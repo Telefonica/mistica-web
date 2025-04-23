@@ -1,5 +1,5 @@
-[data-mistica-variant='inverse']>*,
-.mistica-display-card:has(.mistica-card__media)>* {
+[data-mistica-variant='inverse'] > *,
+.mistica-display-card:has(.mistica-card__media) > * {
     --mistica-boxed-border: none;
 
     --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
@@ -40,11 +40,11 @@
     --vcolor-divider: var(--mistica-color-dividerInverse);
 }
 
-[data-mistica-skin]>*,
-[data-mistica-variant='default']>*,
-.mistica-card>*,
-.mistica-snap-card>*,
-.mistica-display-card>* {
+[data-mistica-skin] > *,
+[data-mistica-variant='default'] > *,
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > * {
     --mistica-boxed-border: 1px solid var(--mistica-color-border);
     --vcolor-textPrimary: var(--mistica-color-textPrimary);
     --vcolor-textSecondary: var(--mistica-color-textSecondary);
@@ -86,25 +86,25 @@
 
 @media (prefers-color-scheme: dark) {
 
-    [data-mistica-skin]>*,
-    [data-mistica-variant='default']>*,
-    .mistica-card>*,
-    .mistica-snap-card>* {
+    [data-mistica-skin] > *,
+    [data-mistica-variant='default'] > *,
+    .mistica-card > *,
+    .mistica-snap-card > * {
         --mistica-boxed-border: none;
     }
 
-    [data-mistica-color-scheme='light'][data-mistica-skin]>*,
-    [data-mistica-color-scheme='light'] [data-mistica-variant='default']>*,
-    [data-mistica-color-scheme='light'] .mistica-card>*,
-    [data-mistica-color-scheme='light'] .mistica-snap-card>* {
+    [data-mistica-color-scheme='light'][data-mistica-skin] > *,
+    [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
+    [data-mistica-color-scheme='light'] .mistica-card > *,
+    [data-mistica-color-scheme='light'] .mistica-snap-card > * {
         --mistica-boxed-border: 1px solid var(--mistica-color-border);
     }
 }
-
-[data-mistica-color-scheme='dark'][data-mistica-skin]>*,
-[data-mistica-color-scheme='dark'] [data-mistica-variant='default']>*,
-[data-mistica-color-scheme='dark'] .mistica-card>*,
-[data-mistica-color-scheme='dark'] .mistica-snap-card>* {
+ 
+[data-mistica-color-scheme='dark'][data-mistica-skin] > *,
+[data-mistica-color-scheme='dark'] [data-mistica-variant='default'] > *,
+[data-mistica-color-scheme='dark'] .mistica-card > *,
+[data-mistica-color-scheme='dark'] .mistica-snap-card > * {
     --mistica-boxed-border: none;
 }
 
@@ -312,6 +312,23 @@
     color: var(--vcolor-tagTextError);
 }
 
+/* TextLink */
+.mistica-text-link {
+    color: var(--vcolor-textLink);
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    text-decoration: underline;
+}
+.mistica-text-link:hover:not([disabled]) {
+    text-decoration-thickness: 0.125em;
+}
+.mistica-text-link[disabled] {
+    opacity: 0.5;
+    text-decoration: none;
+}
+
 /* Breadcrumbs */
 .mistica-breadcrumb ol {
     display: flex;
@@ -328,27 +345,19 @@
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
     color: var(--vcolor-textPrimary);
-    position: relative;
-    padding-right: 12px;
 }
 
-.mistica-breadcrumb a::after {
-    all: unset;
+.mistica-breadcrumb li:after {
     content: '/';
     font-size: var(--mistica-font-size-1);
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
     color: var(--vcolor-textPrimary);
     margin: 0 3px;
-    position: absolute;
 }
 
 .mistica-breadcrumb a:hover {
     text-decoration: underline;
-}
-
-.mistica-breadcrumb a:hover:after {
-    text-decoration: none;
 }
 
 .mistica-breadcrumb li:last-of-type a {
@@ -357,7 +366,7 @@
     padding-right: 0;
 }
 
-.mistica-breadcrumb li:last-of-type a:after {
+.mistica-breadcrumb li:last-of-type:after {
     content: '';
     margin: 0;
 }
@@ -497,9 +506,9 @@
     z-index: 1;
 }
 
-.mistica-card>*,
-.mistica-snap-card>*,
-.mistica-display-card>* {
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > * {
     z-index: 2;
 }
 
@@ -531,24 +540,24 @@ button.mistica-display-card:active:after {
     text-decoration: none;
 }
 
-.mistica-naked-card>*,
-.mistica-small-naked-card>* {
+.mistica-naked-card > *,
+.mistica-small-naked-card > * {
     transition:
         opacity 0.1s ease-in-out,
         filter 0.1s ease-in-out;
 }
 
-a.mistica-naked-card:hover>*,
-button.mistica-naked-card:hover>*,
-a.mistica-small-naked-card:hover>*,
-button.mistica-small-naked-card:hover>* {
+a.mistica-naked-card:hover > *,
+button.mistica-naked-card:hover > *,
+a.mistica-small-naked-card:hover > *,
+button.mistica-small-naked-card:hover > * {
     opacity: 0.8;
 }
 
-a.mistica-naked-card:active>*,
-button.mistica-naked-card:active>*,
-a.mistica-small-naked-card:active>*,
-button.mistica-small-naked-card:active>* {
+a.mistica-naked-card:active > *,
+button.mistica-naked-card:active > *,
+a.mistica-small-naked-card:active > *,
+button.mistica-small-naked-card:active > * {
     opacity: 0.6;
 }
 
@@ -619,8 +628,7 @@ button.mistica-small-naked-card:active>.mistica-card__media {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     width: calc(100% + 32px);
-    max-width: initial;
-    /* Movistar AEM has a default max-width: 100% for any img tag */
+    max-width: initial; /* Movistar AEM has a default max-width: 100% for any img tag */
     position: relative;
 }
 
@@ -680,11 +688,11 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     text-shadow: var(--mistica-card-text-shadow);
 }
 
-[class^='mistica-tag']+.mistica-card__pretitle {
+[class^='mistica-tag'] + .mistica-card__pretitle {
     padding-top: 8px;
 }
 
-.mistica-display-card [class^='mistica-tag']+.mistica-card__pretitle {
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__pretitle {
     padding-top: 16px;
 }
 
@@ -707,15 +715,15 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     font-weight: var(--mistica-font-weight-6);
 }
 
-[class^='mistica-tag']+.mistica-card__title {
+[class^='mistica-tag'] + .mistica-card__title {
     padding-top: 8px;
 }
 
-.mistica-display-card [class^='mistica-tag']+.mistica-card__title {
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__title {
     padding-top: 16px;
 }
 
-.mistica-card__pretitle+.mistica-card__title {
+.mistica-card__pretitle + .mistica-card__title {
     padding-top: 4px;
 }
 
