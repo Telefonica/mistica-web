@@ -818,31 +818,34 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     height: auto;
 }
 
-.mistica-card__asset-floating {
-    padding-left: 16px;
-    padding-top: 16px;
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    left: 0;
-}
-
-@media (min-width: 1024px) {
-    .mistica-card__asset-floating {
-        padding-left: 24px;
-        padding-top: 24px;
-    }
-}
-
 .mistica-card__asset {
-    padding-bottom: 40px;
-}
-
-.mistica-card__asset-icon {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
+}
+
+.mistica-card__asset-floating {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card__asset-floating {
+        margin-left: 24px;
+        margin-top: 24px;
+    }
 }
