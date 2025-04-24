@@ -160,6 +160,7 @@ const CreditCardNumberField = ({
     label,
     optional,
     validate: validateProp,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -207,6 +208,7 @@ const CreditCardNumberField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

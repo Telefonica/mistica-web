@@ -1,3 +1,30 @@
+# [16.21.0](https://github.com/Telefonica/mistica-web/compare/v16.20.0...v16.21.0) (2025-04-22)
+
+
+### Features
+
+* **mistica-css:** basic Accordion implementation ([#1344](https://github.com/Telefonica/mistica-web/issues/1344)) ([4118fc2](https://github.com/Telefonica/mistica-web/commit/4118fc2428ea7b2eb9e96445fb521b2ca157e0e2))
+* **mistica-css:** implement more components ([#1332](https://github.com/Telefonica/mistica-web/issues/1332)) ([652bd06](https://github.com/Telefonica/mistica-web/commit/652bd06fe728aa63051454f800adfdcab62607b0))
+* **mistica-css:** TextLink ([#1346](https://github.com/Telefonica/mistica-web/issues/1346)) ([b9cc8cc](https://github.com/Telefonica/mistica-web/commit/b9cc8ccb8e376482030fd7ea8714f3a98bd6fab6))
+* **Row,BoxedRow:** allow overriding touchable role ([#1347](https://github.com/Telefonica/mistica-web/issues/1347)) ([0e855be](https://github.com/Telefonica/mistica-web/commit/0e855bec0f3137c961fc08fdc9ac079f4519b95d))
+
+# [16.20.0](https://github.com/Telefonica/mistica-web/compare/v16.19.0...v16.20.0) (2025-04-09)
+
+
+### Features
+
+* **tabs:** add selectedTabRef ([#1341](https://github.com/Telefonica/mistica-web/issues/1341)) ([8db0cf3](https://github.com/Telefonica/mistica-web/commit/8db0cf3ea9e68bd32804733f5debb1bb08557a3e))
+
+# [16.19.0](https://github.com/Telefonica/mistica-web/compare/v16.18.2...v16.19.0) (2025-04-04)
+
+
+### Features
+
+* **Chip:** Update chip navigationActive colors ([#1330](https://github.com/Telefonica/mistica-web/issues/1330)) ([6061b67](https://github.com/Telefonica/mistica-web/commit/6061b676a991db6a0dfd02f84ba29f360a75e627))
+* **Form:** allow disabling onBlur validation, make '(optional)' label optional, allow to hide search icon in SearchField ([#1340](https://github.com/Telefonica/mistica-web/issues/1340)) ([d42f4d3](https://github.com/Telefonica/mistica-web/commit/d42f4d3f2efa20e01a780cb2be733c986187b465))
+* **HighlightedValueBlock:** new pretitle and strickedValue props ([#1329](https://github.com/Telefonica/mistica-web/issues/1329)) ([2283867](https://github.com/Telefonica/mistica-web/commit/2283867874caa50767543bf083858af2d3e3573a))
+* **icons:** New vivo icons ([#1335](https://github.com/Telefonica/mistica-web/issues/1335)) ([ba6d2ca](https://github.com/Telefonica/mistica-web/commit/ba6d2ca8cb4dad4a399539361cd4f91c7040eb4e))
+
 ## [16.18.2](https://github.com/Telefonica/mistica-web/compare/v16.18.1...v16.18.2) (2025-03-27)
 
 

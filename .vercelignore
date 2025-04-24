@@ -3,7 +3,8 @@ dist-es
 reports
 doc
 scripts
-examples
+examples/*
+!examples/css
 codemods
 __tests__
 __acceptance_tests__

@@ -31,6 +31,7 @@ const DateField = ({
     label,
     optional,
     validate: validateProp,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue: onChangeValueProp,
     onBlur,
@@ -81,6 +82,7 @@ const DateField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

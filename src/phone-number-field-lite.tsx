@@ -203,6 +203,7 @@ const PhoneNumberFieldLite = ({
     label,
     optional,
     validate,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -232,6 +233,7 @@ const PhoneNumberFieldLite = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });
