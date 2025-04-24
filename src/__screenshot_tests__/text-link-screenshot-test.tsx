@@ -70,10 +70,10 @@ test('TextLink - inherits text style', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('TextLink - bodyLink', async () => {
+test('TextLink - underline on hover', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {bodyLink: false},
+        args: {underline: 'on hover'},
     });
 
     const textLink = await screen.findByTestId('text-link');
@@ -83,10 +83,10 @@ test('TextLink - bodyLink', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('TextLink - bodyLink - inverse', async () => {
+test('TextLink - underline on hover - inverse', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {inverse: true, bodyLink: false},
+        args: {inverse: true, underline: 'on hover'},
     });
 
     const textLink = await screen.findByTestId('text-link');
@@ -96,10 +96,10 @@ test('TextLink - bodyLink - inverse', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('TextLink - bodyLink - dark mode', async () => {
+test('TextLink - underline on hover - dark mode', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {bodyLink: false},
+        args: {underline: 'on hover'},
         isDarkMode: true,
     });
 
@@ -110,10 +110,10 @@ test('TextLink - bodyLink - dark mode', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('TextLink - bodyLink - inverse - dark mode', async () => {
+test('TextLink - underline on hover - inverse - dark mode', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {inverse: true, bodyLink: false},
+        args: {inverse: true, underline: 'on hover'},
         isDarkMode: true,
     });
 

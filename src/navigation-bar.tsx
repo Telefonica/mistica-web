@@ -795,7 +795,7 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
                         role="listitem"
                     >
                         <TextLink
-                            bodyLink={false}
+                            underline="on hover"
                             className={styles.desktopMenuColumnItem}
                             dataAttributes={{
                                 [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',

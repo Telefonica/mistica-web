@@ -22,7 +22,7 @@ const base = style([
     },
 ]);
 
-const withBodyLink = style({
+const underlineAlways = style({
     textDecoration: 'underline !important',
     '@media': {
         [mq.supportsHover]: {
@@ -36,7 +36,7 @@ const withBodyLink = style({
     },
 });
 
-const withoutBodyLink = style({
+const underlineOnHover = style({
     textDecoration: 'none !important',
     '@media': {
         [mq.supportsHover]: {
@@ -51,8 +51,8 @@ const withoutBodyLink = style({
 });
 
 export const linkStyles = {
-    withBodyLink,
-    withoutBodyLink,
+    underlineAlways,
+    underlineOnHover,
 };
 
 export const variants = styleVariants({

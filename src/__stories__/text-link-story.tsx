@@ -44,6 +44,10 @@ export default {
             ],
             control: {type: 'select'},
         },
+        underline: {
+            options: ['always', 'on hover'],
+            control: {type: 'select'},
+        },
     },
 };
 
@@ -117,7 +121,7 @@ type Args = {
     action: 'href' | 'onPress';
     textStyle: 'Text1' | 'Text3' | 'Text5';
     newTab: boolean;
-    bodyLink: boolean;
+    underline: 'always' | 'on hover';
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -127,7 +131,7 @@ export const Default: StoryComponent<Args> = ({
     action,
     newTab,
     textStyle,
-    bodyLink,
+    underline,
 }) => {
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
@@ -136,7 +140,7 @@ export const Default: StoryComponent<Args> = ({
                     Text link can be located in the middle of a paragraph:{' '}
                     <TextLink
                         disabled={disabled}
-                        bodyLink={bodyLink}
+                        underline={underline}
                         {...getTextLinkActionProps(action, newTab)}
                     >
                         {text || 'Text link'}
@@ -156,7 +160,7 @@ Default.args = {
     inverse: false,
     disabled: false,
     newTab: false,
-    bodyLink: true,
+    underline: 'always',
 };
 
 Default.storyName = 'TextLink';
