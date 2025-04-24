@@ -1,3 +1,13 @@
+# [16.21.0](https://github.com/Telefonica/mistica-web/compare/v16.20.0...v16.21.0) (2025-04-22)
+
+
+### Features
+
+* **mistica-css:** basic Accordion implementation ([#1344](https://github.com/Telefonica/mistica-web/issues/1344)) ([4118fc2](https://github.com/Telefonica/mistica-web/commit/4118fc2428ea7b2eb9e96445fb521b2ca157e0e2))
+* **mistica-css:** implement more components ([#1332](https://github.com/Telefonica/mistica-web/issues/1332)) ([652bd06](https://github.com/Telefonica/mistica-web/commit/652bd06fe728aa63051454f800adfdcab62607b0))
+* **mistica-css:** TextLink ([#1346](https://github.com/Telefonica/mistica-web/issues/1346)) ([b9cc8cc](https://github.com/Telefonica/mistica-web/commit/b9cc8ccb8e376482030fd7ea8714f3a98bd6fab6))
+* **Row,BoxedRow:** allow overriding touchable role ([#1347](https://github.com/Telefonica/mistica-web/issues/1347)) ([0e855be](https://github.com/Telefonica/mistica-web/commit/0e855bec0f3137c961fc08fdc9ac079f4519b95d))
+
 # [16.20.0](https://github.com/Telefonica/mistica-web/compare/v16.19.0...v16.20.0) (2025-04-09)
 
 

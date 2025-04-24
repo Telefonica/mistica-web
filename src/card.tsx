@@ -1307,7 +1307,7 @@ const DisplayCardContent = ({
             )}
 
             {subtitle && (
-                <div style={{paddingBottom: subtitle ? 4 : 0}} data-testid="subtitle">
+                <div style={{paddingBottom: description ? 4 : 0}} data-testid="subtitle">
                     {subtitle}
                 </div>
             )}

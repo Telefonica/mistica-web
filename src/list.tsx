@@ -49,6 +49,7 @@ interface CommonProps {
     asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
+    touchableRole?: string;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
@@ -375,6 +376,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         danger,
         badge,
         role,
+        touchableRole,
         extra,
         withChevron,
         dataAttributes,
@@ -426,7 +428,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = (contentProps?: {control?: React.ReactNode; labelId?: string}) => (
+    const renderContent = (contentProps?: {control?: React.ReactNode; labelId?: string; role?: string}) => (
         <Content
             asset={asset}
             headline={headline}
@@ -453,6 +455,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 }
             }}
             control={contentProps?.control}
+            role={contentProps?.role}
             extra={extra}
             extraRef={(node) => {
                 if (node) {
@@ -475,14 +478,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.pointer]: !disabled,
                 })}
                 {...interactiveProps}
-                role={role}
+                role={touchableRole}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 aria-label={ariaLabel}
                 tabIndex={tabIndex}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
-                    {renderContent()}
+                    {renderContent({role})}
                 </Box>
             </BaseTouchable>
         );
@@ -497,7 +500,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             <BaseTouchable
                 disabled={disabled}
                 {...interactiveProps}
-                role={role}
+                role={touchableRole}
                 className={classNames(styles.dualActionLeft, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
@@ -505,7 +508,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 aria-label={ariaLabel}
                 tabIndex={tabIndex}
             >
-                {renderContent({labelId: titleId})}
+                {renderContent({labelId: titleId, role})}
             </BaseTouchable>
 
             <div className={styles.dualActionDivider} />
@@ -648,7 +651,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             ref={ref as React.Ref<HTMLDivElement>}
             tabIndex={tabIndex}
         >
-            <div aria-hidden={hasCustomAriaLabel}>{renderContent()}</div>
+            <div aria-hidden={hasCustomAriaLabel}>{renderContent({role})}</div>
             {hasCustomAriaLabel && (
                 <ScreenReaderOnly>
                     <span>{props['aria-label']}</span>
