@@ -817,3 +817,99 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-accordion-item[open]::details-content {
     height: auto;
 }
+
+/* Table */
+.mistica-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    position: relative;
+    width: 100%;
+}
+
+.mistica-table thead tr {
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--vcolor-textSecondary);
+}
+
+.mistica-table tbody td,
+.mistica-table tbody th {
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+}
+
+.mistica-table th,
+.mistica-table td {
+    border-bottom: 1px solid var(--mistica-color-divider);
+    padding: 16px 12px;
+    height: 56px;
+    vertical-align: middle;
+    text-align: left;
+}
+.mistica-table th:first-child,
+.mistica-table td:first-child {
+    padding-left: 0;
+}
+.mistica-table th:last-child,
+.mistica-table td:last-child {
+    padding-right: 0;
+}
+.mistica-table tbody tr:last-child td,
+.mistica-table tbody tr:last-child th {
+    border-bottom: none;
+}
+
+@media (max-width: 1023px) {
+    .mistica-table-mobile-collapsed,
+    .mistica-table-mobile-collapsed thead,
+    .mistica-table-mobile-collapsed tbody,
+    .mistica-table-mobile-collapsed th,
+    .mistica-table-mobile-collapsed td,
+    .mistica-table-mobile-collapsed tr {
+        display: block;
+    }
+    .mistica-table-mobile-collapsed tr {
+        display: flex;
+        flex-direction: column;
+    }
+    .mistica-table-mobile-collapsed tbody th {
+        order: -1;
+        font-size: var(--mistica-font-size-4);
+        line-height: var(--mistica-line-height-4);
+        font-weight: var(--mistica-font-weight-cardTitle);
+        padding-bottom: 8px;
+    }
+    .mistica-table-mobile-collapsed tbody td,
+    .mistica-table-mobile-collapsed tbody th {
+        vertical-align: initial;
+        border: none;
+        height: auto;
+        padding: 0 0 8px 0;
+    }
+    .mistica-table-mobile-collapsed tbody td:last-child {
+        padding-bottom: 0;
+    }
+    .mistica-table-mobile-collapsed tbody tr {
+        padding: 16px 0;
+    }
+    .mistica-table-mobile-collapsed tbody tr:not(:last-child) {
+        border-bottom: 1px solid var(--mistica-color-divider);
+    }
+    .mistica-table-mobile-collapsed td[data-heading]:before {
+        display: block;
+        content: attr(data-heading);
+        font-size: var(--mistica-font-size-1);
+        line-height: var(--mistica-line-height-1);
+        font-weight: 500;
+        color: var(--vcolor-textSecondary);
+        padding-bottom: 4px;
+    }
+    .mistica-table-mobile-collapsed thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+}
