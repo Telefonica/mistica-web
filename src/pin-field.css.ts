@@ -18,7 +18,7 @@ export const disabled = style({
 
 const fieldCommonStyles = style([
     sprinkles({
-        border: 'regular',
+        border: 'input',
         display: 'flex',
         borderRadius: vars.borderRadii.input,
         position: 'relative',
@@ -26,7 +26,6 @@ const fieldCommonStyles = style([
     }),
     {
         width: `calc(${pinInputLineHeight} * 3)`,
-        borderColor: vars.colors.inputBorder,
     },
 ]);
 
