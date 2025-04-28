@@ -938,3 +938,68 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-accordion-item[open]::details-content {
     height: auto;
 }
+
+/* Column Layout */
+
+.mistica-grid__tablet,
+.mistica-grid__mobile {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .mistica-grid__mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mistica-grid__mobile [class^="mistica-col-"] {
+    grid-column: span 1;
+  }
+
+  .mistica-col-filler {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .mistica-grid__tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mistica-grid__tablet [class^="mistica-col-"] {
+    grid-column: span 1;
+  }
+
+  .mistica-col-filler {
+    display: none;
+  }
+}
+
+.mistica-col-3 {
+  grid-column: span 3;
+}
+
+.mistica-col-4 {
+  grid-column: span 4;
+}
+
+.mistica-col-5 {
+  grid-column: span 5;
+}
+
+.mistica-col-6 {
+  grid-column: span 6;
+}
+
+.mistica-col-8 {
+  grid-column: span 8;
+}
+
+.mistica-col-9 {
+  grid-column: span 9;
+}
+
+.mistica-col-filler {
+  grid-column: span 1;
+}

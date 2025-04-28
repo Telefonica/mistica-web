@@ -12,3 +12,24 @@ document.querySelector('#variant-select').addEventListener('change', (e) => {
     const newVariant = e.target.value;
     document.getElementById('app').dataset.misticaVariant = newVariant;
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const verticalSelector = document.querySelector('#vertical-separation');
+    const misticaGridTablet = document.querySelector('.mistica-grid__tablet');
+    const misticaGridMobile = document.querySelector('.mistica-grid__mobile');
+
+    function applyGap() {
+        const verticalValue = verticalSelector.value;
+
+        if ( window.innerWidth < 1024) {
+            misticaGridTablet.style.gap = verticalValue + 'px';
+            
+        } else if (window.innerWidth < 768) {           
+            misticaGridMobile.style.gap = verticalValue + 'px';            
+        }
+    }
+
+    verticalSelector.addEventListener('change', applyGap);
+
+    window.addEventListener('resize', applyGap);
+});
