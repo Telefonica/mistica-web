@@ -342,7 +342,7 @@
 }
 
 .mistica-breadcrumb a {
-    text-decoration: none;
+    text-decoration: underline;
     font-size: var(--mistica-font-size-1);
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
@@ -355,17 +355,18 @@
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
     color: var(--vcolor-textPrimary);
-    margin: 0 3px;
+    margin-right: 3px;
 }
 
 .mistica-breadcrumb a:hover {
-    text-decoration: underline;
+    text-decoration-thickness: 0.125rem;
 }
 
 .mistica-breadcrumb li:last-of-type a {
     pointer-events: none;
     color: var(--vcolor-textSecondary);
     padding-right: 0;
+    text-decoration: none;
 }
 
 /* Buttons */
