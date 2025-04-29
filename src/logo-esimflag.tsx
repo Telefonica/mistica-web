@@ -14,9 +14,7 @@ const EsimflagLogoImage = ({
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors} = getEsimflagSkin();
-    const color =
-        colorProp || (isDarkMode ? colors.inverse : isInverse ? colors.inverse : 'url(#backgroundLogo)');
-
+    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : 'url(#backgroundLogo)');
     const LogoBackground = () => (
         <defs>
             <pattern id="backgroundLogo" patternUnits="userSpaceOnUse" width="100%" height="100%">
