@@ -939,42 +939,31 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     height: auto;
 }
 
-/* Column Layout */
+/* Grid Layout */
 
-.mistica-grid__tablet,
-.mistica-grid__mobile {
+.mistica-grid-layout {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 24px;
 }
 
-@media (max-width: 768px) {
-  .mistica-grid__mobile {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .mistica-grid__mobile [class^="mistica-col-"] {
-    grid-column: span 1;
-  }
-
-  .mistica-col-filler {
-    display: none;
-  }
-}
-
 @media (max-width: 1023px) {
-  .mistica-grid__tablet {
+  .mistica-grid-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .mistica-grid__tablet [class^="mistica-col-"] {
+  .mistica-grid-layout [class^="mistica-col-"] {
     grid-column: span 1;
   }
 
-  .mistica-col-filler {
+  .mistica-col-1 {
     display: none;
   }
 }
+
+.mistica-col-1 {
+    grid-column: span 1;
+  }
 
 .mistica-col-3 {
   grid-column: span 3;
@@ -998,8 +987,4 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 .mistica-col-9 {
   grid-column: span 9;
-}
-
-.mistica-col-filler {
-  grid-column: span 1;
 }
