@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet-common.css';
 import FocusTrap from './focus-trap';
-import {useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useDisableBodyScroll, useIsInViewport, useIsWithinIFrame, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -172,6 +172,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
     const modalTitleId = React.useId();
+    const isInIframe = useIsWithinIFrame();
 
     const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
         // Don't trigger transitionEnd if the event is not triggered by the sheet element.
@@ -220,7 +221,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
 
     return (
         <Portal>
-            <FocusTrap>
+            <FocusTrap disabled={isInIframe}>
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <div
                     className={classnames(styles.overlay, {
