@@ -84,7 +84,11 @@ const renderFeedbackBody = (
                 {asset}
             </div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
-                <div className={classnames(animateText && styles.feedbackTextAppearFast)} data-testid="title" aria-live="polite">
+                <div
+                    className={classnames(animateText && styles.feedbackTextAppearFast)}
+                    data-testid="title"
+                    aria-live="polite"
+                >
                     <Text6 as="h1">{title}</Text6>
                 </div>
 
@@ -92,8 +96,8 @@ const renderFeedbackBody = (
                     <div
                         className={classnames(animateText && styles.feedbackTextAppearMedium)}
                         data-testid="description"
-                   
-                        aria-live="polite" >
+                        aria-live="polite"
+                    >
                         {normalizedDescription && (
                             <Text3 regular color={vars.colors.textSecondary}>
                                 {normalizedDescription}
@@ -111,8 +115,8 @@ const renderFeedbackBody = (
                                     : styles.feedbackTextAppearMedium)
                         )}
                         data-testid="slot"
-                   
-                        aria-live="polite" >
+                        aria-live="polite"
+                    >
                         {extra}
                     </div>
                 )}
