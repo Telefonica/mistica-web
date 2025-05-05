@@ -961,6 +961,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
   }
 }
 
+@media (min-width: 1024px) and (max-width: 1367px) {
+    .mistica-grid-layout {
+      grid-column-gap: 16px;
+    }  
+}
+
 .mistica-col-1 {
     grid-column: span 1;
   }
