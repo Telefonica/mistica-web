@@ -333,12 +333,14 @@
 
 /* Breadcrumbs */
 .mistica-breadcrumb ol {
-    display: flex;
-    flex: 1;
-    align-items: flex-end;
+    display: block;
     padding: 0;
     margin: 0;
     list-style: none;
+}
+
+.mistica-breadcrumb li {
+    display: inline;
 }
 
 .mistica-breadcrumb a {
