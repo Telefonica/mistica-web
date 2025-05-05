@@ -20,24 +20,56 @@ const calcSpaceValue = (space: NumericSpace | FlexSpace) => {
     }
 };
 
-const calcInlineVars = (space: FlexSpace | ByBreakpoint<NumericSpace>) => {
-    if (typeof space === 'number' || typeof space === 'string') {
+const calcInlineVars = (
+    space: FlexSpace | ByBreakpoint<NumericSpace>,
+    verticalSpace?: ByBreakpoint<NumericSpace>
+) => {
+    const calcSpaceVars = (
+        space: FlexSpace | ByBreakpoint<NumericSpace>,
+        varNames: {default: string; mobile: string; tablet: string; desktop: string}
+    ) => {
+        if (typeof space === 'number' || typeof space === 'string') {
+            return {
+                [varNames.default]: calcSpaceValue(space),
+            };
+        }
+        const vars = {
+            [varNames.mobile]: calcSpaceValue(space.mobile),
+            [varNames.desktop]: calcSpaceValue(space.desktop),
+        };
+        if (space.tablet) {
+            vars[varNames.tablet] = calcSpaceValue(space.tablet);
+        }
+        return vars;
+    };
+
+    const spaceVars = calcSpaceVars(space, {
+        default: styles.vars.space,
+        mobile: styles.vars.spaceMobile,
+        tablet: styles.vars.spaceTablet,
+        desktop: styles.vars.spaceDesktop,
+    });
+
+    if (verticalSpace) {
+        const verticalSpaceVars = calcSpaceVars(verticalSpace, {
+            default: styles.vars.verticalSpace,
+            mobile: styles.vars.verticalSpaceMobile,
+            tablet: styles.vars.verticalSpaceTablet,
+            desktop: styles.vars.verticalSpaceDesktop,
+        });
+
         return {
-            [styles.vars.space]: calcSpaceValue(space),
+            ...spaceVars,
+            ...verticalSpaceVars,
         };
     }
-    const vars = {
-        [styles.vars.spaceMobile]: calcSpaceValue(space.mobile),
-        [styles.vars.spaceDesktop]: calcSpaceValue(space.desktop),
-    };
-    if (space.tablet) {
-        vars[styles.vars.spaceTablet] = calcSpaceValue(space.tablet);
-    }
-    return vars;
+
+    return spaceVars;
 };
 
 type Props = {
     space: FlexSpace | ByBreakpoint<NumericSpace>;
+    verticalSpace?: ByBreakpoint<NumericSpace>;
     alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     children: React.ReactNode;
     className?: string;
@@ -51,6 +83,7 @@ type Props = {
 
 const Inline = ({
     space,
+    verticalSpace,
     className,
     children,
     role,
@@ -72,7 +105,7 @@ const Inline = ({
                 wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
                 isStringSpace ? (wrap ? styles.stringSpaceWithWrap : styles.stringSpace) : styles.marginInline
             )}
-            style={{...applyCssVars(calcInlineVars(space)), alignItems}}
+            style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
