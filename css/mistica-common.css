@@ -265,6 +265,127 @@
     }
 }
 
+/* Chip */
+
+.mistica-chip {
+    font-weight: var(--mistica-font-weight-indicator);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    color: var(--mistica-color-textPrimary);
+    border: 1px solid var(--mistica-color-control);
+    border-radius: var(--mistica-border-radius-indicator);
+    background: var(--mistica-color-backgroundContainer);
+    position: relative;
+    overflow: hidden;
+    min-width: 72px;
+    min-height: 40px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+label.mistica-chip {
+    padding: 0;
+    border: none;
+    overflow: visible;
+    background: transparent;
+}
+label.mistica-chip > span {
+    border: 1px solid var(--mistica-color-control);
+    border-radius: var(--mistica-border-radius-indicator);
+    background: var(--mistica-color-backgroundContainer);
+    position: relative;
+    overflow: hidden;
+    min-width: 72px;
+    min-height: 40px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .mistica-chip,
+    label.mistica-chip > span {
+        min-width: 56px;
+        min-height: 32px;
+        padding: 0 12px;
+    }
+}
+
+button.mistica-chip,
+a.mistica-chip,
+label.mistica-chip {
+    cursor: pointer;
+    user-select: none;
+}
+
+button.mistica-chip:before,
+a.mistica-chip:before,
+label.mistica-chip > span:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    transition: background-color 0.1s ease-in-out;
+}
+
+button.mistica-chip:hover:before,
+a.mistica-chip:hover:before,
+label.mistica-chip > input:hover + span:before {
+    background: var(--mistica-color-backgroundContainerHover);
+}
+
+button.mistica-chip:active:before,
+a.mistica-chip:active:before,
+label.mistica-chip > input:active + span:before {
+    background: var(--mistica-color-backgroundContainerPressed);
+}
+
+label.mistica-chip > input {
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--mistica-border-radius-indicator);
+    outline-offset: 0;
+}
+
+label.mistica-chip > input:checked + span {
+    color: var(--mistica-color-textActivated);
+    background: var(--mistica-color-brandLow);
+    border-color: var(--mistica-color-controlActivated);
+}
+
+.mistica-chip > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    min-width: 24px;
+    min-height: 24px;
+    margin-left: 4px;
+    margin-right: -4px;
+}
+
+.mistica-chip > button > svg {
+    width: 1rem;
+    height: 1rem;
+}
+
 /* Tag */
 [class^='mistica-tag'] {
     font-weight: var(--mistica-font-weight-indicator);
@@ -610,6 +731,7 @@ button.mistica-small-naked-card:active > .mistica-card__media {
 
 .mistica-naked-card,
 .mistica-small-naked-card {
+    position: relative;
     padding-right: 16px;
 }
 
@@ -856,4 +978,189 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 .mistica-accordion-item[open]::details-content {
     height: auto;
+}
+
+/* Grid Layout */
+
+.mistica-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1023px) {
+  .mistica-grid-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mistica-grid-layout [class^="mistica-col-"] {
+    grid-column: span 1;
+  }
+
+  .mistica-col-1 {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1367px) {
+    .mistica-grid-layout {
+      grid-column-gap: 16px;
+    }  
+}
+
+.mistica-col-1 {
+    grid-column: span 1;
+  }
+
+.mistica-col-3 {
+  grid-column: span 3;
+}
+
+.mistica-col-4 {
+  grid-column: span 4;
+}
+
+.mistica-col-5 {
+  grid-column: span 5;
+}
+
+.mistica-col-6 {
+  grid-column: span 6;
+}
+
+.mistica-col-8 {
+  grid-column: span 8;
+}
+
+.mistica-col-9 {
+  grid-column: span 9;
+}
+
+/* Table */
+.mistica-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    position: relative;
+    width: 100%;
+}
+
+.mistica-table thead tr {
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--vcolor-textSecondary);
+}
+
+.mistica-table tbody td,
+.mistica-table tbody th {
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+}
+
+.mistica-table th,
+.mistica-table td {
+    border-bottom: 1px solid var(--mistica-color-divider);
+    padding: 16px 12px;
+    height: 56px;
+    vertical-align: middle;
+    text-align: left;
+}
+.mistica-table th:first-child,
+.mistica-table td:first-child {
+    padding-left: 0;
+}
+.mistica-table th:last-child,
+.mistica-table td:last-child {
+    padding-right: 0;
+}
+.mistica-table tbody tr:last-child td,
+.mistica-table tbody tr:last-child th {
+    border-bottom: none;
+}
+
+@media (max-width: 1023px) {
+    .mistica-table-mobile-collapsed,
+    .mistica-table-mobile-collapsed thead,
+    .mistica-table-mobile-collapsed tbody,
+    .mistica-table-mobile-collapsed th,
+    .mistica-table-mobile-collapsed td,
+    .mistica-table-mobile-collapsed tr {
+        display: block;
+    }
+    .mistica-table-mobile-collapsed tr {
+        display: flex;
+        flex-direction: column;
+    }
+    .mistica-table-mobile-collapsed tbody th {
+        order: -1;
+        font-size: var(--mistica-font-size-4);
+        line-height: var(--mistica-line-height-4);
+        font-weight: var(--mistica-font-weight-cardTitle);
+        padding-bottom: 8px;
+    }
+    .mistica-table-mobile-collapsed tbody td,
+    .mistica-table-mobile-collapsed tbody th {
+        vertical-align: initial;
+        border: none;
+        height: auto;
+        padding: 0 0 8px 0;
+    }
+    .mistica-table-mobile-collapsed tbody td:last-child {
+        padding-bottom: 0;
+    }
+    .mistica-table-mobile-collapsed tbody tr {
+        padding: 16px 0;
+    }
+    .mistica-table-mobile-collapsed tbody tr:not(:last-child) {
+        border-bottom: 1px solid var(--mistica-color-divider);
+    }
+    .mistica-table-mobile-collapsed td[data-heading]:before {
+        display: block;
+        content: attr(data-heading);
+        font-size: var(--mistica-font-size-1);
+        line-height: var(--mistica-line-height-1);
+        font-weight: 500;
+        color: var(--vcolor-textSecondary);
+        padding-bottom: 4px;
+    }
+    .mistica-table-mobile-collapsed thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+}
+
+.mistica-card__asset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.mistica-card__asset-floating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+.mistica-card__asset-floating img,
+.mistica-card__asset img {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card__asset-floating {
+        margin-left: 24px;
+        margin-top: 24px;
+    }
 }

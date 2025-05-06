@@ -1,3 +1,11 @@
+# [16.22.0](https://github.com/Telefonica/mistica-web/compare/v16.21.0...v16.22.0) (2025-04-29)
+
+
+### Features
+
+* **mistica-css:** Chip ([#1350](https://github.com/Telefonica/mistica-web/issues/1350)) ([ca4aa01](https://github.com/Telefonica/mistica-web/commit/ca4aa01f1a685238d3de5cd4fe443a231cc5228a))
+* **sheet-root:** disable focus trap when running in an iframe ([#1353](https://github.com/Telefonica/mistica-web/issues/1353)) ([#1354](https://github.com/Telefonica/mistica-web/issues/1354)) ([19aeaf1](https://github.com/Telefonica/mistica-web/commit/19aeaf1986eb1e1ac900777e73605f3bdaf99877))
+
 # [16.21.0](https://github.com/Telefonica/mistica-web/compare/v16.20.0...v16.21.0) (2025-04-22)
 
 
