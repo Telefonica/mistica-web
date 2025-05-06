@@ -351,14 +351,14 @@
     color: var(--vcolor-textPrimary);
 }
 
-.mistica-breadcrumb li:not(:last-child):after {
-    content: '/';
-    font-size: var(--mistica-font-size-1);
-    line-height: var(--mistica-line-height-1);
-    font-weight: var(--mistica-font-weight-1);
-    color: var(--vcolor-textPrimary);
-    margin-right: 3px;
-}
+.mistica-breadcrumb li + li::before {
+    display: inline-block;
+    margin: -1px 0.25em;
+    transform: rotate(18deg);
+    border-right: 0.1em solid var(--vcolor-textPrimary);
+    height: 0.8em;
+    content: "";
+  }
 
 .mistica-breadcrumb a:hover {
     text-decoration-thickness: 0.125rem;
