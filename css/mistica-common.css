@@ -691,6 +691,7 @@ button.mistica-small-naked-card:active > .mistica-card__media {
 
 .mistica-naked-card,
 .mistica-small-naked-card {
+    position: relative;
     padding-right: 16px;
 }
 
@@ -1088,5 +1089,38 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         position: absolute;
         top: -9999px;
         left: -9999px;
+    }
+}
+
+.mistica-card__asset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.mistica-card__asset-floating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+.mistica-card__asset-floating img,
+.mistica-card__asset img {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card__asset-floating {
+        margin-left: 24px;
+        margin-top: 24px;
     }
 }
