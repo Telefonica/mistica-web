@@ -83,6 +83,94 @@
                     <div class="mistica-tag-error">Error</div>
                 </div>
 
+                <h3 class="mistica-text-title2">Table</h3>
+                <h4 class="mistica-text-title1">Column headings</h4>
+                <table class="mistica-table mistica-table-mobile-collapsed">
+                    <thead>
+                        <tr>
+                            <th>Type of food</th>
+                            <th>Calories</th>
+                            <th>Tasty factor</th>
+                            <th>Price</th>
+                            <th>Average rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-heading="Type of food">Slice of pizza</td>
+                            <td data-heading="Calories">285</td>
+                            <td data-heading="Tasty factor">95%</td>
+                            <td data-heading="Price">5,00€</td>
+                            <td data-heading="Average rating">9/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Hamburger</td>
+                            <td data-heading="Calories">354</td>
+                            <td data-heading="Tasty factor">90%</td>
+                            <td data-heading="Price">6,00€</td>
+                            <td data-heading="Average rating">8/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Sushi</td>
+                            <td data-heading="Calories">200</td>
+                            <td data-heading="Tasty factor">85%</td>
+                            <td data-heading="Price">10,00€</td>
+                            <td data-heading="Average rating">10/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Salad</td>
+                            <td data-heading="Calories">150</td>
+                            <td data-heading="Tasty factor">70%</td>
+                            <td data-heading="Price">4,00€</td>
+                            <td data-heading="Average rating">7/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Ice cream</td>
+                            <td data-heading="Calories">250</td>
+                            <td data-heading="Tasty factor">95%</td>
+                            <td data-heading="Price">3,00€</td>
+                            <td data-heading="Average rating">9/10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4 class="mistica-text-title1">Row headings</h4>
+                <table class="mistica-table mistica-table-mobile-collapsed">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <span class="mistica-text-3">Sistema operativo y procesador</span>
+                            </th>
+                            <td>
+                                <p>Sistema operativo: Android 15 con One UI 7</p>
+                                <p>Procesador: Snapdragon 8 Elite (3nm) - Ray Tracing</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="mistica-text-3">Conectividad</span></th>
+                            <td>
+                                <p>5G</p>
+                                <p>WiFi 802.11 a/b/g/n/ac/ax 2.4 + 5 + 6 Ghz</p>
+                                <p>Bluetooth 5.3</p>
+                                <p>USB type C</p>
+                                <p>GPS</p>
+                                <p>NFC</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="mistica-text-3">Características físicas</span></th>
+                            <td>
+                                <p>Tipo de SIM: Dual SIM (SIM1+SIM2 o eSIM)</p>
+                                <p>Dimensiones: 146,9 x 70,5 x 7,2mm</p>
+                                <p>Peso: 162 g</p>
+                                <p>Colores Disponibles: Gris</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="mistica-text-3">Pantalla</span></th>
+                            <td>6,2" Dynamic AMOLED 2340x1080 FHD+ (1-120 Hz)</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <h3 class="mistica-text-title2">Chip</h3>
                 <div>
                     <button class="mistica-chip">Chip button</button>
@@ -525,8 +613,107 @@
                         </a>
                     </div>
                 </div>
+
+                <h3 class="mistica-text-title2">Grid Layout</h3>              
+                <h4 class="mistica-text-title1">6 + 6</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">              
+                    <div class="mistica-col-6">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                              </svg>                                    
+                        </div>
+                    </div>
+                    <div class="mistica-col-6">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                              </svg>                                   
+                        </div>
+                    </div>
+                </section>                
+                <h4 class="mistica-text-title1">5 + 4</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">  
+                    <div class="mistica-col-1"></div>            
+                    <div class="mistica-col-5">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                              </svg>                                    
+                        </div>
+                    </div>
+                    <div class="mistica-col-1"></div>
+                    <div class="mistica-col-4">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                              </svg>                                    
+                        </div>
+                    </div>
+                    <div class="mistica-col-1"></div>            
+                </section>               
+                <h4 class="mistica-text-title1">4 + 6</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">      
+                    <div class="mistica-col-1"></div>        
+                    <div class="mistica-col-4">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mistica-col-6">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mistica-col-1"></div>         
+                </section>               
+                <h4 class="mistica-text-title1">8 + 4</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">              
+                    <div class="mistica-col-8">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                            </svg>                                    
+                        </div>
+                    </div>
+                    <div class="mistica-col-4">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </section>               
+                <h4 class="mistica-text-title1">3 + 9</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">              
+                    <div class="mistica-col-3">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                            </svg>                                    
+                        </div>
+                    </div>
+                    <div class="mistica-col-9">
+                        <div style="height: 120px; width: auto; box-sizing: border-box; background: rgba(11, 39, 57, 0.08); border: 2px solid rgba(11, 39, 57, 0.3); position: relative;">
+                            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <use href="#mistica-grid-svg"></use>
+                            </svg>                                    
+                        </div>
+                    </div>
+                </section>                
             </div>
         </div>
         <script type="module" src="/main.js"></script>
     </body>
+
+    <svg style="display: none;">
+        <symbol id="mistica-grid-svg">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke-width: 2; stroke: rgba(11, 39, 57, 0.1);" />
+          <line x1="100" y1="0" x2="0" y2="100" style="stroke-width: 2; stroke: rgba(11, 39, 57, 0.1);" />
+        </symbol>
+    </svg>
 </html>

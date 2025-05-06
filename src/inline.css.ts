@@ -6,25 +6,42 @@ const spaceMobile = createVar();
 const spaceTablet = createVar();
 const spaceDesktop = createVar();
 
-export const vars = {space, spaceMobile, spaceTablet, spaceDesktop};
+const verticalSpace = createVar();
+const verticalSpaceMobile = createVar();
+const verticalSpaceTablet = createVar();
+const verticalSpaceDesktop = createVar();
+
+export const vars = {
+    space,
+    spaceMobile,
+    spaceTablet,
+    spaceDesktop,
+    verticalSpace,
+    verticalSpaceMobile,
+    verticalSpaceTablet,
+    verticalSpaceDesktop,
+};
 
 export const marginInline = style({
-    marginTop: `calc(${space} * -1)`,
+    marginTop: `calc(${verticalSpace} * -1)`,
     marginLeft: `calc(${space} * -1)`,
     '@media': {
         [mq.mobile]: {
             vars: {
                 [space]: spaceMobile,
+                [verticalSpace]: verticalSpaceMobile,
             },
         },
         [mq.tablet]: {
             vars: {
                 [space]: fallbackVar(spaceTablet, spaceMobile),
+                [verticalSpace]: fallbackVar(verticalSpaceTablet, verticalSpaceMobile),
             },
         },
         [mq.desktopOrBigger]: {
             vars: {
                 [space]: spaceDesktop,
+                [verticalSpace]: verticalSpaceDesktop,
             },
         },
     },
@@ -39,7 +56,7 @@ const supportsFlexGap = '(display: flex) and (gap: 0px)';
 export const inline = style({
     pointerEvents: 'none', // to prevent negative margins from affecting clickable areas
     gridAutoFlow: 'column',
-    marginTop: `calc(${space} * -1)`,
+    marginTop: `calc(${fallbackVar(verticalSpace, space)} * -1)`,
     marginLeft: `calc(${space} * -1)`,
     '@supports': {
         [supportsFlexGap]: {
@@ -47,6 +64,7 @@ export const inline = style({
             pointerEvents: 'auto', // restore
             flexDirection: 'row',
             gap: space,
+            rowGap: fallbackVar(verticalSpace, space),
         },
     },
 });
@@ -82,7 +100,7 @@ export const stringSpaceWithWrap = style({
 
 globalStyle(`${marginInline} > div`, {
     marginLeft: space,
-    marginTop: space,
+    marginTop: fallbackVar(verticalSpace, space),
 });
 
 globalStyle(`${inline} > div`, {
