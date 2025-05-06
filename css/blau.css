@@ -103,6 +103,7 @@
     --mistica-color-textLinkSnackbar: var(--mistica-blau-blauPurple30);
     --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
+    --mistica-color-inputBorder: var(--mistica-blau-grey5);
     --mistica-color-control: var(--mistica-blau-grey5);
     --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-controlInverse: var(--mistica-blau-blauBluePrimary30);
@@ -315,6 +316,7 @@
     --mistica-color-textLinkSnackbar: var(--mistica-blau-blauPurple30);
     --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
+    --mistica-color-inputBorder: var(--mistica-blau-grey5);
     --mistica-color-control: var(--mistica-blau-darkModeGrey6);
     --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-controlInverse: var(--mistica-blau-darkModeGrey6);
@@ -475,6 +477,7 @@
         --mistica-color-textLinkSnackbar: var(--mistica-blau-blauPurple30);
         --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
+        --mistica-color-inputBorder: var(--mistica-blau-grey5);
         --mistica-color-control: var(--mistica-blau-darkModeGrey6);
         --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-controlInverse: var(--mistica-blau-darkModeGrey6);
@@ -631,6 +634,7 @@
         --mistica-color-textLinkSnackbar: var(--mistica-blau-blauPurple30);
         --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
+        --mistica-color-inputBorder: var(--mistica-blau-grey5);
         --mistica-color-control: var(--mistica-blau-grey5);
         --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-controlInverse: var(--mistica-blau-blauBluePrimary30);
