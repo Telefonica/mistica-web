@@ -107,13 +107,14 @@ Default.storyName = 'Inline';
 
 type Args = {
     space: React.ComponentProps<typeof Inline>['space'];
+    verticalSpace: React.ComponentProps<typeof Inline>['verticalSpace'];
     numItems: number;
 };
 
-export const Wrap: StoryComponent<Args> = ({space, numItems}) => {
+export const Wrap: StoryComponent<Args> = ({space, verticalSpace, numItems}) => {
     const tagTypes = ['active', 'inactive', 'success', 'warning', 'error', 'promo', 'info'] as const;
     return (
-        <Inline space={space} wrap>
+        <Inline space={space} verticalSpace={verticalSpace} wrap>
             {Array.from({length: numItems}, (_, i) => {
                 const type = tagTypes[i % tagTypes.length];
                 return (
@@ -128,11 +129,16 @@ export const Wrap: StoryComponent<Args> = ({space, numItems}) => {
 
 Wrap.args = {
     space: 8,
+    verticalSpace: 8,
     numItems: 50,
 };
 
 Wrap.argTypes = {
     space: {
+        options: [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64],
+        control: {type: 'select'},
+    },
+    verticalSpace: {
         options: [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64],
         control: {type: 'select'},
     },

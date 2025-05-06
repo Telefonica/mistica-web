@@ -153,7 +153,7 @@ const PinInput = ({
     };
 
     return (
-        <Inline space={8}>
+        <Inline space={8} wrap verticalSpace={16}>
             {Array.from({length}).map((_, index) => (
                 <div
                     key={index}
