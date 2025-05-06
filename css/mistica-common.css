@@ -99,7 +99,7 @@
         --mistica-boxed-border: 1px solid var(--mistica-color-border);
     }
 }
-
+ 
 [data-mistica-color-scheme='dark'][data-mistica-skin] > *,
 [data-mistica-color-scheme='dark'] [data-mistica-variant='default'] > *,
 [data-mistica-color-scheme='dark'] .mistica-card > *,
@@ -449,6 +449,46 @@ label.mistica-chip > input:checked + span {
 
 .mistica-text-link[disabled] {
     opacity: 0.5;
+    text-decoration: none;
+}
+
+/* Breadcrumbs */
+.mistica-breadcrumb ol {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mistica-breadcrumb li {
+    display: inline;
+}
+
+.mistica-breadcrumb a {
+    text-decoration: underline;
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: var(--mistica-font-weight-1);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-breadcrumb li + li::before {
+    display: inline-block;
+    margin: -1px 0.25em;
+    transform: rotate(18deg);
+    border-right: 0.1em solid var(--vcolor-textPrimary);
+    height: 0.8em;
+    content: "";
+  }
+
+.mistica-breadcrumb a:hover {
+    text-decoration-thickness: 0.125rem;
+}
+
+.mistica-breadcrumb li:last-of-type a {
+    pointer-events: none;
+    color: var(--vcolor-textSecondary);
+    padding-right: 0;
     text-decoration: none;
 }
 
