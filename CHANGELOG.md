@@ -1,3 +1,12 @@
+# [16.24.0](https://github.com/Telefonica/mistica-web/compare/v16.23.0...v16.24.0) (2025-05-06)
+
+
+### Features
+
+* **Accordion, List, Select:** Chevron normalization ([#1345](https://github.com/Telefonica/mistica-web/issues/1345)) ([c24ed06](https://github.com/Telefonica/mistica-web/commit/c24ed066d8e8aa5c6658700ee30d18a040945db3))
+* **InputFields & Counter:** use inputBorder token in border ([#1337](https://github.com/Telefonica/mistica-web/issues/1337)) ([c8538a2](https://github.com/Telefonica/mistica-web/commit/c8538a2ea30e2bc8d12f677178901925d7d99585))
+* **TextLink:** add underline to textLink ([#1343](https://github.com/Telefonica/mistica-web/issues/1343)) ([b90ad61](https://github.com/Telefonica/mistica-web/commit/b90ad6189e60c22c01b3ec38abce2196e13f8fb8))
+
 # [16.23.0](https://github.com/Telefonica/mistica-web/compare/v16.22.0...v16.23.0) (2025-05-06)
 
 
