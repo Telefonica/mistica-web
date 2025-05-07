@@ -296,7 +296,7 @@ export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetP
         <Text
             {...getTextSizes({forceMobileSizes, ...textProps.text10})}
             weight={textPresets.text10.weight}
-            dataAttributes={{'component-name': 'Text10', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text10', testid: 'Text10', ...dataAttributes}}
             {...props}
         />
     );
@@ -308,7 +308,7 @@ export const Text9 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
         <Text
             {...getTextSizes({forceMobileSizes, ...textProps.text9})}
             weight={textPresets.text9.weight}
-            dataAttributes={{'component-name': 'Text9', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text9', testid: 'Text9', ...dataAttributes}}
             {...props}
         />
     );
@@ -320,7 +320,7 @@ export const Text8 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
         <Text
             {...getTextSizes({forceMobileSizes, ...textProps.text8})}
             weight={textPresets.text8.weight}
-            dataAttributes={{'component-name': 'Text8', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text8', testid: 'Text8', ...dataAttributes}}
             {...props}
         />
     );
@@ -332,7 +332,7 @@ export const Text7 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
         <Text
             {...getTextSizes({forceMobileSizes, ...textProps.text7})}
             weight={textPresets.text7.weight}
-            dataAttributes={{'component-name': 'Text7', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text7', testid: 'Text7', ...dataAttributes}}
             {...props}
         />
     );
@@ -344,7 +344,7 @@ export const Text6 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
         <Text
             {...getTextSizes({forceMobileSizes, ...textProps.text6})}
             weight={textPresets.text6.weight}
-            dataAttributes={{'component-name': 'Text6', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text6', testid: 'Text6', ...dataAttributes}}
             {...props}
         />
     );
@@ -356,7 +356,7 @@ export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
         <Text
             {...getTextSizes({forceMobileSizes, ...textProps.text5})}
             weight={textPresets.text5.weight}
-            dataAttributes={{'component-name': 'Text5', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text5', testid: 'Text5', ...dataAttributes}}
             {...props}
         />
     );
@@ -366,7 +366,7 @@ export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegular
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text4})}
         weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text4', ...dataAttributes}}
+        dataAttributes={{'component-name': 'Text4', testid: 'Text4', ...dataAttributes}}
         {...props}
     />
 );
@@ -375,7 +375,7 @@ export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegular
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text3})}
         weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text3', ...dataAttributes}}
+        dataAttributes={{'component-name': 'Text3', testid: 'Text3', ...dataAttributes}}
         {...props}
     />
 );
@@ -384,7 +384,7 @@ export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text2})}
         weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text2', ...dataAttributes}}
+        dataAttributes={{'component-name': 'Text2', testid: 'Text2', ...dataAttributes}}
         {...props}
     />
 );
@@ -393,7 +393,7 @@ export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text1})}
         weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text1', ...dataAttributes}}
+        dataAttributes={{'component-name': 'Text1', testid: 'Text1', ...dataAttributes}}
         {...props}
     />
 );
