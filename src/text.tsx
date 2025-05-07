@@ -201,7 +201,7 @@ export const Text = ({
             'aria-label': ariaLabel,
             'aria-hidden': ariaHidden,
             'aria-live': ariaLive,
-            ...getPrefixedDataAttributes(dataAttributes, dataAttributes?.testid ?? 'Text'),
+            ...getPrefixedDataAttributes(dataAttributes, 'Text'),
             style: {
                 ...sizeVars,
                 ...textVars,
