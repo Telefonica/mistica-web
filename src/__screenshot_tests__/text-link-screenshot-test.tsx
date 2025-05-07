@@ -69,3 +69,57 @@ test('TextLink - inherits text style', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('TextLink - underline on hover', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {underline: 'on hover'},
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - underline on hover - inverse', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {inverse: true, underline: 'on hover'},
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - underline on hover - dark mode', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {underline: 'on hover'},
+        isDarkMode: true,
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - underline on hover - inverse - dark mode', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {inverse: true, underline: 'on hover'},
+        isDarkMode: true,
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

@@ -14,7 +14,7 @@ import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
-import IconChevron from './icons/icon-chevron';
+import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
@@ -239,9 +239,9 @@ export const Content = ({
                             className={classNames(styles.center, {[styles.disabled]: disabled})}
                             data-testid="chevron"
                         >
-                            <IconChevron
+                            <IconChevronRightFilled
+                                size={16}
                                 color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                                direction="right"
                             />
                         </div>
                     )}

@@ -61,7 +61,7 @@ const commonInputStyles = style([
     }),
     {
         background: 'none',
-        outline: 0,
+        borderRadius: `calc(${vars.borderRadii.input} - 1px)`,
         lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
