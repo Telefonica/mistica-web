@@ -107,6 +107,7 @@
     --mistica-color-textLinkSnackbar: var(--mistica-tu-white);
     --mistica-color-textActivated: var(--mistica-tu-primary);
     --mistica-color-textBrand: var(--mistica-tu-blue);
+    --mistica-color-inputBorder: var(--mistica-tu-grey5);
     --mistica-color-control: var(--mistica-tu-grey5);
     --mistica-color-controlActivated: var(--mistica-tu-primary);
     --mistica-color-controlInverse: var(--mistica-tu-white);
@@ -319,6 +320,7 @@
     --mistica-color-textLinkSnackbar: var(--mistica-tu-blue30);
     --mistica-color-textActivated: var(--mistica-tu-blue30);
     --mistica-color-textBrand: var(--mistica-tu-blue30);
+    --mistica-color-inputBorder: var(--mistica-tu-grey5);
     --mistica-color-control: var(--mistica-tu-darkModeGrey6);
     --mistica-color-controlActivated: var(--mistica-tu-blue30);
     --mistica-color-controlInverse: var(--mistica-tu-darkModeGrey6);
@@ -348,8 +350,8 @@
     --mistica-color-neutralLowAlternative: var(--mistica-tu-darkModeGrey6);
     --mistica-color-textPrimary: var(--mistica-tu-grey2);
     --mistica-color-textPrimaryInverse: var(--mistica-tu-grey2);
-    --mistica-color-textSecondary: var(--mistica-tu-grey4);
-    --mistica-color-textSecondaryInverse: var(--mistica-tu-grey4);
+    --mistica-color-textSecondary: var(--mistica-tu-grey3);
+    --mistica-color-textSecondaryInverse: var(--mistica-tu-grey3);
     --mistica-color-error: var(--mistica-tu-red);
     --mistica-color-textError: var(--mistica-tu-red);
     --mistica-color-textErrorInverse: var(--mistica-tu-red);
@@ -476,6 +478,7 @@
         --mistica-color-textLinkSnackbar: var(--mistica-tu-blue30);
         --mistica-color-textActivated: var(--mistica-tu-blue30);
         --mistica-color-textBrand: var(--mistica-tu-blue30);
+        --mistica-color-inputBorder: var(--mistica-tu-grey5);
         --mistica-color-control: var(--mistica-tu-darkModeGrey6);
         --mistica-color-controlActivated: var(--mistica-tu-blue30);
         --mistica-color-controlInverse: var(--mistica-tu-darkModeGrey6);
@@ -505,8 +508,8 @@
         --mistica-color-neutralLowAlternative: var(--mistica-tu-darkModeGrey6);
         --mistica-color-textPrimary: var(--mistica-tu-grey2);
         --mistica-color-textPrimaryInverse: var(--mistica-tu-grey2);
-        --mistica-color-textSecondary: var(--mistica-tu-grey4);
-        --mistica-color-textSecondaryInverse: var(--mistica-tu-grey4);
+        --mistica-color-textSecondary: var(--mistica-tu-grey3);
+        --mistica-color-textSecondaryInverse: var(--mistica-tu-grey3);
         --mistica-color-error: var(--mistica-tu-red);
         --mistica-color-textError: var(--mistica-tu-red);
         --mistica-color-textErrorInverse: var(--mistica-tu-red);
@@ -632,6 +635,7 @@
         --mistica-color-textLinkSnackbar: var(--mistica-tu-white);
         --mistica-color-textActivated: var(--mistica-tu-primary);
         --mistica-color-textBrand: var(--mistica-tu-blue);
+        --mistica-color-inputBorder: var(--mistica-tu-grey5);
         --mistica-color-control: var(--mistica-tu-grey5);
         --mistica-color-controlActivated: var(--mistica-tu-primary);
         --mistica-color-controlInverse: var(--mistica-tu-white);

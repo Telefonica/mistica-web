@@ -1,3 +1,24 @@
+# [16.24.0](https://github.com/Telefonica/mistica-web/compare/v16.23.0...v16.24.0) (2025-05-06)
+
+
+### Features
+
+* **Accordion, List, Select:** Chevron normalization ([#1345](https://github.com/Telefonica/mistica-web/issues/1345)) ([c24ed06](https://github.com/Telefonica/mistica-web/commit/c24ed066d8e8aa5c6658700ee30d18a040945db3))
+* **InputFields & Counter:** use inputBorder token in border ([#1337](https://github.com/Telefonica/mistica-web/issues/1337)) ([c8538a2](https://github.com/Telefonica/mistica-web/commit/c8538a2ea30e2bc8d12f677178901925d7d99585))
+* **TextLink:** add underline to textLink ([#1343](https://github.com/Telefonica/mistica-web/issues/1343)) ([b90ad61](https://github.com/Telefonica/mistica-web/commit/b90ad6189e60c22c01b3ec38abce2196e13f8fb8))
+
+# [16.23.0](https://github.com/Telefonica/mistica-web/compare/v16.22.0...v16.23.0) (2025-05-06)
+
+
+### Features
+
+* **mistica-css:** breadcrumbs ([#1349](https://github.com/Telefonica/mistica-web/issues/1349)) ([eeb36b2](https://github.com/Telefonica/mistica-web/commit/eeb36b25559c651351685e7b9a71c8006e0195da))
+* **mistica-css:** card asset ([#1351](https://github.com/Telefonica/mistica-web/issues/1351)) ([45c275f](https://github.com/Telefonica/mistica-web/commit/45c275fa4c67cf1af172e081369b6e363ba78ffb))
+* **mistica-css:** GridLayout ([#1355](https://github.com/Telefonica/mistica-web/issues/1355)) ([da0a953](https://github.com/Telefonica/mistica-web/commit/da0a95355b6974b0b880cc6d53db0bab6287a790))
+* **mistica-css:** Table implementation ([#1352](https://github.com/Telefonica/mistica-web/issues/1352)) ([d26129e](https://github.com/Telefonica/mistica-web/commit/d26129e7ac73f8eed7088adf28e2a87a3d33fd47))
+* **PinField:** wrap to next line when digits don't fit in viewport ([#1359](https://github.com/Telefonica/mistica-web/issues/1359)) ([13e13ed](https://github.com/Telefonica/mistica-web/commit/13e13ed49e5a14c2fcb241c1037f3558c7d0132e))
+* **TextField:** make field error aria-live ([#1348](https://github.com/Telefonica/mistica-web/issues/1348)) ([1c45c55](https://github.com/Telefonica/mistica-web/commit/1c45c552eeb361fc326f034864700491f4143326))
+
 # [16.22.0](https://github.com/Telefonica/mistica-web/compare/v16.21.0...v16.22.0) (2025-04-29)
 
 

@@ -69,8 +69,7 @@ const selectContainerBase = style([
         cursor: 'pointer',
     }),
     {
-        outline: 0,
-
+        borderRadius: `calc(${skinVars.borderRadii.input} - 1px)`,
         '@media': {
             [mq.tabletOrSmaller]: {
                 width: '100%',

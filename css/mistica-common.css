@@ -452,6 +452,46 @@ label.mistica-chip > input:checked + span {
     text-decoration: none;
 }
 
+/* Breadcrumbs */
+.mistica-breadcrumb ol {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mistica-breadcrumb li {
+    display: inline;
+}
+
+.mistica-breadcrumb a {
+    text-decoration: underline;
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: var(--mistica-font-weight-1);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-breadcrumb li + li::before {
+    display: inline-block;
+    margin: -1px 0.25em;
+    transform: rotate(18deg);
+    border-right: 0.1em solid var(--vcolor-textPrimary);
+    height: 0.8em;
+    content: '';
+}
+
+.mistica-breadcrumb a:hover {
+    text-decoration-thickness: 0.125rem;
+}
+
+.mistica-breadcrumb li:last-of-type a {
+    pointer-events: none;
+    color: var(--vcolor-textSecondary);
+    padding-right: 0;
+    text-decoration: none;
+}
+
 /* Buttons */
 [class^='mistica-button'] {
     --button-font-size: var(--mistica-font-size-3);
@@ -691,6 +731,7 @@ button.mistica-small-naked-card:active > .mistica-card__media {
 
 .mistica-naked-card,
 .mistica-small-naked-card {
+    position: relative;
     padding-right: 16px;
 }
 
@@ -942,57 +983,57 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 /* Grid Layout */
 
 .mistica-grid-layout {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
 }
 
 @media (max-width: 1023px) {
-  .mistica-grid-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
+    .mistica-grid-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
 
-  .mistica-grid-layout [class^="mistica-col-"] {
-    grid-column: span 1;
-  }
+    .mistica-grid-layout [class^='mistica-col-'] {
+        grid-column: span 1;
+    }
 
-  .mistica-col-1 {
-    display: none;
-  }
+    .mistica-col-1 {
+        display: none;
+    }
 }
 
 @media (min-width: 1024px) and (max-width: 1367px) {
     .mistica-grid-layout {
-      grid-column-gap: 16px;
-    }  
+        grid-column-gap: 16px;
+    }
 }
 
 .mistica-col-1 {
     grid-column: span 1;
-  }
+}
 
 .mistica-col-3 {
-  grid-column: span 3;
+    grid-column: span 3;
 }
 
 .mistica-col-4 {
-  grid-column: span 4;
+    grid-column: span 4;
 }
 
 .mistica-col-5 {
-  grid-column: span 5;
+    grid-column: span 5;
 }
 
 .mistica-col-6 {
-  grid-column: span 6;
+    grid-column: span 6;
 }
 
 .mistica-col-8 {
-  grid-column: span 8;
+    grid-column: span 8;
 }
 
 .mistica-col-9 {
-  grid-column: span 9;
+    grid-column: span 9;
 }
 
 /* Table */
@@ -1088,5 +1129,38 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         position: absolute;
         top: -9999px;
         left: -9999px;
+    }
+}
+
+.mistica-card__asset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.mistica-card__asset-floating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+.mistica-card__asset-floating img,
+.mistica-card__asset img {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card__asset-floating {
+        margin-left: 24px;
+        margin-top: 24px;
     }
 }

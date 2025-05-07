@@ -18,8 +18,7 @@ export const disabled = style({
 
 const fieldCommonStyles = style([
     sprinkles({
-        overflow: 'hidden',
-        border: 'regular',
+        border: 'input',
         display: 'flex',
         borderRadius: vars.borderRadii.input,
         position: 'relative',

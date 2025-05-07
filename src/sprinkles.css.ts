@@ -64,6 +64,7 @@ const commonProperties = defineProperties({
         border: {
             regular: `1px solid ${vars.colors.border}`,
             none: 'none',
+            input: `1px solid ${vars.colors.inputBorder}`,
         },
         borderRadius: ['50%', 2, 4, 8, 16, 20, ...Object.values(vars.borderRadii)],
         cursor: ['pointer'],
