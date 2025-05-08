@@ -53,7 +53,7 @@ const startStorybook = () => {
         storybookServer.listen(port, () => {
             console.log(`Serving static storybook at: http://localhost:${port}`);
             resolve({
-                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}&skin=Blau`,
                 closeStorybook: () => {
                     console.log('Stopping static storybook server');
                     storybookServer.close();
@@ -81,7 +81,6 @@ const audit = async (browser, url, disabledRules = []) => {
             // ignored because we use invented autocomplete values to workaround related chrome issues
             'autocomplete-valid',
             // ignored because disabled input fields have a low contrast by design spec
-            'color-contrast',
             // https://jira.tid.es/browse/WEB-612
             'scrollable-region-focusable',
             // https://jira.tid.es/browse/WEB-616
