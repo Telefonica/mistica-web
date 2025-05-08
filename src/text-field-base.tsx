@@ -350,6 +350,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
                     {prefix && (
                         <div
+                            aria-hidden
                             className={classNames(
                                 styles.prefix,
                                 hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
