@@ -959,6 +959,58 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
   .mistica-col-1 {
     display: none;
   }
+
+  .mistica-vertical-spacing-0 {
+    gap: 0;
+  }
+
+  .mistica-vertical-spacing-2 {
+    gap: 2px;
+  }
+
+  .mistica-vertical-spacing-8 {
+    gap: 8px;
+  }
+
+  .mistica-vertical-spacing-12 {
+    gap: 12px;
+  }
+
+  .mistica-vertical-spacing-16 {
+    gap: 16px;
+  }
+
+  .mistica-vertical-spacing-24 {
+    gap: 24px;
+  }
+
+  .mistica-vertical-spacing-32 {
+    gap: 32px;
+  }
+
+  .mistica-vertical-spacing-40 {
+    gap: 40px;
+  }
+
+  .mistica-vertical-spacing-48 {
+    gap: 48px;
+  }
+  
+  .mistica-vertical-spacing-56 {
+    gap: 56px;
+  }
+
+  .mistica-vertical-spacing-64 {
+    gap: 64px;
+  }
+
+  .mistica-vertical-spacing-72 {
+    gap: 72px;
+  }
+
+  .mistica-vertical-spacing-80 {
+    gap: 80px;
+  }
 }
 
 @media (min-width: 1024px) and (max-width: 1367px) {
