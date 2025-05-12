@@ -73,6 +73,7 @@ const colors: Colors = {
     controlKnobInverse: '',
     iosControlKnob: '',
     completedStep: '',
+    completedStepInverse: '',
 
     // DIVIDERS
     divider: '',
