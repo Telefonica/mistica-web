@@ -27,6 +27,7 @@ interface CommonProps {
     dataAttributes?: DataAttributes;
     /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
+    underline?: 'always' | 'on hover';
 }
 
 export type TextLinkProps = AlwaysTouchableComponentProps & CommonProps;
@@ -37,12 +38,16 @@ const TextLink = ({
     disabled,
     style,
     trackEvent,
+    underline = 'always',
     ...props
 }: TextLinkProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const {isDarkMode} = useTheme();
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();
+
+    const underlineStyle =
+        underline === 'always' ? styles.linkStyles.underlineAlways : styles.linkStyles.underlineOnHover;
 
     const createDefaultTrackingEvent = (): TrackingEvent => {
         if (eventFormat === 'google-analytics-4') {
@@ -73,6 +78,7 @@ const TextLink = ({
                         ? styles.variants.inverseDark
                         : styles.variants.inverseLight
                     : styles.variants.default,
+                underlineStyle,
                 className
             )}
             style={style}

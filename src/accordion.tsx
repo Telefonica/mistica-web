@@ -180,7 +180,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                     {right}
                                     <div className={styles.chevronContainer}>
                                         <IconChevron
-                                            size={24}
+                                            size={20}
                                             transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
                                             direction={isOpen ? 'up' : 'down'}
                                             color={

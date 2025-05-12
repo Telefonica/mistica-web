@@ -12,6 +12,7 @@ import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
 import * as tokens from './text-tokens';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -152,7 +153,7 @@ const PinInput = ({
     };
 
     return (
-        <Inline space={8}>
+        <Inline space={8} wrap verticalSpace={16}>
             {Array.from({length}).map((_, index) => (
                 <div
                     key={index}
@@ -198,11 +199,10 @@ const PinInput = ({
                          * style than other inputs (less margin, fontSize and height).
                          */
                         style={{
-                            marginTop: `calc(${styles.pinInputLineHeight} - 1px)`,
-                            marginBottom: `calc(${styles.pinInputLineHeight} - 1px)`,
                             lineHeight: styles.pinInputLineHeight,
                             fontSize: styles.pinInputLineHeight,
-                            height: styles.pinInputLineHeight,
+                            height: `calc(${styles.pinInputLineHeight} * 3 - 2px)`,
+                            borderRadius: vars.borderRadii.input,
                         }}
                         disabled={disabled}
                         readOnly={readOnly}

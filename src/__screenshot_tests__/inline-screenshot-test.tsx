@@ -32,6 +32,13 @@ test('Inline wrap', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Inline wrap vertical space', async () => {
+    const page = await openStoryPage({id: 'layout-inline--wrap', args: {verticalSpace: 16}});
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 // This test is unstable (https://jira.tid.es/browse/WEB-1648)
 // eslint-disable-next-line jest/no-disabled-tests
 test.skip('Inline negative space', async () => {

@@ -170,8 +170,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const borderRadiusStyle = props.circular
             ? styles.circularBorderRadius
             : noBorderRadius
-              ? styles.noBorderRadius
-              : styles.defaultBorderRadius;
+              ? styles.withoutBorderRadius
+              : noBorderRadius === false // explicitly set to false, so we set border radius
+                ? styles.withBorderRadius
+                : styles.defaultBorderRadius; // === undefined, use the default border radius (or the setting set by parent component, like cards or slideshow)
 
         const [isError, setIsError] = React.useState(!src);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);

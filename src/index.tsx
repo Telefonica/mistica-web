@@ -592,12 +592,16 @@ export {default as IconCheckRegular} from './generated/mistica-icons/icon-check-
 export {default as IconChemistryFilled} from './generated/mistica-icons/icon-chemistry-filled';
 export {default as IconChemistryLight} from './generated/mistica-icons/icon-chemistry-light';
 export {default as IconChemistryRegular} from './generated/mistica-icons/icon-chemistry-regular';
+export {default as IconChevronDownFilled} from './generated/mistica-icons/icon-chevron-down-filled';
 export {default as IconChevronDownLight} from './generated/mistica-icons/icon-chevron-down-light';
 export {default as IconChevronDownRegular} from './generated/mistica-icons/icon-chevron-down-regular';
+export {default as IconChevronLeftFilled} from './generated/mistica-icons/icon-chevron-left-filled';
 export {default as IconChevronLeftLight} from './generated/mistica-icons/icon-chevron-left-light';
 export {default as IconChevronLeftRegular} from './generated/mistica-icons/icon-chevron-left-regular';
+export {default as IconChevronRightFilled} from './generated/mistica-icons/icon-chevron-right-filled';
 export {default as IconChevronRightLight} from './generated/mistica-icons/icon-chevron-right-light';
 export {default as IconChevronRightRegular} from './generated/mistica-icons/icon-chevron-right-regular';
+export {default as IconChevronUpFilled} from './generated/mistica-icons/icon-chevron-up-filled';
 export {default as IconChevronUpLight} from './generated/mistica-icons/icon-chevron-up-light';
 export {default as IconChevronUpRegular} from './generated/mistica-icons/icon-chevron-up-regular';
 export {default as IconChildFilled} from './generated/mistica-icons/icon-child-filled';
