@@ -61,6 +61,7 @@ export type Colors = {
     textActivated: string;
     textBrand: string;
     inputBorder: string;
+    completedStep: string;
     control: string;
     controlActivated: string;
     controlInverse: string;
