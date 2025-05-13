@@ -1242,3 +1242,105 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-checkbox-label:has(.mistica-checkbox:disabled) > .mistica-checkbox {
     opacity: initial; /* avoid applying 0.5 opacity twice */
 }
+
+/* TextField */
+.mistica-text-field {
+    --border-width: 1px;
+    --vertical-padding: calc(8px - var(--border-width));
+    --gap: 12px;
+    --right-padding: calc(16px - var(--border-width));
+    --shrinked-label-line-height: 1.25rem;
+    --label-scale: 1;
+    --icon-size: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--mistica-border-radius-input);
+    border: var(--border-width) solid var(--mistica-color-inputBorder);
+    width: 328px;
+    background: var(--mistica-color-backgroundContainer);
+    color: var(--mistica-color-textPrimary);
+}
+
+@media (max-width: 1023px) {
+    .mistica-text-field {
+        --shrinked-label-line-height: 1rem;
+        width: 100%;
+    }
+}
+
+.mistica-text-field > * {
+    --start-icon-size: 0px;
+    --left-padding: calc(12px - var(--border-width) + var(--start-icon-size));
+}
+
+.mistica-text-field .mistica-text-field__start-icon ~ * {
+    --start-icon-size: calc(var(--icon-size) + var(--gap));
+}
+
+.mistica-text-field__start-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: absolute;
+    top: calc(50% - var(--icon-size) / 2);
+    left: 12px;
+    color: var(--mistica-color-neutralHigh);
+    margin-right: var(--gap);
+    pointer-events: none;
+}
+
+.mistica-text-field > label {
+    position: absolute;
+    left: var(--left-padding);
+    top: var(--vertical-padding);
+    pointer-events: none;
+    transform-origin: 0 0;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    width: calc(100% - var(--left-padding) - var(--right-padding));
+    transform: translateY(calc(var(--shrinked-label-line-height) / 2));
+    transition: transform 150ms;
+    color: var(--mistica-color-textSecondary);
+}
+
+.mistica-text-field:focus-within > label,
+.mistica-text-field > input:not(:placeholder-shown) + label {
+    --label-scale: 0.75;
+    transform: translateY(0) scale(var(--label-scale));
+    line-height: calc(var(--shrinked-label-line-height) / var(--label-scale));
+    width: calc(100% - var(--left-padding) - var(--right-padding)) / var(--label-scale);
+    color: var(--mistica-color-textActivated);
+}
+
+.mistica-text-field > input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    padding: calc(var(--vertical-padding) + var(--shrinked-label-line-height)) var(--right-padding)
+        var(--vertical-padding) var(--left-padding);
+    caret-color: var(--mistica-color-textActivated);
+    color: inherit;
+    border-radius: calc(var(--mistica-border-radius-input) - var(--border-width));
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+}
+
+.mistica-text-field > input::placeholder {
+    opacity: 0;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.mistica-text-field > input:focus::placeholder {
+    opacity: 0.5;
+}
+
+.mistica-text-field > input::-webkit-search-cancel-button {
+    appearance: none;
+}
+.mistica-text-field > input::-webkit-search-decoration {
+    appearance: none;
+}

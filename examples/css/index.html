@@ -9,7 +9,7 @@
     </head>
     <body data-mistica-skin="movistar" data-mistica-color-scheme="light">
         <div id="app" class="mistica-responsive-layout">
-            <h1 class="mistica-text-title4">Hello mistica css</h1>
+            <h1 class="mistica-text-title4">Mistica css</h1>
 
             <div class="controls">
                 <div>
@@ -46,7 +46,7 @@
                 <h2 class="mistica-text-title3">Components</h2>
 
                 <h3 class="mistica-text-title2">Texts / Titles</h3>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <div>
                         <p class="mistica-text-1">Text 1</p>
                         <p class="mistica-text-2">Text 2</p>
@@ -81,6 +81,30 @@
                     <div class="mistica-tag-success">Success</div>
                     <div class="mistica-tag-warning">Warning</div>
                     <div class="mistica-tag-error">Error</div>
+                </div>
+
+                <h3 class="mistica-text-title2">TextFields</h3>
+                <h4 class="mistica-text-title1">TextField</h4>
+                <div class="vertical-group">
+                    <div class="mistica-text-field">
+                        <input id="text-field-1" type="text" placeholder=" " />
+                        <label for="text-field-1">Label</label>
+                    </div>
+                    <div class="mistica-text-field">
+                        <input id="text-field-1" type="text" placeholder="Some placeholder" />
+                        <label for="text-field-1">Label</label>
+                    </div>
+                </div>
+                <h4 class="mistica-text-title1">SearchField</h4>
+                <div class="mistica-text-field">
+                    <svg class="mistica-text-field__start-icon" viewBox="0 0 24 24" aria-hidden>
+                        <path
+                            fill="currentColor"
+                            d="M10.021 17.83A7.846 7.846 0 0 1 4.472 4.435a7.848 7.848 0 0 1 11.473 10.677l5.704 5.704a.561.561 0 0 1-.793.793l-5.697-5.697a7.8 7.8 0 0 1-5.138 1.918m0-14.571A6.726 6.726 0 0 0 5.265 14.74a6.73 6.73 0 0 0 9.513-.036 6.724 6.724 0 0 0 0-9.473 6.67 6.67 0 0 0-4.757-1.972"
+                        />
+                    </svg>
+                    <input id="search-field-1" type="search" placeholder=" " />
+                    <label for="search-field-1">Search</label>
                 </div>
 
                 <h3 class="mistica-text-title2">Checkbox</h3>
@@ -209,36 +233,32 @@
                 </div>
 
                 <h3 class="mistica-text-title2">Breadcrumbs</h3>
-                <div class="cards-group">
-                    <nav class="mistica-breadcrumb">
-                        <ol>
-                            <li>
-                                <a href="/">Home</a>
-                            </li>
-                            <li>
-                                <a href="/">Section</a>
-                            </li>
-                            <li>
-                                <a aria-current="page" href="">Subsection</a>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="cards-group">
-                    <nav class="mistica-breadcrumb">
-                        <ol>
-                            <li>
-                                <a href="/">This is a long link in the breadcrumbs</a>
-                            </li>
-                            <li>
-                                <a href="/">This is a long link in the breadcrumbs</a>
-                            </li>
-                            <li>
-                                <a aria-current="page" href="">Subsection</a>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <nav class="mistica-breadcrumb">
+                    <ol>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/">Section</a>
+                        </li>
+                        <li>
+                            <a aria-current="page" href="">Subsection</a>
+                        </li>
+                    </ol>
+                </nav>
+                <nav class="mistica-breadcrumb">
+                    <ol>
+                        <li>
+                            <a href="/">This is a long link in the breadcrumbs</a>
+                        </li>
+                        <li>
+                            <a href="/">This is a long link in the breadcrumbs</a>
+                        </li>
+                        <li>
+                            <a aria-current="page" href="">Subsection</a>
+                        </li>
+                    </ol>
+                </nav>
 
                 <h3 class="mistica-text-title2">Buttons</h3>
                 <div>
@@ -448,7 +468,7 @@
 
                 <h3 class="mistica-text-title2">Cards</h3>
                 <h4 class="mistica-text-title1">MediaCard / DataCard / SnapCard</h4>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <section class="mistica-card">
                         <div
                             class="mistica-card__asset-floating"
@@ -533,7 +553,7 @@
                         <p class="mistica-card__description">Description</p>
                     </section>
                 </div>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <a href="#" class="mistica-card">
                         <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
                         <div class="mistica-tag-promo">Headline</div>
@@ -556,7 +576,7 @@
                     </a>
                 </div>
                 <h4 class="mistica-text-title1">NakedCard / SmallNakedCard</h4>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <section class="mistica-naked-card">
                         <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
                         <div class="mistica-tag-promo">Headline</div>
@@ -588,7 +608,7 @@
                         <p class="mistica-card__description">Description</p>
                     </section>
                 </div>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <a href="#" class="mistica-naked-card">
                         <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
                         <div class="mistica-tag-promo">Headline</div>
@@ -606,7 +626,7 @@
                 </div>
 
                 <h4 class="mistica-text-title1">DisplayMediaCard / DisplayDataCard</h4>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <div class="mistica-aspect-ratio" style="--aspect-ratio: 16 / 9">
                         <section class="mistica-display-card">
                             <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
@@ -657,7 +677,7 @@
                         </section>
                     </div>
                 </div>
-                <div class="cards-group">
+                <div class="horizontal-group">
                     <div class="mistica-aspect-ratio" style="--aspect-ratio: 16 / 9">
                         <a href="#" class="mistica-display-card">
                             <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
