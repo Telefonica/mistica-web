@@ -106,6 +106,8 @@
     --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-inputBorder: var(--mistica-telefonica-grey4);
+    --mistica-color-completedStep: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-completedStepInverse: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-control: var(--mistica-telefonica-grey3);
     --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-controlInverse: var(--mistica-telefonica-grey1);
@@ -319,6 +321,8 @@
     --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
+    --mistica-color-completedStep: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-completedStepInverse: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-control: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-controlInverse: var(--mistica-telefonica-darkModeGrey6);
@@ -486,6 +490,8 @@
         --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
+        --mistica-color-completedStep: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-completedStepInverse: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-control: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-controlInverse: var(--mistica-telefonica-darkModeGrey6);
@@ -652,6 +658,8 @@
         --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-inputBorder: var(--mistica-telefonica-grey4);
+        --mistica-color-completedStep: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-completedStepInverse: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-control: var(--mistica-telefonica-grey3);
         --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-controlInverse: var(--mistica-telefonica-grey1);
