@@ -998,7 +998,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     grid-column: span 1;
   }
 
-  .mistica-col-1 {
+  .mistica-grid-col-1 {
     display: none;
   }
 
