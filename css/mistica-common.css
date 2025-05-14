@@ -1324,6 +1324,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 @media (max-width: 1023px) {
     .mistica-feedback-screen {
+        /* Space for fixed buttons */
         padding-bottom: 142px;
     }
 }
