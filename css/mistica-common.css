@@ -1298,8 +1298,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     line-height: var(--mistica-line-height-3);
     width: calc(100% - var(--left-padding) - var(--right-padding));
     transform: translateY(calc(var(--shrinked-label-line-height) / 2));
-    transition: transform 150ms;
+    transition:
+        transform 150ms,
+        width 150ms;
     color: var(--mistica-color-textSecondary);
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
 }
 
 .mistica-text-field:focus-within > label,
@@ -1307,7 +1311,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     --label-scale: 0.75;
     transform: translateY(0) scale(var(--label-scale));
     line-height: calc(var(--shrinked-label-line-height) / var(--label-scale));
-    width: calc(100% - var(--left-padding) - var(--right-padding)) / var(--label-scale);
+    width: calc((100% - var(--left-padding) - var(--right-padding)) / var(--label-scale));
     color: var(--mistica-color-textActivated);
 }
 
