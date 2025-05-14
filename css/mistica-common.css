@@ -1270,58 +1270,30 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 /* FeedbackScreen */
 
-/*
-const shake = keyframes({
-    '10%, 90%': {
-        transform: 'translate(3px, 0)',
-    },
-    '20%, 80%': {
-        transform: 'translate(6px, 0)',
-    },
-
-    '30%, 50%, 70%': {
-        transform: 'translate(0px, 0)',
-    },
-
-    '40%, 60%': {
-        transform: 'translate(8px, 0)',
-    },
-});
-
-export const outerAnimation = style({
-    animation: `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`,
-    animationDelay: '0.84s',
-});
-export const innerAnimation = style({
-    animation: `${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both`,
-    animationDelay: '0.8s',
-});
-*/
-
 @keyframes mistica-animation-shake {
     10%,
     90% {
-        transform: translate(3px, 0);
+        transform: translateX(3px);
     }
     20%,
     80% {
-        transform: translate(6px, 0);
+        transform: translateX(6px);
     }
     30%,
     50%,
     70% {
-        transform: translate(0px, 0);
+        transform: translateX(0);
     }
     40%,
     60% {
-        transform: translate(8px, 0);
+        transform: translateX(8px);
     }
 }
 
 @keyframes mistica-animation-text-appear {
     0% {
         opacity: 0;
-        transform: translateY(var(--text-appear-animation-distance));
+        transform: translateY(var(--text-appear-distance));
     }
     100% {
         opacity: 1;
@@ -1331,13 +1303,13 @@ export const innerAnimation = style({
 
 .mistica-feedback-screen {
     --text-animation: mistica-animation-text-appear 1s both cubic-bezier(0.215, 0.61, 0.355, 1);
-    --text-appear-animation-distance: 16px;
+    --text-appear-distance: 16px;
     padding: 64px 0 16px;
 }
 
 @media (min-width: 1024px) {
     .mistica-feedback-screen {
-        --text-appear-animation-distance: 40px;
+        --text-appear-distance: 40px;
         margin-top: 64px;
         border-radius: var(--mistica-border-radius-legacyDisplay);
         border: var(--mistica-boxed-border);
@@ -1357,19 +1329,19 @@ export const innerAnimation = style({
 }
 
 .mistica-feedback-screen__asset {
-    --mistica-animation-shake: mistica-animation-shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    --asset-animation: mistica-animation-shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     width: 48px;
     height: 48px;
     margin-bottom: 24px;
 }
 
 .mistica-feedback-screen__asset-error-inside {
-    animation: var(--mistica-animation-shake);
+    animation: var(--asset-animation);
     animation-delay: 0.8s;
 }
 
 .mistica-feedback-screen__asset-error-outside {
-    animation: var(--mistica-animation-shake);
+    animation: var(--asset-animation);
     animation-delay: 0.84s;
 }
 
@@ -1423,7 +1395,7 @@ export const innerAnimation = style({
     }
 }
 
-@media (max-width: 1023px) and (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
     .mistica-fixed-footer-buttons {
         padding: 32px 24px;
     }
