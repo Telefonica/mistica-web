@@ -1267,3 +1267,78 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-checkbox-label:has(.mistica-checkbox:disabled) > .mistica-checkbox {
     opacity: initial; /* avoid applying 0.5 opacity twice */
 }
+
+/* Counter */
+
+.mistica-counter {
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-backgroundContainer);
+    display: inline-flex;
+    gap: 8px;
+    overflow: hidden;
+    border: 1px solid var(--mistica-color-inputBorder);
+}
+
+.mistica-counter input {
+    width: 3.75ch;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    caret-color: var(--mistica-color-textActivated);
+    color: inherit;
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+}
+
+.mistica-counter__button {
+    user-select: none;
+    isolation: isolate;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--mistica-color-controlActivated);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.mistica-counter__button svg {
+    z-index: 1;
+}
+
+.mistica-counter__button:before {
+    z-index: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-brandLow);
+    transform: scale(0);
+    transition:
+        transform 0.2s ease-in-out,
+        background 0.1s ease-in-out;
+}
+
+.mistica-counter__button:hover:not(:disabled):before {
+    transform: scale(1);
+}
+.mistica-counter__button:active:not(:disabled):before {
+    transform: scale(1.06);
+}
+
+.mistica-counter__button:disabled {
+    cursor: default;
+    color: var(--mistica-color-control);
+}
