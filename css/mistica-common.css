@@ -38,6 +38,11 @@
     --vcolor-accordionActive: var(--mistica-color-backgroundContainerBrandPressed);
 
     --vcolor-divider: var(--mistica-color-dividerInverse);
+
+    --vcolor-control: var(--mistica-color-controlInverse);
+    --vcolor-controlActivated: var(--mistica-color-controlActivatedInverse);
+    --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
+    --vcolor-checkbox-background: transparent;
 }
 
 [data-mistica-skin] > *,
@@ -82,6 +87,11 @@
     --vcolor-accordionActive: var(--mistica-color-backgroundContainerPressed);
 
     --vcolor-divider: var(--mistica-color-divider);
+
+    --vcolor-control: var(--mistica-color-control);
+    --vcolor-controlActivated: var(--mistica-color-controlActivated);
+    --vcolor-checkbox-tick: var(--mistica-color-inverse);
+    --vcolor-checkbox-background: var(--mistica-color-background);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1188,4 +1198,72 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         margin-left: 24px;
         margin-top: 24px;
     }
+}
+
+/* Checkbox */
+.mistica-checkbox {
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    user-select: none;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border-radius: var(--mistica-border-radius-checkbox);
+    background: var(--vcolor-checkbox-background);
+    box-shadow: inset 0 0 0 2px var(--vcolor-control);
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.mistica-checkbox:not(:focus-visible) {
+    outline: 1px solid transparent;
+}
+
+.mistica-checkbox:checked {
+    box-shadow: inset 0 0 0 12px var(--vcolor-controlActivated);
+}
+
+.mistica-checkbox:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.mistica-checkbox:before {
+    content: '';
+    width: 12px;
+    height: 7px;
+    border-bottom: 2px solid var(--vcolor-checkbox-tick);
+    border-left: 2px solid var(--vcolor-checkbox-tick);
+    transform: scale(0) rotate(-45deg) translate(1.5px, -1.5px);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.mistica-checkbox:checked:before {
+    transform: scale(1) rotate(-45deg) translate(1.5px, -1.5px);
+}
+
+.mistica-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+    cursor: pointer;
+}
+
+.mistica-checkbox-label:has(.mistica-checkbox:disabled) {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.mistica-checkbox-label:has(.mistica-checkbox:disabled) > .mistica-checkbox {
+    opacity: initial; /* avoid applying 0.5 opacity twice */
 }

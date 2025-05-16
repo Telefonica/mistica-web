@@ -33,6 +33,7 @@ type Args = {
     sections: boolean;
     menu: 'undefined' | 'default' | 'custom';
     desktopLargeMenu: boolean;
+    customLogo: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -43,6 +44,7 @@ export const Default: StoryComponent<Args> = ({
     sections,
     menu,
     desktopLargeMenu,
+    customLogo,
 }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
@@ -61,6 +63,7 @@ export const Default: StoryComponent<Args> = ({
             withBorder={border}
             burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
             desktopLargeMenu={desktopLargeMenu}
+            logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
             sections={
                 sections
                     ? sectionTitles.map((title, idx) => ({
@@ -130,6 +133,7 @@ Default.args = {
     sections: true,
     menu: 'undefined',
     desktopLargeMenu: false,
+    customLogo: false,
 };
 
 Default.argTypes = {
