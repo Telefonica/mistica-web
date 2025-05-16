@@ -1,3 +1,18 @@
+# [16.25.0](https://github.com/Telefonica/mistica-web/compare/v16.24.0...v16.25.0) (2025-05-13)
+
+
+### Bug Fixes
+
+* **TextField:** make prefix hidden to screen readers ([#1362](https://github.com/Telefonica/mistica-web/issues/1362)) ([9644cd5](https://github.com/Telefonica/mistica-web/commit/9644cd58952b3a2ccc45ddad0f60c649cde065c1))
+
+
+### Features
+
+* **mistica-css:** checkbox ([#1367](https://github.com/Telefonica/mistica-web/issues/1367)) ([eb9d5b8](https://github.com/Telefonica/mistica-web/commit/eb9d5b8d6ffc9f6ab8f55f2864fc627acf549445))
+* **mistica-css:** grid-layout ([#1365](https://github.com/Telefonica/mistica-web/issues/1365)) ([717b0ce](https://github.com/Telefonica/mistica-web/commit/717b0ce255714909ec7c66483623f4416bf35665))
+* **Slideshow:** allow images with border radius inside ([#1363](https://github.com/Telefonica/mistica-web/issues/1363)) ([46b1138](https://github.com/Telefonica/mistica-web/commit/46b1138c6d2da9bb1dbe992459d22cf5d03d2e24))
+* **TextX:** add testid ([#1361](https://github.com/Telefonica/mistica-web/issues/1361)) ([1452f71](https://github.com/Telefonica/mistica-web/commit/1452f71b05559d203e436be2b69ffefe7c71e24b))
+
 # [16.24.0](https://github.com/Telefonica/mistica-web/compare/v16.23.0...v16.24.0) (2025-05-06)
 
 
