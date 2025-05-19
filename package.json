@@ -20,7 +20,7 @@
         "test": "jest --config jest.unit.config.js",
         "test-acceptance": "test-acceptance",
         "test-ssr": "test-acceptance --config jest.ssr.config.js",
-        "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
+        "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\" \"**/*.css\" \"**/*.html\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
@@ -176,7 +176,7 @@
         "*.css"
     ],
     "lint-staged": {
-        "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json}": "prettier --write"
+        "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json,html}": "prettier --write"
     },
     "release": {
         "plugins": [
