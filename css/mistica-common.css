@@ -43,6 +43,8 @@
     --vcolor-controlActivated: var(--mistica-color-controlActivatedInverse);
     --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
     --vcolor-checkbox-background: transparent;
+
+    --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
 }
 
 [data-mistica-skin] > *,
@@ -92,6 +94,8 @@
     --vcolor-controlActivated: var(--mistica-color-controlActivated);
     --vcolor-checkbox-tick: var(--mistica-color-inverse);
     --vcolor-checkbox-background: var(--mistica-color-background);
+
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1276,7 +1280,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     display: inline-flex;
     gap: 8px;
     overflow: hidden;
-    border: 1px solid var(--mistica-color-inputBorder);
+    border: 1px solid var(--vcolor-inputBorder);
 }
 
 .mistica-counter input {
@@ -1288,7 +1292,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     line-height: var(--mistica-line-height-3);
     font-weight: 400;
     caret-color: var(--mistica-color-textActivated);
-    color: inherit;
+    color: var(--mistica-color-textPrimary);
     text-overflow: ellipsis;
     outline: none;
     box-shadow: none;
