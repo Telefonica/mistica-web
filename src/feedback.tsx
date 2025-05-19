@@ -69,14 +69,13 @@ interface RenderFeedbackBodyProps {
 }
 
 const RenderFeedbackBody = ({
-        asset,
-        title,
-        description,
-        extra,
-        animateText,
-        setShouldRead,
-    }: RenderFeedbackBodyProps
-): JSX.Element =>{
+    asset,
+    title,
+    description,
+    extra,
+    animateText,
+    setShouldRead,
+}: RenderFeedbackBodyProps): JSX.Element => {
     const [hideOthers, setHideOthers] = React.useState(animateText);
     const divRef = React.useRef<HTMLDivElement>(null);
     const normalizedDescription =
@@ -144,14 +143,16 @@ const RenderFeedbackBody = ({
     );
 };
 
-const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps, shouldReadButtons: boolean ) => {
+const renderInlineFeedbackBody = (
+    feedbackBody: React.ReactNode,
+    buttons: ButtonGroupProps,
+    shouldReadButtons: boolean
+) => {
     const hasButtons = checkHasButtons(buttons);
     return (
         <Stack space={{desktop: 40, mobile: 24}}>
             {feedbackBody}
-            <div aria-hidden={!shouldReadButtons}>
-                {hasButtons && <ButtonGroup {...buttons} />}
-            </div>
+            <div aria-hidden={!shouldReadButtons}>{hasButtons && <ButtonGroup {...buttons} />}</div>
         </Stack>
     );
 };
@@ -250,27 +251,30 @@ export const FeedbackScreen = ({
     const {isTabletOrSmaller} = useScreenSize();
 
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
-    const isAnimated = animateText && areAnimationsSupported(platformOverrides)
+    const isAnimated = animateText && areAnimationsSupported(platformOverrides);
     const [isShouldRead, setShouldRead] = React.useState(!isAnimated);
 
     const feedbackBody = (
         <RenderFeedbackBody
-            asset = {asset}
-            title = {title} 
-            description = {description}
-            extra  = {extra}
-            animateText = {isAnimated}
+            asset={asset}
+            title={title}
+            description={description}
+            extra={extra}
+            animateText={isAnimated}
             setShouldRead={setShouldRead}
         />
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
-        return renderInlineFeedbackBody(feedbackBody, {
+        return renderInlineFeedbackBody(
+            feedbackBody,
+            {
                 primaryButton,
                 secondaryButton,
                 link,
             },
-            isShouldRead);
+            isShouldRead
+        );
     }
 
     return (
@@ -434,20 +438,23 @@ export const SuccessFeedback = ({
         );
     const feedbackBody = (
         <RenderFeedbackBody
-            asset = {asset}
-            title = {title} 
-            description = {description}
-            extra  = {extra}
-            animateText = {areAnimationsSupported(platformOverrides)}
+            asset={asset}
+            title={title}
+            description={description}
+            extra={extra}
+            animateText={areAnimationsSupported(platformOverrides)}
             setShouldRead={setShouldRead}
         />
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
             primaryButton,
             secondaryButton,
             link,
         },
-        isShouldRead );
+        isShouldRead
+    );
 
     return renderFeedback({
         isInverse: true,
