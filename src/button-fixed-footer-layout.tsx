@@ -15,7 +15,7 @@ type Props = {
     footerBgColor?: string;
     containerBgColor?: string;
     children: React.ReactNode;
-    shouldRead?: boolean;
+    hideDivToScreenReaders?: boolean;
     onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
@@ -27,7 +27,7 @@ const ButtonFixedFooterLayout = ({
     children,
     footerBgColor,
     containerBgColor,
-    shouldRead=false,
+    hideDivToScreenReaders = false,
     onChangeFooterHeight,
 }: Props): JSX.Element => {
     const hasButton = !!button || !!secondaryButton;
@@ -38,7 +38,7 @@ const ButtonFixedFooterLayout = ({
                 footerBgColor={footerBgColor}
                 containerBgColor={containerBgColor}
                 footer={
-                    <div aria-hidden={shouldRead}>
+                    <div aria-hidden={hideDivToScreenReaders}>
                         <InternalResponsiveLayout shouldExpandWhenNested="desktop">
                             <Box
                                 paddingY={{

@@ -297,7 +297,7 @@ export const FeedbackScreen = ({
                                     containerBgColor={
                                         isInverse ? vars.colors.backgroundBrand : vars.colors.background
                                     }
-                                    shouldRead={!isShouldRead}
+                                    hideDivToScreenReaders={!isShouldRead}
                                 >
                                     <ResponsiveLayout>
                                         <div className={styles.container}>
