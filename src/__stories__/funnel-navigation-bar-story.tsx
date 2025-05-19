@@ -7,6 +7,7 @@ import {
     IconQuestionRegular,
     IconCloseRegular,
     Text2,
+    Placeholder,
 } from '..';
 import {vars} from '../skins/skin-contract.css';
 
@@ -20,14 +21,15 @@ export default {
     },
 };
 
-type Args = {variant: Variant; border: boolean};
+type Args = {variant: Variant; border: boolean; customLogo: boolean};
 
-export const Default: StoryComponent<Args> = ({variant, border}) => {
+export const Default: StoryComponent<Args> = ({variant, border, customLogo}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
             withBorder={border}
             variant={variant}
+            logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="need help?" href="/help">
@@ -53,6 +55,7 @@ Default.storyName = 'FunnelNavigationBar';
 Default.args = {
     variant: 'default',
     border: true,
+    customLogo: false,
 };
 
 Default.argTypes = {

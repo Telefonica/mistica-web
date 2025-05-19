@@ -38,6 +38,11 @@
     --vcolor-accordionActive: var(--mistica-color-backgroundContainerBrandPressed);
 
     --vcolor-divider: var(--mistica-color-dividerInverse);
+
+    --vcolor-control: var(--mistica-color-controlInverse);
+    --vcolor-controlActivated: var(--mistica-color-controlActivatedInverse);
+    --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
+    --vcolor-checkbox-background: transparent;
 }
 
 [data-mistica-skin] > *,
@@ -82,6 +87,11 @@
     --vcolor-accordionActive: var(--mistica-color-backgroundContainerPressed);
 
     --vcolor-divider: var(--mistica-color-divider);
+
+    --vcolor-control: var(--mistica-color-control);
+    --vcolor-controlActivated: var(--mistica-color-controlActivated);
+    --vcolor-checkbox-tick: var(--mistica-color-inverse);
+    --vcolor-checkbox-background: var(--mistica-color-background);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -995,14 +1005,39 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 @media (max-width: 1023px) {
     .mistica-grid-layout {
         grid-template-columns: minmax(0, 1fr);
+        row-gap: 0;
     }
 
     .mistica-grid-layout [class^='mistica-col-'] {
         grid-column: span 1;
     }
 
-    .mistica-col-1 {
+    .mistica-grid-col-1 {
         display: none;
+    }
+
+    .mistica-grid-vertical-space-2 {
+        row-gap: 2px;
+    }
+
+    .mistica-grid-vertical-space-8 {
+        row-gap: 8px;
+    }
+
+    .mistica-grid-vertical-space-12 {
+        row-gap: 12px;
+    }
+
+    .mistica-grid-vertical-space-16 {
+        row-gap: 16px;
+    }
+
+    .mistica-grid-vertical-space-24 {
+        row-gap: 24px;
+    }
+
+    .mistica-grid-vertical-space-32 {
+        row-gap: 32px;
     }
 }
 
@@ -1012,31 +1047,31 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     }
 }
 
-.mistica-col-1 {
+.mistica-grid-col-1 {
     grid-column: span 1;
 }
 
-.mistica-col-3 {
+.mistica-grid-col-3 {
     grid-column: span 3;
 }
 
-.mistica-col-4 {
+.mistica-grid-col-4 {
     grid-column: span 4;
 }
 
-.mistica-col-5 {
+.mistica-grid-col-5 {
     grid-column: span 5;
 }
 
-.mistica-col-6 {
+.mistica-grid-col-6 {
     grid-column: span 6;
 }
 
-.mistica-col-8 {
+.mistica-grid-col-8 {
     grid-column: span 8;
 }
 
-.mistica-col-9 {
+.mistica-grid-col-9 {
     grid-column: span 9;
 }
 
@@ -1250,4 +1285,72 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-switch:checked:before {
     background-color: var(--mistica-color-controlActivated);
     transform: translateX(20px);
+}
+
+/* Checkbox */
+.mistica-checkbox {
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    user-select: none;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border-radius: var(--mistica-border-radius-checkbox);
+    background: var(--vcolor-checkbox-background);
+    box-shadow: inset 0 0 0 2px var(--vcolor-control);
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.mistica-checkbox:not(:focus-visible) {
+    outline: 1px solid transparent;
+}
+
+.mistica-checkbox:checked {
+    box-shadow: inset 0 0 0 12px var(--vcolor-controlActivated);
+}
+
+.mistica-checkbox:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.mistica-checkbox:before {
+    content: '';
+    width: 12px;
+    height: 7px;
+    border-bottom: 2px solid var(--vcolor-checkbox-tick);
+    border-left: 2px solid var(--vcolor-checkbox-tick);
+    transform: scale(0) rotate(-45deg) translate(1.5px, -1.5px);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.mistica-checkbox:checked:before {
+    transform: scale(1) rotate(-45deg) translate(1.5px, -1.5px);
+}
+
+.mistica-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+    cursor: pointer;
+}
+
+.mistica-checkbox-label:has(.mistica-checkbox:disabled) {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.mistica-checkbox-label:has(.mistica-checkbox:disabled) > .mistica-checkbox {
+    opacity: initial; /* avoid applying 0.5 opacity twice */
 }
