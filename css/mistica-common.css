@@ -49,6 +49,7 @@
 
 [data-mistica-skin] > *,
 [data-mistica-variant='default'] > *,
+.mistica-boxed > *,
 .mistica-card > *,
 .mistica-snap-card > *,
 .mistica-display-card > * {
