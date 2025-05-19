@@ -1298,6 +1298,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     outline: none;
     box-shadow: none;
     text-align: center;
+    -moz-appearance: textfield;
 }
 
 .mistica-counter__button {
