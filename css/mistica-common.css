@@ -43,7 +43,12 @@
     --vcolor-controlActivated: var(--mistica-color-controlActivatedInverse);
     --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
     --vcolor-checkbox-background: transparent;
+
     --vcolor-barTrack: var(--mistica-color-barTrackInverse);
+
+    --vcolor-switch-trackBackground: transparent;
+    --vcolor-switch-handleChecked: var(--mistica-color-controlKnobInverse);
+    --vcolor-switch-handleHover: var(--mistica-color-inverse);
 }
 
 [data-mistica-skin] > *,
@@ -93,7 +98,12 @@
     --vcolor-controlActivated: var(--mistica-color-controlActivated);
     --vcolor-checkbox-tick: var(--mistica-color-inverse);
     --vcolor-checkbox-background: var(--mistica-color-background);
+
     --vcolor-barTrack: var(--mistica-color-barTrack);
+
+    --vcolor-switch-trackBackground: var(--mistica-color-backgroundAlternative);
+    --vcolor-switch-handleChecked: var(--mistica-color-inverse);
+    --vcolor-switch-handleHover: var(--mistica-color-neutralHigh);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -933,6 +943,10 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     transition: background-color 0.1s ease-in-out;
 }
 
+.mistica-accordion-item__summary::-webkit-details-marker {
+    display: none;
+}
+
 .mistica-accordion-item__summary-body {
     display: flex;
     flex-direction: column;
@@ -1200,6 +1214,88 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         margin-left: 24px;
         margin-top: 24px;
     }
+}
+
+/* Switch */
+.mistica-switch {
+    --switch-border-width: 2px;
+    --switch-transition: 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    appearance: none;
+    position: relative;
+    width: 52px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: var(--vcolor-switch-trackBackground);
+    border: var(--switch-border-width) solid var(--vcolor-control);
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition:
+        background-color var(--switch-transition),
+        border-color var(--switch-transition);
+}
+
+/* :after is the switch handle (bolita) */
+.mistica-switch:after {
+    content: '';
+    position: absolute;
+    top: calc(8px - var(--switch-border-width));
+    left: calc(8px - var(--switch-border-width));
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--vcolor-control);
+    transition:
+        transform var(--switch-transition),
+        background-color var(--switch-transition);
+}
+
+.mistica-switch:hover:after {
+    background-color: var(--vcolor-switch-handleHover);
+}
+
+.mistica-switch:checked {
+    background-color: var(--vcolor-controlActivated);
+    border-color: var(--vcolor-controlActivated);
+}
+.mistica-switch:checked:after {
+    background-color: var(--vcolor-switch-handleChecked);
+    transform: translateX(20px) scale(1.5);
+}
+
+.mistica-switch:active:after {
+    transform: scale(1.75);
+}
+.mistica-switch:checked:active:after {
+    transform: translateX(20px) scale(1.75);
+}
+
+/* :before is the ripple effect overlay on hover */
+.mistica-switch:before {
+    content: '';
+    position: absolute;
+    top: calc(-8px + var(--switch-border-width));
+    left: calc(-8px + var(--switch-border-width));
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition:
+        transform var(--switch-transition),
+        background-color var(--switch-transition);
+}
+
+.mistica-switch:checked:before {
+    transform: translateX(20px);
+}
+
+.mistica-switch:hover:before {
+    background-color: var(--mistica-color-backgroundContainerHover);
+}
+
+.mistica-switch:active:before {
+    background-color: var(--mistica-color-backgroundContainerPressed);
 }
 
 /* Checkbox */
