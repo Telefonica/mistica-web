@@ -70,11 +70,17 @@ select {
     margin-top: 16px;
 }
 
-.cards-group {
+.horizontal-group {
     display: flex;
     gap: 16px;
 }
 
-.cards-group + .cards-group {
+.horizontal-group + .horizontal-group {
     margin-top: 16px;
+}
+
+.vertical-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
