@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mistica CSS Example</title>
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body data-mistica-skin="movistar" data-mistica-color-scheme="auto">
+        <div class="mistica-responsive-layout">
+            <div class="mistica-feedback-screen">
+                <svg
+                    role="presentation"
+                    class="mistica-feedback-screen__asset"
+                    viewBox="0 0 64 64"
+                    overflow="visible"
+                >
+                    <g
+                        stroke="var(--mistica-color-error)"
+                        fill="none"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-miterlimit="10"
+                    >
+                        <g class="mistica-feedback-screen__asset-error-outside">
+                            <path
+                                fill="none"
+                                stroke-width="2"
+                                stroke-miterlimit="10"
+                                d="M 31.9 0.9 C 52.5 0.9 62.9 11.4 62.9 31.9 C 62.9 52.5 52.5 62.9 31.9 62.9 C 11.3 62.9 0.9 52.5 0.9 31.9 C 0.9 11.3 11.3 0.9 31.9 0.9 Z"
+                                transform="rotate(90 32 32)"
+                                stroke-dasharray="202"
+                                stroke-dashoffset="202"
+                            >
+                                <animate
+                                    attributeName="stroke-dashoffset"
+                                    from="202"
+                                    to="0"
+                                    dur="0.7"
+                                    repeatCount="1"
+                                    begin="0.3s"
+                                    fill="freeze"
+                                    keyTimes="0;1"
+                                    calcMode="spline"
+                                    keySplines="0.65 0 0.25 1"
+                                ></animate>
+                            </path>
+                        </g>
+                        <g class="mistica-feedback-screen__asset-error-inside">
+                            <line
+                                x1="31.9"
+                                y1="20.9"
+                                x2="31.9"
+                                y2="36.9"
+                                stroke-dasharray="17"
+                                stroke-dashoffset="17"
+                            >
+                                <animate
+                                    attributeName="stroke-dashoffset"
+                                    from="17"
+                                    to="0"
+                                    dur="0.7"
+                                    repeatCount="1"
+                                    begin="0.7s"
+                                    fill="freeze"
+                                    keyTimes="0;1"
+                                    calcMode="spline"
+                                    keySplines="0.65 0 0.25 1"
+                                ></animate>
+                            </line>
+                            <circle
+                                stroke="var(--mistica-color-error)"
+                                fill="var(--mistica-color-error)"
+                                stroke-width="1"
+                                cx="31.9"
+                                cy="43.9"
+                                r="1.5"
+                                opacity="0"
+                            >
+                                <animate
+                                    attributeName="opacity"
+                                    from="0"
+                                    to="1"
+                                    dur="0.4"
+                                    repeatCount="1"
+                                    begin="1s"
+                                    fill="freeze"
+                                    keyTimes="0;1"
+                                    calcMode="spline"
+                                    keySplines="0.65 0 0.25 1"
+                                ></animate>
+                            </circle>
+                        </g>
+                    </g>
+                </svg>
+                <h1 class="mistica-feedback-screen__title">Title</h1>
+                <p class="mistica-feedback-screen__description">Description</p>
+                <p class="mistica-feedback-screen__slot mistica-text-2">Error reference: #95001</p>
+                <div class="mistica-fixed-footer-buttons">
+                    <a class="mistica-button-primary" href="#">Action</a>
+                    <a class="mistica-button-link" href="#"
+                        >Link<svg style="margin-left: 2px" width="0.5em" height="0.5em" viewBox="0 0 8 8">
+                            <path
+                                d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                fill="currentColor"
+                            /></svg
+                    ></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
