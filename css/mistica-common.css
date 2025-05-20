@@ -1497,3 +1497,245 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         var(--vcolor-barTrack) var(--slider-thumb-position)
     );
 }
+
+/* FeedbackScreen */
+
+@keyframes mistica-animation-shake {
+    10%,
+    90% {
+        transform: translateX(3px);
+    }
+    20%,
+    80% {
+        transform: translateX(6px);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translateX(0);
+    }
+    40%,
+    60% {
+        transform: translateX(8px);
+    }
+}
+
+@keyframes mistica-animation-text-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(var(--text-appear-distance));
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mistica-feedback-screen {
+    --text-animation: mistica-animation-text-appear 1s both cubic-bezier(0.215, 0.61, 0.355, 1);
+    --text-appear-distance: 16px;
+    padding: 64px 0 16px;
+}
+
+@media (min-width: 1024px) {
+    .mistica-feedback-screen {
+        --text-appear-distance: 40px;
+        margin-top: 64px;
+        border-radius: var(--mistica-border-radius-legacyDisplay);
+        border: var(--mistica-boxed-border);
+        background: var(--mistica-color-backgroundContainer);
+        padding: 64px;
+    }
+
+    .mistica-feedback-screen > .mistica-fixed-footer-buttons {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .mistica-feedback-screen {
+        /* Space for fixed buttons */
+        padding-bottom: 142px;
+    }
+}
+
+.mistica-feedback-screen__asset {
+    --asset-animation: mistica-animation-shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+}
+
+.mistica-feedback-screen__asset-error-inside {
+    animation: var(--asset-animation);
+    animation-delay: 0.8s;
+}
+
+.mistica-feedback-screen__asset-error-outside {
+    animation: var(--asset-animation);
+    animation-delay: 0.84s;
+}
+
+.mistica-feedback-screen__title {
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
+    color: var(--mistica-color-textPrimary);
+    animation: var(--text-animation);
+    animation-delay: 0.6s;
+}
+
+.mistica-feedback-screen__description {
+    margin-top: 16px;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    color: var(--mistica-color-textSecondary);
+    animation: var(--text-animation);
+    animation-delay: 0.8s;
+}
+
+.mistica-feedback-screen__slot {
+    margin-top: 16px;
+    animation: var(--text-animation);
+    color: var(--mistica-color-textSecondary);
+    animation-delay: 1s;
+}
+
+.mistica-fixed-footer-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+@media (max-width: 1023px) {
+    .mistica-fixed-footer,
+    .mistica-fixed-footer-buttons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--mistica-color-background);
+        box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .mistica-fixed-footer-buttons {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .mistica-fixed-footer-buttons {
+        padding: 32px 24px;
+    }
+}
+
+/* TextField */
+.mistica-text-field {
+    --border-width: 1px;
+    --vertical-padding: calc(8px - var(--border-width));
+    --gap: 12px;
+    --right-padding: calc(16px - var(--border-width));
+    --shrinked-label-line-height: 1.25rem;
+    --label-scale: 1;
+    --icon-size: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--mistica-border-radius-input);
+    border: var(--border-width) solid var(--mistica-color-inputBorder);
+    width: 328px;
+    background: var(--mistica-color-backgroundContainer);
+    color: var(--mistica-color-textPrimary);
+}
+
+@media (max-width: 1023px) {
+    .mistica-text-field {
+        --shrinked-label-line-height: 1rem;
+        width: 100%;
+    }
+}
+
+.mistica-text-field > * {
+    --start-icon-size: 0px;
+    --left-padding: calc(12px - var(--border-width) + var(--start-icon-size));
+}
+
+.mistica-text-field .mistica-text-field__start-icon ~ * {
+    --start-icon-size: calc(var(--icon-size) + var(--gap));
+}
+
+.mistica-text-field__start-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: absolute;
+    top: calc(50% - var(--icon-size) / 2);
+    left: 12px;
+    color: var(--mistica-color-neutralHigh);
+    margin-right: var(--gap);
+    pointer-events: none;
+}
+
+.mistica-text-field > label {
+    position: absolute;
+    left: var(--left-padding);
+    top: var(--vertical-padding);
+    pointer-events: none;
+    transform-origin: 0 0;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    width: calc(100% - var(--left-padding) - var(--right-padding));
+    transform: translateY(calc(var(--shrinked-label-line-height) / 2));
+    transition:
+        transform 150ms,
+        width 150ms;
+    color: var(--mistica-color-textSecondary);
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.mistica-text-field:focus-within > label,
+.mistica-text-field > input:not(:placeholder-shown) + label {
+    --label-scale: 0.75;
+    transform: translateY(0) scale(var(--label-scale));
+    line-height: calc(var(--shrinked-label-line-height) / var(--label-scale));
+    width: calc((100% - var(--left-padding) - var(--right-padding)) / var(--label-scale));
+    color: var(--mistica-color-textActivated);
+}
+
+.mistica-text-field > input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    padding: calc(var(--vertical-padding) + var(--shrinked-label-line-height)) var(--right-padding)
+        var(--vertical-padding) var(--left-padding);
+    caret-color: var(--mistica-color-textActivated);
+    color: inherit;
+    border-radius: calc(var(--mistica-border-radius-input) - var(--border-width));
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+}
+
+.mistica-text-field > input::placeholder {
+    opacity: 0;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.mistica-text-field > input:focus::placeholder {
+    opacity: 0.5;
+}
+
+.mistica-text-field > input::-webkit-search-cancel-button {
+    appearance: none;
+}
+.mistica-text-field > input::-webkit-search-decoration {
+    appearance: none;
+}
