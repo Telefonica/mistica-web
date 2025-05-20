@@ -1380,6 +1380,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 .mistica-counter input {
     width: 3.75ch;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
     caret-color: var(--mistica-color-textActivated);
     color: var(--mistica-color-textPrimary);
     text-overflow: ellipsis;
@@ -1436,6 +1442,8 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     cursor: default;
     color: var(--mistica-color-control);
 }
+
+/* TextField */
 /* TextField */
 .mistica-text-field {
     --border-width: 1px;
