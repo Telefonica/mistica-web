@@ -1372,6 +1372,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     isolation: isolate;
     position: relative;
     appearance: none;
+    -webkit-appearance: none;
     height: 20px;
     outline: none;
     margin: 0;
@@ -1388,27 +1389,59 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     cursor: grab;
     border-radius: 50%;
     transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    box-shadow: none;
 }
 
-.mistica-slider:active::-webkit-slider-thumb {
-    cursor: grabbing;
+.mistica-slider::-moz-range-thumb {
+    position: relative;
+    z-index: 1;
+    background: var(--vcolor-controlActivated);
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+    border-radius: 50%;
+    transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    border: none; /*Removes extra border that FF applies*/
 }
 
 .mistica-slider::-webkit-slider-thumb:hover {
     box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
 }
 
+.mistica-slider::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+}
+
 .mistica-slider:active::-webkit-slider-thumb,
 .mistica-slider:focus-visible::-webkit-slider-thumb {
+    cursor: grabbing;
     box-shadow: 0 0 0 8px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
 }
 
-.mistica-slider::-webkit-slider-runnable-track {
-    height: 100%;
+.mistica-slider:active::-moz-range-thumb,
+.mistica-slider:focus-visible::-moz-range-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 8px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
 }
 
 .mistica-slider::before {
     content: '';
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: var(--mistica-border-radius-bar);
+    background: linear-gradient(
+        to right,
+        var(--vcolor-controlActivated) var(--slider-thumb-position),
+        var(--vcolor-barTrack) var(--slider-thumb-position)
+    );
+}
+
+.mistica-slider::-moz-range-track {
     position: absolute;
     z-index: 0;
     top: 50%;
