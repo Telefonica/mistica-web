@@ -567,7 +567,7 @@ label.mistica-chip > input:checked + span {
     background: var(--vcolor-buttonPrimaryBackground);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     [class^='mistica-button-primary']:hover {
         background: var(--vcolor-buttonPrimaryBackgroundHover);
     }
@@ -583,7 +583,7 @@ label.mistica-chip > input:checked + span {
     border-color: var(--vcolor-buttonSecondaryBorder);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     [class^='mistica-button-secondary']:hover {
         background: var(--vcolor-buttonSecondaryBackgroundHover);
     }
@@ -598,7 +598,7 @@ label.mistica-chip > input:checked + span {
     background: var(--mistica-color-buttonDangerBackground);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     [class^='mistica-button-danger']:hover {
         background: var(--mistica-color-buttonDangerBackgroundHover);
     }
@@ -612,7 +612,7 @@ label.mistica-chip > input:checked + span {
     color: var(--vcolor-textLink);
     background: transparent;
 }
-@media (cursor: pointer) {
+@media (pointer: fine) {
     [class^='mistica-button-link']:hover {
         background: var(--vcolor-buttonLinkBackgroundPressed);
     }
@@ -679,7 +679,7 @@ label.mistica-chip > input:checked + span {
     z-index: 1;
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     a.mistica-card:hover:after,
     a.mistica-snap-card:hover:after,
     a.mistica-display-card:hover:after,
@@ -712,7 +712,7 @@ button.mistica-display-card:active:after {
         filter 0.1s ease-in-out;
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     a.mistica-naked-card:hover > *,
     button.mistica-naked-card:hover > *,
     a.mistica-small-naked-card:hover > *,
@@ -728,7 +728,7 @@ button.mistica-small-naked-card:active > * {
     opacity: 0.6;
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     a.mistica-naked-card:hover > .mistica-card__media,
     button.mistica-naked-card:hover > .mistica-card__media,
     a.mistica-small-naked-card:hover > .mistica-card__media,
@@ -841,7 +841,7 @@ button.mistica-small-naked-card:active > .mistica-card__media {
     background: var(--mistica-color-cardContentOverlay);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     a.mistica-display-card:has(.mistica-card__media):hover:after,
     button.mistica-display-card:has(.mistica-card__media):hover:after {
         background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerHover);
@@ -1008,7 +1008,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     color: var(--vcolor-accordionChevronOpen);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     .mistica-accordion-item__summary:hover {
         background-color: var(--vcolor-accordionHover);
     }
@@ -1283,7 +1283,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         background-color var(--switch-transition);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     .mistica-switch:hover:after {
         background-color: var(--vcolor-switch-handleHover);
     }
@@ -1324,7 +1324,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     transform: translateX(20px);
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     .mistica-switch:hover:before {
         background-color: var(--mistica-color-backgroundContainerHover);
     }
@@ -1443,11 +1443,10 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     border: none; /*Removes extra border that FF applies*/
 }
 
-@media (cursor: pointer) {
+@media (pointer: fine) {
     .mistica-slider::-webkit-slider-thumb:hover {
         box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
     }
-
     .mistica-slider::-moz-range-thumb:hover {
         box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
     }
