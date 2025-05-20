@@ -1411,6 +1411,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     position: relative;
     appearance: none;
     -webkit-appearance: none;
+    background: transparent;
     height: 20px;
     outline: none;
     margin: 0;
