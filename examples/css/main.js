@@ -12,3 +12,6 @@ document.querySelector('#variant-select').addEventListener('change', (e) => {
     const newVariant = e.target.value;
     document.getElementById('app').dataset.misticaVariant = newVariant;
 });
+
+// hack to make css :active pseudo-class work on mobile
+document.addEventListener('touchstart', function () {}, false);

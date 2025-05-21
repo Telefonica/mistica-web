@@ -46,6 +46,8 @@
 
     --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
 
+    --vcolor-barTrack: var(--mistica-color-barTrackInverse);
+
     --vcolor-switch-trackBackground: transparent;
     --vcolor-switch-handleChecked: var(--mistica-color-controlKnobInverse);
     --vcolor-switch-handleHover: var(--mistica-color-inverse);
@@ -101,6 +103,8 @@
     --vcolor-checkbox-background: var(--mistica-color-background);
 
     --vcolor-inputBorder: var(--mistica-color-inputBorder);
+
+    --vcolor-barTrack: var(--mistica-color-barTrack);
 
     --vcolor-switch-trackBackground: var(--mistica-color-backgroundAlternative);
     --vcolor-switch-handleChecked: var(--mistica-color-inverse);
@@ -214,6 +218,7 @@
     font-size: var(--mistica-font-size-link);
     line-height: var(--mistica-line-height-link);
     font-weight: var(--mistica-font-weight-link);
+    -webkit-tap-highlight-color: transparent;
 }
 .mistica-text-title1 {
     color: var(--vcolor-textSecondary);
@@ -307,6 +312,7 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 label.mistica-chip {
     padding: 0;
@@ -353,13 +359,15 @@ label.mistica-chip > span:before {
     width: 100%;
     height: 100%;
     background: transparent;
-    transition: background-color 0.1s ease-in-out;
+    /* transition: background-color 0.1s ease-in-out; */
 }
 
-button.mistica-chip:hover:before,
-a.mistica-chip:hover:before,
-label.mistica-chip > input:hover + span:before {
-    background: var(--mistica-color-backgroundContainerHover);
+@media (pointer: fine) {
+    button.mistica-chip:hover:before,
+    a.mistica-chip:hover:before,
+    label.mistica-chip > input:hover + span:before {
+        background: var(--mistica-color-backgroundContainerHover);
+    }
 }
 
 button.mistica-chip:active:before,
@@ -396,6 +404,7 @@ label.mistica-chip > input:checked + span {
     color: inherit;
     font: inherit;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     padding: 0;
     margin: 0;
     min-width: 24px;
@@ -464,10 +473,13 @@ label.mistica-chip > input:checked + span {
     line-height: inherit;
     font-family: inherit;
     text-decoration: underline;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.mistica-text-link:hover:not([disabled]) {
-    text-decoration-thickness: 0.125em;
+@media (pointer: fine) {
+    .mistica-text-link:hover:not([disabled]) {
+        text-decoration-thickness: 0.125em;
+    }
 }
 
 .mistica-text-link[disabled] {
@@ -493,6 +505,7 @@ label.mistica-chip > input:checked + span {
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
     color: var(--vcolor-textPrimary);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mistica-breadcrumb li + li::before {
@@ -504,8 +517,10 @@ label.mistica-chip > input:checked + span {
     content: '';
 }
 
-.mistica-breadcrumb a:hover {
-    text-decoration-thickness: 0.125rem;
+@media (pointer: fine) {
+    .mistica-breadcrumb a:hover {
+        text-decoration-thickness: 0.125rem;
+    }
 }
 
 .mistica-breadcrumb li:last-of-type a {
@@ -536,7 +551,7 @@ label.mistica-chip > input:checked + span {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    --webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
     transition:
         background-color 0.1s ease-in-out,
         color 0.1s ease-in-out,
@@ -557,8 +572,10 @@ label.mistica-chip > input:checked + span {
     background: var(--vcolor-buttonPrimaryBackground);
 }
 
-[class^='mistica-button-primary']:hover {
-    background: var(--vcolor-buttonPrimaryBackgroundHover);
+@media (pointer: fine) {
+    [class^='mistica-button-primary']:hover {
+        background: var(--vcolor-buttonPrimaryBackgroundHover);
+    }
 }
 
 [class^='mistica-button-primary']:active {
@@ -571,8 +588,10 @@ label.mistica-chip > input:checked + span {
     border-color: var(--vcolor-buttonSecondaryBorder);
 }
 
-[class^='mistica-button-secondary']:hover {
-    background: var(--vcolor-buttonSecondaryBackgroundHover);
+@media (pointer: fine) {
+    [class^='mistica-button-secondary']:hover {
+        background: var(--vcolor-buttonSecondaryBackgroundHover);
+    }
 }
 
 [class^='mistica-button-secondary']:active {
@@ -584,8 +603,10 @@ label.mistica-chip > input:checked + span {
     background: var(--mistica-color-buttonDangerBackground);
 }
 
-[class^='mistica-button-danger']:hover {
-    background: var(--mistica-color-buttonDangerBackgroundHover);
+@media (pointer: fine) {
+    [class^='mistica-button-danger']:hover {
+        background: var(--mistica-color-buttonDangerBackgroundHover);
+    }
 }
 
 [class^='mistica-button-danger']:active {
@@ -596,9 +617,10 @@ label.mistica-chip > input:checked + span {
     color: var(--vcolor-textLink);
     background: transparent;
 }
-
-[class^='mistica-button-link']:hover {
-    background: var(--vcolor-buttonLinkBackgroundPressed);
+@media (pointer: fine) {
+    [class^='mistica-button-link']:hover {
+        background: var(--vcolor-buttonLinkBackgroundPressed);
+    }
 }
 
 [class^='mistica-button-link']:active {
@@ -630,6 +652,7 @@ label.mistica-chip > input:checked + span {
     height: auto;
     transition: background 0.1s ease-in-out;
     isolation: isolate;
+    -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 1024px) {
@@ -661,13 +684,15 @@ label.mistica-chip > input:checked + span {
     z-index: 1;
 }
 
-a.mistica-card:hover:after,
-a.mistica-snap-card:hover:after,
-a.mistica-display-card:hover:after,
-button.mistica-card:hover:after,
-button.mistica-snap-card:hover:after,
-button.mistica-display-card:hover:after {
-    background: var(--mistica-color-backgroundContainerHover);
+@media (pointer: fine) {
+    a.mistica-card:hover:after,
+    a.mistica-snap-card:hover:after,
+    a.mistica-display-card:hover:after,
+    button.mistica-card:hover:after,
+    button.mistica-snap-card:hover:after,
+    button.mistica-display-card:hover:after {
+        background: var(--mistica-color-backgroundContainerHover);
+    }
 }
 
 a.mistica-card:active:after,
@@ -682,6 +707,7 @@ button.mistica-display-card:active:after {
 .mistica-naked-card,
 .mistica-small-naked-card {
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mistica-naked-card > *,
@@ -691,11 +717,13 @@ button.mistica-display-card:active:after {
         filter 0.1s ease-in-out;
 }
 
-a.mistica-naked-card:hover > *,
-button.mistica-naked-card:hover > *,
-a.mistica-small-naked-card:hover > *,
-button.mistica-small-naked-card:hover > * {
-    opacity: 0.8;
+@media (pointer: fine) {
+    a.mistica-naked-card:hover > *,
+    button.mistica-naked-card:hover > *,
+    a.mistica-small-naked-card:hover > *,
+    button.mistica-small-naked-card:hover > * {
+        opacity: 0.8;
+    }
 }
 
 a.mistica-naked-card:active > *,
@@ -705,12 +733,14 @@ button.mistica-small-naked-card:active > * {
     opacity: 0.6;
 }
 
-a.mistica-naked-card:hover > .mistica-card__media,
-button.mistica-naked-card:hover > .mistica-card__media,
-a.mistica-small-naked-card:hover > .mistica-card__media,
-button.mistica-small-naked-card:hover > .mistica-card__media {
-    opacity: 1;
-    filter: brightness(75%);
+@media (pointer: fine) {
+    a.mistica-naked-card:hover > .mistica-card__media,
+    button.mistica-naked-card:hover > .mistica-card__media,
+    a.mistica-small-naked-card:hover > .mistica-card__media,
+    button.mistica-small-naked-card:hover > .mistica-card__media {
+        opacity: 1;
+        filter: brightness(75%);
+    }
 }
 
 a.mistica-naked-card:active > .mistica-card__media,
@@ -816,9 +846,11 @@ button.mistica-small-naked-card:active > .mistica-card__media {
     background: var(--mistica-color-cardContentOverlay);
 }
 
-a.mistica-display-card:has(.mistica-card__media):hover:after,
-button.mistica-display-card:has(.mistica-card__media):hover:after {
-    background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerHover);
+@media (pointer: fine) {
+    a.mistica-display-card:has(.mistica-card__media):hover:after,
+    button.mistica-display-card:has(.mistica-card__media):hover:after {
+        background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerHover);
+    }
 }
 
 a.mistica-display-card:has(.mistica-card__media):active:after,
@@ -942,6 +974,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     padding: 16px;
     margin: 0 -16px;
     transition: background-color 0.1s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mistica-accordion-item__summary::-webkit-details-marker {
@@ -980,8 +1013,10 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     color: var(--vcolor-accordionChevronOpen);
 }
 
-.mistica-accordion-item__summary:hover {
-    background-color: var(--vcolor-accordionHover);
+@media (pointer: fine) {
+    .mistica-accordion-item__summary:hover {
+        background-color: var(--vcolor-accordionHover);
+    }
 }
 
 .mistica-accordion-item__summary:active {
@@ -1232,6 +1267,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     margin: 0;
     box-sizing: border-box;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition:
         background-color var(--switch-transition),
         border-color var(--switch-transition);
@@ -1252,8 +1288,10 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         background-color var(--switch-transition);
 }
 
-.mistica-switch:hover:after {
-    background-color: var(--vcolor-switch-handleHover);
+@media (pointer: fine) {
+    .mistica-switch:hover:after {
+        background-color: var(--vcolor-switch-handleHover);
+    }
 }
 
 .mistica-switch:checked {
@@ -1291,8 +1329,10 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     transform: translateX(20px);
 }
 
-.mistica-switch:hover:before {
-    background-color: var(--mistica-color-backgroundContainerHover);
+@media (pointer: fine) {
+    .mistica-switch:hover:before {
+        background-color: var(--mistica-color-backgroundContainerHover);
+    }
 }
 
 .mistica-switch:active:before {
@@ -1316,6 +1356,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     background: var(--vcolor-checkbox-background);
     box-shadow: inset 0 0 0 2px var(--vcolor-control);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition: box-shadow 0.3s;
 }
 
@@ -1356,6 +1397,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-3);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mistica-checkbox-label:has(.mistica-checkbox:disabled) {
@@ -1441,6 +1483,101 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-counter__button:disabled {
     cursor: default;
     color: var(--mistica-color-control);
+}
+
+/* Slider */
+
+.mistica-slider {
+    --slider-thumb-position: 50%;
+    isolation: isolate;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    height: 20px;
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-slider::-webkit-slider-thumb {
+    position: relative;
+    z-index: 1;
+    appearance: none;
+    background: var(--vcolor-controlActivated);
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+    border-radius: 50%;
+    transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    box-shadow: none;
+}
+
+.mistica-slider::-moz-range-thumb {
+    position: relative;
+    z-index: 1;
+    background: var(--vcolor-controlActivated);
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+    border-radius: 50%;
+    transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    border: none; /*Removes extra border that FF applies*/
+}
+
+@media (pointer: fine) {
+    .mistica-slider::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+    }
+    .mistica-slider::-moz-range-thumb:hover {
+        box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+    }
+}
+
+.mistica-slider:active::-webkit-slider-thumb,
+.mistica-slider:focus-visible::-webkit-slider-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 8px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+}
+
+.mistica-slider:active::-moz-range-thumb,
+.mistica-slider:focus-visible::-moz-range-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 8px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+}
+
+.mistica-slider::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: var(--mistica-border-radius-bar);
+    background: linear-gradient(
+        to right,
+        var(--vcolor-controlActivated) var(--slider-thumb-position),
+        var(--vcolor-barTrack) var(--slider-thumb-position)
+    );
+}
+
+.mistica-slider::-moz-range-track {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: var(--mistica-border-radius-bar);
+    background: linear-gradient(
+        to right,
+        var(--vcolor-controlActivated) var(--slider-thumb-position),
+        var(--vcolor-barTrack) var(--slider-thumb-position)
+    );
 }
 
 /* FeedbackScreen */
