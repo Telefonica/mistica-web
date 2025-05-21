@@ -122,6 +122,23 @@
                     <label for="search-field-1">Search</label>
                 </div>
 
+                <h3 class="mistica-text-title2">Slider</h3>
+                <input type="range" class="mistica-slider" min="0" max="10" value="2" step="1" />
+                <script>
+                    function setSliderThumbPosition(slider) {
+                        slider.style.setProperty(
+                            '--slider-thumb-position',
+                            `${((slider.value - slider.min) / (slider.max - slider.min)) * 100}%`
+                        );
+                    }
+                    document.querySelectorAll('.mistica-slider').forEach((slider) => {
+                        setSliderThumbPosition(slider);
+                        slider.addEventListener('input', () => {
+                            setSliderThumbPosition(slider);
+                        });
+                    });
+                </script>
+
                 <h3 class="mistica-text-title2">Switch</h3>
                 <input type="checkbox" class="mistica-switch" />
 
