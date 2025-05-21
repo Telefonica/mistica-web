@@ -1450,6 +1450,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     cursor: pointer;
     width: 40px;
     height: 40px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mistica-counter__button svg {
@@ -1473,9 +1474,18 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
         background 0.1s ease-in-out;
 }
 
-.mistica-counter__button:hover:not(:disabled):before {
-    transform: scale(1);
+@media (pointer: coarse) {
+    .mistica-counter__button:before {
+        transition: none;
+    }
 }
+
+@media (pointer: fine) {
+    .mistica-counter__button:hover:not(:disabled):before {
+        transform: scale(1);
+    }
+}
+
 .mistica-counter__button:active:not(:disabled):before {
     transform: scale(1.06);
 }

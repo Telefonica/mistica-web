@@ -7,10 +7,12 @@ document.querySelectorAll('.mistica-counter').forEach((counterEl) => {
     const min = Number(input.min);
     const max = Number(input.max);
     const step = Number(input.step);
+    const counterLabel = input.dataset.misticaCounterLabel;
 
     const normalizeValue = () => {
         const normalizedValue = Math.max(min, Math.min(max, input.value));
         input.value = normalizedValue;
+        input.setAttribute('aria-label', `${normalizedValue}, ${counterLabel}. Mínimo ${min}, máximo ${max}`);
         decreaseButton.disabled = normalizedValue === min;
         increaseButton.disabled = normalizedValue === max;
     };
@@ -26,4 +28,9 @@ document.querySelectorAll('.mistica-counter').forEach((counterEl) => {
     });
 
     input.addEventListener('change', normalizeValue);
+    normalizeValue();
+    // small timeout to avoid screen readers reading the initial value when page loads
+    setTimeout(() => {
+        input.setAttribute('aria-live', 'polite');
+    }, 100);
 });
