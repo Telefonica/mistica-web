@@ -289,12 +289,15 @@ export const FeedbackScreen = ({
 
 export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {skinName} = useTheme();
+    const {skinName, themeVariants} = useTheme();
 
     return (
         <FeedbackScreen
             {...props}
-            isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}
+            isInverse={
+                themeVariants.successFeedback === 'inverse' &&
+                (!props.unstable_inlineInDesktop || isTabletOrSmaller)
+            }
             hapticFeedback="success"
             asset={
                 skinName === VIVO_SKIN ? (

@@ -1,3 +1,4 @@
+import type {Variant} from '../../theme-variant-context';
 import type {Colors} from './colors';
 
 export type {Colors} from './colors';
@@ -80,12 +81,18 @@ export type BorderRadiiConfig = {
     mediaSmall: string;
 };
 
+export type ThemeVariantsConfig = {
+    successFeedback: Variant;
+    brandLoadingScreen: Variant;
+};
+
 export type Skin = {
     name: SkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
+    themeVariants?: ThemeVariantsConfig;
 };
 
 export type KnownSkin = {
@@ -94,4 +101,5 @@ export type KnownSkin = {
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
+    themeVariants?: ThemeVariantsConfig;
 };

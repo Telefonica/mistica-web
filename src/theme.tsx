@@ -2,7 +2,14 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {BorderRadiiConfig, Colors, Skin, SkinName, TextPresetsConfig} from './skins/types';
+import type {
+    BorderRadiiConfig,
+    Colors,
+    Skin,
+    SkinName,
+    TextPresetsConfig,
+    ThemeVariantsConfig,
+} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 import type {Dictionary, TextToken} from './text-tokens';
 
@@ -164,6 +171,7 @@ export type Theme = {
     colorValues: Colors;
     borderRadii: BorderRadiiConfig;
     textPresets: TextPresetsConfig;
+    themeVariants: ThemeVariantsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
