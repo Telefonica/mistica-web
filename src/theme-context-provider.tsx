@@ -15,7 +15,11 @@ import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
 import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
-import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
+import {
+    defaultBorderRadiiConfig,
+    defaultTextPresetsConfig,
+    defaultThemeVarantsConfig,
+} from './skins/defaults';
 import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
@@ -180,8 +184,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
             },
-            textPresets,
             borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+            textPresets,
+            themeVariants: theme.skin.themeVariants ?? defaultThemeVarantsConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
