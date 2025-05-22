@@ -145,9 +145,14 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 .join(',')}
         },
         textPresets: ${JSON.stringify(jsonSort(textTokens))},
-        themeVariants: ${Object.entries(designTokens.themeVariant)
-            .map(([componentName, variantDescription]) => `'${componentName}': '${variantDescription.value}'`)
-            .join(',')},
+        themeVariants: {
+            ${Object.entries(designTokens.themeVariant)
+                .map(
+                    ([componentName, variantDescription]) =>
+                        `'${componentName}': '${variantDescription.value}'`
+                )
+                .join(',')},
+        },
     };
     return skin;
 };
