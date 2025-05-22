@@ -119,11 +119,19 @@
         --mistica-boxed-border: none;
     }
 
+    [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-inputBorder);
+    }
+
     [data-mistica-color-scheme='light'][data-mistica-skin] > *,
     [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
     [data-mistica-color-scheme='light'] .mistica-card > *,
     [data-mistica-color-scheme='light'] .mistica-snap-card > * {
         --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    }
+
+    [data-mistica-color-scheme='light'] [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
     }
 }
 
@@ -132,6 +140,10 @@
 [data-mistica-color-scheme='dark'] .mistica-card > *,
 [data-mistica-color-scheme='dark'] .mistica-snap-card > * {
     --mistica-boxed-border: none;
+}
+
+[data-mistica-color-scheme='dark'] [data-mistica-variant='inverse'] > * {
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
 }
 
 [data-mistica-skin] {
