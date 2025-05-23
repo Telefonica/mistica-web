@@ -4,7 +4,6 @@ import * as mq from './media-queries.css';
 import {applyAlpha} from './utils/color';
 import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
-import {desktopMediumColumn, desktopSmallColumn} from './grid-layout.css';
 
 const bulletBase = style([
     sprinkles({
@@ -303,60 +302,13 @@ export const carouselArrowButton = style([
     },
 ]);
 
-export const carouselPrevArrowButton = style([
-    carouselArrowButton,
-    {
-        left: -arrowButtonSize / 2,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                left: `calc(${responsiveLayoutSideMargin} * -1)`,
-            },
-            [mq.largeDesktop]: {
-                left: -(24 + arrowButtonSize),
-            },
-        },
-        selectors: {
-            [`${desktopSmallColumn} &`]: {
-                left: -arrowButtonSize / 2,
-            },
-            [`${desktopMediumColumn} &`]: {
-                left: -arrowButtonSize / 2,
-            },
-        },
-    },
-]);
-
-export const carouselNextArrowButton = style([
-    carouselArrowButton,
-    {
-        right: -arrowButtonSize / 2,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                right: `calc(${responsiveLayoutSideMargin} * -1)`,
-            },
-            [mq.largeDesktop]: {
-                right: -(24 + arrowButtonSize),
-            },
-        },
-        selectors: {
-            [`${desktopSmallColumn} &`]: {
-                right: -arrowButtonSize / 2,
-            },
-            [`${desktopMediumColumn} &`]: {
-                right: -arrowButtonSize / 2,
-            },
-        },
-    },
-]);
-
 export const carouselBullets = style([
     {
         paddingBottom: 2,
     },
     sprinkles({
         display: 'flex',
-        justifyContent: 'center',
-        paddingTop: 24,
+        paddingTop: 16,
     }),
 ]);
 

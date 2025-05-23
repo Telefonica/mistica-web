@@ -123,6 +123,7 @@ export {
     useCarouselContext,
     CarouselContextConsumer,
 } from './carousel';
+export {CarouselPageControls} from './carousel-page-controls';
 export {Grid, GridItem} from './grid';
 export {default as Drawer} from './drawer';
 export {default as Timeline, TimelineItem} from './timeline';

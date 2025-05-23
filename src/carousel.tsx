@@ -16,15 +16,26 @@ import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
+import {IconButton, ToggleIconButton} from './icon-button';
+import {Box, IconPauseFilled, IconPlayFilled} from '../playroom/components';
 import * as tokens from './text-tokens';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
-const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
+const useShouldAutoplay = (
+    autoplay: boolean,
+    ref: React.RefObject<HTMLElement>
+): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setSouldAutoPlay: (enabled: boolean) => void} => {
+    const [isAutoplayEnabled, setIsAutoplayEnabled] = React.useState(!!autoplay);
+
     const isDocumentVisible = useDocumentVisibility();
     const isInViewport = useIsInViewport(ref, false);
-    return isInViewport && isDocumentVisible && !!autoplay;
+    return {
+        isAutoplayEnabled: isAutoplayEnabled && !!autoplay,
+        shouldAutoplay: isInViewport && isDocumentVisible && !!autoplay && isAutoplayEnabled,
+        setSouldAutoPlay: setIsAutoplayEnabled,
+    };
 };
 
 type PageBulletsProps = {
@@ -88,6 +99,8 @@ type CarouselControls = {
     goPrev: () => void;
     goNext: () => void;
     goToPage: GoToPage;
+    prevArrowEnabled: boolean;
+    nextArrowEnabled: boolean;
     bulletsProps: PageBulletsProps;
 };
 
@@ -95,6 +108,8 @@ const CarouselContext = React.createContext<CarouselControls>({
     goPrev: defaultGoPrev,
     goNext: defaultGoNext,
     goToPage: defaultGoToPage,
+    prevArrowEnabled: false,
+    nextArrowEnabled: false,
     bulletsProps: defaultBulletProps,
 });
 
@@ -103,10 +118,14 @@ const CarouselControlsSetterContext = React.createContext<{
     setGoNext: (goNext: () => void) => void;
     setGoToPage: (goToPage: GoToPage) => void;
     setBulletsProps: (bulletsProps: PageBulletsProps) => void;
+    setPrevArrowEnabled: (prevArrowEnabled: boolean) => void;
+    setNextArrowEnabled: (nextArrowEnabled: boolean) => void;
 } | null>(null);
 
 export const CarouselContextProvider = ({children}: {children: React.ReactNode}): JSX.Element => {
     const [bulletsProps, setBulletsProps] = React.useState<PageBulletsProps>(defaultBulletProps);
+    const [prevArrowEnabled, setPrevArrowEnabled] = React.useState<boolean>(false);
+    const [nextArrowEnabled, setNextArrowEnabled] = React.useState<boolean>(false);
     const goPrevRef = React.useRef<() => void>(defaultGoPrev);
     const goNextRef = React.useRef<() => void>(defaultGoNext);
     const goToPageRef = React.useRef<GoToPage>(defaultGoToPage);
@@ -122,9 +141,11 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
             goToPage: (pageIndex, animate = true) => {
                 goToPageRef.current(pageIndex, animate);
             },
+            prevArrowEnabled,
+            nextArrowEnabled,
             bulletsProps,
         }),
-        [bulletsProps]
+        [bulletsProps, nextArrowEnabled, prevArrowEnabled]
     );
 
     return (
@@ -141,6 +162,8 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
                         goToPageRef.current = goToPage;
                     },
                     setBulletsProps,
+                    setPrevArrowEnabled,
+                    setNextArrowEnabled,
                 }}
             >
                 {children}
@@ -239,6 +262,76 @@ const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Arra
     return 0;
 };
 
+export type CarouselPageControlsProps = {bleedLeft?: boolean; bleedRight?: boolean};
+type InternalCarouselPageControlsProps = CarouselPageControlsProps & {
+    goPrev: () => void;
+    goNext: () => void;
+    prevArrowEnabled: boolean;
+    nextArrowEnabled: boolean;
+};
+
+export const InternalCarouselPageControls = ({
+    bleedLeft,
+    bleedRight,
+    goPrev,
+    goNext,
+    prevArrowEnabled,
+    nextArrowEnabled,
+}: InternalCarouselPageControlsProps): JSX.Element => {
+    const {texts, t} = useTheme();
+    return (
+        <Inline space={8}>
+            <IconButton
+                Icon={IconChevronLeftRegular}
+                aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
+                type="neutral"
+                backgroundType="soft"
+                small
+                bleedLeft={bleedLeft}
+                onPress={goPrev}
+                disabled={!prevArrowEnabled}
+            />
+            <IconButton
+                Icon={IconChevronRightRegular}
+                aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
+                type="neutral"
+                backgroundType="soft"
+                small
+                bleedRight={bleedRight}
+                onPress={goNext}
+                disabled={!nextArrowEnabled}
+            />
+        </Inline>
+    );
+};
+
+type InternalCarouselAutoplayControlProps = {
+    isAutoplayEnabled: boolean;
+    onAutoplayChanged: (autoplay: boolean) => void;
+};
+
+export const InternalCarouselAutoplayControl = ({
+    isAutoplayEnabled,
+    onAutoplayChanged,
+}: InternalCarouselAutoplayControlProps): JSX.Element => (
+    <ToggleIconButton
+        checkedProps={{
+            Icon: IconPauseFilled,
+            type: 'neutral',
+            'aria-label': 'Enable autoplay',
+        }}
+        uncheckedProps={{
+            Icon: IconPlayFilled,
+            type: 'neutral',
+            'aria-label': 'Pause autoplay',
+        }}
+        bleedLeft
+        small
+        onChange={onAutoplayChanged}
+        checked={isAutoplayEnabled}
+    />
+);
+
 const DEFAULT_AUTOPLAY_TIME = 5000;
 
 type BaseCarouselProps = {
@@ -280,7 +373,7 @@ const BaseCarousel = ({
     onPageChange,
     dataAttributes,
 }: BaseCarouselProps): JSX.Element => {
-    const {texts, platformOverrides, skinName, t} = useTheme();
+    const {platformOverrides, skinName} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
@@ -309,8 +402,8 @@ const BaseCarousel = ({
         ? calcPagesScrollPositions(itemScrollPositions, Math.ceil(items.length / itemsToScroll))
         : pagesScrollPositions;
 
-    const showNextArrow = scrollRight !== 0;
-    const showPrevArrow = scrollLeft !== 0;
+    const nextArrowEnabled = scrollRight !== 0;
+    const prevArrowEnabled = scrollLeft !== 0;
 
     React.useEffect(() => {
         if (carouselRef.current) {
@@ -399,7 +492,7 @@ const BaseCarousel = ({
         }
     }, [scrollPositions]);
 
-    const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
+    const {isAutoplayEnabled, shouldAutoplay, setSouldAutoPlay} = useShouldAutoplay(!!autoplay, carouselRef);
 
     React.useEffect(() => {
         if (initialActiveItem !== undefined) {
@@ -471,8 +564,10 @@ const BaseCarousel = ({
             controlsSetter.setGoNext(goNext);
             controlsSetter.setGoToPage(goToPage);
             controlsSetter.setBulletsProps(bulletsProps);
+            controlsSetter.setPrevArrowEnabled(prevArrowEnabled);
+            controlsSetter.setNextArrowEnabled(nextArrowEnabled);
         }
-    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
+    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage, prevArrowEnabled, nextArrowEnabled]);
 
     let bullets: React.ReactNode = null;
 
@@ -488,16 +583,6 @@ const BaseCarousel = ({
     return (
         <div {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}>
             <div className={styles.carouselContainer}>
-                <ThemeVariant isInverse={false}>
-                    <BaseTouchable
-                        className={styles.carouselPrevArrowButton}
-                        aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
-                        onPress={goPrev}
-                        disabled={!showPrevArrow}
-                    >
-                        <IconChevronLeftRegular />
-                    </BaseTouchable>
-                </ThemeVariant>
                 <div
                     className={classNames(styles.carousel, {
                         [styles.centeredCarousel]: centered,
@@ -544,32 +629,44 @@ const BaseCarousel = ({
                         </div>
                     ))}
                 </div>
-                <ThemeVariant isInverse={false}>
-                    <BaseTouchable
-                        className={styles.carouselNextArrowButton}
-                        aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
-                        onPress={goNext}
-                        disabled={!showNextArrow}
-                    >
-                        <IconChevronRightRegular />
-                    </BaseTouchable>
-                </ThemeVariant>
             </div>
-            {bullets && (
-                <div
-                    className={classNames(
-                        styles.carouselBullets,
-                        // when renderBullets is provided, we let the consumer decide if the bullets should be hidden
-                        !renderBullets && {
-                            [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
-                            [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
-                            [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
-                        }
+            <Box paddingTop={8}>
+                <Inline space="between">
+                    {!!autoplay && (
+                        <InternalCarouselAutoplayControl
+                            isAutoplayEnabled={isAutoplayEnabled}
+                            onAutoplayChanged={(autoplayEnabled: boolean) => {
+                                if (!nextArrowEnabled && autoplayEnabled) {
+                                    goToPage(0);
+                                }
+                                setSouldAutoPlay(autoplayEnabled);
+                            }}
+                        />
                     )}
-                >
-                    {bullets}
-                </div>
-            )}
+                    {bullets && (
+                        <div
+                            className={classNames(
+                                styles.carouselBullets,
+                                // when renderBullets is provided, we let the consumer decide if the bullets should be hidden
+                                !renderBullets && {
+                                    [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
+                                    [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
+                                    [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
+                                }
+                            )}
+                        >
+                            {bullets}
+                        </div>
+                    )}
+                    <InternalCarouselPageControls
+                        bleedRight
+                        goNext={goNext}
+                        goPrev={goPrev}
+                        prevArrowEnabled={prevArrowEnabled}
+                        nextArrowEnabled={nextArrowEnabled}
+                    />
+                </Inline>
+            </Box>
         </div>
     );
 };
@@ -700,7 +797,7 @@ export const Slideshow = ({
     dataAttributes,
     inverseBullets = true,
 }: SlideshowProps): JSX.Element => {
-    const {texts, platformOverrides, t} = useTheme();
+    const {platformOverrides} = useTheme();
     const controlsSetter = React.useContext(CarouselControlsSetterContext);
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
@@ -734,8 +831,6 @@ export const Slideshow = ({
         [carouselRef]
     );
 
-    const showNextArrow = scrollRight !== 0;
-    const showPrevArrow = scrollLeft !== 0;
     const currentIndex = carouselRef.current
         ? Math.floor((scrollLeft + carouselRef.current.clientWidth / 2) / carouselRef.current.clientWidth)
         : 0;
@@ -827,16 +922,6 @@ export const Slideshow = ({
                     })}
                     {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
                 >
-                    <ThemeVariant isInverse={false}>
-                        <BaseTouchable
-                            className={styles.slideshowPrevArrowButton}
-                            aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
-                            onPress={goPrev}
-                            disabled={!showPrevArrow}
-                        >
-                            <IconChevronLeftRegular />
-                        </BaseTouchable>
-                    </ThemeVariant>
                     <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                         <div className={styles.slideshow} ref={carouselRef}>
                             {items.map((item, index) => (
@@ -852,16 +937,6 @@ export const Slideshow = ({
                             ))}
                         </div>
                     </div>
-                    <ThemeVariant isInverse={false}>
-                        <BaseTouchable
-                            className={styles.slideshowNextArrowButton}
-                            aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
-                            onPress={goNext}
-                            disabled={!showNextArrow}
-                        >
-                            <IconChevronRightRegular />
-                        </BaseTouchable>
-                    </ThemeVariant>
                     {withBullets && items.length > 1 && (
                         <ThemeVariant isInverse={inverseBullets}>
                             <div className={styles.slideshowBullets}>
