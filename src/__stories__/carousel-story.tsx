@@ -36,6 +36,7 @@ type Args = {
     mobilePageOffset: (typeof mobilePageOffsetOptions)[number];
     autoplay: boolean;
     loop: boolean;
+    withControls: boolean;
     initialActiveItem: number;
 };
 
@@ -50,6 +51,7 @@ export const Default: StoryComponent<Args> = ({
     mobilePageOffset,
     autoplay,
     loop,
+    withControls,
     initialActiveItem,
 }) => {
     const [pageInfo, setPageInfo] = React.useState<{
@@ -76,6 +78,7 @@ export const Default: StoryComponent<Args> = ({
                         itemsToScroll={itemsToScroll}
                         mobilePageOffset={mobilePageOffset}
                         autoplay={autoplay ? {time: 5000, loop} : false}
+                        withControls={withControls}
                         onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
@@ -118,6 +121,7 @@ Default.args = {
     free: false,
     autoplay: false,
     loop: false,
+    withControls: true,
     itemsToScroll: 0,
     initialActiveItem: 0,
     mobilePageOffset: 'regular',

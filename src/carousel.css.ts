@@ -305,6 +305,8 @@ export const carouselArrowButton = style([
 export const carouselBullets = style([
     {
         paddingBottom: 2,
+        paddingLeft: 8,
+        paddingRight: 8,
     },
     sprinkles({
         display: 'flex',

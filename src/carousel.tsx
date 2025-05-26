@@ -351,6 +351,7 @@ type BaseCarouselProps = {
     /** centered mode only applies to mobile. It includes a horizontal padding of half of the size of an item to show the items centered */
     centered?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
+    withControls?: boolean;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
     children?: void;
@@ -370,6 +371,7 @@ const BaseCarousel = ({
     free,
     centered,
     autoplay,
+    withControls = true,
     onPageChange,
     dataAttributes,
 }: BaseCarouselProps): JSX.Element => {
@@ -580,6 +582,22 @@ const BaseCarousel = ({
     const largePageOffset = '64px';
     const vivoNewMobilePageOffset = '36px';
 
+    const bulletsContainer = (
+        <div
+            className={classNames(
+                styles.carouselBullets,
+                // when renderBullets is provided, we let the consumer decide if the bullets should be hidden
+                !renderBullets && {
+                    [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
+                    [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
+                    [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
+                }
+            )}
+        >
+            {bullets}
+        </div>
+    );
+
     return (
         <div {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}>
             <div className={styles.carouselContainer}>
@@ -630,43 +648,35 @@ const BaseCarousel = ({
                     ))}
                 </div>
             </div>
-            <Box paddingTop={8}>
-                <Inline space="between">
-                    {!!autoplay && (
-                        <InternalCarouselAutoplayControl
-                            isAutoplayEnabled={isAutoplayEnabled}
-                            onAutoplayChanged={(autoplayEnabled: boolean) => {
-                                if (!nextArrowEnabled && autoplayEnabled) {
-                                    goToPage(0);
-                                }
-                                setSouldAutoPlay(autoplayEnabled);
-                            }}
-                        />
-                    )}
-                    {bullets && (
-                        <div
-                            className={classNames(
-                                styles.carouselBullets,
-                                // when renderBullets is provided, we let the consumer decide if the bullets should be hidden
-                                !renderBullets && {
-                                    [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
-                                    [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
-                                    [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
-                                }
+            {pagesCount > 1 && (
+                <Box paddingTop={8}>
+                    {withControls ? (
+                        <Inline space="between">
+                            {!!autoplay && (
+                                <InternalCarouselAutoplayControl
+                                    isAutoplayEnabled={isAutoplayEnabled}
+                                    onAutoplayChanged={(autoplayEnabled: boolean) => {
+                                        if (!nextArrowEnabled && autoplayEnabled) {
+                                            goToPage(0);
+                                        }
+                                        setSouldAutoPlay(autoplayEnabled);
+                                    }}
+                                />
                             )}
-                        >
-                            {bullets}
-                        </div>
+                            {bulletsContainer}
+                            <InternalCarouselPageControls
+                                bleedRight
+                                goNext={goNext}
+                                goPrev={goPrev}
+                                prevArrowEnabled={prevArrowEnabled}
+                                nextArrowEnabled={nextArrowEnabled}
+                            />
+                        </Inline>
+                    ) : (
+                        bullets && <Inline space="around">{bulletsContainer}</Inline>
                     )}
-                    <InternalCarouselPageControls
-                        bleedRight
-                        goNext={goNext}
-                        goPrev={goPrev}
-                        prevArrowEnabled={prevArrowEnabled}
-                        nextArrowEnabled={nextArrowEnabled}
-                    />
-                </Inline>
-            </Box>
+                </Box>
+            )}
         </div>
     );
 };
@@ -685,6 +695,7 @@ type CarouselProps = {
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
+    withControls?: boolean;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
 
@@ -729,6 +740,7 @@ type CenteredCarouselProps = {
     itemStyle?: React.CSSProperties;
     itemClassName?: string;
     withBullets?: boolean;
+    withControls?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
     initialActiveItem?: number;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
@@ -743,6 +755,7 @@ export const CenteredCarousel = ({
     itemClassName,
     withBullets,
     renderBullets,
+    withControls = true,
     initialActiveItem,
     onPageChange,
     dataAttributes,
@@ -760,6 +773,7 @@ export const CenteredCarousel = ({
             gap={0}
             withBullets={withBullets}
             renderBullets={renderBullets}
+            withControls={withControls}
             initialActiveItem={initialActiveItem}
             onPageChange={onPageChange}
             dataAttributes={dataAttributes}
@@ -772,6 +786,7 @@ type SlideshowProps = {
     withBullets?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
     initialPageIndex?: number;
+    withControls?: boolean;
     onPageChange?: (newPageIndex: number) => void;
     dataAttributes?: DataAttributes;
     inverseBullets?: boolean;
