@@ -39,8 +39,6 @@ type Props = {
     className?: string;
     role?: string;
     'aria-labelledby'?: string;
-    'aria-live'?: 'polite' | 'off' | 'assertive';
-    'aria-atomic'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
@@ -50,8 +48,6 @@ const Stack = ({
     children,
     role,
     'aria-labelledby': ariaLabelledby,
-    'aria-live': ariaLive,
-    'aria-atomic': ariaAtomic,
     dataAttributes,
 }: Props): JSX.Element => {
     const isFlexStack = typeof space === 'string';
@@ -62,8 +58,6 @@ const Stack = ({
             style={applyCssVars(calcInlineVars(space))}
             role={role}
             aria-labelledby={ariaLabelledby}
-            aria-live={ariaLive}
-            aria-atomic={ariaAtomic}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             {React.Children.map(children, (child) => (
