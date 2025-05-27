@@ -758,8 +758,6 @@ type BoxedRowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
-    'aria-live'?: 'polite' | 'off' | 'assertive';
-    'aria-atomic'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
