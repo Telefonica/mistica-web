@@ -74,7 +74,14 @@ type Args = {
     overInverse: boolean;
 };
 
-const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
+const Template: StoryComponent<
+    Args & {
+        boxed?: boolean;
+        inverse?: boolean;
+        'aria-live'?: 'off' | 'polite' | 'assertive';
+        'aria-atomic'?: boolean;
+    }
+> = ({
     boxed,
     headline,
     title,
@@ -91,6 +98,8 @@ const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
     overInverse,
     inverse,
     danger,
+    'aria-live': ariaLive,
+    'aria-atomic': ariaAtomic,
 }) => {
     const extraContent = extra ? <Placeholder height={56} /> : undefined;
 
@@ -105,26 +114,45 @@ const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
                 controlProps = {href: 'https://example.org', newTab: true, right: null}; // right null removes the chevron
                 break;
             case 'switch':
-                controlProps = {switch: {defaultValue: true, onChange: () => {}}};
+                controlProps = {
+                    switch: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
+                };
                 break;
             case 'switch and onPress':
                 controlProps = {
-                    switch: {defaultValue: true, onChange: () => {}},
+                    switch: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
                     onPress,
                 };
                 break;
             case 'checkbox':
-                controlProps = {checkbox: {defaultValue: true, onChange: () => {}}};
+                controlProps = {
+                    checkbox: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
+                };
                 break;
             case 'checkbox and onPress':
                 controlProps = {
-                    checkbox: {defaultValue: true, onChange: () => {}},
+                    checkbox: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
                     onPress,
                 };
                 break;
             case 'checkbox with custom element':
                 controlProps = {
-                    checkbox: {defaultValue: true, onChange: () => {}},
+                    checkbox: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
                     right: () => (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
@@ -229,7 +257,7 @@ const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
 
     let row = 1;
     const list = (
-        <ListComponent dataAttributes={{testid: 'list'}}>
+        <ListComponent dataAttributes={{testid: 'list'}} aria-live={ariaLive} aria-atomic={ariaAtomic}>
             <RowComponent
                 headline={headline}
                 title={title}
@@ -421,9 +449,23 @@ const defaultArgs = {
     overInverse: false,
 };
 
-export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
+export const RowListStory: StoryComponent<
+    Args & {
+        'aria-live': 'off' | 'polite' | 'assertive';
+        'aria-atomic': boolean;
+    }
+> = (args) => <Template {...args} />;
 RowListStory.storyName = 'RowList';
-RowListStory.args = defaultArgs;
+RowListStory.args = {...defaultArgs, 'aria-live': 'off', 'aria-atomic': false};
+RowListStory.argTypes = {
+    'aria-live': {
+        control: {type: 'select'},
+        options: ['off', 'polite', 'assertive'],
+    },
+    'aria-atomic': {
+        control: {type: 'boolean'},
+    },
+};
 
 export const BoxedRowListStory: StoryComponent<Args & {inverse: boolean}> = (args) => (
     <Template boxed {...args} />

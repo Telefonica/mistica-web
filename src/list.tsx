@@ -677,6 +677,8 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    'aria-live'?: 'polite' | 'off' | 'assertive';
+    'aria-atomic'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
@@ -684,14 +686,19 @@ export const RowList = ({
     children,
     ariaLabelledby,
     role = 'list',
+    'aria-live': ariaLive = 'off',
+    'aria-atomic': ariaAtomic = false,
     dataAttributes,
 }: RowListProps): JSX.Element => {
     const childrenContent = React.Children.toArray(children).filter(Boolean);
     const lastIndex = childrenContent.length - 1;
+
     return (
         <div
             role={role}
             aria-labelledby={ariaLabelledby}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
             {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
         >
             {childrenContent.map((child, index) => (
@@ -751,6 +758,8 @@ type BoxedRowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    'aria-live'?: 'polite' | 'off' | 'assertive';
+    'aria-atomic'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
