@@ -51,6 +51,10 @@ export default {
             ],
             control: {type: 'select'},
         },
+        'aria-live': {
+            options: ['off', 'polite', 'assertive'],
+            control: {type: 'select'},
+        },
     },
     parameters: {
         fullScreen: true,
@@ -72,14 +76,14 @@ type Args = {
     disabled: boolean;
     danger: boolean;
     overInverse: boolean;
+    'aria-live': 'off' | 'polite' | 'assertive';
+    'aria-atomic': boolean;
 };
 
 const Template: StoryComponent<
     Args & {
         boxed?: boolean;
         inverse?: boolean;
-        'aria-live'?: 'off' | 'polite' | 'assertive';
-        'aria-atomic'?: boolean;
     }
 > = ({
     boxed,
@@ -447,25 +451,13 @@ const defaultArgs = {
     disabled: false,
     danger: false,
     overInverse: false,
+    'aria-live': 'off' as const,
+    'aria-atomic': false as const,
 };
 
-export const RowListStory: StoryComponent<
-    Args & {
-        'aria-live': 'off' | 'polite' | 'assertive';
-        'aria-atomic': boolean;
-    }
-> = (args) => <Template {...args} />;
+export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
 RowListStory.storyName = 'RowList';
-RowListStory.args = {...defaultArgs, 'aria-live': 'off', 'aria-atomic': false};
-RowListStory.argTypes = {
-    'aria-live': {
-        control: {type: 'select'},
-        options: ['off', 'polite', 'assertive'],
-    },
-    'aria-atomic': {
-        control: {type: 'boolean'},
-    },
-};
+RowListStory.args = defaultArgs;
 
 export const BoxedRowListStory: StoryComponent<Args & {inverse: boolean}> = (args) => (
     <Template boxed {...args} />
