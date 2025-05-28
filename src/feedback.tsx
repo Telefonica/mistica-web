@@ -59,15 +59,25 @@ const useHapticFeedback = (type?: HapticFeedback) => {
     }, [type]);
 };
 
-const renderFeedbackBody = (
-    {
-        asset,
-        title,
-        description,
-        extra,
-    }: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'extra'>,
-    animateText: boolean
-) => {
+interface RenderFeedbackBodyProps {
+    asset: React.ReactNode;
+    title: string;
+    description?: React.ReactNode;
+    extra?: React.ReactNode;
+    animateText: boolean;
+    setShouldRead: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const RenderFeedbackBody = ({
+    asset,
+    title,
+    description,
+    extra,
+    animateText,
+    setShouldRead,
+}: RenderFeedbackBodyProps): JSX.Element => {
+    const [hideOthers, setHideOthers] = React.useState(animateText);
+    const divRef = React.useRef<HTMLDivElement>(null);
     const normalizedDescription =
         description && Array.isArray(description) ? (
             <Stack space={16}>
@@ -78,13 +88,25 @@ const renderFeedbackBody = (
         ) : (
             description
         );
+    const handleAnimationEnd = () => {
+        setShouldRead(true);
+        divRef.current?.focus();
+        setHideOthers(false);
+    };
+
     return (
         <Stack space={24}>
             <div className={styles.assetContainer} data-testid="icon">
                 {asset}
             </div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
-                <div className={classnames(animateText && styles.feedbackTextAppearFast)} data-testid="title">
+                <div
+                    ref={divRef}
+                    className={classnames(animateText && styles.feedbackTextAppearFast)}
+                    data-testid="title"
+                    onAnimationEnd={handleAnimationEnd}
+                    tabIndex={-1}
+                >
                     <Text6 as="h1">{title}</Text6>
                 </div>
 
@@ -92,6 +114,7 @@ const renderFeedbackBody = (
                     <div
                         className={classnames(animateText && styles.feedbackTextAppearMedium)}
                         data-testid="description"
+                        aria-hidden={hideOthers}
                     >
                         {normalizedDescription && (
                             <Text3 regular color={vars.colors.textSecondary}>
@@ -110,6 +133,7 @@ const renderFeedbackBody = (
                                     : styles.feedbackTextAppearMedium)
                         )}
                         data-testid="slot"
+                        aria-hidden={hideOthers}
                     >
                         {extra}
                     </div>
@@ -119,12 +143,16 @@ const renderFeedbackBody = (
     );
 };
 
-const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
+const renderInlineFeedbackBody = (
+    feedbackBody: React.ReactNode,
+    buttons: ButtonGroupProps,
+    shouldReadButtons: boolean
+) => {
     const hasButtons = checkHasButtons(buttons);
     return (
         <Stack space={{desktop: 40, mobile: 24}}>
             {feedbackBody}
-            {hasButtons && <ButtonGroup {...buttons} />}
+            <div aria-hidden={!shouldReadButtons}>{hasButtons && <ButtonGroup {...buttons} />}</div>
         </Stack>
     );
 };
@@ -223,18 +251,30 @@ export const FeedbackScreen = ({
     const {isTabletOrSmaller} = useScreenSize();
 
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
+    const isAnimated = animateText && areAnimationsSupported(platformOverrides);
+    const [isShouldRead, setShouldRead] = React.useState(!isAnimated);
 
-    const feedbackBody = renderFeedbackBody(
-        {asset, title, description, extra},
-        animateText && areAnimationsSupported(platformOverrides)
+    const feedbackBody = (
+        <RenderFeedbackBody
+            asset={asset}
+            title={title}
+            description={description}
+            extra={extra}
+            animateText={isAnimated}
+            setShouldRead={setShouldRead}
+        />
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
-        return renderInlineFeedbackBody(feedbackBody, {
-            primaryButton,
-            secondaryButton,
-            link,
-        });
+        return renderInlineFeedbackBody(
+            feedbackBody,
+            {
+                primaryButton,
+                secondaryButton,
+                link,
+            },
+            isShouldRead
+        );
     }
 
     return (
@@ -261,6 +301,7 @@ export const FeedbackScreen = ({
                                     containerBgColor={
                                         isInverse ? vars.colors.backgroundBrand : vars.colors.background
                                     }
+                                    hideDivToScreenReaders={!isShouldRead}
                                 >
                                     <ResponsiveLayout>
                                         <div className={styles.container}>
@@ -385,6 +426,7 @@ export const SuccessFeedback = ({
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
     const {skinName, platformOverrides} = useTheme();
+    const [isShouldRead, setShouldRead] = React.useState(false);
 
     const asset =
         skinName === VIVO_SKIN ? (
@@ -394,15 +436,25 @@ export const SuccessFeedback = ({
         ) : (
             <IconSuccess size="100%" />
         );
-    const feedbackBody = renderFeedbackBody(
-        {asset, title, description, extra},
-        areAnimationsSupported(platformOverrides)
+    const feedbackBody = (
+        <RenderFeedbackBody
+            asset={asset}
+            title={title}
+            description={description}
+            extra={extra}
+            animateText={areAnimationsSupported(platformOverrides)}
+            setShouldRead={setShouldRead}
+        />
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
-        primaryButton,
-        secondaryButton,
-        link,
-    });
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        isShouldRead
+    );
 
     return renderFeedback({
         isInverse: true,

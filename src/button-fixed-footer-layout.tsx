@@ -15,6 +15,7 @@ type Props = {
     footerBgColor?: string;
     containerBgColor?: string;
     children: React.ReactNode;
+    hideDivToScreenReaders?: boolean;
     onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
@@ -26,6 +27,7 @@ const ButtonFixedFooterLayout = ({
     children,
     footerBgColor,
     containerBgColor,
+    hideDivToScreenReaders = false,
     onChangeFooterHeight,
 }: Props): JSX.Element => {
     const hasButton = !!button || !!secondaryButton;
@@ -36,22 +38,24 @@ const ButtonFixedFooterLayout = ({
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
             footer={
-                <InternalResponsiveLayout shouldExpandWhenNested="desktop">
-                    <Box
-                        paddingY={{
-                            mobile: 16,
-                            tablet: 32,
-                            desktop: 0,
-                        }}
-                    >
-                        <ButtonLayout
-                            primaryButton={button}
-                            secondaryButton={secondaryButton}
-                            align="full-width"
-                            link={link}
-                        />
-                    </Box>
-                </InternalResponsiveLayout>
+                <div aria-hidden={hideDivToScreenReaders}>
+                    <InternalResponsiveLayout shouldExpandWhenNested="desktop">
+                        <Box
+                            paddingY={{
+                                mobile: 16,
+                                tablet: 32,
+                                desktop: 0,
+                            }}
+                        >
+                            <ButtonLayout
+                                primaryButton={button}
+                                secondaryButton={secondaryButton}
+                                align="full-width"
+                                link={link}
+                            />
+                        </Box>
+                    </InternalResponsiveLayout>
+                </div>
             }
         >
             {children}
