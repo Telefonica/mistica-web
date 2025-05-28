@@ -299,9 +299,9 @@
     }
 }
 
-@media (min-width: 1368px) {
+@media (min-width: 1512px) {
     .mistica-responsive-layout {
-        --mistica-responsive-layout-margin: calc((100vw - 1224px) / 2);
+        --mistica-responsive-layout-margin: calc((100vw - 1416px) / 2);
     }
 }
 
