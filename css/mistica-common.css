@@ -34,8 +34,8 @@
 
     --vcolor-accordionChevronClosed: var(--mistica-color-inverse);
     --vcolor-accordionChevronOpen: var(--mistica-color-inverse);
-    --vcolor-accordionHover: var(--mistica-color-backgroundContainerBrandHover);
-    --vcolor-accordionActive: var(--mistica-color-backgroundContainerBrandPressed);
+    --vcolor-backgroundContainerHover: var(--mistica-color-backgroundContainerBrandHover);
+    --vcolor-backgroundConteinerPressed: var(--mistica-color-backgroundContainerBrandPressed);
 
     --vcolor-divider: var(--mistica-color-dividerInverse);
 
@@ -49,13 +49,17 @@
     --vcolor-switch-trackBackground: transparent;
     --vcolor-switch-handleChecked: var(--mistica-color-controlKnobInverse);
     --vcolor-switch-handleHover: var(--mistica-color-inverse);
+
+    --vcolor-rowChevron: var(--mistica-color-inverse);
 }
 
 [data-mistica-skin] > *,
 [data-mistica-variant='default'] > *,
 .mistica-card > *,
 .mistica-snap-card > *,
-.mistica-display-card > * {
+.mistica-display-card > *,
+.mistica-boxed > *,
+.mistica-boxed-row > * {
     --mistica-boxed-border: 1px solid var(--mistica-color-border);
     --vcolor-textPrimary: var(--mistica-color-textPrimary);
     --vcolor-textSecondary: var(--mistica-color-textSecondary);
@@ -89,8 +93,8 @@
 
     --vcolor-accordionChevronClosed: var(--mistica-color-neutralMedium);
     --vcolor-accordionChevronOpen: var(--mistica-color-neutralHigh);
-    --vcolor-accordionHover: var(--mistica-color-backgroundContainerHover);
-    --vcolor-accordionActive: var(--mistica-color-backgroundContainerPressed);
+    --vcolor-backgroundContainerHover: var(--mistica-color-backgroundContainerHover);
+    --vcolor-backgroundConteinerPressed: var(--mistica-color-backgroundContainerPressed);
 
     --vcolor-divider: var(--mistica-color-divider);
 
@@ -104,6 +108,8 @@
     --vcolor-switch-trackBackground: var(--mistica-color-backgroundAlternative);
     --vcolor-switch-handleChecked: var(--mistica-color-inverse);
     --vcolor-switch-handleHover: var(--mistica-color-neutralHigh);
+
+    --vcolor-rowChevron: var(--mistica-color-neutralMedium);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -976,21 +982,24 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     display: none;
 }
 
-.mistica-accordion-item__summary-body {
+.mistica-accordion-item__summary-body,
+.mistica-row__body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 2px;
 }
 
-.mistica-accordion-item__summary-title {
+.mistica-accordion-item__summary-title,
+.mistica-row__title {
     font-size: var(--mistica-font-size-3);
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-3);
     color: var(--vcolor-textPrimary);
 }
 
-.mistica-accordion-item__summary-subtitle {
+.mistica-accordion-item__summary-subtitle,
+.mistica-row__subtitle {
     font-size: var(--mistica-font-size-2);
     line-height: var(--mistica-line-height-2);
     font-weight: var(--mistica-font-weight-2);
@@ -1010,12 +1019,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 @media (pointer: fine) {
     .mistica-accordion-item__summary:hover {
-        background-color: var(--vcolor-accordionHover);
+        background-color: var(--vcolor-backgroundContainerHover);
     }
 }
 
 .mistica-accordion-item__summary:active {
-    background-color: var(--vcolor-accordionActive);
+    background-color: var(--vcolor-backgroundConteinerPressed);
 }
 
 .mistica-accordion-item::details-content {
@@ -1035,6 +1044,119 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 .mistica-accordion-item[open]::details-content {
     height: auto;
+}
+
+/* Lists */
+
+.mistica-list,
+.mistica-boxed-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.mistica-boxed-list {
+    gap: 16px;
+}
+
+.mistica-row__asset {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-self: flex-start;
+}
+
+.mistica-row,
+.mistica-boxed-row {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    transition: background-color 0.1s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-row {
+    position: relative;
+    margin: 0 -16px;
+}
+
+.mistica-row:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 32px);
+    height: 1px;
+    background-color: var(--vcolor-divider);
+}
+
+.mistica-row:last-child:after {
+    display: none;
+}
+
+.mistica-boxed-row {
+    border: var(--mistica-boxed-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+}
+
+.mistica-row > a,
+.mistica-boxed-row > a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    margin: -16px;
+    padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+@media (pointer: fine) {
+    .mistica-row > a:hover,
+    .mistica-boxed-row > a:hover {
+        background-color: var(--vcolor-backgroundContainerHover);
+    }
+}
+
+.mistica-row > a:active,
+.mistica-boxed-row > a:active {
+    background-color: var(--vcolor-backgroundConteinerPressed);
+}
+
+.mistica-row__body {
+    flex: 1;
+}
+
+.mistica-row__body > [class^='mistica-tag'] {
+    margin-bottom: 2px;
+}
+
+.mistica-row__description {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: 400;
+    color: var(--vcolor-textSecondary);
+}
+
+.mistica-row__right {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.mistica-row__chevron {
+    width: 16px;
+    height: 16px;
+    color: var(--vcolor-rowChevron);
+    align-self: center;
 }
 
 /* Grid Layout */
