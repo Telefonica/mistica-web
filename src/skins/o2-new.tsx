@@ -399,6 +399,10 @@ export const getO2NewSkin: GetKnownSkin = () => {
             title2: {weight: 'bold'},
             title3: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'bold'},
         },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
+        },
     };
     return skin;
 };

@@ -405,6 +405,10 @@ export const getVivoNewSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
         },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
+        },
     };
     return skin;
 };

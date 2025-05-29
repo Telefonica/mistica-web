@@ -417,6 +417,10 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
                 weight: 'regular',
             },
         },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
+        },
     };
     return skin;
 };

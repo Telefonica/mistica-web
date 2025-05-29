@@ -392,6 +392,10 @@ export const getBlauSkin: GetKnownSkin = () => {
             title2: {weight: 'light'},
             title3: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'light'},
         },
+        themeVariants: {
+            successFeedback: 'default',
+            brandLoadingScreen: 'default',
+        },
     };
     return skin;
 };

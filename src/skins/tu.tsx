@@ -401,6 +401,10 @@ export const getTuSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
         },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
+        },
     };
     return skin;
 };
