@@ -145,7 +145,7 @@ const renderFeedback = ({
     <InternalBoxed
         borderRadius={vars.borderRadii.legacyDisplay}
         desktopOnly
-        isInverse={isInverse}
+        variant={isInverse ? 'inverse' : 'default'}
         dataAttributes={dataAttributes}
     >
         <div className={styles.desktopContainer}>
@@ -387,7 +387,7 @@ export const SuccessFeedback = ({
     dataAttributes,
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
-    const {skinName, platformOverrides} = useTheme();
+    const {skinName, platformOverrides, themeVariants} = useTheme();
 
     const asset =
         skinName === VIVO_SKIN ? (
@@ -407,10 +407,12 @@ export const SuccessFeedback = ({
         link,
     });
 
+    const isInverse = themeVariants.successFeedback === 'inverse';
+
     return renderFeedback({
-        isInverse: true,
+        isInverse,
         body: (
-            <div className={styles.backgroundBrand}>
+            <div className={isInverse ? styles.backgroundBrand : undefined}>
                 <Box paddingX={{mobile: 16, tablet: 24, desktop: 0}}>
                     <Box paddingBottom={{desktop: 0, mobile: 48}} paddingTop={64}>
                         {inlineFeedbackBody}
