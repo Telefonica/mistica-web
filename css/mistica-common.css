@@ -44,6 +44,8 @@
     --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
     --vcolor-checkbox-background: transparent;
 
+    --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
+
     --vcolor-barTrack: var(--mistica-color-barTrackInverse);
 
     --vcolor-switch-trackBackground: transparent;
@@ -53,6 +55,7 @@
 
 [data-mistica-skin] > *,
 [data-mistica-variant='default'] > *,
+.mistica-boxed > *,
 .mistica-card > *,
 .mistica-snap-card > *,
 .mistica-display-card > * {
@@ -99,6 +102,8 @@
     --vcolor-checkbox-tick: var(--mistica-color-inverse);
     --vcolor-checkbox-background: var(--mistica-color-background);
 
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
+
     --vcolor-barTrack: var(--mistica-color-barTrack);
 
     --vcolor-switch-trackBackground: var(--mistica-color-backgroundAlternative);
@@ -114,11 +119,19 @@
         --mistica-boxed-border: none;
     }
 
+    [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-inputBorder);
+    }
+
     [data-mistica-color-scheme='light'][data-mistica-skin] > *,
     [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
     [data-mistica-color-scheme='light'] .mistica-card > *,
     [data-mistica-color-scheme='light'] .mistica-snap-card > * {
         --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    }
+
+    [data-mistica-color-scheme='light'] [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
     }
 }
 
@@ -127,6 +140,10 @@
 [data-mistica-color-scheme='dark'] .mistica-card > *,
 [data-mistica-color-scheme='dark'] .mistica-snap-card > * {
     --mistica-boxed-border: none;
+}
+
+[data-mistica-color-scheme='dark'] [data-mistica-variant='inverse'] > * {
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
 }
 
 [data-mistica-skin] {
@@ -1404,7 +1421,94 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     opacity: initial; /* avoid applying 0.5 opacity twice */
 }
 
+/* Counter */
+
+.mistica-counter {
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-backgroundContainer);
+    display: inline-flex;
+    gap: 8px;
+    overflow: hidden;
+    border: 1px solid var(--vcolor-inputBorder);
+}
+
+.mistica-counter input {
+    width: 3.75ch;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    caret-color: var(--mistica-color-textActivated);
+    color: var(--mistica-color-textPrimary);
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.mistica-counter__button {
+    user-select: none;
+    isolation: isolate;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--mistica-color-controlActivated);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-counter__button svg {
+    z-index: 1;
+}
+
+.mistica-counter__button:before {
+    z-index: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-brandLow);
+    transform: scale(0);
+    transition:
+        transform 0.2s ease-in-out,
+        background 0.1s ease-in-out;
+}
+
+@media (pointer: coarse) {
+    .mistica-counter__button:before {
+        transition: none;
+    }
+}
+
+@media (pointer: fine) {
+    .mistica-counter__button:hover:not(:disabled):before {
+        transform: scale(1);
+    }
+}
+
+.mistica-counter__button:active:not(:disabled):before {
+    transform: scale(1.06);
+}
+
+.mistica-counter__button:disabled {
+    cursor: default;
+    color: var(--mistica-color-control);
+}
+
 /* Slider */
+
 .mistica-slider {
     --slider-thumb-position: 50%;
     isolation: isolate;
