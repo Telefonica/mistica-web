@@ -36,7 +36,7 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     mediaSmall: '8px',
 };
 
-export const defaultThemeVarantsConfig: ThemeVariantsConfig = {
+export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
     brandLoadingScreen: 'inverse',
     successFeedback: 'inverse',
 };

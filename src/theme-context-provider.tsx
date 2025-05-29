@@ -18,7 +18,7 @@ import {fromHexToRgb} from './utils/color';
 import {
     defaultBorderRadiiConfig,
     defaultTextPresetsConfig,
-    defaultThemeVarantsConfig,
+    defaultThemeVariantsConfig,
 } from './skins/defaults';
 import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
@@ -186,7 +186,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             },
             borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
             textPresets,
-            themeVariants: theme.skin.themeVariants ?? defaultThemeVarantsConfig,
+            themeVariants: theme.skin.themeVariants ?? defaultThemeVariantsConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
