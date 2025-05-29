@@ -51,6 +51,10 @@ export default {
             ],
             control: {type: 'select'},
         },
+        'aria-live': {
+            options: ['off', 'polite', 'assertive'],
+            control: {type: 'select'},
+        },
     },
     parameters: {
         fullScreen: true,
@@ -72,9 +76,16 @@ type Args = {
     disabled: boolean;
     danger: boolean;
     overInverse: boolean;
+    'aria-live': 'off' | 'polite' | 'assertive';
+    'aria-atomic': boolean;
 };
 
-const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
+const Template: StoryComponent<
+    Args & {
+        boxed?: boolean;
+        inverse?: boolean;
+    }
+> = ({
     boxed,
     headline,
     title,
@@ -91,6 +102,8 @@ const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
     overInverse,
     inverse,
     danger,
+    'aria-live': ariaLive,
+    'aria-atomic': ariaAtomic,
 }) => {
     const extraContent = extra ? <Placeholder height={56} /> : undefined;
 
@@ -105,26 +118,45 @@ const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
                 controlProps = {href: 'https://example.org', newTab: true, right: null}; // right null removes the chevron
                 break;
             case 'switch':
-                controlProps = {switch: {defaultValue: true, onChange: () => {}}};
+                controlProps = {
+                    switch: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
+                };
                 break;
             case 'switch and onPress':
                 controlProps = {
-                    switch: {defaultValue: true, onChange: () => {}},
+                    switch: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
                     onPress,
                 };
                 break;
             case 'checkbox':
-                controlProps = {checkbox: {defaultValue: true, onChange: () => {}}};
+                controlProps = {
+                    checkbox: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
+                };
                 break;
             case 'checkbox and onPress':
                 controlProps = {
-                    checkbox: {defaultValue: true, onChange: () => {}},
+                    checkbox: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
                     onPress,
                 };
                 break;
             case 'checkbox with custom element':
                 controlProps = {
-                    checkbox: {defaultValue: true, onChange: () => {}},
+                    checkbox: {
+                        defaultValue: true,
+                        onChange: () => {},
+                    },
                     right: () => (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
@@ -229,7 +261,7 @@ const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
 
     let row = 1;
     const list = (
-        <ListComponent dataAttributes={{testid: 'list'}}>
+        <ListComponent dataAttributes={{testid: 'list'}} aria-live={ariaLive} aria-atomic={ariaAtomic}>
             <RowComponent
                 headline={headline}
                 title={title}
@@ -419,6 +451,8 @@ const defaultArgs = {
     disabled: false,
     danger: false,
     overInverse: false,
+    'aria-live': 'off' as const,
+    'aria-atomic': false as const,
 };
 
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;

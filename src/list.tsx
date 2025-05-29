@@ -673,25 +673,35 @@ export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     )
 );
 
+type CommonAccessibilityProps = {
+    'aria-live'?: 'polite' | 'off' | 'assertive';
+    'aria-atomic'?: boolean;
+};
+
 type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
-};
+} & CommonAccessibilityProps;
 
 export const RowList = ({
     children,
     ariaLabelledby,
     role = 'list',
+    'aria-live': ariaLive = 'off',
+    'aria-atomic': ariaAtomic = false,
     dataAttributes,
 }: RowListProps): JSX.Element => {
     const childrenContent = React.Children.toArray(children).filter(Boolean);
     const lastIndex = childrenContent.length - 1;
+
     return (
         <div
             role={role}
             aria-labelledby={ariaLabelledby}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
             {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
         >
             {childrenContent.map((child, index) => (
@@ -711,8 +721,8 @@ export const RowList = ({
 // danger + isInverse is not allowed
 type CommonBoxedRowProps =
     | {
-          danger: true;
           isInverse?: false;
+          danger: true;
       }
     | {
           isInverse?: boolean;
@@ -752,18 +762,22 @@ type BoxedRowListProps = {
     ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
-};
+} & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
     children,
     ariaLabelledby,
     role = 'list',
     dataAttributes,
+    'aria-live': ariaLive = 'off',
+    'aria-atomic': ariaAtomic = false,
 }: BoxedRowListProps): JSX.Element => (
     <Stack
         space={16}
         role={role}
         aria-labelledby={ariaLabelledby}
+        aria-live={ariaLive}
+        aria-atomic={ariaAtomic}
         dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
     >
         {children}
