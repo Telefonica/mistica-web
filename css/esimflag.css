@@ -123,6 +123,8 @@
     --mistica-color-textActivated: var(--mistica-esimflag-blue);
     --mistica-color-textBrand: var(--mistica-esimflag-blue);
     --mistica-color-inputBorder: var(--mistica-esimflag-grey4);
+    --mistica-color-completedStep: var(--mistica-esimflag-blue);
+    --mistica-color-completedStepInverse: var(--mistica-esimflag-blue80);
     --mistica-color-control: var(--mistica-esimflag-grey4);
     --mistica-color-controlActivated: var(--mistica-esimflag-blue);
     --mistica-color-controlInverse: var(--mistica-esimflag-blue20);
@@ -336,6 +338,8 @@
     --mistica-color-textActivated: var(--mistica-esimflag-blue30);
     --mistica-color-textBrand: var(--mistica-esimflag-blue30);
     --mistica-color-inputBorder: var(--mistica-esimflag-grey4);
+    --mistica-color-completedStep: var(--mistica-esimflag-blue);
+    --mistica-color-completedStepInverse: var(--mistica-esimflag-blue);
     --mistica-color-control: var(--mistica-esimflag-grey4);
     --mistica-color-controlActivated: var(--mistica-esimflag-blue);
     --mistica-color-controlInverse: var(--mistica-esimflag-grey4);
@@ -500,6 +504,8 @@
         --mistica-color-textActivated: var(--mistica-esimflag-blue30);
         --mistica-color-textBrand: var(--mistica-esimflag-blue30);
         --mistica-color-inputBorder: var(--mistica-esimflag-grey4);
+        --mistica-color-completedStep: var(--mistica-esimflag-blue);
+        --mistica-color-completedStepInverse: var(--mistica-esimflag-blue);
         --mistica-color-control: var(--mistica-esimflag-grey4);
         --mistica-color-controlActivated: var(--mistica-esimflag-blue);
         --mistica-color-controlInverse: var(--mistica-esimflag-grey4);
@@ -670,6 +676,8 @@
         --mistica-color-textActivated: var(--mistica-esimflag-blue);
         --mistica-color-textBrand: var(--mistica-esimflag-blue);
         --mistica-color-inputBorder: var(--mistica-esimflag-grey4);
+        --mistica-color-completedStep: var(--mistica-esimflag-blue);
+        --mistica-color-completedStepInverse: var(--mistica-esimflag-blue80);
         --mistica-color-control: var(--mistica-esimflag-grey4);
         --mistica-color-controlActivated: var(--mistica-esimflag-blue);
         --mistica-color-controlInverse: var(--mistica-esimflag-blue20);

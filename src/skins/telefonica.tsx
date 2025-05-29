@@ -108,6 +108,8 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textActivated: palette.telefonicaBlue,
             textBrand: palette.telefonicaBlue,
             inputBorder: palette.grey4,
+            completedStep: palette.telefonicaBlue,
+            completedStepInverse: palette.telefonicaBlue70,
             control: palette.grey3,
             controlActivated: palette.telefonicaBlue,
             controlInverse: palette.grey1,
@@ -259,6 +261,8 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textActivated: palette.telefonicaBlue,
             textBrand: palette.telefonicaBlue,
             inputBorder: palette.grey5,
+            completedStep: palette.telefonicaBlue,
+            completedStepInverse: palette.telefonicaBlue,
             control: palette.darkModeGrey6,
             controlActivated: palette.telefonicaBlue,
             controlInverse: palette.darkModeGrey6,
@@ -412,6 +416,10 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
                 size: {desktop: 28, mobile: 20},
                 weight: 'regular',
             },
+        },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
         },
     };
     return skin;

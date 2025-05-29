@@ -118,6 +118,8 @@ export const getO2NewSkin: GetKnownSkin = () => {
             textActivated: palette.beyondBlue,
             textBrand: palette.beyondBlue,
             inputBorder: palette.grey45,
+            completedStep: palette.beyondBlue,
+            completedStepInverse: palette.beyondBlue70,
             control: palette.grey45,
             controlActivated: palette.beyondBlue,
             controlInverse: palette.white,
@@ -269,6 +271,8 @@ export const getO2NewSkin: GetKnownSkin = () => {
             textActivated: palette.beyondBlue30,
             textBrand: palette.beyondBlue30,
             inputBorder: palette.grey45,
+            completedStep: palette.darkModeBeyondBlue,
+            completedStepInverse: palette.darkModeBeyondBlue,
             control: palette.grey45,
             controlActivated: palette.darkModeBeyondBlue,
             controlInverse: palette.grey45,
@@ -394,6 +398,10 @@ export const getO2NewSkin: GetKnownSkin = () => {
             title1: {weight: 'medium'},
             title2: {weight: 'bold'},
             title3: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'bold'},
+        },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
         },
     };
     return skin;

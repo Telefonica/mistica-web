@@ -72,6 +72,8 @@ const colors: Colors = {
     toggleAndroidBackgroundActive: '',
     controlKnobInverse: '',
     iosControlKnob: '',
+    completedStep: '',
+    completedStepInverse: '',
 
     // DIVIDERS
     divider: '',
