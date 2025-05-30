@@ -84,3 +84,32 @@ select {
     flex-direction: column;
     gap: 16px;
 }
+
+.placeholder {
+    box-sizing: border-box;
+    background: rgba(from var(--mistica-color-neutralHigh) r g b / 0.08);
+    border: 2px solid rgba(from var(--mistica-color-neutralHigh) r g b / 0.3);
+    position: relative;
+}
+
+.placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(-2px 0, 0 -2px, calc(100% + 2px) 100%, 100% calc(100% + 2px));
+    background-color: rgba(from var(--mistica-color-neutralHigh) r g b / 0.1);
+}
+
+.placeholder::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(calc(100% + 2px) 0, 100% -2px, -2px 100%, 0 calc(100% + 2px));
+    background-color: rgba(from var(--mistica-color-neutralHigh) r g b / 0.1);
+}
