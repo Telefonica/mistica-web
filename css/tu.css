@@ -108,6 +108,7 @@
     --mistica-color-textActivated: var(--mistica-tu-primary);
     --mistica-color-textBrand: var(--mistica-tu-blue);
     --mistica-color-inputBorder: var(--mistica-tu-grey5);
+    --mistica-color-inputBorderInverse: var(--mistica-tu-white);
     --mistica-color-completedStep: var(--mistica-tu-primary);
     --mistica-color-completedStepInverse: var(--mistica-tu-primary80);
     --mistica-color-control: var(--mistica-tu-grey5);
@@ -323,6 +324,7 @@
     --mistica-color-textActivated: var(--mistica-tu-blue30);
     --mistica-color-textBrand: var(--mistica-tu-blue30);
     --mistica-color-inputBorder: var(--mistica-tu-grey5);
+    --mistica-color-inputBorderInverse: var(--mistica-tu-grey5);
     --mistica-color-completedStep: var(--mistica-tu-grey2);
     --mistica-color-completedStepInverse: var(--mistica-tu-grey2);
     --mistica-color-control: var(--mistica-tu-darkModeGrey6);
@@ -483,6 +485,7 @@
         --mistica-color-textActivated: var(--mistica-tu-blue30);
         --mistica-color-textBrand: var(--mistica-tu-blue30);
         --mistica-color-inputBorder: var(--mistica-tu-grey5);
+        --mistica-color-inputBorderInverse: var(--mistica-tu-grey5);
         --mistica-color-completedStep: var(--mistica-tu-grey2);
         --mistica-color-completedStepInverse: var(--mistica-tu-grey2);
         --mistica-color-control: var(--mistica-tu-darkModeGrey6);
@@ -642,6 +645,7 @@
         --mistica-color-textActivated: var(--mistica-tu-primary);
         --mistica-color-textBrand: var(--mistica-tu-blue);
         --mistica-color-inputBorder: var(--mistica-tu-grey5);
+        --mistica-color-inputBorderInverse: var(--mistica-tu-white);
         --mistica-color-completedStep: var(--mistica-tu-primary);
         --mistica-color-completedStepInverse: var(--mistica-tu-primary80);
         --mistica-color-control: var(--mistica-tu-grey5);

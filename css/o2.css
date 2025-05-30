@@ -105,6 +105,7 @@
     --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary);
     --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary);
     --mistica-color-inputBorder: var(--mistica-o2-grey3);
+    --mistica-color-inputBorderInverse: var(--mistica-o2-white);
     --mistica-color-completedStep: var(--mistica-o2-o2BluePrimary);
     --mistica-color-completedStepInverse: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-control: var(--mistica-o2-grey3);
@@ -320,6 +321,7 @@
     --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-inputBorder: var(--mistica-o2-darkModeGrey6);
+    --mistica-color-inputBorderInverse: var(--mistica-o2-darkModeGrey6);
     --mistica-color-completedStep: var(--mistica-o2-darkModeO2BluePrimary);
     --mistica-color-completedStepInverse: var(--mistica-o2-darkModeO2BluePrimary);
     --mistica-color-control: var(--mistica-o2-darkModeGrey6);
@@ -480,6 +482,7 @@
         --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-inputBorder: var(--mistica-o2-darkModeGrey6);
+        --mistica-color-inputBorderInverse: var(--mistica-o2-darkModeGrey6);
         --mistica-color-completedStep: var(--mistica-o2-darkModeO2BluePrimary);
         --mistica-color-completedStepInverse: var(--mistica-o2-darkModeO2BluePrimary);
         --mistica-color-control: var(--mistica-o2-darkModeGrey6);
@@ -639,6 +642,7 @@
         --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary);
         --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary);
         --mistica-color-inputBorder: var(--mistica-o2-grey3);
+        --mistica-color-inputBorderInverse: var(--mistica-o2-white);
         --mistica-color-completedStep: var(--mistica-o2-o2BluePrimary);
         --mistica-color-completedStepInverse: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-control: var(--mistica-o2-grey3);

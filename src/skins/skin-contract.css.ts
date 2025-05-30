@@ -32,6 +32,7 @@ const colors: Colors = {
     borderHigh: '',
     borderSelected: '',
     inputBorder: '',
+    inputBorderInverse: '',
 
     // BUTTONS
     buttonDangerBackground: '',

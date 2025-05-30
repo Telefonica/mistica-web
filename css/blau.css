@@ -108,8 +108,9 @@
     --mistica-color-textLinkDanger: var(--mistica-blau-blauRed);
     --mistica-color-textLinkSnackbar: var(--mistica-blau-blauPurple30);
     --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
-    --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
+    --mistica-color-textBrand: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-inputBorder: var(--mistica-blau-grey4);
+    --mistica-color-inputBorderInverse: var(--mistica-blau-white);
     --mistica-color-control: var(--mistica-blau-grey4);
     --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-controlInverse: var(--mistica-blau-blauBluePrimary30);
@@ -325,6 +326,7 @@
     --mistica-color-textActivated: var(--mistica-blau-blauBluePrimary);
     --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
     --mistica-color-inputBorder: var(--mistica-blau-darkModeGrey5);
+    --mistica-color-inputBorderInverse: var(--mistica-blau-darkModeGrey5);
     --mistica-color-control: var(--mistica-blau-grey4);
     --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-controlInverse: var(--mistica-blau-grey4);
@@ -488,6 +490,7 @@
         --mistica-color-textActivated: var(--mistica-blau-blauBluePrimary);
         --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
         --mistica-color-inputBorder: var(--mistica-blau-darkModeGrey5);
+        --mistica-color-inputBorderInverse: var(--mistica-blau-darkModeGrey5);
         --mistica-color-control: var(--mistica-blau-grey4);
         --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-controlInverse: var(--mistica-blau-grey4);
@@ -645,8 +648,9 @@
         --mistica-color-textLinkDanger: var(--mistica-blau-blauRed);
         --mistica-color-textLinkSnackbar: var(--mistica-blau-blauPurple30);
         --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
-        --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
+        --mistica-color-textBrand: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-inputBorder: var(--mistica-blau-grey4);
+        --mistica-color-inputBorderInverse: var(--mistica-blau-white);
         --mistica-color-control: var(--mistica-blau-grey4);
         --mistica-color-controlActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-controlInverse: var(--mistica-blau-blauBluePrimary30);

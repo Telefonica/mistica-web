@@ -101,6 +101,7 @@
     --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-inputBorder: var(--mistica-vivo-new-grey4);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-new-white);
     --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleDark);
     --mistica-color-control: var(--mistica-vivo-new-grey4);
@@ -316,6 +317,7 @@
     --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-inputBorder: var(--mistica-vivo-new-darkModeGrey5);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-new-darkModeGrey5);
     --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-control: var(--mistica-vivo-new-darkModeGrey6);
@@ -482,6 +484,7 @@
         --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-inputBorder: var(--mistica-vivo-new-darkModeGrey5);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-new-darkModeGrey5);
         --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-control: var(--mistica-vivo-new-darkModeGrey6);
@@ -644,6 +647,7 @@
         --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-inputBorder: var(--mistica-vivo-new-grey4);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-new-white);
         --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleDark);
         --mistica-color-control: var(--mistica-vivo-new-grey4);
