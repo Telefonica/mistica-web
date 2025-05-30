@@ -127,6 +127,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textActivated: palette.movistarBlueHC,
             textBrand: palette.movistarBlueHC,
             inputBorder: palette.grey4,
+            inputBorderInverse: palette.white,
             completedStep: palette.movistarBlueHC,
             completedStepInverse: palette.movistarBlue55,
             control: palette.grey4,
@@ -280,6 +281,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textActivated: palette.movistarBlue,
             textBrand: palette.movistarBlue,
             inputBorder: palette.darkModeGrey4,
+            inputBorderInverse: palette.darkModeGrey4,
             completedStep: palette.movistarBlueHC,
             completedStepInverse: palette.movistarBlueHC,
             control: palette.darkModeGrey4,
@@ -407,6 +409,10 @@ export const getMovistarSkin: GetKnownSkin = () => {
             title1: {weight: 'medium'},
             title2: {weight: 'bold'},
             title3: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'bold'},
+        },
+        themeVariants: {
+            successFeedback: 'default',
+            brandLoadingScreen: 'default',
         },
     };
     return skin;

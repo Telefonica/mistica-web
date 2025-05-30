@@ -114,6 +114,7 @@
     --mistica-color-textActivated: var(--mistica-movistar-movistarBlueHC);
     --mistica-color-textBrand: var(--mistica-movistar-movistarBlueHC);
     --mistica-color-inputBorder: var(--mistica-movistar-grey4);
+    --mistica-color-inputBorderInverse: var(--mistica-movistar-white);
     --mistica-color-completedStep: var(--mistica-movistar-movistarBlueHC);
     --mistica-color-completedStepInverse: var(--mistica-movistar-movistarBlue55);
     --mistica-color-control: var(--mistica-movistar-grey4);
@@ -329,6 +330,7 @@
     --mistica-color-textActivated: var(--mistica-movistar-movistarBlue);
     --mistica-color-textBrand: var(--mistica-movistar-movistarBlue);
     --mistica-color-inputBorder: var(--mistica-movistar-darkModeGrey4);
+    --mistica-color-inputBorderInverse: var(--mistica-movistar-darkModeGrey4);
     --mistica-color-completedStep: var(--mistica-movistar-movistarBlueHC);
     --mistica-color-completedStepInverse: var(--mistica-movistar-movistarBlueHC);
     --mistica-color-control: var(--mistica-movistar-darkModeGrey4);
@@ -495,6 +497,7 @@
         --mistica-color-textActivated: var(--mistica-movistar-movistarBlue);
         --mistica-color-textBrand: var(--mistica-movistar-movistarBlue);
         --mistica-color-inputBorder: var(--mistica-movistar-darkModeGrey4);
+        --mistica-color-inputBorderInverse: var(--mistica-movistar-darkModeGrey4);
         --mistica-color-completedStep: var(--mistica-movistar-movistarBlueHC);
         --mistica-color-completedStepInverse: var(--mistica-movistar-movistarBlueHC);
         --mistica-color-control: var(--mistica-movistar-darkModeGrey4);
@@ -654,6 +657,7 @@
         --mistica-color-textActivated: var(--mistica-movistar-movistarBlueHC);
         --mistica-color-textBrand: var(--mistica-movistar-movistarBlueHC);
         --mistica-color-inputBorder: var(--mistica-movistar-grey4);
+        --mistica-color-inputBorderInverse: var(--mistica-movistar-white);
         --mistica-color-completedStep: var(--mistica-movistar-movistarBlueHC);
         --mistica-color-completedStepInverse: var(--mistica-movistar-movistarBlue55);
         --mistica-color-control: var(--mistica-movistar-grey4);
