@@ -1,3 +1,10 @@
+## [16.28.1](https://github.com/Telefonica/mistica-web/compare/v16.28.0...v16.28.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* **sheet:** z-index and scroll dividers in desktop ([#1381](https://github.com/Telefonica/mistica-web/issues/1381)) ([2aafa78](https://github.com/Telefonica/mistica-web/commit/2aafa78aa58cc7cf4cfd0ec150af432592fb3889))
+
 # [16.28.0](https://github.com/Telefonica/mistica-web/compare/v16.27.0...v16.28.0) (2025-05-30)
 
 
