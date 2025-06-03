@@ -196,6 +196,7 @@ export const modalCloseButton = style([
         padding: 24,
     }),
     {
+        zIndex: 1,
         '@media': {
             [mq.tabletOrSmaller]: {
                 display: 'none',
