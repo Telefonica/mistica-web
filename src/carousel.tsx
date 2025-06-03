@@ -17,7 +17,7 @@ import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
 import {IconButton, ToggleIconButton} from './icon-button';
-import {Box, IconPauseFilled, IconPlayFilled} from '../playroom/components';
+import {Box, IconPauseFilled, IconPlayFilled, IconReloadRegular} from '../playroom/components';
 import * as tokens from './text-tokens';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
@@ -26,7 +26,7 @@ import type {ByBreakpoint, DataAttributes} from './utils/types';
 const useShouldAutoplay = (
     autoplay: boolean,
     ref: React.RefObject<HTMLElement>
-): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setSouldAutoPlay: (enabled: boolean) => void} => {
+): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setShouldAutoPlay: (enabled: boolean) => void} => {
     const [isAutoplayEnabled, setIsAutoplayEnabled] = React.useState(!!autoplay);
 
     const isDocumentVisible = useDocumentVisibility();
@@ -34,9 +34,125 @@ const useShouldAutoplay = (
     return {
         isAutoplayEnabled: isAutoplayEnabled && !!autoplay,
         shouldAutoplay: isInViewport && isDocumentVisible && !!autoplay && isAutoplayEnabled,
-        setSouldAutoPlay: setIsAutoplayEnabled,
+        setShouldAutoPlay: setIsAutoplayEnabled,
     };
 };
+
+const throwMissingProviderError = () => {
+    throw new Error('You must wrap your component with a CarouselContextProvider to use CarouselContext');
+};
+const defaultGoPrev = throwMissingProviderError;
+const defaultGoNext = throwMissingProviderError;
+const defaultGoToPage = throwMissingProviderError;
+const defaultAutoplaySetter = throwMissingProviderError;
+const defaultBulletProps = {currentIndex: 0, numPages: 0};
+
+type GoToPage = (pageIndex: number, animate?: boolean) => void;
+type SetIsAutoplayEnabled = (isAutoplayEnabled: boolean) => void;
+
+type CarouselControls = {
+    goPrev: () => void;
+    goNext: () => void;
+    goToPage: GoToPage;
+    prevArrowEnabled: boolean;
+    nextArrowEnabled: boolean;
+    hasAutoplay: boolean;
+    isAutoplayEnabled: boolean;
+    setIsAutoplayEnabled: SetIsAutoplayEnabled;
+    bulletsProps: PageBulletsProps;
+};
+
+const CarouselContext = React.createContext<CarouselControls>({
+    goPrev: defaultGoPrev,
+    goNext: defaultGoNext,
+    goToPage: defaultGoToPage,
+    prevArrowEnabled: false,
+    nextArrowEnabled: false,
+    hasAutoplay: false,
+    isAutoplayEnabled: false,
+    setIsAutoplayEnabled: defaultAutoplaySetter,
+    bulletsProps: defaultBulletProps,
+});
+
+const CarouselControlsSetterContext = React.createContext<{
+    setGoPrev: (goPrev: () => void) => void;
+    setGoNext: (goNext: () => void) => void;
+    setGoToPage: (goToPage: GoToPage) => void;
+    setBulletsProps: (bulletsProps: PageBulletsProps) => void;
+    setPrevArrowEnabled: (prevArrowEnabled: boolean) => void;
+    setNextArrowEnabled: (nextArrowEnabled: boolean) => void;
+    setHasAutoPlay: (hasAutoPlay: boolean) => void;
+    setIsAutoplayEnabled: SetIsAutoplayEnabled;
+    setIsAutoplayEnabledSetter: (isAutoplayEnabledSetter: SetIsAutoplayEnabled) => void;
+} | null>(null);
+
+export const CarouselContextProvider = ({children}: {children: React.ReactNode}): JSX.Element => {
+    const [bulletsProps, setBulletsProps] = React.useState<PageBulletsProps>(defaultBulletProps);
+    const [prevArrowEnabled, setPrevArrowEnabled] = React.useState<boolean>(false);
+    const [nextArrowEnabled, setNextArrowEnabled] = React.useState<boolean>(false);
+    const goPrevRef = React.useRef<() => void>(defaultGoPrev);
+    const goNextRef = React.useRef<() => void>(defaultGoNext);
+    const goToPageRef = React.useRef<GoToPage>(defaultGoToPage);
+    const [hasAutoplay, setHasAutoPlay] = React.useState<boolean>(false);
+    const [isAutoplayEnabled, setIsAutoplayEnabled] = React.useState<boolean>(false);
+    const setIsAutoplayEnabledRef = React.useRef<(isAutoplayEnabled: boolean) => void>(defaultAutoplaySetter);
+
+    const controls = React.useMemo<CarouselControls>(
+        () => ({
+            goPrev: () => {
+                goPrevRef.current();
+            },
+            goNext: () => {
+                goNextRef.current();
+            },
+            goToPage: (pageIndex, animate = true) => {
+                goToPageRef.current(pageIndex, animate);
+            },
+            prevArrowEnabled,
+            nextArrowEnabled,
+
+            hasAutoplay,
+            isAutoplayEnabled,
+            setIsAutoplayEnabled: (isAutoplayEnabled) => {
+                setIsAutoplayEnabledRef.current(isAutoplayEnabled);
+            },
+
+            bulletsProps,
+        }),
+        [bulletsProps, nextArrowEnabled, prevArrowEnabled, hasAutoplay, isAutoplayEnabled]
+    );
+
+    return (
+        <CarouselContext.Provider value={controls}>
+            <CarouselControlsSetterContext.Provider
+                value={{
+                    setGoPrev: (goPrev) => {
+                        goPrevRef.current = goPrev;
+                    },
+                    setGoNext: (goNext) => {
+                        goNextRef.current = goNext;
+                    },
+                    setGoToPage: (goToPage) => {
+                        goToPageRef.current = goToPage;
+                    },
+                    setBulletsProps,
+                    setPrevArrowEnabled,
+                    setNextArrowEnabled,
+                    setHasAutoPlay,
+                    setIsAutoplayEnabled,
+                    setIsAutoplayEnabledSetter: (isAutoplayEnabledSetter) => {
+                        setIsAutoplayEnabledRef.current = isAutoplayEnabledSetter;
+                    },
+                }}
+            >
+                {children}
+            </CarouselControlsSetterContext.Provider>
+        </CarouselContext.Provider>
+    );
+};
+
+export const useCarouselContext = (): CarouselControls => React.useContext(CarouselContext);
+export const CarouselContextConsumer = CarouselContext.Consumer;
 
 type PageBulletsProps = {
     currentIndex: number;
@@ -86,94 +202,126 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
     );
 };
 
-const throwMissingProviderError = () => {
-    throw new Error('You must wrap your component with a CarouselContextProvider to use CarouselContext');
-};
-const defaultGoPrev = throwMissingProviderError;
-const defaultGoNext = throwMissingProviderError;
-const defaultGoToPage = throwMissingProviderError;
-const defaultBulletProps = {currentIndex: 0, numPages: 0};
-
-type GoToPage = (pageIndex: number, animate?: boolean) => void;
-type CarouselControls = {
+type CarouselPageControlsProps = {bleedLeft?: boolean; bleedRight?: boolean};
+type InternalCarouselPageControlsProps = CarouselPageControlsProps & {
     goPrev: () => void;
     goNext: () => void;
-    goToPage: GoToPage;
+    setShouldAutoplay: (autoplay: boolean) => void;
     prevArrowEnabled: boolean;
     nextArrowEnabled: boolean;
-    bulletsProps: PageBulletsProps;
 };
 
-const CarouselContext = React.createContext<CarouselControls>({
-    goPrev: defaultGoPrev,
-    goNext: defaultGoNext,
-    goToPage: defaultGoToPage,
-    prevArrowEnabled: false,
-    nextArrowEnabled: false,
-    bulletsProps: defaultBulletProps,
-});
-
-const CarouselControlsSetterContext = React.createContext<{
-    setGoPrev: (goPrev: () => void) => void;
-    setGoNext: (goNext: () => void) => void;
-    setGoToPage: (goToPage: GoToPage) => void;
-    setBulletsProps: (bulletsProps: PageBulletsProps) => void;
-    setPrevArrowEnabled: (prevArrowEnabled: boolean) => void;
-    setNextArrowEnabled: (nextArrowEnabled: boolean) => void;
-} | null>(null);
-
-export const CarouselContextProvider = ({children}: {children: React.ReactNode}): JSX.Element => {
-    const [bulletsProps, setBulletsProps] = React.useState<PageBulletsProps>(defaultBulletProps);
-    const [prevArrowEnabled, setPrevArrowEnabled] = React.useState<boolean>(false);
-    const [nextArrowEnabled, setNextArrowEnabled] = React.useState<boolean>(false);
-    const goPrevRef = React.useRef<() => void>(defaultGoPrev);
-    const goNextRef = React.useRef<() => void>(defaultGoNext);
-    const goToPageRef = React.useRef<GoToPage>(defaultGoToPage);
-
-    const controls = React.useMemo<CarouselControls>(
-        () => ({
-            goPrev: () => {
-                goPrevRef.current();
-            },
-            goNext: () => {
-                goNextRef.current();
-            },
-            goToPage: (pageIndex, animate = true) => {
-                goToPageRef.current(pageIndex, animate);
-            },
-            prevArrowEnabled,
-            nextArrowEnabled,
-            bulletsProps,
-        }),
-        [bulletsProps, nextArrowEnabled, prevArrowEnabled]
-    );
-
+const InternalCarouselPageControls = ({
+    bleedLeft,
+    bleedRight,
+    goPrev,
+    goNext,
+    setShouldAutoplay,
+    prevArrowEnabled,
+    nextArrowEnabled,
+}: InternalCarouselPageControlsProps): JSX.Element => {
+    const {texts, t} = useTheme();
     return (
-        <CarouselContext.Provider value={controls}>
-            <CarouselControlsSetterContext.Provider
-                value={{
-                    setGoPrev: (goPrev) => {
-                        goPrevRef.current = goPrev;
-                    },
-                    setGoNext: (goNext) => {
-                        goNextRef.current = goNext;
-                    },
-                    setGoToPage: (goToPage) => {
-                        goToPageRef.current = goToPage;
-                    },
-                    setBulletsProps,
-                    setPrevArrowEnabled,
-                    setNextArrowEnabled,
+        <Inline space={8}>
+            <IconButton
+                Icon={IconChevronLeftRegular}
+                aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
+                type="neutral"
+                backgroundType="soft"
+                small
+                bleedLeft={bleedLeft}
+                onPress={() => {
+                    goPrev();
+                    setShouldAutoplay(false);
                 }}
-            >
-                {children}
-            </CarouselControlsSetterContext.Provider>
-        </CarouselContext.Provider>
+                disabled={!prevArrowEnabled}
+            />
+            <IconButton
+                Icon={IconChevronRightRegular}
+                aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
+                type="neutral"
+                backgroundType="soft"
+                small
+                bleedRight={bleedRight}
+                onPress={() => {
+                    goNext();
+                    setShouldAutoplay(false);
+                }}
+                disabled={!nextArrowEnabled}
+            />
+        </Inline>
     );
 };
 
-export const useCarouselContext = (): CarouselControls => React.useContext(CarouselContext);
-export const CarouselContextConsumer = CarouselContext.Consumer;
+export const CarouselPageControls = ({bleedLeft, bleedRight}: CarouselPageControlsProps): JSX.Element => {
+    const controls = useCarouselContext();
+    const {goPrev, goNext, setIsAutoplayEnabled, prevArrowEnabled, nextArrowEnabled} = controls;
+    return (
+        <InternalCarouselPageControls
+            goPrev={goPrev}
+            goNext={goNext}
+            setShouldAutoplay={setIsAutoplayEnabled}
+            bleedLeft={bleedLeft}
+            bleedRight={bleedRight}
+            prevArrowEnabled={prevArrowEnabled}
+            nextArrowEnabled={nextArrowEnabled}
+        />
+    );
+};
+
+type CarouselAutoplayControlProps = {
+    bleedLeft?: boolean;
+    bleedRight?: boolean;
+};
+
+type InternalCarouselAutoplayControlProps = CarouselAutoplayControlProps & {
+    isAutoplayEnabled: boolean;
+    atLastPage: boolean;
+    onAutoplayChanged: (autoplay: boolean) => void;
+};
+
+const InternalCarouselAutoplayControl = ({
+    isAutoplayEnabled,
+    atLastPage,
+    onAutoplayChanged,
+    bleedLeft,
+    bleedRight,
+}: InternalCarouselAutoplayControlProps): JSX.Element => (
+    <ToggleIconButton
+        checkedProps={{
+            Icon: IconPauseFilled,
+            type: 'neutral',
+            'aria-label': 'Enable autoplay',
+        }}
+        uncheckedProps={{
+            Icon: atLastPage ? IconReloadRegular : IconPlayFilled,
+            type: 'neutral',
+            'aria-label': 'Pause autoplay',
+        }}
+        bleedLeft={bleedLeft}
+        bleedRight={bleedRight}
+        small
+        onChange={onAutoplayChanged}
+        checked={isAutoplayEnabled}
+    />
+);
+
+export const CarouselAutoplayControl = ({
+    bleedLeft,
+    bleedRight,
+}: CarouselAutoplayControlProps): JSX.Element => {
+    const controls = useCarouselContext();
+    const {hasAutoplay, isAutoplayEnabled, setIsAutoplayEnabled, nextArrowEnabled} = controls;
+    return (
+        <InternalCarouselAutoplayControl
+            isAutoplayEnabled={isAutoplayEnabled && hasAutoplay}
+            atLastPage={!nextArrowEnabled}
+            bleedLeft={bleedLeft}
+            bleedRight={bleedRight}
+            onAutoplayChanged={setIsAutoplayEnabled}
+        />
+    );
+};
 
 type DesktopItemsPerPage = {small?: number; medium?: number; large?: number} | number;
 type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage} | number;
@@ -261,76 +409,6 @@ const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Arra
     }
     return 0;
 };
-
-export type CarouselPageControlsProps = {bleedLeft?: boolean; bleedRight?: boolean};
-type InternalCarouselPageControlsProps = CarouselPageControlsProps & {
-    goPrev: () => void;
-    goNext: () => void;
-    prevArrowEnabled: boolean;
-    nextArrowEnabled: boolean;
-};
-
-export const InternalCarouselPageControls = ({
-    bleedLeft,
-    bleedRight,
-    goPrev,
-    goNext,
-    prevArrowEnabled,
-    nextArrowEnabled,
-}: InternalCarouselPageControlsProps): JSX.Element => {
-    const {texts, t} = useTheme();
-    return (
-        <Inline space={8}>
-            <IconButton
-                Icon={IconChevronLeftRegular}
-                aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
-                type="neutral"
-                backgroundType="soft"
-                small
-                bleedLeft={bleedLeft}
-                onPress={goPrev}
-                disabled={!prevArrowEnabled}
-            />
-            <IconButton
-                Icon={IconChevronRightRegular}
-                aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
-                type="neutral"
-                backgroundType="soft"
-                small
-                bleedRight={bleedRight}
-                onPress={goNext}
-                disabled={!nextArrowEnabled}
-            />
-        </Inline>
-    );
-};
-
-type InternalCarouselAutoplayControlProps = {
-    isAutoplayEnabled: boolean;
-    onAutoplayChanged: (autoplay: boolean) => void;
-};
-
-export const InternalCarouselAutoplayControl = ({
-    isAutoplayEnabled,
-    onAutoplayChanged,
-}: InternalCarouselAutoplayControlProps): JSX.Element => (
-    <ToggleIconButton
-        checkedProps={{
-            Icon: IconPauseFilled,
-            type: 'neutral',
-            'aria-label': 'Enable autoplay',
-        }}
-        uncheckedProps={{
-            Icon: IconPlayFilled,
-            type: 'neutral',
-            'aria-label': 'Pause autoplay',
-        }}
-        bleedLeft
-        small
-        onChange={onAutoplayChanged}
-        checked={isAutoplayEnabled}
-    />
-);
 
 const DEFAULT_AUTOPLAY_TIME = 5000;
 
@@ -494,7 +572,7 @@ const BaseCarousel = ({
         }
     }, [scrollPositions]);
 
-    const {isAutoplayEnabled, shouldAutoplay, setSouldAutoPlay} = useShouldAutoplay(!!autoplay, carouselRef);
+    const {isAutoplayEnabled, shouldAutoplay, setShouldAutoPlay} = useShouldAutoplay(!!autoplay, carouselRef);
 
     React.useEffect(() => {
         if (initialActiveItem !== undefined) {
@@ -502,20 +580,21 @@ const BaseCarousel = ({
         }
     }, [initialActiveItem, goToPage, itemsPerPageFloor]);
 
+    const hasAutoplayLoop = typeof autoplay === 'object' && autoplay.loop;
+
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
-            const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
                 if (scrollRight !== 0) {
                     goNext();
-                } else if (loop) {
+                } else if (hasAutoplayLoop) {
                     carouselRef.current?.scrollTo({left: 0, behavior: 'smooth'});
                 }
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, scrollRight, shouldAutoplay]);
+    }, [autoplay, goNext, scrollRight, shouldAutoplay, hasAutoplayLoop]);
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
@@ -546,6 +625,24 @@ const BaseCarousel = ({
         }
     }, [currentPageIndex, items.length, itemsPerPageFloor, initialActiveItem, onPageChange]);
 
+    React.useEffect(() => {
+        if (currentPageIndex === pagesCount - 1 && !hasAutoplayLoop) {
+            setShouldAutoPlay(false);
+        }
+
+        const carouselEl = carouselRef.current;
+        if (carouselEl) {
+            const handleTouch = () => {
+                setShouldAutoPlay(false);
+            };
+            carouselEl.addEventListener('touchstart', handleTouch);
+
+            return () => {
+                carouselEl.removeEventListener('touchstart', handleTouch);
+            };
+        }
+    }, [currentPageIndex, pagesCount, setShouldAutoPlay, hasAutoplayLoop]);
+
     const controlsSetter = React.useContext(CarouselControlsSetterContext);
 
     const bulletsProps = React.useMemo(
@@ -568,8 +665,22 @@ const BaseCarousel = ({
             controlsSetter.setBulletsProps(bulletsProps);
             controlsSetter.setPrevArrowEnabled(prevArrowEnabled);
             controlsSetter.setNextArrowEnabled(nextArrowEnabled);
+            controlsSetter.setHasAutoPlay(!!autoplay);
+            controlsSetter.setIsAutoplayEnabled(isAutoplayEnabled);
+            controlsSetter.setIsAutoplayEnabledSetter(setShouldAutoPlay);
         }
-    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage, prevArrowEnabled, nextArrowEnabled]);
+    }, [
+        controlsSetter,
+        goNext,
+        goPrev,
+        bulletsProps,
+        goToPage,
+        prevArrowEnabled,
+        nextArrowEnabled,
+        autoplay,
+        isAutoplayEnabled,
+        setShouldAutoPlay,
+    ]);
 
     let bullets: React.ReactNode = null;
 
@@ -655,19 +766,22 @@ const BaseCarousel = ({
                             {!!autoplay && (
                                 <InternalCarouselAutoplayControl
                                     isAutoplayEnabled={isAutoplayEnabled}
+                                    atLastPage={currentPageIndex === pagesCount - 1}
                                     onAutoplayChanged={(autoplayEnabled: boolean) => {
                                         if (!nextArrowEnabled && autoplayEnabled) {
                                             goToPage(0);
                                         }
-                                        setSouldAutoPlay(autoplayEnabled);
+                                        setShouldAutoPlay(autoplayEnabled);
                                     }}
+                                    bleedLeft={!isDesktopOrBigger}
                                 />
                             )}
                             {bulletsContainer}
                             <InternalCarouselPageControls
-                                bleedRight
+                                bleedRight={!isDesktopOrBigger}
                                 goNext={goNext}
                                 goPrev={goPrev}
+                                setShouldAutoplay={setShouldAutoPlay}
                                 prevArrowEnabled={prevArrowEnabled}
                                 nextArrowEnabled={nextArrowEnabled}
                             />
