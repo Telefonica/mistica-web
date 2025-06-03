@@ -1121,6 +1121,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     border: var(--mistica-boxed-border);
     border-radius: var(--mistica-border-radius-container);
     background: var(--mistica-color-backgroundContainer);
+    overflow: hidden;
 }
 
 .mistica-row > a,
