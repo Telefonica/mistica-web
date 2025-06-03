@@ -101,6 +101,9 @@
     --mistica-color-textActivated: var(--mistica-vivo-vivoPurple);
     --mistica-color-textBrand: var(--mistica-vivo-vivoPurple);
     --mistica-color-inputBorder: var(--mistica-vivo-grey3);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-white);
+    --mistica-color-completedStep: var(--mistica-vivo-vivoPurple);
+    --mistica-color-completedStepInverse: var(--mistica-vivo-vivoPurpleDark);
     --mistica-color-control: var(--mistica-vivo-grey3);
     --mistica-color-controlActivated: var(--mistica-vivo-vivoPurple);
     --mistica-color-controlInverse: var(--mistica-vivo-vivoPurpleLight50);
@@ -314,6 +317,9 @@
     --mistica-color-textActivated: var(--mistica-vivo-vivoPurpleLight80);
     --mistica-color-textBrand: var(--mistica-vivo-vivoPurpleLight80);
     --mistica-color-inputBorder: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-completedStep: var(--mistica-vivo-vivoPurpleLight80);
+    --mistica-color-completedStepInverse: var(--mistica-vivo-vivoPurpleLight80);
     --mistica-color-control: var(--mistica-vivo-darkModeGrey6);
     --mistica-color-controlActivated: var(--mistica-vivo-vivoPurpleLight80);
     --mistica-color-controlInverse: var(--mistica-vivo-darkModeGrey6);
@@ -472,6 +478,9 @@
         --mistica-color-textActivated: var(--mistica-vivo-vivoPurpleLight80);
         --mistica-color-textBrand: var(--mistica-vivo-vivoPurpleLight80);
         --mistica-color-inputBorder: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-completedStep: var(--mistica-vivo-vivoPurpleLight80);
+        --mistica-color-completedStepInverse: var(--mistica-vivo-vivoPurpleLight80);
         --mistica-color-control: var(--mistica-vivo-darkModeGrey6);
         --mistica-color-controlActivated: var(--mistica-vivo-vivoPurpleLight80);
         --mistica-color-controlInverse: var(--mistica-vivo-darkModeGrey6);
@@ -629,6 +638,9 @@
         --mistica-color-textActivated: var(--mistica-vivo-vivoPurple);
         --mistica-color-textBrand: var(--mistica-vivo-vivoPurple);
         --mistica-color-inputBorder: var(--mistica-vivo-grey3);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-white);
+        --mistica-color-completedStep: var(--mistica-vivo-vivoPurple);
+        --mistica-color-completedStepInverse: var(--mistica-vivo-vivoPurpleDark);
         --mistica-color-control: var(--mistica-vivo-grey3);
         --mistica-color-controlActivated: var(--mistica-vivo-vivoPurple);
         --mistica-color-controlInverse: var(--mistica-vivo-vivoPurpleLight50);

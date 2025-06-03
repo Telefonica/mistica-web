@@ -1,3 +1,18 @@
+# [16.28.0](https://github.com/Telefonica/mistica-web/compare/v16.27.0...v16.28.0) (2025-05-30)
+
+
+### Features
+
+* **movistar skin, telefonca skin:** SuccessFeedback white background in Movistar. Color changes in Telefonica ([#1380](https://github.com/Telefonica/mistica-web/issues/1380)) ([0bcdbcc](https://github.com/Telefonica/mistica-web/commit/0bcdbcca0a44ca8e23c50ca943f37f626655a55c))
+
+# [16.27.0](https://github.com/Telefonica/mistica-web/compare/v16.26.0...v16.27.0) (2025-05-29)
+
+
+### Features
+
+* **skin:** allow customizing some components theme variant by skin ([#1375](https://github.com/Telefonica/mistica-web/issues/1375)) ([a80f5bd](https://github.com/Telefonica/mistica-web/commit/a80f5bdc0cd5981fd3c6ce7eda2eb4a38a585bcc))
+* **skin:** Improve color contrast in Blau skin ([#1369](https://github.com/Telefonica/mistica-web/issues/1369)) ([e49e84d](https://github.com/Telefonica/mistica-web/commit/e49e84d0c718b50d22b6ce193754d4e424782586))
+
 # [16.26.0](https://github.com/Telefonica/mistica-web/compare/v16.25.0...v16.26.0) (2025-05-28)
 
 
