@@ -268,11 +268,7 @@ export const stickyTitle = style([
         background: skinVars.colors.background,
     }),
     {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                zIndex: 1,
-            },
-        },
+        zIndex: 1,
     },
 ]);
 
@@ -283,11 +279,7 @@ export const stickyButtons = style([
         background: skinVars.colors.background,
     }),
     {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                zIndex: 1,
-            },
-        },
+        zIndex: 1,
     },
 ]);
 
@@ -296,7 +288,6 @@ export const bodyContent = style({
     zIndex: 0,
     '@media': {
         [mq.desktopOrBigger]: {
-            overflowY: 'auto',
             flex: 1,
         },
     },
