@@ -1843,3 +1843,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-text-field > input::-webkit-search-decoration {
     appearance: none;
 }
+
+/* Inline + Stack Component */
+.mistica-inline {
+    display: flex;
+}
+.mistica-stack {
+    display: flex;
+    flex-direction: column;
+}
