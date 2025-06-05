@@ -70,21 +70,6 @@ select {
     margin-top: 16px;
 }
 
-.horizontal-group {
-    display: flex;
-    gap: 16px;
-}
-
-.horizontal-group + .horizontal-group {
-    margin-top: 16px;
-}
-
-.vertical-group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
 .placeholder {
     box-sizing: border-box;
     background: rgba(from var(--mistica-color-neutralHigh) r g b / 0.08);
@@ -112,4 +97,19 @@ select {
     height: 100%;
     clip-path: polygon(calc(100% + 2px) 0, 100% -2px, -2px 100%, 0 calc(100% + 2px));
     background-color: rgba(from var(--mistica-color-neutralHigh) r g b / 0.1);
+}
+
+[data-demo-container] {
+    border: 2px solid var(--mistica-color-divider);
+    position: relative;
+    margin-top: calc(var(--mistica-line-height-2) + 8px);
+}
+
+[data-demo-container]:before {
+    content: attr(class);
+    position: absolute;
+    top: calc(-1 * var(--mistica-line-height-2));
+    left: 0;
+    color: var(--vcolor-textSecondary);
+    line-height: var(--mistica-line-height-2);
 }
