@@ -5,38 +5,6 @@ import {applyAlpha} from './utils/color';
 import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
 
-const bulletBase = style([
-    sprinkles({
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-    }),
-    {
-        transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                width: 4,
-                height: 4,
-            },
-        },
-    },
-]);
-
-const bulletActiveBase = style([
-    bulletBase,
-    {
-        transform: 'scale(1.25)', // 10px
-
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                transform: 'scale(1.5)', // 6px
-            },
-        },
-    },
-]);
-
 export const bulletButton = style([
     sprinkles({
         display: 'block',
@@ -54,35 +22,94 @@ export const bulletButton = style([
     },
 ]);
 
-const bulletButtonByBreakpoint = style([bulletButton, {display: 'none'}]);
+export const bulletVisibility = style([bulletButton, {display: 'block'}]);
 
-export const bulletButtonMobile = style([
-    bulletButtonByBreakpoint,
+export const bulletVisibilityMobile = style([
+    bulletButton,
+    {display: 'none'},
     {'@media': {[mq.mobile]: {display: 'block'}}},
 ]);
 
-export const bulletButtonTablet = style([
-    bulletButtonByBreakpoint,
+export const bulletVisibilityTablet = style([
+    bulletButton,
+    {display: 'none'},
     {'@media': {[mq.tablet]: {display: 'block'}}},
 ]);
 
-export const bulletButtonDesktop = style([
-    bulletButtonByBreakpoint,
+export const bulletVisibilityDesktop = style([
+    bulletButton,
+    {display: 'none'},
     {'@media': {[mq.desktopOrBigger]: {display: 'block'}}},
 ]);
 
+const bulletBase = style([
+    sprinkles({
+        borderRadius: '50%',
+    }),
+    {
+        transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
+    },
+]);
 export const bullet = style([bulletBase, sprinkles({background: skinVars.colors.control})]);
 export const bulletInverse = style([bulletBase, {background: applyAlpha(skinVars.rawColors.inverse, 0.5)}]);
-export const bulletActive = style([
-    bulletActiveBase,
-    sprinkles({background: skinVars.colors.controlActivated}),
-]);
-export const bulletActiveInverse = style([
-    bulletActiveBase,
-    sprinkles({background: skinVars.colors.inverse}),
+export const bulletActive = style([bulletBase, sprinkles({background: skinVars.colors.controlActivated})]);
+export const bulletActiveInverse = style([bulletBase, sprinkles({background: skinVars.colors.inverse})]);
+
+export const bulletInactiveSizing = style([
+    sprinkles({
+        width: 8,
+        height: 8,
+    }),
+    {
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                width: 4,
+                height: 4,
+            },
+        },
+    },
 ]);
 
-const arrowButtonSize = 40;
+export const bulletActiveSizing = style([
+    bulletInactiveSizing,
+    {
+        transform: 'scale(1.25)', // 10px
+
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                transform: 'scale(1.5)', // 6px
+            },
+        },
+    },
+]);
+
+export const bulletInactiveMediumSizing = style([
+    bulletInactiveSizing,
+    {
+        transform: 'scale(0.75)', // 6px
+
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                transform: 'scale(0.75)',
+            },
+        },
+    },
+]);
+
+export const bulletInactiveSmallSizing = style([
+    bulletInactiveSizing,
+    {
+        transform: 'scale(0.5)',
+
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                transform: 'scale(0.5)',
+            },
+        },
+    },
+]);
+
 export const slideshowContainer = style([
     sprinkles({
         position: 'relative',
@@ -98,32 +125,6 @@ const hideScrollbar = style({
         display: 'none', // Hide in Chrome/Safari
     },
 });
-
-const arrowButtonBase = style([
-    sprinkles({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        background: skinVars.colors.backgroundContainer,
-        width: arrowButtonSize,
-        height: arrowButtonSize,
-    }),
-    {
-        transition: 'opacity 0.2s',
-        selectors: {
-            '&[disabled]': {
-                opacity: 0,
-            },
-        },
-        '@media': {
-            // don't show carrousel arrow buttons in touch devices, just regular horizontal scroll
-            [mq.touchableOnly]: {
-                display: 'none',
-            },
-        },
-    },
-]);
 
 export const carouselContainer = sprinkles({
     isolation: 'isolate',
@@ -290,18 +291,6 @@ globalStyle(`${carouselItem}:not(:empty) ~ ${carouselItem}:not(:empty)`, {
     paddingLeft: `calc(${gap} * 1px)`,
 });
 
-export const carouselArrowButton = style([
-    arrowButtonBase,
-    sprinkles({
-        border: 'regular',
-        position: 'absolute',
-    }),
-    {
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-        top: `calc(50% - ${arrowButtonSize / 2}px)`,
-    },
-]);
-
 export const carouselBullets = style([
     {
         paddingBottom: 2,
@@ -345,30 +334,6 @@ export const slideshowItem = style([
     }),
     {
         scrollSnapAlign: 'start',
-    },
-]);
-
-export const slideshowPrevArrowButton = style([
-    carouselArrowButton,
-    sprinkles({left: 24}),
-    {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                left: 0,
-            },
-        },
-    },
-]);
-
-export const slideshowNextArrowButton = style([
-    carouselArrowButton,
-    sprinkles({right: 24}),
-    {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                right: 0,
-            },
-        },
     },
 ]);
 

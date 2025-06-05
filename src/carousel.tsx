@@ -160,16 +160,139 @@ type PageBulletsProps = {
     onPress?: (index: number) => void;
 };
 
+/*
+const PAGE_BULLETS_VISIBLE_OFFSET = 3;
+
 export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const {isDesktopOrBigger} = useScreenSize();
-    const getClassName = (index: number) => {
+
+    const getClassNames = (index: number) => {
         const isActive = index === currentIndex;
+        const classNames: {[key: string]: boolean} = {};
         if (isInverse) {
-            return isActive ? styles.bulletActiveInverse : styles.bulletInverse;
+            classNames[isActive ? styles.bulletActiveInverse : styles.bulletInverse] = true;
         } else {
-            return isActive ? styles.bulletActive : styles.bullet;
+            classNames[isActive ? styles.bulletActive : styles.bullet] = true;
         }
+
+        if (typeof numPages === 'number') {
+            classNames[styles.bulletTransform] =
+                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
+                currentIndex >= numPages - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
+        } else {
+            classNames[styles.bulletTransformMobile] =
+                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
+                currentIndex >= numPages.mobile - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
+            classNames[styles.bulletTransformTablet] =
+                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
+                currentIndex >= (numPages.tablet ?? numPages.mobile) - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
+            classNames[styles.bulletTransformDesktop] =
+                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
+                currentIndex >= numPages.desktop - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
+        }
+
+        return classNames;
+    };
+
+    const maxNumPages =
+        typeof numPages === 'number'
+            ? numPages
+            : Math.max(numPages.mobile, numPages.tablet ?? numPages.mobile, numPages.desktop);
+
+    const minBulletIndex = (numPages: number) => {
+        if (currentIndex >= numPages - PAGE_BULLETS_VISIBLE_OFFSET) {
+            return numPages - PAGE_BULLETS_VISIBLE_OFFSET * 2;
+        }
+        return Math.max(currentIndex - PAGE_BULLETS_VISIBLE_OFFSET, -1);
+    };
+    const maxBulletIndex = (numPages: number) => minBulletIndex(numPages) + 6;
+
+    return (
+        <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
+            {Array.from({length: maxNumPages}, (_, i: number) => (
+                <BaseTouchable
+                    className={classNames(
+                        typeof numPages === 'number'
+                            ? {
+                                  [styles.hiddenBulletButton]: true,
+                                  [styles.bulletButton]:
+                                      i > minBulletIndex(numPages) && i < maxBulletIndex(numPages),
+                              }
+                            : {
+                                  [styles.hiddenBulletButton]: true,
+                                  [styles.bulletButtonMobile]:
+                                      i > minBulletIndex(numPages.mobile) &&
+                                      i < maxBulletIndex(numPages.mobile),
+                                  [styles.bulletButtonTablet]:
+                                      i > minBulletIndex(numPages.tablet ?? numPages.mobile) &&
+                                      i < maxBulletIndex(numPages.tablet ?? numPages.mobile),
+                                  [styles.bulletButtonDesktop]:
+                                      i > minBulletIndex(numPages.desktop) &&
+                                      i < maxBulletIndex(numPages.desktop),
+                              }
+                    )}
+                    key={i}
+                    maybe
+                    onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
+                >
+                    <div className={classNames(getClassNames(i))} />
+                </BaseTouchable>
+            ))}
+        </Inline>
+    );
+};
+*/
+
+const VISIBLE_BULLETS = 5;
+
+const getActiveBulletIndex = (currentPageIndex: number, pagesCount: number): number => {
+    if (pagesCount <= VISIBLE_BULLETS || currentPageIndex < Math.floor(VISIBLE_BULLETS / 2)) {
+        return currentPageIndex;
+    }
+    if (currentPageIndex >= pagesCount - Math.floor(VISIBLE_BULLETS / 2)) {
+        return currentPageIndex + VISIBLE_BULLETS - pagesCount;
+    }
+    return Math.floor(VISIBLE_BULLETS / 2);
+};
+
+export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
+    const {isTablet, isDesktopOrBigger} = useScreenSize();
+    const pagesCount =
+        typeof numPages === 'number'
+            ? numPages
+            : isDesktopOrBigger
+              ? numPages.desktop
+              : isTablet
+                ? numPages.tablet ?? numPages.mobile
+                : numPages.mobile;
+
+    const getClassNames = (bulletIndex: number) => {
+        const activeBulletIndex = getActiveBulletIndex(currentIndex, pagesCount);
+
+        const classNames: {[key: string]: boolean} = {};
+
+        if (isInverse) {
+            classNames[
+                activeBulletIndex === bulletIndex ? styles.bulletActiveInverse : styles.bulletInverse
+            ] = true;
+        } else {
+            classNames[activeBulletIndex === bulletIndex ? styles.bulletActive : styles.bullet] = true;
+        }
+        classNames[
+            activeBulletIndex === bulletIndex ? styles.bulletActiveSizing : styles.bulletInactiveSizing
+        ] = true;
+        classNames[styles.bulletInactiveMediumSizing] =
+            pagesCount > VISIBLE_BULLETS &&
+            Math.abs(activeBulletIndex - bulletIndex) ===
+                (Math.abs(activeBulletIndex - Math.floor(VISIBLE_BULLETS / 2)) <= 1 ? 2 : 3);
+        classNames[styles.bulletInactiveSmallSizing] =
+            pagesCount > VISIBLE_BULLETS &&
+            Math.abs(activeBulletIndex - bulletIndex) ===
+                (Math.abs(activeBulletIndex - Math.floor(VISIBLE_BULLETS / 2)) <= 1 ? 3 : 4);
+
+        return classNames;
     };
 
     const maxNumPages =
@@ -179,15 +302,16 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
 
     return (
         <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
-            {Array.from({length: maxNumPages}, (_, i: number) => (
+            {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
                 <BaseTouchable
                     className={classNames(
                         typeof numPages === 'number'
-                            ? styles.bulletButton
+                            ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
                             : {
-                                  [styles.bulletButtonMobile]: i < numPages.mobile,
-                                  [styles.bulletButtonTablet]: i < (numPages.tablet ?? numPages.mobile),
-                                  [styles.bulletButtonDesktop]: i < numPages.desktop,
+                                  [styles.bulletButton]: true,
+                                  [styles.bulletVisibilityMobile]: i < numPages.mobile,
+                                  [styles.bulletVisibilityTablet]: i < (numPages.tablet ?? numPages.mobile),
+                                  [styles.bulletVisibilityDesktop]: i < numPages.desktop,
                               }
                     )}
                     style={i === 0 ? {paddingLeft: 0} : {}}
@@ -195,7 +319,7 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
                 >
-                    <div className={getClassName(i)} />
+                    <div className={classNames(getClassNames(i))} />
                 </BaseTouchable>
             ))}
         </Inline>
