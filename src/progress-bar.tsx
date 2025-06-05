@@ -36,10 +36,9 @@ export const ProgressBar = ({
     const progressValue = Math.max(0, Math.min(100, progressPercent));
 
     const getFormattedValueText = () => {
-        const name = ariaLabel || texts.loading || t(tokens.loading);
         const completedText = texts.progressBarCompletedLabel || t(tokens.progressBarCompletedLabel);
 
-        return `${name}, ${progressValue.toFixed(1)}% ${completedText}`;
+        return `${progressValue.toFixed(1)}% ${completedText}`;
     };
 
     const a11yProps =
@@ -51,6 +50,7 @@ export const ProgressBar = ({
                   'aria-valuemin': 0,
                   'aria-valuemax': 100,
                   'aria-valuetext': getFormattedValueText(),
+                  'aria-label': ariaLabelledBy ? undefined : ariaLabel || texts.loading || t(tokens.loading),
                   'aria-labelledby': ariaLabelledBy,
               };
 
@@ -110,7 +110,7 @@ export const ProgressBarStepped = ({
         const stepText = (texts.progressBarStepLabel || t(tokens.progressBarStepLabel))
             .replace('1$s', String(step))
             .replace('2$s', String(steps));
-        return ariaLabel ? `${ariaLabel}, ${stepText.toLowerCase()}` : stepText;
+        return stepText;
     };
 
     const a11yProps =
@@ -122,6 +122,7 @@ export const ProgressBarStepped = ({
                   'aria-valuemin': 0,
                   'aria-valuemax': steps,
                   'aria-valuetext': getFormattedValueText(),
+                  'aria-label': ariaLabelledBy ? undefined : ariaLabel,
                   'aria-labelledby': ariaLabelledBy,
               };
 
