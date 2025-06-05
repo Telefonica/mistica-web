@@ -8,15 +8,20 @@ import {vars as responsiveLayoutVars} from './responsive-layout.css';
 export const bulletButton = style([
     sprinkles({
         display: 'block',
-        padding: 0,
         border: 'none',
         background: 'transparent',
-        paddingLeft: 16,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 8,
+        paddingRight: 8,
     }),
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingLeft: 8,
+                paddingTop: 0,
+                paddingBottom: 0,
+                paddingLeft: 4,
+                paddingRight: 4,
             },
         },
     },
@@ -292,15 +297,20 @@ globalStyle(`${carouselItem}:not(:empty) ~ ${carouselItem}:not(:empty)`, {
 });
 
 export const carouselBullets = style([
-    {
-        paddingBottom: 2,
-        paddingLeft: 8,
-        paddingRight: 8,
-    },
     sprinkles({
         display: 'flex',
-        paddingTop: 16,
     }),
+    {
+        paddingTop: 8,
+        paddingBottom: 2,
+        margin: '0 -4px',
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingTop: 16,
+                margin: '0 -2px',
+            },
+        },
+    },
 ]);
 
 export const noCarouselBulletsDesktop = style({

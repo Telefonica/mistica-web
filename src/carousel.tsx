@@ -160,90 +160,6 @@ type PageBulletsProps = {
     onPress?: (index: number) => void;
 };
 
-/*
-const PAGE_BULLETS_VISIBLE_OFFSET = 3;
-
-export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const {isDesktopOrBigger} = useScreenSize();
-
-    const getClassNames = (index: number) => {
-        const isActive = index === currentIndex;
-        const classNames: {[key: string]: boolean} = {};
-        if (isInverse) {
-            classNames[isActive ? styles.bulletActiveInverse : styles.bulletInverse] = true;
-        } else {
-            classNames[isActive ? styles.bulletActive : styles.bullet] = true;
-        }
-
-        if (typeof numPages === 'number') {
-            classNames[styles.bulletTransform] =
-                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
-                currentIndex >= numPages - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
-        } else {
-            classNames[styles.bulletTransformMobile] =
-                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
-                currentIndex >= numPages.mobile - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
-            classNames[styles.bulletTransformTablet] =
-                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
-                currentIndex >= (numPages.tablet ?? numPages.mobile) - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
-            classNames[styles.bulletTransformDesktop] =
-                currentIndex < PAGE_BULLETS_VISIBLE_OFFSET ||
-                currentIndex >= numPages.desktop - (PAGE_BULLETS_VISIBLE_OFFSET - 1);
-        }
-
-        return classNames;
-    };
-
-    const maxNumPages =
-        typeof numPages === 'number'
-            ? numPages
-            : Math.max(numPages.mobile, numPages.tablet ?? numPages.mobile, numPages.desktop);
-
-    const minBulletIndex = (numPages: number) => {
-        if (currentIndex >= numPages - PAGE_BULLETS_VISIBLE_OFFSET) {
-            return numPages - PAGE_BULLETS_VISIBLE_OFFSET * 2;
-        }
-        return Math.max(currentIndex - PAGE_BULLETS_VISIBLE_OFFSET, -1);
-    };
-    const maxBulletIndex = (numPages: number) => minBulletIndex(numPages) + 6;
-
-    return (
-        <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
-            {Array.from({length: maxNumPages}, (_, i: number) => (
-                <BaseTouchable
-                    className={classNames(
-                        typeof numPages === 'number'
-                            ? {
-                                  [styles.hiddenBulletButton]: true,
-                                  [styles.bulletButton]:
-                                      i > minBulletIndex(numPages) && i < maxBulletIndex(numPages),
-                              }
-                            : {
-                                  [styles.hiddenBulletButton]: true,
-                                  [styles.bulletButtonMobile]:
-                                      i > minBulletIndex(numPages.mobile) &&
-                                      i < maxBulletIndex(numPages.mobile),
-                                  [styles.bulletButtonTablet]:
-                                      i > minBulletIndex(numPages.tablet ?? numPages.mobile) &&
-                                      i < maxBulletIndex(numPages.tablet ?? numPages.mobile),
-                                  [styles.bulletButtonDesktop]:
-                                      i > minBulletIndex(numPages.desktop) &&
-                                      i < maxBulletIndex(numPages.desktop),
-                              }
-                    )}
-                    key={i}
-                    maybe
-                    onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
-                >
-                    <div className={classNames(getClassNames(i))} />
-                </BaseTouchable>
-            ))}
-        </Inline>
-    );
-};
-*/
-
 const VISIBLE_BULLETS = 5;
 
 const getActiveBulletIndex = (currentPageIndex: number, pagesCount: number): number => {
@@ -267,10 +183,8 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
               : isTablet
                 ? numPages.tablet ?? numPages.mobile
                 : numPages.mobile;
-
+    const activeBulletIndex = getActiveBulletIndex(currentIndex, pagesCount);
     const getClassNames = (bulletIndex: number) => {
-        const activeBulletIndex = getActiveBulletIndex(currentIndex, pagesCount);
-
         const classNames: {[key: string]: boolean} = {};
 
         if (isInverse) {
@@ -314,10 +228,13 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
                                   [styles.bulletVisibilityDesktop]: i < numPages.desktop,
                               }
                     )}
-                    style={i === 0 ? {paddingLeft: 0} : {}}
                     key={i}
                     maybe
-                    onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
+                    onPress={
+                        isDesktopOrBigger && onPress
+                            ? () => onPress(currentIndex + i - activeBulletIndex)
+                            : undefined
+                    }
                 >
                     <div className={classNames(getClassNames(i))} />
                 </BaseTouchable>
@@ -811,7 +728,15 @@ const BaseCarousel = ({
     if (renderBullets) {
         bullets = renderBullets({numPages: pagesCount, currentIndex: currentPageIndex, onPress: goToPage});
     } else if (withBullets) {
-        bullets = <PageBullets {...bulletsProps} onPress={goToPage} />;
+        bullets = (
+            <PageBullets
+                {...bulletsProps}
+                onPress={(index) => {
+                    goToPage(index);
+                    setShouldAutoPlay(false);
+                }}
+            />
+        );
     }
 
     const largePageOffset = '64px';
