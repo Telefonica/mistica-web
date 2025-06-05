@@ -232,12 +232,6 @@
     line-height: var(--mistica-line-height-tabsLabel);
     font-weight: var(--mistica-font-weight-tabsLabel);
 }
-.mistica-text-link {
-    font-size: var(--mistica-font-size-link);
-    line-height: var(--mistica-line-height-link);
-    font-weight: var(--mistica-font-weight-link);
-    -webkit-tap-highlight-color: transparent;
-}
 .mistica-text-title1 {
     color: var(--vcolor-textSecondary);
     text-transform: uppercase;
@@ -484,7 +478,8 @@ label.mistica-chip > input:checked + span {
 
 /* TextLink */
 
-.mistica-text-link {
+.mistica-text-link,
+[class^='mistica-text'] a {
     color: var(--vcolor-textLink);
     font-weight: inherit;
     font-size: inherit;
@@ -495,14 +490,18 @@ label.mistica-chip > input:checked + span {
 }
 
 @media (pointer: fine) {
-    .mistica-text-link:hover:not([disabled]) {
+    .mistica-text-link:hover:not([disabled]),
+    [class^='mistica-text'] a:hover:not([disabled]) {
         text-decoration-thickness: 0.125em;
     }
 }
 
-.mistica-text-link[disabled] {
+.mistica-text-link[disabled],
+[class^='mistica-text'] a[disabled] {
     opacity: 0.5;
     text-decoration: none;
+    cursor: default;
+    pointer-events: none;
 }
 
 /* Breadcrumbs */
