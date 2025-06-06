@@ -62,6 +62,7 @@ export const ProgressBarSteppedStory: StoryComponent<ProgressBarSteppedStoryArgs
     <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
         <Box padding={16}>
             <ProgressBarStepped
+                aria-label="Progreso"
                 steps={steps}
                 currentStep={currentStep}
                 dataAttributes={{testid: 'progress-bar-stepped'}}
