@@ -57,6 +57,7 @@ interface MenuItemBaseProps {
     destructive?: boolean;
     disabled?: boolean;
     onPress: (item: number) => void;
+    dataAttributes?: DataAttributes;
 }
 
 interface MenuItemWithoutControlProps extends MenuItemBaseProps {
@@ -79,6 +80,7 @@ export const MenuItem = ({
     onPress,
     controlType,
     checked,
+    dataAttributes,
 }: MenuItemProps): JSX.Element => {
     const {focusedItem, setFocusedItem, closeMenu, isMenuOpen} = useMenuContext();
     const itemRef = React.useRef<HTMLDivElement | null>(null);
@@ -88,6 +90,8 @@ export const MenuItem = ({
     const item = itemRef?.current;
     const menu: HTMLElement | null = item?.closest('[role=menu]') || null;
     const itemIndex = getItemIndexInMenu(menu, item);
+
+    const menuItemDataAttributes = {testid: 'MenuItem', ...dataAttributes};
 
     const renderContent = () =>
         controlType === 'checkbox' ? (
@@ -103,6 +107,7 @@ export const MenuItem = ({
                 }}
                 disabled={disabled}
                 role="menuitemcheckbox"
+                dataAttributes={menuItemDataAttributes}
                 render={({controlElement}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">
@@ -132,6 +137,7 @@ export const MenuItem = ({
                 }}
                 disabled={disabled}
                 role="menuitem"
+                dataAttributes={menuItemDataAttributes}
             >
                 <Box paddingX={8} paddingY={12}>
                     <div className={styles.itemContent}>
