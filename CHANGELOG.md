@@ -1,3 +1,12 @@
+# [16.29.0](https://github.com/Telefonica/mistica-web/compare/v16.28.1...v16.29.0) (2025-06-06)
+
+
+### Features
+
+* **Form, Select, MenuItem:** support dataAttributes ([#1387](https://github.com/Telefonica/mistica-web/issues/1387)) ([ebeb3a7](https://github.com/Telefonica/mistica-web/commit/ebeb3a7f9d2a860ffb69c77664b90a2e0a5aae6e))
+* **mistica-css:** lists and rows ([#1379](https://github.com/Telefonica/mistica-web/issues/1379)) ([2e09c14](https://github.com/Telefonica/mistica-web/commit/2e09c141660f02d04dacb89b65044251cbe00453))
+* **mistica-css:** style any a element inside mistica-text as text link   ([#1382](https://github.com/Telefonica/mistica-web/issues/1382)) ([e857c3f](https://github.com/Telefonica/mistica-web/commit/e857c3f10f6dac26501d5535ec5f146a57c8bf21))
+
 ## [16.28.1](https://github.com/Telefonica/mistica-web/compare/v16.28.0...v16.28.1) (2025-06-03)
 
 
