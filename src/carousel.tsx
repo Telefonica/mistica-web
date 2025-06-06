@@ -624,14 +624,20 @@ const BaseCarousel = ({
 
     const hasAutoplayLoop = (typeof autoplay === 'object' && autoplay.loop) || false;
 
+    const interactionDetectorRef = React.useRef<{interacting: boolean; left: number}>({
+        interacting: false,
+        left: 0,
+    });
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const interval = setInterval(() => {
-                if (scrollRight !== 0) {
-                    goNext();
-                } else if (hasAutoplayLoop) {
-                    carouselRef.current?.scrollTo({left: 0, behavior: 'smooth'});
+                if (!interactionDetectorRef.current.interacting) {
+                    if (scrollRight !== 0) {
+                        goNext();
+                    } else if (hasAutoplayLoop) {
+                        carouselRef.current?.scrollTo({left: 0, behavior: 'smooth'});
+                    }
                 }
             }, time);
             return () => clearInterval(interval);
@@ -639,6 +645,38 @@ const BaseCarousel = ({
     }, [autoplay, goNext, scrollRight, shouldAutoplay, hasAutoplayLoop]);
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
+
+    const INTERACTION_DETECTOR_THRESHOLD = 20; // pixels
+
+    React.useEffect(() => {
+        if (currentPageIndex === pagesCount - 1 && !hasAutoplayLoop) {
+            setShouldAutoPlay(false);
+        }
+
+        const carouselEl = carouselRef.current;
+        if (carouselEl) {
+            const handleTouchStart = () => {
+                interactionDetectorRef.current.left = carouselEl.scrollLeft;
+                interactionDetectorRef.current.interacting = true;
+            };
+            const handleTouchEnd = () => {
+                interactionDetectorRef.current.interacting = false;
+                if (
+                    Math.abs(carouselEl.scrollLeft - interactionDetectorRef.current.left) >
+                    INTERACTION_DETECTOR_THRESHOLD
+                ) {
+                    setShouldAutoPlay(false);
+                }
+            };
+            carouselEl.addEventListener('touchstart', handleTouchStart);
+            carouselEl.addEventListener('touchend', handleTouchEnd);
+
+            return () => {
+                carouselEl.removeEventListener('touchstart', handleTouchStart);
+                carouselEl.removeEventListener('touchend', handleTouchEnd);
+            };
+        }
+    }, [currentPageIndex, pagesCount, setShouldAutoPlay, hasAutoplayLoop]);
 
     const pageInitialized = React.useRef<boolean>(!initialActiveItem);
     const lastPageIndex = React.useRef<number>(0);
@@ -666,24 +704,6 @@ const BaseCarousel = ({
             lastPageIndex.current = currentPageIndex;
         }
     }, [currentPageIndex, items.length, itemsPerPageFloor, initialActiveItem, onPageChange]);
-
-    React.useEffect(() => {
-        if (currentPageIndex === pagesCount - 1 && !hasAutoplayLoop) {
-            setShouldAutoPlay(false);
-        }
-
-        const carouselEl = carouselRef.current;
-        if (carouselEl) {
-            const handleTouch = () => {
-                setShouldAutoPlay(false);
-            };
-            carouselEl.addEventListener('touchstart', handleTouch);
-
-            return () => {
-                carouselEl.removeEventListener('touchstart', handleTouch);
-            };
-        }
-    }, [currentPageIndex, pagesCount, setShouldAutoPlay, hasAutoplayLoop]);
 
     const controlsSetter = React.useContext(CarouselControlsSetterContext);
 
@@ -1059,6 +1079,12 @@ export const Slideshow = ({
         }
     }, [autoplay, goNext, scrollRight, shouldAutoplay, hasAutoplayLoop]);
 
+    React.useEffect(() => {
+        if (currentIndex === items.length - 1 && !hasAutoplayLoop) {
+            setShouldAutoPlay(false);
+        }
+    }, [currentIndex, items.length, setShouldAutoPlay, hasAutoplayLoop]);
+
     const pageInitialized = React.useRef(false);
     const lastPageIndex = React.useRef(0);
 
@@ -1080,12 +1106,6 @@ export const Slideshow = ({
             carouselEl.scrollTo({left: carouselEl.clientWidth * initialPageIndex});
         }
     }, [initialPageIndex]);
-
-    React.useEffect(() => {
-        if (currentIndex === items.length - 1 && !hasAutoplayLoop) {
-            setShouldAutoPlay(false);
-        }
-    }, [currentIndex, items.length, setShouldAutoPlay, hasAutoplayLoop]);
 
     const bulletsProps = React.useMemo<PageBulletsProps>(
         () => ({
