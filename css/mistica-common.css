@@ -661,9 +661,14 @@ label.mistica-chip > input:checked + span {
     flex-direction: column;
 }
 
-.mistica-inline {
+.mistica-inline,
+.mistica-inline-wrap {
     display: flex;
     flex-direction: row;
+}
+
+.mistica-inline-wrap {
+    flex-wrap: wrap;
 }
 
 .mistica-gap-8 {
