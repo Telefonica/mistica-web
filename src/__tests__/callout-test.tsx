@@ -8,12 +8,20 @@ test('renders an accesible and closable Callout', async () => {
     const handleCloseSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Callout title="some title" description="some description" onClose={handleCloseSpy} />
+            <Callout
+                aria-label="some label"
+                title={{text: 'some title', 'aria-label': 'some title aria label'}}
+                description="some description"
+                onClose={handleCloseSpy}
+            />
         </ThemeContextProvider>
     );
 
-    const callout = screen.getByRole('region');
+    const callout = screen.getByRole('region', {name: 'some label'});
     expect(callout).toBeInTheDocument();
+
+    const title = within(callout).getByRole('heading', {name: 'some title aria label'});
+    expect(title).toBeInTheDocument();
 
     const closeButton = within(callout).getByRole('button', {name: 'Cerrar'});
     expect(closeButton).toBeInTheDocument();
@@ -28,6 +36,7 @@ test('renders an accesible and closable Callout with custom close button label',
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Callout
+                aria-label="some label"
                 title="some title"
                 description="some description"
                 onClose={handleCloseSpy}
@@ -36,7 +45,7 @@ test('renders an accesible and closable Callout with custom close button label',
         </ThemeContextProvider>
     );
 
-    const callout = screen.getByRole('region');
+    const callout = screen.getByRole('region', {name: 'some label'});
     expect(callout).toBeInTheDocument();
 
     const closeButton = within(callout).getByRole('button', {name: 'custom close label'});
