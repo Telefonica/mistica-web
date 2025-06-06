@@ -504,6 +504,236 @@ label.mistica-chip > input:checked + span {
     pointer-events: none;
 }
 
+/* Padding */
+
+[class*='mistica-padding-'] {
+    padding-left: var(--mistica-padding-left, var(--mistica-padding-x, var(--mistica-padding)));
+    padding-right: var(--mistica-padding-right, var(--mistica-padding-x, var(--mistica-padding)));
+    padding-top: var(--mistica-padding-top, var(--mistica-padding-y, var(--mistica-padding)));
+    padding-bottom: var(--mistica-padding-bottom, var(--mistica-padding-y, var(--mistica-padding)));
+}
+
+.mistica-padding-8 {
+    --mistica-padding: 8px;
+}
+
+.mistica-padding-16 {
+    --mistica-padding: 16px;
+}
+
+.mistica-padding-20 {
+    --mistica-padding: 20px;
+}
+
+.mistica-padding-24 {
+    --mistica-padding: 24px;
+}
+
+.mistica-padding-32 {
+    --mistica-padding: 32px;
+}
+
+.mistica-padding-y-8 {
+    --mistica-padding-y: 8px;
+}
+
+.mistica-padding-y-16 {
+    --mistica-padding-y: 16px;
+}
+
+.mistica-padding-y-20 {
+    --mistica-padding-y: 20px;
+}
+
+.mistica-padding-y-24 {
+    --mistica-padding-y: 24px;
+}
+
+.mistica-padding-y-32 {
+    --mistica-padding-y: 32px;
+}
+
+.mistica-padding-x-8 {
+    --mistica-padding-x: 8px;
+}
+
+.mistica-padding-x-16 {
+    --mistica-padding-x: 16px;
+}
+
+.mistica-padding-x-20 {
+    --mistica-padding-x: 20px;
+}
+
+.mistica-padding-x-24 {
+    --mistica-padding-x: 24px;
+}
+
+.mistica-padding-x-32 {
+    --mistica-padding-x: 32px;
+}
+
+.mistica-padding-left-8 {
+    --mistica-padding-left: 8px;
+}
+
+.mistica-padding-left-16 {
+    --mistica-padding-left: 16px;
+}
+
+.mistica-padding-left-20 {
+    --mistica-padding-left: 20px;
+}
+
+.mistica-padding-left-24 {
+    --mistica-padding-left: 24px;
+}
+
+.mistica-padding-left-32 {
+    --mistica-padding-left: 32px;
+}
+
+.mistica-padding-right-8 {
+    --mistica-padding-right: 8px;
+}
+
+.mistica-padding-right-16 {
+    --mistica-padding-right: 16px;
+}
+
+.mistica-padding-right-20 {
+    --mistica-padding-right: 20px;
+}
+
+.mistica-padding-right-24 {
+    --mistica-padding-right: 24px;
+}
+
+.mistica-padding-right-32 {
+    --mistica-padding-right: 32px;
+}
+
+.mistica-padding-top-8 {
+    --mistica-padding-top: 8px;
+}
+
+.mistica-padding-top-16 {
+    --mistica-padding-top: 16px;
+}
+
+.mistica-padding-top-20 {
+    --mistica-padding-top: 20px;
+}
+
+.mistica-padding-top-24 {
+    --mistica-padding-top: 24px;
+}
+
+.mistica-padding-top-32 {
+    --mistica-padding-top: 32px;
+}
+
+.mistica-padding-bottom-8 {
+    --mistica-padding-bottom: 8px;
+}
+
+.mistica-padding-bottom-16 {
+    --mistica-padding-bottom: 16px;
+}
+
+.mistica-padding-bottom-20 {
+    --mistica-padding-bottom: 20px;
+}
+
+.mistica-padding-bottom-24 {
+    --mistica-padding-bottom: 24px;
+}
+
+.mistica-padding-bottom-32 {
+    --mistica-padding-bottom: 32px;
+}
+
+/* Stack / Inline */
+
+.mistica-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.mistica-inline,
+.mistica-inline-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.mistica-inline-wrap {
+    flex-wrap: wrap;
+}
+
+.mistica-gap-8 {
+    gap: 8px;
+}
+
+.mistica-gap-16 {
+    gap: 16px;
+}
+
+.mistica-gap-20 {
+    gap: 20px;
+}
+
+.mistica-gap-24 {
+    gap: 24px;
+}
+
+.mistica-gap-32 {
+    gap: 32px;
+}
+
+/* Align */
+
+[class*='mistica-align-'] {
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+.mistica-align-start {
+    place-items: start;
+}
+
+.mistica-align-end {
+    place-items: end;
+}
+
+.mistica-align-center {
+    place-items: center;
+}
+
+.mistica-align-x-start {
+    justify-items: start;
+}
+
+.mistica-align-x-end {
+    justify-items: end;
+}
+
+.mistica-align-x-center {
+    justify-items: center;
+}
+
+.mistica-align-y-start {
+    align-items: start;
+}
+
+.mistica-align-y-end {
+    align-items: end;
+}
+
+.mistica-align-y-center {
+    align-items: center;
+}
+
 /* Breadcrumbs */
 .mistica-breadcrumb ol {
     display: block;
