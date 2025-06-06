@@ -21,7 +21,13 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
 
 type Props = {
-    title?: string;
+    title?:
+        | {
+              text: string;
+              'aria-label'?: string;
+              as?: HeadingType;
+          }
+        | string;
     titleAs?: HeadingType;
     description: string;
     onClose?: () => void;
@@ -52,13 +58,20 @@ const Callout = ({
 }: Props): JSX.Element => {
     const variant = useThemeVariant();
     const {texts, t} = useTheme();
+
+    const isTitleObject = typeof title === 'object';
+
+    const titleElementType = isTitleObject ? title?.as || titleAs : titleAs;
+    const titleAriaLabel = isTitleObject ? title?.['aria-label'] : undefined;
+    const titleText = isTitleObject ? title?.text : title;
+
     return (
         <section
             className={classNames(styles.container, styles.background[variant])}
             style={applyCssVars({
                 [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
             })}
-            aria-label={ariaLabel ?? title}
+            aria-label={ariaLabel}
             role={role}
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
@@ -72,8 +85,13 @@ const Callout = ({
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
                             <Stack space={4}>
-                                <Text3 as={titleAs} regular dataAttributes={{testid: 'title'}}>
-                                    {title}
+                                <Text3
+                                    as={titleElementType}
+                                    regular
+                                    dataAttributes={{testid: 'title'}}
+                                    aria-label={titleAriaLabel}
+                                >
+                                    {titleText}
                                 </Text3>
                                 <Text2
                                     as="p"
