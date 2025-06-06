@@ -6,7 +6,7 @@ import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
-import {useIsInverseOrMediaVariant, ThemeVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
@@ -262,13 +262,14 @@ const InternalCarouselPageControls = ({
     nextArrowEnabled,
 }: InternalCarouselPageControlsProps): JSX.Element => {
     const {texts, t} = useTheme();
+    const variant = useThemeVariant();
     return (
-        <Inline space={8}>
+        <Inline space={variant === 'media' ? 16 : 8}>
             <IconButton
                 Icon={IconChevronLeftRegular}
                 aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
                 type="neutral"
-                backgroundType="soft"
+                backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
                 bleedLeft={bleedLeft}
                 onPress={() => {
@@ -281,7 +282,7 @@ const InternalCarouselPageControls = ({
                 Icon={IconChevronRightRegular}
                 aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
                 type="neutral"
-                backgroundType="soft"
+                backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
                 bleedRight={bleedRight}
                 onPress={() => {
@@ -339,9 +340,9 @@ const InternalCarouselAutoplayControl = ({
             type: 'neutral',
             'aria-label': 'Pause autoplay',
         }}
+        small
         bleedLeft={bleedLeft}
         bleedRight={bleedRight}
-        small
         onChange={onAutoplayChanged}
         checked={isAutoplayEnabled}
     />
@@ -621,7 +622,7 @@ const BaseCarousel = ({
         }
     }, [initialActiveItem, goToPage, itemsPerPageFloor]);
 
-    const hasAutoplayLoop = typeof autoplay === 'object' && autoplay.loop;
+    const hasAutoplayLoop = (typeof autoplay === 'object' && autoplay.loop) || false;
 
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
@@ -813,17 +814,19 @@ const BaseCarousel = ({
                     {withControls ? (
                         <Inline space="between">
                             {!!autoplay && (
-                                <InternalCarouselAutoplayControl
-                                    isAutoplayEnabled={isAutoplayEnabled}
-                                    atLastPage={currentPageIndex === pagesCount - 1}
-                                    onAutoplayChanged={(autoplayEnabled: boolean) => {
-                                        if (!nextArrowEnabled && autoplayEnabled) {
-                                            goToPage(0);
-                                        }
-                                        setShouldAutoPlay(autoplayEnabled);
-                                    }}
-                                    bleedLeft={!isDesktopOrBigger}
-                                />
+                                <div className={classNames(styles.carouselAutoplayControlContainer)}>
+                                    <InternalCarouselAutoplayControl
+                                        isAutoplayEnabled={isAutoplayEnabled}
+                                        atLastPage={currentPageIndex === pagesCount - 1}
+                                        onAutoplayChanged={(autoplayEnabled: boolean) => {
+                                            if (!nextArrowEnabled && autoplayEnabled) {
+                                                goToPage(0);
+                                            }
+                                            setShouldAutoPlay(autoplayEnabled);
+                                        }}
+                                        bleedLeft={!isDesktopOrBigger}
+                                    />
+                                </div>
                             )}
                             {bulletsContainer}
                             <InternalCarouselPageControls
@@ -969,6 +972,7 @@ export const useSlideshowContext = (): {withBullets: boolean} | undefined =>
 export const Slideshow = ({
     items,
     withBullets,
+    withControls = true,
     autoplay,
     initialPageIndex = 0,
     onPageChange,
@@ -981,6 +985,8 @@ export const Slideshow = ({
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
+    const nextArrowEnabled = scrollRight !== 0;
+    const prevArrowEnabled = scrollLeft !== 0;
 
     const goPrev = React.useCallback(() => {
         const carouselEl = carouselRef.current;
@@ -1035,22 +1041,23 @@ export const Slideshow = ({
         }
     }, [items.length]);
 
-    const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
+    const {isAutoplayEnabled, shouldAutoplay, setShouldAutoPlay} = useShouldAutoplay(!!autoplay, carouselRef);
+
+    const hasAutoplayLoop = (typeof autoplay === 'object' && autoplay.loop) || false;
 
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
-            const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
                 if (scrollRight !== 0) {
                     goNext();
-                } else if (loop) {
+                } else if (hasAutoplayLoop) {
                     carouselRef.current?.scrollTo({left: 0, behavior: 'smooth'});
                 }
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, scrollRight, shouldAutoplay]);
+    }, [autoplay, goNext, scrollRight, shouldAutoplay, hasAutoplayLoop]);
 
     const pageInitialized = React.useRef(false);
     const lastPageIndex = React.useRef(0);
@@ -1074,6 +1081,12 @@ export const Slideshow = ({
         }
     }, [initialPageIndex]);
 
+    React.useEffect(() => {
+        if (currentIndex === items.length - 1 && !hasAutoplayLoop) {
+            setShouldAutoPlay(false);
+        }
+    }, [currentIndex, items.length, setShouldAutoPlay, hasAutoplayLoop]);
+
     const bulletsProps = React.useMemo<PageBulletsProps>(
         () => ({
             currentIndex,
@@ -1090,6 +1103,14 @@ export const Slideshow = ({
             controlsSetter.setBulletsProps(bulletsProps);
         }
     }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
+
+    const bulletsContainer = withBullets && (
+        <div className={styles.slideshowBulletsContainer}>
+            <ThemeVariant variant={inverseBullets ? 'inverse' : 'default'}>
+                <PageBullets {...bulletsProps} />
+            </ThemeVariant>
+        </div>
+    );
 
     return (
         <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
@@ -1115,13 +1136,44 @@ export const Slideshow = ({
                             ))}
                         </div>
                     </div>
-                    {withBullets && items.length > 1 && (
-                        <ThemeVariant isInverse={inverseBullets}>
-                            <div className={styles.slideshowBullets}>
-                                <PageBullets {...bulletsProps} />
-                            </div>
-                        </ThemeVariant>
-                    )}
+                    {items.length > 1 &&
+                        (withControls ? (
+                            <ThemeVariant variant="media">
+                                <Inline space="between" className={styles.slideshowControlsContainer}>
+                                    {!!autoplay && (
+                                        <div className={styles.slideshowAutoplayControlContainer}>
+                                            <InternalCarouselAutoplayControl
+                                                isAutoplayEnabled={isAutoplayEnabled}
+                                                atLastPage={currentIndex === items.length - 1}
+                                                onAutoplayChanged={(autoplayEnabled: boolean) => {
+                                                    if (
+                                                        currentIndex === items.length - 1 &&
+                                                        autoplayEnabled
+                                                    ) {
+                                                        goToPage(0);
+                                                    }
+                                                    setShouldAutoPlay(autoplayEnabled);
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                    {bulletsContainer}
+                                    <InternalCarouselPageControls
+                                        goNext={goNext}
+                                        goPrev={goPrev}
+                                        setShouldAutoplay={setShouldAutoPlay}
+                                        prevArrowEnabled={prevArrowEnabled}
+                                        nextArrowEnabled={nextArrowEnabled}
+                                    />
+                                </Inline>
+                            </ThemeVariant>
+                        ) : (
+                            withBullets && (
+                                <Inline space="around" className={styles.slideshowControlsContainer}>
+                                    {bulletsContainer}
+                                </Inline>
+                            )
+                        ))}
                 </div>
             </ResetResponsiveLayout>
         </SlideshowContext.Provider>

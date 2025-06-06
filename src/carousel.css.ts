@@ -139,6 +139,12 @@ export const carouselContainer = sprinkles({
     position: 'relative',
 });
 
+export const carouselAutoplayControlContainer = style([
+    sprinkles({
+        minWidth: 64,
+    }),
+]);
+
 const itemsPerPage = createVar();
 const itemsPerPageMobile = createVar();
 const itemsPerPageTablet = createVar();
@@ -301,13 +307,13 @@ export const carouselBullets = style([
         display: 'flex',
     }),
     {
-        paddingTop: 8,
+        paddingTop: 4,
         paddingBottom: 2,
         margin: '0 -4px',
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingTop: 16,
-                margin: '0 -2px',
+                paddingTop: 14,
+                margin: '0 -2px', // required to align with specs at pixel perfect level
             },
         },
     },
@@ -347,15 +353,43 @@ export const slideshowItem = style([
     },
 ]);
 
-export const slideshowBullets = style([
+export const slideshowControlsContainer = style([
     sprinkles({
         position: 'absolute',
-        bottom: 24,
+        bottom: 12,
+        left: 0,
+        right: 0,
         display: 'flex',
-        justifyContent: 'center',
         width: '100%',
+        height: 32,
     }),
     {
         zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
+        paddingLeft: 40,
+        paddingRight: 40,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingLeft: 32,
+                paddingRight: 32,
+            },
+            [mq.mobile]: {
+                paddingLeft: 16,
+                paddingRight: 16,
+            },
+        },
+    },
+]);
+
+export const slideshowAutoplayControlContainer = style([
+    sprinkles({
+        minWidth: 80,
+    }),
+]);
+
+export const slideshowBulletsContainer = style([
+    {
+        paddingTop: 4,
+        paddingLeft: 8,
+        paddingRight: 8,
     },
 ]);
