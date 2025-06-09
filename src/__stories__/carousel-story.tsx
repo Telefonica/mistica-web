@@ -18,6 +18,7 @@ import {
     PageBullets,
 } from '..';
 import tennisUrl from './images/tennis.jpg';
+import {CarouselAutoplayControl, CarouselPageControls} from '../carousel';
 
 export default {
     title: 'Components/Carousels/Carousel',
@@ -187,5 +188,63 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
 WithCarouselContext.storyName = 'Carousel with CarouselContext';
 WithCarouselContext.parameters = {fullScreen: true};
 WithCarouselContext.args = {
+    numItems: 6,
+};
+
+export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselContextArgs> = ({
+    numItems,
+}) => {
+    return (
+        <CarouselContextProvider>
+            <Box paddingY={24}>
+                <ResponsiveLayout>
+                    <Carousel
+                        items={Array.from({length: numItems}, (_, idx) => (
+                            <MediaCard
+                                aria-label={`Carousel item ${idx}`}
+                                key={idx}
+                                title={`Title ${idx}`}
+                                description="Some description"
+                                media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                                buttonLink={
+                                    <ButtonLink small href="https://google.com">
+                                        Link {idx}
+                                    </ButtonLink>
+                                }
+                            />
+                        ))}
+                        withBullets={false}
+                        withControls={false}
+                        autoplay
+                    />
+                    <Inline space="around">Some content here</Inline>
+                    <CarouselContextConsumer>
+                        {({goToPage, bulletsProps, autoplayControlProps, pageControlsProps}) => (
+                            <Inline space="between" alignItems="center">
+                                <CarouselAutoplayControl
+                                    {...autoplayControlProps}
+                                    onAutoplayChanged={() => {
+                                        if (autoplayControlProps.isAtLastPage) {
+                                            goToPage(0);
+                                        }
+                                        autoplayControlProps.onAutoplayChanged(
+                                            !autoplayControlProps.isAutoplayEnabled
+                                        );
+                                    }}
+                                />
+                                <PageBullets {...bulletsProps} onPress={goToPage} />
+                                <CarouselPageControls {...pageControlsProps} />
+                            </Inline>
+                        )}
+                    </CarouselContextConsumer>
+                </ResponsiveLayout>
+            </Box>
+        </CarouselContextProvider>
+    );
+};
+
+WithCarouselContextAndOutsideControls.storyName = 'Carousel with CarouselContext and controls';
+WithCarouselContextAndOutsideControls.parameters = {fullScreen: true};
+WithCarouselContextAndOutsideControls.args = {
     numItems: 6,
 };
