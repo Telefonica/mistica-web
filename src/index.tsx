@@ -119,11 +119,12 @@ export {
     CenteredCarousel,
     Slideshow,
     PageBullets,
+    CarouselPageControls,
+    CarouselAutoplayControl,
     CarouselContextProvider,
     useCarouselContext,
     CarouselContextConsumer,
 } from './carousel';
-export {CarouselPageControls} from './carousel';
 export {Grid, GridItem} from './grid';
 export {default as Drawer} from './drawer';
 export {default as Timeline, TimelineItem} from './timeline';
