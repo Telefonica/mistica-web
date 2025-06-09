@@ -112,6 +112,9 @@ export const getTuSkin: GetKnownSkin = () => {
             textActivated: palette.primary,
             textBrand: palette.blue,
             inputBorder: palette.grey5,
+            inputBorderInverse: palette.white,
+            completedStep: palette.primary,
+            completedStepInverse: palette.primary80,
             control: palette.grey5,
             controlActivated: palette.primary,
             controlInverse: palette.white,
@@ -263,6 +266,9 @@ export const getTuSkin: GetKnownSkin = () => {
             textActivated: palette.blue30,
             textBrand: palette.blue30,
             inputBorder: palette.grey5,
+            inputBorderInverse: palette.grey5,
+            completedStep: palette.grey2,
+            completedStepInverse: palette.grey2,
             control: palette.darkModeGrey6,
             controlActivated: palette.blue30,
             controlInverse: palette.darkModeGrey6,
@@ -396,6 +402,10 @@ export const getTuSkin: GetKnownSkin = () => {
                 size: {desktop: 28, mobile: 20},
                 weight: 'medium',
             },
+        },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
         },
     };
     return skin;

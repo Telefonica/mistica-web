@@ -1,3 +1,46 @@
+# [16.29.0](https://github.com/Telefonica/mistica-web/compare/v16.28.1...v16.29.0) (2025-06-06)
+
+
+### Features
+
+* **Form, Select, MenuItem:** support dataAttributes ([#1387](https://github.com/Telefonica/mistica-web/issues/1387)) ([ebeb3a7](https://github.com/Telefonica/mistica-web/commit/ebeb3a7f9d2a860ffb69c77664b90a2e0a5aae6e))
+* **mistica-css:** lists and rows ([#1379](https://github.com/Telefonica/mistica-web/issues/1379)) ([2e09c14](https://github.com/Telefonica/mistica-web/commit/2e09c141660f02d04dacb89b65044251cbe00453))
+* **mistica-css:** style any a element inside mistica-text as text link   ([#1382](https://github.com/Telefonica/mistica-web/issues/1382)) ([e857c3f](https://github.com/Telefonica/mistica-web/commit/e857c3f10f6dac26501d5535ec5f146a57c8bf21))
+
+## [16.28.1](https://github.com/Telefonica/mistica-web/compare/v16.28.0...v16.28.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* **sheet:** z-index and scroll dividers in desktop ([#1381](https://github.com/Telefonica/mistica-web/issues/1381)) ([2aafa78](https://github.com/Telefonica/mistica-web/commit/2aafa78aa58cc7cf4cfd0ec150af432592fb3889))
+
+# [16.28.0](https://github.com/Telefonica/mistica-web/compare/v16.27.0...v16.28.0) (2025-05-30)
+
+
+### Features
+
+* **movistar skin, telefonca skin:** SuccessFeedback white background in Movistar. Color changes in Telefonica ([#1380](https://github.com/Telefonica/mistica-web/issues/1380)) ([0bcdbcc](https://github.com/Telefonica/mistica-web/commit/0bcdbcca0a44ca8e23c50ca943f37f626655a55c))
+
+# [16.27.0](https://github.com/Telefonica/mistica-web/compare/v16.26.0...v16.27.0) (2025-05-29)
+
+
+### Features
+
+* **skin:** allow customizing some components theme variant by skin ([#1375](https://github.com/Telefonica/mistica-web/issues/1375)) ([a80f5bd](https://github.com/Telefonica/mistica-web/commit/a80f5bdc0cd5981fd3c6ce7eda2eb4a38a585bcc))
+* **skin:** Improve color contrast in Blau skin ([#1369](https://github.com/Telefonica/mistica-web/issues/1369)) ([e49e84d](https://github.com/Telefonica/mistica-web/commit/e49e84d0c718b50d22b6ce193754d4e424782586))
+
+# [16.26.0](https://github.com/Telefonica/mistica-web/compare/v16.25.0...v16.26.0) (2025-05-28)
+
+
+### Features
+
+* **mistica-css:** counter ([#1372](https://github.com/Telefonica/mistica-web/issues/1372)) ([70d8beb](https://github.com/Telefonica/mistica-web/commit/70d8bebab8667b611003ab0f419cc78c507ee924))
+* **mistica-css:** ErrorFeedbackScreen ([#1371](https://github.com/Telefonica/mistica-web/issues/1371)) ([99ea3cf](https://github.com/Telefonica/mistica-web/commit/99ea3cfc4ea9de60bdb90cfe808b5acbfc9e5f62))
+* **mistica-css:** slider ([#1374](https://github.com/Telefonica/mistica-web/issues/1374)) ([89c6aee](https://github.com/Telefonica/mistica-web/commit/89c6aee0e534e9d884854ac0b72ada0f65e16823))
+* **mistica-css:** switch ([#1364](https://github.com/Telefonica/mistica-web/issues/1364)) ([7b6df80](https://github.com/Telefonica/mistica-web/commit/7b6df8039278131c0c3f33c0f3ced7cd872eada9))
+* **mistica-css:** TextField / SearchField ([#1370](https://github.com/Telefonica/mistica-web/issues/1370)) ([55781c4](https://github.com/Telefonica/mistica-web/commit/55781c472d0485992f9d1b5adad03c5fa84b22ce))
+* **RowList, BoxedRowList, Stack:** O2DE-7699 RowList with aria-live and aria-atomic attributes ([#1376](https://github.com/Telefonica/mistica-web/issues/1376)) ([5070c61](https://github.com/Telefonica/mistica-web/commit/5070c6197dae571e64d3c88cf4a7dcf6f0cbc232))
+
 # [16.25.0](https://github.com/Telefonica/mistica-web/compare/v16.24.0...v16.25.0) (2025-05-13)
 
 

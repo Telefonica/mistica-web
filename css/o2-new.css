@@ -120,6 +120,9 @@
     --mistica-color-textActivated: var(--mistica-o2-new-beyondBlue);
     --mistica-color-textBrand: var(--mistica-o2-new-beyondBlue);
     --mistica-color-inputBorder: var(--mistica-o2-new-grey45);
+    --mistica-color-inputBorderInverse: var(--mistica-o2-new-white);
+    --mistica-color-completedStep: var(--mistica-o2-new-beyondBlue);
+    --mistica-color-completedStepInverse: var(--mistica-o2-new-beyondBlue70);
     --mistica-color-control: var(--mistica-o2-new-grey45);
     --mistica-color-controlActivated: var(--mistica-o2-new-beyondBlue);
     --mistica-color-controlInverse: var(--mistica-o2-new-white);
@@ -333,6 +336,9 @@
     --mistica-color-textActivated: var(--mistica-o2-new-beyondBlue30);
     --mistica-color-textBrand: var(--mistica-o2-new-beyondBlue30);
     --mistica-color-inputBorder: var(--mistica-o2-new-grey45);
+    --mistica-color-inputBorderInverse: var(--mistica-o2-new-grey45);
+    --mistica-color-completedStep: var(--mistica-o2-new-darkModeBeyondBlue);
+    --mistica-color-completedStepInverse: var(--mistica-o2-new-darkModeBeyondBlue);
     --mistica-color-control: var(--mistica-o2-new-grey45);
     --mistica-color-controlActivated: var(--mistica-o2-new-darkModeBeyondBlue);
     --mistica-color-controlInverse: var(--mistica-o2-new-grey45);
@@ -491,6 +497,9 @@
         --mistica-color-textActivated: var(--mistica-o2-new-beyondBlue30);
         --mistica-color-textBrand: var(--mistica-o2-new-beyondBlue30);
         --mistica-color-inputBorder: var(--mistica-o2-new-grey45);
+        --mistica-color-inputBorderInverse: var(--mistica-o2-new-grey45);
+        --mistica-color-completedStep: var(--mistica-o2-new-darkModeBeyondBlue);
+        --mistica-color-completedStepInverse: var(--mistica-o2-new-darkModeBeyondBlue);
         --mistica-color-control: var(--mistica-o2-new-grey45);
         --mistica-color-controlActivated: var(--mistica-o2-new-darkModeBeyondBlue);
         --mistica-color-controlInverse: var(--mistica-o2-new-grey45);
@@ -658,6 +667,9 @@
         --mistica-color-textActivated: var(--mistica-o2-new-beyondBlue);
         --mistica-color-textBrand: var(--mistica-o2-new-beyondBlue);
         --mistica-color-inputBorder: var(--mistica-o2-new-grey45);
+        --mistica-color-inputBorderInverse: var(--mistica-o2-new-white);
+        --mistica-color-completedStep: var(--mistica-o2-new-beyondBlue);
+        --mistica-color-completedStepInverse: var(--mistica-o2-new-beyondBlue70);
         --mistica-color-control: var(--mistica-o2-new-grey45);
         --mistica-color-controlActivated: var(--mistica-o2-new-beyondBlue);
         --mistica-color-controlInverse: var(--mistica-o2-new-white);

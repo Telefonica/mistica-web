@@ -34,8 +34,8 @@
 
     --vcolor-accordionChevronClosed: var(--mistica-color-inverse);
     --vcolor-accordionChevronOpen: var(--mistica-color-inverse);
-    --vcolor-accordionHover: var(--mistica-color-backgroundContainerBrandHover);
-    --vcolor-accordionActive: var(--mistica-color-backgroundContainerBrandPressed);
+    --vcolor-backgroundContainerHover: var(--mistica-color-backgroundContainerBrandHover);
+    --vcolor-backgroundConteinerPressed: var(--mistica-color-backgroundContainerBrandPressed);
 
     --vcolor-divider: var(--mistica-color-dividerInverse);
 
@@ -44,18 +44,25 @@
     --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
     --vcolor-checkbox-background: transparent;
 
+    --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
+
     --vcolor-barTrack: var(--mistica-color-barTrackInverse);
 
     --vcolor-switch-trackBackground: transparent;
     --vcolor-switch-handleChecked: var(--mistica-color-controlKnobInverse);
     --vcolor-switch-handleHover: var(--mistica-color-inverse);
+
+    --vcolor-rowChevron: var(--mistica-color-inverse);
 }
 
 [data-mistica-skin] > *,
 [data-mistica-variant='default'] > *,
+.mistica-boxed > *,
 .mistica-card > *,
 .mistica-snap-card > *,
-.mistica-display-card > * {
+.mistica-display-card > *,
+.mistica-boxed > *,
+.mistica-boxed-row > * {
     --mistica-boxed-border: 1px solid var(--mistica-color-border);
     --vcolor-textPrimary: var(--mistica-color-textPrimary);
     --vcolor-textSecondary: var(--mistica-color-textSecondary);
@@ -89,8 +96,8 @@
 
     --vcolor-accordionChevronClosed: var(--mistica-color-neutralMedium);
     --vcolor-accordionChevronOpen: var(--mistica-color-neutralHigh);
-    --vcolor-accordionHover: var(--mistica-color-backgroundContainerHover);
-    --vcolor-accordionActive: var(--mistica-color-backgroundContainerPressed);
+    --vcolor-backgroundContainerHover: var(--mistica-color-backgroundContainerHover);
+    --vcolor-backgroundConteinerPressed: var(--mistica-color-backgroundContainerPressed);
 
     --vcolor-divider: var(--mistica-color-divider);
 
@@ -99,11 +106,15 @@
     --vcolor-checkbox-tick: var(--mistica-color-inverse);
     --vcolor-checkbox-background: var(--mistica-color-background);
 
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
+
     --vcolor-barTrack: var(--mistica-color-barTrack);
 
     --vcolor-switch-trackBackground: var(--mistica-color-backgroundAlternative);
     --vcolor-switch-handleChecked: var(--mistica-color-inverse);
     --vcolor-switch-handleHover: var(--mistica-color-neutralHigh);
+
+    --vcolor-rowChevron: var(--mistica-color-neutralMedium);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -114,11 +125,19 @@
         --mistica-boxed-border: none;
     }
 
+    [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-inputBorder);
+    }
+
     [data-mistica-color-scheme='light'][data-mistica-skin] > *,
     [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
     [data-mistica-color-scheme='light'] .mistica-card > *,
     [data-mistica-color-scheme='light'] .mistica-snap-card > * {
         --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    }
+
+    [data-mistica-color-scheme='light'] [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
     }
 }
 
@@ -127,6 +146,10 @@
 [data-mistica-color-scheme='dark'] .mistica-card > *,
 [data-mistica-color-scheme='dark'] .mistica-snap-card > * {
     --mistica-boxed-border: none;
+}
+
+[data-mistica-color-scheme='dark'] [data-mistica-variant='inverse'] > * {
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
 }
 
 [data-mistica-skin] {
@@ -208,12 +231,6 @@
     font-size: var(--mistica-font-size-tabsLabel);
     line-height: var(--mistica-line-height-tabsLabel);
     font-weight: var(--mistica-font-weight-tabsLabel);
-}
-.mistica-text-link {
-    font-size: var(--mistica-font-size-link);
-    line-height: var(--mistica-line-height-link);
-    font-weight: var(--mistica-font-weight-link);
-    -webkit-tap-highlight-color: transparent;
 }
 .mistica-text-title1 {
     color: var(--vcolor-textSecondary);
@@ -461,7 +478,8 @@ label.mistica-chip > input:checked + span {
 
 /* TextLink */
 
-.mistica-text-link {
+.mistica-text-link,
+[class^='mistica-text'] a {
     color: var(--vcolor-textLink);
     font-weight: inherit;
     font-size: inherit;
@@ -472,14 +490,248 @@ label.mistica-chip > input:checked + span {
 }
 
 @media (pointer: fine) {
-    .mistica-text-link:hover:not([disabled]) {
+    .mistica-text-link:hover:not([disabled]),
+    [class^='mistica-text'] a:hover:not([disabled]) {
         text-decoration-thickness: 0.125em;
     }
 }
 
-.mistica-text-link[disabled] {
+.mistica-text-link[disabled],
+[class^='mistica-text'] a[disabled] {
     opacity: 0.5;
     text-decoration: none;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Padding */
+
+[class*='mistica-padding-'] {
+    padding-left: var(--mistica-padding-left, var(--mistica-padding-x, var(--mistica-padding)));
+    padding-right: var(--mistica-padding-right, var(--mistica-padding-x, var(--mistica-padding)));
+    padding-top: var(--mistica-padding-top, var(--mistica-padding-y, var(--mistica-padding)));
+    padding-bottom: var(--mistica-padding-bottom, var(--mistica-padding-y, var(--mistica-padding)));
+}
+
+.mistica-padding-8 {
+    --mistica-padding: 8px;
+}
+
+.mistica-padding-16 {
+    --mistica-padding: 16px;
+}
+
+.mistica-padding-20 {
+    --mistica-padding: 20px;
+}
+
+.mistica-padding-24 {
+    --mistica-padding: 24px;
+}
+
+.mistica-padding-32 {
+    --mistica-padding: 32px;
+}
+
+.mistica-padding-y-8 {
+    --mistica-padding-y: 8px;
+}
+
+.mistica-padding-y-16 {
+    --mistica-padding-y: 16px;
+}
+
+.mistica-padding-y-20 {
+    --mistica-padding-y: 20px;
+}
+
+.mistica-padding-y-24 {
+    --mistica-padding-y: 24px;
+}
+
+.mistica-padding-y-32 {
+    --mistica-padding-y: 32px;
+}
+
+.mistica-padding-x-8 {
+    --mistica-padding-x: 8px;
+}
+
+.mistica-padding-x-16 {
+    --mistica-padding-x: 16px;
+}
+
+.mistica-padding-x-20 {
+    --mistica-padding-x: 20px;
+}
+
+.mistica-padding-x-24 {
+    --mistica-padding-x: 24px;
+}
+
+.mistica-padding-x-32 {
+    --mistica-padding-x: 32px;
+}
+
+.mistica-padding-left-8 {
+    --mistica-padding-left: 8px;
+}
+
+.mistica-padding-left-16 {
+    --mistica-padding-left: 16px;
+}
+
+.mistica-padding-left-20 {
+    --mistica-padding-left: 20px;
+}
+
+.mistica-padding-left-24 {
+    --mistica-padding-left: 24px;
+}
+
+.mistica-padding-left-32 {
+    --mistica-padding-left: 32px;
+}
+
+.mistica-padding-right-8 {
+    --mistica-padding-right: 8px;
+}
+
+.mistica-padding-right-16 {
+    --mistica-padding-right: 16px;
+}
+
+.mistica-padding-right-20 {
+    --mistica-padding-right: 20px;
+}
+
+.mistica-padding-right-24 {
+    --mistica-padding-right: 24px;
+}
+
+.mistica-padding-right-32 {
+    --mistica-padding-right: 32px;
+}
+
+.mistica-padding-top-8 {
+    --mistica-padding-top: 8px;
+}
+
+.mistica-padding-top-16 {
+    --mistica-padding-top: 16px;
+}
+
+.mistica-padding-top-20 {
+    --mistica-padding-top: 20px;
+}
+
+.mistica-padding-top-24 {
+    --mistica-padding-top: 24px;
+}
+
+.mistica-padding-top-32 {
+    --mistica-padding-top: 32px;
+}
+
+.mistica-padding-bottom-8 {
+    --mistica-padding-bottom: 8px;
+}
+
+.mistica-padding-bottom-16 {
+    --mistica-padding-bottom: 16px;
+}
+
+.mistica-padding-bottom-20 {
+    --mistica-padding-bottom: 20px;
+}
+
+.mistica-padding-bottom-24 {
+    --mistica-padding-bottom: 24px;
+}
+
+.mistica-padding-bottom-32 {
+    --mistica-padding-bottom: 32px;
+}
+
+/* Stack / Inline */
+
+.mistica-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.mistica-inline,
+.mistica-inline-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.mistica-inline-wrap {
+    flex-wrap: wrap;
+}
+
+.mistica-gap-8 {
+    gap: 8px;
+}
+
+.mistica-gap-16 {
+    gap: 16px;
+}
+
+.mistica-gap-20 {
+    gap: 20px;
+}
+
+.mistica-gap-24 {
+    gap: 24px;
+}
+
+.mistica-gap-32 {
+    gap: 32px;
+}
+
+/* Align */
+
+[class*='mistica-align-'] {
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+.mistica-align-start {
+    place-items: start;
+}
+
+.mistica-align-end {
+    place-items: end;
+}
+
+.mistica-align-center {
+    place-items: center;
+}
+
+.mistica-align-x-start {
+    justify-items: start;
+}
+
+.mistica-align-x-end {
+    justify-items: end;
+}
+
+.mistica-align-x-center {
+    justify-items: center;
+}
+
+.mistica-align-y-start {
+    align-items: start;
+}
+
+.mistica-align-y-end {
+    align-items: end;
+}
+
+.mistica-align-y-center {
+    align-items: center;
 }
 
 /* Breadcrumbs */
@@ -976,21 +1228,24 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     display: none;
 }
 
-.mistica-accordion-item__summary-body {
+.mistica-accordion-item__summary-body,
+.mistica-row__body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 2px;
 }
 
-.mistica-accordion-item__summary-title {
+.mistica-accordion-item__summary-title,
+.mistica-row__title {
     font-size: var(--mistica-font-size-3);
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-3);
     color: var(--vcolor-textPrimary);
 }
 
-.mistica-accordion-item__summary-subtitle {
+.mistica-accordion-item__summary-subtitle,
+.mistica-row__subtitle {
     font-size: var(--mistica-font-size-2);
     line-height: var(--mistica-line-height-2);
     font-weight: var(--mistica-font-weight-2);
@@ -1010,12 +1265,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 @media (pointer: fine) {
     .mistica-accordion-item__summary:hover {
-        background-color: var(--vcolor-accordionHover);
+        background-color: var(--vcolor-backgroundContainerHover);
     }
 }
 
 .mistica-accordion-item__summary:active {
-    background-color: var(--vcolor-accordionActive);
+    background-color: var(--vcolor-backgroundConteinerPressed);
 }
 
 .mistica-accordion-item::details-content {
@@ -1035,6 +1290,120 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 .mistica-accordion-item[open]::details-content {
     height: auto;
+}
+
+/* Lists */
+
+.mistica-list,
+.mistica-boxed-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.mistica-boxed-list {
+    gap: 16px;
+}
+
+.mistica-row__asset {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-self: flex-start;
+}
+
+.mistica-row,
+.mistica-boxed-row {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    transition: background-color 0.1s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-row {
+    position: relative;
+    margin: 0 -16px;
+}
+
+.mistica-row:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 32px);
+    height: 1px;
+    background-color: var(--vcolor-divider);
+}
+
+.mistica-row:last-child:after {
+    display: none;
+}
+
+.mistica-boxed-row {
+    border: var(--mistica-boxed-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+    overflow: hidden;
+}
+
+.mistica-row > a,
+.mistica-boxed-row > a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    margin: -16px;
+    padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+@media (pointer: fine) {
+    .mistica-row > a:hover,
+    .mistica-boxed-row > a:hover {
+        background-color: var(--vcolor-backgroundContainerHover);
+    }
+}
+
+.mistica-row > a:active,
+.mistica-boxed-row > a:active {
+    background-color: var(--vcolor-backgroundConteinerPressed);
+}
+
+.mistica-row__body {
+    flex: 1;
+}
+
+.mistica-row__body > [class^='mistica-tag'] {
+    margin-bottom: 2px;
+}
+
+.mistica-row__description {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: 400;
+    color: var(--vcolor-textSecondary);
+}
+
+.mistica-row__right {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.mistica-row__chevron {
+    width: 16px;
+    height: 16px;
+    color: var(--vcolor-rowChevron);
+    align-self: center;
 }
 
 /* Grid Layout */
@@ -1404,7 +1773,94 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     opacity: initial; /* avoid applying 0.5 opacity twice */
 }
 
+/* Counter */
+
+.mistica-counter {
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-backgroundContainer);
+    display: inline-flex;
+    gap: 8px;
+    overflow: hidden;
+    border: 1px solid var(--vcolor-inputBorder);
+}
+
+.mistica-counter input {
+    width: 3.75ch;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    caret-color: var(--mistica-color-textActivated);
+    color: var(--mistica-color-textPrimary);
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.mistica-counter__button {
+    user-select: none;
+    isolation: isolate;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--mistica-color-controlActivated);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-counter__button svg {
+    z-index: 1;
+}
+
+.mistica-counter__button:before {
+    z-index: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-brandLow);
+    transform: scale(0);
+    transition:
+        transform 0.2s ease-in-out,
+        background 0.1s ease-in-out;
+}
+
+@media (pointer: coarse) {
+    .mistica-counter__button:before {
+        transition: none;
+    }
+}
+
+@media (pointer: fine) {
+    .mistica-counter__button:hover:not(:disabled):before {
+        transform: scale(1);
+    }
+}
+
+.mistica-counter__button:active:not(:disabled):before {
+    transform: scale(1.06);
+}
+
+.mistica-counter__button:disabled {
+    cursor: default;
+    color: var(--mistica-color-control);
+}
+
 /* Slider */
+
 .mistica-slider {
     --slider-thumb-position: 50%;
     isolation: isolate;

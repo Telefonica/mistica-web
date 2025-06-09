@@ -107,6 +107,9 @@ export const getVivoSkin: GetKnownSkin = () => {
             textActivated: palette.vivoPurple,
             textBrand: palette.vivoPurple,
             inputBorder: palette.grey3,
+            inputBorderInverse: palette.white,
+            completedStep: palette.vivoPurple,
+            completedStepInverse: palette.vivoPurpleDark,
             control: palette.grey3,
             controlActivated: palette.vivoPurple,
             controlInverse: palette.vivoPurpleLight50,
@@ -258,6 +261,9 @@ export const getVivoSkin: GetKnownSkin = () => {
             textActivated: palette.vivoPurpleLight80,
             textBrand: palette.vivoPurpleLight80,
             inputBorder: palette.darkModeGrey6,
+            inputBorderInverse: palette.darkModeGrey6,
+            completedStep: palette.vivoPurpleLight80,
+            completedStepInverse: palette.vivoPurpleLight80,
             control: palette.darkModeGrey6,
             controlActivated: palette.vivoPurpleLight80,
             controlInverse: palette.darkModeGrey6,
@@ -383,6 +389,10 @@ export const getVivoSkin: GetKnownSkin = () => {
             title1: {weight: 'medium'},
             title2: {weight: 'light'},
             title3: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'light'},
+        },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
         },
     };
     return skin;
