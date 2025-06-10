@@ -68,7 +68,7 @@ export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
                         {...dialog}
                         onDestroy={() => {
                             setDialog(null);
-                            console.log('Dialog closed, focus on trigger element', dialog.triggerEl);
+                            // The focus doesn't work without this timeout
                             setTimeout(() => {
                                 dialog.triggerEl?.focus?.();
                             }, 0);

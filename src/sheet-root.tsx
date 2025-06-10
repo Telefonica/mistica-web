@@ -30,7 +30,6 @@ export const showSheet = <T extends SheetType>(
     const activeElement = document.activeElement as HTMLElement;
 
     const focusTriggerElement = () => {
-        console.log('Focusing trigger element:', activeElement);
         activeElement?.focus();
     };
 

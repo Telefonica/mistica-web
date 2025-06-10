@@ -18,7 +18,6 @@ import {
     MOVISTAR_SKIN,
     ESIMFLAG_SKIN,
 } from '../src';
-import {bottomSheet, isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 import type {ThemeConfig} from '../src';
 
@@ -77,11 +76,10 @@ const FrameComponent = ({children, theme}: Props): React.ReactNode => (
         <ThemeOverriderContextProvider>
             {(overridenTheme) => (
                 <ThemeContextProvider theme={overridenTheme ?? theme}>
-                    <SheetRoot nativeImplementation={isWebViewBridgeAvailable() ? bottomSheet : undefined}>
-                        <OverscrollColorProvider>
-                            <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
-                        </OverscrollColorProvider>
-                    </SheetRoot>
+                    <SheetRoot />
+                    <OverscrollColorProvider>
+                        <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
+                    </OverscrollColorProvider>
                 </ThemeContextProvider>
             )}
         </ThemeOverriderContextProvider>
