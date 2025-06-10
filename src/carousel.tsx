@@ -17,7 +17,6 @@ import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
 import {IconButton, ToggleIconButton} from './icon-button';
-import Box from './box';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import IconReloadRegular from './generated/mistica-icons/icon-reload-regular';
@@ -821,40 +820,49 @@ const BaseCarousel = ({
                     ))}
                 </div>
             </div>
-            {pagesCount > 1 && (
-                <Box paddingTop={8}>
-                    {withControls ? (
-                        <Inline space="between">
-                            {!!autoplay && (
-                                <div className={styles.carouselAutoplayControlContainer}>
-                                    <CarouselAutoplayControl
-                                        isAutoplayEnabled={isAutoplayEnabled}
-                                        isAtLastPage={currentPageIndex === pagesCount - 1}
-                                        onAutoplayChanged={(autoplayEnabled: boolean) => {
-                                            if (!nextArrowEnabled && autoplayEnabled) {
-                                                goToPage(0);
-                                            }
-                                            setShouldAutoPlay(autoplayEnabled);
-                                        }}
-                                    />
-                                </div>
-                            )}
-                            {bulletsContainer}
-                            <div className={styles.carouselPagesControlsContainer}>
-                                <CarouselPageControls
-                                    goNext={goNext}
-                                    goPrev={goPrev}
-                                    setShouldAutoplay={setShouldAutoPlay}
-                                    prevArrowEnabled={prevArrowEnabled}
-                                    nextArrowEnabled={nextArrowEnabled}
+
+            <div
+                className={classNames({
+                    [styles.carouselControlsVisibilityMobile]: pagesCountMobile > 1,
+                    [styles.carouselControlsVisibilityTablet]: pagesCountTablet > 1,
+                    [styles.carouselControlsVisibilityDesktop]: pagesCountDesktop > 1,
+                })}
+            >
+                {withControls ? (
+                    <Inline space="between" className={styles.carouselControlsContainer}>
+                        {!!autoplay && (
+                            <div className={styles.carouselAutoplayControlContainer}>
+                                <CarouselAutoplayControl
+                                    isAutoplayEnabled={isAutoplayEnabled}
+                                    isAtLastPage={currentPageIndex === pagesCount - 1}
+                                    onAutoplayChanged={(autoplayEnabled: boolean) => {
+                                        if (!nextArrowEnabled && autoplayEnabled) {
+                                            goToPage(0);
+                                        }
+                                        setShouldAutoPlay(autoplayEnabled);
+                                    }}
                                 />
                             </div>
+                        )}
+                        {bulletsContainer}
+                        <div className={styles.carouselPagesControlsContainer}>
+                            <CarouselPageControls
+                                goNext={goNext}
+                                goPrev={goPrev}
+                                setShouldAutoplay={setShouldAutoPlay}
+                                prevArrowEnabled={prevArrowEnabled}
+                                nextArrowEnabled={nextArrowEnabled}
+                            />
+                        </div>
+                    </Inline>
+                ) : (
+                    bullets && (
+                        <Inline space="around" className={styles.carouselControlsContainer}>
+                            {bulletsContainer}
                         </Inline>
-                    ) : (
-                        bullets && <Inline space="around">{bulletsContainer}</Inline>
-                    )}
-                </Box>
-            )}
+                    )
+                )}
+            </div>
         </div>
     );
 };

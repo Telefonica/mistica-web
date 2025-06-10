@@ -140,6 +140,36 @@ export const carouselContainer = sprinkles({
     position: 'relative',
 });
 
+export const carouselControlsContainer = style([
+    sprinkles({
+        paddingTop: 8,
+    }),
+]);
+export const carouselControlsVisibilityMobile = style({
+    display: 'none',
+    '@media': {
+        [mq.mobile]: {
+            display: 'block',
+        },
+    },
+});
+export const carouselControlsVisibilityTablet = style({
+    display: 'none',
+    '@media': {
+        [mq.tablet]: {
+            display: 'block',
+        },
+    },
+});
+export const carouselControlsVisibilityDesktop = style({
+    display: 'none',
+    '@media': {
+        [mq.desktopOrBigger]: {
+            display: 'block',
+        },
+    },
+});
+
 export const carouselAutoplayControlContainer = style([
     sprinkles({
         minWidth: 64,
