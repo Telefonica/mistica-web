@@ -483,7 +483,11 @@ const BaseCarousel = ({
     const pagesCountTablet = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.tablet), 1));
     const pagesCountDesktop = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.desktop), 1));
     const pagesCount = Math.ceil(items.length / itemsPerPageFloor);
-    const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
+
+    // ScrollRight is initialized to 1 to avoid the next arrow being disabled when the carousel is first rendered.
+    // This is required to make the SSR test pass, and taking advantage of the fact that this is the base case (having more than one page)
+    const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 1});
+
     const [itemScrollPositions, setItemScrollPositions] = React.useState<Array<number>>([]);
 
     const pagesScrollPositions = React.useMemo(
@@ -822,7 +826,7 @@ const BaseCarousel = ({
                     {withControls ? (
                         <Inline space="between">
                             {!!autoplay && (
-                                <div className={classNames(styles.carouselAutoplayControlContainer)}>
+                                <div className={styles.carouselAutoplayControlContainer}>
                                     <CarouselAutoplayControl
                                         isAutoplayEnabled={isAutoplayEnabled}
                                         isAtLastPage={currentPageIndex === pagesCount - 1}
@@ -832,19 +836,19 @@ const BaseCarousel = ({
                                             }
                                             setShouldAutoPlay(autoplayEnabled);
                                         }}
-                                        bleedLeft={!isDesktopOrBigger}
                                     />
                                 </div>
                             )}
                             {bulletsContainer}
-                            <CarouselPageControls
-                                bleedRight={!isDesktopOrBigger}
-                                goNext={goNext}
-                                goPrev={goPrev}
-                                setShouldAutoplay={setShouldAutoPlay}
-                                prevArrowEnabled={prevArrowEnabled}
-                                nextArrowEnabled={nextArrowEnabled}
-                            />
+                            <div className={styles.carouselPagesControlsContainer}>
+                                <CarouselPageControls
+                                    goNext={goNext}
+                                    goPrev={goPrev}
+                                    setShouldAutoplay={setShouldAutoPlay}
+                                    prevArrowEnabled={prevArrowEnabled}
+                                    nextArrowEnabled={nextArrowEnabled}
+                                />
+                            </div>
                         </Inline>
                     ) : (
                         bullets && <Inline space="around">{bulletsContainer}</Inline>
@@ -1000,7 +1004,9 @@ export const Slideshow = ({
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
-    const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
+    // ScrollRight is initialized to 1 to avoid the next arrow being disabled when the carousel is first rendered.
+    // This is required to make the SSR test pass, and taking advantage of the fact that this is the base case (having more than one page)
+    const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 1});
     const nextArrowEnabled = scrollRight !== 0;
     const prevArrowEnabled = scrollLeft !== 0;
 
