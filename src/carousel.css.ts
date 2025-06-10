@@ -145,8 +145,11 @@ export const carouselControlsContainer = style([
         paddingTop: 8,
     }),
 ]);
-export const carouselControlsVisibilityMobile = style({
+
+export const carouselControlsVisibility = style({
     display: 'none',
+});
+export const carouselControlsVisibilityMobile = style({
     '@media': {
         [mq.mobile]: {
             display: 'block',
@@ -154,7 +157,6 @@ export const carouselControlsVisibilityMobile = style({
     },
 });
 export const carouselControlsVisibilityTablet = style({
-    display: 'none',
     '@media': {
         [mq.tablet]: {
             display: 'block',
@@ -162,7 +164,6 @@ export const carouselControlsVisibilityTablet = style({
     },
 });
 export const carouselControlsVisibilityDesktop = style({
-    display: 'none',
     '@media': {
         [mq.desktopOrBigger]: {
             display: 'block',

@@ -4,8 +4,6 @@ import {
     Stack,
     Box,
     ResponsiveLayout,
-    Callout,
-    IconInformationRegular,
     Image,
     Text4,
     CarouselContextConsumer,
@@ -30,10 +28,6 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, bullets
         <Box paddingY={24}>
             <ResponsiveLayout>
                 <Stack space={16}>
-                    <Callout
-                        description="Arrow controls disappear in touch devices."
-                        asset={<IconInformationRegular />}
-                    />
                     <Slideshow
                         withBullets={bullets}
                         autoplay={autoplay ? {time: 5000, loop} : false}

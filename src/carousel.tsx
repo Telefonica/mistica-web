@@ -820,9 +820,8 @@ const BaseCarousel = ({
                     ))}
                 </div>
             </div>
-
             <div
-                className={classNames({
+                className={classNames(styles.carouselControlsVisibility, {
                     [styles.carouselControlsVisibilityMobile]: pagesCountMobile > 1,
                     [styles.carouselControlsVisibilityTablet]: pagesCountTablet > 1,
                     [styles.carouselControlsVisibilityDesktop]: pagesCountDesktop > 1,

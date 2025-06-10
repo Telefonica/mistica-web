@@ -82,10 +82,6 @@ export const Default: StoryComponent<Args> = ({
         <Box paddingY={24}>
             <ResponsiveLayout>
                 <Stack space={16}>
-                    <Callout
-                        description="Arrow controls disappear in touch devices"
-                        asset={<IconInformationRegular />}
-                    />
                     <GridLayout
                         template="8+4"
                         left={
