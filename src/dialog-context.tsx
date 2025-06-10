@@ -32,7 +32,7 @@ export const useDialog = (): {
             if (params && currentDialog) {
                 throw Error('Tried to show a dialog on top of another dialog');
             }
-            setDialog(params);
+            setDialog({triggerEl: document.activeElement as HTMLElement, ...params});
         },
         [setDialog, currentDialog, mounted]
     );
@@ -68,6 +68,10 @@ export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
                         {...dialog}
                         onDestroy={() => {
                             setDialog(null);
+                            console.log('Dialog closed, focus on trigger element', dialog.triggerEl);
+                            setTimeout(() => {
+                                dialog.triggerEl?.focus?.();
+                            }, 0);
                         }}
                     />
                 </React.Suspense>
