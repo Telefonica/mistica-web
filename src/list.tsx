@@ -294,16 +294,23 @@ interface IconButtonRowContentProps extends CommonProps {
     iconButton: ExclusifyUnion<IconButtonProps | ToggleIconButtonProps> | undefined;
 }
 
-interface HrefRowContentProps extends CommonProps {
+type TouchableCommonProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+};
+
+interface HrefRowContentProps extends CommonProps, TouchableCommonProps {
     href: string | undefined;
     newTab?: boolean;
     loadOnTop?: boolean;
     onNavigate?: () => void | Promise<void>;
 }
 
-interface ToRowContentProps extends CommonProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+interface ToRowContentProps extends CommonProps, TouchableCommonProps {
     to: string | undefined;
     newTab?: boolean;
     fullPageOnWebView?: boolean;
@@ -311,8 +318,7 @@ interface ToRowContentProps extends CommonProps {
     onNavigate?: () => void | Promise<void>;
 }
 
-interface OnPressRowContentProps extends CommonProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+interface OnPressRowContentProps extends CommonProps, TouchableCommonProps {
     onPress: (() => void) | undefined;
 }
 
@@ -424,6 +430,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         onNavigate: props.onNavigate,
         onPress: props.onPress,
         trackingEvent: props.trackingEvent,
+
+        'aria-label': ariaLabel,
+        'aria-labelledby': props['aria-labelledby'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
+        'aria-current': props['aria-current'],
     } as TouchableProps;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
@@ -481,7 +493,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={touchableRole}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
-                aria-label={ariaLabel}
                 tabIndex={tabIndex}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
@@ -505,7 +516,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                 })}
-                aria-label={ariaLabel}
                 tabIndex={tabIndex}
             >
                 {renderContent({labelId: titleId, role})}

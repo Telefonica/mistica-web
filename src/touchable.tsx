@@ -34,6 +34,8 @@ interface CommonProps {
     'aria-labelledby'?: string;
     'aria-live'?: 'polite' | 'off' | 'assertive';
     'aria-current'?: React.AriaAttributes['aria-current'];
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
     type?: 'button' | 'submit';
@@ -68,12 +70,32 @@ type SubmitProps = {
 };
 
 export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefProps | ToProps> &
-    Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
+    Pick<
+        CommonProps,
+        | 'trackingEvent'
+        | 'dataAttributes'
+        | 'role'
+        | 'aria-label'
+        | 'aria-labelledby'
+        | 'aria-description'
+        | 'aria-describedby'
+        | 'aria-current'
+    >;
 
 export type TouchableComponentProps<Props> = ExclusifyUnion<
     Props | (OnPressProps & Props) | (HrefProps & Props) | (ToProps & Props)
 > &
-    Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
+    Pick<
+        CommonProps,
+        | 'trackingEvent'
+        | 'dataAttributes'
+        | 'role'
+        | 'aria-label'
+        | 'aria-labelledby'
+        | 'aria-description'
+        | 'aria-describedby'
+        | 'aria-current'
+    >;
 
 type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
 
