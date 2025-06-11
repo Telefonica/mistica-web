@@ -458,7 +458,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return <BaseTouchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
+        return <BaseTouchable maybe {...commonProps} />;
     }
 
     if (props.submit) {
