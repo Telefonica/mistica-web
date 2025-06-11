@@ -1,3 +1,10 @@
+## [16.30.1](https://github.com/Telefonica/mistica-web/compare/v16.30.0...v16.30.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* **Buttons:** Remove role=presentation and aria-hidden from fake buttons ([#1392](https://github.com/Telefonica/mistica-web/issues/1392)) ([f089329](https://github.com/Telefonica/mistica-web/commit/f089329804396e6f3c21155e0617fdb0ddfeb5ec))
+
 # [16.30.0](https://github.com/Telefonica/mistica-web/compare/v16.29.0...v16.30.0) (2025-06-11)
 
 
