@@ -133,6 +133,11 @@ type ButtonProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
     onPress?: () => unknown;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
 };
 
 type DrawerProps = {
