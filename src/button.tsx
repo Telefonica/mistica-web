@@ -312,7 +312,9 @@ type ButtonProps = ExclusifyUnion<
     FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 >;
 
-type ButtonLinkProps = ExclusifyUnion<ToButtonProps | OnPressButtonProps | HrefButtonProps> & {
+type ButtonLinkProps = ExclusifyUnion<
+    FakeButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
+> & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
