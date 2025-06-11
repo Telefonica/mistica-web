@@ -1140,6 +1140,11 @@ const tabsSnippets: Array<Snippet> = [
                 {text: 'Tab 2'},
                 {text: 'Tab 3'},
             ]}
+            renderPanel={({selectedIndex, panelProps}) => (
+                <div {...panelProps}>
+                    <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                </div>
+            )}
         />`,
     },
     {
@@ -1154,6 +1159,11 @@ const tabsSnippets: Array<Snippet> = [
                 {text: 'Tab 2', Icon: IconBrainRegular},
                 {text: 'Tab 3', Icon: IconBusRegular},
             ]}
+            renderPanel={({selectedIndex, panelProps}) => (
+                <div {...panelProps}>
+                    <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                </div>
+            )}
         />`,
     },
 ];

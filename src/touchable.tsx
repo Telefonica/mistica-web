@@ -19,6 +19,7 @@ export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void | unde
 interface CommonProps {
     children: React.ReactNode;
     className?: string;
+    id?: string;
     disabled?: boolean;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -107,6 +108,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
 
     const commonProps = {
         className: props.className,
+        id: props.id,
         disabled: props.disabled,
         style: props.style,
         role: props.role,
