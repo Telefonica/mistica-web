@@ -141,6 +141,10 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         'aria-selected': props['aria-selected'],
         'aria-live': props['aria-live'],
         'aria-current': props['aria-current'],
+        'aria-label': props['aria-label'],
+        'aria-labelledby': props['aria-labelledby'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
         ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
     };
@@ -245,8 +249,6 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         return (
             <a
                 {...commonProps}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
                 onClick={handleHrefClick}
                 onKeyDown={handleKeyDown}
                 href={props.disabled ? undefined : getHref()}
@@ -269,8 +271,6 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
             <Link
                 {...commonProps}
                 target={props.newTab ? '_blank' : undefined}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
                 innerRef={ref as React.RefObject<HTMLAnchorElement>}
                 to={props.disabled ? '' : props.to}
                 replace={props.replace}
@@ -297,8 +297,6 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
             // a ButtonFixedFooter layout inside a form with the submit
             // button located at the footer, which is redered using a Portal
             form: type === 'submit' && props.formId ? props.formId : undefined,
-            'aria-label': props['aria-label'],
-            'aria-labelledby': props['aria-labelledby'],
             type,
             ref: ref as React.RefObject<HTMLButtonElement>,
             onClick: (e: React.MouseEvent<HTMLElement>) => {

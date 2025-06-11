@@ -59,6 +59,9 @@ export const useInnerText = (): {text: string; ref: (instance: HTMLElement | nul
 type BaseIconButtonAction = {
     Icon: (props: IconProps) => JSX.Element;
     label: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
 };
 
 type IconButtonAction = BaseIconButtonAction &
