@@ -98,6 +98,8 @@ const Spinner = ({
                 </ScreenReaderOnly>
                 <svg
                     role="progressbar"
+                    // this doesn't work in TalkBack, but it's needed for testing-library tests
+                    aria-label={label}
                     className={styles.spinnerDefault}
                     height={size}
                     style={{...style}}
