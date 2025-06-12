@@ -7,6 +7,7 @@ import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as tokens from './text-tokens';
+import ScreenReaderOnly from './screen-reader-only';
 
 type Props = {
     color?: string;
@@ -30,22 +31,20 @@ const Spinner = ({
     const {texts, platformOverrides, t} = useTheme();
     const isInverse = useIsInverseOrMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
-    const spinnerId = React.useId();
-    const title = texts.loading || t(tokens.loading);
+    const label = texts.loading || t(tokens.loading);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
             <svg
-                aria-labelledby={spinnerId}
                 className={styles.spinnerIos}
                 height={size}
                 style={{...style}}
                 role="progressbar"
                 aria-live="polite"
+                aria-label={label}
                 aria-hidden={ariaHidden || rolePresentation}
                 viewBox="0 0 30 30"
                 width={size}
             >
-                <title id={spinnerId}>{title}</title>
                 <g role="presentation">
                     <path
                         className={styles.spinnerIosSvgPath}
@@ -90,29 +89,31 @@ const Spinner = ({
                 </g>
             </svg>
         ) : (
-            <svg
-                aria-labelledby={spinnerId}
-                className={styles.spinnerDefault}
-                height={size}
-                style={{...style}}
-                role="progressbar"
-                aria-live="polite"
-                aria-hidden={ariaHidden || rolePresentation}
-                viewBox="0 0 66 66"
-                width={size}
-            >
-                <title id={spinnerId}>{title}</title>
-                <circle
-                    className={styles.spinnerDefaultPath}
-                    cx="33"
-                    cy="33"
-                    fill="none"
-                    r="30"
-                    role="presentation"
-                    stroke={color}
-                    strokeWidth="6"
-                />
-            </svg>
+            <div aria-hidden={ariaHidden || rolePresentation} aria-live="polite">
+                {/* Android TalkBack doesn't read label of role="progress" elements, so we need a ScreenReaderOnly with the label */}
+                <ScreenReaderOnly>
+                    <span>{label}</span>
+                </ScreenReaderOnly>
+                <svg
+                    role="progressbar"
+                    className={styles.spinnerDefault}
+                    height={size}
+                    style={{...style}}
+                    viewBox="0 0 66 66"
+                    width={size}
+                >
+                    <circle
+                        className={styles.spinnerDefaultPath}
+                        cx="33"
+                        cy="33"
+                        fill="none"
+                        r="30"
+                        role="presentation"
+                        stroke={color}
+                        strokeWidth="6"
+                    />
+                </svg>
+            </div>
         );
     if (delay === '0' || delay === '0s' || delay === '0ms') {
         return content;
