@@ -41,7 +41,6 @@ const Spinner = ({
                 style={{...style}}
                 role="progressbar"
                 aria-live="polite"
-                aria-busy
                 aria-hidden={ariaHidden || rolePresentation}
                 viewBox="0 0 30 30"
                 width={size}
@@ -98,7 +97,6 @@ const Spinner = ({
                 style={{...style}}
                 role="progressbar"
                 aria-live="polite"
-                aria-busy
                 aria-hidden={ariaHidden || rolePresentation}
                 viewBox="0 0 66 66"
                 width={size}
