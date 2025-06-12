@@ -174,12 +174,6 @@ const Tabs = ({
                                                 if (!isAnimating && selectedIndex !== index) {
                                                     onChange(index);
                                                     animateLine(selectedIndex, index);
-                                                    const panelId = getPanelId(index);
-                                                    if (panelId) {
-                                                        setTimeout(() => {
-                                                            document.getElementById(panelId)?.focus();
-                                                        }, 0);
-                                                    }
                                                 }
                                             }}
                                             trackingEvent={trackingEvent}
@@ -231,7 +225,7 @@ const Tabs = ({
                 selectedIndex,
                 panelProps: {
                     role: 'tabpanel',
-                    tabIndex: -1,
+                    tabIndex: 0,
                     id: getPanelId(selectedIndex) as string,
                     'aria-labelledby': `${id}-tab-${selectedIndex}`,
                 },
