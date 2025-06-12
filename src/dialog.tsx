@@ -54,6 +54,7 @@ export interface ExtendedDialogProps extends BaseDialogProps {
 
 export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps> & {
     type: 'dialog' | 'alert' | 'confirm';
+    triggerEl?: HTMLElement;
 };
 
 type InternalDialogProps = DialogProps & {showCancelButton: boolean; showAcceptButton: boolean};

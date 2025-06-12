@@ -27,6 +27,12 @@ let isSheetOpen = false;
 export const showSheet = <T extends SheetType>(
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
+    const activeElement = document.activeElement as HTMLElement;
+
+    const focusTriggerElement = () => {
+        activeElement?.focus();
+    };
+
     const webImplementation = () => {
         if (!configureSheet) {
             return Promise.reject(
@@ -47,6 +53,7 @@ export const showSheet = <T extends SheetType>(
 
         sheetPromise.finally(() => {
             isSheetOpen = false;
+            focusTriggerElement();
         });
 
         return sheetPromise as Promise<SheetResultByType[T]>;
@@ -56,7 +63,9 @@ export const showSheet = <T extends SheetType>(
         const impl = nativeSheetImplementation;
         return import(/* webpackChunkName: "sheet-native" */ './sheet-native')
             .then(({showNativeSheet}) => {
-                return showNativeSheet(impl, sheetProps);
+                return showNativeSheet(impl, sheetProps).finally(() => {
+                    focusTriggerElement();
+                });
             })
             .catch((error) => {
                 if (error.code === '400') {

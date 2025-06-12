@@ -1,3 +1,24 @@
+## [16.30.1](https://github.com/Telefonica/mistica-web/compare/v16.30.0...v16.30.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* **Buttons:** Remove role=presentation and aria-hidden from fake buttons ([#1392](https://github.com/Telefonica/mistica-web/issues/1392)) ([f089329](https://github.com/Telefonica/mistica-web/commit/f089329804396e6f3c21155e0617fdb0ddfeb5ec))
+
+# [16.30.0](https://github.com/Telefonica/mistica-web/compare/v16.29.0...v16.30.0) (2025-06-11)
+
+
+### Bug Fixes
+
+* **ProgressBar, ProgressBarStepped:** fix screen reader anouncement ([#1385](https://github.com/Telefonica/mistica-web/issues/1385)) ([8e41dd3](https://github.com/Telefonica/mistica-web/commit/8e41dd3730aa4de0c95369be306c88cad6858372))
+
+
+### Features
+
+* **Callout:** allow setting title aria-label ([#1386](https://github.com/Telefonica/mistica-web/issues/1386)) ([f467238](https://github.com/Telefonica/mistica-web/commit/f467238e32e364bfde2e288a1df0cac2582e17fb))
+* CHECKOUT-8438. Allow fake ButtonLink ([#1391](https://github.com/Telefonica/mistica-web/issues/1391)) ([2dd60ec](https://github.com/Telefonica/mistica-web/commit/2dd60ec28c91b6d7f0fa4dd66af27ba37111b566))
+* **mistica-css:** padding, stack, inline, align ([#1384](https://github.com/Telefonica/mistica-web/issues/1384)) ([1b5a32e](https://github.com/Telefonica/mistica-web/commit/1b5a32e7e6bd9bd4a4eb1f2073ae53d8e3f9a329))
+
 # [16.29.0](https://github.com/Telefonica/mistica-web/compare/v16.28.1...v16.29.0) (2025-06-06)
 
 

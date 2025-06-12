@@ -35,6 +35,8 @@ interface CommonProps {
     'aria-labelledby'?: string;
     'aria-live'?: 'polite' | 'off' | 'assertive';
     'aria-current'?: React.AriaAttributes['aria-current'];
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
     type?: 'button' | 'submit';
@@ -69,12 +71,32 @@ type SubmitProps = {
 };
 
 export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefProps | ToProps> &
-    Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
+    Pick<
+        CommonProps,
+        | 'trackingEvent'
+        | 'dataAttributes'
+        | 'role'
+        | 'aria-label'
+        | 'aria-labelledby'
+        | 'aria-description'
+        | 'aria-describedby'
+        | 'aria-current'
+    >;
 
 export type TouchableComponentProps<Props> = ExclusifyUnion<
     Props | (OnPressProps & Props) | (HrefProps & Props) | (ToProps & Props)
 > &
-    Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
+    Pick<
+        CommonProps,
+        | 'trackingEvent'
+        | 'dataAttributes'
+        | 'role'
+        | 'aria-label'
+        | 'aria-labelledby'
+        | 'aria-description'
+        | 'aria-describedby'
+        | 'aria-current'
+    >;
 
 type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
 
@@ -112,17 +134,25 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         disabled: props.disabled,
         style: props.style,
         role: props.role,
+        tabIndex: props.tabIndex,
+        'aria-hidden': props['aria-hidden'],
+        'aria-live': props['aria-live'],
+        ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
+    };
+
+    // aria props that we want to apply to both <a> and <button> elements, not applicable to <div>
+    const touchableAriaProps = {
         'aria-checked': props['aria-checked'],
         'aria-disabled': props.disabled ? true : undefined,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-haspopup': props['aria-haspopup'],
-        'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
-        'aria-live': props['aria-live'],
         'aria-current': props['aria-current'],
-        tabIndex: props.tabIndex,
-        ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
+        'aria-label': props['aria-label'],
+        'aria-labelledby': props['aria-labelledby'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
     };
 
     const type = props.type ? props.type : 'button';
@@ -225,8 +255,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         return (
             <a
                 {...commonProps}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
+                {...touchableAriaProps}
                 onClick={handleHrefClick}
                 onKeyDown={handleKeyDown}
                 href={props.disabled ? undefined : getHref()}
@@ -248,9 +277,8 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         return (
             <Link
                 {...commonProps}
+                {...touchableAriaProps}
                 target={props.newTab ? '_blank' : undefined}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
                 innerRef={ref as React.RefObject<HTMLAnchorElement>}
                 to={props.disabled ? '' : props.to}
                 replace={props.replace}
@@ -268,6 +296,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         const role = commonProps.role ?? (props.as === 'a' ? 'button' : undefined);
         return React.createElement(elementType, {
             ...commonProps,
+            ...touchableAriaProps,
             role,
             // When an <a/> is rendered without an href value, the element is not accesible
             // by keyboard (using tab key). We add a fictional href to "#" to avoid this.
@@ -277,8 +306,6 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
             // a ButtonFixedFooter layout inside a form with the submit
             // button located at the footer, which is redered using a Portal
             form: type === 'submit' && props.formId ? props.formId : undefined,
-            'aria-label': props['aria-label'],
-            'aria-labelledby': props['aria-labelledby'],
             type,
             ref: ref as React.RefObject<HTMLButtonElement>,
             onClick: (e: React.MouseEvent<HTMLElement>) => {
