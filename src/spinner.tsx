@@ -16,6 +16,7 @@ type Props = {
     /** @deprecated Use aria-hidden instead */
     rolePresentation?: boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
+    'aria-label'?: string;
     style?: React.CSSProperties;
     children?: void;
 };
@@ -27,11 +28,12 @@ const Spinner = ({
     style,
     rolePresentation,
     'aria-hidden': ariaHidden,
+    'aria-label': ariaLabel,
 }: Props): JSX.Element => {
     const {texts, platformOverrides, t} = useTheme();
     const isInverse = useIsInverseOrMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
-    const label = texts.loading || t(tokens.loading);
+    const label = ariaLabel || texts.loading || t(tokens.loading);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
             <svg
