@@ -1,3 +1,4 @@
+import {within} from '@telefonica/acceptance-testing';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 const THEME_VARIANTS = ['default', 'inverse', 'alternative'] as const;
@@ -55,25 +56,22 @@ test('Tabs with long text and icon', async () => {
 });
 
 test('Tabs selected line appears properly', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-tabs--default',
         device: 'MOBILE_IOS',
     });
 
-    const tabs = await screen.findByRole('tablist');
+    const tabslist = await screen.findByRole('tablist');
+    const tabs = await within(tabslist).findAllByRole('tab');
 
-    await page.evaluate(() => {
-        document.querySelector<HTMLElement>('[data-tabindex="1"]')?.click();
-    });
+    await tabs[1].click();
 
-    const secondTabActive = await tabs.screenshot();
+    const secondTabActive = await tabslist.screenshot();
     expect(secondTabActive).toMatchImageSnapshot();
 
-    await page.evaluate(() => {
-        document.querySelector<HTMLElement>('[data-tabindex="2"]')?.click();
-    });
+    await tabs[2].click();
 
-    const thirdTabActive = await tabs.screenshot();
+    const thirdTabActive = await tabslist.screenshot();
     expect(thirdTabActive).toMatchImageSnapshot();
 });
 
