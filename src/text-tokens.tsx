@@ -373,10 +373,10 @@ export const progressBarStepLabel: TextToken = {
 };
 
 export const stepperCurrentStep: TextToken = {
-    es: 'Actual',
+    es: 'En curso',
     en: 'Current',
     de: 'Aktuell',
-    pt: 'Atual',
+    pt: 'Em andamento',
 };
 
 export const stepperCompletedStep: TextToken = {
