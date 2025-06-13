@@ -53,6 +53,7 @@ const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
 type HorizontalMosaicProps = {
     items: ReadonlyArray<MosaicItem>;
     withBullets?: boolean;
+    withControls?: boolean;
     free?: boolean;
     dataAttributes?: DataAttributes;
 };
@@ -60,6 +61,7 @@ type HorizontalMosaicProps = {
 export const HorizontalMosaic = ({
     items,
     withBullets,
+    withControls = true,
     free,
     dataAttributes,
 }: HorizontalMosaicProps): JSX.Element => {
@@ -82,6 +84,7 @@ export const HorizontalMosaic = ({
                 </Grid>
             ))}
             withBullets={withBullets}
+            withControls={withControls}
             free={free}
         />
     );
