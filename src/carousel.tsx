@@ -223,31 +223,34 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
             : Math.max(numPages.mobile, numPages.tablet ?? numPages.mobile, numPages.desktop);
 
     return (
-        <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
-            {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
-                <BaseTouchable
-                    className={classNames(
-                        typeof numPages === 'number'
-                            ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
-                            : {
-                                  [styles.bulletButton]: true,
-                                  [styles.bulletVisibilityMobile]: i < numPages.mobile,
-                                  [styles.bulletVisibilityTablet]: i < (numPages.tablet ?? numPages.mobile),
-                                  [styles.bulletVisibilityDesktop]: i < numPages.desktop,
-                              }
-                    )}
-                    key={i}
-                    maybe
-                    onPress={
-                        isDesktopOrBigger && onPress
-                            ? () => onPress(currentIndex + i - activeBulletIndex)
-                            : undefined
-                    }
-                >
-                    <div className={classNames(getClassNames(i))} />
-                </BaseTouchable>
-            ))}
-        </Inline>
+        <div aria-hidden="true">
+            <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
+                {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
+                    <BaseTouchable
+                        className={classNames(
+                            typeof numPages === 'number'
+                                ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
+                                : {
+                                      [styles.bulletButton]: true,
+                                      [styles.bulletVisibilityMobile]: i < numPages.mobile,
+                                      [styles.bulletVisibilityTablet]:
+                                          i < (numPages.tablet ?? numPages.mobile),
+                                      [styles.bulletVisibilityDesktop]: i < numPages.desktop,
+                                  }
+                        )}
+                        key={i}
+                        maybe
+                        onPress={
+                            isDesktopOrBigger && onPress
+                                ? () => onPress(currentIndex + i - activeBulletIndex)
+                                : undefined
+                        }
+                    >
+                        <div className={classNames(getClassNames(i))} />
+                    </BaseTouchable>
+                ))}
+            </Inline>
+        </div>
     );
 };
 
@@ -310,25 +313,28 @@ export const CarouselAutoplayControl = ({
     onAutoplayChanged,
     bleedLeft = false,
     bleedRight = false,
-}: CarouselAutoplayControlProps): JSX.Element => (
-    <ToggleIconButton
-        checkedProps={{
-            Icon: IconPauseFilled,
-            type: 'neutral',
-            'aria-label': 'Enable autoplay',
-        }}
-        uncheckedProps={{
-            Icon: isAtLastPage ? IconReloadRegular : IconPlayFilled,
-            type: 'neutral',
-            'aria-label': 'Pause autoplay',
-        }}
-        small
-        bleedLeft={bleedLeft}
-        bleedRight={bleedRight}
-        onChange={onAutoplayChanged}
-        checked={isAutoplayEnabled}
-    />
-);
+}: CarouselAutoplayControlProps): JSX.Element => {
+    const {texts, t} = useTheme();
+    return (
+        <ToggleIconButton
+            checkedProps={{
+                Icon: IconPauseFilled,
+                type: 'neutral',
+                'aria-label': texts.carouselPauseAutoplay || t(tokens.carouselPauseAutoplay),
+            }}
+            uncheckedProps={{
+                Icon: isAtLastPage ? IconReloadRegular : IconPlayFilled,
+                type: 'neutral',
+                'aria-label': texts.carouselEnableAutoplay || t(tokens.carouselEnableAutoplay),
+            }}
+            small
+            bleedLeft={bleedLeft}
+            bleedRight={bleedRight}
+            onChange={onAutoplayChanged}
+            checked={isAutoplayEnabled}
+        />
+    );
+};
 
 type DesktopItemsPerPage = {small?: number; medium?: number; large?: number} | number;
 type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage} | number;
@@ -771,7 +777,52 @@ const BaseCarousel = ({
     );
 
     return (
-        <div {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}>
+        <div
+            {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}
+            className={styles.carouselComponentContainer}
+        >
+            <div
+                className={classNames(styles.carouselControlsVisibility, {
+                    [styles.carouselControlsVisibilityMobile]: pagesCountMobile > 1,
+                    [styles.carouselControlsVisibilityTablet]: pagesCountTablet > 1,
+                    [styles.carouselControlsVisibilityDesktop]: pagesCountDesktop > 1,
+                })}
+            >
+                {withControls ? (
+                    <Inline space="between" className={styles.carouselControlsContainer}>
+                        {!!autoplay && (
+                            <div className={styles.carouselAutoplayControlContainer}>
+                                <CarouselAutoplayControl
+                                    isAutoplayEnabled={isAutoplayEnabled}
+                                    isAtLastPage={currentPageIndex === pagesCount - 1}
+                                    onAutoplayChanged={(autoplayEnabled: boolean) => {
+                                        if (!nextArrowEnabled && autoplayEnabled) {
+                                            goToPage(0);
+                                        }
+                                        setShouldAutoPlay(autoplayEnabled);
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {bulletsContainer}
+                        <div className={styles.carouselPagesControlsContainer}>
+                            <CarouselPageControls
+                                goNext={goNext}
+                                goPrev={goPrev}
+                                setShouldAutoplay={setShouldAutoPlay}
+                                prevArrowEnabled={prevArrowEnabled}
+                                nextArrowEnabled={nextArrowEnabled}
+                            />
+                        </div>
+                    </Inline>
+                ) : (
+                    bullets && (
+                        <Inline space="around" className={styles.carouselControlsContainer}>
+                            {bulletsContainer}
+                        </Inline>
+                    )
+                )}
+            </div>
             <div className={styles.carouselContainer}>
                 <div
                     className={classNames(styles.carousel, {
@@ -819,48 +870,6 @@ const BaseCarousel = ({
                         </div>
                     ))}
                 </div>
-            </div>
-            <div
-                className={classNames(styles.carouselControlsVisibility, {
-                    [styles.carouselControlsVisibilityMobile]: pagesCountMobile > 1,
-                    [styles.carouselControlsVisibilityTablet]: pagesCountTablet > 1,
-                    [styles.carouselControlsVisibilityDesktop]: pagesCountDesktop > 1,
-                })}
-            >
-                {withControls ? (
-                    <Inline space="between" className={styles.carouselControlsContainer}>
-                        {!!autoplay && (
-                            <div className={styles.carouselAutoplayControlContainer}>
-                                <CarouselAutoplayControl
-                                    isAutoplayEnabled={isAutoplayEnabled}
-                                    isAtLastPage={currentPageIndex === pagesCount - 1}
-                                    onAutoplayChanged={(autoplayEnabled: boolean) => {
-                                        if (!nextArrowEnabled && autoplayEnabled) {
-                                            goToPage(0);
-                                        }
-                                        setShouldAutoPlay(autoplayEnabled);
-                                    }}
-                                />
-                            </div>
-                        )}
-                        {bulletsContainer}
-                        <div className={styles.carouselPagesControlsContainer}>
-                            <CarouselPageControls
-                                goNext={goNext}
-                                goPrev={goPrev}
-                                setShouldAutoplay={setShouldAutoPlay}
-                                prevArrowEnabled={prevArrowEnabled}
-                                nextArrowEnabled={nextArrowEnabled}
-                            />
-                        </div>
-                    </Inline>
-                ) : (
-                    bullets && (
-                        <Inline space="around" className={styles.carouselControlsContainer}>
-                            {bulletsContainer}
-                        </Inline>
-                    )
-                )}
             </div>
         </div>
     );

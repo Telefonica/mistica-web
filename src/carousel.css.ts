@@ -6,6 +6,13 @@ import {applyAlpha} from './utils/color';
 import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
 
+export const carouselComponentContainer = style([
+    sprinkles({
+        display: 'flex',
+        flexDirection: 'column',
+    }),
+]);
+
 export const bulletButton = style([
     sprinkles({
         display: 'block',
@@ -148,6 +155,7 @@ export const carouselControlsContainer = style([
 
 export const carouselControlsVisibility = style({
     display: 'none',
+    order: 1, // to ensure controls are always rendered after the carousel items
 });
 export const carouselControlsVisibilityMobile = style({
     '@media': {

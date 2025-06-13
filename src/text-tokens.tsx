@@ -36,6 +36,9 @@ export type Dictionary = {
     mainNavigationBarSectionSeeAll: string;
     backNavigationBar: string;
     clearButton: string;
+    carouselRegion: string;
+    carouselPauseAutoplay: string;
+    carouselEnableAutoplay: string;
     carouselNextButton: string;
     carouselPrevButton: string;
     playIconButtonLabel: string;
@@ -319,6 +322,20 @@ export const clearButton: TextToken = {
     en: 'Clear',
     de: 'Löschen',
     pt: 'Apagar',
+};
+
+export const carouselPauseAutoplay: TextToken = {
+    es: 'Pausar reproducción automática',
+    en: 'Pause autoplay',
+    de: 'Automatisches Abspielen pausieren',
+    pt: 'Pausar reprodução automática',
+};
+
+export const carouselEnableAutoplay: TextToken = {
+    es: 'Activar reproducción automática',
+    en: 'Enable autoplay',
+    de: 'Automatisches Abspielen aktivieren',
+    pt: 'Ativar reprodução automática',
 };
 
 export const carouselNextButton: TextToken = {
