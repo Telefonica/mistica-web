@@ -1159,21 +1159,6 @@ export const Slideshow = ({
                     })}
                     {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
                 >
-                    <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
-                        <div className={styles.slideshow} ref={carouselRef}>
-                            {items.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className={styles.slideshowItem}
-                                    style={{
-                                        scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
-                                    }}
-                                >
-                                    {item}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                     {items.length > 1 &&
                         (withControls ? (
                             <ThemeVariant variant="media">
@@ -1212,6 +1197,21 @@ export const Slideshow = ({
                                 </Inline>
                             )
                         ))}
+                    <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
+                        <div className={styles.slideshow} ref={carouselRef}>
+                            {items.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className={styles.slideshowItem}
+                                    style={{
+                                        scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
+                                    }}
+                                >
+                                    {item}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </ResetResponsiveLayout>
         </SlideshowContext.Provider>
