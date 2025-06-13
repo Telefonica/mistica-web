@@ -65,9 +65,13 @@ const stepIconKeyframes = keyframes({
 export const stepper = style([
     sprinkles({
         display: 'flex',
+        alignItems: 'flex-start',
         minHeight: 24,
     }),
     {
+        listStyle: 'none',
+        margin: 0,
+        padding: 0,
         '@media': {
             [mq.desktopOrBigger]: {
                 minHeight: stepperMinHeight,
@@ -79,6 +83,11 @@ export const stepper = style([
     },
 ]);
 
+export const listItem = sprinkles({
+    display: 'flex',
+    alignItems: 'center',
+});
+
 export const step = style([
     sprinkles({
         position: 'relative',
@@ -88,13 +97,15 @@ export const step = style([
     }),
     {
         textAlign: 'center',
-        ':first-child': {
-            alignItems: 'flex-start',
-            textAlign: 'left',
-        },
-        ':last-child': {
-            alignItems: 'flex-end',
-            textAlign: 'right',
+        selectors: {
+            ':first-child > &': {
+                alignItems: 'flex-start',
+                textAlign: 'left',
+            },
+            ':last-child > &': {
+                alignItems: 'flex-end',
+                textAlign: 'right',
+            },
         },
     },
 ]);
@@ -164,6 +175,11 @@ export const textContainer = style([
     {
         width: 200,
         top: `calc(${pxToRem(24)} + 18px)`,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                display: 'none',
+            },
+        },
     },
 ]);
 
@@ -184,15 +200,6 @@ export const bar = style([
     {
         margin: '0 8px',
         background: skinVars.colors.barTrack,
-        ':last-child': {
-            display: 'none',
-        },
-        '@media': {
-            [mq.desktopOrBigger]: {
-                position: 'relative',
-                top: `calc(${pxToRem(8)} + 6px)`,
-            },
-        },
     },
 ]);
 
