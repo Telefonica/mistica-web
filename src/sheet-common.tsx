@@ -24,7 +24,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
-import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
+import {MOBILE_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
 import Touchable from './touchable';
 
