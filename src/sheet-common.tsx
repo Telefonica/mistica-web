@@ -296,7 +296,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
 const paddingX = {
     mobile: MOBILE_SIDE_MARGIN,
     tablet: TABLET_SIDE_MARGIN,
-    desktop: 40,
+    desktop: 40, // to keep consistency with the rest of the dialogs components
 } as const;
 
 type SheetBodyProps = {
