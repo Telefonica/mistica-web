@@ -39,6 +39,7 @@ export type Dictionary = {
     carouselRegion: string;
     carouselPauseAutoplay: string;
     carouselEnableAutoplay: string;
+    carouselReloadAutoplay: string;
     carouselNextButton: string;
     carouselPrevButton: string;
     playIconButtonLabel: string;
@@ -324,32 +325,46 @@ export const clearButton: TextToken = {
     pt: 'Apagar',
 };
 
+export const carouselRegion: TextToken = {
+    es: 'Carousel',
+    en: 'Carousel',
+    de: 'Karussell',
+    pt: 'Carrossel',
+};
+
 export const carouselPauseAutoplay: TextToken = {
-    es: 'Pausar reproducción automática',
-    en: 'Pause autoplay',
-    de: 'Automatisches Abspielen pausieren',
-    pt: 'Pausar reprodução automática',
+    es: 'Pausar carousel automático',
+    en: 'Pause automatic carousel',
+    de: 'Automatisches Karussell pausieren',
+    pt: 'Pausar carrossel automático',
 };
 
 export const carouselEnableAutoplay: TextToken = {
-    es: 'Activar reproducción automática',
-    en: 'Enable autoplay',
-    de: 'Automatisches Abspielen aktivieren',
-    pt: 'Ativar reprodução automática',
+    es: 'Reproducir carousel automático',
+    en: 'Play automatic carousel',
+    de: 'Automatisches Karussell abspielen',
+    pt: 'Reproduzir carrossel automático',
+};
+
+export const carouselReloadAutoplay: TextToken = {
+    es: 'Reiniciar reproducción automática',
+    en: 'Restart automatic carousel',
+    de: 'Automatisches Karussell neu starten',
+    pt: 'Reiniciar carrossel automático',
 };
 
 export const carouselNextButton: TextToken = {
-    es: 'siguiente',
-    en: 'next',
-    de: 'nächste',
-    pt: 'próximo',
+    es: 'Página siguiente',
+    en: 'Next slide',
+    de: 'Nächste seite',
+    pt: 'Página seguinte',
 };
 
 export const carouselPrevButton: TextToken = {
-    es: 'anterior',
-    en: 'previous',
-    de: 'vorherige',
-    pt: 'anterior',
+    es: 'Página anterior',
+    en: 'Previous slide',
+    de: 'Vorherige seite',
+    pt: 'Página anterior',
 };
 
 export const playIconButtonLabel: TextToken = {
