@@ -115,6 +115,9 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             textActivated: palette.blue,
             textBrand: palette.blue,
             inputBorder: palette.grey4,
+            inputBorderInverse: palette.white,
+            completedStep: palette.blue,
+            completedStepInverse: palette.blue80,
             control: palette.grey4,
             controlActivated: palette.blue,
             controlInverse: palette.blue20,
@@ -266,6 +269,9 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             textActivated: palette.blue30,
             textBrand: palette.blue30,
             inputBorder: palette.grey4,
+            inputBorderInverse: palette.grey4,
+            completedStep: palette.blue,
+            completedStepInverse: palette.blue,
             control: palette.grey4,
             controlActivated: palette.blue,
             controlInverse: palette.grey4,
@@ -391,6 +397,10 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             title1: {weight: 'medium'},
             title2: {weight: 'bold'},
             title3: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'bold'},
+        },
+        themeVariants: {
+            successFeedback: 'inverse',
+            brandLoadingScreen: 'inverse',
         },
     };
     return skin;

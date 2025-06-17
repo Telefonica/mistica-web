@@ -2,12 +2,14 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {Text2, Text1} from './text';
-import {useScreenSize, useElementDimensions, useTheme} from './hooks';
+import {useElementDimensions, useTheme} from './hooks';
+import * as tokens from './text-tokens';
 import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
 import {pxToRem, applyCssVars} from './utils/css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {DataAttributes} from './utils/types';
 
@@ -15,7 +17,9 @@ type StepperProps = {
     steps: ReadonlyArray<string>;
     currentIndex: number;
     'aria-label'?: string;
-    children?: void;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     dataAttributes?: DataAttributes;
 };
 
@@ -23,10 +27,12 @@ const Stepper = ({
     steps,
     currentIndex,
     'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
+    'aria-description': ariaDescription,
+    'aria-describedby': ariaDescribedby,
     dataAttributes,
 }: StepperProps): JSX.Element => {
-    const {textPresets} = useTheme();
-    const {isDesktopOrBigger} = useScreenSize();
+    const {texts, t, textPresets} = useTheme();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
 
@@ -41,13 +47,24 @@ const Stepper = ({
         }
     }, [currentIndex, steps, step]);
 
+    const completedText = texts.stepperCompletedStep || t(tokens.stepperCompletedStep);
+    const currentText = texts.stepperCurrentStep || t(tokens.stepperCurrentStep);
+
     return (
-        <div
+        // The explicit role="list" is needed for Safari VoiceOver when setting css list-style: none
+        // aria-description is not supported by the eslint rule
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles, jsx-a11y/role-supports-aria-props
+        <ol
+            role="list"
             className={styles.stepper}
             style={applyCssVars({
                 [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
+            aria-description={ariaDescription}
+            aria-describedby={ariaDescribedby}
         >
             {steps.map((text, index) => {
                 const isCurrent = index === step;
@@ -56,16 +73,13 @@ const Stepper = ({
                 const hasAnimation = index === step - 1;
 
                 return (
-                    <React.Fragment key={index}>
-                        <div
-                            className={styles.step}
-                            role="progressbar"
-                            aria-valuenow={isCurrent ? index + 1 : undefined}
-                            aria-valuemin={1}
-                            aria-valuemax={steps.length}
-                            aria-valuetext={text}
-                            aria-label={ariaLabel}
-                        >
+                    <li
+                        key={index}
+                        className={styles.listItem}
+                        style={isLastStep ? undefined : {flex: 1}}
+                        aria-current={isCurrent ? 'step' : undefined}
+                    >
+                        <div className={styles.step}>
                             {isCompleted ? (
                                 <div
                                     className={classnames(styles.stepIconNumber, {
@@ -99,21 +113,24 @@ const Stepper = ({
                                     </Text1>
                                 </div>
                             )}
-                            {isDesktopOrBigger && (
-                                <div className={styles.textContainer} ref={ref} aria-hidden="true">
-                                    <Text2
-                                        as="span"
-                                        regular
-                                        color={
-                                            isCompleted || isCurrent
-                                                ? vars.colors.textPrimary
-                                                : vars.colors.textSecondary
-                                        }
-                                    >
-                                        {text}
-                                    </Text2>
-                                </div>
-                            )}
+
+                            <div className={styles.textContainer} aria-hidden="true" ref={ref}>
+                                <Text2
+                                    as="div"
+                                    regular
+                                    color={
+                                        isCompleted || isCurrent
+                                            ? vars.colors.textPrimary
+                                            : vars.colors.textSecondary
+                                    }
+                                >
+                                    {text}
+                                </Text2>
+                            </div>
+
+                            <ScreenReaderOnly>
+                                <span>{`${isCompleted ? `${completedText}: ` : isCurrent ? `${currentText}: ` : ''}${text}`}</span>
+                            </ScreenReaderOnly>
                         </div>
                         {!isLastStep && (
                             <div className={styles.bar} aria-hidden="true">
@@ -128,10 +145,10 @@ const Stepper = ({
                                 )}
                             </div>
                         )}
-                    </React.Fragment>
+                    </li>
                 );
             })}
-        </div>
+        </ol>
     );
 };
 

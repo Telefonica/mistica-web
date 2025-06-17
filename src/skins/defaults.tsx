@@ -1,4 +1,4 @@
-import type {BorderRadiiConfig, TextPresetsConfig} from './types';
+import type {BorderRadiiConfig, TextPresetsConfig, ThemeVariantsConfig} from './types';
 
 export const defaultTextPresetsConfig: TextPresetsConfig = {
     text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
@@ -34,4 +34,9 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     bar: '999px',
     avatar: '50%',
     mediaSmall: '8px',
+};
+
+export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
+    brandLoadingScreen: 'inverse',
+    successFeedback: 'inverse',
 };

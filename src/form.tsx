@@ -7,7 +7,9 @@ import * as styles from './form.css';
 import * as tokens from './text-tokens';
 import ScreenReaderOnly from './screen-reader-only';
 import {isIos} from './utils/platform';
+import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {DataAttributes} from './utils/types';
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
 if (
@@ -33,6 +35,7 @@ type FormProps = {
     onValidationErrors?: (errors: FormErrors) => void;
     getErrorMessageForScreenReader?: (errors: FormErrors) => string;
     className?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const Form = ({
@@ -44,6 +47,7 @@ const Form = ({
     onValidationErrors,
     getErrorMessageForScreenReader,
     id: idProp,
+    dataAttributes,
 }: FormProps): JSX.Element => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
@@ -260,6 +264,7 @@ const Form = ({
                 ref={formRef}
                 className={classnames(styles.form, className)}
                 noValidate
+                {...getPrefixedDataAttributes(dataAttributes, 'Form')}
             >
                 {hasMultipleFormErrors ? (
                     <ScreenReaderOnly>

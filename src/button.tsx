@@ -276,9 +276,13 @@ interface CommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     tabIndex?: number;
     StartIcon?: (props: IconProps) => JSX.Element;
     EndIcon?: (props: IconProps) => JSX.Element;
@@ -312,7 +316,9 @@ type ButtonProps = ExclusifyUnion<
     FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 >;
 
-type ButtonLinkProps = ExclusifyUnion<ToButtonProps | OnPressButtonProps | HrefButtonProps> & {
+type ButtonLinkProps = ExclusifyUnion<
+    FakeButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
+> & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
@@ -430,9 +436,13 @@ const BaseButton = React.forwardRef<
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
+        'aria-labelledby': props['aria-labelledby'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-haspopup': props['aria-haspopup'],
+        'aria-current': props['aria-current'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
         children: renderButtonContent({
             showSpinner,
@@ -456,7 +466,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return <BaseTouchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
+        return <BaseTouchable maybe {...commonProps} />;
     }
 
     if (props.submit) {
