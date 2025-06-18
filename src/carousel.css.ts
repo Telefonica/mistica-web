@@ -290,6 +290,7 @@ export const centeredCarousel = style({
 });
 
 export const carouselItem = style({
+    listStyle: 'none',
     scrollSnapAlign: 'start',
     flexShrink: 0,
     width: `calc(1 / ${itemsPerPage} * 100% + ${gap} / ${itemsPerPage} * 1px)`,
