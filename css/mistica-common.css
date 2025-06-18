@@ -690,6 +690,30 @@ label.mistica-chip > input:checked + span {
     gap: 32px;
 }
 
+.mistica-inline-y-center {
+    align-items: center;
+}
+
+.mistica-inline-y-start {
+    align-items: start;
+}
+
+.mistica-inline-y-end {
+    align-items: end;
+}
+
+.mistica-justify-space-between {
+    justify-content: space-between;
+}
+
+.mistica-justify-space-around {
+    justify-content: space-around;
+}
+
+.mistica-justify-space-evenly {
+    justify-content: space-evenly;
+}
+
 /* Align */
 
 [class*='mistica-align-'] {
