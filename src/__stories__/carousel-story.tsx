@@ -139,12 +139,12 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                     <ResponsiveLayout>
                         <Box paddingY={16}>
                             <CarouselContextConsumer>
-                                {({goNext, goPrev, goToPage, bulletsProps}) => (
+                                {({goNext, goPrev, bulletsProps}) => (
                                     <Inline space="between" alignItems="center">
                                         <ButtonLink small bleedLeft onPress={goPrev}>
                                             Prev
                                         </ButtonLink>
-                                        <PageBullets {...bulletsProps} onPress={goToPage} />
+                                        <PageBullets {...bulletsProps} />
                                         <ButtonLink small bleedRight onPress={goNext}>
                                             Next
                                         </ButtonLink>
@@ -158,7 +158,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                 <Box paddingY={24}>
                     <ResponsiveLayout>
                         <Carousel
-                            aria-label="Component story"
+                            aria-label="Component story with context"
                             items={Array.from({length: numItems}, (_, idx) => (
                                 <MediaCard
                                     aria-label={`Carousel item ${idx}`}
@@ -209,14 +209,21 @@ export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselC
                                 }
                             />
                         ))}
-                        aria-label="Component story"
+                        aria-label="Component story with context and controls"
                         withBullets={false}
                         withControls={false}
                         autoplay
                     />
                     <Inline space="around">Some content here</Inline>
                     <CarouselContextConsumer>
-                        {({goToPage, bulletsProps, autoplayControlProps, pageControlsProps}) => (
+                        {({
+                            goNext,
+                            goPrev,
+                            goToPage,
+                            bulletsProps,
+                            autoplayControlProps,
+                            pageControlsProps,
+                        }) => (
                             <Inline space="between" alignItems="center">
                                 <CarouselAutoplayControl
                                     {...autoplayControlProps}
@@ -229,8 +236,12 @@ export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselC
                                         );
                                     }}
                                 />
-                                <PageBullets {...bulletsProps} onPress={goToPage} />
-                                <CarouselPageControls {...pageControlsProps} />
+                                <PageBullets {...bulletsProps} />
+                                <CarouselPageControls
+                                    {...pageControlsProps}
+                                    goNext={goNext}
+                                    goPrev={goPrev}
+                                />
                             </Inline>
                         )}
                     </CarouselContextConsumer>

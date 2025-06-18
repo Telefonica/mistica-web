@@ -31,16 +31,19 @@ const ExampleCarousel = ({
     bullets,
     cardsTitlePrefix,
     itemsPerPage,
+    'aria-label': ariaLabelProp,
 }: {
     numItems: number;
     bullets: boolean;
     cardsTitlePrefix: number;
     itemsPerPage: {mobile: number; tablet: number; desktop: {small: number; medium: number; large: number}};
+    'aria-label': string;
 }) => (
     <Carousel
         dataAttributes={{testid: 'carousel-story'}}
         withBullets={bullets}
         itemsPerPage={itemsPerPage}
+        aria-label={ariaLabelProp}
         items={Array.from({length: numItems}, (_, idx) => (
             <MediaCard
                 aria-label={`Carousel ${cardsTitlePrefix} item ${idx}`}
@@ -87,6 +90,7 @@ export const Default: StoryComponent<Args> = ({
                                 numItems={numItems}
                                 bullets={bullets}
                                 itemsPerPage={itemsPerPage}
+                                aria-label="Component story, right placeholder"
                                 cardsTitlePrefix={1}
                             />
                         }
@@ -100,6 +104,7 @@ export const Default: StoryComponent<Args> = ({
                                 numItems={numItems}
                                 bullets={bullets}
                                 itemsPerPage={itemsPerPage}
+                                aria-label="Component story, left placeholder"
                                 cardsTitlePrefix={2}
                             />
                         }
@@ -109,6 +114,7 @@ export const Default: StoryComponent<Args> = ({
                         bullets={bullets}
                         itemsPerPage={itemsPerPage}
                         cardsTitlePrefix={3}
+                        aria-label="Component story, no placeholder"
                     />
                 </Stack>
             </ResponsiveLayout>

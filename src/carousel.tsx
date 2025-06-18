@@ -4,7 +4,6 @@ import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
-import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
@@ -21,6 +20,7 @@ import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import IconReloadRegular from './generated/mistica-icons/icon-reload-regular';
 import * as tokens from './text-tokens';
+import {isClientSide} from './utils/environment';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
@@ -29,8 +29,10 @@ const useShouldAutoplay = (
     autoplay: boolean,
     ref: React.RefObject<HTMLElement>
 ): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setShouldAutoPlay: (enabled: boolean) => void} => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const [isAutoplayEnabled, setIsAutoplayEnabled] = React.useState(!!autoplay && !reducedMotion.matches);
+    const reducedMotion = isClientSide()
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+    const [isAutoplayEnabled, setIsAutoplayEnabled] = React.useState(!!autoplay && !reducedMotion);
 
     const isDocumentVisible = useDocumentVisibility();
     const isInViewport = useIsInViewport(ref, false);
@@ -51,8 +53,6 @@ const defaultAutoplayProps = {
     onAutoplayChanged: throwMissingProviderError,
 };
 const defaultPageControlsProps = {
-    goPrev: throwMissingProviderError,
-    goNext: throwMissingProviderError,
     setShouldAutoplay: throwMissingProviderError,
     prevArrowEnabled: false,
     nextArrowEnabled: false,
@@ -73,8 +73,6 @@ type AutoplayControlProps = {
 };
 
 type PageControlsProps = {
-    goPrev: () => void;
-    goNext: () => void;
     setShouldAutoplay: (autoplay: boolean) => void;
     prevArrowEnabled: boolean;
     nextArrowEnabled: boolean;
@@ -223,34 +221,33 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
             : Math.max(numPages.mobile, numPages.tablet ?? numPages.mobile, numPages.desktop);
 
     return (
-        <div aria-hidden="true">
-            <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
-                {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
-                    <div
-                        className={classNames(
-                            typeof numPages === 'number'
-                                ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
-                                : {
-                                      [styles.bulletButton]: true,
-                                      [styles.bulletVisibilityMobile]: i < numPages.mobile,
-                                      [styles.bulletVisibilityTablet]:
-                                          i < (numPages.tablet ?? numPages.mobile),
-                                      [styles.bulletVisibilityDesktop]: i < numPages.desktop,
-                                  }
-                        )}
-                        key={i}
-                    >
-                        <div className={classNames(getClassNames(i))} />
-                    </div>
-                ))}
-            </Inline>
-        </div>
+        <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
+            {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
+                <div
+                    className={classNames(
+                        typeof numPages === 'number'
+                            ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
+                            : {
+                                  [styles.bulletButton]: true,
+                                  [styles.bulletVisibilityMobile]: i < numPages.mobile,
+                                  [styles.bulletVisibilityTablet]: i < (numPages.tablet ?? numPages.mobile),
+                                  [styles.bulletVisibilityDesktop]: i < numPages.desktop,
+                              }
+                    )}
+                    key={i}
+                >
+                    <div className={classNames(getClassNames(i))} />
+                </div>
+            ))}
+        </Inline>
     );
 };
 
 type CarouselPageControlsProps = PageControlsProps & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
+    goPrev: () => void;
+    goNext: () => void;
 };
 
 export const CarouselPageControls = ({
@@ -421,8 +418,6 @@ const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Arra
 
 const DEFAULT_AUTOPLAY_TIME = 5000;
 
-type AccessibilityLabel = {'aria-label': string} | {'aria-labelledby': string};
-
 type BaseCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
     itemStyle?: React.CSSProperties;
@@ -484,7 +479,7 @@ const BaseCarousel = ({
         1
     );
 
-    const carouselRef = React.useRef<HTMLUListElement>(null);
+    const carouselRef = React.useRef<HTMLDivElement>(null);
 
     const pagesCountMobile = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.mobile), 1));
     const pagesCountTablet = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.tablet), 1));
@@ -636,6 +631,8 @@ const BaseCarousel = ({
         }
 
         const carouselEl = carouselRef.current;
+        const passiveOpts = {passive: true};
+
         if (carouselEl) {
             const handleTouchStart = () => {
                 interactionDetectorRef.current.left = carouselEl.scrollLeft;
@@ -653,9 +650,9 @@ const BaseCarousel = ({
             const handleKeyboardPress = () => {
                 setShouldAutoPlay(false);
             };
-            carouselEl.addEventListener('touchstart', handleTouchStart);
-            carouselEl.addEventListener('touchend', handleTouchEnd);
-            carouselEl.addEventListener('keydown', handleKeyboardPress);
+            carouselEl.addEventListener('touchstart', handleTouchStart, passiveOpts);
+            carouselEl.addEventListener('touchend', handleTouchEnd, passiveOpts);
+            carouselEl.addEventListener('keydown', handleKeyboardPress, passiveOpts);
 
             return () => {
                 carouselEl.removeEventListener('touchstart', handleTouchStart);
@@ -715,13 +712,11 @@ const BaseCarousel = ({
     );
     const pageControlsProps = React.useMemo(
         () => ({
-            goPrev,
-            goNext,
             setShouldAutoplay: setShouldAutoPlay,
             prevArrowEnabled,
             nextArrowEnabled,
         }),
-        [goPrev, goNext, setShouldAutoPlay, prevArrowEnabled, nextArrowEnabled]
+        [setShouldAutoPlay, prevArrowEnabled, nextArrowEnabled]
     );
 
     React.useEffect(() => {
@@ -831,13 +826,13 @@ const BaseCarousel = ({
                 )}
             </div>
             <div className={styles.carouselContainer}>
-                <ul
+                <div
                     className={classNames(styles.carousel, {
                         [styles.centeredCarousel]: centered,
                         [styles.carouselWithScrollMobile]: pagesCountMobile > 1,
                         [styles.carouselWithScrollTablet]: pagesCountTablet > 1,
                     })}
-                    tabIndex={0}
+                    role="list"
                     style={{
                         ...applyCssVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
@@ -865,19 +860,20 @@ const BaseCarousel = ({
                     ref={carouselRef}
                 >
                     {items.map((item, index) => (
-                        <li
+                        <div
                             key={index}
                             className={classNames(styles.carouselItem, itemClassName)}
                             style={{
                                 ...itemStyle,
                                 scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
                             }}
+                            role="listitem"
                             data-item
                         >
                             {item}
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         </div>
     );
