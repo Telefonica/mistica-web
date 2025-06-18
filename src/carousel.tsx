@@ -29,6 +29,8 @@ const useShouldAutoplay = (
     autoplay: boolean,
     ref: React.RefObject<HTMLElement>
 ): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setShouldAutoPlay: (enabled: boolean) => void} => {
+    // evaluar media query reduced motion y pasar como estado inicial
+    // darle una vuelta
     const [isAutoplayEnabled, setIsAutoplayEnabled] = React.useState(!!autoplay);
 
     const isDocumentVisible = useDocumentVisibility();
@@ -226,7 +228,7 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
         <div aria-hidden="true">
             <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
                 {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
-                    <BaseTouchable
+                    <div
                         className={classNames(
                             typeof numPages === 'number'
                                 ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
@@ -239,15 +241,9 @@ export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps)
                                   }
                         )}
                         key={i}
-                        maybe
-                        onPress={
-                            isDesktopOrBigger && onPress
-                                ? () => onPress(currentIndex + i - activeBulletIndex)
-                                : undefined
-                        }
                     >
                         <div className={classNames(getClassNames(i))} />
-                    </BaseTouchable>
+                    </div>
                 ))}
             </Inline>
         </div>
@@ -325,6 +321,7 @@ export const CarouselAutoplayControl = ({
             uncheckedProps={{
                 Icon: isAtLastPage ? IconReloadRegular : IconPlayFilled,
                 type: 'neutral',
+                // usar isAtLastPage para estado reload
                 'aria-label': texts.carouselEnableAutoplay || t(tokens.carouselEnableAutoplay),
             }}
             small
@@ -425,6 +422,8 @@ const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Arra
 
 const DEFAULT_AUTOPLAY_TIME = 5000;
 
+type AccessibilityLabel = {'aria-label': string} | {'aria-labelledby': string};
+
 type BaseCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
     itemStyle?: React.CSSProperties;
@@ -450,6 +449,7 @@ type BaseCarouselProps = {
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
     children?: void;
+    accessibilityLabel?: AccessibilityLabel;
 };
 
 const BaseCarousel = ({
@@ -469,8 +469,9 @@ const BaseCarousel = ({
     withControls = true,
     onPageChange,
     dataAttributes,
+    accessibilityLabel,
 }: BaseCarouselProps): JSX.Element => {
-    const {platformOverrides, skinName} = useTheme();
+    const {platformOverrides, skinName, texts, t} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
@@ -607,6 +608,8 @@ const BaseCarousel = ({
         interacting: false,
         left: 0,
     });
+
+    // evitar mover el carousel con autoplay cuando el usuario está interactuando
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
@@ -627,6 +630,8 @@ const BaseCarousel = ({
 
     const INTERACTION_DETECTOR_THRESHOLD = 20; // pixels
 
+    // igual que el slideshow pero añade eventos para desactivar el autoplay con el touch
+    // evento tabIndexChanged o tabIndexChanged -> buscar
     React.useEffect(() => {
         if (currentPageIndex === pagesCount - 1 && !hasAutoplayLoop) {
             setShouldAutoPlay(false);
@@ -780,6 +785,9 @@ const BaseCarousel = ({
         <div
             {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}
             className={styles.carouselComponentContainer}
+            role="region"
+            {...accessibilityLabel}
+            aria-description={texts.carouselRegion || t(tokens.carouselRegion)}
         >
             <div
                 className={classNames(styles.carouselControlsVisibility, {
@@ -830,6 +838,7 @@ const BaseCarousel = ({
                         [styles.carouselWithScrollMobile]: pagesCountMobile > 1,
                         [styles.carouselWithScrollTablet]: pagesCountTablet > 1,
                     })}
+                    role="list"
                     style={{
                         ...applyCssVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
@@ -865,6 +874,7 @@ const BaseCarousel = ({
                                 scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
                             }}
                             data-item
+                            role="listitem"
                         >
                             {item}
                         </div>
@@ -896,6 +906,7 @@ type CarouselProps = {
     withControls?: boolean;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
+    accessibilityLabel?: AccessibilityLabel;
 
     children?: void;
 };
@@ -947,6 +958,7 @@ type CenteredCarouselProps = {
     initialActiveItem?: number;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
+    accessibilityLabel?: AccessibilityLabel;
 
     children?: void;
 };
@@ -961,6 +973,7 @@ export const CenteredCarousel = ({
     initialActiveItem,
     onPageChange,
     dataAttributes,
+    accessibilityLabel,
 }: CenteredCarouselProps): JSX.Element => {
     const key = useWorkaroundForZeroWidthWebView();
     return (
@@ -979,6 +992,7 @@ export const CenteredCarousel = ({
             initialActiveItem={initialActiveItem}
             onPageChange={onPageChange}
             dataAttributes={dataAttributes}
+            accessibilityLabel={accessibilityLabel}
         />
     );
 };
@@ -1097,6 +1111,7 @@ export const Slideshow = ({
         }
     }, [autoplay, goNext, scrollRight, shouldAutoplay, hasAutoplayLoop]);
 
+    // solo se pausa cuando llega al final
     React.useEffect(() => {
         if (currentIndex === items.length - 1 && !hasAutoplayLoop) {
             setShouldAutoPlay(false);

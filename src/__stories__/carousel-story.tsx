@@ -75,6 +75,7 @@ export const Default: StoryComponent<Args> = ({
                         autoplay={autoplay ? {time: 5000, loop} : false}
                         withControls={withControls}
                         onPageChange={setPageInfo}
+                        accessibilityLabel={{'aria-label': 'Carousel story'}}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
                                 aria-label={`Carousel item ${idx}`}
@@ -157,6 +158,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                 <Box paddingY={24}>
                     <ResponsiveLayout>
                         <Carousel
+                            accessibilityLabel={{'aria-label': 'Carousel story'}}
                             items={Array.from({length: numItems}, (_, idx) => (
                                 <MediaCard
                                     aria-label={`Carousel item ${idx}`}
@@ -207,6 +209,7 @@ export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselC
                                 }
                             />
                         ))}
+                        accessibilityLabel={{'aria-label': 'Carousel story'}}
                         withBullets={false}
                         withControls={false}
                         autoplay
