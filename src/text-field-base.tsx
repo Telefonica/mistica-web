@@ -474,6 +474,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
+        const containerRef = React.useRef<HTMLDivElement>(null);
         const {platformOverrides, texts, t} = useTheme();
         const reactId = React.useId();
         const id = idProp || reactId;
@@ -515,6 +516,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                     renderInputComponent={(inputProps) => (
                         <TextFieldBase
                             {...(inputProps as TextFieldBaseProps)}
+                            fieldRef={containerRef}
                             inputRef={combineRefs(inputRef, props.inputRef, ref)}
                         />
                     )}
@@ -536,7 +538,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         <div
                             {...options.containerProps}
                             style={{
-                                width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
+                                width: containerRef.current ? containerRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
                             }}
                             className={styles.suggestionsContainer}
                             aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
