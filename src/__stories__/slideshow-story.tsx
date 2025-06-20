@@ -4,8 +4,6 @@ import {
     Stack,
     Box,
     ResponsiveLayout,
-    Callout,
-    IconInformationRegular,
     Image,
     Text4,
     CarouselContextConsumer,
@@ -22,18 +20,14 @@ export default {
     title: 'Components/Carousels/Slideshow',
 };
 
-type Args = {numItems: number; autoplay: boolean; loop: boolean; bullets: boolean};
+type Args = {numItems: number; autoplay: boolean; loop: boolean; bullets: boolean; withControls: boolean};
 
-export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, bullets}) => {
+export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, bullets, withControls}) => {
     const [currentPage, setCurrentPage] = React.useState<number>(0);
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
                 <Stack space={16}>
-                    <Callout
-                        description="Arrow controls disappear in touch devices."
-                        asset={<IconInformationRegular />}
-                    />
                     <Slideshow
                         withBullets={bullets}
                         autoplay={autoplay ? {time: 5000, loop} : false}
@@ -44,6 +38,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, bullets
                                 aspectRatio="16:9"
                             />
                         ))}
+                        withControls={withControls}
                     />
                     <Text4 regular>Page {currentPage}</Text4>
                 </Stack>
@@ -59,6 +54,7 @@ Default.args = {
     autoplay: false,
     loop: false,
     bullets: true,
+    withControls: true,
 };
 
 type WithCarouselContextArgs = {numItems: number};
@@ -96,6 +92,8 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                                     aspectRatio="16:9"
                                 />
                             ))}
+                            withControls={false}
+                            withBullets={false}
                         />
                     </ResponsiveLayout>
                 </Box>
