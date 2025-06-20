@@ -365,14 +365,12 @@ globalStyle(`${carouselItem}:not(:empty) ~ ${carouselItem}:not(:empty)`, {
 export const carouselBullets = style([
     sprinkles({
         display: 'flex',
-        paddingTop: 4,
-        paddingBottom: 2,
+        justifyContent: 'center',
     }),
     {
         margin: '0 -4px',
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingTop: 14,
                 margin: '0 -2px', // required to align with specs at pixel perfect level
             },
         },
@@ -454,7 +452,9 @@ export const slideshowAutoplayControlContainer = style([
 
 export const slideshowBulletsContainer = style([
     sprinkles({
-        paddingTop: 4,
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: 0,
         paddingLeft: 8,
         paddingRight: 8,
     }),
