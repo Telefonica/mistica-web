@@ -781,7 +781,7 @@ const BaseCarousel = ({
                     ? `${ariaLabelProp}, ${texts.carouselRegion || t(tokens.carouselRegion)}`
                     : undefined
             }
-            aria-labelledby={ariaLabelledByProp}
+            aria-labelledby={ariaLabelProp ? undefined : ariaLabelledByProp}
         >
             <div
                 className={classNames(styles.carouselControlsVisibility, {
@@ -1162,6 +1162,8 @@ export const Slideshow = ({
         </div>
     );
 
+    const onlyControls = !withBullets && !autoplay;
+
     return (
         <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
             <ResetResponsiveLayout skipDesktop>
@@ -1174,7 +1176,12 @@ export const Slideshow = ({
                     {items.length > 1 &&
                         (withControls ? (
                             <ThemeVariant variant="media">
-                                <Inline space="between" className={styles.slideshowControlsContainer}>
+                                <Inline
+                                    space={onlyControls ? 0 : 'between'}
+                                    className={classNames(styles.slideshowControlsContainer, {
+                                        [styles.slideshowControlsContainerSingleItem]: onlyControls,
+                                    })}
+                                >
                                     {!!autoplay && (
                                         <div className={styles.slideshowAutoplayControlContainer}>
                                             <CarouselAutoplayControl

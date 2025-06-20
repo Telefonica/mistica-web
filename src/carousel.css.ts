@@ -440,6 +440,10 @@ export const slideshowControlsContainer = style([
     },
 ]);
 
+export const slideshowControlsContainerSingleItem = style({
+    justifyContent: 'flex-end',
+});
+
 export const slideshowAutoplayControlContainer = style([
     sprinkles({
         minWidth: 80,
