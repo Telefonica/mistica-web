@@ -365,10 +365,10 @@ globalStyle(`${carouselItem}:not(:empty) ~ ${carouselItem}:not(:empty)`, {
 export const carouselBullets = style([
     sprinkles({
         display: 'flex',
-    }),
-    {
         paddingTop: 4,
         paddingBottom: 2,
+    }),
+    {
         margin: '0 -4px',
         '@media': {
             [mq.tabletOrSmaller]: {
@@ -440,9 +440,11 @@ export const slideshowControlsContainer = style([
     },
 ]);
 
-export const slideshowControlsContainerSingleItem = style({
-    justifyContent: 'flex-end',
-});
+export const slideshowControlsContainerSingleItem = style([
+    sprinkles({
+        justifyContent: 'flex-end',
+    }),
+]);
 
 export const slideshowAutoplayControlContainer = style([
     sprinkles({
@@ -451,9 +453,9 @@ export const slideshowAutoplayControlContainer = style([
 ]);
 
 export const slideshowBulletsContainer = style([
-    {
+    sprinkles({
         paddingTop: 4,
         paddingLeft: 8,
         paddingRight: 8,
-    },
+    }),
 ]);

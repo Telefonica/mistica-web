@@ -791,7 +791,7 @@ const BaseCarousel = ({
                 })}
             >
                 {withControls ? (
-                    <Inline space="between" className={styles.carouselControlsContainer}>
+                    <Inline space="between" alignItems="center" className={styles.carouselControlsContainer}>
                         {!!autoplay && (
                             <div className={styles.carouselAutoplayControlContainer}>
                                 <CarouselAutoplayControl
@@ -1178,6 +1178,7 @@ export const Slideshow = ({
                             <ThemeVariant variant="media">
                                 <Inline
                                     space={onlyControls ? 0 : 'between'}
+                                    alignItems="center"
                                     className={classNames(styles.slideshowControlsContainer, {
                                         [styles.slideshowControlsContainerSingleItem]: onlyControls,
                                     })}

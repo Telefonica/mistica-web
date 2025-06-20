@@ -159,6 +159,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                     <ResponsiveLayout>
                         <Carousel
                             aria-label="Component story with context"
+                            withControls={false}
                             items={Array.from({length: numItems}, (_, idx) => (
                                 <MediaCard
                                     aria-label={`Carousel item ${idx}`}
