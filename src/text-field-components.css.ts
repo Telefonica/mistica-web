@@ -103,7 +103,6 @@ export const fullWidth = sprinkles({
 });
 
 export const field = sprinkles({
-    overflow: 'hidden',
     border: 'input',
     display: 'flex',
     borderRadius: vars.borderRadii.input,

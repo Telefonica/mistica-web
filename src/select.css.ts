@@ -109,12 +109,12 @@ const selectBase = style([
         background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
         paddingY: 0,
+        borderRadius: skinVars.borderRadii.input,
     }),
     {
         fontFamily: 'inherit',
         paddingRight: `calc(${iconButtonSize} + ${fieldEndIconGap}px)`,
         paddingLeft: fieldLeftPadding,
-        outline: 0,
         textOverflow: 'ellipsis',
         appearance: 'none',
 
