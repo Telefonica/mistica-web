@@ -128,7 +128,7 @@ export const bulletInactiveSmallSizing = style([
     },
 ]);
 
-export const bulletsContainer = style([
+export const bulletsScrollableContainer = style([
     {
         width: `${(VISIBLE_BULLETS + VISIBLE_BULLETS - 2) * LARGE_BULLET_SIZE * 2}px`,
         scrollBehavior: 'smooth',

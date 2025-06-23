@@ -236,7 +236,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
             space={0}
             alignItems="center"
             dataAttributes={{'component-name': 'PageBullets'}}
-            className={classNames({[styles.bulletsContainer]: true})}
+            className={classNames({[styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS})}
         >
             {Array.from({length: pagesCount}, (_, i: number) => (
                 <div
