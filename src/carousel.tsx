@@ -166,17 +166,7 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
 export const useCarouselContext = (): CarouselControls => React.useContext(CarouselContext);
 export const CarouselContextConsumer = CarouselContext.Consumer;
 
-const VISIBLE_BULLETS = 5;
-
-const getActiveBulletIndex = (currentPageIndex: number, pagesCount: number): number => {
-    if (pagesCount <= VISIBLE_BULLETS || currentPageIndex < Math.floor(VISIBLE_BULLETS / 2)) {
-        return currentPageIndex;
-    }
-    if (currentPageIndex >= pagesCount - Math.floor(VISIBLE_BULLETS / 2)) {
-        return currentPageIndex + VISIBLE_BULLETS - pagesCount;
-    }
-    return Math.floor(VISIBLE_BULLETS / 2);
-};
+// const VISIBLE_BULLETS = 5;
 
 export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
@@ -189,40 +179,66 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
               : isTablet
                 ? numPages.tablet ?? numPages.mobile
                 : numPages.mobile;
-    const activeBulletIndex = getActiveBulletIndex(currentIndex, pagesCount);
+    const bulletRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+
+    React.useEffect(() => {
+        const target = bulletRefs.current[currentIndex];
+
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest',
+            });
+        }
+    }, [currentIndex]);
+
     const getClassNames = (bulletIndex: number) => {
         const classNames: {[key: string]: boolean} = {};
 
         if (isInverse) {
-            classNames[
-                activeBulletIndex === bulletIndex ? styles.bulletActiveInverse : styles.bulletInverse
-            ] = true;
+            classNames[currentIndex === bulletIndex ? styles.bulletActiveInverse : styles.bulletInverse] =
+                true;
         } else {
-            classNames[activeBulletIndex === bulletIndex ? styles.bulletActive : styles.bullet] = true;
+            classNames[currentIndex === bulletIndex ? styles.bulletActive : styles.bullet] = true;
         }
-        classNames[
-            activeBulletIndex === bulletIndex ? styles.bulletActiveSizing : styles.bulletInactiveSizing
-        ] = true;
-        classNames[styles.bulletInactiveMediumSizing] =
-            pagesCount > VISIBLE_BULLETS &&
-            Math.abs(activeBulletIndex - bulletIndex) ===
-                (Math.abs(activeBulletIndex - Math.floor(VISIBLE_BULLETS / 2)) <= 1 ? 2 : 3);
-        classNames[styles.bulletInactiveSmallSizing] =
-            pagesCount > VISIBLE_BULLETS &&
-            Math.abs(activeBulletIndex - bulletIndex) ===
-                (Math.abs(activeBulletIndex - Math.floor(VISIBLE_BULLETS / 2)) <= 1 ? 3 : 4);
+
+        if (currentIndex === bulletIndex) {
+            classNames[styles.bulletActiveSizing] = true;
+            return classNames;
+        }
+
+        const distanceToCurrent = Math.abs(bulletIndex - currentIndex);
+
+        if (pagesCount <= styles.VISIBLE_BULLETS || distanceToCurrent === 1) {
+            classNames[styles.bulletInactiveSizing] = true;
+            return classNames;
+        }
+
+        const isFirstOrLastItemActive = currentIndex === 0 || currentIndex === pagesCount - 1;
+
+        if (isFirstOrLastItemActive) {
+            classNames[styles.bulletInactiveSizing] = distanceToCurrent === 2;
+            classNames[styles.bulletInactiveMediumSizing] = distanceToCurrent === 3;
+            classNames[styles.bulletInactiveSmallSizing] = distanceToCurrent > 3;
+
+            return classNames;
+        }
+
+        classNames[styles.bulletInactiveMediumSizing] = distanceToCurrent === 2;
+        classNames[styles.bulletInactiveSmallSizing] = distanceToCurrent > 2;
 
         return classNames;
     };
 
-    const maxNumPages =
-        typeof numPages === 'number'
-            ? numPages
-            : Math.max(numPages.mobile, numPages.tablet ?? numPages.mobile, numPages.desktop);
-
     return (
-        <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
-            {Array.from({length: Math.min(maxNumPages, VISIBLE_BULLETS)}, (_, i: number) => (
+        <Inline
+            space={0}
+            alignItems="center"
+            dataAttributes={{'component-name': 'PageBullets'}}
+            className={classNames({[styles.bulletsContainer]: true})}
+        >
+            {Array.from({length: pagesCount}, (_, i: number) => (
                 <div
                     className={classNames(
                         typeof numPages === 'number'
@@ -236,7 +252,10 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
                     )}
                     key={i}
                 >
-                    <div className={classNames(getClassNames(i))} />
+                    <div
+                        className={classNames(getClassNames(i))}
+                        ref={(el) => (bulletRefs.current[i] = el)}
+                    />
                 </div>
             ))}
         </Inline>

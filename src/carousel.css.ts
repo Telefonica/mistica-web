@@ -26,8 +26,8 @@ export const bulletButton = style([
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingTop: 0,
-                paddingBottom: 0,
+                paddingTop: 4,
+                paddingBottom: 4,
                 paddingLeft: 4,
                 paddingRight: 4,
             },
@@ -61,7 +61,7 @@ const bulletBase = style([
     }),
     {
         transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
+        zIndex: 2, // needed because images have zIndex 1, otherwise this component won't be shown
     },
 ]);
 export const bullet = style([bulletBase, sprinkles({background: skinVars.colors.control})]);
@@ -69,20 +69,25 @@ export const bulletInverse = style([bulletBase, {background: applyAlpha(skinVars
 export const bulletActive = style([bulletBase, sprinkles({background: skinVars.colors.controlActivated})]);
 export const bulletActiveInverse = style([bulletBase, sprinkles({background: skinVars.colors.inverse})]);
 
+const SMALL_BULLET_SIZE = 4;
+const LARGE_BULLET_SIZE = 8;
+
 export const bulletInactiveSizing = style([
     sprinkles({
-        width: 8,
-        height: 8,
+        width: LARGE_BULLET_SIZE,
+        height: LARGE_BULLET_SIZE,
     }),
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                width: 4,
-                height: 4,
+                width: SMALL_BULLET_SIZE,
+                height: SMALL_BULLET_SIZE,
             },
         },
     },
 ]);
+
+export const VISIBLE_BULLETS = 5;
 
 export const bulletActiveSizing = style([
     bulletInactiveSizing,
@@ -118,6 +123,21 @@ export const bulletInactiveSmallSizing = style([
         '@media': {
             [mq.tabletOrSmaller]: {
                 transform: 'scale(0.5)',
+            },
+        },
+    },
+]);
+
+export const bulletsContainer = style([
+    {
+        width: `${(VISIBLE_BULLETS + VISIBLE_BULLETS - 2) * LARGE_BULLET_SIZE * 2}px`,
+        scrollBehavior: 'smooth',
+        overflowX: 'hidden',
+    },
+    {
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                width: `${(VISIBLE_BULLETS + VISIBLE_BULLETS - 2) * SMALL_BULLET_SIZE * 2}px`,
             },
         },
     },
