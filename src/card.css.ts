@@ -207,7 +207,7 @@ export const mediaCardContent = style([
         position: 'relative',
         paddingX: 16,
         paddingTop: 16,
-        paddingBottom: 24,
+        paddingBottom: 32,
         flexDirection: 'column',
         justifyContent: 'space-between',
     }),
@@ -218,7 +218,6 @@ export const mediaCardContent = style([
                 paddingLeft: 24,
                 paddingRight: 24,
                 paddingTop: 24,
-                paddingBottom: 32,
             },
         },
     },
@@ -279,7 +278,8 @@ export const dataCard = style([
         display: 'flex',
         flex: 1,
         position: 'relative',
-        paddingY: 24,
+        paddingTop: 24,
+        paddingBottom: 32,
         paddingX: 16,
         flexDirection: 'column',
         width: '100%',
@@ -289,7 +289,6 @@ export const dataCard = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingTop: 32,
-                paddingBottom: 32,
                 paddingLeft: 24,
                 paddingRight: 24,
             },
@@ -368,7 +367,7 @@ export const displayCardBackground = style({
     zIndex: 0,
 });
 
-export const displayCardContentWrapper = sprinkles({paddingX: 24, paddingBottom: 24});
+export const displayCardContentWrapper = sprinkles({paddingX: 24, paddingBottom: 32});
 
 export const displayCardGradient = style([
     sprinkles({paddingTop: 40}),
@@ -379,7 +378,7 @@ export const displayCardGradient = style([
 
 export const posterCardContentWrapper = sprinkles({
     paddingX: {mobile: 16, desktop: 24},
-    paddingBottom: 24,
+    paddingBottom: 32,
 });
 
 const aspectRatio = createVar();
