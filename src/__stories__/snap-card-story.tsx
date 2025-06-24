@@ -13,6 +13,7 @@ import {
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
+import {SnapCard as SnapCard2} from '../cards2';
 
 import type {AspectRatio} from '../card';
 
@@ -70,18 +71,32 @@ export const Default: StoryComponent<Args> = ({
     } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
 
     return (
-        <SnapCard
-            asset={assetToIcon[asset]}
-            title={title}
-            subtitle={subtitle}
-            description={description}
-            dataAttributes={{testid: 'snap-card'}}
-            aria-label="SnapCard card label"
-            isInverse={inverse}
-            extra={extra ? <Placeholder /> : undefined}
-            aspectRatio={aspectRatioValue as AspectRatio}
-            {...interactiveProps}
-        />
+        <>
+            <SnapCard2
+                asset={assetToIcon[asset]}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                dataAttributes={{testid: 'snap-card'}}
+                aria-label="SnapCard card label"
+                isInverse={inverse}
+                extra={extra ? <Placeholder /> : undefined}
+                aspectRatio={aspectRatioValue as AspectRatio}
+                {...interactiveProps}
+            />
+            <SnapCard
+                asset={assetToIcon[asset]}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                dataAttributes={{testid: 'snap-card'}}
+                aria-label="SnapCard card label"
+                isInverse={inverse}
+                extra={extra ? <Placeholder /> : undefined}
+                aspectRatio={aspectRatioValue as AspectRatio}
+                {...interactiveProps}
+            />
+        </>
     );
 };
 
