@@ -498,6 +498,10 @@ const formSnippets: Array<Snippet> = [
     ],
     ['CvvField', '<CvvField name="cvv" label="CVV"/>'],
     ['SearchField', '<SearchField name="search" label="Search"/>'],
+    [
+        'SearchField (with suggestions)',
+        '<SearchField name="search2" label="Search" getSuggestions={() => ["aa", "bb", "cc", "dd"]}/>',
+    ],
     ['Switch', '<Switch name="switch"/>'],
     ['Checkbox', '<Checkbox name="checkbox">Checkbox</Checkbox>'],
     [
