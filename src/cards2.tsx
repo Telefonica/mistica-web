@@ -6,6 +6,8 @@ import {useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {applyCssVars} from './utils/css';
+import {Boxed} from './boxed';
 
 import type {DataAttributes, HeadingType, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -13,17 +15,41 @@ import type {PressHandler} from './touchable';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 
-type CardSize = 'snap' | 'default' | 'display';
+const aspectRatioToNumber = (aspectRatio?: AspectRatio | number): number => {
+    if (!aspectRatio) {
+        return 0;
+    }
+    if (typeof aspectRatio === 'number') {
+        return aspectRatio;
+    }
+    return {
+        '1:1': 1,
+        '16:9': 16 / 9,
+        '7:10': 7 / 10,
+        '9:10': 9 / 10,
+        auto: 0,
+    }[aspectRatio];
+};
+
+type CardSizeVariant = 'snap' | 'default' | 'display';
 
 type ContainerProps = {
-    cardSize: CardSize;
+    cardSizeVariant: CardSizeVariant;
+    width?: string | number;
+    height?: string | number;
+    aspectRatio?: AspectRatio | number;
     children: React.ReactNode;
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    isInverse?: boolean;
 };
 
 type TextContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
-    cardSize: CardSize;
+    cardSizeVariant: CardSizeVariant;
     pretitle?: string;
     pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
@@ -37,14 +63,23 @@ type TextContentProps = {
 };
 
 type AssetProps = {
-    cardSize: CardSize;
+    cardSizeVariant: CardSizeVariant;
     asset?: React.ReactElement;
 };
 
 type CardProps = {
     // container props
-    cardSize: CardSize;
+    cardSizeVariant: CardSizeVariant;
+    width?: string | number;
+    height?: string | number;
+    aspectRatio?: AspectRatio | number;
+    children?: React.ReactNode;
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    isInverse?: boolean;
 
     // asset props
     asset?: React.ReactElement;
@@ -64,26 +99,63 @@ type CardProps = {
 };
 
 const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
-    ({children, cardSize, dataAttributes}, ref): JSX.Element => {
+    (
+        {
+            children,
+            cardSizeVariant,
+            width,
+            height,
+            aspectRatio,
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
+            'aria-description': ariaDescription,
+            'aria-describedby': ariaDescribedby,
+            dataAttributes,
+            isInverse,
+        },
+        ref
+    ): JSX.Element => {
+        const cssAspectRatio = width && height ? undefined : aspectRatioToNumber(aspectRatio);
+
         return (
-            <div
-                ref={ref}
-                className={styles.containerVariants[cardSize]}
-                {...getPrefixedDataAttributes(dataAttributes)}
+            <Boxed
+                width="100%"
+                height="100%"
+                variant={isInverse ? 'inverse' : 'default'}
+                className={styles.boxed}
             >
-                {children}
-            </div>
+                {/* aria-description should be vaild, but this eslint rule is complaining about it */}
+                {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
+                <section
+                    ref={ref}
+                    aria-label={ariaLabel}
+                    aria-labelledby={ariaLabelledby}
+                    aria-description={ariaDescription}
+                    aria-describedby={ariaDescribedby}
+                    className={styles.containerVariants[cardSizeVariant]}
+                    {...getPrefixedDataAttributes(dataAttributes)}
+                    style={{
+                        width: width || '100%',
+                        height: height || '100%',
+                        ...(cssAspectRatio
+                            ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                            : {}),
+                    }}
+                >
+                    {children}
+                </section>
+            </Boxed>
         );
     }
 );
 
-const Asset = ({cardSize, asset}: AssetProps): JSX.Element | null => {
+const Asset = ({cardSizeVariant, asset}: AssetProps): JSX.Element | null => {
     if (!asset) {
         return null;
     }
 
     // Content-Follows Spacing
-    if (cardSize === 'snap') {
+    if (cardSizeVariant === 'snap') {
         return (
             <div data-testid="asset" style={{paddingBottom: 16}}>
                 {asset}
@@ -95,7 +167,7 @@ const Asset = ({cardSize, asset}: AssetProps): JSX.Element | null => {
 };
 
 const TextContent = ({
-    cardSize: size,
+    cardSizeVariant: size,
     headline,
     title,
     titleAs = 'h3',
@@ -298,7 +370,7 @@ const TextContent = ({
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
     (
         {
-            cardSize,
+            cardSizeVariant,
             asset,
             headline,
             title,
@@ -311,14 +383,20 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             description,
             descriptionLinesMax,
             dataAttributes,
+            isInverse,
         },
         ref
     ): JSX.Element => {
         return (
-            <Container cardSize={cardSize} dataAttributes={dataAttributes} ref={ref}>
-                <Asset cardSize={cardSize} asset={asset} />
+            <Container
+                cardSizeVariant={cardSizeVariant}
+                dataAttributes={dataAttributes}
+                ref={ref}
+                isInverse={isInverse}
+            >
+                <Asset cardSizeVariant={cardSizeVariant} asset={asset} />
                 <TextContent
-                    cardSize={cardSize}
+                    cardSizeVariant={cardSizeVariant}
                     headline={headline}
                     pretitle={pretitle}
                     pretitleLinesMax={pretitleLinesMax}
@@ -396,20 +474,21 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             description,
             descriptionLinesMax,
             dataAttributes,
-            // 'aria-label': ariaLabelProp,
-            // 'aria-labelledby': ariaLabeledByProp,
-            // 'aria-description': ariaDescriptionProp,
-            // 'aria-describedby': ariaDescribedByProp,
+            'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             // extra,
-            // isInverse = false,
-            // aspectRatio,
+            isInverse = false,
+            aspectRatio,
             // ...touchableProps
         },
         ref
     ) => {
         return (
             <Card
-                cardSize="snap"
+                cardSizeVariant="snap"
+                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 asset={asset}
                 title={title}
@@ -419,14 +498,13 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 subtitleLinesMax={subtitleLinesMax}
                 description={description}
                 descriptionLinesMax={descriptionLinesMax}
-                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
-                // aria-label={ariaLabelProp}
-                // aria-labelledby={ariaLabeledByProp}
-                // aria-description={ariaDescriptionProp}
-                // aria-describedby={ariaDescribedByProp}
+                aria-label={ariaLabelProp}
+                aria-labelledby={ariaLabeledByProp}
+                aria-description={ariaDescriptionProp}
+                aria-describedby={ariaDescribedByProp}
                 // extra={extra}
-                // isInverse={isInverse}
-                // aspectRatio={aspectRatio}
+                isInverse={isInverse}
+                aspectRatio={aspectRatio}
                 // {...touchableProps}
             />
         );

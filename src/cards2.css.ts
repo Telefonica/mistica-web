@@ -1,14 +1,29 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {mq} from '.';
 
+const aspectRatio = createVar();
+
+export const vars = {aspectRatio};
+
 const commonContainer = style([
     sprinkles({
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
     }),
     {
         borderRadius: 'container',
+        ':before': {
+            float: 'left',
+            content: '""',
+            paddingTop: `calc(100% / ${aspectRatio})`,
+        },
+        ':after': {
+            display: 'block',
+            content: '""',
+            clear: 'both',
+        },
     },
 ]);
 
@@ -59,6 +74,13 @@ export const containerVariants = styleVariants({
     display: [commonContainer, displayContainer],
     default: [commonContainer, defaultContainer],
     snap: [commonContainer, snapContainer],
+});
+
+export const boxed = style({
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+    position: 'relative',
 });
 
 export const titleVariants = styleVariants({
