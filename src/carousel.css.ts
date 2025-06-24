@@ -6,6 +6,32 @@ import {applyAlpha} from './utils/color';
 import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
 
+const SMALL_BULLET_SIZE = 4;
+const SMALL_BULLET_PADDING = 4;
+const LARGE_BULLET_SIZE = 6;
+const LARGE_BULLET_PADDING = 4;
+export const SMALL_BULLET_FULL_SIZE = SMALL_BULLET_SIZE + SMALL_BULLET_PADDING * 2;
+export const LARGE_BULLET_FULL_SIZE = LARGE_BULLET_SIZE + LARGE_BULLET_PADDING * 2;
+
+const itemsPerPage = createVar();
+const itemsPerPageMobile = createVar();
+const itemsPerPageTablet = createVar();
+const itemsPerPageDesktop = createVar();
+const gap = createVar();
+const mobilePageOffset = createVar();
+const mobileBulletLeftPosition = createVar();
+const desktopBulletLeftPosition = createVar();
+
+export const vars = {
+    itemsPerPageMobile,
+    itemsPerPageTablet,
+    itemsPerPageDesktop,
+    gap,
+    mobilePageOffset,
+    mobileBulletLeftPosition,
+    desktopBulletLeftPosition,
+};
+
 export const carouselComponentContainer = style([
     sprinkles({
         display: 'flex',
@@ -18,18 +44,12 @@ export const bulletButton = style([
         display: 'block',
         border: 'none',
         background: 'transparent',
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
+        padding: LARGE_BULLET_PADDING,
     }),
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingTop: 4,
-                paddingBottom: 4,
-                paddingLeft: 4,
-                paddingRight: 4,
+                padding: SMALL_BULLET_PADDING,
             },
         },
     },
@@ -55,12 +75,33 @@ export const bulletVisibilityDesktop = style([
     {'@media': {[mq.desktopOrBigger]: {display: 'block'}}},
 ]);
 
+const DEFAULT_BULLET_LEFT_POSITION = '0px';
+
+export const scrollableBullet = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        transition: 'left 0.3s ease-in-out',
+        left: `${desktopBulletLeftPosition}`,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                left: `${mobileBulletLeftPosition}`,
+            },
+        },
+        vars: {
+            dekstopBulletLeftPosition: DEFAULT_BULLET_LEFT_POSITION,
+            mobileBulletLeftPosition: DEFAULT_BULLET_LEFT_POSITION,
+        },
+    },
+]);
+
 const bulletBase = style([
     sprinkles({
         borderRadius: '50%',
     }),
     {
-        transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
+        transition: 'left 1.5s ease-in-out, transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
         zIndex: 2, // needed because images have zIndex 1, otherwise this component won't be shown
     },
 ]);
@@ -69,15 +110,10 @@ export const bulletInverse = style([bulletBase, {background: applyAlpha(skinVars
 export const bulletActive = style([bulletBase, sprinkles({background: skinVars.colors.controlActivated})]);
 export const bulletActiveInverse = style([bulletBase, sprinkles({background: skinVars.colors.inverse})]);
 
-const SMALL_BULLET_SIZE = 4;
-const LARGE_BULLET_SIZE = 8;
-
 export const bulletInactiveSizing = style([
-    sprinkles({
+    {
         width: LARGE_BULLET_SIZE,
         height: LARGE_BULLET_SIZE,
-    }),
-    {
         '@media': {
             [mq.tabletOrSmaller]: {
                 width: SMALL_BULLET_SIZE,
@@ -128,16 +164,25 @@ export const bulletInactiveSmallSizing = style([
     },
 ]);
 
+export const bulletsScrollableContainerBase = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        height: 32,
+    }),
+    {}, // needed to force vanilla extract to generate a class name (not only sprinkles)
+]);
+
 export const bulletsScrollableContainer = style([
     {
-        width: `${(VISIBLE_BULLETS + VISIBLE_BULLETS - 2) * LARGE_BULLET_SIZE * 2}px`,
-        scrollBehavior: 'smooth',
+        width: `${VISIBLE_BULLETS * LARGE_BULLET_FULL_SIZE}px`,
         overflowX: 'hidden',
     },
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                width: `${(VISIBLE_BULLETS + VISIBLE_BULLETS - 2) * SMALL_BULLET_SIZE * 2}px`,
+                width: `${VISIBLE_BULLETS * SMALL_BULLET_FULL_SIZE}px`,
             },
         },
     },
@@ -223,21 +268,6 @@ export const carouselPagesControlsContainer = style([
         },
     },
 ]);
-
-const itemsPerPage = createVar();
-const itemsPerPageMobile = createVar();
-const itemsPerPageTablet = createVar();
-const itemsPerPageDesktop = createVar();
-const gap = createVar();
-const mobilePageOffset = createVar();
-
-export const vars = {
-    itemsPerPageMobile,
-    itemsPerPageTablet,
-    itemsPerPageDesktop,
-    gap,
-    mobilePageOffset,
-};
 
 export const DEFAULT_DESKTOP_GAP = 16;
 const DEFAULT_MOBILE_GAP = 8;

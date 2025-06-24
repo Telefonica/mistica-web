@@ -166,8 +166,6 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
 export const useCarouselContext = (): CarouselControls => React.useContext(CarouselContext);
 export const CarouselContextConsumer = CarouselContext.Consumer;
 
-// const VISIBLE_BULLETS = 5;
-
 export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const {isTablet, isDesktopOrBigger} = useScreenSize();
@@ -179,19 +177,6 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
               : isTablet
                 ? numPages.tablet ?? numPages.mobile
                 : numPages.mobile;
-    const bulletRefs = React.useRef<Array<HTMLDivElement | null>>([]);
-
-    React.useEffect(() => {
-        const target = bulletRefs.current[currentIndex];
-
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                inline: 'center',
-                block: 'nearest',
-            });
-        }
-    }, [currentIndex]);
 
     const getClassNames = (bulletIndex: number) => {
         const classNames: {[key: string]: boolean} = {};
@@ -231,34 +216,59 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
         return classNames;
     };
 
+    const getLeftOffsetPosition = (bulletIndex: number) => {
+        if (currentIndex + 2 < styles.VISIBLE_BULLETS) {
+            return bulletIndex;
+        }
+
+        if (pagesCount - currentIndex + 1 < styles.VISIBLE_BULLETS) {
+            return bulletIndex - (pagesCount - styles.VISIBLE_BULLETS);
+        }
+
+        return bulletIndex - (currentIndex - 2);
+    };
+
     return (
-        <Inline
-            space={0}
-            alignItems="center"
-            dataAttributes={{'component-name': 'PageBullets'}}
-            className={classNames({[styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS})}
+        <div
+            // dataAttributes={{'component-name': 'PageBullets'}}
+            className={classNames(styles.bulletsScrollableContainerBase, {
+                [styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS,
+            })}
         >
-            {Array.from({length: pagesCount}, (_, i: number) => (
-                <div
-                    className={classNames(
-                        typeof numPages === 'number'
-                            ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
-                            : {
-                                  [styles.bulletButton]: true,
-                                  [styles.bulletVisibilityMobile]: i < numPages.mobile,
-                                  [styles.bulletVisibilityTablet]: i < (numPages.tablet ?? numPages.mobile),
-                                  [styles.bulletVisibilityDesktop]: i < numPages.desktop,
-                              }
-                    )}
-                    key={i}
-                >
+            {Array.from({length: pagesCount}, (_, i: number) => {
+                const bulletLeftOffsetPosition = getLeftOffsetPosition(i);
+
+                return (
                     <div
-                        className={classNames(getClassNames(i))}
-                        ref={(el) => (bulletRefs.current[i] = el)}
-                    />
-                </div>
-            ))}
-        </Inline>
+                        className={classNames(
+                            {
+                                [styles.scrollableBullet]: pagesCount > styles.VISIBLE_BULLETS,
+                            },
+                            typeof numPages === 'number'
+                                ? {[styles.bulletButton]: true, [styles.bulletVisibility]: i < numPages}
+                                : {
+                                      [styles.bulletButton]: true,
+                                      [styles.bulletVisibilityMobile]: i < numPages.mobile,
+                                      [styles.bulletVisibilityTablet]:
+                                          i < (numPages.tablet ?? numPages.mobile),
+                                      [styles.bulletVisibilityDesktop]: i < numPages.desktop,
+                                  }
+                        )}
+                        key={i}
+                        style={{
+                            ...applyCssVars({
+                                [styles.vars.desktopBulletLeftPosition]:
+                                    `${bulletLeftOffsetPosition * styles.LARGE_BULLET_FULL_SIZE}px`,
+                                [styles.vars.mobileBulletLeftPosition]:
+                                    `${bulletLeftOffsetPosition * styles.SMALL_BULLET_FULL_SIZE}px`,
+                            }),
+                        }}
+                    >
+                        <div className={classNames(getClassNames(i))} />
+                    </div>
+                );
+            })}
+        </div>
     );
 };
 
