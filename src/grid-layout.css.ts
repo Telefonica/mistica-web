@@ -22,7 +22,7 @@ export const grid = style({
         },
         [mq.desktop]: {
             gridTemplateColumns: 'repeat(12, 1fr)',
-            gridColumnGap: 16,
+            gridColumnGap: 24,
         },
         [mq.tablet]: {
             gridTemplateColumns: 'repeat(12, 1fr)',
