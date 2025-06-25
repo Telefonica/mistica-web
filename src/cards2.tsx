@@ -454,6 +454,23 @@ type DataCardProps = {
     children?: undefined;
 };
 
+export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
+    ({dataAttributes, type, ...rest}, ref) => {
+        return (
+            <Card
+                type={type}
+                dataAttributes={{
+                    'component-name': 'DataCard',
+                    testid: 'DataCard',
+                    ...dataAttributes,
+                }}
+                ref={ref}
+                {...rest}
+            />
+        );
+    }
+);
+
 type SnapCardProps = Omit<DataCardProps, 'type'>;
 
 /**
@@ -467,23 +484,6 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Snap
                 dataAttributes={{
                     'component-name': 'SnapCard',
                     testid: 'SnapCard',
-                    ...dataAttributes,
-                }}
-                ref={ref}
-                {...rest}
-            />
-        );
-    }
-);
-
-export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
-    ({dataAttributes, type, ...rest}, ref) => {
-        return (
-            <Card
-                type={type}
-                dataAttributes={{
-                    'component-name': 'DataCard',
-                    testid: 'DataCard',
                     ...dataAttributes,
                 }}
                 ref={ref}
