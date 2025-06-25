@@ -1,21 +1,20 @@
 import {openStoryPage, screen} from '../test-utils';
 
-// const DEVICES = ['MOBILE_IOS', 'DESKTOP', 'LARGE_DESKTOP'] as const;
-const DEVICES = ['DESKTOP', 'LARGE_DESKTOP'] as const;
+const DEVICES = ['MOBILE_IOS', 'DESKTOP', 'LARGE_DESKTOP'] as const;
 
 const CASES = [
     'Carousel wrapped in layouts with and without fullWidth',
-    // 'Hero wrapped in multiple layouts',
-    // 'Slideshow with Hero wrapped in layout',
-    // 'Multiple nested layouts',
-    // 'Multiple layouts and reset',
-    // 'Multiple resets without layouts',
-    // 'Alternated layouts and resets ending with layout',
-    // 'Alternated layouts and resets ending with reset',
-    // 'Layout with fullWidth',
-    // 'Layout with fullWidth after reset',
-    // 'Layout after one with fullWidth and reset',
-    // 'Internal layout expands (only in desktop)',
+    'Hero wrapped in multiple layouts',
+    'Slideshow with Hero wrapped in layout',
+    'Multiple nested layouts',
+    'Multiple layouts and reset',
+    'Multiple resets without layouts',
+    'Alternated layouts and resets ending with layout',
+    'Alternated layouts and resets ending with reset',
+    'Layout with fullWidth',
+    'Layout with fullWidth after reset',
+    'Layout after one with fullWidth and reset',
+    'Internal layout expands (only in desktop)',
 ];
 
 test.each(DEVICES)('ResponsiveLayout scenarios (%s)', async (device) => {
