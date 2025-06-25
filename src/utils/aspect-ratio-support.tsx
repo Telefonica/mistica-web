@@ -121,3 +121,21 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
         return container;
     }
 };
+
+/**
+ * @param aspectRatio value in the format of "width:height" or a number, or "auto"
+ * @returns number
+ */
+export const aspectRatioToNumber = (aspectRatio?: `${number}:${number}` | number | 'auto'): number => {
+    if (!aspectRatio) {
+        return 0;
+    }
+    if (typeof aspectRatio === 'number') {
+        return aspectRatio;
+    }
+    if (aspectRatio.includes(':')) {
+        const [width, height] = aspectRatio.split(':');
+        return +width / +height;
+    }
+    return 0;
+};

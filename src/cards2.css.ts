@@ -1,19 +1,19 @@
 import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 import {mq} from '.';
 
 const aspectRatio = createVar();
 
 export const vars = {aspectRatio};
 
-const commonContainer = style([
+export const container = style([
     sprinkles({
         position: 'relative',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row', // Not working if vertical. Not sure why
     }),
     {
-        borderRadius: 'container',
         ':before': {
             float: 'left',
             content: '""',
@@ -27,7 +27,7 @@ const commonContainer = style([
     },
 ]);
 
-const displayContainer = style([
+const displayContainerPaddings = style([
     sprinkles({
         paddingTop: 24,
         paddingRight: 24,
@@ -36,7 +36,7 @@ const displayContainer = style([
     }),
 ]);
 
-const defaultContainer = style([
+const defaultContainerPaddings = style([
     sprinkles({
         paddingTop: 16,
         paddingBottom: 24,
@@ -44,7 +44,6 @@ const defaultContainer = style([
         paddingLeft: 16,
     }),
     {
-        borderRadius: 'container',
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingTop: 24,
@@ -56,12 +55,11 @@ const defaultContainer = style([
     },
 ]);
 
-const snapContainer = style([
+const snapContainerPaddings = style([
     sprinkles({
         padding: 16,
     }),
     {
-        borderRadius: 'container',
         '@media': {
             [mq.desktopOrBigger]: {
                 padding: 24,
@@ -70,21 +68,95 @@ const snapContainer = style([
     },
 ]);
 
-export const containerVariants = styleVariants({
-    display: [commonContainer, displayContainer],
-    default: [commonContainer, defaultContainer],
-    snap: [commonContainer, snapContainer],
-});
-
 export const boxed = style({
-    display: 'flex',
-    flexDirection: 'column',
     minHeight: '100%',
     position: 'relative',
+    borderRadius: skinVars.borderRadii.container,
 });
 
-export const titleVariants = styleVariants({
-    display: [style({lineHeight: 32})],
-    default: [style({lineHeight: 24})],
-    snap: [style({lineHeight: 20})],
+export const containerPaddingsVariants = styleVariants({
+    display: [displayContainerPaddings],
+    default: [defaultContainerPaddings],
+    snap: [snapContainerPaddings],
 });
+
+export const touchable = style([
+    sprinkles({
+        display: 'flex',
+        position: 'relative',
+        padding: 0,
+        border: 'none',
+        background: 'transparent',
+        width: '100%',
+    }),
+    {
+        minHeight: '100%',
+        isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+    },
+]);
+
+export const touchableContainer = style({});
+
+const touchableCardOverlayBase = style({
+    height: '100%',
+    width: '100%',
+    pointerEvents: 'none',
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    zIndex: 1,
+    transition: 'background-color 0.1s ease-in-out',
+});
+
+export const touchableCardOverlay = style([
+    touchableCardOverlayBase,
+    {
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.backgroundContainerPressed,
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerPressed,
+                    },
+                },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const touchableCardOverlayInverse = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 1,
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.backgroundContainerBrandPressed,
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerBrandHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerBrandPressed,
+                    },
+                },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
+        },
+    },
+]);

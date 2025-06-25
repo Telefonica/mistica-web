@@ -3,7 +3,6 @@ import {
     IconMobileDeviceRegular,
     skinVars,
     Circle,
-    SnapCard,
     ResponsiveLayout,
     Stack,
     Text2,
@@ -15,6 +14,7 @@ import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 import {SnapCard as SnapCard2} from '../cards2';
 
+import type {ExtraAlignment} from '../cards2';
 import type {AspectRatio} from '../card';
 
 export default {
@@ -28,6 +28,7 @@ type Args = {
     description: string;
     actions: 'onPress' | 'href' | 'to' | 'none';
     inverse: boolean;
+    extraAlignment?: ExtraAlignment;
     extra: boolean;
     aspectRatio: AspectRatio;
 };
@@ -41,6 +42,7 @@ export const Default: StoryComponent<Args> = ({
     description,
     actions,
     inverse,
+    extraAlignment,
     extra,
     aspectRatio,
 }) => {
@@ -65,8 +67,8 @@ export const Default: StoryComponent<Args> = ({
         : aspectRatio;
 
     const interactiveProps = {
-        onPress: actions === 'onPress' ? () => {} : undefined,
-        to: actions === 'to' ? '#' : undefined,
+        onPress: actions === 'onPress' ? () => console.log('pressed') : undefined,
+        to: actions === 'to' ? '#example' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
     } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
 
@@ -82,18 +84,7 @@ export const Default: StoryComponent<Args> = ({
                 isInverse={inverse}
                 extra={extra ? <Placeholder /> : undefined}
                 aspectRatio={aspectRatioValue as AspectRatio}
-                {...interactiveProps}
-            />
-            <SnapCard
-                asset={assetToIcon[asset]}
-                title={title}
-                subtitle={subtitle}
-                description={description}
-                dataAttributes={{testid: 'snap-card'}}
-                aria-label="SnapCard card label"
-                isInverse={inverse}
-                extra={extra ? <Placeholder /> : undefined}
-                aspectRatio={aspectRatioValue as AspectRatio}
+                extraAlignment={extraAlignment}
                 {...interactiveProps}
             />
         </>
@@ -109,6 +100,7 @@ Default.args = {
     actions: 'none',
     inverse: false,
     extra: false,
+    extraAlignment: 'bottom',
     aspectRatio: 'auto',
 };
 Default.argTypes = {
@@ -128,6 +120,10 @@ Default.argTypes = {
             },
         },
     },
+    extraAlignment: {
+        options: ['content', 'bottom'],
+        control: {type: 'select'},
+    },
     actions: {
         options: ['onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
@@ -143,7 +139,7 @@ export const Group: StoryComponent = () => {
                     <Carousel
                         itemsPerPage={4}
                         items={[
-                            <SnapCard
+                            <SnapCard2
                                 title="Title 1"
                                 subtitle="Subtitle"
                                 asset={
@@ -152,7 +148,7 @@ export const Group: StoryComponent = () => {
                                     </Circle>
                                 }
                             />,
-                            <SnapCard
+                            <SnapCard2
                                 title="Title 2"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -160,9 +156,10 @@ export const Group: StoryComponent = () => {
                                     </Circle>
                                 }
                             />,
-                            <SnapCard title="Title 3" />,
-                            <SnapCard
+                            <SnapCard2 title="Title 3" />,
+                            <SnapCard2
                                 title="Data left"
+                                extraAlignment="bottom"
                                 extra={
                                     <Stack space={4}>
                                         <Text4 regular>10 GB</Text4>

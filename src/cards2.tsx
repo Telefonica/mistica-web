@@ -2,48 +2,35 @@
 import * as React from 'react';
 import * as styles from './cards2.css';
 import {Text} from './text';
-import {useTheme} from './hooks';
+import {useInnerText, useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {Boxed} from './boxed';
+import {BaseTouchable, type PressHandler} from './touchable';
+import {aspectRatioToNumber} from './utils/aspect-ratio-support';
+import classnames from 'classnames';
 
 import type {DataAttributes, HeadingType, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {PressHandler} from './touchable';
 
-export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
-
-const aspectRatioToNumber = (aspectRatio?: AspectRatio | number): number => {
-    if (!aspectRatio) {
-        return 0;
-    }
-    if (typeof aspectRatio === 'number') {
-        return aspectRatio;
-    }
-    return {
-        '1:1': 1,
-        '16:9': 16 / 9,
-        '7:10': 7 / 10,
-        '9:10': 9 / 10,
-        auto: 0,
-    }[aspectRatio];
-};
+export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
 type CardSizeVariant = 'snap' | 'default' | 'display';
+export type ExtraAlignment = 'content' | 'bottom';
 
 type ContainerProps = {
     cardSizeVariant: CardSizeVariant;
     width?: string | number;
     height?: string | number;
-    aspectRatio?: AspectRatio | number;
-    children: React.ReactNode;
+    aspectRatio?: AspectRatio;
+    children?: React.ReactNode;
     dataAttributes?: DataAttributes;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
+    'aria-label'?: React.AriaAttributes['aria-label'];
+    'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
+    'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
+    'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     isInverse?: boolean;
 };
 
@@ -67,38 +54,37 @@ type AssetProps = {
     asset?: React.ReactElement;
 };
 
-type CardProps = {
-    // container props
-    cardSizeVariant: CardSizeVariant;
-    width?: string | number;
-    height?: string | number;
-    aspectRatio?: AspectRatio | number;
-    children?: React.ReactNode;
-    dataAttributes?: DataAttributes;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
-    isInverse?: boolean;
+type TouchableProps = {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    role?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+} & ExclusifyUnion<
+    | {
+          href: string | undefined;
+          newTab?: boolean;
+          loadOnTop?: boolean;
+          onNavigate?: () => void | Promise<void>;
+      }
+    | {
+          to: string | undefined;
+          newTab?: boolean;
+          fullPageOnWebView?: boolean;
+          replace?: boolean;
+          onNavigate?: () => void | Promise<void>;
+      }
+    | {onPress: PressHandler | undefined}
+>;
 
-    // asset props
-    asset?: React.ReactElement;
-
-    // text content props
-    headline?: string | RendersNullableElement<typeof Tag>;
-    pretitle?: string;
-    pretitleAs?: HeadingType;
-    pretitleLinesMax?: number;
-    title?: string;
-    titleAs?: HeadingType;
-    titleLinesMax?: number;
-    subtitle?: string;
-    subtitleLinesMax?: number;
-    description?: string;
-    descriptionLinesMax?: number;
+type ExtraProps = {
+    extra?: React.ReactNode;
+    extraAlignment?: ExtraAlignment;
 };
 
-const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
+type CardProps = ContainerProps & TextContentProps & AssetProps & TouchableProps & ExtraProps;
+type TouchableCard<T> = T & TouchableProps;
+type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+
+const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchableProps>(
     (
         {
             children,
@@ -112,39 +98,52 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
             'aria-describedby': ariaDescribedby,
             dataAttributes,
             isInverse,
+            ...touchableProps
         },
         ref
     ): JSX.Element => {
-        const cssAspectRatio = width && height ? undefined : aspectRatioToNumber(aspectRatio);
+        const aspectRatioValue = width && height ? undefined : aspectRatioToNumber(aspectRatio);
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
+
+        const aspectRatioStyle = aspectRatioValue
+            ? applyCssVars({[styles.vars.aspectRatio]: String(aspectRatioValue)})
+            : {};
 
         return (
-            <Boxed
-                width="100%"
-                height="100%"
-                variant={isInverse ? 'inverse' : 'default'}
-                className={styles.boxed}
+            // aria-description should be vaild, but this eslint rule is complaining about it
+            // eslint-disable-next-line jsx-a11y/role-supports-aria-props
+            <section
+                ref={ref}
+                aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledby}
+                aria-description={ariaDescription}
+                aria-describedby={ariaDescribedby}
+                className={classnames(styles.container, styles.touchableContainer)}
+                {...getPrefixedDataAttributes(dataAttributes)}
+                style={{
+                    width: width || '100%',
+                    height: height || '100%',
+                    ...aspectRatioStyle,
+                }}
             >
-                {/* aria-description should be vaild, but this eslint rule is complaining about it */}
-                {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
-                <section
-                    ref={ref}
-                    aria-label={ariaLabel}
-                    aria-labelledby={ariaLabelledby}
-                    aria-description={ariaDescription}
-                    aria-describedby={ariaDescribedby}
-                    className={styles.containerVariants[cardSizeVariant]}
-                    {...getPrefixedDataAttributes(dataAttributes)}
-                    style={{
-                        width: width || '100%',
-                        height: height || '100%',
-                        ...(cssAspectRatio
-                            ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
-                            : {}),
-                    }}
-                >
-                    {children}
-                </section>
-            </Boxed>
+                <BaseTouchable maybe className={styles.touchable} {...touchableProps}>
+                    <Boxed
+                        // Without setting the width here, the component fails to get the correct width in some cases
+                        // even if we set the 100% width style in the boxed class
+                        width="100%"
+                        height="100%"
+                        variant={isInverse ? 'inverse' : 'default'}
+                        className={classnames(
+                            styles.boxed,
+                            styles.containerPaddingsVariants[cardSizeVariant]
+                        )}
+                    >
+                        {isTouchable && <div className={overlayStyle} />}
+                        {children}
+                    </Boxed>
+                </BaseTouchable>
+            </section>
         );
     }
 );
@@ -384,62 +383,56 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             descriptionLinesMax,
             dataAttributes,
             isInverse,
+            width,
+            height,
+            aspectRatio,
+            extra,
+            extraAlignment = 'content',
+            ...touchableProps
         },
         ref
     ): JSX.Element => {
+        const {text: extraText, ref: extraRef} = useInnerText();
+        console.log('TODO A11Y', extraText);
+
         return (
             <Container
                 cardSizeVariant={cardSizeVariant}
                 dataAttributes={dataAttributes}
                 ref={ref}
                 isInverse={isInverse}
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+                {...touchableProps}
             >
-                <Asset cardSizeVariant={cardSizeVariant} asset={asset} />
-                <TextContent
-                    cardSizeVariant={cardSizeVariant}
-                    headline={headline}
-                    pretitle={pretitle}
-                    pretitleLinesMax={pretitleLinesMax}
-                    title={title}
-                    titleAs={titleAs}
-                    titleLinesMax={titleLinesMax}
-                    subtitle={subtitle}
-                    subtitleLinesMax={subtitleLinesMax}
-                    description={description}
-                    descriptionLinesMax={descriptionLinesMax}
-                />
+                {/* this div shouldn't be needed if we don't use Boxed here, which causes several issues (see container) */}
+                <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
+                    <Asset cardSizeVariant={cardSizeVariant} asset={asset} />
+                    <TextContent
+                        cardSizeVariant={cardSizeVariant}
+                        headline={headline}
+                        pretitle={pretitle}
+                        pretitleLinesMax={pretitleLinesMax}
+                        title={title}
+                        titleAs={titleAs}
+                        titleLinesMax={titleLinesMax}
+                        subtitle={subtitle}
+                        subtitleLinesMax={subtitleLinesMax}
+                        description={description}
+                        descriptionLinesMax={descriptionLinesMax}
+                    />
+                    {extraAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
+                    {extra && (
+                        <div ref={extraRef} data-testid="slot">
+                            {extra}
+                        </div>
+                    )}
+                </div>
             </Container>
         );
     }
 );
-
-Card.displayName = 'Card';
-
-export default Card;
-
-type TouchableProps = {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    role?: string;
-    'aria-current'?: React.AriaAttributes['aria-current'];
-} & ExclusifyUnion<
-    | {
-          href: string | undefined;
-          newTab?: boolean;
-          loadOnTop?: boolean;
-          onNavigate?: () => void | Promise<void>;
-      }
-    | {
-          to: string | undefined;
-          newTab?: boolean;
-          fullPageOnWebView?: boolean;
-          replace?: boolean;
-          onNavigate?: () => void | Promise<void>;
-      }
-    | {onPress: PressHandler | undefined}
->;
-
-type TouchableCard<T> = T & TouchableProps;
-type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 type SnapCardProps = MaybeTouchableCard<{
     asset?: React.ReactElement;
@@ -450,63 +443,29 @@ type SnapCardProps = MaybeTouchableCard<{
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
+    'aria-label'?: React.AriaAttributes['aria-label'];
+    'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
+    'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
+    'aria-describedby'?: React.AriaAttributes['aria-describedby'];
+    extraAlignment?: ExtraAlignment;
     extra?: React.ReactNode;
     isInverse?: boolean;
-    aspectRatio?: AspectRatio | number;
-    children?: void;
+    aspectRatio?: AspectRatio;
+    children?: undefined;
 }>;
 
-export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
-    (
-        {
-            asset,
-            title,
-            titleAs = 'h3',
-            titleLinesMax,
-            subtitle,
-            subtitleLinesMax,
-            description,
-            descriptionLinesMax,
-            dataAttributes,
-            'aria-label': ariaLabelProp,
-            'aria-labelledby': ariaLabeledByProp,
-            'aria-description': ariaDescriptionProp,
-            'aria-describedby': ariaDescribedByProp,
-            // extra,
-            isInverse = false,
-            aspectRatio,
-            // ...touchableProps
-        },
-        ref
-    ) => {
-        return (
-            <Card
-                cardSizeVariant="snap"
-                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
-                ref={ref}
-                asset={asset}
-                title={title}
-                titleAs={titleAs}
-                titleLinesMax={titleLinesMax}
-                subtitle={subtitle}
-                subtitleLinesMax={subtitleLinesMax}
-                description={description}
-                descriptionLinesMax={descriptionLinesMax}
-                aria-label={ariaLabelProp}
-                aria-labelledby={ariaLabeledByProp}
-                aria-description={ariaDescriptionProp}
-                aria-describedby={ariaDescribedByProp}
-                // extra={extra}
-                isInverse={isInverse}
-                aspectRatio={aspectRatio}
-                // {...touchableProps}
-            />
-        );
-    }
-);
+export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(({dataAttributes, ...rest}, ref) => {
+    return (
+        <Card
+            cardSizeVariant="snap"
+            dataAttributes={{
+                'component-name': 'SnapCard',
+                testid: 'SnapCard',
+                ...dataAttributes,
+            }}
+            ref={ref}
+            {...rest}
+        />
+    );
+});
