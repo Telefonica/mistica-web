@@ -163,6 +163,24 @@ const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
     return null;
 };
 
+type ActionsProps = {
+    type: CardType;
+};
+
+const Actions = ({type}: ActionsProps): JSX.Element => {
+    // Placeholder for future actions implementation
+    return (
+        <div
+            style={{
+                border: '1px solid red',
+                paddingTop: type === 'display' ? 24 : 16,
+            }}
+        >
+            lala
+        </div>
+    );
+};
+
 const TextContent = ({
     type: size,
     headline,
@@ -426,6 +444,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                             {extra}
                         </div>
                     )}
+                    <Actions type={type} />
                 </div>
             </Container>
         );
