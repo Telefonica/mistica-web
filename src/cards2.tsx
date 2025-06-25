@@ -17,11 +17,12 @@ import type {ExclusifyUnion} from './utils/utility-types';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
-type CardSizeVariant = 'snap' | 'default' | 'display';
+type CardType = 'snap' | 'default' | 'display';
+
 export type ExtraAlignment = 'content' | 'bottom';
 
 type ContainerProps = {
-    cardSizeVariant: CardSizeVariant;
+    type: CardType;
     width?: string | number;
     height?: string | number;
     aspectRatio?: AspectRatio;
@@ -35,8 +36,8 @@ type ContainerProps = {
 };
 
 type TextContentProps = {
+    type: CardType;
     headline?: string | RendersNullableElement<typeof Tag>;
-    cardSizeVariant: CardSizeVariant;
     pretitle?: string;
     pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
@@ -50,7 +51,7 @@ type TextContentProps = {
 };
 
 type AssetProps = {
-    cardSizeVariant: CardSizeVariant;
+    type: CardType;
     asset?: React.ReactElement;
 };
 
@@ -88,7 +89,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
     (
         {
             children,
-            cardSizeVariant,
+            type,
             width,
             height,
             aspectRatio,
@@ -134,10 +135,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
                         width="100%"
                         height="100%"
                         variant={isInverse ? 'inverse' : 'default'}
-                        className={classnames(
-                            styles.boxed,
-                            styles.containerPaddingsVariants[cardSizeVariant]
-                        )}
+                        className={classnames(styles.boxed, styles.containerPaddingsVariants[type])}
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         {children}
@@ -148,13 +146,13 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
     }
 );
 
-const Asset = ({cardSizeVariant, asset}: AssetProps): JSX.Element | null => {
+const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
     if (!asset) {
         return null;
     }
 
     // Content-Follows Spacing
-    if (cardSizeVariant === 'snap') {
+    if (type === 'snap') {
         return (
             <div data-testid="asset" style={{paddingBottom: 16}}>
                 {asset}
@@ -166,7 +164,7 @@ const Asset = ({cardSizeVariant, asset}: AssetProps): JSX.Element | null => {
 };
 
 const TextContent = ({
-    cardSizeVariant: size,
+    type: size,
     headline,
     title,
     titleAs = 'h3',
@@ -369,7 +367,7 @@ const TextContent = ({
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
     (
         {
-            cardSizeVariant,
+            type,
             asset,
             headline,
             title,
@@ -397,7 +395,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
         return (
             <Container
-                cardSizeVariant={cardSizeVariant}
+                type={type}
                 dataAttributes={dataAttributes}
                 ref={ref}
                 isInverse={isInverse}
@@ -408,9 +406,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             >
                 {/* this div shouldn't be needed if we don't use Boxed here, which causes several issues (see container) */}
                 <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
-                    <Asset cardSizeVariant={cardSizeVariant} asset={asset} />
+                    <Asset type={type} asset={asset} />
                     <TextContent
-                        cardSizeVariant={cardSizeVariant}
+                        type={type}
                         headline={headline}
                         pretitle={pretitle}
                         pretitleLinesMax={pretitleLinesMax}
@@ -434,7 +432,8 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     }
 );
 
-type SnapCardProps = MaybeTouchableCard<{
+type DataCardProps = {
+    type: CardType;
     asset?: React.ReactElement;
     title?: string;
     titleAs?: HeadingType;
@@ -453,19 +452,43 @@ type SnapCardProps = MaybeTouchableCard<{
     isInverse?: boolean;
     aspectRatio?: AspectRatio;
     children?: undefined;
-}>;
+};
 
-export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(({dataAttributes, ...rest}, ref) => {
-    return (
-        <Card
-            cardSizeVariant="snap"
-            dataAttributes={{
-                'component-name': 'SnapCard',
-                testid: 'SnapCard',
-                ...dataAttributes,
-            }}
-            ref={ref}
-            {...rest}
-        />
-    );
-});
+type SnapCardProps = Omit<DataCardProps, 'type'>;
+
+/**
+ * @deprecated use <Datacard type="snap" /> instead
+ */
+export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<SnapCardProps>>(
+    ({dataAttributes, ...rest}, ref) => {
+        return (
+            <Card
+                type="snap"
+                dataAttributes={{
+                    'component-name': 'SnapCard',
+                    testid: 'SnapCard',
+                    ...dataAttributes,
+                }}
+                ref={ref}
+                {...rest}
+            />
+        );
+    }
+);
+
+export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
+    ({dataAttributes, type, ...rest}, ref) => {
+        return (
+            <Card
+                type={type}
+                dataAttributes={{
+                    'component-name': 'DataCard',
+                    testid: 'DataCard',
+                    ...dataAttributes,
+                }}
+                ref={ref}
+                {...rest}
+            />
+        );
+    }
+);
