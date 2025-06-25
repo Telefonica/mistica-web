@@ -230,7 +230,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
 
     return (
         <div
-            // dataAttributes={{'component-name': 'PageBullets'}}
+            {...getPrefixedDataAttributes({'component-name': 'PageBullets'})}
             className={classNames(styles.bulletsScrollableContainerBase, {
                 [styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS,
             })}

@@ -1,7 +1,6 @@
 import {createVar, fallbackVar, globalStyle, style} from '@vanilla-extract/css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
-import * as iconButtonStyles from './icon-button.css';
 import {applyAlpha} from './utils/color';
 import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
@@ -248,7 +247,6 @@ export const carouselAutoplayControlContainer = style([
     sprinkles({
         minWidth: 64,
     }),
-    iconButtonStyles.bleedLeft.small,
     {
         '@media': {
             [mq.desktopOrBigger]: {
@@ -259,7 +257,6 @@ export const carouselAutoplayControlContainer = style([
 ]);
 
 export const carouselPagesControlsContainer = style([
-    iconButtonStyles.bleedRight.small,
     {
         '@media': {
             [mq.desktopOrBigger]: {
