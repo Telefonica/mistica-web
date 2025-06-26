@@ -328,21 +328,21 @@ export const clearButton: TextToken = {
 };
 
 export const carouselRegion: TextToken = {
-    es: 'Carousel',
+    es: 'Carrusel',
     en: 'Carousel',
     de: 'Karussell',
     pt: 'Carrossel',
 };
 
 export const carouselPauseAutoplay: TextToken = {
-    es: 'Pausar carousel automático',
+    es: 'Pausar carrusel automático',
     en: 'Pause automatic carousel',
     de: 'Automatisches Karussell pausieren',
     pt: 'Pausar carrossel automático',
 };
 
 export const carouselEnableAutoplay: TextToken = {
-    es: 'Reproducir carousel automático',
+    es: 'Reproducir carrusel automático',
     en: 'Play automatic carousel',
     de: 'Automatisches Karussell abspielen',
     pt: 'Reproduzir carrossel automático',

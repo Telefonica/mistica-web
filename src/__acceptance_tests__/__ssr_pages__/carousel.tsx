@@ -19,7 +19,6 @@ const CarouselTest = (): JSX.Element => (
                     buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
                 />
             ))}
-            autoplay
         />
     </ResponsiveLayout>
 );
