@@ -207,7 +207,7 @@ export const mediaCardContent = style([
         position: 'relative',
         paddingX: 16,
         paddingTop: 16,
-        paddingBottom: 32,
+        paddingBottom: 24,
         flexDirection: 'column',
         justifyContent: 'space-between',
     }),
@@ -218,6 +218,7 @@ export const mediaCardContent = style([
                 paddingLeft: 24,
                 paddingRight: 24,
                 paddingTop: 24,
+                paddingBottom: 32,
             },
         },
     },
@@ -278,8 +279,7 @@ export const dataCard = style([
         display: 'flex',
         flex: 1,
         position: 'relative',
-        paddingTop: 24,
-        paddingBottom: 32,
+        paddingY: 24,
         paddingX: 16,
         flexDirection: 'column',
         width: '100%',
@@ -289,6 +289,7 @@ export const dataCard = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingTop: 32,
+                paddingBottom: 32,
                 paddingLeft: 24,
                 paddingRight: 24,
             },
@@ -318,27 +319,27 @@ export const snapCard = style([
     },
 ]);
 
-// const snapCardTouchableBase = sprinkles({
-//     display: 'flex',
-//     height: '100%',
-//     width: '100%',
-//     padding: 0,
-//     border: 'none',
-//     background: 'transparent',
-// });
+const snapCardTouchableBase = sprinkles({
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    padding: 0,
+    border: 'none',
+    background: 'transparent',
+});
 
-// export const snapCardTouchableHover = style([
-//     snapCardTouchableBase,
-//     {
-//         '@media': {
-//             [mq.supportsHover]: {
-//                 ':hover': {
-//                     backgroundColor: skinVars.colors.backgroundAlternative,
-//                 },
-//             },
-//         },
-//     },
-// ]);
+export const snapCardTouchableHover = style([
+    snapCardTouchableBase,
+    {
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    backgroundColor: skinVars.colors.backgroundAlternative,
+                },
+            },
+        },
+    },
+]);
 
 export const displayCardContainer = sprinkles({
     width: '100%',
@@ -367,7 +368,7 @@ export const displayCardBackground = style({
     zIndex: 0,
 });
 
-export const displayCardContentWrapper = sprinkles({paddingX: 24, paddingBottom: 32});
+export const displayCardContentWrapper = sprinkles({paddingX: 24, paddingBottom: 24});
 
 export const displayCardGradient = style([
     sprinkles({paddingTop: 40}),
@@ -378,7 +379,7 @@ export const displayCardGradient = style([
 
 export const posterCardContentWrapper = sprinkles({
     paddingX: {mobile: 16, desktop: 24},
-    paddingBottom: 32,
+    paddingBottom: 24,
 });
 
 const aspectRatio = createVar();

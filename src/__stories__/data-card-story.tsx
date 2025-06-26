@@ -14,6 +14,7 @@ import {
     IconStarFilled,
     IconStarRegular,
 } from '..';
+import {DataCard as DataCard2} from '../cards2';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
@@ -99,47 +100,91 @@ export const Default: StoryComponent<DataCardArgs> = ({
         : aspectRatio;
 
     return (
-        <DataCard
-            onClose={closable ? () => {} : undefined}
-            asset={assetElement}
-            headline={headline && <Tag type={headlineType}>{headline}</Tag>}
-            pretitle={pretitle}
-            pretitleAs={pretitleAs}
-            title={title}
-            titleAs={titleAs}
-            subtitle={subtitle}
-            description={description}
-            extra={extra ? <Placeholder /> : undefined}
-            {...interactiveActions}
-            aspectRatio={aspectRatioValue as AspectRatio}
-            dataAttributes={{testid: 'data-card'}}
-            aria-label={ariaLabel}
-            actions={
-                topAction
-                    ? [
-                          {
-                              Icon: IconMobileDeviceRegular,
-                              onPress: () => {
-                                  alert('icon press');
+        <>
+            <DataCard
+                onClose={closable ? () => {} : undefined}
+                asset={assetElement}
+                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                pretitle={pretitle}
+                pretitleAs={pretitleAs}
+                title={title}
+                titleAs={titleAs}
+                subtitle={subtitle}
+                description={description}
+                extra={extra ? <Placeholder /> : undefined}
+                {...interactiveActions}
+                aspectRatio={aspectRatioValue as AspectRatio}
+                dataAttributes={{testid: 'data-card'}}
+                aria-label={ariaLabel}
+                actions={
+                    topAction
+                        ? [
+                              {
+                                  Icon: IconMobileDeviceRegular,
+                                  onPress: () => {
+                                      alert('icon press');
+                                  },
+                                  label: 'Device',
                               },
-                              label: 'Device',
-                          },
-                          {
-                              checkedProps: {
-                                  Icon: IconStarFilled,
-                                  label: 'checked',
+                              {
+                                  checkedProps: {
+                                      Icon: IconStarFilled,
+                                      label: 'checked',
+                                  },
+                                  uncheckedProps: {
+                                      Icon: IconStarRegular,
+                                      label: 'unchecked',
+                                  },
+                                  defaultChecked: false,
+                                  onChange: () => {},
                               },
-                              uncheckedProps: {
-                                  Icon: IconStarRegular,
-                                  label: 'unchecked',
+                          ]
+                        : undefined
+                }
+            />
+            <DataCard2
+                onClose={closable ? () => {} : undefined}
+                asset={assetElement}
+                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                pretitle={pretitle}
+                pretitleAs={pretitleAs}
+                title={title}
+                titleAs={titleAs}
+                subtitle={subtitle}
+                description={description}
+                extra={extra ? <Placeholder /> : undefined}
+                {...interactiveActions}
+                aspectRatio={aspectRatioValue as AspectRatio}
+                dataAttributes={{testid: 'data-card'}}
+                aria-label={ariaLabel}
+                actions={
+                    topAction
+                        ? [
+                              {
+                                  Icon: IconMobileDeviceRegular,
+                                  onPress: () => {
+                                      alert('icon press');
+                                  },
+                                  label: 'Device',
                               },
-                              defaultChecked: false,
-                              onChange: () => {},
-                          },
-                      ]
-                    : undefined
-            }
-        />
+                              {
+                                  checkedProps: {
+                                      Icon: IconStarFilled,
+                                      label: 'checked',
+                                  },
+                                  uncheckedProps: {
+                                      Icon: IconStarRegular,
+                                      label: 'unchecked',
+                                  },
+                                  defaultChecked: false,
+                                  onChange: () => {},
+                              },
+                          ]
+                        : undefined
+                }
+                showFooter
+            />
+        </>
     );
 };
 

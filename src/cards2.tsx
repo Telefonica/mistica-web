@@ -11,15 +11,23 @@ import {Boxed} from './boxed';
 import {BaseTouchable, type PressHandler} from './touchable';
 import {aspectRatioToNumber} from './utils/aspect-ratio-support';
 import classnames from 'classnames';
+import {vars as skinVars} from './skins/skin-contract.css';
+import ButtonGroup from './button-group';
 
 import type {DataAttributes, HeadingType, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
 type CardType = 'snap' | 'default' | 'display';
+type ActionButton =
+    | RendersNullableElement<typeof ButtonPrimary>
+    | RendersNullableElement<typeof ButtonSecondary>
+    | RendersNullableElement<typeof ButtonLink>
+    | undefined;
 
-export type ExtraAlignment = 'content' | 'bottom';
+export type SlotAlignment = 'content' | 'bottom';
 
 type ContainerProps = {
     type: CardType;
@@ -76,12 +84,12 @@ type TouchableProps = {
     | {onPress: PressHandler | undefined}
 >;
 
-type ExtraProps = {
-    extra?: React.ReactNode;
-    extraAlignment?: ExtraAlignment;
+type SlotProps = {
+    slot?: React.ReactNode;
+    slotAlignment?: SlotAlignment;
 };
 
-type CardProps = ContainerProps & TextContentProps & AssetProps & TouchableProps & ExtraProps;
+type CardProps = ContainerProps & TextContentProps & AssetProps & TouchableProps & ActionsProps & SlotProps;
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
@@ -147,12 +155,13 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
 );
 
 const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
+    console.log('asset', asset);
     if (!asset) {
         return null;
     }
 
-    // Content-Follows Spacing
-    if (type === 'snap') {
+    // Content-Follows Spacing (mode C according to specs)
+    if (type === 'snap' || type === 'default') {
         return (
             <div data-testid="asset" style={{paddingBottom: 16}}>
                 {asset}
@@ -165,18 +174,43 @@ const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
 
 type ActionsProps = {
     type: CardType;
+    primaryAction?: ActionButton;
+    secondaryAction?: ActionButton;
 };
 
-const Actions = ({type}: ActionsProps): JSX.Element => {
-    // Placeholder for future actions implementation
+type FooterProps = {
+    type: CardType;
+    showFooter: boolean;
+    footerExtra?: React.ReactNode;
+};
+
+const Actions = ({type, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
+    return (
+        <div style={{paddingTop: type === 'display' ? 24 : 16}}>
+            <ButtonGroup primaryButton={primaryAction as any} secondaryButton={secondaryAction as any} />
+        </div>
+    );
+};
+
+const Footer = ({
+    type,
+    showFooter,
+    footerExtra,
+    primaryAction,
+    secondaryAction,
+}: FooterProps & ActionsProps): JSX.Element => {
+    if (!showFooter) {
+        return <></>;
+    }
+    if (!footerExtra && !primaryAction && !secondaryAction) {
+        return <></>;
+    }
     return (
         <div
-            style={{
-                border: '1px solid red',
-                paddingTop: type === 'display' ? 24 : 16,
-            }}
+            data-testid="footer"
+            style={{padding: type === 'display' ? 24 : 16, borderTop: `1px solid ${skinVars.colors.border}`}}
         >
-            lala
+            {footerExtra}
         </div>
     );
 };
@@ -402,14 +436,16 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             width,
             height,
             aspectRatio,
-            extra,
-            extraAlignment = 'content',
+            slot,
+            slotAlignment = 'content',
+            primaryAction,
+            secondaryAction,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
-        const {text: extraText, ref: extraRef} = useInnerText();
-        console.log('TODO A11Y', extraText);
+        const {text: slotText, ref: slotRef} = useInnerText();
+        console.log('TODO A11Y', slotText);
 
         return (
             <Container
@@ -438,13 +474,13 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                         description={description}
                         descriptionLinesMax={descriptionLinesMax}
                     />
-                    {extraAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
-                    {extra && (
-                        <div ref={extraRef} data-testid="slot">
-                            {extra}
+                    {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
+                    {slot && (
+                        <div ref={slotRef} data-testid="slot">
+                            {slot}
                         </div>
                     )}
-                    <Actions type={type} />
+                    <Actions type={type} primaryAction={primaryAction} secondaryAction={secondaryAction} />
                 </div>
             </Container>
         );
@@ -466,15 +502,36 @@ type DataCardProps = {
     'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
     'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
-    extraAlignment?: ExtraAlignment;
+    extraAlignment?: SlotAlignment;
+    /** @deprecated use slot */
     extra?: React.ReactNode;
+    slot?: React.ReactNode;
     isInverse?: boolean;
     aspectRatio?: AspectRatio;
     children?: undefined;
+    /** @deprecated use primaryAction */
+    button?: ActionButton;
+    /** @deprecated use secondaryAction */
+    buttonLink?: ActionButton;
+    primaryAction?: ActionButton;
+    secondaryAction?: ActionButton;
 };
 
 export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
-    ({dataAttributes, type, ...rest}, ref) => {
+    (
+        {
+            dataAttributes,
+            type = 'default',
+            button,
+            primaryAction,
+            buttonLink,
+            secondaryAction,
+            extra,
+            slot,
+            ...rest
+        },
+        ref
+    ) => {
         return (
             <Card
                 type={type}
@@ -484,6 +541,9 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                     ...dataAttributes,
                 }}
                 ref={ref}
+                primaryAction={primaryAction || button}
+                secondaryAction={secondaryAction || buttonLink}
+                slot={slot || extra}
                 {...rest}
             />
         );
@@ -498,7 +558,7 @@ type SnapCardProps = Omit<DataCardProps, 'type'>;
 export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<SnapCardProps>>(
     ({dataAttributes, ...rest}, ref) => {
         return (
-            <Card
+            <DataCard
                 type="snap"
                 dataAttributes={{
                     'component-name': 'SnapCard',
