@@ -12,7 +12,8 @@ import {BaseTouchable, type PressHandler} from './touchable';
 import {aspectRatioToNumber} from './utils/aspect-ratio-support';
 import classnames from 'classnames';
 import {vars as skinVars} from './skins/skin-contract.css';
-import ButtonGroup from './button-group';
+import Stack from './stack';
+import Inline from './inline';
 
 import type {DataAttributes, HeadingType, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -89,7 +90,14 @@ type SlotProps = {
     slotAlignment?: SlotAlignment;
 };
 
-type CardProps = ContainerProps & TextContentProps & AssetProps & TouchableProps & ActionsProps & SlotProps;
+type CardProps = ContainerProps &
+    TextContentProps &
+    AssetProps &
+    TouchableProps &
+    ActionsProps &
+    SlotProps &
+    FooterProps;
+
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
@@ -112,9 +120,6 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
         ref
     ): JSX.Element => {
         const aspectRatioValue = width && height ? undefined : aspectRatioToNumber(aspectRatio);
-        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
-        const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
-
         const aspectRatioStyle = aspectRatioValue
             ? applyCssVars({[styles.vars.aspectRatio]: String(aspectRatioValue)})
             : {};
@@ -143,9 +148,8 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
                         width="100%"
                         height="100%"
                         variant={isInverse ? 'inverse' : 'default'}
-                        className={classnames(styles.boxed, styles.containerPaddingsVariants[type])}
+                        className={classnames(styles.boxed)}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
                         {children}
                     </Boxed>
                 </BaseTouchable>
@@ -155,7 +159,6 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
 );
 
 const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
-    console.log('asset', asset);
     if (!asset) {
         return null;
     }
@@ -172,45 +175,61 @@ const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
     return null;
 };
 
+type FooterProps = {
+    type: CardType;
+    showFooter?: boolean;
+    footerSlot?: React.ReactNode;
+};
+
+const Footer = ({
+    showFooter,
+    footerSlot,
+    primaryAction,
+    secondaryAction,
+}: FooterProps & ActionsProps): JSX.Element => {
+    if (!showFooter || (!footerSlot && !primaryAction && !secondaryAction)) {
+        return <></>;
+    }
+    return (
+        <div
+            data-testid="footer"
+            style={{
+                padding: 16,
+                borderTop: `1px solid ${skinVars.colors.border}`,
+            }}
+        >
+            <Stack space={16}>
+                {footerSlot}
+                {primaryAction ||
+                    (secondaryAction && (
+                        <Inline space="between" alignItems="center">
+                            {primaryAction}
+                            {secondaryAction}
+                        </Inline>
+                    ))}
+            </Stack>
+        </div>
+    );
+};
+
 type ActionsProps = {
     type: CardType;
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
 };
 
-type FooterProps = {
-    type: CardType;
-    showFooter: boolean;
-    footerExtra?: React.ReactNode;
-};
-
 const Actions = ({type, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
     return (
-        <div style={{paddingTop: type === 'display' ? 24 : 16}}>
-            <ButtonGroup primaryButton={primaryAction as any} secondaryButton={secondaryAction as any} />
-        </div>
-    );
-};
-
-const Footer = ({
-    type,
-    showFooter,
-    footerExtra,
-    primaryAction,
-    secondaryAction,
-}: FooterProps & ActionsProps): JSX.Element => {
-    if (!showFooter) {
-        return <></>;
-    }
-    if (!footerExtra && !primaryAction && !secondaryAction) {
-        return <></>;
-    }
-    return (
         <div
-            data-testid="footer"
-            style={{padding: type === 'display' ? 24 : 16, borderTop: `1px solid ${skinVars.colors.border}`}}
+            style={{
+                paddingTop: type === 'display' ? 24 : 16,
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 16,
+            }}
         >
-            {footerExtra}
+            {primaryAction}
+            {secondaryAction}
         </div>
     );
 };
@@ -440,49 +459,98 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             slotAlignment = 'content',
             primaryAction,
             secondaryAction,
+            showFooter,
+            footerSlot,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
         const {text: slotText, ref: slotRef} = useInnerText();
-        console.log('TODO A11Y', slotText);
+        const hasActions = !!(primaryAction || secondaryAction);
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
+        const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
+        const showActionsInBody = !shouldShowFooter && hasActions;
+
+        console.log('TODO A11Y', {slotText, slotAlignment});
 
         return (
-            <Container
-                type={type}
-                dataAttributes={dataAttributes}
-                ref={ref}
-                isInverse={isInverse}
-                width={width}
-                height={height}
-                aspectRatio={aspectRatio}
-                {...touchableProps}
-            >
-                {/* this div shouldn't be needed if we don't use Boxed here, which causes several issues (see container) */}
-                <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
-                    <Asset type={type} asset={asset} />
-                    <TextContent
-                        type={type}
-                        headline={headline}
-                        pretitle={pretitle}
-                        pretitleLinesMax={pretitleLinesMax}
-                        title={title}
-                        titleAs={titleAs}
-                        titleLinesMax={titleLinesMax}
-                        subtitle={subtitle}
-                        subtitleLinesMax={subtitleLinesMax}
-                        description={description}
-                        descriptionLinesMax={descriptionLinesMax}
-                    />
-                    {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
-                    {slot && (
-                        <div ref={slotRef} data-testid="slot">
-                            {slot}
+            <>
+                <Container
+                    type={type}
+                    dataAttributes={dataAttributes}
+                    ref={ref}
+                    isInverse={isInverse}
+                    width={width}
+                    height={height}
+                    aspectRatio={aspectRatio}
+                    {...touchableProps}
+                >
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    >
+                        {/* this div shouldn't be needed if we don't use Boxed here, which causes several issues (see container) */}
+
+                        <div
+                            data-testid="body"
+                            className={styles.containerPaddingsVariants[type]}
+                            // with a footer, the bottom padding for the body is always 16px
+                            style={{
+                                paddingBottom: shouldShowFooter ? 16 : undefined,
+
+                                display: 'flex',
+                                flexDirection: 'column',
+                                height: '100%',
+                            }}
+                        >
+                            {isTouchable && <div className={overlayStyle} />}
+
+                            <Asset type={type} asset={asset} />
+                            <TextContent
+                                type={type}
+                                headline={headline}
+                                pretitle={pretitle}
+                                pretitleLinesMax={pretitleLinesMax}
+                                title={title}
+                                titleAs={titleAs}
+                                titleLinesMax={titleLinesMax}
+                                subtitle={subtitle}
+                                subtitleLinesMax={subtitleLinesMax}
+                                description={description}
+                                descriptionLinesMax={descriptionLinesMax}
+                            />
+                            {slotAlignment === 'bottom' && <div style={{flexGrow: 1, background: '#eee'}} />}
+                            {slot && (
+                                <div ref={slotRef} data-testid="slot">
+                                    {slot}
+                                </div>
+                            )}
+                            {showActionsInBody && (
+                                <Actions
+                                    type={type}
+                                    primaryAction={primaryAction}
+                                    secondaryAction={secondaryAction}
+                                />
+                            )}
                         </div>
-                    )}
-                    <Actions type={type} primaryAction={primaryAction} secondaryAction={secondaryAction} />
-                </div>
-            </Container>
+                        {shouldShowFooter && <div style={{flexGrow: 1, background: '#eee'}} />}
+                        {shouldShowFooter && (
+                            <Footer
+                                type={type}
+                                showFooter={showFooter}
+                                footerSlot={footerSlot}
+                                primaryAction={primaryAction}
+                                secondaryAction={secondaryAction}
+                            />
+                        )}
+                    </div>
+                </Container>
+            </>
         );
     }
 );
