@@ -461,7 +461,7 @@ export const slideshowItem = style([
 export const slideshowControlsContainer = style([
     sprinkles({
         position: 'absolute',
-        bottom: 32,
+        bottom: 12,
         left: 0,
         right: 0,
         display: 'flex',
@@ -476,12 +476,10 @@ export const slideshowControlsContainer = style([
             [mq.tabletOrSmaller]: {
                 paddingLeft: 32,
                 paddingRight: 32,
-                bottom: 12,
             },
             [mq.mobile]: {
                 paddingLeft: 16,
                 paddingRight: 16,
-                bottom: 12,
             },
         },
     },
