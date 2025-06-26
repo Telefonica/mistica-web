@@ -42,6 +42,8 @@ type ContainerProps = {
     'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     isInverse?: boolean;
+    onClose?: () => void;
+    closeButtonLabel?: string;
 };
 
 type TextContentProps = {
@@ -101,11 +103,10 @@ type CardProps = ContainerProps &
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
-const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchableProps>(
+const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
     (
         {
             children,
-            type,
             width,
             height,
             aspectRatio,
@@ -115,7 +116,6 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
             'aria-describedby': ariaDescribedby,
             dataAttributes,
             isInverse,
-            ...touchableProps
         },
         ref
     ): JSX.Element => {
@@ -133,7 +133,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
                 aria-labelledby={ariaLabelledby}
                 aria-description={ariaDescription}
                 aria-describedby={ariaDescribedby}
-                className={classnames(styles.container, styles.touchableContainer)}
+                className={classnames(styles.container)}
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     width: width || '100%',
@@ -141,7 +141,15 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
                     ...aspectRatioStyle,
                 }}
             >
-                <BaseTouchable maybe className={styles.touchable} {...touchableProps}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        position: 'relative',
+                        minHeight: '100%',
+                    }}
+                >
                     <Boxed
                         // Without setting the width here, the component fails to get the correct width in some cases
                         // even if we set the 100% width style in the boxed class
@@ -152,11 +160,13 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & TouchablePro
                     >
                         {children}
                     </Boxed>
-                </BaseTouchable>
+                </div>
             </section>
         );
     }
 );
+
+const Filler = () => <div style={{flexGrow: 1}} />;
 
 const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
     if (!asset) {
@@ -187,26 +197,20 @@ const Footer = ({
     primaryAction,
     secondaryAction,
 }: FooterProps & ActionsProps): JSX.Element => {
+    const hasActions = !!(primaryAction || secondaryAction);
     if (!showFooter || (!footerSlot && !primaryAction && !secondaryAction)) {
         return <></>;
     }
     return (
-        <div
-            data-testid="footer"
-            style={{
-                padding: 16,
-                borderTop: `1px solid ${skinVars.colors.border}`,
-            }}
-        >
+        <div data-testid="footer" style={{padding: 16, borderTop: `1px solid ${skinVars.colors.border}`}}>
             <Stack space={16}>
                 {footerSlot}
-                {primaryAction ||
-                    (secondaryAction && (
-                        <Inline space="between" alignItems="center">
-                            {primaryAction}
-                            {secondaryAction}
-                        </Inline>
-                    ))}
+                {hasActions && (
+                    <Inline space="between" alignItems="center">
+                        {primaryAction}
+                        {secondaryAction}
+                    </Inline>
+                )}
             </Stack>
         </div>
     );
@@ -484,52 +488,75 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio}
-                    {...touchableProps}
                 >
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '100%',
-                            height: '100%',
-                        }}
+                    <BaseTouchable
+                        maybe
+                        className={classnames(styles.touchable, styles.touchableContainer)}
+                        {...touchableProps}
                     >
-                        {/* this div shouldn't be needed if we don't use Boxed here, which causes several issues (see container) */}
-
+                        {isTouchable && <div className={overlayStyle} />}
                         <div
                             data-testid="body"
-                            className={styles.containerPaddingsVariants[type]}
-                            // with a footer, the bottom padding for the body is always 16px
-                            style={{
-                                paddingBottom: shouldShowFooter ? 16 : undefined,
+                            className={classnames(
+                                styles.touchable,
 
+                                styles.containerPaddingsVariants[type]
+                            )}
+                            style={{
+                                // with a footer, the bottom padding for the body is always 16px
+                                paddingBottom: shouldShowFooter ? 16 : undefined,
+                                position: 'relative',
                                 display: 'flex',
-                                flexDirection: 'column',
                                 height: '100%',
+                                flexDirection: 'column',
                             }}
                         >
-                            {isTouchable && <div className={overlayStyle} />}
+                            <div
+                                data-testid="content"
+                                style={{
+                                    border: `1px solid red`,
+                                    position: 'relative',
+                                    display: 'flex',
 
-                            <Asset type={type} asset={asset} />
-                            <TextContent
-                                type={type}
-                                headline={headline}
-                                pretitle={pretitle}
-                                pretitleLinesMax={pretitleLinesMax}
-                                title={title}
-                                titleAs={titleAs}
-                                titleLinesMax={titleLinesMax}
-                                subtitle={subtitle}
-                                subtitleLinesMax={subtitleLinesMax}
-                                description={description}
-                                descriptionLinesMax={descriptionLinesMax}
-                            />
-                            {slotAlignment === 'bottom' && <div style={{flexGrow: 1, background: '#eee'}} />}
+                                    flexDirection: 'row',
+                                    gap: 8,
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: 'relative',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        height: '100%',
+                                    }}
+                                >
+                                    <Asset type={type} asset={asset} />
+                                    <TextContent
+                                        type={type}
+                                        headline={headline}
+                                        pretitle={pretitle}
+                                        pretitleLinesMax={pretitleLinesMax}
+                                        title={title}
+                                        titleAs={titleAs}
+                                        titleLinesMax={titleLinesMax}
+                                        subtitle={subtitle}
+                                        subtitleLinesMax={subtitleLinesMax}
+                                        description={description}
+                                        descriptionLinesMax={descriptionLinesMax}
+                                    />
+                                </div>
+                                <div data-testid="top-actions" style={{background: 'lightblue'}}>
+                                    lalala
+                                </div>
+                            </div>
+                            {slotAlignment === 'bottom' && <Filler />}
                             {slot && (
                                 <div ref={slotRef} data-testid="slot">
                                     {slot}
                                 </div>
                             )}
+                            {slotAlignment === 'content' && showActionsInBody && <Filler />}
                             {showActionsInBody && (
                                 <Actions
                                     type={type}
@@ -538,17 +565,17 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                                 />
                             )}
                         </div>
-                        {shouldShowFooter && <div style={{flexGrow: 1, background: '#eee'}} />}
-                        {shouldShowFooter && (
-                            <Footer
-                                type={type}
-                                showFooter={showFooter}
-                                footerSlot={footerSlot}
-                                primaryAction={primaryAction}
-                                secondaryAction={secondaryAction}
-                            />
-                        )}
-                    </div>
+                    </BaseTouchable>
+                    {shouldShowFooter && <Filler />}
+                    {shouldShowFooter && (
+                        <Footer
+                            type={type}
+                            showFooter={showFooter}
+                            footerSlot={footerSlot}
+                            primaryAction={primaryAction}
+                            secondaryAction={secondaryAction}
+                        />
+                    )}
                 </Container>
             </>
         );

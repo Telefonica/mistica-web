@@ -11,7 +11,7 @@ export const container = style([
     sprinkles({
         position: 'relative',
         display: 'flex',
-        flexDirection: 'row', // Not working if vertical. Not sure why
+        flexDirection: 'row', // Not working if column. Not sure why
     }),
     {
         ':before': {
@@ -71,6 +71,10 @@ const snapContainerPaddings = style([
 export const boxed = style({
     minHeight: '100%',
     position: 'relative',
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     borderRadius: skinVars.borderRadii.container,
 });
 
@@ -88,9 +92,9 @@ export const touchable = style([
         border: 'none',
         background: 'transparent',
         width: '100%',
+        height: '100%',
     }),
     {
-        minHeight: '100%',
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
     },
 ]);
