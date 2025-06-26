@@ -191,28 +191,23 @@ type FooterProps = {
     footerSlot?: React.ReactNode;
 };
 
-const Footer = ({
-    showFooter,
-    footerSlot,
-    primaryAction,
-    secondaryAction,
-}: FooterProps & ActionsProps): JSX.Element => {
+const Footer = ({footerSlot, primaryAction, secondaryAction}: FooterProps & ActionsProps): JSX.Element => {
     const hasActions = !!(primaryAction || secondaryAction);
-    if (!showFooter || (!footerSlot && !primaryAction && !secondaryAction)) {
-        return <></>;
-    }
     return (
-        <div data-testid="footer" style={{padding: 16, borderTop: `1px solid ${skinVars.colors.border}`}}>
-            <Stack space={16}>
-                {footerSlot}
-                {hasActions && (
-                    <Inline space="between" alignItems="center">
-                        {primaryAction}
-                        {secondaryAction}
-                    </Inline>
-                )}
-            </Stack>
-        </div>
+        <>
+            <Filler />
+            <div data-testid="footer" style={{padding: 16, borderTop: `1px solid ${skinVars.colors.border}`}}>
+                <Stack space={16}>
+                    {footerSlot}
+                    {hasActions && (
+                        <Inline space="between" alignItems="center">
+                            {primaryAction}
+                            {secondaryAction}
+                        </Inline>
+                    )}
+                </Stack>
+            </div>
+        </>
     );
 };
 
@@ -512,12 +507,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                             }}
                         >
                             <div
-                                data-testid="content"
                                 style={{
                                     border: `1px solid red`,
                                     position: 'relative',
                                     display: 'flex',
-
                                     flexDirection: 'row',
                                     gap: 8,
                                     justifyContent: 'space-between',
@@ -566,11 +559,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                             )}
                         </div>
                     </BaseTouchable>
-                    {shouldShowFooter && <Filler />}
                     {shouldShowFooter && (
                         <Footer
                             type={type}
-                            showFooter={showFooter}
                             footerSlot={footerSlot}
                             primaryAction={primaryAction}
                             secondaryAction={secondaryAction}
@@ -610,6 +601,8 @@ type DataCardProps = {
     buttonLink?: ActionButton;
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
+    showFooter?: boolean;
+    footerSlot?: React.ReactNode;
 };
 
 export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
