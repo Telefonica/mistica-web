@@ -47,6 +47,8 @@ export type Dictionary = {
     sheetConfirmButton: string;
     progressBarCompletedLabel: string;
     progressBarStepLabel: string;
+    stepperCurrentStep: string;
+    stepperCompletedStep: string;
     pinFieldInputLabel: string;
     counterRemoveLabel: string;
     counterIncreaseLabel: string;
@@ -400,6 +402,20 @@ export const progressBarStepLabel: TextToken = {
     en: 'Step 1$s of 2$s',
     de: 'Schritt 1$s von 2$s',
     pt: 'Etapa 1$s de 2$s',
+};
+
+export const stepperCurrentStep: TextToken = {
+    es: 'En curso',
+    en: 'Current',
+    de: 'Aktuell',
+    pt: 'Em andamento',
+};
+
+export const stepperCompletedStep: TextToken = {
+    es: 'Completado',
+    en: 'Completed',
+    de: 'Abgeschlossen',
+    pt: 'Concluído',
 };
 
 export const pinFieldInputLabel: TextToken = {

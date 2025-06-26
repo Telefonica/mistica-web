@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {ButtonLink} from '..';
 
+<ButtonLink fake>Text</ButtonLink>;
+
 <ButtonLink href="/foo" onNavigate={() => {}}>
     Text
 </ButtonLink>;
@@ -19,5 +21,10 @@ import {ButtonLink} from '..';
 
 // @ts-expect-error - onPress doesn't support onNavigate
 <ButtonLink onPress={() => {}} onNavigate={() => Promise.resolve()}>
+    Text
+</ButtonLink>;
+
+// @ts-expect-error - bad combination
+<ButtonLink fake onPress={() => {}}>
     Text
 </ButtonLink>;

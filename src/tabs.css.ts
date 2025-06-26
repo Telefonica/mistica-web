@@ -59,6 +59,7 @@ const baseTab = style([
         background: 'transparent',
     }),
     {
+        outlineOffset: -8,
         textAlign: 'center',
         verticalAlign: 'baseline',
         borderBottom: '2px solid transparent',
@@ -88,9 +89,19 @@ export const tabVariants = styleVariants({
     ],
 });
 
+const focusOutlineStyles = {
+    // the revert important! is needed to bypass the styles applied by TabFocus component
+    outline: 'revert !important',
+    outlineOffset: -8,
+};
+
 export const tabHover = styleVariants({
     default: [
         style({
+            ':focus-visible': {
+                ...focusOutlineStyles,
+                color: vars.colors.textPrimary,
+            },
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
@@ -102,6 +113,10 @@ export const tabHover = styleVariants({
     ],
     inverse: [
         style({
+            ':focus-visible': {
+                ...focusOutlineStyles,
+                color: vars.colors.textPrimaryInverse,
+            },
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {

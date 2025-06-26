@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {Box, IconCloseRegular, ResponsiveLayout, Tabs} from '..';
+import {
+    Box,
+    IconAppointmentRegular,
+    IconBrainRegular,
+    IconBusRegular,
+    ResponsiveLayout,
+    Tabs,
+    Text3,
+} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -35,8 +43,15 @@ export const Default: StoryComponent<Args> = ({tabCount, text, theme, icon}) => 
                     onChange={setSelectedIndex}
                     tabs={Array.from({length: tabCount}).map((_, index) => ({
                         text: `${text} ${index + 1}`,
-                        Icon: icon ? IconCloseRegular : undefined,
+                        Icon: icon
+                            ? [IconAppointmentRegular, IconBrainRegular, IconBusRegular][index]
+                            : undefined,
                     }))}
+                    renderPanel={({selectedIndex, panelProps}) => (
+                        <div {...panelProps}>
+                            <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                        </div>
+                    )}
                 />
             </Box>
         </ResponsiveLayout>
