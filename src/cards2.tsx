@@ -1,3 +1,4 @@
+// spec: https://www.figma.com/design/tKdPOfcUALzVIh5oizFbm7
 'use client';
 import * as React from 'react';
 import * as styles from './cards2.css';
@@ -651,7 +652,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                                     descriptionLinesMax={descriptionLinesMax}
                                 />
                             </div>
-                            {hasAssetOrHeadline && <div style={{width: topActionsLength * 48 - 16}} />}
+                            {!hasAssetOrHeadline && (
+                                <div style={{flexShrink: 0, width: topActionsLength * 48 - 16}} />
+                            )}
                         </div>
                         {slotAlignment === 'bottom' && <Filler />}
                         {slot && (
