@@ -71,7 +71,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                 </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
-                <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
+                <Text2 id={id} weight={textPresets.indicator.weight} color="currentColor">
                     {children}
                 </Text2>
             </Box>
