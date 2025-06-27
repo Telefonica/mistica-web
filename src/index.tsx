@@ -70,7 +70,6 @@ export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {Timer, TextTimer} from './timer';
 export {
     MediaCard,
-    DataCard,
     DisplayDataCard,
     DisplayMediaCard,
     PosterCard,
@@ -79,7 +78,7 @@ export {
     CardActionSpinner,
     CardActionIconButton,
 } from './card';
-export {SnapCard} from './cards2';
+export {SnapCard, DataCard} from './cards2';
 export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';
