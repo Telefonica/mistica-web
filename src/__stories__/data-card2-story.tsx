@@ -154,7 +154,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     );
 };
 
-Default.storyName = 'DataCard';
+Default.storyName = 'DataCard2';
 Default.args = {
     type: 'default',
     asset: 'icon',
