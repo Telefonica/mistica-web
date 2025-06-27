@@ -5,9 +5,7 @@ import {
     ResponsiveLayout,
     MediaCard,
     ButtonLink,
-    Callout,
     Stack,
-    IconInformationRegular,
     Title1,
     Text2,
     Image,
@@ -18,6 +16,7 @@ import {
     PageBullets,
 } from '..';
 import tennisUrl from './images/tennis.jpg';
+import {CarouselAutoplayControl, CarouselPageControls} from '../carousel';
 
 export default {
     title: 'Components/Carousels/Carousel',
@@ -36,6 +35,7 @@ type Args = {
     mobilePageOffset: (typeof mobilePageOffsetOptions)[number];
     autoplay: boolean;
     loop: boolean;
+    withControls: boolean;
     initialActiveItem: number;
 };
 
@@ -50,6 +50,7 @@ export const Default: StoryComponent<Args> = ({
     mobilePageOffset,
     autoplay,
     loop,
+    withControls,
     initialActiveItem,
 }) => {
     const [pageInfo, setPageInfo] = React.useState<{
@@ -60,10 +61,6 @@ export const Default: StoryComponent<Args> = ({
         <Box paddingY={24}>
             <ResponsiveLayout>
                 <Stack space={16}>
-                    <Callout
-                        description="Arrow controls disappear in touch devices"
-                        asset={<IconInformationRegular />}
-                    />
                     <Carousel
                         dataAttributes={{testid: 'carousel-story'}}
                         withBullets={bullets}
@@ -76,7 +73,9 @@ export const Default: StoryComponent<Args> = ({
                         itemsToScroll={itemsToScroll}
                         mobilePageOffset={mobilePageOffset}
                         autoplay={autoplay ? {time: 5000, loop} : false}
+                        withControls={withControls}
                         onPageChange={setPageInfo}
+                        aria-label="Component story"
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
                                 aria-label={`Carousel item ${idx}`}
@@ -118,6 +117,7 @@ Default.args = {
     free: false,
     autoplay: false,
     loop: false,
+    withControls: true,
     itemsToScroll: 0,
     initialActiveItem: 0,
     mobilePageOffset: 'regular',
@@ -139,12 +139,12 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                     <ResponsiveLayout>
                         <Box paddingY={16}>
                             <CarouselContextConsumer>
-                                {({goNext, goPrev, goToPage, bulletsProps}) => (
+                                {({goNext, goPrev, bulletsProps}) => (
                                     <Inline space="between" alignItems="center">
                                         <ButtonLink small bleedLeft onPress={goPrev}>
                                             Prev
                                         </ButtonLink>
-                                        <PageBullets {...bulletsProps} onPress={goToPage} />
+                                        <PageBullets {...bulletsProps} />
                                         <ButtonLink small bleedRight onPress={goNext}>
                                             Next
                                         </ButtonLink>
@@ -158,6 +158,8 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                 <Box paddingY={24}>
                     <ResponsiveLayout>
                         <Carousel
+                            aria-label="Component story with context"
+                            withControls={false}
                             items={Array.from({length: numItems}, (_, idx) => (
                                 <MediaCard
                                     aria-label={`Carousel item ${idx}`}
@@ -183,5 +185,75 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
 WithCarouselContext.storyName = 'Carousel with CarouselContext';
 WithCarouselContext.parameters = {fullScreen: true};
 WithCarouselContext.args = {
+    numItems: 6,
+};
+
+export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselContextArgs> = ({
+    numItems,
+}) => {
+    return (
+        <CarouselContextProvider>
+            <Box paddingY={24}>
+                <ResponsiveLayout>
+                    <Carousel
+                        items={Array.from({length: numItems}, (_, idx) => (
+                            <MediaCard
+                                aria-label={`Carousel item ${idx}`}
+                                key={idx}
+                                title={`Title ${idx}`}
+                                description="Some description"
+                                media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                                buttonLink={
+                                    <ButtonLink small href="https://google.com">
+                                        Link {idx}
+                                    </ButtonLink>
+                                }
+                            />
+                        ))}
+                        aria-label="Component story with context and controls"
+                        withBullets={false}
+                        withControls={false}
+                        autoplay
+                    />
+                    <Inline space="around">Some content here</Inline>
+                    <CarouselContextConsumer>
+                        {({
+                            goNext,
+                            goPrev,
+                            goToPage,
+                            bulletsProps,
+                            autoplayControlProps,
+                            pageControlsProps,
+                        }) => (
+                            <Inline space="between" alignItems="center">
+                                <CarouselAutoplayControl
+                                    {...autoplayControlProps}
+                                    onAutoplayChanged={() => {
+                                        if (autoplayControlProps.isAtLastPage) {
+                                            goToPage(0);
+                                        }
+                                        autoplayControlProps.onAutoplayChanged(
+                                            !autoplayControlProps.isAutoplayEnabled
+                                        );
+                                    }}
+                                />
+                                <PageBullets {...bulletsProps} />
+                                <CarouselPageControls
+                                    {...pageControlsProps}
+                                    goNext={goNext}
+                                    goPrev={goPrev}
+                                />
+                            </Inline>
+                        )}
+                    </CarouselContextConsumer>
+                </ResponsiveLayout>
+            </Box>
+        </CarouselContextProvider>
+    );
+};
+
+WithCarouselContextAndOutsideControls.storyName = 'Carousel with CarouselContext and controls';
+WithCarouselContextAndOutsideControls.parameters = {fullScreen: true};
+WithCarouselContextAndOutsideControls.args = {
     numItems: 6,
 };
