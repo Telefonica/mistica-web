@@ -1,3 +1,17 @@
+# [16.32.0](https://github.com/Telefonica/mistica-web/compare/v16.31.0...v16.32.0) (2025-06-27)
+
+
+### Bug Fixes
+
+* **Radio:** update tabIndex logic when no radio is selected ([#1396](https://github.com/Telefonica/mistica-web/issues/1396)) ([8f70ce2](https://github.com/Telefonica/mistica-web/commit/8f70ce2f5e129f04ad1c952b54e09e982e285628))
+* **SearchField:** Adjust suggestions size to field container ([#1399](https://github.com/Telefonica/mistica-web/issues/1399)) ([5207d01](https://github.com/Telefonica/mistica-web/commit/5207d01b07e4e016874ee38de7a51d0d0b337daa))
+* **Select:** Show native select focus ring ([#1398](https://github.com/Telefonica/mistica-web/issues/1398)) ([c0bbf30](https://github.com/Telefonica/mistica-web/commit/c0bbf306c5ba902895457332bc1f0528a5d7b26b))
+
+
+### Features
+
+* **Carousel, CenteredCarousel, Slideshow:** design changes and a11y improvements ([#1388](https://github.com/Telefonica/mistica-web/issues/1388)) ([59e989e](https://github.com/Telefonica/mistica-web/commit/59e989e704dd4e5c84fa9aebe61018243d172071))
+
 # [16.31.0](https://github.com/Telefonica/mistica-web/compare/v16.30.1...v16.31.0) (2025-06-18)
 
 
