@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, Stack, Title1} from '..';
+import {useTheme} from '../hooks';
+import * as textProps from '../text-props';
 import {isSafari} from '../utils/platform';
 
 export default {
@@ -7,41 +9,69 @@ export default {
     component: Text,
 };
 
-export const TextComponents: StoryComponent = () => (
-    <Stack space={16} dataAttributes={{testid: 'text'}}>
-        <Text10 dataAttributes={{qsysid: 'text10'}}>Text10 48/56 (Mobile) | 64/72 (Desktop)</Text10>
+const getDisplaySizes = (textPreset: any, textProp: any) => {
+    const mobileSize = textPreset.size.mobile || textProp.mobileSize;
+    const mobileLineHeight = textPreset.lineHeight.mobile || textProp.mobileLineHeight;
+    const desktopSize = textPreset.size.desktop || textProp.desktopSize;
+    const desktopLineHeight = textPreset.lineHeight.desktop || textProp.desktopLineHeight;
 
-        <Text9>Text9 40/48 (Mobile) | 56/64 (Desktop)</Text9>
+    return `${mobileSize}/${mobileLineHeight} (Mobile) | ${desktopSize}/${desktopLineHeight} (Desktop)`;
+};
 
-        <Text8>Text8 32/40 (Mobile) | 48/56 (Desktop)</Text8>
+type TextKey = keyof typeof textProps;
 
-        <Text7>Text7 28/32 (Mobile) | 40/48 (Desktop)</Text7>
+const useTextDisplayContent = (textKey: TextKey, weight?: string) => {
+    const {textPresets} = useTheme();
+    const textProp = textProps[textKey];
+    const textPreset = textPresets[textKey];
 
-        <Text6>Text6 24/32 (Mobile) | 32/40 (Desktop)</Text6>
+    const sizeInfo = getDisplaySizes(textPreset, textProp);
+    const weightText = weight ? ` ${weight.charAt(0).toUpperCase() + weight.slice(1)}` : '';
+    const displayText = `${textKey.charAt(0).toUpperCase() + textKey.slice(1)}${weightText} ${sizeInfo}`;
 
-        <Text5>Text5 20/24 (Mobile) | 28/32 (Desktop)</Text5>
+    return displayText;
+};
 
-        <Text4 medium>Text4 Medium 18/24 (Mobile) | 20/28 (Desktop)</Text4>
+export const TextComponents: StoryComponent = () => {
+    // Get automatic text content for each component
+    const text10Content = useTextDisplayContent('text10');
+    const text9Content = useTextDisplayContent('text9');
+    const text8Content = useTextDisplayContent('text8');
+    const text7Content = useTextDisplayContent('text7');
+    const text6Content = useTextDisplayContent('text6');
+    const text5Content = useTextDisplayContent('text5');
+    const text4MediumContent = useTextDisplayContent('text4', 'medium');
+    const text4RegularContent = useTextDisplayContent('text4', 'regular');
+    const text4LightContent = useTextDisplayContent('text4', 'light');
+    const text3MediumContent = useTextDisplayContent('text3', 'medium');
+    const text3RegularContent = useTextDisplayContent('text3', 'regular');
+    const text3LightContent = useTextDisplayContent('text3', 'light');
+    const text2MediumContent = useTextDisplayContent('text2', 'medium');
+    const text2RegularContent = useTextDisplayContent('text2', 'regular');
+    const text1MediumContent = useTextDisplayContent('text1', 'medium');
+    const text1RegularContent = useTextDisplayContent('text1', 'regular');
 
-        <Text4 regular>Text4 Regular 18/24 (Mobile) | 20/28 (Desktop)</Text4>
-
-        <Text4 light>Text4 Light 18/24 (Mobile) | 20/28 (Desktop)</Text4>
-
-        <Text3 medium>Text3 Medium 16/24 (Mobile) | 18/24 (Desktop)</Text3>
-
-        <Text3 regular>Text3 Regular 16/24 (Mobile) | 18/24 (Desktop)</Text3>
-
-        <Text3 light>Text3 Light 16/24 (Mobile) | 18/24 (Desktop)</Text3>
-
-        <Text2 medium>Text2 Medium 14/20 (Mobile) | 16/24 (Desktop)</Text2>
-
-        <Text2 regular>Text2 Regular 14/20 (Mobile) | 16/24 (Desktop)</Text2>
-
-        <Text1 medium>Text1 Medium 12/16 (Mobile) | 14/20 (Desktop)</Text1>
-
-        <Text1 regular>Text1 Regular 12/16 (Mobile) | 14/20 (Desktop)</Text1>
-    </Stack>
-);
+    return (
+        <Stack space={16} dataAttributes={{testid: 'text'}}>
+            <Text10 dataAttributes={{qsysid: 'text10'}}>{text10Content}</Text10>
+            <Text9>{text9Content}</Text9>
+            <Text8>{text8Content}</Text8>
+            <Text7>{text7Content}</Text7>
+            <Text6>{text6Content}</Text6>
+            <Text5>{text5Content}</Text5>
+            <Text4 medium>{text4MediumContent}</Text4>
+            <Text4 regular>{text4RegularContent}</Text4>
+            <Text4 light>{text4LightContent}</Text4>
+            <Text3 medium>{text3MediumContent}</Text3>
+            <Text3 regular>{text3RegularContent}</Text3>
+            <Text3 light>{text3LightContent}</Text3>
+            <Text2 medium>{text2MediumContent}</Text2>
+            <Text2 regular>{text2RegularContent}</Text2>
+            <Text1 medium>{text1MediumContent}</Text1>
+            <Text1 regular>{text1RegularContent}</Text1>
+        </Stack>
+    );
+};
 
 TextComponents.storyName = 'Text components';
 
