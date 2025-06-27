@@ -658,37 +658,6 @@ const BaseCarousel = ({
         if (currentPageIndex === pagesCount - 1 && !hasAutoplayLoop) {
             setShouldAutoPlay(false);
         }
-
-        const carouselEl = carouselRef.current;
-        const passiveOpts = {passive: true};
-
-        if (carouselEl) {
-            const handleTouchStart = () => {
-                interactionDetectorRef.current.left = carouselEl.scrollLeft;
-                interactionDetectorRef.current.interacting = true;
-            };
-            const handleTouchEnd = () => {
-                interactionDetectorRef.current.interacting = false;
-                if (
-                    Math.abs(carouselEl.scrollLeft - interactionDetectorRef.current.left) >
-                    INTERACTION_DETECTOR_THRESHOLD
-                ) {
-                    setShouldAutoPlay(false);
-                }
-            };
-            const handleKeyboardPress = () => {
-                setShouldAutoPlay(false);
-            };
-            carouselEl.addEventListener('touchstart', handleTouchStart, passiveOpts);
-            carouselEl.addEventListener('touchend', handleTouchEnd, passiveOpts);
-            carouselEl.addEventListener('keydown', handleKeyboardPress, passiveOpts);
-
-            return () => {
-                carouselEl.removeEventListener('touchstart', handleTouchStart);
-                carouselEl.removeEventListener('touchend', handleTouchEnd);
-                carouselEl.removeEventListener('keydown', handleKeyboardPress);
-            };
-        }
     }, [currentPageIndex, pagesCount, setShouldAutoPlay, hasAutoplayLoop]);
 
     const pageInitialized = React.useRef<boolean>(!initialActiveItem);
@@ -855,6 +824,7 @@ const BaseCarousel = ({
                 )}
             </div>
             <div className={styles.carouselContainer}>
+                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                 <div
                     className={classNames(styles.carousel, {
                         [styles.centeredCarousel]: centered,
@@ -887,6 +857,30 @@ const BaseCarousel = ({
                                 : undefined,
                     }}
                     ref={carouselRef}
+                    onTouchStart={() => {
+                        const carouselEl = carouselRef.current;
+
+                        if (carouselEl) {
+                            interactionDetectorRef.current.left = carouselEl.scrollLeft;
+                            interactionDetectorRef.current.interacting = true;
+                        }
+                    }}
+                    onTouchEnd={() => {
+                        const carouselEl = carouselRef.current;
+
+                        if (carouselEl) {
+                            interactionDetectorRef.current.interacting = false;
+                            if (
+                                Math.abs(carouselEl.scrollLeft - interactionDetectorRef.current.left) >
+                                INTERACTION_DETECTOR_THRESHOLD
+                            ) {
+                                setShouldAutoPlay(false);
+                            }
+                        }
+                    }}
+                    onKeyDown={() => {
+                        setShouldAutoPlay(false);
+                    }}
                 >
                     {items.map((item, index) => (
                         <div
