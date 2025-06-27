@@ -23,7 +23,7 @@ export default {
 };
 
 type DataCardArgs = {
-    type: 'default' | 'snap' | 'display';
+    size: 'default' | 'snap' | 'display';
     isInverse: boolean;
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -49,7 +49,7 @@ type DataCardArgs = {
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DataCardArgs> = ({
-    type,
+    size,
     isInverse,
     asset = 'icon',
     headline,
@@ -114,7 +114,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     return (
         <>
             <DataCard2
-                type={type}
+                size={size}
                 isInverse={isInverse}
                 onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
@@ -159,7 +159,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
 Default.storyName = 'DataCard2';
 Default.args = {
-    type: 'default',
+    size: 'default',
     asset: 'icon',
     isInverse: false,
     headlineType: 'promo',
@@ -183,7 +183,7 @@ Default.args = {
 };
 
 Default.argTypes = {
-    type: {
+    size: {
         options: ['default', 'snap', 'display'],
         control: {type: 'select'},
     },

@@ -31,7 +31,7 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
-type CardType = 'snap' | 'default' | 'display';
+type CardSize = 'snap' | 'default' | 'display';
 type ActionButton =
     | RendersNullableElement<typeof ButtonPrimary>
     | RendersNullableElement<typeof ButtonSecondary>
@@ -41,7 +41,7 @@ type ActionButton =
 export type SlotAlignment = 'content' | 'bottom';
 
 type ContainerProps = {
-    type: CardType;
+    size: CardSize;
     isInverse?: boolean;
     width?: string | number;
     height?: string | number;
@@ -57,7 +57,7 @@ type ContainerProps = {
 };
 
 type TextContentProps = {
-    type: CardType;
+    size: CardSize;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: HeadingType;
@@ -72,7 +72,7 @@ type TextContentProps = {
 };
 
 type AssetProps = {
-    type: CardType;
+    size: CardSize;
     asset?: React.ReactElement;
 };
 
@@ -179,13 +179,13 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
 
 const Filler = () => <div style={{flexGrow: 1}} />;
 
-const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
+const Asset = ({size, asset}: AssetProps): JSX.Element | null => {
     if (!asset) {
         return null;
     }
 
     // Content-Follows Spacing (mode C according to specs)
-    if (type === 'snap' || type === 'default') {
+    if (size === 'snap' || size === 'default') {
         return (
             <div data-testid="asset" style={{paddingBottom: 16}}>
                 {asset}
@@ -197,14 +197,14 @@ const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
 };
 
 type FooterProps = {
-    type: CardType;
+    size: CardSize;
     isInverse?: boolean;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
 };
 
 const Footer = ({
-    type,
+    size,
     isInverse,
     footerSlot,
     primaryAction,
@@ -217,7 +217,7 @@ const Footer = ({
             <div
                 data-testid="footer"
                 style={{
-                    padding: `16px ${type === 'display' ? 24 : 16}px`,
+                    padding: `16px ${size === 'display' ? 24 : 16}px`,
                     borderTop: `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                 }}
             >
@@ -236,16 +236,16 @@ const Footer = ({
 };
 
 type ActionsProps = {
-    type: CardType;
+    size: CardSize;
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
 };
 
-const Actions = ({type, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
+const Actions = ({size, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
     return (
         <div
             style={{
-                paddingTop: type === 'display' ? 24 : 16,
+                paddingTop: size === 'display' ? 24 : 16,
                 display: 'flex',
                 flexDirection: 'row',
                 gap: 16,
@@ -320,7 +320,7 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 };
 
 type TopActionsProps = {
-    type?: CardType;
+    size?: CardSize;
     isInverse?: boolean;
     onClose?: () => void;
     closeButtonLabel?: string;
@@ -361,7 +361,7 @@ const TopActions = ({onClose, closeButtonLabel, topActions, isInverse}: TopActio
 };
 
 const TextContent = ({
-    type: size,
+    size: size,
     headline,
     title,
     titleAs = 'h3',
@@ -564,7 +564,7 @@ const TextContent = ({
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
     (
         {
-            type,
+            size,
             asset,
             headline,
             title,
@@ -607,7 +607,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
         return (
             <Container
-                type={type}
+                size={size}
                 dataAttributes={dataAttributes}
                 ref={ref}
                 isInverse={isInverse}
@@ -629,7 +629,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                     {isTouchable && <div className={overlayStyle} />}
                     <div
                         data-testid="body"
-                        className={classnames(styles.touchable, styles.containerPaddingsVariants[type])}
+                        className={classnames(styles.touchable, styles.containerPaddingsVariants[size])}
                         style={{
                             // with a footer, the bottom padding for the body is always 16px
                             paddingBottom: shouldShowFooter ? 16 : undefined,
@@ -637,9 +637,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                     >
                         <div className={styles.contentContainer}>
                             <div className={styles.assetAndTextContent}>
-                                <Asset type={type} asset={asset} />
+                                <Asset size={size} asset={asset} />
                                 <TextContent
-                                    type={type}
+                                    size={size}
                                     headline={headline}
                                     pretitle={pretitle}
                                     pretitleLinesMax={pretitleLinesMax}
@@ -665,7 +665,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                         {slotAlignment === 'content' && showActionsInBody && <Filler />}
                         {showActionsInBody && (
                             <Actions
-                                type={type}
+                                size={size}
                                 primaryAction={primaryAction}
                                 secondaryAction={secondaryAction}
                             />
@@ -675,7 +675,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                 {shouldShowFooter && (
                     <Footer
                         isInverse={isInverse}
-                        type={type}
+                        size={size}
                         footerSlot={footerSlot}
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
@@ -687,7 +687,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 );
 
 type DataCardProps = {
-    type?: CardType;
+    size?: CardSize;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -732,7 +732,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
     (
         {
             dataAttributes,
-            type = 'default',
+            size = 'default',
             // handle deprecations
             button,
             primaryAction,
@@ -749,7 +749,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
     ) => {
         return (
             <Card
-                type={type}
+                size={size}
                 dataAttributes={{
                     'component-name': 'DataCard',
                     testid: 'DataCard',
@@ -766,16 +766,16 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
     }
 );
 
-type SnapCardProps = Omit<DataCardProps, 'type'>;
+type SnapCardProps = Omit<DataCardProps, 'size'>;
 
 /**
- * @deprecated use <Datacard type="snap" /> instead
+ * @deprecated use <Datacard size="snap" /> instead
  */
 export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<SnapCardProps>>(
     ({dataAttributes, ...rest}, ref) => {
         return (
             <DataCard
-                type="snap"
+                size="snap"
                 dataAttributes={{
                     'component-name': 'SnapCard',
                     testid: 'SnapCard',
