@@ -32,6 +32,8 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
 type CardSize = 'snap' | 'default' | 'display';
+type CardType = 'data' | 'media' | 'cover' | 'naked';
+
 type ActionButton =
     | RendersNullableElement<typeof ButtonPrimary>
     | RendersNullableElement<typeof ButtonSecondary>
@@ -41,6 +43,7 @@ type ActionButton =
 export type SlotAlignment = 'content' | 'bottom';
 
 type ContainerProps = {
+    type: CardType;
     size: CardSize;
     isInverse?: boolean;
     width?: string | number;
@@ -564,6 +567,7 @@ const TextContent = ({
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
     (
         {
+            type,
             size,
             asset,
             headline,
@@ -607,6 +611,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
         return (
             <Container
+                type={type}
                 size={size}
                 dataAttributes={dataAttributes}
                 ref={ref}
@@ -749,6 +754,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
     ) => {
         return (
             <Card
+                type="data"
                 size={size}
                 dataAttributes={{
                     'component-name': 'DataCard',

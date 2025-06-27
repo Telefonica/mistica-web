@@ -23,6 +23,7 @@ export default {
 };
 
 type DataCardArgs = {
+    type: 'data' | 'media' | 'cover' | 'naked';
     size: 'default' | 'snap' | 'display';
     isInverse: boolean;
     asset: 'icon' | 'image' | 'none';
@@ -159,6 +160,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
 Default.storyName = 'DataCard2';
 Default.args = {
+    type: 'data',
     size: 'default',
     asset: 'icon',
     isInverse: false,
@@ -183,6 +185,10 @@ Default.args = {
 };
 
 Default.argTypes = {
+    type: {
+        options: ['data', 'media', 'cover', 'naked'],
+        control: {type: 'select'},
+    },
     size: {
         options: ['default', 'snap', 'display'],
         control: {type: 'select'},
@@ -199,12 +205,7 @@ Default.argTypes = {
         options: ['auto', ...fixedAspectRatioValues],
         control: {
             type: 'select',
-            labels: {
-                '1 1': '1:1',
-                '16 9': '16:9',
-                '7 10': '7:10',
-                '9 10': '9:10',
-            },
+            labels: {'1 1': '1:1', '16 9': '16:9', '7 10': '7:10', '9 10': '9:10'},
         },
     },
     pretitleAs: {
