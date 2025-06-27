@@ -41,6 +41,7 @@ export type SlotAlignment = 'content' | 'bottom';
 
 type ContainerProps = {
     type: CardType;
+    isInverse?: boolean;
     width?: string | number;
     height?: string | number;
     aspectRatio?: AspectRatio;
@@ -50,7 +51,6 @@ type ContainerProps = {
     'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
     'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
-    isInverse?: boolean;
     onClose?: () => void;
     closeButtonLabel?: string;
 };
@@ -197,12 +197,14 @@ const Asset = ({type, asset}: AssetProps): JSX.Element | null => {
 
 type FooterProps = {
     type: CardType;
+    isInverse?: boolean;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
 };
 
 const Footer = ({
     type,
+    isInverse,
     footerSlot,
     primaryAction,
     secondaryAction,
@@ -215,7 +217,7 @@ const Footer = ({
                 data-testid="footer"
                 style={{
                     padding: `16px ${type === 'display' ? 24 : 16}px`,
-                    borderTop: `1px solid ${skinVars.colors.border}`,
+                    borderTop: `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                 }}
             >
                 <Stack space={16}>
@@ -317,12 +319,14 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 };
 
 type TopActionsProps = {
+    type?: CardType;
+    isInverse?: boolean;
     onClose?: () => void;
     closeButtonLabel?: string;
     topActions?: TopActionsArray;
 };
 
-const TopActions = ({onClose, closeButtonLabel, topActions}: TopActionsProps): JSX.Element => {
+const TopActions = ({onClose, closeButtonLabel, topActions, isInverse}: TopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const actions = topActions ? [...topActions] : [];
 
@@ -338,7 +342,9 @@ const TopActions = ({onClose, closeButtonLabel, topActions}: TopActionsProps): J
         return <></>;
     }
 
-    const variant = 'default'; // fixme
+    // TODO: complete for other cases
+    const variant = isInverse ? 'inverse' : 'default';
+
     return (
         <ThemeVariant variant={variant}>
             <div className={styles.topActionsContainer}>
@@ -608,7 +614,12 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                 height={height}
                 aspectRatio={aspectRatio}
             >
-                <TopActions onClose={onClose} closeButtonLabel={closeButtonLabel} topActions={topActions} />
+                <TopActions
+                    onClose={onClose}
+                    closeButtonLabel={closeButtonLabel}
+                    topActions={topActions}
+                    isInverse={isInverse}
+                />
                 <BaseTouchable
                     maybe
                     className={classnames(styles.touchable, styles.touchableContainer)}
@@ -660,6 +671,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                 </BaseTouchable>
                 {shouldShowFooter && (
                     <Footer
+                        isInverse={isInverse}
                         type={type}
                         footerSlot={footerSlot}
                         primaryAction={primaryAction}
