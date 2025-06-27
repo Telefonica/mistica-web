@@ -857,25 +857,17 @@ const BaseCarousel = ({
                                 : undefined,
                     }}
                     ref={carouselRef}
-                    onTouchStart={() => {
-                        const carouselEl = carouselRef.current;
-
-                        if (carouselEl) {
-                            interactionDetectorRef.current.left = carouselEl.scrollLeft;
-                            interactionDetectorRef.current.interacting = true;
-                        }
+                    onTouchStart={(e) => {
+                        interactionDetectorRef.current.left = e.currentTarget.scrollLeft;
+                        interactionDetectorRef.current.interacting = true;
                     }}
-                    onTouchEnd={() => {
-                        const carouselEl = carouselRef.current;
-
-                        if (carouselEl) {
-                            interactionDetectorRef.current.interacting = false;
-                            if (
-                                Math.abs(carouselEl.scrollLeft - interactionDetectorRef.current.left) >
-                                INTERACTION_DETECTOR_THRESHOLD
-                            ) {
-                                setShouldAutoPlay(false);
-                            }
+                    onTouchEnd={(e) => {
+                        interactionDetectorRef.current.interacting = false;
+                        if (
+                            Math.abs(e.currentTarget.scrollLeft - interactionDetectorRef.current.left) >
+                            INTERACTION_DETECTOR_THRESHOLD
+                        ) {
+                            setShouldAutoPlay(false);
                         }
                     }}
                     onKeyDown={() => {
