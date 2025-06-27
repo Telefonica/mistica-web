@@ -68,9 +68,14 @@ const snapContainerPaddings = style([
     },
 ]);
 
+export const containerPaddingsVariants = styleVariants({
+    display: [displayContainerPaddings],
+    default: [defaultContainerPaddings],
+    snap: [snapContainerPaddings],
+});
+
 export const boxed = style({
     minHeight: '100%',
-    position: 'relative',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
@@ -78,15 +83,10 @@ export const boxed = style({
     borderRadius: skinVars.borderRadii.container,
 });
 
-export const containerPaddingsVariants = styleVariants({
-    display: [displayContainerPaddings],
-    default: [defaultContainerPaddings],
-    snap: [snapContainerPaddings],
-});
-
 export const touchable = style([
     sprinkles({
         display: 'flex',
+        flexDirection: 'column',
         position: 'relative',
         padding: 0,
         border: 'none',
@@ -162,5 +162,39 @@ export const touchableCardOverlayInverse = style([
                 transition: 'none',
             },
         },
+    },
+]);
+
+export const contentContainer = style([
+    sprinkles({
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }),
+    {
+        gap: 8,
+    },
+]);
+
+export const assetAndTextContent = style([
+    sprinkles({
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+    }),
+]);
+
+export const topActionsContainer = style([
+    sprinkles({
+        position: 'absolute',
+        top: 8,
+        right: 8,
+        display: 'flex',
+        flexDirection: 'row',
+    }),
+    {
+        zIndex: 2,
     },
 ]);

@@ -23,6 +23,7 @@ export default {
 };
 
 type DataCardArgs = {
+    type: 'default' | 'snap' | 'display';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
     headline: string;
@@ -35,9 +36,9 @@ type DataCardArgs = {
     ariaLabel: string;
     slot: boolean;
     slotAlignment: SlotAlignment;
-    closable: boolean;
-    topAction: boolean;
-    aspectRatio: AspectRatio;
+    onClose: boolean;
+    topActions: boolean;
+    aspectRatio: string;
     showFooter: boolean;
     footerSlot: boolean;
     primaryAction: 'buttonPrimary' | 'buttonSecondary' | 'buttonLink' | 'none';
@@ -47,6 +48,7 @@ type DataCardArgs = {
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DataCardArgs> = ({
+    type,
     asset = 'icon',
     headline,
     headlineType,
@@ -59,10 +61,10 @@ export const Default: StoryComponent<DataCardArgs> = ({
     ariaLabel,
     slot,
     slotAlignment,
-    closable,
+    onClose,
     primaryAction,
     secondaryAction,
-    topAction,
+    topActions,
     aspectRatio,
     footerSlot,
     showFooter,
@@ -110,7 +112,8 @@ export const Default: StoryComponent<DataCardArgs> = ({
     return (
         <>
             <DataCard2
-                onClose={closable ? () => {} : undefined}
+                type={type}
+                onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
                 pretitle={pretitle}
@@ -124,25 +127,17 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 aspectRatio={aspectRatioValue as AspectRatio}
                 dataAttributes={{testid: 'data-card'}}
                 aria-label={ariaLabel}
-                actions={
-                    topAction
+                topActions={
+                    topActions
                         ? [
                               {
                                   Icon: IconMobileDeviceRegular,
-                                  onPress: () => {
-                                      alert('icon press');
-                                  },
+                                  onPress: () => alert('Icon pressed'),
                                   label: 'Device',
                               },
                               {
-                                  checkedProps: {
-                                      Icon: IconStarFilled,
-                                      label: 'checked',
-                                  },
-                                  uncheckedProps: {
-                                      Icon: IconStarRegular,
-                                      label: 'unchecked',
-                                  },
+                                  checkedProps: {Icon: IconStarFilled, label: 'checked'},
+                                  uncheckedProps: {Icon: IconStarRegular, label: 'unchecked'},
                                   defaultChecked: false,
                                   onChange: () => {},
                               },
@@ -161,6 +156,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
 Default.storyName = 'DataCard';
 Default.args = {
+    type: 'default',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
@@ -171,18 +167,22 @@ Default.args = {
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
     ariaLabel: '',
-    closable: false,
-    topAction: false,
+    onClose: true,
+    topActions: true,
     primaryAction: 'buttonPrimary',
     secondaryAction: 'buttonLink',
     slot: true,
     slotAlignment: 'content',
-    aspectRatio: 'auto',
+    aspectRatio: '9 11',
     showFooter: true,
     footerSlot: true,
 };
 
 Default.argTypes = {
+    type: {
+        options: ['default', 'snap', 'display'],
+        control: {type: 'select'},
+    },
     asset: {
         options: ['icon', 'image', 'none'],
         control: {type: 'select'},

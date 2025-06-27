@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as styles from './cards2.css';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
@@ -14,8 +14,17 @@ import classnames from 'classnames';
 import {vars as skinVars} from './skins/skin-contract.css';
 import Stack from './stack';
 import Inline from './inline';
+import {IconButton, ToggleIconButton} from './icon-button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import * as tokens from './text-tokens';
 
-import type {DataAttributes, HeadingType, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {
+    DataAttributes,
+    HeadingType,
+    IconProps,
+    RendersNullableElement,
+    TrackingEvent,
+} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 
@@ -97,6 +106,7 @@ type CardProps = ContainerProps &
     AssetProps &
     TouchableProps &
     ActionsProps &
+    TopActionsProps &
     SlotProps &
     FooterProps;
 
@@ -191,12 +201,23 @@ type FooterProps = {
     footerSlot?: React.ReactNode;
 };
 
-const Footer = ({footerSlot, primaryAction, secondaryAction}: FooterProps & ActionsProps): JSX.Element => {
+const Footer = ({
+    type,
+    footerSlot,
+    primaryAction,
+    secondaryAction,
+}: FooterProps & ActionsProps): JSX.Element => {
     const hasActions = !!(primaryAction || secondaryAction);
     return (
         <>
             <Filler />
-            <div data-testid="footer" style={{padding: 16, borderTop: `1px solid ${skinVars.colors.border}`}}>
+            <div
+                data-testid="footer"
+                style={{
+                    padding: `16px ${type === 'display' ? 24 : 16}px`,
+                    borderTop: `1px solid ${skinVars.colors.border}`,
+                }}
+            >
                 <Stack space={16}>
                     {footerSlot}
                     {hasActions && (
@@ -230,6 +251,105 @@ const Actions = ({type, primaryAction, secondaryAction}: ActionsProps): JSX.Elem
             {primaryAction}
             {secondaryAction}
         </div>
+    );
+};
+
+type BaseIconButtonAction = {
+    Icon: (props: IconProps) => JSX.Element;
+    label: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+};
+
+type IconButtonAction = BaseIconButtonAction &
+    ExclusifyUnion<
+        | {href: string; newTab?: boolean}
+        | {
+              to: string;
+              newTab?: boolean;
+              fullPageOnWebView?: boolean;
+              replace?: boolean;
+          }
+        | {onPress: () => void}
+    >;
+
+type ToggleIconButtonAction = {
+    checkedProps: BaseIconButtonAction;
+    uncheckedProps: BaseIconButtonAction;
+    onChange?: (checked: boolean) => void | undefined | Promise<void>;
+    checked?: boolean;
+    defaultChecked?: boolean;
+};
+
+export type CardAction = {
+    disabled?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+} & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
+
+type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
+
+export const CardActionIconButton = (props: CardAction): JSX.Element => {
+    const variant = useThemeVariant();
+
+    if (props.Icon) {
+        return <IconButton {...props} aria-label={props.label} type="neutral" backgroundType="transparent" />;
+    }
+
+    const {checkedProps, uncheckedProps, ...rest} = props;
+    return (
+        <ToggleIconButton
+            {...rest}
+            checkedProps={{
+                ...checkedProps,
+                'aria-label': props.checkedProps.label,
+                type: variant === 'media' ? 'neutral' : 'brand',
+                backgroundType: 'solid',
+            }}
+            uncheckedProps={{
+                ...uncheckedProps,
+                'aria-label': props.uncheckedProps.label,
+                type: 'neutral',
+                backgroundType: 'transparent',
+            }}
+        />
+    );
+};
+
+type TopActionsProps = {
+    onClose?: () => void;
+    closeButtonLabel?: string;
+    topActions?: TopActionsArray;
+};
+
+const TopActions = ({onClose, closeButtonLabel, topActions}: TopActionsProps): JSX.Element => {
+    const {texts, t} = useTheme();
+    const actions = topActions ? [...topActions] : [];
+
+    if (onClose) {
+        actions.push({
+            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
+            onPress: onClose,
+            Icon: IconCloseRegular,
+        });
+    }
+
+    if (actions.length === 0) {
+        return <></>;
+    }
+
+    const variant = 'default'; // fixme
+    return (
+        <ThemeVariant variant={variant}>
+            <div className={styles.topActionsContainer}>
+                {actions.map((action, index) => {
+                    if ('Icon' in action || 'checkedProps' in action) {
+                        return <CardActionIconButton key={index} {...action} />;
+                    }
+                    return action;
+                })}
+            </div>
+        </ThemeVariant>
     );
 };
 
@@ -460,122 +580,104 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             secondaryAction,
             showFooter,
             footerSlot,
+            topActions,
+            onClose,
+            closeButtonLabel,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
         const {text: slotText, ref: slotRef} = useInnerText();
         const hasActions = !!(primaryAction || secondaryAction);
+        const hasAssetOrHeadline = !!(asset || headline);
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
         const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
         const showActionsInBody = !shouldShowFooter && hasActions;
+        const topActionsLength = (topActions ? topActions.length : 0) + (onClose ? 1 : 0);
 
         console.log('TODO A11Y', {slotText, slotAlignment});
 
         return (
-            <>
-                <Container
-                    type={type}
-                    dataAttributes={dataAttributes}
-                    ref={ref}
-                    isInverse={isInverse}
-                    width={width}
-                    height={height}
-                    aspectRatio={aspectRatio}
+            <Container
+                type={type}
+                dataAttributes={dataAttributes}
+                ref={ref}
+                isInverse={isInverse}
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+            >
+                <TopActions onClose={onClose} closeButtonLabel={closeButtonLabel} topActions={topActions} />
+                <BaseTouchable
+                    maybe
+                    className={classnames(styles.touchable, styles.touchableContainer)}
+                    {...touchableProps}
                 >
-                    <BaseTouchable
-                        maybe
-                        className={classnames(styles.touchable, styles.touchableContainer)}
-                        {...touchableProps}
+                    {isTouchable && <div className={overlayStyle} />}
+                    <div
+                        data-testid="body"
+                        className={classnames(styles.touchable, styles.containerPaddingsVariants[type])}
+                        style={{
+                            // with a footer, the bottom padding for the body is always 16px
+                            paddingBottom: shouldShowFooter ? 16 : undefined,
+                        }}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
-                        <div
-                            data-testid="body"
-                            className={classnames(
-                                styles.touchable,
-
-                                styles.containerPaddingsVariants[type]
-                            )}
-                            style={{
-                                // with a footer, the bottom padding for the body is always 16px
-                                paddingBottom: shouldShowFooter ? 16 : undefined,
-                                position: 'relative',
-                                display: 'flex',
-                                height: '100%',
-                                flexDirection: 'column',
-                            }}
-                        >
-                            <div
-                                style={{
-                                    border: `1px solid red`,
-                                    position: 'relative',
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    gap: 8,
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        position: 'relative',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: '100%',
-                                    }}
-                                >
-                                    <Asset type={type} asset={asset} />
-                                    <TextContent
-                                        type={type}
-                                        headline={headline}
-                                        pretitle={pretitle}
-                                        pretitleLinesMax={pretitleLinesMax}
-                                        title={title}
-                                        titleAs={titleAs}
-                                        titleLinesMax={titleLinesMax}
-                                        subtitle={subtitle}
-                                        subtitleLinesMax={subtitleLinesMax}
-                                        description={description}
-                                        descriptionLinesMax={descriptionLinesMax}
-                                    />
-                                </div>
-                                <div data-testid="top-actions" style={{background: 'lightblue'}}>
-                                    lalala
-                                </div>
-                            </div>
-                            {slotAlignment === 'bottom' && <Filler />}
-                            {slot && (
-                                <div ref={slotRef} data-testid="slot">
-                                    {slot}
-                                </div>
-                            )}
-                            {slotAlignment === 'content' && showActionsInBody && <Filler />}
-                            {showActionsInBody && (
-                                <Actions
+                        <div className={styles.contentContainer}>
+                            <div className={styles.assetAndTextContent}>
+                                <Asset type={type} asset={asset} />
+                                <TextContent
                                     type={type}
-                                    primaryAction={primaryAction}
-                                    secondaryAction={secondaryAction}
+                                    headline={headline}
+                                    pretitle={pretitle}
+                                    pretitleLinesMax={pretitleLinesMax}
+                                    title={title}
+                                    titleAs={titleAs}
+                                    titleLinesMax={titleLinesMax}
+                                    subtitle={subtitle}
+                                    subtitleLinesMax={subtitleLinesMax}
+                                    description={description}
+                                    descriptionLinesMax={descriptionLinesMax}
                                 />
-                            )}
+                            </div>
+                            {hasAssetOrHeadline && <div style={{width: topActionsLength * 48 - 16}} />}
                         </div>
-                    </BaseTouchable>
-                    {shouldShowFooter && (
-                        <Footer
-                            type={type}
-                            footerSlot={footerSlot}
-                            primaryAction={primaryAction}
-                            secondaryAction={secondaryAction}
-                        />
-                    )}
-                </Container>
-            </>
+                        {slotAlignment === 'bottom' && <Filler />}
+                        {slot && (
+                            <div ref={slotRef} data-testid="slot">
+                                {slot}
+                            </div>
+                        )}
+                        {slotAlignment === 'content' && showActionsInBody && <Filler />}
+                        {showActionsInBody && (
+                            <Actions
+                                type={type}
+                                primaryAction={primaryAction}
+                                secondaryAction={secondaryAction}
+                            />
+                        )}
+                    </div>
+                </BaseTouchable>
+                {shouldShowFooter && (
+                    <Footer
+                        type={type}
+                        footerSlot={footerSlot}
+                        primaryAction={primaryAction}
+                        secondaryAction={secondaryAction}
+                    />
+                )}
+            </Container>
         );
     }
 );
 
 type DataCardProps = {
-    type: CardType;
+    type?: CardType;
     asset?: React.ReactElement;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleAs?: HeadingType;
+    pretitleLinesMax?: number;
     title?: string;
     titleAs?: HeadingType;
     titleLinesMax?: number;
@@ -592,6 +694,7 @@ type DataCardProps = {
     /** @deprecated use slot */
     extra?: React.ReactNode;
     slot?: React.ReactNode;
+    slotAlignment?: SlotAlignment;
     isInverse?: boolean;
     aspectRatio?: AspectRatio;
     children?: undefined;
@@ -601,6 +704,11 @@ type DataCardProps = {
     buttonLink?: ActionButton;
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
+    onClose?: () => void;
+    closeButtonLabel?: string;
+    /** @deprecated use topActions */
+    actions?: TopActionsArray;
+    topActions?: TopActionsArray;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
 };
@@ -610,12 +718,16 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
         {
             dataAttributes,
             type = 'default',
+            // handle deprecations
             button,
             primaryAction,
             buttonLink,
             secondaryAction,
             extra,
             slot,
+            actions,
+            topActions,
+            // pass through props
             ...rest
         },
         ref
@@ -631,6 +743,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 ref={ref}
                 primaryAction={primaryAction || button}
                 secondaryAction={secondaryAction || buttonLink}
+                topActions={topActions || actions}
                 slot={slot || extra}
                 {...rest}
             />
