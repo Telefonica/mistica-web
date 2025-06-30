@@ -31,8 +31,8 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
-type CardSize = 'snap' | 'default' | 'display';
 type CardType = 'data' | 'media' | 'cover' | 'naked';
+type CardSize = 'snap' | 'default' | 'display';
 
 type ActionButton =
     | RendersNullableElement<typeof ButtonPrimary>
@@ -219,8 +219,10 @@ const Footer = ({
             <Filler />
             <div
                 data-testid="footer"
+                className={styles.containerPaddingsVariants[size]}
                 style={{
-                    padding: `16px ${size === 'display' ? 24 : 16}px`,
+                    paddingTop: 16,
+                    paddingBottom: 16,
                     borderTop: `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                 }}
             >
