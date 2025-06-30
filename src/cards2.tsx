@@ -4,11 +4,11 @@ import * as React from 'react';
 import * as styles from './cards2.css';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrMediaVariant, useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
-import {Boxed} from './boxed';
+import {InternalBoxed} from './boxed';
 import {BaseTouchable, type PressHandler} from './touchable';
 import {aspectRatioToNumber} from './utils/aspect-ratio-support';
 import classnames from 'classnames';
@@ -28,6 +28,8 @@ import type {
 } from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import type {Variant} from './theme-variant-context';
+import type {VideoElement, VideoSource} from './video';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
@@ -45,7 +47,7 @@ export type SlotAlignment = 'content' | 'bottom';
 type ContainerProps = {
     type: CardType;
     size: CardSize;
-    isInverse?: boolean;
+    variant?: Variant;
     width?: string | number;
     height?: string | number;
     aspectRatio?: AspectRatio;
@@ -57,6 +59,7 @@ type ContainerProps = {
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     onClose?: () => void;
     closeButtonLabel?: string;
+    background?: string;
 };
 
 type TextContentProps = {
@@ -108,7 +111,6 @@ type SlotProps = {
 type CardProps = ContainerProps &
     TextContentProps &
     AssetProps &
-    TouchableProps &
     ActionsProps &
     TopActionsProps &
     SlotProps &
@@ -129,7 +131,8 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
             'aria-description': ariaDescription,
             'aria-describedby': ariaDescribedby,
             dataAttributes,
-            isInverse,
+            background,
+            variant,
         },
         ref
     ): JSX.Element => {
@@ -164,16 +167,17 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
                         minHeight: '100%',
                     }}
                 >
-                    <Boxed
+                    <InternalBoxed
                         // Without setting the width here, the component fails to get the correct width in some cases
                         // even if we set the 100% width style in the boxed class
                         width="100%"
                         height="100%"
-                        variant={isInverse ? 'inverse' : 'default'}
+                        variant={variant}
                         className={classnames(styles.boxed)}
+                        background={background}
                     >
                         {children}
-                    </Boxed>
+                    </InternalBoxed>
                 </div>
             </section>
         );
@@ -326,13 +330,13 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 
 type TopActionsProps = {
     size?: CardSize;
-    isInverse?: boolean;
+    variant?: Variant;
     onClose?: () => void;
     closeButtonLabel?: string;
     topActions?: TopActionsArray;
 };
 
-const TopActions = ({onClose, closeButtonLabel, topActions, isInverse}: TopActionsProps): JSX.Element => {
+const TopActions = ({onClose, closeButtonLabel, topActions, variant}: TopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const actions = topActions ? [...topActions] : [];
 
@@ -347,9 +351,6 @@ const TopActions = ({onClose, closeButtonLabel, topActions, isInverse}: TopActio
     if (actions.length === 0) {
         return <></>;
     }
-
-    // TODO: complete for other cases
-    const variant = isInverse ? 'inverse' : 'default';
 
     return (
         <ThemeVariant variant={variant}>
@@ -566,11 +567,12 @@ const TextContent = ({
     );
 };
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
+export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
     (
         {
             type,
             size,
+            background,
             asset,
             headline,
             title,
@@ -583,7 +585,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             description,
             descriptionLinesMax,
             dataAttributes,
-            isInverse,
+            variant,
             width,
             height,
             aspectRatio,
@@ -603,7 +605,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         const {text: slotText, ref: slotRef} = useInnerText();
         const hasActions = !!(primaryAction || secondaryAction);
         const hasAssetOrHeadline = !!(asset || headline);
+
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const isInverseOutside = useIsInverseOrMediaVariant();
+        const isInverse = variant ? variant === 'inverse' || variant === 'media' : isInverseOutside;
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
         const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
         const showActionsInBody = !shouldShowFooter && hasActions;
@@ -617,16 +622,17 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                 size={size}
                 dataAttributes={dataAttributes}
                 ref={ref}
-                isInverse={isInverse}
+                variant={variant}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
+                background={background}
             >
                 <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
-                    isInverse={isInverse}
+                    variant={variant}
                 />
                 <BaseTouchable
                     maybe
@@ -695,6 +701,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
 type DataCardProps = {
     size?: CardSize;
+    background?: string;
+    variant?: Variant;
+    /** @deprecated use variant */
+    isInverse?: boolean;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -717,7 +727,6 @@ type DataCardProps = {
     extra?: React.ReactNode;
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
-    isInverse?: boolean;
     aspectRatio?: AspectRatio;
     children?: undefined;
     /** @deprecated use primaryAction */
@@ -749,13 +758,15 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
             slot,
             actions,
             topActions,
+            isInverse,
+            variant,
             // pass through props
             ...rest
         },
         ref
     ) => {
         return (
-            <Card
+            <InternalCard
                 type="data"
                 size={size}
                 dataAttributes={{
@@ -768,6 +779,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 secondaryAction={secondaryAction || buttonLink}
                 topActions={topActions || actions}
                 slot={slot || extra}
+                variant={variant || (isInverse ? 'inverse' : 'default')}
                 {...rest}
             />
         );
@@ -795,3 +807,108 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Snap
         );
     }
 );
+
+type CoverCardBaseProps = {
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    size?: 'default' | 'display';
+    aspectRatio?: AspectRatio;
+    width?: number | string;
+    height?: number | string;
+    asset?: React.ReactElement;
+    topActions?: ReadonlyArray<CardAction | React.ReactElement>;
+    onClose?: () => void;
+    closeButtonLabel?: string;
+    dataAttributes?: DataAttributes;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleAs?: HeadingType;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleAs?: HeadingType;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    slotAlignment?: SlotAlignment;
+    slot?: React.ReactNode;
+};
+
+type ImageProps = {
+    backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
+};
+
+type VideoProps = {
+    backgroundVideo: VideoSource;
+    poster?: string;
+    backgroundVideoRef?: React.RefObject<VideoElement>;
+};
+
+type BackgroundColorProps = {
+    backgroundColor?: string | undefined;
+    /** @deprecated use variant */
+    isInverse?: boolean;
+    variant?: Variant;
+};
+
+export const CoverCard = React.forwardRef<
+    HTMLDivElement,
+    MaybeTouchableCard<CoverCardBaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>>
+>(({size = 'default', ...rest}, ref) => {
+    return <InternalCard size={size} {...rest} ref={ref} type="cover" />;
+});
+
+type PosterCardBaseProps = {
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    aspectRatio?: AspectRatio;
+    width?: number | string;
+    height?: number | string;
+    asset?: React.ReactElement;
+    /** @deprecated use topActions */
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
+    topActions?: ReadonlyArray<CardAction | React.ReactElement>;
+    onClose?: () => void;
+    closeButtonLabel?: string;
+    dataAttributes?: DataAttributes;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleAs?: HeadingType;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleAs?: HeadingType;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    /** @deprecated use slot */
+    extra?: React.ReactNode;
+    slotAlignment?: SlotAlignment;
+    slot?: React.ReactNode;
+};
+
+/**
+ * @deprecated use CoverCard
+ */
+export const PosterCard = React.forwardRef<
+    HTMLDivElement,
+    MaybeTouchableCard<PosterCardBaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>>
+>(({isInverse, variant, actions, topActions, extra, slot, ...rest}, ref) => {
+    return (
+        <InternalCard
+            ref={ref}
+            type="cover"
+            size="display"
+            variant={variant || (isInverse ? 'inverse' : 'default')}
+            topActions={topActions || actions}
+            slot={slot || extra}
+            {...rest}
+        />
+    );
+});

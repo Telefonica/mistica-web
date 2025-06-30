@@ -10,13 +10,14 @@ import {
     IconStarRegular,
     ButtonSecondary,
 } from '..';
-import {DataCard as DataCard2, type SlotAlignment} from '../cards2';
+import {InternalCard, type SlotAlignment} from '../cards2';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {AspectRatio} from '../card';
 import type {TagType} from '..';
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Cards/DataCard2',
@@ -25,7 +26,8 @@ export default {
 type DataCardArgs = {
     type: 'data' | 'media' | 'cover' | 'naked';
     size: 'default' | 'snap' | 'display';
-    isInverse: boolean;
+    background?: string;
+    variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
     headline: string;
@@ -50,8 +52,10 @@ type DataCardArgs = {
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DataCardArgs> = ({
+    type,
     size,
-    isInverse,
+    background,
+    variant,
     asset = 'icon',
     headline,
     headlineType,
@@ -75,7 +79,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     let assetElement;
     if (asset === 'icon') {
         assetElement = (
-            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+            <Circle size={40} background={skinVars.colors.brandLow}>
                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
@@ -114,9 +118,11 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
     return (
         <>
-            <DataCard2
+            <InternalCard
+                type={type}
                 size={size}
-                isInverse={isInverse}
+                variant={variant || undefined}
+                background={background || undefined}
                 onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
@@ -158,12 +164,13 @@ export const Default: StoryComponent<DataCardArgs> = ({
     );
 };
 
-Default.storyName = 'DataCard2';
+Default.storyName = 'InternalCard';
 Default.args = {
     type: 'data',
+    background: '',
     size: 'default',
+    variant: '',
     asset: 'icon',
-    isInverse: false,
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
@@ -191,7 +198,22 @@ Default.argTypes = {
     },
     size: {
         options: ['default', 'snap', 'display'],
-        control: {type: 'select'},
+        control: {
+            type: 'select',
+        },
+    },
+    variant: {
+        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+                media: 'media',
+            },
+        },
     },
     asset: {
         options: ['icon', 'image', 'none'],
