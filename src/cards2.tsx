@@ -4,7 +4,12 @@ import * as React from 'react';
 import * as styles from './cards2.css';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {ThemeVariant, useIsInverseOrMediaVariant, useThemeVariant} from './theme-variant-context';
+import {
+    ThemeVariant,
+    useIsInverseOrMediaVariant,
+    useIsInverseVariant,
+    useThemeVariant,
+} from './theme-variant-context';
 import Tag from './tag';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
@@ -17,6 +22,7 @@ import Stack from './stack';
 import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import Image from './image';
 import * as tokens from './text-tokens';
 
 import type {
@@ -59,11 +65,17 @@ type ContainerProps = {
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     onClose?: () => void;
     closeButtonLabel?: string;
-    background?: string;
+};
+
+type BackgroundProps = {
+    backgroundColor?: string;
+    backgroundImageSrc?: string;
+    backgroundImageSrcSet?: string;
 };
 
 type TextContentProps = {
     size: CardSize;
+    variant?: Variant;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: HeadingType;
@@ -109,6 +121,7 @@ type SlotProps = {
 };
 
 type CardProps = ContainerProps &
+    BackgroundProps &
     TextContentProps &
     AssetProps &
     ActionsProps &
@@ -119,7 +132,7 @@ type CardProps = ContainerProps &
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
-const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
+const Container = React.forwardRef<HTMLDivElement, ContainerProps & BackgroundProps>(
     (
         {
             children,
@@ -131,7 +144,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
             'aria-description': ariaDescription,
             'aria-describedby': ariaDescribedby,
             dataAttributes,
-            background,
+            backgroundColor,
             variant,
         },
         ref
@@ -174,7 +187,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
                         height="100%"
                         variant={variant}
                         className={classnames(styles.boxed)}
-                        background={background}
+                        background={backgroundColor}
                     >
                         {children}
                     </InternalBoxed>
@@ -201,6 +214,31 @@ const Asset = ({size, asset}: AssetProps): JSX.Element | null => {
     }
 
     return null;
+};
+
+type BackgroundImageProps = {
+    src?: string;
+    srcSet?: string;
+};
+
+const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
+    if (!src && !srcSet) {
+        return <></>;
+    }
+    return (
+        <div
+            style={{
+                // class displayCardBackground
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                objectFit: 'cover',
+                zIndex: 0,
+            }}
+        >
+            <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />;
+        </div>
+    );
 };
 
 type FooterProps = {
@@ -379,6 +417,7 @@ const TextContent = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
+    variant,
 }: TextContentProps): JSX.Element => {
     const {textPresets, colorValues} = useTheme();
     const themeVariant = useThemeVariant();
@@ -501,7 +540,10 @@ const TextContent = ({
         },
     } as const;
 
-    const colors = colorVariants[themeVariant as keyof typeof colorVariants] || colorVariants.default;
+    const colors =
+        colorVariants[variant as keyof typeof colorVariants] ||
+        colorVariants[themeVariant as keyof typeof colorVariants] ||
+        colorVariants.default;
     const textVariant = textVariants[size] || textVariants.default;
 
     return (
@@ -572,7 +614,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         {
             type,
             size,
-            background,
+            backgroundColor,
+            backgroundImageSrc,
+            backgroundImageSrcSet,
             asset,
             headline,
             title,
@@ -585,7 +629,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             description,
             descriptionLinesMax,
             dataAttributes,
-            variant,
+            variant: variantProp,
             width,
             height,
             aspectRatio,
@@ -602,19 +646,29 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         },
         ref
     ): JSX.Element => {
-        const {text: slotText, ref: slotRef} = useInnerText();
+        const {/* text: slotText, */ ref: slotRef} = useInnerText();
         const hasActions = !!(primaryAction || secondaryAction);
         const hasAssetOrHeadline = !!(asset || headline);
 
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const isInverseOutside = useIsInverseOrMediaVariant();
-        const isInverse = variant ? variant === 'inverse' || variant === 'media' : isInverseOutside;
+        const isExternalInverse = useIsInverseVariant();
+        const variant = variantProp || (type === 'cover' ? 'media' : undefined);
+
+        const isInverse = variant
+            ? variant === 'inverse' || variant === 'media'
+            : isInverseOutside
+              ? true
+              : type === 'cover';
+
+        console.log({type, variantProp, variant, isInverse});
+
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
         const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
         const showActionsInBody = !shouldShowFooter && hasActions;
         const topActionsLength = (topActions ? topActions.length : 0) + (onClose ? 1 : 0);
 
-        console.log('TODO A11Y', {slotText, slotAlignment});
+        // console.log('TODO A11Y', {slotText, slotAlignment});
 
         return (
             <Container
@@ -626,7 +680,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
-                background={background}
+                backgroundColor={
+                    // REVIEW THIS
+                    backgroundColor || variant === 'alternative'
+                        ? skinVars.colors.backgroundAlternative
+                        : variant === 'media'
+                          ? isExternalInverse
+                              ? skinVars.colors.backgroundContainerBrandOverInverse
+                              : skinVars.colors.backgroundBrand
+                          : undefined
+                }
             >
                 <TopActions
                     onClose={onClose}
@@ -640,6 +703,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     {...touchableProps}
                 >
                     {isTouchable && <div className={overlayStyle} />}
+                    <BackgroundImage src={backgroundImageSrc} srcSet={backgroundImageSrcSet} />
                     <div
                         data-testid="body"
                         className={classnames(styles.touchable, styles.containerPaddingsVariants[size])}
@@ -652,6 +716,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             <div className={styles.assetAndTextContent}>
                                 <Asset size={size} asset={asset} />
                                 <TextContent
+                                    variant={variant}
                                     size={size}
                                     headline={headline}
                                     pretitle={pretitle}
@@ -779,7 +844,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 secondaryAction={secondaryAction || buttonLink}
                 topActions={topActions || actions}
                 slot={slot || extra}
-                variant={variant || (isInverse ? 'inverse' : 'default')}
+                variant={variant || (isInverse ? 'inverse' : undefined)}
                 {...rest}
             />
         );
@@ -814,11 +879,14 @@ type CoverCardBaseProps = {
     'aria-description'?: string;
     'aria-describedby'?: string;
     size?: 'default' | 'display';
+    variant?: Variant;
     aspectRatio?: AspectRatio;
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
+    primaryAction?: ActionButton;
+    secondaryAction?: ActionButton;
     onClose?: () => void;
     closeButtonLabel?: string;
     dataAttributes?: DataAttributes;
@@ -838,20 +906,18 @@ type CoverCardBaseProps = {
 };
 
 type ImageProps = {
-    backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
+    backgroundImageSrc?: string;
+    backgroundImageSrcSet?: string;
+};
+
+type BackgroundColorProps = {
+    backgroundColor?: string;
 };
 
 type VideoProps = {
     backgroundVideo: VideoSource;
     poster?: string;
     backgroundVideoRef?: React.RefObject<VideoElement>;
-};
-
-type BackgroundColorProps = {
-    backgroundColor?: string | undefined;
-    /** @deprecated use variant */
-    isInverse?: boolean;
-    variant?: Variant;
 };
 
 export const CoverCard = React.forwardRef<
@@ -893,21 +959,39 @@ type PosterCardBaseProps = {
     slot?: React.ReactNode;
 };
 
+type DeprecatedImageProps = {
+    backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
+};
+
+type DeprecatedBackgroundColorProps = {
+    backgroundColor?: string | undefined;
+    /** @deprecated use variant */
+    isInverse?: boolean;
+    variant?: Variant;
+};
+
 /**
  * @deprecated use CoverCard
  */
 export const PosterCard = React.forwardRef<
     HTMLDivElement,
-    MaybeTouchableCard<PosterCardBaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>>
->(({isInverse, variant, actions, topActions, extra, slot, ...rest}, ref) => {
+    MaybeTouchableCard<
+        PosterCardBaseProps &
+            ExclusifyUnion<DeprecatedImageProps | DeprecatedBackgroundColorProps /* | VideoProps  */>
+    >
+>(({isInverse, variant, actions, topActions, extra, slot, backgroundImage, ...rest}, ref) => {
+    const backgroundImageProps = {
+        backgroundImageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
+        backgroundImageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
+    } as BackgroundImageProps;
     return (
-        <InternalCard
+        <CoverCard
             ref={ref}
-            type="cover"
             size="display"
-            variant={variant || (isInverse ? 'inverse' : 'default')}
+            variant={variant || (isInverse ? 'inverse' : undefined)}
             topActions={topActions || actions}
             slot={slot || extra}
+            {...backgroundImageProps}
             {...rest}
         />
     );

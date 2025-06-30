@@ -15,6 +15,7 @@ import {
     Placeholder,
 } from '..';
 import {PosterCard} from '../card';
+import {PosterCard as PosterCard2} from '../cards2';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
@@ -22,6 +23,7 @@ import beachImg from './images/beach.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Cards/PosterCard',
@@ -36,7 +38,7 @@ type PosterCardArgs = {
     background: 'image' | 'video' | 'custom color' | 'color from skin';
     backgroundColorCustom: string;
     backgroundColorFromSkin: string;
-    variant: 'default' | 'inverse' | 'alternative';
+    variant: Variant | '';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -131,7 +133,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
               : {
                     ...topActionsProps,
                     backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
-                    variant,
+                    variant: (variant || undefined) as Variant,
                 };
 
     const interactiveProps = {
@@ -161,6 +163,24 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     aspectRatio={aspectRatio}
                     {...interactiveProps}
                 />
+                <PosterCard2
+                    dataAttributes={{testid: 'poster-card'}}
+                    {...backgroundProps}
+                    asset={assetElement}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    pretitleAs={pretitleAs}
+                    title={title}
+                    titleAs={titleAs}
+                    subtitle={subtitle}
+                    description={description}
+                    extra={extra ? <Placeholder /> : undefined}
+                    aria-label={ariaLabel}
+                    width={width}
+                    height={height}
+                    aspectRatio={aspectRatio}
+                    {...interactiveProps}
+                />
             </Box>
         </ResponsiveLayout>
     );
@@ -173,7 +193,7 @@ Default.args = {
     background: 'image',
     backgroundColorCustom: '',
     backgroundColorFromSkin: '',
-    variant: 'default',
+    variant: '',
     headline: 'Priority',
     pretitle: 'Pretitle',
     pretitleAs: 'span',
@@ -216,8 +236,17 @@ Default.argTypes = {
         if: {arg: 'background', eq: 'color from skin'},
     },
     variant: {
-        options: ['default', 'inverse', 'alternative'],
-        control: {type: 'select'},
+        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+                media: 'media',
+            },
+        },
         // This control should only be visible when background is set to 'color from skin' or 'custom color'.
         // That could look similar to this in a future storybook version (see https://github.com/ComponentDriven/csf/pull/76):
         // if: {
