@@ -159,6 +159,8 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & BackgroundPr
         const aspectRatioStyle = aspectRatioValue
             ? applyCssVars({[styles.vars.aspectRatio]: String(aspectRatioValue)})
             : {};
+
+        // @TODO verify this. Color cards have border?
         const boxedBorderStyleOverride = backgroundColor ? 'none' : undefined;
 
         return (
@@ -247,6 +249,8 @@ type BackgroundImageProps = {
 };
 
 const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
+    // @TODO: move to prop?
+    const isExternalInverse = useIsInverseVariant();
     return (
         <div
             style={{
@@ -258,7 +262,12 @@ const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
                 zIndex: 0,
             }}
         >
-            <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />
+            <ThemeVariant
+                // this avoids color flickering while loading the image
+                variant={isExternalInverse ? 'inverse' : 'default'}
+            >
+                <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />
+            </ThemeVariant>
         </div>
     );
 };
@@ -710,14 +719,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         // @TODO: REVIEW THIS
         const backgroundColor =
-            backgroundColorProp ||
-            (variant === 'alternative'
-                ? skinVars.colors.backgroundAlternative
-                : variant === 'media'
-                  ? isExternalInverse
-                      ? skinVars.colors.backgroundContainerBrandOverInverse
-                      : skinVars.colors.backgroundBrand
-                  : undefined);
+            hasImage || hasVideo
+                ? 'transparent'
+                : backgroundColorProp ||
+                  (variant === 'alternative'
+                      ? skinVars.colors.backgroundAlternative
+                      : variant === 'media'
+                        ? isExternalInverse
+                            ? skinVars.colors.backgroundContainerBrandOverInverse
+                            : skinVars.colors.backgroundBrand
+                        : undefined);
 
         console.log({
             type,
