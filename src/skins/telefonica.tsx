@@ -367,10 +367,10 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
         borderRadii: {
             avatar: '50%',
             bar: '0px',
-            button: '999px',
+            button: '32px',
             checkbox: '0px',
             container: '0px',
-            indicator: '999px',
+            indicator: '24px',
             input: '0px',
             legacyDisplay: '0px',
             popup: '0px',

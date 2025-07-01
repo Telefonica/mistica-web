@@ -363,7 +363,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
         borderRadii: {
             avatar: '50%',
             bar: '999px',
-            button: '999px',
+            button: '32px',
             checkbox: '4px',
             container: '20px',
             indicator: '8px',

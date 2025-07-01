@@ -179,13 +179,13 @@ export const NavigableChip: StoryComponent<{
 };
 
 const defaultArgs = {
+    label: 'Chip',
     inverse: false,
     active: false,
     badge: '0',
     icon: false,
     closable: false,
     href: 'undefined',
-    label: 'Chip',
 };
 
 const navigableArgs = {
