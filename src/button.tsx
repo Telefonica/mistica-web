@@ -241,8 +241,6 @@ const renderButtonContent = ({
                             display: 'inline-block',
                             width: spinnerSizeRem,
                             height: spinnerSizeRem,
-                            paddingTop: 4,
-                            paddingBottom: 4,
                         }}
                     />
                 )}
