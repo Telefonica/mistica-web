@@ -80,10 +80,11 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     topAction,
     width,
     height,
-    aspectRatio,
+    aspectRatio: aspectRatioArg,
     emptySource,
     inverse,
 }) => {
+    const aspectRatio = aspectRatioArg.replace(' ', ':');
     let assetElement;
     if (asset === 'circle with icon') {
         assetElement = (
@@ -160,7 +161,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     aria-label={ariaLabel}
                     width={width}
                     height={height}
-                    aspectRatio={aspectRatio}
+                    aspectRatio={aspectRatio as any}
                     {...interactiveProps}
                 />
                 <PosterCard2
@@ -178,7 +179,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     aria-label={ariaLabel}
                     width={width}
                     height={height}
-                    aspectRatio={aspectRatio}
+                    aspectRatio={aspectRatio as any}
                     {...interactiveProps}
                 />
             </Box>
@@ -206,8 +207,8 @@ Default.args = {
     closable: false,
     actions: 'none',
     topAction: false,
-    width: 'auto',
-    height: 'auto',
+    width: '',
+    height: '',
     aspectRatio: 'auto',
     emptySource: false,
     inverse: false,
@@ -257,8 +258,16 @@ Default.argTypes = {
         // },
     },
     aspectRatio: {
-        options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
-        control: {type: 'select'},
+        options: ['auto', '1:1', '16:9', '7:10', '9:10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
     actions: {
         options: ['onPress', 'href', 'to', 'none'],

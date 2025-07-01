@@ -39,6 +39,10 @@ import type {VideoElement, VideoSource} from './video';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
+const DEBUG = 0;
+
+const dbg = (value: any) => (DEBUG ? value : undefined);
+
 type CardType = 'data' | 'media' | 'cover' | 'naked';
 type CardSize = 'snap' | 'default' | 'display';
 
@@ -87,10 +91,12 @@ type TextContentProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
+    withTextShadow?: boolean;
 };
 
 type AssetProps = {
     size: CardSize;
+    type: CardType;
     asset?: React.ReactElement;
 };
 
@@ -153,6 +159,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & BackgroundPr
         const aspectRatioStyle = aspectRatioValue
             ? applyCssVars({[styles.vars.aspectRatio]: String(aspectRatioValue)})
             : {};
+        const boxedBorderStyleOverride = backgroundColor ? 'none' : undefined;
 
         return (
             // aria-description should be vaild, but this eslint rule is complaining about it
@@ -188,6 +195,8 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & BackgroundPr
                         variant={variant}
                         className={classnames(styles.boxed)}
                         background={backgroundColor}
+                        borderRadius={skinVars.borderRadii.container}
+                        border={boxedBorderStyleOverride}
                     >
                         {children}
                     </InternalBoxed>
@@ -197,23 +206,39 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & BackgroundPr
     }
 );
 
-const Filler = () => <div style={{flexGrow: 1}} />;
+type FillerProps = {
+    minHeight?: number;
+};
 
-const Asset = ({size, asset}: AssetProps): JSX.Element | null => {
+const Filler = ({minHeight}: FillerProps) => (
+    <div
+        style={{
+            flexGrow: 1,
+            flexShrink: 0,
+            minHeight,
+            border: dbg('1px solid green'),
+            background: dbg('rgba(200,255,200,0.4)'),
+        }}
+    />
+);
+
+const Asset = ({size, type, asset}: AssetProps): JSX.Element | null => {
+    // @TODO: review this logic
     if (!asset) {
         return null;
     }
 
-    // Content-Follows Spacing (mode C according to specs)
-    if (size === 'snap' || size === 'default') {
-        return (
-            <div data-testid="asset" style={{paddingBottom: 16}}>
-                {asset}
-            </div>
-        );
+    // Flexible Spacing (mode A according to specs)
+    if (type === 'cover') {
+        return <div data-testid="asset">{asset}</div>;
     }
 
-    return null;
+    // Content-Follows Spacing (mode C according to specs)
+    if (size === 'snap' || size === 'default') {
+        return <div data-testid="asset">{asset}</div>;
+    }
+
+    return <div data-testid="asset">{asset}</div>;
 };
 
 type BackgroundImageProps = {
@@ -222,9 +247,6 @@ type BackgroundImageProps = {
 };
 
 const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
-    if (!src && !srcSet) {
-        return <></>;
-    }
     return (
         <div
             style={{
@@ -236,7 +258,7 @@ const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
                 zIndex: 0,
             }}
         >
-            <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />;
+            <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />
         </div>
     );
 };
@@ -261,7 +283,7 @@ const Footer = ({
             <Filler />
             <div
                 data-testid="footer"
-                className={styles.containerPaddingsVariants[size]}
+                className={styles.containerPaddingXVariants[size]}
                 style={{
                     paddingTop: 16,
                     paddingBottom: 16,
@@ -343,12 +365,21 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
     const variant = useThemeVariant();
 
     if (props.Icon) {
-        return <IconButton {...props} aria-label={props.label} type="neutral" backgroundType="transparent" />;
+        return (
+            <IconButton
+                small
+                {...props}
+                aria-label={props.label}
+                type="neutral"
+                backgroundType="transparent"
+            />
+        );
     }
 
     const {checkedProps, uncheckedProps, ...rest} = props;
     return (
         <ToggleIconButton
+            small
             {...rest}
             checkedProps={{
                 ...checkedProps,
@@ -418,6 +449,7 @@ const TextContent = ({
     description,
     descriptionLinesMax,
     variant,
+    withTextShadow,
 }: TextContentProps): JSX.Element => {
     const {textPresets, colorValues} = useTheme();
     const themeVariant = useThemeVariant();
@@ -545,6 +577,7 @@ const TextContent = ({
         colorVariants[themeVariant as keyof typeof colorVariants] ||
         colorVariants.default;
     const textVariant = textVariants[size] || textVariants.default;
+    const textShadowStyle = withTextShadow ? '0 0 20px rgba(0,0,0,1)' : undefined;
 
     return (
         <div>
@@ -561,6 +594,7 @@ const TextContent = ({
                         as={pretitleAs || 'p'}
                         truncate={pretitleLinesMax}
                         color={colors.pretitle}
+                        textShadow={textShadowStyle}
                     >
                         {pretitle}
                     </Text>
@@ -574,6 +608,7 @@ const TextContent = ({
                         as={titleAs}
                         truncate={titleLinesMax}
                         color={colors.title}
+                        textShadow={textShadowStyle}
                     >
                         {title}
                     </Text>
@@ -587,6 +622,7 @@ const TextContent = ({
                         as="p"
                         truncate={subtitleLinesMax}
                         color={colors.subtitle}
+                        textShadow={textShadowStyle}
                     >
                         {subtitle}
                     </Text>
@@ -600,6 +636,7 @@ const TextContent = ({
                         as="p"
                         truncate={descriptionLinesMax}
                         color={colors.description}
+                        textShadow={textShadowStyle}
                     >
                         {description}
                     </Text>
@@ -614,7 +651,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         {
             type,
             size,
-            backgroundColor,
+            backgroundColor: backgroundColorProp,
             backgroundImageSrc,
             backgroundImageSrcSet,
             asset,
@@ -646,29 +683,51 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         },
         ref
     ): JSX.Element => {
+        // @TODO: A11Y
         const {/* text: slotText, */ ref: slotRef} = useInnerText();
         const hasActions = !!(primaryAction || secondaryAction);
         const hasAssetOrHeadline = !!(asset || headline);
+        // We consider any string (including empty string) as an image source
+        // If the source is not valid, it shoud show an empty case
+        const hasImage = typeof backgroundImageSrc === 'string' || typeof backgroundImageSrcSet === 'string';
+        const hasVideo = false; // TODO
+        const hasCustomBackground = !!(backgroundColorProp || hasImage || hasVideo);
+        const hasGradient = hasImage || hasVideo;
 
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const isInverseOutside = useIsInverseOrMediaVariant();
         const isExternalInverse = useIsInverseVariant();
-        const variant = variantProp || (type === 'cover' ? 'media' : undefined);
+        const variant = variantProp || (type === 'cover' && hasCustomBackground ? 'media' : undefined);
 
-        const isInverse = variant
-            ? variant === 'inverse' || variant === 'media'
-            : isInverseOutside
-              ? true
-              : type === 'cover';
+        const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isInverseOutside;
 
-        console.log({type, variantProp, variant, isInverse});
-
-        const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
+        const overlayStyle = isInverseStyle
+            ? styles.touchableCardOverlayInverse
+            : styles.touchableCardOverlay;
         const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
         const showActionsInBody = !shouldShowFooter && hasActions;
         const topActionsLength = (topActions ? topActions.length : 0) + (onClose ? 1 : 0);
 
-        // console.log('TODO A11Y', {slotText, slotAlignment});
+        // @TODO: REVIEW THIS
+        const backgroundColor =
+            backgroundColorProp ||
+            (variant === 'alternative'
+                ? skinVars.colors.backgroundAlternative
+                : variant === 'media'
+                  ? isExternalInverse
+                      ? skinVars.colors.backgroundContainerBrandOverInverse
+                      : skinVars.colors.backgroundBrand
+                  : undefined);
+
+        console.log({
+            type,
+            asset,
+            variantProp,
+            variant,
+            isInverse: isInverseStyle,
+            backgroundColor,
+            backgroundColorProp,
+        });
 
         return (
             <Container
@@ -680,16 +739,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
-                backgroundColor={
-                    // REVIEW THIS
-                    backgroundColor || variant === 'alternative'
-                        ? skinVars.colors.backgroundAlternative
-                        : variant === 'media'
-                          ? isExternalInverse
-                              ? skinVars.colors.backgroundContainerBrandOverInverse
-                              : skinVars.colors.backgroundBrand
-                          : undefined
-                }
+                backgroundColor={backgroundColor}
             >
                 <TopActions
                     onClose={onClose}
@@ -703,56 +753,93 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     {...touchableProps}
                 >
                     {isTouchable && <div className={overlayStyle} />}
-                    <BackgroundImage src={backgroundImageSrc} srcSet={backgroundImageSrcSet} />
+                    {hasImage && <BackgroundImage src={backgroundImageSrc} srcSet={backgroundImageSrcSet} />}
                     <div
                         data-testid="body"
-                        className={classnames(styles.touchable, styles.containerPaddingsVariants[size])}
+                        className={classnames(styles.touchable, {
+                            [styles.containerPaddingTopVariants[size]]: !!asset,
+                        })}
                         style={{
                             // with a footer, the bottom padding for the body is always 16px
-                            paddingBottom: shouldShowFooter ? 16 : undefined,
+                            border: dbg('2px solid red'),
                         }}
                     >
-                        <div className={styles.contentContainer}>
-                            <div className={styles.assetAndTextContent}>
-                                <Asset size={size} asset={asset} />
-                                <TextContent
-                                    variant={variant}
-                                    size={size}
-                                    headline={headline}
-                                    pretitle={pretitle}
-                                    pretitleLinesMax={pretitleLinesMax}
-                                    title={title}
-                                    titleAs={titleAs}
-                                    titleLinesMax={titleLinesMax}
-                                    subtitle={subtitle}
-                                    subtitleLinesMax={subtitleLinesMax}
-                                    description={description}
-                                    descriptionLinesMax={descriptionLinesMax}
-                                />
+                        {!!asset && (
+                            <div className={classnames(styles.containerPaddingXVariants[size])}>
+                                <Asset type={type} size={size} asset={asset} />
                             </div>
-                            {!hasAssetOrHeadline && (
-                                <div style={{flexShrink: 0, width: topActionsLength * 48 - 16}} />
+                        )}
+                        {type === 'cover' && (
+                            <Filler minHeight={type === 'cover' && topActionsLength && !asset ? 48 : 0} />
+                        )}
+                        <div
+                            className={classnames(
+                                styles.containerPaddingXVariants[size],
+                                styles.containerPaddingBottomVariants[size],
+                                styles.containerPaddingTopVariants[size]
+                            )}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                height: type === 'cover' ? undefined : '100%',
+                                // padding overrides for specific cases
+                                paddingTop: type === 'cover' ? 40 : asset ? 16 : undefined,
+                                paddingBottom: shouldShowFooter ? 16 : undefined,
+                                border: dbg('2px solid blue'),
+                                background: hasGradient ? skinVars.colors.cardContentOverlay : undefined,
+                            }}
+                        >
+                            <div className={styles.contentContainer}>
+                                <div className={styles.textContent}>
+                                    <TextContent
+                                        variant={variant}
+                                        size={size}
+                                        headline={headline}
+                                        pretitle={pretitle}
+                                        pretitleLinesMax={pretitleLinesMax}
+                                        title={title}
+                                        titleAs={titleAs}
+                                        titleLinesMax={titleLinesMax}
+                                        subtitle={subtitle}
+                                        subtitleLinesMax={subtitleLinesMax}
+                                        description={description}
+                                        descriptionLinesMax={descriptionLinesMax}
+                                        withTextShadow={hasGradient}
+                                    />
+                                </div>
+                                {!hasAssetOrHeadline && type !== 'cover' && (
+                                    <div
+                                        style={{
+                                            flexShrink: 0,
+                                            flexGrow: 0,
+                                            width: topActionsLength * 48 - 24,
+                                            background: dbg('#fee'),
+                                        }}
+                                    />
+                                )}
+                            </div>
+                            {type !== 'cover' && slotAlignment === 'bottom' && <Filler />}
+                            {slot && (
+                                <div ref={slotRef} data-testid="slot">
+                                    {slot}
+                                </div>
+                            )}
+                            {type !== 'cover' && slotAlignment === 'content' && showActionsInBody && (
+                                <Filler />
+                            )}
+                            {showActionsInBody && (
+                                <Actions
+                                    size={size}
+                                    primaryAction={primaryAction}
+                                    secondaryAction={secondaryAction}
+                                />
                             )}
                         </div>
-                        {slotAlignment === 'bottom' && <Filler />}
-                        {slot && (
-                            <div ref={slotRef} data-testid="slot">
-                                {slot}
-                            </div>
-                        )}
-                        {slotAlignment === 'content' && showActionsInBody && <Filler />}
-                        {showActionsInBody && (
-                            <Actions
-                                size={size}
-                                primaryAction={primaryAction}
-                                secondaryAction={secondaryAction}
-                            />
-                        )}
                     </div>
                 </BaseTouchable>
                 {shouldShowFooter && (
                     <Footer
-                        isInverse={isInverse}
+                        isInverse={isInverseStyle}
                         size={size}
                         footerSlot={footerSlot}
                         primaryAction={primaryAction}

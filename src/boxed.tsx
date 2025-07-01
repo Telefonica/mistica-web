@@ -30,6 +30,7 @@ type Props = {
 
 type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
+    border?: string;
     desktopOnly?: boolean;
     background?: string;
     overflow?: 'hidden' | 'visible';
@@ -88,6 +89,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             desktopOnly,
             variant,
             overflow,
+            border,
         },
         ref
     ) => {
@@ -113,6 +115,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                         [styles.vars.borderRadius]: borderRadius,
                     }),
                     background,
+                    border,
                 }}
                 className={classnames(
                     className,

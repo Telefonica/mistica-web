@@ -20,13 +20,13 @@ import type {TagType} from '..';
 import type {Variant} from '../theme-variant-context';
 
 export default {
-    title: 'Components/Cards/DataCard2',
+    title: 'Components/Cards/InternalCard',
 };
 
-type DataCardArgs = {
+type InternalCardArgs = {
     type: 'data' | 'media' | 'cover' | 'naked';
     size: 'default' | 'snap' | 'display';
-    background?: string;
+    backgroundColor?: string;
     variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -51,10 +51,10 @@ type DataCardArgs = {
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
-export const Default: StoryComponent<DataCardArgs> = ({
+export const Default: StoryComponent<InternalCardArgs> = ({
     type,
     size,
-    background,
+    backgroundColor,
     variant,
     asset = 'icon',
     headline,
@@ -122,7 +122,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 type={type}
                 size={size}
                 variant={variant || undefined}
-                background={background || undefined}
+                backgroundColor={backgroundColor || undefined}
                 onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
@@ -167,7 +167,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
 Default.storyName = 'InternalCard';
 Default.args = {
     type: 'data',
-    background: '',
+    backgroundColor: '',
     size: 'default',
     variant: '',
     asset: 'icon',
@@ -227,7 +227,12 @@ Default.argTypes = {
         options: ['auto', ...fixedAspectRatioValues],
         control: {
             type: 'select',
-            labels: {'1 1': '1:1', '16 9': '16:9', '7 10': '7:10', '9 10': '9:10'},
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
         },
     },
     pretitleAs: {

@@ -27,51 +27,66 @@ export const container = style([
     },
 ]);
 
-const displayContainerPaddings = style([
-    sprinkles({
-        paddingTop: 24,
-        paddingRight: 24,
-        paddingBottom: 32,
-        paddingLeft: 24,
-    }),
-]);
-
-const defaultContainerPaddings = style([
-    sprinkles({
-        paddingTop: 16,
-        paddingBottom: 24,
-        paddingRight: 16,
-        paddingLeft: 16,
-    }),
-    {
-        '@media': {
-            [mq.desktopOrBigger]: {
-                paddingTop: 24,
-                paddingRight: 24,
-                paddingBottom: 32,
-                paddingLeft: 24,
+export const containerPaddingXVariants = styleVariants({
+    display: [sprinkles({paddingX: 24})],
+    default: [
+        sprinkles({paddingX: 16}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {
+                    paddingLeft: 24,
+                    paddingRight: 24,
+                },
             },
         },
-    },
-]);
-
-const snapContainerPaddings = style([
-    sprinkles({
-        padding: 16,
-    }),
-    {
-        '@media': {
-            [mq.desktopOrBigger]: {
-                padding: 24,
+    ],
+    snap: [
+        sprinkles({paddingX: 16}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {
+                    paddingLeft: 24,
+                    paddingRight: 24,
+                },
             },
         },
-    },
-]);
+    ],
+});
 
-export const containerPaddingsVariants = styleVariants({
-    display: [displayContainerPaddings],
-    default: [defaultContainerPaddings],
-    snap: [snapContainerPaddings],
+export const containerPaddingTopVariants = styleVariants({
+    display: [sprinkles({paddingTop: 24})],
+    default: [
+        sprinkles({paddingTop: 16}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {paddingTop: 24},
+            },
+        },
+    ],
+    snap: [
+        sprinkles({paddingTop: 16}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {paddingTop: 24},
+            },
+        },
+    ],
+});
+
+export const containerPaddingBottomVariants = styleVariants({
+    display: [sprinkles({paddingBottom: 32})],
+    default: [
+        sprinkles({paddingBottom: 24}),
+        {
+            '@media': {[mq.desktopOrBigger]: {paddingBottom: 32}},
+        },
+    ],
+    snap: [
+        sprinkles({paddingBottom: 16}),
+        {
+            '@media': {[mq.desktopOrBigger]: {paddingBottom: 24}},
+        },
+    ],
 });
 
 export const boxed = style({
@@ -177,24 +192,26 @@ export const contentContainer = style([
     },
 ]);
 
-export const assetAndTextContent = style([
+export const textContent = style([
     sprinkles({
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        width: '100%',
     }),
 ]);
 
 export const topActionsContainer = style([
     sprinkles({
         position: 'absolute',
-        top: 8,
-        right: 8,
+        top: 16,
+        right: 16,
         display: 'flex',
         flexDirection: 'row',
     }),
     {
+        gap: 16,
         zIndex: 2,
     },
 ]);
