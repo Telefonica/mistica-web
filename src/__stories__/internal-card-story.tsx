@@ -26,8 +26,8 @@ export default {
 type InternalCardArgs = {
     type: 'data' | 'media' | 'cover' | 'naked';
     size: 'default' | 'snap' | 'display';
-    backgroundColor?: string;
-    backgroundImageSrc?: string;
+    backgroundColor: string;
+    backgroundImageSrc: string;
     variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -48,6 +48,8 @@ type InternalCardArgs = {
     footerSlot: boolean;
     primaryAction: 'buttonPrimary' | 'buttonSecondary' | 'buttonLink' | 'none';
     secondaryAction: 'buttonPrimary' | 'buttonSecondary' | 'buttonLink' | 'none';
+    footerBackgroundColor: string;
+    footerVariant: Variant | '';
 };
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
@@ -77,6 +79,8 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     aspectRatio,
     footerSlot,
     showFooter,
+    footerBackgroundColor,
+    footerVariant,
 }) => {
     let assetElement;
     if (asset === 'icon') {
@@ -161,6 +165,8 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 secondaryAction={getAction(secondaryAction)}
                 footerSlot={footerSlot ? <Placeholder height={64} /> : undefined}
                 showFooter={showFooter}
+                footerBackgroundColor={footerBackgroundColor || undefined}
+                footerVariant={footerVariant || undefined}
                 onPress={() => {}}
             />
         </>
@@ -193,6 +199,8 @@ Default.args = {
     aspectRatio: '9 11',
     showFooter: true,
     footerSlot: true,
+    footerBackgroundColor: '',
+    footerVariant: '',
 };
 
 Default.argTypes = {
@@ -280,4 +288,18 @@ Default.argTypes = {
     },
     showFooter: true,
     footerSlot: true,
+    footerBackgroundColor: '',
+    footerVariant: {
+        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+                media: 'media',
+            },
+        },
+    },
 };

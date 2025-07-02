@@ -69,6 +69,7 @@ type ContainerProps = {
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     onClose?: () => void;
     closeButtonLabel?: string;
+    showFooter?: boolean;
 };
 
 type BackgroundProps = {
@@ -274,23 +275,27 @@ const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
 
 type FooterProps = {
     size: CardSize;
-    isInverse?: boolean;
-    showFooter?: boolean;
+    variant?: Variant;
     footerSlot?: React.ReactNode;
     hasBackgroundImage?: boolean;
+    footerBackgroundColor?: string;
+    footerVariant?: Variant;
 };
 
 const Footer = ({
     size,
-    isInverse,
+    variant,
     footerSlot,
     primaryAction,
     secondaryAction,
     hasBackgroundImage,
+    footerVariant,
+    footerBackgroundColor,
 }: FooterProps & ActionsProps): JSX.Element => {
     const hasActions = !!(primaryAction || secondaryAction);
+    const isInverse = variant === 'inverse' || variant === 'media';
     return (
-        <>
+        <ThemeVariant variant={footerVariant || variant}>
             <Filler />
             <div
                 data-testid="footer"
@@ -298,10 +303,14 @@ const Footer = ({
                 style={{
                     paddingTop: 16,
                     paddingBottom: 16,
-                    borderTop: `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
+
+                    borderTop: footerBackgroundColor
+                        ? undefined
+                        : `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                     position: 'relative',
                     // @FIXME: the color should be the color token "cardFooterOverlay"
-                    background: hasBackgroundImage ? 'rgba(0, 0, 0, 0.7)' : undefined,
+                    background:
+                        footerBackgroundColor || (hasBackgroundImage ? 'rgba(0, 0, 0, 0.7)' : undefined),
                     backdropFilter: hasBackgroundImage ? 'blur(12px)' : undefined,
                 }}
             >
@@ -315,7 +324,7 @@ const Footer = ({
                     )}
                 </Stack>
             </div>
-        </>
+        </ThemeVariant>
     );
 };
 
@@ -690,6 +699,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             primaryAction,
             secondaryAction,
             showFooter,
+            footerBackgroundColor,
+            footerVariant,
             footerSlot,
             topActions,
             onClose,
@@ -861,7 +872,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 </BaseTouchable>
                 {shouldShowFooter && (
                     <Footer
-                        isInverse={isInverseStyle}
+                        variant={variant}
+                        footerVariant={footerVariant}
+                        footerBackgroundColor={footerBackgroundColor}
                         size={size}
                         footerSlot={footerSlot}
                         primaryAction={primaryAction}
