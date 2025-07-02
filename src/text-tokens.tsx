@@ -78,6 +78,7 @@ export type Dictionary = {
     ratingGoodLabel: string;
     ratingVeryGoodLabel: string;
     ratingQuantitativeLabel: string;
+    skipLinkNavLabel: string;
 };
 
 export type TextToken = Record<Language, string>;
@@ -641,4 +642,11 @@ export const meterSectionLabel: TextToken = {
     en: 'Segment 1$s: 2$s%',
     de: 'Abschnitt 1$s: 2$s%',
     pt: 'Seção 1$s: 2$s%',
+};
+
+export const skipLinkNavLabel: TextToken = {
+    es: 'Accesos directos',
+    en: 'Skip links',
+    de: 'Direkt zum Inhalt',
+    pt: 'Acesso rápido',
 };
