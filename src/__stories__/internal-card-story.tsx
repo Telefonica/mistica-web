@@ -123,6 +123,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 size={size}
                 variant={variant || undefined}
                 backgroundColor={backgroundColor || undefined}
+                backgroundImageSrc="https://picsum.photos/seed/17/1024/1024"
                 onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}

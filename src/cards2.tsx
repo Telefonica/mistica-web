@@ -277,6 +277,7 @@ type FooterProps = {
     isInverse?: boolean;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
+    hasBackgroundImage?: boolean;
 };
 
 const Footer = ({
@@ -285,6 +286,7 @@ const Footer = ({
     footerSlot,
     primaryAction,
     secondaryAction,
+    hasBackgroundImage,
 }: FooterProps & ActionsProps): JSX.Element => {
     const hasActions = !!(primaryAction || secondaryAction);
     return (
@@ -297,6 +299,10 @@ const Footer = ({
                     paddingTop: 16,
                     paddingBottom: 16,
                     borderTop: `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
+                    position: 'relative',
+                    // @FIXME: the color should be the color token "cardFooterOverlay"
+                    background: hasBackgroundImage ? 'rgba(0, 0, 0, 0.7)' : undefined,
+                    backdropFilter: hasBackgroundImage ? 'blur(12px)' : undefined,
                 }}
             >
                 <Stack space={16}>
@@ -698,10 +704,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasAssetOrHeadline = !!(asset || headline);
         // We consider any string (including empty string) as an image source
         // If the source is not valid, it shoud show an empty case
-        const hasImage = typeof backgroundImageSrc === 'string' || typeof backgroundImageSrcSet === 'string';
+        const hasBackgroundImage =
+            type === 'cover' &&
+            (typeof backgroundImageSrc === 'string' || typeof backgroundImageSrcSet === 'string');
         const hasVideo = false; // TODO
-        const hasCustomBackground = !!(backgroundColorProp || hasImage || hasVideo);
-        const hasGradient = hasImage || hasVideo;
+        const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasVideo);
+        const hasGradient = hasBackgroundImage || hasVideo;
 
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const isInverseOutside = useIsInverseOrMediaVariant();
@@ -719,7 +727,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         // @TODO: REVIEW THIS
         const backgroundColor =
-            hasImage || hasVideo
+            hasBackgroundImage || hasVideo
                 ? 'transparent'
                 : backgroundColorProp ||
                   (variant === 'alternative'
@@ -752,19 +760,22 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 aspectRatio={aspectRatio}
                 backgroundColor={backgroundColor}
             >
+                {hasBackgroundImage && (
+                    <BackgroundImage src={backgroundImageSrc} srcSet={backgroundImageSrcSet} />
+                )}
                 <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
                     variant={variant}
                 />
+
                 <BaseTouchable
                     maybe
                     className={classnames(styles.touchable, styles.touchableContainer)}
                     {...touchableProps}
                 >
                     {isTouchable && <div className={overlayStyle} />}
-                    {hasImage && <BackgroundImage src={backgroundImageSrc} srcSet={backgroundImageSrcSet} />}
                     <div
                         data-testid="body"
                         className={classnames(styles.touchable, {
@@ -855,6 +866,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         footerSlot={footerSlot}
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
+                        hasBackgroundImage={hasBackgroundImage}
                     />
                 )}
             </Container>
