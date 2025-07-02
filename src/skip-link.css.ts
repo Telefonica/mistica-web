@@ -17,7 +17,7 @@ export const skipLinkContainer = style([
         width: 'fit-content',
         boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
         opacity: 1,
-        transition: 'opacity 0.5s ease-in-out',
+        transition: 'opacity 0.15s ease-in-out',
         selectors: {
             '&:not(:focus-within)': {
                 ...screenReaderOnlyStyles,
