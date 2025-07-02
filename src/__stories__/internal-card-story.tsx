@@ -27,6 +27,7 @@ type InternalCardArgs = {
     type: 'data' | 'media' | 'cover' | 'naked';
     size: 'default' | 'snap' | 'display';
     backgroundColor?: string;
+    backgroundImageSrc?: string;
     variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -55,6 +56,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     type,
     size,
     backgroundColor,
+    backgroundImageSrc,
     variant,
     asset = 'icon',
     headline,
@@ -123,7 +125,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 size={size}
                 variant={variant || undefined}
                 backgroundColor={backgroundColor || undefined}
-                backgroundImageSrc="https://picsum.photos/seed/17/1024/1024"
+                backgroundImageSrc={backgroundImageSrc === 'undefined' ? undefined : backgroundImageSrc}
                 onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
@@ -168,9 +170,10 @@ export const Default: StoryComponent<InternalCardArgs> = ({
 Default.storyName = 'InternalCard';
 Default.args = {
     type: 'data',
-    backgroundColor: '',
     size: 'default',
     variant: '',
+    backgroundColor: '',
+    backgroundImageSrc: 'undefined',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
@@ -213,6 +216,25 @@ Default.argTypes = {
                 inverse: 'inverse',
                 alternative: 'alternative',
                 media: 'media',
+            },
+        },
+    },
+    backgroundImageSrc: {
+        options: [
+            'https://picsum.photos/id/292/1024/1024',
+            'https://picsum.photos/id/130/1024/1024',
+            'https://picsum.photos/id/892/1024/1024',
+            'undefined',
+            '',
+        ],
+        control: {
+            type: 'select',
+            labels: {
+                'https://picsum.photos/id/292/1024/1024': 'colored image',
+                'https://picsum.photos/id/130/1024/1024': 'clear image',
+                'https://picsum.photos/id/892/1024/1024': 'dark image',
+                undefined: 'undefined',
+                '': 'empty string',
             },
         },
     },
