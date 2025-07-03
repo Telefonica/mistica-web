@@ -14,8 +14,7 @@ import {
     IconStarRegular,
     Placeholder,
 } from '..';
-import {PosterCard} from '../card';
-import {PosterCard as PosterCard2} from '../cards2';
+import {PosterCard} from '../internal-card';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
@@ -147,24 +146,6 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <PosterCard
-                    dataAttributes={{testid: 'poster-card'}}
-                    {...backgroundProps}
-                    asset={assetElement}
-                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                    pretitle={pretitle}
-                    pretitleAs={pretitleAs}
-                    title={title}
-                    titleAs={titleAs}
-                    subtitle={subtitle}
-                    description={description}
-                    extra={extra ? <Placeholder /> : undefined}
-                    aria-label={ariaLabel}
-                    width={width}
-                    height={height}
-                    aspectRatio={aspectRatio as any}
-                    {...interactiveProps}
-                />
-                <PosterCard2
                     dataAttributes={{testid: 'poster-card'}}
                     {...backgroundProps}
                     asset={assetElement}

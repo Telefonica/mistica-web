@@ -12,9 +12,9 @@ import {
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
-import {SnapCard as SnapCard2} from '../cards2';
+import {SnapCard as SnapCard2} from '../internal-card';
 
-import type {SlotAlignment} from '../cards2';
+import type {SlotAlignment} from '../internal-card';
 import type {AspectRatio} from '../card';
 
 export default {

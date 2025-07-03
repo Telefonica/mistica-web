@@ -1,7 +1,7 @@
 // spec: https://www.figma.com/design/tKdPOfcUALzVIh5oizFbm7
 'use client';
 import * as React from 'react';
-import * as styles from './cards2.css';
+import * as styles from './internal-card.css';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
 import {
@@ -29,6 +29,7 @@ import type {
     DataAttributes,
     HeadingType,
     IconProps,
+    RendersElement,
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
@@ -36,6 +37,7 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource} from './video';
+import type Video from './video';
 
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 
@@ -45,6 +47,7 @@ const dbg = (value: any) => (DEBUG ? value : undefined);
 
 type CardType = 'data' | 'media' | 'cover' | 'naked';
 type CardSize = 'snap' | 'default' | 'display';
+type Media = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
 type ActionButton =
     | RendersNullableElement<typeof ButtonPrimary>
@@ -61,7 +64,6 @@ type ContainerProps = {
     width?: string | number;
     height?: string | number;
     aspectRatio?: AspectRatio;
-    children?: React.ReactNode;
     dataAttributes?: DataAttributes;
     'aria-label'?: React.AriaAttributes['aria-label'];
     'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
@@ -70,6 +72,11 @@ type ContainerProps = {
     onClose?: () => void;
     closeButtonLabel?: string;
     showFooter?: boolean;
+    children?: React.ReactNode;
+};
+
+type MediaProps = {
+    media?: Media;
 };
 
 type BackgroundProps = {
@@ -128,6 +135,7 @@ type SlotProps = {
 };
 
 type CardProps = ContainerProps &
+    MediaProps &
     BackgroundProps &
     TextContentProps &
     AssetProps &
@@ -139,7 +147,11 @@ type CardProps = ContainerProps &
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
-const Container = React.forwardRef<HTMLDivElement, ContainerProps & BackgroundProps>(
+type PrivateContainerProps = {
+    children?: React.ReactNode;
+};
+
+const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & ContainerProps & BackgroundProps>(
     (
         {
             children,
@@ -916,20 +928,20 @@ type DataCardProps = {
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     aspectRatio?: AspectRatio;
-    children?: undefined;
     /** @deprecated use primaryAction */
     button?: ActionButton;
     /** @deprecated use secondaryAction */
     buttonLink?: ActionButton;
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
-    onClose?: () => void;
+    onClose?: () => unknown;
     closeButtonLabel?: string;
     /** @deprecated use topActions */
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
+    children?: undefined;
 };
 
 export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
@@ -1010,7 +1022,7 @@ type CoverCardBaseProps = {
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
-    onClose?: () => void;
+    onClose?: () => unknown;
     closeButtonLabel?: string;
     dataAttributes?: DataAttributes;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -1026,6 +1038,7 @@ type CoverCardBaseProps = {
     descriptionLinesMax?: number;
     slotAlignment?: SlotAlignment;
     slot?: React.ReactNode;
+    children?: undefined;
 };
 
 type ImageProps = {
@@ -1062,7 +1075,7 @@ type PosterCardBaseProps = {
     /** @deprecated use topActions */
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
-    onClose?: () => void;
+    onClose?: () => unknown;
     closeButtonLabel?: string;
     dataAttributes?: DataAttributes;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -1080,6 +1093,7 @@ type PosterCardBaseProps = {
     extra?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     slot?: React.ReactNode;
+    children?: undefined;
 };
 
 type DeprecatedImageProps = {
@@ -1110,7 +1124,7 @@ export const PosterCard = React.forwardRef<
     return (
         <CoverCard
             ref={ref}
-            size="display"
+            size="default"
             variant={variant || (isInverse ? 'inverse' : undefined)}
             topActions={topActions || actions}
             slot={slot || extra}
@@ -1119,3 +1133,58 @@ export const PosterCard = React.forwardRef<
         />
     );
 });
+
+interface MediaCardBaseProps {
+    media: Media;
+    size?: CardSize;
+    asset?: React.ReactElement;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleAs?: HeadingType;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleAs?: HeadingType;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    /** @deprecated use slot */
+    extra?: React.ReactNode;
+    slot?: React.ReactNode;
+    /** @deprecated use topActions */
+    actions?: TopActionsArray;
+    topActions?: TopActionsArray;
+    dataAttributes?: DataAttributes;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    onClose?: () => unknown;
+    closeButtonLabel?: string;
+    children?: undefined;
+}
+
+type MediaCardProps = MediaCardBaseProps &
+    ExclusifyUnion<
+        | TouchableProps
+        | {
+              button?: RendersNullableElement<typeof ButtonPrimary>;
+              buttonLink?: RendersNullableElement<typeof ButtonLink>;
+          }
+    >;
+
+export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
+    ({size = 'default', slot, extra, topActions, actions, ...props}, ref) => {
+        return (
+            <InternalCard
+                type="media"
+                size={size}
+                slot={slot || extra}
+                topActions={topActions || actions}
+                ref={ref}
+                {...props}
+            />
+        );
+    }
+);

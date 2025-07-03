@@ -10,7 +10,7 @@ import {
     IconStarRegular,
     ButtonSecondary,
 } from '..';
-import {InternalCard, type SlotAlignment} from '../cards2';
+import {InternalCard, type SlotAlignment} from '../internal-card';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 

@@ -78,7 +78,7 @@ export {
     CardActionSpinner,
     CardActionIconButton,
 } from './card';
-export {SnapCard, DataCard} from './cards2';
+export {SnapCard, DataCard} from './internal-card';
 export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';
