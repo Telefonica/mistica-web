@@ -13,6 +13,8 @@ import {
 import {InternalCard, type SlotAlignment} from '../internal-card';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
+import beachVideo from './videos/beach.mp4';
+import beachImg from './images/beach.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {AspectRatio} from '../card';
@@ -23,11 +25,15 @@ export default {
     title: 'Components/Cards/InternalCard',
 };
 
+const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
+
 type InternalCardArgs = {
     type: 'data' | 'media' | 'cover' | 'naked';
     size: 'default' | 'snap' | 'display';
     backgroundColor: string;
-    backgroundImageSrc: string;
+    imageSrc: string;
+    videoSrc: string;
+    mediaAspectRatio: string;
     variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -52,13 +58,11 @@ type InternalCardArgs = {
     footerVariant: Variant | '';
 };
 
-const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
-
 export const Default: StoryComponent<InternalCardArgs> = ({
     type,
     size,
     backgroundColor,
-    backgroundImageSrc,
+    imageSrc,
     variant,
     asset = 'icon',
     headline,
@@ -129,7 +133,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 size={size}
                 variant={variant || undefined}
                 backgroundColor={backgroundColor || undefined}
-                backgroundImageSrc={backgroundImageSrc === 'undefined' ? undefined : backgroundImageSrc}
+                imageSrc={imageSrc === 'undefined' ? undefined : imageSrc}
                 onClose={onClose ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
@@ -179,7 +183,9 @@ Default.args = {
     size: 'default',
     variant: '',
     backgroundColor: '',
-    backgroundImageSrc: 'undefined',
+    imageSrc: 'undefined',
+    videoSrc: 'undefined',
+    mediaAspectRatio: '16 9',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
@@ -227,11 +233,12 @@ Default.argTypes = {
             },
         },
     },
-    backgroundImageSrc: {
+    imageSrc: {
         options: [
             'https://picsum.photos/id/292/1024/1024',
             'https://picsum.photos/id/130/1024/1024',
             'https://picsum.photos/id/892/1024/1024',
+            beachImg,
             'undefined',
             '',
         ],
@@ -241,6 +248,18 @@ Default.argTypes = {
                 'https://picsum.photos/id/292/1024/1024': 'colored image',
                 'https://picsum.photos/id/130/1024/1024': 'clear image',
                 'https://picsum.photos/id/892/1024/1024': 'dark image',
+                [beachImg]: 'beach image',
+                undefined: 'undefined',
+                '': 'empty string',
+            },
+        },
+    },
+    videoSrc: {
+        options: [beachVideo, 'undefined', ''],
+        control: {
+            type: 'select',
+            labels: {
+                [beachVideo]: 'beach video',
                 undefined: 'undefined',
                 '': 'empty string',
             },
@@ -256,6 +275,18 @@ Default.argTypes = {
     },
     aspectRatio: {
         options: ['auto', ...fixedAspectRatioValues],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
+    },
+    mediaAspectRatio: {
+        options: [...fixedAspectRatioValues],
         control: {
             type: 'select',
             labels: {

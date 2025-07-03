@@ -77,13 +77,13 @@ type ContainerProps = {
 };
 
 type MediaProps = {
+    /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
     media?: Media;
-};
-
-type BackgroundProps = {
     backgroundColor?: string;
-    backgroundImageSrc?: string;
-    backgroundImageSrcSet?: string;
+    imageSrc?: string;
+    imageSrcSet?: string;
+    videoSrc?: VideoSource;
+    mediaAspectRatio?: AspectRatio;
 };
 
 type TextContentProps = {
@@ -137,7 +137,6 @@ type SlotProps = {
 
 type CardProps = ContainerProps &
     MediaProps &
-    BackgroundProps &
     TextContentProps &
     AssetProps &
     ActionsProps &
@@ -152,7 +151,7 @@ type PrivateContainerProps = {
     children?: React.ReactNode;
 };
 
-const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & ContainerProps & BackgroundProps>(
+const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & ContainerProps & MediaProps>(
     (
         {
             children,
@@ -689,9 +688,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             type,
             size,
             backgroundColor: backgroundColorProp,
-            backgroundImageSrc,
-            backgroundImageSrcSet,
+            imageSrc,
+            imageSrcSet,
+            videoSrc,
             media,
+            mediaAspectRatio,
             asset,
             headline,
             title,
@@ -725,28 +726,31 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
     ): JSX.Element => {
         // @TODO: A11Y
         const {/* text: slotText, */ ref: slotRef} = useInnerText();
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasActions = !!(primaryAction || secondaryAction);
         const hasAssetOrHeadline = !!(asset || headline);
-        // We consider any string (including empty string) as an image source
-        // If the source is not valid, it shoud show an empty case
-        const hasBackgroundImage =
-            type === 'cover' &&
-            (typeof backgroundImageSrc === 'string' || typeof backgroundImageSrcSet === 'string');
-        const hasBackgroundVideo = false; // TODO
+
+        // We consider any string (including empty string) as an image/video source
+        const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
+        const hasBackgroundVideo = type === 'cover' && videoSrc !== undefined;
         const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasBackgroundVideo);
         const hasGradient = hasBackgroundImage || hasBackgroundVideo;
-        const hasMedia = !!media && type === 'media';
 
-        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        // In this context "media" refers to the image or video that is placed inside the card, not the background
+        const hasMediaImage = type === 'media' && (imageSrc !== undefined || imageSrcSet !== undefined);
+        const hasMediaVideo = type === 'media' && videoSrc !== undefined;
+        const hasDeprecatedMedia = type === 'media' && !!media;
+        const hasMediaSources = hasMediaImage || hasMediaVideo;
+        const hasMedia = hasMediaSources || hasDeprecatedMedia;
+
         const isInverseOutside = useIsInverseOrMediaVariant();
         const isExternalInverse = useIsInverseVariant();
         const variant = variantProp || (type === 'cover' && hasCustomBackground ? 'media' : undefined);
-
         const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isInverseOutside;
-
         const overlayStyle = isInverseStyle
             ? styles.touchableCardOverlayInverse
             : styles.touchableCardOverlay;
+
         const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
         const showActionsInBody = !shouldShowFooter && hasActions;
         const topActionsLength = (topActions ? topActions.length : 0) + (onClose ? 1 : 0);
@@ -776,9 +780,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 aspectRatio={aspectRatio}
                 backgroundColor={backgroundColor}
             >
-                {hasBackgroundImage && (
-                    <BackgroundImage src={backgroundImageSrc} srcSet={backgroundImageSrcSet} />
-                )}
+                {hasBackgroundImage && <BackgroundImage src={imageSrc} srcSet={imageSrcSet} />}
                 <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
@@ -792,8 +794,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     {...touchableProps}
                 >
                     {isTouchable && <div className={overlayStyle} />}
-                    {hasMedia && (
+                    {hasDeprecatedMedia && (
                         <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>{media}</div>
+                    )}
+                    {hasMediaSources && (
+                        <Media
+                            imageSrc={imageSrc}
+                            imageSrcSet={imageSrcSet}
+                            videoSrc={videoSrc}
+                            mediaAspectRatio={mediaAspectRatio}
+                        />
                     )}
                     <div
                         data-testid="body"
@@ -1107,9 +1117,9 @@ export const PosterCard = React.forwardRef<
             ExclusifyUnion<DeprecatedImageProps | DeprecatedBackgroundColorProps /* | VideoProps  */>
     >
 >(({isInverse, variant, actions, topActions, extra, slot, backgroundImage, dataAttributes, ...rest}, ref) => {
-    const backgroundImageProps = {
-        backgroundImageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
-        backgroundImageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
+    const imageProps = {
+        imageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
+        imageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
     } as BackgroundImageProps;
     return (
         <CoverCard
@@ -1119,15 +1129,21 @@ export const PosterCard = React.forwardRef<
             dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
             topActions={topActions || actions}
             slot={slot || extra}
-            {...backgroundImageProps}
+            {...imageProps}
             {...rest}
         />
     );
 });
 
 interface MediaCardProps {
-    media: Media;
     size?: CardSize;
+    /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
+    media: Media;
+    imageSrc?: string;
+    imageSrcSet?: string;
+    videoSrc?: VideoSource;
+    /** @deprecated use imageSrc */
+    poster?: string;
     variant?: Variant;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
