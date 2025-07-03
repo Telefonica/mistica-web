@@ -2,6 +2,7 @@
 'use client';
 import * as React from 'react';
 import * as styles from './internal-card.css';
+import * as mediaStyles from './image.css';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
 import {
@@ -690,6 +691,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             backgroundColor: backgroundColorProp,
             backgroundImageSrc,
             backgroundImageSrcSet,
+            media,
             asset,
             headline,
             title,
@@ -730,9 +732,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImage =
             type === 'cover' &&
             (typeof backgroundImageSrc === 'string' || typeof backgroundImageSrcSet === 'string');
-        const hasVideo = false; // TODO
-        const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasVideo);
-        const hasGradient = hasBackgroundImage || hasVideo;
+        const hasBackgroundVideo = false; // TODO
+        const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasBackgroundVideo);
+        const hasGradient = hasBackgroundImage || hasBackgroundVideo;
+        const hasMedia = !!media && type === 'media';
 
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const isInverseOutside = useIsInverseOrMediaVariant();
@@ -750,7 +753,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         // @TODO: REVIEW THIS
         const backgroundColor =
-            hasBackgroundImage || hasVideo
+            hasBackgroundImage || hasBackgroundVideo
                 ? 'transparent'
                 : backgroundColorProp ||
                   (variant === 'alternative'
@@ -760,16 +763,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             ? skinVars.colors.backgroundContainerBrandOverInverse
                             : skinVars.colors.backgroundBrand
                         : undefined);
-
-        console.log({
-            type,
-            asset,
-            variantProp,
-            variant,
-            isInverse: isInverseStyle,
-            backgroundColor,
-            backgroundColorProp,
-        });
 
         return (
             <Container
@@ -790,7 +783,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
-                    variant={variant}
+                    variant={hasMedia ? 'media' : variant}
                 />
 
                 <BaseTouchable
@@ -799,6 +792,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     {...touchableProps}
                 >
                     {isTouchable && <div className={overlayStyle} />}
+                    {hasMedia && (
+                        <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>{media}</div>
+                    )}
                     <div
                         data-testid="body"
                         className={classnames(styles.touchable, {
@@ -939,6 +935,8 @@ type DataCardProps = {
     /** @deprecated use topActions */
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
+    footerBackgroundColor?: string;
+    footerVariant?: Variant;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     children?: undefined;
@@ -969,11 +967,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
             <InternalCard
                 type="data"
                 size={size}
-                dataAttributes={{
-                    'component-name': 'DataCard',
-                    testid: 'DataCard',
-                    ...dataAttributes,
-                }}
+                dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
                 ref={ref}
                 primaryAction={primaryAction || button}
                 secondaryAction={secondaryAction || buttonLink}
@@ -996,11 +990,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Snap
         return (
             <DataCard
                 size="snap"
-                dataAttributes={{
-                    'component-name': 'SnapCard',
-                    testid: 'SnapCard',
-                    ...dataAttributes,
-                }}
+                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 {...rest}
             />
@@ -1116,7 +1106,7 @@ export const PosterCard = React.forwardRef<
         PosterCardBaseProps &
             ExclusifyUnion<DeprecatedImageProps | DeprecatedBackgroundColorProps /* | VideoProps  */>
     >
->(({isInverse, variant, actions, topActions, extra, slot, backgroundImage, ...rest}, ref) => {
+>(({isInverse, variant, actions, topActions, extra, slot, backgroundImage, dataAttributes, ...rest}, ref) => {
     const backgroundImageProps = {
         backgroundImageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
         backgroundImageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
@@ -1126,6 +1116,7 @@ export const PosterCard = React.forwardRef<
             ref={ref}
             size="default"
             variant={variant || (isInverse ? 'inverse' : undefined)}
+            dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
             topActions={topActions || actions}
             slot={slot || extra}
             {...backgroundImageProps}
@@ -1134,9 +1125,10 @@ export const PosterCard = React.forwardRef<
     );
 });
 
-interface MediaCardBaseProps {
+interface MediaCardProps {
     media: Media;
     size?: CardSize;
+    variant?: Variant;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -1155,6 +1147,12 @@ interface MediaCardBaseProps {
     /** @deprecated use topActions */
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
+    /** @deprecated use primaryAction */
+    button?: ActionButton;
+    /** @deprecated use secondaryAction */
+    buttonLink?: ActionButton;
+    primaryAction?: ActionButton;
+    secondaryAction?: ActionButton;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     'aria-labelledby'?: string;
@@ -1162,28 +1160,43 @@ interface MediaCardBaseProps {
     'aria-describedby'?: string;
     onClose?: () => unknown;
     closeButtonLabel?: string;
+    footerBackgroundColor?: string;
+    footerVariant?: Variant;
+    showFooter?: boolean;
+    footerSlot?: React.ReactNode;
     children?: undefined;
 }
 
-type MediaCardProps = MediaCardBaseProps &
-    ExclusifyUnion<
-        | TouchableProps
-        | {
-              button?: RendersNullableElement<typeof ButtonPrimary>;
-              buttonLink?: RendersNullableElement<typeof ButtonLink>;
-          }
-    >;
-
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
-    ({size = 'default', slot, extra, topActions, actions, ...props}, ref) => {
+    (
+        {
+            size = 'default',
+            slot,
+            extra,
+            topActions,
+            actions,
+            button,
+            buttonLink,
+            variant,
+            primaryAction,
+            secondaryAction,
+            dataAttributes,
+            ...rest
+        },
+        ref
+    ) => {
         return (
             <InternalCard
+                dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard'}}
                 type="media"
+                variant={variant}
                 size={size}
                 slot={slot || extra}
                 topActions={topActions || actions}
+                primaryAction={primaryAction || button}
+                secondaryAction={secondaryAction || buttonLink}
                 ref={ref}
-                {...props}
+                {...rest}
             />
         );
     }
