@@ -13,6 +13,7 @@ import {
 } from '..';
 import avatarImg from './images/avatar.jpg';
 
+import type {PadSize} from '../box';
 import type {Variant} from '../theme-variant-context';
 
 export default {
@@ -34,6 +35,8 @@ type Args = {
     menu: 'undefined' | 'default' | 'custom';
     desktopLargeMenu: boolean;
     customLogo: boolean;
+    wide: boolean;
+    paddingX: PadSize | 'undefined';
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -45,6 +48,8 @@ export const Default: StoryComponent<Args> = ({
     menu,
     desktopLargeMenu,
     customLogo,
+    wide,
+    paddingX,
 }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
@@ -119,6 +124,7 @@ export const Default: StoryComponent<Args> = ({
                     </NavigationBarAction>
                 </NavigationBarActionGroup>
             }
+            wide={wide ? (paddingX === 'undefined' ? true : {paddingX}) : false}
         />
     );
 };
@@ -134,6 +140,8 @@ Default.args = {
     menu: 'undefined',
     desktopLargeMenu: false,
     customLogo: false,
+    wide: false,
+    paddingX: 'undefined',
 };
 
 Default.argTypes = {
@@ -147,4 +155,9 @@ Default.argTypes = {
         if: {arg: 'sections'},
     },
     desktopLargeMenu: {if: {arg: 'sections'}},
+    paddingX: {
+        options: ['undefined', 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80],
+        control: {type: 'select'},
+        if: {arg: 'wide'},
+    },
 };

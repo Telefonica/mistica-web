@@ -34,6 +34,7 @@ import {DOWN, ESC, UP} from './utils/keys';
 import {debounce, isEqual} from './utils/helpers';
 import NegativeBox from './negative-box';
 
+import type {BoxProps} from './box';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
@@ -142,6 +143,33 @@ const NavigationBarContentContainer = React.forwardRef<HTMLDivElement, Navigatio
     }
 );
 
+type WideConfig = {
+    paddingX: BoxProps['paddingX'];
+};
+
+const NavigationBarSideMargins = ({
+    children,
+    wide,
+}: {
+    children: React.ReactNode;
+    wide: boolean | WideConfig;
+}) => {
+    if (!wide) {
+        return <ResponsiveLayout>{children}</ResponsiveLayout>;
+    }
+
+    const defaultWidePaddingX: BoxProps['paddingX'] = {mobile: 16, tablet: 24, desktop: 24};
+
+    return (
+        <Box
+            width="100%"
+            paddingX={wide === true ? defaultWidePaddingX : wide.paddingX ?? defaultWidePaddingX}
+        >
+            {children}
+        </Box>
+    );
+};
+
 interface NavigationBarCommonProps {
     variant?: Variant;
     onBack?: () => void;
@@ -150,6 +178,7 @@ interface NavigationBarCommonProps {
     right?: React.ReactElement;
     withBorder?: boolean;
     children?: undefined;
+    wide?: boolean | WideConfig;
 }
 
 interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
@@ -159,6 +188,7 @@ interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
 
 interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
     topFixed: false;
+    /** @deprecated use wide */
     paddingX?: number;
 }
 
@@ -173,6 +203,7 @@ export const NavigationBar = ({
     topFixed = true,
     paddingX = 0,
     withBorder = true,
+    wide = false,
 }: NavigationBarProps): JSX.Element => {
     const {texts, t} = useTheme();
     const content = (
@@ -193,6 +224,18 @@ export const NavigationBar = ({
             </Inline>
         </NavigationBarContentContainer>
     );
+
+    const calcPaddingXWhenNotTopFixed = (): BoxProps['paddingX'] => {
+        if (typeof wide !== 'undefined') {
+            if (typeof wide !== 'object') {
+                return 0;
+            }
+            return wide.paddingX ?? 0;
+        }
+
+        return paddingX as BoxProps['paddingX'];
+    };
+
     return (
         <ThemeVariant variant={variant}>
             <Header
@@ -202,16 +245,11 @@ export const NavigationBar = ({
                 dataAttributes={{'component-name': 'NavigationBar'}}
             >
                 {topFixed ? (
-                    <ResponsiveLayout>{content}</ResponsiveLayout>
+                    <NavigationBarSideMargins wide={wide}>{content}</NavigationBarSideMargins>
                 ) : (
-                    <div
-                        style={{
-                            padding: `0 ${paddingX}px`,
-                            width: '100%',
-                        }}
-                    >
+                    <Box width="100%" paddingX={calcPaddingXWhenNotTopFixed()}>
                         {content}
-                    </div>
+                    </Box>
                 )}
             </Header>
             {topFixed && <div className={styles.spacer} />}
@@ -272,6 +310,7 @@ type MainNavigationBarProps = {
     burgerMenuExtra?: React.ReactNode;
     large?: boolean;
     desktopLargeMenu?: boolean;
+    wide?: boolean | WideConfig;
 };
 
 type MainNavigationBarMenuStatus = 'opening' | 'opened' | 'closing' | 'closed';
@@ -816,10 +855,12 @@ const MainNavigationBarDesktopMenuContent = ({
     section,
     index,
     isLargeNavigationBar,
+    wide,
 }: {
     section: MainNavigationBarSection;
     index: number;
     isLargeNavigationBar: boolean;
+    wide: boolean | WideConfig;
 }): JSX.Element => {
     const menuRef = React.useRef<HTMLDivElement>(null);
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
@@ -889,7 +930,7 @@ const MainNavigationBarDesktopMenuContent = ({
                                 overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
                             }}
                         >
-                            <ResponsiveLayout>
+                            <NavigationBarSideMargins wide={wide}>
                                 <div
                                     className={classnames(styles.desktopMenu, {
                                         [styles.desktopMenuContentFadeIn]: isContentVisible,
@@ -926,7 +967,7 @@ const MainNavigationBarDesktopMenuContent = ({
                                         </Grid>
                                     )}
                                 </div>
-                            </ResponsiveLayout>
+                            </NavigationBarSideMargins>
                         </div>
                     </ResetResponsiveLayout>
                 )}
@@ -1030,6 +1071,7 @@ const MainNavigationBarDesktopSection = ({
     variant,
     isLargeNavigationBar,
     desktopLargeMenu,
+    wide,
 }: {
     section: MainNavigationBarSection;
     index: number;
@@ -1040,6 +1082,7 @@ const MainNavigationBarDesktopSection = ({
     variant?: Variant;
     isLargeNavigationBar: boolean;
     desktopLargeMenu?: boolean;
+    wide: boolean | WideConfig;
 }): JSX.Element => {
     const {texts, t} = useTheme();
     const {title, menu, ...touchableProps} = section;
@@ -1218,6 +1261,7 @@ const MainNavigationBarDesktopSection = ({
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
                             index={index}
+                            wide={wide}
                         />
                     ) : (
                         <MainNavigationBarDesktopSmallMenu
@@ -1241,6 +1285,7 @@ const MainNavigationBarDesktopSections = ({
     isLargeNavigationBar,
     hasRightContent,
     desktopLargeMenu,
+    wide,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
@@ -1249,6 +1294,7 @@ const MainNavigationBarDesktopSections = ({
     hasRightContent: boolean;
     isLargeNavigationBar: boolean;
     desktopLargeMenu: boolean;
+    wide: boolean | WideConfig;
 }): JSX.Element => {
     const {openSectionMenu, openedSection, closeMenu} = useMainNavigationBarDesktopMenuState();
 
@@ -1282,6 +1328,7 @@ const MainNavigationBarDesktopSections = ({
                         section={section}
                         isLargeNavigationBar={isLargeNavigationBar}
                         desktopLargeMenu={desktopLargeMenu}
+                        wide={wide}
                     />
                 ))}
             </Inline>
@@ -1333,6 +1380,7 @@ export const MainNavigationBar = ({
     logo,
     large = false,
     desktopLargeMenu = false,
+    wide = false,
 }: MainNavigationBarProps): JSX.Element => {
     const {texts, t} = useTheme();
     const menuId = React.useId();
@@ -1354,6 +1402,7 @@ export const MainNavigationBar = ({
             hasRightContent={!!right}
             isLargeNavigationBar={hasBottomSections}
             desktopLargeMenu={desktopLargeMenu}
+            wide={wide}
         />
     );
 
@@ -1385,7 +1434,7 @@ export const MainNavigationBar = ({
                     isLargeNavigationBar={hasBottomSections}
                     desktopLargeMenu={desktopLargeMenu}
                 >
-                    <ResponsiveLayout>
+                    <NavigationBarSideMargins wide={wide}>
                         <NavigationBarContentContainer
                             ref={navigationBarRef}
                             right={right}
@@ -1415,7 +1464,7 @@ export const MainNavigationBar = ({
                                 {desktopSections}
                             </NavigationBarContentContainer>
                         )}
-                    </ResponsiveLayout>
+                    </NavigationBarSideMargins>
                 </MainNavigationBarContentWrapper>
             </Header>
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
@@ -1453,6 +1502,7 @@ type FunnelNavigationBarProps = {
     topFixed?: boolean;
     children?: undefined;
     withBorder?: boolean;
+    wide?: boolean | WideConfig;
 };
 
 export const FunnelNavigationBar = ({
@@ -1461,6 +1511,7 @@ export const FunnelNavigationBar = ({
     variant = 'default',
     topFixed = true,
     withBorder = true,
+    wide = false,
 }: FunnelNavigationBarProps): JSX.Element => {
     logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
@@ -1472,13 +1523,13 @@ export const FunnelNavigationBar = ({
                 variant={variant}
                 dataAttributes={{'component-name': 'FunnelNavigationBar'}}
             >
-                <ResponsiveLayout>
+                <NavigationBarSideMargins wide={wide}>
                     <GridLayout template="10">
                         <NavigationBarContentContainer right={right} expandRightContent>
                             {logo}
                         </NavigationBarContentContainer>
                     </GridLayout>
-                </ResponsiveLayout>
+                </NavigationBarSideMargins>
             </Header>
             {topFixed && <div className={styles.spacer} />}
         </ThemeVariant>
