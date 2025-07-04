@@ -16,7 +16,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {InternalBoxed} from './boxed';
 import {BaseTouchable, type PressHandler} from './touchable';
-import {aspectRatioToNumber} from './utils/aspect-ratio-support';
+import {AspectRatioContainer, aspectRatioToNumber} from './utils/aspect-ratio-support';
 import classnames from 'classnames';
 import {vars as skinVars} from './skins/skin-contract.css';
 import Stack from './stack';
@@ -24,7 +24,13 @@ import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Image from './image';
+import Video from './video';
 import * as tokens from './text-tokens';
+import {isRunningAcceptanceTest} from './utils/platform';
+import {combineRefs} from './utils/common';
+import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
+import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
+import Spinner from './spinner';
 
 import type {
     DataAttributes,
@@ -37,10 +43,11 @@ import type {
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {Variant} from './theme-variant-context';
-import type {VideoElement, VideoSource} from './video';
-import type Video from './video';
+import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
+import type {AspectRatio as ImageAspectRatio} from './image';
 
-export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
+export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
+export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
 const DEBUG = 0;
 
@@ -64,7 +71,7 @@ type ContainerProps = {
     variant?: Variant;
     width?: string | number;
     height?: string | number;
-    aspectRatio?: AspectRatio;
+    aspectRatio?: CardAspectRatio;
     dataAttributes?: DataAttributes;
     'aria-label'?: React.AriaAttributes['aria-label'];
     'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
@@ -83,7 +90,8 @@ type MediaProps = {
     imageSrc?: string;
     imageSrcSet?: string;
     videoSrc?: VideoSource;
-    mediaAspectRatio?: AspectRatio;
+    videoRef?: React.RefObject<VideoElement>;
+    mediaAspectRatio?: MediaAspectRatio;
 };
 
 type TextContentProps = {
@@ -256,33 +264,178 @@ const Asset = ({size, type, asset}: AssetProps): JSX.Element | null => {
     return <div data-testid="asset">{asset}</div>;
 };
 
-type BackgroundImageProps = {
+type BackgroundImageOrVideoProps = {
+    video?: React.ReactNode;
     src?: string;
     srcSet?: string;
 };
 
-const BackgroundImage = ({src, srcSet}: BackgroundImageProps): JSX.Element => {
+const BackgroundImageOrVideo = ({video, src, srcSet}: BackgroundImageOrVideoProps): JSX.Element => {
     // @TODO: move to prop?
     const isExternalInverse = useIsInverseVariant();
     return (
-        <div
-            style={{
-                // class displayCardBackground
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                objectFit: 'cover',
-                zIndex: 0,
-            }}
+        <ThemeVariant
+            // this avoids color flickering while loading the image
+            variant={isExternalInverse ? 'inverse' : 'default'}
         >
-            <ThemeVariant
-                // this avoids color flickering while loading the image
-                variant={isExternalInverse ? 'inverse' : 'default'}
+            <div
+                className={styles.backgroundImageOrVideoContainer}
+                // remove video border radius
+                style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
             >
-                <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />
-            </ThemeVariant>
-        </div>
+                {video ? (
+                    video
+                ) : (
+                    <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />
+                )}
+            </div>
+        </ThemeVariant>
     );
+};
+
+type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
+
+type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
+
+const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
+    loading: {
+        showSpinner: 'loadingTimeout',
+        play: 'playing',
+        pause: 'paused',
+        fail: 'error',
+    },
+
+    loadingTimeout: {
+        play: 'playing',
+        pause: 'paused',
+        fail: 'error',
+        reset: 'loading',
+    },
+
+    playing: {
+        pause: 'paused',
+        reset: 'loading',
+        fail: 'error',
+    },
+
+    paused: {
+        play: 'playing',
+        reset: 'loading',
+        fail: 'error',
+    },
+
+    error: {
+        reset: 'loading',
+    },
+};
+
+const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
+    transitions[state][action] || state;
+
+export const CardActionSpinner = ({color}: IconProps): React.ReactElement => (
+    <Spinner color={color} size={16} delay="0" />
+);
+
+const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={color} size={12} />;
+
+const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
+
+export const useVideoWithControls = (
+    videoSrc?: VideoSource,
+    poster?: string,
+    videoRef?: React.RefObject<VideoElement>
+): {
+    video?: React.ReactNode;
+    videoAction?: CardAction;
+} => {
+    const {texts, t} = useTheme();
+    const videoController = React.useRef<VideoElement>(null);
+    const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
+
+    React.useEffect(() => {
+        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
+        videoController.current?.load();
+
+        return () => {
+            clearTimeout(loadingTimeoutId);
+            dispatch('reset');
+        };
+    }, [videoSrc]);
+
+    const video = React.useMemo(() => {
+        return videoSrc !== undefined ? (
+            <Video
+                ref={combineRefs(videoController, videoRef)}
+                src={videoSrc}
+                poster={poster}
+                width="100%"
+                height="100%"
+                onError={() => dispatch('fail')}
+                onPause={() => dispatch('pause')}
+                onPlay={() => dispatch('play')}
+            />
+        ) : undefined;
+    }, [videoRef, videoSrc, poster]);
+
+    const onVideoControlPress = () => {
+        const video = videoController.current;
+        if (video) {
+            if (videoStatus === 'loading') {
+                dispatch('showSpinner');
+            } else if (videoStatus === 'paused') {
+                video.play();
+            } else if (videoStatus === 'playing') {
+                video.pause();
+            }
+        }
+    };
+
+    if (videoStatus === 'error') {
+        return {video};
+    }
+
+    const videoAction: CardAction | undefined = video
+        ? {
+              uncheckedProps: {
+                  Icon:
+                      videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
+                          ? CardActionSpinner
+                          : CardActionPauseIcon,
+                  label:
+                      videoStatus === 'loadingTimeout'
+                          ? ''
+                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
+              },
+              checkedProps: {
+                  Icon: CardActionPlayIcon,
+                  label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
+              },
+              onChange: onVideoControlPress,
+              disabled: videoStatus === 'loadingTimeout',
+              checked: videoStatus === 'paused',
+          }
+        : undefined;
+
+    return {
+        video,
+        videoAction,
+    };
+};
+
+type MediaComponentProps = {
+    imageSrc?: string;
+    imageSrcSet?: string;
+    video?: React.ReactNode;
+};
+
+const Media = ({imageSrc, imageSrcSet, video}: MediaComponentProps): JSX.Element => {
+    if (video) {
+        return <>{video}</>;
+    }
+    if (imageSrc !== undefined || imageSrcSet !== undefined) {
+        return <Image src={imageSrc || ''} srcSet={imageSrcSet} width="100%" height="100%" noBorderRadius />;
+    }
+    return <></>;
 };
 
 type FooterProps = {
@@ -439,11 +592,22 @@ type TopActionsProps = {
     onClose?: () => void;
     closeButtonLabel?: string;
     topActions?: TopActionsArray;
+    videoAction?: CardAction;
 };
 
-const TopActions = ({onClose, closeButtonLabel, topActions, variant}: TopActionsProps): JSX.Element => {
+const TopActions = ({
+    onClose,
+    closeButtonLabel,
+    topActions,
+    videoAction,
+    variant,
+}: TopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const actions = topActions ? [...topActions] : [];
+
+    if (videoAction) {
+        actions.unshift(videoAction);
+    }
 
     if (onClose) {
         actions.push({
@@ -691,8 +855,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             imageSrc,
             imageSrcSet,
             videoSrc,
+            videoRef,
             media,
-            mediaAspectRatio,
+            mediaAspectRatio = 'auto',
             asset,
             headline,
             title,
@@ -713,7 +878,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             slotAlignment = 'content',
             primaryAction,
             secondaryAction,
-            showFooter,
+            showFooter: showFooterProp,
             footerBackgroundColor,
             footerVariant,
             footerSlot,
@@ -734,7 +899,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
         const hasBackgroundVideo = type === 'cover' && videoSrc !== undefined;
         const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasBackgroundVideo);
-        const hasGradient = hasBackgroundImage || hasBackgroundVideo;
+        const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         // In this context "media" refers to the image or video that is placed inside the card, not the background
         const hasMediaImage = type === 'media' && (imageSrc !== undefined || imageSrcSet !== undefined);
@@ -742,6 +907,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasDeprecatedMedia = type === 'media' && !!media;
         const hasMediaSources = hasMediaImage || hasMediaVideo;
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
+
+        const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
+
+        const {video, videoAction} = useVideoWithControls(
+            shouldShowVideo ? videoSrc : undefined,
+            imageSrc,
+            videoRef
+        );
 
         const isInverseOutside = useIsInverseOrMediaVariant();
         const isExternalInverse = useIsInverseVariant();
@@ -751,9 +924,13 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             ? styles.touchableCardOverlayInverse
             : styles.touchableCardOverlay;
 
-        const shouldShowFooter = showFooter && (hasActions || !!footerSlot);
+        // If the card has actions and an onClose handler, the footer will always be shown
+        // If the footer has no content, it will not be shown
+        const shouldShowFooter =
+            (showFooterProp && (hasActions || !!footerSlot)) || (hasActions && touchableProps.onPress);
+
         const showActionsInBody = !shouldShowFooter && hasActions;
-        const topActionsLength = (topActions ? topActions.length : 0) + (onClose ? 1 : 0);
+        const topActionsLength = (topActions?.length || 0) + (onClose ? 1 : 0) + (videoAction ? 1 : 0);
 
         // @TODO: REVIEW THIS
         const backgroundColor =
@@ -780,11 +957,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 aspectRatio={aspectRatio}
                 backgroundColor={backgroundColor}
             >
-                {hasBackgroundImage && <BackgroundImage src={imageSrc} srcSet={imageSrcSet} />}
+                {hasBackgroundImageOrVideo && (
+                    <BackgroundImageOrVideo video={video} src={imageSrc} srcSet={imageSrcSet} />
+                )}
                 <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
+                    videoAction={videoAction}
                     variant={hasMedia ? 'media' : variant}
                 />
 
@@ -798,12 +978,13 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>{media}</div>
                     )}
                     {hasMediaSources && (
-                        <Media
-                            imageSrc={imageSrc}
-                            imageSrcSet={imageSrcSet}
-                            videoSrc={videoSrc}
-                            mediaAspectRatio={mediaAspectRatio}
-                        />
+                        // using AspectRatioContainer because the <video> element flashes with the poster image size while loading
+                        <AspectRatioContainer
+                            aspectRatio={aspectRatioToNumber(mediaAspectRatio)}
+                            style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
+                        >
+                            <Media video={video} imageSrc={imageSrc} imageSrcSet={imageSrcSet} />
+                        </AspectRatioContainer>
                     )}
                     <div
                         data-testid="body"
@@ -837,7 +1018,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 paddingTop: type === 'cover' ? 40 : asset ? 16 : undefined,
                                 paddingBottom: shouldShowFooter ? 16 : undefined,
                                 border: dbg('2px solid blue'),
-                                background: hasGradient ? skinVars.colors.cardContentOverlay : undefined,
+                                background: hasBackgroundImageOrVideo
+                                    ? skinVars.colors.cardContentOverlay
+                                    : undefined,
                             }}
                         >
                             <div className={styles.contentContainer}>
@@ -855,7 +1038,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                         subtitleLinesMax={subtitleLinesMax}
                                         description={description}
                                         descriptionLinesMax={descriptionLinesMax}
-                                        withTextShadow={hasGradient}
+                                        withTextShadow={hasBackgroundImageOrVideo}
                                     />
                                 </div>
                                 {!hasAssetOrHeadline && type !== 'cover' && (
@@ -933,7 +1116,7 @@ type DataCardProps = {
     extra?: React.ReactNode;
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
-    aspectRatio?: AspectRatio;
+    aspectRatio?: CardAspectRatio;
     /** @deprecated use primaryAction */
     button?: ActionButton;
     /** @deprecated use secondaryAction */
@@ -1015,7 +1198,7 @@ type CoverCardBaseProps = {
     'aria-describedby'?: string;
     size?: 'default' | 'display';
     variant?: Variant;
-    aspectRatio?: AspectRatio;
+    aspectRatio?: CardAspectRatio;
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
@@ -1068,7 +1251,7 @@ type PosterCardBaseProps = {
     'aria-labelledby'?: string;
     'aria-description'?: string;
     'aria-describedby'?: string;
-    aspectRatio?: AspectRatio;
+    aspectRatio?: CardAspectRatio;
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
@@ -1120,7 +1303,7 @@ export const PosterCard = React.forwardRef<
     const imageProps = {
         imageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
         imageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
-    } as BackgroundImageProps;
+    } as BackgroundImageOrVideoProps;
     return (
         <CoverCard
             ref={ref}

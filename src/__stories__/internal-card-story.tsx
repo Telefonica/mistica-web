@@ -10,7 +10,7 @@ import {
     IconStarRegular,
     ButtonSecondary,
 } from '..';
-import {InternalCard, type SlotAlignment} from '../internal-card';
+import {InternalCard} from '../internal-card';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
@@ -20,6 +20,7 @@ import type {HeadingType} from '../utils/types';
 import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 import type {Variant} from '../theme-variant-context';
+import type {MediaAspectRatio, SlotAlignment} from '../internal-card';
 
 export default {
     title: 'Components/Cards/InternalCard',
@@ -48,6 +49,7 @@ type InternalCardArgs = {
     slot: boolean;
     slotAlignment: SlotAlignment;
     onClose: boolean;
+    onPress: boolean;
     topActions: boolean;
     aspectRatio: string;
     showFooter: boolean;
@@ -63,6 +65,8 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     size,
     backgroundColor,
     imageSrc,
+    videoSrc,
+    mediaAspectRatio,
     variant,
     asset = 'icon',
     headline,
@@ -77,6 +81,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     slot,
     slotAlignment,
     onClose,
+    onPress,
     primaryAction,
     secondaryAction,
     topActions,
@@ -134,7 +139,10 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 variant={variant || undefined}
                 backgroundColor={backgroundColor || undefined}
                 imageSrc={imageSrc === 'undefined' ? undefined : imageSrc}
+                videoSrc={videoSrc === 'undefined' ? undefined : videoSrc}
+                mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
                 onClose={onClose ? () => {} : undefined}
+                onPress={onPress ? () => {} : undefined}
                 asset={assetElement}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
                 pretitle={pretitle}
@@ -171,7 +179,6 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 showFooter={showFooter}
                 footerBackgroundColor={footerBackgroundColor || undefined}
                 footerVariant={footerVariant || undefined}
-                onPress={() => {}}
             />
         </>
     );
@@ -183,7 +190,7 @@ Default.args = {
     size: 'default',
     variant: '',
     backgroundColor: '',
-    imageSrc: 'undefined',
+    imageSrc: 'beach image',
     videoSrc: 'undefined',
     mediaAspectRatio: '16 9',
     asset: 'icon',
@@ -197,6 +204,7 @@ Default.args = {
     description: 'This is a description for the card',
     ariaLabel: '',
     onClose: true,
+    onPress: true,
     topActions: true,
     primaryAction: 'buttonPrimary',
     secondaryAction: 'buttonLink',
@@ -286,7 +294,7 @@ Default.argTypes = {
         },
     },
     mediaAspectRatio: {
-        options: [...fixedAspectRatioValues],
+        options: ['auto', ...fixedAspectRatioValues],
         control: {
             type: 'select',
             labels: {

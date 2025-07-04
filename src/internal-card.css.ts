@@ -215,3 +215,15 @@ export const topActionsContainer = style([
         zIndex: 2,
     },
 ]);
+
+export const backgroundImageOrVideoContainer = style([
+    sprinkles({
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        objectFit: 'cover',
+    }),
+    {
+        zIndex: 0,
+    },
+]);
