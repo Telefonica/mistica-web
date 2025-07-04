@@ -14,7 +14,7 @@ import {
     IconStarRegular,
     Placeholder,
 } from '..';
-import {PosterCard} from '../card';
+import {PosterCard} from '../internal-card';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
@@ -22,6 +22,7 @@ import beachImg from './images/beach.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Cards/PosterCard',
@@ -36,7 +37,7 @@ type PosterCardArgs = {
     background: 'image' | 'video' | 'custom color' | 'color from skin';
     backgroundColorCustom: string;
     backgroundColorFromSkin: string;
-    variant: 'default' | 'inverse' | 'alternative';
+    variant: Variant | '';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -78,10 +79,11 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     topAction,
     width,
     height,
-    aspectRatio,
+    aspectRatio: aspectRatioArg,
     emptySource,
     inverse,
 }) => {
+    const aspectRatio = aspectRatioArg.replace(' ', ':');
     let assetElement;
     if (asset === 'circle with icon') {
         assetElement = (
@@ -131,7 +133,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
               : {
                     ...topActionsProps,
                     backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
-                    variant,
+                    variant: (variant || undefined) as Variant,
                 };
 
     const interactiveProps = {
@@ -158,7 +160,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     aria-label={ariaLabel}
                     width={width}
                     height={height}
-                    aspectRatio={aspectRatio}
+                    aspectRatio={aspectRatio as any}
                     {...interactiveProps}
                 />
             </Box>
@@ -173,7 +175,7 @@ Default.args = {
     background: 'image',
     backgroundColorCustom: '',
     backgroundColorFromSkin: '',
-    variant: 'default',
+    variant: '',
     headline: 'Priority',
     pretitle: 'Pretitle',
     pretitleAs: 'span',
@@ -186,8 +188,8 @@ Default.args = {
     closable: false,
     actions: 'none',
     topAction: false,
-    width: 'auto',
-    height: 'auto',
+    width: '',
+    height: '',
     aspectRatio: 'auto',
     emptySource: false,
     inverse: false,
@@ -216,8 +218,17 @@ Default.argTypes = {
         if: {arg: 'background', eq: 'color from skin'},
     },
     variant: {
-        options: ['default', 'inverse', 'alternative'],
-        control: {type: 'select'},
+        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+                media: 'media',
+            },
+        },
         // This control should only be visible when background is set to 'color from skin' or 'custom color'.
         // That could look similar to this in a future storybook version (see https://github.com/ComponentDriven/csf/pull/76):
         // if: {
@@ -228,8 +239,16 @@ Default.argTypes = {
         // },
     },
     aspectRatio: {
-        options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
-        control: {type: 'select'},
+        options: ['auto', '1:1', '16:9', '7:10', '9:10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
     actions: {
         options: ['onPress', 'href', 'to', 'none'],
