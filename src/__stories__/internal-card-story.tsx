@@ -20,7 +20,7 @@ import type {HeadingType} from '../utils/types';
 import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 import type {Variant} from '../theme-variant-context';
-import type {MediaAspectRatio, SlotAlignment} from '../internal-card';
+import type {CardSize, CardType, MediaAspectRatio, MediaPosition, SlotAlignment} from '../internal-card';
 
 export default {
     title: 'Components/Cards/InternalCard',
@@ -29,11 +29,12 @@ export default {
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 type InternalCardArgs = {
-    type: 'data' | 'media' | 'cover' | 'naked';
-    size: 'default' | 'snap' | 'display';
+    type: CardType;
+    size: CardSize;
     backgroundColor: string;
     imageSrc: string;
     videoSrc: string;
+    mediaPosition: MediaPosition;
     mediaAspectRatio: string;
     variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
@@ -66,6 +67,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     backgroundColor,
     imageSrc,
     videoSrc,
+    mediaPosition,
     mediaAspectRatio,
     variant,
     asset = 'icon',
@@ -141,6 +143,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 imageSrc={imageSrc === 'undefined' ? undefined : imageSrc}
                 videoSrc={videoSrc === 'undefined' ? undefined : videoSrc}
                 mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
+                mediaPosition={mediaPosition}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
                 asset={assetElement}
@@ -192,6 +195,7 @@ Default.args = {
     backgroundColor: '',
     imageSrc: 'beach image',
     videoSrc: 'undefined',
+    mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     asset: 'icon',
     headlineType: 'promo',
@@ -272,6 +276,10 @@ Default.argTypes = {
                 '': 'empty string',
             },
         },
+    },
+    mediaPosition: {
+        options: ['top', 'left', 'right'],
+        control: {type: 'select'},
     },
     asset: {
         options: ['icon', 'image', 'none'],

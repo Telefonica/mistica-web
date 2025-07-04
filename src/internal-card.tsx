@@ -49,12 +49,13 @@ import type {AspectRatio as ImageAspectRatio} from './image';
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
-const DEBUG = 0;
+const DEBUG = 1;
 
 const dbg = (value: any) => (DEBUG ? value : undefined);
 
-type CardType = 'data' | 'media' | 'cover' | 'naked';
-type CardSize = 'snap' | 'default' | 'display';
+export type CardType = 'data' | 'media' | 'cover' | 'naked';
+export type CardSize = 'snap' | 'default' | 'display';
+export type MediaPosition = 'top' | 'left' | 'right';
 
 type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
@@ -93,6 +94,7 @@ type MediaProps = {
     videoSrc?: VideoSource;
     videoRef?: React.RefObject<VideoElement>;
     mediaAspectRatio?: MediaAspectRatio;
+    mediaPosition?: MediaPosition;
 };
 
 type TextContentProps = {
@@ -161,6 +163,7 @@ type PrivateContainerProps = {
 const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & ContainerProps & MediaProps>(
     (
         {
+            type,
             children,
             width,
             height,
@@ -198,6 +201,7 @@ const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & Conta
                     width: width || '100%',
                     height: height || '100%',
                     ...aspectRatioStyle,
+                    border: dbg('1px solid lime'),
                 }}
             >
                 <div
@@ -217,8 +221,8 @@ const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & Conta
                         variant={variant}
                         className={classnames(styles.boxed)}
                         background={backgroundColor}
-                        borderRadius={skinVars.borderRadii.container}
-                        border={boxedBorderStyleOverride}
+                        borderRadius={type === 'naked' ? '0px' : skinVars.borderRadii.container}
+                        border={type === 'naked' ? 'none' : boxedBorderStyleOverride}
                     >
                         {children}
                     </InternalBoxed>
@@ -293,11 +297,7 @@ const BackgroundImageOrVideo = ({video, src, srcSet}: BackgroundImageOrVideoProp
                 // remove video border radius
                 style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
             >
-                {video ? (
-                    video
-                ) : (
-                    <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} noBorderRadius />
-                )}
+                {video ? video : <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} />}
             </div>
         </ThemeVariant>
     );
@@ -443,7 +443,7 @@ const Media = ({imageSrc, imageSrcSet, video}: MediaComponentProps): JSX.Element
         return <>{video}</>;
     }
     if (imageSrc !== undefined || imageSrcSet !== undefined) {
-        return <Image src={imageSrc || ''} srcSet={imageSrcSet} width="100%" height="100%" noBorderRadius />;
+        return <Image src={imageSrc || ''} srcSet={imageSrcSet} width="100%" height="100%" />;
     }
     return <></>;
 };
@@ -457,6 +457,10 @@ type FooterProps = {
     footerVariant?: Variant;
 };
 
+type PrivateFooterProps = {
+    noCardPadding?: boolean;
+};
+
 const Footer = ({
     size,
     variant,
@@ -466,7 +470,8 @@ const Footer = ({
     hasBackgroundImage,
     footerVariant,
     footerBackgroundColor,
-}: FooterProps & ActionsProps): JSX.Element => {
+    noCardPadding,
+}: FooterProps & ActionsProps & PrivateFooterProps): JSX.Element => {
     const hasActions = !!(primaryAction || secondaryAction);
     const isInverse = variant === 'inverse' || variant === 'media';
     return (
@@ -474,10 +479,10 @@ const Footer = ({
             <Filler />
             <div
                 data-testid="footer"
-                className={styles.containerPaddingXVariants[size]}
+                className={classnames({[styles.containerPaddingXVariants[size]]: !noCardPadding})}
                 style={{
                     paddingTop: 16,
-                    paddingBottom: 16,
+                    paddingBottom: noCardPadding ? 0 : 16,
 
                     borderTop: footerBackgroundColor
                         ? undefined
@@ -791,7 +796,7 @@ const TextContent = ({
         colorVariants[themeVariant as keyof typeof colorVariants] ||
         colorVariants.default;
     const textVariant = textVariants[size] || textVariants.default;
-    const textShadowStyle = withTextShadow ? '0 0 20px rgba(0,0,0,1)' : undefined;
+    const textShadowStyle = withTextShadow ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
     return (
         <div>
@@ -872,6 +877,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoRef,
             media,
             mediaAspectRatio = 'auto',
+            mediaPosition = 'top',
             asset,
             headline,
             title,
@@ -916,11 +922,13 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         // In this context "media" refers to the image or video that is placed inside the card, not the background
-        const hasMediaImage = type === 'media' && (imageSrc !== undefined || imageSrcSet !== undefined);
-        const hasMediaVideo = type === 'media' && videoSrc !== undefined;
+        const typeAllowsMedia = type === 'media' || type === 'naked';
+        const hasMediaImage = typeAllowsMedia && (imageSrc !== undefined || imageSrcSet !== undefined);
+        const hasMediaVideo = typeAllowsMedia && videoSrc !== undefined;
         const hasMediaSources = hasMediaImage || hasMediaVideo;
-        const hasDeprecatedMedia = type === 'media' && !!media && !hasMediaSources;
+        const hasDeprecatedMedia = typeAllowsMedia && !!media && !hasMediaSources;
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
+        const noCardPadding = type === 'naked' || mediaPosition === 'top';
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
 
@@ -932,6 +940,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         const isInverseOutside = useIsInverseOrMediaVariant();
         const isExternalInverse = useIsInverseVariant();
+        // @TODO review
         const variant = variantProp || (type === 'cover' && hasCustomBackground ? 'media' : undefined);
         const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isInverseOutside;
         const overlayStyle = isInverseStyle
@@ -989,13 +998,25 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 >
                     {isTouchable && <div className={overlayStyle} />}
                     {hasDeprecatedMedia && (
-                        <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>{media}</div>
+                        <div
+                            style={
+                                type === 'naked'
+                                    ? undefined
+                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})
+                            }
+                        >
+                            {media}
+                        </div>
                     )}
                     {hasMediaSources && (
                         // using AspectRatioContainer because the <video> element flashes with the poster image size while loading
                         <AspectRatioContainer
                             aspectRatio={aspectRatioToNumber(mediaAspectRatio)}
-                            style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
+                            style={
+                                type === 'naked'
+                                    ? undefined
+                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})
+                            }
                         >
                             <Media video={video} imageSrc={imageSrc} imageSrcSet={imageSrcSet} />
                             <Asset absolute size={size} asset={asset} />
@@ -1014,7 +1035,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         )}
                         <div
                             className={classnames(
-                                styles.containerPaddingXVariants[size],
+                                {[styles.containerPaddingXVariants[size]]: !noCardPadding},
                                 styles.containerPaddingBottomVariants[size],
                                 styles.containerPaddingTopVariants[size]
                             )}
@@ -1024,8 +1045,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 height: type === 'cover' ? undefined : '100%',
                                 // padding overrides for specific cases
                                 paddingTop: type === 'cover' ? 40 : asset ? 16 : undefined,
-                                paddingBottom: shouldShowFooter ? 16 : undefined,
-                                border: dbg('2px solid blue'),
+                                paddingBottom: shouldShowFooter ? 16 : noCardPadding ? 0 : undefined,
+                                border: dbg('1px solid blue'),
                                 background: hasBackgroundImageOrVideo
                                     ? skinVars.colors.cardContentOverlay
                                     : undefined,
@@ -1089,6 +1110,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
                         hasBackgroundImage={hasBackgroundImage}
+                        noCardPadding={noCardPadding}
                     />
                 )}
             </Container>

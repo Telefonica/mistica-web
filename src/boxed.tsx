@@ -29,7 +29,7 @@ type Props = {
 };
 
 type InternalProps = {
-    borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
+    borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay | string;
     border?: string;
     desktopOnly?: boolean;
     background?: string;
