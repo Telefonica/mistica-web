@@ -3,6 +3,7 @@
 import * as React from 'react';
 import * as styles from './internal-card.css';
 import * as mediaStyles from './image.css';
+import * as tokens from './text-tokens';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
 import {
@@ -12,25 +13,24 @@ import {
     useThemeVariant,
 } from './theme-variant-context';
 import Tag from './tag';
+import Stack from './stack';
+import Image from './image';
+import Video from './video';
+import Inline from './inline';
+import Spinner from './spinner';
+import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
+import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {InternalBoxed} from './boxed';
 import {BaseTouchable, type PressHandler} from './touchable';
 import {AspectRatioContainer, aspectRatioToNumber} from './utils/aspect-ratio-support';
-import classnames from 'classnames';
 import {vars as skinVars} from './skins/skin-contract.css';
-import Stack from './stack';
-import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import Image from './image';
-import Video from './video';
-import * as tokens from './text-tokens';
-import {isRunningAcceptanceTest} from './utils/platform';
 import {combineRefs} from './utils/common';
-import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
-import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
-import Spinner from './spinner';
+import {isRunningAcceptanceTest} from './utils/platform';
+import classnames from 'classnames';
 
 import type {
     DataAttributes,
@@ -55,7 +55,8 @@ const dbg = (value: any) => (DEBUG ? value : undefined);
 
 type CardType = 'data' | 'media' | 'cover' | 'naked';
 type CardSize = 'snap' | 'default' | 'display';
-type Media = RendersElement<typeof Image> | RendersElement<typeof Video>;
+
+type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
 type ActionButton =
     | RendersNullableElement<typeof ButtonPrimary>
@@ -85,7 +86,7 @@ type ContainerProps = {
 
 type MediaProps = {
     /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
-    media?: Media;
+    media?: DeprecatedMediaProp;
     backgroundColor?: string;
     imageSrc?: string;
     imageSrcSet?: string;
@@ -108,7 +109,6 @@ type TextContentProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    withTextShadow?: boolean;
 };
 
 type AssetProps = {
@@ -645,6 +645,10 @@ const TopActions = ({
     );
 };
 
+type PrivateTextContentProps = {
+    withTextShadow?: boolean;
+};
+
 const TextContent = ({
     size: size,
     headline,
@@ -660,7 +664,7 @@ const TextContent = ({
     descriptionLinesMax,
     variant,
     withTextShadow,
-}: TextContentProps): JSX.Element => {
+}: TextContentProps & PrivateTextContentProps): JSX.Element => {
     const {textPresets, colorValues} = useTheme();
     const themeVariant = useThemeVariant();
 
@@ -914,8 +918,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // In this context "media" refers to the image or video that is placed inside the card, not the background
         const hasMediaImage = type === 'media' && (imageSrc !== undefined || imageSrcSet !== undefined);
         const hasMediaVideo = type === 'media' && videoSrc !== undefined;
-        const hasDeprecatedMedia = type === 'media' && !!media;
         const hasMediaSources = hasMediaImage || hasMediaVideo;
+        const hasDeprecatedMedia = type === 'media' && !!media && !hasMediaSources;
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
@@ -1002,10 +1006,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]: !!asset && !hasMediaSources,
                         })}
-                        style={{
-                            // with a footer, the bottom padding for the body is always 16px
-                            border: dbg('2px solid red'),
-                        }}
                     >
                         {!hasMediaSources && <Asset size={size} asset={asset} />}
 
@@ -1097,6 +1097,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 );
 
 type DataCardProps = {
+    'aria-label'?: React.AriaAttributes['aria-label'];
+    'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
+    'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
+    'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     size?: CardSize;
     background?: string;
     variant?: Variant;
@@ -1115,10 +1119,6 @@ type DataCardProps = {
     description?: string;
     descriptionLinesMax?: number;
     dataAttributes?: DataAttributes;
-    'aria-label'?: React.AriaAttributes['aria-label'];
-    'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
-    'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
-    'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     extraAlignment?: SlotAlignment;
     /** @deprecated use slot */
     extra?: React.ReactNode;
@@ -1148,7 +1148,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
         {
             dataAttributes,
             size = 'default',
-            // handle deprecations
             button,
             primaryAction,
             buttonLink,
@@ -1159,7 +1158,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
             topActions,
             isInverse,
             variant,
-            // pass through props
             ...rest
         },
         ref
@@ -1327,9 +1325,13 @@ export const PosterCard = React.forwardRef<
 });
 
 interface MediaCardProps {
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     size?: CardSize;
     /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
-    media: Media;
+    media: DeprecatedMediaProp;
     imageSrc?: string;
     imageSrcSet?: string;
     videoSrc?: VideoSource;
@@ -1361,10 +1363,6 @@ interface MediaCardProps {
     primaryAction?: ActionButton;
     secondaryAction?: ActionButton;
     dataAttributes?: DataAttributes;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
     onClose?: () => unknown;
     closeButtonLabel?: string;
     footerBackgroundColor?: string;
@@ -1383,9 +1381,8 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
             topActions,
             actions,
             button,
-            buttonLink,
-            variant,
             primaryAction,
+            buttonLink,
             secondaryAction,
             dataAttributes,
             ...rest
@@ -1396,7 +1393,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
             <InternalCard
                 dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard'}}
                 type="media"
-                variant={variant}
                 size={size}
                 slot={slot || extra}
                 topActions={topActions || actions}
