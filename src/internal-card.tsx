@@ -113,7 +113,6 @@ type TextContentProps = {
 
 type AssetProps = {
     size: CardSize;
-    type: CardType;
     asset?: React.ReactElement;
 };
 
@@ -245,23 +244,34 @@ const Filler = ({minHeight}: FillerProps) => (
     />
 );
 
-const Asset = ({size, type, asset}: AssetProps): JSX.Element | null => {
-    // @TODO: review this logic
+type PrivateAssetProps = {
+    absolute?: boolean;
+};
+
+const Asset = ({size, absolute, asset}: AssetProps & PrivateAssetProps): JSX.Element | null => {
     if (!asset) {
         return null;
     }
 
-    // Flexible Spacing (mode A according to specs)
-    if (type === 'cover') {
-        return <div data-testid="asset">{asset}</div>;
+    if (absolute) {
+        return (
+            <div
+                style={{position: 'absolute', top: 0, left: 0}}
+                className={classnames(
+                    styles.containerPaddingXVariants[size],
+                    styles.containerPaddingTopVariants[size]
+                )}
+            >
+                <div data-testid="asset">{asset}</div>
+            </div>
+        );
     }
 
-    // Content-Follows Spacing (mode C according to specs)
-    if (size === 'snap' || size === 'default') {
-        return <div data-testid="asset">{asset}</div>;
-    }
-
-    return <div data-testid="asset">{asset}</div>;
+    return (
+        <div className={classnames(styles.containerPaddingXVariants[size])}>
+            <div data-testid="asset">{asset}</div>
+        </div>
+    );
 };
 
 type BackgroundImageOrVideoProps = {
@@ -984,23 +994,21 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
                         >
                             <Media video={video} imageSrc={imageSrc} imageSrcSet={imageSrcSet} />
+                            <Asset absolute size={size} asset={asset} />
                         </AspectRatioContainer>
                     )}
                     <div
                         data-testid="body"
                         className={classnames(styles.touchable, {
-                            [styles.containerPaddingTopVariants[size]]: !!asset,
+                            [styles.containerPaddingTopVariants[size]]: !!asset && !hasMediaSources,
                         })}
                         style={{
                             // with a footer, the bottom padding for the body is always 16px
                             border: dbg('2px solid red'),
                         }}
                     >
-                        {!!asset && (
-                            <div className={classnames(styles.containerPaddingXVariants[size])}>
-                                <Asset type={type} size={size} asset={asset} />
-                            </div>
-                        )}
+                        {!hasMediaSources && <Asset size={size} asset={asset} />}
+
                         {type === 'cover' && (
                             <Filler minHeight={type === 'cover' && topActionsLength && !asset ? 48 : 0} />
                         )}
