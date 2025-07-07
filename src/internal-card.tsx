@@ -49,7 +49,7 @@ import type {AspectRatio as ImageAspectRatio} from './image';
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
-const DEBUG = 0;
+const DEBUG = 1;
 const dbg = (value: any) => (DEBUG ? value : undefined);
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
@@ -650,6 +650,7 @@ const Media = ({
 };
 
 type FooterProps = {
+    type: CardType;
     size: CardSize;
     variant?: Variant;
     footerSlot?: React.ReactNode;
@@ -658,11 +659,8 @@ type FooterProps = {
     footerVariant?: Variant;
 };
 
-type PrivateFooterProps = {
-    noCardPadding?: boolean;
-};
-
 const Footer = ({
+    type,
     size,
     variant,
     footerSlot,
@@ -671,19 +669,20 @@ const Footer = ({
     hasBackgroundImage,
     footerVariant,
     footerBackgroundColor,
-    noCardPadding,
-}: FooterProps & ActionsProps & PrivateFooterProps): JSX.Element => {
+}: FooterProps & ActionsProps): JSX.Element => {
     const hasActions = !!(primaryAction || secondaryAction);
     const isInverse = variant === 'inverse' || variant === 'media';
+    const noPadding = type === 'naked';
+
     return (
         <ThemeVariant variant={footerVariant || variant}>
             <Filler />
             <div
                 data-testid="footer"
-                className={classnames({[styles.containerPaddingXVariants[size]]: !noCardPadding})}
+                className={classnames({[styles.containerPaddingXVariants[size]]: !noPadding})}
                 style={{
                     paddingTop: 16,
-                    paddingBottom: noCardPadding ? 0 : 16,
+                    paddingBottom: noPadding ? 0 : 16,
 
                     borderTop: footerBackgroundColor
                         ? undefined
@@ -973,14 +972,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const {/* text: slotText, */ ref: slotRef} = useInnerText();
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasActions = !!(primaryAction || secondaryAction);
-        // @TODO insufficient condition. The asset could be moved to the left media position
-        const hasAssetOrHeadline = !!(asset || headline);
-
-        // We consider any string (including empty string) as an image/video source
-        const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
-        const hasBackgroundVideo = type === 'cover' && videoSrc !== undefined;
-        const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasBackgroundVideo);
-        const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         // In this context "media" refers to the image or video that is placed inside the card, not the background
         const typeAllowsMedia = type === 'media' || type === 'naked';
@@ -989,7 +980,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasMediaSources = hasMediaImage || hasMediaVideo;
         const hasDeprecatedMedia = typeAllowsMedia && !!media && !hasMediaSources;
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
-        const noCardPadding = type === 'naked' && mediaPosition === 'top'; // @TODO review
+        const isNaked = type === 'naked';
+
+        // @TODO insufficient condition. The asset could be moved to the left media position
+        const hasAssetOrHeadline = !!(asset || headline);
+
+        // We consider any string (including empty string) as an image/video source
+        const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
+        const hasBackgroundVideo = type === 'cover' && videoSrc !== undefined;
+        const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasBackgroundVideo);
+        const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
 
@@ -1128,7 +1128,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         )}
                         <div
                             className={classnames(
-                                {[styles.containerPaddingXVariants[size]]: !noCardPadding},
+                                styles.containerPaddingXVariants[size],
                                 styles.containerPaddingBottomVariants[size],
                                 styles.containerPaddingTopVariants[size]
                             )}
@@ -1138,7 +1138,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 height: type === 'cover' ? undefined : '100%',
                                 // padding overrides for specific cases
                                 paddingTop: type === 'cover' ? 40 : asset ? 16 : undefined,
-                                paddingBottom: shouldShowFooter ? 16 : noCardPadding ? 0 : undefined,
+                                paddingLeft: hasMedia && isNaked && mediaPosition === 'right' ? 0 : undefined,
+                                paddingRight: hasMedia && isNaked && mediaPosition === 'left' ? 0 : undefined,
+                                paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
                                 border: dbg('1px solid blue'),
                                 background: hasBackgroundImageOrVideo
                                     ? skinVars.colors.cardContentOverlay
@@ -1197,6 +1199,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 </BaseTouchable>
                 {shouldShowFooter && (
                     <Footer
+                        type={type}
                         variant={variant}
                         footerVariant={footerVariant}
                         footerBackgroundColor={footerBackgroundColor}
@@ -1205,7 +1208,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         primaryAction={primaryAction}
                         secondaryAction={secondaryAction}
                         hasBackgroundImage={hasBackgroundImage}
-                        noCardPadding={noCardPadding}
                     />
                 )}
             </Container>
