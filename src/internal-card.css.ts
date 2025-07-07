@@ -73,6 +73,30 @@ export const containerPaddingTopVariants = styleVariants({
     ],
 });
 
+const actionsContainer = style([
+    sprinkles({
+        display: 'flex',
+        flexDirection: 'row',
+    }),
+    {
+        gap: 16,
+    },
+]);
+
+export const actionsContainerVariants = styleVariants({
+    display: [actionsContainer, sprinkles({paddingTop: 24})],
+    default: [
+        actionsContainer,
+        sprinkles({paddingTop: 16}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {paddingTop: 24},
+            },
+        },
+    ],
+    snap: [actionsContainer, sprinkles({paddingTop: 16})],
+});
+
 export const containerPaddingBottomVariants = styleVariants({
     display: [sprinkles({paddingBottom: 32})],
     default: [

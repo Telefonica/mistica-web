@@ -49,8 +49,7 @@ import type {AspectRatio as ImageAspectRatio} from './image';
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
-const DEBUG = 1;
-
+const DEBUG = 0;
 const dbg = (value: any) => (DEBUG ? value : undefined);
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
@@ -93,8 +92,11 @@ type MediaProps = {
     imageSrcSet?: string;
     videoSrc?: VideoSource;
     videoRef?: React.RefObject<VideoElement>;
-    mediaAspectRatio?: MediaAspectRatio;
     mediaPosition?: MediaPosition;
+    /** Ignored when mediaPosition !== 'top' */
+    mediaAspectRatio?: MediaAspectRatio;
+    /** Ignored when mediaPosition === 'top' */
+    mediaWidth?: string | number;
 };
 
 type TextContentProps = {
@@ -200,8 +202,9 @@ const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & Conta
                 style={{
                     width: width || '100%',
                     height: height || '100%',
-                    ...aspectRatioStyle,
                     border: dbg('1px solid lime'),
+                    position: 'relative',
+                    ...aspectRatioStyle,
                 }}
             >
                 <div
@@ -249,10 +252,11 @@ const Filler = ({minHeight}: FillerProps) => (
 );
 
 type PrivateAssetProps = {
+    type: CardType;
     absolute?: boolean;
 };
 
-const Asset = ({size, absolute, asset}: AssetProps & PrivateAssetProps): JSX.Element | null => {
+const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): JSX.Element | null => {
     if (!asset) {
         return null;
     }
@@ -272,7 +276,7 @@ const Asset = ({size, absolute, asset}: AssetProps & PrivateAssetProps): JSX.Ele
     }
 
     return (
-        <div className={classnames(styles.containerPaddingXVariants[size])}>
+        <div className={classnames({[styles.containerPaddingXVariants[size]]: type !== 'naked'})}>
             <div data-testid="asset">{asset}</div>
         </div>
     );
@@ -353,7 +357,8 @@ const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color}
 export const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
-    videoRef?: React.RefObject<VideoElement>
+    videoRef?: React.RefObject<VideoElement>,
+    autoHeight?: boolean
 ): {
     video?: React.ReactNode;
     videoAction?: CardAction;
@@ -379,13 +384,13 @@ export const useVideoWithControls = (
                 src={videoSrc}
                 poster={poster}
                 width="100%"
-                height="100%"
+                height={autoHeight ? undefined : '100%'}
                 onError={() => dispatch('fail')}
                 onPause={() => dispatch('pause')}
                 onPlay={() => dispatch('play')}
             />
         ) : undefined;
-    }, [videoRef, videoSrc, poster]);
+    }, [videoRef, videoSrc, poster, autoHeight]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;
@@ -432,20 +437,216 @@ export const useVideoWithControls = (
     };
 };
 
+type ActionsProps = {
+    size: CardSize;
+    primaryAction?: ActionButton;
+    secondaryAction?: ActionButton;
+};
+
+const Actions = ({size, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
+    return (
+        <div className={styles.actionsContainerVariants[size]}>
+            {primaryAction}
+            {secondaryAction}
+        </div>
+    );
+};
+
+type BaseIconButtonAction = {
+    Icon: (props: IconProps) => JSX.Element;
+    label: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+};
+
+type IconButtonAction = BaseIconButtonAction &
+    ExclusifyUnion<
+        | {href: string; newTab?: boolean}
+        | {
+              to: string;
+              newTab?: boolean;
+              fullPageOnWebView?: boolean;
+              replace?: boolean;
+          }
+        | {onPress: () => void}
+    >;
+
+type ToggleIconButtonAction = {
+    checkedProps: BaseIconButtonAction;
+    uncheckedProps: BaseIconButtonAction;
+    onChange?: (checked: boolean) => void | undefined | Promise<void>;
+    checked?: boolean;
+    defaultChecked?: boolean;
+};
+
+export type CardAction = {
+    disabled?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+} & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
+
+type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
+
+export const CardActionIconButton = (props: CardAction): JSX.Element => {
+    const variant = useThemeVariant();
+
+    if (props.Icon) {
+        return (
+            <IconButton
+                {...props}
+                small
+                aria-label={props.label}
+                type="neutral"
+                backgroundType="transparent"
+            />
+        );
+    }
+
+    const {checkedProps, uncheckedProps, ...rest} = props;
+    return (
+        <ToggleIconButton
+            small
+            {...rest}
+            checkedProps={{
+                ...checkedProps,
+                'aria-label': props.checkedProps.label,
+                type: variant === 'media' ? 'neutral' : 'brand',
+                backgroundType: 'solid',
+            }}
+            uncheckedProps={{
+                ...uncheckedProps,
+                'aria-label': props.uncheckedProps.label,
+                type: 'neutral',
+                backgroundType: 'transparent',
+            }}
+        />
+    );
+};
+
+type TopActionsProps = {
+    size?: CardSize;
+    variant?: Variant;
+    onClose?: () => void;
+    closeButtonLabel?: string;
+    topActions?: TopActionsArray;
+    videoAction?: CardAction;
+    containerStyles?: React.CSSProperties;
+};
+
+const TopActions = ({
+    onClose,
+    closeButtonLabel,
+    topActions,
+    videoAction,
+    variant,
+    containerStyles = {},
+}: TopActionsProps): JSX.Element => {
+    const {texts, t} = useTheme();
+    const actions = topActions ? [...topActions] : [];
+
+    if (videoAction) {
+        actions.unshift(videoAction);
+    }
+
+    if (onClose) {
+        actions.push({
+            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
+            onPress: onClose,
+            Icon: IconCloseRegular,
+        });
+    }
+
+    if (actions.length === 0) {
+        return <></>;
+    }
+
+    return (
+        <ThemeVariant variant={variant}>
+            <div className={styles.topActionsContainer} style={containerStyles}>
+                {actions.map((action, index) => {
+                    if ('Icon' in action || 'checkedProps' in action) {
+                        return <CardActionIconButton key={index} {...action} />;
+                    }
+                    return action;
+                })}
+            </div>
+        </ThemeVariant>
+    );
+};
+
 type MediaComponentProps = {
+    type: CardType;
+    size: CardSize;
+    asset?: React.ReactElement;
     imageSrc?: string;
     imageSrcSet?: string;
     video?: React.ReactNode;
+    mediaAspectRatio: MediaAspectRatio;
+    mediaPosition: MediaPosition;
+    mediaWidth: string | number;
+    videoAction?: CardAction;
 };
 
-const Media = ({imageSrc, imageSrcSet, video}: MediaComponentProps): JSX.Element => {
-    if (video) {
-        return <>{video}</>;
+const Media = ({
+    type,
+    size,
+    asset,
+    imageSrc,
+    imageSrcSet,
+    video,
+    mediaAspectRatio,
+    mediaPosition,
+    mediaWidth,
+}: MediaComponentProps): JSX.Element => {
+    const aspectRatioAsNumber = aspectRatioToNumber(mediaAspectRatio);
+
+    const mediaElement = video ? (
+        video
+    ) : imageSrc !== undefined || imageSrcSet !== undefined ? (
+        <Image
+            src={imageSrc || ''}
+            srcSet={imageSrcSet}
+            width="100%"
+            height={mediaPosition === 'top' ? (aspectRatioAsNumber === 0 ? undefined : '100%') : '100%'}
+        />
+    ) : null;
+
+    if (!mediaElement) {
+        return <></>;
     }
-    if (imageSrc !== undefined || imageSrcSet !== undefined) {
-        return <Image src={imageSrc || ''} srcSet={imageSrcSet} width="100%" height="100%" />;
+
+    const commonContainerStyles = {
+        border: dbg('2px solid green'),
+        // overrides media border radius
+        ...(type === 'naked' ? undefined : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
+    };
+
+    if (mediaPosition === 'top') {
+        // using AspectRatioContainer because the <video> element flashes with the poster image size while loading
+        return (
+            <AspectRatioContainer aspectRatio={aspectRatioAsNumber} style={commonContainerStyles}>
+                {mediaElement}
+                <Asset absolute size={size} asset={asset} type={type} />
+            </AspectRatioContainer>
+        );
     }
-    return <></>;
+
+    // in left/right media position, mediaAspectRatio is ignored
+    return (
+        <div
+            style={{
+                ...commonContainerStyles,
+                width: mediaWidth,
+                flexShrink: 0,
+                flexGrow: 0,
+                height: '100%',
+                position: 'relative',
+            }}
+        >
+            {mediaElement}
+            {mediaPosition !== 'right' && <Asset absolute size={size} asset={asset} type={type} />}
+        </div>
+    );
 };
 
 type FooterProps = {
@@ -503,148 +704,6 @@ const Footer = ({
                         </Inline>
                     )}
                 </Stack>
-            </div>
-        </ThemeVariant>
-    );
-};
-
-type ActionsProps = {
-    size: CardSize;
-    primaryAction?: ActionButton;
-    secondaryAction?: ActionButton;
-};
-
-const Actions = ({size, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
-    return (
-        <div
-            style={{
-                paddingTop: size === 'display' ? 24 : 16,
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 16,
-            }}
-        >
-            {primaryAction}
-            {secondaryAction}
-        </div>
-    );
-};
-
-type BaseIconButtonAction = {
-    Icon: (props: IconProps) => JSX.Element;
-    label: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
-    'aria-current'?: React.AriaAttributes['aria-current'];
-};
-
-type IconButtonAction = BaseIconButtonAction &
-    ExclusifyUnion<
-        | {href: string; newTab?: boolean}
-        | {
-              to: string;
-              newTab?: boolean;
-              fullPageOnWebView?: boolean;
-              replace?: boolean;
-          }
-        | {onPress: () => void}
-    >;
-
-type ToggleIconButtonAction = {
-    checkedProps: BaseIconButtonAction;
-    uncheckedProps: BaseIconButtonAction;
-    onChange?: (checked: boolean) => void | undefined | Promise<void>;
-    checked?: boolean;
-    defaultChecked?: boolean;
-};
-
-export type CardAction = {
-    disabled?: boolean;
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-} & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
-
-type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
-
-export const CardActionIconButton = (props: CardAction): JSX.Element => {
-    const variant = useThemeVariant();
-
-    if (props.Icon) {
-        return (
-            <IconButton
-                small
-                {...props}
-                aria-label={props.label}
-                type="neutral"
-                backgroundType="transparent"
-            />
-        );
-    }
-
-    const {checkedProps, uncheckedProps, ...rest} = props;
-    return (
-        <ToggleIconButton
-            small
-            {...rest}
-            checkedProps={{
-                ...checkedProps,
-                'aria-label': props.checkedProps.label,
-                type: variant === 'media' ? 'neutral' : 'brand',
-                backgroundType: 'solid',
-            }}
-            uncheckedProps={{
-                ...uncheckedProps,
-                'aria-label': props.uncheckedProps.label,
-                type: 'neutral',
-                backgroundType: 'transparent',
-            }}
-        />
-    );
-};
-
-type TopActionsProps = {
-    size?: CardSize;
-    variant?: Variant;
-    onClose?: () => void;
-    closeButtonLabel?: string;
-    topActions?: TopActionsArray;
-    videoAction?: CardAction;
-};
-
-const TopActions = ({
-    onClose,
-    closeButtonLabel,
-    topActions,
-    videoAction,
-    variant,
-}: TopActionsProps): JSX.Element => {
-    const {texts, t} = useTheme();
-    const actions = topActions ? [...topActions] : [];
-
-    if (videoAction) {
-        actions.unshift(videoAction);
-    }
-
-    if (onClose) {
-        actions.push({
-            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
-            onPress: onClose,
-            Icon: IconCloseRegular,
-        });
-    }
-
-    if (actions.length === 0) {
-        return <></>;
-    }
-
-    return (
-        <ThemeVariant variant={variant}>
-            <div className={styles.topActionsContainer}>
-                {actions.map((action, index) => {
-                    if ('Icon' in action || 'checkedProps' in action) {
-                        return <CardActionIconButton key={index} {...action} />;
-                    }
-                    return action;
-                })}
             </div>
         </ThemeVariant>
     );
@@ -878,6 +937,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             media,
             mediaAspectRatio = 'auto',
             mediaPosition = 'top',
+            mediaWidth = 150,
             asset,
             headline,
             title,
@@ -913,6 +973,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const {/* text: slotText, */ ref: slotRef} = useInnerText();
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasActions = !!(primaryAction || secondaryAction);
+        // @TODO insufficient condition. The asset could be moved to the left media position
         const hasAssetOrHeadline = !!(asset || headline);
 
         // We consider any string (including empty string) as an image/video source
@@ -928,14 +989,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasMediaSources = hasMediaImage || hasMediaVideo;
         const hasDeprecatedMedia = typeAllowsMedia && !!media && !hasMediaSources;
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
-        const noCardPadding = type === 'naked' || mediaPosition === 'top';
+        const noCardPadding = type === 'naked' && mediaPosition === 'top'; // @TODO review
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
 
         const {video, videoAction} = useVideoWithControls(
             shouldShowVideo ? videoSrc : undefined,
             imageSrc,
-            videoRef
+            videoRef,
+            // @TODO pass aspect ratio to hook
+            aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
         const isInverseOutside = useIsInverseOrMediaVariant();
@@ -952,8 +1015,15 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const shouldShowFooter =
             (showFooterProp && (hasActions || !!footerSlot)) || (hasActions && touchableProps.onPress);
 
+        const showVideoActionInContentContainer = hasMedia && videoAction && mediaPosition !== 'left';
+        const showVideoActionInMediaContainer = hasMedia && videoAction && mediaPosition === 'left';
+        const videoActionInMediaContainerLeftPosition = Number.isFinite(mediaWidth)
+            ? `calc(${mediaWidth}px - 48px)`
+            : `calc(${mediaWidth} - 48px)`;
+
         const showActionsInBody = !shouldShowFooter && hasActions;
-        const topActionsLength = (topActions?.length || 0) + (onClose ? 1 : 0) + (videoAction ? 1 : 0);
+        const topActionsLengthInContent =
+            (topActions?.length || 0) + (onClose ? 1 : 0) + (showVideoActionInContentContainer ? 1 : 0);
 
         // @TODO: REVIEW THIS
         const backgroundColor =
@@ -987,14 +1057,29 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
-                    videoAction={videoAction}
+                    videoAction={showVideoActionInContentContainer ? videoAction : undefined}
                     variant={hasMedia ? 'media' : variant}
+                />
+                <TopActions
+                    videoAction={showVideoActionInMediaContainer ? videoAction : undefined}
+                    variant="media"
+                    containerStyles={{left: videoActionInMediaContainerLeftPosition, right: 'unset'}}
                 />
 
                 <BaseTouchable
                     maybe
                     className={classnames(styles.touchable, styles.touchableContainer)}
                     {...touchableProps}
+                    style={{
+                        flexDirection:
+                            mediaPosition === 'top'
+                                ? 'column'
+                                : mediaPosition === 'left'
+                                  ? 'row'
+                                  : 'row-reverse',
+                        justifyItems: 'stretch',
+                        border: dbg('3px solid #f0f'),
+                    }}
                 >
                     {isTouchable && <div className={overlayStyle} />}
                     {hasDeprecatedMedia && (
@@ -1009,29 +1094,37 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         </div>
                     )}
                     {hasMediaSources && (
-                        // using AspectRatioContainer because the <video> element flashes with the poster image size while loading
-                        <AspectRatioContainer
-                            aspectRatio={aspectRatioToNumber(mediaAspectRatio)}
-                            style={
-                                type === 'naked'
-                                    ? undefined
-                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})
-                            }
-                        >
-                            <Media video={video} imageSrc={imageSrc} imageSrcSet={imageSrcSet} />
-                            <Asset absolute size={size} asset={asset} />
-                        </AspectRatioContainer>
+                        <Media
+                            type={type}
+                            size={size}
+                            mediaAspectRatio={mediaAspectRatio}
+                            mediaPosition={mediaPosition}
+                            asset={asset}
+                            video={video}
+                            imageSrc={imageSrc}
+                            imageSrcSet={imageSrcSet}
+                            mediaWidth={mediaWidth}
+                        />
                     )}
                     <div
                         data-testid="body"
                         className={classnames(styles.touchable, {
-                            [styles.containerPaddingTopVariants[size]]: !!asset && !hasMediaSources,
+                            [styles.containerPaddingTopVariants[size]]:
+                                !!asset &&
+                                type !== 'naked' &&
+                                (!hasMediaSources || mediaPosition === 'right'),
                         })}
                     >
-                        {!hasMediaSources && <Asset size={size} asset={asset} />}
-
+                        {
+                            // inline asset
+                            (!hasMediaSources || mediaPosition === 'right') && (
+                                <Asset size={size} asset={asset} type={type} />
+                            )
+                        }
                         {type === 'cover' && (
-                            <Filler minHeight={type === 'cover' && topActionsLength && !asset ? 48 : 0} />
+                            <Filler
+                                minHeight={type === 'cover' && topActionsLengthInContent && !asset ? 48 : 0}
+                            />
                         )}
                         <div
                             className={classnames(
@@ -1070,16 +1163,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                         withTextShadow={hasBackgroundImageOrVideo}
                                     />
                                 </div>
-                                {!hasAssetOrHeadline && type !== 'cover' && (
-                                    <div
-                                        style={{
-                                            flexShrink: 0,
-                                            flexGrow: 0,
-                                            width: topActionsLength * 48 - 24,
-                                            background: dbg('#fee'),
-                                        }}
-                                    />
-                                )}
+                                {!hasAssetOrHeadline &&
+                                    type !== 'cover' &&
+                                    !(hasMedia && mediaPosition === 'right') && (
+                                        <div
+                                            style={{
+                                                flexShrink: 0,
+                                                flexGrow: 0,
+                                                width: topActionsLengthInContent * 48 - 24,
+                                                background: dbg('#fee'),
+                                            }}
+                                        />
+                                    )}
                             </div>
                             {type !== 'cover' && slotAlignment === 'bottom' && <Filler />}
                             {slot && (

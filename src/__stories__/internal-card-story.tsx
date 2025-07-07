@@ -36,6 +36,7 @@ type InternalCardArgs = {
     videoSrc: string;
     mediaPosition: MediaPosition;
     mediaAspectRatio: string;
+    mediaWidth: string;
     variant: Variant | '';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -69,6 +70,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     videoSrc,
     mediaPosition,
     mediaAspectRatio,
+    mediaWidth,
     variant,
     asset = 'icon',
     headline,
@@ -147,6 +149,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
                 asset={assetElement}
+                mediaWidth={Number.isFinite(+mediaWidth) ? +mediaWidth : mediaWidth}
                 headline={headline && <Tag type={headlineType}>{headline}</Tag>}
                 pretitle={pretitle}
                 pretitleAs={pretitleAs}
@@ -197,6 +200,7 @@ Default.args = {
     videoSrc: 'undefined',
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
+    mediaWidth: '150px',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
