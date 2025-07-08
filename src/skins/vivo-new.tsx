@@ -198,6 +198,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.orangeLight10,
             tagBackgroundErrorInverse: palette.pepperLight10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(palette.grey6, 0.4)} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.grey6, 0.7),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -352,6 +353,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.darkModeGrey6,
             tagBackgroundErrorInverse: palette.darkModeGrey6,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(palette.grey6, 0.4)} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.grey6, 0.7),
         },
         borderRadii: {
             avatar: '50%',
