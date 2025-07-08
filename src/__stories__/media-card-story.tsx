@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     Stack,
-    MediaCard,
     ButtonPrimary,
     ButtonLink,
     Text2,
@@ -14,13 +13,13 @@ import {
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    MediaCard,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import beachVideo from './videos/beach.mp4';
 import avatarImg from './images/avatar.jpg';
-import {MediaCard as MediaCard2} from '../internal-card';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
@@ -101,108 +100,56 @@ export const Default: StoryComponent<Args> = ({
         | {[key: string]: never};
 
     return (
-        <>
-            <MediaCard
-                dataAttributes={{testid: 'media-card'}}
-                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
-                pretitle={pretitle}
-                pretitleAs={pretitleAs}
-                title={title}
-                titleAs={titleAs}
-                subtitle={subtitle}
-                description={description}
-                asset={assetElement}
-                media={
-                    media === 'video' ? (
-                        <Video
-                            src={emptySource ? '' : VIDEO_SRC}
-                            aspectRatio="16:9"
-                            dataAttributes={{qsysid: 'video'}}
-                        />
-                    ) : (
-                        <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
-                    )
-                }
-                {...interactiveActions}
-                extra={extra ? <Placeholder /> : undefined}
-                onClose={closable ? () => {} : undefined}
-                actions={
-                    topAction
-                        ? [
-                              {
-                                  Icon: IconMobileDeviceRegular,
-                                  onPress: () => {
-                                      alert('icon press');
-                                  },
-                                  label: 'Device',
+        <MediaCard
+            dataAttributes={{testid: 'media-card'}}
+            headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+            pretitle={pretitle}
+            pretitleAs={pretitleAs}
+            title={title}
+            titleAs={titleAs}
+            subtitle={subtitle}
+            description={description}
+            asset={assetElement}
+            media={
+                media === 'video' ? (
+                    <Video
+                        src={emptySource ? '' : VIDEO_SRC}
+                        aspectRatio="16:9"
+                        dataAttributes={{qsysid: 'video'}}
+                    />
+                ) : (
+                    <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
+                )
+            }
+            {...interactiveActions}
+            extra={extra ? <Placeholder /> : undefined}
+            onClose={closable ? () => {} : undefined}
+            actions={
+                topAction
+                    ? [
+                          {
+                              Icon: IconMobileDeviceRegular,
+                              onPress: () => {
+                                  alert('icon press');
                               },
-                              {
-                                  checkedProps: {
-                                      Icon: IconStarFilled,
-                                      label: 'checked',
-                                  },
-                                  uncheckedProps: {
-                                      Icon: IconStarRegular,
-                                      label: 'unchecked',
-                                  },
-                                  defaultChecked: false,
-                                  onChange: () => {},
+                              label: 'Device',
+                          },
+                          {
+                              checkedProps: {
+                                  Icon: IconStarFilled,
+                                  label: 'checked',
                               },
-                          ]
-                        : undefined
-                }
-            />
-            <MediaCard2
-                dataAttributes={{testid: 'media-card'}}
-                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
-                pretitle={pretitle}
-                pretitleAs={pretitleAs}
-                title={title}
-                titleAs={titleAs}
-                subtitle={subtitle}
-                description={description}
-                asset={assetElement}
-                media={
-                    media === 'video' ? (
-                        <Video
-                            src={emptySource ? '' : VIDEO_SRC}
-                            aspectRatio="16:9"
-                            dataAttributes={{qsysid: 'video'}}
-                        />
-                    ) : (
-                        <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
-                    )
-                }
-                {...interactiveActions}
-                extra={extra ? <Placeholder /> : undefined}
-                onClose={closable ? () => {} : undefined}
-                actions={
-                    topAction
-                        ? [
-                              {
-                                  Icon: IconMobileDeviceRegular,
-                                  onPress: () => {
-                                      alert('icon press');
-                                  },
-                                  label: 'Device',
+                              uncheckedProps: {
+                                  Icon: IconStarRegular,
+                                  label: 'unchecked',
                               },
-                              {
-                                  checkedProps: {
-                                      Icon: IconStarFilled,
-                                      label: 'checked',
-                                  },
-                                  uncheckedProps: {
-                                      Icon: IconStarRegular,
-                                      label: 'unchecked',
-                                  },
-                                  defaultChecked: false,
-                                  onChange: () => {},
-                              },
-                          ]
-                        : undefined
-                }
-            />
-        </>
+                              defaultChecked: false,
+                              onChange: () => {},
+                          },
+                      ]
+                    : undefined
+            }
+        />
     );
 };
 

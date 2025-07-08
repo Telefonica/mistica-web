@@ -20,8 +20,8 @@ import {
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {CardAspectRatio} from '../card-internal';
 import type {HeadingType} from '../utils/types';
-import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
@@ -50,7 +50,7 @@ type DisplayDataCardArgs = {
         | 'to'
         | 'none';
     isInverse: boolean;
-    aspectRatio: AspectRatio;
+    aspectRatio: string;
 };
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
@@ -150,7 +150,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             title={title}
             titleAs={titleAs}
             description={description}
-            aspectRatio={aspectRatioValue as AspectRatio}
+            aspectRatio={aspectRatioValue as CardAspectRatio}
             extra={extra ? <Placeholder /> : undefined}
             {...interactiveActions}
             dataAttributes={{testid: 'display-data-card'}}

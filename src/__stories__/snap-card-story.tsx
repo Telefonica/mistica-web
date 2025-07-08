@@ -12,10 +12,9 @@ import {
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
-import {SnapCard as SnapCard2} from '../internal-card';
+import {SnapCard} from '../card-data';
 
-import type {SlotAlignment} from '../internal-card';
-import type {AspectRatio} from '../card';
+import type {CardAspectRatio, SlotAlignment} from '../card-internal';
 
 export default {
     title: 'Components/Cards/SnapCard',
@@ -30,7 +29,7 @@ type Args = {
     inverse: boolean;
     slotAlignment?: SlotAlignment;
     extra: boolean;
-    aspectRatio: AspectRatio;
+    aspectRatio: string;
 };
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
@@ -73,21 +72,19 @@ export const Default: StoryComponent<Args> = ({
     } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
 
     return (
-        <>
-            <SnapCard2
-                asset={assetToIcon[asset]}
-                title={title}
-                subtitle={subtitle}
-                description={description}
-                dataAttributes={{testid: 'snap-card'}}
-                aria-label="SnapCard card label"
-                isInverse={inverse}
-                extra={extra ? <Placeholder /> : undefined}
-                aspectRatio={aspectRatioValue as AspectRatio}
-                slotAlignment={slotAlignment}
-                {...interactiveProps}
-            />
-        </>
+        <SnapCard
+            asset={assetToIcon[asset]}
+            title={title}
+            subtitle={subtitle}
+            description={description}
+            dataAttributes={{testid: 'snap-card'}}
+            aria-label="SnapCard card label"
+            isInverse={inverse}
+            extra={extra ? <Placeholder /> : undefined}
+            aspectRatio={aspectRatioValue as CardAspectRatio}
+            slotAlignment={slotAlignment}
+            {...interactiveProps}
+        />
     );
 };
 
@@ -139,7 +136,7 @@ export const Group: StoryComponent = () => {
                     <Carousel
                         itemsPerPage={4}
                         items={[
-                            <SnapCard2
+                            <SnapCard
                                 title="Title 1"
                                 subtitle="Subtitle"
                                 asset={
@@ -148,7 +145,7 @@ export const Group: StoryComponent = () => {
                                     </Circle>
                                 }
                             />,
-                            <SnapCard2
+                            <SnapCard
                                 title="Title 2"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -156,8 +153,8 @@ export const Group: StoryComponent = () => {
                                     </Circle>
                                 }
                             />,
-                            <SnapCard2 title="Title 3" />,
-                            <SnapCard2
+                            <SnapCard title="Title 3" />,
+                            <SnapCard
                                 title="Data left"
                                 slotAlignment="bottom"
                                 extra={

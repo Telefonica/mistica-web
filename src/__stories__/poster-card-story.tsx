@@ -14,7 +14,7 @@ import {
     IconStarRegular,
     Placeholder,
 } from '..';
-import {PosterCard} from '../internal-card';
+import {PosterCard} from '../card-cover';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';

@@ -11,17 +11,23 @@ import {
     ButtonSecondary,
     ThemeVariant,
 } from '..';
-import {InternalCard} from '../internal-card';
+import {InternalCard} from '../card-internal';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 
 import type {HeadingType} from '../utils/types';
-import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 import type {Variant} from '../theme-variant-context';
-import type {CardSize, CardType, MediaAspectRatio, MediaPosition, SlotAlignment} from '../internal-card';
+import type {
+    CardAspectRatio,
+    CardSize,
+    CardType,
+    MediaAspectRatio,
+    MediaPosition,
+    SlotAlignment,
+} from '../card-internal';
 
 export default {
     title: 'Components/Cards/InternalCard',
@@ -178,7 +184,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                     description={description}
                     slot={slot ? <Placeholder height={64} /> : undefined}
                     slotAlignment={slotAlignment}
-                    aspectRatio={aspectRatioValue as AspectRatio}
+                    aspectRatio={aspectRatioValue as CardAspectRatio}
                     dataAttributes={{testid: 'data-card'}}
                     aria-label={ariaLabel}
                     topActions={

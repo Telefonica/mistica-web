@@ -1,0 +1,136 @@
+import * as React from 'react';
+import {InternalCard} from './card-internal';
+
+import type {
+    CardSize,
+    SlotAlignment,
+    CardAspectRatio,
+    CardActionButton,
+    TopActionsArray,
+    MaybeTouchableCard,
+} from './card-internal';
+import type Tag from './tag';
+import type {Variant} from './theme-variant-context';
+import type {RendersNullableElement} from './utils/renders-element';
+import type {HeadingType, DataAttributes} from './utils/types';
+
+type DataCardProps = {
+    'aria-label'?: React.AriaAttributes['aria-label'];
+    'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
+    'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
+    'aria-describedby'?: React.AriaAttributes['aria-describedby'];
+    size?: CardSize;
+    background?: string;
+    variant?: Variant;
+    /** @deprecated use variant */
+    isInverse?: boolean;
+    asset?: React.ReactElement;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleAs?: HeadingType;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleAs?: HeadingType;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    dataAttributes?: DataAttributes;
+    extraAlignment?: SlotAlignment;
+    /** @deprecated use slot */
+    extra?: React.ReactNode;
+    slot?: React.ReactNode;
+    slotAlignment?: SlotAlignment;
+    aspectRatio?: CardAspectRatio;
+    /** @deprecated use primaryAction */
+    button?: CardActionButton;
+    /** @deprecated use secondaryAction */
+    buttonLink?: CardActionButton;
+    primaryAction?: CardActionButton;
+    secondaryAction?: CardActionButton;
+    onClose?: () => unknown;
+    closeButtonLabel?: string;
+    /** @deprecated use topActions */
+    actions?: TopActionsArray;
+    topActions?: TopActionsArray;
+    footerBackgroundColor?: string;
+    footerVariant?: Variant;
+    showFooter?: boolean;
+    footerSlot?: React.ReactNode;
+    children?: undefined;
+};
+
+export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
+    (
+        {
+            dataAttributes,
+            size = 'default',
+            button,
+            primaryAction,
+            buttonLink,
+            secondaryAction,
+            extra,
+            slot,
+            actions,
+            topActions,
+            isInverse,
+            variant,
+            ...rest
+        },
+        ref
+    ) => {
+        return (
+            <InternalCard
+                type="data"
+                size={size}
+                dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
+                ref={ref}
+                primaryAction={primaryAction || button}
+                secondaryAction={secondaryAction || buttonLink}
+                topActions={topActions || actions}
+                slot={slot || extra}
+                variant={variant || (isInverse ? 'inverse' : undefined)}
+                {...rest}
+            />
+        );
+    }
+);
+
+type FixedSizeDataCardProps = Omit<DataCardProps, 'size'>;
+
+/**
+ * @deprecated use <Datacard size="snap" /> instead
+ */
+export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<FixedSizeDataCardProps>>(
+    ({dataAttributes, ...rest}, ref) => {
+        return (
+            <DataCard
+                size="snap"
+                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
+                ref={ref}
+                {...rest}
+            />
+        );
+    }
+);
+
+/**
+ * @deprecated use <Datacard size="display" /> instead
+ */
+export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<FixedSizeDataCardProps>>(
+    ({dataAttributes, ...rest}, ref) => {
+        return (
+            <DataCard
+                size="display"
+                dataAttributes={{
+                    'component-name': 'DisplayDataCard',
+                    testid: 'DisplayDataCard',
+                    ...dataAttributes,
+                }}
+                ref={ref}
+                {...rest}
+            />
+        );
+    }
+);

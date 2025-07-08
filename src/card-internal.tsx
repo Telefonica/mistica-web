@@ -1,7 +1,7 @@
 // spec: https://www.figma.com/design/tKdPOfcUALzVIh5oizFbm7
 'use client';
 import * as React from 'react';
-import * as styles from './internal-card.css';
+import * as styles from './card-internal.css';
 import * as mediaStyles from './image.css';
 import * as tokens from './text-tokens';
 import {Text} from './text';
@@ -56,9 +56,10 @@ export type CardType = 'data' | 'media' | 'cover' | 'naked';
 export type CardSize = 'snap' | 'default' | 'display';
 export type MediaPosition = 'top' | 'left' | 'right';
 
-type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
+/** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
+export type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
-type ActionButton =
+export type CardActionButton =
     | RendersNullableElement<typeof ButtonPrimary>
     | RendersNullableElement<typeof ButtonSecondary>
     | RendersNullableElement<typeof ButtonLink>
@@ -90,6 +91,7 @@ type MediaProps = {
     backgroundColor?: string;
     imageSrc?: string;
     imageSrcSet?: string;
+    imageAlt?: string;
     videoSrc?: VideoSource;
     videoRef?: React.RefObject<VideoElement>;
     mediaPosition?: MediaPosition;
@@ -156,7 +158,7 @@ type CardProps = ContainerProps &
     FooterProps;
 
 type TouchableCard<T> = T & TouchableProps;
-type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 type PrivateContainerProps = {
     children?: React.ReactNode;
@@ -282,13 +284,14 @@ const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): J
     );
 };
 
-type BackgroundImageOrVideoProps = {
+export type BackgroundImageOrVideoProps = {
     video?: React.ReactNode;
     src?: string;
     srcSet?: string;
+    imageAlt?: string;
 };
 
-const BackgroundImageOrVideo = ({video, src, srcSet}: BackgroundImageOrVideoProps): JSX.Element => {
+const BackgroundImageOrVideo = ({video, src, srcSet, imageAlt}: BackgroundImageOrVideoProps): JSX.Element => {
     // @TODO: move to prop?
     const isExternalInverse = useIsInverseVariant();
     return (
@@ -301,7 +304,11 @@ const BackgroundImageOrVideo = ({video, src, srcSet}: BackgroundImageOrVideoProp
                 // remove video border radius
                 style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
             >
-                {video ? video : <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} />}
+                {video ? (
+                    video
+                ) : (
+                    <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} alt={imageAlt} />
+                )}
             </div>
         </ThemeVariant>
     );
@@ -439,8 +446,8 @@ export const useVideoWithControls = (
 
 type ActionsProps = {
     size: CardSize;
-    primaryAction?: ActionButton;
-    secondaryAction?: ActionButton;
+    primaryAction?: CardActionButton;
+    secondaryAction?: CardActionButton;
 };
 
 const Actions = ({size, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
@@ -485,7 +492,7 @@ export type CardAction = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
-type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
+export type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
 
 export const CardActionIconButton = (props: CardAction): JSX.Element => {
     const variant = useThemeVariant();
@@ -533,7 +540,7 @@ type TopActionsProps = {
     containerStyles?: React.CSSProperties;
 };
 
-const TopActions = ({
+export const TopActions = ({
     onClose,
     closeButtonLabel,
     topActions,
@@ -943,6 +950,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             backgroundColor: backgroundColorProp,
             imageSrc,
             imageSrcSet,
+            imageAlt = '',
             videoSrc,
             videoRef,
             media,
@@ -1070,7 +1078,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 backgroundColor={backgroundColor}
             >
                 {hasBackgroundImageOrVideo && (
-                    <BackgroundImageOrVideo video={video} src={imageSrc} srcSet={imageSrcSet} />
+                    <BackgroundImageOrVideo
+                        video={video}
+                        src={imageSrc}
+                        srcSet={imageSrcSet}
+                        imageAlt={imageAlt}
+                    />
                 )}
                 <TopActions
                     onClose={onClose}
@@ -1233,315 +1246,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     />
                 )}
             </Container>
-        );
-    }
-);
-
-type DataCardProps = {
-    'aria-label'?: React.AriaAttributes['aria-label'];
-    'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
-    'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
-    'aria-describedby'?: React.AriaAttributes['aria-describedby'];
-    size?: CardSize;
-    background?: string;
-    variant?: Variant;
-    /** @deprecated use variant */
-    isInverse?: boolean;
-    asset?: React.ReactElement;
-    headline?: string | RendersNullableElement<typeof Tag>;
-    pretitle?: string;
-    pretitleAs?: HeadingType;
-    pretitleLinesMax?: number;
-    title?: string;
-    titleAs?: HeadingType;
-    titleLinesMax?: number;
-    subtitle?: string;
-    subtitleLinesMax?: number;
-    description?: string;
-    descriptionLinesMax?: number;
-    dataAttributes?: DataAttributes;
-    extraAlignment?: SlotAlignment;
-    /** @deprecated use slot */
-    extra?: React.ReactNode;
-    slot?: React.ReactNode;
-    slotAlignment?: SlotAlignment;
-    aspectRatio?: CardAspectRatio;
-    /** @deprecated use primaryAction */
-    button?: ActionButton;
-    /** @deprecated use secondaryAction */
-    buttonLink?: ActionButton;
-    primaryAction?: ActionButton;
-    secondaryAction?: ActionButton;
-    onClose?: () => unknown;
-    closeButtonLabel?: string;
-    /** @deprecated use topActions */
-    actions?: TopActionsArray;
-    topActions?: TopActionsArray;
-    footerBackgroundColor?: string;
-    footerVariant?: Variant;
-    showFooter?: boolean;
-    footerSlot?: React.ReactNode;
-    children?: undefined;
-};
-
-export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
-    (
-        {
-            dataAttributes,
-            size = 'default',
-            button,
-            primaryAction,
-            buttonLink,
-            secondaryAction,
-            extra,
-            slot,
-            actions,
-            topActions,
-            isInverse,
-            variant,
-            ...rest
-        },
-        ref
-    ) => {
-        return (
-            <InternalCard
-                type="data"
-                size={size}
-                dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
-                ref={ref}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
-                topActions={topActions || actions}
-                slot={slot || extra}
-                variant={variant || (isInverse ? 'inverse' : undefined)}
-                {...rest}
-            />
-        );
-    }
-);
-
-type SnapCardProps = Omit<DataCardProps, 'size'>;
-
-/**
- * @deprecated use <Datacard size="snap" /> instead
- */
-export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<SnapCardProps>>(
-    ({dataAttributes, ...rest}, ref) => {
-        return (
-            <DataCard
-                size="snap"
-                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
-                ref={ref}
-                {...rest}
-            />
-        );
-    }
-);
-
-type CoverCardBaseProps = {
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
-    size?: 'default' | 'display';
-    variant?: Variant;
-    aspectRatio?: CardAspectRatio;
-    width?: number | string;
-    height?: number | string;
-    asset?: React.ReactElement;
-    topActions?: ReadonlyArray<CardAction | React.ReactElement>;
-    primaryAction?: ActionButton;
-    secondaryAction?: ActionButton;
-    onClose?: () => unknown;
-    closeButtonLabel?: string;
-    dataAttributes?: DataAttributes;
-    headline?: string | RendersNullableElement<typeof Tag>;
-    pretitle?: string;
-    pretitleAs?: HeadingType;
-    pretitleLinesMax?: number;
-    title?: string;
-    titleAs?: HeadingType;
-    titleLinesMax?: number;
-    subtitle?: string;
-    subtitleLinesMax?: number;
-    description?: string;
-    descriptionLinesMax?: number;
-    slotAlignment?: SlotAlignment;
-    slot?: React.ReactNode;
-    children?: undefined;
-};
-
-type ImageProps = {
-    backgroundImageSrc?: string;
-    backgroundImageSrcSet?: string;
-};
-
-type BackgroundColorProps = {
-    backgroundColor?: string;
-};
-
-type VideoProps = {
-    backgroundVideo: VideoSource;
-    poster?: string;
-    backgroundVideoRef?: React.RefObject<VideoElement>;
-};
-
-export const CoverCard = React.forwardRef<
-    HTMLDivElement,
-    MaybeTouchableCard<CoverCardBaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>>
->(({size = 'default', ...rest}, ref) => {
-    return <InternalCard size={size} {...rest} ref={ref} type="cover" />;
-});
-
-type PosterCardBaseProps = {
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
-    aspectRatio?: CardAspectRatio;
-    width?: number | string;
-    height?: number | string;
-    asset?: React.ReactElement;
-    /** @deprecated use topActions */
-    actions?: ReadonlyArray<CardAction | React.ReactElement>;
-    topActions?: ReadonlyArray<CardAction | React.ReactElement>;
-    onClose?: () => unknown;
-    closeButtonLabel?: string;
-    dataAttributes?: DataAttributes;
-    headline?: string | RendersNullableElement<typeof Tag>;
-    pretitle?: string;
-    pretitleAs?: HeadingType;
-    pretitleLinesMax?: number;
-    title?: string;
-    titleAs?: HeadingType;
-    titleLinesMax?: number;
-    subtitle?: string;
-    subtitleLinesMax?: number;
-    description?: string;
-    descriptionLinesMax?: number;
-    /** @deprecated use slot */
-    extra?: React.ReactNode;
-    slotAlignment?: SlotAlignment;
-    slot?: React.ReactNode;
-    children?: undefined;
-};
-
-type DeprecatedImageProps = {
-    backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
-};
-
-type DeprecatedBackgroundColorProps = {
-    backgroundColor?: string | undefined;
-    /** @deprecated use variant */
-    isInverse?: boolean;
-    variant?: Variant;
-};
-
-/**
- * @deprecated use CoverCard
- */
-export const PosterCard = React.forwardRef<
-    HTMLDivElement,
-    MaybeTouchableCard<
-        PosterCardBaseProps &
-            ExclusifyUnion<DeprecatedImageProps | DeprecatedBackgroundColorProps /* | VideoProps  */>
-    >
->(({isInverse, variant, actions, topActions, extra, slot, backgroundImage, dataAttributes, ...rest}, ref) => {
-    const imageProps = {
-        imageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
-        imageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
-    } as BackgroundImageOrVideoProps;
-    return (
-        <CoverCard
-            ref={ref}
-            size="default"
-            variant={variant || (isInverse ? 'inverse' : undefined)}
-            dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
-            topActions={topActions || actions}
-            slot={slot || extra}
-            {...imageProps}
-            {...rest}
-        />
-    );
-});
-
-interface MediaCardProps {
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    'aria-description'?: string;
-    'aria-describedby'?: string;
-    size?: CardSize;
-    /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
-    media: DeprecatedMediaProp;
-    imageSrc?: string;
-    imageSrcSet?: string;
-    videoSrc?: VideoSource;
-    /** @deprecated use imageSrc */
-    poster?: string;
-    variant?: Variant;
-    asset?: React.ReactElement;
-    headline?: string | RendersNullableElement<typeof Tag>;
-    pretitle?: string;
-    pretitleAs?: HeadingType;
-    pretitleLinesMax?: number;
-    title?: string;
-    titleAs?: HeadingType;
-    titleLinesMax?: number;
-    subtitle?: string;
-    subtitleLinesMax?: number;
-    description?: string;
-    descriptionLinesMax?: number;
-    /** @deprecated use slot */
-    extra?: React.ReactNode;
-    slot?: React.ReactNode;
-    /** @deprecated use topActions */
-    actions?: TopActionsArray;
-    topActions?: TopActionsArray;
-    /** @deprecated use primaryAction */
-    button?: ActionButton;
-    /** @deprecated use secondaryAction */
-    buttonLink?: ActionButton;
-    primaryAction?: ActionButton;
-    secondaryAction?: ActionButton;
-    dataAttributes?: DataAttributes;
-    onClose?: () => unknown;
-    closeButtonLabel?: string;
-    footerBackgroundColor?: string;
-    footerVariant?: Variant;
-    showFooter?: boolean;
-    footerSlot?: React.ReactNode;
-    children?: undefined;
-}
-
-export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
-    (
-        {
-            size = 'default',
-            slot,
-            extra,
-            topActions,
-            actions,
-            button,
-            primaryAction,
-            buttonLink,
-            secondaryAction,
-            dataAttributes,
-            ...rest
-        },
-        ref
-    ) => {
-        return (
-            <InternalCard
-                dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard'}}
-                type="media"
-                size={size}
-                slot={slot || extra}
-                topActions={topActions || actions}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
-                ref={ref}
-                {...rest}
-            />
         );
     }
 );

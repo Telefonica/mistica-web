@@ -61,24 +61,38 @@ export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HorizontalScroll} from './horizontal-scroll';
-export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
 export {default as Meter} from './meter';
 export {Rating, InfoRating} from './rating';
 export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {Timer, TextTimer} from './timer';
+// @TODO move to card-utils?
+export {CardActionSpinner, CardActionIconButton} from './card-internal';
+export {
+    CoverCard,
+    /** @deprecated use <CoverCard /> */
+    PosterCard,
+    /** @deprecated use <CoverCard size="display" /> */
+    DisplayMediaCard,
+} from './card-cover';
+export {
+    NakedCard,
+    /** @deprecated use <NakedCard size="snap" /> */
+    SmallNakedCard,
+} from './card-naked';
+export {
+    DataCard,
+    /** @deprecated use <DataCard size="snap" /> */
+    SnapCard,
+    /** @deprecated use <DataCard size="display" /> */
+    DisplayDataCard,
+} from './card-data';
 export {
     MediaCard,
-    DisplayDataCard,
-    DisplayMediaCard,
-    PosterCard,
-    NakedCard,
-    SmallNakedCard,
-    CardActionSpinner,
-    CardActionIconButton,
-} from './card';
-export {SnapCard, DataCard} from './internal-card';
+    /** @deprecated use <MediaCard size="default" mediaPosition="right" /> */
+    HighlightedCard,
+} from './card-media';
 export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';
