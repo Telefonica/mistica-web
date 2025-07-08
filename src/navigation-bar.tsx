@@ -158,12 +158,25 @@ const NavigationBarSideMargins = ({
         return <ResponsiveLayout>{children}</ResponsiveLayout>;
     }
 
-    const defaultWidePaddingX: BoxProps['paddingX'] = {mobile: 16, tablet: 24, desktop: 24};
+    const defaultWidePaddingX: BoxProps['paddingX'] = {
+        mobile: 16,
+        tablet: 24,
+        desktop: 24,
+    };
 
     return (
         <Box
             width="100%"
-            paddingX={wide === true ? defaultWidePaddingX : wide.paddingX ?? defaultWidePaddingX}
+            paddingX={
+                wide === true
+                    ? defaultWidePaddingX
+                    : typeof wide.paddingX === 'number'
+                      ? wide.paddingX
+                      : {
+                            ...defaultWidePaddingX,
+                            ...wide.paddingX,
+                        }
+            }
         >
             {children}
         </Box>
