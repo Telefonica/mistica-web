@@ -5,8 +5,8 @@ import {vars as skinVars} from './skins/skin-contract.css';
 
 export const MOBILE_SIDE_MARGIN = 16;
 export const TABLET_SIDE_MARGIN = 32;
-export const SMALL_DESKTOP_SIDE_MARGIN = 40;
-export const LARGE_DESKTOP_MAX_WIDTH = 1224;
+export const SMALL_DESKTOP_SIDE_MARGIN = 48;
+export const LARGE_DESKTOP_MAX_WIDTH = 1416;
 
 const marginValue = {
     largeDesktop: `calc((100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,

@@ -118,6 +118,8 @@ export {
     CenteredCarousel,
     Slideshow,
     PageBullets,
+    CarouselPageControls,
+    CarouselAutoplayControl,
     CarouselContextProvider,
     useCarouselContext,
     CarouselContextConsumer,

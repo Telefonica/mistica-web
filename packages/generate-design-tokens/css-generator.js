@@ -51,7 +51,7 @@ const buildLineHeightVarName = (textPreset) => buildVarName('line-height', textP
 const buildFontWeightVarName = (textPreset) => buildVarName('font-weight', textPreset);
 const tabletMediaQuery = '@media (min-width: 768px)';
 const desktopMediaQuery = '@media (min-width: 1024px)';
-const largeDesktopMediaQuery = '@media (min-width: 1368px)';
+const largeDesktopMediaQuery = '@media (min-width: 1512px)';
 
 export const generateSkinCssSrc = (skinName, DESIGN_TOKENS_FOLDER) => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
@@ -345,7 +345,7 @@ ${desktopMediaQuery} {
 
 ${largeDesktopMediaQuery} {
     .${prefix}responsive-layout {
-        --${prefix}responsive-layout-margin: calc((100vw - 1224px) / 2);
+        --${prefix}responsive-layout-margin: calc((100vw - 1416px) / 2);
     }
 }
     `;
