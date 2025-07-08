@@ -705,7 +705,8 @@ const Footer = ({
                 <Stack space={16}>
                     {footerSlot}
                     {hasActions && (
-                        // @FIXME the secondary Action, if it is a link, it should bleed right
+                        // @FIXME if the secondary action is a link, it should bleed right
+                        // perhaps we could create styles to override button styles (small, bleed)
                         // see spec related to button group alignment
                         // https://www.figma.com/design/koROdh3HpEPG2O8jG52Emh/%F0%9F%94%B8-Buttons-Specs?node-id=4337-1606&t=HtImvar8DMbivDqC-0
                         <Inline space="between" alignItems="center">
