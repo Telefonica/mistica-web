@@ -223,7 +223,7 @@ const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & Conta
                         height="100%"
                         variant={variant}
                         className={classnames(styles.boxed)}
-                        background={backgroundColor}
+                        background={type === 'naked' ? 'transparent' : backgroundColor}
                         borderRadius={type === 'naked' ? '0px' : skinVars.borderRadii.container}
                         border={type === 'naked' ? 'none' : boxedBorderStyleOverride}
                     >
@@ -678,15 +678,23 @@ const Footer = ({
         <ThemeVariant variant={footerVariant || variant}>
             <Filler />
             <div
+                // The divider is outside the footer because it has a conditional margin
+                // @TODO use Divider component here?
+                style={{
+                    borderTop: footerBackgroundColor
+                        ? undefined
+                        : `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
+                    marginRight: noPadding ? 16 : 0,
+                }}
+            />
+            <div
                 data-testid="footer"
                 className={classnames({[styles.containerPaddingXVariants[size]]: !noPadding})}
                 style={{
                     paddingTop: 16,
                     paddingBottom: noPadding ? 0 : 16,
+                    paddingRight: noPadding ? 16 : undefined,
 
-                    borderTop: footerBackgroundColor
-                        ? undefined
-                        : `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                     position: 'relative',
                     // @FIXME: the color should be the color token "cardFooterOverlay"
                     background:
@@ -697,6 +705,9 @@ const Footer = ({
                 <Stack space={16}>
                     {footerSlot}
                     {hasActions && (
+                        // @FIXME the secondary Action, if it is a link, it should bleed right
+                        // see spec related to button group alignment
+                        // https://www.figma.com/design/koROdh3HpEPG2O8jG52Emh/%F0%9F%94%B8-Buttons-Specs?node-id=4337-1606&t=HtImvar8DMbivDqC-0
                         <Inline space="between" alignItems="center">
                             {primaryAction}
                             {secondaryAction}
@@ -935,7 +946,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoRef,
             media,
             mediaAspectRatio = 'auto',
-            mediaPosition = 'top',
+            mediaPosition: mediaPositionProp = 'top',
             mediaWidth = 150,
             asset,
             headline,
@@ -982,6 +993,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
         const isNaked = type === 'naked';
 
+        // If no media is provided, we use the "top" media position to simplify logic
+        const mediaPosition = hasMedia ? mediaPositionProp : 'top';
+
         // We consider any string (including empty string) as an image/video source. If not valid a fallback image will be used.
         const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
         const hasBackgroundVideo = type === 'cover' && videoSrc !== undefined;
@@ -994,7 +1008,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             shouldShowVideo ? videoSrc : undefined,
             imageSrc,
             videoRef,
-            // @TODO pass aspect ratio to hook
+            // @TODO pass aspect ratio to hook?
             aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
@@ -1025,6 +1039,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasAssetInContent = asset && !(hasMedia && mediaPosition === 'left');
         const shouldAddContentSpacingForTopActions =
             type !== 'cover' && topActionsLengthInContent > 0 && !hasAssetInContent && !headline;
+
+        // see asset spacing config in spec
+        const isAssetConfigA = type === 'cover' || (type === 'data' && size === 'display');
 
         // @TODO: REVIEW THIS
         const backgroundColor =
@@ -1122,7 +1139,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 <Asset size={size} asset={asset} type={type} />
                             )
                         }
-                        {type === 'cover' && (
+                        {isAssetConfigA && (
                             <Filler
                                 minHeight={type === 'cover' && topActionsLengthInContent && !asset ? 48 : 0}
                             />
@@ -1137,14 +1154,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 border: dbg('1px solid blue'),
                                 display: 'flex',
                                 flexDirection: 'column',
-                                height: type === 'cover' ? undefined : '100%',
+                                height: isAssetConfigA ? undefined : '100%',
                                 background: hasBackgroundImageOrVideo
                                     ? skinVars.colors.cardContentOverlay
                                     : undefined,
                                 // padding overrides for specific cases
-                                paddingTop: type === 'cover' ? 40 : asset ? 16 : undefined,
-                                paddingLeft: hasMedia && isNaked && mediaPosition === 'right' ? 0 : undefined,
-                                paddingRight: hasMedia && isNaked && mediaPosition === 'left' ? 0 : undefined,
+                                paddingTop: isAssetConfigA ? 40 : asset ? 16 : undefined,
+                                paddingLeft: isNaked && mediaPosition !== 'left' ? 0 : undefined,
+                                paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
                                 paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
                             }}
                         >
@@ -1182,13 +1199,13 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     />
                                 )}
                             </div>
-                            {type !== 'cover' && slotAlignment === 'bottom' && <Filler />}
+                            {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
                             {slot && (
                                 <div ref={slotRef} data-testid="slot">
                                     {slot}
                                 </div>
                             )}
-                            {type !== 'cover' && slotAlignment === 'content' && showActionsInBody && (
+                            {!isAssetConfigA && slotAlignment === 'content' && showActionsInBody && (
                                 <Filler />
                             )}
                             {showActionsInBody && (

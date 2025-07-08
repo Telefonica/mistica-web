@@ -9,6 +9,7 @@ import {
     IconStarFilled,
     IconStarRegular,
     ButtonSecondary,
+    ThemeVariant,
 } from '..';
 import {InternalCard} from '../internal-card';
 import {Placeholder} from '../placeholder';
@@ -24,6 +25,10 @@ import type {CardSize, CardType, MediaAspectRatio, MediaPosition, SlotAlignment}
 
 export default {
     title: 'Components/Cards/InternalCard',
+    component: InternalCard,
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
@@ -38,6 +43,7 @@ type InternalCardArgs = {
     mediaAspectRatio: string;
     mediaWidth: string;
     variant: Variant | '';
+    variantOutside: Variant;
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
     headline: string;
@@ -72,6 +78,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     mediaAspectRatio,
     mediaWidth,
     variant,
+    variantOutside,
     asset = 'icon',
     headline,
     headlineType,
@@ -136,57 +143,70 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     };
 
     return (
-        <>
-            <InternalCard
-                type={type}
-                size={size}
-                variant={variant || undefined}
-                backgroundColor={backgroundColor || undefined}
-                imageSrc={imageSrc === 'undefined' ? undefined : imageSrc}
-                videoSrc={videoSrc === 'undefined' ? undefined : videoSrc}
-                mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
-                mediaPosition={mediaPosition}
-                onClose={onClose ? () => {} : undefined}
-                onPress={onPress ? () => {} : undefined}
-                asset={assetElement}
-                mediaWidth={Number.isFinite(+mediaWidth) ? +mediaWidth : mediaWidth}
-                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
-                pretitle={pretitle}
-                pretitleAs={pretitleAs}
-                title={title}
-                titleAs={titleAs}
-                subtitle={subtitle}
-                description={description}
-                slot={slot ? <Placeholder height={64} /> : undefined}
-                slotAlignment={slotAlignment}
-                aspectRatio={aspectRatioValue as AspectRatio}
-                dataAttributes={{testid: 'data-card'}}
-                aria-label={ariaLabel}
-                topActions={
-                    topActions
-                        ? [
-                              {
-                                  Icon: IconMobileDeviceRegular,
-                                  onPress: () => alert('Icon pressed'),
-                                  label: 'Device',
-                              },
-                              {
-                                  checkedProps: {Icon: IconStarFilled, label: 'checked'},
-                                  uncheckedProps: {Icon: IconStarRegular, label: 'unchecked'},
-                                  defaultChecked: false,
-                                  onChange: () => {},
-                              },
-                          ]
-                        : undefined
-                }
-                primaryAction={getAction(primaryAction)}
-                secondaryAction={getAction(secondaryAction)}
-                footerSlot={footerSlot ? <Placeholder height={64} /> : undefined}
-                showFooter={showFooter}
-                footerBackgroundColor={footerBackgroundColor || undefined}
-                footerVariant={footerVariant || undefined}
-            />
-        </>
+        <ThemeVariant variant={variantOutside}>
+            <div
+                data-testid="container"
+                style={{
+                    padding: 16,
+                    backgroundColor:
+                        variantOutside === 'inverse'
+                            ? skinVars.colors.backgroundBrand
+                            : variantOutside === 'alternative'
+                              ? skinVars.colors.backgroundAlternative
+                              : undefined,
+                }}
+            >
+                <InternalCard
+                    type={type}
+                    size={size}
+                    variant={variant || undefined}
+                    backgroundColor={backgroundColor || undefined}
+                    imageSrc={imageSrc === 'undefined' ? undefined : imageSrc}
+                    videoSrc={videoSrc === 'undefined' ? undefined : videoSrc}
+                    mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
+                    mediaPosition={mediaPosition}
+                    onClose={onClose ? () => {} : undefined}
+                    onPress={onPress ? () => {} : undefined}
+                    asset={assetElement}
+                    mediaWidth={Number.isFinite(+mediaWidth) ? +mediaWidth : mediaWidth}
+                    headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                    pretitle={pretitle}
+                    pretitleAs={pretitleAs}
+                    title={title}
+                    titleAs={titleAs}
+                    subtitle={subtitle}
+                    description={description}
+                    slot={slot ? <Placeholder height={64} /> : undefined}
+                    slotAlignment={slotAlignment}
+                    aspectRatio={aspectRatioValue as AspectRatio}
+                    dataAttributes={{testid: 'data-card'}}
+                    aria-label={ariaLabel}
+                    topActions={
+                        topActions
+                            ? [
+                                  {
+                                      Icon: IconMobileDeviceRegular,
+                                      onPress: () => alert('Icon pressed'),
+                                      label: 'Device',
+                                  },
+                                  {
+                                      checkedProps: {Icon: IconStarFilled, label: 'checked'},
+                                      uncheckedProps: {Icon: IconStarRegular, label: 'unchecked'},
+                                      defaultChecked: false,
+                                      onChange: () => {},
+                                  },
+                              ]
+                            : undefined
+                    }
+                    primaryAction={getAction(primaryAction)}
+                    secondaryAction={getAction(secondaryAction)}
+                    footerSlot={footerSlot ? <Placeholder height={64} /> : undefined}
+                    showFooter={showFooter}
+                    footerBackgroundColor={footerBackgroundColor || undefined}
+                    footerVariant={footerVariant || undefined}
+                />
+            </div>
+        </ThemeVariant>
     );
 };
 
@@ -195,6 +215,7 @@ Default.args = {
     type: 'data',
     size: 'default',
     variant: '',
+    variantOutside: 'default',
     backgroundColor: '',
     imageSrc: 'beach image',
     videoSrc: 'undefined',
@@ -246,6 +267,17 @@ Default.argTypes = {
                 inverse: 'inverse',
                 alternative: 'alternative',
                 media: 'media',
+            },
+        },
+    },
+    variantOutside: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {
+            type: 'select',
+            labels: {
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
             },
         },
     },
