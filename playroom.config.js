@@ -48,7 +48,7 @@ const getWidths = () => {
     if (process.env.FORCE_DESKTOP) {
         return [1024];
     }
-    return [320, 360, 768, 1024, 1368];
+    return [320, 360, 768, 1024, 1512];
 };
 
 const exampleCode = `
