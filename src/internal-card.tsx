@@ -49,7 +49,7 @@ import type {AspectRatio as ImageAspectRatio} from './image';
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
-const DEBUG = 1;
+const DEBUG = 0;
 const dbg = (value: any) => (DEBUG ? value : undefined);
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
@@ -982,13 +982,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasMedia = hasMediaSources || hasDeprecatedMedia;
         const isNaked = type === 'naked';
 
-        // @TODO insufficient condition. The asset could be moved to the left media position
-        const hasAssetOrHeadline = !!(asset || headline);
-
-        // We consider any string (including empty string) as an image/video source
+        // We consider any string (including empty string) as an image/video source. If not valid a fallback image will be used.
         const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
         const hasBackgroundVideo = type === 'cover' && videoSrc !== undefined;
-        const hasCustomBackground = !!(backgroundColorProp || hasBackgroundImage || hasBackgroundVideo);
+        const hasCustomBackground = !!backgroundColorProp || hasBackgroundImage || hasBackgroundVideo;
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
@@ -1024,6 +1021,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const showActionsInBody = !shouldShowFooter && hasActions;
         const topActionsLengthInContent =
             (topActions?.length || 0) + (onClose ? 1 : 0) + (showVideoActionInContentContainer ? 1 : 0);
+
+        const hasAssetInContent = asset && !(hasMedia && mediaPosition === 'left');
+        const shouldAddContentSpacingForTopActions =
+            type !== 'cover' && topActionsLengthInContent > 0 && !hasAssetInContent && !headline;
 
         // @TODO: REVIEW THIS
         const backgroundColor =
@@ -1133,18 +1134,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 styles.containerPaddingTopVariants[size]
                             )}
                             style={{
+                                border: dbg('1px solid blue'),
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: type === 'cover' ? undefined : '100%',
+                                background: hasBackgroundImageOrVideo
+                                    ? skinVars.colors.cardContentOverlay
+                                    : undefined,
                                 // padding overrides for specific cases
                                 paddingTop: type === 'cover' ? 40 : asset ? 16 : undefined,
                                 paddingLeft: hasMedia && isNaked && mediaPosition === 'right' ? 0 : undefined,
                                 paddingRight: hasMedia && isNaked && mediaPosition === 'left' ? 0 : undefined,
                                 paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
-                                border: dbg('1px solid blue'),
-                                background: hasBackgroundImageOrVideo
-                                    ? skinVars.colors.cardContentOverlay
-                                    : undefined,
                             }}
                         >
                             <div className={styles.contentContainer}>
@@ -1165,18 +1166,21 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                         withTextShadow={hasBackgroundImageOrVideo}
                                     />
                                 </div>
-                                {!hasAssetOrHeadline &&
-                                    type !== 'cover' &&
-                                    !(hasMedia && mediaPosition === 'right') && (
-                                        <div
-                                            style={{
-                                                flexShrink: 0,
-                                                flexGrow: 0,
-                                                width: topActionsLengthInContent * 48 - 24,
-                                                background: dbg('#fee'),
-                                            }}
-                                        />
-                                    )}
+                                {shouldAddContentSpacingForTopActions && (
+                                    <div
+                                        style={{
+                                            flexShrink: 0,
+                                            flexGrow: 0,
+                                            width:
+                                                topActionsLengthInContent * 48 -
+                                                // required space depends on the card padding
+                                                (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
+                                                //
+                                                8,
+                                            background: dbg('#fee'),
+                                        }}
+                                    />
+                                )}
                             </div>
                             {type !== 'cover' && slotAlignment === 'bottom' && <Filler />}
                             {slot && (
