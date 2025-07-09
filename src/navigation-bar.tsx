@@ -239,7 +239,7 @@ export const NavigationBar = ({
     );
 
     const calcPaddingXWhenNotTopFixed = (): BoxProps['paddingX'] => {
-        if (typeof wide !== 'undefined') {
+        if (wide !== undefined) {
             if (typeof wide !== 'object') {
                 return 0;
             }
