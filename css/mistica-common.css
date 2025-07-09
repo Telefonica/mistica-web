@@ -1,6 +1,8 @@
 [data-mistica-variant='inverse'] > *,
 .mistica-display-card:has(.mistica-card__media) > *,
-.mistica-card.mistica-card-inverted {
+.mistica-snap-card.mistica-card-inverse > *,
+.mistica-display-card.mistica-card-inverse > *,
+.mistica-card.mistica-card-inverse > * {
     --mistica-boxed-border: none;
 
     --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
@@ -118,9 +120,12 @@
     --vcolor-rowChevron: var(--mistica-color-neutralMedium);
 }
 
-.mistica-card.mistica-card-inverted {
+.mistica-display-card.mistica-card-inverse,
+.mistica-snap-card.mistica-card-inverse,
+.mistica-card.mistica-card-inverse {
     --mistica-color-backgroundContainer: var(--mistica-color-backgroundContainerBrand);
     --mistica-card-text-color: var(--mistica-color-textPrimaryInverse);
+    --mistica-card-description-text-color: var(--mistica-color-textPrimaryInverse);
 }
 
 @media (prefers-color-scheme: dark) {
