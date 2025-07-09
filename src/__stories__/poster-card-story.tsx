@@ -142,6 +142,8 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         href: actions === 'href' ? 'https://example.org' : undefined,
     } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
 
+    console.log('aspectRatio:', aspectRatio);
+
     return (
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
@@ -161,6 +163,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio as any}
+                    variant={variant || undefined}
                     {...interactiveProps}
                 />
             </Box>

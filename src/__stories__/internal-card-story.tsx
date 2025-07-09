@@ -48,6 +48,7 @@ type InternalCardArgs = {
     mediaPosition: MediaPosition;
     mediaAspectRatio: string;
     mediaWidth: string;
+    circledImage: boolean;
     variant: Variant | '';
     variantOutside: Variant;
     asset: 'icon' | 'image' | 'none';
@@ -84,6 +85,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     mediaPosition,
     mediaAspectRatio,
     mediaWidth,
+    circledImage,
     variant,
     variantOutside,
     asset = 'icon',
@@ -148,6 +150,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                     videoSrc={videoSrc === 'undefined' ? undefined : videoSrc}
                     mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
                     mediaPosition={mediaPosition}
+                    circledImage={circledImage}
                     onClose={onClose ? () => {} : undefined}
                     onPress={onPress ? () => {} : undefined}
                     asset={assetElement}
@@ -224,6 +227,7 @@ Default.args = {
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
+    circledImage: false,
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',

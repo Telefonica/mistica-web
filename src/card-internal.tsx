@@ -93,6 +93,7 @@ type MediaProps = {
     mediaAspectRatio?: MediaAspectRatio;
     /** Ignored when mediaPosition === 'top' */
     mediaWidth?: string | number;
+    circledImage?: boolean;
 };
 
 type TextContentProps = {
@@ -280,19 +281,21 @@ const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): J
 
 export type BackgroundImageOrVideoProps = {
     video?: React.ReactNode;
+    variant?: Variant;
     src?: string;
     srcSet?: string;
     imageAlt?: string;
 };
 
-const BackgroundImageOrVideo = ({video, src, srcSet, imageAlt}: BackgroundImageOrVideoProps): JSX.Element => {
-    // @TODO: move to prop?
-    const isExternalInverse = useIsInverseVariant();
+const BackgroundImageOrVideo = ({
+    video,
+    src,
+    srcSet,
+    imageAlt,
+    variant,
+}: BackgroundImageOrVideoProps): JSX.Element => {
     return (
-        <ThemeVariant
-            // this avoids color flickering while loading the image
-            variant={isExternalInverse ? 'inverse' : 'default'}
-        >
+        <ThemeVariant variant={variant}>
             <div
                 className={styles.backgroundImageOrVideoContainer}
                 // remove video border radius
@@ -586,6 +589,7 @@ type MediaComponentProps = {
     mediaPosition: MediaPosition;
     mediaWidth: string | number;
     videoAction?: CardAction;
+    circledImage?: boolean;
 };
 
 const Media = ({
@@ -598,18 +602,22 @@ const Media = ({
     mediaAspectRatio,
     mediaPosition,
     mediaWidth,
+    circledImage,
 }: MediaComponentProps): JSX.Element => {
     const aspectRatioAsNumber = aspectRatioToNumber(mediaAspectRatio);
 
+    const imageProps =
+        type === 'naked' && circledImage
+            ? {circular: true}
+            : {
+                  width: '100%',
+                  height: mediaPosition === 'top' ? (aspectRatioAsNumber === 0 ? undefined : '100%') : '100%',
+              };
+    console.log(imageProps);
     const mediaElement = video ? (
         video
     ) : imageSrc !== undefined || imageSrcSet !== undefined ? (
-        <Image
-            src={imageSrc || ''}
-            srcSet={imageSrcSet}
-            width="100%"
-            height={mediaPosition === 'top' ? (aspectRatioAsNumber === 0 ? undefined : '100%') : '100%'}
-        />
+        <Image src={imageSrc || ''} srcSet={imageSrcSet} {...imageProps} />
     ) : null;
 
     if (!mediaElement) {
@@ -655,7 +663,7 @@ type FooterProps = {
     size: CardSize;
     variant?: Variant;
     footerSlot?: React.ReactNode;
-    hasBackgroundImage?: boolean;
+    hasBackgroundImageOrVideo?: boolean;
     footerBackgroundColor?: string;
     footerVariant?: Variant;
 };
@@ -668,7 +676,7 @@ const Footer = ({
     buttonPrimary,
     buttonSecondary,
     buttonLink,
-    hasBackgroundImage,
+    hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
 }: FooterProps & ActionsProps): JSX.Element => {
@@ -687,6 +695,7 @@ const Footer = ({
                         ? undefined
                         : `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                     marginRight: noPadding ? 16 : 0,
+                    backdropFilter: hasBackgroundImageOrVideo ? 'blur(12px)' : undefined,
                 }}
             />
             <div
@@ -700,8 +709,9 @@ const Footer = ({
                     position: 'relative',
                     // @FIXME: the color should be the color token "cardFooterOverlay"
                     background:
-                        footerBackgroundColor || (hasBackgroundImage ? 'rgba(0, 0, 0, 0.7)' : undefined),
-                    backdropFilter: hasBackgroundImage ? 'blur(12px)' : undefined,
+                        footerBackgroundColor ||
+                        (hasBackgroundImageOrVideo ? 'rgba(0, 0, 0, 0.7)' : undefined),
+                    backdropFilter: hasBackgroundImageOrVideo ? 'blur(12px)' : undefined,
                 }}
             >
                 <Stack space={16}>
@@ -952,6 +962,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             mediaAspectRatio = 'auto',
             mediaPosition: mediaPositionProp = 'top',
             mediaWidth = 150,
+            circledImage,
             asset,
             headline,
             title,
@@ -1008,20 +1019,24 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
-
         const {video, videoAction} = useVideoWithControls(
             shouldShowVideo ? videoSrc : undefined,
             imageSrc,
             videoRef,
-            // @TODO pass aspect ratio to hook?
-            aspectRatioToNumber(mediaAspectRatio) === 0
+            type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
         const isExternalInverse = useIsInverseVariant();
+        const externalInverseOrDefault = isExternalInverse ? 'inverse' : 'default';
         // @TODO review
         const variant =
             variantProp ||
-            (type === 'cover' && hasCustomBackground ? 'media' : isExternalInverse ? 'inverse' : 'default');
+            (backgroundColorProp
+                ? externalInverseOrDefault
+                : type === 'cover' && hasCustomBackground
+                  ? 'media'
+                  : externalInverseOrDefault);
+
         const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isExternalInverse;
         const overlayStyle = isInverseStyle
             ? styles.touchableCardOverlayInverse
@@ -1043,7 +1058,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             (topActions?.length || 0) + (onClose ? 1 : 0) + (showVideoActionInContentContainer ? 1 : 0);
 
         const hasAssetInContent = asset && !(hasMedia && mediaPosition === 'left');
-        console.log('hasAssetInContent', hasAssetInContent);
         const shouldAddContentSpacingForTopActions =
             type !== 'cover' && topActionsLengthInContent > 0 && !hasAssetInContent && !headline;
 
@@ -1081,6 +1095,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         src={imageSrc}
                         srcSet={imageSrcSet}
                         imageAlt={imageAlt}
+                        variant={variant}
                     />
                 )}
                 <TopActions
@@ -1136,6 +1151,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             imageSrc={imageSrc}
                             imageSrcSet={imageSrcSet}
                             mediaWidth={mediaWidth}
+                            circledImage={circledImage}
                         />
                     )}
                     <div
@@ -1145,12 +1161,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 !!asset && type !== 'naked' && (!hasMedia || mediaPosition === 'right'),
                         })}
                     >
-                        {
-                            // inline asset
-                            (!hasMedia || mediaPosition === 'right') && (
-                                <Asset size={size} asset={asset} type={type} />
-                            )
-                        }
+                        {(!hasMedia || mediaPosition === 'right') && (
+                            <Asset size={size} asset={asset} type={type} />
+                        )}
                         {isAssetConfigA && (
                             <Filler
                                 minHeight={type === 'cover' && topActionsLengthInContent && !asset ? 48 : 0}
@@ -1172,7 +1185,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     : undefined,
                                 // padding overrides for specific cases
                                 paddingTop: isAssetConfigA ? 40 : asset ? 16 : undefined,
-                                paddingLeft: isNaked && mediaPosition !== 'left' ? 0 : undefined,
+                                paddingLeft:
+                                    isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
                                 paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
                                 paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
                             }}
@@ -1241,7 +1255,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         footerSlot={footerSlot}
                         buttonPrimary={buttonPrimary}
                         buttonSecondary={buttonSecondary}
-                        hasBackgroundImage={hasBackgroundImage}
+                        hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
                     />
                 )}
             </Container>

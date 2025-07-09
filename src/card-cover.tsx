@@ -18,7 +18,7 @@ import type {DataAttributes, HeadingType} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {VideoSource, VideoElement} from './video';
 
-type CoverCardBaseProps = {
+type CoverCardProps = {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     'aria-description'?: string;
@@ -29,6 +29,10 @@ type CoverCardBaseProps = {
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
+    imageSrc?: string;
+    imageSrcSet?: string;
+    videoSrc?: VideoSource;
+    videoRef?: React.RefObject<VideoElement>;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
     buttonPrimary?: CardActionButtonPrimary;
     buttonSecondary?: CardActionButtonSecondary;
@@ -52,26 +56,9 @@ type CoverCardBaseProps = {
     children?: undefined;
 };
 
-type ImageProps = {
-    backgroundImageSrc?: string;
-    backgroundImageSrcSet?: string;
-};
-
-type BackgroundColorProps = {
-    backgroundColor?: string;
-};
-
-type VideoProps = {
-    backgroundVideo: VideoSource;
-    poster?: string;
-    backgroundVideoRef?: React.RefObject<VideoElement>;
-};
-
-type CoverCardProps = CoverCardBaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>;
-
 export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(
     ({size = 'default', ...rest}, ref) => {
-        return <InternalCard size={size} {...rest} ref={ref} type="cover" />;
+        return <InternalCard type="cover" size={size} {...rest} ref={ref} />;
     }
 );
 
@@ -87,6 +74,10 @@ type PosterCardBaseProps = {
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
+    videoSrc?: VideoSource;
+    videoRef?: React.RefObject<VideoElement>;
+    imageSrc?: string;
+    imageSrcSet?: string;
     /** @deprecated use topActions */
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
@@ -117,6 +108,7 @@ type PosterCardBaseProps = {
 };
 
 type DeprecatedImageProps = {
+    /** @deprecated use imageSrc or imageSrcSet */
     backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
 };
 
@@ -124,8 +116,17 @@ type DeprecatedBackgroundColorProps = {
     backgroundColor?: string | undefined;
 };
 
+type DeprecatedVideoProps = {
+    /** @deprecated use videoSrc */
+    backgroundVideo: VideoSource;
+    /** @deprecated use imageSrc */
+    poster?: string;
+    /** @deprecated use videoRef */
+    backgroundVideoRef?: React.RefObject<VideoElement>;
+};
+
 type PosterCardProps = PosterCardBaseProps &
-    ExclusifyUnion<DeprecatedImageProps | DeprecatedBackgroundColorProps>;
+    ExclusifyUnion<DeprecatedImageProps | DeprecatedBackgroundColorProps | DeprecatedVideoProps>;
 
 /**
  * @deprecated use CoverCard
@@ -139,7 +140,14 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
             topActions,
             extra,
             slot,
+            videoSrc,
+            /** @deprecated use imageSrc or imageSrcSet */
             backgroundImage,
+            /** @deprecated use videoSrc */
+            backgroundVideo,
+            /** @deprecated use imageSrc */
+            poster,
+            backgroundVideoRef,
             button,
             buttonPrimary,
             buttonSecondary,
@@ -152,6 +160,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
             imageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
             imageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
         } as BackgroundImageOrVideoProps;
+
         return (
             <CoverCard
                 ref={ref}
@@ -166,6 +175,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
                 slot={slot || extra}
                 buttonPrimary={buttonPrimary || button}
                 buttonSecondary={buttonSecondary}
+                videoSrc={videoSrc || backgroundVideo}
                 {...imageProps}
                 {...rest}
             />
