@@ -613,7 +613,7 @@ const Media = ({
                   width: '100%',
                   height: mediaPosition === 'top' ? (aspectRatioAsNumber === 0 ? undefined : '100%') : '100%',
               };
-    console.log(imageProps);
+
     const mediaElement = video ? (
         video
     ) : imageSrc !== undefined || imageSrcSet !== undefined ? (
@@ -1184,7 +1184,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     ? skinVars.colors.cardContentOverlay
                                     : undefined,
                                 // padding overrides for specific cases
-                                paddingTop: isAssetConfigA ? 40 : asset ? 16 : undefined,
+                                paddingTop: isAssetConfigA ? 40 : asset ? 16 : isNaked ? 0 : undefined,
                                 paddingLeft:
                                     isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
                                 paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
