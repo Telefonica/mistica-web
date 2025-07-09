@@ -68,8 +68,9 @@ type InternalCardArgs = {
     aspectRatio: string;
     showFooter: boolean;
     footerSlot: boolean;
-    primaryAction: 'buttonPrimary' | 'buttonSecondary' | 'buttonLink' | 'none';
-    secondaryAction: 'buttonPrimary' | 'buttonSecondary' | 'buttonLink' | 'none';
+    buttonPrimary: boolean;
+    buttonSecondary: boolean;
+    buttonLink: boolean;
     footerBackgroundColor: string;
     footerVariant: Variant | '';
 };
@@ -99,8 +100,9 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     slotAlignment,
     onClose,
     onPress,
-    primaryAction,
-    secondaryAction,
+    buttonPrimary,
+    buttonSecondary,
+    buttonLink,
     topActions,
     aspectRatio,
     footerSlot,
@@ -122,31 +124,6 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
         ? aspectRatio.replace(' ', ':')
         : aspectRatio;
-
-    const getAction = (action: string) => {
-        if (action === 'buttonPrimary') {
-            return (
-                <ButtonPrimary small onPress={() => {}}>
-                    Primary Action
-                </ButtonPrimary>
-            );
-        }
-        if (action === 'buttonSecondary') {
-            return (
-                <ButtonSecondary small onPress={() => {}}>
-                    Secondary Action
-                </ButtonSecondary>
-            );
-        }
-        if (action === 'buttonLink') {
-            return (
-                <ButtonLink small href="#">
-                    Link Action
-                </ButtonLink>
-            );
-        }
-        return undefined;
-    };
 
     return (
         <ThemeVariant variant={variantOutside}>
@@ -204,8 +181,27 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                               ]
                             : undefined
                     }
-                    primaryAction={getAction(primaryAction)}
-                    secondaryAction={getAction(secondaryAction)}
+                    buttonPrimary={
+                        buttonPrimary ? (
+                            <ButtonPrimary small onPress={() => {}}>
+                                Button Primary
+                            </ButtonPrimary>
+                        ) : undefined
+                    }
+                    buttonSecondary={
+                        buttonSecondary ? (
+                            <ButtonSecondary small onPress={() => {}}>
+                                Button Secondary
+                            </ButtonSecondary>
+                        ) : undefined
+                    }
+                    buttonLink={
+                        buttonLink ? (
+                            <ButtonLink small onPress={() => {}} withChevron>
+                                Button Link
+                            </ButtonLink>
+                        ) : undefined
+                    }
                     footerSlot={footerSlot ? <Placeholder height={64} /> : undefined}
                     showFooter={showFooter}
                     footerBackgroundColor={footerBackgroundColor || undefined}
@@ -241,8 +237,9 @@ Default.args = {
     onClose: true,
     onPress: true,
     topActions: true,
-    primaryAction: 'buttonPrimary',
-    secondaryAction: 'buttonLink',
+    buttonPrimary: true,
+    buttonSecondary: false,
+    buttonLink: true,
     slot: true,
     slotAlignment: 'content',
     aspectRatio: '9 11',
@@ -367,17 +364,6 @@ Default.argTypes = {
         options: ['content', 'bottom'],
         control: {type: 'select'},
     },
-    primaryAction: {
-        options: ['none', 'buttonPrimary', 'buttonSecondary', 'buttonLink', 'none'],
-        control: {type: 'select'},
-    },
-    secondaryAction: {
-        options: ['none', 'buttonPrimary', 'buttonSecondary', 'buttonLink', 'none'],
-        control: {type: 'select'},
-    },
-    showFooter: true,
-    footerSlot: true,
-    footerBackgroundColor: '',
     footerVariant: {
         options: ['', 'default', 'inverse', 'alternative', 'media'],
         control: {

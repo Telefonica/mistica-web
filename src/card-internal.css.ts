@@ -73,20 +73,9 @@ export const containerPaddingTopVariants = styleVariants({
     ],
 });
 
-const actionsContainer = style([
-    sprinkles({
-        display: 'flex',
-        flexDirection: 'row',
-    }),
-    {
-        gap: 16,
-    },
-]);
-
 export const actionsContainerVariants = styleVariants({
-    display: [actionsContainer, sprinkles({paddingTop: 24})],
+    display: [sprinkles({paddingTop: 24})],
     default: [
-        actionsContainer,
         sprinkles({paddingTop: 16}),
         {
             '@media': {
@@ -94,7 +83,7 @@ export const actionsContainerVariants = styleVariants({
             },
         },
     ],
-    snap: [actionsContainer, sprinkles({paddingTop: 16})],
+    snap: [sprinkles({paddingTop: 16})],
 });
 
 export const containerPaddingBottomVariants = styleVariants({

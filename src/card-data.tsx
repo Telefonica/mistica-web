@@ -5,9 +5,11 @@ import type {
     CardSize,
     SlotAlignment,
     CardAspectRatio,
-    CardActionButton,
     TopActionsArray,
     MaybeTouchableCard,
+    CardActionButtonLink,
+    CardActionButtonPrimary,
+    CardActionButtonSecondary,
 } from './card-internal';
 import type Tag from './tag';
 import type {Variant} from './theme-variant-context';
@@ -43,12 +45,11 @@ type DataCardProps = {
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     aspectRatio?: CardAspectRatio;
-    /** @deprecated use primaryAction */
-    button?: CardActionButton;
-    /** @deprecated use secondaryAction */
-    buttonLink?: CardActionButton;
-    primaryAction?: CardActionButton;
-    secondaryAction?: CardActionButton;
+    /** @deprecated use buttonPrimary or buttonSecondary */
+    button?: CardActionButtonPrimary;
+    buttonPrimary?: CardActionButtonPrimary;
+    buttonSecondary?: CardActionButtonSecondary;
+    buttonLink?: CardActionButtonLink;
     onClose?: () => unknown;
     closeButtonLabel?: string;
     /** @deprecated use topActions */
@@ -67,9 +68,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
             dataAttributes,
             size = 'default',
             button,
-            primaryAction,
-            buttonLink,
-            secondaryAction,
+            buttonPrimary,
             extra,
             slot,
             actions,
@@ -86,8 +85,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 size={size}
                 dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
                 ref={ref}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
+                buttonPrimary={buttonPrimary || button}
                 topActions={topActions || actions}
                 slot={slot || extra}
                 variant={variant || (isInverse ? 'inverse' : undefined)}

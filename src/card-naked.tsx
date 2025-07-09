@@ -6,19 +6,7 @@ import type {MaybeTouchableCard} from './card-internal';
 
 export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
     (
-        {
-            size = 'default',
-            slot,
-            extra,
-            topActions,
-            actions,
-            button,
-            primaryAction,
-            buttonLink,
-            secondaryAction,
-            dataAttributes,
-            ...rest
-        },
+        {size = 'default', slot, extra, topActions, actions, button, buttonPrimary, dataAttributes, ...rest},
         ref
     ) => {
         return (
@@ -28,8 +16,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                 size={size}
                 slot={slot || extra}
                 topActions={topActions || actions}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
+                buttonPrimary={buttonPrimary || button}
                 ref={ref}
                 {...rest}
             />

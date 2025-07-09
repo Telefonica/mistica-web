@@ -4,7 +4,9 @@ import {InternalCard} from './card-internal';
 import type Tag from './tag';
 import type {VideoSource} from './video';
 import type {
-    CardActionButton,
+    CardActionButtonLink,
+    CardActionButtonPrimary,
+    CardActionButtonSecondary,
     CardAspectRatio,
     CardSize,
     DeprecatedMediaProp,
@@ -54,12 +56,11 @@ export type MediaCardProps = {
     /** @deprecated use topActions */
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
-    /** @deprecated use primaryAction */
-    button?: CardActionButton;
-    /** @deprecated use secondaryAction */
-    buttonLink?: CardActionButton;
-    primaryAction?: CardActionButton;
-    secondaryAction?: CardActionButton;
+    /** @deprecated use buttonPrimary */
+    button?: CardActionButtonPrimary;
+    buttonLink?: CardActionButtonLink;
+    buttonPrimary?: CardActionButtonPrimary;
+    buttonSecondary?: CardActionButtonSecondary;
     dataAttributes?: DataAttributes;
     onClose?: () => unknown;
     closeButtonLabel?: string;
@@ -72,19 +73,7 @@ export type MediaCardProps = {
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
     (
-        {
-            size = 'default',
-            slot,
-            extra,
-            topActions,
-            actions,
-            button,
-            primaryAction,
-            buttonLink,
-            secondaryAction,
-            dataAttributes,
-            ...rest
-        },
+        {size = 'default', slot, extra, topActions, actions, button, buttonPrimary, dataAttributes, ...rest},
         ref
     ) => {
         return (
@@ -94,8 +83,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                 dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard'}}
                 slot={slot || extra}
                 topActions={topActions || actions}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
+                buttonPrimary={buttonPrimary || button}
                 ref={ref}
                 {...rest}
             />

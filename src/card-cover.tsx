@@ -4,10 +4,12 @@ import {InternalCard} from './card-internal';
 import type {CardAction} from './card-deprecated';
 import type {
     CardAspectRatio,
-    CardActionButton,
     SlotAlignment,
     MaybeTouchableCard,
     BackgroundImageOrVideoProps,
+    CardActionButtonLink,
+    CardActionButtonSecondary,
+    CardActionButtonPrimary,
 } from './card-internal';
 import type Tag from './tag';
 import type {Variant} from './theme-variant-context';
@@ -28,8 +30,9 @@ type CoverCardBaseProps = {
     height?: number | string;
     asset?: React.ReactElement;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
-    primaryAction?: CardActionButton;
-    secondaryAction?: CardActionButton;
+    buttonPrimary?: CardActionButtonPrimary;
+    buttonSecondary?: CardActionButtonSecondary;
+    buttonLink?: CardActionButtonLink;
     onClose?: () => unknown;
     closeButtonLabel?: string;
     dataAttributes?: DataAttributes;
@@ -78,18 +81,20 @@ type PosterCardBaseProps = {
     'aria-description'?: string;
     'aria-describedby'?: string;
     aspectRatio?: CardAspectRatio;
+    /** @deprecated use variant */
+    isInverse?: boolean;
+    variant?: Variant;
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
     /** @deprecated use topActions */
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
-    /** @deprecated use primaryAction */
-    button?: CardActionButton;
-    /** @deprecated use secondaryAction */
-    buttonLink?: CardActionButton;
-    primaryAction?: CardActionButton;
-    secondaryAction?: CardActionButton;
+    /** @deprecated use buttonPrimary or buttonSecondary */
+    button?: CardActionButtonPrimary;
+    buttonPrimary?: CardActionButtonPrimary;
+    buttonSecondary?: CardActionButtonSecondary;
+    buttonLink?: CardActionButtonLink;
     onClose?: () => unknown;
     closeButtonLabel?: string;
     dataAttributes?: DataAttributes;
@@ -117,9 +122,6 @@ type DeprecatedImageProps = {
 
 type DeprecatedBackgroundColorProps = {
     backgroundColor?: string | undefined;
-    /** @deprecated use variant */
-    isInverse?: boolean;
-    variant?: Variant;
 };
 
 type PosterCardProps = PosterCardBaseProps &
@@ -139,9 +141,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
             slot,
             backgroundImage,
             button,
-            buttonLink,
-            primaryAction,
-            secondaryAction,
+            buttonPrimary,
+            buttonSecondary,
             dataAttributes,
             ...rest
         },
@@ -159,8 +160,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
                 dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
                 topActions={topActions || actions}
                 slot={slot || extra}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
+                buttonPrimary={buttonPrimary || button}
+                buttonSecondary={buttonSecondary}
                 {...imageProps}
                 {...rest}
             />
@@ -172,39 +173,16 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
  * @deprecated use <CoverCard size="display" />
  */
 export const DisplayMediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<PosterCardProps>>(
-    (
-        {
-            isInverse,
-            variant,
-            actions,
-            topActions,
-            extra,
-            slot,
-            backgroundImage,
-            button,
-            buttonLink,
-            primaryAction,
-            secondaryAction,
-            dataAttributes,
-            ...rest
-        },
-        ref
-    ) => {
-        const imageProps = {
-            imageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
-            imageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
-        } as BackgroundImageOrVideoProps;
+    ({backgroundImage, dataAttributes, ...rest}, ref) => {
         return (
             <CoverCard
                 ref={ref}
                 size="display"
-                variant={variant || (isInverse ? 'inverse' : undefined)}
-                dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
-                topActions={topActions || actions}
-                slot={slot || extra}
-                primaryAction={primaryAction || button}
-                secondaryAction={secondaryAction || buttonLink}
-                {...imageProps}
+                dataAttributes={{
+                    'component-name': 'DisplayMediaCard',
+                    testid: 'DisplayMediaCard',
+                    ...dataAttributes,
+                }}
                 {...rest}
             />
         );

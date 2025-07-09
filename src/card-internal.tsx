@@ -6,12 +6,7 @@ import * as mediaStyles from './image.css';
 import * as tokens from './text-tokens';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {
-    ThemeVariant,
-    useIsInverseOrMediaVariant,
-    useIsInverseVariant,
-    useThemeVariant,
-} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import Stack from './stack';
 import Image from './image';
@@ -31,6 +26,7 @@ import {IconButton, ToggleIconButton} from './icon-button';
 import {combineRefs} from './utils/common';
 import {isRunningAcceptanceTest} from './utils/platform';
 import classnames from 'classnames';
+import ButtonGroup from './button-group';
 
 import type {
     DataAttributes,
@@ -46,11 +42,11 @@ import type {Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
 
-export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
-export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
-
 const DEBUG = 0;
 const dbg = (value: any) => (DEBUG ? value : undefined);
+
+export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
+export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
 export type CardSize = 'snap' | 'default' | 'display';
@@ -59,13 +55,11 @@ export type MediaPosition = 'top' | 'left' | 'right';
 /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
 export type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
-export type CardActionButton =
-    | RendersNullableElement<typeof ButtonPrimary>
-    | RendersNullableElement<typeof ButtonSecondary>
-    | RendersNullableElement<typeof ButtonLink>
-    | undefined;
-
 export type SlotAlignment = 'content' | 'bottom';
+
+export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimary>;
+export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
+export type CardActionButtonLink = RendersNullableElement<typeof ButtonLink>;
 
 type ContainerProps = {
     type: CardType;
@@ -446,15 +440,15 @@ export const useVideoWithControls = (
 
 type ActionsProps = {
     size: CardSize;
-    primaryAction?: CardActionButton;
-    secondaryAction?: CardActionButton;
+    buttonPrimary?: CardActionButtonPrimary;
+    buttonSecondary?: CardActionButtonSecondary;
+    buttonLink?: CardActionButtonLink;
 };
 
-const Actions = ({size, primaryAction, secondaryAction}: ActionsProps): JSX.Element => {
+const Actions = ({size, buttonPrimary, buttonSecondary, buttonLink}: ActionsProps): JSX.Element => {
     return (
         <div className={styles.actionsContainerVariants[size]}>
-            {primaryAction}
-            {secondaryAction}
+            <ButtonGroup primaryButton={buttonPrimary} secondaryButton={buttonSecondary} link={buttonLink} />
         </div>
     );
 };
@@ -671,13 +665,14 @@ const Footer = ({
     size,
     variant,
     footerSlot,
-    primaryAction,
-    secondaryAction,
+    buttonPrimary,
+    buttonSecondary,
+    buttonLink,
     hasBackgroundImage,
     footerVariant,
     footerBackgroundColor,
 }: FooterProps & ActionsProps): JSX.Element => {
-    const hasActions = !!(primaryAction || secondaryAction);
+    const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
     const isInverse = variant === 'inverse' || variant === 'media';
     const noPadding = type === 'naked';
 
@@ -711,14 +706,14 @@ const Footer = ({
             >
                 <Stack space={16}>
                     {footerSlot}
-                    {hasActions && (
+                    {hasButtons && (
                         // @FIXME if the secondary action is a link, it should bleed right
                         // perhaps we could create styles to override button styles (small, bleed)
                         // see spec related to button group alignment
                         // https://www.figma.com/design/koROdh3HpEPG2O8jG52Emh/%F0%9F%94%B8-Buttons-Specs?node-id=4337-1606&t=HtImvar8DMbivDqC-0
                         <Inline space="between" alignItems="center">
-                            {primaryAction}
-                            {secondaryAction}
+                            {buttonPrimary}
+                            {buttonSecondary}
                         </Inline>
                     )}
                 </Stack>
@@ -975,8 +970,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             aspectRatio,
             slot,
             slotAlignment = 'content',
-            primaryAction,
-            secondaryAction,
+            buttonPrimary,
+            buttonSecondary,
+            buttonLink,
             showFooter: showFooterProp,
             footerBackgroundColor,
             footerVariant,
@@ -991,7 +987,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // @TODO: A11Y
         const {/* text: slotText, */ ref: slotRef} = useInnerText();
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
-        const hasActions = !!(primaryAction || secondaryAction);
+        const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
 
         // In this context "media" refers to the image or video that is placed inside the card, not the background
         const typeAllowsMedia = type === 'media' || type === 'naked';
@@ -1021,11 +1017,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
-        const isInverseOutside = useIsInverseOrMediaVariant();
         const isExternalInverse = useIsInverseVariant();
         // @TODO review
-        const variant = variantProp || (type === 'cover' && hasCustomBackground ? 'media' : undefined);
-        const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isInverseOutside;
+        const variant =
+            variantProp ||
+            (type === 'cover' && hasCustomBackground ? 'media' : isExternalInverse ? 'inverse' : 'default');
+        const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isExternalInverse;
         const overlayStyle = isInverseStyle
             ? styles.touchableCardOverlayInverse
             : styles.touchableCardOverlay;
@@ -1033,7 +1030,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
         const shouldShowFooter =
-            (showFooterProp && (hasActions || !!footerSlot)) || (hasActions && touchableProps.onPress);
+            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
 
         const showVideoActionInContentContainer = hasMedia && videoAction && mediaPosition !== 'left';
         const showVideoActionInMediaContainer = hasMedia && videoAction && mediaPosition === 'left';
@@ -1041,7 +1038,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             ? `calc(${mediaWidth}px - 48px)`
             : `calc(${mediaWidth} - 48px)`;
 
-        const showActionsInBody = !shouldShowFooter && hasActions;
+        const showActionsInBody = !shouldShowFooter && hasButtons;
         const topActionsLengthInContent =
             (topActions?.length || 0) + (onClose ? 1 : 0) + (showVideoActionInContentContainer ? 1 : 0);
 
@@ -1225,8 +1222,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             {showActionsInBody && (
                                 <Actions
                                     size={size}
-                                    primaryAction={primaryAction}
-                                    secondaryAction={secondaryAction}
+                                    buttonPrimary={buttonPrimary}
+                                    buttonSecondary={buttonSecondary}
+                                    buttonLink={buttonLink}
                                 />
                             )}
                         </div>
@@ -1240,8 +1238,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         footerBackgroundColor={footerBackgroundColor}
                         size={size}
                         footerSlot={footerSlot}
-                        primaryAction={primaryAction}
-                        secondaryAction={secondaryAction}
+                        buttonPrimary={buttonPrimary}
+                        buttonSecondary={buttonSecondary}
                         hasBackgroundImage={hasBackgroundImage}
                     />
                 )}
