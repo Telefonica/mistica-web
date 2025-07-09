@@ -128,6 +128,7 @@ export {
 export {Grid, GridItem} from './grid';
 export {default as Drawer} from './drawer';
 export {default as Timeline, TimelineItem} from './timeline';
+export {default as SkipLink, SkipLinkNav} from './skip-link';
 
 // Sheets
 export {default as SheetRoot, showSheet} from './sheet-root';
