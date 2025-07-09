@@ -80,7 +80,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
             <InternalCard
                 type="media"
                 size={size}
-                dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard'}}
+                dataAttributes={{
+                    'component-name': 'MediaCard',
+                    testid: 'MediaCard',
+                    ...dataAttributes,
+                }}
                 slot={slot || extra}
                 topActions={topActions || actions}
                 buttonPrimary={buttonPrimary || button}
@@ -112,7 +116,11 @@ export const HighlightedCard = React.forwardRef<
             size="default"
             mediaPosition="right"
             mediaWidth={mediaWidth || 100}
-            dataAttributes={{'component-name': 'HighlightedCard', testid: 'HighlightedCard'}}
+            dataAttributes={{
+                'component-name': 'HighlightedCard',
+                testid: 'HighlightedCard',
+                ...dataAttributes,
+            }}
             imageSrc={imageSrc || imageUrl}
             variant={variant || (isInverse ? 'inverse' : 'default')}
             ref={ref}

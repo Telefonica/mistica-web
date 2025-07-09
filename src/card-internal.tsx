@@ -1043,6 +1043,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             (topActions?.length || 0) + (onClose ? 1 : 0) + (showVideoActionInContentContainer ? 1 : 0);
 
         const hasAssetInContent = asset && !(hasMedia && mediaPosition === 'left');
+        console.log('hasAssetInContent', hasAssetInContent);
         const shouldAddContentSpacingForTopActions =
             type !== 'cover' && topActionsLengthInContent > 0 && !hasAssetInContent && !headline;
 
@@ -1122,7 +1123,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             {media}
                         </div>
                     )}
-                    {hasMediaSources && (
+                    {hasDeprecatedMedia && <Asset absolute size={size} asset={asset} type={type} />}
+
+                    {hasMedia && (
                         <Media
                             type={type}
                             size={size}
@@ -1139,14 +1142,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         data-testid="body"
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]:
-                                !!asset &&
-                                type !== 'naked' &&
-                                (!hasMediaSources || mediaPosition === 'right'),
+                                !!asset && type !== 'naked' && (!hasMedia || mediaPosition === 'right'),
                         })}
                     >
                         {
                             // inline asset
-                            (!hasMediaSources || mediaPosition === 'right') && (
+                            (!hasMedia || mediaPosition === 'right') && (
                                 <Asset size={size} asset={asset} type={type} />
                             )
                         }

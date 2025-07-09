@@ -11,7 +11,11 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
     ) => {
         return (
             <InternalCard
-                dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard'}}
+                dataAttributes={{
+                    'component-name': 'MediaCard',
+                    testid: 'MediaCard',
+                    ...dataAttributes,
+                }}
                 type="naked"
                 size={size}
                 slot={slot || extra}
@@ -30,7 +34,18 @@ type NakedCardProps = Omit<MediaCardProps, 'size'>;
  * @deprecated use <NakedCard size="snap" /> instead
  */
 export const SmallNakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<NakedCardProps>>(
-    ({...rest}, ref) => {
-        return <NakedCard size="snap" ref={ref} {...rest} />;
+    ({dataAttributes, ...rest}, ref) => {
+        return (
+            <NakedCard
+                dataAttributes={{
+                    'component-name': 'SmallNakedCard',
+                    testid: 'SmallNakedCard',
+                    ...dataAttributes,
+                }}
+                size="snap"
+                ref={ref}
+                {...rest}
+            />
+        );
     }
 );

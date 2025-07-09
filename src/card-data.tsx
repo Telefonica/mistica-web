@@ -83,7 +83,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
             <InternalCard
                 type="data"
                 size={size}
-                dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'DataCard',
+                    testid: 'DataCard',
+                    ...dataAttributes,
+                }}
                 ref={ref}
                 buttonPrimary={buttonPrimary || button}
                 topActions={topActions || actions}
@@ -105,7 +109,11 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Fixe
         return (
             <DataCard
                 size="snap"
-                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'SnapCard',
+                    testid: 'SnapCard',
+                    ...dataAttributes,
+                }}
                 ref={ref}
                 {...rest}
             />

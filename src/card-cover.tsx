@@ -157,7 +157,11 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
                 ref={ref}
                 size="default"
                 variant={variant || (isInverse ? 'inverse' : undefined)}
-                dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'PosterCard',
+                    testid: 'PosterCard',
+                    ...dataAttributes,
+                }}
                 topActions={topActions || actions}
                 slot={slot || extra}
                 buttonPrimary={buttonPrimary || button}
