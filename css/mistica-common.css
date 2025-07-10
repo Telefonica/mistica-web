@@ -1,5 +1,11 @@
 [data-mistica-variant='inverse'] > *,
-.mistica-display-card:has(.mistica-card__media) > * {
+.mistica-display-card:has(.mistica-card__media) > *,
+.mistica-snap-card.mistica-card-inverse > *,
+.mistica-display-card.mistica-card-inverse > *,
+.mistica-card.mistica-card-inverse > * {
+    /* TODO: Handle the case when an inverse card is rendered over an inverse context
+    ** (e.g., an inverse responsive layout). In that scenario, the background color should be
+    **`backgroundContainerBrandOverInverse`. For now, this case is ignored and may be addressed later.*/
     --mistica-boxed-border: none;
 
     --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
@@ -115,6 +121,14 @@
     --vcolor-switch-handleHover: var(--mistica-color-neutralHigh);
 
     --vcolor-rowChevron: var(--mistica-color-neutralMedium);
+}
+
+.mistica-display-card.mistica-card-inverse,
+.mistica-snap-card.mistica-card-inverse,
+.mistica-card.mistica-card-inverse {
+    --mistica-color-backgroundContainer: var(--mistica-color-backgroundContainerBrand);
+    --mistica-card-text-color: var(--mistica-color-textPrimaryInverse);
+    --mistica-card-description-text-color: var(--mistica-color-textPrimaryInverse);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -507,10 +521,10 @@ label.mistica-chip > input:checked + span {
 /* Padding */
 
 [class*='mistica-padding-'] {
-    padding-left: var(--mistica-padding-left, var(--mistica-padding-x, var(--mistica-padding)));
-    padding-right: var(--mistica-padding-right, var(--mistica-padding-x, var(--mistica-padding)));
-    padding-top: var(--mistica-padding-top, var(--mistica-padding-y, var(--mistica-padding)));
-    padding-bottom: var(--mistica-padding-bottom, var(--mistica-padding-y, var(--mistica-padding)));
+    padding-left: var(--mistica-padding-left, var(--mistica-padding-x, var(--mistica-padding, 0)));
+    padding-right: var(--mistica-padding-right, var(--mistica-padding-x, var(--mistica-padding, 0)));
+    padding-top: var(--mistica-padding-top, var(--mistica-padding-y, var(--mistica-padding, 0)));
+    padding-bottom: var(--mistica-padding-bottom, var(--mistica-padding-y, var(--mistica-padding, 0)));
 }
 
 .mistica-padding-8 {
@@ -688,6 +702,18 @@ label.mistica-chip > input:checked + span {
 
 .mistica-gap-32 {
     gap: 32px;
+}
+
+.mistica-justify-space-between {
+    justify-content: space-between;
+}
+
+.mistica-justify-space-around {
+    justify-content: space-around;
+}
+
+.mistica-justify-space-evenly {
+    justify-content: space-evenly;
 }
 
 /* Align */
@@ -900,6 +926,7 @@ label.mistica-chip > input:checked + span {
     transition: background 0.1s ease-in-out;
     isolation: isolate;
     -webkit-tap-highlight-color: transparent;
+    align-items: stretch;
 }
 
 @media (min-width: 1024px) {
@@ -1617,7 +1644,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 }
 
 /* Switch */
-.mistica-switch {
+[type='checkbox'].mistica-switch {
     --switch-border-width: 2px;
     --switch-transition: 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     appearance: none;
