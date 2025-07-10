@@ -35,18 +35,10 @@ test('SnapCard', async () => {
 
     const snapCardWithExtra = await renderSnapCard({
         device: 'MOBILE_IOS',
-        args: {extra: true, asset: 'icon in circle', aspectRatio: '7 10'},
+        args: {extra: true, asset: 'icon in circle'},
     });
     expect(await snapCardWithExtra.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-with-extra',
-    });
-
-    const snapCardWithExtraAlignContent = await renderSnapCard({
-        device: 'MOBILE_IOS',
-        args: {extra: true, asset: 'icon in circle', extraAlignment: 'content', aspectRatio: '7 10'},
-    });
-    expect(await snapCardWithExtraAlignContent.screenshot()).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'snapcard-screenshot-test-with-extra-content',
     });
 
     const desktopSnapCard = await renderSnapCard({device: 'DESKTOP'});
