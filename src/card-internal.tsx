@@ -302,12 +302,10 @@ const BackgroundImageOrVideo = ({
 }: BackgroundImageOrVideoProps): JSX.Element => {
     const isVideoOk = videoStatus === 'playing' || videoStatus === 'paused';
     const variant = !isVideoOk && !src && !srcSet ? userVariant || externalVariant : variantProp;
-    console.log('image', {variant}, {isVideoOk, src, srcSet});
     return (
         <ThemeVariant variant={variant}>
             <div
                 className={styles.backgroundImageOrVideoContainer}
-                // remove video border radius
                 style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
             >
                 {video ? (
@@ -1094,6 +1092,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             : skinVars.colors.backgroundBrand
                         : undefined);
 
+        // @TODO REMOVE THIS
         console.log({
             topActions: topActions?.length || 0,
             showVideoActionInContentContainer,

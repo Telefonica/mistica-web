@@ -184,7 +184,6 @@ test('SmallNakedCard with circular image ', async () => {
         },
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for image to load
     const smallNakedCard = await screen.findByTestId('small-naked-card');
     const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
 
