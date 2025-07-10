@@ -1054,8 +1054,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
 
         const showVideoActionInContentContainer =
-            (hasMedia || hasBackgroundImageOrVideo) && videoAction && mediaPosition !== 'left';
-        const showVideoActionInMediaContainer = hasMedia && videoAction && mediaPosition === 'left';
+            (hasMedia || hasBackgroundImageOrVideo) && !!videoAction && mediaPosition !== 'left';
+        const showVideoActionInMediaContainer = hasMedia && !!videoAction && mediaPosition === 'left';
         const videoActionInMediaContainerLeftPosition = Number.isFinite(mediaWidth)
             ? `calc(${mediaWidth}px - 48px)`
             : `calc(${mediaWidth} - 48px)`;
@@ -1083,6 +1083,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             : skinVars.colors.backgroundBrand
                         : undefined);
 
+        console.log({
+            topActions: topActions?.length || 0,
+            showVideoActionInContentContainer,
+            showVideoActionInMediaContainer,
+        });
+
         return (
             <Container
                 type={type}
@@ -1104,18 +1110,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         variant={variant}
                     />
                 )}
-                <TopActions
-                    onClose={onClose}
-                    closeButtonLabel={closeButtonLabel}
-                    topActions={topActions}
-                    videoAction={showVideoActionInContentContainer ? videoAction : undefined}
-                    variant={hasBackgroundImageOrVideo ? 'media' : variant}
-                />
-                <TopActions
-                    videoAction={showVideoActionInMediaContainer ? videoAction : undefined}
-                    variant="media"
-                    containerStyles={{left: videoActionInMediaContainerLeftPosition, right: 'unset'}}
-                />
 
                 <BaseTouchable
                     maybe
@@ -1275,6 +1269,22 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
                     />
                 )}
+                <TopActions
+                    onClose={onClose}
+                    closeButtonLabel={closeButtonLabel}
+                    topActions={topActions}
+                    videoAction={showVideoActionInContentContainer ? videoAction : undefined}
+                    variant={
+                        hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
+                            ? 'media'
+                            : variant
+                    }
+                />
+                <TopActions
+                    videoAction={showVideoActionInMediaContainer ? videoAction : undefined}
+                    variant="media"
+                    containerStyles={{left: videoActionInMediaContainerLeftPosition, right: 'unset'}}
+                />
             </Container>
         );
     }
