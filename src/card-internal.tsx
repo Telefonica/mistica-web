@@ -195,7 +195,7 @@ const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & Conta
                 aria-description={ariaDescription}
                 aria-describedby={ariaDescribedby}
                 className={classnames(styles.container)}
-                {...getPrefixedDataAttributes(dataAttributes)}
+                {...getPrefixedDataAttributes(dataAttributes, 'InternalCard')}
                 style={{
                     width: width || '100%',
                     height: height || '100%',
@@ -1143,11 +1143,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     {isTouchable && <div className={overlayStyle} />}
                     {hasDeprecatedMedia && (
                         <div
-                            style={
-                                type === 'naked'
+                            style={{
+                                // for some reason, this width is required to pass headless screenshot tests
+                                // otherwise, it gets 0px width and the media is not visible
+                                width: '100%',
+                                ...(type === 'naked'
                                     ? undefined
-                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})
-                            }
+                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
+                            }}
                         >
                             {media}
                         </div>
