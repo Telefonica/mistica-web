@@ -1204,7 +1204,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                       ? 16
                                       : isNaked && mediaPosition !== 'top'
                                         ? 16
-                                        : undefined,
+                                        : isNaked && !hasMedia
+                                          ? 0
+                                          : undefined,
                                 paddingLeft:
                                     isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
                                 paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
