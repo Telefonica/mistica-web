@@ -3,6 +3,9 @@
 .mistica-snap-card.mistica-card-inverse > *,
 .mistica-display-card.mistica-card-inverse > *,
 .mistica-card.mistica-card-inverse > * {
+    /* TODO: Handle the case when an inverse card is rendered over an inverse context
+    ** (e.g., an inverse responsive layout). In that scenario, the background color should be
+    **`backgroundContainerBrandOverInverse`. For now, this case is ignored and may be addressed later.*/
     --mistica-boxed-border: none;
 
     --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
