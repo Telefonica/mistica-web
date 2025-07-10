@@ -1040,9 +1040,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             (backgroundColorProp
                 ? externalVariant
                 : type === 'cover' && hasCustomBackground
-                  ? externalVariant === 'inverse'
-                      ? 'inverse'
-                      : 'media'
+                  ? 'inverse'
                   : externalVariant);
 
         const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isExternalInverse;
@@ -1111,7 +1109,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
                     videoAction={showVideoActionInContentContainer ? videoAction : undefined}
-                    variant={hasMedia ? 'media' : variant}
+                    variant={hasBackgroundImageOrVideo ? 'media' : variant}
                 />
                 <TopActions
                     videoAction={showVideoActionInMediaContainer ? videoAction : undefined}
