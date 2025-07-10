@@ -959,7 +959,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoSrc,
             videoRef,
             media,
-            mediaAspectRatio = 'auto',
+            mediaAspectRatio: mediaAspectRatioProp = 'auto',
             mediaPosition: mediaPositionProp = 'top',
             mediaWidth = 150,
             circledImage,
@@ -1011,6 +1011,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         // If no media is provided, we use the "top" media position to simplify logic
         const mediaPosition = hasMedia ? mediaPositionProp : 'top';
+        // Override mediaAspectRatio for naked cards with circled image
+        const mediaAspectRatio = type === 'naked' && circledImage ? 1 : mediaAspectRatioProp;
 
         // We consider any string (including empty string) as an image/video source. If not valid a fallback image will be used.
         const hasBackgroundImage = type === 'cover' && (imageSrc !== undefined || imageSrcSet !== undefined);
@@ -1047,7 +1049,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const shouldShowFooter =
             (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
 
-        const showVideoActionInContentContainer = hasMedia && videoAction && mediaPosition !== 'left';
+        const showVideoActionInContentContainer =
+            (hasMedia || hasBackgroundImageOrVideo) && videoAction && mediaPosition !== 'left';
         const showVideoActionInMediaContainer = hasMedia && videoAction && mediaPosition === 'left';
         const videoActionInMediaContainerLeftPosition = Number.isFinite(mediaWidth)
             ? `calc(${mediaWidth}px - 48px)`
@@ -1076,6 +1079,17 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             ? skinVars.colors.backgroundContainerBrandOverInverse
                             : skinVars.colors.backgroundBrand
                         : undefined);
+
+        console.debug({
+            hasMedia,
+            topActions: topActions?.length || 0,
+            hasBackgroundImageOrVideo,
+            videoAction: !!videoAction,
+            mediaPosition,
+            showVideoActionInContentContainer,
+            showVideoActionInMediaContainer,
+            videoActionInMediaContainerLeftPosition,
+        });
 
         return (
             <Container

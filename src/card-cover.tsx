@@ -6,7 +6,6 @@ import type {
     CardAspectRatio,
     SlotAlignment,
     MaybeTouchableCard,
-    BackgroundImageOrVideoProps,
     CardActionButtonLink,
     CardActionButtonSecondary,
     CardActionButtonPrimary,
@@ -58,6 +57,7 @@ type CoverCardProps = {
 
 export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(
     ({size = 'default', ...rest}, ref) => {
+        console.log(rest);
         return <InternalCard type="cover" size={size} {...rest} ref={ref} />;
     }
 );
@@ -71,6 +71,7 @@ type PosterCardBaseProps = {
     /** @deprecated use variant */
     isInverse?: boolean;
     variant?: Variant;
+    size?: 'default' | 'display';
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
@@ -134,37 +135,40 @@ type PosterCardProps = PosterCardBaseProps &
 export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<PosterCardProps>>(
     (
         {
+            size = 'default',
+            /** @deprecated use variant */
             isInverse,
             variant,
+            /** @deprecated use topActions */
             actions,
             topActions,
+            /** @deprecated use slot */
             extra,
             slot,
-            videoSrc,
             /** @deprecated use imageSrc or imageSrcSet */
             backgroundImage,
             /** @deprecated use videoSrc */
             backgroundVideo,
             /** @deprecated use imageSrc */
             poster,
+            videoSrc,
+            imageSrc,
+            imageSrcSet,
+            /** @deprecated use videoRef */
             backgroundVideoRef,
+            videoRef,
+            /** @deprecated use buttonPrimary */
             button,
             buttonPrimary,
-            buttonSecondary,
             dataAttributes,
             ...rest
         },
         ref
     ) => {
-        const imageProps = {
-            imageSrc: typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src,
-            imageSrcSet: typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet,
-        } as BackgroundImageOrVideoProps;
-
         return (
             <CoverCard
                 ref={ref}
-                size="default"
+                size={size}
                 variant={variant || (isInverse ? 'inverse' : undefined)}
                 dataAttributes={{
                     'component-name': 'PosterCard',
@@ -174,9 +178,14 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
                 topActions={topActions || actions}
                 slot={slot || extra}
                 buttonPrimary={buttonPrimary || button}
-                buttonSecondary={buttonSecondary}
+                imageSrc={
+                    imageSrc || (typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src)
+                }
+                imageSrcSet={
+                    imageSrcSet || (typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet)
+                }
                 videoSrc={videoSrc || backgroundVideo}
-                {...imageProps}
+                videoRef={videoRef || backgroundVideoRef}
                 {...rest}
             />
         );
@@ -187,9 +196,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
  * @deprecated use <CoverCard size="display" />
  */
 export const DisplayMediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<PosterCardProps>>(
-    ({backgroundImage, dataAttributes, ...rest}, ref) => {
+    ({dataAttributes, ...rest}, ref) => {
         return (
-            <CoverCard
+            <PosterCard
                 ref={ref}
                 size="display"
                 dataAttributes={{
