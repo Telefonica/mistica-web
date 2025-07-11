@@ -25,7 +25,7 @@ import type {TagType} from '..';
 import type {Variant} from '../theme-variant-context';
 
 export default {
-    title: 'Components/Cards/PosterCard',
+    title: 'Private/Deprecated Card Stories/PosterCard',
 };
 
 const BACKGROUND_IMAGE_SRC = usingVrImg;

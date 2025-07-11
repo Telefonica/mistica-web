@@ -22,7 +22,7 @@ import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/DataCard',
+    title: 'Private/Deprecated Card Stories/DataCard',
 };
 
 type DataCardArgs = {

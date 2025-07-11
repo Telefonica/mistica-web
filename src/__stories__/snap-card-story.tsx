@@ -17,7 +17,7 @@ import {SnapCard} from '../card-data';
 import type {CardAspectRatio, SlotAlignment} from '../card-internal';
 
 export default {
-    title: 'Components/Cards/SnapCard',
+    title: 'Private/Deprecated Card Stories/SnapCard',
 };
 
 type Args = {

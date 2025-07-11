@@ -25,7 +25,7 @@ import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/DisplayDataCard',
+    title: 'Private/Deprecated Card Stories/DisplayDataCard',
 };
 
 type DisplayDataCardArgs = {

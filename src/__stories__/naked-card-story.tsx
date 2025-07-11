@@ -27,7 +27,7 @@ import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/NakedCard',
+    title: 'Private/Deprecated Card Stories/NakedCard',
     parameters: {
         fullScreen: true,
     },

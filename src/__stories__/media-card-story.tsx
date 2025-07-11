@@ -25,7 +25,7 @@ import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/MediaCard',
+    title: 'Private/Deprecated Card Stories/MediaCard',
 };
 
 const VIDEO_SRC = beachVideo;
