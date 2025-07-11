@@ -282,29 +282,21 @@ const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): J
 
 export type BackgroundImageOrVideoProps = {
     video?: React.ReactNode;
-    videoStatus: VideoState;
     src?: string;
     srcSet?: string;
     imageAlt?: string;
-    variant?: Variant;
-    userVariant?: Variant;
-    externalVariant?: Variant;
+    backgroundVariant: Variant;
 };
 
 const BackgroundImageOrVideo = ({
-    videoStatus,
     video,
     src,
     srcSet,
     imageAlt,
-    variant: variantProp,
-    userVariant,
-    externalVariant,
+    backgroundVariant,
 }: BackgroundImageOrVideoProps): JSX.Element => {
-    const isVideoOk = videoStatus === 'playing' || videoStatus === 'paused';
-    const variant = !isVideoOk && !src && !srcSet ? userVariant || externalVariant : variantProp;
     return (
-        <ThemeVariant variant={variant}>
+        <ThemeVariant variant={backgroundVariant}>
             <div
                 className={styles.backgroundImageOrVideoContainer}
                 style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
@@ -374,7 +366,6 @@ export const useVideoWithControls = (
 ): {
     video?: React.ReactNode;
     videoAction?: CardAction;
-    videoStatus: VideoState;
 } => {
     const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
@@ -419,7 +410,7 @@ export const useVideoWithControls = (
     };
 
     if (videoStatus === 'error') {
-        return {video, videoStatus};
+        return {video};
     }
 
     const videoAction: CardAction | undefined = video
@@ -447,7 +438,6 @@ export const useVideoWithControls = (
     return {
         video,
         videoAction,
-        videoStatus,
     };
 };
 
@@ -1035,7 +1025,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
-        const {video, videoAction, videoStatus} = useVideoWithControls(
+        const {video, videoAction} = useVideoWithControls(
             shouldShowVideo ? videoSrc : undefined,
             imageSrc,
             videoRef,
@@ -1044,7 +1034,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         const isExternalInverse = useIsInverseVariant();
         const externalVariant = isExternalInverse ? 'inverse' : 'default';
-
+        const backgroundVariant = variantProp || externalVariant;
         const variant: Variant =
             variantProp || (type === 'cover' && hasCustomBackground ? 'media' : 'default');
 
@@ -1086,13 +1076,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         ? skinVars.colors.backgroundAlternative
                         : undefined);
 
-        // @TODO REMOVE THIS
-        console.log({
-            topActions: topActions?.length || 0,
-            showVideoActionInContentContainer,
-            showVideoActionInMediaContainer,
-        });
-
         return (
             <Container
                 type={type}
@@ -1107,14 +1090,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             >
                 {hasBackgroundImageOrVideo && (
                     <BackgroundImageOrVideo
-                        videoStatus={videoStatus}
                         video={video}
                         src={imageSrc}
                         srcSet={imageSrcSet}
                         imageAlt={imageAlt}
-                        variant={variant}
-                        userVariant={variantProp}
-                        externalVariant={externalVariant}
+                        backgroundVariant={backgroundVariant}
                     />
                 )}
 

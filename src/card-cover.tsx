@@ -2,7 +2,6 @@ import * as React from 'react';
 import {InternalCard} from './card-internal';
 
 import type {Variant} from './theme-variant-context';
-import type {CardAction} from './card-deprecated';
 import type {
     CardAspectRatio,
     SlotAlignment,
@@ -10,6 +9,7 @@ import type {
     CardActionButtonLink,
     CardActionButtonSecondary,
     CardActionButtonPrimary,
+    CardAction,
 } from './card-internal';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';

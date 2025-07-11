@@ -13,9 +13,15 @@ import {
 } from '..';
 import {InternalCard} from '../card-internal';
 import {Placeholder} from '../placeholder';
-import avatarImg from './images/avatar.jpg';
-import beachVideo from './videos/beach.mp4';
-import beachImg from './images/beach.jpg';
+import avatarImg from '../__stories__/images/avatar.jpg';
+import beachVideo from '../__stories__/videos/beach.mp4';
+import beachImg from '../__stories__/images/beach.jpg';
+import appleGadgetsImg from '../__stories__/images/apple-gadgets-portrait.jpg';
+import gamingImg from '../__stories__/images/gaming.jpg';
+import laptopImg from '../__stories__/images/laptop.jpg';
+import personPortraitImg from '../__stories__/images/person-portrait.jpg';
+import surfaceInSofaImg from '../__stories__/images/surface-in-sofa.jpg';
+import tennisImg from '../__stories__/images/tennis.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
@@ -30,11 +36,29 @@ import type {
 } from '../card-internal';
 
 export default {
-    title: 'Components/Cards/InternalCard',
+    title: 'Private/InternalCard',
     component: InternalCard,
     parameters: {
         fullScreen: true,
     },
+};
+
+const imageNameToUrl = {
+    '-undefined-': undefined,
+    '-empty string-': '',
+    beach: beachImg,
+    'apple gadgets': appleGadgetsImg,
+    gaming: gamingImg,
+    laptop: laptopImg,
+    'person portrait': personPortraitImg,
+    'surface in sofa': surfaceInSofaImg,
+    tennis: tennisImg,
+};
+
+const videoNameToUrl = {
+    '-undefined-': undefined,
+    '-empty string-': '',
+    beach: beachVideo,
 };
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
@@ -146,8 +170,8 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                     size={size}
                     variant={variant || undefined}
                     backgroundColor={backgroundColor || undefined}
-                    imageSrc={imageSrc === 'undefined' ? undefined : imageSrc}
-                    videoSrc={videoSrc === 'undefined' ? undefined : videoSrc}
+                    imageSrc={imageNameToUrl[imageSrc as never]}
+                    videoSrc={videoNameToUrl[videoSrc as never]}
                     mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
                     mediaPosition={mediaPosition}
                     circledImage={circledImage}
@@ -289,36 +313,12 @@ Default.argTypes = {
         },
     },
     imageSrc: {
-        options: [
-            'https://picsum.photos/id/292/1024/1024',
-            'https://picsum.photos/id/130/1024/1024',
-            'https://picsum.photos/id/892/1024/1024',
-            beachImg,
-            'undefined',
-            '',
-        ],
-        control: {
-            type: 'select',
-            labels: {
-                'https://picsum.photos/id/292/1024/1024': 'colored image',
-                'https://picsum.photos/id/130/1024/1024': 'clear image',
-                'https://picsum.photos/id/892/1024/1024': 'dark image',
-                [beachImg]: 'beach image',
-                undefined: 'undefined',
-                '': 'empty string',
-            },
-        },
+        options: Object.keys(imageNameToUrl),
+        control: {type: 'select'},
     },
     videoSrc: {
-        options: [beachVideo, 'undefined', ''],
-        control: {
-            type: 'select',
-            labels: {
-                [beachVideo]: 'beach video',
-                undefined: 'undefined',
-                '': 'empty string',
-            },
-        },
+        options: Object.keys(videoNameToUrl),
+        control: {type: 'select'},
     },
     mediaPosition: {
         options: ['top', 'left', 'right'],

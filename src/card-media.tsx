@@ -12,6 +12,7 @@ import type {
     DefaultOrInverseVariant,
     DeprecatedMediaProp,
     MaybeTouchableCard,
+    MediaAspectRatio,
     TopActionsArray,
 } from './card-internal';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
@@ -29,6 +30,7 @@ export type MediaCardProps = {
     media?: DeprecatedMediaProp;
     mediaPosition?: 'top' | 'left' | 'right';
     mediaWidth?: number | string;
+    mediaAspectRatio?: MediaAspectRatio;
     width?: number | string;
     aspectRatio?: CardAspectRatio;
     imageAlt?: string;

@@ -29,12 +29,12 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
     }
 );
 
-type NakedCardProps = Omit<MediaCardProps, 'size'>;
+type SmallNakedCardProps = Omit<MediaCardProps, 'size'>;
 
 /**
  * @deprecated use <NakedCard size="snap" /> instead
  */
-export const SmallNakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<NakedCardProps>>(
+export const SmallNakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<SmallNakedCardProps>>(
     ({dataAttributes, ...rest}, ref) => {
         return (
             <NakedCard
