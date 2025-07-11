@@ -10,7 +10,7 @@ import type {
     CardActionButtonLink,
     CardActionButtonPrimary,
     CardActionButtonSecondary,
-    CardVariant,
+    DefaultOrInverseVariant,
 } from './card-internal';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
@@ -23,7 +23,7 @@ type DataCardProps = {
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     size?: CardSize;
     background?: string;
-    variant?: CardVariant;
+    variant?: DefaultOrInverseVariant;
     /** @deprecated use variant */
     isInverse?: boolean;
     asset?: React.ReactElement;
@@ -56,7 +56,7 @@ type DataCardProps = {
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
     footerBackgroundColor?: string;
-    footerVariant?: CardVariant;
+    footerVariant?: DefaultOrInverseVariant;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     children?: undefined;
@@ -109,7 +109,6 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Fixe
         return (
             <DataCard
                 size="snap"
-                variant="default"
                 dataAttributes={{
                     'component-name': 'SnapCard',
                     testid: 'SnapCard',

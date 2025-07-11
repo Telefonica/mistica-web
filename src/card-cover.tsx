@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {InternalCard} from './card-internal';
 
+import type {Variant} from './theme-variant-context';
 import type {CardAction} from './card-deprecated';
 import type {
     CardAspectRatio,
@@ -9,7 +10,6 @@ import type {
     CardActionButtonLink,
     CardActionButtonSecondary,
     CardActionButtonPrimary,
-    CardVariant,
 } from './card-internal';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
@@ -23,7 +23,7 @@ type CoverCardProps = {
     'aria-description'?: string;
     'aria-describedby'?: string;
     size?: 'default' | 'display';
-    variant?: CardVariant;
+    variant?: Variant;
     aspectRatio?: CardAspectRatio;
     width?: number | string;
     height?: number | string;
@@ -70,7 +70,7 @@ type PosterCardBaseProps = {
     aspectRatio?: CardAspectRatio;
     /** @deprecated use variant */
     isInverse?: boolean;
-    variant?: CardVariant;
+    variant?: Variant;
     size?: 'default' | 'display';
     width?: number | string;
     height?: number | string;

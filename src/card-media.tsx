@@ -9,7 +9,7 @@ import type {
     CardActionButtonSecondary,
     CardAspectRatio,
     CardSize,
-    CardVariant,
+    DefaultOrInverseVariant,
     DeprecatedMediaProp,
     MaybeTouchableCard,
     TopActionsArray,
@@ -37,7 +37,7 @@ export type MediaCardProps = {
     videoSrc?: VideoSource;
     /** @deprecated use imageSrc */
     poster?: string;
-    variant?: CardVariant;
+    variant?: DefaultOrInverseVariant;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -65,7 +65,7 @@ export type MediaCardProps = {
     onClose?: () => unknown;
     closeButtonLabel?: string;
     footerBackgroundColor?: string;
-    footerVariant?: CardVariant;
+    footerVariant?: DefaultOrInverseVariant;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     children?: undefined;

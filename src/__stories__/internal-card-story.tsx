@@ -23,7 +23,7 @@ import type {
     CardAspectRatio,
     CardSize,
     CardType,
-    CardVariant,
+    DefaultOrInverseVariant,
     MediaAspectRatio,
     MediaPosition,
     SlotAlignment,
@@ -49,7 +49,7 @@ type InternalCardArgs = {
     mediaAspectRatio: string;
     mediaWidth: string;
     circledImage: boolean;
-    variant: CardVariant | '';
+    variant: DefaultOrInverseVariant | '';
     variantOutside: 'default' | 'inverse' | 'alternative';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -73,7 +73,7 @@ type InternalCardArgs = {
     buttonSecondary: boolean;
     buttonLink: boolean;
     footerBackgroundColor: string;
-    footerVariant: CardVariant | '';
+    footerVariant: DefaultOrInverseVariant | '';
 };
 
 export const Default: StoryComponent<InternalCardArgs> = ({

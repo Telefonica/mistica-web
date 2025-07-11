@@ -47,7 +47,7 @@ const dbg = (value: any) => (DEBUG ? value : undefined);
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
-export type CardVariant = 'default' | 'inverse';
+export type DefaultOrInverseVariant = 'default' | 'inverse';
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
 export type CardSize = 'snap' | 'default' | 'display';
@@ -1082,7 +1082,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                       ? isExternalInverse
                           ? skinVars.colors.backgroundContainerBrandOverInverse
                           : skinVars.colors.backgroundBrand
-                      : undefined);
+                      : variant === 'alternative'
+                        ? skinVars.colors.backgroundAlternative
+                        : undefined);
 
         // @TODO REMOVE THIS
         console.log({
