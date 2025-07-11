@@ -179,7 +179,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
                 slot={slot || extra}
                 buttonPrimary={buttonPrimary || button}
                 imageSrc={
-                    imageSrc || (typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src)
+                    // using ?? because we want to keep empty string as a valid value
+                    imageSrc ??
+                    (typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src) ??
+                    poster
                 }
                 imageSrcSet={
                     imageSrcSet || (typeof backgroundImage === 'string' ? undefined : backgroundImage?.srcSet)
