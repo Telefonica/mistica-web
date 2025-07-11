@@ -74,10 +74,12 @@ type ContainerProps = {
     'aria-labelledby'?: React.AriaAttributes['aria-labelledby'];
     'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
-    onClose?: () => void;
-    closeButtonLabel?: string;
-    showFooter?: boolean;
-    children?: React.ReactNode;
+};
+
+type ButtonsProps = {
+    buttonPrimary?: CardActionButtonPrimary;
+    buttonSecondary?: CardActionButtonSecondary;
+    buttonLink?: CardActionButtonLink;
 };
 
 type MediaProps = {
@@ -98,8 +100,6 @@ type MediaProps = {
 };
 
 type TextContentProps = {
-    size: CardSize;
-    variant?: Variant;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: HeadingType;
@@ -114,9 +114,41 @@ type TextContentProps = {
 };
 
 type AssetProps = {
-    size: CardSize;
     asset?: React.ReactElement;
 };
+
+type TopActionsProps = {
+    onClose?: () => void;
+    closeButtonLabel?: string;
+    topActions?: TopActionsArray;
+    videoAction?: CardAction;
+};
+
+type SlotProps = {
+    slot?: React.ReactNode;
+    slotAlignment?: SlotAlignment;
+};
+
+type FooterProps = {
+    showFooter?: boolean;
+    footerSlot?: React.ReactNode;
+    footerBackgroundColor?: string;
+    footerVariant?: Variant;
+};
+
+type NoChildrenProps = {
+    children?: undefined;
+};
+
+type CardProps = ContainerProps &
+    MediaProps &
+    TextContentProps &
+    AssetProps &
+    ButtonsProps &
+    TopActionsProps &
+    SlotProps &
+    FooterProps &
+    NoChildrenProps;
 
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -139,20 +171,6 @@ type TouchableProps = {
     | {onPress: PressHandler | undefined}
 >;
 
-type SlotProps = {
-    slot?: React.ReactNode;
-    slotAlignment?: SlotAlignment;
-};
-
-type CardProps = ContainerProps &
-    MediaProps &
-    TextContentProps &
-    AssetProps &
-    ActionsProps &
-    TopActionsProps &
-    SlotProps &
-    FooterProps;
-
 type TouchableCard<T> = T & TouchableProps;
 export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
@@ -160,7 +178,7 @@ type PrivateContainerProps = {
     children?: React.ReactNode;
 };
 
-const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & ContainerProps & MediaProps>(
+const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps & PrivateContainerProps>(
     (
         {
             type,
@@ -183,7 +201,6 @@ const Container = React.forwardRef<HTMLDivElement, PrivateContainerProps & Conta
             ? applyCssVars({[styles.vars.aspectRatio]: String(aspectRatioValue)})
             : {};
 
-        // @TODO verify this. Color cards have border?
         const boxedBorderStyleOverride = backgroundColor ? 'none' : undefined;
 
         return (
@@ -250,6 +267,7 @@ const Filler = ({minHeight}: FillerProps) => (
 );
 
 type PrivateAssetProps = {
+    size: CardSize;
     type: CardType;
     absolute?: boolean;
 };
@@ -441,14 +459,16 @@ export const useVideoWithControls = (
     };
 };
 
-type ActionsProps = {
+type PrivateButtonsProps = {
     size: CardSize;
-    buttonPrimary?: CardActionButtonPrimary;
-    buttonSecondary?: CardActionButtonSecondary;
-    buttonLink?: CardActionButtonLink;
 };
 
-const Actions = ({size, buttonPrimary, buttonSecondary, buttonLink}: ActionsProps): JSX.Element => {
+const Buttons = ({
+    size,
+    buttonPrimary,
+    buttonSecondary,
+    buttonLink,
+}: ButtonsProps & PrivateButtonsProps): JSX.Element => {
     return (
         <div className={styles.actionsContainerVariants[size]}>
             <ButtonGroup primaryButton={buttonPrimary} secondaryButton={buttonSecondary} link={buttonLink} />
@@ -527,13 +547,8 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
     );
 };
 
-type TopActionsProps = {
-    size?: CardSize;
-    variant?: Variant;
-    onClose?: () => void;
-    closeButtonLabel?: string;
-    topActions?: TopActionsArray;
-    videoAction?: CardAction;
+type PrivateTopActionsProps = {
+    variant: Variant;
     containerStyles?: React.CSSProperties;
 };
 
@@ -544,7 +559,7 @@ export const TopActions = ({
     videoAction,
     variant,
     containerStyles = {},
-}: TopActionsProps): JSX.Element => {
+}: TopActionsProps & PrivateTopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const actions = topActions ? [...topActions] : [];
 
@@ -658,14 +673,11 @@ const Media = ({
     );
 };
 
-type FooterProps = {
+type PrivateFooterProps = {
     type: CardType;
     size: CardSize;
     variant?: Variant;
-    footerSlot?: React.ReactNode;
     hasBackgroundImageOrVideo?: boolean;
-    footerBackgroundColor?: string;
-    footerVariant?: Variant;
 };
 
 const Footer = ({
@@ -679,7 +691,7 @@ const Footer = ({
     hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
-}: FooterProps & ActionsProps): JSX.Element => {
+}: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
     const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
     const isInverse = variant === 'inverse' || variant === 'media';
     const isNaked = type === 'naked';
@@ -737,11 +749,14 @@ const Footer = ({
 };
 
 type PrivateTextContentProps = {
+    size: CardSize;
+    variant?: Variant;
     withTextShadow?: boolean;
 };
 
 const TextContent = ({
-    size: size,
+    size,
+    variant,
     headline,
     title,
     titleAs = 'h3',
@@ -753,7 +768,6 @@ const TextContent = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
-    variant,
     withTextShadow,
 }: TextContentProps & PrivateTextContentProps): JSX.Element => {
     const {textPresets, colorValues} = useTheme();
@@ -1233,7 +1247,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 <Filler />
                             )}
                             {showActionsInBody && (
-                                <Actions
+                                <Buttons
                                     size={size}
                                     buttonPrimary={buttonPrimary}
                                     buttonSecondary={buttonSecondary}

@@ -55,9 +55,9 @@ type DataCardProps = {
     /** @deprecated use topActions */
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
+    showFooter?: boolean;
     footerBackgroundColor?: string;
     footerVariant?: DefaultOrInverseVariant;
-    showFooter?: boolean;
     footerSlot?: React.ReactNode;
     children?: undefined;
 };

@@ -66,10 +66,11 @@ export type MediaCardProps = {
     dataAttributes?: DataAttributes;
     onClose?: () => unknown;
     closeButtonLabel?: string;
+    showFooter?: boolean;
     footerBackgroundColor?: string;
     footerVariant?: DefaultOrInverseVariant;
-    showFooter?: boolean;
     footerSlot?: React.ReactNode;
+
     children?: undefined;
 };
 

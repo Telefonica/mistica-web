@@ -53,6 +53,10 @@ type CoverCardProps = {
     slotAlignment?: SlotAlignment;
     slot?: React.ReactNode;
     children?: undefined;
+    showFooter?: boolean;
+    footerBackgroundColor?: string;
+    footerVariant?: Variant;
+    footerSlot?: React.ReactNode;
 };
 
 export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(
