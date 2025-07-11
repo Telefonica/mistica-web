@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     Stack,
-    MediaCard,
     ButtonPrimary,
     ButtonLink,
     Text2,
@@ -14,6 +13,7 @@ import {
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    MediaCard,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';

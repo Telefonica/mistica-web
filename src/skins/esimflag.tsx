@@ -205,6 +205,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.peach10,
             tagBackgroundErrorInverse: palette.tomato10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -359,6 +360,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.darkModeGrey6,
             tagBackgroundErrorInverse: palette.darkModeGrey6,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         borderRadii: {
             avatar: '50%',

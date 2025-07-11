@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {PosterCard} from '../card';
+import {PosterCard} from '../card-cover';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';

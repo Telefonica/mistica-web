@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SnapCard} from '../card';
+import {SnapCard} from '../card-data';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';

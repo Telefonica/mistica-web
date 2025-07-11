@@ -209,6 +209,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.yellow15,
             tagBackgroundErrorInverse: palette.coral10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -363,6 +364,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.yellow80,
             tagBackgroundErrorInverse: palette.coral90,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         borderRadii: {
             avatar: '50%',

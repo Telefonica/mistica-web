@@ -196,6 +196,7 @@
         rgba(var(--mistica-vivo-new-raw-grey6), 0.4) 30%,
         rgba(var(--mistica-vivo-new-raw-grey6), 0.7) 100%
     );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-new-raw-grey6), 0.7);
 
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
@@ -412,6 +413,7 @@
         rgba(var(--mistica-vivo-new-raw-grey6), 0.4) 30%,
         rgba(var(--mistica-vivo-new-raw-grey6), 0.7) 100%
     );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-new-raw-grey6), 0.7);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -579,6 +581,7 @@
             rgba(var(--mistica-vivo-new-raw-grey6), 0.4) 30%,
             rgba(var(--mistica-vivo-new-raw-grey6), 0.7) 100%
         );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-new-raw-grey6), 0.7);
     }
 
     [data-mistica-skin='vivo-new'][data-mistica-color-scheme='light'] {
@@ -742,6 +745,7 @@
             rgba(var(--mistica-vivo-new-raw-grey6), 0.4) 30%,
             rgba(var(--mistica-vivo-new-raw-grey6), 0.7) 100%
         );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-new-raw-grey6), 0.7);
     }
 }
 
