@@ -445,7 +445,7 @@ export const useVideoWithControls = (
 
     return {
         video,
-        videoAction: videoStatus === 'playing' || videoStatus === 'paused' ? videoAction : undefined,
+        videoAction,
         videoStatus,
     };
 };
