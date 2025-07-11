@@ -10,9 +10,9 @@ import type {
     CardActionButtonLink,
     CardActionButtonPrimary,
     CardActionButtonSecondary,
+    CardVariant,
 } from './card-internal';
 import type Tag from './tag';
-import type {Variant} from './theme-variant-context';
 import type {RendersNullableElement} from './utils/renders-element';
 import type {HeadingType, DataAttributes} from './utils/types';
 
@@ -23,7 +23,7 @@ type DataCardProps = {
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     size?: CardSize;
     background?: string;
-    variant?: Variant;
+    variant?: CardVariant;
     /** @deprecated use variant */
     isInverse?: boolean;
     asset?: React.ReactElement;
@@ -56,7 +56,7 @@ type DataCardProps = {
     actions?: TopActionsArray;
     topActions?: TopActionsArray;
     footerBackgroundColor?: string;
-    footerVariant?: Variant;
+    footerVariant?: CardVariant;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     children?: undefined;
@@ -92,7 +92,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 buttonPrimary={buttonPrimary || button}
                 topActions={topActions || actions}
                 slot={slot || extra}
-                variant={variant || (isInverse ? 'inverse' : undefined)}
+                variant={variant || (isInverse ? 'inverse' : 'default') || 'default'}
                 {...rest}
             />
         );
@@ -109,6 +109,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Fixe
         return (
             <DataCard
                 size="snap"
+                variant="default"
                 dataAttributes={{
                     'component-name': 'SnapCard',
                     testid: 'SnapCard',

@@ -9,9 +9,9 @@ import type {
     CardActionButtonLink,
     CardActionButtonSecondary,
     CardActionButtonPrimary,
+    CardVariant,
 } from './card-internal';
 import type Tag from './tag';
-import type {Variant} from './theme-variant-context';
 import type {RendersNullableElement} from './utils/renders-element';
 import type {DataAttributes, HeadingType} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -23,7 +23,7 @@ type CoverCardProps = {
     'aria-description'?: string;
     'aria-describedby'?: string;
     size?: 'default' | 'display';
-    variant?: Variant;
+    variant?: CardVariant;
     aspectRatio?: CardAspectRatio;
     width?: number | string;
     height?: number | string;
@@ -70,7 +70,7 @@ type PosterCardBaseProps = {
     aspectRatio?: CardAspectRatio;
     /** @deprecated use variant */
     isInverse?: boolean;
-    variant?: Variant;
+    variant?: CardVariant;
     size?: 'default' | 'display';
     width?: number | string;
     height?: number | string;

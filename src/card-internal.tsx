@@ -47,6 +47,7 @@ const dbg = (value: any) => (DEBUG ? value : undefined);
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
+export type CardVariant = 'default' | 'inverse';
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
 export type CardSize = 'snap' | 'default' | 'display';
@@ -1044,18 +1045,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const isExternalInverse = useIsInverseVariant();
         const externalVariant = isExternalInverse ? 'inverse' : 'default';
 
-        const variant =
-            variantProp ||
-            (backgroundColorProp
-                ? externalVariant
-                : type === 'cover' && hasCustomBackground
-                  ? 'inverse'
-                  : externalVariant);
+        const variant: Variant =
+            variantProp || (type === 'cover' && hasCustomBackground ? 'media' : 'default');
 
-        const isInverseStyle = variant ? variant === 'inverse' || variant === 'media' : isExternalInverse;
-        const overlayStyle = isInverseStyle
-            ? styles.touchableCardOverlayInverse
-            : styles.touchableCardOverlay;
+        const overlayStyle =
+            variant === 'inverse' ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
 
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
@@ -1084,13 +1078,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             hasBackgroundImage || hasBackgroundVideo
                 ? 'transparent'
                 : backgroundColorProp ||
-                  (variant === 'alternative'
-                      ? skinVars.colors.backgroundAlternative
-                      : variant === 'media'
-                        ? isExternalInverse
-                            ? skinVars.colors.backgroundContainerBrandOverInverse
-                            : skinVars.colors.backgroundBrand
-                        : undefined);
+                  (variant === 'media'
+                      ? isExternalInverse
+                          ? skinVars.colors.backgroundContainerBrandOverInverse
+                          : skinVars.colors.backgroundBrand
+                      : undefined);
 
         // @TODO REMOVE THIS
         console.log({

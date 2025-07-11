@@ -19,11 +19,11 @@ import beachImg from './images/beach.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
-import type {Variant} from '../theme-variant-context';
 import type {
     CardAspectRatio,
     CardSize,
     CardType,
+    CardVariant,
     MediaAspectRatio,
     MediaPosition,
     SlotAlignment,
@@ -49,8 +49,8 @@ type InternalCardArgs = {
     mediaAspectRatio: string;
     mediaWidth: string;
     circledImage: boolean;
-    variant: Variant | '';
-    variantOutside: Variant;
+    variant: CardVariant | '';
+    variantOutside: 'default' | 'inverse' | 'alternative';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
     headline: string;
@@ -73,7 +73,7 @@ type InternalCardArgs = {
     buttonSecondary: boolean;
     buttonLink: boolean;
     footerBackgroundColor: string;
-    footerVariant: Variant | '';
+    footerVariant: CardVariant | '';
 };
 
 export const Default: StoryComponent<InternalCardArgs> = ({

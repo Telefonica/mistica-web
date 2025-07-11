@@ -16,6 +16,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                     testid: 'NakedCard',
                     ...dataAttributes,
                 }}
+                variant="default"
                 type="naked"
                 size={size}
                 slot={slot || extra}

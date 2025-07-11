@@ -9,11 +9,11 @@ import type {
     CardActionButtonSecondary,
     CardAspectRatio,
     CardSize,
+    CardVariant,
     DeprecatedMediaProp,
     MaybeTouchableCard,
     TopActionsArray,
 } from './card-internal';
-import type {Variant} from './theme-variant-context';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
 
 /**
@@ -37,7 +37,7 @@ export type MediaCardProps = {
     videoSrc?: VideoSource;
     /** @deprecated use imageSrc */
     poster?: string;
-    variant?: Variant;
+    variant?: CardVariant;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -65,7 +65,7 @@ export type MediaCardProps = {
     onClose?: () => unknown;
     closeButtonLabel?: string;
     footerBackgroundColor?: string;
-    footerVariant?: Variant;
+    footerVariant?: CardVariant;
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     children?: undefined;
@@ -79,6 +79,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
         return (
             <InternalCard
                 type="media"
+                variant="default"
                 size={size}
                 dataAttributes={{
                     'component-name': 'MediaCard',
