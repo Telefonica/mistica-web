@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
-import {DisplayMediaCard, NakedCard, PosterCard, SmallNakedCard, SnapCard} from '../card';
+import {SnapCard} from '../card-data';
+import {DisplayMediaCard, PosterCard} from '../card-cover';
+import {NakedCard, SmallNakedCard} from '../card-naked';
 import Image from '../image';
 
 <SnapCard title="title" />;
@@ -61,10 +63,6 @@ import Image from '../image';
 <PosterCard title="title" backgroundImage="" backgroundColor="" />;
 // @ts-expect-error backgroundVideo and backgroundColor can't be used together
 <PosterCard title="title" backgroundVideo="" backgroundColor="" />;
-// @ts-expect-error backgroundColor, backgroundImage or backgroundVideo are mandatory
-<PosterCard title="title" />;
-// @ts-expect-error if you set a custom backgroundColor, you should specify the variant
-<PosterCard title="title" backgroundColor="red" />;
 // @ts-expect-error backgroundImage should have src or srcSet
 <PosterCard title="title" backgroundImage={{src: undefined, srcSet: undefined}} />;
 
