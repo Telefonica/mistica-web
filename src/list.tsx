@@ -663,7 +663,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         >
             <div aria-hidden={hasCustomAriaLabel}>{renderContent({role})}</div>
             {hasCustomAriaLabel && (
-                <ScreenReaderOnly>
+                <ScreenReaderOnly className={styles.screenReaderOnly}>
                     <span>{props['aria-label']}</span>
                 </ScreenReaderOnly>
             )}

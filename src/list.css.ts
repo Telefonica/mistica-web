@@ -63,6 +63,7 @@ export const rowContent = style([
         padding: 0,
         display: 'block',
         height: '100%',
+        position: 'relative',
     }),
     {
         selectors: {
@@ -77,6 +78,13 @@ export const rowContent = style([
         },
     },
 ]);
+
+// Position the ScreenReaderOnly text in a natural place inside the row, this makes VoiceOver "focus" appear in a good position
+export const screenReaderOnly = style({
+    position: 'absolute',
+    top: 16,
+    left: 16,
+});
 
 export const rowContentPadding = sprinkles({
     paddingX: 16,
