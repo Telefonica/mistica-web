@@ -4,7 +4,9 @@ import {InternalCard} from './card-internal';
 import type {MediaCardProps} from './card-media';
 import type {MaybeTouchableCard} from './card-internal';
 
-export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
+type NakedCardProps = Omit<MediaCardProps, 'footerBackgroundColor'>;
+
+export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<NakedCardProps>>(
     (
         {size = 'default', slot, extra, topActions, actions, button, buttonPrimary, dataAttributes, ...rest},
         ref
@@ -29,7 +31,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
     }
 );
 
-type SmallNakedCardProps = Omit<MediaCardProps, 'size'>;
+type SmallNakedCardProps = Omit<NakedCardProps, 'size'>;
 
 /**
  * @deprecated use <NakedCard size="snap" /> instead

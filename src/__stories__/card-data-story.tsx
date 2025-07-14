@@ -26,6 +26,7 @@ export default {
 type DataCardArgs = CommonCardArgs & {
     slotAlignment: SlotAlignment | '';
     backgroundColor: string;
+    footerBackgroundColor: string;
 };
 
 export const Default: StoryComponent<DataCardArgs> = ({
@@ -77,6 +78,7 @@ Default.args = {
     ...defaultCommonCardArgs,
     slotAlignment: '',
     backgroundColor: '',
+    footerBackgroundColor: '',
 };
 
 Default.argTypes = {

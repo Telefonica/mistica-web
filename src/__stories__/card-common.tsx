@@ -57,7 +57,6 @@ export type CommonCardArgs = {
     // footer
     showFooter: boolean;
     footerSlot: boolean;
-    footerBackgroundColor: string;
     footerVariant: DefaultOrInverseVariant | '';
 };
 
@@ -199,7 +198,6 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     aspectRatio: 'auto',
     showFooter: true,
     footerSlot: true,
-    footerBackgroundColor: '',
     footerVariant: '',
     slot: true,
 };

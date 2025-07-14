@@ -27,6 +27,7 @@ export default {
 
 type CoverCardArgs = CommonCardArgs & {
     backgroundColor: string;
+    footerBackgroundColor: string;
     imageSrc: string;
     videoSrc: string;
 };
@@ -81,6 +82,7 @@ Default.storyName = 'CoverCard';
 Default.args = {
     ...defaultCommonCardArgs,
     backgroundColor: '',
+    footerBackgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
 };

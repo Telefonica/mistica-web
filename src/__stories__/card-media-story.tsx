@@ -36,6 +36,7 @@ export default {
 type MediaCardArgs = CommonCardArgs & {
     slotAlignment: SlotAlignment | '';
     backgroundColor: string;
+    footerBackgroundColor: string;
     imageSrc: string;
     videoSrc: string;
     mediaPosition: MediaPosition;
@@ -100,6 +101,7 @@ Default.args = {
     ...defaultCommonCardArgs,
     slotAlignment: '',
     backgroundColor: '',
+    footerBackgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
     mediaPosition: 'top',

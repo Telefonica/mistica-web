@@ -35,7 +35,6 @@ export default {
 
 type NakedCardArgs = CommonCardArgs & {
     slotAlignment: SlotAlignment | '';
-    backgroundColor: string;
     imageSrc: string;
     videoSrc: string;
     mediaPosition: MediaPosition;
@@ -100,7 +99,6 @@ Default.storyName = 'NakedCard';
 Default.args = {
     ...defaultCommonCardArgs,
     slotAlignment: '',
-    backgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
     mediaPosition: 'top',
