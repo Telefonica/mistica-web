@@ -1,52 +1,38 @@
 import * as React from 'react';
-import {ButtonLink, ButtonPrimary, ButtonSecondary, MediaCard, Placeholder} from '..';
+import {ButtonLink, ButtonPrimary, ButtonSecondary, CoverCard, Placeholder} from '..';
 import {
     commonArgTypes,
-    dataArgTypes,
     defaultCommonCardArgs,
     getAsset,
     getTopActions,
     imageAndVideoArgTypes,
     imageNameToUrl,
-    mediaArgTypes,
     normalizeAspectRatio,
     ThemeVariantWrapper,
     videoNameToUrl,
 } from './card-common';
 
-import type {
-    CardAspectRatio,
-    DefaultOrInverseVariant,
-    MediaAspectRatio,
-    MediaPosition,
-    SlotAlignment,
-} from '../card-internal';
+import type {CardAspectRatio, DefaultOrInverseVariant} from '../card-internal';
 import type {CommonCardArgs} from './card-common';
 
 export default {
-    title: 'Components/Cards/MediaCard',
+    title: 'Components/Cards/CoverCard',
     parameters: {
         fullScreen: true,
     },
 };
 
-type MediaCardArgs = CommonCardArgs & {
-    slotAlignment: SlotAlignment | '';
+type CoverCardArgs = CommonCardArgs & {
     backgroundColor: string;
     imageSrc: string;
     videoSrc: string;
-    mediaPosition: MediaPosition;
-    mediaAspectRatio?: MediaAspectRatio | string;
-    mediaWidth: string;
 };
 
-export const Default: StoryComponent<MediaCardArgs> = ({
+export const Default: StoryComponent<CoverCardArgs> = ({
     asset,
     variant,
     variantOutside,
     aspectRatio,
-    mediaAspectRatio,
-    mediaWidth,
     onClose,
     onPress,
     topActions,
@@ -57,7 +43,6 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     imageSrc,
     videoSrc,
     slot,
-    slotAlignment,
     footerSlot,
     titleAs,
     pretitleAs,
@@ -65,21 +50,18 @@ export const Default: StoryComponent<MediaCardArgs> = ({
 }) => {
     return (
         <ThemeVariantWrapper variant={variantOutside}>
-            <MediaCard
+            <CoverCard
                 titleAs={titleAs || undefined}
                 pretitleAs={pretitleAs || undefined}
                 asset={getAsset(asset)}
                 variant={(variant as DefaultOrInverseVariant) || undefined}
                 footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
-                mediaAspectRatio={(normalizeAspectRatio(mediaAspectRatio) as MediaAspectRatio) || undefined}
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
                 slot={slot ? <Placeholder height={50} /> : undefined}
-                slotAlignment={slotAlignment || undefined}
                 footerSlot={slot ? <Placeholder height={50} /> : undefined}
-                mediaWidth={mediaWidth || undefined}
                 buttonPrimary={
                     buttonPrimary ? (
                         <ButtonPrimary small onPress={() => {}}>
@@ -109,23 +91,16 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     );
 };
 
-Default.storyName = 'MediaCard';
+Default.storyName = 'CoverCard';
 
 Default.args = {
     ...defaultCommonCardArgs,
-    slotAlignment: '',
     backgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
-    mediaPosition: 'top',
-    mediaAspectRatio: '16 9',
-    mediaWidth: '150px',
-    // circledImage: false,
 };
 
 Default.argTypes = {
     ...commonArgTypes,
-    ...dataArgTypes,
     ...imageAndVideoArgTypes,
-    ...mediaArgTypes,
 };

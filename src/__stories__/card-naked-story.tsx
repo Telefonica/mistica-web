@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonLink, ButtonPrimary, ButtonSecondary, MediaCard, Placeholder} from '..';
+import {ButtonLink, ButtonPrimary, ButtonSecondary, NakedCard, Placeholder} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
@@ -24,13 +24,13 @@ import type {
 import type {CommonCardArgs} from './card-common';
 
 export default {
-    title: 'Components/Cards/MediaCard',
+    title: 'Components/Cards/NakedCard',
     parameters: {
         fullScreen: true,
     },
 };
 
-type MediaCardArgs = CommonCardArgs & {
+type NakedCardArgs = CommonCardArgs & {
     slotAlignment: SlotAlignment | '';
     backgroundColor: string;
     imageSrc: string;
@@ -38,9 +38,10 @@ type MediaCardArgs = CommonCardArgs & {
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
     mediaWidth: string;
+    circledImage: boolean;
 };
 
-export const Default: StoryComponent<MediaCardArgs> = ({
+export const Default: StoryComponent<NakedCardArgs> = ({
     asset,
     variant,
     variantOutside,
@@ -65,7 +66,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
 }) => {
     return (
         <ThemeVariantWrapper variant={variantOutside}>
-            <MediaCard
+            <NakedCard
                 titleAs={titleAs || undefined}
                 pretitleAs={pretitleAs || undefined}
                 asset={getAsset(asset)}
@@ -73,13 +74,13 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                 mediaAspectRatio={(normalizeAspectRatio(mediaAspectRatio) as MediaAspectRatio) || undefined}
+                mediaWidth={mediaWidth || undefined}
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={slot ? <Placeholder height={50} /> : undefined}
-                mediaWidth={mediaWidth || undefined}
                 buttonPrimary={
                     buttonPrimary ? (
                         <ButtonPrimary small onPress={() => {}}>
@@ -109,7 +110,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     );
 };
 
-Default.storyName = 'MediaCard';
+Default.storyName = 'NakedCard';
 
 Default.args = {
     ...defaultCommonCardArgs,
@@ -120,7 +121,7 @@ Default.args = {
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
-    // circledImage: false,
+    circledImage: false,
 };
 
 Default.argTypes = {

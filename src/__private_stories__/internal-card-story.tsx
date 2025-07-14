@@ -80,10 +80,14 @@ type InternalCardArgs = {
     headline: string;
     pretitle: string;
     pretitleAs: HeadingType;
+    pretitleLinesMax?: number;
     title: string;
     titleAs: HeadingType;
+    titleLinesMax?: number;
     subtitle: string;
+    subtitleLinesMax?: number;
     description: string;
+    descriptionLinesMax?: number;
     ariaLabel: string;
     slot: boolean;
     slotAlignment: SlotAlignment;

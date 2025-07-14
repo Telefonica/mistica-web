@@ -10,6 +10,7 @@ import type {
     CardActionButtonSecondary,
     CardActionButtonPrimary,
     CardAction,
+    CardSize,
 } from './card-internal';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
@@ -22,7 +23,7 @@ type CoverCardProps = {
     'aria-labelledby'?: string;
     'aria-description'?: string;
     'aria-describedby'?: string;
-    size?: 'default' | 'display';
+    size?: CardSize;
     variant?: Variant;
     aspectRatio?: CardAspectRatio;
     width?: number | string;
@@ -75,7 +76,7 @@ type PosterCardBaseProps = {
     /** @deprecated use variant */
     isInverse?: boolean;
     variant?: Variant;
-    size?: 'default' | 'display';
+    size?: CardSize;
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;

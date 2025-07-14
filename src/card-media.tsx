@@ -13,6 +13,7 @@ import type {
     DeprecatedMediaProp,
     MaybeTouchableCard,
     MediaAspectRatio,
+    SlotAlignment,
     TopActionsArray,
 } from './card-internal';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
@@ -55,6 +56,7 @@ export type MediaCardProps = {
     /** @deprecated use slot */
     extra?: React.ReactNode;
     slot?: React.ReactNode;
+    slotAlignment?: SlotAlignment;
     /** @deprecated use topActions */
     actions?: TopActionsArray;
     topActions?: TopActionsArray;

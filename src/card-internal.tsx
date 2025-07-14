@@ -1267,6 +1267,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         footerSlot={footerSlot}
                         buttonPrimary={buttonPrimary}
                         buttonSecondary={buttonSecondary}
+                        buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
                     />
                 )}

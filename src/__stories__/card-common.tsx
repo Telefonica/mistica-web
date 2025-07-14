@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Circle, IconMobileDeviceRegular, IconStarFilled, IconStarRegular, skinVars} from '..';
+import {Circle, IconMobileDeviceRegular, IconStarFilled, IconStarRegular, skinVars, ThemeVariant} from '..';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
@@ -10,12 +10,14 @@ import personPortraitImg from './images/person-portrait.jpg';
 import surfaceInSofaImg from './images/surface-in-sofa.jpg';
 import tennisImg from './images/tennis.jpg';
 
+import type {Variant} from '../theme-variant-context';
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
-import type {CardSize, DefaultOrInverseVariant, SlotAlignment, TopActionsArray} from '../card-internal';
+import type {CardSize, DefaultOrInverseVariant, TopActionsArray} from '../card-internal';
 
 export type CommonCardArgs = {
     size: CardSize;
+    variant: Variant | '';
     aspectRatio: number | string;
     variantOutside: 'default' | 'inverse' | 'alternative';
     asset: 'icon' | 'image' | 'none';
@@ -24,14 +26,13 @@ export type CommonCardArgs = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
-    pretitleAs: HeadingType;
+    pretitleAs: HeadingType | '';
     title: string;
-    titleAs: HeadingType;
+    titleAs: HeadingType | '';
     subtitle: string;
     description: string;
     ariaLabel: string;
     slot: boolean;
-    slotAlignment: SlotAlignment;
 
     // topActions
     onClose: boolean;
@@ -83,6 +84,33 @@ export const getTopActions = (topActions: boolean): TopActionsArray | undefined 
         : undefined;
 };
 
+export const ThemeVariantWrapper = ({
+    children,
+    variant,
+}: {
+    children: React.ReactNode;
+    variant?: Variant;
+}): JSX.Element => {
+    return (
+        <ThemeVariant variant={variant}>
+            <div
+                data-testid="container"
+                style={{
+                    padding: 16,
+                    backgroundColor:
+                        variant === 'inverse'
+                            ? skinVars.colors.backgroundBrand
+                            : variant === 'alternative'
+                              ? skinVars.colors.backgroundAlternative
+                              : undefined,
+                }}
+            >
+                {children}
+            </div>
+        </ThemeVariant>
+    );
+};
+
 export const normalizeAspectRatio = (aspectRatio?: string | number): string | number | undefined => {
     if (!aspectRatio) {
         return undefined;
@@ -90,15 +118,15 @@ export const normalizeAspectRatio = (aspectRatio?: string | number): string | nu
     if (Number.isFinite(+aspectRatio)) {
         return +aspectRatio;
     }
-    if (typeof aspectRatio === 'string') {
+    if (typeof aspectRatio === 'string' && aspectRatio.match(/^\d+\s\d+$/)) {
         return aspectRatio.replace(' ', ':');
     }
     return aspectRatio;
 };
 
 export const imageNameToUrl = {
-    '-undefined-': undefined,
-    '-empty string-': '',
+    ['undefined']: undefined,
+    'empty string': '',
     beach: beachImg,
     'apple gadgets': appleGadgetsImg,
     gaming: gamingImg,
@@ -109,21 +137,22 @@ export const imageNameToUrl = {
 };
 
 export const videoNameToUrl = {
-    '-undefined-': undefined,
-    '-empty string-': '',
+    ['undefined']: undefined,
+    'empty string': '',
     beach: beachVideo,
 };
 
 export const defaultCommonCardArgs: CommonCardArgs = {
     size: 'default',
+    variant: '',
     variantOutside: 'default',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
-    pretitleAs: 'span',
+    pretitleAs: '',
     title: 'Title',
-    titleAs: 'h3',
+    titleAs: '',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
     ariaLabel: '',
@@ -133,21 +162,144 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     buttonPrimary: true,
     buttonSecondary: false,
     buttonLink: true,
-    slot: true,
-    slotAlignment: 'content',
-    aspectRatio: '9 11',
+    aspectRatio: 'auto',
     showFooter: true,
     footerSlot: true,
     footerBackgroundColor: '',
     footerVariant: '',
+    slot: true,
 };
 
 export const commonArgTypes = {
+    size: {
+        options: ['default', 'snap', 'display'],
+        control: {
+            type: 'select',
+        },
+    },
     asset: {
         options: ['undefined', 'icon', 'image'],
         control: {
             type: 'select',
             labels: {'': 'undefined'},
+        },
+    },
+    variant: {
+        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+                media: 'media',
+            },
+        },
+    },
+    variantOutside: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {
+            type: 'select',
+            labels: {
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+            },
+        },
+    },
+    pretitleAs: {
+        options: ['', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {
+            type: 'select',
+            labels: {'': 'undefined'},
+        },
+    },
+    titleAs: {
+        options: ['', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {
+            type: 'select',
+            labels: {'': 'undefined'},
+        },
+    },
+    headlineType: {
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'info'],
+        control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
+    },
+    footerVariant: {
+        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+                alternative: 'alternative',
+                media: 'media',
+            },
+        },
+    },
+};
+
+export const imageAndVideoArgTypes = {
+    imageSrc: {
+        options: Object.keys(imageNameToUrl),
+        control: {type: 'select'},
+    },
+    videoSrc: {
+        options: Object.keys(videoNameToUrl),
+        control: {type: 'select'},
+    },
+};
+
+export const mediaArgTypes = {
+    mediaPosition: {
+        options: ['top', 'left', 'right'],
+        control: {type: 'select'},
+    },
+    mediaAspectRatio: {
+        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
+    },
+};
+
+export const dataArgTypes = {
+    slotAlignment: {
+        options: ['', 'content', 'bottom'],
+        control: {
+            type: 'select',
+            labels: {'': 'undefined'},
+        },
+    },
+    variant: {
+        options: ['', 'default', 'inverse'],
+        control: {
+            type: 'select',
+            labels: {
+                '': 'undefined',
+                default: 'default',
+                inverse: 'inverse',
+            },
         },
     },
 };
