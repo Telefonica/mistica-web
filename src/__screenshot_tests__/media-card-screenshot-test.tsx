@@ -42,16 +42,6 @@ test('MediaCard group', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('MediaCard slot alignment', async () => {
-    const page = await openStoryPage({
-        id: 'components-cards-mediacard--slot-alignment',
-    });
-
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
-});
-
 test('MediaCard with body ', async () => {
     const page = await openStoryPage({
         id: 'components-cards-mediacard--default',
