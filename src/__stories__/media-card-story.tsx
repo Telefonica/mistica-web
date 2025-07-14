@@ -14,6 +14,7 @@ import {
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    Inline,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -239,3 +240,44 @@ export const Group: StoryComponent = () => {
 };
 
 Group.storyName = 'MediaCard group';
+
+export const SlotAlignment: StoryComponent = () => {
+    return (
+        <Inline space={16}>
+            <MediaCard
+                title="Title"
+                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                extra={<Placeholder height={200} />}
+                buttonLink={
+                    <ButtonLink small href="https://google.com">
+                        Link
+                    </ButtonLink>
+                }
+            />
+            <MediaCard
+                title="Content"
+                slotAlignment="content"
+                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                extra={<Placeholder height={100} />}
+                buttonLink={
+                    <ButtonLink small href="https://google.com">
+                        Link
+                    </ButtonLink>
+                }
+            />
+            <MediaCard
+                title="Bottom"
+                slotAlignment="bottom"
+                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                extra={<Placeholder height={100} />}
+                buttonLink={
+                    <ButtonLink small href="https://google.com">
+                        Link
+                    </ButtonLink>
+                }
+            />
+        </Inline>
+    );
+};
+
+SlotAlignment.storyName = 'MediaCard slot alignment';

@@ -56,6 +56,8 @@ export const useInnerText = (): {text: string; ref: (instance: HTMLElement | nul
     return {text, ref};
 };
 
+type SlotAlignment = 'content' | 'bottom';
+
 type BaseIconButtonAction = {
     Icon: (props: IconProps) => JSX.Element;
     label: string;
@@ -405,6 +407,7 @@ type CardContentProps = {
     extraRef?: (instance: HTMLElement | null) => void;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
+    slotAlignment?: SlotAlignment;
 };
 
 const CardContent = ({
@@ -424,12 +427,13 @@ const CardContent = ({
     extraRef,
     button,
     buttonLink,
+    slotAlignment,
 }: CardContentProps) => {
     const {textPresets} = useTheme();
     return (
         <div className={styles.cardContentContainer}>
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
-            <div className={styles.flexColumn}>
+            <div className={styles.flexColumn} style={slotAlignment ? {height: '100%'} : undefined}>
                 {isBiggerHeading(titleAs, pretitleAs) ? (
                     <>
                         {title && (
@@ -538,8 +542,18 @@ const CardContent = ({
                     </div>
                 )}
                 {extra && (
-                    <div ref={extraRef} data-testid="slot">
+                    <div
+                        ref={extraRef}
+                        style={
+                            slotAlignment
+                                ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                : undefined
+                        }
+                        data-testid="slot"
+                    >
+                        {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                         {extra}
+                        {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                     </div>
                 )}
             </div>
@@ -601,6 +615,7 @@ interface MediaCardBaseProps {
     'aria-describedby'?: string;
     onClose?: () => void;
     closeButtonLabel?: string;
+    slotAlignment?: SlotAlignment;
 }
 
 type MediaCardProps = MediaCardBaseProps &
@@ -639,6 +654,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             'aria-describedby': ariaDescribedByProp,
             onClose,
             closeButtonLabel,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -701,6 +717,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     extraRef={extraRef}
                                     button={button}
                                     buttonLink={buttonLink}
+                                    slotAlignment={slotAlignment}
                                 />
                             </div>
                             {asset && (
