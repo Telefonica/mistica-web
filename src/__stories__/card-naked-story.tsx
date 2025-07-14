@@ -1,10 +1,13 @@
 import * as React from 'react';
-import {ButtonLink, ButtonPrimary, ButtonSecondary, NakedCard, Placeholder} from '..';
+import {NakedCard, Placeholder} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
     defaultCommonCardArgs,
     getAsset,
+    getButtonLink,
+    getButtonPrimary,
+    getButtonSecondary,
     getTopActions,
     imageAndVideoArgTypes,
     imageNameToUrl,
@@ -81,27 +84,9 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={slot ? <Placeholder height={50} /> : undefined}
-                buttonPrimary={
-                    buttonPrimary ? (
-                        <ButtonPrimary small onPress={() => {}}>
-                            Button Primary
-                        </ButtonPrimary>
-                    ) : undefined
-                }
-                buttonSecondary={
-                    buttonSecondary ? (
-                        <ButtonSecondary small onPress={() => {}}>
-                            Button Secondary
-                        </ButtonSecondary>
-                    ) : undefined
-                }
-                buttonLink={
-                    buttonLink ? (
-                        <ButtonLink small onPress={() => {}} withChevron>
-                            Button Link
-                        </ButtonLink>
-                    ) : undefined
-                }
+                buttonPrimary={getButtonPrimary(buttonPrimary)}
+                buttonSecondary={getButtonSecondary(buttonSecondary)}
+                buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
                 {...args}

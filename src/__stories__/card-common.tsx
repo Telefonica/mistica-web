@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {Circle, IconMobileDeviceRegular, IconStarFilled, IconStarRegular, skinVars, ThemeVariant} from '..';
+import {
+    ButtonLink,
+    ButtonPrimary,
+    ButtonSecondary,
+    Circle,
+    IconMobileDeviceRegular,
+    IconStarFilled,
+    IconStarRegular,
+    skinVars,
+    ThemeVariant,
+} from '..';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
@@ -82,6 +92,30 @@ export const getTopActions = (topActions: boolean): TopActionsArray | undefined 
               },
           ]
         : undefined;
+};
+
+export const getButtonPrimary = (buttonPrimary: boolean): JSX.Element | undefined => {
+    return buttonPrimary ? (
+        <ButtonPrimary small onPress={() => {}}>
+            Button Primary
+        </ButtonPrimary>
+    ) : undefined;
+};
+
+export const getButtonSecondary = (buttonSecondary: boolean): JSX.Element | undefined => {
+    return buttonSecondary ? (
+        <ButtonSecondary small onPress={() => {}}>
+            Button Secondary
+        </ButtonSecondary>
+    ) : undefined;
+};
+
+export const getButtonLink = (buttonLink: boolean): JSX.Element | undefined => {
+    return buttonLink ? (
+        <ButtonLink small onPress={() => {}} withChevron>
+            Button Link
+        </ButtonLink>
+    ) : undefined;
 };
 
 export const ThemeVariantWrapper = ({

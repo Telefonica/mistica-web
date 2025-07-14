@@ -1,10 +1,13 @@
 import * as React from 'react';
-import {ButtonLink, ButtonPrimary, ButtonSecondary, MediaCard, Placeholder} from '..';
+import {MediaCard, Placeholder} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
     defaultCommonCardArgs,
     getAsset,
+    getButtonLink,
+    getButtonPrimary,
+    getButtonSecondary,
     getTopActions,
     imageAndVideoArgTypes,
     imageNameToUrl,
@@ -80,27 +83,9 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={slot ? <Placeholder height={50} /> : undefined}
                 mediaWidth={mediaWidth || undefined}
-                buttonPrimary={
-                    buttonPrimary ? (
-                        <ButtonPrimary small onPress={() => {}}>
-                            Button Primary
-                        </ButtonPrimary>
-                    ) : undefined
-                }
-                buttonSecondary={
-                    buttonSecondary ? (
-                        <ButtonSecondary small onPress={() => {}}>
-                            Button Secondary
-                        </ButtonSecondary>
-                    ) : undefined
-                }
-                buttonLink={
-                    buttonLink ? (
-                        <ButtonLink small onPress={() => {}} withChevron>
-                            Button Link
-                        </ButtonLink>
-                    ) : undefined
-                }
+                buttonPrimary={getButtonPrimary(buttonPrimary)}
+                buttonSecondary={getButtonSecondary(buttonSecondary)}
+                buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
                 {...args}
@@ -120,7 +105,6 @@ Default.args = {
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
-    // circledImage: false,
 };
 
 Default.argTypes = {
