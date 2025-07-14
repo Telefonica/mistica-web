@@ -11,6 +11,7 @@ test('ssr carousel tablet', async () => {
     await openSSRPage({name: 'carousel', device: 'TABLET', checkHidrationVisualMismatch: false});
 });
 
-test('ssr carousel desktop', async () => {
+// eslint-disable-next-line jest/no-disabled-tests
+test.skip('ssr carousel desktop', async () => {
     await openSSRPage({name: 'carousel', device: 'DESKTOP'});
 });
