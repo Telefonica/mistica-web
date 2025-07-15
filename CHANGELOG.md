@@ -1,3 +1,18 @@
+# [16.33.0](https://github.com/Telefonica/mistica-web/compare/v16.32.0...v16.33.0) (2025-07-10)
+
+
+### Bug Fixes
+
+* **Spinner:** improve aria-live a11y ([#1395](https://github.com/Telefonica/mistica-web/issues/1395)) ([04ff3b0](https://github.com/Telefonica/mistica-web/commit/04ff3b01158c1dd62a0ed70dcc06444f5991cfb6))
+* **Text:** use tokens in Text ([#1401](https://github.com/Telefonica/mistica-web/issues/1401)) ([43cfdfa](https://github.com/Telefonica/mistica-web/commit/43cfdfaaf81c63aff224fc72d7342177568c6e13))
+
+
+### Features
+
+* **Media Queries:** increase large desktop breakpoint ([#1377](https://github.com/Telefonica/mistica-web/issues/1377)) ([6fcc0e5](https://github.com/Telefonica/mistica-web/commit/6fcc0e589f93e004a3694f67b06faa6cfef3b5ec))
+* **mistica-css:** support for inverse cards, fixes in switch and padding components. ([#1403](https://github.com/Telefonica/mistica-web/issues/1403)) ([3d6f2bc](https://github.com/Telefonica/mistica-web/commit/3d6f2bca4e5bb726788b7502a7a76d2ab9ca1322))
+* **SkipLink:** new component ([#1406](https://github.com/Telefonica/mistica-web/issues/1406)) ([2518790](https://github.com/Telefonica/mistica-web/commit/2518790e244a545dee6481b466280a7090447431))
+
 # [16.32.0](https://github.com/Telefonica/mistica-web/compare/v16.31.0...v16.32.0) (2025-06-27)
 
 

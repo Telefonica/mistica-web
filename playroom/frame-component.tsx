@@ -17,6 +17,8 @@ import {
     TU_SKIN,
     MOVISTAR_SKIN,
     ESIMFLAG_SKIN,
+    VIVO_SKIN,
+    BLAU_SKIN,
 } from '../src';
 
 import type {ThemeConfig} from '../src';
@@ -39,8 +41,30 @@ const ThemeOverriderContextProvider = ({children}: ThemeOverriderContextProvider
 
 export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverriderContext);
 
+/**
+ * The language cannot be fully determined from the skin name because
+ * some skins are used in multiple countries.
+ *
+ * This is a best effort.
+ * The only OB that has shown interest in having their own lang is Vivo,
+ */
+const skinToLang: Record<string, string> = {
+    [VIVO_NEW_SKIN]: 'pt-BR',
+    [VIVO_SKIN]: 'pt-BR',
+    [BLAU_SKIN]: 'de-DE',
+    [TELEFONICA_SKIN]: 'es-ES',
+    [MOVISTAR_SKIN]: 'es-ES',
+};
+
 const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
     const {isModalOpen} = useModalState();
+    const lang = skinToLang[skinName] || 'en';
+
+    React.useEffect(() => {
+        // set lang attribute in html tag
+        document.documentElement.lang = lang;
+    }, [lang]);
+
     const styles = `
         body {background: ${skinVars.colors.background}}
 
@@ -54,7 +78,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 ? 'body {font-family: "On Air"}'
                 : ''
         }
-        
+
 
         *[class^='_1fu0koy1'] {
             display: none;
@@ -62,10 +86,10 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
     `;
 
     return (
-        <div lang="en" aria-hidden={isModalOpen}>
+        <main lang={lang} aria-hidden={isModalOpen}>
             <style>{styles}</style>
             {children}
-        </div>
+        </main>
     );
 };
 
