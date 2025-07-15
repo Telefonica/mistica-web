@@ -56,6 +56,8 @@ export const useInnerText = (): {text: string; ref: (instance: HTMLElement | nul
     return {text, ref};
 };
 
+type SlotAlignment = 'content' | 'bottom';
+
 type BaseIconButtonAction = {
     Icon: (props: IconProps) => JSX.Element;
     label: string;
@@ -405,6 +407,7 @@ type CardContentProps = {
     extraRef?: (instance: HTMLElement | null) => void;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
+    slotAlignment?: SlotAlignment;
 };
 
 const CardContent = ({
@@ -424,12 +427,13 @@ const CardContent = ({
     extraRef,
     button,
     buttonLink,
+    slotAlignment,
 }: CardContentProps) => {
     const {textPresets} = useTheme();
     return (
         <div className={styles.cardContentContainer}>
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
-            <div className={styles.flexColumn}>
+            <div className={styles.flexColumn} style={slotAlignment ? {height: '100%'} : undefined}>
                 {isBiggerHeading(titleAs, pretitleAs) ? (
                     <>
                         {title && (
@@ -538,8 +542,18 @@ const CardContent = ({
                     </div>
                 )}
                 {extra && (
-                    <div ref={extraRef} data-testid="slot">
+                    <div
+                        ref={extraRef}
+                        style={
+                            slotAlignment
+                                ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                : undefined
+                        }
+                        data-testid="slot"
+                    >
+                        {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                         {extra}
+                        {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                     </div>
                 )}
             </div>
@@ -601,6 +615,7 @@ interface MediaCardBaseProps {
     'aria-describedby'?: string;
     onClose?: () => void;
     closeButtonLabel?: string;
+    slotAlignment?: SlotAlignment;
 }
 
 type MediaCardProps = MediaCardBaseProps &
@@ -639,6 +654,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             'aria-describedby': ariaDescribedByProp,
             onClose,
             closeButtonLabel,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -701,6 +717,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     extraRef={extraRef}
                                     button={button}
                                     buttonLink={buttonLink}
+                                    slotAlignment={slotAlignment}
                                 />
                             </div>
                             {asset && (
@@ -765,6 +782,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
             'aria-describedby': ariaDescribedByProp,
             onClose,
             closeButtonLabel,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -833,6 +851,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
                                 extraRef={extraRef}
                                 button={button}
                                 buttonLink={buttonLink}
+                                slotAlignment={slotAlignment}
                             />
                         </div>
                         {asset && (
@@ -870,6 +889,7 @@ type SmallNakedCardProps = MaybeTouchableCard<{
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
+    slotAlignment?: SlotAlignment;
     'aria-label'?: string;
     'aria-labelledby'?: string;
     'aria-description'?: string;
@@ -893,6 +913,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
             'aria-labelledby': ariaLabeledByProp,
             'aria-description': ariaDescriptionProp,
             'aria-describedby': ariaDescribedByProp,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -944,7 +965,10 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                 {media}
                             </div>
                         )}
-                        <div className={styles.nakedCardContent} style={{paddingTop: media ? 16 : 0}}>
+                        <div
+                            className={styles.nakedCardContent}
+                            style={{paddingTop: media ? 16 : 0, height: slotAlignment ? '100%' : undefined}}
+                        >
                             <div>
                                 <Stack space={4}>
                                     {title && (
@@ -985,8 +1009,18 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                 </Stack>
                             </div>
                             {extra && (
-                                <div ref={extraRef} data-testid="slot">
+                                <div
+                                    ref={extraRef}
+                                    data-testid="slot"
+                                    style={
+                                        slotAlignment
+                                            ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                            : undefined
+                                    }
+                                >
+                                    {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                                     {extra}
+                                    {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                                 </div>
                             )}
                         </div>
@@ -1025,6 +1059,7 @@ interface DataCardBaseProps {
     'aria-describedby'?: string;
     onClose?: () => void;
     closeButtonLabel?: string;
+    slotAlignment?: SlotAlignment;
 }
 
 type DataCardProps = DataCardBaseProps &
@@ -1063,6 +1098,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             onClose,
             closeButtonLabel,
             aspectRatio,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -1107,7 +1143,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                 >
                     <Boxed className={styles.boxed} width="100%" height="100%">
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
-                        <div className={styles.dataCard} aria-hidden={isTouchable}>
+                        <div
+                            className={styles.dataCard}
+                            aria-hidden={isTouchable}
+                            style={slotAlignment ? {height: '100%'} : undefined}
+                        >
                             <Inline space={0}>
                                 <Stack space={16}>
                                     {asset && (
@@ -1148,9 +1188,21 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                             </Inline>
 
                             {extra && (
-                                <div ref={extraRef} data-testid="slot">
-                                    {extra}
-                                </div>
+                                <>
+                                    <div
+                                        ref={extraRef}
+                                        data-testid="slot"
+                                        style={
+                                            slotAlignment
+                                                ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                                : undefined
+                                        }
+                                    >
+                                        {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
+                                        {extra}
+                                        {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
+                                    </div>
+                                </>
                             )}
 
                             {(button || buttonLink) && (
@@ -1190,6 +1242,7 @@ type SnapCardProps = MaybeTouchableCard<{
     extra?: React.ReactNode;
     isInverse?: boolean;
     aspectRatio?: AspectRatio | number;
+    slotAlignment?: SlotAlignment;
     children?: void;
 }>;
 
@@ -1212,6 +1265,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             extra,
             isInverse = false,
             aspectRatio,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -1254,7 +1308,11 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         height="100%"
                     >
                         {isTouchable && <div className={overlayStyle} />}
-                        <section className={styles.snapCard} aria-hidden={isTouchable}>
+                        <section
+                            className={styles.snapCard}
+                            aria-hidden={isTouchable}
+                            style={slotAlignment ? {height: '100%'} : undefined}
+                        >
                             <div>
                                 {asset && (
                                     <div
@@ -1306,8 +1364,18 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 </Stack>
                             </div>
                             {extra && (
-                                <div ref={extraRef} data-testid="slot">
+                                <div
+                                    ref={extraRef}
+                                    data-testid="slot"
+                                    style={
+                                        slotAlignment
+                                            ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                            : undefined
+                                    }
+                                >
+                                    {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                                     {extra}
+                                    {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                                 </div>
                             )}
                         </section>
