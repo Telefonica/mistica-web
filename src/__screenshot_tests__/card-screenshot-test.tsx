@@ -1,4 +1,3 @@
-import {circle} from '../skeletons.css';
 import {openStoryPage, screen} from '../test-utils';
 
 const STORY_IDS: Record<any, string> = {
