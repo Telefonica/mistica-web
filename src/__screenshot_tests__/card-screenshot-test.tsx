@@ -1,3 +1,4 @@
+import {circle} from '../skeletons.css';
 import {openStoryPage, screen} from '../test-utils';
 
 const STORY_IDS: Record<any, string> = {
@@ -108,6 +109,34 @@ test.each`
             footerSlot: true,
             mediaPosition,
             description,
+        },
+    });
+
+    const card = await screen.findByTestId(TEST_IDS[type]);
+    const image = await card.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.only.each`
+    type       | mediaPosition | mediaWidth | description
+    ${'naked'} | ${'top'}      | ${'150px'} | ${'Naked card with circledImage and media on the top'}
+    ${'naked'} | ${'left'}     | ${'150px'} | ${'Naked card with circledImage and media on the left'}
+    ${'naked'} | ${'right'}    | ${'150px'} | ${'Naked card with circledImage and media on the right'}
+`('Card anatomy - $description', async ({type, mediaPosition, mediaWidth, description}) => {
+    await openStoryPage({
+        id: STORY_IDS[type],
+        device: 'MOBILE_IOS',
+        args: {
+            ...argsReset,
+            imageSrc: 'beach',
+            topActions: false,
+            onClose: true,
+            showFooter: true,
+            footerSlot: true,
+            mediaPosition,
+            mediaWidth,
+            description,
+            circledImage: true,
         },
     });
 

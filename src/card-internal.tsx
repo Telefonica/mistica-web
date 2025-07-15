@@ -27,6 +27,7 @@ import {combineRefs} from './utils/common';
 import {isRunningAcceptanceTest} from './utils/platform';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
+import {isBiggerHeading} from './utils/headings';
 
 import type {
     DataAttributes,
@@ -321,7 +322,14 @@ const BackgroundImageOrVideo = ({
                 {video ? (
                     video
                 ) : (
-                    <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} alt={imageAlt} />
+                    <Image
+                        dataAttributes={{testid: 'image'}}
+                        width="100%"
+                        height="100%"
+                        src={src || ''}
+                        srcSet={srcSet}
+                        alt={imageAlt}
+                    />
                 )}
             </div>
         </ThemeVariant>
@@ -580,7 +588,7 @@ export const TopActions = ({
 
     return (
         <ThemeVariant variant={variant}>
-            <div className={styles.topActionsContainer} style={containerStyles}>
+            <div className={styles.topActionsContainer} style={containerStyles} data-testid="topActions">
                 {actions.map((action, index) => {
                     if ('Icon' in action || 'checkedProps' in action) {
                         return <CardActionIconButton key={index} {...action} />;
@@ -631,7 +639,7 @@ const Media = ({
     const mediaElement = video ? (
         video
     ) : imageSrc !== undefined || imageSrcSet !== undefined ? (
-        <Image src={imageSrc || ''} srcSet={imageSrcSet} {...imageProps} />
+        <Image src={imageSrc || ''} srcSet={imageSrcSet} {...imageProps} dataAttributes={{testid: 'image'}} />
     ) : null;
 
     if (!mediaElement) {
@@ -751,9 +759,11 @@ type PrivateTextContentProps = {
     size: CardSize;
     variant?: Variant;
     withTextShadow?: boolean;
+    headlineRef?: (element: HTMLHeadingElement | null) => void;
 };
 
 const TextContent = ({
+    headlineRef,
     size,
     variant,
     headline,
@@ -900,7 +910,11 @@ const TextContent = ({
     return (
         <div>
             {headline && (
-                <div style={{paddingBottom: size === 'display' ? 16 : 8}} data-testid="headline">
+                <div
+                    style={{paddingBottom: size === 'display' ? 16 : 8}}
+                    data-testid="headline"
+                    ref={headlineRef}
+                >
                     {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
                 </div>
             )}
@@ -986,6 +1000,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             titleAs = 'h3',
             titleLinesMax,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -1008,12 +1023,17 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             topActions,
             onClose,
             closeButtonLabel,
+            'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
         // @TODO: A11Y
-        const {/* text: slotText, */ ref: slotRef} = useInnerText();
+        const {text: slotText, ref: slotRef} = useInnerText();
+        const {text: headlineText, ref: headlineRef} = useInnerText();
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
 
@@ -1089,8 +1109,23 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         ? skinVars.colors.backgroundAlternative
                         : undefined);
 
+        const ariaLabel =
+            ariaLabelProp ||
+            (ariaLabeledByProp
+                ? undefined
+                : (isBiggerHeading(titleAs, pretitleAs)
+                      ? [title, headlineText, pretitle, subtitle, description, slotText]
+                      : [pretitle, headlineText, title, subtitle, description, slotText]
+                  )
+                      .filter(Boolean)
+                      .join(' '));
+
         return (
             <Container
+                aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
                 type={type}
                 size={size}
                 dataAttributes={dataAttributes}
@@ -1113,6 +1148,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
                 <BaseTouchable
                     maybe
+                    aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                     className={classnames(styles.touchable, styles.touchableContainer)}
                     {...touchableProps}
                     style={{
@@ -1158,6 +1197,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         />
                     )}
                     <div
+                        aria-hidden={isTouchable}
                         data-testid="body"
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]:
@@ -1207,10 +1247,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             <div className={styles.contentContainer}>
                                 <div className={styles.textContent}>
                                     <TextContent
+                                        headlineRef={headlineRef}
                                         variant={variant}
                                         size={size}
                                         headline={headline}
                                         pretitle={pretitle}
+                                        pretitleAs={pretitleAs}
                                         pretitleLinesMax={pretitleLinesMax}
                                         title={title}
                                         titleAs={titleAs}

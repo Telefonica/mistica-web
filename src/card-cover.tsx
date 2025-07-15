@@ -62,7 +62,6 @@ type CoverCardProps = {
 
 export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(
     ({size = 'default', dataAttributes, ...rest}, ref) => {
-        console.log(rest);
         return (
             <InternalCard
                 ref={ref}
