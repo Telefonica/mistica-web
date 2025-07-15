@@ -117,7 +117,7 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test.only.each`
+test.each`
     type       | mediaPosition | mediaWidth | description
     ${'naked'} | ${'top'}      | ${'150px'} | ${'Naked card with circledImage and media on the top'}
     ${'naked'} | ${'left'}     | ${'150px'} | ${'Naked card with circledImage and media on the left'}
