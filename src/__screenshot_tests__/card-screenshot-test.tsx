@@ -243,7 +243,26 @@ test.each`
             variant,
             variantOutside,
             description,
+            showFooter: true,
+            footerSlot: true,
             imageSrc: 'empty string',
+        },
+    });
+
+    const card = await screen.findByTestId('card-container');
+    const image = await card.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Card cover footer with image background', async () => {
+    await openStoryPage({
+        id: STORY_IDS.cover,
+        device: 'MOBILE_IOS',
+        args: {
+            ...argsReset,
+            showFooter: true,
+            footerSlot: false,
+            imageSrc: 'person portrait',
         },
     });
 
