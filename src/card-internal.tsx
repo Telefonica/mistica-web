@@ -555,7 +555,7 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 };
 
 type PrivateTopActionsProps = {
-    variant: Variant;
+    variant?: Variant;
     containerStyles?: React.CSSProperties;
 };
 
