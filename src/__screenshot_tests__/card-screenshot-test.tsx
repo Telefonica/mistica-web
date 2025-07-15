@@ -52,21 +52,21 @@ test.each`
 });
 
 test.each`
-    type       | size         | variant        | asset          | topActions | mediaPosition | aspectRatio | description
-    ${'data'}  | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Data card with display size'}
-    ${'data'}  | ${'default'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Data card with default size'}
-    ${'data'}  | ${'default'} | ${'inverse'}   | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Data card with default size and inverse variant - see topActions'}
-    ${'data'}  | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Data card with snap size'}
-    ${'cover'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Cover card with display size'}
-    ${'cover'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${false}   | ${'top'}      | ${'9 10'}   | ${'Cover card with display size - without topActions'}
-    ${'cover'} | ${'display'} | ${'undefined'} | ${'undefined'} | ${false}   | ${'top'}      | ${'9 10'}   | ${'Cover card with display size - without topActions or asset'}
-    ${'cover'} | ${'default'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Cover card with default size'}
-    ${'cover'} | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Cover card with snap size'}
-    ${'media'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Media card with display size'}
-    ${'media'} | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'9 10'}   | ${'Media card with snap size'}
+    type       | size         | variant        | asset          | topActions | mediaPosition | description
+    ${'data'}  | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with display size'}
+    ${'data'}  | ${'default'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with default size'}
+    ${'data'}  | ${'default'} | ${'inverse'}   | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with default size and inverse variant - see topActions'}
+    ${'data'}  | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with snap size'}
+    ${'cover'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Cover card with display size'}
+    ${'cover'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${false}   | ${'top'}      | ${'Cover card with display size - without topActions'}
+    ${'cover'} | ${'display'} | ${'undefined'} | ${'undefined'} | ${false}   | ${'top'}      | ${'Cover card with display size - without topActions or asset'}
+    ${'cover'} | ${'default'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Cover card with default size'}
+    ${'cover'} | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Cover card with snap size'}
+    ${'media'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Media card with display size'}
+    ${'media'} | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Media card with snap size'}
 `(
     'Card anatomy - $description',
-    async ({type, size, variant, asset, topActions, mediaPosition, aspectRatio, description}) => {
+    async ({type, size, variant, asset, topActions, mediaPosition, description}) => {
         await openStoryPage({
             id: STORY_IDS[type],
             device: 'MOBILE_IOS',
@@ -77,7 +77,6 @@ test.each`
                 asset,
                 topActions,
                 mediaPosition,
-                aspectRatio,
                 onClose: false,
                 description,
             },
