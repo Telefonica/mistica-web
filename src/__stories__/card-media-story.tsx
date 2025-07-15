@@ -17,13 +17,8 @@ import {
     videoNameToUrl,
 } from './card-common';
 
-import type {
-    CardAspectRatio,
-    DefaultOrInverseVariant,
-    MediaAspectRatio,
-    MediaPosition,
-    SlotAlignment,
-} from '../card-internal';
+import type {Variant} from '../theme-variant-context';
+import type {CardAspectRatio, MediaAspectRatio, MediaPosition, SlotAlignment} from '../card-internal';
 import type {CommonCardArgs} from './card-common';
 
 export default {
@@ -46,6 +41,8 @@ type MediaCardArgs = CommonCardArgs & {
 
 export const Default: StoryComponent<MediaCardArgs> = ({
     asset,
+    width,
+    height,
     variant,
     variantOutside,
     aspectRatio,
@@ -70,10 +67,12 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     return (
         <ThemeVariantWrapper variant={variantOutside}>
             <MediaCard
+                width={width ? (Number.isFinite(+width) ? +width : width) : undefined}
+                height={height ? (Number.isFinite(+height) ? +height : height) : undefined}
                 titleAs={titleAs || undefined}
                 pretitleAs={pretitleAs || undefined}
                 asset={getAsset(asset)}
-                variant={(variant as DefaultOrInverseVariant) || undefined}
+                variant={(variant as Variant) || undefined}
                 footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                 mediaAspectRatio={(normalizeAspectRatio(mediaAspectRatio) as MediaAspectRatio) || undefined}

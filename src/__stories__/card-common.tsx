@@ -23,24 +23,34 @@ import tennisImg from './images/tennis.jpg';
 import type {Variant} from '../theme-variant-context';
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
-import type {CardSize, DefaultOrInverseVariant, TopActionsArray} from '../card-internal';
+import type {CardSize, TopActionsArray} from '../card-internal';
 
+/**
+ * These are arguments for props that all cards have in common.
+ */
 export type CommonCardArgs = {
+    // container
     size: CardSize;
     variant: Variant | '';
     aspectRatio: number | string;
     variantOutside: 'default' | 'inverse' | 'alternative';
-    asset: 'icon' | 'image' | 'none';
+    width?: number | string;
+    height?: number | string;
 
     // content
+    asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
     headline: string;
     pretitle: string;
     pretitleAs: HeadingType | '';
+    pretitleLinesMax?: number;
     title: string;
     titleAs: HeadingType | '';
+    titleLinesMax?: number;
     subtitle: string;
+    subtitleLinesMax?: number;
     description: string;
+    descriptionLinesMax?: number;
     ariaLabel: string;
     slot: boolean;
 
@@ -57,7 +67,7 @@ export type CommonCardArgs = {
     // footer
     showFooter: boolean;
     footerSlot: boolean;
-    footerVariant: DefaultOrInverseVariant | '';
+    footerVariant: Variant | '';
 };
 
 export const getAsset = (asset: CommonCardArgs['asset']): JSX.Element | undefined => {
@@ -127,7 +137,7 @@ export const ThemeVariantWrapper = ({
     return (
         <ThemeVariant variant={variant}>
             <div
-                data-testid="container"
+                data-testid="card-container"
                 style={{
                     padding: 16,
                     backgroundColor:
@@ -179,15 +189,21 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     size: 'default',
     variant: '',
     variantOutside: 'default',
+    width: '',
+    height: '',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
     pretitleAs: '',
+    pretitleLinesMax: 0,
     title: 'Title',
     titleAs: '',
+    titleLinesMax: 0,
     subtitle: 'Subtitle',
+    subtitleLinesMax: 0,
     description: 'This is a description for the card',
+    descriptionLinesMax: 0,
     ariaLabel: '',
     onClose: true,
     onPress: true,
@@ -321,17 +337,6 @@ export const dataArgTypes = {
         control: {
             type: 'select',
             labels: {'': 'undefined'},
-        },
-    },
-    variant: {
-        options: ['', 'default', 'inverse'],
-        control: {
-            type: 'select',
-            labels: {
-                '': 'undefined',
-                default: 'default',
-                inverse: 'inverse',
-            },
         },
     },
 };

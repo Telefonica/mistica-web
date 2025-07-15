@@ -23,13 +23,13 @@ import personPortraitImg from '../__stories__/images/person-portrait.jpg';
 import surfaceInSofaImg from '../__stories__/images/surface-in-sofa.jpg';
 import tennisImg from '../__stories__/images/tennis.jpg';
 
+import type {Variant} from '../theme-variant-context';
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 import type {
     CardAspectRatio,
     CardSize,
     CardType,
-    DefaultOrInverseVariant,
     MediaAspectRatio,
     MediaPosition,
     SlotAlignment,
@@ -73,7 +73,7 @@ type InternalCardArgs = {
     mediaAspectRatio: string;
     mediaWidth: string;
     circledImage: boolean;
-    variant: DefaultOrInverseVariant | '';
+    variant: Variant | '';
     variantOutside: 'default' | 'inverse' | 'alternative';
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
@@ -101,7 +101,7 @@ type InternalCardArgs = {
     buttonSecondary: boolean;
     buttonLink: boolean;
     footerBackgroundColor: string;
-    footerVariant: DefaultOrInverseVariant | '';
+    footerVariant: Variant | '';
 };
 
 export const Default: StoryComponent<InternalCardArgs> = ({

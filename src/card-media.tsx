@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {InternalCard} from './card-internal';
 
+import type {Variant} from './theme-variant-context';
 import type Tag from './tag';
 import type {VideoSource} from './video';
 import type {
@@ -9,7 +10,6 @@ import type {
     CardActionButtonSecondary,
     CardAspectRatio,
     CardSize,
-    DefaultOrInverseVariant,
     DeprecatedMediaProp,
     MaybeTouchableCard,
     MediaAspectRatio,
@@ -33,6 +33,7 @@ export type MediaCardProps = {
     mediaWidth?: number | string;
     mediaAspectRatio?: MediaAspectRatio;
     width?: number | string;
+    height?: number | string;
     aspectRatio?: CardAspectRatio;
     imageAlt?: string;
     imageSrc?: string;
@@ -40,7 +41,7 @@ export type MediaCardProps = {
     videoSrc?: VideoSource;
     /** @deprecated use imageSrc */
     poster?: string;
-    variant?: DefaultOrInverseVariant;
+    variant?: Variant;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -70,7 +71,7 @@ export type MediaCardProps = {
     closeButtonLabel?: string;
     showFooter?: boolean;
     footerBackgroundColor?: string;
-    footerVariant?: DefaultOrInverseVariant;
+    footerVariant?: Variant;
     footerSlot?: React.ReactNode;
 
     children?: undefined;

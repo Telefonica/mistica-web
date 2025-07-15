@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {InternalCard} from './card-internal';
 
+import type {Variant} from './theme-variant-context';
 import type {
     CardSize,
     SlotAlignment,
@@ -10,7 +11,6 @@ import type {
     CardActionButtonLink,
     CardActionButtonPrimary,
     CardActionButtonSecondary,
-    DefaultOrInverseVariant,
 } from './card-internal';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
@@ -22,8 +22,10 @@ type DataCardProps = {
     'aria-description'?: string; // W3C Editor's Draft for ARIA 1.3
     'aria-describedby'?: React.AriaAttributes['aria-describedby'];
     size?: CardSize;
+    width?: number | string;
+    height?: number | string;
     background?: string;
-    variant?: DefaultOrInverseVariant;
+    variant?: Variant;
     /** @deprecated use variant */
     isInverse?: boolean;
     asset?: React.ReactElement;
@@ -57,7 +59,7 @@ type DataCardProps = {
     topActions?: TopActionsArray;
     showFooter?: boolean;
     footerBackgroundColor?: string;
-    footerVariant?: DefaultOrInverseVariant;
+    footerVariant?: Variant;
     footerSlot?: React.ReactNode;
     children?: undefined;
 };

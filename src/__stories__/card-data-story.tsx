@@ -13,7 +13,8 @@ import {
     ThemeVariantWrapper,
 } from './card-common';
 
-import type {CardAspectRatio, DefaultOrInverseVariant, SlotAlignment} from '../card-internal';
+import type {Variant} from '../theme-variant-context';
+import type {CardAspectRatio, SlotAlignment} from '../card-internal';
 import type {CommonCardArgs} from './card-common';
 
 export default {
@@ -31,6 +32,8 @@ type DataCardArgs = CommonCardArgs & {
 
 export const Default: StoryComponent<DataCardArgs> = ({
     asset,
+    width,
+    height,
     variant,
     variantOutside,
     aspectRatio,
@@ -51,10 +54,12 @@ export const Default: StoryComponent<DataCardArgs> = ({
     return (
         <ThemeVariantWrapper variant={variantOutside}>
             <DataCard
+                width={width ? (Number.isFinite(+width) ? +width : width) : undefined}
+                height={height ? (Number.isFinite(+height) ? +height : height) : undefined}
                 titleAs={titleAs || undefined}
                 pretitleAs={pretitleAs || undefined}
                 asset={getAsset(asset)}
-                variant={(variant as DefaultOrInverseVariant) || undefined}
+                variant={(variant as Variant) || undefined}
                 footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                 topActions={getTopActions(topActions)}

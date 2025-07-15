@@ -47,7 +47,6 @@ const dbg = (value: any) => (DEBUG ? value : undefined);
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
-export type DefaultOrInverseVariant = 'default' | 'inverse';
 
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
 export type CardSize = 'snap' | 'default' | 'display';
@@ -1050,7 +1049,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const externalVariant = isExternalInverse ? 'inverse' : 'default';
         const backgroundVariant = variantProp || externalVariant;
         const variant: Variant =
-            variantProp || (type === 'cover' && hasCustomBackground ? 'media' : 'default');
+            variantProp || (type === 'cover' && hasCustomBackground ? 'inverse' : 'default');
 
         const overlayStyle =
             variant === 'inverse' ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
@@ -1170,7 +1169,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         )}
                         {isAssetConfigA && (
                             <Filler
-                                minHeight={type === 'cover' && topActionsLengthInContent && !asset ? 48 : 0}
+                                minHeight={
+                                    type === 'cover' && topActionsLengthInContent && !asset ? 48 + 8 : 0
+                                }
                             />
                         )}
                         <div

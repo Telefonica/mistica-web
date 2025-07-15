@@ -15,7 +15,8 @@ import {
     videoNameToUrl,
 } from './card-common';
 
-import type {CardAspectRatio, DefaultOrInverseVariant} from '../card-internal';
+import type {Variant} from '../theme-variant-context';
+import type {CardAspectRatio} from '../card-internal';
 import type {CommonCardArgs} from './card-common';
 
 export default {
@@ -33,6 +34,8 @@ type CoverCardArgs = CommonCardArgs & {
 };
 
 export const Default: StoryComponent<CoverCardArgs> = ({
+    width,
+    height,
     asset,
     variant,
     variantOutside,
@@ -55,10 +58,12 @@ export const Default: StoryComponent<CoverCardArgs> = ({
     return (
         <ThemeVariantWrapper variant={variantOutside}>
             <CoverCard
+                width={width ? (Number.isFinite(+width) ? +width : width) : undefined}
+                height={height ? (Number.isFinite(+height) ? +height : height) : undefined}
                 titleAs={titleAs || undefined}
                 pretitleAs={pretitleAs || undefined}
                 asset={getAsset(asset)}
-                variant={(variant as DefaultOrInverseVariant) || undefined}
+                variant={(variant as Variant) || undefined}
                 footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                 topActions={getTopActions(topActions)}
