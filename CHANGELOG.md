@@ -1,3 +1,11 @@
+# [16.34.0](https://github.com/Telefonica/mistica-web/compare/v16.33.0...v16.34.0) (2025-07-16)
+
+
+### Features
+
+* **Card:** slot alignment ([#1410](https://github.com/Telefonica/mistica-web/issues/1410)) ([684e9af](https://github.com/Telefonica/mistica-web/commit/684e9afa3b2ad83b44eb9b392d837a5aa2c6a316))
+* **NavigationBar:** wide mode ([#1407](https://github.com/Telefonica/mistica-web/issues/1407)) ([5e45395](https://github.com/Telefonica/mistica-web/commit/5e453953f7a5dc5c57f8669a6396f452a65a338d))
+
 # [16.33.0](https://github.com/Telefonica/mistica-web/compare/v16.32.0...v16.33.0) (2025-07-10)
 
 
