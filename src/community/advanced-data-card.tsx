@@ -13,17 +13,17 @@ import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
-import {CardActionsGroup, useInnerText} from '../card';
-import {useTheme} from '../hooks';
+import {useInnerText, useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
 import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
+import {TopActions} from '../card-internal';
 
+import type {CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
-import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
@@ -422,7 +422,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </Touchable>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <CardActionsGroup actions={actions} onClose={onClose} />
+                <TopActions topActions={actions} onClose={onClose} />
             </section>
         );
     }
