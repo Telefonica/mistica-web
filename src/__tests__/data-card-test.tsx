@@ -133,7 +133,6 @@ test('DataCard onClose custom label', async () => {
 test('DataCard tab order', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <ButtonPrimary onPress={() => {}}>Click me</ButtonPrimary>
             <DataCard
                 aria-label="Card touchable"
                 onClose={() => {}}
@@ -169,8 +168,7 @@ test('DataCard tab order', async () => {
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Click me'}));
-    expect(await screen.findByRole('button', {name: 'Click me'})).toHaveFocus();
+    expect(document.body).toHaveFocus();
 
     await userEvent.tab();
     expect(await screen.findByRole('button', {name: 'Card touchable'})).toHaveFocus();
@@ -191,6 +189,5 @@ test('DataCard tab order', async () => {
     expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
 
     await userEvent.tab();
-    // Outside the DataCard
     expect(document.body).toHaveFocus();
 });

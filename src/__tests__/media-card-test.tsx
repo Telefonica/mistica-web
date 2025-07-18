@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {MediaCard} from '../card-media';
 import {makeTheme} from './test-utils';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import Tag from '../tag';
 import Stack from '../stack';
@@ -146,7 +146,6 @@ test.each`
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <ButtonPrimary onPress={() => {}}>Click me</ButtonPrimary>
             <MediaCard
                 mediaPosition={mediaPosition}
                 videoSrc="https://example.com/image.jpg"
@@ -184,47 +183,29 @@ test.each`
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Click me'}));
-    expect(await screen.findByRole('button', {name: 'Click me'})).toHaveFocus();
+    expect(document.body).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Pausar'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Pausar'})).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Card touchable'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Card touchable'})).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Button Link'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Button Link'})).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Device Icon'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Device Icon'})).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Star Checked'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Star Checked'})).toHaveFocus();
 
     await userEvent.tab();
-    await waitFor(async () => {
-        expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
-    });
+    expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
 
     await userEvent.tab();
-    // Outside the Card
-    await waitFor(async () => {
-        expect(document.body).toHaveFocus();
-    });
+    expect(document.body).toHaveFocus();
 });

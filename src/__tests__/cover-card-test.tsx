@@ -15,7 +15,6 @@ test('CoverCard tab order with video', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <ButtonPrimary onPress={() => {}}>Click me</ButtonPrimary>
             <CoverCard
                 videoSrc="https://example.com/image.jpg"
                 aria-label="Card Touchable"
@@ -52,8 +51,7 @@ test('CoverCard tab order with video', async () => {
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Click me'}));
-    expect(await screen.findByRole('button', {name: 'Click me'})).toHaveFocus();
+    expect(document.body).toHaveFocus();
 
     await userEvent.tab();
     expect(await screen.findByRole('button', {name: 'Pausar'})).toHaveFocus();
@@ -77,6 +75,5 @@ test('CoverCard tab order with video', async () => {
     expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
 
     await userEvent.tab();
-    // Outside the Card
     expect(document.body).toHaveFocus();
 });

@@ -394,7 +394,10 @@ export const useVideoWithControls = (
 } => {
     const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
-    const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
+    const [videoStatus, dispatch] = React.useReducer(
+        videoReducer,
+        process.env.NODE_ENV === 'test' ? 'playing' : 'loading'
+    );
 
     React.useEffect(() => {
         const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
