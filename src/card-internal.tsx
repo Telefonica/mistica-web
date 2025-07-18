@@ -1077,7 +1077,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
 
         const showButtonsInBody = !shouldShowFooter && hasButtons;
-        const topActionsLength = (topActions?.length || 0) + (onClose ? 1 : 0);
+
+        const topActionsLengthWithoutVideo = (topActions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsLength = videoAction
+            ? topActionsLengthWithoutVideo + 1
+            : topActionsLengthWithoutVideo;
 
         const hasAssetInContent = asset && !(hasMedia && mediaPosition === 'left');
         const shouldAddContentSpacingForTopActions =
@@ -1151,7 +1155,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                             ? `calc(${mediaWidth}px - 48px)`
                                             : `calc(${mediaWidth} - 48px)`
                                         : 'auto',
-                                right: mediaPosition !== 'left' ? topActionsLength * 48 + 16 : 'auto',
+                                right:
+                                    mediaPosition !== 'left'
+                                        ? topActionsLengthWithoutVideo * 48 + 16
+                                        : 'auto',
                             }}
                         />
                     </div>
@@ -1219,7 +1226,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             <Asset size={size} asset={asset} type={type} />
                         )}
                         {isAssetConfigA && (
-                            <Filler minHeight={type === 'cover' && topActionsLength && !asset ? 48 + 8 : 0} />
+                            <Filler
+                                minHeight={type === 'cover' && topActionsLength > 0 && !asset ? 48 + 8 : 0}
+                            />
                         )}
                         <div
                             className={classnames(
@@ -1277,7 +1286,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                             flexShrink: 0,
                                             flexGrow: 0,
                                             width:
-                                                topActionsLength * 48 -
+                                                topActionsLengthWithoutVideo * 48 -
                                                 // required space depends on the card padding
                                                 (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
                                                 //
