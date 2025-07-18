@@ -555,24 +555,21 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 };
 
 type PrivateTopActionsProps = {
+    testid?: string;
     variant?: Variant;
     containerStyles?: React.CSSProperties;
 };
 
 export const TopActions = ({
+    testid = 'topActions',
     onClose,
     closeButtonLabel,
     topActions,
-    videoAction,
     variant,
     containerStyles = {},
 }: TopActionsProps & PrivateTopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const actions = topActions ? [...topActions] : [];
-
-    if (videoAction) {
-        actions.unshift(videoAction);
-    }
 
     if (onClose) {
         actions.push({
@@ -588,7 +585,7 @@ export const TopActions = ({
 
     return (
         <ThemeVariant variant={variant}>
-            <div className={styles.topActionsContainer} style={containerStyles} data-testid="topActions">
+            <div className={styles.topActionsContainer} style={containerStyles} data-testid={testid}>
                 {actions.map((action, index) => {
                     if ('Icon' in action || 'checkedProps' in action) {
                         return <CardActionIconButton key={index} {...action} />;
@@ -1079,20 +1076,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const shouldShowFooter =
             (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
 
-        const showVideoActionInContentContainer =
-            (hasMedia || hasBackgroundImageOrVideo) && !!videoAction && mediaPosition !== 'left';
-        const showVideoActionInMediaContainer = hasMedia && !!videoAction && mediaPosition === 'left';
-        const videoActionInMediaContainerLeftPosition = Number.isFinite(mediaWidth)
-            ? `calc(${mediaWidth}px - 48px)`
-            : `calc(${mediaWidth} - 48px)`;
-
-        const showActionsInBody = !shouldShowFooter && hasButtons;
-        const topActionsLengthInContent =
-            (topActions?.length || 0) + (onClose ? 1 : 0) + (showVideoActionInContentContainer ? 1 : 0);
+        const showButtonsInBody = !shouldShowFooter && hasButtons;
+        const topActionsLength = (topActions?.length || 0) + (onClose ? 1 : 0);
 
         const hasAssetInContent = asset && !(hasMedia && mediaPosition === 'left');
         const shouldAddContentSpacingForTopActions =
-            type !== 'cover' && topActionsLengthInContent > 0 && !hasAssetInContent && !headline;
+            type !== 'cover' && topActionsLength > 0 && !hasAssetInContent && !headline;
 
         // See asset spacing config in spec
         const isAssetConfigA = type === 'cover' || (type === 'data' && size === 'display');
@@ -1144,6 +1133,28 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         imageAlt={imageAlt}
                         backgroundVariant={backgroundVariant}
                     />
+                )}
+
+                {videoAction && (
+                    // The video action is placed first in the card reading order, so it is placed outside the other topActions container
+                    <div data-testid="videoAction">
+                        <TopActions
+                            testid="videoAction"
+                            variant="media"
+                            topActions={[videoAction]}
+                            containerStyles={{
+                                position: 'absolute',
+                                top: 16,
+                                left:
+                                    mediaPosition === 'left'
+                                        ? typeof mediaWidth === 'number'
+                                            ? `calc(${mediaWidth}px - 48px)`
+                                            : `calc(${mediaWidth} - 48px)`
+                                        : 'auto',
+                                right: mediaPosition !== 'left' ? topActionsLength * 48 + 16 : 'auto',
+                            }}
+                        />
+                    </div>
                 )}
 
                 <BaseTouchable
@@ -1208,11 +1219,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             <Asset size={size} asset={asset} type={type} />
                         )}
                         {isAssetConfigA && (
-                            <Filler
-                                minHeight={
-                                    type === 'cover' && topActionsLengthInContent && !asset ? 48 + 8 : 0
-                                }
-                            />
+                            <Filler minHeight={type === 'cover' && topActionsLength && !asset ? 48 + 8 : 0} />
                         )}
                         <div
                             className={classnames(
@@ -1270,7 +1277,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                             flexShrink: 0,
                                             flexGrow: 0,
                                             width:
-                                                topActionsLengthInContent * 48 -
+                                                topActionsLength * 48 -
                                                 // required space depends on the card padding
                                                 (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
                                                 //
@@ -1286,10 +1293,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     {slot}
                                 </div>
                             )}
-                            {!isAssetConfigA && slotAlignment === 'content' && showActionsInBody && (
+                            {!isAssetConfigA && slotAlignment === 'content' && showButtonsInBody && (
                                 <Filler />
                             )}
-                            {showActionsInBody && (
+                            {showButtonsInBody && (
                                 <Buttons
                                     size={size}
                                     buttonPrimary={buttonPrimary}
@@ -1318,17 +1325,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     topActions={topActions}
-                    videoAction={showVideoActionInContentContainer ? videoAction : undefined}
                     variant={
                         hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
                             ? 'media'
                             : variant
                     }
-                />
-                <TopActions
-                    videoAction={showVideoActionInMediaContainer ? videoAction : undefined}
-                    variant="media"
-                    containerStyles={{left: videoActionInMediaContainerLeftPosition, right: 'unset'}}
                 />
             </Container>
         );
