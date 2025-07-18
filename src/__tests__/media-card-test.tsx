@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {MediaCard} from '../card-media';
 import {makeTheme} from './test-utils';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import Tag from '../tag';
 import Stack from '../stack';
@@ -188,27 +188,43 @@ test.each`
     expect(await screen.findByRole('button', {name: 'Click me'})).toHaveFocus();
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Pausar'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Pausar'})).toHaveFocus();
+    });
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Card touchable'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Card touchable'})).toHaveFocus();
+    });
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();
+    });
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Button Link'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Button Link'})).toHaveFocus();
+    });
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Device Icon'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Device Icon'})).toHaveFocus();
+    });
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Star Checked'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Star Checked'})).toHaveFocus();
+    });
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
+    await waitFor(async () => {
+        expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
+    });
 
     await userEvent.tab();
     // Outside the Card
-    expect(document.body).toHaveFocus();
+    await waitFor(async () => {
+        expect(document.body).toHaveFocus();
+    });
 });
