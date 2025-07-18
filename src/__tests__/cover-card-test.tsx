@@ -18,7 +18,7 @@ test('CoverCard tab order with video', async () => {
             <ButtonPrimary onPress={() => {}}>Click me</ButtonPrimary>
             <CoverCard
                 videoSrc="https://example.com/image.jpg"
-                aria-label="Datacard touchable"
+                aria-label="Card Touchable"
                 onClose={() => {}}
                 closeButtonLabel="Close label"
                 onPress={() => {}}
@@ -53,12 +53,13 @@ test('CoverCard tab order with video', async () => {
     );
 
     await userEvent.click(screen.getByRole('button', {name: 'Click me'}));
+    expect(await screen.findByRole('button', {name: 'Click me'})).toHaveFocus();
 
     await userEvent.tab();
     expect(await screen.findByRole('button', {name: 'Pausar'})).toHaveFocus();
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Datacard touchable'})).toHaveFocus();
+    expect(await screen.findByRole('button', {name: 'Card Touchable'})).toHaveFocus();
 
     await userEvent.tab();
     expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();

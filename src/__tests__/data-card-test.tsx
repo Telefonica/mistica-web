@@ -135,7 +135,7 @@ test('DataCard tab order', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary onPress={() => {}}>Click me</ButtonPrimary>
             <DataCard
-                aria-label="Datacard touchable"
+                aria-label="Card touchable"
                 onClose={() => {}}
                 closeButtonLabel="Close label"
                 onPress={() => {}}
@@ -170,9 +170,10 @@ test('DataCard tab order', async () => {
     );
 
     await userEvent.click(screen.getByRole('button', {name: 'Click me'}));
+    expect(await screen.findByRole('button', {name: 'Click me'})).toHaveFocus();
 
     await userEvent.tab();
-    expect(await screen.findByRole('button', {name: 'Datacard touchable'})).toHaveFocus();
+    expect(await screen.findByRole('button', {name: 'Card touchable'})).toHaveFocus();
 
     await userEvent.tab();
     expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();
