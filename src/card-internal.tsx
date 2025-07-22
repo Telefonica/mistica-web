@@ -907,73 +907,92 @@ const TextContent = ({
     const textVariant = textVariants[size] || textVariants.default;
     const textShadowStyle = withTextShadow ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
+    const headlineElement = headline && (
+        // tag/headline read order 2. Position 1
+        <div
+            style={{paddingBottom: size === 'display' ? 16 : 8, order: 1}}
+            data-testid="headline"
+            ref={headlineRef}
+        >
+            {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
+        </div>
+    );
+
+    const pretitleElement = pretitle && (
+        // pretitle read order: 3. Position 2
+        <div style={{paddingBottom: 4, order: 2}} data-testid="pretitle">
+            <Text
+                {...commonProps}
+                {...textVariant.pretitle}
+                as={pretitleAs || 'p'}
+                truncate={pretitleLinesMax}
+                color={colors.pretitle}
+                textShadow={textShadowStyle}
+            >
+                {pretitle}
+            </Text>
+        </div>
+    );
+
+    const titleElement = title && (
+        // title read order: 1. Position 3
+        <div style={{paddingBottom: 4, order: 3}} data-testid="title">
+            <Text
+                {...commonProps}
+                {...textVariant.title}
+                as={titleAs}
+                truncate={titleLinesMax}
+                color={colors.title}
+                textShadow={textShadowStyle}
+            >
+                {title}
+            </Text>
+        </div>
+    );
+
+    const subtitleElement = subtitle && (
+        // subtitle read order: 4. Position 4
+        <div style={{paddingBottom: 0, order: 4}} data-testid="subtitle">
+            <Text
+                {...commonProps}
+                {...textVariant.subtitle}
+                as="p"
+                truncate={subtitleLinesMax}
+                color={colors.subtitle}
+                textShadow={textShadowStyle}
+            >
+                {subtitle}
+            </Text>
+        </div>
+    );
+
+    const descriptionElement = description && (
+        // description read order: 5. Position 5
+        <div style={{paddingTop: 4, order: 5}} data-testid="description">
+            <Text
+                {...commonProps}
+                {...textVariant.description}
+                as="p"
+                truncate={descriptionLinesMax}
+                color={colors.description}
+                textShadow={textShadowStyle}
+            >
+                {description}
+            </Text>
+        </div>
+    );
+
+    const [firstTitle, secondTitle] = isBiggerHeading(titleAs, pretitleAs)
+        ? [titleElement, pretitleElement]
+        : [pretitleElement, titleElement];
+
     return (
-        <div>
-            {headline && (
-                <div
-                    style={{paddingBottom: size === 'display' ? 16 : 8}}
-                    data-testid="headline"
-                    ref={headlineRef}
-                >
-                    {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
-                </div>
-            )}
-            {pretitle && (
-                <div style={{paddingBottom: 4}} data-testid="pretitle">
-                    <Text
-                        {...commonProps}
-                        {...textVariant.pretitle}
-                        as={pretitleAs || 'p'}
-                        truncate={pretitleLinesMax}
-                        color={colors.pretitle}
-                        textShadow={textShadowStyle}
-                    >
-                        {pretitle}
-                    </Text>
-                </div>
-            )}
-            {title && (
-                <div style={{paddingBottom: 4}} data-testid="title">
-                    <Text
-                        {...commonProps}
-                        {...textVariant.title}
-                        as={titleAs}
-                        truncate={titleLinesMax}
-                        color={colors.title}
-                        textShadow={textShadowStyle}
-                    >
-                        {title}
-                    </Text>
-                </div>
-            )}
-            {subtitle && (
-                <div style={{paddingBottom: 0}} data-testid="subtitle">
-                    <Text
-                        {...commonProps}
-                        {...textVariant.subtitle}
-                        as="p"
-                        truncate={subtitleLinesMax}
-                        color={colors.subtitle}
-                        textShadow={textShadowStyle}
-                    >
-                        {subtitle}
-                    </Text>
-                </div>
-            )}
-            {description && (
-                <div style={{paddingTop: 4}} data-testid="description">
-                    <Text
-                        {...commonProps}
-                        {...textVariant.description}
-                        as="p"
-                        truncate={descriptionLinesMax}
-                        color={colors.description}
-                        textShadow={textShadowStyle}
-                    >
-                        {description}
-                    </Text>
-                </div>
-            )}
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+            {firstTitle}
+            {headlineElement}
+            {secondTitle}
+            {subtitleElement}
+            {descriptionElement}
         </div>
     );
 };
