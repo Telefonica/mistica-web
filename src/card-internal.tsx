@@ -908,7 +908,7 @@ const TextContent = ({
     const textShadowStyle = withTextShadow ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
     const headlineElement = headline && (
-        // tag/headline read order 2. Position 1
+        // Read order 2. Visual order 1
         <div
             style={{paddingBottom: size === 'display' ? 16 : 8, order: 1}}
             data-testid="headline"
@@ -919,7 +919,7 @@ const TextContent = ({
     );
 
     const pretitleElement = pretitle && (
-        // pretitle read order: 3. Position 2
+        // Read order: 3 or 1. Visual order 2
         <div style={{paddingBottom: 4, order: 2}} data-testid="pretitle">
             <Text
                 {...commonProps}
@@ -935,7 +935,7 @@ const TextContent = ({
     );
 
     const titleElement = title && (
-        // title read order: 1. Position 3
+        // Read order: 1 or 3. Visual order 3
         <div style={{paddingBottom: 4, order: 3}} data-testid="title">
             <Text
                 {...commonProps}
@@ -951,7 +951,7 @@ const TextContent = ({
     );
 
     const subtitleElement = subtitle && (
-        // subtitle read order: 4. Position 4
+        // Read order: 4. Visual order 4
         <div style={{paddingBottom: 0, order: 4}} data-testid="subtitle">
             <Text
                 {...commonProps}
@@ -967,7 +967,7 @@ const TextContent = ({
     );
 
     const descriptionElement = description && (
-        // description read order: 5. Position 5
+        // Read order: 5. Visual order 5
         <div style={{paddingTop: 4, order: 5}} data-testid="description">
             <Text
                 {...commonProps}
@@ -982,15 +982,16 @@ const TextContent = ({
         </div>
     );
 
-    const [firstTitle, secondTitle] = isBiggerHeading(titleAs, pretitleAs)
-        ? [titleElement, pretitleElement]
-        : [pretitleElement, titleElement];
+    const [title1, title2] =
+        title && isBiggerHeading(titleAs, pretitleAs)
+            ? [titleElement, pretitleElement]
+            : [pretitleElement, titleElement];
 
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
-            {firstTitle}
+            {title1}
             {headlineElement}
-            {secondTitle}
+            {title2}
             {subtitleElement}
             {descriptionElement}
         </div>
@@ -1128,7 +1129,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             ariaLabelProp ||
             (ariaLabeledByProp
                 ? undefined
-                : (isBiggerHeading(titleAs, pretitleAs)
+                : (title && isBiggerHeading(titleAs, pretitleAs)
                       ? [title, headlineText, pretitle, subtitle, description, slotText]
                       : [pretitle, headlineText, title, subtitle, description, slotText]
                   )
