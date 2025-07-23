@@ -9,8 +9,8 @@ export const getColors = (skin) => {
     switch (skin) {
         case 'Movistar':
             return {
-                primary: '#019DF4',
-                textPrimary: '#0B2739',
+                primary: '#0066FF',
+                textPrimary: '#000000',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#6B6C6F',
             };
