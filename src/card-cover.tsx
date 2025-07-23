@@ -25,6 +25,7 @@ type CoverCardProps = {
     'aria-describedby'?: string;
     size?: CardSize;
     variant?: Variant;
+    backgroundColor?: string;
     aspectRatio?: CardAspectRatio;
     width?: number | string;
     height?: number | string;

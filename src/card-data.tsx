@@ -24,7 +24,7 @@ type DataCardProps = {
     size?: CardSize;
     width?: number | string;
     height?: number | string;
-    background?: string;
+    backgroundColor?: string;
     variant?: Variant;
     /** @deprecated use variant */
     isInverse?: boolean;

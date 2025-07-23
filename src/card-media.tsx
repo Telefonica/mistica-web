@@ -32,6 +32,7 @@ export type MediaCardProps = {
     mediaPosition?: 'top' | 'left' | 'right';
     mediaWidth?: number | string;
     mediaAspectRatio?: MediaAspectRatio;
+    backgroundColor?: string;
     width?: number | string;
     height?: number | string;
     aspectRatio?: CardAspectRatio;
