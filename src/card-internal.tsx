@@ -1147,7 +1147,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const isAssetConfigA = type === 'cover' || (type === 'data' && size === 'display');
 
         const borderRadius = skinVars.borderRadii.container;
-        const touchableTopBorderRadius = `calc(${borderRadius} - 1px)`;
 
         const backgroundColor =
             hasBackgroundImage || hasBackgroundVideo
@@ -1239,8 +1238,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                   : 'row-reverse',
                         justifyItems: 'stretch',
                         border: dbg('3px solid #f0f'),
-                        borderTopLeftRadius: borderRadius,
-                        borderTopRightRadius: borderRadius,
+                        borderTopLeftRadius: `calc(${borderRadius} - 1px)`,
+                        borderTopRightRadius: `calc(${borderRadius} - 1px)`,
                         overflow: 'hidden',
                         zIndex: 1, // this way the touchable focus ring is above the footer
                     }}
