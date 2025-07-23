@@ -1164,7 +1164,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         return (
             <Container
-                aria-label={isTouchable ? undefined : ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
                 aria-description={isTouchable ? undefined : ariaDescriptionProp}
                 aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
