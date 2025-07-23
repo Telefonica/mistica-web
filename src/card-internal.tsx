@@ -242,6 +242,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                         background={isNaked ? 'transparent' : backgroundColor}
                         borderRadius={isNaked ? 'none' : skinVars.borderRadii.container}
                         border={isNaked ? 'none' : boxedBorderStyleOverride}
+                        overflow="visible"
                     >
                         {children}
                     </InternalBoxed>
@@ -320,7 +321,11 @@ const BackgroundImageOrVideo = ({
         <ThemeVariant variant={backgroundVariant}>
             <div
                 className={styles.backgroundImageOrVideoContainer}
-                style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}
+                style={applyCssVars({
+                    [mediaStyles.vars.mediaBorderRadius]: '0px',
+                    borderRadius: skinVars.borderRadii.container,
+                    overflow: 'hidden',
+                })}
             >
                 {video ? (
                     video
@@ -740,6 +745,8 @@ const Footer = ({
                         (hasBackgroundImageOrVideo ? skinVars.colors.cardFooterOverlay : undefined),
                     position: 'relative',
                     backdropFilter: hasBackgroundImageOrVideo ? 'blur(12px)' : undefined,
+                    borderBottomLeftRadius: isNaked ? 0 : skinVars.borderRadii.container,
+                    borderBottomRightRadius: isNaked ? 0 : skinVars.borderRadii.container,
                 }}
             >
                 <div
@@ -1139,6 +1146,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // See asset spacing config in spec
         const isAssetConfigA = type === 'cover' || (type === 'data' && size === 'display');
 
+        const borderRadius = skinVars.borderRadii.container;
+        const touchableTopBorderRadius = `calc(${borderRadius} - 1px)`;
+
         const backgroundColor =
             hasBackgroundImage || hasBackgroundVideo
                 ? 'transparent'
@@ -1229,6 +1239,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                   : 'row-reverse',
                         justifyItems: 'stretch',
                         border: dbg('3px solid #f0f'),
+                        borderTopLeftRadius: borderRadius,
+                        borderTopRightRadius: borderRadius,
+                        overflow: 'hidden',
+                        zIndex: 1, // this way the touchable focus ring is above the footer
                     }}
                 >
                     {isTouchable && <div className={overlayStyle} />}
@@ -1307,6 +1321,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
                                 paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
                                 paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
+                                borderBottomLeftRadius: shouldShowFooter ? 0 : borderRadius,
+                                borderBottomRightRadius: shouldShowFooter ? 0 : borderRadius,
                             }}
                         >
                             <div className={styles.contentContainer}>
