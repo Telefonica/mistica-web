@@ -52,6 +52,7 @@ export type CommonCardArgs = {
     description: string;
     descriptionLinesMax?: number;
     ariaLabel: string;
+    ariaDescription: string;
     slot: boolean;
 
     // topActions
@@ -67,7 +68,7 @@ export type CommonCardArgs = {
     // footer
     showFooter: boolean;
     footerSlot: boolean;
-    footerVariant: Variant | '';
+    footerVariant: 'default' | 'inverse' | '';
 };
 
 export const getAsset = (asset: CommonCardArgs['asset']): JSX.Element | undefined => {
@@ -204,7 +205,8 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     subtitleLinesMax: 0,
     description: 'This is a description for the card',
     descriptionLinesMax: 0,
-    ariaLabel: '',
+    ariaLabel: 'Aria label',
+    ariaDescription: 'Aria description',
     onClose: true,
     onPress: true,
     topActions: true,
@@ -287,15 +289,13 @@ export const commonArgTypes = {
         },
     },
     footerVariant: {
-        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        options: ['', 'default', 'inverse'],
         control: {
             type: 'select',
             labels: {
                 '': 'undefined',
                 default: 'default',
                 inverse: 'inverse',
-                alternative: 'alternative',
-                media: 'media',
             },
         },
     },

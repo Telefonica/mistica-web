@@ -32,6 +32,7 @@ type NakedCardArgs = CommonCardArgs & {
     slotAlignment: SlotAlignment | '';
     imageSrc: string;
     videoSrc: string;
+    imageAlt: string;
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
     mediaWidth: string;
@@ -59,6 +60,8 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     footerSlot,
     titleAs,
     pretitleAs,
+    ariaLabel,
+    ariaDescription,
     ...args
 }) => {
     return (
@@ -83,6 +86,8 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
+                aria-label={ariaLabel || undefined}
+                aria-description={ariaDescription || undefined}
                 {...args}
             />
         </ThemeVariantWrapper>
@@ -95,6 +100,7 @@ Default.args = {
     ...defaultCommonCardArgs,
     slotAlignment: '',
     imageSrc: 'beach',
+    imageAlt: 'Image Alt Text',
     videoSrc: 'undefined',
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',

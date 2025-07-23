@@ -56,7 +56,7 @@ type CoverCardProps = {
     children?: undefined;
     showFooter?: boolean;
     footerBackgroundColor?: string;
-    footerVariant?: Variant;
+    footerVariant?: 'default' | 'inverse';
     footerSlot?: React.ReactNode;
 };
 

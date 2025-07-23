@@ -33,6 +33,7 @@ type MediaCardArgs = CommonCardArgs & {
     backgroundColor: string;
     footerBackgroundColor: string;
     imageSrc: string;
+    imageAlt: string;
     videoSrc: string;
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
@@ -62,6 +63,8 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     footerSlot,
     titleAs,
     pretitleAs,
+    ariaLabel,
+    ariaDescription,
     ...args
 }) => {
     return (
@@ -88,6 +91,8 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
+                aria-label={ariaLabel || undefined}
+                aria-description={ariaDescription || undefined}
                 {...args}
             />
         </ThemeVariantWrapper>
@@ -102,6 +107,7 @@ Default.args = {
     backgroundColor: '',
     footerBackgroundColor: '',
     imageSrc: 'beach',
+    imageAlt: 'Image Alt Text',
     videoSrc: 'undefined',
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',

@@ -133,7 +133,7 @@ type FooterProps = {
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     footerBackgroundColor?: string;
-    footerVariant?: Variant;
+    footerVariant?: 'default' | 'inverse';
 };
 
 type NoChildrenProps = {
@@ -286,14 +286,18 @@ const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): J
                     styles.containerPaddingTopVariants[size]
                 )}
             >
-                <div data-testid="asset">{asset}</div>
+                <div data-testid="asset" aria-hidden>
+                    {asset}
+                </div>
             </div>
         );
     }
 
     return (
         <div className={classnames({[styles.containerPaddingXVariants[size]]: type !== 'naked'})}>
-            <div data-testid="asset">{asset}</div>
+            <div data-testid="asset" aria-hidden>
+                {asset}
+            </div>
         </div>
     );
 };
@@ -302,7 +306,6 @@ export type BackgroundImageOrVideoProps = {
     video?: React.ReactNode;
     src?: string;
     srcSet?: string;
-    imageAlt?: string;
     backgroundVariant: Variant;
 };
 
@@ -310,7 +313,6 @@ const BackgroundImageOrVideo = ({
     video,
     src,
     srcSet,
-    imageAlt,
     backgroundVariant,
 }: BackgroundImageOrVideoProps): JSX.Element => {
     return (
@@ -328,7 +330,7 @@ const BackgroundImageOrVideo = ({
                         height="100%"
                         src={src || ''}
                         srcSet={srcSet}
-                        alt={imageAlt}
+                        alt=""
                     />
                 )}
             </div>
@@ -606,6 +608,7 @@ type MediaComponentProps = {
     asset?: React.ReactElement;
     imageSrc?: string;
     imageSrcSet?: string;
+    imageAlt?: string;
     video?: React.ReactNode;
     mediaAspectRatio: MediaAspectRatio;
     mediaPosition: MediaPosition;
@@ -620,6 +623,7 @@ const Media = ({
     asset,
     imageSrc,
     imageSrcSet,
+    imageAlt = '',
     video,
     mediaAspectRatio,
     mediaPosition,
@@ -639,7 +643,13 @@ const Media = ({
     const mediaElement = video ? (
         video
     ) : imageSrc !== undefined || imageSrcSet !== undefined ? (
-        <Image src={imageSrc || ''} srcSet={imageSrcSet} {...imageProps} dataAttributes={{testid: 'image'}} />
+        <Image
+            src={imageSrc || ''}
+            srcSet={imageSrcSet}
+            {...imageProps}
+            dataAttributes={{testid: 'image'}}
+            alt={imageAlt}
+        />
     ) : null;
 
     if (!mediaElement) {
@@ -655,28 +665,32 @@ const Media = ({
     if (mediaPosition === 'top') {
         // using AspectRatioContainer because the <video> element flashes with the poster image size while loading
         return (
-            <AspectRatioContainer aspectRatio={aspectRatioAsNumber} style={commonContainerStyles}>
-                {mediaElement}
+            <>
+                <AspectRatioContainer aspectRatio={aspectRatioAsNumber} style={commonContainerStyles}>
+                    {mediaElement}
+                </AspectRatioContainer>
                 <Asset absolute size={size} asset={asset} type={type} />
-            </AspectRatioContainer>
+            </>
         );
     }
 
     // in left/right media position, mediaAspectRatio is ignored
     return (
-        <div
-            style={{
-                ...commonContainerStyles,
-                width: mediaWidth,
-                flexShrink: 0,
-                flexGrow: 0,
-                height: '100%',
-                position: 'relative',
-            }}
-        >
-            {mediaElement}
+        <>
+            <div
+                style={{
+                    ...commonContainerStyles,
+                    width: mediaWidth,
+                    flexShrink: 0,
+                    flexGrow: 0,
+                    height: '100%',
+                    position: 'relative',
+                }}
+            >
+                {mediaElement}
+            </div>
             {mediaPosition !== 'right' && <Asset absolute size={size} asset={asset} type={type} />}
-        </div>
+        </>
     );
 };
 
@@ -685,6 +699,7 @@ type PrivateFooterProps = {
     size: CardSize;
     variant?: Variant;
     hasBackgroundImageOrVideo?: boolean;
+    isInverseOutside: boolean;
 };
 
 const Footer = ({
@@ -698,10 +713,20 @@ const Footer = ({
     hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
+    isInverseOutside,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
     const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
-    const isInverse = variant === 'inverse' || variant === 'media';
+    const isInverseCard = variant === 'inverse' || variant === 'media';
     const isNaked = type === 'naked';
+
+    const backgroundColor =
+        footerBackgroundColor || footerVariant
+            ? footerVariant === 'default'
+                ? skinVars.colors.backgroundContainer
+                : isInverseOutside
+                  ? skinVars.colors.backgroundContainerBrandOverInverse
+                  : skinVars.colors.backgroundContainerBrand
+            : undefined;
 
     return (
         <ThemeVariant variant={footerVariant || variant}>
@@ -709,19 +734,18 @@ const Footer = ({
             <div
                 style={{
                     background:
-                        footerBackgroundColor ||
+                        backgroundColor ||
                         (hasBackgroundImageOrVideo ? skinVars.colors.cardFooterOverlay : undefined),
                     position: 'relative',
                     backdropFilter: hasBackgroundImageOrVideo ? 'blur(12px)' : undefined,
                 }}
             >
                 <div
-                    // The divider is outside the footer because it has a conditional margin
+                    // The divider is outside the footer because it has a conditional right margin
                     style={{
-                        // no divider when footerBackgroundColor is set
-                        borderTop: footerBackgroundColor
+                        borderTop: backgroundColor
                             ? undefined
-                            : `1px solid ${isInverse ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
+                            : `1px solid ${isInverseCard ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
                         marginRight: isNaked ? 16 : 0,
                     }}
                 />
@@ -1085,8 +1109,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
-        const isExternalInverse = useIsInverseVariant();
-        const externalVariant = isExternalInverse ? 'inverse' : 'default';
+        const isInverseOutside = useIsInverseVariant();
+        const externalVariant = isInverseOutside ? 'inverse' : 'default';
         const backgroundVariant = variantProp || externalVariant;
         const variant: Variant =
             variantProp || (type === 'cover' && hasCustomBackground ? 'inverse' : 'default');
@@ -1118,7 +1142,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 ? 'transparent'
                 : backgroundColorProp ||
                   (variant === 'media'
-                      ? isExternalInverse
+                      ? isInverseOutside
                           ? skinVars.colors.backgroundContainerBrandOverInverse
                           : skinVars.colors.backgroundBrand
                       : variant === 'alternative'
@@ -1138,7 +1162,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         return (
             <Container
-                aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-label={isTouchable ? undefined : ariaLabel}
                 aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
                 aria-description={isTouchable ? undefined : ariaDescriptionProp}
                 aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
@@ -1157,7 +1181,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         video={video}
                         src={imageSrc}
                         srcSet={imageSrcSet}
-                        imageAlt={imageAlt}
                         backgroundVariant={backgroundVariant}
                     />
                 )}
@@ -1233,6 +1256,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             video={video}
                             imageSrc={imageSrc}
                             imageSrcSet={imageSrcSet}
+                            imageAlt={imageAlt}
                             mediaWidth={mediaWidth}
                             circledImage={circledImage}
                         />
@@ -1351,6 +1375,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         buttonSecondary={buttonSecondary}
                         buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
+                        isInverseOutside={isInverseOutside}
                     />
                 )}
                 <TopActions

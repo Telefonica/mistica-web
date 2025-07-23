@@ -49,6 +49,8 @@ export const Default: StoryComponent<DataCardArgs> = ({
     footerSlot,
     titleAs,
     pretitleAs,
+    ariaLabel,
+    ariaDescription,
     ...args
 }) => {
     return (
@@ -71,6 +73,8 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
+                aria-label={ariaLabel || undefined}
+                aria-description={ariaDescription || undefined}
                 {...args}
             />
         </ThemeVariantWrapper>
