@@ -1177,7 +1177,7 @@ const tabsSnippets: Array<Snippet> = [
 const cardSnippets: Array<Snippet> = [
     {
         group: 'Cards',
-        name: 'MediaCard mediaPosition="right"',
+        name: 'MediaCard right media position',
         code: `
         <MediaCard
             mediaPosition="right"
@@ -1194,7 +1194,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'MediaCard mediaPosition="left"',
+        name: 'MediaCard left media position',
         code: `
         <MediaCard
             mediaPosition="left"
@@ -1278,7 +1278,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DataCard size="snap"',
+        name: 'DataCard snap size',
         code: `
         <DataCard
             size="snap"
@@ -1294,7 +1294,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DataCard size="display"',
+        name: 'DataCard display size',
         code: `
         <DataCard
           size="display"
@@ -1336,7 +1336,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'CoverCard size="display" with image',
+        name: 'CoverCard display size with image',
         code: `
         <CoverCard
           size="display"
@@ -1374,7 +1374,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'CoverCard size="display" with video',
+        name: 'CoverCard display size with video',
         code: `
         <CoverCard
           size="display"
@@ -1560,7 +1560,7 @@ const cardSnippets: Array<Snippet> = [
 
     {
         group: 'Cards',
-        name: 'NakedCard size="snap"',
+        name: 'NakedCard snap size',
         code: `
         <NakedCard
             size="snap"
