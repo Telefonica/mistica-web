@@ -202,6 +202,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
             : {};
 
         const boxedBorderStyleOverride = backgroundColor ? 'none' : undefined;
+        const isNaked = type === 'naked';
 
         return (
             // aria-description should be vaild, but this eslint rule is complaining about it
@@ -238,9 +239,9 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                         height="100%"
                         variant={variant}
                         className={classnames(styles.boxed)}
-                        background={type === 'naked' ? 'transparent' : backgroundColor}
-                        borderRadius={type === 'naked' ? '0px' : skinVars.borderRadii.container}
-                        border={type === 'naked' ? 'none' : boxedBorderStyleOverride}
+                        background={isNaked ? 'transparent' : backgroundColor}
+                        borderRadius={isNaked ? 'none' : skinVars.borderRadii.container}
+                        border={isNaked ? 'none' : boxedBorderStyleOverride}
                     >
                         {children}
                     </InternalBoxed>

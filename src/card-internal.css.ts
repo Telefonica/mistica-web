@@ -108,7 +108,6 @@ export const boxed = style({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    borderRadius: skinVars.borderRadii.container,
 });
 
 export const touchable = style([
