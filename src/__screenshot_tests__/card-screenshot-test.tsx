@@ -238,23 +238,41 @@ test('Card footer is forced with buttons and onPress', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Card footer divider is removed with custom footer color', async () => {
-    await openStoryPage({
-        id: STORY_IDS.data,
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            size: 'snap',
-            showFooter: true,
-            description: 'Card footer divider is removed with custom footer color',
-            footerBackgroundColor: 'red',
-        },
-    });
+test.each`
+    variantOutside | variant      | footerVariant | footerBackgroundColor | description
+    ${'default'}   | ${'default'} | ${''}         | ${''}                 | ${'Card with default variant'}
+    ${'default'}   | ${'inverse'} | ${''}         | ${''}                 | ${'Card with inverse variant'}
+    ${'default'}   | ${'default'} | ${''}         | ${'red'}              | ${'Card with background color'}
+    ${'default'}   | ${'default'} | ${'inverse'}  | ${''}                 | ${'Card with inverse footer variant and default outside'}
+    ${'inverse'}   | ${'default'} | ${'inverse'}  | ${''}                 | ${'Card with inverse footer variant and inverse outside'}
+`(
+    'Card footer and divider - $description',
+    async ({variantOutside, variant, footerVariant, footerBackgroundColor, description}) => {
+        await openStoryPage({
+            id: STORY_IDS.data,
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                headline: '',
+                pretitle: '',
+                title: 'Footer and divider',
+                variantOutside,
+                variant,
+                footerVariant,
+                footerBackgroundColor,
+                description,
+                topActions: false,
+                onClose: false,
+                slot: false,
+                showFooter: true,
+            },
+        });
 
-    const card = await screen.findByTestId(TEST_IDS.data);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const card = await screen.findByTestId('card-container');
+        const image = await card.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 test.each`
     type       | variantOutside | variant      | description

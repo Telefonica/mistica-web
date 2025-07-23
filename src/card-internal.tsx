@@ -721,13 +721,14 @@ const Footer = ({
     const isNaked = type === 'naked';
 
     const backgroundColor =
-        footerBackgroundColor || footerVariant
+        footerBackgroundColor ||
+        (footerVariant
             ? footerVariant === 'default'
                 ? skinVars.colors.backgroundContainer
                 : isInverseOutside
                   ? skinVars.colors.backgroundContainerBrandOverInverse
                   : skinVars.colors.backgroundContainerBrand
-            : undefined;
+            : undefined);
 
     return (
         <ThemeVariant variant={footerVariant || variant}>
