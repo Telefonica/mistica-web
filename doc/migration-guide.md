@@ -7,7 +7,7 @@ codebase for the eventual removal of these deprecated features.
 
 ### Card Components
 
-- The `PosterCard` component has been deprecated. Use `<CoverCard size="display" />`.
+- The `PosterCard` component has been deprecated. Use `<CoverCard size="default" />`.
 - The `DisplayMediaCard` component has been deprecated. Use `<CoverCard size="display" />`.
 - The `SmallNakedCard` component has been deprecated. Use `<NakedCard size="snap" />`.
 - The `SnapCard` component has been deprecated. Use `<DataCard size="snap" />`.
