@@ -317,7 +317,7 @@ test('Card cover footer with image background', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.only.each`
+test.each`
     gradientOverlayColor
     ${'#F00'}
     ${'#00FF00'}
