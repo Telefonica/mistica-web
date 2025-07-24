@@ -316,3 +316,27 @@ test('Card cover footer with image background', async () => {
     const image = await card.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.only.each`
+    gradientOverlayColor
+    ${'#F00'}
+    ${'#00FF00'}
+    ${'blue'}
+    ${'rgba(255, 255, 0, 1)'}
+`('Card cover with custom gradientOverlayColor - $gradientOverlayColor', async ({gradientOverlayColor}) => {
+    await openStoryPage({
+        id: STORY_IDS.cover,
+        device: 'MOBILE_IOS',
+        args: {
+            ...argsReset,
+            showFooter: true,
+            footerSlot: false,
+            imageSrc: 'beach',
+            gradientOverlayColor,
+        },
+    });
+
+    const card = await screen.findByTestId(TEST_IDS.cover);
+    const image = await card.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

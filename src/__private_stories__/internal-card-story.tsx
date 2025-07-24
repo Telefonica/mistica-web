@@ -76,6 +76,7 @@ type InternalCardArgs = {
     variant: Variant | '';
     variantOutside: 'default' | 'inverse' | 'alternative';
     asset: 'icon' | 'image' | 'none';
+    gradientOverlayColor?: string;
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -116,6 +117,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
     circledImage,
     variant,
     variantOutside,
+    gradientOverlayColor,
     asset = 'icon',
     headline,
     headlineType,
@@ -179,6 +181,7 @@ export const Default: StoryComponent<InternalCardArgs> = ({
                     mediaAspectRatio={mediaAspectRatio.replace(' ', ':') as MediaAspectRatio}
                     mediaPosition={mediaPosition}
                     circledImage={circledImage}
+                    gradientOverlayColor={gradientOverlayColor || undefined}
                     onClose={onClose ? () => {} : undefined}
                     onPress={onPress ? () => {} : undefined}
                     asset={assetElement}
@@ -255,6 +258,7 @@ Default.args = {
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
+    gradientOverlayColor: '',
     circledImage: false,
     asset: 'icon',
     headlineType: 'promo',

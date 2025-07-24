@@ -28,6 +28,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
+import {getRGBComponents} from './utils/color';
 
 import type {
     DataAttributes,
@@ -68,6 +69,8 @@ type ContainerProps = {
     variant?: Variant;
     width?: string | number;
     height?: string | number;
+    /** Gradient overlay color for cover cards. If not set it uses the theme color */
+    gradientOverlayColor?: string;
     aspectRatio?: CardAspectRatio;
     dataAttributes?: DataAttributes;
     'aria-label'?: React.AriaAttributes['aria-label'];
@@ -706,6 +709,7 @@ type PrivateFooterProps = {
     variant?: Variant;
     hasBackgroundImageOrVideo?: boolean;
     isInverseOutside: boolean;
+    overlayColor: string;
 };
 
 const Footer = ({
@@ -720,11 +724,11 @@ const Footer = ({
     footerVariant,
     footerBackgroundColor,
     isInverseOutside,
+    overlayColor,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
     const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
     const isInverseCard = variant === 'inverse' || variant === 'media';
     const isNaked = type === 'naked';
-
     const backgroundColor =
         footerBackgroundColor ||
         (footerVariant
@@ -740,9 +744,7 @@ const Footer = ({
             <Filler />
             <div
                 style={{
-                    background:
-                        backgroundColor ||
-                        (hasBackgroundImageOrVideo ? skinVars.colors.cardFooterOverlay : undefined),
+                    background: backgroundColor || (hasBackgroundImageOrVideo ? overlayColor : undefined),
                     position: 'relative',
                     backdropFilter: hasBackgroundImageOrVideo ? 'blur(12px)' : undefined,
                     borderBottomLeftRadius: isNaked ? 0 : skinVars.borderRadii.container,
@@ -1076,15 +1078,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             'aria-labelledby': ariaLabeledByProp,
             'aria-description': ariaDescriptionProp,
             'aria-describedby': ariaDescribedByProp,
+            gradientOverlayColor,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
-        // @TODO: A11Y
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
+        const {colorValues} = useTheme();
 
         // In this context "media" refers to the image or video that is placed inside the card, not the background
         const typeAllowsMedia = type === 'media' || type === 'naked';
@@ -1155,6 +1158,27 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                       : variant === 'alternative'
                         ? skinVars.colors.backgroundAlternative
                         : undefined);
+
+        const [[cardOverlayGradient, footerOverlayColor], setOverlayColors] = React.useState([
+            colorValues.cardContentOverlay,
+            colorValues.cardFooterOverlay,
+        ]);
+
+        /** This effect updates the overlay gradient and footer colors based on the gradientOverlayColor prop. */
+        React.useEffect(() => {
+            if (gradientOverlayColor) {
+                const components = getRGBComponents(gradientOverlayColor);
+                if (!components) {
+                    return;
+                }
+                const newRgb = components.join(',');
+                const RE_RGB = /rgba\s*\(\s*\d+\s*,\s*\d+\s*,\s*\d+/g;
+                setOverlayColors([
+                    colorValues.cardContentOverlay.replace(RE_RGB, `rgba(${newRgb}`),
+                    colorValues.cardFooterOverlay.replace(RE_RGB, `rgba(${newRgb}`),
+                ]);
+            }
+        }, [gradientOverlayColor, colorValues.cardContentOverlay, colorValues.cardFooterOverlay]);
 
         const ariaLabel =
             ariaLabelProp ||
@@ -1299,9 +1323,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: isAssetConfigA ? undefined : '100%',
-                                background: hasBackgroundImageOrVideo
-                                    ? skinVars.colors.cardContentOverlay
-                                    : undefined,
+                                background: hasBackgroundImageOrVideo ? cardOverlayGradient : undefined,
                                 // padding overrides for specific cases
                                 paddingTop:
                                     isAssetConfigA && hasBackgroundImageOrVideo
@@ -1390,6 +1412,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
                         isInverseOutside={isInverseOutside}
+                        overlayColor={footerOverlayColor}
                     />
                 )}
                 <TopActions
