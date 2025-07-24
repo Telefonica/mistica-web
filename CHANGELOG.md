@@ -1,3 +1,16 @@
+# [16.35.0](https://github.com/Telefonica/mistica-web/compare/v16.34.0...v16.35.0) (2025-07-24)
+
+
+### Bug Fixes
+
+* **Grid:** improve accessibility when rendered as ul ([#1413](https://github.com/Telefonica/mistica-web/issues/1413)) ([0c7ff3f](https://github.com/Telefonica/mistica-web/commit/0c7ff3f9437e335146bd032bd145c047e38227c4))
+* **Row,BoxedRow:** fix ScreenReaderOnly position for iOS VoiceOver in informative lists using aria-label ([#1409](https://github.com/Telefonica/mistica-web/issues/1409)) ([bb0f52f](https://github.com/Telefonica/mistica-web/commit/bb0f52f1ac717381c3cc48251c453f6a8e27ace4))
+
+
+### Features
+
+* **Drawer:** Allow disabled prop in buttons ([#1412](https://github.com/Telefonica/mistica-web/issues/1412)) ([f4ca7f4](https://github.com/Telefonica/mistica-web/commit/f4ca7f40a6efa95bfb1bef5943022abe1e35f528))
+
 # [16.34.0](https://github.com/Telefonica/mistica-web/compare/v16.33.0...v16.34.0) (2025-07-16)
 
 
