@@ -101,7 +101,7 @@ type InternalCardArgs = {
     buttonSecondary: boolean;
     buttonLink: boolean;
     footerBackgroundColor: string;
-    footerVariant: Variant | '';
+    footerVariant: 'default' | 'inverse' | '';
 };
 
 export const Default: StoryComponent<InternalCardArgs> = ({
@@ -373,15 +373,13 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     footerVariant: {
-        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        options: ['', 'default', 'inverse'],
         control: {
             type: 'select',
             labels: {
                 '': 'undefined',
                 default: 'default',
                 inverse: 'inverse',
-                alternative: 'alternative',
-                media: 'media',
             },
         },
     },
