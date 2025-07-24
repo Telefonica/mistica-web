@@ -96,6 +96,7 @@ test('PosterCard with video', async () => {
 
     const posterCard = await screen.findByTestId('poster-card');
 
+    await new Promise((r) => setTimeout(r, 250)); // try to fix unstable pause icon in video
     const image = await posterCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
