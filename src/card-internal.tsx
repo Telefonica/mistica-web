@@ -466,7 +466,7 @@ export const useVideoWithControls = (
                   label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
               },
               onChange: onVideoControlPress,
-              disabled: videoStatus === 'loadingTimeout',
+              disabled: isRunningAcceptanceTest() ? false : videoStatus === 'loadingTimeout',
               checked: videoStatus === 'paused',
           }
         : undefined;
@@ -942,11 +942,7 @@ const TextContent = ({
 
     const headlineElement = headline && (
         // Read order 2. Visual order 1
-        <div
-            style={{paddingBottom: size === 'display' ? 16 : 8, order: 1}}
-            data-testid="headline"
-            ref={headlineRef}
-        >
+        <div style={{paddingBottom: 8, order: 1}} data-testid="headline" ref={headlineRef}>
             {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
         </div>
     );

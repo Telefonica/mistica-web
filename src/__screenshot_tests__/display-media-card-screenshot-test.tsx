@@ -43,7 +43,6 @@ test('DisplayMediaCard with video', async () => {
 
     const displayMediaCard = await screen.findByTestId('display-media-card');
 
-    await new Promise((r) => setTimeout(r, 250)); // try to fix unstable pause icon in video
     const image = await displayMediaCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
