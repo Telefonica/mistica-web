@@ -1029,6 +1029,11 @@ const TextContent = ({
     );
 };
 
+const SKIN_OVERLAY_COLORS = [
+    skinVars.colors.cardContentOverlay as string,
+    skinVars.colors.cardFooterOverlay as string,
+];
+
 export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
     (
         {
@@ -1159,10 +1164,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         ? skinVars.colors.backgroundAlternative
                         : undefined);
 
-        const [[cardOverlayGradient, footerOverlayColor], setOverlayColors] = React.useState([
-            colorValues.cardContentOverlay,
-            colorValues.cardFooterOverlay,
-        ]);
+        const [[cardOverlayGradient, footerOverlayColor], setOverlayColors] =
+            React.useState(SKIN_OVERLAY_COLORS);
 
         /** This effect updates the overlay gradient and footer colors based on the gradientOverlayColor prop. */
         React.useEffect(() => {
@@ -1177,6 +1180,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     colorValues.cardContentOverlay.replace(RE_RGB, `rgba(${newRgb}`),
                     colorValues.cardFooterOverlay.replace(RE_RGB, `rgba(${newRgb}`),
                 ]);
+            } else {
+                // restore default colors
+                setOverlayColors(SKIN_OVERLAY_COLORS);
             }
         }, [gradientOverlayColor, colorValues.cardContentOverlay, colorValues.cardFooterOverlay]);
 
