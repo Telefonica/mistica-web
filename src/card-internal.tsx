@@ -1307,15 +1307,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     ? skinVars.colors.cardContentOverlay
                                     : undefined,
                                 // padding overrides for specific cases
-                                paddingTop: isAssetConfigA
-                                    ? 40
-                                    : asset
-                                      ? 16
-                                      : isNaked && mediaPosition !== 'top'
-                                        ? 16
-                                        : isNaked && !hasMedia
-                                          ? 0
-                                          : undefined,
+                                paddingTop:
+                                    isAssetConfigA && hasBackgroundImageOrVideo
+                                        ? 40
+                                        : asset
+                                          ? 16
+                                          : isNaked && mediaPosition !== 'top'
+                                            ? 16
+                                            : isNaked && !hasMedia
+                                              ? 0
+                                              : undefined,
                                 paddingLeft:
                                     isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
                                 paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
