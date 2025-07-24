@@ -50,7 +50,7 @@ export const getRGBComponents = (() => {
     // Should we limit the cache size?
     const cache = new Map();
 
-    return (color: string) => {
+    return (color: string): [number, number, number] | null => {
         const cacheKey = color;
 
         if (cache.has(cacheKey)) {
@@ -72,7 +72,11 @@ export const getRGBComponents = (() => {
             return null;
         }
 
-        const rgb = [parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3], 10)];
+        const rgb: [number, number, number] = [
+            parseInt(match[1], 10),
+            parseInt(match[2], 10),
+            parseInt(match[3], 10),
+        ];
 
         cache.set(cacheKey, rgb);
         return rgb;
