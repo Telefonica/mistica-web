@@ -6,9 +6,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
-type PadSize = 0 | 2 | 4 | 8 | 12 | 16 | 20 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80;
+export type PadSize = 0 | 2 | 4 | 8 | 12 | 16 | 20 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80;
 
-type Props = {
+export type BoxProps = {
     width?: number | string;
     padding?: ByBreakpoint<PadSize>;
     paddingX?: ByBreakpoint<PadSize>;
@@ -32,7 +32,7 @@ type Props = {
     id?: string;
 };
 
-const Box = React.forwardRef<HTMLDivElement, Props>(
+const Box = React.forwardRef<HTMLDivElement, BoxProps>(
     (
         {
             className,

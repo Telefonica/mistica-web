@@ -13,16 +13,6 @@ const base = style([
         userSelect: 'text',
         lineHeight: 'inherit',
         wordBreak: 'break-word',
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    '&:hover:not([disabled])': {
-                        // important is needed to override styles in touchable.css.ts
-                        textDecoration: 'underline !important',
-                    },
-                },
-            },
-        },
         selectors: {
             '&[disabled]': {
                 opacity: 0.5,
@@ -31,6 +21,39 @@ const base = style([
         },
     },
 ]);
+
+const underlineAlways = style({
+    textDecoration: 'underline !important',
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                '&:hover:not([disabled])': {
+                    // important is needed to override styles in touchable.css.ts
+                    textDecorationThickness: '0.125em !important',
+                },
+            },
+        },
+    },
+});
+
+const underlineOnHover = style({
+    textDecoration: 'none !important',
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                '&:hover:not([disabled])': {
+                    textDecoration: 'underline !important',
+                    textDecorationThickness: '0.0625em !important',
+                },
+            },
+        },
+    },
+});
+
+export const linkStyles = {
+    underlineAlways,
+    underlineOnHover,
+};
 
 export const variants = styleVariants({
     default: [
@@ -44,34 +67,11 @@ export const variants = styleVariants({
         sprinkles({
             color: vars.colors.textLinkInverse,
         }),
-        {
-            textDecoration: 'underline !important',
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        '&:hover:not([disabled])': {
-                            textDecorationThickness: '2px !important',
-                        },
-                    },
-                },
-            },
-        },
     ],
     inverseDark: [
         base,
         sprinkles({
             color: vars.colors.textLink,
         }),
-        {
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        '&:hover:not([disabled])': {
-                            textDecorationThickness: 1,
-                        },
-                    },
-                },
-            },
-        },
     ],
 });

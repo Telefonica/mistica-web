@@ -31,6 +31,8 @@ const colors: Colors = {
     borderLow: '',
     borderHigh: '',
     borderSelected: '',
+    inputBorder: '',
+    inputBorderInverse: '',
 
     // BUTTONS
     buttonDangerBackground: '',
@@ -71,6 +73,8 @@ const colors: Colors = {
     toggleAndroidBackgroundActive: '',
     controlKnobInverse: '',
     iosControlKnob: '',
+    completedStep: '',
+    completedStepInverse: '',
 
     // DIVIDERS
     divider: '',

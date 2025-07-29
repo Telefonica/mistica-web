@@ -498,6 +498,10 @@ const formSnippets: Array<Snippet> = [
     ],
     ['CvvField', '<CvvField name="cvv" label="CVV"/>'],
     ['SearchField', '<SearchField name="search" label="Search"/>'],
+    [
+        'SearchField (with suggestions)',
+        '<SearchField name="search2" label="Search" getSuggestions={() => ["aa", "bb", "cc", "dd"]}/>',
+    ],
     ['Switch', '<Switch name="switch"/>'],
     ['Checkbox', '<Checkbox name="checkbox">Checkbox</Checkbox>'],
     [
@@ -1133,13 +1137,18 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (without icons)',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex', 0)}
-            onChange={setState('tabIndex')}
+            selectedIndex={getState('selectedTab', 0)}
+            onChange={setState('selectedTab')}
             tabs={[
                 {text: 'Tab 1'},
                 {text: 'Tab 2'},
                 {text: 'Tab 3'},
             ]}
+            renderPanel={({selectedIndex, panelProps}) => (
+                <div {...panelProps}>
+                    <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                </div>
+            )}
         />`,
     },
     {
@@ -1147,13 +1156,18 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (with icons)',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex', 0)}
-            onChange={setState('tabIndex')}
+            selectedIndex={getState('selectedTab', 0)}
+            onChange={setState('selectedTab')}
             tabs={[
                 {text: 'Tab 1', Icon: IconAppointmentRegular},
                 {text: 'Tab 2', Icon: IconBrainRegular},
                 {text: 'Tab 3', Icon: IconBusRegular},
             ]}
+            renderPanel={({selectedIndex, panelProps}) => (
+                <div {...panelProps}>
+                    <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                </div>
+            )}
         />`,
     },
 ];
@@ -2840,6 +2854,7 @@ const navigationBarSnippets = [
                                 "Movistar Cloud",
                               ].map((title, index) => (
                                 <TextLink
+                                  underline={false}
                                   key={index}
                                   onPress={() => {}}
                                   style={{ color: colors.textPrimary }}
@@ -4313,6 +4328,11 @@ export default [
     {group: 'Badge', name: 'Badge non numeric', code: '<Badge />'},
     {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
+    {
+        group: 'TextLink',
+        name: 'TextLink',
+        code: '<Text3>This is a <TextLink href="https://example.org" newTab>text link</TextLink> in the middle of a text</Text3>',
+    },
     {
         group: 'Counter',
         name: 'Counter',

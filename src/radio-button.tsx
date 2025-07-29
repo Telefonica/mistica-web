@@ -14,6 +14,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
 
 type RadioContextType = {
+    id: string;
     disabled?: boolean;
     selectedValue?: string | null;
     focusableValue?: string | null;
@@ -22,6 +23,7 @@ type RadioContextType = {
     selectPrev: () => void;
 };
 const RadioContext = React.createContext<RadioContextType>({
+    id: '',
     disabled: false,
     selectedValue: null,
     focusableValue: null,
@@ -64,14 +66,38 @@ const RadioButton = ({
     'aria-label': ariaLabel,
     ...rest
 }: PropsRender | PropsChildren): JSX.Element => {
-    const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
+    const {
+        id: groupId,
+        disabled,
+        selectedValue,
+        focusableValue,
+        select,
+        selectNext,
+        selectPrev,
+    } = useRadioContext();
+    const [isFirstRadio, setIsFirstRadio] = React.useState(false);
     const reactId = React.useId();
     const labelId = ariaLabelledby || reactId;
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
-    const tabIndex = focusableValue === value ? 0 : -1;
     const {isIos} = useTheme();
     const isInverse = useIsInverseVariant();
+
+    /**
+     * The radio will gain focus with tab navigation if:
+     * - it is not disabled
+     * - it is the currently selected radio -OR- it is the first radio in the group and no radio is selected
+     */
+    const tabIndex = disabled
+        ? undefined
+        : focusableValue === value || (isFirstRadio && !selectedValue)
+          ? 0
+          : -1;
+
+    React.useEffect(() => {
+        const firstRadio = document.getElementById(groupId)?.querySelector('[role=radio]');
+        setIsFirstRadio(firstRadio === ref.current);
+    }, [groupId]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.key) {
@@ -124,11 +150,10 @@ const RadioButton = ({
     );
 
     return (
-        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
             ref={ref}
             id={id}
-            tabIndex={disabled ? undefined : tabIndex}
+            tabIndex={tabIndex}
             role="radio"
             data-value={value}
             aria-checked={checked}
@@ -188,6 +213,8 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
         onChange: props.onChange,
         disabled: props.disabled,
     });
+
+    const id = React.useId();
 
     const isControlledByParent = typeof valueContext !== 'undefined';
 
@@ -265,6 +292,7 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
     return (
         <div
             ref={combineRefs(ref, focusableRef)}
+            id={id}
             role="radiogroup"
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : props['aria-labelledby']}
@@ -272,6 +300,7 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
         >
             <RadioContext.Provider
                 value={{
+                    id,
                     disabled,
                     selectedValue: value ?? defaultValue,
                     focusableValue,

@@ -56,9 +56,14 @@ export const useInnerText = (): {text: string; ref: (instance: HTMLElement | nul
     return {text, ref};
 };
 
+type SlotAlignment = 'content' | 'bottom';
+
 type BaseIconButtonAction = {
     Icon: (props: IconProps) => JSX.Element;
     label: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
 };
 
 type IconButtonAction = BaseIconButtonAction &
@@ -202,20 +207,39 @@ type CardContainerProps = {
     dataAttributes?: DataAttributes;
     className?: string;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
 };
 
 const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
     (
-        {children, width, height, aspectRatio, dataAttributes, className, 'aria-label': ariaLabel},
+        {
+            children,
+            width,
+            height,
+            aspectRatio,
+            dataAttributes,
+            className,
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
+            'aria-description': ariaDescription,
+            'aria-describedby': ariaDescribedby,
+        },
         ref
     ): JSX.Element => {
         const cssAspectRatio = width && height ? undefined : aspectRatioToNumber(aspectRatio);
 
         return (
+            // aria-description should be vaild, but this eslint rule is complaining about it
+            // eslint-disable-next-line jsx-a11y/role-supports-aria-props
             <section
                 {...getPrefixedDataAttributes(dataAttributes)}
                 ref={ref}
                 aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledby}
+                aria-description={ariaDescription}
+                aria-describedby={ariaDescribedby}
                 className={classNames(className, styles.cardContainer)}
                 style={{
                     width: width || '100%',
@@ -383,6 +407,7 @@ type CardContentProps = {
     extraRef?: (instance: HTMLElement | null) => void;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
+    slotAlignment?: SlotAlignment;
 };
 
 const CardContent = ({
@@ -402,12 +427,13 @@ const CardContent = ({
     extraRef,
     button,
     buttonLink,
+    slotAlignment,
 }: CardContentProps) => {
     const {textPresets} = useTheme();
     return (
         <div className={styles.cardContentContainer}>
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
-            <div className={styles.flexColumn}>
+            <div className={styles.flexColumn} style={slotAlignment ? {height: '100%'} : undefined}>
                 {isBiggerHeading(titleAs, pretitleAs) ? (
                     <>
                         {title && (
@@ -516,8 +542,18 @@ const CardContent = ({
                     </div>
                 )}
                 {extra && (
-                    <div ref={extraRef} data-testid="slot">
+                    <div
+                        ref={extraRef}
+                        style={
+                            slotAlignment
+                                ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                : undefined
+                        }
+                        data-testid="slot"
+                    >
+                        {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                         {extra}
+                        {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                     </div>
                 )}
             </div>
@@ -534,6 +570,7 @@ const CardContent = ({
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
 } & ExclusifyUnion<
     | {
           href: string | undefined;
@@ -573,8 +610,12 @@ interface MediaCardBaseProps {
     children?: void;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     onClose?: () => void;
     closeButtonLabel?: string;
+    slotAlignment?: SlotAlignment;
 }
 
 type MediaCardProps = MediaCardBaseProps &
@@ -608,8 +649,12 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             buttonLink,
             dataAttributes,
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             onClose,
             closeButtonLabel,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -620,18 +665,23 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, subtitle, description, extraText]
-                : [pretitle, headlineText, title, subtitle, description, extraText]
-            )
-                .filter(Boolean)
-                .join(' ');
+            (ariaLabeledByProp
+                ? undefined
+                : (isBiggerHeading(titleAs, pretitleAs)
+                      ? [title, headlineText, pretitle, subtitle, description, extraText]
+                      : [pretitle, headlineText, title, subtitle, description, extraText]
+                  )
+                      .filter(Boolean)
+                      .join(' '));
 
         return (
             <CardContainer
                 dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard', ...dataAttributes}}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
                 className={styles.touchableContainer}
             >
                 <BaseTouchable
@@ -639,6 +689,9 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <Boxed className={styles.boxed} width="100%" height="100%">
                         {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
@@ -664,6 +717,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     extraRef={extraRef}
                                     button={button}
                                     buttonLink={buttonLink}
+                                    slotAlignment={slotAlignment}
                                 />
                             </div>
                             {asset && (
@@ -723,8 +777,12 @@ export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
             buttonLink,
             dataAttributes,
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             onClose,
             closeButtonLabel,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -736,18 +794,23 @@ export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, subtitle, description, extraText]
-                : [pretitle, headlineText, title, subtitle, description, extraText]
-            )
-                .filter(Boolean)
-                .join(' ');
+            (ariaLabeledByProp
+                ? undefined
+                : (isBiggerHeading(titleAs, pretitleAs)
+                      ? [title, headlineText, pretitle, subtitle, description, extraText]
+                      : [pretitle, headlineText, title, subtitle, description, extraText]
+                  )
+                      .filter(Boolean)
+                      .join(' '));
 
         return (
             <CardContainer
                 ref={ref}
                 dataAttributes={{'component-name': 'NakedCard', testid: 'NakedCard', ...dataAttributes}}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
                 className={isTouchable ? styles.touchableContainer : undefined}
             >
                 <BaseTouchable
@@ -755,6 +818,9 @@ export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <div className={styles.mediaCard} aria-hidden={isTouchable}>
                         <div style={{position: 'relative'}}>
@@ -785,6 +851,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
                                 extraRef={extraRef}
                                 button={button}
                                 buttonLink={buttonLink}
+                                slotAlignment={slotAlignment}
                             />
                         </div>
                         {asset && (
@@ -822,7 +889,11 @@ type SmallNakedCardProps = MaybeTouchableCard<{
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
+    slotAlignment?: SlotAlignment;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
 }>;
 
 export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardProps>(
@@ -839,6 +910,10 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
             extra,
             dataAttributes,
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -849,7 +924,10 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
         const {text: extraText, ref: extraRef} = useInnerText();
 
         const ariaLabel =
-            ariaLabelProp || [title, subtitle, description, extraText].filter(Boolean).join(' ');
+            ariaLabelProp ||
+            (ariaLabeledByProp
+                ? undefined
+                : [title, subtitle, description, extraText].filter(Boolean).join(' '));
 
         return (
             <CardContainer
@@ -860,6 +938,9 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                     ...dataAttributes,
                 }}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
                 className={isTouchable ? styles.touchableContainer : undefined}
             >
                 <BaseTouchable
@@ -867,6 +948,9 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <div className={styles.mediaCard} aria-hidden={isTouchable}>
                         {media && (
@@ -881,7 +965,10 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                 {media}
                             </div>
                         )}
-                        <div className={styles.nakedCardContent} style={{paddingTop: media ? 16 : 0}}>
+                        <div
+                            className={styles.nakedCardContent}
+                            style={{paddingTop: media ? 16 : 0, height: slotAlignment ? '100%' : undefined}}
+                        >
                             <div>
                                 <Stack space={4}>
                                     {title && (
@@ -922,8 +1009,18 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                 </Stack>
                             </div>
                             {extra && (
-                                <div ref={extraRef} data-testid="slot">
+                                <div
+                                    ref={extraRef}
+                                    data-testid="slot"
+                                    style={
+                                        slotAlignment
+                                            ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                            : undefined
+                                    }
+                                >
+                                    {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                                     {extra}
+                                    {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                                 </div>
                             )}
                         </div>
@@ -957,8 +1054,12 @@ interface DataCardBaseProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     onClose?: () => void;
     closeButtonLabel?: string;
+    slotAlignment?: SlotAlignment;
 }
 
 type DataCardProps = DataCardBaseProps &
@@ -991,9 +1092,13 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             buttonLink,
             dataAttributes,
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             onClose,
             closeButtonLabel,
             aspectRatio,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -1007,18 +1112,23 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, subtitle, description, extraText]
-                : [pretitle, headlineText, title, subtitle, description, extraText]
-            )
-                .filter(Boolean)
-                .join(' ');
+            (ariaLabeledByProp
+                ? undefined
+                : (isBiggerHeading(titleAs, pretitleAs)
+                      ? [title, headlineText, pretitle, subtitle, description, extraText]
+                      : [pretitle, headlineText, title, subtitle, description, extraText]
+                  )
+                      .filter(Boolean)
+                      .join(' '));
 
         return (
             <CardContainer
                 dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
                 className={styles.touchableContainer}
                 aspectRatio={aspectRatio}
             >
@@ -1027,10 +1137,17 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <Boxed className={styles.boxed} width="100%" height="100%">
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
-                        <div className={styles.dataCard} aria-hidden={isTouchable}>
+                        <div
+                            className={styles.dataCard}
+                            aria-hidden={isTouchable}
+                            style={slotAlignment ? {height: '100%'} : undefined}
+                        >
                             <Inline space={0}>
                                 <Stack space={16}>
                                     {asset && (
@@ -1071,9 +1188,21 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                             </Inline>
 
                             {extra && (
-                                <div ref={extraRef} data-testid="slot">
-                                    {extra}
-                                </div>
+                                <>
+                                    <div
+                                        ref={extraRef}
+                                        data-testid="slot"
+                                        style={
+                                            slotAlignment
+                                                ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                                : undefined
+                                        }
+                                    >
+                                        {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
+                                        {extra}
+                                        {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
+                                    </div>
+                                </>
                             )}
 
                             {(button || buttonLink) && (
@@ -1107,9 +1236,13 @@ type SnapCardProps = MaybeTouchableCard<{
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     extra?: React.ReactNode;
     isInverse?: boolean;
     aspectRatio?: AspectRatio | number;
+    slotAlignment?: SlotAlignment;
     children?: void;
 }>;
 
@@ -1126,9 +1259,13 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             descriptionLinesMax,
             dataAttributes,
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             extra,
             isInverse = false,
             aspectRatio,
+            slotAlignment,
             ...touchableProps
         },
         ref
@@ -1139,7 +1276,10 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         const {text: extraText, ref: extraRef} = useInnerText();
 
         const ariaLabel =
-            ariaLabelProp || [title, subtitle, description, extraText].filter(Boolean).join(' ');
+            ariaLabelProp ||
+            (ariaDescribedByProp
+                ? undefined
+                : [title, subtitle, description, extraText].filter(Boolean).join(' '));
 
         return (
             <CardContainer
@@ -1148,12 +1288,18 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 className={styles.touchableContainer}
                 aspectRatio={aspectRatio}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
             >
                 <BaseTouchable
                     maybe
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <Boxed
                         className={styles.boxed}
@@ -1162,7 +1308,11 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         height="100%"
                     >
                         {isTouchable && <div className={overlayStyle} />}
-                        <section className={styles.snapCard} aria-hidden={isTouchable}>
+                        <section
+                            className={styles.snapCard}
+                            aria-hidden={isTouchable}
+                            style={slotAlignment ? {height: '100%'} : undefined}
+                        >
                             <div>
                                 {asset && (
                                     <div
@@ -1214,8 +1364,18 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 </Stack>
                             </div>
                             {extra && (
-                                <div ref={extraRef} data-testid="slot">
+                                <div
+                                    ref={extraRef}
+                                    data-testid="slot"
+                                    style={
+                                        slotAlignment
+                                            ? {display: 'flex', flexDirection: 'column', height: '100%'}
+                                            : undefined
+                                    }
+                                >
+                                    {slotAlignment === 'bottom' && <div style={{flexGrow: 1}} />}
                                     {extra}
+                                    {slotAlignment === 'content' && <div style={{flexGrow: 1}} />}
                                 </div>
                             )}
                         </section>
@@ -1351,6 +1511,9 @@ interface CommonDisplayCardProps {
     description?: string;
     descriptionLinesMax?: number;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     aspectRatio?: AspectRatio | number;
     extra?: React.ReactNode;
 }
@@ -1426,6 +1589,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             height,
             aspectRatio,
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             ...touchableProps
         },
         ref
@@ -1456,12 +1622,14 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, description, extraText]
-                : [pretitle, headlineText, title, description, extraText]
-            )
-                .filter(Boolean)
-                .join(' ');
+            (ariaLabeledByProp
+                ? undefined
+                : (isBiggerHeading(titleAs, pretitleAs)
+                      ? [title, headlineText, pretitle, description, extraText]
+                      : [pretitle, headlineText, title, description, extraText]
+                  )
+                      .filter(Boolean)
+                      .join(' '));
 
         return (
             <CardContainer
@@ -1471,6 +1639,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 height={height}
                 aspectRatio={aspectRatio}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
                 className={styles.touchableContainer}
             >
                 <BaseTouchable
@@ -1478,6 +1649,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <InternalBoxed
                         borderRadius={vars.borderRadii.legacyDisplay}
@@ -1644,6 +1818,9 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
 
 interface PosterCardBaseProps {
     'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
@@ -1703,6 +1880,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             height,
             aspectRatio = '7:10',
             'aria-label': ariaLabelProp,
+            'aria-labelledby': ariaLabeledByProp,
+            'aria-description': ariaDescriptionProp,
+            'aria-describedby': ariaDescribedByProp,
             actions,
             onClose,
             closeButtonLabel,
@@ -1775,12 +1955,14 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, subtitle, description, extraText]
-                : [pretitle, headlineText, title, subtitle, description, extraText]
-            )
-                .filter(Boolean)
-                .join(' ');
+            (ariaLabeledByProp
+                ? undefined
+                : (isBiggerHeading(titleAs, pretitleAs)
+                      ? [title, headlineText, pretitle, subtitle, description, extraText]
+                      : [pretitle, headlineText, title, subtitle, description, extraText]
+                  )
+                      .filter(Boolean)
+                      .join(' '));
 
         return (
             <CardContainer
@@ -1791,12 +1973,18 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 aspectRatio={aspectRatio}
                 className={styles.touchableContainer}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                aria-labelledby={isTouchable ? undefined : ariaLabeledByProp}
+                aria-description={isTouchable ? undefined : ariaDescriptionProp}
+                aria-describedby={isTouchable ? undefined : ariaDescribedByProp}
             >
                 <BaseTouchable
                     maybe
                     {...touchableProps}
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
+                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                 >
                     <InternalBoxed
                         borderRadius={vars.borderRadii.legacyDisplay}

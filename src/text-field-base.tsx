@@ -350,6 +350,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
                     {prefix && (
                         <div
+                            aria-hidden
                             className={classNames(
                                 styles.prefix,
                                 hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
@@ -473,6 +474,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
+        const containerRef = React.useRef<HTMLDivElement>(null);
         const {platformOverrides, texts, t} = useTheme();
         const reactId = React.useId();
         const id = idProp || reactId;
@@ -481,7 +483,6 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
         if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
             throw Error('Fields with suggestions must be used in controlled mode');
         }
-
         return getSuggestions ? (
             <React.Suspense
                 fallback={
@@ -511,12 +512,20 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                             props.onChange?.(e);
                         },
                     }}
-                    renderInputComponent={(inputProps) => (
-                        <TextFieldBase
-                            {...(inputProps as TextFieldBaseProps)}
-                            inputRef={combineRefs(inputRef, props.inputRef, ref)}
-                        />
-                    )}
+                    renderInputComponent={(inputProps) => {
+                        // The `Autosuggest.RenderInputComponentProps` type is missing the `key` property
+                        const {key, ...inputPropsWithoutKey} = inputProps as Record<string, any>;
+                        // extract key from inputProps to avoid React warning:
+                        // "A props object containing a "key" prop is being spread into JSX"
+                        return (
+                            <TextFieldBase
+                                key={key}
+                                {...(inputPropsWithoutKey as TextFieldBaseProps)}
+                                fieldRef={containerRef}
+                                inputRef={combineRefs(inputRef, props.inputRef, ref)}
+                            />
+                        );
+                    }}
                     suggestions={suggestions}
                     onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
                     onSuggestionsClearRequested={() => setSuggestions([])}
@@ -531,18 +540,24 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                             <Text3 regular>{suggestion}</Text3>
                         </div>
                     )}
-                    renderSuggestionsContainer={(options) => (
-                        <div
-                            {...options.containerProps}
-                            style={{
-                                width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
-                            }}
-                            className={styles.suggestionsContainer}
-                            aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
-                        >
-                            {options.children}
-                        </div>
-                    )}
+                    renderSuggestionsContainer={(options) => {
+                        // extract key from containerProps to avoid React warning:
+                        // "A props object containing a "key" prop is being spread into JSX"
+                        const {key, ...containerPropsWithoutKey} = options.containerProps;
+                        return (
+                            <div
+                                {...containerPropsWithoutKey}
+                                key={key}
+                                style={{
+                                    width: containerRef.current ? containerRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
+                                }}
+                                className={styles.suggestionsContainer}
+                                aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
+                            >
+                                {options.children}
+                            </div>
+                        );
+                    }}
                 />
             </React.Suspense>
         ) : (

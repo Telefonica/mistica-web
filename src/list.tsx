@@ -14,7 +14,7 @@ import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
-import IconChevron from './icons/icon-chevron';
+import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
@@ -239,9 +239,9 @@ export const Content = ({
                             className={classNames(styles.center, {[styles.disabled]: disabled})}
                             data-testid="chevron"
                         >
-                            <IconChevron
+                            <IconChevronRightFilled
+                                size={16}
                                 color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                                direction="right"
                             />
                         </div>
                     )}
@@ -294,16 +294,23 @@ interface IconButtonRowContentProps extends CommonProps {
     iconButton: ExclusifyUnion<IconButtonProps | ToggleIconButtonProps> | undefined;
 }
 
-interface HrefRowContentProps extends CommonProps {
+type TouchableCommonProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+};
+
+interface HrefRowContentProps extends CommonProps, TouchableCommonProps {
     href: string | undefined;
     newTab?: boolean;
     loadOnTop?: boolean;
     onNavigate?: () => void | Promise<void>;
 }
 
-interface ToRowContentProps extends CommonProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+interface ToRowContentProps extends CommonProps, TouchableCommonProps {
     to: string | undefined;
     newTab?: boolean;
     fullPageOnWebView?: boolean;
@@ -311,8 +318,7 @@ interface ToRowContentProps extends CommonProps {
     onNavigate?: () => void | Promise<void>;
 }
 
-interface OnPressRowContentProps extends CommonProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+interface OnPressRowContentProps extends CommonProps, TouchableCommonProps {
     onPress: (() => void) | undefined;
 }
 
@@ -424,6 +430,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         onNavigate: props.onNavigate,
         onPress: props.onPress,
         trackingEvent: props.trackingEvent,
+
+        'aria-label': ariaLabel,
+        'aria-labelledby': props['aria-labelledby'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
+        'aria-current': props['aria-current'],
     } as TouchableProps;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
@@ -481,7 +493,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={touchableRole}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
-                aria-label={ariaLabel}
                 tabIndex={tabIndex}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
@@ -505,7 +516,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                 })}
-                aria-label={ariaLabel}
                 tabIndex={tabIndex}
             >
                 {renderContent({labelId: titleId, role})}
@@ -653,7 +663,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         >
             <div aria-hidden={hasCustomAriaLabel}>{renderContent({role})}</div>
             {hasCustomAriaLabel && (
-                <ScreenReaderOnly>
+                <ScreenReaderOnly className={styles.screenReaderOnly}>
                     <span>{props['aria-label']}</span>
                 </ScreenReaderOnly>
             )}
@@ -673,25 +683,35 @@ export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     )
 );
 
+type CommonAccessibilityProps = {
+    'aria-live'?: 'polite' | 'off' | 'assertive';
+    'aria-atomic'?: boolean;
+};
+
 type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
-};
+} & CommonAccessibilityProps;
 
 export const RowList = ({
     children,
     ariaLabelledby,
     role = 'list',
+    'aria-live': ariaLive = 'off',
+    'aria-atomic': ariaAtomic = false,
     dataAttributes,
 }: RowListProps): JSX.Element => {
     const childrenContent = React.Children.toArray(children).filter(Boolean);
     const lastIndex = childrenContent.length - 1;
+
     return (
         <div
             role={role}
             aria-labelledby={ariaLabelledby}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
             {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
         >
             {childrenContent.map((child, index) => (
@@ -711,8 +731,8 @@ export const RowList = ({
 // danger + isInverse is not allowed
 type CommonBoxedRowProps =
     | {
-          danger: true;
           isInverse?: false;
+          danger: true;
       }
     | {
           isInverse?: boolean;
@@ -752,18 +772,22 @@ type BoxedRowListProps = {
     ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
-};
+} & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
     children,
     ariaLabelledby,
     role = 'list',
     dataAttributes,
+    'aria-live': ariaLive = 'off',
+    'aria-atomic': ariaAtomic = false,
 }: BoxedRowListProps): JSX.Element => (
     <Stack
         space={16}
         role={role}
         aria-labelledby={ariaLabelledby}
+        aria-live={ariaLive}
+        aria-atomic={ariaAtomic}
         dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
     >
         {children}

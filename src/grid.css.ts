@@ -23,6 +23,10 @@ export const gapVars = {columnGap, rowGap};
 
 export const grid = style({
     display: 'grid',
+    // just in case grid is rendered as <ul>, reset default browser styles
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
 });
 
 export const gap = style({

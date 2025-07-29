@@ -73,6 +73,20 @@ test('MainNavigationBar large', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar wide', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {wide: true, desktopLargeMenu: true, menu: 'default'},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // Open menu
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test.each`
     variant          | isDarkMode | device
     ${'default'}     | ${false}   | ${'DESKTOP'}

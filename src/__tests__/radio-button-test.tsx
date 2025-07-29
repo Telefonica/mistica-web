@@ -297,3 +297,45 @@ test('Radio onClick event is not propagated', async () => {
 
     expect(onPressHandler).not.toHaveBeenCalled();
 });
+
+test('Radiogroup with no radio selected gets focus on first radio using TAB navigation', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ButtonPrimary onPress={() => {}}>Focus me first</ButtonPrimary>
+            <RadioGroup name="radio-group" aria-labelledby="label">
+                <RadioButton value="banana" />
+                <RadioButton value="apple" />
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Focus me first'});
+    await userEvent.click(button);
+    expect(button).toHaveFocus();
+
+    await userEvent.tab();
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0]).toHaveFocus();
+});
+
+test('Radiogroup with selected radio gets focus on selected radio using TAB navigation', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ButtonPrimary onPress={() => {}}>Focus me first</ButtonPrimary>
+            <RadioGroup name="radio-group" aria-labelledby="label" defaultValue="apple">
+                <RadioButton value="banana" />
+                <RadioButton value="apple" />
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Focus me first'});
+    await userEvent.click(button);
+    expect(button).toHaveFocus();
+
+    await userEvent.tab();
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios[1]).toHaveFocus();
+});

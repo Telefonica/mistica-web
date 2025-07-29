@@ -320,6 +320,7 @@ type BrandLoadingScreenProps = {
 
 export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingScreenProps>(
     ({isLoading = true, onClose, dataAttributes, ...textProps}, ref) => {
+        const {themeVariants} = useTheme();
         const [isClosing, setIsClosing] = React.useState(false);
         const logoClosedRef = React.useRef(false);
         const textClosedRef = React.useRef(false);
@@ -337,7 +338,7 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
         return (
             <BaseLoadingScreen
                 ref={ref}
-                isInverse
+                isInverse={themeVariants.brandLoadingScreen === 'inverse'}
                 {...textProps}
                 isLoading={isLoading || !isClosing}
                 onClose={() => {

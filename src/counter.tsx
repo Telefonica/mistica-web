@@ -85,7 +85,7 @@ const Counter = ({
 }: Props): JSX.Element => {
     const variant = useThemeVariant();
     const counterId = React.useId();
-    const {texts, t} = useTheme();
+    const {texts, t, isDarkMode} = useTheme();
 
     const minValue = min === undefined ? 0 : min;
     const maxValue = Math.max(minValue, max === undefined ? 999 : max);
@@ -123,7 +123,7 @@ const Counter = ({
             className={classNames(styles.counter, {[styles.disabled]: disabled})}
             {...getPrefixedDataAttributes(dataAttributes, 'Counter')}
             style={{
-                border: `1px solid ${variant === 'inverse' || variant === 'media' ? vars.colors.backgroundContainer : vars.colors.border}`,
+                border: `1px solid ${(variant === 'inverse' || variant === 'media') && !isDarkMode ? vars.colors.backgroundContainer : vars.colors.inputBorder}`,
             }}
         >
             <Inline space={8} alignItems="center">

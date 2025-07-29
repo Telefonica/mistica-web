@@ -133,6 +133,12 @@ type ButtonProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
     onPress?: () => unknown;
+    disabled?: boolean;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-description'?: string;
+    'aria-describedby'?: string;
+    'aria-current'?: React.AriaAttributes['aria-current'];
 };
 
 type DrawerProps = {
@@ -269,6 +275,7 @@ const Drawer = ({
                                         trackEvent={button.trackEvent}
                                         trackingEvent={button.trackingEvent}
                                         onPress={() => handleButtonPress(button.onPress)}
+                                        disabled={button.disabled}
                                     >
                                         {button.text}
                                     </ButtonPrimary>
@@ -280,6 +287,7 @@ const Drawer = ({
                                         trackEvent={secondaryButton.trackEvent}
                                         trackingEvent={secondaryButton.trackingEvent}
                                         onPress={() => handleButtonPress(secondaryButton.onPress)}
+                                        disabled={secondaryButton.disabled}
                                     >
                                         {secondaryButton.text}
                                     </ButtonSecondary>
@@ -292,6 +300,7 @@ const Drawer = ({
                                         trackingEvent={buttonLink.trackingEvent}
                                         onPress={() => handleButtonPress(buttonLink.onPress)}
                                         bleedY
+                                        disabled={buttonLink.disabled}
                                     >
                                         {buttonLink.text}
                                     </ButtonLink>

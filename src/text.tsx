@@ -264,17 +264,27 @@ const getWeight = (props: LightRegularMediumProps) => {
 
 const getTextSizes = ({
     forceMobileSizes,
-    mobileSize,
-    mobileLineHeight,
-    desktopSize,
-    desktopLineHeight,
+    textPreset,
+    textProps,
 }: {
     forceMobileSizes?: boolean;
-    mobileSize?: number;
-    mobileLineHeight?: string | number;
-    desktopSize?: number;
-    desktopLineHeight?: string | number;
+    textPreset: {
+        size: {mobile?: number; desktop?: number};
+        lineHeight: {mobile?: string | number; desktop?: string | number};
+    };
+    // textProps is used as a fallback for textPreset values from textProps.tsx
+    textProps: {
+        mobileSize?: number;
+        mobileLineHeight?: string | number;
+        desktopSize?: number;
+        desktopLineHeight?: string | number;
+    };
 }) => {
+    const mobileSize = textPreset.size.mobile || textProps.mobileSize;
+    const mobileLineHeight = textPreset.lineHeight.mobile || textProps.mobileLineHeight;
+    const desktopSize = textPreset.size.desktop || textProps.desktopSize;
+    const desktopLineHeight = textPreset.lineHeight.desktop || textProps.desktopLineHeight;
+
     if (forceMobileSizes) {
         return {
             size: mobileSize,
@@ -294,9 +304,13 @@ export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetP
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textProps.text10})}
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text10,
+                textProps: textProps.text10,
+            })}
             weight={textPresets.text10.weight}
-            dataAttributes={{'component-name': 'Text10', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text10', testid: 'Text10', ...dataAttributes}}
             {...props}
         />
     );
@@ -306,9 +320,13 @@ export const Text9 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textProps.text9})}
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text9,
+                textProps: textProps.text9,
+            })}
             weight={textPresets.text9.weight}
-            dataAttributes={{'component-name': 'Text9', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text9', testid: 'Text9', ...dataAttributes}}
             {...props}
         />
     );
@@ -318,9 +336,13 @@ export const Text8 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textProps.text8})}
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text8,
+                textProps: textProps.text8,
+            })}
             weight={textPresets.text8.weight}
-            dataAttributes={{'component-name': 'Text8', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text8', testid: 'Text8', ...dataAttributes}}
             {...props}
         />
     );
@@ -330,9 +352,13 @@ export const Text7 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textProps.text7})}
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text7,
+                textProps: textProps.text7,
+            })}
             weight={textPresets.text7.weight}
-            dataAttributes={{'component-name': 'Text7', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text7', testid: 'Text7', ...dataAttributes}}
             {...props}
         />
     );
@@ -342,9 +368,13 @@ export const Text6 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textProps.text6})}
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text6,
+                textProps: textProps.text6,
+            })}
             weight={textPresets.text6.weight}
-            dataAttributes={{'component-name': 'Text6', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text6', testid: 'Text6', ...dataAttributes}}
             {...props}
         />
     );
@@ -354,48 +384,80 @@ export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textProps.text5})}
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text5,
+                textProps: textProps.text5,
+            })}
             weight={textPresets.text5.weight}
-            dataAttributes={{'component-name': 'Text5', ...dataAttributes}}
+            dataAttributes={{'component-name': 'Text5', testid: 'Text5', ...dataAttributes}}
             {...props}
         />
     );
 };
 
-export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => (
-    <Text
-        {...getTextSizes({forceMobileSizes, ...textProps.text4})}
-        weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text4', ...dataAttributes}}
-        {...props}
-    />
-);
+export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text4,
+                textProps: textProps.text4,
+            })}
+            weight={getWeight(props)}
+            dataAttributes={{'component-name': 'Text4', testid: 'Text4', ...dataAttributes}}
+            {...props}
+        />
+    );
+};
 
-export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => (
-    <Text
-        {...getTextSizes({forceMobileSizes, ...textProps.text3})}
-        weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text3', ...dataAttributes}}
-        {...props}
-    />
-);
+export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text3,
+                textProps: textProps.text3,
+            })}
+            weight={getWeight(props)}
+            dataAttributes={{'component-name': 'Text3', testid: 'Text3', ...dataAttributes}}
+            {...props}
+        />
+    );
+};
 
-export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => (
-    <Text
-        {...getTextSizes({forceMobileSizes, ...textProps.text2})}
-        weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text2', ...dataAttributes}}
-        {...props}
-    />
-);
+export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text2,
+                textProps: textProps.text2,
+            })}
+            weight={getWeight(props)}
+            dataAttributes={{'component-name': 'Text2', testid: 'Text2', ...dataAttributes}}
+            {...props}
+        />
+    );
+};
 
-export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => (
-    <Text
-        {...getTextSizes({forceMobileSizes, ...textProps.text1})}
-        weight={getWeight(props)}
-        dataAttributes={{'component-name': 'Text1', ...dataAttributes}}
-        {...props}
-    />
-);
+export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            {...getTextSizes({
+                forceMobileSizes,
+                textPreset: textPresets.text1,
+                textProps: textProps.text1,
+            })}
+            weight={getWeight(props)}
+            dataAttributes={{'component-name': 'Text1', testid: 'Text1', ...dataAttributes}}
+            {...props}
+        />
+    );
+};
 
 export default Text;

@@ -14,7 +14,7 @@
     --mistica-vivo-new-vivoPurpleLight10: #efe5f4;
     --mistica-vivo-new-vivoPurpleLight50: #b280cc;
     --mistica-vivo-new-vivoPurpleLight20: #e0cceb;
-    --mistica-vivo-new-grey4: #949494;
+    --mistica-vivo-new-grey4: #8a8c90;
     --mistica-vivo-new-grey6: #000000;
     --mistica-vivo-new-vivoGreen: #99cc33;
     --mistica-vivo-new-orange: #ff9900;
@@ -27,6 +27,7 @@
     --mistica-vivo-new-darkModeBlack: #191919;
     --mistica-vivo-new-darkModeGrey: #242424;
     --mistica-vivo-new-darkModeGrey6: #313235;
+    --mistica-vivo-new-darkModeGrey5: #6d7d88;
     --mistica-vivo-new-vivoGreenLight30: #91ae9e;
     --mistica-vivo-new-orangeLight40: #ffb84c;
     --mistica-vivo-new-pepperLight40: #db628b;
@@ -99,6 +100,10 @@
     --mistica-color-textLinkSnackbar: var(--mistica-vivo-new-vivoPurpleLight20);
     --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurple);
+    --mistica-color-inputBorder: var(--mistica-vivo-new-grey4);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-new-white);
+    --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurple);
+    --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleDark);
     --mistica-color-control: var(--mistica-vivo-new-grey4);
     --mistica-color-controlActivated: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-controlInverse: var(--mistica-vivo-new-vivoPurpleLight50);
@@ -165,7 +170,7 @@
     --mistica-color-tagTextWarning: var(--mistica-vivo-new-orangeDark);
     --mistica-color-tagTextError: var(--mistica-vivo-new-pepperDark80);
     --mistica-color-tagBackgroundPromo: var(--mistica-vivo-new-vivoPurpleLight10);
-    --mistica-color-tagBackgroundActive: var(--mistica-vivo-new-vivoPurpleLight10);
+    --mistica-color-tagBackgroundActive: var(--mistica-vivo-new-grey1);
     --mistica-color-tagBackgroundInactive: var(--mistica-vivo-new-grey1);
     --mistica-color-tagBackgroundInfo: var(--mistica-vivo-new-vivoPurpleLight10);
     --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-new-vivoGreenLight10);
@@ -311,6 +316,10 @@
     --mistica-color-textLinkSnackbar: var(--mistica-vivo-new-vivoPurpleLight50);
     --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurpleLight80);
+    --mistica-color-inputBorder: var(--mistica-vivo-new-darkModeGrey5);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-new-darkModeGrey5);
+    --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurpleLight80);
+    --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-control: var(--mistica-vivo-new-darkModeGrey6);
     --mistica-color-controlActivated: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-controlInverse: var(--mistica-vivo-new-darkModeGrey6);
@@ -340,8 +349,8 @@
     --mistica-color-neutralLowAlternative: var(--mistica-vivo-new-darkModeGrey6);
     --mistica-color-textPrimary: var(--mistica-vivo-new-grey2);
     --mistica-color-textPrimaryInverse: var(--mistica-vivo-new-grey2);
-    --mistica-color-textSecondary: var(--mistica-vivo-new-grey4);
-    --mistica-color-textSecondaryInverse: var(--mistica-vivo-new-grey4);
+    --mistica-color-textSecondary: var(--mistica-vivo-new-grey3);
+    --mistica-color-textSecondaryInverse: var(--mistica-vivo-new-grey3);
     --mistica-color-success: var(--mistica-vivo-new-vivoGreen);
     --mistica-color-warning: var(--mistica-vivo-new-orange);
     --mistica-color-error: var(--mistica-vivo-new-pepper);
@@ -474,6 +483,10 @@
         --mistica-color-textLinkSnackbar: var(--mistica-vivo-new-vivoPurpleLight50);
         --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurpleLight80);
+        --mistica-color-inputBorder: var(--mistica-vivo-new-darkModeGrey5);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-new-darkModeGrey5);
+        --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurpleLight80);
+        --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-control: var(--mistica-vivo-new-darkModeGrey6);
         --mistica-color-controlActivated: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-controlInverse: var(--mistica-vivo-new-darkModeGrey6);
@@ -503,8 +516,8 @@
         --mistica-color-neutralLowAlternative: var(--mistica-vivo-new-darkModeGrey6);
         --mistica-color-textPrimary: var(--mistica-vivo-new-grey2);
         --mistica-color-textPrimaryInverse: var(--mistica-vivo-new-grey2);
-        --mistica-color-textSecondary: var(--mistica-vivo-new-grey4);
-        --mistica-color-textSecondaryInverse: var(--mistica-vivo-new-grey4);
+        --mistica-color-textSecondary: var(--mistica-vivo-new-grey3);
+        --mistica-color-textSecondaryInverse: var(--mistica-vivo-new-grey3);
         --mistica-color-success: var(--mistica-vivo-new-vivoGreen);
         --mistica-color-warning: var(--mistica-vivo-new-orange);
         --mistica-color-error: var(--mistica-vivo-new-pepper);
@@ -633,6 +646,10 @@
         --mistica-color-textLinkSnackbar: var(--mistica-vivo-new-vivoPurpleLight20);
         --mistica-color-textActivated: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-textBrand: var(--mistica-vivo-new-vivoPurple);
+        --mistica-color-inputBorder: var(--mistica-vivo-new-grey4);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-new-white);
+        --mistica-color-completedStep: var(--mistica-vivo-new-vivoPurple);
+        --mistica-color-completedStepInverse: var(--mistica-vivo-new-vivoPurpleDark);
         --mistica-color-control: var(--mistica-vivo-new-grey4);
         --mistica-color-controlActivated: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-controlInverse: var(--mistica-vivo-new-vivoPurpleLight50);
@@ -699,7 +716,7 @@
         --mistica-color-tagTextWarning: var(--mistica-vivo-new-orangeDark);
         --mistica-color-tagTextError: var(--mistica-vivo-new-pepperDark80);
         --mistica-color-tagBackgroundPromo: var(--mistica-vivo-new-vivoPurpleLight10);
-        --mistica-color-tagBackgroundActive: var(--mistica-vivo-new-vivoPurpleLight10);
+        --mistica-color-tagBackgroundActive: var(--mistica-vivo-new-grey1);
         --mistica-color-tagBackgroundInactive: var(--mistica-vivo-new-grey1);
         --mistica-color-tagBackgroundInfo: var(--mistica-vivo-new-vivoPurpleLight10);
         --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-new-vivoGreenLight10);
