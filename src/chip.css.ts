@@ -46,6 +46,10 @@ export const chipVariants = styleVariants({
             background: vars.colors.backgroundContainer,
             color: vars.colors.textPrimary,
         }),
+        {
+            borderStyle: 'solid',
+            borderWidth: '1px',
+        },
     ],
     overAlternative: [
         containerBase,
@@ -53,6 +57,10 @@ export const chipVariants = styleVariants({
             background: vars.colors.backgroundContainerAlternative,
             color: vars.colors.textPrimary,
         }),
+        {
+            borderStyle: 'solid',
+            borderWidth: '1px',
+        },
     ],
     active: [
         chipActive,
@@ -63,7 +71,11 @@ export const chipVariants = styleVariants({
         }),
         {
             borderColor: vars.colors.controlActivated,
+            borderStyle: 'solid',
+            borderWidth: '2px',
             cursor: 'pointer',
+            // Add subtle shadow for additional visual emphasis
+            boxShadow: `0 0 0 1px ${vars.colors.controlActivated}`,
         },
     ],
     navigationActive: [
@@ -75,7 +87,11 @@ export const chipVariants = styleVariants({
         }),
         {
             borderColor: vars.colors.buttonPrimaryBackground,
+            borderStyle: 'solid',
+            borderWidth: '2px',
             cursor: 'pointer',
+            // Add subtle shadow for additional visual emphasis
+            boxShadow: `0 0 0 1px ${vars.colors.buttonPrimaryBackground}`,
         },
     ],
     navigationActiveInverse: [
@@ -86,7 +102,11 @@ export const chipVariants = styleVariants({
         }),
         {
             borderColor: vars.colors.controlActivated,
+            borderStyle: 'solid',
+            borderWidth: '2px',
             cursor: 'pointer',
+            // Add subtle shadow for additional visual emphasis
+            boxShadow: `0 0 0 1px ${vars.colors.controlActivated}`,
         },
     ],
 });

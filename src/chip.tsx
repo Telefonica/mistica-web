@@ -6,6 +6,7 @@ import Badge from './badge';
 import Box from './box';
 import {Text2} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCheckRegular from './generated/mistica-icons/icon-check-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
@@ -68,6 +69,20 @@ const Chip = (props: ChipProps): JSX.Element => {
                     }
                 >
                     <Icon color="currentColor" size={pxToRem(16)} />
+                </div>
+            )}
+            {active && !Icon && (
+                <div
+                    className={
+                        isTouchable
+                            ? overInverse
+                                ? styles.iconNavigationInverse
+                                : styles.iconNavigation
+                            : styles.iconActive
+                    }
+                    aria-hidden="true"
+                >
+                    <IconCheckRegular color="currentColor" size={pxToRem(16)} />
                 </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
@@ -135,7 +150,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                 {
                     [styles.interactive]: isInteractive,
                 },
-                Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
+                Icon || (active && !Icon) ? styles.leftPadding.withIcon : styles.leftPadding.default,
                 badge ? styles.rightPadding.withIcon : styles.rightPadding.default
             )}
             {...getPrefixedDataAttributes(dataAttributes)}
