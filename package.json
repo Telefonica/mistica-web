@@ -210,8 +210,5 @@
     "packageManager": "yarn@3.6.1",
     "workspaces": [
         "packages/eslint-plugin-mistica-local-rules"
-    ],
-    "engines": {
-        "node": "^18.0.0"
-    }
+    ]
 }
