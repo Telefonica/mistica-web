@@ -1,3 +1,11 @@
+# [16.36.0](https://github.com/Telefonica/mistica-web/compare/v16.35.0...v16.36.0) (2025-08-06)
+
+
+### Features
+
+* **icons:** Include new icons ([#1415](https://github.com/Telefonica/mistica-web/issues/1415)) ([116738b](https://github.com/Telefonica/mistica-web/commit/116738b6b467789ebe49caa4c2e921bc0ba83420))
+* **package.json:** remove node version restriction ([#1419](https://github.com/Telefonica/mistica-web/issues/1419)) ([97900d5](https://github.com/Telefonica/mistica-web/commit/97900d5f9bca073bd932b56dfb74c554a8c7fe62)), closes [#1356](https://github.com/Telefonica/mistica-web/issues/1356)
+
 # [16.35.0](https://github.com/Telefonica/mistica-web/compare/v16.34.0...v16.35.0) (2025-07-24)
 
 
