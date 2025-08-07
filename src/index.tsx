@@ -54,6 +54,7 @@ export type {TagType} from './tag';
 export {Placeholder} from './placeholder';
 export {Title1, Title2, Title3, Title4} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
+export {Ul, Ol, Li} from './ul';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
 export {default as RadioButton, RadioGroup} from './radio-button';
