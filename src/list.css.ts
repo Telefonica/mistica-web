@@ -2,6 +2,7 @@ import {style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+import {pxToRem} from './utils/css';
 
 export const disabled = style({
     opacity: 0.5,
@@ -84,6 +85,7 @@ export const screenReaderOnly = style({
     position: 'absolute',
     top: 16,
     left: 16,
+    fontSize: pxToRem(16),
 });
 
 export const rowContentPadding = sprinkles({
