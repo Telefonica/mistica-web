@@ -1,6 +1,8 @@
 import {capitalize} from 'lodash';
 
 const imagePlaceholder = 'https://picsum.photos/1200/1200';
+const videoPlaceholder =
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4';
 
 type Snippet = {group: string; name: string; code: string};
 
@@ -1175,15 +1177,32 @@ const tabsSnippets: Array<Snippet> = [
 const cardSnippets: Array<Snippet> = [
     {
         group: 'Cards',
-        name: 'HighlightedCard',
+        name: 'MediaCard right media position',
         code: `
-        <HighlightedCard
+        <MediaCard
+            mediaPosition="right"
             title="Title"
             description="Some description here"
-            imageUrl="${imagePlaceholder}"
-            imageFit="fill"
+            imageSrc="${imagePlaceholder}"
             onClose={() => {}}
-            button={
+            buttonPrimary={
+                <ButtonPrimary href="#" small>
+                    ButtonPrimary
+                </ButtonPrimary>
+            }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard left media position',
+        code: `
+        <MediaCard
+            mediaPosition="left"
+            title="Title"
+            description="Some description here"
+            imageSrc="${imagePlaceholder}"
+            onClose={() => {}}
+            buttonPrimary={
                 <ButtonPrimary href="#" small>
                     ButtonPrimary
                 </ButtonPrimary>
@@ -1195,15 +1214,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
             asset={<Avatar size={40} src="${imagePlaceholder}" />}
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1216,15 +1236,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Video',
         code: `
         <MediaCard
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            videoSrc="${videoPlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
             asset={<Avatar size={40} src="${imagePlaceholder}" />}
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1246,8 +1267,8 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1257,9 +1278,10 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'SnapCard',
+        name: 'DataCard snap size',
         code: `
-        <SnapCard
+        <DataCard
+            size="snap"
             asset={
               <Circle size={40} backgroundColor={colors.brandLow}>
                 <IconAcademicRegular color={colors.brand} />
@@ -1272,9 +1294,10 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayDataCard',
+        name: 'DataCard display size',
         code: `
-        <DisplayDataCard
+        <DataCard
+          size="display"
           asset={
             <Circle size={40} backgroundColor={colors.brandLow}>
               <IconInvoicePlanFileRegular color={colors.brand} />
@@ -1290,7 +1313,7 @@ const cardSnippets: Array<Snippet> = [
             </ButtonPrimary>
           }
           onClose={() => {}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1313,21 +1336,22 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with image',
+        name: 'CoverCard display size with image',
         code: `
-        <DisplayMediaCard
+        <CoverCard
+          size="display"
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="${imagePlaceholder}"
-          button={
+          imageSrc="${imagePlaceholder}"
+          buttonPrimary={
             <ButtonPrimary small href="https://google.com">
               Action
             </ButtonPrimary>
           }
           onClose={() => {}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1350,70 +1374,17 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with video',
+        name: 'CoverCard display size with video',
         code: `
-        <DisplayMediaCard
+        <CoverCard
+          size="display"
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="${imagePlaceholder}"
-          button={
-            <ButtonPrimary small href="https://google.com">
-              Action
-            </ButtonPrimary>
-          }
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with image',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          subtitle="Subtitle"
-          description="Description"
-          backgroundImage="${imagePlaceholder}"
-          onClose={() => {}}
-          onPress={() => {alert({ title: "pressed" });}}
-          actions={[
-            {
-              Icon: IconLightningRegular,
-              onPress: () => {},
-              label: "Lightning",
-            },
-            {
-              checkedProps: {
-                  Icon: IconStarFilled,
-                  label: 'checked',
-              },
-              uncheckedProps: {
-                  Icon: IconStarRegular,
-                  label: 'unchecked',
-              },
-              defaultChecked: false,
-              onChange: () => {},
-          },
-          ]}
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with video',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          subtitle="Subtitle"
-          description="Description"
-          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="${imagePlaceholder}"
-          onPress={() => {alert({ title: "pressed" });}}
-          button={
+          videoSrc="${videoPlaceholder}"
+          imageSrc="${imagePlaceholder}"
+          buttonPrimary={
             <ButtonPrimary small href="https://google.com">
               Action
             </ButtonPrimary>
@@ -1422,18 +1393,18 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard inverse',
+        name: 'CoverCard with image',
         code: `
-        <PosterCard
+        <CoverCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           subtitle="Subtitle"
           description="Description"
-          isInverse
+          imageSrc="${imagePlaceholder}"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1456,19 +1427,73 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard with backgroundColor',
+        name: 'CoverCard with video',
         code: `
-        <PosterCard
+        <CoverCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          videoSrc="${videoPlaceholder}"
+          imageSrc="${imagePlaceholder}"
+          onPress={() => {alert({ title: "pressed" });}}
+          buttonPrimary={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'CoverCard inverse',
+        code: `
+        <CoverCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          variant="inverse"
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          topActions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'CoverCard with backgroundColor',
+        code: `
+        <CoverCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           subtitle="Subtitle"
           description="Description"
           backgroundColor={colors.promo}
-          isInverse
+          variant="inverse"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1495,14 +1520,15 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Image',
         code: `
         <NakedCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1515,14 +1541,15 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Video',
         code: `
         <NakedCard
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            videoSrc="${videoPlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1533,10 +1560,12 @@ const cardSnippets: Array<Snippet> = [
 
     {
         group: 'Cards',
-        name: 'SmallNakedCard',
+        name: 'NakedCard snap size',
         code: `
-        <SmallNakedCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+        <NakedCard
+            size="snap"
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             title="Title"
             subtitle="Subtitle"
             description="Description"

@@ -34,3 +34,51 @@ export const applyAlpha = (color: string, alpha: number): string => {
         return color;
     }
 };
+
+/**
+ * Given a color returns the RGB components of the color.
+ *
+ * Accepts as color:
+ * - Hex value: '#ff0000', '#f00'
+ * - Color name: 'red'
+ * - RGB value: 'rgb(255, 0, 0)', 'rgba(255, 0, 0, 1)' (opacity is ignored)
+ *
+ * Should work with CSS variables but it won't be reactive
+ */
+export const getRGBComponents = (() => {
+    // Cache to avoid multiple DOM manipulations for the same color.
+    // Should we limit the cache size?
+    const cache = new Map();
+
+    return (color: string): [number, number, number] | null => {
+        const cacheKey = color;
+
+        if (cache.has(cacheKey)) {
+            return cache.get(cacheKey);
+        }
+
+        const temp = document.createElement('div');
+        temp.style.display = 'none';
+        temp.style.position = 'absolute';
+        temp.style.color = color;
+        document.body.appendChild(temp);
+
+        const computedColor = getComputedStyle(temp).color;
+        document.body.removeChild(temp);
+
+        const match = computedColor.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+        if (!match) {
+            cache.set(cacheKey, null);
+            return null;
+        }
+
+        const rgb: [number, number, number] = [
+            parseInt(match[1], 10),
+            parseInt(match[2], 10),
+            parseInt(match[3], 10),
+        ];
+
+        cache.set(cacheKey, rgb);
+        return rgb;
+    };
+})();

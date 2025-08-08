@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('NakedCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device,
     });
 
@@ -18,7 +18,7 @@ test.each(TESTABLE_DEVICES)('NakedCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('NakedCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device,
     });
 
@@ -32,7 +32,7 @@ test.each(TESTABLE_DEVICES)('NakedCard with large fontSize in %s', async (device
 
 test('NakedCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-nakedcard--group',
+        id: 'private-deprecated-card-stories-nakedcard--group',
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -42,7 +42,7 @@ test('NakedCard group', async () => {
 
 test('NakedCard with extra ', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
             extra: true,
@@ -58,7 +58,7 @@ test('NakedCard with extra ', async () => {
 
 test('NakedCard with circular image ', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
             media: 'circular image',
@@ -73,7 +73,7 @@ test('NakedCard with circular image ', async () => {
 
 test('NakedCard without media ', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
             media: 'none',
@@ -88,7 +88,7 @@ test('NakedCard without media ', async () => {
 
 test('NakedCard closeable', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
             actions: 'button and link',
@@ -104,7 +104,7 @@ test('NakedCard closeable', async () => {
 
 test('NakedCard with top actions', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
             actions: 'button and link',
@@ -120,7 +120,7 @@ test('NakedCard with top actions', async () => {
 
 test.each(TESTABLE_DEVICES)('NakedCard with asset in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--default',
+        id: 'private-deprecated-card-stories-nakedcard--default',
         device,
         args: {
             asset: 'circle with icon',
@@ -135,7 +135,7 @@ test.each(TESTABLE_DEVICES)('NakedCard with asset in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('SmallNakedCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--small',
+        id: 'private-deprecated-card-stories-nakedcard--small',
         device,
     });
 
@@ -147,7 +147,7 @@ test.each(TESTABLE_DEVICES)('SmallNakedCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('SmallNakedCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--small',
+        id: 'private-deprecated-card-stories-nakedcard--small',
         device,
     });
 
@@ -161,7 +161,7 @@ test.each(TESTABLE_DEVICES)('SmallNakedCard with large fontSize in %s', async (d
 
 test('SmallNakedCard with extra ', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--small',
+        id: 'private-deprecated-card-stories-nakedcard--small',
         device: 'MOBILE_IOS',
         args: {
             extra: true,
@@ -177,7 +177,7 @@ test('SmallNakedCard with extra ', async () => {
 
 test('SmallNakedCard with circular image ', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--small',
+        id: 'private-deprecated-card-stories-nakedcard--small',
         device: 'MOBILE_IOS',
         args: {
             media: 'circular image',
@@ -192,7 +192,7 @@ test('SmallNakedCard with circular image ', async () => {
 
 test('SmallNakedCard without media ', async () => {
     await openStoryPage({
-        id: 'components-cards-nakedcard--small',
+        id: 'private-deprecated-card-stories-nakedcard--small',
         device: 'MOBILE_IOS',
         args: {
             media: 'none',

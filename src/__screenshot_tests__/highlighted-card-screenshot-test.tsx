@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--default',
+        id: 'private-deprecated-card-stories-highlightedcard--default',
         device,
     });
 
@@ -17,7 +17,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--default',
+        id: 'private-deprecated-card-stories-highlightedcard--default',
         device,
     });
 
@@ -30,7 +30,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (
 
 test('HighlightedCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-highlightedcard--group',
+        id: 'private-deprecated-card-stories-highlightedcard--group',
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -45,7 +45,7 @@ test.each`
     ${'Title'} | ${''}
 `('HighlightedCard combinations $title $description', async ({title, description}) => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--default',
+        id: 'private-deprecated-card-stories-highlightedcard--default',
         device: 'MOBILE_IOS',
         args: {title, description},
     });

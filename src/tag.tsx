@@ -40,7 +40,7 @@ const Tag = ({
 }: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
-    const isInverse = themeVariant === 'inverse';
+    const isInverse = themeVariant === 'inverse' || themeVariant === 'media';
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {

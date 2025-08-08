@@ -204,6 +204,7 @@ export const getO2Skin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.o2Orange10,
             tagBackgroundErrorInverse: palette.pepper10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -358,6 +359,7 @@ export const getO2Skin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.darkModeGrey6,
             tagBackgroundErrorInverse: palette.darkModeGrey6,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         borderRadii: {
             avatar: '50%',
