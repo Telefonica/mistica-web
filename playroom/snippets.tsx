@@ -4307,6 +4307,117 @@ const timelineSnippets: Array<Snippet> = [
     },
 ];
 
+const olSnippets: Array<Snippet> = [
+    {
+        group: 'Ol',
+        name: 'Ol',
+        code: `
+        <Text3 regular as="div">
+  <Ol>
+    <Li>List item 1</Li>
+    <Li>List item 2</Li>
+    <Li>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <Ol>
+        <Li>Nested list item 2.1</Li>
+        <Li>Nested list item 2.2</Li>
+        <Li>Nested list item 2.3</Li>
+      </Ol>
+    </Li>
+    <Li>List item 4</Li>
+  </Ol>
+</Text3>`,
+    },
+    {
+        group: 'Ol',
+        name: 'Ol (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <Ol>
+    <Li Icon={IconLightningFilled}>List item 1</Li>
+    <Li Icon={IconLightningFilled}>List item 2</Li>
+    <Li Icon={IconLightningFilled}>List item 3</Li>
+  </Ol>
+</Text3>`,
+    },
+];
+
+const ulSnippets: Array<Snippet> = [
+    {
+        group: 'Ul',
+        name: 'Ul',
+        code: `
+        <Text3 regular as="div">
+  <Ul>
+    <Li>List item 1</Li>
+    <Li>List item 2</Li>
+    <Li>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <Ul>
+        <Li>Nested list item 2.1</Li>
+        <Li>Nested list item 2.2</Li>
+        <Li>Nested list item 2.3</Li>
+      </Ul>
+    </Li>
+    <Li>List item 4</Li>
+  </Ul>
+</Text3>`,
+    },
+    {
+        group: 'Ul',
+        name: 'Ul (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <Ul>
+    <Li Icon={IconLightningFilled}>List item 1</Li>
+    <Li Icon={IconLightningFilled}>List item 2</Li>
+    <Li Icon={IconLightningFilled}>List item 3</Li>
+  </Ul>
+</Text3>`,
+    },
+];
+
+const liSnippets = [
+    {
+        group: 'Li',
+        name: 'Li',
+        code: `<Li>List item</Li>`,
+    },
+    {
+        group: 'Li',
+        name: 'Li with icon',
+        code: `<Li Icon={IconLightningFilled}>List item</Li>`,
+    },
+    {
+        group: 'Li',
+        name: 'Li with custom icon',
+        code: `<Li
+      renderIcon={() => (
+        <IconLightningFilled size="1em" color={colors.error} />
+      )}
+    >
+      List item with custom icon rendering
+    </Li>`,
+    },
+    {
+        group: 'Li',
+        name: 'Li without marker',
+        code: `<Li withMarker={false}>List item</Li>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4505,5 +4616,8 @@ export default [
     ...loadingScreenSnippets,
     ...tableSnippets,
     ...timelineSnippets,
+    ...olSnippets,
+    ...ulSnippets,
+    ...liSnippets,
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

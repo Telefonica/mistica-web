@@ -68,6 +68,18 @@ export const li = style({
     },
 
     selectors: {
+        'ul > &': {
+            listStyleType: 'disc',
+        },
+        'ol > &': {
+            listStyleType: 'decimal',
+        },
+        'ul ul > &': {
+            listStyleType: 'circle',
+        },
+        'ul ul ul > &': {
+            listStyleType: 'square',
+        },
         'ol ol > &': {
             listStyleType: 'lower-alpha',
         },
