@@ -122,7 +122,6 @@ type PosterCardBaseProps = {
     extra?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     slot?: React.ReactNode;
-    children?: undefined;
 };
 
 type DeprecatedImageProps = {
