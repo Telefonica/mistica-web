@@ -44,9 +44,6 @@ import type {Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
 
-const DEBUG = 0;
-const dbg = (value: any) => (DEBUG ? value : undefined);
-
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
 
@@ -221,7 +218,6 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 style={{
                     width: width || '100%',
                     height: height || '100%',
-                    border: dbg('1px solid lime'),
                     position: 'relative',
                     ...aspectRatioStyle,
                 }}
@@ -265,8 +261,6 @@ const Filler = ({minHeight}: FillerProps) => (
             flexGrow: 1,
             flexShrink: 0,
             minHeight,
-            border: dbg('1px solid green'),
-            background: dbg('rgba(200,255,200,0.4)'),
         }}
     />
 );
@@ -282,6 +276,16 @@ const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): J
         return null;
     }
 
+    const assetWithContainer = (
+        <div
+            data-testid="asset"
+            aria-hidden
+            style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: skinVars.borderRadii.mediaSmall})}
+        >
+            {asset}
+        </div>
+    );
+
     if (absolute) {
         return (
             <div
@@ -291,18 +295,14 @@ const Asset = ({size, absolute, asset, type}: AssetProps & PrivateAssetProps): J
                     styles.containerPaddingTopVariants[size]
                 )}
             >
-                <div data-testid="asset" aria-hidden>
-                    {asset}
-                </div>
+                {assetWithContainer}
             </div>
         );
     }
 
     return (
         <div className={classnames({[styles.containerPaddingXVariants[size]]: type !== 'naked'})}>
-            <div data-testid="asset" aria-hidden>
-                {asset}
-            </div>
+            {assetWithContainer}
         </div>
     );
 };
@@ -666,7 +666,6 @@ const Media = ({
     }
 
     const commonContainerStyles = {
-        border: dbg('2px solid green'),
         // overrides media border radius
         ...(type === 'naked' ? undefined : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
     };
@@ -1263,7 +1262,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                   ? 'row'
                                   : 'row-reverse',
                         justifyItems: 'stretch',
-                        border: dbg('3px solid #f0f'),
                         borderTopLeftRadius: `calc(${borderRadius} - 1px)`,
                         borderTopRightRadius: `calc(${borderRadius} - 1px)`,
                         overflow: 'hidden',
@@ -1325,7 +1323,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 styles.containerPaddingTopVariants[size]
                             )}
                             style={{
-                                border: dbg('1px solid blue'),
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: isAssetConfigA ? undefined : '100%',
@@ -1380,7 +1377,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                                 (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
                                                 //
                                                 8,
-                                            background: dbg('#fee'),
                                         }}
                                     />
                                 )}

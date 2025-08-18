@@ -95,6 +95,8 @@ import Image from '../image';
 <NakedCard media={<Image src="/something.png" />} title="title" href="/" to="/" />;
 // @ts-expect-error trackingEvent can't be used if the card is not touchable
 <NakedCard media={<Image src="/something.png" />} title="title" trackingEvent={{name: 'do-something'}} />;
+// @ts-expect-error footerBackgroundColor not allowed in NakedCard
+<NakedCard title="title" footerBackgroundColor="blue" />;
 
 <SmallNakedCard media={<Image src="/something.png" />} title="title" />;
 <SmallNakedCard media={<Image src="/something.png" />} title="title" href="/" />;
