@@ -391,6 +391,9 @@ export {default as IconArrowLineUpLight} from './generated/mistica-icons/icon-ar
 export {default as IconArrowLineUpRegular} from './generated/mistica-icons/icon-arrow-line-up-regular';
 export {default as IconArrowLineUpRightLight} from './generated/mistica-icons/icon-arrow-line-up-right-light';
 export {default as IconArrowLineUpRightRegular} from './generated/mistica-icons/icon-arrow-line-up-right-regular';
+export {default as IconArrowReturnLockFilled} from './generated/mistica-icons/icon-arrow-return-lock-filled';
+export {default as IconArrowReturnLockLight} from './generated/mistica-icons/icon-arrow-return-lock-light';
+export {default as IconArrowReturnLockRegular} from './generated/mistica-icons/icon-arrow-return-lock-regular';
 export {default as IconArrowRightFilled} from './generated/mistica-icons/icon-arrow-right-filled';
 export {default as IconArrowRightLight} from './generated/mistica-icons/icon-arrow-right-light';
 export {default as IconArrowRightRegular} from './generated/mistica-icons/icon-arrow-right-regular';
@@ -1760,6 +1763,9 @@ export {default as IconSnowflakeRegular} from './generated/mistica-icons/icon-sn
 export {default as IconSportBallFilled} from './generated/mistica-icons/icon-sport-ball-filled';
 export {default as IconSportBallLight} from './generated/mistica-icons/icon-sport-ball-light';
 export {default as IconSportBallRegular} from './generated/mistica-icons/icon-sport-ball-regular';
+export {default as IconSquareArrowUpRightFilled} from './generated/mistica-icons/icon-square-arrow-up-right-filled';
+export {default as IconSquareArrowUpRightLight} from './generated/mistica-icons/icon-square-arrow-up-right-light';
+export {default as IconSquareArrowUpRightRegular} from './generated/mistica-icons/icon-square-arrow-up-right-regular';
 export {default as IconStarFilled} from './generated/mistica-icons/icon-star-filled';
 export {default as IconStarLight} from './generated/mistica-icons/icon-star-light';
 export {default as IconStarRegular} from './generated/mistica-icons/icon-star-regular';
@@ -1859,6 +1865,9 @@ export {default as IconTelephoneIpRegular} from './generated/mistica-icons/icon-
 export {default as IconTelephonePotFilled} from './generated/mistica-icons/icon-telephone-pot-filled';
 export {default as IconTelephonePotLight} from './generated/mistica-icons/icon-telephone-pot-light';
 export {default as IconTelephonePotRegular} from './generated/mistica-icons/icon-telephone-pot-regular';
+export {default as IconTextSizeFilled} from './generated/mistica-icons/icon-text-size-filled';
+export {default as IconTextSizeLight} from './generated/mistica-icons/icon-text-size-light';
+export {default as IconTextSizeRegular} from './generated/mistica-icons/icon-text-size-regular';
 export {default as IconTheaterFilled} from './generated/mistica-icons/icon-theater-filled';
 export {default as IconTheaterLight} from './generated/mistica-icons/icon-theater-light';
 export {default as IconTheaterRegular} from './generated/mistica-icons/icon-theater-regular';
