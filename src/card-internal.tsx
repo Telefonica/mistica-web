@@ -569,6 +569,7 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 };
 
 type PrivateTopActionsProps = {
+    actions?: TopActionsArray;
     testid?: string;
     variant?: Variant;
     containerStyles?: React.CSSProperties;
@@ -578,12 +579,12 @@ export const TopActions = ({
     testid = 'topActions',
     onClose,
     closeButtonLabel,
-    topActions,
+    actions: actionsProp,
     variant,
     containerStyles = {},
-}: TopActionsProps & PrivateTopActionsProps): JSX.Element => {
+}: Omit<TopActionsProps, 'topActions'> & PrivateTopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
-    const actions = topActions ? [...topActions] : [];
+    const actions = actionsProp ? [...actionsProp] : [];
 
     if (onClose) {
         actions.push({
@@ -1227,7 +1228,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         <TopActions
                             testid="videoAction"
                             variant="media"
-                            topActions={[videoAction]}
+                            actions={[videoAction]}
                             containerStyles={{
                                 position: 'absolute',
                                 top: 16,
@@ -1420,7 +1421,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
-                    topActions={topActions}
+                    actions={topActions}
                     variant={
                         hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
                             ? 'media'

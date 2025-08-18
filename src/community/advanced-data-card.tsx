@@ -422,7 +422,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </Touchable>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <TopActions topActions={actions} onClose={onClose} />
+                <TopActions actions={actions} onClose={onClose} />
             </section>
         );
     }
