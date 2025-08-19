@@ -67,7 +67,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
-                footerSlot={slot ? <Placeholder height={50} /> : undefined}
+                footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
                 buttonSecondary={getButtonSecondary(buttonSecondary)}
                 buttonLink={getButtonLink(buttonLink)}

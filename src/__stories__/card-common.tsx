@@ -329,6 +329,13 @@ export const mediaArgTypes = {
             },
         },
     },
+    imageFit: {
+        options: ['', 'fit', 'fill', 'fill-center'],
+        control: {
+            type: 'select',
+            labels: {'': 'undefined'},
+        },
+    },
 };
 
 export const dataArgTypes = {

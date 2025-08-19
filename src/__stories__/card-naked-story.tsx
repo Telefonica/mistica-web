@@ -37,6 +37,7 @@ type NakedCardArgs = CommonCardArgs & {
     mediaAspectRatio?: MediaAspectRatio | string;
     mediaWidth: string;
     circledImage: boolean;
+    imageFit: '' | 'fit' | 'fill' | 'fill-center';
 };
 
 export const Default: StoryComponent<NakedCardArgs> = ({
@@ -62,6 +63,7 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     pretitleAs,
     ariaLabel,
     ariaDescription,
+    imageFit,
     ...args
 }) => {
     return (
@@ -80,7 +82,7 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 videoSrc={videoNameToUrl[videoSrc as never]}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
-                footerSlot={slot ? <Placeholder height={50} /> : undefined}
+                footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
                 buttonSecondary={getButtonSecondary(buttonSecondary)}
                 buttonLink={getButtonLink(buttonLink)}
@@ -88,6 +90,7 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 onPress={onPress ? () => {} : undefined}
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
+                imageFit={imageFit || undefined}
                 {...args}
             />
         </ThemeVariantWrapper>
@@ -106,6 +109,7 @@ Default.args = {
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
     circledImage: false,
+    imageFit: '',
 };
 
 Default.argTypes = {

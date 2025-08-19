@@ -38,6 +38,7 @@ type MediaCardArgs = CommonCardArgs & {
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
     mediaWidth: string;
+    imageFit: '' | 'fit' | 'fill' | 'fill-center';
 };
 
 export const Default: StoryComponent<MediaCardArgs> = ({
@@ -65,6 +66,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     pretitleAs,
     ariaLabel,
     ariaDescription,
+    imageFit,
     ...args
 }) => {
     return (
@@ -84,7 +86,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 videoSrc={videoNameToUrl[videoSrc as never]}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
-                footerSlot={slot ? <Placeholder height={50} /> : undefined}
+                footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 mediaWidth={mediaWidth || undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
                 buttonSecondary={getButtonSecondary(buttonSecondary)}
@@ -93,6 +95,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 onPress={onPress ? () => {} : undefined}
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
+                imageFit={imageFit || undefined}
                 {...args}
             />
         </ThemeVariantWrapper>
@@ -112,6 +115,7 @@ Default.args = {
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
+    imageFit: '',
 };
 
 Default.argTypes = {
