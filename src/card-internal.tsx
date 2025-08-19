@@ -89,6 +89,7 @@ type MediaProps = {
     imageSrc?: string;
     imageSrcSet?: string;
     imageAlt?: string;
+    imageFit?: 'fit' | 'fill' | 'fill-center';
     videoSrc?: VideoSource;
     videoRef?: React.RefObject<VideoElement>;
     mediaPosition?: MediaPosition;
@@ -619,6 +620,7 @@ type MediaComponentProps = {
     imageSrc?: string;
     imageSrcSet?: string;
     imageAlt?: string;
+    imageFit: 'fit' | 'fill' | 'fill-center';
     video?: React.ReactNode;
     mediaAspectRatio: MediaAspectRatio;
     mediaPosition: MediaPosition;
@@ -633,6 +635,7 @@ const Media = ({
     asset,
     imageSrc,
     imageSrcSet,
+    imageFit,
     imageAlt = '',
     video,
     mediaAspectRatio,
@@ -650,17 +653,33 @@ const Media = ({
                   height: mediaPosition === 'top' ? (aspectRatioAsNumber === 0 ? undefined : '100%') : '100%',
               };
 
-    const mediaElement = video ? (
-        video
-    ) : imageSrc !== undefined || imageSrcSet !== undefined ? (
-        <Image
-            src={imageSrc || ''}
-            srcSet={imageSrcSet}
-            {...imageProps}
-            dataAttributes={{testid: 'image'}}
-            alt={imageAlt}
-        />
-    ) : null;
+    const renderMedia = () => {
+        if (video) {
+            return video;
+        }
+        if (imageSrc !== undefined || imageSrcSet !== undefined) {
+            const isLeftOrRight = mediaPosition === 'left' || mediaPosition === 'right';
+            const imageFitProps = {
+                fit: {objectFit: 'contain', objectPosition: `bottom ${mediaPosition}`},
+                fill: {objectFit: 'cover', objectPosition: mediaPosition},
+                'fill-center': {objectFit: 'cover', objectPosition: 'center'},
+            } as const;
+
+            return (
+                <Image
+                    src={imageSrc || ''}
+                    srcSet={imageSrcSet}
+                    {...imageProps}
+                    dataAttributes={{testid: 'image'}}
+                    alt={imageAlt}
+                    {...(isLeftOrRight ? imageFitProps[imageFit] : {})}
+                />
+            );
+        }
+        return null;
+    };
+
+    const mediaElement = renderMedia();
 
     if (!mediaElement) {
         return <></>;
@@ -1043,6 +1062,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             imageSrc,
             imageSrcSet,
             imageAlt = '',
+            imageFit = 'fill-center',
             videoSrc,
             videoRef,
             media,
@@ -1294,6 +1314,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             mediaPosition={mediaPosition}
                             asset={asset}
                             video={video}
+                            imageFit={imageFit}
                             imageSrc={imageSrc}
                             imageSrcSet={imageSrcSet}
                             imageAlt={imageAlt}

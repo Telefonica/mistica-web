@@ -31,7 +31,10 @@ export type MediaCardProps = {
     media?: DeprecatedMediaProp;
     mediaPosition?: 'top' | 'left' | 'right';
     mediaWidth?: number | string;
+    /** Ignored when mediaPosition is 'left' or 'right' */
     mediaAspectRatio?: MediaAspectRatio;
+    /** Ignored when media position is not 'left' or 'right' */
+    imageFit?: 'fit' | 'fill' | 'fill-center';
     backgroundColor?: string;
     width?: number | string;
     height?: number | string;
@@ -104,8 +107,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
 type DeprecatedHighlightedCardProps = Omit<MediaCardProps, 'size' | 'mediaPosition'> & {
     /** @deprecated use imageSrc */
     imageUrl?: string;
-    /** @deprecated this prop is ignored */
-    imageFit?: 'fit' | 'fill' | 'fill-center';
     /** @deprecated use variant */
     isInverse?: boolean;
 };
