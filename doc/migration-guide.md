@@ -12,6 +12,7 @@ codebase for the eventual removal of these deprecated features.
 - The `SmallNakedCard` component has been deprecated. Use `<NakedCard size="snap" />`.
 - The `SnapCard` component has been deprecated. Use `<DataCard size="snap" />`.
 - The `DisplayDataCard` component has been deprecated. Use `<DataCard size="display" />`.
+- The `HighlightCard` component has been deprecated. Use `<MediaCard mediaPosition="right" />`.
 
 ### Card Props
 
