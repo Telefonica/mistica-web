@@ -746,6 +746,7 @@ const Footer = ({
     overlayColor,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
     const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
+    const has3Buttons = !!(buttonPrimary && buttonSecondary && buttonLink);
     const isInverseCard = variant === 'inverse' || variant === 'media';
     const isNaked = type === 'naked';
     const backgroundColor =
@@ -790,18 +791,30 @@ const Footer = ({
                 >
                     <Stack space={16}>
                         {footerSlot}
-                        {hasButtons && (
-                            // @FIXME if the secondary action is a link, it should bleed right
-                            // perhaps we could create styles to override button styles (small, bleed)
-                            // see spec related to button group alignment
+                        {hasButtons &&
+                            // @FIXME: We should use the ButtonGroup component
+                            // https://jira.tid.es/browse/WEB-2278
                             // https://www.figma.com/design/koROdh3HpEPG2O8jG52Emh/%F0%9F%94%B8-Buttons-Specs?node-id=4337-1606&t=HtImvar8DMbivDqC-0
-                            // We should use the ButtonGroup component here but it is missing some features
-                            <Inline space="between" alignItems="center">
-                                {buttonPrimary}
-                                {buttonSecondary}
-                                {buttonLink}
-                            </Inline>
-                        )}
+                            (has3Buttons ? (
+                                <Stack space={16}>
+                                    <Inline space="between" alignItems="center">
+                                        {buttonPrimary}
+                                        {buttonSecondary}
+                                    </Inline>
+                                    <div
+                                        // bleed workaround
+                                        style={{marginLeft: -12}}
+                                    >
+                                        {buttonLink}
+                                    </div>
+                                </Stack>
+                            ) : (
+                                <Inline space="between" alignItems="center">
+                                    {buttonPrimary}
+                                    {buttonSecondary}
+                                    {buttonLink}
+                                </Inline>
+                            ))}
                     </Stack>
                 </div>
             </div>
