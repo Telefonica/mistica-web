@@ -750,7 +750,7 @@ const Footer = ({
     const isNaked = type === 'naked';
     const backgroundColor =
         footerBackgroundColor ||
-        (footerVariant
+        (footerVariant && footerVariant !== variant
             ? footerVariant === 'default'
                 ? skinVars.colors.backgroundContainer
                 : isInverseOutside
