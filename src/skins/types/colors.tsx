@@ -151,4 +151,5 @@ export type Colors = {
     tagBackgroundWarningInverse: string;
     tagBackgroundErrorInverse: string;
     cardContentOverlay: string;
+    cardFooterOverlay: string;
 };

@@ -20,14 +20,14 @@ import {
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import beachVideo from './videos/beach.mp4';
-import {SmallNakedCard} from '../card';
+import {SmallNakedCard} from '../card-naked';
 import avatarImg from './images/avatar.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/NakedCard',
+    title: 'Private/Deprecated Card Stories/NakedCard',
     parameters: {
         fullScreen: true,
     },

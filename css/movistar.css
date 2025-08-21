@@ -209,6 +209,7 @@
         rgba(var(--mistica-movistar-raw-black), 0.4) 30%,
         rgba(var(--mistica-movistar-raw-black), 0.7) 100%
     );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
 
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
@@ -425,6 +426,7 @@
         rgba(var(--mistica-movistar-raw-black), 0.4) 30%,
         rgba(var(--mistica-movistar-raw-black), 0.7) 100%
     );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -592,6 +594,7 @@
             rgba(var(--mistica-movistar-raw-black), 0.4) 30%,
             rgba(var(--mistica-movistar-raw-black), 0.7) 100%
         );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
     }
 
     [data-mistica-skin='movistar'][data-mistica-color-scheme='light'] {
@@ -752,6 +755,7 @@
             rgba(var(--mistica-movistar-raw-black), 0.4) 30%,
             rgba(var(--mistica-movistar-raw-black), 0.7) 100%
         );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
     }
 }
 
