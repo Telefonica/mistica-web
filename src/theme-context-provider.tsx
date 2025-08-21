@@ -258,7 +258,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             colorScheme === 'auto'
                 ? `@media (prefers-color-scheme: dark) {
                     ${selector} {
-                        ${assignInlineVars(vars.colors, darkColors)}
+                        ${assignInlineVars(vars.colors, darkColors)};
                         ${assignInlineVars(vars.rawColors, darkRawColors)}
                     }
                 }`
