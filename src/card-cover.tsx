@@ -120,7 +120,6 @@ type PosterCardBaseProps = {
     descriptionLinesMax?: number;
     /** @deprecated use slot */
     extra?: React.ReactNode;
-    slotAlignment?: SlotAlignment;
     slot?: React.ReactNode;
 };
 
