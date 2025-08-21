@@ -298,3 +298,16 @@ export const useBoundingRect = (
 
     return rect;
 };
+
+export const useInnerText = (): {text: string; ref: (instance: HTMLElement | null) => void} => {
+    const [text, setText] = React.useState('');
+
+    const ref: React.LegacyRef<HTMLElement> = React.useCallback((node: HTMLElement) => {
+        if (node) {
+            // jsdom doesn't implements innerText. Using textContent as fallback in unit tests although it's not the same
+            setText((process.env.NODE_ENV === 'test' ? node.textContent : node.innerText) || '');
+        }
+    }, []);
+
+    return {text, ref};
+};

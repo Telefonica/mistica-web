@@ -12,7 +12,7 @@ import {
 import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
-    title: 'Components/Cards/HighlightedCard',
+    title: 'Private/Deprecated Card Stories/HighlightedCard',
 };
 
 type Args = {

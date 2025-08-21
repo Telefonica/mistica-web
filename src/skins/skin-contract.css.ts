@@ -182,6 +182,7 @@ const colors: Colors = {
     coverBackgroundHover: '',
     coverBackgroundPressed: '',
     cardContentOverlay: '',
+    cardFooterOverlay: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
