@@ -30,7 +30,7 @@ import ScreenReaderOnly from './screen-reader-only';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
@@ -793,3 +793,63 @@ export const BoxedRowList = ({
         {children}
     </Stack>
 );
+
+type UnorderedListProps = {
+    children: React.ReactNode;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+};
+
+type OrderedListProps = UnorderedListProps;
+
+export const UnorderedList = ({
+    children,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+}: UnorderedListProps): JSX.Element => {
+    return (
+        // role="list" is needed for accesibility in Safari+VoiceOver. See: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#accessibility
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles
+        <ul role="list" className={styles.ul} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
+            {children}
+        </ul>
+    );
+};
+
+export const OrderedList = ({
+    children,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+}: OrderedListProps): JSX.Element => {
+    return (
+        // role="list" is needed for accesibility in Safari+VoiceOver. See: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#accessibility
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles
+        <ol role="list" className={styles.ul} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
+            {children}
+        </ol>
+    );
+};
+
+type ListItemProps = {
+    children: React.ReactNode;
+    Icon?: (props: IconProps) => JSX.Element;
+    icon?: JSX.Element;
+    withMarker?: boolean;
+};
+
+export const ListItem = ({children, Icon, icon, withMarker = true}: ListItemProps): JSX.Element => {
+    return !withMarker ? (
+        <li className={styles.liWithoutMarker}>
+            <div className={styles.liContent}>{children}</div>
+        </li>
+    ) : Icon || icon ? (
+        <li className={styles.liWithCustomIcon}>
+            <Box paddingRight={{mobile: 8, desktop: 16}}>
+                {Icon ? <Icon size="1em" color="currentColor" /> : icon}
+            </Box>
+            <div className={styles.liContent}>{children}</div>
+        </li>
+    ) : (
+        <li className={styles.li}>{children}</li>
+    );
+};
