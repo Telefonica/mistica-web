@@ -1301,6 +1301,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         justifyItems: 'stretch',
                         borderTopLeftRadius: `calc(${borderRadius} - 1px)`,
                         borderTopRightRadius: `calc(${borderRadius} - 1px)`,
+                        borderBottomLeftRadius:
+                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                        borderBottomRightRadius:
+                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                        backgroundColor: isTouchable ? 'transparent' : backgroundColor,
                         overflow: 'hidden',
                         zIndex: 1, // this way the touchable focus ring is above the footer
                     }}
