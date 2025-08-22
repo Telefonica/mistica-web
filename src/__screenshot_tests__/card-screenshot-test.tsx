@@ -323,6 +323,7 @@ test.each`
     ${'#00FF00'}
     ${'blue'}
     ${'rgba(255, 255, 0, 1)'}
+    ${'transparent'}
 `('Card cover with custom gradientOverlayColor - $gradientOverlayColor', async ({gradientOverlayColor}) => {
     await openStoryPage({
         id: STORY_IDS.cover,
