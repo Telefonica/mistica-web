@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DisplayDataCard} from '../card';
+import {DisplayDataCard} from '../card-data';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';

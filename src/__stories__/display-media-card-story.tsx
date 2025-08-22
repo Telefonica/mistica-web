@@ -27,7 +27,7 @@ import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/DisplayMediaCard',
+    title: 'Private/Deprecated Card Stories/DisplayMediaCard',
 };
 
 const BACKGROUND_IMAGE_SRC = usingVrImg;

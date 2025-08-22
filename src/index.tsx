@@ -53,7 +53,7 @@ export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {Placeholder} from './placeholder';
 export {Title1, Title2, Title3, Title4} from './title';
-export {RowList, Row, BoxedRowList, BoxedRow} from './list';
+export {RowList, Row, BoxedRowList, BoxedRow, UnorderedList, OrderedList, ListItem} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
 export {default as RadioButton, RadioGroup} from './radio-button';
@@ -61,25 +61,38 @@ export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HorizontalScroll} from './horizontal-scroll';
-export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
 export {default as Meter} from './meter';
 export {Rating, InfoRating} from './rating';
 export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {Timer, TextTimer} from './timer';
+// @TODO move to card-utils?
+export {CardActionSpinner, CardActionIconButton} from './card-internal';
+export {
+    CoverCard,
+    /** @deprecated use <CoverCard /> */
+    PosterCard,
+    /** @deprecated use <CoverCard size="display" /> */
+    DisplayMediaCard,
+} from './card-cover';
+export {
+    NakedCard,
+    /** @deprecated use <NakedCard size="snap" /> */
+    SmallNakedCard,
+} from './card-naked';
+export {
+    DataCard,
+    /** @deprecated use <DataCard size="snap" /> */
+    SnapCard,
+    /** @deprecated use <DataCard size="display" /> */
+    DisplayDataCard,
+} from './card-data';
 export {
     MediaCard,
-    DataCard,
-    SnapCard,
-    DisplayDataCard,
-    DisplayMediaCard,
-    PosterCard,
-    NakedCard,
-    SmallNakedCard,
-    CardActionSpinner,
-    CardActionIconButton,
-} from './card';
+    /** @deprecated use <MediaCard size="default" mediaPosition="right" /> */
+    HighlightedCard,
+} from './card-media';
 export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';

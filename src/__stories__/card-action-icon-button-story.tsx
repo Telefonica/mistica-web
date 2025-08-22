@@ -16,7 +16,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Cards/Utils/CardActionIconButton',
+    title: 'Private/Deprecated Card Stories/Utils/CardActionIconButton',
 };
 
 const MyCustomCardActionComponent = () => {
