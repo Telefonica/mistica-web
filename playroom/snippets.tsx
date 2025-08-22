@@ -4403,11 +4403,7 @@ const liSnippets = [
     {
         group: 'Li',
         name: 'Li with custom icon',
-        code: `<Li
-      renderIcon={() => (
-        <IconLightningFilled size="1em" color={colors.error} />
-      )}
-    >
+        code: `<Li icon={<IconLightningFilled size="1em" color={colors.error} />}>
       List item with custom icon rendering
     </Li>`,
     },

@@ -41,22 +41,22 @@ export const Ol = ({
 export const Li = ({
     children,
     Icon,
-    renderIcon,
+    icon,
     withMarker = true,
 }: {
     children: React.ReactNode;
     Icon?: (props: IconProps) => JSX.Element;
-    renderIcon?: () => JSX.Element;
+    icon?: JSX.Element;
     withMarker?: boolean;
 }): JSX.Element => {
     return !withMarker ? (
         <li className={styles.liWithoutMarker}>
             <div className={styles.content}>{children}</div>
         </li>
-    ) : Icon || renderIcon ? (
+    ) : Icon || icon ? (
         <li className={styles.liWithCustomIcon}>
             <Box paddingRight={{mobile: 8, desktop: 16}}>
-                {Icon ? <Icon size="1em" color="currentColor" /> : renderIcon?.()}
+                {Icon ? <Icon size="1em" color="currentColor" /> : icon}
             </Box>
             <div className={styles.content}>{children}</div>
         </li>
