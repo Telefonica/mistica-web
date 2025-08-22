@@ -27,6 +27,7 @@ import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
+import Spinner from './spinner';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -52,7 +53,7 @@ interface CommonProps {
     touchableRole?: string;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
-    disabled?: boolean;
+    disabled?: boolean | 'busy';
     withChevron?: boolean;
     'aria-label'?: string;
     right?: Right;
@@ -108,6 +109,19 @@ export const Content = ({
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
+    const rightContent = (right: Right): JSX.Element => (
+        <div
+            className={classNames({
+                [styles.detailRight]: !!detail,
+                [styles.disabled]: disabled,
+            })}
+            ref={rightRef}
+            data-testid="endSlot"
+        >
+            {renderRight(right, centerY)}
+        </div>
+    );
+    console.log('content > ', disabled, control);
     return (
         <div className={styles.content} id={labelId}>
             {asset && (
@@ -137,7 +151,6 @@ export const Content = ({
                     </div>
                 </div>
             )}
-
             <div
                 className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
@@ -196,7 +209,6 @@ export const Content = ({
                     </Box>
                 )}
             </div>
-
             {badge && (
                 <Box paddingLeft={16}>
                     <div className={classNames(styles.badge, {[styles.disabled]: disabled})}>
@@ -204,7 +216,6 @@ export const Content = ({
                     </div>
                 </Box>
             )}
-
             {(detail || right || withChevron || control) && (
                 <div className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}>
                     {detail && (
@@ -220,18 +231,7 @@ export const Content = ({
                         </div>
                     )}
 
-                    {right && (
-                        <div
-                            className={classNames({
-                                [styles.detailRight]: !!detail,
-                                [styles.disabled]: disabled,
-                            })}
-                            ref={rightRef}
-                            data-testid="endSlot"
-                        >
-                            {renderRight(right, centerY)}
-                        </div>
-                    )}
+                    {right && disabled !== 'busy' && rightContent(right)}
 
                     {withChevron && (
                         <div
@@ -246,10 +246,19 @@ export const Content = ({
                         </div>
                     )}
 
-                    {control && (
+                    {control && disabled !== 'busy' && (
                         <div style={{paddingLeft: detail || right ? 8 : 0}} className={styles.center}>
                             {control}
                         </div>
+                    )}
+
+                    {control && disabled === 'busy' && (
+                        <>
+                            {rightContent(<Spinner aria-hidden />)}
+                            <div style={{display: 'none'}} aria-hidden={false}>
+                                {control}
+                            </div>
+                        </>
                     )}
                 </div>
             )}
@@ -436,6 +445,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         'aria-description': props['aria-description'],
         'aria-describedby': props['aria-describedby'],
         'aria-current': props['aria-current'],
+        'aria-busy': props.disabled === 'busy',
     } as TouchableProps;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
@@ -479,26 +489,54 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             withChevron={hasChevron}
         />
     );
+    const BusyComponent = React.useMemo(
+        () =>
+            disabled === 'busy'
+                ? () => (
+                      <div
+                          aria-live="assertive"
+                          aria-hidden={false}
+                          style={{
+                              position: 'absolute',
+                              width: '1px',
+                              height: '1px',
+                              margin: '-1px',
+                              padding: '0',
+                              overflow: 'hidden',
+                              clip: 'rect(0 0 0 0)',
+                              border: '0',
+                              whiteSpace: 'nowrap',
+                          }}
+                      >
+                          this component is updating itself
+                      </div>
+                  )
+                : () => null,
+        [disabled]
+    );
 
     if (isInteractive && !hasControl) {
         return (
-            <BaseTouchable
-                ref={ref}
-                className={classNames(styles.rowContent, {
-                    [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    [styles.pointer]: !disabled,
-                })}
-                {...interactiveProps}
-                role={touchableRole}
-                dataAttributes={dataAttributes}
-                disabled={disabled}
-                tabIndex={tabIndex}
-            >
-                <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
-                    {renderContent({role})}
-                </Box>
-            </BaseTouchable>
+            <>
+                <BusyComponent />
+                <BaseTouchable
+                    ref={ref}
+                    className={classNames(styles.rowContent, {
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundInverse]: hasHoverInverse,
+                        [styles.pointer]: !disabled,
+                    })}
+                    {...interactiveProps}
+                    role={touchableRole}
+                    dataAttributes={dataAttributes}
+                    disabled={!!disabled}
+                    tabIndex={tabIndex}
+                >
+                    <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
+                        {renderContent({role})}
+                    </Box>
+                </BaseTouchable>
+            </>
         );
     }
 
@@ -508,8 +546,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             ref={ref as React.Ref<HTMLDivElement>}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
+            <BusyComponent />
             <BaseTouchable
-                disabled={disabled}
+                disabled={!!disabled}
                 {...interactiveProps}
                 role={touchableRole}
                 className={classNames(styles.dualActionLeft, {
@@ -537,6 +576,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             ref={ref as React.Ref<HTMLDivElement>}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
+            <BusyComponent />
             {content}
         </div>
     );
@@ -548,7 +588,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return isInteractive
             ? renderRowWithDoubleInteraction(
                   <Control
-                      disabled={disabled}
+                      disabled={!!disabled}
                       name={name}
                       checked={isChecked}
                       aria-label={ariaLabel}
@@ -561,7 +601,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
               )
             : renderRowWithSingleControl(
                   <Control
-                      disabled={disabled}
+                      disabled={!!disabled}
                       name={name}
                       checked={isChecked}
                       aria-label={ariaLabel}
@@ -618,9 +658,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                   <Box padding={16}>
                       <Stack space="around">
                           {props.iconButton.Icon ? (
-                              <IconButton {...props.iconButton} disabled={props.disabled} />
+                              <IconButton {...props.iconButton} disabled={!!props.disabled} />
                           ) : (
-                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                              <ToggleIconButton {...props.iconButton} disabled={!!props.disabled} />
                           )}
                       </Stack>
                   </Box>
@@ -634,13 +674,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                                   {props.iconButton.Icon ? (
                                       <IconButton
                                           {...props.iconButton}
-                                          disabled={props.disabled}
+                                          disabled={!!props.disabled}
                                           role={role}
                                       />
                                   ) : (
                                       <ToggleIconButton
                                           {...props.iconButton}
-                                          disabled={props.disabled}
+                                          disabled={!!props.disabled}
                                           role={role}
                                       />
                                   )}
