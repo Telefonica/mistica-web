@@ -4307,16 +4307,16 @@ const timelineSnippets: Array<Snippet> = [
     },
 ];
 
-const olSnippets: Array<Snippet> = [
+const orderedListSnippets: Array<Snippet> = [
     {
-        group: 'Ol',
-        name: 'Ol',
+        group: 'OrderedList',
+        name: 'OrderedList',
         code: `
         <Text3 regular as="div">
-  <Ol>
-    <Li>List item 1</Li>
-    <Li>List item 2</Li>
-    <Li>
+  <OrderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -4324,40 +4324,40 @@ const olSnippets: Array<Snippet> = [
       velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
       occaecat cupidatat non proident, sunt in culpa qui officia deserunt
       mollit anim id est laborum
-      <Ol>
-        <Li>Nested list item 2.1</Li>
-        <Li>Nested list item 2.2</Li>
-        <Li>Nested list item 2.3</Li>
-      </Ol>
-    </Li>
-    <Li>List item 4</Li>
-  </Ol>
+      <OrderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </OrderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </OrderedList>
 </Text3>`,
     },
     {
-        group: 'Ol',
-        name: 'Ol (with icons)',
+        group: 'OrderedList',
+        name: 'OrderedList (with icons)',
         code: `
         <Text3 regular as="div">
-  <Ol>
-    <Li Icon={IconLightningFilled}>List item 1</Li>
-    <Li Icon={IconLightningFilled}>List item 2</Li>
-    <Li Icon={IconLightningFilled}>List item 3</Li>
-  </Ol>
+  <OrderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </OrderedList>
 </Text3>`,
     },
 ];
 
-const ulSnippets: Array<Snippet> = [
+const unorderedListSnippets: Array<Snippet> = [
     {
-        group: 'Ul',
-        name: 'Ul',
+        group: 'UnorderedList',
+        name: 'UnorderedList',
         code: `
         <Text3 regular as="div">
-  <Ul>
-    <Li>List item 1</Li>
-    <Li>List item 2</Li>
-    <Li>
+  <UnorderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -4365,14 +4365,14 @@ const ulSnippets: Array<Snippet> = [
       velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
       occaecat cupidatat non proident, sunt in culpa qui officia deserunt
       mollit anim id est laborum
-      <Ul>
-        <Li>Nested list item 2.1</Li>
-        <Li>Nested list item 2.2</Li>
-        <Li>Nested list item 2.3</Li>
-      </Ul>
-    </Li>
-    <Li>List item 4</Li>
-  </Ul>
+      <UnorderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </UnorderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </UnorderedList>
 </Text3>`,
     },
     {
@@ -4380,37 +4380,37 @@ const ulSnippets: Array<Snippet> = [
         name: 'Ul (with icons)',
         code: `
         <Text3 regular as="div">
-  <Ul>
-    <Li Icon={IconLightningFilled}>List item 1</Li>
-    <Li Icon={IconLightningFilled}>List item 2</Li>
-    <Li Icon={IconLightningFilled}>List item 3</Li>
-  </Ul>
+  <UnorderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </UnorderedList>
 </Text3>`,
     },
 ];
 
-const liSnippets = [
+const listItemSnippets = [
     {
-        group: 'Li',
-        name: 'Li',
-        code: `<Li>List item</Li>`,
+        group: 'ListItem',
+        name: 'ListItem',
+        code: `<ListItem>List item</ListItem>`,
     },
     {
-        group: 'Li',
-        name: 'Li with icon',
-        code: `<Li Icon={IconLightningFilled}>List item</Li>`,
+        group: 'ListItem',
+        name: 'ListItem with icon',
+        code: `<ListItem Icon={IconLightningFilled}>List item</ListItem>`,
     },
     {
-        group: 'Li',
-        name: 'Li with custom icon',
-        code: `<Li icon={<IconLightningFilled size="1em" color={colors.error} />}>
+        group: 'ListItem',
+        name: 'ListItem with custom icon',
+        code: `<ListItem icon={<IconLightningFilled size="1em" color={colors.error} />}>
       List item with custom icon rendering
-    </Li>`,
+    </ListItem>`,
     },
     {
-        group: 'Li',
-        name: 'Li without marker',
-        code: `<Li withMarker={false}>List item</Li>`,
+        group: 'ListItem',
+        name: 'ListItem without marker',
+        code: `<ListItem withMarker={false}>List item</Li>`,
     },
 ];
 
@@ -4460,6 +4460,8 @@ export default [
     ...accordionSnippets,
     ...listSnippets,
     ...listSnippetsAvatar,
+    ...orderedListSnippets,
+    ...unorderedListSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
     ...sliderSnippets,
@@ -4612,8 +4614,6 @@ export default [
     ...loadingScreenSnippets,
     ...tableSnippets,
     ...timelineSnippets,
-    ...olSnippets,
-    ...ulSnippets,
-    ...liSnippets,
+    ...listItemSnippets,
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
