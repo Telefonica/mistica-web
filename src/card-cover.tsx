@@ -26,7 +26,7 @@ type CoverCardProps = {
     size?: CardSize;
     variant?: Variant;
     backgroundColor?: string;
-    gradientOverlayColor?: 'none' | string;
+    gradientOverlayColor?: 'transparent' | string;
     aspectRatio?: CardAspectRatio;
     width?: number | string;
     height?: number | string;
