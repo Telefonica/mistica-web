@@ -67,7 +67,7 @@ type ContainerProps = {
     width?: string | number;
     height?: string | number;
     /** Gradient overlay color for cover cards. If not set it uses the theme color */
-    gradientOverlayColor?: string;
+    gradientOverlayColor?: 'transparent' | string;
     aspectRatio?: CardAspectRatio;
     dataAttributes?: DataAttributes;
     'aria-label'?: React.AriaAttributes['aria-label'];
@@ -1202,6 +1202,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         /** This effect updates the overlay gradient and footer colors based on the gradientOverlayColor prop. */
         React.useEffect(() => {
+            if (gradientOverlayColor === 'transparent') {
+                return setOverlayColors(['transparent', 'transparent']);
+            }
             if (gradientOverlayColor) {
                 const components = getRGBComponents(gradientOverlayColor);
                 if (!components) {
