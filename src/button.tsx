@@ -29,18 +29,11 @@ import type {ExclusifyUnion} from './utils/utility-types';
 const ButtonTextRenderer = ({element, small}: {element: React.ReactNode; small?: boolean}) => {
     const {textPresets} = useTheme();
     return small ? (
-        <Text
-            size={14}
-            lineHeight={20}
-            weight={textPresets.button.weight}
-            truncate={1}
-            color="inherit"
-            as="div"
-        >
+        <Text size={14} lineHeight={20} weight={textPresets.button.weight} color="inherit" as="div">
             {element}
         </Text>
     ) : (
-        <Text3 weight={textPresets.button.weight} truncate={1} color="inherit" as="div">
+        <Text3 weight={textPresets.button.weight} color="inherit" as="div">
             {element}
         </Text3>
     );
