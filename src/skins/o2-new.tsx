@@ -225,7 +225,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             tagBackgroundWarningInverse: palette.o2Orange10,
             tagBackgroundErrorInverse: palette.o2Red10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
-            cardFooterOverlay: applyAlpha(palette.black, 1),
+            cardFooterOverlay: applyAlpha(palette.black, 0.7),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
