@@ -240,7 +240,7 @@
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
     --mistica-border-radius-bar: 999px;
-    --mistica-border-radius-button: 999px;
+    --mistica-border-radius-button: 32px;
     --mistica-border-radius-checkbox: 4px;
     --mistica-border-radius-container: 20px;
     --mistica-border-radius-indicator: 8px;
