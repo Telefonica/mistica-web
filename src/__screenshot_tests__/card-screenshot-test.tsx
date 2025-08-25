@@ -1,4 +1,3 @@
-import {O2} from '../../.storybook/themes';
 import {
     BLAU_SKIN,
     ESIMFLAG_SKIN,
