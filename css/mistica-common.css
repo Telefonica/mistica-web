@@ -256,17 +256,12 @@
 .mistica-text-title1 {
     color: var(--vcolor-textSecondary);
     text-transform: uppercase;
-    font-size: var(--mistica-font-size-1);
-    line-height: var(--mistica-line-height-1);
     font-size: var(--mistica-font-size-title1);
     line-height: var(--mistica-line-height-title1);
     font-weight: var(--mistica-font-weight-title1);
 }
 .mistica-text-title2 {
     color: var(--vcolor-textPrimary);
-    font-size: var(--mistica-font-size-3);
-    line-height: var(--mistica-line-height-3);
-
     font-size: var(--mistica-font-size-title2);
     line-height: var(--mistica-line-height-title2);
     font-weight: var(--mistica-font-weight-title2);
