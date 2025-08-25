@@ -12,7 +12,6 @@ import {
     IconThumbUpFilled,
     IconMobileDeviceRegular,
     Image,
-    Text3,
     Inline,
     Avatar,
     IconTrashCanRegular,
@@ -20,6 +19,23 @@ import {
     IconPlayFilled,
     ResponsiveLayout,
     NegativeBox,
+    Title2,
+    OrderedList,
+    UnorderedList,
+    ListItem,
+    IconLightningFilled,
+    Box,
+    Text1,
+    Text2,
+    Text3,
+    Text4,
+    Text5,
+    Text6,
+    Text7,
+    Text8,
+    Text9,
+    Text10,
+    Stack,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -29,33 +45,6 @@ import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
     title: 'Components/Lists',
-    argTypes: {
-        control: {
-            options: [
-                'chevron',
-                'navigates without chevron',
-                'switch',
-                'switch and onPress',
-                'checkbox',
-                'checkbox and onPress',
-                'checkbox with custom element',
-                'radio',
-                'radio and onPress',
-                'iconButton',
-                'iconButton and onPress',
-                'toggleIconButton',
-                'custom element',
-                'custom element with text',
-                'action with custom element',
-                'none',
-            ],
-            control: {type: 'select'},
-        },
-        'aria-live': {
-            options: ['off', 'polite', 'assertive'],
-            control: {type: 'select'},
-        },
-    },
     parameters: {
         fullScreen: true,
     },
@@ -458,10 +447,221 @@ const defaultArgs = {
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
 RowListStory.storyName = 'RowList';
 RowListStory.args = defaultArgs;
+RowListStory.argTypes = {
+    control: {
+        options: [
+            'chevron',
+            'navigates without chevron',
+            'switch',
+            'switch and onPress',
+            'checkbox',
+            'checkbox and onPress',
+            'checkbox with custom element',
+            'radio',
+            'radio and onPress',
+            'iconButton',
+            'iconButton and onPress',
+            'toggleIconButton',
+            'custom element',
+            'custom element with text',
+            'action with custom element',
+            'none',
+        ],
+        control: {type: 'select'},
+    },
+    'aria-live': {
+        options: ['off', 'polite', 'assertive'],
+        control: {type: 'select'},
+    },
+};
 
 export const BoxedRowListStory: StoryComponent<Args & {inverse: boolean}> = (args) => (
     <Template boxed {...args} />
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = {...defaultArgs, inverse: false};
-BoxedRowListStory.argTypes = {danger: {if: {arg: 'inverse', eq: false}}};
+BoxedRowListStory.argTypes = {...RowListStory.argTypes, danger: {if: {arg: 'inverse', eq: false}}};
+
+type UnorderedListArgs = {
+    inverse: boolean;
+    textPreset:
+        | 'Text1'
+        | 'Text2'
+        | 'Text3'
+        | 'Text4'
+        | 'Text5'
+        | 'Text6'
+        | 'Text7'
+        | 'Text8'
+        | 'Text9'
+        | 'Text10';
+    customIcon: boolean;
+    withMarker: boolean;
+};
+
+export const UnorderedListStory: StoryComponent<UnorderedListArgs> = ({
+    inverse,
+    textPreset,
+    customIcon,
+    withMarker,
+}) => {
+    const TextComponent = {
+        Text1,
+        Text2,
+        Text3,
+        Text4,
+        Text5,
+        Text6,
+        Text7,
+        Text8,
+        Text9,
+        Text10,
+    }[textPreset];
+    const Icon = customIcon ? IconLightningFilled : undefined;
+    return (
+        <ResponsiveLayout variant={inverse ? 'inverse' : 'default'}>
+            <TextComponent as="div" regular>
+                <Box paddingY={24}>
+                    <Stack space={16}>
+                        <Title2 id="title">Unordered List</Title2>
+                        <UnorderedList aria-labelledby="title">
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                List item 1
+                            </ListItem>
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                                <UnorderedList>
+                                    <ListItem Icon={Icon} withMarker={withMarker}>
+                                        Nested list item 1.1
+                                    </ListItem>
+                                    <ListItem Icon={Icon} withMarker={withMarker}>
+                                        Nested list item 1.2
+                                        <UnorderedList>
+                                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                                Nested list item 1.2.1
+                                            </ListItem>
+                                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                                Nested list item 1.2.2
+                                            </ListItem>
+                                        </UnorderedList>
+                                    </ListItem>
+                                    <ListItem Icon={Icon} withMarker={withMarker}>
+                                        Nested list item 1.3
+                                    </ListItem>
+                                </UnorderedList>
+                            </ListItem>
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                List item 3
+                            </ListItem>
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                List item 4
+                            </ListItem>
+                        </UnorderedList>
+                    </Stack>
+                </Box>
+            </TextComponent>
+        </ResponsiveLayout>
+    );
+};
+
+const unorderedListArgTypes = {
+    textPreset: {
+        control: 'select',
+        options: ['Text1', 'Text2', 'Text3', 'Text4', 'Text5', 'Text6', 'Text7', 'Text8', 'Text9', 'Text10'],
+    },
+} as const;
+
+const unorderedListArgs = {
+    inverse: false,
+    textPreset: 'Text1',
+    customIcon: true,
+    withMarker: true,
+} as const;
+
+UnorderedListStory.storyName = 'UnorderedList';
+UnorderedListStory.argTypes = unorderedListArgTypes;
+UnorderedListStory.args = unorderedListArgs;
+
+type OrderedListArgs = UnorderedListArgs;
+
+export const OrderedListStory: StoryComponent<OrderedListArgs> = ({
+    inverse,
+    textPreset,
+    customIcon,
+    withMarker,
+}) => {
+    const TextComponent = {
+        Text1,
+        Text2,
+        Text3,
+        Text4,
+        Text5,
+        Text6,
+        Text7,
+        Text8,
+        Text9,
+        Text10,
+    }[textPreset];
+    const Icon = customIcon ? IconLightningFilled : undefined;
+    return (
+        <ResponsiveLayout variant={inverse ? 'inverse' : 'default'}>
+            <TextComponent as="div" regular>
+                <Box paddingY={24}>
+                    <Stack space={16}>
+                        <Title2 id="title">Ordered List</Title2>
+                        <OrderedList aria-labelledby="title">
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                List item 1
+                            </ListItem>
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                                <OrderedList>
+                                    <ListItem Icon={Icon} withMarker={withMarker}>
+                                        Nested list item 1.1
+                                    </ListItem>
+                                    <ListItem Icon={Icon} withMarker={withMarker}>
+                                        Nested list item 1.2
+                                        <OrderedList>
+                                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                                Nested list item 1.2.1
+                                            </ListItem>
+                                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                                Nested list item 1.2.2
+                                            </ListItem>
+                                        </OrderedList>
+                                    </ListItem>
+                                    <ListItem Icon={Icon} withMarker={withMarker}>
+                                        Nested list item 1.3
+                                    </ListItem>
+                                </OrderedList>
+                            </ListItem>
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                List item 3
+                            </ListItem>
+                            <ListItem Icon={Icon} withMarker={withMarker}>
+                                List item 4
+                            </ListItem>
+                        </OrderedList>
+                    </Stack>
+                </Box>
+            </TextComponent>
+        </ResponsiveLayout>
+    );
+};
+
+const orderedListArgs = unorderedListArgs;
+const orderedListArgTypes = unorderedListArgTypes;
+
+OrderedListStory.storyName = 'OrderedList';
+OrderedListStory.argTypes = orderedListArgTypes;
+OrderedListStory.args = orderedListArgs;

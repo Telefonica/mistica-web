@@ -35,9 +35,9 @@ export const Default: StoryComponent<Args> = ({gap}) => (
         <Box paddingY={24}>
             <Stack space={32}>
                 <Stack space={16}>
-                    <Title1>Example 1</Title1>
-                    <Grid columns={3} rows={3} gap={gap}>
-                        <GridItem>
+                    <Title1 id="example-1">Example 1</Title1>
+                    <Grid as="ul" aria-labelledby="example-1" columns={3} rows={3} gap={gap}>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -48,7 +48,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 1"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -59,7 +59,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 2"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -70,7 +70,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 3"
                             />
                         </GridItem>
-                        <GridItem columnSpan={2}>
+                        <GridItem as="li" columnSpan={2}>
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -81,7 +81,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 4"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -92,7 +92,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 5"
                             />
                         </GridItem>
-                        <GridItem columnSpan="full">
+                        <GridItem as="li" columnSpan="full">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -107,9 +107,9 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                 </Stack>
 
                 <Stack space={16}>
-                    <Title1>Example 2</Title1>
-                    <Grid columns={3} rows={3} gap={gap}>
-                        <GridItem>
+                    <Title1 id="example-2">Example 2</Title1>
+                    <Grid as="ul" aria-labelledby="example-2" columns={3} rows={3} gap={gap}>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -120,7 +120,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 1"
                             />
                         </GridItem>
-                        <GridItem rowSpan={2}>
+                        <GridItem as="li" rowSpan={2}>
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -131,7 +131,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 2"
                             />
                         </GridItem>
-                        <GridItem rowSpan={3}>
+                        <GridItem as="li" rowSpan={3}>
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -142,7 +142,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 3"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -153,7 +153,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 4"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -164,7 +164,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 5"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem as="li">
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -179,9 +179,9 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                 </Stack>
 
                 <Stack space={16}>
-                    <Title1>Example 3</Title1>
-                    <Grid columns={3} rows={3} gap={gap}>
-                        <GridItem columnSpan={2}>
+                    <Title1 id="example-3">Example 3</Title1>
+                    <Grid as="ul" aria-labelledby="example-3" columns={3} rows={3} gap={gap}>
+                        <GridItem as="li" columnSpan={2}>
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -192,7 +192,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 1"
                             />
                         </GridItem>
-                        <GridItem rowSpan={3}>
+                        <GridItem as="li" rowSpan={3}>
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -203,7 +203,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                                 subtitle="Subtitle 2"
                             />
                         </GridItem>
-                        <GridItem rowSpan={2} columnSpan={2}>
+                        <GridItem as="li" rowSpan={2} columnSpan={2}>
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>

@@ -14,7 +14,6 @@ test('spinner is accessible', () => {
     const spinner = screen.getByRole('progressbar', {name: 'Cargando'});
 
     expect(spinner).toBeInTheDocument();
-    expect(spinner).toHaveAttribute('aria-busy');
 });
 
 test('spinner with aria-hidden is not visible', () => {

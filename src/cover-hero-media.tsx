@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {CardActionsGroup, useVideoWithControls} from './card';
+import {TopActions, useVideoWithControls} from './card-internal';
 import * as styles from './cover-hero.css';
 import Image from './image';
 
@@ -29,7 +29,7 @@ export const CoverHeroMedia = ({
             {backgroundImage && <Image width="100%" height="100%" src={backgroundImage} />}
             {backgroundVideo && video}
             <div className={styles.mediaOverlay} />
-            {videoAction && <CardActionsGroup actions={[videoAction]} variant="media" />}
+            {videoAction && <TopActions actions={[videoAction]} variant="media" />}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
-import HighlightedCard from '../highlighted-card';
+import {HighlightedCard} from '../card-media';
 
 const s = 'maybe string' as string | undefined;
 
@@ -9,11 +9,6 @@ const s = 'maybe string' as string | undefined;
 <HighlightedCard title="title" description="description" />;
 <HighlightedCard title="title" description={s} />;
 <HighlightedCard title={s} description="description" />;
-
-// @ts-expect-error a title or a description is required
-<HighlightedCard />;
-// @ts-expect-error a title or a description is required
-<HighlightedCard title={s} description={s} />;
 
 <HighlightedCard title="title" onPress={() => {}} />;
 <HighlightedCard title="title" to="#" fullPageOnWebView />;

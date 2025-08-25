@@ -74,6 +74,8 @@ type GridProps = {
     minHeight?: string | number;
     children: React.ReactNode;
     as?: React.ComponentType<any> | string;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 };
@@ -93,6 +95,8 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
             minHeight,
             children,
             as = 'div',
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
             dataAttributes,
         },
         ref
@@ -151,6 +155,10 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                     }),
                 },
                 ...getPrefixedDataAttributes(dataAttributes),
+                // role="list" is needed in <ul> for accessibility in Safari+VoiceOver. See: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#accessibility
+                ...(as === 'ul' ? {role: 'list'} : {}),
+                'aria-label': ariaLabel,
+                'aria-labelledby': ariaLabelledby,
             },
             children
         );

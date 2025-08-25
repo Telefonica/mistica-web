@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "16.32.0",
+    "version": "16.37.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -212,6 +212,6 @@
         "packages/eslint-plugin-mistica-local-rules"
     ],
     "engines": {
-        "node": "^18.0.0"
+        "node": ">=18.0.0"
     }
 }

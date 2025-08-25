@@ -3,7 +3,6 @@ import {
     IconMobileDeviceRegular,
     skinVars,
     Circle,
-    SnapCard,
     ResponsiveLayout,
     Stack,
     Text2,
@@ -13,11 +12,12 @@ import {
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
+import {SnapCard} from '../card-data';
 
-import type {AspectRatio} from '../card';
+import type {CardAspectRatio, SlotAlignment} from '../card-internal';
 
 export default {
-    title: 'Components/Cards/SnapCard',
+    title: 'Private/Deprecated Card Stories/SnapCard',
 };
 
 type Args = {
@@ -27,8 +27,9 @@ type Args = {
     description: string;
     actions: 'onPress' | 'href' | 'to' | 'none';
     inverse: boolean;
+    slotAlignment?: SlotAlignment;
     extra: boolean;
-    aspectRatio: AspectRatio;
+    aspectRatio: string;
 };
 
 const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
@@ -40,6 +41,7 @@ export const Default: StoryComponent<Args> = ({
     description,
     actions,
     inverse,
+    slotAlignment,
     extra,
     aspectRatio,
 }) => {
@@ -64,8 +66,8 @@ export const Default: StoryComponent<Args> = ({
         : aspectRatio;
 
     const interactiveProps = {
-        onPress: actions === 'onPress' ? () => {} : undefined,
-        to: actions === 'to' ? '#' : undefined,
+        onPress: actions === 'onPress' ? () => console.log('pressed') : undefined,
+        to: actions === 'to' ? '#example' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
     } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
 
@@ -79,7 +81,8 @@ export const Default: StoryComponent<Args> = ({
             aria-label="SnapCard card label"
             isInverse={inverse}
             extra={extra ? <Placeholder /> : undefined}
-            aspectRatio={aspectRatioValue as AspectRatio}
+            aspectRatio={aspectRatioValue as CardAspectRatio}
+            slotAlignment={slotAlignment}
             {...interactiveProps}
         />
     );
@@ -94,6 +97,7 @@ Default.args = {
     actions: 'none',
     inverse: false,
     extra: false,
+    slotAlignment: 'bottom',
     aspectRatio: 'auto',
 };
 Default.argTypes = {
@@ -112,6 +116,10 @@ Default.argTypes = {
                 '9 10': '9:10',
             },
         },
+    },
+    slotAlignment: {
+        options: ['content', 'bottom'],
+        control: {type: 'select'},
     },
     actions: {
         options: ['onPress', 'href', 'to', 'none'],
@@ -148,6 +156,7 @@ export const Group: StoryComponent = () => {
                             <SnapCard title="Title 3" />,
                             <SnapCard
                                 title="Data left"
+                                slotAlignment="bottom"
                                 extra={
                                     <Stack space={4}>
                                         <Text4 regular>10 GB</Text4>
