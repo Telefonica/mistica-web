@@ -1,3 +1,171 @@
+[data-mistica-variant='inverse'] > *,
+.mistica-display-card:has(.mistica-card__media) > *,
+.mistica-snap-card.mistica-card-inverse > *,
+.mistica-display-card.mistica-card-inverse > *,
+.mistica-card.mistica-card-inverse > * {
+    /* TODO: Handle the case when an inverse card is rendered over an inverse context
+    ** (e.g., an inverse responsive layout). In that scenario, the background color should be
+    **`backgroundContainerBrandOverInverse`. For now, this case is ignored and may be addressed later.*/
+    --mistica-boxed-border: none;
+
+    --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
+    --vcolor-textSecondary: var(--mistica-color-textSecondaryInverse);
+    --vcolor-textLink: var(--mistica-color-textLinkInverse);
+    --vcolor-textError: var(--mistica-color-textErrorInverse);
+
+    --vcolor-textButtonPrimary: var(--mistica-color-textButtonPrimaryInverse);
+    --vcolor-textButtonSecondary: var(--mistica-color-textButtonSecondaryInverse);
+    --vcolor-textButtonError: var(--mistica-color-textButtonPrimary);
+    --vcolor-buttonPrimaryBackground: var(--mistica-color-buttonPrimaryBackgroundInverse);
+    --vcolor-buttonPrimaryBackgroundHover: var(--mistica-color-buttonPrimaryBackgroundInversePressed);
+    --vcolor-buttonPrimaryBackgroundPressed: var(--mistica-color-buttonPrimaryBackgroundInversePressed);
+    --vcolor-buttonSecondaryBorder: var(--mistica-color-buttonSecondaryBorderInverse);
+    --vcolor-textButtonSecondaryPressed: var(--mistica-color-textButtonSecondaryInversePressed);
+    --vcolor-buttonSecondaryBackgroundHover: var(--mistica-color-buttonSecondaryBackgroundInverseHover);
+    --vcolor-buttonSecondaryBackgroundPressed: var(--mistica-color-buttonSecondaryBackgroundInversePressed);
+    --vcolor-buttonLinkBackgroundPressed: var(--mistica-color-buttonLinkBackgroundInversePressed);
+
+    --vcolor-tagBackgroundPromo: var(--mistica-color-tagBackgroundPromoInverse);
+    --vcolor-tagTextPromo: var(--mistica-color-tagTextPromoInverse);
+    --vcolor-tagBackgroundActive: var(--mistica-color-tagBackgroundActiveInverse);
+    --vcolor-tagTextActive: var(--mistica-color-tagTextActiveInverse);
+    --vcolor-tagBackgroundInactive: var(--mistica-color-tagBackgroundInactiveInverse);
+    --vcolor-tagTextInactive: var(--mistica-color-tagTextInactiveInverse);
+    --vcolor-tagBackgroundSuccess: var(--mistica-color-tagBackgroundSuccessInverse);
+    --vcolor-tagTextSuccess: var(--mistica-color-tagTextSuccessInverse);
+    --vcolor-tagBackgroundWarning: var(--mistica-color-tagBackgroundWarningInverse);
+    --vcolor-tagTextWarning: var(--mistica-color-tagTextWarningInverse);
+    --vcolor-tagBackgroundError: var(--mistica-color-tagBackgroundErrorInverse);
+    --vcolor-tagTextError: var(--mistica-color-tagTextErrorInverse);
+
+    --vcolor-accordionChevronClosed: var(--mistica-color-inverse);
+    --vcolor-accordionChevronOpen: var(--mistica-color-inverse);
+    --vcolor-backgroundContainerHover: var(--mistica-color-backgroundContainerBrandHover);
+    --vcolor-backgroundConteinerPressed: var(--mistica-color-backgroundContainerBrandPressed);
+
+    --vcolor-divider: var(--mistica-color-dividerInverse);
+
+    --vcolor-control: var(--mistica-color-controlInverse);
+    --vcolor-controlActivated: var(--mistica-color-controlActivatedInverse);
+    --vcolor-checkbox-tick: var(--mistica-color-controlKnobInverse);
+    --vcolor-checkbox-background: transparent;
+
+    --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
+
+    --vcolor-barTrack: var(--mistica-color-barTrackInverse);
+
+    --vcolor-switch-trackBackground: transparent;
+    --vcolor-switch-handleChecked: var(--mistica-color-controlKnobInverse);
+    --vcolor-switch-handleHover: var(--mistica-color-inverse);
+
+    --vcolor-rowChevron: var(--mistica-color-inverse);
+}
+
+[data-mistica-skin] > *,
+[data-mistica-variant='default'] > *,
+.mistica-boxed > *,
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > *,
+.mistica-boxed > *,
+.mistica-boxed-row > * {
+    --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    --vcolor-textPrimary: var(--mistica-color-textPrimary);
+    --vcolor-textSecondary: var(--mistica-color-textSecondary);
+    --vcolor-textLink: var(--mistica-color-textLink);
+    --vcolor-textError: var(--mistica-color-textError);
+
+    --vcolor-textButtonPrimary: var(--mistica-color-textButtonPrimary);
+    --vcolor-textButtonSecondary: var(--mistica-color-textButtonSecondary);
+    --vcolor-textButtonError: var(--mistica-color-textButtonPrimary);
+    --vcolor-buttonPrimaryBackground: var(--mistica-color-buttonPrimaryBackground);
+    --vcolor-buttonPrimaryBackgroundHover: var(--mistica-color-buttonPrimaryBackgroundHover);
+    --vcolor-buttonPrimaryBackgroundPressed: var(--mistica-color-buttonPrimaryBackgroundPressed);
+    --vcolor-buttonSecondaryBorder: var(--mistica-color-buttonSecondaryBorder);
+    --vcolor-textButtonSecondaryPressed: var(--mistica-color-textButtonSecondaryPressed);
+    --vcolor-buttonSecondaryBackgroundHover: var(--mistica-color-buttonSecondaryBackgroundHover);
+    --vcolor-buttonSecondaryBackgroundPressed: var(--mistica-color-buttonSecondaryBackgroundPressed);
+    --vcolor-buttonLinkBackgroundPressed: var(--mistica-color-buttonLinkBackgroundPressed);
+
+    --vcolor-tagBackgroundPromo: var(--mistica-color-tagBackgroundPromo);
+    --vcolor-tagTextPromo: var(--mistica-color-tagTextPromo);
+    --vcolor-tagBackgroundActive: var(--mistica-color-tagBackgroundActive);
+    --vcolor-tagTextActive: var(--mistica-color-tagTextActive);
+    --vcolor-tagBackgroundInactive: var(--mistica-color-tagBackgroundInactive);
+    --vcolor-tagTextInactive: var(--mistica-color-tagTextInactive);
+    --vcolor-tagBackgroundSuccess: var(--mistica-color-tagBackgroundSuccess);
+    --vcolor-tagTextSuccess: var(--mistica-color-tagTextSuccess);
+    --vcolor-tagBackgroundWarning: var(--mistica-color-tagBackgroundWarning);
+    --vcolor-tagTextWarning: var(--mistica-color-tagTextWarning);
+    --vcolor-tagBackgroundError: var(--mistica-color-tagBackgroundError);
+    --vcolor-tagTextError: var(--mistica-color-tagTextError);
+
+    --vcolor-accordionChevronClosed: var(--mistica-color-neutralMedium);
+    --vcolor-accordionChevronOpen: var(--mistica-color-neutralHigh);
+    --vcolor-backgroundContainerHover: var(--mistica-color-backgroundContainerHover);
+    --vcolor-backgroundConteinerPressed: var(--mistica-color-backgroundContainerPressed);
+
+    --vcolor-divider: var(--mistica-color-divider);
+
+    --vcolor-control: var(--mistica-color-control);
+    --vcolor-controlActivated: var(--mistica-color-controlActivated);
+    --vcolor-checkbox-tick: var(--mistica-color-inverse);
+    --vcolor-checkbox-background: var(--mistica-color-background);
+
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
+
+    --vcolor-barTrack: var(--mistica-color-barTrack);
+
+    --vcolor-switch-trackBackground: var(--mistica-color-backgroundAlternative);
+    --vcolor-switch-handleChecked: var(--mistica-color-inverse);
+    --vcolor-switch-handleHover: var(--mistica-color-neutralHigh);
+
+    --vcolor-rowChevron: var(--mistica-color-neutralMedium);
+}
+
+.mistica-display-card.mistica-card-inverse,
+.mistica-snap-card.mistica-card-inverse,
+.mistica-card.mistica-card-inverse {
+    --mistica-color-backgroundContainer: var(--mistica-color-backgroundContainerBrand);
+    --mistica-card-text-color: var(--mistica-color-textPrimaryInverse);
+    --mistica-card-description-text-color: var(--mistica-color-textPrimaryInverse);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-mistica-skin] > *,
+    [data-mistica-variant='default'] > *,
+    .mistica-card > *,
+    .mistica-snap-card > * {
+        --mistica-boxed-border: none;
+    }
+
+    [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-inputBorder);
+    }
+
+    [data-mistica-color-scheme='light'][data-mistica-skin] > *,
+    [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
+    [data-mistica-color-scheme='light'] .mistica-card > *,
+    [data-mistica-color-scheme='light'] .mistica-snap-card > * {
+        --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    }
+
+    [data-mistica-color-scheme='light'] [data-mistica-variant='inverse'] > * {
+        --vcolor-inputBorder: var(--mistica-color-backgroundContainer);
+    }
+}
+
+[data-mistica-color-scheme='dark'][data-mistica-skin] > *,
+[data-mistica-color-scheme='dark'] [data-mistica-variant='default'] > *,
+[data-mistica-color-scheme='dark'] .mistica-card > *,
+[data-mistica-color-scheme='dark'] .mistica-snap-card > * {
+    --mistica-boxed-border: none;
+}
+
+[data-mistica-color-scheme='dark'] [data-mistica-variant='inverse'] > * {
+    --vcolor-inputBorder: var(--mistica-color-inputBorder);
+}
+
 /* Default text color */
 [data-mistica-skin] {
     color: var(--mistica-color-textPrimary);
@@ -6,51 +174,61 @@
 
 /* text utility classes */
 .mistica-text-1 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-1);
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
 }
 .mistica-text-2 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-2);
     line-height: var(--mistica-line-height-2);
     font-weight: var(--mistica-font-weight-2);
 }
 .mistica-text-3 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-3);
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-3);
 }
 .mistica-text-4 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-4);
     line-height: var(--mistica-line-height-4);
     font-weight: var(--mistica-font-weight-4);
 }
 .mistica-text-5 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-5);
     line-height: var(--mistica-line-height-5);
     font-weight: var(--mistica-font-weight-5);
 }
 .mistica-text-6 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-6);
     line-height: var(--mistica-line-height-6);
     font-weight: var(--mistica-font-weight-6);
 }
 .mistica-text-7 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-7);
     line-height: var(--mistica-line-height-7);
     font-weight: var(--mistica-font-weight-7);
 }
 .mistica-text-8 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-8);
     line-height: var(--mistica-line-height-8);
     font-weight: var(--mistica-font-weight-8);
 }
 .mistica-text-9 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-9);
     line-height: var(--mistica-line-height-9);
     font-weight: var(--mistica-font-weight-9);
 }
 .mistica-text-10 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-10);
     line-height: var(--mistica-line-height-10);
     font-weight: var(--mistica-font-weight-10);
@@ -76,19 +254,34 @@
     font-weight: var(--mistica-font-weight-link);
 }
 .mistica-text-title1 {
+    color: var(--vcolor-textSecondary);
+    text-transform: uppercase;
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
     font-size: var(--mistica-font-size-title1);
     line-height: var(--mistica-line-height-title1);
     font-weight: var(--mistica-font-weight-title1);
 }
 .mistica-text-title2 {
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+
     font-size: var(--mistica-font-size-title2);
     line-height: var(--mistica-line-height-title2);
     font-weight: var(--mistica-font-weight-title2);
 }
 .mistica-text-title3 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-title3);
     line-height: var(--mistica-line-height-title3);
     font-weight: var(--mistica-font-weight-title3);
+}
+.mistica-text-title4 {
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
 }
 .mistica-text-indicator {
     font-size: var(--mistica-font-size-indicator);
@@ -103,7 +296,7 @@
 
 /* Boxed */
 .mistica-boxed {
-    border: 1px solid var(--mistica-color-border);
+    border: var(--mistica-boxed-border);
     border-radius: var(--mistica-border-radius-container);
     background: var(--mistica-color-backgroundContainer);
 }
@@ -112,8 +305,12 @@
 .mistica-responsive-layout {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
-    margin: 0 var(--mistica-responsive-layout-margin);
+    padding: 0 var(--mistica-responsive-layout-margin);
     --mistica-responsive-layout-margin: 16px;
+}
+
+.mistica-responsive-layout[data-mistica-variant='inverse'] {
+    background: var(--mistica-color-backgroundBrand);
 }
 
 @media (min-width: 768px) {
@@ -132,4 +329,1908 @@
     .mistica-responsive-layout {
         --mistica-responsive-layout-margin: calc((100vw - 1416px) / 2);
     }
+}
+
+/* Chip */
+
+.mistica-chip {
+    font-weight: var(--mistica-font-weight-indicator);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    color: var(--mistica-color-textPrimary);
+    border: 1px solid var(--mistica-color-control);
+    border-radius: var(--mistica-border-radius-indicator);
+    background: var(--mistica-color-backgroundContainer);
+    position: relative;
+    overflow: hidden;
+    min-width: 72px;
+    min-height: 40px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+label.mistica-chip {
+    padding: 0;
+    border: none;
+    overflow: visible;
+    background: transparent;
+}
+label.mistica-chip > span {
+    border: 1px solid var(--mistica-color-control);
+    border-radius: var(--mistica-border-radius-indicator);
+    background: var(--mistica-color-backgroundContainer);
+    position: relative;
+    overflow: hidden;
+    min-width: 72px;
+    min-height: 40px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .mistica-chip,
+    label.mistica-chip > span {
+        min-width: 56px;
+        min-height: 32px;
+        padding: 0 12px;
+    }
+}
+
+button.mistica-chip,
+a.mistica-chip,
+label.mistica-chip {
+    cursor: pointer;
+    user-select: none;
+}
+
+button.mistica-chip:before,
+a.mistica-chip:before,
+label.mistica-chip > span:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    /* transition: background-color 0.1s ease-in-out; */
+}
+
+@media (pointer: fine) {
+    button.mistica-chip:hover:before,
+    a.mistica-chip:hover:before,
+    label.mistica-chip > input:hover + span:before {
+        background: var(--mistica-color-backgroundContainerHover);
+    }
+}
+
+button.mistica-chip:active:before,
+a.mistica-chip:active:before,
+label.mistica-chip > input:active + span:before {
+    background: var(--mistica-color-backgroundContainerPressed);
+}
+
+label.mistica-chip > input {
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--mistica-border-radius-indicator);
+    outline-offset: 0;
+}
+
+label.mistica-chip > input:checked + span {
+    color: var(--mistica-color-textActivated);
+    background: var(--mistica-color-brandLow);
+    border-color: var(--mistica-color-controlActivated);
+}
+
+.mistica-chip > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+    margin: 0;
+    min-width: 24px;
+    min-height: 24px;
+    margin-left: 4px;
+    margin-right: -4px;
+}
+
+.mistica-chip > button > svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Tag */
+[class^='mistica-tag'] {
+    font-weight: var(--mistica-font-weight-indicator);
+    border-radius: var(--mistica-border-radius-indicator);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 56px;
+    padding: 4px 12px;
+    vertical-align: middle;
+    width: fit-content;
+}
+
+.mistica-tag-promo {
+    background: var(--vcolor-tagBackgroundPromo);
+    color: var(--vcolor-tagTextPromo);
+}
+
+.mistica-tag-active {
+    background: var(--vcolor-tagBackgroundActive);
+    color: var(--vcolor-tagTextActive);
+}
+
+.mistica-tag-inactive {
+    background: var(--vcolor-tagBackgroundInactive);
+    color: var(--vcolor-tagTextInactive);
+}
+
+.mistica-tag-success {
+    background: var(--vcolor-tagBackgroundSuccess);
+    color: var(--vcolor-tagTextSuccess);
+}
+
+.mistica-tag-warning {
+    background: var(--vcolor-tagBackgroundWarning);
+    color: var(--vcolor-tagTextWarning);
+}
+
+.mistica-tag-error {
+    background: var(--vcolor-tagBackgroundError);
+    color: var(--vcolor-tagTextError);
+}
+
+/* TextLink */
+
+.mistica-text-link,
+[class^='mistica-text'] a {
+    color: var(--vcolor-textLink);
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    text-decoration: underline;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (pointer: fine) {
+    .mistica-text-link:hover:not([disabled]),
+    [class^='mistica-text'] a:hover:not([disabled]) {
+        text-decoration-thickness: 0.125em;
+    }
+}
+
+.mistica-text-link[disabled],
+[class^='mistica-text'] a[disabled] {
+    opacity: 0.5;
+    text-decoration: none;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Padding */
+
+[class*='mistica-padding-'] {
+    padding-left: var(--mistica-padding-left, var(--mistica-padding-x, var(--mistica-padding, 0)));
+    padding-right: var(--mistica-padding-right, var(--mistica-padding-x, var(--mistica-padding, 0)));
+    padding-top: var(--mistica-padding-top, var(--mistica-padding-y, var(--mistica-padding, 0)));
+    padding-bottom: var(--mistica-padding-bottom, var(--mistica-padding-y, var(--mistica-padding, 0)));
+}
+
+.mistica-padding-8 {
+    --mistica-padding: 8px;
+}
+
+.mistica-padding-16 {
+    --mistica-padding: 16px;
+}
+
+.mistica-padding-20 {
+    --mistica-padding: 20px;
+}
+
+.mistica-padding-24 {
+    --mistica-padding: 24px;
+}
+
+.mistica-padding-32 {
+    --mistica-padding: 32px;
+}
+
+.mistica-padding-y-8 {
+    --mistica-padding-y: 8px;
+}
+
+.mistica-padding-y-16 {
+    --mistica-padding-y: 16px;
+}
+
+.mistica-padding-y-20 {
+    --mistica-padding-y: 20px;
+}
+
+.mistica-padding-y-24 {
+    --mistica-padding-y: 24px;
+}
+
+.mistica-padding-y-32 {
+    --mistica-padding-y: 32px;
+}
+
+.mistica-padding-x-8 {
+    --mistica-padding-x: 8px;
+}
+
+.mistica-padding-x-16 {
+    --mistica-padding-x: 16px;
+}
+
+.mistica-padding-x-20 {
+    --mistica-padding-x: 20px;
+}
+
+.mistica-padding-x-24 {
+    --mistica-padding-x: 24px;
+}
+
+.mistica-padding-x-32 {
+    --mistica-padding-x: 32px;
+}
+
+.mistica-padding-left-8 {
+    --mistica-padding-left: 8px;
+}
+
+.mistica-padding-left-16 {
+    --mistica-padding-left: 16px;
+}
+
+.mistica-padding-left-20 {
+    --mistica-padding-left: 20px;
+}
+
+.mistica-padding-left-24 {
+    --mistica-padding-left: 24px;
+}
+
+.mistica-padding-left-32 {
+    --mistica-padding-left: 32px;
+}
+
+.mistica-padding-right-8 {
+    --mistica-padding-right: 8px;
+}
+
+.mistica-padding-right-16 {
+    --mistica-padding-right: 16px;
+}
+
+.mistica-padding-right-20 {
+    --mistica-padding-right: 20px;
+}
+
+.mistica-padding-right-24 {
+    --mistica-padding-right: 24px;
+}
+
+.mistica-padding-right-32 {
+    --mistica-padding-right: 32px;
+}
+
+.mistica-padding-top-8 {
+    --mistica-padding-top: 8px;
+}
+
+.mistica-padding-top-16 {
+    --mistica-padding-top: 16px;
+}
+
+.mistica-padding-top-20 {
+    --mistica-padding-top: 20px;
+}
+
+.mistica-padding-top-24 {
+    --mistica-padding-top: 24px;
+}
+
+.mistica-padding-top-32 {
+    --mistica-padding-top: 32px;
+}
+
+.mistica-padding-bottom-8 {
+    --mistica-padding-bottom: 8px;
+}
+
+.mistica-padding-bottom-16 {
+    --mistica-padding-bottom: 16px;
+}
+
+.mistica-padding-bottom-20 {
+    --mistica-padding-bottom: 20px;
+}
+
+.mistica-padding-bottom-24 {
+    --mistica-padding-bottom: 24px;
+}
+
+.mistica-padding-bottom-32 {
+    --mistica-padding-bottom: 32px;
+}
+
+/* Stack / Inline */
+
+.mistica-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.mistica-inline,
+.mistica-inline-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.mistica-inline-wrap {
+    flex-wrap: wrap;
+}
+
+.mistica-gap-8 {
+    gap: 8px;
+}
+
+.mistica-gap-16 {
+    gap: 16px;
+}
+
+.mistica-gap-20 {
+    gap: 20px;
+}
+
+.mistica-gap-24 {
+    gap: 24px;
+}
+
+.mistica-gap-32 {
+    gap: 32px;
+}
+
+.mistica-justify-space-between {
+    justify-content: space-between;
+}
+
+.mistica-justify-space-around {
+    justify-content: space-around;
+}
+
+.mistica-justify-space-evenly {
+    justify-content: space-evenly;
+}
+
+/* Align */
+
+[class*='mistica-align-'] {
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+.mistica-align-start {
+    place-items: start;
+}
+
+.mistica-align-end {
+    place-items: end;
+}
+
+.mistica-align-center {
+    place-items: center;
+}
+
+.mistica-align-x-start {
+    justify-items: start;
+}
+
+.mistica-align-x-end {
+    justify-items: end;
+}
+
+.mistica-align-x-center {
+    justify-items: center;
+}
+
+.mistica-align-y-start {
+    align-items: start;
+}
+
+.mistica-align-y-end {
+    align-items: end;
+}
+
+.mistica-align-y-center {
+    align-items: center;
+}
+
+/* Breadcrumbs */
+.mistica-breadcrumb ol {
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mistica-breadcrumb li {
+    display: inline;
+}
+
+.mistica-breadcrumb a {
+    text-decoration: underline;
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: var(--mistica-font-weight-1);
+    color: var(--vcolor-textPrimary);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-breadcrumb li + li::before {
+    display: inline-block;
+    margin: -1px 0.25em;
+    transform: rotate(18deg);
+    border-right: 0.1em solid var(--vcolor-textPrimary);
+    height: 0.8em;
+    content: '';
+}
+
+@media (pointer: fine) {
+    .mistica-breadcrumb a:hover {
+        text-decoration-thickness: 0.125rem;
+    }
+}
+
+.mistica-breadcrumb li:last-of-type a {
+    pointer-events: none;
+    color: var(--vcolor-textSecondary);
+    padding-right: 0;
+    text-decoration: none;
+}
+
+/* Buttons */
+[class^='mistica-button'] {
+    --button-font-size: var(--mistica-font-size-3);
+    --button-line-height: var(--mistica-line-height-3);
+    display: inline-block;
+    border-radius: var(--mistica-border-radius-button);
+    font-size: var(--button-font-size);
+    line-height: var(--button-line-height);
+    font-weight: var(--mistica-font-weight-button);
+    border: 1.5px solid transparent;
+    box-sizing: border-box;
+    min-width: 104px;
+    padding: 10.5px 14.5px;
+    cursor: pointer;
+    /* Reset default browser styles */
+    font-family: inherit;
+    appearance: none;
+    user-select: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        background-color 0.1s ease-in-out,
+        color 0.1s ease-in-out,
+        border-color 0.1s ease-in-out;
+}
+
+[class^='mistica-button']:hover,
+[class^='mistica-button']:active {
+    text-decoration: none;
+}
+
+[class^='mistica-button'][disabled] {
+    cursor: default;
+}
+
+[class^='mistica-button-primary'] {
+    color: var(--vcolor-textButtonPrimary);
+    background: var(--vcolor-buttonPrimaryBackground);
+}
+
+@media (pointer: fine) {
+    [class^='mistica-button-primary']:hover {
+        background: var(--vcolor-buttonPrimaryBackgroundHover);
+    }
+}
+
+[class^='mistica-button-primary']:active {
+    background: var(--vcolor-buttonPrimaryBackgroundPressed);
+}
+
+[class^='mistica-button-secondary'] {
+    color: var(--vcolor-textButtonSecondary);
+    background: transparent;
+    border-color: var(--vcolor-buttonSecondaryBorder);
+}
+
+@media (pointer: fine) {
+    [class^='mistica-button-secondary']:hover {
+        background: var(--vcolor-buttonSecondaryBackgroundHover);
+    }
+}
+
+[class^='mistica-button-secondary']:active {
+    background: var(--vcolor-buttonSecondaryBackgroundPressed);
+}
+
+[class^='mistica-button-danger'] {
+    color: var(--vcolor-textButtonError);
+    background: var(--mistica-color-buttonDangerBackground);
+}
+
+@media (pointer: fine) {
+    [class^='mistica-button-danger']:hover {
+        background: var(--mistica-color-buttonDangerBackgroundHover);
+    }
+}
+
+[class^='mistica-button-danger']:active {
+    background: var(--mistica-color-buttonDangerBackgroundPressed);
+}
+
+[class^='mistica-button-link'] {
+    color: var(--vcolor-textLink);
+    background: transparent;
+}
+@media (pointer: fine) {
+    [class^='mistica-button-link']:hover {
+        background: var(--vcolor-buttonLinkBackgroundPressed);
+    }
+}
+
+[class^='mistica-button-link']:active {
+    background: var(--vcolor-buttonLinkBackgroundPressed);
+}
+
+[class^='mistica-button'][class$='small'] {
+    --button-font-size: 0.875rem;
+    --button-line-height: 1.25rem;
+    padding: 4.5px 10.5px;
+    min-width: 80px;
+}
+
+/* Cards */
+.mistica-card,
+.mistica-snap-card,
+.mistica-display-card {
+    text-decoration: none;
+    position: relative;
+    border: var(--mistica-boxed-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+    padding: 24px 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+    transition: background 0.1s ease-in-out;
+    isolation: isolate;
+    -webkit-tap-highlight-color: transparent;
+    align-items: stretch;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card {
+        padding: 32px 24px;
+    }
+}
+
+.mistica-card:after,
+.mistica-snap-card:after,
+.mistica-display-card:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > * {
+    z-index: 2;
+}
+
+.mistica-card .mistica-card__media,
+.mistica-display-card .mistica-card__media {
+    z-index: 1;
+}
+
+@media (pointer: fine) {
+    a.mistica-card:hover:after,
+    a.mistica-snap-card:hover:after,
+    a.mistica-display-card:hover:after,
+    button.mistica-card:hover:after,
+    button.mistica-snap-card:hover:after,
+    button.mistica-display-card:hover:after {
+        background: var(--mistica-color-backgroundContainerHover);
+    }
+}
+
+a.mistica-card:active:after,
+a.mistica-snap-card:active:after,
+a.mistica-display-card:active:after,
+button.mistica-card:active:after,
+button.mistica-snap-card:active:after,
+button.mistica-display-card:active:after {
+    background: var(--mistica-color-backgroundContainerPressed);
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-naked-card > *,
+.mistica-small-naked-card > * {
+    transition:
+        opacity 0.1s ease-in-out,
+        filter 0.1s ease-in-out;
+}
+
+@media (pointer: fine) {
+    a.mistica-naked-card:hover > *,
+    button.mistica-naked-card:hover > *,
+    a.mistica-small-naked-card:hover > *,
+    button.mistica-small-naked-card:hover > * {
+        opacity: 0.8;
+    }
+}
+
+a.mistica-naked-card:active > *,
+button.mistica-naked-card:active > *,
+a.mistica-small-naked-card:active > *,
+button.mistica-small-naked-card:active > * {
+    opacity: 0.6;
+}
+
+@media (pointer: fine) {
+    a.mistica-naked-card:hover > .mistica-card__media,
+    button.mistica-naked-card:hover > .mistica-card__media,
+    a.mistica-small-naked-card:hover > .mistica-card__media,
+    button.mistica-small-naked-card:hover > .mistica-card__media {
+        opacity: 1;
+        filter: brightness(75%);
+    }
+}
+
+a.mistica-naked-card:active > .mistica-card__media,
+button.mistica-naked-card:active > .mistica-card__media,
+a.mistica-small-naked-card:active > .mistica-card__media,
+button.mistica-small-naked-card:active > .mistica-card__media {
+    opacity: 1;
+    filter: brightness(65%);
+}
+
+.mistica-card,
+.mistica-snap-card,
+.mistica-display-card {
+    --mistica-card-text-color: var(--mistica-color-textPrimary);
+    --mistica-card-description-text-color: var(--mistica-color-textSecondary);
+    color: var(--mistica-card-text-color);
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    --mistica-card-text-color: var(--vcolor-textPrimary);
+    --mistica-card-description-text-color: var(--vcolor-textSecondary);
+    color: var(--mistica-card-text-color);
+}
+
+.mistica-snap-card {
+    padding: 16px;
+}
+
+@media (min-width: 1024px) {
+    .mistica-snap-card {
+        padding: 24px;
+    }
+}
+
+.mistica-display-card {
+    padding: 24px;
+    border-radius: var(--mistica-border-radius-legacyDisplay);
+    justify-content: flex-end;
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    position: relative;
+    padding-right: 16px;
+}
+
+.mistica-aspect-ratio {
+    display: flex;
+    flex: 1;
+}
+
+.mistica-aspect-ratio::before {
+    content: '';
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+}
+
+.mistica-card .mistica-card__media {
+    margin: -24px -16px 16px -16px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: calc(100% + 32px);
+    max-width: initial; /* Movistar AEM has a default max-width: 100% for any img tag */
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card .mistica-card__media {
+        margin: -32px -24px 24px -24px;
+        width: calc(100% + 48px);
+    }
+}
+
+.mistica-naked-card .mistica-card__media,
+.mistica-small-naked-card .mistica-card__media {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: calc(100% + 16px);
+    border-radius: var(--mistica-border-radius-container);
+    margin-bottom: 16px;
+}
+
+.mistica-display-card .mistica-card__media {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.mistica-display-card:has(.mistica-card__media) {
+    isolation: isolate;
+    padding-top: 40px;
+    border: none;
+    --mistica-card-text-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+    --mistica-card-text-color: var(--mistica-color-textPrimaryInverse);
+    --mistica-card-description-text-color: var(--mistica-color-textPrimaryInverse);
+}
+
+.mistica-display-card:has(.mistica-card__media):after {
+    background: var(--mistica-color-cardContentOverlay);
+}
+
+@media (pointer: fine) {
+    a.mistica-display-card:has(.mistica-card__media):hover:after,
+    button.mistica-display-card:has(.mistica-card__media):hover:after {
+        background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerHover);
+    }
+}
+
+a.mistica-display-card:has(.mistica-card__media):active:after,
+button.mistica-display-card:has(.mistica-card__media):active:after {
+    background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerPressed);
+}
+
+.mistica-card__pretitle {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    text-shadow: var(--mistica-card-text-shadow);
+}
+
+[class^='mistica-tag'] + .mistica-card__pretitle {
+    padding-top: 8px;
+}
+
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__pretitle {
+    padding-top: 16px;
+}
+
+.mistica-card__title {
+    font-size: var(--mistica-font-size-cardTitle);
+    line-height: var(--mistica-line-height-cardTitle);
+    font-weight: var(--mistica-font-weight-cardTitle);
+    text-shadow: var(--mistica-card-text-shadow);
+}
+
+.mistica-snap-card .mistica-card__title,
+.mistica-small-naked-card .mistica-card__title {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+}
+
+.mistica-display-card .mistica-card__title {
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
+}
+
+[class^='mistica-tag'] + .mistica-card__title {
+    padding-top: 8px;
+}
+
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__title {
+    padding-top: 16px;
+}
+
+.mistica-card__pretitle + .mistica-card__title {
+    padding-top: 4px;
+}
+
+.mistica-card__subtitle {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    text-shadow: var(--mistica-card-text-shadow);
+    padding-top: 4px;
+}
+
+.mistica-card__description {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    text-shadow: var(--mistica-card-text-shadow);
+    color: var(--mistica-card-description-text-color);
+}
+
+.mistica-display-card .mistica-card__description {
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+}
+
+.mistica-card__description:not(:first-child) {
+    padding-top: 8px;
+}
+
+.mistica-snap-card .mistica-card__description:not(:first-child) {
+    padding-top: 4px;
+}
+
+.mistica-card__buttons {
+    padding-top: 16px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.mistica-card .mistica-card__buttons {
+    flex: 1;
+}
+
+/* Accordion */
+
+.mistica-accordion-item {
+    interpolate-size: allow-keywords;
+}
+
+.mistica-accordion-item:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--vcolor-divider);
+}
+
+.mistica-accordion-item:last-child:after {
+    display: none;
+}
+
+.mistica-accordion-item__summary {
+    cursor: pointer;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    margin: 0 -16px;
+    transition: background-color 0.1s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-accordion-item__summary::-webkit-details-marker {
+    display: none;
+}
+
+.mistica-accordion-item__summary-body,
+.mistica-row__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.mistica-accordion-item__summary-title,
+.mistica-row__title {
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-accordion-item__summary-subtitle,
+.mistica-row__subtitle {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-accordion-item__chevron {
+    transition: transform 0.4s;
+    color: var(--vcolor-accordionChevronClosed);
+    flex-shrink: 0;
+}
+
+.mistica-accordion-item[open] > summary > .mistica-accordion-item__chevron {
+    transform: rotate(-180deg);
+    color: var(--vcolor-accordionChevronOpen);
+}
+
+@media (pointer: fine) {
+    .mistica-accordion-item__summary:hover {
+        background-color: var(--vcolor-backgroundContainerHover);
+    }
+}
+
+.mistica-accordion-item__summary:active {
+    background-color: var(--vcolor-backgroundConteinerPressed);
+}
+
+.mistica-accordion-item::details-content {
+    overflow: hidden;
+    height: 0;
+
+    transition:
+        height 0.4s,
+        content-visibility 0.4s;
+    transition-behavior: allow-discrete;
+}
+
+.mistica-accordion-item__content {
+    padding: 0 16px 16px;
+    margin: 0 -16px;
+}
+
+.mistica-accordion-item[open]::details-content {
+    height: auto;
+}
+
+/* Lists */
+
+.mistica-list,
+.mistica-boxed-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.mistica-boxed-list {
+    gap: 16px;
+}
+
+.mistica-row__asset {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-self: flex-start;
+}
+
+.mistica-row,
+.mistica-boxed-row {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    transition: background-color 0.1s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-row {
+    position: relative;
+    margin: 0 -16px;
+}
+
+.mistica-row:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 32px);
+    height: 1px;
+    background-color: var(--vcolor-divider);
+}
+
+.mistica-row:last-child:after {
+    display: none;
+}
+
+.mistica-boxed-row {
+    border: var(--mistica-boxed-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+    overflow: hidden;
+}
+
+.mistica-row > a,
+.mistica-boxed-row > a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    margin: -16px;
+    padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+@media (pointer: fine) {
+    .mistica-row > a:hover,
+    .mistica-boxed-row > a:hover {
+        background-color: var(--vcolor-backgroundContainerHover);
+    }
+}
+
+.mistica-row > a:active,
+.mistica-boxed-row > a:active {
+    background-color: var(--vcolor-backgroundConteinerPressed);
+}
+
+.mistica-row__body {
+    flex: 1;
+}
+
+.mistica-row__body > [class^='mistica-tag'] {
+    margin-bottom: 2px;
+}
+
+.mistica-row__description {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: 400;
+    color: var(--vcolor-textSecondary);
+}
+
+.mistica-row__right {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.mistica-row__chevron {
+    width: 16px;
+    height: 16px;
+    color: var(--vcolor-rowChevron);
+    align-self: center;
+}
+
+/* Grid Layout */
+
+.mistica-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 1023px) {
+    .mistica-grid-layout {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 0;
+    }
+
+    .mistica-grid-layout [class^='mistica-col-'] {
+        grid-column: span 1;
+    }
+
+    .mistica-grid-col-1 {
+        display: none;
+    }
+
+    .mistica-grid-vertical-space-2 {
+        row-gap: 2px;
+    }
+
+    .mistica-grid-vertical-space-8 {
+        row-gap: 8px;
+    }
+
+    .mistica-grid-vertical-space-12 {
+        row-gap: 12px;
+    }
+
+    .mistica-grid-vertical-space-16 {
+        row-gap: 16px;
+    }
+
+    .mistica-grid-vertical-space-24 {
+        row-gap: 24px;
+    }
+
+    .mistica-grid-vertical-space-32 {
+        row-gap: 32px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1367px) {
+    .mistica-grid-layout {
+        grid-column-gap: 16px;
+    }
+}
+
+.mistica-grid-col-1 {
+    grid-column: span 1;
+}
+
+.mistica-grid-col-3 {
+    grid-column: span 3;
+}
+
+.mistica-grid-col-4 {
+    grid-column: span 4;
+}
+
+.mistica-grid-col-5 {
+    grid-column: span 5;
+}
+
+.mistica-grid-col-6 {
+    grid-column: span 6;
+}
+
+.mistica-grid-col-8 {
+    grid-column: span 8;
+}
+
+.mistica-grid-col-9 {
+    grid-column: span 9;
+}
+
+/* Table */
+.mistica-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    position: relative;
+    width: 100%;
+}
+
+.mistica-table thead tr {
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--vcolor-textSecondary);
+}
+
+.mistica-table tbody td,
+.mistica-table tbody th {
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+}
+
+.mistica-table th,
+.mistica-table td {
+    border-bottom: 1px solid var(--mistica-color-divider);
+    padding: 16px 12px;
+    height: 56px;
+    vertical-align: middle;
+    text-align: left;
+}
+.mistica-table th:first-child,
+.mistica-table td:first-child {
+    padding-left: 0;
+}
+.mistica-table th:last-child,
+.mistica-table td:last-child {
+    padding-right: 0;
+}
+.mistica-table tbody tr:last-child td,
+.mistica-table tbody tr:last-child th {
+    border-bottom: none;
+}
+
+@media (max-width: 1023px) {
+    .mistica-table-mobile-collapsed,
+    .mistica-table-mobile-collapsed thead,
+    .mistica-table-mobile-collapsed tbody,
+    .mistica-table-mobile-collapsed th,
+    .mistica-table-mobile-collapsed td,
+    .mistica-table-mobile-collapsed tr {
+        display: block;
+    }
+    .mistica-table-mobile-collapsed tr {
+        display: flex;
+        flex-direction: column;
+    }
+    .mistica-table-mobile-collapsed tbody th {
+        order: -1;
+        font-size: var(--mistica-font-size-4);
+        line-height: var(--mistica-line-height-4);
+        font-weight: var(--mistica-font-weight-cardTitle);
+        padding-bottom: 8px;
+    }
+    .mistica-table-mobile-collapsed tbody td,
+    .mistica-table-mobile-collapsed tbody th {
+        vertical-align: initial;
+        border: none;
+        height: auto;
+        padding: 0 0 8px 0;
+    }
+    .mistica-table-mobile-collapsed tbody td:last-child {
+        padding-bottom: 0;
+    }
+    .mistica-table-mobile-collapsed tbody tr {
+        padding: 16px 0;
+    }
+    .mistica-table-mobile-collapsed tbody tr:not(:last-child) {
+        border-bottom: 1px solid var(--mistica-color-divider);
+    }
+    .mistica-table-mobile-collapsed td[data-heading]:before {
+        display: block;
+        content: attr(data-heading);
+        font-size: var(--mistica-font-size-1);
+        line-height: var(--mistica-line-height-1);
+        font-weight: 500;
+        color: var(--vcolor-textSecondary);
+        padding-bottom: 4px;
+    }
+    .mistica-table-mobile-collapsed thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+}
+
+.mistica-card__asset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.mistica-card__asset-floating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+.mistica-card__asset-floating img,
+.mistica-card__asset img {
+    border-radius: inherit;
+    width: inherit;
+    height: inherit;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card__asset-floating {
+        margin-left: 24px;
+        margin-top: 24px;
+    }
+}
+
+/* Switch */
+[type='checkbox'].mistica-switch {
+    --switch-border-width: 2px;
+    --switch-transition: 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    appearance: none;
+    position: relative;
+    width: 52px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: var(--vcolor-switch-trackBackground);
+    border: var(--switch-border-width) solid var(--vcolor-control);
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        background-color var(--switch-transition),
+        border-color var(--switch-transition);
+}
+
+/* :after is the switch handle (bolita) */
+.mistica-switch:after {
+    content: '';
+    position: absolute;
+    top: calc(8px - var(--switch-border-width));
+    left: calc(8px - var(--switch-border-width));
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--vcolor-control);
+    transition:
+        transform var(--switch-transition),
+        background-color var(--switch-transition);
+}
+
+@media (pointer: fine) {
+    .mistica-switch:hover:after {
+        background-color: var(--vcolor-switch-handleHover);
+    }
+}
+
+.mistica-switch:checked {
+    background-color: var(--vcolor-controlActivated);
+    border-color: var(--vcolor-controlActivated);
+}
+.mistica-switch:checked:after {
+    background-color: var(--vcolor-switch-handleChecked);
+    transform: translateX(20px) scale(1.5);
+}
+
+.mistica-switch:active:after {
+    transform: scale(1.75);
+}
+.mistica-switch:checked:active:after {
+    transform: translateX(20px) scale(1.75);
+}
+
+/* :before is the ripple effect overlay on hover */
+.mistica-switch:before {
+    content: '';
+    position: absolute;
+    top: calc(-8px + var(--switch-border-width));
+    left: calc(-8px + var(--switch-border-width));
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition:
+        transform var(--switch-transition),
+        background-color var(--switch-transition);
+}
+
+.mistica-switch:checked:before {
+    transform: translateX(20px);
+}
+
+@media (pointer: fine) {
+    .mistica-switch:hover:before {
+        background-color: var(--mistica-color-backgroundContainerHover);
+    }
+}
+
+.mistica-switch:active:before {
+    background-color: var(--mistica-color-backgroundContainerPressed);
+}
+
+/* Checkbox */
+.mistica-checkbox {
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    user-select: none;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border-radius: var(--mistica-border-radius-checkbox);
+    background: var(--vcolor-checkbox-background);
+    box-shadow: inset 0 0 0 2px var(--vcolor-control);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: box-shadow 0.3s;
+}
+
+.mistica-checkbox:not(:focus-visible) {
+    outline: 1px solid transparent;
+}
+
+.mistica-checkbox:checked {
+    box-shadow: inset 0 0 0 12px var(--vcolor-controlActivated);
+}
+
+.mistica-checkbox:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.mistica-checkbox:before {
+    content: '';
+    width: 12px;
+    height: 7px;
+    border-bottom: 2px solid var(--vcolor-checkbox-tick);
+    border-left: 2px solid var(--vcolor-checkbox-tick);
+    transform: scale(0) rotate(-45deg) translate(1.5px, -1.5px);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.mistica-checkbox:checked:before {
+    transform: scale(1) rotate(-45deg) translate(1.5px, -1.5px);
+}
+
+.mistica-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-checkbox-label:has(.mistica-checkbox:disabled) {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.mistica-checkbox-label:has(.mistica-checkbox:disabled) > .mistica-checkbox {
+    opacity: initial; /* avoid applying 0.5 opacity twice */
+}
+
+/* Counter */
+
+.mistica-counter {
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-backgroundContainer);
+    display: inline-flex;
+    gap: 8px;
+    overflow: hidden;
+    border: 1px solid var(--vcolor-inputBorder);
+}
+
+.mistica-counter input {
+    width: 3.75ch;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    caret-color: var(--mistica-color-textActivated);
+    color: var(--mistica-color-textPrimary);
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.mistica-counter__button {
+    user-select: none;
+    isolation: isolate;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--mistica-color-controlActivated);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-counter__button svg {
+    z-index: 1;
+}
+
+.mistica-counter__button:before {
+    z-index: 0;
+    content: '';
+    display: block;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: var(--mistica-border-radius-button);
+    background: var(--mistica-color-brandLow);
+    transform: scale(0);
+    transition:
+        transform 0.2s ease-in-out,
+        background 0.1s ease-in-out;
+}
+
+@media (pointer: coarse) {
+    .mistica-counter__button:before {
+        transition: none;
+    }
+}
+
+@media (pointer: fine) {
+    .mistica-counter__button:hover:not(:disabled):before {
+        transform: scale(1);
+    }
+}
+
+.mistica-counter__button:active:not(:disabled):before {
+    transform: scale(1.06);
+}
+
+.mistica-counter__button:disabled {
+    cursor: default;
+    color: var(--mistica-color-control);
+}
+
+/* Slider */
+
+.mistica-slider {
+    --slider-thumb-position: 50%;
+    isolation: isolate;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    height: 20px;
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mistica-slider::-webkit-slider-thumb {
+    position: relative;
+    z-index: 1;
+    appearance: none;
+    background: var(--vcolor-controlActivated);
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+    border-radius: 50%;
+    transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    box-shadow: none;
+}
+
+.mistica-slider::-moz-range-thumb {
+    position: relative;
+    z-index: 1;
+    background: var(--vcolor-controlActivated);
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+    border-radius: 50%;
+    transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    border: none; /*Removes extra border that FF applies*/
+}
+
+@media (pointer: fine) {
+    .mistica-slider::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+    }
+    .mistica-slider::-moz-range-thumb:hover {
+        box-shadow: 0 0 0 4px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+    }
+}
+
+.mistica-slider:active::-webkit-slider-thumb,
+.mistica-slider:focus-visible::-webkit-slider-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 8px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+}
+
+.mistica-slider:active::-moz-range-thumb,
+.mistica-slider:focus-visible::-moz-range-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 8px rgba(from var(--vcolor-controlActivated) r g b / 0.2);
+}
+
+.mistica-slider::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: var(--mistica-border-radius-bar);
+    background: linear-gradient(
+        to right,
+        var(--vcolor-controlActivated) var(--slider-thumb-position),
+        var(--vcolor-barTrack) var(--slider-thumb-position)
+    );
+}
+
+.mistica-slider::-moz-range-track {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: var(--mistica-border-radius-bar);
+    background: linear-gradient(
+        to right,
+        var(--vcolor-controlActivated) var(--slider-thumb-position),
+        var(--vcolor-barTrack) var(--slider-thumb-position)
+    );
+}
+
+/* FeedbackScreen */
+
+@keyframes mistica-animation-shake {
+    10%,
+    90% {
+        transform: translateX(3px);
+    }
+    20%,
+    80% {
+        transform: translateX(6px);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translateX(0);
+    }
+    40%,
+    60% {
+        transform: translateX(8px);
+    }
+}
+
+@keyframes mistica-animation-text-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(var(--text-appear-distance));
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mistica-feedback-screen {
+    --text-animation: mistica-animation-text-appear 1s both cubic-bezier(0.215, 0.61, 0.355, 1);
+    --text-appear-distance: 16px;
+    padding: 64px 0 16px;
+}
+
+@media (min-width: 1024px) {
+    .mistica-feedback-screen {
+        --text-appear-distance: 40px;
+        margin-top: 64px;
+        border-radius: var(--mistica-border-radius-legacyDisplay);
+        border: var(--mistica-boxed-border);
+        background: var(--mistica-color-backgroundContainer);
+        padding: 64px;
+    }
+
+    .mistica-feedback-screen > .mistica-fixed-footer-buttons {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .mistica-feedback-screen {
+        /* Space for fixed buttons */
+        padding-bottom: 142px;
+    }
+}
+
+.mistica-feedback-screen__asset {
+    --asset-animation: mistica-animation-shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+}
+
+.mistica-feedback-screen__asset-error-inside {
+    animation: var(--asset-animation);
+    animation-delay: 0.8s;
+}
+
+.mistica-feedback-screen__asset-error-outside {
+    animation: var(--asset-animation);
+    animation-delay: 0.84s;
+}
+
+.mistica-feedback-screen__title {
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
+    color: var(--mistica-color-textPrimary);
+    animation: var(--text-animation);
+    animation-delay: 0.6s;
+}
+
+.mistica-feedback-screen__description {
+    margin-top: 16px;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    color: var(--mistica-color-textSecondary);
+    animation: var(--text-animation);
+    animation-delay: 0.8s;
+}
+
+.mistica-feedback-screen__slot {
+    margin-top: 16px;
+    animation: var(--text-animation);
+    color: var(--mistica-color-textSecondary);
+    animation-delay: 1s;
+}
+
+.mistica-fixed-footer-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+@media (max-width: 1023px) {
+    .mistica-fixed-footer,
+    .mistica-fixed-footer-buttons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--mistica-color-background);
+        box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .mistica-fixed-footer-buttons {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .mistica-fixed-footer-buttons {
+        padding: 32px 24px;
+    }
+}
+
+/* TextField */
+.mistica-text-field {
+    --border-width: 1px;
+    --vertical-padding: calc(8px - var(--border-width));
+    --gap: 12px;
+    --right-padding: calc(16px - var(--border-width));
+    --shrinked-label-line-height: 1.25rem;
+    --label-scale: 1;
+    --icon-size: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--mistica-border-radius-input);
+    border: var(--border-width) solid var(--mistica-color-inputBorder);
+    width: 328px;
+    background: var(--mistica-color-backgroundContainer);
+    color: var(--mistica-color-textPrimary);
+}
+
+@media (max-width: 1023px) {
+    .mistica-text-field {
+        --shrinked-label-line-height: 1rem;
+        width: 100%;
+    }
+}
+
+.mistica-text-field > * {
+    --start-icon-size: 0px;
+    --left-padding: calc(12px - var(--border-width) + var(--start-icon-size));
+}
+
+.mistica-text-field .mistica-text-field__start-icon ~ * {
+    --start-icon-size: calc(var(--icon-size) + var(--gap));
+}
+
+.mistica-text-field__start-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: absolute;
+    top: calc(50% - var(--icon-size) / 2);
+    left: 12px;
+    color: var(--mistica-color-neutralHigh);
+    margin-right: var(--gap);
+    pointer-events: none;
+}
+
+.mistica-text-field > label {
+    position: absolute;
+    left: var(--left-padding);
+    top: var(--vertical-padding);
+    pointer-events: none;
+    transform-origin: 0 0;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    width: calc(100% - var(--left-padding) - var(--right-padding));
+    transform: translateY(calc(var(--shrinked-label-line-height) / 2));
+    transition:
+        transform 150ms,
+        width 150ms;
+    color: var(--mistica-color-textSecondary);
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.mistica-text-field:focus-within > label,
+.mistica-text-field > input:not(:placeholder-shown) + label {
+    --label-scale: 0.75;
+    transform: translateY(0) scale(var(--label-scale));
+    line-height: calc(var(--shrinked-label-line-height) / var(--label-scale));
+    width: calc((100% - var(--left-padding) - var(--right-padding)) / var(--label-scale));
+    color: var(--mistica-color-textActivated);
+}
+
+.mistica-text-field > input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    appearance: none;
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: 400;
+    padding: calc(var(--vertical-padding) + var(--shrinked-label-line-height)) var(--right-padding)
+        var(--vertical-padding) var(--left-padding);
+    caret-color: var(--mistica-color-textActivated);
+    color: inherit;
+    border-radius: calc(var(--mistica-border-radius-input) - var(--border-width));
+    text-overflow: ellipsis;
+    outline: none;
+    box-shadow: none;
+}
+
+.mistica-text-field > input::placeholder {
+    opacity: 0;
+    transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.mistica-text-field > input:focus::placeholder {
+    opacity: 0.5;
+}
+
+.mistica-text-field > input::-webkit-search-cancel-button {
+    appearance: none;
+}
+.mistica-text-field > input::-webkit-search-decoration {
+    appearance: none;
 }
