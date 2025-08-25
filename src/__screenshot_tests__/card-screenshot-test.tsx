@@ -1,3 +1,14 @@
+import {
+    BLAU_SKIN,
+    ESIMFLAG_SKIN,
+    MOVISTAR_SKIN,
+    O2_NEW_SKIN,
+    O2_SKIN,
+    TELEFONICA_SKIN,
+    TU_SKIN,
+    VIVO_NEW_SKIN,
+    VIVO_SKIN,
+} from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
 
 const STORY_IDS: Record<any, string> = {
@@ -300,10 +311,22 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test('Card cover footer with image background', async () => {
+test.each`
+    skin
+    ${MOVISTAR_SKIN}
+    ${O2_SKIN}
+    ${O2_NEW_SKIN}
+    ${VIVO_SKIN}
+    ${VIVO_NEW_SKIN}
+    ${TELEFONICA_SKIN}
+    ${BLAU_SKIN}
+    ${TU_SKIN}
+    ${ESIMFLAG_SKIN}
+`('Card cover footer with image background - $skin', async ({skin}) => {
     await openStoryPage({
         id: STORY_IDS.cover,
         device: 'MOBILE_IOS',
+        skin,
         args: {
             ...argsReset,
             showFooter: true,
