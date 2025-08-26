@@ -140,7 +140,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCa
                     testid: 'DisplayDataCard',
                     ...dataAttributes,
                 }}
-                buttonSecondary={secondaryButton || buttonSecondary}
+                buttonSecondary={buttonSecondary || secondaryButton}
                 ref={ref}
                 {...rest}
             />
