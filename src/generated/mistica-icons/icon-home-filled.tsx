@@ -25,6 +25,15 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                 />
             </svg>
         );
+    } else if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M22.001 12 12 2 1.999 12l.481 1.162h1.916v5.378c0 1.33 1.082 2.41 2.411 2.41h10.386a2.414 2.414 0 0 0 2.411-2.41v-5.378h1.916zM13.6 17.49h-3.2v-3.2h3.2z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

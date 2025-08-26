@@ -1,3 +1,37 @@
+## Migration Guide for the New Cards Ecosystem (Starting from Mistica 16.xx.xx)
+
+The changes introduced in this version are backwards compatible; however, several components and props have
+been deprecated. To ensure your code remains compatible with future major updates, please update your
+implementation to replace the deprecated components and props as outlined below. This will prepare your
+codebase for the eventual removal of these deprecated features.
+
+### Card Components
+
+- The `PosterCard` component has been deprecated. Use `<CoverCard size="default" />`.
+- The `DisplayMediaCard` component has been deprecated. Use `<CoverCard size="display" />`.
+- The `SmallNakedCard` component has been deprecated. Use `<NakedCard size="snap" />`.
+- The `SnapCard` component has been deprecated. Use `<DataCard size="snap" />`.
+- The `DisplayDataCard` component has been deprecated. Use `<DataCard size="display" />`.
+- The `HighlightCard` component has been deprecated. Use `<MediaCard mediaPosition="right" />`.
+
+### Card Props
+
+- The `poster` prop has been deprecated. Use `imageSrc`. The `imageSrc` will be used as the poster when a
+  video is provided.
+- The `media` prop has been deprecated. Use `imageSrc`, `imageSrcSet`, or `videoSrc` and related props like
+  `mediaAspectRatio`.
+- The `extra` prop has been deprecated. Use `slot`.
+- The `actions` prop has been deprecated. Use `topActions`.
+- The `button` prop has been deprecated. Use `buttonPrimary`.
+- The `isInverse` prop has been deprecated. Use `variant`.
+
+### Behavior changes
+
+- A card with onPress and buttons will show the Footer, containing the buttons, even if it was set to `false`
+  via props.
+- Cards now accept 3 kind of buttons: `buttonPrimary`, `buttonSecondary`, and `buttonLink`. You must use at
+  most 2 buttons at the same time.
+
 ## Migration Guide from mistica 12.x to mistica 13.x
 
 - First of all, we recommend to run the [`theme-colors-codemod.js`](../codemods/theme-colors-codemod.js). This

@@ -124,6 +124,8 @@ type CommonImageProps = {
     loadingFallback?: boolean;
     errorFallback?: boolean;
     border?: boolean;
+    objectFit?: 'contain' | 'cover' | 'fill' | 'none';
+    objectPosition?: 'center' | 'top' | 'bottom' | 'left' | 'right' | string;
 };
 
 type RectangularImageProps = {
@@ -161,6 +163,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             onLoad,
             loadingFallback = true,
             errorFallback = true,
+            objectFit,
+            objectPosition,
             ...props
         },
         ref
@@ -231,6 +235,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     style={{
                         opacity: isLoading && withLoadingFallback ? 0 : 1,
                         position: ratio !== 0 ? 'absolute' : 'static',
+                        objectFit,
+                        objectPosition,
                     }}
                     ref={combineRefs(imageRef, ref)}
                     src={src}

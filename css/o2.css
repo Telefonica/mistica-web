@@ -73,34 +73,51 @@
     --mistica-color-buttonDangerBackground: var(--mistica-o2-pepper);
     --mistica-color-buttonDangerBackgroundPressed: var(--mistica-o2-pepper60);
     --mistica-color-buttonDangerBackgroundHover: var(--mistica-o2-pepper60);
-    --mistica-color-buttonLinkDangerBackgroundPressed: var(--mistica-o2-pepper10);
     --mistica-color-buttonLinkDangerBackgroundInverse: var(--mistica-o2-white);
+    --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-o2-white);
+    --mistica-color-buttonLinkDangerBackgroundPressed: var(--mistica-o2-pepper10);
     --mistica-color-buttonLinkDangerBackgroundInversePressed: var(--mistica-o2-pepper10);
+    --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-o2-pepper10);
     --mistica-color-buttonLinkBackgroundPressed: var(--mistica-o2-o2BluePrimary10);
     --mistica-color-buttonLinkBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.08);
+    --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonPrimaryBackground: var(--mistica-o2-o2BluePrimary);
     --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-o2-white);
-    --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-o2BluePrimary70);
+    --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-o2-white);
     --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-o2-o2BluePrimary70);
+    --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-buttonSecondaryBorder: var(--mistica-o2-o2BluePrimary);
-    --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-o2BluePrimary70);
-    --mistica-color-buttonSecondaryBackgroundHover: var(--mistica-o2-o2BluePrimary10);
-    --mistica-color-buttonSecondaryBackgroundPressed: var(--mistica-o2-o2BluePrimary10);
     --mistica-color-buttonSecondaryBorderInverse: var(--mistica-o2-white);
+    --mistica-color-buttonSecondaryBorderMedia: var(--mistica-o2-white);
+    --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-buttonSecondaryBackgroundHover: var(--mistica-o2-o2BluePrimary10);
     --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundPressed: var(--mistica-o2-o2BluePrimary10);
     --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.15);
     --mistica-color-textButtonPrimary: var(--mistica-o2-white);
     --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-o2BluePrimary);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-o2BluePrimary);
     --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-o2BluePrimary70);
+    --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-textButtonSecondary: var(--mistica-o2-o2BluePrimary);
-    --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-textButtonSecondaryInverse: var(--mistica-o2-white);
+    --mistica-color-textButtonSecondaryMedia: var(--mistica-o2-white);
+    --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-textButtonSecondaryInversePressed: var(--mistica-o2-white);
+    --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-o2-white);
     --mistica-color-textLink: var(--mistica-o2-o2BluePrimary);
     --mistica-color-textLinkInverse: var(--mistica-o2-white);
+    --mistica-color-textLinkMedia: var(--mistica-o2-white);
     --mistica-color-textLinkDanger: var(--mistica-o2-pepper);
+    --mistica-color-textLinkDangerMedia: var(--mistica-o2-pepper);
     --mistica-color-textLinkSnackbar: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary);
     --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary);
@@ -200,6 +217,7 @@
         rgba(var(--mistica-o2-raw-black), 0.4) 30%,
         rgba(var(--mistica-o2-raw-black), 0.7) 100%
     );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-o2-raw-black), 0.7);
 
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
@@ -289,34 +307,51 @@
     --mistica-color-buttonDangerBackground: var(--mistica-o2-pepper);
     --mistica-color-buttonDangerBackgroundPressed: var(--mistica-o2-pepper60);
     --mistica-color-buttonDangerBackgroundHover: var(--mistica-o2-pepper60);
-    --mistica-color-buttonLinkDangerBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonLinkDangerBackgroundInverse: rgba(var(--mistica-o2-raw-white), 0);
+    --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-o2-white);
+    --mistica-color-buttonLinkDangerBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonLinkDangerBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.08);
+    --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-o2-pepper10);
     --mistica-color-buttonLinkBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonLinkBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.08);
+    --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonPrimaryBackground: var(--mistica-o2-darkModeO2BluePrimary);
     --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-o2-darkModeO2BluePrimary);
-    --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-darkModeO2BluePrimaryDark);
+    --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-o2-white);
     --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-o2-darkModeO2BluePrimaryDark);
+    --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-o2-darkModeO2BluePrimaryDark);
+    --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-darkModeO2BluePrimaryDark);
     --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-o2-darkModeO2BluePrimaryDark);
-    --mistica-color-buttonSecondaryBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-buttonSecondaryBorder: var(--mistica-o2-white);
-    --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-white);
     --mistica-color-buttonSecondaryBorderInverse: var(--mistica-o2-white);
+    --mistica-color-buttonSecondaryBorderMedia: var(--mistica-o2-white);
+    --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-white);
     --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-o2-white);
+    --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-buttonSecondaryBackgroundHover: rgba(var(--mistica-o2-raw-white), 0.15);
     --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.15);
     --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.15);
     --mistica-color-textButtonPrimary: var(--mistica-o2-grey2);
     --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-grey2);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-o2BluePrimary);
     --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-grey2);
+    --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-o2BluePrimary70);
     --mistica-color-textButtonSecondary: var(--mistica-o2-grey2);
-    --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-grey2);
     --mistica-color-textButtonSecondaryInverse: var(--mistica-o2-grey2);
+    --mistica-color-textButtonSecondaryMedia: var(--mistica-o2-white);
+    --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-grey2);
     --mistica-color-textButtonSecondaryInversePressed: var(--mistica-o2-grey2);
+    --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-o2-white);
     --mistica-color-textLink: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-textLinkInverse: var(--mistica-o2-o2BluePrimary30);
+    --mistica-color-textLinkMedia: var(--mistica-o2-white);
     --mistica-color-textLinkDanger: var(--mistica-o2-pepper);
+    --mistica-color-textLinkDangerMedia: var(--mistica-o2-pepper);
     --mistica-color-textLinkSnackbar: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary30);
     --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary30);
@@ -416,6 +451,7 @@
         rgba(var(--mistica-o2-raw-black), 0.4) 30%,
         rgba(var(--mistica-o2-raw-black), 0.7) 100%
     );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-o2-raw-black), 0.7);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -450,34 +486,51 @@
         --mistica-color-buttonDangerBackground: var(--mistica-o2-pepper);
         --mistica-color-buttonDangerBackgroundPressed: var(--mistica-o2-pepper60);
         --mistica-color-buttonDangerBackgroundHover: var(--mistica-o2-pepper60);
-        --mistica-color-buttonLinkDangerBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonLinkDangerBackgroundInverse: rgba(var(--mistica-o2-raw-white), 0);
+        --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-o2-white);
+        --mistica-color-buttonLinkDangerBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonLinkDangerBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.08);
+        --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-o2-pepper10);
         --mistica-color-buttonLinkBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonLinkBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.08);
+        --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonPrimaryBackground: var(--mistica-o2-darkModeO2BluePrimary);
         --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-o2-darkModeO2BluePrimary);
-        --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-darkModeO2BluePrimaryDark);
+        --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-o2-white);
         --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-o2-darkModeO2BluePrimaryDark);
+        --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-o2-darkModeO2BluePrimaryDark);
+        --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-o2-o2BluePrimary30);
+        --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-darkModeO2BluePrimaryDark);
         --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-o2-darkModeO2BluePrimaryDark);
-        --mistica-color-buttonSecondaryBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-buttonSecondaryBorder: var(--mistica-o2-white);
-        --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-white);
         --mistica-color-buttonSecondaryBorderInverse: var(--mistica-o2-white);
+        --mistica-color-buttonSecondaryBorderMedia: var(--mistica-o2-white);
+        --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-white);
         --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-o2-white);
+        --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-buttonSecondaryBackgroundHover: rgba(var(--mistica-o2-raw-white), 0.15);
         --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundPressed: rgba(var(--mistica-o2-raw-white), 0.15);
         --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.15);
         --mistica-color-textButtonPrimary: var(--mistica-o2-grey2);
         --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-grey2);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-o2BluePrimary);
         --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-grey2);
+        --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-textButtonSecondary: var(--mistica-o2-grey2);
-        --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-grey2);
         --mistica-color-textButtonSecondaryInverse: var(--mistica-o2-grey2);
+        --mistica-color-textButtonSecondaryMedia: var(--mistica-o2-white);
+        --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-grey2);
         --mistica-color-textButtonSecondaryInversePressed: var(--mistica-o2-grey2);
+        --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-o2-white);
         --mistica-color-textLink: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-textLinkInverse: var(--mistica-o2-o2BluePrimary30);
+        --mistica-color-textLinkMedia: var(--mistica-o2-white);
         --mistica-color-textLinkDanger: var(--mistica-o2-pepper);
+        --mistica-color-textLinkDangerMedia: var(--mistica-o2-pepper);
         --mistica-color-textLinkSnackbar: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary30);
@@ -577,6 +630,7 @@
             rgba(var(--mistica-o2-raw-black), 0.4) 30%,
             rgba(var(--mistica-o2-raw-black), 0.7) 100%
         );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-o2-raw-black), 0.7);
     }
 
     [data-mistica-skin='o2'][data-mistica-color-scheme='light'] {
@@ -610,34 +664,51 @@
         --mistica-color-buttonDangerBackground: var(--mistica-o2-pepper);
         --mistica-color-buttonDangerBackgroundPressed: var(--mistica-o2-pepper60);
         --mistica-color-buttonDangerBackgroundHover: var(--mistica-o2-pepper60);
-        --mistica-color-buttonLinkDangerBackgroundPressed: var(--mistica-o2-pepper10);
         --mistica-color-buttonLinkDangerBackgroundInverse: var(--mistica-o2-white);
+        --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-o2-white);
+        --mistica-color-buttonLinkDangerBackgroundPressed: var(--mistica-o2-pepper10);
         --mistica-color-buttonLinkDangerBackgroundInversePressed: var(--mistica-o2-pepper10);
+        --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-o2-pepper10);
         --mistica-color-buttonLinkBackgroundPressed: var(--mistica-o2-o2BluePrimary10);
         --mistica-color-buttonLinkBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.08);
+        --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonPrimaryBackground: var(--mistica-o2-o2BluePrimary);
         --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-o2-white);
-        --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-o2BluePrimary70);
+        --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-o2-white);
         --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-o2-o2BluePrimary70);
+        --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-o2-o2BluePrimary30);
+        --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-o2-o2BluePrimary30);
+        --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-o2-o2BluePrimary30);
-        --mistica-color-buttonSecondaryBackgroundPressed: var(--mistica-o2-o2BluePrimary10);
+        --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-buttonSecondaryBorder: var(--mistica-o2-o2BluePrimary);
-        --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-buttonSecondaryBorderInverse: var(--mistica-o2-white);
+        --mistica-color-buttonSecondaryBorderMedia: var(--mistica-o2-white);
+        --mistica-color-buttonSecondaryBorderPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-o2-o2BluePrimary30);
+        --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-buttonSecondaryBackgroundHover: var(--mistica-o2-o2BluePrimary10);
         --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundPressed: var(--mistica-o2-o2BluePrimary10);
         --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(var(--mistica-o2-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.15);
         --mistica-color-textButtonPrimary: var(--mistica-o2-white);
         --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-o2BluePrimary);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-o2BluePrimary);
         --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-o2BluePrimary70);
+        --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-textButtonSecondary: var(--mistica-o2-o2BluePrimary);
-        --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-textButtonSecondaryInverse: var(--mistica-o2-white);
+        --mistica-color-textButtonSecondaryMedia: var(--mistica-o2-white);
+        --mistica-color-textButtonSecondaryPressed: var(--mistica-o2-o2BluePrimary70);
         --mistica-color-textButtonSecondaryInversePressed: var(--mistica-o2-white);
+        --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-o2-white);
         --mistica-color-textLink: var(--mistica-o2-o2BluePrimary);
         --mistica-color-textLinkInverse: var(--mistica-o2-white);
+        --mistica-color-textLinkMedia: var(--mistica-o2-white);
         --mistica-color-textLinkDanger: var(--mistica-o2-pepper);
+        --mistica-color-textLinkDangerMedia: var(--mistica-o2-pepper);
         --mistica-color-textLinkSnackbar: var(--mistica-o2-o2BluePrimary30);
         --mistica-color-textActivated: var(--mistica-o2-o2BluePrimary);
         --mistica-color-textBrand: var(--mistica-o2-o2BluePrimary);
@@ -737,6 +808,7 @@
             rgba(var(--mistica-o2-raw-black), 0.4) 30%,
             rgba(var(--mistica-o2-raw-black), 0.7) 100%
         );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-o2-raw-black), 0.7);
     }
 }
 

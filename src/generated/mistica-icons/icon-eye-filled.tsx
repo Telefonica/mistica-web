@@ -16,7 +16,20 @@ const IconEyeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 8.4c1.987 0 3.6 1.611 3.6 3.6l-.005.185A3.6 3.6 0 0 1 12 15.601l-.185-.005A3.601 3.601 0 0 1 12 8.399"
+                />
+                <path
+                    fill={fillColor}
+                    d="M11.983 5.3c4.124 0 7.796 2.4 9.828 6.4l.189.308-.156.308c-2.048 4-5.72 6.384-9.844 6.384s-7.796-2.4-9.828-6.4L2 12.008l.156-.308c2.032-4 5.703-6.4 9.827-6.4M12 6.965A5.035 5.035 0 1 0 12 17.035a5.035 5.035 0 0 0 0-10.07"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

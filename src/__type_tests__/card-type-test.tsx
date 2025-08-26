@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
-import {DisplayMediaCard, NakedCard, PosterCard, SmallNakedCard, SnapCard} from '../card';
+import {DataCard, SnapCard} from '../card-data';
+import {DisplayMediaCard, PosterCard, CoverCard} from '../card-cover';
+import {NakedCard, SmallNakedCard} from '../card-naked';
 import Image from '../image';
+import {MediaCard} from '../card-media';
 
 <SnapCard title="title" />;
 <SnapCard title="title" href="/" />;
@@ -61,12 +64,10 @@ import Image from '../image';
 <PosterCard title="title" backgroundImage="" backgroundColor="" />;
 // @ts-expect-error backgroundVideo and backgroundColor can't be used together
 <PosterCard title="title" backgroundVideo="" backgroundColor="" />;
-// @ts-expect-error backgroundColor, backgroundImage or backgroundVideo are mandatory
-<PosterCard title="title" />;
-// @ts-expect-error if you set a custom backgroundColor, you should specify the variant
-<PosterCard title="title" backgroundColor="red" />;
 // @ts-expect-error backgroundImage should have src or srcSet
 <PosterCard title="title" backgroundImage={{src: undefined, srcSet: undefined}} />;
+// @ts-expect-error PosterCard expects no children
+<PosterCard title="title">hello</PosterCard>;
 
 (isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
 (isTouchable: boolean) => <SnapCard title="title" to={isTouchable ? '/' : undefined} />;
@@ -97,6 +98,10 @@ import Image from '../image';
 <NakedCard media={<Image src="/something.png" />} title="title" href="/" to="/" />;
 // @ts-expect-error trackingEvent can't be used if the card is not touchable
 <NakedCard media={<Image src="/something.png" />} title="title" trackingEvent={{name: 'do-something'}} />;
+// @ts-expect-error footerBackgroundColor not allowed in NakedCard
+<NakedCard title="title" footerBackgroundColor="blue" />;
+// @ts-expect-error NakedCard expects no children
+<NakedCard title="title">hello</NakedCard>;
 
 <SmallNakedCard media={<Image src="/something.png" />} title="title" />;
 <SmallNakedCard media={<Image src="/something.png" />} title="title" href="/" />;
@@ -121,3 +126,12 @@ import Image from '../image';
     title="title"
     trackingEvent={{name: 'do-something'}}
 />;
+
+// @ts-expect-error MediaCard expects no children
+<MediaCard title="title">hello</MediaCard>;
+
+// @ts-expect-error DataCard expects no children
+<DataCard title="title">hello</DataCard>;
+
+// @ts-expect-error CoverCard expects no children
+<CoverCard title="title">hello</CoverCard>;
