@@ -8,6 +8,7 @@ import {ButtonPrimary, ButtonLink} from '../button';
 import IconMobileDeviceRegular from '../generated/mistica-icons/icon-mobile-device-regular';
 import IconStarFilled from '../generated/mistica-icons/icon-star-filled';
 import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
+import {useThemeVariant} from '../theme-variant-context';
 
 test('CoverCard tab order with video', async () => {
     // not implemented in jsdom
@@ -76,4 +77,24 @@ test('CoverCard tab order with video', async () => {
 
     await userEvent.tab();
     expect(document.body).toHaveFocus();
+});
+
+test('CoverCard with image has media variant', async () => {
+    const Slot = () => {
+        const variant = useThemeVariant();
+        return <div data-testid="slot-element">{variant}</div>;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <CoverCard
+                imageSrc="https://example.com/image.jpg"
+                title="Title"
+                description="Description"
+                slot={<Slot />}
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(await screen.findByTestId('slot-element')).toHaveTextContent('media');
 });
