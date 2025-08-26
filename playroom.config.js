@@ -97,7 +97,7 @@ const config = {
                     ],
                 },
                 {
-                    test: /(reset|roboto|vivo-font|telefonica-font|onair-font|rebond-font)\.css$/,
+                    test: /(reset|roboto|vivo-font|telefonica-font|onair-font|movistar-font)\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
                 {

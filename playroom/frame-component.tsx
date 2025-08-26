@@ -2,7 +2,7 @@ import '../css/roboto.css';
 import '../.storybook/css/vivo-font.css';
 import '../.storybook/css/telefonica-font.css';
 import '../.storybook/css/onair-font.css';
-import '../.storybook/css/rebond-font.css';
+import '../.storybook/css/movistar-font.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {
@@ -76,7 +76,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 ? 'body {font-family: "On Air"}'
                 : ''
         }
-        ${skinName === MOVISTAR_SKIN ? 'body {font-family: "Rebond Grotesque"}' : ''}
+        ${skinName === MOVISTAR_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
 
         *[class^='_1fu0koy1'] {
             display: none;

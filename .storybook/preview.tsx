@@ -2,7 +2,7 @@ import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
 import './css/onair-font.css';
-import './css/rebond-font.css';
+import './css/movistar-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
@@ -127,7 +127,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                         {(skin === O2_SKIN || skin === O2_NEW_SKIN || skin === ESIMFLAG_SKIN) && (
                             <style>{`body {font-family: "On Air"}`}</style>
                         )}
-                        {skin === MOVISTAR_SKIN && <style>{`body {font-family: "Rebond Grotesque"}`}</style>}
+                        {skin === MOVISTAR_SKIN && <style>{`body {font-family: "Movistar Sans"}`}</style>}
                         <Story {...context} />
                     </OverscrollColorProvider>
                 </ThemeContextProvider>
