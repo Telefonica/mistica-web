@@ -1306,8 +1306,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                   ? 'row'
                                   : 'row-reverse',
                         justifyItems: 'stretch',
-                        borderTopLeftRadius: `calc(${borderRadius} - 1px)`,
-                        borderTopRightRadius: `calc(${borderRadius} - 1px)`,
+                        borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                        borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
                         borderBottomLeftRadius:
                             shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
                         borderBottomRightRadius:
