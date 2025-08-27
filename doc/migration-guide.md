@@ -31,6 +31,8 @@ codebase for the eventual removal of these deprecated features.
   via props.
 - Cards now accept 3 kind of buttons: `buttonPrimary`, `buttonSecondary`, and `buttonLink`. You must use at
   most 2 buttons at the same time.
+- Deprecated cards have a default `slotAlignment` of `bottom`. New cards have a default `slotAlignment` of
+  `content`. If you want to keep the previous behavior, you must set `slotAlignment="bottom"` explicitly.
 
 ## Migration Guide from mistica 12.x to mistica 13.x
 
