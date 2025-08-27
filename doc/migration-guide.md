@@ -23,6 +23,7 @@ codebase for the eventual removal of these deprecated features.
 - The `extra` prop has been deprecated. Use `slot`.
 - The `actions` prop has been deprecated. Use `topActions`.
 - The `button` prop has been deprecated. Use `buttonPrimary`.
+- The `secondaryButton` prop has been deprecated. Use `buttonSecondary`.
 - The `isInverse` prop has been deprecated. Use `variant`.
 
 ### Behavior changes
