@@ -1159,7 +1159,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const externalVariant = isInverseOutside ? 'inverse' : 'default';
         const backgroundVariant = variantProp || externalVariant;
         const variant: Variant =
-            variantProp || (type === 'cover' && hasCustomBackground ? 'inverse' : 'default');
+            variantProp || (type === 'cover' && hasCustomBackground ? 'media' : 'default');
 
         const overlayStyle =
             variant === 'inverse' ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;

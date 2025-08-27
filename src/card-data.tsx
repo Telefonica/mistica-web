@@ -122,11 +122,16 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Fixe
     }
 );
 
+type DisplayDataCardProps = FixedSizeDataCardProps & {
+    /** @deprecated use buttonSecondary */
+    secondaryButton?: CardActionButtonPrimary;
+};
+
 /**
  * @deprecated use <Datacard size="display" /> instead
  */
-export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<FixedSizeDataCardProps>>(
-    ({dataAttributes, ...rest}, ref) => {
+export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DisplayDataCardProps>>(
+    ({dataAttributes, buttonSecondary, secondaryButton, ...rest}, ref) => {
         return (
             <DataCard
                 size="display"
@@ -135,6 +140,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCa
                     testid: 'DisplayDataCard',
                     ...dataAttributes,
                 }}
+                buttonSecondary={buttonSecondary || secondaryButton}
                 ref={ref}
                 {...rest}
             />

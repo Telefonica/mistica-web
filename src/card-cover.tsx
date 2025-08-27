@@ -211,15 +211,21 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
     }
 );
 
+type DisplayMediaCardProps = PosterCardProps & {
+    /** @deprecated use buttonSecondary */
+    secondaryButton?: CardActionButtonPrimary;
+};
+
 /**
  * @deprecated use <CoverCard size="display" />
  */
-export const DisplayMediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<PosterCardProps>>(
-    ({dataAttributes, ...rest}, ref) => {
+export const DisplayMediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DisplayMediaCardProps>>(
+    ({dataAttributes, secondaryButton, buttonSecondary, ...rest}, ref) => {
         return (
             <PosterCard
                 ref={ref}
                 size="display"
+                buttonSecondary={buttonSecondary || secondaryButton}
                 dataAttributes={{
                     'component-name': 'DisplayMediaCard',
                     testid: 'DisplayMediaCard',
