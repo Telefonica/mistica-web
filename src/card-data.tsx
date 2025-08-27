@@ -106,7 +106,7 @@ type FixedSizeDataCardProps = Omit<DataCardProps, 'size'>;
  * @deprecated use <Datacard size="snap" /> instead
  */
 export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<FixedSizeDataCardProps>>(
-    ({dataAttributes, ...rest}, ref) => {
+    ({dataAttributes, slotAlignment = 'bottom', ...rest}, ref) => {
         return (
             <DataCard
                 size="snap"
@@ -116,6 +116,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Fixe
                     ...dataAttributes,
                 }}
                 ref={ref}
+                slotAlignment={slotAlignment}
                 {...rest}
             />
         );
@@ -131,7 +132,7 @@ type DisplayDataCardProps = FixedSizeDataCardProps & {
  * @deprecated use <Datacard size="display" /> instead
  */
 export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DisplayDataCardProps>>(
-    ({dataAttributes, buttonSecondary, secondaryButton, ...rest}, ref) => {
+    ({dataAttributes, buttonSecondary, slotAlignment = 'bottom', secondaryButton, ...rest}, ref) => {
         return (
             <DataCard
                 size="display"
@@ -141,6 +142,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCa
                     ...dataAttributes,
                 }}
                 buttonSecondary={buttonSecondary || secondaryButton}
+                slotAlignment={slotAlignment}
                 ref={ref}
                 {...rest}
             />
