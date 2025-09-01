@@ -345,7 +345,7 @@ export const SheetBody = ({
             <div className={styles.stickyTitle}>
                 {title ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}} paddingX={paddingX}>
-                        <Text5 as="h2" id={modalTitleId} truncate>
+                        <Text5 as="h2" id={modalTitleId}>
                             {title}
                         </Text5>
                     </Box>
