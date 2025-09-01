@@ -70,11 +70,11 @@ const Chip = (props: ChipProps): JSX.Element => {
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </div>
             )}
-            <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
+            <div style={{paddingRight: badge ? 8 : 0 || onClose ? 4 : 0, display: 'flex'}}>
                 <Text2 id={id} weight={textPresets.indicator.weight} color="currentColor">
                     {children}
                 </Text2>
-            </Box>
+            </div>
         </>
     );
 
