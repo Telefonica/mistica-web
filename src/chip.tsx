@@ -3,7 +3,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Badge from './badge';
-import Box from './box';
 import {Text2} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
