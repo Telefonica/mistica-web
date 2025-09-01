@@ -1,3 +1,17 @@
+## [16.37.4](https://github.com/Telefonica/mistica-web/compare/v16.37.3...v16.37.4) (2025-08-27)
+
+
+### Bug Fixes
+
+* **Card:** Naked border radius. Default slotAlignment for deprecated cards ([#1426](https://github.com/Telefonica/mistica-web/issues/1426)) ([0280612](https://github.com/Telefonica/mistica-web/commit/02806122c71d8301d29193fccd5240d0b6095db8))
+
+## [16.37.3](https://github.com/Telefonica/mistica-web/compare/v16.37.2...v16.37.3) (2025-08-27)
+
+
+### Bug Fixes
+
+* **Card:** Update CoverCard description color ([#1425](https://github.com/Telefonica/mistica-web/issues/1425)) ([420757b](https://github.com/Telefonica/mistica-web/commit/420757b0ccdc91b23e68448d055547c898d7891d))
+
 ## [16.37.2](https://github.com/Telefonica/mistica-web/compare/v16.37.1...v16.37.2) (2025-08-26)
 
 

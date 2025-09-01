@@ -23,6 +23,7 @@ codebase for the eventual removal of these deprecated features.
 - The `extra` prop has been deprecated. Use `slot`.
 - The `actions` prop has been deprecated. Use `topActions`.
 - The `button` prop has been deprecated. Use `buttonPrimary`.
+- The `secondaryButton` prop has been deprecated. Use `buttonSecondary`.
 - The `isInverse` prop has been deprecated. Use `variant`.
 
 ### Behavior changes
@@ -31,6 +32,8 @@ codebase for the eventual removal of these deprecated features.
   via props.
 - Cards now accept 3 kind of buttons: `buttonPrimary`, `buttonSecondary`, and `buttonLink`. You must use at
   most 2 buttons at the same time.
+- Deprecated cards have a default `slotAlignment` of `bottom`. New cards have a default `slotAlignment` of
+  `content`. If you want to keep the previous behavior, you must set `slotAlignment="bottom"` explicitly.
 
 ## Migration Guide from mistica 12.x to mistica 13.x
 
