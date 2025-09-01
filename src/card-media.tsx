@@ -117,21 +117,36 @@ type DeprecatedHighlightedCardProps = Omit<MediaCardProps, 'size' | 'mediaPositi
 export const HighlightedCard = React.forwardRef<
     HTMLDivElement,
     MaybeTouchableCard<DeprecatedHighlightedCardProps>
->(({dataAttributes, isInverse, variant, imageUrl, imageSrc, mediaWidth, ...rest}, ref) => {
-    return (
-        <MediaCard
-            size="default"
-            mediaPosition="right"
-            mediaWidth={mediaWidth || 100}
-            dataAttributes={{
-                'component-name': 'HighlightedCard',
-                testid: 'HighlightedCard',
-                ...dataAttributes,
-            }}
-            imageSrc={imageSrc || imageUrl}
-            variant={variant || (isInverse ? 'inverse' : 'default')}
-            ref={ref}
-            {...rest}
-        />
-    );
-});
+>(
+    (
+        {
+            dataAttributes,
+            isInverse,
+            variant,
+            imageUrl,
+            imageSrc,
+            mediaWidth,
+            slotAlignment = 'bottom',
+            ...rest
+        },
+        ref
+    ) => {
+        return (
+            <MediaCard
+                size="default"
+                mediaPosition="right"
+                mediaWidth={mediaWidth || 100}
+                dataAttributes={{
+                    'component-name': 'HighlightedCard',
+                    testid: 'HighlightedCard',
+                    ...dataAttributes,
+                }}
+                slotAlignment={slotAlignment}
+                imageSrc={imageSrc || imageUrl}
+                variant={variant || (isInverse ? 'inverse' : 'default')}
+                ref={ref}
+                {...rest}
+            />
+        );
+    }
+);

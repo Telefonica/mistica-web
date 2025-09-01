@@ -1,3 +1,41 @@
+## [16.37.4](https://github.com/Telefonica/mistica-web/compare/v16.37.3...v16.37.4) (2025-08-27)
+
+
+### Bug Fixes
+
+* **Card:** Naked border radius. Default slotAlignment for deprecated cards ([#1426](https://github.com/Telefonica/mistica-web/issues/1426)) ([0280612](https://github.com/Telefonica/mistica-web/commit/02806122c71d8301d29193fccd5240d0b6095db8))
+
+## [16.37.3](https://github.com/Telefonica/mistica-web/compare/v16.37.2...v16.37.3) (2025-08-27)
+
+
+### Bug Fixes
+
+* **Card:** Update CoverCard description color ([#1425](https://github.com/Telefonica/mistica-web/issues/1425)) ([420757b](https://github.com/Telefonica/mistica-web/commit/420757b0ccdc91b23e68448d055547c898d7891d))
+
+## [16.37.2](https://github.com/Telefonica/mistica-web/compare/v16.37.1...v16.37.2) (2025-08-26)
+
+
+### Bug Fixes
+
+* **Card:** expose deprecated props ([#1424](https://github.com/Telefonica/mistica-web/issues/1424)) ([ce1dd77](https://github.com/Telefonica/mistica-web/commit/ce1dd77d86cd9f7ebf56de43574bb4a74cdee5ad))
+
+## [16.37.1](https://github.com/Telefonica/mistica-web/compare/v16.37.0...v16.37.1) (2025-08-26)
+
+
+### Bug Fixes
+
+* **Card:** fix cover card with image variant ([#1423](https://github.com/Telefonica/mistica-web/issues/1423)) ([2ef4c87](https://github.com/Telefonica/mistica-web/commit/2ef4c87bfd1ca7c4763b24776da549db55bea91f))
+
+# [16.37.0](https://github.com/Telefonica/mistica-web/compare/v16.36.1...v16.37.0) (2025-08-25)
+
+
+### Features
+
+* **Cards:** allow transparent gradient color in cover card ([#1422](https://github.com/Telefonica/mistica-web/issues/1422)) ([c892f33](https://github.com/Telefonica/mistica-web/commit/c892f338312f34eddaa5322d19fcd46fe07b3ae4))
+* **Cards:** Card ecosystem evolution ([#1400](https://github.com/Telefonica/mistica-web/issues/1400)) ([59e4d38](https://github.com/Telefonica/mistica-web/commit/59e4d389573f5a88e3532ebf6ec6856c58e4818c))
+* **skin:** update design tokens ([#1418](https://github.com/Telefonica/mistica-web/issues/1418)) ([c50b3b6](https://github.com/Telefonica/mistica-web/commit/c50b3b656d83d0343b716691fdbecf71fdbe45c8))
+* **UnorderedList/OrderedList/ListItem:** new components ([#1417](https://github.com/Telefonica/mistica-web/issues/1417)) ([4d52083](https://github.com/Telefonica/mistica-web/commit/4d5208316ac4e41c3c975ef7100365aa24652092))
+
 ## [16.36.1](https://github.com/Telefonica/mistica-web/compare/v16.36.0...v16.36.1) (2025-08-08)
 
 

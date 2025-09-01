@@ -4336,6 +4336,113 @@ const timelineSnippets: Array<Snippet> = [
     },
 ];
 
+const orderedListSnippets: Array<Snippet> = [
+    {
+        group: 'OrderedList',
+        name: 'OrderedList',
+        code: `
+        <Text3 regular as="div">
+  <OrderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <OrderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </OrderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </OrderedList>
+</Text3>`,
+    },
+    {
+        group: 'OrderedList',
+        name: 'OrderedList (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <OrderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </OrderedList>
+</Text3>`,
+    },
+];
+
+const unorderedListSnippets: Array<Snippet> = [
+    {
+        group: 'UnorderedList',
+        name: 'UnorderedList',
+        code: `
+        <Text3 regular as="div">
+  <UnorderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <UnorderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </UnorderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </UnorderedList>
+</Text3>`,
+    },
+    {
+        group: 'Ul',
+        name: 'Ul (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <UnorderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </UnorderedList>
+</Text3>`,
+    },
+];
+
+const listItemSnippets = [
+    {
+        group: 'ListItem',
+        name: 'ListItem',
+        code: `<ListItem>List item</ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem with icon',
+        code: `<ListItem Icon={IconLightningFilled}>List item</ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem with custom icon',
+        code: `<ListItem icon={<IconLightningFilled size="1em" color={colors.error} />}>
+      List item with custom icon rendering
+    </ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem without marker',
+        code: `<ListItem withMarker={false}>List item</Li>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4382,6 +4489,8 @@ export default [
     ...accordionSnippets,
     ...listSnippets,
     ...listSnippetsAvatar,
+    ...orderedListSnippets,
+    ...unorderedListSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
     ...sliderSnippets,
@@ -4534,5 +4643,6 @@ export default [
     ...loadingScreenSnippets,
     ...tableSnippets,
     ...timelineSnippets,
+    ...listItemSnippets,
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

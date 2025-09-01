@@ -37,7 +37,7 @@ type SmallNakedCardProps = Omit<NakedCardProps, 'size'>;
  * @deprecated use <NakedCard size="snap" /> instead
  */
 export const SmallNakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<SmallNakedCardProps>>(
-    ({dataAttributes, ...rest}, ref) => {
+    ({dataAttributes, slotAlignment = 'bottom', ...rest}, ref) => {
         return (
             <NakedCard
                 dataAttributes={{
@@ -45,6 +45,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCar
                     testid: 'SmallNakedCard',
                     ...dataAttributes,
                 }}
+                slotAlignment={slotAlignment}
                 size="snap"
                 ref={ref}
                 {...rest}

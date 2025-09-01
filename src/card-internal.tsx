@@ -67,7 +67,7 @@ type ContainerProps = {
     width?: string | number;
     height?: string | number;
     /** Gradient overlay color for cover cards. If not set it uses the theme color */
-    gradientOverlayColor?: string;
+    gradientOverlayColor?: 'transparent' | string;
     aspectRatio?: CardAspectRatio;
     dataAttributes?: DataAttributes;
     'aria-label'?: React.AriaAttributes['aria-label'];
@@ -101,6 +101,7 @@ type MediaProps = {
 };
 
 type TextContentProps = {
+    type: CardType;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: HeadingType;
@@ -827,9 +828,12 @@ type PrivateTextContentProps = {
     variant?: Variant;
     withTextShadow?: boolean;
     headlineRef?: (element: HTMLHeadingElement | null) => void;
+    hasCustomBackground: boolean;
 };
 
 const TextContent = ({
+    type,
+    hasCustomBackground,
     headlineRef,
     size,
     variant,
@@ -870,7 +874,10 @@ const TextContent = ({
             pretitle: colorValues.textPrimaryInverse,
             title: colorValues.textPrimaryInverse,
             subtitle: colorValues.textPrimaryInverse,
-            description: colorValues.textSecondaryInverse,
+            description:
+                type === 'cover' && hasCustomBackground
+                    ? colorValues.textPrimaryInverse
+                    : colorValues.textSecondaryInverse,
         },
     } as const;
 
@@ -1159,7 +1166,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const externalVariant = isInverseOutside ? 'inverse' : 'default';
         const backgroundVariant = variantProp || externalVariant;
         const variant: Variant =
-            variantProp || (type === 'cover' && hasCustomBackground ? 'inverse' : 'default');
+            variantProp || (type === 'cover' && hasCustomBackground ? 'media' : 'default');
 
         const overlayStyle =
             variant === 'inverse' ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
@@ -1202,6 +1209,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         /** This effect updates the overlay gradient and footer colors based on the gradientOverlayColor prop. */
         React.useEffect(() => {
+            if (gradientOverlayColor === 'transparent') {
+                return setOverlayColors(['transparent', 'transparent']);
+            }
             if (gradientOverlayColor) {
                 const components = getRGBComponents(gradientOverlayColor);
                 if (!components) {
@@ -1296,8 +1306,12 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                   ? 'row'
                                   : 'row-reverse',
                         justifyItems: 'stretch',
-                        borderTopLeftRadius: `calc(${borderRadius} - 1px)`,
-                        borderTopRightRadius: `calc(${borderRadius} - 1px)`,
+                        borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                        borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                        borderBottomLeftRadius:
+                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                        borderBottomRightRadius:
+                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
                         overflow: 'hidden',
                         zIndex: 1, // this way the touchable focus ring is above the footer
                     }}
@@ -1384,6 +1398,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             <div className={styles.contentContainer}>
                                 <div className={styles.textContent}>
                                     <TextContent
+                                        type={type}
+                                        hasCustomBackground={hasCustomBackground}
                                         headlineRef={headlineRef}
                                         variant={variant}
                                         size={size}
