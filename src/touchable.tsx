@@ -34,6 +34,7 @@ interface CommonProps {
     'aria-selected'?: 'true' | 'false' | boolean;
     'aria-labelledby'?: string;
     'aria-live'?: 'polite' | 'off' | 'assertive';
+    'aria-busy'?: boolean;
     'aria-current'?: React.AriaAttributes['aria-current'];
     'aria-description'?: string;
     'aria-describedby'?: string;
@@ -153,6 +154,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         'aria-labelledby': props['aria-labelledby'],
         'aria-description': props['aria-description'],
         'aria-describedby': props['aria-describedby'],
+        'aria-busy': props['aria-busy'],
     };
 
     const type = props.type ? props.type : 'button';
