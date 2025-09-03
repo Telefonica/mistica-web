@@ -145,7 +145,6 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                         <Text3
                                             medium
                                             forceMobileSizes
-                                            truncate
                                             color={
                                                 type === 'CRITICAL'
                                                     ? vars.colors.textPrimaryInverse
