@@ -230,11 +230,13 @@ export const openSSRPage = async ({
     device = TABLET_DEVICE,
     skin = MOVISTAR_SKIN,
     checkHidrationVisualMismatch = true,
+    prefersColorScheme,
 }: {
     name: string;
     device?: Device;
     skin?: string;
     checkHidrationVisualMismatch?: boolean;
+    prefersColorScheme?: 'light' | 'dark';
 }): Promise<PageApi> => {
     const globalPage = getGlobalPage();
     const port = (global as any)['__SSR_SERVER__'].address().port;
@@ -259,6 +261,10 @@ export const openSSRPage = async ({
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
     });
+
+    if (prefersColorScheme) {
+        await page.emulateMediaFeatures([{name: 'prefers-color-scheme', value: prefersColorScheme}]);
+    }
 
     if (checkHidrationVisualMismatch) {
         await checkHydrationMismatch(page);

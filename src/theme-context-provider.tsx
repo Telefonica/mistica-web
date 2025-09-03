@@ -125,6 +125,19 @@ type TextPresetsVars = {
     };
 };
 
+// Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
+const makeRawColors = (colors: Colors): Colors =>
+    Object.fromEntries(
+        Object.entries(colors).map(([colorName, colorValue]) => {
+            let rawColorValue = '';
+            if (colorValue.startsWith('#')) {
+                const [r, g, b] = fromHexToRgb(colorValue);
+                rawColorValue = `${r}, ${g}, ${b}`;
+            }
+            return [colorName, rawColorValue];
+        })
+    ) as Colors;
+
 const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
@@ -196,22 +209,6 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         };
     }, [colors, theme, isDarkModeEnabled, translate]);
 
-    // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
-    const rawColors = React.useMemo(
-        () =>
-            Object.fromEntries(
-                Object.entries(colors).map(([colorName, colorValue]) => {
-                    let rawColorValue = '';
-                    if (colorValue.startsWith('#')) {
-                        const [r, g, b] = fromHexToRgb(colorValue);
-                        rawColorValue = `${r}, ${g}, ${b}`;
-                    }
-                    return [colorName, rawColorValue];
-                })
-            ) as Colors,
-        [colors]
-    );
-
     const textPresetsVars = React.useMemo(() => {
         // Get an object mapping textPresets tokens to objects containing the token's weight
         // For example, {title1: {weight: '700'}}
@@ -244,11 +241,49 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         return Object.assign({}, ...tokenValues) as TextPresetsVars;
     }, [contextTheme]);
 
-    const themeVars = {
-        textPresets: textPresetsVars,
-        colors,
-        rawColors,
-        borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+    const renderStyles = (selector: string) => {
+        if (withoutStyles || (process.env.NODE_ENV === 'test' && !process.env.SSR_TEST)) {
+            return null;
+        }
+
+        const lightRawColors = makeRawColors(lightColors);
+        const darkRawColors = makeRawColors(darkColors);
+
+        const [defaultColors, defaultRawColors] =
+            colorScheme === 'auto' || colorScheme === 'light'
+                ? [lightColors, lightRawColors]
+                : [darkColors, darkRawColors];
+
+        const darkModeMediaQuery =
+            colorScheme === 'auto'
+                ? `@media (prefers-color-scheme: dark) {
+                    ${selector} {
+                        ${assignInlineVars(vars.colors, darkColors)};
+                        ${assignInlineVars(vars.rawColors, darkRawColors)}
+                    }
+                }`
+                : '';
+
+        return (
+            <style>
+                {`
+                ${selector} {
+                    ${assignInlineVars(vars, {
+                        colors: defaultColors,
+                        rawColors: defaultRawColors,
+                        textPresets: textPresetsVars,
+                        borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+                    })}
+                }
+                @media ${mq.tabletOrSmaller} {
+                    ${selector} {
+                        ${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}
+                    }
+                }
+                ${darkModeMediaQuery}
+            `}
+            </style>
+        );
     };
 
     return (
@@ -264,40 +299,24 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                                             <DialogRoot>
                                                 <SnackbarRoot>
                                                     {as ? (
-                                                        React.createElement(
-                                                            as,
-                                                            {
-                                                                style: {
-                                                                    isolation: 'isolate',
-                                                                    ...assignInlineVars(
-                                                                        styles.themeVarsContract,
-                                                                        themeVars
-                                                                    ),
-                                                                    ...assignInlineVars(
-                                                                        styles.textPresetResponsiveVarsContract,
-                                                                        textPresetsResponsiveVars
-                                                                    ),
+                                                        <>
+                                                            {renderStyles(`.${styles.themeVars}`)}
+                                                            {React.createElement(
+                                                                as,
+                                                                {
+                                                                    style: {
+                                                                        isolation: 'isolate',
+                                                                    },
+                                                                    className: withoutStyles
+                                                                        ? undefined
+                                                                        : styles.themeVars,
                                                                 },
-                                                                className: withoutStyles
-                                                                    ? undefined
-                                                                    : styles.themeVars,
-                                                            },
-                                                            children
-                                                        )
+                                                                children
+                                                            )}
+                                                        </>
                                                     ) : (
                                                         <>
-                                                            {!withoutStyles &&
-                                                                (process.env.NODE_ENV !== 'test' ||
-                                                                    process.env.SSR_TEST) && (
-                                                                    <style>
-                                                                        {`
-                                                                                :root {${assignInlineVars(vars, themeVars)}}
-                                                                                @media ${mq.tabletOrSmaller} {
-                                                                                    :root {${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}}
-                                                                                }
-                                                                            `}
-                                                                    </style>
-                                                                )}
+                                                            {renderStyles(':root')}
                                                             {children}
                                                         </>
                                                     )}
