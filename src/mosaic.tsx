@@ -158,7 +158,7 @@ export const VerticalMosaic = ({items, dataAttributes}: VerticalMosaicProps): JS
         <Grid
             rows={1}
             gap={GRID_GAP}
-            dataAttributes={{...dataAttributes, 'component-name': 'VerticalMosaic'}}
+            dataAttributes={{'component-name': 'VerticalMosaic', testid: 'VerticalMosaic', ...dataAttributes}}
         >
             {pages.map((items, index) => (
                 <VerticalMosaicPage items={items} key={index} />

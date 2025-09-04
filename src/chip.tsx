@@ -78,7 +78,7 @@ const Chip = (props: ChipProps): JSX.Element => {
         </>
     );
 
-    const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
+    const chipDataAttributes = {'component-name': 'Chip', testid: 'Chip', ...dataAttributes};
 
     if (onClose) {
         return (
