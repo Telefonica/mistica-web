@@ -107,9 +107,7 @@ export const ProgressBarStepped = ({
     }, [currentStep, steps, step]);
 
     const getFormattedValueText = () => {
-        const stepText = (texts.progressBarStepLabel || t(tokens.progressBarStepLabel))
-            .replace('1$s', String(step))
-            .replace('2$s', String(steps));
+        const stepText = t(texts.progressBarStepLabel || tokens.progressBarStepLabel, step, steps);
         return stepText;
     };
 

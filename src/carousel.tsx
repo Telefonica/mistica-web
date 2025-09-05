@@ -296,17 +296,15 @@ export const CarouselPageControls = ({
     const variant = useThemeVariant();
     const prevPageNumberText =
         prevArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
-            ? ', ' +
-              (texts.carouselPageNumber || t(tokens.carouselPageNumber))
-                  .replace('1$s', String(currentPageIndex))
-                  .replace('2$s', String(pagesCount))
+            ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, currentPageIndex, pagesCount)}`
             : '';
     const nextPageNumberText =
         nextArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
-            ? ', ' +
-              (texts.carouselPageNumber || t(tokens.carouselPageNumber))
-                  .replace('1$s', String(currentPageIndex + 2))
-                  .replace('2$s', String(pagesCount))
+            ? `, ${t(
+                  texts.carouselPageNumber || tokens.carouselPageNumber,
+                  currentPageIndex + 2,
+                  pagesCount
+              )}`
             : '';
     return (
         <Inline space={variant === 'media' ? 16 : 8}>

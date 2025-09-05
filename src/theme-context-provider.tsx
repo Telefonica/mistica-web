@@ -137,8 +137,8 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
     const language = localeToLanguage(theme.i18n.locale);
 
     const translate = React.useCallback(
-        (token: TextToken, ...params: Array<string | number>): string => {
-            const text = token[language] || token.en;
+        (token: TextToken | string, ...params: Array<string | number>): string => {
+            const text = typeof token === 'string' ? token : token[language] || token.en;
             if (!params.length) {
                 return text;
             }
