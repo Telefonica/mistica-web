@@ -327,10 +327,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
                         rightTextLabel={
                             multiline && maxLength
-                                ? texts.formTextMultilineMaxCount ||
-                                  t(tokens.formTextMultilineMaxCount)
-                                      .replace('1$s', String(characterCount))
-                                      .replace('2$s', String(maxLength))
+                                ? t(
+                                      texts.formTextMultilineMaxCount || tokens.formTextMultilineMaxCount,
+                                      characterCount,
+                                      maxLength
+                                  )
                                 : undefined
                         }
                     />

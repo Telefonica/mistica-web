@@ -166,9 +166,11 @@ const PinInput = ({
                     }
                 >
                     <IntegerInput
-                        aria-label={(texts.pinFieldInputLabel || t(tokens.pinFieldInputLabel))
-                            .replace('1$s', String(index + 1))
-                            .replace('2$s', String(length))}
+                        aria-label={t(
+                            texts.pinFieldInputLabel || tokens.pinFieldInputLabel,
+                            index + 1,
+                            length
+                        )}
                         type={hideCode ? 'password' : 'text'}
                         tabIndex={index > controlledValue.length ? -1 : undefined}
                         required
