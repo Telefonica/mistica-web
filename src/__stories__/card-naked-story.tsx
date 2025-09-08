@@ -27,7 +27,7 @@ export default {
     },
 };
 
-type NakedCardArgs = Omit<CommonCardArgs, 'footerBackgroundColor' | 'variant' | 'footerVariant'> & {
+type NakedCardArgs = Omit<CommonCardArgs, 'variant' | 'footerVariant'> & {
     slotAlignment: SlotAlignment | '';
     imageSrc: string;
     videoSrc: string;
