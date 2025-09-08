@@ -364,3 +364,18 @@ test.each`
     const image = await card.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('NakedCard over inverse', async () => {
+    await openStoryPage({
+        id: STORY_IDS.naked,
+        device: 'MOBILE_IOS',
+        args: {
+            ...argsReset,
+            variantOutside: 'inverse',
+        },
+    });
+
+    const card = await screen.findByTestId(TEST_IDS.naked);
+    const image = await card.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

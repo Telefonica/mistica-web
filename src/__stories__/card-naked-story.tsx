@@ -17,7 +17,6 @@ import {
     videoNameToUrl,
 } from './card-common';
 
-import type {Variant} from '../theme-variant-context';
 import type {CardAspectRatio, MediaAspectRatio, MediaPosition, SlotAlignment} from '../card-internal';
 import type {CommonCardArgs} from './card-common';
 
@@ -28,7 +27,7 @@ export default {
     },
 };
 
-type NakedCardArgs = CommonCardArgs & {
+type NakedCardArgs = Omit<CommonCardArgs, 'footerBackgroundColor' | 'variant' | 'footerVariant'> & {
     slotAlignment: SlotAlignment | '';
     imageSrc: string;
     videoSrc: string;
@@ -42,7 +41,6 @@ type NakedCardArgs = CommonCardArgs & {
 
 export const Default: StoryComponent<NakedCardArgs> = ({
     asset,
-    variant,
     variantOutside,
     aspectRatio,
     mediaAspectRatio,
@@ -53,7 +51,6 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     buttonPrimary,
     buttonSecondary,
     buttonLink,
-    footerVariant,
     imageSrc,
     videoSrc,
     slot,
@@ -72,8 +69,6 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 titleAs={titleAs || undefined}
                 pretitleAs={pretitleAs || undefined}
                 asset={getAsset(asset)}
-                variant={(variant as Variant) || undefined}
-                footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                 mediaAspectRatio={(normalizeAspectRatio(mediaAspectRatio) as MediaAspectRatio) || undefined}
                 mediaWidth={mediaWidth || undefined}
@@ -99,8 +94,10 @@ export const Default: StoryComponent<NakedCardArgs> = ({
 
 Default.storyName = 'NakedCard';
 
+const {variant, footerVariant, ...commonArgs} = defaultCommonCardArgs;
+
 Default.args = {
-    ...defaultCommonCardArgs,
+    ...commonArgs,
     slotAlignment: '',
     imageSrc: 'beach',
     imageAlt: 'Image Alt Text',
