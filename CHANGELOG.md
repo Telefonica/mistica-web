@@ -1,3 +1,11 @@
+## [16.37.5](https://github.com/Telefonica/mistica-web/compare/v16.37.4...v16.37.5) (2025-09-08)
+
+
+### Bug Fixes
+
+* **color-scheme:** initial flash when using SSR and dark mode ([#1421](https://github.com/Telefonica/mistica-web/issues/1421)) ([4d457f1](https://github.com/Telefonica/mistica-web/commit/4d457f18414c5f8509d07b18992c558e22805d81))
+* **NakedCard, SmallNakedCard:** use context variant. Deprecate variant and footerVariant props ([#1430](https://github.com/Telefonica/mistica-web/issues/1430)) ([179f9d3](https://github.com/Telefonica/mistica-web/commit/179f9d392ae1b4377acb78d5040eebc62751241d))
+
 ## [16.37.4](https://github.com/Telefonica/mistica-web/compare/v16.37.3...v16.37.4) (2025-08-27)
 
 
