@@ -77,13 +77,13 @@ const getButtonActionProps = (action: string, newTab: boolean) => {
 };
 
 type Props = {
-    variantOutside: 'default' | 'inverse' | 'media';
+    variant: 'default' | 'inverse' | 'media';
     children: React.ReactNode;
 };
 
-const ButtonBackgroundContainer = ({variantOutside, children}: Props) => (
-    <div style={{backgroundImage: variantOutside === 'media' ? `url(${tennisImg})` : undefined}}>
-        <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} variant={variantOutside}>
+const ButtonBackgroundContainer = ({variant, children}: Props) => (
+    <div style={{backgroundImage: variant === 'media' ? `url(${tennisImg})` : undefined}}>
+        <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} variant={variant}>
             <Box padding={16}>{children}</Box>
         </ResponsiveLayout>
     </div>
@@ -98,7 +98,7 @@ export const primaryButton: StoryComponent<Args> = ({
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer variantOutside={variantOutside}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonPrimary
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -120,7 +120,7 @@ export const SecondaryButton: StoryComponent<Args> = ({
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer variantOutside={variantOutside}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonSecondary
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -142,7 +142,7 @@ export const DangerButton: StoryComponent<Args> = ({
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer variantOutside={variantOutside}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonDanger
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -165,7 +165,7 @@ export const LinkButton: StoryComponent<Args & {chevron: string}> = ({
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer variantOutside={variantOutside}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonLink
                 {...props}
                 withChevron={chevron === 'default' ? undefined : chevron === 'true'}
@@ -188,7 +188,7 @@ export const LinkButtonDanger: StoryComponent<Args> = ({
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer variantOutside={variantOutside}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonLinkDanger
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -202,7 +202,7 @@ export const LinkButtonDanger: StoryComponent<Args> = ({
 };
 
 export const SubmitButton: StoryComponent = () => (
-    <ButtonBackgroundContainer variantOutside="default">
+    <ButtonBackgroundContainer variant="default">
         <Text2 as="p" regular>
             A button with submit attribute in a form doesn't need a onPress prop. And clicking on it will fire
             onSubmit event, that should be handled by the form.
