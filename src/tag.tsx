@@ -117,13 +117,7 @@ const Tag = ({
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
-                <Text
-                    color={textColor}
-                    size={14}
-                    lineHeight={20}
-                    weight={textPresets.indicator.weight}
-                    truncate
-                >
+                <Text color={textColor} size={14} lineHeight={20} weight={textPresets.indicator.weight}>
                     {children}
                 </Text>
                 {badgeValue !== 0 && (

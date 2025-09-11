@@ -26,6 +26,7 @@ type Args = {
     active: boolean;
     badge: string;
     href: string;
+    label: string;
 };
 
 type Props = {
@@ -57,6 +58,7 @@ export const Default: StoryComponent<Args> = ({
     badge,
     active: chipActive,
     href: hrefProp,
+    label,
 }) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
@@ -71,10 +73,10 @@ export const Default: StoryComponent<Args> = ({
         <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
             {closable ? (
                 <Chip onClose={() => window.alert('closed')} {...rest}>
-                    Chip
+                    {label}
                 </Chip>
             ) : (
-                <Chip {...props}>Chip</Chip>
+                <Chip {...props}>{label}</Chip>
             )}
         </ChipBackgroundContainer>
     );
@@ -177,6 +179,7 @@ export const NavigableChip: StoryComponent<{
 };
 
 const defaultArgs = {
+    label: 'Chip',
     inverse: false,
     active: false,
     badge: '0',
