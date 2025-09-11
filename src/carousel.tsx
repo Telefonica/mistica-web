@@ -277,6 +277,8 @@ type CarouselPageControlsProps = PageControlsProps & {
     bleedRight?: boolean;
     goPrev: () => void;
     goNext: () => void;
+    pagesCount?: number;
+    currentPageIndex?: number;
 };
 
 export const CarouselPageControls = ({
@@ -287,14 +289,28 @@ export const CarouselPageControls = ({
     setShouldAutoplay,
     prevArrowEnabled,
     nextArrowEnabled,
+    pagesCount,
+    currentPageIndex,
 }: CarouselPageControlsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
+    const prevPageNumberText =
+        prevArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
+            ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, currentPageIndex, pagesCount)}`
+            : '';
+    const nextPageNumberText =
+        nextArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
+            ? `, ${t(
+                  texts.carouselPageNumber || tokens.carouselPageNumber,
+                  currentPageIndex + 2,
+                  pagesCount
+              )}`
+            : '';
     return (
         <Inline space={variant === 'media' ? 16 : 8}>
             <IconButton
                 Icon={IconChevronLeftRegular}
-                aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
+                aria-label={(texts.carouselPrevButton || t(tokens.carouselPrevButton)) + prevPageNumberText}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
@@ -307,7 +323,7 @@ export const CarouselPageControls = ({
             />
             <IconButton
                 Icon={IconChevronRightRegular}
-                aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
+                aria-label={(texts.carouselNextButton || t(tokens.carouselNextButton)) + nextPageNumberText}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
@@ -816,6 +832,8 @@ const BaseCarousel = ({
                                 setShouldAutoplay={setShouldAutoPlay}
                                 prevArrowEnabled={prevArrowEnabled}
                                 nextArrowEnabled={nextArrowEnabled}
+                                pagesCount={pagesCount}
+                                currentPageIndex={currentPageIndex}
                             />
                         </div>
                     </Inline>
@@ -1226,6 +1244,8 @@ export const Slideshow = ({
                                         setShouldAutoplay={setShouldAutoPlay}
                                         prevArrowEnabled={prevArrowEnabled}
                                         nextArrowEnabled={nextArrowEnabled}
+                                        pagesCount={items.length}
+                                        currentPageIndex={currentIndex}
                                     />
                                 </Inline>
                             </ThemeVariant>
