@@ -204,6 +204,37 @@ const lightPrimaryInverse: ComplexStyleRule = [
     },
 ];
 
+const lightPrimaryMedia: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonPrimaryMedia,
+        background: vars.colors.buttonPrimaryBackgroundMedia,
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
+                color: vars.colors.textButtonPrimaryMediaPressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        color: vars.colors.textButtonPrimaryMediaPressed,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
+                        color: vars.colors.textButtonPrimaryMediaPressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 const lightSecondary: ComplexStyleRule = [
     button,
     sprinkles({
@@ -269,6 +300,42 @@ const lightSecondaryInverse: ComplexStyleRule = [
                         borderColor: vars.colors.buttonSecondaryBorderInversePressed,
                         color: vars.colors.textButtonSecondaryInversePressed,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundInversePressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
+const lightSecondaryMedia: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonSecondaryMedia,
+        background: 'transparent',
+    }),
+    {
+        borderColor: vars.colors.buttonSecondaryBorderMedia,
+
+        selectors: {
+            '&:not([disabled]):active': {
+                borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
+                color: vars.colors.textButtonSecondaryMediaPressed,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundMediaPressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
+                        color: vars.colors.textButtonSecondaryMediaPressed,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundMediaHover,
+                    },
+                    '&:not([disabled]):active': {
+                        borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
+                        color: vars.colors.textButtonSecondaryMediaPressed,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundMediaPressed,
                     },
                 },
             },
@@ -360,6 +427,34 @@ export const defaultLinkInverse: ComplexStyleRule = [
     },
 ];
 
+export const defaultLinkMedia: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkMedia,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 const dangerLink: ComplexStyleRule = [
     button,
     sprinkles({
@@ -416,6 +511,34 @@ const dangerLinkInverse: ComplexStyleRule = [
     },
 ];
 
+const dangerLinkMedia: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: vars.colors.buttonLinkDangerBackgroundMedia,
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 const dangerLinkInverseDark: ComplexStyleRule = [
     button,
     sprinkles({
@@ -444,6 +567,34 @@ const dangerLinkInverseDark: ComplexStyleRule = [
     },
 ];
 
+const dangerLinkMediaDark: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
@@ -460,4 +611,13 @@ export const inverseButtonVariants = styleVariants({
     link: defaultLinkInverse,
     linkDanger: dangerLinkInverse,
     linkDangerDark: dangerLinkInverseDark,
+});
+
+export const mediaButtonVariants = styleVariants({
+    primary: lightPrimaryMedia,
+    secondary: lightSecondaryMedia,
+    danger,
+    link: defaultLinkMedia,
+    linkDanger: dangerLinkMedia,
+    linkDangerDark: dangerLinkMediaDark,
 });
