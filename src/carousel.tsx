@@ -230,7 +230,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
 
     return (
         <div
-            {...getPrefixedDataAttributes({'component-name': 'PageBullets'})}
+            {...getPrefixedDataAttributes({'component-name': 'PageBullets', testid: 'PageBullets'})}
             className={classNames(styles.bulletsScrollableContainerBase, {
                 [styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS,
             })}
@@ -771,7 +771,11 @@ const BaseCarousel = ({
 
     return (
         <div
-            {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}
+            {...getPrefixedDataAttributes({
+                'component-name': 'Carousel',
+                testid: 'Carousel',
+                ...dataAttributes,
+            })}
             className={styles.carouselComponentContainer}
             role="region"
             aria-label={
