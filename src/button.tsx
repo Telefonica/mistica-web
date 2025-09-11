@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
 import {BaseTouchable} from './touchable';
-import {useIsInverseOrMediaVariant, useThemeVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {applyCssVars, pxToRem} from './utils/css';
 import {Text, Text3} from './text';
