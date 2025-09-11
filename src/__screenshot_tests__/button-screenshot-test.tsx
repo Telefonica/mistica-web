@@ -31,7 +31,20 @@ test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
-        args: {inverse: true},
+        args: {variantOutside: 'inverse'},
+    });
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(BUTTONS)('Buttons - %s - media', async (button) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+        device: 'MOBILE_IOS',
+        args: {variantOutside: 'media'},
     });
 
     const story = await screen.findByTestId('content');
