@@ -201,18 +201,21 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
 };
 
 /**
- * @typedef {{[key: string]: Array<string>}} IconKeywordsInfo
+ * @typedef {{[key: string]: {category: Array<string>, keywords: Array<string>}}} IconKeywordsInfoNew
  */
 const createAllIconKeywordsSource = () => {
     const keywordsPath = join(PATH_MISTICA_ICONS_REPO, 'icons', 'icons-keywords.json');
     const keywordsSource = fs.readFileSync(keywordsPath, 'utf8');
-    /** @type {IconKeywordsInfo} */
     const keywordsMap = JSON.parse(keywordsSource);
 
     // map icon names to kebab case
     const result = {};
-    for (const [icon, keywords] of Object.entries(keywordsMap)) {
-        result[kebabCase(icon)] = keywords;
+    for (const [icon, data] of Object.entries(keywordsMap)) {
+        const iconKey = kebabCase(icon);
+        result[iconKey] = {
+            category: data.category || [],
+            keywords: data.keywords || [],
+        };
     }
 
     const source = `/*
@@ -221,7 +224,7 @@ const createAllIconKeywordsSource = () => {
      * To update, execute "yarn start" inside "import-mistica-icons"
      */
 
-    const iconKeywords: {[key: string]: Array<string>} = ${JSON.stringify(result)};
+    const iconKeywords: {[key: string]: {keywords: Array<string>, category: Array<string>}} = ${JSON.stringify(result)};
 
     export default iconKeywords;
     `;
