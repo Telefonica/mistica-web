@@ -106,8 +106,8 @@ const VerticalMosaicPage = ({items, itemRole}: VerticalMosaicPageProps) => {
         case 1:
         case 2:
             return (
-                <div className={styles.singleItemRowContainer}>
-                    <Grid gap={GRID_GAP} columns={2} height="100%">
+                <div className={styles.singleItemRowContainer} role="none">
+                    <Grid role="none" gap={GRID_GAP} columns={2} height="100%">
                         {items.map((item, itemIndex) => (
                             <GridItem
                                 role={itemRole}
@@ -123,8 +123,8 @@ const VerticalMosaicPage = ({items, itemRole}: VerticalMosaicPageProps) => {
 
         case 3:
             return (
-                <div className={styles.squareContainer}>
-                    <Grid gap={GRID_GAP} columns={2} flow="column" height="100%">
+                <div className={styles.squareContainer} role="none">
+                    <Grid role="none" gap={GRID_GAP} columns={2} flow="column" height="100%">
                         {items.map((item, itemIndex) => (
                             <GridItem
                                 role={itemRole}
@@ -141,8 +141,8 @@ const VerticalMosaicPage = ({items, itemRole}: VerticalMosaicPageProps) => {
         case 4:
         default:
             return (
-                <div className={styles.fourItemsContainer}>
-                    <Grid gap={GRID_GAP} rows={3} columns={2} height="100%">
+                <div className={styles.fourItemsContainer} role="none">
+                    <Grid role="none" gap={GRID_GAP} rows={3} columns={2} height="100%">
                         <GridItem role={itemRole} order={0} rowSpan={2}>
                             {renderItem(items[0], 'vertical')}
                         </GridItem>
