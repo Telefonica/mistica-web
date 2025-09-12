@@ -195,7 +195,7 @@ export const VerticalMosaic = ({
             gap={GRID_GAP}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            dataAttributes={{...dataAttributes, 'component-name': 'VerticalMosaic'}}
+            dataAttributes={{'component-name': 'VerticalMosaic', testid: 'VerticalMosaic', ...dataAttributes}}
         >
             {pages.map((items, index) => (
                 <VerticalMosaicPage items={items} itemRole={itemRole} key={index} />
