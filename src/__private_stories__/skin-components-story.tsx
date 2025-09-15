@@ -19,7 +19,6 @@ import {
     IconBoxLight,
     DataCard,
     IconLightningRegular,
-    DisplayMediaCard,
     ButtonLinkDanger,
     PageBullets,
     Checkbox,
@@ -55,6 +54,7 @@ import {
     Timeline,
     TimelineItem,
     IconShopRegular,
+    CoverCard,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -181,7 +181,6 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                     </ComponentsGroup>
 
                     <ComponentsGroup>
-                        {/** DataCard */}
                         <DataCard
                             title="Title"
                             subtitle="Subtitle"
@@ -209,15 +208,15 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             }
                         />
 
-                        {/** DisplayMediaCard */}
-                        <DisplayMediaCard
-                            backgroundImage={usingVrImg}
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
                             title="Title"
                             pretitle="Pretitle"
                             description="Description"
                             onClose={() => {}}
-                            actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
-                            button={
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
                                 <ButtonDanger
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
@@ -234,6 +233,34 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                                 >
                                     LinkDanger
                                 </ButtonLinkDanger>
+                            }
+                        />
+
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
+                            title="Title"
+                            pretitle="Pretitle"
+                            description="Description"
+                            onClose={() => {}}
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
+                                <ButtonPrimary
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonPrimary
+                                </ButtonPrimary>
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    LinkDanger
+                                </ButtonLink>
                             }
                         />
 
