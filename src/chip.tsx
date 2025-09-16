@@ -3,7 +3,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Badge from './badge';
-import Box from './box';
 import {Text2} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
@@ -70,11 +69,11 @@ const Chip = (props: ChipProps): JSX.Element => {
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </div>
             )}
-            <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
-                <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
+            <div style={{paddingRight: badge ? 8 : 0 || onClose ? 4 : 0, display: 'flex'}}>
+                <Text2 id={id} weight={textPresets.indicator.weight} color="currentColor">
                     {children}
                 </Text2>
-            </Box>
+            </div>
         </>
     );
 

@@ -396,10 +396,10 @@ export const getTuSkin: GetKnownSkin = () => {
         borderRadii: {
             avatar: '50%',
             bar: '999px',
-            button: '999px',
+            button: '32px',
             checkbox: '2px',
             container: '16px',
-            indicator: '999px',
+            indicator: '24px',
             input: '12px',
             legacyDisplay: '16px',
             popup: '8px',
