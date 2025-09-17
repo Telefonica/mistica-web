@@ -6,12 +6,12 @@ import {getColors} from '../colors';
 import {createStorybookTheme} from '../storybook-manager-theme';
 
 const AVAILABLE_SKINS = [
-    'Movistar',
     'Movistar-new',
-    'O2',
+    'Movistar',
     'O2-new',
-    'Vivo',
+    'O2',
     'Vivo-new',
+    'Vivo',
     'Telefonica',
     'Blau',
     'Tu',
@@ -31,7 +31,7 @@ const renderPrimaryColorDot = (skinName) => (
 
 const ThemeSelectorAddon = ({api}) => {
     const channel = addons.getChannel();
-    const [currentSkin, setCurrentSkin] = React.useState(() => api.getQueryParam('skin') || 'Movistar');
+    const [currentSkin, setCurrentSkin] = React.useState(() => api.getQueryParam('skin') || 'Movistar-new');
 
     React.useEffect(() => {
         const notifySkin = () => {
