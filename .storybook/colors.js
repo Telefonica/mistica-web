@@ -3,16 +3,23 @@
 // This module replaces the required parts from ./src/skins
 
 /**
- * @param {'Movistar' | 'Vivo' | 'Vivo-new' | 'O2' | 'O2-new' | 'Telefonica' | 'Blau' | 'Tu' | 'Esimflag'} skin
+ * @param {'Movistar'| 'Movistar-new' | 'Vivo' | 'Vivo-new' | 'O2' | 'O2-new' | 'Telefonica' | 'Blau' | 'Tu' | 'Esimflag'} skin
  */
 export const getColors = (skin) => {
     switch (skin) {
         case 'Movistar':
             return {
-                primary: '#0066FF',
-                textPrimary: '#000000',
+                primary: '#019DF4',
+                textPrimary: '#313235',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#6B6C6F',
+                textSecondary: '#86888C',
+            };
+        case 'Movistar-new':
+            return {
+                primary: '#0066FF',
+                textPrimary: '#262423',
+                textPrimaryInverse: '#FFFFFF',
+                textSecondary: '#605e5c',
             };
         case 'Vivo':
         case 'Vivo-new':

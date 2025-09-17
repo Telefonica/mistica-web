@@ -7,6 +7,7 @@ import {createStorybookTheme} from '../storybook-manager-theme';
 
 const AVAILABLE_SKINS = [
     'Movistar',
+    'Movistar-new',
     'O2',
     'O2-new',
     'Vivo',

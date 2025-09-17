@@ -8,6 +8,7 @@ import * as React from 'react';
 import {
     ThemeContextProvider,
     MOVISTAR_SKIN,
+    MOVISTAR_NEW_SKIN,
     VIVO_SKIN,
     VIVO_NEW_SKIN,
     O2_SKIN,
@@ -31,6 +32,7 @@ const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
     return [
         MOVISTAR_SKIN,
+        MOVISTAR_NEW_SKIN,
         O2_SKIN,
         O2_NEW_SKIN,
         VIVO_SKIN,
@@ -124,10 +126,11 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                         {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
                             <style>{`body {font-family: "Telefonica Sans"}`}</style>
                         )}
-                        {(skin === O2_SKIN || skin === O2_NEW_SKIN || skin === ESIMFLAG_SKIN) && (
-                            <style>{`body {font-family: "On Air"}`}</style>
-                        )}
-                        {skin === MOVISTAR_SKIN && <style>{`body {font-family: "Movistar Sans"}`}</style>}
+                        {(skin === MOVISTAR_SKIN ||
+                            skin === O2_SKIN ||
+                            skin === O2_NEW_SKIN ||
+                            skin === ESIMFLAG_SKIN) && <style>{`body {font-family: "On Air"}`}</style>}
+                        {skin === MOVISTAR_NEW_SKIN && <style>{`body {font-family: "Movistar Sans"}`}</style>}
                         <Story {...context} />
                     </OverscrollColorProvider>
                 </ThemeContextProvider>

@@ -17,6 +17,7 @@ import {
     O2_NEW_SKIN,
     TU_SKIN,
     MOVISTAR_SKIN,
+    MOVISTAR_NEW_SKIN,
     ESIMFLAG_SKIN,
     VIVO_SKIN,
     BLAU_SKIN,
@@ -55,6 +56,11 @@ const skinToLang: Record<string, string> = {
     [BLAU_SKIN]: 'de-DE',
     [TELEFONICA_SKIN]: 'es-ES',
     [MOVISTAR_SKIN]: 'es-ES',
+    [MOVISTAR_NEW_SKIN]: 'es-ES',
+    [TU_SKIN]: 'es-ES',
+    [O2_SKIN]: 'en-GB',
+    [O2_NEW_SKIN]: 'en-GB',
+    [ESIMFLAG_SKIN]: 'es-ES',
 };
 
 const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
@@ -72,11 +78,14 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${
-            skinName === O2_SKIN || skinName === O2_NEW_SKIN || skinName === ESIMFLAG_SKIN
+            skinName === MOVISTAR_SKIN ||
+            skinName === O2_SKIN ||
+            skinName === O2_NEW_SKIN ||
+            skinName === ESIMFLAG_SKIN
                 ? 'body {font-family: "On Air"}'
                 : ''
         }
-        ${skinName === MOVISTAR_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
+        ${skinName === MOVISTAR_NEW_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
 
         *[class^='_1fu0koy1'] {
             display: none;
