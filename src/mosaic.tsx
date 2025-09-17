@@ -55,6 +55,8 @@ type HorizontalMosaicProps = {
     withBullets?: boolean;
     withControls?: boolean;
     free?: boolean;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
     dataAttributes?: DataAttributes;
 };
 
@@ -63,6 +65,8 @@ export const HorizontalMosaic = ({
     withBullets,
     withControls = true,
     free,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
     dataAttributes,
 }: HorizontalMosaicProps): JSX.Element => {
     const itemsCount = items.length;
@@ -77,6 +81,8 @@ export const HorizontalMosaic = ({
 
     return (
         <Carousel
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
             dataAttributes={{...dataAttributes, 'component-name': 'HorizontalMosaic'}}
             items={pages.map((items, index) => (
                 <Grid>
@@ -92,17 +98,22 @@ export const HorizontalMosaic = ({
 
 type VerticalMosaicPageProps = {
     items: ReadonlyArray<MosaicItem>;
+    itemRole?: string;
 };
 
-const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
+const VerticalMosaicPage = ({items, itemRole}: VerticalMosaicPageProps) => {
     switch (items.length) {
         case 1:
         case 2:
             return (
-                <div className={styles.singleItemRowContainer}>
-                    <Grid gap={GRID_GAP} columns={2} height="100%">
+                <div className={styles.singleItemRowContainer} role="none">
+                    <Grid role="none" gap={GRID_GAP} columns={2} height="100%">
                         {items.map((item, itemIndex) => (
-                            <GridItem columnSpan={items.length === 2 ? undefined : 2} key={itemIndex}>
+                            <GridItem
+                                role={itemRole}
+                                columnSpan={items.length === 2 ? undefined : 2}
+                                key={itemIndex}
+                            >
                                 {renderItem(item, items.length === 2 ? 'square' : 'horizontal')}
                             </GridItem>
                         ))}
@@ -112,10 +123,14 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
 
         case 3:
             return (
-                <div className={styles.squareContainer}>
-                    <Grid gap={GRID_GAP} columns={2} flow="column" height="100%">
+                <div className={styles.squareContainer} role="none">
+                    <Grid role="none" gap={GRID_GAP} columns={2} flow="column" height="100%">
                         {items.map((item, itemIndex) => (
-                            <GridItem rowSpan={itemIndex === 0 ? 2 : undefined} key={itemIndex}>
+                            <GridItem
+                                role={itemRole}
+                                rowSpan={itemIndex === 0 ? 2 : undefined}
+                                key={itemIndex}
+                            >
                                 {renderItem(item, itemIndex === 0 ? 'vertical' : 'square')}
                             </GridItem>
                         ))}
@@ -126,12 +141,20 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
         case 4:
         default:
             return (
-                <div className={styles.fourItemsContainer}>
-                    <Grid gap={GRID_GAP} rows={3} columns={2} height="100%">
-                        <GridItem rowSpan={2}>{renderItem(items[0], 'vertical')}</GridItem>
-                        <GridItem>{renderItem(items[1], 'square')}</GridItem>
-                        <GridItem rowSpan={2}>{renderItem(items[3], 'vertical')}</GridItem>
-                        <GridItem>{renderItem(items[2], 'square')}</GridItem>
+                <div className={styles.fourItemsContainer} role="none">
+                    <Grid role="none" gap={GRID_GAP} rows={3} columns={2} height="100%">
+                        <GridItem role={itemRole} order={0} rowSpan={2}>
+                            {renderItem(items[0], 'vertical')}
+                        </GridItem>
+                        <GridItem role={itemRole} order={1}>
+                            {renderItem(items[1], 'square')}
+                        </GridItem>
+                        <GridItem role={itemRole} order={3}>
+                            {renderItem(items[2], 'square')}
+                        </GridItem>
+                        <GridItem role={itemRole} order={2} rowSpan={2}>
+                            {renderItem(items[3], 'vertical')}
+                        </GridItem>
                     </Grid>
                 </div>
             );
@@ -141,9 +164,20 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
 type VerticalMosaicProps = {
     items: ReadonlyArray<MosaicItem>;
     dataAttributes?: DataAttributes;
+    role?: string;
+    itemRole?: string;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
 };
 
-export const VerticalMosaic = ({items, dataAttributes}: VerticalMosaicProps): JSX.Element => {
+export const VerticalMosaic = ({
+    items,
+    dataAttributes,
+    role = 'list',
+    itemRole = 'listitem',
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
+}: VerticalMosaicProps): JSX.Element => {
     const itemsCount = items.length;
 
     const pagesCount = Math.ceil(itemsCount / 4);
@@ -156,12 +190,15 @@ export const VerticalMosaic = ({items, dataAttributes}: VerticalMosaicProps): JS
 
     return (
         <Grid
+            role={role}
             rows={1}
             gap={GRID_GAP}
-            dataAttributes={{...dataAttributes, 'component-name': 'VerticalMosaic'}}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
+            dataAttributes={{'component-name': 'VerticalMosaic', testid: 'VerticalMosaic', ...dataAttributes}}
         >
             {pages.map((items, index) => (
-                <VerticalMosaicPage items={items} key={index} />
+                <VerticalMosaicPage items={items} itemRole={itemRole} key={index} />
             ))}
         </Grid>
     );

@@ -42,6 +42,7 @@ export type Dictionary = {
     carouselReloadAutoplay: string;
     carouselNextButton: string;
     carouselPrevButton: string;
+    carouselPageNumber: string;
     playIconButtonLabel: string;
     pauseIconButtonLabel: string;
     sheetConfirmButton: string;
@@ -368,6 +369,13 @@ export const carouselPrevButton: TextToken = {
     en: 'Previous slide',
     de: 'Vorherige seite',
     pt: 'Página anterior',
+};
+
+export const carouselPageNumber: TextToken = {
+    es: '1$s de 2$s',
+    en: '1$s of 2$s',
+    de: '1$s von 2$s',
+    pt: '1$s de 2$s',
 };
 
 export const playIconButtonLabel: TextToken = {

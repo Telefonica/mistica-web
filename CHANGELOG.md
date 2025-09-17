@@ -1,3 +1,41 @@
+# [16.38.0](https://github.com/Telefonica/mistica-web/compare/v16.37.5...v16.38.0) (2025-09-16)
+
+
+### Features
+
+* **Carousel, PageBullets, Chip, Mosaic:** add data-testid ([#1429](https://github.com/Telefonica/mistica-web/issues/1429)) ([f5669d0](https://github.com/Telefonica/mistica-web/commit/f5669d0ef56b8ecb934c68c4685fa0bd2052ade0))
+* **Carousel:** improve control buttons aria-label ([#1427](https://github.com/Telefonica/mistica-web/issues/1427)) ([d5c57bb](https://github.com/Telefonica/mistica-web/commit/d5c57bb3f5b69d2e353346a1b85ded2dda6c2de1))
+* **VerticalMosaic:** improve a11y. Fix reading order and set list role as default ([#1428](https://github.com/Telefonica/mistica-web/issues/1428)) ([baa439f](https://github.com/Telefonica/mistica-web/commit/baa439fca4e79cef4eb8ff2888665678d4f8a5cf))
+
+## [16.37.5](https://github.com/Telefonica/mistica-web/compare/v16.37.4...v16.37.5) (2025-09-08)
+
+
+### Bug Fixes
+
+* **color-scheme:** initial flash when using SSR and dark mode ([#1421](https://github.com/Telefonica/mistica-web/issues/1421)) ([4d457f1](https://github.com/Telefonica/mistica-web/commit/4d457f18414c5f8509d07b18992c558e22805d81))
+* **NakedCard, SmallNakedCard:** use context variant. Deprecate variant and footerVariant props ([#1430](https://github.com/Telefonica/mistica-web/issues/1430)) ([179f9d3](https://github.com/Telefonica/mistica-web/commit/179f9d392ae1b4377acb78d5040eebc62751241d))
+
+## [16.37.4](https://github.com/Telefonica/mistica-web/compare/v16.37.3...v16.37.4) (2025-08-27)
+
+
+### Bug Fixes
+
+* **Card:** Naked border radius. Default slotAlignment for deprecated cards ([#1426](https://github.com/Telefonica/mistica-web/issues/1426)) ([0280612](https://github.com/Telefonica/mistica-web/commit/02806122c71d8301d29193fccd5240d0b6095db8))
+
+## [16.37.3](https://github.com/Telefonica/mistica-web/compare/v16.37.2...v16.37.3) (2025-08-27)
+
+
+### Bug Fixes
+
+* **Card:** Update CoverCard description color ([#1425](https://github.com/Telefonica/mistica-web/issues/1425)) ([420757b](https://github.com/Telefonica/mistica-web/commit/420757b0ccdc91b23e68448d055547c898d7891d))
+
+## [16.37.2](https://github.com/Telefonica/mistica-web/compare/v16.37.1...v16.37.2) (2025-08-26)
+
+
+### Bug Fixes
+
+* **Card:** expose deprecated props ([#1424](https://github.com/Telefonica/mistica-web/issues/1424)) ([ce1dd77](https://github.com/Telefonica/mistica-web/commit/ce1dd77d86cd9f7ebf56de43574bb4a74cdee5ad))
+
 ## [16.37.1](https://github.com/Telefonica/mistica-web/compare/v16.37.0...v16.37.1) (2025-08-26)
 
 
