@@ -210,7 +210,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             tagBackgroundInactive: palette.grey200,
             tagBackgroundInfo: palette.movistarBlack,
             tagBackgroundSuccess: palette.green200,
-            tagBackgroundWarning: palette.yellowLight,
+            tagBackgroundWarning: palette.yellow200,
             tagBackgroundError: palette.salmon100,
             tagTextPromoInverse: palette.redHigh,
             tagTextActiveInverse: palette.blueHigh,
