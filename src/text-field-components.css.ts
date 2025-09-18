@@ -1,4 +1,4 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
@@ -11,6 +11,7 @@ import {
     fieldLeftPadding,
     fieldRightPadding,
 } from './text-field-base.css';
+import {TAB_NAVIGATION_CLASS} from './tab-focus';
 
 export const DEFAULT_WIDTH = 328;
 
@@ -102,12 +103,27 @@ export const fullWidth = sprinkles({
     width: '100%',
 });
 
-export const field = sprinkles({
-    border: 'input',
-    display: 'flex',
-    borderRadius: vars.borderRadii.input,
-    position: 'relative',
+// See https://css-tricks.com/copy-the-browsers-native-focus-styles/
+const browserDefaultFocusOutline = [
+    '5px auto Highlight', // Firefox
+    '5px auto -webkit-focus-ring-color', // Chrome / Safari
+];
+
+export const fieldFocusRing = style({
+    ':focus-within': {
+        outline: browserDefaultFocusOutline,
+    },
 });
+
+export const field = style([
+    sprinkles({
+        border: 'input',
+        display: 'flex',
+        borderRadius: vars.borderRadii.input,
+        position: 'relative',
+    }),
+    fieldFocusRing,
+]);
 
 export const helperContainer = sprinkles({
     paddingLeft: 12,

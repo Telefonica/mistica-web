@@ -117,6 +117,8 @@ export const textArea = style([
         paddingY: 0,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none !important',
         resize: 'none',
     },
     commonInputStyles,
@@ -153,6 +155,8 @@ export const input = style([
         position: 'relative',
     }),
     {
+        // the outline is set in the field container
+        outline: 'none !important',
         margin: 0,
         WebkitAppearance: 'none',
         appearance: 'none',
