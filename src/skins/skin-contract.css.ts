@@ -210,6 +210,7 @@ const borderRadii: BorderRadiiConfig = {
     popup: '',
     checkbox: '',
     indicator: '',
+    chip: '',
     sheet: '',
     bar: '',
     avatar: '',

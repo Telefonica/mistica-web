@@ -76,6 +76,7 @@ export type BorderRadiiConfig = {
     popup: string;
     checkbox: string;
     indicator: string;
+    chip: string;
     sheet: string;
     bar: string;
     avatar: string;

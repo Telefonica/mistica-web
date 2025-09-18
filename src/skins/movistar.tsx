@@ -415,6 +415,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             checkbox: '4px',
             container: '16px',
             indicator: '999px',
+            chip: '999px',
             input: '12px',
             legacyDisplay: '16px',
             popup: '8px',
