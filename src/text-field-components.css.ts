@@ -1,4 +1,4 @@
-import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
@@ -11,7 +11,6 @@ import {
     fieldLeftPadding,
     fieldRightPadding,
 } from './text-field-base.css';
-import {TAB_NAVIGATION_CLASS} from './tab-focus';
 
 export const DEFAULT_WIDTH = 328;
 
