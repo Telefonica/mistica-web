@@ -6,7 +6,7 @@
 
 const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<string>}} = {
     '2-g': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'second generation',
             'dual generation',
@@ -17,18 +17,18 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     '3-d-view': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'three-dimensional view',
-            '3d perspective',
-            'spatial visualization',
+            '3D perspective',
+            '3D visualization',
             'vista tridimensional',
-            'visualização 3D',
-            'räumliche Visualisierung',
+            'perspectiva 3D',
+            '3D-Visualisierung',
         ],
     },
     '3-g': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'third generation',
             'tertiary generation',
@@ -39,7 +39,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     '4-g': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'fourth generation',
             'quaternary generation',
@@ -50,7 +50,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     '5-g': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'fifth generation',
             'quinary generation',
@@ -65,11 +65,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['educational', 'scholarly', 'learning', 'académico', 'acadêmico', 'akademisch'],
     },
     accessories: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['add-ons', 'extras', 'attachments', 'accesorios', 'acessórios', 'Zubehör'],
     },
     'add-bill-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'include invoice euro',
             'append bill euro',
@@ -80,7 +80,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'add-bill-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'include invoice pound',
             'append bill pound',
@@ -91,7 +91,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'add-bolton': {
-        category: [],
+        category: ['Others'],
         keywords: [
             'include bolt-on',
             'attach extra',
@@ -102,11 +102,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'add-more': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['include', 'additional', 'append', 'more', 'incluir', 'adicional', 'anexar', 'mehr'],
     },
     'add-more-circle': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'include additional circle',
             'add extra round',
@@ -117,7 +117,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'add-more-location': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['area', 'place', 'append', 'área', 'local', 'anexar', 'Gebiet', 'Ort', 'hinzufügen'],
     },
     'add-more-query': {
@@ -132,7 +132,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'add-phone': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'telephone',
             'include',
@@ -146,7 +146,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     airtime: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'broadcast',
             'wireless period',
@@ -173,7 +173,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'alarm-light': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'alert lamp',
             'warning light',
@@ -201,7 +201,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     alert: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: [
             'warning',
             'notification',
@@ -215,7 +215,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     ambulance: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'medical transport',
             'emergency vehicle',
@@ -229,7 +229,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'amplifier-signal': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'signal booster',
             'signal enhancer',
@@ -240,7 +240,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     angel: {
-        category: [],
+        category: ['People and users'],
         keywords: [
             'divine messenger',
             'heavenly being',
@@ -254,7 +254,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     antenna: {
-        category: ['Others'],
+        category: ['Telco and comms'],
         keywords: [
             'aerial',
             'signal receiver',
@@ -268,7 +268,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'apartment-building': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'multi-unit residence',
             'condo complex',
@@ -290,7 +290,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'app-icon': {
-        category: [],
+        category: ['Others'],
         keywords: ['application', 'program', 'software', 'aplicación', 'aplicativo', 'Anwendung'],
     },
     appointment: {
@@ -302,7 +302,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['applications', 'programs', 'software', 'aplicaciones', 'aplicações', 'Anwendungen'],
     },
     'apps-business': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'business applications',
             'corporate software',
@@ -445,7 +445,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'arrow-return-lock': {
-        category: [],
+        category: ['Arrows'],
         keywords: [
             'back-arrow-lock',
             'reverse-point-lock',
@@ -528,7 +528,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'artificial-intelligence': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'machine learning',
             'automated intellect',
@@ -550,7 +550,10 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         category: ['Media'],
         keywords: ['sound', 'audio signal', 'soundwave', 'sonido', 'sinal de áudio', 'Ton'],
     },
-    aura: {category: [], keywords: ['assistant', 'virtual', 'helper', 'aura', 'aura virtual', 'Helfer']},
+    aura: {
+        category: ['Telco and comms'],
+        keywords: ['assistant', 'virtual', 'helper', 'aura', 'aura virtual', 'Helfer'],
+    },
     'authentication-failure': {
         category: ['Security'],
         keywords: [
@@ -592,17 +595,17 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
             'Wundverband',
         ],
     },
-    'bar-chart': {category: ['Business & finance'], keywords: ['gráfico de barras', 'Balkendiagramm']},
+    'bar-chart': {category: ['Business and finance'], keywords: ['gráfico de barras', 'Balkendiagramm']},
     barcode: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['product code', 'scannable code', 'código de producto', 'código de barras', 'Strichcode'],
     },
     battery: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['cell', 'power source', 'energy unit', 'batería', 'bateria', 'Batterie'],
     },
     'battery-charging': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'charging battery',
             'powering up',
@@ -613,11 +616,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'battery-full': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['maximum charge', '100% power', 'carga máxima', '100% de energía', 'volle Ladung'],
     },
     'battery-low': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'low battery',
             'insufficient charge',
@@ -628,7 +631,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'battery-medium': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'medium battery',
             'moderate charge',
@@ -649,9 +652,12 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
             'Strandsonnenschutz',
         ],
     },
-    bell: {category: ['Actions & system'], keywords: ['alarm', 'chime', 'ring', 'timbre', 'sino', 'Glocke']},
+    bell: {
+        category: ['Actions and system'],
+        keywords: ['alarm', 'chime', 'ring', 'timbre', 'sino', 'Glocke'],
+    },
     'bell-add-more': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'additional bell',
             'extra ringing',
@@ -662,7 +668,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'bell-off': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'silent bell',
             'muted alarm',
@@ -673,7 +679,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'bell-program': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'programmed bell',
             'scheduled alarm',
@@ -684,11 +690,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'bicycle-bike': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['two-wheeler', 'cycling machine', 'pedal cycle', 'bicicleta', 'bicicleta', 'Fahrrad'],
     },
     'bill-invoice-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound invoice',
             'billing statement pound',
@@ -699,7 +705,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'bill-queries-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro billing queries',
             'european invoice questions',
@@ -722,7 +728,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     blog: {category: ['Media'], keywords: ['weblog', 'online journal', 'blogging', 'blog', 'blogue', 'Blog']},
     boat: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['watercraft', 'vessel', 'ship', 'barco', 'barco', 'Boot'],
     },
     book: {
@@ -730,7 +736,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['volume', 'literary work', 'publication', 'libro', 'livro', 'Buch'],
     },
     bookmark: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'page marker',
             'save place',
@@ -741,11 +747,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     box: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['container', 'package', 'carton', 'caja', 'caixa', 'Kasten'],
     },
     'box-location': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'container location',
             'package place',
@@ -756,7 +762,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'box-star': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'benefícios resgatados',
             'benefícios',
@@ -771,11 +777,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['mind', 'intellect', 'cognition', 'cerebro', 'cérebro', 'Gehirn'],
     },
     briefcase: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['portfolio', 'case', 'attache', 'maletín', 'portfólio', 'Aktentasche'],
     },
     'briefcase-business': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'business case',
             'corporate portfolio',
@@ -786,7 +792,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     broadband: {
-        category: [],
+        category: ['Home and devices'],
         keywords: [
             'high-speed internet',
             'broadband connection',
@@ -798,11 +804,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     bug: {category: ['Development'], keywords: ['insect', 'glitch', 'error', 'insecto', 'erro', 'Fehler']},
     bus: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['public transportation', 'coach', 'mass transit', 'autobús', 'ônibus', 'Bus'],
     },
     'buy-data': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'purchase data',
             'get information',
@@ -813,7 +819,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'buy-devices': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'purchase gadgets',
             'get devices',
@@ -824,7 +830,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'buy-home-products': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'purchase household items',
             'get home products',
@@ -835,7 +841,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'buy-plans': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'purchase plans',
             'get strategies',
@@ -846,7 +852,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     cafe: {
-        category: [],
+        category: ['Others'],
         keywords: ['coffee shop', 'java joint', 'espresso bar', 'cafetería', 'cafeteria', 'Kaffeehaus'],
     },
     calendar: {
@@ -887,7 +893,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'call-landline': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'dial landline',
             'phone home',
@@ -898,7 +904,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     callback: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'return call',
             'recall',
@@ -909,7 +915,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     cancel: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['abort', 'annul', 'revoke', 'cancelar', 'cancelar', 'stornieren'],
     },
     cancellation: {
@@ -917,11 +923,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['termination', 'voiding', 'abolition', 'cancelación', 'cancelamento', 'Stornierung'],
     },
     car: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['automobile', 'vehicle', 'auto', 'coche', 'veículo', 'Auto'],
     },
     'car-moving': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'moving vehicle',
             'in-transit car',
@@ -932,7 +938,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'car-with-clock': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'auto with clock',
             'vehicle timepiece',
@@ -947,7 +953,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['concern', 'attention', 'solicitude', 'cuidado', 'atenção', 'Sorge'],
     },
     'care-bike': {
-        category: ['Activities'],
+        category: ['Maps and vehicles'],
         keywords: [
             'bike care',
             'bicycle maintenance',
@@ -958,7 +964,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'care-briefcase': {
-        category: ['Health'],
+        category: ['Business and finance'],
         keywords: [
             'briefcase care',
             'portfolio maintenance',
@@ -991,7 +997,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'care-home': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'home care',
             'household maintenance',
@@ -1002,7 +1008,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'care-laptop': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'laptop care',
             'computer maintenance',
@@ -1013,7 +1019,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'care-mobile': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'mobile care',
             'cell phone maintenance',
@@ -1024,7 +1030,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'care-pet': {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'pet care',
             'animal maintenance',
@@ -1068,7 +1074,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     cat: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['feline', 'kitty', 'kitten', 'gato', 'gatinho', 'Katze'],
     },
     certificate: {
@@ -1098,7 +1104,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'chart-device': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'graph device',
             'diagram tool',
@@ -1109,15 +1115,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     chat: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['conversation', 'talk', 'discussion', 'chat', 'bate-papo', 'Gespräch'],
     },
     check: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['inspect', 'examine', 'verify', 'verificar', 'verificar', 'überprüfen'],
     },
     checked: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['marked', 'verified', 'inspected', 'verificado', 'verificado', 'überprüft'],
     },
     chemistry: {
@@ -1169,11 +1175,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     child: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['kid', 'youngster', 'offspring', 'niño', 'criança', 'Kind'],
     },
     'chip-device': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'integrated circuit device',
             'microchip gadget',
@@ -1184,7 +1190,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'chip-sim-card': {
-        category: ['Home & devices'],
+        category: ['Telco and comms'],
         keywords: [
             'integrated circuit sim card',
             'microchip subscriber identity module',
@@ -1210,7 +1216,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['cleanup', 'sanitizing', 'hygiene', 'limpieza', 'limpeza', 'Reinigung'],
     },
     'click-and-collect': {
-        category: [],
+        category: ['Business and finance'],
         keywords: [
             'click-to-collect',
             'online pickup',
@@ -1221,7 +1227,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'click-to-call': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'click-to-call',
             'online calling',
@@ -1232,7 +1238,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     clip: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['fastener', 'clasp', 'attachment', 'clip', 'prender', 'Klammer'],
     },
     clipboard: {
@@ -1251,11 +1257,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['coatroom', 'checkroom', 'storage room', 'guardarropa', 'vestiário', 'Garderobe'],
     },
     close: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['shut', 'seal', 'lock', 'cerrar', 'fechar', 'schließen'],
     },
     cloud: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['cloud computing', 'virtual storage', 'online storage', 'nube', 'nuvem', 'Wolke'],
     },
     'cloud-distribution': {
@@ -1281,7 +1287,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'cloud-friends': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'cloud companions',
             'virtual pals',
@@ -1303,7 +1309,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     clover: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'lucky leaf',
             'four-leaf clover',
@@ -1333,19 +1339,19 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     coins: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['money', 'currency', 'change', 'monedas', 'moedas', 'Münzen'],
     },
     comment: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['remark', 'opinion', 'observation', 'comentario', 'comentário', 'Kommentar'],
     },
     computer: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['pc', 'desktop', 'personal computer', 'computadora', 'computador', 'Computer'],
     },
     'computer-academic': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'educational computer',
             'learning pc',
@@ -1356,7 +1362,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'computer-user': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'pc user',
             'computer operator',
@@ -1371,7 +1377,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['meeting', 'convention', 'gathering', 'conferencia', 'conferência', 'Konferenz'],
     },
     'conference-call': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'conference call',
             'teleconference',
@@ -1382,7 +1388,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'configure-device': {
-        category: [],
+        category: ['Home and devices'],
         keywords: [
             'set up device',
             'device configuration',
@@ -1393,7 +1399,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'configure-modem': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'set up modem',
             'modem configuration',
@@ -1404,7 +1410,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'configure-tv-decoder': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'set up tv decoder',
             'decoder configuration',
@@ -1415,7 +1421,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'connected-car': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'linked vehicle',
             'connected auto',
@@ -1426,11 +1432,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     connections: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['links', 'associations', 'relationships', 'conexiones', 'conexões', 'Verbindungen'],
     },
     'contact-book': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'address book',
             'contact list',
@@ -1441,7 +1447,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'contact-us': {
-        category: [],
+        category: ['People and users'],
         keywords: [
             'get in touch',
             'reach out',
@@ -1452,7 +1458,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'contactless-payments-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro contactless payments',
             'european no-contact transactions',
@@ -1463,7 +1469,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'contactless-payments-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound contactless payments',
             'british no-contact transactions',
@@ -1474,7 +1480,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     controls: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['settings', 'commands', 'adjustments', 'controles', 'controlos', 'Steuerungen'],
     },
     cooking: {
@@ -1482,7 +1488,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['cuisine', 'food preparation', 'culinary', 'cocina', 'cozinha', 'Kochen'],
     },
     copy: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['duplicate', 'reproduce', 'replicate', 'copiar', 'copiar', 'Kopieren'],
     },
     'cough-syrup': {
@@ -1497,7 +1503,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'cowboy-lasso': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'western lasso',
             'cowboy rope',
@@ -1508,7 +1514,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'credit-balance-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro credit balance',
             'european account credit',
@@ -1519,7 +1525,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'credit-balance-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound credit balance',
             'british account credit',
@@ -1530,7 +1536,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'credit-card': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'charge card',
             'payment card',
@@ -1541,7 +1547,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'credit-card-visa': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'visa card',
             'visa credit card',
@@ -1552,15 +1558,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     curtain: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['drapery', 'window covering', 'blind', 'cortina', 'cortina', 'Vorhang'],
     },
     cut: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['slice', 'chop', 'sever', 'cortar', 'cortar', 'schneiden'],
     },
     dartboard: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'darts target',
             'bullseye board',
@@ -1575,7 +1581,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['information', 'facts', 'data points', 'datos', 'informações', 'Daten'],
     },
     'data-10-gb': {
-        category: [],
+        category: ['Telco and comms'],
         keywords: [
             '10 gigabytes of data',
             'data plan',
@@ -1586,7 +1592,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'data-100-gb': {
-        category: [],
+        category: ['Telco and comms'],
         keywords: [
             '100 gigabytes of data',
             'large data plan',
@@ -1597,7 +1603,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'data-30-gb': {
-        category: [],
+        category: ['Telco and comms'],
         keywords: [
             '30 gigabytes of data',
             'data plan',
@@ -1619,7 +1625,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'data-bonus': {
-        category: ['Business & finance'],
+        category: ['Telco and comms'],
         keywords: [
             'extra data',
             'bonus allocation',
@@ -1718,7 +1724,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'data-unlimited': {
-        category: [],
+        category: ['Telco and comms'],
         keywords: [
             'unlimited data',
             'endless information',
@@ -1762,7 +1768,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'delivery-van-moving': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'moving delivery van',
             'mobile delivery vehicle',
@@ -1773,11 +1779,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     desk: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['workstation', 'table', 'workspace', 'escritorio', 'mesa', 'Schreibtisch'],
     },
     'device-signal': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'gadget signal',
             'equipment reception',
@@ -1792,7 +1798,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['gem', 'precious stone', 'jewel', 'diamante', 'pedra preciosa', 'Diamant'],
     },
     'digital-library': {
-        category: [],
+        category: ['Home and devices'],
         keywords: [
             'online library',
             'electronic collection',
@@ -1803,11 +1809,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     disable: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['deactivate', 'turn off', 'shut down', 'desactivar', 'desativar', 'deaktivieren'],
     },
     disabled: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'handicapped',
             'impaired',
@@ -1818,11 +1824,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     disconnect: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['unplug', 'detach', 'sever connection', 'desconectar', 'desconectar', 'trennen'],
     },
     disturb: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['interrupt', 'bother', 'disrupt', 'interrumpir', 'incomodar', 'stören'],
     },
     dna: {
@@ -1855,11 +1861,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['files', 'records', 'paperwork', 'documentos', 'arquivos', 'Dokumente'],
     },
     dog: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['canine', 'puppy', 'pooch', 'perro', 'cachorro', 'Hund'],
     },
     'dollar-symbol': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'dollar sign',
             'money symbol',
@@ -1870,7 +1876,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'dollar-symbol-circle': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'circular dollar symbol',
             'dollar sign circle',
@@ -1896,7 +1902,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['retrieve', 'get', 'acquire', 'descargar', 'baixar', 'herunterladen'],
     },
     'download-app': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'get app',
             'install application',
@@ -1937,7 +1943,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     eco: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'environmentally friendly',
             'green',
@@ -1948,11 +1954,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     edit: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['modify', 'revise', 'change', 'modificar', 'revisar', 'bearbeiten'],
     },
     'edit-paper': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'modify paper',
             'revise document',
@@ -1963,7 +1969,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'edit-pencil': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'editing pencil',
             'modify pen',
@@ -1978,7 +1984,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['ecg', 'ekg', 'heart graph', 'electrocardiograma', 'gráfico cardíaco', 'EKG'],
     },
     email: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'electronic mail',
             'message',
@@ -1989,7 +1995,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'email-send': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'send email',
             'transmit message',
@@ -2045,7 +2051,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     esim: {
-        category: ['Home & devices'],
+        category: ['Telco and comms'],
         keywords: [
             'embedded sim',
             'electronic sim',
@@ -2056,7 +2062,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     ethernet: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'network cable',
             'internet connection',
@@ -2067,7 +2073,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'euro-symbol': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro sign',
             'european currency symbol',
@@ -2078,7 +2084,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'euro-symbol-circle': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'circular euro symbol',
             'euro sign circle',
@@ -2097,7 +2103,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['way out', 'exit portal', 'doorway', 'salida', 'saída', 'Ausgang'],
     },
     'exit-fullscreen': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'leave fullscreen',
             'exit full view',
@@ -2108,16 +2114,16 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     export: {
-        category: ['Actions & system'],
+        category: ['Arrows'],
         keywords: ['exportation', 'transfer', 'send out', 'exportación', 'transferencia', 'exportieren'],
     },
-    eye: {category: ['Actions & system'], keywords: ['sight', 'vision', 'gaze', 'ojo', 'visão', 'Auge']},
+    eye: {category: ['Actions and system'], keywords: ['sight', 'vision', 'gaze', 'ojo', 'visão', 'Auge']},
     'eye-off': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['closed eye', 'inactive vision', 'shut gaze', 'ojo cerrado', 'visão inativa', 'Auge aus'],
     },
     'face-happy': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'happy smiley',
             'joyful face',
@@ -2128,7 +2134,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'face-neutral': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'neutral smiley',
             'indifferent face',
@@ -2139,7 +2145,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'face-sad': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'sad smiley',
             'unhappy face',
@@ -2150,7 +2156,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'face-slightly-sad': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'slightly sad smiley',
             'somewhat unhappy face',
@@ -2161,7 +2167,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'face-super-happy': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'super happy smiley',
             'extremely joyful face',
@@ -2172,7 +2178,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     family: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['relatives', 'kin', 'household', 'familia', 'família', 'Familie'],
     },
     'fast-forward': {
@@ -2202,7 +2208,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'file-box': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'document box',
             'file container',
@@ -2400,7 +2406,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'file-sketch': {
-        category: [],
+        category: ['Files'],
         keywords: [
             'sketch file',
             'drawing document',
@@ -2422,7 +2428,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'files-digital': {
-        category: ['Files'],
+        category: ['Home and devices'],
         keywords: [
             'digital files',
             'electronic documents',
@@ -2433,7 +2439,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'find-store': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'locate store',
             'discover shop',
@@ -2455,7 +2461,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     fire: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['flame', 'blaze', 'inferno', 'fuego', 'chama', 'Feuer'],
     },
     firewall: {
@@ -2481,7 +2487,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'fixed-internet': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'stable internet',
             'wired connection',
@@ -2492,15 +2498,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     flag: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['banner', 'standard', 'ensign', 'bandera', 'bandeira', 'Flagge'],
     },
     floorplan: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['blueprint', 'layout', 'building diagram', 'plano de planta', 'layout', 'Grundriss'],
     },
     'floppy-disk': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'diskette',
             'flexible disk',
@@ -2517,7 +2523,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     flower: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['blossom', 'bloom', 'botanical', 'flor', 'flor', 'Blume'],
     },
     folder: {
@@ -2551,7 +2557,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['scent', 'aroma', 'perfume', 'fragancia', 'fragrância', 'Duft'],
     },
     fullscreen: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'full view',
             'entire screen',
@@ -2562,19 +2568,19 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     funnel: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['filter', 'conduit', 'channel', 'embudo', 'funil', 'Trichter'],
     },
     fusion: {
-        category: [],
+        category: ['Telco and comms'],
         keywords: ['integration', 'merging', 'combination', 'fusión', 'fusão', 'Verschmelzung'],
     },
     garage: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['garage', 'parking space', 'car shelter', 'garaje', 'espaço de estacionamento', 'Garage'],
     },
     'gas-station': {
-        category: ['Others'],
+        category: ['Maps and vehicles'],
         keywords: [
             'service station',
             'petrol station',
@@ -2589,7 +2595,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['present', 'token', 'offering', 'regalo', 'presente', 'Geschenk'],
     },
     glass: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'pane',
             'crystal',
@@ -2605,18 +2611,21 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
             'Verglasung',
         ],
     },
-    group: {category: ['Others'], keywords: ['team', 'bunch', 'gathering', 'grupo', 'grupo', 'Gruppe']},
+    group: {
+        category: ['People and users'],
+        keywords: ['team', 'bunch', 'gathering', 'grupo', 'grupo', 'Gruppe'],
+    },
     guarantee: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['assurance', 'warranty', 'promise', 'garantía', 'garantia', 'Garantie'],
     },
-    guru: {category: ['People & users'], keywords: ['mentor', 'expert', 'master', 'gurú', 'guru', 'Guru']},
+    guru: {category: ['People and users'], keywords: ['mentor', 'expert', 'master', 'gurú', 'guru', 'Guru']},
     hamburger: {
         category: ['Activities'],
         keywords: ['hamburger', 'burger', 'burger sandwich', 'hamburguesa', 'hambúrguer', 'Hamburger'],
     },
     'hand-connected': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'connected hand',
             'joined hand',
@@ -2627,7 +2636,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'hand-down': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'lowered hand',
             'downward palm',
@@ -2638,11 +2647,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'hand-free': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['hands-free', 'no hands', 'without hands', 'manos libres', 'sem mãos', 'Freihändig'],
     },
     'hand-left': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'left hand',
             'hand on the left',
@@ -2653,7 +2662,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'hand-right': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'right hand',
             'hand on the right',
@@ -2664,7 +2673,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'hand-snap': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'snap of fingers',
             'finger snap',
@@ -2675,7 +2684,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'hand-up': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'raised hand',
             'upward palm',
@@ -2694,7 +2703,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['high definition', 'hd quality', 'high-res', 'alta definición', 'alta qualidade', 'HD'],
     },
     'headphone-bluetooth': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'bluetooth headphones',
             'wireless headset',
@@ -2705,12 +2714,12 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     headphones: {
-        category: ['Media'],
+        category: ['Home and devices'],
         keywords: ['earphones', 'headset', 'audio cans', 'auriculares', 'fones de ouvido', 'Kopfhörer'],
     },
     heart: {category: ['Health'], keywords: ['love', 'affection', 'emotion', 'corazón', 'coração', 'Herz']},
     'heart-bubble': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'love bubble',
             'romantic symbol',
@@ -2721,7 +2730,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'high-priority': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['urgent', 'important', 'critical', 'alta prioridad', 'alta prioridade', 'Hohe Priorität'],
     },
     hockey: {
@@ -2736,11 +2745,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     home: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['house', 'residence', 'dwelling', 'hogar', 'casa', 'Zuhause'],
     },
     'home-wifi': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'house wi-fi',
             'residential wireless',
@@ -2751,7 +2760,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     homespot: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'home wi-fi spot',
             'residential wi-fi',
@@ -2773,11 +2782,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     hotel: {
-        category: ['Health'],
+        category: ['Maps and vehicles'],
         keywords: ['lodging', 'accommodation', 'inn', 'hotel', 'acomodação', 'Hotel'],
     },
     hotline: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'emergency line',
             '24-hour support',
@@ -2788,7 +2797,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'id-card': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'identification card',
             'id',
@@ -2800,7 +2809,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     image: {category: ['Media'], keywords: ['picture', 'visual', 'photo', 'imagen', 'imagem', 'Bild']},
     import: {
-        category: ['Actions & system'],
+        category: ['Arrows'],
         keywords: ['bring in', 'incorporate', 'integrate', 'importar', 'importar', 'importieren'],
     },
     infinity: {
@@ -2808,11 +2817,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['endlessness', 'infinite', 'unlimited', 'infinito', 'infinito', 'Unendlichkeit'],
     },
     information: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['info', 'data', 'facts', 'información', 'informação', 'Information'],
     },
     'information-user': {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: [
             'user information',
             'user data',
@@ -2823,11 +2832,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     internet: {
-        category: ['Home & devices'],
+        category: ['Telco and comms'],
         keywords: ['web', 'online', 'net', 'Internet', 'online', 'Internet'],
     },
     'internet-device': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'web device',
             'online equipment',
@@ -2838,7 +2847,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'internet-pendrive': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'internet usb drive',
             'online flash drive',
@@ -2849,7 +2858,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     intranet: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'internal network',
             'company network',
@@ -2860,7 +2869,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'invoice-digital': {
-        category: ['Files'],
+        category: ['Home and devices'],
         keywords: [
             'digital invoice',
             'electronic bill',
@@ -2893,7 +2902,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'iot-sensor-co-2': {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'iot co2 sensor',
             'internet of things carbon dioxide sensor',
@@ -2904,7 +2913,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'iot-sensor-humidity': {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'humidity sensor',
             'internet of things humidity detector',
@@ -2915,7 +2924,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'iot-sensor-temperature': {
-        category: [],
+        category: ['Nature and sustainability'],
         keywords: [
             'temperature sensor',
             'internet of things thermometer',
@@ -2926,11 +2935,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     justice: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['fairness', 'equity', 'legal system', 'justicia', 'equidade', 'Gerechtigkeit'],
     },
     'kebab-menu': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'menu with dots',
             'three-dot menu',
@@ -2942,11 +2951,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     key: {category: ['Security'], keywords: ['code', 'access', 'secret', 'clave', 'chave', 'Schlüssel']},
     keyboard: {
-        category: ['Actions & system'],
+        category: ['Home and devices'],
         keywords: ['keypad', 'typing board', 'input device', 'teclado', 'teclado', 'Tastatur'],
     },
     landline: {
-        category: [],
+        category: ['Telco and comms'],
         keywords: [
             'fixed line',
             'home phone',
@@ -2957,11 +2966,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     language: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['tongue', 'linguistics', 'dialect', 'idioma', 'linguística', 'Sprache'],
     },
     laptop: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'notebook',
             'portable computer',
@@ -2972,7 +2981,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'laptop-charging': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'charging laptop',
             'powering notebook',
@@ -2983,7 +2992,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'laptop-check': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'check laptop',
             'inspect notebook',
@@ -2994,7 +3003,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'laptop-goto': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'go to laptop',
             'access notebook',
@@ -3020,7 +3029,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     lidar: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'light detection and ranging',
             'laser scanner',
@@ -3053,7 +3062,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'light-switch': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'light control',
             'switch',
@@ -3064,19 +3073,19 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     lightbulb: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['light bulb', 'lamp', 'illuminator', 'bombilla', 'lâmpada', 'Glühbirne'],
     },
     lightning: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['thunderbolt', 'electrical discharge', 'lightning bolt', 'relámpago', 'raio', 'Blitz'],
     },
     link: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['connection', 'hyperlink', 'url', 'enlace', 'ligação', 'Verknüpfung'],
     },
     list: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['listing', 'catalog', 'roster', 'lista', 'lista', 'Liste'],
     },
     'list-document': {
@@ -3091,15 +3100,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     loan: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['borrow', 'lend', 'advance', 'préstamo', 'empréstimo', 'Darlehen'],
     },
     location: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['place', 'position', 'site', 'ubicación', 'localização', 'Ort'],
     },
     'location-map': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'map location',
             'map pin',
@@ -3154,11 +3163,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     logout: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['sign out', 'log off', 'exit', 'cerrar sesión', 'sair', 'Abmelden'],
     },
     'long-distance-call': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'distant call',
             'international call',
@@ -3169,7 +3178,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'loss-theft-devices': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'device loss theft',
             'gadget theft loss',
@@ -3180,7 +3189,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'lost-found': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'lost and found',
             'misplaced and recovered',
@@ -3191,11 +3200,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     lotus: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['water lily', 'lotus flower', 'loto', 'flor de lótus', 'Lotusblume'],
     },
     loudspeaker: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'speaker',
             'audio amplifier',
@@ -3228,15 +3237,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     map: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['chart', 'atlas', 'geographic representation', 'mapa', 'mapa', 'Karte'],
     },
     mast: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['support structure', 'pole', 'tower', 'mástil', 'mastro', 'Mast'],
     },
     meatball: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'ground meat ball',
             'spherical meat',
@@ -3258,7 +3267,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     menu: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['list of options', 'navigation', 'dropdown', 'menú', 'menu', 'Menü'],
     },
     microchip: {
@@ -3277,7 +3286,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['mic', 'audio input', 'sound sensor', 'micrófono', 'microfone', 'Mikrofon'],
     },
     'microphone-aura': {
-        category: [],
+        category: ['Media'],
         keywords: [
             'microphone vibe',
             'microphone energy',
@@ -3294,7 +3303,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'microphone-aura-disabled': {
-        category: [],
+        category: ['Media'],
         keywords: [
             'microphone aura off',
             'microphone halo deactivated',
@@ -3328,11 +3337,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     millennials: {
-        category: [],
+        category: ['People and users'],
         keywords: ['generation y', 'gen y', 'digital natives', 'millennials', 'millennials', 'Millennials'],
     },
     mms: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'multimedia message service',
             'mms',
@@ -3342,7 +3351,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-add-user': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'add user on mobile',
             'mobile user addition',
@@ -3353,7 +3362,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-coverage': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'cellular coverage',
             'mobile network signal',
@@ -3364,7 +3373,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-device': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'smartphone',
             'cell phone',
@@ -3375,7 +3384,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-euro': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'euro mobile',
             'european cell phone',
@@ -3386,7 +3395,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-pause': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'pause on mobile',
             'mobile break',
@@ -3397,7 +3406,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-play': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'play on mobile',
             'mobile entertainment',
@@ -3408,7 +3417,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-question': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'question on mobile',
             'mobile query',
@@ -3430,7 +3439,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-usage': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'phone usage',
             'cellular utilization',
@@ -3441,7 +3450,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'mobile-user': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'phone user',
             'cell phone owner',
@@ -3452,7 +3461,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'money-drop': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'currency drop',
             'cash fall',
@@ -3463,7 +3472,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'money-rise': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'currency increase',
             'cash uptick',
@@ -3474,11 +3483,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     moon: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['lunar', 'celestial body', 'natural satellite', 'luna', 'lua', 'Mond'],
     },
     mouse: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'computer mouse',
             'pc pointer',
@@ -3489,7 +3498,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     multidevice: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'multiple devices',
             'many gadgets',
@@ -3500,7 +3509,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     multisave: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'multiple savings',
             'many rescues',
@@ -3511,7 +3520,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     multisim: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'multiple sim cards',
             'many subscriber identity modules',
@@ -3522,7 +3531,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     museum: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'art gallery',
             'cultural institution',
@@ -3533,8 +3542,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     music: {category: ['Media'], keywords: ['melody', 'tunes', 'sound', 'música', 'música', 'Musik']},
-    mute: {category: [], keywords: ['silent', 'quiet', 'soundless', 'silenciar', 'silencioso', 'stumm']},
-    'my-handy': {category: [], keywords: ['my handy']},
+    mute: {
+        category: ['Media'],
+        keywords: ['silent', 'quiet', 'soundless', 'silenciar', 'silencioso', 'stumm'],
+    },
+    'my-handy': {category: ['Others'], keywords: ['my handy']},
     'negative-film': {
         category: ['Media'],
         keywords: [
@@ -3547,7 +3559,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'network-hotspot': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'wi-fi hotspot',
             'internet access point',
@@ -3591,7 +3603,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'no-conexion': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'no connection',
             'disconnected',
@@ -3668,7 +3680,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'numeric-keypad': {
-        category: ['Home & devices'],
+        category: ['Actions and system'],
         keywords: [
             'number keypad',
             'numeric keyboard',
@@ -3679,11 +3691,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     offer: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['promotion', 'discount', 'special offer', 'oferta', 'desconto', 'Angebot'],
     },
     'offer-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro offer',
             'european deal',
@@ -3694,7 +3706,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'offer-percent': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'percentage offer',
             'discount percentage',
@@ -3705,7 +3717,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'offer-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound offer',
             'british deal',
@@ -3716,7 +3728,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     office: {
-        category: ['Others'],
+        category: ['Maps and vehicles'],
         keywords: [
             'workplace',
             'business space',
@@ -3727,11 +3739,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     on: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['active', 'enabled', 'operational', 'activo', 'ativado', 'aktiviert'],
     },
     'online-offer': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'internet promotion',
             'web-based deal',
@@ -3742,7 +3754,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'online-reload': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'web reload',
             'internet top-up',
@@ -3753,11 +3765,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     open: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['unseal', 'unlock', 'reveal', 'abrir', 'abrir', 'öffnen'],
     },
     'open-email': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'access email',
             'read e-message',
@@ -3779,7 +3791,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'optical-fiber': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'fiber optics',
             'light-conducting fiber',
@@ -3790,7 +3802,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'outgoing-call': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'outbound call',
             'call out',
@@ -3801,15 +3813,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     outlet: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['socket', 'power outlet', 'plug', 'tomacorriente', 'tomada de energia', 'Steckdose'],
     },
     pacifier: {
-        category: [],
+        category: ['People and users'],
         keywords: ["baby's dummy", 'soothie', 'infant pacifier', 'chupete de bebé', 'chupeta', 'Schnuller'],
     },
     'package-trolley': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'cart for packages',
             'trolley for parcels',
@@ -3820,7 +3832,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     parking: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'parking lot',
             'parking space',
@@ -3843,7 +3855,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'pay-as-you-go-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro pay-as-you-go',
             'prepaid eur',
@@ -3854,7 +3866,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'pay-as-you-go-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound pay-as-you-go',
             'prepaid gbp',
@@ -3876,7 +3888,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'pay-invoice-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound invoice payment',
             'gbp bill settlement',
@@ -3887,15 +3899,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     pen: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['writing instrument', 'writing tool', 'ink pen', 'pluma', 'caneta', 'Stift'],
     },
     pendrive: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['usb drive', 'flash drive', 'thumb drive', 'unidad USB', 'pen drive', 'USB-Stick'],
     },
     'people-network': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'social network',
             'human connection',
@@ -3906,15 +3918,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     percent: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['percentage', 'rate', 'proportion', 'porcentaje', 'percentagem', 'Prozent'],
     },
     person: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['individual', 'human', 'being', 'persona', 'pessoa', 'Person'],
     },
     'personal-computer': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'pc',
             'desktop computer',
@@ -3940,7 +3952,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     pickpocket: {
-        category: [],
+        category: ['Security'],
         keywords: ['thief', 'robber', 'stealer', 'carterista', 'ladrão de carteira', 'Taschendieb'],
     },
     pill: {
@@ -3951,13 +3963,16 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         category: ['Health'],
         keywords: ['medications', 'tablets', 'capsules', 'pastillas', 'comprimidos', 'Tabletten'],
     },
-    pin: {category: ['Actions & system'], keywords: ['needle', 'point', 'prick', 'alfiler', 'pino', 'Nadel']},
+    pin: {
+        category: ['Actions and system'],
+        keywords: ['needle', 'point', 'prick', 'alfiler', 'pino', 'Nadel'],
+    },
     plane: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['aircraft', 'airplane', 'aeroplane', 'avión', 'avião', 'Flugzeug'],
     },
     plant: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['flora', 'vegetation', 'botanical', 'planta', 'planta', 'Pflanze'],
     },
     play: {category: ['Media'], keywords: ['start', 'begin', 'commence', 'reproducir', 'jogar', 'spielen']},
@@ -3973,7 +3988,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     plug: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['socket', 'outlet', 'connector', 'enchufe', 'tomada', 'Stecker'],
     },
     podium: {
@@ -3985,7 +4000,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['toxic substance', 'venom', 'deadly chemical', 'veneno', 'veneno', 'Gift'],
     },
     portability: {
-        category: ['Home & devices'],
+        category: ['Telco and comms'],
         keywords: [
             'mobility',
             'transportability',
@@ -3996,7 +4011,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     postpay: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'billing after usage',
             'pay later',
@@ -4007,7 +4022,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'pound-symbol-circle': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'circular pound symbol',
             'pound sign circle',
@@ -4018,11 +4033,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     power: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['energy', 'force', 'strength', 'energía', 'força', 'Kraft'],
     },
     'pre-order': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'advance order',
             'early reservation',
@@ -4033,15 +4048,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     prepaid: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['paid in advance', 'pre-payment', 'upfront payment', 'prepago', 'pré-pago', 'Prepaid'],
     },
     presentation: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['demo', 'demonstration', 'exhibition', 'presentación', 'apresentação', 'Präsentation'],
     },
     'price-drop': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'cost reduction',
             'price decrease',
@@ -4052,11 +4067,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     printer: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['printing machine', 'print device', 'output device', 'impresora', 'impressora', 'Drucker'],
     },
     'process-loading': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'loading process',
             'data loading',
@@ -4071,27 +4086,27 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['enigma', 'conundrum', 'brain teaser', 'rompecabezas', 'quebra-cabeça', 'Rätsel'],
     },
     'qr-code': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['quick response code', 'matrix barcode', 'código QR', 'código de barras', 'QR-Code'],
     },
     question: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['query', 'inquiry', 'interrogation', 'pregunta', 'pergunta', 'Frage'],
     },
     queue: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['line', 'waiting line', 'lineup', 'cola', 'fila de espera', 'Warteschlange'],
     },
     rain: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['rainfall', 'precipitation', 'rainstorm', 'lluvia', 'chuva', 'Regen'],
     },
     rating: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['evaluation', 'ranking', 'score', 'calificación', 'classificação', 'Bewertung'],
     },
     'reading-qr': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'scanning qr code',
             'reading matrix barcode',
@@ -4113,7 +4128,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     recycle: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'reuse',
             'environmental reclamation',
@@ -4124,15 +4139,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     refresh: {
-        category: [],
+        category: ['Arrows'],
         keywords: ['renew', 'revitalize', 'rejuvenate', 'refrescar', 'renovar', 'auffrischen'],
     },
     reload: {
-        category: ['Actions & system'],
+        category: ['Arrows'],
         keywords: ['recharge', 'refill', 'renew', 'recargar', 'recarregar', 'neu laden'],
     },
     'renovate-device-change-mobile': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'device renovation mobile change',
             'mobile upgrade',
@@ -4144,7 +4159,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     repeat: {category: ['Media'], keywords: ['replay', 'redo', 'loop', 'repetir', 'repetir', 'wiederholen']},
     repeater: {
-        category: ['Home & devices'],
+        category: ['Telco and comms'],
         keywords: [
             'signal booster',
             'amplifier',
@@ -4155,7 +4170,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     report: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['document', 'summary', 'statement', 'informe', 'relatório', 'Bericht'],
     },
     restaurant: {
@@ -4167,7 +4182,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['backward', 'reverse', 'go back', 'rebobinar', 'rebobinar', 'zurückspulen'],
     },
     'road-sign': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'traffic sign',
             'street sign',
@@ -4182,7 +4197,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['machine', 'automaton', 'android', 'robot', 'robô', 'Roboter'],
     },
     'robot-vacuum': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'robotic vacuum',
             'automated vacuum',
@@ -4193,13 +4208,13 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     rocket: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['spacecraft', 'spaceship', 'launch vehicle', 'cohete', 'foguete', 'Rakete'],
     },
     rook: {category: ['Activities'], keywords: ['chess piece', 'castle', 'tower', 'torre', 'torre', 'Turm']},
-    route: {category: ['Maps & vehicles'], keywords: ['path', 'way', 'course', 'ruta', 'rota', 'Weg']},
+    route: {category: ['Maps and vehicles'], keywords: ['path', 'way', 'course', 'ruta', 'rota', 'Weg']},
     router: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'network router',
             'internet router',
@@ -4218,7 +4233,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['measuring stick', 'straightedge', 'scale', 'regla', 'régua', 'Lineal'],
     },
     'safety-belt': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'seatbelt',
             'seat belt',
@@ -4229,7 +4244,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     search: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['hunt', 'seek', 'look for', 'buscar', 'procurar', 'suchen'],
     },
     'search-cloud': {
@@ -4266,7 +4281,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'search-money': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'money search',
             'financial search',
@@ -4277,11 +4292,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     send: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['transmit', 'dispatch', 'transfer', 'enviar', 'enviar', 'senden'],
     },
     'send-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro send',
             'european transmission',
@@ -4292,7 +4307,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'send-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound send',
             'gbp transmission',
@@ -4303,7 +4318,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     settings: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'configuration',
             'preferences',
@@ -4336,11 +4351,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     share: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['collaborate', 'participate', 'contribute', 'compartir', 'partilhar', 'teilen'],
     },
     'share-devices': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'device sharing',
             'shared gadgets',
@@ -4362,7 +4377,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'shared-mobile-data': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'mobile data sharing',
             'cellular data collaboration',
@@ -4410,11 +4425,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     shop: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['store', 'retailer', 'market', 'tienda', 'loja', 'Geschäft'],
     },
     'shopping-bag': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'purchase bag',
             "buyer's bag",
@@ -4425,7 +4440,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'shopping-cart': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'purchase cart',
             'shopping trolley',
@@ -4451,11 +4466,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     silence: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['quiet', 'hush', 'stillness', 'silencio', 'silêncio', 'Stille'],
     },
     'singleparent-family': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'single-parent household',
             'one-parent family',
@@ -4467,7 +4482,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     skull: {category: ['Health'], keywords: ['cranium', 'head', 'bones', 'cráneo', 'crânio', 'Schädel']},
     'smart-wifi': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'intelligent wi-fi',
             'smart wireless',
@@ -4478,7 +4493,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     sms: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'text message',
             'short message service',
@@ -4500,7 +4515,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     snowflake: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'ice crystal',
             'frozen flake',
@@ -4522,7 +4537,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'square-arrow-up-right': {
-        category: [],
+        category: ['Actions and system'],
         keywords: [
             'upward-right square',
             'rise-right rectangle',
@@ -4539,11 +4554,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     star: {
-        category: ['Others'],
+        category: ['Nature and sustainability'],
         keywords: ['celestial body', 'astronomical object', 'heavenly body', 'estrella', 'estrela', 'Stern'],
     },
     'status-chart': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'status graph',
             'data chart',
@@ -4566,11 +4581,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     stomach: {category: ['Health'], keywords: ['abdomen', 'belly', 'gut', 'estómago', 'barriga', 'Bauch']},
     storm: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['tempest', 'cyclone', 'turbulence', 'tormenta', 'tempestade', 'Sturm'],
     },
     subscription: {
-        category: ['Time'],
+        category: ['Files'],
         keywords: ['membership', 'enrollment', 'membership fee', 'suscripción', 'assinatura', 'Abonnement'],
     },
     subtitles: {
@@ -4578,11 +4593,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['captions', 'text overlays', 'subtitle text', 'subtítulos', 'legendas', 'Untertitel'],
     },
     subtract: {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['minus', 'deduct', 'take away', 'restar', 'subtrair', 'abziehen'],
     },
     'subtract-circle': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'circular subtract',
             'round minus',
@@ -4593,11 +4608,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     sun: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['solar', 'star', 'daylight', 'sol', 'sol', 'Sonne'],
     },
     supermarket: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'grocery store',
             'marketplace',
@@ -4608,7 +4623,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'support-agent': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'help agent',
             'customer support',
@@ -4619,7 +4634,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'support-agent-premium': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'premium support agent',
             'high-quality assistance',
@@ -4634,7 +4649,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['needle', 'injection', 'medical syringe', 'jeringa', 'seringa', 'Spritze'],
     },
     tablet: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['pad', 'mobile device', 'tablet pc', 'tableta', 'tablet', 'Tablet-PC'],
     },
     tachometer: {
@@ -4642,11 +4657,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['speedometer', 'gauge', 'speed indicator', 'tacómetro', 'tacômetro', 'Tachometer'],
     },
     tag: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['label', 'marker', 'identification', 'etiqueta', 'etiqueta', 'Etikett'],
     },
     'tag-discount-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro discount tag',
             'european sale label',
@@ -4657,7 +4672,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tag-discount-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound discount tag',
             'gbp sale label',
@@ -4668,7 +4683,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tag-euro': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'euro tag',
             'european label',
@@ -4679,7 +4694,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tag-pound': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'pound tag',
             'gbp label',
@@ -4690,16 +4705,16 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     talk: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: ['speak', 'converse', 'chat', 'hablar', 'conversar', 'sprechen'],
     },
     target: {category: ['Others'], keywords: ['bullseye', 'objective', 'goal', 'objetivo', 'meta', 'Ziel']},
     team: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['group', 'squad', 'crew', 'equipo', 'equipe', 'Mannschaft'],
     },
     teamwork: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'collaboration',
             'cooperation',
@@ -4710,7 +4725,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tech-service': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'technical service',
             'technology support',
@@ -4721,7 +4736,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tech-service-internet': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'internet tech service',
             'online support',
@@ -4732,7 +4747,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tech-service-landline': {
-        category: ['Others'],
+        category: ['Telco and comms'],
         keywords: [
             'landline tech service',
             'fixed phone support',
@@ -4743,7 +4758,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tech-service-mobile': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'mobile tech service',
             'cell phone support',
@@ -4754,7 +4769,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'tech-service-tv': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'tv tech service',
             'television support',
@@ -4765,11 +4780,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'teddy-bear': {
-        category: ['Home & devices'],
+        category: ['Activities'],
         keywords: ['stuffed animal', 'plush toy', 'soft toy', 'peluche', 'ursinho de pelúcia', 'Teddybär'],
     },
     'telephone-ip': {
-        category: [],
+        category: ['Telco and comms'],
         keywords: [
             'ip phone',
             'internet protocol telephone',
@@ -4780,7 +4795,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'telephone-pot': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'pots phone',
             'analog telephone',
@@ -4791,7 +4806,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'text-size': {
-        category: [],
+        category: ['Actions and system'],
         keywords: [
             'font size',
             'letter size',
@@ -4812,7 +4827,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['cinema', 'playhouse', 'stage', 'teatro', 'teatro', 'Theater'],
     },
     thermometer: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'temperature gauge',
             'heat measure',
@@ -4827,11 +4842,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['cast light', 'emit light', 'shine', 'arrojar luz', 'emitir luz', 'Licht werfen'],
     },
     'thumb-down': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['disapproval', 'negative', 'thumbs down', 'desaprobación', 'negativo', 'Daumen runter'],
     },
     'thumb-up': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['approval', 'positive', 'thumbs up', 'aprobación', 'positivo', 'Daumen hoch'],
     },
     tickets: {
@@ -4840,7 +4855,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     time: {category: ['Time'], keywords: ['clock', 'duration', 'period', 'tiempo', 'tempo', 'Zeit']},
     'tips-and-tricks': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: [
             'advice and hacks',
             'useful tips',
@@ -4851,7 +4866,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     tk: {
-        category: [],
+        category: ['Others'],
         keywords: [
             'token',
             'digital token',
@@ -4862,7 +4877,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     tokens: {
-        category: [],
+        category: ['Others'],
         keywords: [
             'digital tokens',
             'authentication tokens',
@@ -4878,19 +4893,19 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     tooth: {category: ['Health'], keywords: ['dental', 'teeth', 'molar', 'diente', 'dente', 'Zahn']},
     'top-up': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['recharge', 'refill', 'reload', 'recargar', 'recarregar', 'aufladen'],
     },
     'tow-truck': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['towing vehicle', 'wrecker', 'tow car', 'camión de remolque', 'guincho', 'Abschleppwagen'],
     },
     train: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['locomotive', 'railroad', 'railway', 'tren', 'trem', 'Zug'],
     },
     'tram-train': {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: [
             'tramway train',
             'light rail train',
@@ -4901,7 +4916,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'trash-can': {
-        category: ['Actions & system'],
+        category: ['Actions and system'],
         keywords: ['waste bin', 'garbage receptacle', 'dustbin', 'cubo de basura', 'lixeira', 'Mülltonne'],
     },
     'travel-bag': {
@@ -4909,11 +4924,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         keywords: ['luggage', 'suitcase', 'baggage', 'equipaje', 'bagagem', 'Reisetasche'],
     },
     tree: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['plant', 'foliage', 'woodland', 'árbol', 'árvore', 'Baum'],
     },
     'tree-2': {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'second tree',
             'additional tree',
@@ -4924,7 +4939,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'trend-down': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'decline trend',
             'decreasing pattern',
@@ -4935,7 +4950,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'trend-up': {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: [
             'rising trend',
             'increasing pattern',
@@ -4947,15 +4962,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     trophy: {category: ['Others'], keywords: ['award', 'prize', 'honor', 'trofeo', 'prêmio', 'Trophäe']},
     truck: {
-        category: ['Maps & vehicles'],
+        category: ['Maps and vehicles'],
         keywords: ['lorry', 'delivery vehicle', 'transport truck', 'camión', 'caminhão', 'Lastwagen'],
     },
     tshirt: {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: ['t-shirt', 'shirt', 'top', 'camiseta', 'camiseta', 'T-Shirt'],
     },
     'tv-content': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'television content',
             'tv programming',
@@ -4966,15 +4981,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     umbrella: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['rain shield', 'canopy', 'parasol', 'paraguas', 'guarda-chuva', 'Regenschirm'],
     },
     undo: {
-        category: ['Actions & system'],
+        category: ['Arrows'],
         keywords: ['reverse', 'revert', 'cancel', 'deshacer', 'desfazer', 'rückgängig machen'],
     },
     'unlimited-calls-sms': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'endless calls and sms',
             'infinite calling and messaging',
@@ -4985,7 +5000,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'unlimited-internet': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'endless internet',
             'infinite web access',
@@ -4996,7 +5011,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'user-account': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'account',
             'profile',
@@ -5007,7 +5022,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'user-support': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'user assistance',
             'customer support',
@@ -5047,7 +5062,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'video-chat': {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'video call',
             'visual communication',
@@ -5058,7 +5073,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'video-disabled': {
-        category: [],
+        category: ['Others'],
         keywords: [
             'no video',
             'video turned off',
@@ -5069,7 +5084,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'video-surveillance-security': {
-        category: ['Home & devices'],
+        category: ['Security'],
         keywords: [
             'security video surveillance',
             'cctv security',
@@ -5080,7 +5095,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     videogames: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'video games',
             'electronic games',
@@ -5124,7 +5139,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'vivo-valoriza': {
-        category: [],
+        category: ['Others'],
         keywords: [
             'vivo valoriza',
             'vivo rewards',
@@ -5146,7 +5161,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'voice-assistant': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'virtual assistant',
             'voice-activated helper',
@@ -5157,7 +5172,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     voicemail: {
-        category: ['Telco & Comms'],
+        category: ['Telco and comms'],
         keywords: [
             'voice message',
             'voice recording',
@@ -5201,15 +5216,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     wallet: {
-        category: ['Business & finance'],
+        category: ['Business and finance'],
         keywords: ['billfold', 'money holder', 'pocketbook', 'billetera', 'carteira', 'Brieftasche'],
     },
     warning: {
-        category: ['Alerts & feedbacks'],
+        category: ['Alerts and feedbacks'],
         keywords: ['caution', 'alert', 'admonition', 'advertencia', 'advertência', 'Warnung'],
     },
     'washing-machine': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'Laundry machine',
             'clothes washer',
@@ -5226,11 +5241,11 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'water-drop': {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: ['droplet', 'liquid bead', 'raindrop', 'gota de agua', 'gota líquida', 'Wassertropfen'],
     },
     wearable: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'wearable device',
             'wearable technology',
@@ -5242,15 +5257,15 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
     },
     web: {category: ['Development'], keywords: ['internet', 'world wide web', 'online', 'web', 'web', 'Web']},
     webcam: {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: ['web camera', 'internet camera', 'online camera', 'cámara web', 'câmera web', 'Webkamera'],
     },
     wifi: {
-        category: ['Home & devices'],
+        category: ['Telco and comms'],
         keywords: ['wireless internet', 'wi-fi', 'wireless network', 'wifi', 'wi-fi', 'WLAN'],
     },
     wind: {
-        category: ['Nature & Sustainability'],
+        category: ['Nature and sustainability'],
         keywords: [
             'breeze',
             'gust',
@@ -5266,7 +5281,10 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
             'Böe',
         ],
     },
-    winner: {category: [], keywords: ['champion', 'victor', 'conqueror', 'ganador', 'vencedor', 'Gewinner']},
+    winner: {
+        category: ['Others'],
+        keywords: ['champion', 'victor', 'conqueror', 'ganador', 'vencedor', 'Gewinner'],
+    },
     'winner-check': {
         category: ['Others'],
         keywords: [
@@ -5290,7 +5308,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'winner-fiber-quality': {
-        category: [],
+        category: ['Others'],
         keywords: [
             'fiber quality winner',
             'top fiber quality',
@@ -5311,7 +5329,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
             'Pfund-Gewinner',
         ],
     },
-    woman: {category: ['People & users'], keywords: ['female', 'lady', 'gal', 'mujer', 'mulher', 'Frau']},
+    woman: {category: ['People and users'], keywords: ['female', 'lady', 'gal', 'mujer', 'mulher', 'Frau']},
     workflow: {
         category: ['Others'],
         keywords: [
@@ -5324,7 +5342,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'workshop-meeting': {
-        category: ['People & users'],
+        category: ['People and users'],
         keywords: [
             'workshop gathering',
             'meeting session',
@@ -5335,7 +5353,7 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
     'world-device': {
-        category: ['Home & devices'],
+        category: ['Home and devices'],
         keywords: [
             'global device',
             'international equipment',
@@ -5346,5 +5364,13 @@ const iconKeywords: {[key: string]: {keywords: Array<string>; category: Array<st
         ],
     },
 };
+
+export const keywords: {[key: string]: Array<string>} = Object.fromEntries(
+    Object.entries(iconKeywords).map(([key, value]) => [key, value.keywords])
+);
+
+export const categories: {[key: string]: Array<string>} = Object.fromEntries(
+    Object.entries(iconKeywords).map(([key, value]) => [key, value.category])
+);
 
 export default iconKeywords;
