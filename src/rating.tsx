@@ -172,9 +172,7 @@ const InternalRating = ({
     ];
 
     const defaultQuantitativeLabels = Array.from({length: count}, (_, index) =>
-        (texts.ratingQuantitativeLabel || t(tokens.ratingQuantitativeLabel))
-            .replace('1$s', String(index + 1))
-            .replace('2$s', String(count))
+        t(texts.ratingQuantitativeLabel || tokens.ratingQuantitativeLabel, index + 1, count)
     );
 
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);

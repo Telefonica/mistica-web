@@ -194,6 +194,24 @@ test('TextField - end icon', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - prefix and end icon focus-ring', async () => {
+    const page = await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {prefix: 'Prefix', icon: true},
+    });
+
+    // press Tab until the field gets focused
+    do {
+        await page.keyboard.press('Tab');
+    } while ((await page.evaluate(() => document.activeElement?.tagName)) !== 'INPUT');
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - disabled', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',

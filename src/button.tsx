@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
 import {BaseTouchable} from './touchable';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {applyCssVars, pxToRem} from './utils/css';
 import {Text, Text3} from './text';
@@ -333,7 +333,7 @@ const BaseButton = React.forwardRef<
 >((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
-    const isInverse = useIsInverseOrMediaVariant();
+    const variant = useThemeVariant();
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
@@ -392,12 +392,18 @@ const BaseButton = React.forwardRef<
 
     const minWidthProps = props.buttonType.startsWith('link') ? styles.linkMinWidth : styles.buttonMinWidth;
     const finalType =
-        props.buttonType === 'linkDanger' && isDarkMode && isInverse ? 'linkDangerDark' : props.buttonType;
+        props.buttonType === 'linkDanger' && isDarkMode && variant === 'inverse'
+            ? 'linkDangerDark'
+            : props.buttonType;
 
     const commonProps = {
         ref,
         className: classnames(
-            isInverse ? styles.inverseButtonVariants[finalType] : styles.buttonVariants[finalType],
+            variant === 'media'
+                ? styles.mediaButtonVariants[finalType]
+                : variant === 'inverse'
+                  ? styles.inverseButtonVariants[finalType]
+                  : styles.buttonVariants[finalType],
             props.className,
             {
                 [styles.small]: props.small,
