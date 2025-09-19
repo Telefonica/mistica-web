@@ -12,6 +12,7 @@ import {
     ResponsiveLayout,
     ButtonLinkDanger,
 } from '..';
+import tennisImg from './images/tennis.jpg';
 
 export default {
     title: 'Components/Buttons',
@@ -22,13 +23,13 @@ const defaultArgs = {
     text: 'Example',
     loadingText: '',
     icon: 'none',
-    inverse: false,
+    variantOutside: 'default',
     disabled: false,
     showSpinner: false,
     small: false,
     action: 'href',
     newTab: false,
-};
+} as const;
 
 const defaultArgTypes = {
     icon: {
@@ -40,13 +41,17 @@ const defaultArgTypes = {
         control: {type: 'select'},
     },
     newTab: {if: {arg: 'action', eq: 'href'}},
+    variantOutside: {
+        options: ['default', 'inverse', 'media'],
+        control: {type: 'select'},
+    },
 };
 
 type Args = {
     text: string;
     loadingText: string;
     icon: string;
-    inverse: boolean;
+    variantOutside: 'default' | 'inverse' | 'media';
     disabled: boolean;
     showSpinner: boolean;
     small: boolean;
@@ -72,19 +77,28 @@ const getButtonActionProps = (action: string, newTab: boolean) => {
 };
 
 type Props = {
-    inverse: boolean;
+    variant: 'default' | 'inverse' | 'media';
     children: React.ReactNode;
 };
 
-const ButtonBackgroundContainer = ({inverse, children}: Props) => (
-    <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} isInverse={inverse}>
-        <Box padding={16}>{children}</Box>
-    </ResponsiveLayout>
+const ButtonBackgroundContainer = ({variant, children}: Props) => (
+    <div style={{backgroundImage: variant === 'media' ? `url(${tennisImg})` : undefined}}>
+        <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} variant={variant}>
+            <Box padding={16}>{children}</Box>
+        </ResponsiveLayout>
+    </div>
 );
 
-export const primaryButton: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
+export const primaryButton: StoryComponent<Args> = ({
+    variantOutside,
+    text,
+    icon,
+    action,
+    newTab,
+    ...props
+}) => {
     return (
-        <ButtonBackgroundContainer inverse={inverse}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonPrimary
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -97,9 +111,16 @@ export const primaryButton: StoryComponent<Args> = ({inverse, text, icon, action
     );
 };
 
-export const SecondaryButton: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
+export const SecondaryButton: StoryComponent<Args> = ({
+    variantOutside,
+    text,
+    icon,
+    action,
+    newTab,
+    ...props
+}) => {
     return (
-        <ButtonBackgroundContainer inverse={inverse}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonSecondary
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -112,9 +133,16 @@ export const SecondaryButton: StoryComponent<Args> = ({inverse, text, icon, acti
     );
 };
 
-export const DangerButton: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
+export const DangerButton: StoryComponent<Args> = ({
+    variantOutside,
+    text,
+    icon,
+    action,
+    newTab,
+    ...props
+}) => {
     return (
-        <ButtonBackgroundContainer inverse={inverse}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonDanger
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -128,7 +156,7 @@ export const DangerButton: StoryComponent<Args> = ({inverse, text, icon, action,
 };
 
 export const LinkButton: StoryComponent<Args & {chevron: string}> = ({
-    inverse,
+    variantOutside,
     text,
     icon,
     action,
@@ -137,7 +165,7 @@ export const LinkButton: StoryComponent<Args & {chevron: string}> = ({
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer inverse={inverse}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonLink
                 {...props}
                 withChevron={chevron === 'default' ? undefined : chevron === 'true'}
@@ -151,9 +179,16 @@ export const LinkButton: StoryComponent<Args & {chevron: string}> = ({
     );
 };
 
-export const LinkButtonDanger: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
+export const LinkButtonDanger: StoryComponent<Args> = ({
+    variantOutside,
+    text,
+    icon,
+    action,
+    newTab,
+    ...props
+}) => {
     return (
-        <ButtonBackgroundContainer inverse={inverse}>
+        <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonLinkDanger
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -167,7 +202,7 @@ export const LinkButtonDanger: StoryComponent<Args> = ({inverse, text, icon, act
 };
 
 export const SubmitButton: StoryComponent = () => (
-    <ButtonBackgroundContainer inverse={false}>
+    <ButtonBackgroundContainer variant="default">
         <Text2 as="p" regular>
             A button with submit attribute in a form doesn't need a onPress prop. And clicking on it will fire
             onSubmit event, that should be handled by the form.
