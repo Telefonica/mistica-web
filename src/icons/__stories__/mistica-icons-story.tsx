@@ -170,7 +170,7 @@ export const Catalog: StoryComponent<Args> = ({
 Catalog.args = {
     category: 'All',
     filter: '',
-    size: 32,
+    size: 24,
     regular: true,
     light: true,
     filled: true,
