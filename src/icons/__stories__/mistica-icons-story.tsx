@@ -37,8 +37,8 @@ export default {
 };
 
 type Args = {
-    filter: string;
     category: string;
+    filter: string;
     size: number;
     regular: boolean;
     light: boolean;
@@ -49,8 +49,8 @@ type Args = {
 };
 
 export const Catalog: StoryComponent<Args> = ({
-    filter,
     category,
+    filter,
     size,
     regular,
     light,
@@ -168,8 +168,8 @@ export const Catalog: StoryComponent<Args> = ({
 };
 
 Catalog.args = {
-    filter: '',
     category: 'All',
+    filter: '',
     size: 32,
     regular: true,
     light: true,
