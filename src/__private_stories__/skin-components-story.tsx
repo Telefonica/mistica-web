@@ -259,7 +259,7 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                                     EndIcon={IconPhotoCameraRegular}
                                     onPress={() => {}}
                                 >
-                                    LinkDanger
+                                    ButtonLink
                                 </ButtonLink>
                             }
                         />
