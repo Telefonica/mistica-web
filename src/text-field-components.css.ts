@@ -102,12 +102,33 @@ export const fullWidth = sprinkles({
     width: '100%',
 });
 
-export const field = sprinkles({
-    border: 'input',
-    display: 'flex',
-    borderRadius: vars.borderRadii.input,
-    position: 'relative',
+// See https://css-tricks.com/copy-the-browsers-native-focus-styles/
+const browserDefaultFocusOutline = [
+    '5px auto Highlight', // Firefox
+    '5px auto -webkit-focus-ring-color', // Chrome / Safari
+];
+
+export const fieldFocusRing = style({
+    ':focus-within': {
+        outline: browserDefaultFocusOutline,
+    },
+    selectors: {
+        // when the field has an end icon button (like the password visibility toggle or the CVV help icon), and it is focused, don't show the focus ring on the field
+        '&:has(button:focus-visible)': {
+            outline: 'none',
+        },
+    },
 });
+
+export const field = style([
+    sprinkles({
+        border: 'input',
+        display: 'flex',
+        borderRadius: vars.borderRadii.input,
+        position: 'relative',
+    }),
+    fieldFocusRing,
+]);
 
 export const helperContainer = sprinkles({
     paddingLeft: 12,
