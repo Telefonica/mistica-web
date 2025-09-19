@@ -112,6 +112,12 @@ export const fieldFocusRing = style({
     ':focus-within': {
         outline: browserDefaultFocusOutline,
     },
+    selectors: {
+        // when the field has an end icon button (like the password visibility toggle or the CVV help icon), and it is focused, don't show the focus ring on the field
+        '&:has(button:focus-visible)': {
+            outline: 'none',
+        },
+    },
 });
 
 export const field = style([
