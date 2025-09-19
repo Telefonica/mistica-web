@@ -26,7 +26,7 @@ export default {
     title: 'Icons/Catalog',
     argTypes: {
         size: {
-            control: {type: 'range', min: 24, max: 48, step: 4},
+            control: {type: 'range', min: 16, max: 48, step: 4},
         },
         category: {
             control: {type: 'select'},
