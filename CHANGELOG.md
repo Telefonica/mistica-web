@@ -1,3 +1,16 @@
+# [16.39.0](https://github.com/Telefonica/mistica-web/compare/v16.38.0...v16.39.0) (2025-09-19)
+
+
+### Bug Fixes
+
+* **TextFields:** focus ring in text fields with prefix and/or end icon ([#1435](https://github.com/Telefonica/mistica-web/issues/1435)) ([c8719f9](https://github.com/Telefonica/mistica-web/commit/c8719f98d06a9b42a36d777c763e129c2bd92f16))
+
+
+### Features
+
+* **Button:** improve rendering over media ([#1431](https://github.com/Telefonica/mistica-web/issues/1431)) ([c4d8bb1](https://github.com/Telefonica/mistica-web/commit/c4d8bb146742dfe8d1fd21709b26d52daa7d6d40))
+* **FixedFooterLayout:** allow custimizing footer role ([#1433](https://github.com/Telefonica/mistica-web/issues/1433)) ([2ed1e33](https://github.com/Telefonica/mistica-web/commit/2ed1e332a43eab7318203f99a5bb224d0e96e8bf))
+
 # [16.38.0](https://github.com/Telefonica/mistica-web/compare/v16.37.5...v16.38.0) (2025-09-16)
 
 
