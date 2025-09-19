@@ -92,7 +92,6 @@ export const Catalog: StoryComponent<Args> = ({
             }
         }
 
-        // Filter by search term
         if (filter) {
             const keywords = iconData?.keywords || [];
             const categories = iconData?.category || [];
