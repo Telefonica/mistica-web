@@ -514,7 +514,7 @@ const dangerLinkInverse: ComplexStyleRule = [
 const dangerLinkMedia: ComplexStyleRule = [
     button,
     sprinkles({
-        color: vars.colors.textLinkDanger,
+        color: vars.colors.textLinkDangerMedia,
         background: vars.colors.buttonLinkDangerBackgroundMedia,
     }),
     {
@@ -567,34 +567,6 @@ const dangerLinkInverseDark: ComplexStyleRule = [
     },
 ];
 
-const dangerLinkMediaDark: ComplexStyleRule = [
-    button,
-    sprinkles({
-        color: vars.colors.textLinkDanger,
-        background: 'transparent',
-    }),
-    {
-        selectors: {
-            '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
-                    },
-                    '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
-                    },
-                },
-            },
-        },
-    },
-];
-
 export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
@@ -619,5 +591,5 @@ export const mediaButtonVariants = styleVariants({
     danger,
     link: defaultLinkMedia,
     linkDanger: dangerLinkMedia,
-    linkDangerDark: dangerLinkMediaDark,
+    linkDangerDark: dangerLinkMedia,
 });
