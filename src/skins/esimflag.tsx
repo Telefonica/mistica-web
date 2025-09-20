@@ -403,6 +403,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             checkbox: '4px',
             container: '20px',
             indicator: '8px',
+            chip: '8px',
             input: '16px',
             legacyDisplay: '20px',
             popup: '16px',

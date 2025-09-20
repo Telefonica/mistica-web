@@ -7,6 +7,7 @@ export type SkinVariant = 'prominent';
 
 export type KnownSkinName =
     | 'Movistar'
+    | 'Movistar-new'
     | 'O2'
     | 'O2-new'
     | 'Vivo'
@@ -75,6 +76,7 @@ export type BorderRadiiConfig = {
     popup: string;
     checkbox: string;
     indicator: string;
+    chip: string;
     sheet: string;
     bar: string;
     avatar: string;

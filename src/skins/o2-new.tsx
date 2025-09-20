@@ -406,6 +406,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             checkbox: '2px',
             container: '16px',
             indicator: '999px',
+            chip: '999px',
             input: '12px',
             legacyDisplay: '16px',
             popup: '8px',

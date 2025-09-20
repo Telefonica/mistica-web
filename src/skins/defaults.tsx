@@ -34,6 +34,7 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     bar: '999px',
     avatar: '50%',
     mediaSmall: '8px',
+    chip: '16px',
 };
 
 export const defaultThemeVariantsConfig: ThemeVariantsConfig = {

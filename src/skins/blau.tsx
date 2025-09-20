@@ -399,6 +399,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             checkbox: '2px',
             container: '8px',
             indicator: '999px',
+            chip: '999px',
             input: '8px',
             legacyDisplay: '16px',
             popup: '8px',

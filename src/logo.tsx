@@ -23,6 +23,14 @@ const MovistarLogoImage = React.lazy(
         )
 );
 
+const MovistarNewLogoImage = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "logo-movistar-new" */
+            './logo-movistar-new'
+        )
+);
+
 const VivoLogoImage = React.lazy(
     () =>
         import(
@@ -93,6 +101,16 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
         case 'Movistar':
             return (
                 <MovistarLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
+        case 'Movistar-new':
+            return (
+                <MovistarNewLogoImage
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
@@ -238,6 +256,17 @@ export const MovistarLogo = ({
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Movistar" type={type} size={size} color={color} />
+    </MaybeTouchableLogo>
+);
+
+export const MovistarNewLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
+    <MaybeTouchableLogo size={size} {...props}>
+        <LogoBase skinName="Movistar-new" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
