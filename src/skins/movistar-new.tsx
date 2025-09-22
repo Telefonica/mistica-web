@@ -40,7 +40,7 @@ export const palette = {
     greenDark: '#38552B',
     pink45: '#EB5F99',
     pink55: '#C42F6D',
-    grey100: '#F8F4F0',
+    grey100: '#FAF7F5',
     grey200: '#F3EEEA',
     grey300: '#DFDBD6',
     grey400: '#9F9C99',
