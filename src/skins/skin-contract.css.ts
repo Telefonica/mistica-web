@@ -219,6 +219,7 @@ const borderRadii: BorderRadiiConfig = {
 
 const textPresets = {
     cardTitle: {weight: ''},
+    rowTitle: {weight: ''},
     button: {weight: ''},
     link: {weight: ''},
     title1: {weight: ''},

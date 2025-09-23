@@ -419,6 +419,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
         textPresets: {
             button: {weight: 'medium'},
             cardTitle: {weight: 'bold'},
+            rowTitle: {weight: 'medium'},
             indicator: {weight: 'medium'},
             link: {weight: 'medium'},
             navigationBar: {weight: 'medium'},

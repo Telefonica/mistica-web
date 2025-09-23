@@ -42,6 +42,7 @@ type TextTokenConfig<PossibleFontWeights = FontWeight> = {
 
 export type TextPresetsConfig = {
     cardTitle: TextWeightTokenConfig;
+    rowTitle: TextWeightTokenConfig;
     button: TextWeightTokenConfig<'regular' | 'medium'>;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
     title1: TextWeightTokenConfig<'regular' | 'medium'>;
