@@ -118,8 +118,10 @@ const colors: Colors = {
     // TEXT GLOBAL
     textPrimary: '',
     textPrimaryInverse: '',
+    textPrimaryMedia: '',
     textSecondary: '',
     textSecondaryInverse: '',
+    textSecondaryMedia: '',
     textError: '',
     textErrorInverse: '',
 
