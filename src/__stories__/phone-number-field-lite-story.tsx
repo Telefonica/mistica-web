@@ -66,7 +66,7 @@ const Description = () => {
                         libphonenumber library to reduce bundle size.
                     </Text2>
                     <Stack space={8}>
-                        <Text2 regular>
+                        <Text2 regular as="div">
                             <UnorderedList>
                                 <ListItem>Only supported countries are formatted</ListItem>
                                 <ListItem>Not all phone number types are formatted</ListItem>
