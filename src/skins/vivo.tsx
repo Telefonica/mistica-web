@@ -412,6 +412,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             indicator: {weight: 'medium'},
             link: {weight: 'medium'},
             navigationBar: {weight: 'medium'},
+            rowTitle: {weight: 'regular'},
             tabsLabel: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 16},
