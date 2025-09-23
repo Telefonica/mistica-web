@@ -163,8 +163,10 @@
     --mistica-color-neutralLowAlternative: var(--mistica-telefonica-grey2);
     --mistica-color-textPrimary: var(--mistica-telefonica-grey9);
     --mistica-color-textPrimaryInverse: var(--mistica-telefonica-white);
+    --mistica-color-textPrimaryMedia: var(--mistica-telefonica-white);
     --mistica-color-textSecondary: var(--mistica-telefonica-grey6);
     --mistica-color-textSecondaryInverse: var(--mistica-telefonica-white);
+    --mistica-color-textSecondaryMedia: var(--mistica-telefonica-white);
     --mistica-color-error: var(--mistica-telefonica-coral60);
     --mistica-color-textError: var(--mistica-telefonica-coral60);
     --mistica-color-textErrorInverse: var(--mistica-telefonica-white);
@@ -231,10 +233,11 @@
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
     --mistica-border-radius-bar: 0px;
-    --mistica-border-radius-button: 999px;
+    --mistica-border-radius-button: 32px;
     --mistica-border-radius-checkbox: 0px;
     --mistica-border-radius-container: 0px;
-    --mistica-border-radius-indicator: 999px;
+    --mistica-border-radius-indicator: 24px;
+    --mistica-border-radius-chip: 24px;
     --mistica-border-radius-input: 0px;
     --mistica-border-radius-legacyDisplay: 0px;
     --mistica-border-radius-popup: 0px;
@@ -271,6 +274,7 @@
     --mistica-font-size-cardTitle: 1.25rem;
     --mistica-line-height-cardTitle: 1.5rem;
     --mistica-font-weight-cardTitle: 400;
+    --mistica-font-weight-rowTitle: 400;
     --mistica-font-weight-button: 500;
     --mistica-font-size-tabsLabel: 1rem;
     --mistica-line-height-tabsLabel: 1.5rem;
@@ -403,8 +407,10 @@
     --mistica-color-neutralLowAlternative: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-textPrimary: var(--mistica-telefonica-grey1);
     --mistica-color-textPrimaryInverse: var(--mistica-telefonica-grey1);
+    --mistica-color-textPrimaryMedia: var(--mistica-telefonica-white);
     --mistica-color-textSecondary: var(--mistica-telefonica-grey3);
     --mistica-color-textSecondaryInverse: var(--mistica-telefonica-grey3);
+    --mistica-color-textSecondaryMedia: var(--mistica-telefonica-white);
     --mistica-color-error: var(--mistica-telefonica-coral);
     --mistica-color-textError: var(--mistica-telefonica-coral);
     --mistica-color-textErrorInverse: var(--mistica-telefonica-coral);
@@ -600,8 +606,10 @@
         --mistica-color-neutralLowAlternative: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-textPrimary: var(--mistica-telefonica-grey1);
         --mistica-color-textPrimaryInverse: var(--mistica-telefonica-grey1);
+        --mistica-color-textPrimaryMedia: var(--mistica-telefonica-white);
         --mistica-color-textSecondary: var(--mistica-telefonica-grey3);
         --mistica-color-textSecondaryInverse: var(--mistica-telefonica-grey3);
+        --mistica-color-textSecondaryMedia: var(--mistica-telefonica-white);
         --mistica-color-error: var(--mistica-telefonica-coral);
         --mistica-color-textError: var(--mistica-telefonica-coral);
         --mistica-color-textErrorInverse: var(--mistica-telefonica-coral);
@@ -787,8 +795,10 @@
         --mistica-color-neutralLowAlternative: var(--mistica-telefonica-grey2);
         --mistica-color-textPrimary: var(--mistica-telefonica-grey9);
         --mistica-color-textPrimaryInverse: var(--mistica-telefonica-white);
+        --mistica-color-textPrimaryMedia: var(--mistica-telefonica-white);
         --mistica-color-textSecondary: var(--mistica-telefonica-grey6);
         --mistica-color-textSecondaryInverse: var(--mistica-telefonica-white);
+        --mistica-color-textSecondaryMedia: var(--mistica-telefonica-white);
         --mistica-color-error: var(--mistica-telefonica-coral60);
         --mistica-color-textError: var(--mistica-telefonica-coral60);
         --mistica-color-textErrorInverse: var(--mistica-telefonica-white);

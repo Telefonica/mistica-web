@@ -150,8 +150,10 @@
     --mistica-color-neutralLowAlternative: var(--mistica-vivo-grey2);
     --mistica-color-textPrimary: var(--mistica-vivo-grey6);
     --mistica-color-textPrimaryInverse: var(--mistica-vivo-white);
+    --mistica-color-textPrimaryMedia: var(--mistica-vivo-white);
     --mistica-color-textSecondary: var(--mistica-vivo-grey5);
     --mistica-color-textSecondaryInverse: var(--mistica-vivo-vivoPurpleLight20);
+    --mistica-color-textSecondaryMedia: var(--mistica-vivo-white);
     --mistica-color-success: var(--mistica-vivo-vivoGreen);
     --mistica-color-warning: var(--mistica-vivo-orange);
     --mistica-color-error: var(--mistica-vivo-pepper);
@@ -221,7 +223,8 @@
     --mistica-border-radius-button: 4px;
     --mistica-border-radius-checkbox: 2px;
     --mistica-border-radius-container: 8px;
-    --mistica-border-radius-indicator: 999px;
+    --mistica-border-radius-indicator: 24px;
+    --mistica-border-radius-chip: 24px;
     --mistica-border-radius-input: 8px;
     --mistica-border-radius-legacyDisplay: 16px;
     --mistica-border-radius-popup: 8px;
@@ -384,8 +387,10 @@
     --mistica-color-neutralLowAlternative: var(--mistica-vivo-darkModeGrey6);
     --mistica-color-textPrimary: var(--mistica-vivo-grey2);
     --mistica-color-textPrimaryInverse: var(--mistica-vivo-grey2);
+    --mistica-color-textPrimaryMedia: var(--mistica-vivo-white);
     --mistica-color-textSecondary: var(--mistica-vivo-grey4);
     --mistica-color-textSecondaryInverse: var(--mistica-vivo-grey4);
+    --mistica-color-textSecondaryMedia: var(--mistica-vivo-white);
     --mistica-color-success: var(--mistica-vivo-vivoGreen);
     --mistica-color-warning: var(--mistica-vivo-orange);
     --mistica-color-error: var(--mistica-vivo-pepper);
@@ -563,8 +568,10 @@
         --mistica-color-neutralLowAlternative: var(--mistica-vivo-darkModeGrey6);
         --mistica-color-textPrimary: var(--mistica-vivo-grey2);
         --mistica-color-textPrimaryInverse: var(--mistica-vivo-grey2);
+        --mistica-color-textPrimaryMedia: var(--mistica-vivo-white);
         --mistica-color-textSecondary: var(--mistica-vivo-grey4);
         --mistica-color-textSecondaryInverse: var(--mistica-vivo-grey4);
+        --mistica-color-textSecondaryMedia: var(--mistica-vivo-white);
         --mistica-color-success: var(--mistica-vivo-vivoGreen);
         --mistica-color-warning: var(--mistica-vivo-orange);
         --mistica-color-error: var(--mistica-vivo-pepper);
@@ -741,8 +748,10 @@
         --mistica-color-neutralLowAlternative: var(--mistica-vivo-grey2);
         --mistica-color-textPrimary: var(--mistica-vivo-grey6);
         --mistica-color-textPrimaryInverse: var(--mistica-vivo-white);
+        --mistica-color-textPrimaryMedia: var(--mistica-vivo-white);
         --mistica-color-textSecondary: var(--mistica-vivo-grey5);
         --mistica-color-textSecondaryInverse: var(--mistica-vivo-vivoPurpleLight20);
+        --mistica-color-textSecondaryMedia: var(--mistica-vivo-white);
         --mistica-color-success: var(--mistica-vivo-vivoGreen);
         --mistica-color-warning: var(--mistica-vivo-orange);
         --mistica-color-error: var(--mistica-vivo-pepper);
