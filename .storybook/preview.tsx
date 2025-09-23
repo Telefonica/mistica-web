@@ -165,7 +165,7 @@ const Styles = () => {
     );
 };
 
-const withLayoutDecorator: Decorator = (Story, context): React.ReactElement => {
+const withLayoutDecorator: Decorator = (Story, context) => {
     const isFullscreen = !!context?.parameters?.fullScreen;
     return (
         <>
