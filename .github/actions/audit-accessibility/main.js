@@ -54,7 +54,7 @@ const startStorybook = () => {
             console.log(`Serving static storybook at: http://localhost:${port}`);
             resolve({
                 getStoryUrl: (id) =>
-                    `http://localhost:${port}/iframe.html?viewMode=story&id=${id}&skin=Movistar-new&colorScheme=dark`,
+                    `http://localhost:${port}/iframe.html?viewMode=story&id=${id}&skin=Movistar-new`,
                 closeStorybook: () => {
                     console.log('Stopping static storybook server');
                     storybookServer.close();
