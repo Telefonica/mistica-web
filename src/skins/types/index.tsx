@@ -82,6 +82,7 @@ export type BorderRadiiConfig = {
     bar: string;
     avatar: string;
     mediaSmall: string;
+    tag: string;
 };
 
 export type ThemeVariantsConfig = {

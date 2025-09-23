@@ -217,6 +217,7 @@ const borderRadii: BorderRadiiConfig = {
     bar: '',
     avatar: '',
     mediaSmall: '',
+    tag: '',
 };
 
 const textPresets = {
