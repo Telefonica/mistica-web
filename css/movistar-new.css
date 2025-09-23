@@ -32,7 +32,6 @@
     --mistica-movistar-new-darkModeBlack: #070706;
     --mistica-movistar-new-darkModeGrey: #151414;
     --mistica-movistar-new-darkModeMovistarBlue: #227aff;
-    --mistica-movistar-new-blue600: #4dbaf7;
     --mistica-movistar-new-red350: #ff8a8a;
     --mistica-movistar-new-grey400: #9f9c99;
     --mistica-movistar-new-grey700: #403f3d;
@@ -355,7 +354,7 @@
     --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-movistar-new-raw-white), 0.3);
     --mistica-color-textButtonPrimary: var(--mistica-movistar-new-white);
     --mistica-color-textButtonPrimaryInverse: var(--mistica-movistar-new-white);
-    --mistica-color-textButtonPrimaryMedia: var(--mistica-movistar-new-blue600);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-movistar-new-movistarBlue);
     --mistica-color-textButtonPrimaryInversePressed: var(--mistica-movistar-new-blueLight);
     --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-movistar-new-blueHigh);
     --mistica-color-textButtonSecondary: var(--mistica-movistar-new-grey200);
@@ -548,7 +547,7 @@
         );
         --mistica-color-textButtonPrimary: var(--mistica-movistar-new-white);
         --mistica-color-textButtonPrimaryInverse: var(--mistica-movistar-new-white);
-        --mistica-color-textButtonPrimaryMedia: var(--mistica-movistar-new-blue600);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-movistar-new-movistarBlue);
         --mistica-color-textButtonPrimaryInversePressed: var(--mistica-movistar-new-blueLight);
         --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-movistar-new-blueHigh);
         --mistica-color-textButtonSecondary: var(--mistica-movistar-new-grey200);

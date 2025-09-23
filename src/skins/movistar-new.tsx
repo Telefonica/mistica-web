@@ -294,7 +294,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundMediaPressed: applyAlpha(palette.white, 0.3),
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.white,
-            textButtonPrimaryMedia: palette.blue600,
+            textButtonPrimaryMedia: palette.movistarBlue,
             textButtonPrimaryInversePressed: palette.blueLight,
             textButtonPrimaryMediaPressed: palette.blueHigh,
             textButtonSecondary: palette.grey200,
