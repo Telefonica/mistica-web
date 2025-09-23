@@ -115,6 +115,7 @@ export {
 export {
     Logo,
     MovistarLogo,
+    MovistarNewLogo,
     VivoLogo,
     O2Logo,
     O2NewLogo,
@@ -227,6 +228,7 @@ export {
     O2_SKIN,
     O2_NEW_SKIN,
     MOVISTAR_SKIN,
+    MOVISTAR_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
     TU_SKIN,
@@ -236,6 +238,7 @@ export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
 export {getVivoNewSkin} from './skins/vivo-new';
 export {getMovistarSkin} from './skins/movistar';
+export {getMovistarNewSkin} from './skins/movistar-new';
 export {getO2Skin} from './skins/o2';
 export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';

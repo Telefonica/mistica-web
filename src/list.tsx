@@ -9,7 +9,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {BaseTouchable} from './touchable';
-import {Text3, Text2, Text1} from './text';
+import {Text, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
@@ -27,6 +27,7 @@ import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
+import {useTheme} from './hooks';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -107,6 +108,7 @@ export const Content = ({
     const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
+    const {textPresets} = useTheme();
 
     return (
         <div className={styles.content} id={labelId}>
@@ -142,8 +144,11 @@ export const Content = ({
                 className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
-                <Text3
-                    regular
+                {/* Text3 size */}
+                <Text
+                    mobileSize={16}
+                    desktopSize={18}
+                    weight={textPresets.rowTitle.weight}
                     color={danger ? vars.colors.textError : vars.colors.textPrimary}
                     truncate={titleLinesMax}
                     hyphens="auto"
@@ -151,7 +156,7 @@ export const Content = ({
                     dataAttributes={{testid: 'title'}}
                 >
                     {title}
-                </Text3>
+                </Text>
                 {headline && (
                     <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
                         <Text1

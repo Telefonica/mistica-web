@@ -13,7 +13,7 @@ export const tag = style([
     }),
     {
         verticalAlign: 'middle',
-        borderRadius: vars.borderRadii.indicator,
+        borderRadius: vars.borderRadii.tag,
     },
 ]);
 

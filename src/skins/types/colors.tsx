@@ -110,8 +110,10 @@ export type Colors = {
     neutralLowAlternative: string;
     textPrimary: string;
     textPrimaryInverse: string;
+    textPrimaryMedia: string;
     textSecondary: string;
     textSecondaryInverse: string;
+    textSecondaryMedia: string;
     success: string;
     warning: string;
     error: string;
