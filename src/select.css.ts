@@ -116,6 +116,8 @@ const selectBase = style([
         borderRadius: skinVars.borderRadii.input,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         fontFamily: 'inherit',
         paddingRight: `calc(${iconButtonSize} + ${fieldEndIconGap}px)`,
         paddingLeft: fieldLeftPadding,
