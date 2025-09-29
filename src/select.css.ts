@@ -12,6 +12,7 @@ import {
     mobileFontSize,
 } from './text-field-base.css';
 import {pxToRem} from './utils/css';
+import {browserDefaultFocusOutline} from './text-field-components.css';
 
 const top = createVar();
 const left = createVar();
@@ -74,6 +75,9 @@ const selectContainerBase = style([
             [mq.tabletOrSmaller]: {
                 width: '100%',
             },
+        },
+        ':focus': {
+            outline: browserDefaultFocusOutline,
         },
     },
 ]);
