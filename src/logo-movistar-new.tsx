@@ -113,11 +113,6 @@ const MovistarNewLogoImage = ({
                         fill={wordmarkColor}
                     />
                 </g>
-                <defs>
-                    <clipPath id="clip0_1656_320">
-                        <rect width="190.157" height="72" fill="white" transform="translate(6)" />
-                    </clipPath>
-                </defs>
             </svg>
         );
     }
