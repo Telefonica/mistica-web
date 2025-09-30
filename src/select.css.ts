@@ -78,6 +78,8 @@ const selectContainerBase = style([
         },
         ':focus': {
             outline: browserDefaultFocusOutline,
+            border: `1px solid transparent`, // needed for outline to follow border radius in Safari
+            margin: -1, // to avoid layout shift when adding the transparent border
         },
     },
 ]);
