@@ -8,7 +8,6 @@
     --mistica-movistar-new-blue800: #0149b3;
     --mistica-movistar-new-grey100: #faf7f5;
     --mistica-movistar-new-grey200: #f3eeea;
-    --mistica-movistar-new-blue500: #e8f4fa;
     --mistica-movistar-new-grey300: #dfdbd6;
     --mistica-movistar-new-grey600: #605e5c;
     --mistica-movistar-new-red: #c10000;
@@ -17,6 +16,7 @@
     --mistica-movistar-new-blueHigh: #005eeb;
     --mistica-movistar-new-blue300: #80b3ff;
     --mistica-movistar-new-grey500: #807d7b;
+    --mistica-movistar-new-blue200: #e8f4fa;
     --mistica-movistar-new-blueLight: #d3eeff;
     --mistica-movistar-new-blueDark: #022d67;
     --mistica-movistar-new-emerald: #048239;
@@ -64,7 +64,7 @@
     --mistica-color-backgroundContainerAlternative: var(--mistica-movistar-new-grey100);
     --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-new-raw-movistarBlack), 0.6);
     --mistica-color-backgroundSkeleton: var(--mistica-movistar-new-grey200);
-    --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-new-blue500);
+    --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-new-blue800);
     --mistica-color-backgroundBrandTop: var(--mistica-movistar-new-movistarBlue);
     --mistica-color-backgroundBrandBottom: var(--mistica-movistar-new-movistarBlue);
     --mistica-color-appBarBackground: var(--mistica-movistar-new-white);
@@ -130,7 +130,7 @@
     --mistica-color-inputBorder: var(--mistica-movistar-new-grey500);
     --mistica-color-inputBorderInverse: var(--mistica-movistar-new-white);
     --mistica-color-completedStep: var(--mistica-movistar-new-movistarBlue);
-    --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue500);
+    --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue200);
     --mistica-color-control: var(--mistica-movistar-new-grey500);
     --mistica-color-controlActivated: var(--mistica-movistar-new-movistarBlue);
     --mistica-color-controlInverse: var(--mistica-movistar-new-blueLight);
@@ -138,7 +138,7 @@
     --mistica-color-controlError: var(--mistica-movistar-new-red);
     --mistica-color-barTrack: var(--mistica-movistar-new-grey300);
     --mistica-color-barTrackInverse: rgba(var(--mistica-movistar-new-raw-movistarBlack), 0.14);
-    --mistica-color-loadingBar: var(--mistica-movistar-new-movistarBlue);
+    --mistica-color-loadingBar: var(--mistica-movistar-new-blueLight);
     --mistica-color-loadingBarBackground: var(--mistica-movistar-new-blueHigh);
     --mistica-color-toggleAndroidInactive: var(--mistica-movistar-new-grey200);
     --mistica-color-toggleAndroidBackgroundActive: var(--mistica-movistar-new-blue300);
@@ -375,7 +375,7 @@
     --mistica-color-inputBorder: var(--mistica-movistar-new-grey400);
     --mistica-color-inputBorderInverse: var(--mistica-movistar-new-grey400);
     --mistica-color-completedStep: var(--mistica-movistar-new-blue800);
-    --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue500);
+    --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue200);
     --mistica-color-control: var(--mistica-movistar-new-grey400);
     --mistica-color-controlActivated: var(--mistica-movistar-new-darkModeMovistarBlue);
     --mistica-color-controlInverse: var(--mistica-movistar-new-grey400);
@@ -568,7 +568,7 @@
         --mistica-color-inputBorder: var(--mistica-movistar-new-grey400);
         --mistica-color-inputBorderInverse: var(--mistica-movistar-new-grey400);
         --mistica-color-completedStep: var(--mistica-movistar-new-blue800);
-        --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue500);
+        --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue200);
         --mistica-color-control: var(--mistica-movistar-new-grey400);
         --mistica-color-controlActivated: var(--mistica-movistar-new-darkModeMovistarBlue);
         --mistica-color-controlInverse: var(--mistica-movistar-new-grey400);
@@ -688,7 +688,7 @@
         --mistica-color-backgroundContainerAlternative: var(--mistica-movistar-new-grey100);
         --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-new-raw-movistarBlack), 0.6);
         --mistica-color-backgroundSkeleton: var(--mistica-movistar-new-grey200);
-        --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-new-blue500);
+        --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-new-blue800);
         --mistica-color-backgroundBrandTop: var(--mistica-movistar-new-movistarBlue);
         --mistica-color-backgroundBrandBottom: var(--mistica-movistar-new-movistarBlue);
         --mistica-color-appBarBackground: var(--mistica-movistar-new-white);
@@ -763,7 +763,7 @@
         --mistica-color-inputBorder: var(--mistica-movistar-new-grey500);
         --mistica-color-inputBorderInverse: var(--mistica-movistar-new-white);
         --mistica-color-completedStep: var(--mistica-movistar-new-movistarBlue);
-        --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue500);
+        --mistica-color-completedStepInverse: var(--mistica-movistar-new-blue200);
         --mistica-color-control: var(--mistica-movistar-new-grey500);
         --mistica-color-controlActivated: var(--mistica-movistar-new-movistarBlue);
         --mistica-color-controlInverse: var(--mistica-movistar-new-blueLight);
@@ -771,7 +771,7 @@
         --mistica-color-controlError: var(--mistica-movistar-new-red);
         --mistica-color-barTrack: var(--mistica-movistar-new-grey300);
         --mistica-color-barTrackInverse: rgba(var(--mistica-movistar-new-raw-movistarBlack), 0.14);
-        --mistica-color-loadingBar: var(--mistica-movistar-new-movistarBlue);
+        --mistica-color-loadingBar: var(--mistica-movistar-new-blueLight);
         --mistica-color-loadingBarBackground: var(--mistica-movistar-new-blueHigh);
         --mistica-color-toggleAndroidInactive: var(--mistica-movistar-new-grey200);
         --mistica-color-toggleAndroidBackgroundActive: var(--mistica-movistar-new-blue300);

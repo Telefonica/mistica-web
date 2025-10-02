@@ -118,7 +118,7 @@
     --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-new-raw-white), 0.15);
     --mistica-color-textButtonPrimary: var(--mistica-o2-new-white);
     --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-new-beyondBlue);
-    --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-white);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-beyondBlue);
     --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-new-beyondBlue70);
     --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-new-beyondBlue70);
     --mistica-color-textButtonSecondary: var(--mistica-o2-new-beyondBlue);
@@ -357,7 +357,7 @@
     --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-new-raw-white), 0.15);
     --mistica-color-textButtonPrimary: var(--mistica-o2-new-white);
     --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-new-white);
-    --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-white);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-beyondBlue);
     --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-new-white);
     --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-new-beyondBlue70);
     --mistica-color-textButtonSecondary: var(--mistica-o2-new-grey30);
@@ -538,7 +538,7 @@
         --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-new-raw-white), 0.15);
         --mistica-color-textButtonPrimary: var(--mistica-o2-new-white);
         --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-new-white);
-        --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-white);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-beyondBlue);
         --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-new-white);
         --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-new-beyondBlue70);
         --mistica-color-textButtonSecondary: var(--mistica-o2-new-grey30);
@@ -728,7 +728,7 @@
         --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(var(--mistica-o2-new-raw-white), 0.15);
         --mistica-color-textButtonPrimary: var(--mistica-o2-new-white);
         --mistica-color-textButtonPrimaryInverse: var(--mistica-o2-new-beyondBlue);
-        --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-white);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-o2-new-beyondBlue);
         --mistica-color-textButtonPrimaryInversePressed: var(--mistica-o2-new-beyondBlue70);
         --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-o2-new-beyondBlue70);
         --mistica-color-textButtonSecondary: var(--mistica-o2-new-beyondBlue);
