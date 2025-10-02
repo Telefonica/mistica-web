@@ -7,6 +7,7 @@ export const palette = {
     o2BluePrimary: '#0019A5',
     o2BluePrimary70: '#000066',
     o2BluePrimary90: '#000033',
+    o2BluePrimary95: '#00001E',
     o2BluePrimary30: '#808CD2',
     o2BluePrimary15: '#CCD1ED',
     o2BluePrimary10: '#E5E8F6',
@@ -222,6 +223,7 @@ export const getO2Skin: GetKnownSkin = () => {
             tagBackgroundErrorInverse: palette.pepper10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            gradientColor: palette.o2BluePrimary95,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -394,6 +396,7 @@ export const getO2Skin: GetKnownSkin = () => {
             tagBackgroundErrorInverse: palette.darkModeGrey6,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            gradientColor: palette.o2BluePrimary95,
         },
         borderRadii: {
             avatar: '50%',

@@ -169,4 +169,5 @@ export type Colors = {
     tagBackgroundErrorInverse: string;
     cardContentOverlay: string;
     cardFooterOverlay: string;
+    gradientColor: string;
 };

@@ -235,6 +235,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             tagBackgroundErrorInverse: palette.white,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            gradientColor: palette.black,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -407,6 +408,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             tagBackgroundErrorInverse: palette.darkModeGrey7,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            gradientColor: palette.black,
         },
         borderRadii: {
             avatar: '50%',
