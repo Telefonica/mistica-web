@@ -103,7 +103,7 @@ export const fullWidth = sprinkles({
 });
 
 // See https://css-tricks.com/copy-the-browsers-native-focus-styles/
-const browserDefaultFocusOutline = [
+export const browserDefaultFocusOutline = [
     '5px auto Highlight', // Firefox
     '5px auto -webkit-focus-ring-color', // Chrome / Safari
 ];

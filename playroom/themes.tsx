@@ -3,7 +3,7 @@ import * as themes from '../.storybook/themes';
 import type {ThemeConfig} from '../src/theme';
 
 const common: Partial<ThemeConfig> = {
-    enableTabFocus: true,
+    enableTabFocus: false,
     colorScheme: 'auto',
     dimensions: {
         headerMobileHeight: 0,

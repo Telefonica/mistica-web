@@ -24,6 +24,7 @@ import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
 import {getPlatform} from '../src/utils/platform';
 
+import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
 type Platform = 'android' | 'desktop' | 'ios';
@@ -81,14 +82,20 @@ const getTheme = (
                   },
               }
             : {}),
-        enableTabFocus: true,
+        enableTabFocus: false,
         dimensions: {
             headerMobileHeight: 'mistica',
         },
     };
 };
 
-const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
+const MisticaThemeProvider = ({
+    Story,
+    context,
+}: {
+    Story: Parameters<Decorator>[0];
+    context: Parameters<Decorator>[1];
+}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState(getPlatformByUrl(searchParams));
@@ -139,8 +146,9 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withMisticaThemeProvider = (Story, context) => <MisticaThemeProvider Story={Story} context={context} />;
+const withMisticaThemeProvider: Decorator = (Story, context) => (
+    <MisticaThemeProvider Story={Story} context={context} />
+);
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);
@@ -161,8 +169,7 @@ const Styles = () => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withLayoutDecorator = (Story, context): React.ReactElement => {
+const withLayoutDecorator: Decorator = (Story, context) => {
     const isFullscreen = !!context?.parameters?.fullScreen;
     return (
         <>
