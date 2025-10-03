@@ -9,7 +9,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {BaseTouchable} from './touchable';
-import {Text3, Text2, Text1} from './text';
+import {Text, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
@@ -32,6 +32,7 @@ import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
+import {useTheme} from './hooks';
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
@@ -107,6 +108,7 @@ export const Content = ({
     const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
+    const {textPresets} = useTheme();
 
     return (
         <div className={styles.content} id={labelId}>
@@ -142,8 +144,12 @@ export const Content = ({
                 className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
-                <Text3
-                    regular
+                <Text
+                    mobileSize={textPresets.text3.size.mobile}
+                    desktopSize={textPresets.text3.size.desktop}
+                    mobileLineHeight={textPresets.text3.lineHeight.mobile}
+                    desktopLineHeight={textPresets.text3.lineHeight.desktop}
+                    weight={textPresets.rowTitle.weight} // to be removed in the next major, use
                     color={danger ? vars.colors.textError : vars.colors.textPrimary}
                     truncate={titleLinesMax}
                     hyphens="auto"
@@ -151,7 +157,7 @@ export const Content = ({
                     dataAttributes={{testid: 'title'}}
                 >
                     {title}
-                </Text3>
+                </Text>
                 {headline && (
                     <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
                         <Text1
