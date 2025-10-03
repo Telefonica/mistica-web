@@ -118,8 +118,10 @@ const colors: Colors = {
     // TEXT GLOBAL
     textPrimary: '',
     textPrimaryInverse: '',
+    textPrimaryMedia: '',
     textSecondary: '',
     textSecondaryInverse: '',
+    textSecondaryMedia: '',
     textError: '',
     textErrorInverse: '',
 
@@ -210,14 +212,17 @@ const borderRadii: BorderRadiiConfig = {
     popup: '',
     checkbox: '',
     indicator: '',
+    chip: '',
     sheet: '',
     bar: '',
     avatar: '',
     mediaSmall: '',
+    tag: '',
 };
 
 const textPresets = {
     cardTitle: {weight: ''},
+    rowTitle: {weight: ''},
     button: {weight: ''},
     link: {weight: ''},
     title1: {weight: ''},

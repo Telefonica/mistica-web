@@ -215,7 +215,9 @@ export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselC
                         withControls={false}
                         autoplay
                     />
-                    <Inline space="around">Some content here</Inline>
+                    <Inline space="around">
+                        <Text2 regular>Some content here</Text2>
+                    </Inline>
                     <CarouselContextConsumer>
                         {({
                             goNext,
