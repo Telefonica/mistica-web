@@ -22,6 +22,7 @@ import {
     VIVO_SKIN,
     BLAU_SKIN,
 } from '../src';
+import {Movistar_New as defaultThemeConfig} from './themes';
 
 import type {ThemeConfig} from '../src';
 
@@ -100,9 +101,9 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
     );
 };
 
-type Props = {children: React.ReactNode; theme: ThemeConfig};
+type Props = {children: React.ReactNode; theme?: ThemeConfig};
 
-const FrameComponent = ({children, theme}: Props): React.ReactNode => (
+const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.ReactNode => (
     <React.StrictMode>
         <ThemeOverriderContextProvider>
             {(overridenTheme) => (
