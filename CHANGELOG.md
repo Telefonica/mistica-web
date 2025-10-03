@@ -1,3 +1,11 @@
+# [16.40.0](https://github.com/Telefonica/mistica-web/compare/v16.39.0...v16.40.0) (2025-10-03)
+
+
+### Features
+
+* **Skin:** Movistar new skin ([#1434](https://github.com/Telefonica/mistica-web/issues/1434)) ([0d4ea19](https://github.com/Telefonica/mistica-web/commit/0d4ea1914a8199720c7384c9794b258c64de3b52))
+* **TabFocus:** deprecate theme.enableTabFocus config ([#1437](https://github.com/Telefonica/mistica-web/issues/1437)) ([f9a49d0](https://github.com/Telefonica/mistica-web/commit/f9a49d05930fa0faf722f86976ee6a26c1a6da63))
+
 # [16.39.0](https://github.com/Telefonica/mistica-web/compare/v16.38.0...v16.39.0) (2025-09-19)
 
 
