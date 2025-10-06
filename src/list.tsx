@@ -27,12 +27,12 @@ import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
+import {useTheme} from './hooks';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
-import {useTheme} from './hooks';
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
