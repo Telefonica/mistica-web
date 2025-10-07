@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Box, ResponsiveLayout, Text} from '../..';
-import {kebabCase, camelCase, upperFirst} from 'lodash';
-import iconKeywords from '../../generated/mistica-icons/icons-keywords';
+import {kebabCase, camelCase, upperFirst, sortBy} from 'lodash';
+import iconKeywords, {categories} from '../../generated/mistica-icons/icons-keywords';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
@@ -20,17 +20,24 @@ const misticaIcons = ((requireContext) => {
     });
 })(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
 
+const availableCategories = ['All', ...new Set(sortBy(Object.values(categories).flat()))];
+
 export default {
     title: 'Icons/Catalog',
     argTypes: {
         size: {
-            control: {type: 'range', min: 24, max: 48, step: 4},
+            control: {type: 'range', min: 16, max: 48, step: 4},
+        },
+        category: {
+            control: {type: 'select'},
+            options: availableCategories,
         },
     },
     parameters: {fullScreen: true},
 };
 
 type Args = {
+    category: string;
     filter: string;
     size: number;
     regular: boolean;
@@ -42,6 +49,7 @@ type Args = {
 };
 
 export const Catalog: StoryComponent<Args> = ({
+    category,
     filter,
     size,
     regular,
@@ -73,10 +81,22 @@ export const Catalog: StoryComponent<Args> = ({
             return false;
         }
 
+        const realName = getRealName(name);
+        const iconData = iconKeywords[kebabCase(realName)];
+
+        if (category && category !== 'All') {
+            const iconCategories = iconData?.category || [];
+
+            if (!iconCategories.includes(category)) {
+                return false;
+            }
+        }
+
         if (filter) {
-            const realName = getRealName(name);
-            const keywords = [...(iconKeywords[kebabCase(realName)] || []), realName.toLowerCase()];
-            return keywords.some((key) => key.includes(filter.toLocaleLowerCase()));
+            const keywords = iconData?.keywords || [];
+            const categories = iconData?.category || [];
+            const allSearchableTerms = [...keywords, ...categories, realName.toLowerCase()];
+            return allSearchableTerms.some((key) => key.toLowerCase().includes(filter.toLowerCase()));
         }
 
         return true;
@@ -148,8 +168,9 @@ export const Catalog: StoryComponent<Args> = ({
 };
 
 Catalog.args = {
+    category: 'All',
     filter: '',
-    size: 32,
+    size: 24,
     regular: true,
     light: true,
     filled: true,
