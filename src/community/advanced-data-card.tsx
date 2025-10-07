@@ -403,7 +403,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasExtras && (
-                            <div className={styles.extra} ref={extraRef}>
+                            <div className={styles.extra} ref={extraRef} aria-hidden={isTouchable}>
                                 {extra.map((item, index) => {
                                     return (
                                         <div key={index}>

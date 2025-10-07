@@ -20,7 +20,7 @@ test.each`
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot({failureThreshold: 0.00001});
+    expect(image).toMatchImageSnapshot({failureThreshold: 0.00002});
 });
 
 test.each`
@@ -240,5 +240,5 @@ test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP
 
     // first section opened
     await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
 });

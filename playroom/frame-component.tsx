@@ -2,6 +2,7 @@ import '../css/roboto.css';
 import '../.storybook/css/vivo-font.css';
 import '../.storybook/css/telefonica-font.css';
 import '../.storybook/css/onair-font.css';
+import '../.storybook/css/movistar-font.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {
@@ -16,10 +17,12 @@ import {
     O2_NEW_SKIN,
     TU_SKIN,
     MOVISTAR_SKIN,
+    MOVISTAR_NEW_SKIN,
     ESIMFLAG_SKIN,
     VIVO_SKIN,
     BLAU_SKIN,
 } from '../src';
+import {Movistar_New as defaultThemeConfig} from './themes';
 
 import type {ThemeConfig} from '../src';
 
@@ -54,6 +57,11 @@ const skinToLang: Record<string, string> = {
     [BLAU_SKIN]: 'de-DE',
     [TELEFONICA_SKIN]: 'es-ES',
     [MOVISTAR_SKIN]: 'es-ES',
+    [MOVISTAR_NEW_SKIN]: 'es-ES',
+    [TU_SKIN]: 'es-ES',
+    [O2_SKIN]: 'en-GB',
+    [O2_NEW_SKIN]: 'en-GB',
+    [ESIMFLAG_SKIN]: 'es-ES',
 };
 
 const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
@@ -78,7 +86,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 ? 'body {font-family: "On Air"}'
                 : ''
         }
-
+        ${skinName === MOVISTAR_NEW_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
 
         *[class^='_1fu0koy1'] {
             display: none;
@@ -93,9 +101,9 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
     );
 };
 
-type Props = {children: React.ReactNode; theme: ThemeConfig};
+type Props = {children: React.ReactNode; theme?: ThemeConfig};
 
-const FrameComponent = ({children, theme}: Props): React.ReactNode => (
+const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.ReactNode => (
     <React.StrictMode>
         <ThemeOverriderContextProvider>
             {(overridenTheme) => (

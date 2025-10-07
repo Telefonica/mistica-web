@@ -12,6 +12,7 @@ import {
     mobileFontSize,
 } from './text-field-base.css';
 import {pxToRem} from './utils/css';
+import {browserDefaultFocusOutline} from './text-field-components.css';
 
 const top = createVar();
 const left = createVar();
@@ -75,6 +76,11 @@ const selectContainerBase = style([
                 width: '100%',
             },
         },
+        ':focus': {
+            outline: browserDefaultFocusOutline,
+            border: `1px solid transparent`, // needed for outline to follow border radius in Safari
+            margin: -1, // to avoid layout shift when adding the transparent border
+        },
     },
 ]);
 
@@ -112,6 +118,8 @@ const selectBase = style([
         borderRadius: skinVars.borderRadii.input,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         fontFamily: 'inherit',
         paddingRight: `calc(${iconButtonSize} + ${fieldEndIconGap}px)`,
         paddingLeft: fieldLeftPadding,
