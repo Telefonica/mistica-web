@@ -26,59 +26,21 @@ export const applyAlpha = (color: string, alpha: number): string => {
         if (color.startsWith('var(')) {
             // it's a css variable with rgb components. See skin-contract rawColors
             return `rgba(${color}, ${alpha})`;
-        } else {
+        } else if (color.startsWith('#')) {
             // it's a hex color
             return `rgba(${fromHexToRgb(color).join(',')}, ${alpha})`;
+        } else if (color.startsWith('rgb(')) {
+            // it's an rgb color
+            return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+        } else if (color.startsWith('rgba(')) {
+            // it's already an rgba color
+            return color.replace(/, [\d.]+\)$/, `, ${alpha})`);
+        } else {
+            // it's a different color format (color name, hsl, etc). We try to use css relative color syntax
+            // Note that this won't work in old browsers https://caniuse.com/css-relative-colors
+            return `rgb(from ${color} r g b / ${Math.round(alpha * 100)}%)`;
         }
     } catch (e) {
         return color;
     }
 };
-
-/**
- * Given a color returns the RGB components of the color.
- *
- * Accepts as color:
- * - Hex value: '#ff0000', '#f00'
- * - Color name: 'red'
- * - RGB value: 'rgb(255, 0, 0)', 'rgba(255, 0, 0, 1)' (opacity is ignored)
- *
- * Should work with CSS variables but it won't be reactive
- */
-export const getRGBComponents = (() => {
-    // Cache to avoid multiple DOM manipulations for the same color.
-    // Should we limit the cache size?
-    const cache = new Map();
-
-    return (color: string): [number, number, number] | null => {
-        const cacheKey = color;
-
-        if (cache.has(cacheKey)) {
-            return cache.get(cacheKey);
-        }
-
-        const temp = document.createElement('div');
-        temp.style.display = 'none';
-        temp.style.position = 'absolute';
-        temp.style.color = color;
-        document.body.appendChild(temp);
-
-        const computedColor = getComputedStyle(temp).color;
-        document.body.removeChild(temp);
-
-        const match = computedColor.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-        if (!match) {
-            cache.set(cacheKey, null);
-            return null;
-        }
-
-        const rgb: [number, number, number] = [
-            parseInt(match[1], 10),
-            parseInt(match[2], 10),
-            parseInt(match[3], 10),
-        ];
-
-        cache.set(cacheKey, rgb);
-        return rgb;
-    };
-})();

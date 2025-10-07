@@ -28,7 +28,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
-import {getRGBComponents} from './utils/color';
+import {applyAlpha} from './utils/color';
 
 import type {
     DataAttributes,
@@ -1073,6 +1073,12 @@ const SKIN_OVERLAY_COLORS = [
     skinVars.colors.cardFooterOverlay as string,
 ];
 
+const RGBA_REGEX = /rgba\([^,]+,\s*[^,]+,\s*[^,]+,\s*([^)]+)\)/g;
+
+const replaceRgbaWithColor = (stringWithRgbaColors: string, newColor: string): string => {
+    return stringWithRgbaColors.replace(RGBA_REGEX, (_, alpha) => applyAlpha(newColor, parseFloat(alpha)));
+};
+
 export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
     (
         {
@@ -1204,31 +1210,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         ? skinVars.colors.backgroundAlternative
                         : undefined);
 
-        const [[cardOverlayGradient, footerOverlayColor], setOverlayColors] =
-            React.useState(SKIN_OVERLAY_COLORS);
-
-        /** This effect updates the overlay gradient and footer colors based on the gradientOverlayColor prop. */
-        React.useEffect(() => {
-            if (gradientOverlayColor === 'transparent') {
-                return setOverlayColors(['transparent', 'transparent']);
-            }
-            if (gradientOverlayColor) {
-                const components = getRGBComponents(gradientOverlayColor);
-                if (!components) {
-                    return;
-                }
-                const newRgb = components.join(',');
-                const RE_RGB = /rgba\s*\(\s*\d+\s*,\s*\d+\s*,\s*\d+/g;
-                setOverlayColors([
-                    colorValues.cardContentOverlay.replace(RE_RGB, `rgba(${newRgb}`),
-                    colorValues.cardFooterOverlay.replace(RE_RGB, `rgba(${newRgb}`),
-                ]);
-            } else {
-                // restore default colors
-                setOverlayColors(SKIN_OVERLAY_COLORS);
-            }
-        }, [gradientOverlayColor, colorValues.cardContentOverlay, colorValues.cardFooterOverlay]);
-
         const ariaLabel =
             ariaLabelProp ||
             (ariaLabeledByProp
@@ -1239,6 +1220,22 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                   )
                       .filter(Boolean)
                       .join(' '));
+
+        const calcOverlayBackgrounds = () => {
+            if (gradientOverlayColor === 'transparent') {
+                return ['transparent', 'transparent'];
+            }
+            if (gradientOverlayColor) {
+                return [
+                    replaceRgbaWithColor(colorValues.cardContentOverlay, gradientOverlayColor),
+                    replaceRgbaWithColor(colorValues.cardFooterOverlay, gradientOverlayColor),
+                ];
+            } else {
+                return SKIN_OVERLAY_COLORS;
+            }
+        };
+
+        const [contentOverlayBackground, footerOverlayBackground] = calcOverlayBackgrounds();
 
         return (
             <Container
@@ -1375,7 +1372,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: isAssetConfigA ? undefined : '100%',
-                                background: hasBackgroundImageOrVideo ? cardOverlayGradient : undefined,
+                                background: hasBackgroundImageOrVideo ? contentOverlayBackground : undefined,
                                 // padding overrides for specific cases
                                 paddingTop:
                                     isAssetConfigA && hasBackgroundImageOrVideo
@@ -1465,7 +1462,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
                         isInverseOutside={isInverseOutside}
-                        overlayColor={footerOverlayColor}
+                        overlayColor={footerOverlayBackground}
                     />
                 )}
                 <TopActions
