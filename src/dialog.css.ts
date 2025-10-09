@@ -90,6 +90,7 @@ const dialogContainer = style([
     {
         width: 'calc(100vw - 48px)',
         margin: 'auto',
+        maxHeight: '90vh',
 
         '@media': {
             [mq.desktopOrBigger]: {
