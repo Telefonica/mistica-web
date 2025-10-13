@@ -1436,7 +1436,6 @@ export {default as IconIotSensorTemperatureRegular} from './generated/mistica-ic
 export {default as IconJusticeFilled} from './generated/mistica-icons/icon-justice-filled';
 export {default as IconJusticeLight} from './generated/mistica-icons/icon-justice-light';
 export {default as IconJusticeRegular} from './generated/mistica-icons/icon-justice-regular';
-export {default as IconKebabMenuFilled} from './generated/mistica-icons/icon-kebab-menu-filled';
 export {default as IconKebabMenuLight} from './generated/mistica-icons/icon-kebab-menu-light';
 export {default as IconKebabMenuRegular} from './generated/mistica-icons/icon-kebab-menu-regular';
 export {default as IconKeyboardFilled} from './generated/mistica-icons/icon-keyboard-filled';

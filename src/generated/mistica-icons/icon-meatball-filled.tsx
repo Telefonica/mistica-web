@@ -6,7 +6,6 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -15,26 +14,15 @@ import type {IconProps} from '../../utils/types';
 const IconMeatballFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-    const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M16.745 12.314c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.456 1.037 2.456 2.314s-1.1 2.312-2.459 2.312c-1.36 0-2.456-1.035-2.456-2.312m-7.374 0c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.459 1.035 2.459 2.314 0 1.277-1.1 2.312-2.459 2.312-1.36 0-2.459-1.035-2.459-2.312M4.456 10C3.1 10 2 11.037 2 12.314s1.097 2.312 2.456 2.312c1.36 0 2.459-1.035 2.459-2.312 0-1.28-1.102-2.314-2.459-2.314"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M5 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4M19 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4"
-                />
-            </svg>
-        );
-    }
+
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+            <path
+                fill={fillColor}
+                d="M16.745 12.314c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.456 1.037 2.456 2.314s-1.1 2.312-2.459 2.312c-1.36 0-2.456-1.035-2.456-2.312m-7.374 0c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.459 1.035 2.459 2.314 0 1.277-1.1 2.312-2.459 2.312-1.36 0-2.459-1.035-2.459-2.312M4.456 10C3.1 10 2 11.037 2 12.314s1.097 2.312 2.456 2.312c1.36 0 2.459-1.035 2.459-2.312 0-1.28-1.102-2.314-2.459-2.314"
+            />
+        </svg>
+    );
 };
 
 export default IconMeatballFilled;
