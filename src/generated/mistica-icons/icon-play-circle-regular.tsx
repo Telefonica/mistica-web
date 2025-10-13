@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,34 @@ import type {IconProps} from '../../utils/types';
 const IconPlayCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M9.198 16.31a.484.484 0 0 1-.487-.485V8.143a.484.484 0 0 1 .728-.42l6.653 3.84a.484.484 0 0 1 0 .84l-6.653 3.844a.5.5 0 0 1-.241.064m.485-1.328 5.196-3-5.196-3z"
-            />
-            <path
-                fill={fillColor}
-                d="M11.996 21.831c-3.123 0-5.552-.815-7.218-2.423-1.731-1.667-2.608-4.157-2.608-7.403 0-3.247.877-5.74 2.608-7.41C6.444 2.989 8.876 2.17 11.996 2.17c3.124 0 5.552.815 7.222 2.423 1.733 1.67 2.61 4.162 2.61 7.409s-.88 5.737-2.61 7.406c-1.67 1.608-4.098 2.423-7.222 2.423m0-18.571c-5.798 0-8.74 2.94-8.74 8.745 0 5.798 2.942 8.74 8.74 8.74 5.801 0 8.745-2.942 8.745-8.74 0-5.801-2.944-8.745-8.745-8.745"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.198 16.31a.484.484 0 0 1-.487-.485V8.143a.484.484 0 0 1 .728-.42l6.653 3.84a.484.484 0 0 1 0 .84l-6.653 3.844a.5.5 0 0 1-.241.064m.485-1.328 5.196-3-5.196-3z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M11.996 21.831c-3.123 0-5.552-.815-7.218-2.423-1.731-1.667-2.608-4.157-2.608-7.403 0-3.247.877-5.74 2.608-7.41C6.444 2.989 8.876 2.17 11.996 2.17c3.124 0 5.552.815 7.222 2.423 1.733 1.67 2.61 4.162 2.61 7.409s-.88 5.737-2.61 7.406c-1.67 1.608-4.098 2.423-7.222 2.423m0-18.571c-5.798 0-8.74 2.94-8.74 8.745 0 5.798 2.942 8.74 8.74 8.74 5.801 0 8.745-2.942 8.745-8.74 0-5.801-2.944-8.745-8.745-8.745"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.128 10.65a1.55 1.55 0 0 1 0 2.7l-5.569 3.133a1.55 1.55 0 0 1-2.31-1.351V8.868a1.55 1.55 0 0 1 2.31-1.351zm-.716 1.324q-.001-.006-.02-.018L9.825 8.824q-.019-.01-.024-.008a.1.1 0 0 0-.026.01.1.1 0 0 0-.02.017q-.003.003-.004.025v6.264q.001.022.005.025.005.008.02.018.016.008.025.009.005.002.024-.008l5.569-3.132q.018-.012.019-.018a.1.1 0 0 0 .006-.026.1.1 0 0 0-.006-.026"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.502 0 8.25 8.25 0 0 0 16.502 0"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconPlayCircleRegular;

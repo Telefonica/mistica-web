@@ -16,7 +16,16 @@ const IconDownloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.264 21.488c.179.213.445.336.725.336s.546-.123.728-.336l8.863-9.143q.018-.016.03-.033c.25-.303.3-.726.13-1.079a.96.96 0 0 0-.874-.56h-3.961l.003-6.596a1.903 1.903 0 0 0-1.905-1.905h-6.03c-1.051 0-1.905.854-1.905 1.905v6.596H3.135a.96.96 0 0 0-.871.56 1.01 1.01 0 0 0 .144 1.096l.015.016zm.728-.812-8.62-8.913v-.003h3.816c.535 0 .972-.448.972-.997V4.077c0-.449.364-.816.815-.816h6.03c.452 0 .816.367.816.818l-.003 6.687c0 .549.437.997.972.997h3.843z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -34,7 +43,7 @@ const IconDownloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.264 21.488c.179.213.445.336.725.336s.546-.123.728-.336l8.863-9.143q.018-.016.03-.033c.25-.303.3-.726.13-1.079a.96.96 0 0 0-.874-.56h-3.961l.003-6.596a1.903 1.903 0 0 0-1.905-1.905h-6.03c-1.051 0-1.905.854-1.905 1.905v6.596H3.135a.96.96 0 0 0-.871.56 1.01 1.01 0 0 0 .144 1.096l.015.016zm.728-.812-8.62-8.913v-.003h3.816c.535 0 .972-.448.972-.997V4.077c0-.449.364-.816.815-.816h6.03c.452 0 .816.367.816.818l-.003 6.687c0 .549.437.997.972.997h3.843z"
+                    d="M20 19.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zM12 3.25a.75.75 0 0 1 .75.75v8.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-4 4-.056.052a.7.7 0 0 1-.136.083q-.024.015-.05.026a1 1 0 0 1-.125.038q-.006.004-.013.005l-.021.003a.8.8 0 0 1-.262 0q-.01 0-.017-.003l-.02-.005a1 1 0 0 1-.12-.038q-.033-.016-.066-.035a1 1 0 0 1-.118-.074l-.056-.052-4-4a.75.75 0 1 1 1.06-1.06l2.72 2.72V4a.75.75 0 0 1 .75-.75"
                 />
             </svg>
         );

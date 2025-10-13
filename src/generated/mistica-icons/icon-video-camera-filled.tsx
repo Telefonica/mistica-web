@@ -16,7 +16,16 @@ const IconVideoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.611 6.946a.8.8 0 0 0-.786-.012l-3.642 2.039V7.058a2.33 2.33 0 0 0-2.33-2.33H4.33a2.33 2.33 0 0 0-2.33 2.33v9.882c0 .836.44 1.57 1.1 1.98l.093.055c.335.19.724.295 1.137.295h10.522a2.33 2.33 0 0 0 2.33-2.33v-1.914l3.624 2.029a.8.8 0 0 0 .786.01.8.8 0 0 0 .407-.694v-8.74c0-.28-.15-.542-.392-.685zM6.248 9.582a.605.605 0 1 1 .606-.606c0 .335-.27.606-.606.606"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconVideoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M21.611 6.946a.8.8 0 0 0-.786-.012l-3.642 2.039V7.058a2.33 2.33 0 0 0-2.33-2.33H4.33a2.33 2.33 0 0 0-2.33 2.33v9.882c0 .836.44 1.57 1.1 1.98l.093.055c.335.19.724.295 1.137.295h10.522a2.33 2.33 0 0 0 2.33-2.33v-1.914l3.624 2.029a.8.8 0 0 0 .786.01.8.8 0 0 0 .407-.694v-8.74c0-.28-.15-.542-.392-.685zM6.248 9.582a.605.605 0 1 1 .606-.606c0 .335-.27.606-.606.606"
+                    d="M13 5.5A2.5 2.5 0 0 1 15.5 8v1.19l3.83-1.914.175-.074A1.5 1.5 0 0 1 21.5 8.617v6.765l-.013.19a1.5 1.5 0 0 1-.699 1.085 1.5 1.5 0 0 1-1.459.066L15.5 14.809V16a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 16V8A2.5 2.5 0 0 1 5 5.5z"
                 />
             </svg>
         );

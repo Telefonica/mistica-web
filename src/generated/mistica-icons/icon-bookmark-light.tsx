@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconBookmarkLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M7.141 2.156h9.703c.717 0 1.3.577 1.305 1.28v17.115c0 .493-.277.936-.725 1.154a1.303 1.303 0 0 1-1.37-.132l-3.731-3.672a.464.464 0 0 0-.644.006L7.976 21.54c-.437.336-.961.387-1.41.168a1.28 1.28 0 0 1-.725-1.154V3.439c0-.706.583-1.283 1.3-1.283m9.9 18.799a.44.44 0 0 0 .254-.401h.003V3.442a.45.45 0 0 0-.451-.445H7.144a.45.45 0 0 0-.451.445v17.115c0 .174.092.322.252.4a.45.45 0 0 0 .473-.044l3.664-3.603c.255-.249.591-.372.922-.372.336 0 .666.126.918.372l3.687 3.636c.095.067.274.087.431.009"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.141 2.156h9.703c.717 0 1.3.577 1.305 1.28v17.115c0 .493-.277.936-.725 1.154a1.303 1.303 0 0 1-1.37-.132l-3.731-3.672a.464.464 0 0 0-.644.006L7.976 21.54c-.437.336-.961.387-1.41.168a1.28 1.28 0 0 1-.725-1.154V3.439c0-.706.583-1.283 1.3-1.283m9.9 18.799a.44.44 0 0 0 .254-.401h.003V3.442a.45.45 0 0 0-.451-.445H7.144a.45.45 0 0 0-.451.445v17.115c0 .174.092.322.252.4a.45.45 0 0 0 .473-.044l3.664-3.603c.255-.249.591-.372.922-.372.336 0 .666.126.918.372l3.687 3.636c.095.067.274.087.431.009"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 2.25A4.75 4.75 0 0 1 18.75 7v14a.75.75 0 0 1-1.166.624L12 17.901l-5.584 3.723A.75.75 0 0 1 5.25 21V7A4.75 4.75 0 0 1 10 2.25zm-4 1.5A3.25 3.25 0 0 0 6.75 7v12.599l4.834-3.223.098-.055a.75.75 0 0 1 .734.055l4.834 3.223V7A3.25 3.25 0 0 0 14 3.75z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconBookmarkLight;

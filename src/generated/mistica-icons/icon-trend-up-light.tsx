@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconTrendUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.837 5.442v3.675c0 .23-.193.412-.423.412a.414.414 0 0 1-.423-.406V6.615l-5.972 8.28a.44.44 0 0 1-.515.14l-7.53-3.226-4.028 6.958a.446.446 0 0 1-.582.157.414.414 0 0 1-.16-.563l4.218-7.28a.427.427 0 0 1 .544-.174l7.555 3.238 5.98-8.289h-2.818a.424.424 0 0 1-.423-.414.42.42 0 0 1 .423-.412h3.731c.23 0 .423.18.423.412"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.837 5.442v3.675c0 .23-.193.412-.423.412a.414.414 0 0 1-.423-.406V6.615l-5.972 8.28a.44.44 0 0 1-.515.14l-7.53-3.226-4.028 6.958a.446.446 0 0 1-.582.157.414.414 0 0 1-.16-.563l4.218-7.28a.427.427 0 0 1 .544-.174l7.555 3.238 5.98-8.289h-2.818a.424.424 0 0 1-.423-.414.42.42 0 0 1 .423-.412h3.731c.23 0 .423.18.423.412"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 6.25q.067 0 .13.012.01 0 .018.003.02.005.04.011.05.012.098.03a.75.75 0 0 1 .362.324q.025.04.044.083A.8.8 0 0 1 21.75 7v7a.75.75 0 0 1-1.5 0V8.81l-6.72 6.72a.75.75 0 0 1-1.06 0L9 12.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06l6-6 .056-.052a.75.75 0 0 1 1.004.052L13 13.94l6.19-6.19H14a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTrendUpLight;

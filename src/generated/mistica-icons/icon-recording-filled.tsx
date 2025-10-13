@@ -25,13 +25,19 @@ const IconRecordingFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2m0 15.535A5.54 5.54 0 0 1 6.465 12 5.54 5.54 0 0 1 12 6.465 5.54 5.54 0 0 1 17.535 12 5.54 5.54 0 0 1 12 17.535m0-1.07A4.47 4.47 0 0 0 16.465 12 4.47 4.47 0 0 0 12 7.535 4.47 4.47 0 0 0 7.535 12 4.47 4.47 0 0 0 12 16.465"
                 />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 5a7 7 0 1 1-.002 14A7 7 0 0 1 12 5" />
             </svg>
         );
     }

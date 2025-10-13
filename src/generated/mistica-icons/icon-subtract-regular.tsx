@@ -16,7 +16,16 @@ const IconSubtractRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.001 12.047a.88.88 0 0 1 .828-.924h16.34a.876.876 0 0 1 .003 1.752H3.829A.876.876 0 0 1 3 12.047"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -46,10 +55,7 @@ const IconSubtractRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     } else {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M3.001 12.047a.88.88 0 0 1 .828-.924h16.34a.876.876 0 0 1 .003 1.752H3.829A.876.876 0 0 1 3 12.047"
-                />
+                <path fill={fillColor} d="M19 11.25a.75.75 0 0 1 0 1.5H5a.75.75 0 0 1 0-1.5z" />
             </svg>
         );
     }

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconLightSwitchRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M4 4.47C4 3.107 5.09 2 6.435 2h11.13C18.91 2 20 3.106 20 4.47v15.06c0 1.364-1.09 2.47-2.435 2.47H6.435C5.09 22 4 20.894 4 19.53zm2.435-1.294c-.705 0-1.276.58-1.276 1.295v15.058c0 .715.571 1.294 1.276 1.294h11.13c.705 0 1.276-.579 1.276-1.294V4.471c0-.715-.571-1.295-1.276-1.295zm3.13 6c0-.844.675-1.529 1.508-1.529h1.854c.833 0 1.508.685 1.508 1.53v5.647c0 .844-.675 1.529-1.508 1.529h-1.854a1.52 1.52 0 0 1-1.508-1.53zm1.16 3.412v2.236a.35.35 0 0 0 .348.353h1.854a.35.35 0 0 0 .348-.354v-2.235zm2.55-1.176V9.176a.35.35 0 0 0-.348-.352h-1.854a.35.35 0 0 0-.348.352v2.236z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4 4.47C4 3.107 5.09 2 6.435 2h11.13C18.91 2 20 3.106 20 4.47v15.06c0 1.364-1.09 2.47-2.435 2.47H6.435C5.09 22 4 20.894 4 19.53zm2.435-1.294c-.705 0-1.276.58-1.276 1.295v15.058c0 .715.571 1.294 1.276 1.294h11.13c.705 0 1.276-.579 1.276-1.294V4.471c0-.715-.571-1.295-1.276-1.295zm3.13 6c0-.844.675-1.529 1.508-1.529h1.854c.833 0 1.508.685 1.508 1.53v5.647c0 .844-.675 1.529-1.508 1.529h-1.854a1.52 1.52 0 0 1-1.508-1.53zm1.16 3.412v2.236a.35.35 0 0 0 .348.353h1.854a.35.35 0 0 0 .348-.354v-2.235zm2.55-1.176V9.176a.35.35 0 0 0-.348-.352h-1.854a.35.35 0 0 0-.348.352v2.236z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13 7.25c.966 0 1.75.784 1.75 1.75v6A1.75 1.75 0 0 1 13 16.75h-2A1.75 1.75 0 0 1 9.25 15V9c0-.966.784-1.75 1.75-1.75zm-2.25 5.5V15c0 .138.112.25.25.25h2a.25.25 0 0 0 .25-.25v-2.25zm.25-4a.25.25 0 0 0-.25.25v2.25h2.5V9a.25.25 0 0 0-.25-.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17 2.25A2.75 2.75 0 0 1 19.75 5v14A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V5A2.75 2.75 0 0 1 7 2.25zM7 3.75c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h10c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconLightSwitchRegular;

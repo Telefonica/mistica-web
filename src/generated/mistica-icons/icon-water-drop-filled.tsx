@@ -16,7 +16,16 @@ const IconWaterDropFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.269 2.276a.407.407 0 0 0-.575-.003l-.003.002c-1.358 1.367-6.672 8.247-6.658 12.57.006 2.173.647 3.957 1.852 5.164 1.199 1.2 2.966 1.835 5.106 1.835h.034c4.367-.014 6.963-2.644 6.95-7.042-.009-4.28-5.345-11.157-6.707-12.526"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconWaterDropFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12.269 2.276a.407.407 0 0 0-.575-.003l-.003.002c-1.358 1.367-6.672 8.247-6.658 12.57.006 2.173.647 3.957 1.852 5.164 1.199 1.2 2.966 1.835 5.106 1.835h.034c4.367-.014 6.963-2.644 6.95-7.042-.009-4.28-5.345-11.157-6.707-12.526"
+                    d="M11.5 2.5a.5.5 0 0 1 .416.223l4.875 7.307.013.02c.663 1.109 1.413 2.132 1.618 3.481a6.9 6.9 0 0 1-.543 3.889 6.95 6.95 0 0 1-2.583 2.972 7.05 7.05 0 0 1-7.592 0 6.95 6.95 0 0 1-2.583-2.972 6.9 6.9 0 0 1-.543-3.889c.205-1.349.955-2.372 1.618-3.48l.013-.02 4.875-7.308A.5.5 0 0 1 11.5 2.5"
                 />
             </svg>
         );

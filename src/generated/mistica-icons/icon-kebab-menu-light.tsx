@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconKebabMenuLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12 7.085c-1.278 0-2.315-1.1-2.315-2.459 0-1.36 1.037-2.456 2.314-2.456s2.312 1.1 2.312 2.459c0 1.36-1.035 2.456-2.312 2.456m0 7.374c-1.278 0-2.315-1.1-2.315-2.459 0-1.36 1.035-2.459 2.314-2.459 1.277 0 2.312 1.1 2.312 2.459 0 1.36-1.035 2.459-2.312 2.459m-2.315 4.915c0 1.357 1.037 2.456 2.314 2.456s2.312-1.096 2.312-2.456-1.035-2.459-2.312-2.459c-1.28 0-2.314 1.102-2.314 2.459"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 7.085c-1.278 0-2.315-1.1-2.315-2.459 0-1.36 1.037-2.456 2.314-2.456s2.312 1.1 2.312 2.459c0 1.36-1.035 2.456-2.312 2.456m0 7.374c-1.278 0-2.315-1.1-2.315-2.459 0-1.36 1.035-2.459 2.314-2.459 1.277 0 2.312 1.1 2.312 2.459 0 1.36-1.035 2.459-2.312 2.459m-2.315 4.915c0 1.357 1.037 2.456 2.314 2.456s2.312-1.096 2.312-2.456-1.035-2.459-2.312-2.459c-1.28 0-2.314 1.102-2.314 2.459"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 17a2 2 0 1 1 0 4 2 2 0 0 1 0-4M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconKebabMenuLight;

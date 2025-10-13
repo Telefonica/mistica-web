@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.375 4.685v13.038l-6.228-5.885a.69.69 0 0 0-.97.05.684.684 0 0 0 .027.947l7.385 6.978c.032.03.073.046.11.07.033.024.065.051.104.067q.123.049.257.05h.005a.8.8 0 0 0 .253-.052c.04-.016.073-.044.107-.069.034-.022.075-.036.107-.066l7.252-6.852a.684.684 0 0 0 .03-.968q0-.001-.003-.002a.687.687 0 0 0-.97-.027l-6.095 5.76V4.684a.687.687 0 0 0-1.371 0"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.375 4.685v13.038l-6.228-5.885a.69.69 0 0 0-.97.05.684.684 0 0 0 .027.947l7.385 6.978c.032.03.073.046.11.07.033.024.065.051.104.067q.123.049.257.05h.005a.8.8 0 0 0 .253-.052c.04-.016.073-.044.107-.069.034-.022.075-.036.107-.066l7.252-6.852a.684.684 0 0 0 .03-.968q0-.001-.003-.002a.687.687 0 0 0-.97-.027l-6.095 5.76V4.684a.687.687 0 0 0-1.371 0"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 4.25a.75.75 0 0 1 .75.75v12.19l4.72-4.72a.75.75 0 1 1 1.06 1.06l-6 6-.056.052q-.025.019-.05.034a.75.75 0 0 1-.273.118q-.011.002-.024.003a1 1 0 0 1-.127.013 1 1 0 0 1-.133-.013q-.01 0-.017-.003-.01-.002-.02-.006a1 1 0 0 1-.12-.037q-.033-.016-.066-.035a.7.7 0 0 1-.174-.126l-6-6a.75.75 0 1 1 1.06-1.06l4.72 4.72V5a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineDownRegular;

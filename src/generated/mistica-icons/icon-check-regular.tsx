@@ -16,7 +16,16 @@ const IconCheckRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.016 20a1 1 0 0 1-.77-.353l-5.033-6.065a.916.916 0 0 1 .155-1.322 1.01 1.01 0 0 1 1.379.149L8.99 17.52 19.233 4.377a1.01 1.01 0 0 1 1.373-.19.915.915 0 0 1 .198 1.317L9.807 19.621a.99.99 0 0 1-.77.379z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -48,7 +57,7 @@ const IconCheckRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M9.016 20a1 1 0 0 1-.77-.353l-5.033-6.065a.916.916 0 0 1 .155-1.322 1.01 1.01 0 0 1 1.379.149L8.99 17.52 19.233 4.377a1.01 1.01 0 0 1 1.373-.19.915.915 0 0 1 .198 1.317L9.807 19.621a.99.99 0 0 1-.77.379z"
+                    d="M19.47 6.47a.75.75 0 1 1 1.06 1.06l-10 10a.75.75 0 0 1-1.06 0l-5-5a.75.75 0 1 1 1.06-1.06L10 15.94z"
                 />
             </svg>
         );

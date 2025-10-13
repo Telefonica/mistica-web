@@ -16,7 +16,16 @@ const IconArrowUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.84 11.96q0 .229-.084.44c-.176.435-.602.701-1.106.695l-3.65.003q-.031.015-.056.04l-.02 6.882c.009.616-.145 1.07-.468 1.384-.322.313-.775.459-1.392.442H9.022c-.42.009-1.025-.03-1.445-.437-.42-.406-.479-1.008-.487-1.426l.002-6.72a.5.5 0 0 0-.053-.156l-3.563.005H3.47c-.857-.005-1.148-.414-1.246-.658-.168-.417-.014-.9.42-1.322l8.712-8.658c.084-.087.33-.337.689-.334a.82.82 0 0 1 .594.275l8.703 8.481c.325.3.498.69.498 1.065"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconArrowUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M21.84 11.96q0 .229-.084.44c-.176.435-.602.701-1.106.695l-3.65.003q-.031.015-.056.04l-.02 6.882c.009.616-.145 1.07-.468 1.384-.322.313-.775.459-1.392.442H9.022c-.42.009-1.025-.03-1.445-.437-.42-.406-.479-1.008-.487-1.426l.002-6.72a.5.5 0 0 0-.053-.156l-3.563.005H3.47c-.857-.005-1.148-.414-1.246-.658-.168-.417-.014-.9.42-1.322l8.712-8.658c.084-.087.33-.337.689-.334a.82.82 0 0 1 .594.275l8.703 8.481c.325.3.498.69.498 1.065"
+                    d="M12 2.914c.397 0 .78.159 1.06.44l6.586 6.586a1.5 1.5 0 0 1-.949 2.556l-.111.004H15.5V20a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 8.5 20v-7.5H5.414a1.5 1.5 0 0 1-1.386-.926 1.5 1.5 0 0 1 .325-1.634l6.586-6.586c.281-.281.663-.44 1.06-.44"
                 />
             </svg>
         );

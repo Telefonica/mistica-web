@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconDownloadLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.44 21.576a.698.698 0 0 0 1.08 0l9.131-9.417.017-.017a.76.76 0 0 0 .098-.813.71.71 0 0 0-.644-.417h-4.196c-.09 0-.16-.081-.16-.185l.003-6.885c0-.927-.754-1.68-1.681-1.68h-6.21c-.927 0-1.68.753-1.68 1.68v6.888c0 .1-.074.185-.16.185H2.867a.71.71 0 0 0-.645.414.76.76 0 0 0 .096.813l.016.017zm.413-.381L2.749 11.78a.21.21 0 0 1-.02-.213.15.15 0 0 1 .14-.095h4.169c.397 0 .72-.333.72-.745v-6.88c0-.619.5-1.12 1.12-1.12h6.207c.62 0 1.12.501 1.12 1.12l-.002 6.883c0 .409.322.745.72.745h4.199c.061 0 .117.04.14.095a.21.21 0 0 1-.02.21l-9.126 9.415-.017.017a.15.15 0 0 1-.115.058.16.16 0 0 1-.114-.058z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.44 21.576a.698.698 0 0 0 1.08 0l9.131-9.417.017-.017a.76.76 0 0 0 .098-.813.71.71 0 0 0-.644-.417h-4.196c-.09 0-.16-.081-.16-.185l.003-6.885c0-.927-.754-1.68-1.681-1.68h-6.21c-.927 0-1.68.753-1.68 1.68v6.888c0 .1-.074.185-.16.185H2.867a.71.71 0 0 0-.645.414.76.76 0 0 0 .096.813l.016.017zm.413-.381L2.749 11.78a.21.21 0 0 1-.02-.213.15.15 0 0 1 .14-.095h4.169c.397 0 .72-.333.72-.745v-6.88c0-.619.5-1.12 1.12-1.12h6.207c.62 0 1.12.501 1.12 1.12l-.002 6.883c0 .409.322.745.72.745h4.199c.061 0 .117.04.14.095a.21.21 0 0 1-.02.21l-9.126 9.415-.017.017a.15.15 0 0 1-.115.058.16.16 0 0 1-.114-.058z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 19.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zM12 3.25a.75.75 0 0 1 .75.75v8.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-4 4-.056.052a.7.7 0 0 1-.136.083q-.024.015-.05.026a1 1 0 0 1-.125.038q-.006.004-.013.005l-.021.003a.8.8 0 0 1-.262 0q-.01 0-.017-.003l-.02-.005a1 1 0 0 1-.12-.038q-.033-.016-.066-.035a1 1 0 0 1-.118-.074l-.056-.052-4-4a.75.75 0 1 1 1.06-1.06l2.72 2.72V4a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconDownloadLight;

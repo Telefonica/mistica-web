@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconLightningRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17.697 11.023c.21.053.375.216.434.428a.63.63 0 0 1-.151.6L8.694 21.67a.584.584 0 0 1-.748.078.62.62 0 0 1-.23-.736l2.701-7.05-4.112-1.018a.6.6 0 0 1-.431-.423.63.63 0 0 1 .142-.596l8.916-9.572a.58.58 0 0 1 .754-.09c.24.16.336.474.23.746l-2.72 6.905zm-5.919 2.731-1.893 4.944 6.504-6.74-4.146-1.022a.6.6 0 0 1-.389-.316.63.63 0 0 1-.022-.51l1.815-4.605L7.597 12l3.767.932a.6.6 0 0 1 .39.314.64.64 0 0 1 .024.507"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.697 11.023c.21.053.375.216.434.428a.63.63 0 0 1-.151.6L8.694 21.67a.584.584 0 0 1-.748.078.62.62 0 0 1-.23-.736l2.701-7.05-4.112-1.018a.6.6 0 0 1-.431-.423.63.63 0 0 1 .142-.596l8.916-9.572a.58.58 0 0 1 .754-.09c.24.16.336.474.23.746l-2.72 6.905zm-5.919 2.731-1.893 4.944 6.504-6.74-4.146-1.022a.6.6 0 0 1-.389-.316.63.63 0 0 1-.022-.51l1.815-4.605L7.597 12l3.767.932a.6.6 0 0 1 .39.314.64.64 0 0 1 .024.507"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.394 2.559A.75.75 0 0 1 13.75 3v6.25H19a.75.75 0 0 1 .607 1.192l-8 11A.75.75 0 0 1 10.25 21v-6.25H5a.75.75 0 0 1-.606-1.191zM6.473 13.25H11a.75.75 0 0 1 .75.75v4.694l5.778-7.944H13a.75.75 0 0 1-.75-.75V5.306z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconLightningRegular;

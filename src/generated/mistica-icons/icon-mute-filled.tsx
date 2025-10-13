@@ -16,7 +16,16 @@ const IconMuteFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.448 4.603a.807.807 0 0 1 1.194.713v14.117a.816.816 0 0 1-.803.817.8.8 0 0 1-.413-.115L5.24 16.058H3.045a.8.8 0 0 1-.795-.806V9.5c0-.443.357-.805.795-.805H5.24zM22.616 9.758l-2.582 2.617 2.582 2.617a.556.556 0 0 1 0 .78.533.533 0 0 1-.77 0l-2.583-2.617-2.583 2.617a.533.533 0 0 1-.77 0 .556.556 0 0 1 0-.78l2.583-2.617-2.583-2.617a.556.556 0 0 1 0-.78.54.54 0 0 1 .77 0l2.583 2.616 2.583-2.616a.54.54 0 0 1 .77 0 .556.556 0 0 1 0 .78"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconMuteFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12.448 4.603a.807.807 0 0 1 1.194.713v14.117a.816.816 0 0 1-.803.817.8.8 0 0 1-.413-.115L5.24 16.058H3.045a.8.8 0 0 1-.795-.806V9.5c0-.443.357-.805.795-.805H5.24zM22.616 9.758l-2.582 2.617 2.582 2.617a.556.556 0 0 1 0 .78.533.533 0 0 1-.77 0l-2.583-2.617-2.583 2.617a.533.533 0 0 1-.77 0 .556.556 0 0 1 0-.78l2.583-2.617-2.583-2.617a.556.556 0 0 1 0-.78.54.54 0 0 1 .77 0l2.583 2.616 2.583-2.616a.54.54 0 0 1 .77 0 .556.556 0 0 1 0 .78"
+                    d="M9.875 5.26a1 1 0 0 1 1.625.78v11.92a1 1 0 0 1-1.625.78l-4.05-3.24H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h1.824zM19.47 8.97a.75.75 0 0 1 1.06 1.06L18.56 12l1.97 1.97a.75.75 0 0 1-1.06 1.06l-1.97-1.97-1.97 1.97a.75.75 0 1 1-1.06-1.06L16.44 12l-1.97-1.97a.75.75 0 0 1 1.06-1.06l1.97 1.97z"
                 />
             </svg>
         );

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconRobotVacuumRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12 3.176a8.824 8.824 0 1 0 0 17.648 8.824 8.824 0 0 0 0-17.648M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12m10-6a6 6 0 0 0-6 6 .588.588 0 1 1-1.176 0 7.176 7.176 0 1 1 14.353 0A.588.588 0 0 1 18 12a6 6 0 0 0-6-6m-2.824 5.882a.588.588 0 1 0 0 1.177h5.647a.588.588 0 1 0 0-1.177zm-.588 5.295c0-.325.264-.589.588-.589h5.647a.588.588 0 0 1 0 1.177H9.176a.59.59 0 0 1-.588-.588m-.353-2.942a.588.588 0 0 0 0 1.177h7.53a.588.588 0 0 0 0-1.177z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 3.176a8.824 8.824 0 1 0 0 17.648 8.824 8.824 0 0 0 0-17.648M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12m10-6a6 6 0 0 0-6 6 .588.588 0 1 1-1.176 0 7.176 7.176 0 1 1 14.353 0A.588.588 0 0 1 18 12a6 6 0 0 0-6-6m-2.824 5.882a.588.588 0 1 0 0 1.177h5.647a.588.588 0 1 0 0-1.177zm-.588 5.295c0-.325.264-.589.588-.589h5.647a.588.588 0 0 1 0 1.177H9.176a.59.59 0 0 1-.588-.588m-.353-2.942a.588.588 0 0 0 0 1.177h7.53a.588.588 0 0 0 0-1.177z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2M12 6.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25a9.75 9.75 0 1 1 0 19.5 9.75 9.75 0 0 1 0-19.5m0 1.5a8.25 8.25 0 1 0-.001 16.5A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconRobotVacuumRegular;

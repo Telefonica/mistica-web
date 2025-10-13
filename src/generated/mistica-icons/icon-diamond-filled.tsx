@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconDiamondFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.118 2.155h-5.38L7.37 7.298zm7.143 0H12.87l3.75 5.143zm.76.697-1.594 5.003h4.414zM17.126 8.8h4.613l-8.38 11.852zm-.975 0H7.847l4.15 13.042zm-8.017-.944 3.863-5.305 3.854 5.305zm-5.98 0 2.823-5.01 1.594 5.01zm4.714.944H2.26l8.378 11.855z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.118 2.155h-5.38L7.37 7.298zm7.143 0H12.87l3.75 5.143zm.76.697-1.594 5.003h4.414zM17.126 8.8h4.613l-8.38 11.852zm-.975 0H7.847l4.15 13.042zm-8.017-.944 3.863-5.305 3.854 5.305zm-5.98 0 2.823-5.01 1.594 5.01zm4.714.944H2.26l8.378 11.855z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.333 7.5c.175 0 .339.091.429.241l2.666 4.42a.5.5 0 0 1-.056.592l-7.555 8.395-.016.017a1.127 1.127 0 0 1-1.617-.017l-7.556-8.395a.5.5 0 0 1-.055-.593l2.666-4.419.037-.053a.5.5 0 0 1 .391-.188zm-8.346 2.856a.75.75 0 0 0-1.03.258l-.6 1a.75.75 0 0 0 .089.89l2 2.2a.75.75 0 0 0 1.109-1.009L8.93 11.907l.313-.521a.75.75 0 0 0-.256-1.03M4.47 3.07a.75.75 0 0 1 1.06 0l.7.7a.75.75 0 0 1-1.06 1.06l-.7-.7a.75.75 0 0 1 0-1.06M17.27 3.07a.75.75 0 0 1 1.06 1.06l-.7.7a.75.75 0 0 1-1.06-1.06zM11.4 1.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0V2a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconDiamondFilled;

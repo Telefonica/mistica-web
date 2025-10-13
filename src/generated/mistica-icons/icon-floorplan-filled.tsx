@@ -25,12 +25,21 @@ const IconFloorplanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M16.292 13.113a.716.716 0 0 1 0-1.037.716.716 0 0 1 1.037 0l3.517 3.517a.746.746 0 0 0 .926-.11.716.716 0 0 0 0-1.038l-3.48-3.48v-8.59h-6.85v9.071H8.665a.57.57 0 0 1-.556-.555.57.57 0 0 1 .556-.555h1.666V2.375H2v7.96h2.592a.57.57 0 0 1 .555.556.57.57 0 0 1-.555.555H2V21.63h16.292v-6.517z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11 2.25a.25.25 0 0 1 .25.25v7.75H10a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 .75-.75V2.5a.25.25 0 0 1 .25-.25h3A2.75 2.75 0 0 1 18.75 5v5.69l3.28 3.28a.75.75 0 0 1-1.06 1.06l-2.22-2.22V19A2.75 2.75 0 0 1 16 21.75H5A2.75 2.75 0 0 1 2.25 19v-7a.25.25 0 0 1 .25-.25H6a.75.75 0 0 0 0-1.5H2.5a.25.25 0 0 1-.25-.25V5A2.75 2.75 0 0 1 5 2.25z"
                 />
             </svg>
         );

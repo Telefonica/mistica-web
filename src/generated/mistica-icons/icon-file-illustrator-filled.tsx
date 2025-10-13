@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconFileIllustratorFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M9.177 11.318h-.955l-1.277 3.804h.829l.294-.955h1.235l.317.955h.93zm-.498.95.417 1.269h-.824l.395-1.27zM11.004 11.318h.868v3.804h-.868z"
-            />
-            <path
-                fill={fillColor}
-                d="M21.793 7.912q.047.11.048.238v12.306c0 .75-.644 1.383-1.409 1.383H8.25c-.75 0-1.409-.647-1.409-1.383l.034-2.774h-2.3a2.427 2.427 0 0 1-2.42-2.425v-4.093a2.427 2.427 0 0 1 2.42-2.426h2.266V3.534c0-.726.672-1.384 1.409-1.384h7.415c.232 0 .448.09.616.25l5.297 5.126c.109.109.173.243.215.386m-5.79-4.09v1.765c0 .658.216 1.213.622 1.608.415.4.997.61 1.692.61h1.801zM4.575 16.47h9.846a1.21 1.21 0 0 0 1.207-1.21v-4.093c0-.667-.54-1.21-1.207-1.21H4.575a1.21 1.21 0 0 0-1.207 1.21v4.092c0 .667.54 1.21 1.207 1.21"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.177 11.318h-.955l-1.277 3.804h.829l.294-.955h1.235l.317.955h.93zm-.498.95.417 1.269h-.824l.395-1.27zM11.004 11.318h.868v3.804h-.868z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21.793 7.912q.047.11.048.238v12.306c0 .75-.644 1.383-1.409 1.383H8.25c-.75 0-1.409-.647-1.409-1.383l.034-2.774h-2.3a2.427 2.427 0 0 1-2.42-2.425v-4.093a2.427 2.427 0 0 1 2.42-2.426h2.266V3.534c0-.726.672-1.384 1.409-1.384h7.415c.232 0 .448.09.616.25l5.297 5.126c.109.109.173.243.215.386m-5.79-4.09v1.765c0 .658.216 1.213.622 1.608.415.4.997.61 1.692.61h1.801zM4.575 16.47h9.846a1.21 1.21 0 0 0 1.207-1.21v-4.093c0-.667-.54-1.21-1.207-1.21H4.575a1.21 1.21 0 0 0-1.207 1.21v4.092c0 .667.54 1.21 1.207 1.21"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 14.25A2.75 2.75 0 0 1 18.75 17v4a.75.75 0 0 1-1.5 0v-1.25h-2.5V21a.75.75 0 0 1-1.5 0v-4A2.75 2.75 0 0 1 16 14.25m5 0a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 .75-.75M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6v3.843a.4.4 0 0 1-.08.239c-.3.404-.087.1-.254.32a.266.266 0 0 1-.385.036A4.247 4.247 0 0 0 11.75 17v4.25a.25.25 0 0 1-.25.25H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zM16 15.75A1.25 1.25 0 0 0 14.75 17v1.25h2.5V17A1.25 1.25 0 0 0 16 15.75m2.957-8.5H15a.25.25 0 0 1-.25-.25V3.043z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconFileIllustratorFilled;

@@ -29,7 +29,7 @@ const IconAlarmClockFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconAlarmClockFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 <path
                     fill={fillColor}
                     d="M18.337 19.052a9.23 9.23 0 0 0 2.803-6.642c0-5.084-4.105-9.226-9.143-9.226-5.037 0-9.146 4.142-9.146 9.226a9.25 9.25 0 0 0 2.803 6.642l-1.7 1.714A.723.723 0 0 0 4.463 22c.186 0 .369-.072.508-.212l1.794-1.811a9 9 0 0 0 5.224 1.666 9 9 0 0 0 5.225-1.666l1.794 1.81a.712.712 0 0 0 1.016 0 .723.723 0 0 0 0-1.02zm-5.804-5.921H8.405a.543.543 0 0 1-.54-.545c0-.3.242-.545.54-.545h3.048V6.805c0-.3.243-.544.54-.544s.54.244.54.544z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 5.5a7.5 7.5 0 1 1-.002 15A7.5 7.5 0 0 1 12 5.5m0 3.75a.75.75 0 0 0-.75.75v3c0 .414.336.75.75.75h2a.75.75 0 0 0 0-1.5h-1.25V10a.75.75 0 0 0-.75-.75M6.559 3.394a.75.75 0 0 1 .882 1.212l-2.75 2a.75.75 0 0 1-.882-1.212zM16.394 3.559a.75.75 0 0 1 1.047-.165l2.75 2a.75.75 0 0 1-.882 1.212l-2.75-2a.75.75 0 0 1-.165-1.047"
                 />
             </svg>
         );

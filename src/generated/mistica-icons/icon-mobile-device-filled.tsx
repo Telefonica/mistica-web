@@ -16,7 +16,16 @@ const IconMobileDeviceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.321 2.155c1.11 0 1.91.272 2.454.832.535.549.795 1.353.795 2.46V18.55c0 2.216-1.061 3.291-3.249 3.291H8.682c-2.187 0-3.249-1.075-3.249-3.291V5.446c0-2.185 1.093-3.291 3.25-3.291zm-3.314 17.359c.342 0 .625-.107.821-.306q.287-.3.291-.81c0-.697-.411-1.114-1.109-1.114-.697 0-1.112.417-1.112 1.115q-.001.51.289.81c.193.198.479.305.82.305"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconMobileDeviceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M15.321 2.155c1.11 0 1.91.272 2.454.832.535.549.795 1.353.795 2.46V18.55c0 2.216-1.061 3.291-3.249 3.291H8.682c-2.187 0-3.249-1.075-3.249-3.291V5.446c0-2.185 1.093-3.291 3.25-3.291zm-3.314 17.359c.342 0 .625-.107.821-.306q.287-.3.291-.81c0-.697-.411-1.114-1.109-1.114-.697 0-1.112.417-1.112 1.115q-.001.51.289.81c.193.198.479.305.82.305"
+                    d="M16 2.5A2.5 2.5 0 0 1 18.5 5v14a2.5 2.5 0 0 1-2.5 2.5H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
                 />
             </svg>
         );

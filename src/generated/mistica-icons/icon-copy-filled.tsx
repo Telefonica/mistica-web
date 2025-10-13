@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconCopyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.244 7.757h4.143c.803 0 1.459.656 1.456 1.46v11.165c0 .804-.655 1.46-1.46 1.46H9.222c-.804 0-1.459-.656-1.459-1.46v-4.143h-4.09c-.832 0-1.51-.678-1.51-1.51V3.665c0-.832.678-1.51 1.51-1.51h11.062c.832 0 1.51.678 1.51 1.51zM3.434 3.662v11.064c0 .132.104.236.236.236H14.73a.237.237 0 0 0 .236-.236V3.662a.237.237 0 0 0-.236-.235H3.67a.237.237 0 0 0-.236.235"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.244 7.757h4.143c.803 0 1.459.656 1.456 1.46v11.165c0 .804-.655 1.46-1.46 1.46H9.222c-.804 0-1.459-.656-1.459-1.46v-4.143h-4.09c-.832 0-1.51-.678-1.51-1.51V3.665c0-.832.678-1.51 1.51-1.51h11.062c.832 0 1.51.678 1.51 1.51zM3.434 3.662v11.064c0 .132.104.236.236.236H14.73a.237.237 0 0 0 .236-.236V3.662a.237.237 0 0 0-.236-.235H3.67a.237.237 0 0 0-.236.235"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.333 6.5A3.167 3.167 0 0 1 21.5 9.667v8.666a3.17 3.17 0 0 1-3.167 3.167H9.667A3.17 3.17 0 0 1 6.5 18.333V9.667A3.167 3.167 0 0 1 9.667 6.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M15 2.25q.772-.001 1.344.412c.364.264.615.621.811.974a.75.75 0 1 1-1.31.728c-.146-.262-.27-.406-.382-.488-.097-.07-.229-.126-.463-.126H5c-.686 0-1.25.564-1.25 1.25v9.998l.012.165a1.26 1.26 0 0 0 .622.922.75.75 0 0 1-.743 1.304 2.76 2.76 0 0 1-1.391-2.387V5A2.756 2.756 0 0 1 5 2.25z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCopyFilled;

@@ -16,7 +16,16 @@ const IconCreditCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.84 12.79V9.023q-.001-.026-.01-.049l-.008-.035V6.488c0-.807-.666-1.46-1.484-1.46H3.648c-.82 0-1.487.653-1.487 1.46v2.487l-.005.02q-.005.013-.006.028v3.767q0 .015.006.028l.005.02v4.678c0 .804.667 1.46 1.488 1.46h16.689c.818 0 1.484-.656 1.484-1.46v-4.642l.009-.038q.007-.021.008-.046m-1.27 4.723a.233.233 0 0 1-.232.227s-16.69 0-16.69.003a.23.23 0 0 1-.232-.227v-4.11H20.57zM3.65 6.26h16.686c.129 0 .232.1.232.227v1.918H3.418V6.488c0-.126.106-.23.232-.227m16.918 5.913H3.418V9.639h17.15z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path fill={fillColor} d="M12 14.32H4.676v1.36H12zM15.996 12.336h3.328v3.328h-3.328z" />
@@ -55,9 +64,10 @@ const IconCreditCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     } else {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M10 14.25a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5z" />
                 <path
                     fill={fillColor}
-                    d="M21.84 12.79V9.023q-.001-.026-.01-.049l-.008-.035V6.488c0-.807-.666-1.46-1.484-1.46H3.648c-.82 0-1.487.653-1.487 1.46v2.487l-.005.02q-.005.013-.006.028v3.767q0 .015.006.028l.005.02v4.678c0 .804.667 1.46 1.488 1.46h16.689c.818 0 1.484-.656 1.484-1.46v-4.642l.009-.038q.007-.021.008-.046m-1.27 4.723a.233.233 0 0 1-.232.227s-16.69 0-16.69.003a.23.23 0 0 1-.232-.227v-4.11H20.57zM3.65 6.26h16.686c.129 0 .232.1.232.227v1.918H3.418V6.488c0-.126.106-.23.232-.227m16.918 5.913H3.418V9.639h17.15z"
+                    d="M18 4.25A3.75 3.75 0 0 1 21.75 8v8A3.75 3.75 0 0 1 18 19.75H6A3.75 3.75 0 0 1 2.25 16V8A3.75 3.75 0 0 1 6 4.25zM3.75 16A2.25 2.25 0 0 0 6 18.25h12l.223-.01a2.25 2.25 0 0 0 2.016-2.017L20.25 16V9.75H3.75zM6 5.75A2.25 2.25 0 0 0 3.75 8v.25h16.5V8A2.25 2.25 0 0 0 18 5.75z"
                 />
             </svg>
         );

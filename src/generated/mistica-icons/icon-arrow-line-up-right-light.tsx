@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineUpRightLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m16.867 7.775.039 9.356a.47.47 0 0 0 .732.44.48.48 0 0 0 .201-.47l-.064-10.446a.13.13 0 0 0-.013-.081.4.4 0 0 0-.053-.053.46.46 0 0 0-.253-.253.4.4 0 0 0-.053-.053.3.3 0 0 0-.087-.02L7.064 6.179a.45.45 0 0 0-.355.142.46.46 0 0 0 .326.792h9.169l-9.907 9.907a.47.47 0 0 0-.002.665.47.47 0 0 0 .665-.002z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m16.867 7.775.039 9.356a.47.47 0 0 0 .732.44.48.48 0 0 0 .201-.47l-.064-10.446a.13.13 0 0 0-.013-.081.4.4 0 0 0-.053-.053.46.46 0 0 0-.253-.253.4.4 0 0 0-.053-.053.3.3 0 0 0-.087-.02L7.064 6.179a.45.45 0 0 0-.355.142.46.46 0 0 0 .326.792h9.169l-9.907 9.907a.47.47 0 0 0-.002.665.47.47 0 0 0 .665-.002z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.95 6.3a.75.75 0 0 1 0 1.5H8.86l8.62 8.62a.75.75 0 0 1-1.06 1.06L7.8 8.86v8.09a.75.75 0 1 1-1.5 0v-9.9c0-.08.016-.158.04-.23q.007-.027.015-.052l.004-.01.032-.06a.8.8 0 0 1 .13-.178.8.8 0 0 1 .176-.128q.03-.018.062-.033l.01-.004q.024-.008.05-.015a.8.8 0 0 1 .232-.04z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineUpRightLight;

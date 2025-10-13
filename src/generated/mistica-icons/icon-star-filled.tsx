@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconStarFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.748 21.834c-.353 0-.697-.09-1.005-.26l-3.56-1.953c-.138-.064-.253-.081-.39.008l-3.546 1.944a2.08 2.08 0 0 1-2.216-.128 2.22 2.22 0 0 1-.899-2.19l.664-4.029c.064-.317.011-.392-.18-.591l-2.812-2.857a2.23 2.23 0 0 1-.52-2.291 2.15 2.15 0 0 1 1.714-1.468l3.896-.591c.238-.045.308-.079.457-.381l1.722-3.636a2.11 2.11 0 0 1 1.922-1.238c.826 0 1.563.476 1.924 1.238l1.731 3.655c.14.264.185.323.49.367l3.858.586c.795.12 1.45.683 1.714 1.468.272.8.07 1.689-.521 2.29l-2.712 2.732c-.31.31-.322.339-.271.714l.65 4.031a2.22 2.22 0 0 1-.9 2.19c-.352.253-.775.39-1.21.39"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.748 21.834c-.353 0-.697-.09-1.005-.26l-3.56-1.953c-.138-.064-.253-.081-.39.008l-3.546 1.944a2.08 2.08 0 0 1-2.216-.128 2.22 2.22 0 0 1-.899-2.19l.664-4.029c.064-.317.011-.392-.18-.591l-2.812-2.857a2.23 2.23 0 0 1-.52-2.291 2.15 2.15 0 0 1 1.714-1.468l3.896-.591c.238-.045.308-.079.457-.381l1.722-3.636a2.11 2.11 0 0 1 1.922-1.238c.826 0 1.563.476 1.924 1.238l1.731 3.655c.14.264.185.323.49.367l3.858.586c.795.12 1.45.683 1.714 1.468.272.8.07 1.689-.521 2.29l-2.712 2.732c-.31.31-.322.339-.271.714l.65 4.031a2.22 2.22 0 0 1-.9 2.19c-.352.253-.775.39-1.21.39"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.647 3.597c.55-1.114 2.14-1.114 2.69 0l1.957 3.965c.072.148.214.25.377.274l4.372.633c1.23.178 1.722 1.692.83 2.56l-3.168 3.084a.5.5 0 0 0-.145.443l.747 4.355c.21 1.226-1.077 2.16-2.178 1.58l-3.897-2.054a.5.5 0 0 0-.466 0l-3.912 2.057c-1.1.578-2.387-.356-2.177-1.581l.747-4.357a.5.5 0 0 0-.143-.443l-3.17-3.085c-.89-.868-.399-2.38.832-2.56l4.371-.632a.5.5 0 0 0 .377-.274z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconStarFilled;
