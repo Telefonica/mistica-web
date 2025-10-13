@@ -39,9 +39,7 @@ const IconInvoiceEuroFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    fillRule="evenodd"
                     d="M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6V19a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zm1.601 7.965a3.75 3.75 0 0 0-4.582 1.81 3.8 3.8 0 0 0-.343.975H9a.75.75 0 0 0 0 1.5h.326a3.75 3.75 0 0 0 1.509 2.313 3.75 3.75 0 0 0 3.416.472.75.75 0 0 0-.501-1.414 2.25 2.25 0 0 1-2.871-1.371H12a.75.75 0 0 0 0-1.5h-1.121a2.252 2.252 0 0 1 2.871-1.371.75.75 0 0 0 .501-1.414"
-                    clipRule="evenodd"
                 />
                 <path fill={fillColor} d="M18.957 7.25H15a.25.25 0 0 1-.25-.25V3.043z" />
             </svg>

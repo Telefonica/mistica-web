@@ -30,9 +30,7 @@ const IconDocumentsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    fillRule="evenodd"
                     d="M13.65 2.25a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 16 8.75h4.15a.6.6 0 0 1 .6.6V15A2.75 2.75 0 0 1 18 17.75h-1.25V19A2.75 2.75 0 0 1 14 21.75H7A2.75 2.75 0 0 1 4.25 19V9A2.75 2.75 0 0 1 7 6.25h1.25V5A2.75 2.75 0 0 1 11 2.25zM7 7.75A1.25 1.25 0 0 0 5.75 9v10l.006.124A1.25 1.25 0 0 0 7 20.25h7A1.25 1.25 0 0 0 15.25 19v-1.25H11A2.75 2.75 0 0 1 8.25 15V7.75z"
-                    clipRule="evenodd"
                 />
                 <path fill={fillColor} d="M20.31 7.25H16a.25.25 0 0 1-.25-.25V2.69z" />
             </svg>
