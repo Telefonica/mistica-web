@@ -69,9 +69,9 @@ const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX
                 stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
                 fill={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
                 strokeLinecap="round"
+                strokeWidth="4"
             >
                 <circle
-                    strokeWidth="4"
                     stroke={color ? color : undefined}
                     fill="none"
                     cx="32"
@@ -81,7 +81,6 @@ const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX
                 />
                 <polyline
                     fill="none"
-                    strokeWidth="4"
                     stroke={color ? color : undefined}
                     points="18,32.67 27.33,42 49.33,20.67"
                     {...(!skipAnimation &&
@@ -106,21 +105,20 @@ const IconSuccessDefault = ({size = 48, color, skipAnimation = false}: Props): J
                     vectorEffect="non-scaling-stroke"
                     fill="none"
                     stroke={color ? color : undefined}
-                    strokeWidth="2"
+                    strokeWidth="3"
                     strokeMiterlimit="10"
-                    d="M61.4,32c0,19.5-10,29.4-29.4,29.4C12.5,61.4,2.6,51.5,2.6,32S12.5,2.6,32,2.6S61.4,12.5,61.4,32z"
-                    transform="rotate(90 32 32)"
+                    d="M4.71002 43.3039C3.22557 39.7201 2.46154 35.879 2.46154 32C2.46154 28.121 3.22557 24.2799 4.71002 20.6961C6.19447 17.1124 8.37025 13.8561 11.1132 11.1132C13.8561 8.37026 17.1124 6.19447 20.6961 4.71002C24.2799 3.22558 28.121 2.46154 32 2.46154C35.879 2.46154 39.7201 3.22558 43.3039 4.71002C46.8877 6.19447 50.1439 8.37026 52.8868 11.1132C55.6297 13.8561 57.8055 17.1124 59.29 20.6961C60.7744 24.2799 61.5385 28.121 61.5385 32C61.5385 35.879 60.7744 39.7201 59.29 43.3039C57.8055 46.8877 55.6297 50.1439 52.8868 52.8868C50.1439 55.6297 46.8877 57.8055 43.3039 59.29C39.7201 60.7744 35.879 61.5385 32 61.5385C28.121 61.5385 24.2799 60.7744 20.6961 59.29C17.1124 57.8055 13.8561 55.6297 11.1132 52.8868C8.37025 50.1439 6.19447 46.8877 4.71002 43.3039Z"
                     {...(!skipAnimation && getAnimateDrawLineProps('202', '0.2s', platformOverrides))}
                 />
-                <polyline
+                <path
                     vectorEffect="non-scaling-stroke"
                     fill="none"
                     stroke={color ? color : undefined}
-                    strokeWidth="2"
+                    strokeWidth="3"
                     strokeMiterlimit="10"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    points="20,34.9 27.4,44.3 45.6,21"
+                    d="M18.8718 32L28.7179 41.8462L45.1282 23.7949"
                     {...(!skipAnimation &&
                         mergeProperties(
                             getAnimateDrawLineProps('44', '0.6s', platformOverrides),
