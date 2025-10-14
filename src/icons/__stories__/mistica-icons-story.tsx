@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Box, ResponsiveLayout, Text} from '../..';
 import {kebabCase, camelCase, upperFirst, sortBy} from 'lodash';
-import iconKeywords, {categories} from '../../generated/mistica-icons/icons-keywords';
+import {iconKeywords, iconCategories} from '../../generated/mistica-icons/icons-keywords';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
@@ -20,7 +20,7 @@ const misticaIcons = ((requireContext) => {
     });
 })(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
 
-const availableCategories = ['All', ...new Set(sortBy(Object.values(categories).flat()))];
+const availableCategories = ['All', ...new Set(sortBy(Object.values(iconCategories).flat()))];
 
 export default {
     title: 'Icons/Catalog',
@@ -82,19 +82,20 @@ export const Catalog: StoryComponent<Args> = ({
         }
 
         const realName = getRealName(name);
-        const iconData = iconKeywords[kebabCase(realName)];
+        const iconKeywordsData = iconKeywords[kebabCase(realName)];
+        const iconCategoriesData = iconCategories[kebabCase(realName)];
 
         if (category && category !== 'All') {
-            const iconCategories = iconData?.category || [];
+            const categories = iconCategoriesData || [];
 
-            if (!iconCategories.includes(category)) {
+            if (!categories.includes(category)) {
                 return false;
             }
         }
 
         if (filter) {
-            const keywords = iconData?.keywords || [];
-            const categories = iconData?.category || [];
+            const keywords = iconKeywordsData || [];
+            const categories = iconCategoriesData || [];
             const allSearchableTerms = [...keywords, ...categories, realName.toLowerCase()];
             return allSearchableTerms.some((key) => key.toLowerCase().includes(filter.toLowerCase()));
         }
