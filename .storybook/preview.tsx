@@ -2,11 +2,13 @@ import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
 import './css/onair-font.css';
+import './css/movistar-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
     ThemeContextProvider,
     MOVISTAR_SKIN,
+    MOVISTAR_NEW_SKIN,
     VIVO_SKIN,
     VIVO_NEW_SKIN,
     O2_SKIN,
@@ -22,6 +24,7 @@ import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
 import {getPlatform} from '../src/utils/platform';
 
+import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
 type Platform = 'android' | 'desktop' | 'ios';
@@ -30,6 +33,7 @@ const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
     return [
         MOVISTAR_SKIN,
+        MOVISTAR_NEW_SKIN,
         O2_SKIN,
         O2_NEW_SKIN,
         VIVO_SKIN,
@@ -78,14 +82,20 @@ const getTheme = (
                   },
               }
             : {}),
-        enableTabFocus: true,
+        enableTabFocus: false,
         dimensions: {
             headerMobileHeight: 'mistica',
         },
     };
 };
 
-const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
+const MisticaThemeProvider = ({
+    Story,
+    context,
+}: {
+    Story: Parameters<Decorator>[0];
+    context: Parameters<Decorator>[1];
+}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState(getPlatformByUrl(searchParams));
@@ -123,10 +133,11 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                         {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
                             <style>{`body {font-family: "Telefonica Sans"}`}</style>
                         )}
-                        {(skin === O2_SKIN ||
+                        {(skin === MOVISTAR_SKIN ||
+                            skin === O2_SKIN ||
                             skin === O2_NEW_SKIN ||
-                            skin === MOVISTAR_SKIN ||
                             skin === ESIMFLAG_SKIN) && <style>{`body {font-family: "On Air"}`}</style>}
+                        {skin === MOVISTAR_NEW_SKIN && <style>{`body {font-family: "Movistar Sans"}`}</style>}
                         <Story {...context} />
                     </OverscrollColorProvider>
                 </ThemeContextProvider>
@@ -135,8 +146,9 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withMisticaThemeProvider = (Story, context) => <MisticaThemeProvider Story={Story} context={context} />;
+const withMisticaThemeProvider: Decorator = (Story, context) => (
+    <MisticaThemeProvider Story={Story} context={context} />
+);
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);
@@ -157,8 +169,7 @@ const Styles = () => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withLayoutDecorator = (Story, context): React.ReactElement => {
+const withLayoutDecorator: Decorator = (Story, context) => {
     const isFullscreen = !!context?.parameters?.fullScreen;
     return (
         <>

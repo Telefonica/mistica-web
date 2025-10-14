@@ -1,3 +1,23 @@
+# [16.41.0](https://github.com/Telefonica/mistica-web/compare/v16.40.0...v16.41.0) (2025-10-07)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** wrong voiceover behavior in touchable cards with extra  ([#1441](https://github.com/Telefonica/mistica-web/issues/1441)) ([03ef774](https://github.com/Telefonica/mistica-web/commit/03ef7742af302063495233ebe55d04d84a939cdf))
+
+
+### Features
+
+* **Lists, Accordion:** use rowListTitle weight token ([#1440](https://github.com/Telefonica/mistica-web/issues/1440)) ([e0966a5](https://github.com/Telefonica/mistica-web/commit/e0966a57b0d20bccce81953b16eb4bcf34fbb1b7))
+
+# [16.40.0](https://github.com/Telefonica/mistica-web/compare/v16.39.0...v16.40.0) (2025-10-03)
+
+
+### Features
+
+* **Skin:** Movistar new skin ([#1434](https://github.com/Telefonica/mistica-web/issues/1434)) ([0d4ea19](https://github.com/Telefonica/mistica-web/commit/0d4ea1914a8199720c7384c9794b258c64de3b52))
+* **TabFocus:** deprecate theme.enableTabFocus config ([#1437](https://github.com/Telefonica/mistica-web/issues/1437)) ([f9a49d0](https://github.com/Telefonica/mistica-web/commit/f9a49d05930fa0faf722f86976ee6a26c1a6da63))
+
 # [16.39.0](https://github.com/Telefonica/mistica-web/compare/v16.38.0...v16.39.0) (2025-09-19)
 
 

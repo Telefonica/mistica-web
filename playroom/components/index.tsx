@@ -8,7 +8,7 @@ import {
     Tabs,
     ThemeContextProvider,
     skinVars,
-    MovistarLogo,
+    MovistarNewLogo,
     VivoLogo,
     TelefonicaLogo,
     BlauLogo,
@@ -22,7 +22,7 @@ import {
     O2NewLogo,
     EsimflagLogo,
 } from '../../src';
-import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New, Esimflag} from '../themes';
+import {Movistar_New, Telefonica, Blau, Vivo_New, Tu, O2_New, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -39,7 +39,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo'>;
+type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar'>;
 
 const themesMap: {
     [skinName in ValidSkinName]: {
@@ -48,10 +48,10 @@ const themesMap: {
         Icon: (props: IconProps) => JSX.Element;
     };
 } = {
-    Movistar: {
+    'Movistar-new': {
         text: 'Movistar',
-        themeConfig: Movistar,
-        Icon: () => <MovistarLogo size={24} />,
+        themeConfig: Movistar_New,
+        Icon: () => <MovistarNewLogo size={24} />,
     },
     'Vivo-new': {
         text: 'Vivo',
