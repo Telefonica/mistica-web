@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_NEW_SKIN} from '../skins/constants';
+import {O2_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
@@ -102,7 +102,7 @@ const IconErrorO2New = ({size = 48}: Props): JSX.Element => {
     );
 };
 
-const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
+const IconErrorVivo = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
@@ -148,6 +148,47 @@ const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
     );
 };
 
+const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
+    const {platformOverrides} = useTheme();
+
+    return (
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+            <g
+                stroke={vars.colors.error}
+                fill="none"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeMiterlimit="10"
+            >
+                <g className={styles.outerAnimation}>
+                    <circle
+                        fill="none"
+                        cx="32"
+                        cy="32"
+                        r="30"
+                        {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
+                    />
+                </g>
+                <g className={styles.innerAnimation}>
+                    <path
+                        d="M32 17.9375V32.9375"
+                        {...getAnimateDrawLineProps('17', '0.7s', platformOverrides)}
+                    />
+                    <circle
+                        stroke={vars.colors.error}
+                        fill={vars.colors.error}
+                        cx="32"
+                        cy="45.1289"
+                        r="1.5"
+                        {...getAnimateFadeInProps('1s', platformOverrides)}
+                    />
+                </g>
+            </g>
+        </svg>
+    );
+};
+
 const IconError = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
 
@@ -156,6 +197,8 @@ const IconError = (props: Props): JSX.Element => {
             return <IconErrorO2 {...props} />;
         case O2_NEW_SKIN:
             return <IconErrorO2New {...props} />;
+        case VIVO_NEW_SKIN:
+            return <IconErrorVivo {...props} />;
         default:
             return <IconErrorDefault {...props} />;
     }
