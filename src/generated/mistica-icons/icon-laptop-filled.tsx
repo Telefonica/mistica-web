@@ -25,12 +25,21 @@ const IconLaptopFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M18.787 5.5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.942c0-.79.64-1.442 1.426-1.442zM2 16.332v-.36h20v.36c0 1.192-.964 2.168-2.143 2.168H4.144C2.964 18.5 2 17.524 2 16.332"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 3.5A2.5 2.5 0 0 1 21.5 6v9c0 .457-.125.883-.339 1.251.88.01 1.589.725 1.589 1.606a2.893 2.893 0 0 1-2.893 2.893H4.143a2.893 2.893 0 0 1-2.893-2.893c0-.88.71-1.596 1.588-1.606A2.5 2.5 0 0 1 2.5 15V6A2.5 2.5 0 0 1 5 3.5zM2.857 17.75a.11.11 0 0 0-.107.107c0 .77.624 1.393 1.393 1.393h15.714c.77 0 1.393-.623 1.393-1.393a.11.11 0 0 0-.107-.107z"
                 />
             </svg>
         );

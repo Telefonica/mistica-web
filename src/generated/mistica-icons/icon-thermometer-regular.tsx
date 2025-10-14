@@ -38,7 +38,7 @@ const IconThermometerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -48,6 +48,15 @@ const IconThermometerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                 <path
                     fill={fillColor}
                     d="M12.546 4.963v11.222a1.835 1.835 0 0 1 1.272 1.744c0 1.036-.801 1.851-1.818 1.851s-1.818-.815-1.818-1.851a1.83 1.83 0 0 1 1.272-1.74V4.963c0-.296.255-.555.546-.555.29 0 .546.26.546.555M11.274 17.93c0 .404.326.74.726.74a.736.736 0 0 0 .726-.74.74.74 0 0 0-.726-.74.74.74 0 0 0-.726.74"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A2.75 2.75 0 0 1 14.75 5v8.092a4.75 4.75 0 0 1 1.838 5.101 4.75 4.75 0 1 1-7.338-5.101V5A2.75 2.75 0 0 1 12 2.25m-1.25 7.5v3.75a.75.75 0 0 1-.375.65 3.252 3.252 0 0 0-.354 5.393 3.25 3.25 0 1 0 3.604-5.394.75.75 0 0 1-.375-.649V9.75zm1.25-6A1.25 1.25 0 0 0 10.75 5v3.25h2.5V5A1.25 1.25 0 0 0 12 3.75"
                 />
             </svg>
         );

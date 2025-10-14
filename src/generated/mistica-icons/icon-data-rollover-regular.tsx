@@ -29,7 +29,7 @@ const IconDataRolloverRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconDataRolloverRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
                 <path
                     fill={fillColor}
                     d="M6.644 11.998c0-2.376 1.927-4.32 4.283-4.32s4.284 1.944 4.284 4.32-1.928 4.32-4.284 4.32-4.283-1.945-4.283-4.32m1.427 0c0 1.585 1.284 2.88 2.856 2.88 1.568 0 2.856-1.295 2.856-2.88s-1.284-2.88-2.856-2.88-2.856 1.295-2.856 2.88"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.389 3.41a9.753 9.753 0 0 1 12.615 3.017 9.75 9.75 0 1 1-17.69 6.657.75.75 0 0 1 1.49-.167 8.25 8.25 0 0 0 8.167 7.333 8.252 8.252 0 0 0 6.802-12.965A8.25 8.25 0 0 0 8.1 4.732a8.25 8.25 0 0 0-3.442 3.519H8a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9V4a.75.75 0 0 1 1.5 0v2.811a9.75 9.75 0 0 1 3.639-3.401"
                 />
             </svg>
         );

@@ -25,13 +25,23 @@ const IconNonBinaryToiletFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M12.6 10.005H5.402c-.44 0-.8-.36-.8-.8s.36-.8.8-.8H12.6c.44 0 .8.36.8.8s-.36.8-.8.8m5.998-7.997H15c-.44 0-.8.36-.8.8v7.997H4.604v.8c0 3.918 3.319 5.318 5.598 5.558V22h9.197V2.807c0-.44-.36-.8-.8-.8"
                 />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 2.5c.826 0 1.5.674 1.5 1.5v17a.5.5 0 0 1-.5.5h-6.5a.5.5 0 0 1-.437-.257l-1.96-3.53-.001-.002-.154-.28c-1.318-.15-2.65-.66-3.62-1.528C5.171 14.877 4.5 13.475 4.5 11.99a.5.5 0 0 1 .5-.5h8.5V4c0-.826.674-1.5 1.5-1.5z"
+                />
+                <path fill={fillColor} d="M11 8.25a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1 0-1.5z" />
             </svg>
         );
     }

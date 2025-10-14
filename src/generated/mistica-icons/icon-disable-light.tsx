@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconDisableLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M1 12.003C1 4.51 5.048 1 11.997 1 18.947 1 23 4.51 23 12.003S18.946 23 11.997 23C5.047 23 1 19.497 1 12.003M11.997 1.917C5.307 1.917 1.917 5.31 1.917 12c0 3.137.755 5.54 2.238 7.215l15.06-15.06c-1.674-1.483-4.078-2.238-7.218-2.238m0 20.166c6.693 0 10.086-3.39 10.086-10.08 0-3.127-.748-5.522-2.22-7.2l-15.06 15.06c1.675 1.472 4.073 2.22 7.194 2.22"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M1 12.003C1 4.51 5.048 1 11.997 1 18.947 1 23 4.51 23 12.003S18.946 23 11.997 23C5.047 23 1 19.497 1 12.003M11.997 1.917C5.307 1.917 1.917 5.31 1.917 12c0 3.137.755 5.54 2.238 7.215l15.06-15.06c-1.674-1.483-4.078-2.238-7.218-2.238m0 20.166c6.693 0 10.086-3.39 10.086-10.08 0-3.127-.748-5.522-2.22-7.2l-15.06 15.06c1.675 1.472 4.073 2.22 7.194 2.22"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25M6.72 18.339A8.26 8.26 0 0 0 12 20.25l.405-.01A8.25 8.25 0 0 0 20.25 12l-.01-.405A8.25 8.25 0 0 0 18.34 6.72zM12 3.75A8.25 8.25 0 0 0 3.75 12l.01.405a8.25 8.25 0 0 0 1.9 4.872L17.277 5.66A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconDisableLight;

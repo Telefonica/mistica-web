@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconShieldFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12.001 21.841a.6.6 0 0 1-.257-.059c-.745-.355-7.286-3.577-7.897-7.128-.473-2.743-.456-9.082-.456-9.35 0-.191.087-.367.235-.485a.61.61 0 0 1 .521-.11c1.602.258 2.448-.316 3.524-1.039 1.061-.711 2.263-1.515 4.328-1.515h.008c2.064.003 3.266.807 4.325 1.518 1.075.723 1.927 1.289 3.552 1.034a.63.63 0 0 1 .501.137.64.64 0 0 1 .23.462c0 .27.017 6.608-.448 9.35-.611 3.552-7.16 6.774-7.905 7.13a.7.7 0 0 1-.26.055"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.001 21.841a.6.6 0 0 1-.257-.059c-.745-.355-7.286-3.577-7.897-7.128-.473-2.743-.456-9.082-.456-9.35 0-.191.087-.367.235-.485a.61.61 0 0 1 .521-.11c1.602.258 2.448-.316 3.524-1.039 1.061-.711 2.263-1.515 4.328-1.515h.008c2.064.003 3.266.807 4.325 1.518 1.075.723 1.927 1.289 3.552 1.034a.63.63 0 0 1 .501.137.64.64 0 0 1 .23.462c0 .27.017 6.608-.448 9.35-.611 3.552-7.16 6.774-7.905 7.13a.7.7 0 0 1-.26.055"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.337 2.767c.42-.206.91-.201 1.327.007.585.294 1.65.827 2.558 1.278.636.315 1.61.682 2.443.974a56 56 0 0 0 1.37.46l.108.035.005.001c.209.066.352.26.352.478v7.39a6.5 6.5 0 0 1-2.999 5.476l-3.696 2.363a1.5 1.5 0 0 1-1.61.004l-3.669-2.319A6.5 6.5 0 0 1 4.5 13.42V6a.5.5 0 0 1 .354-.478l.006-.002.023-.007.088-.028a45 45 0 0 0 1.397-.462c.846-.293 1.813-.658 2.4-.965.864-.454 1.967-.997 2.569-1.291"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconShieldFilled;

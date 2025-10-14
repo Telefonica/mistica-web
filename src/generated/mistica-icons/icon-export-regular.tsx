@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconExportRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M5.497 8.729a.842.842 0 0 0 1.436.59l4.278-4.282v11.05a.845.845 0 0 0 1.689 0V5.037l4.21 4.213.008.008.014.014a.845.845 0 0 0 1.171-1.216l-5.65-5.655a.847.847 0 0 0-1.193 0L5.743 8.129a.86.86 0 0 0-.246.6M21.84 16.91a.844.844 0 0 0-.843-.844.84.84 0 0 0-.84.844v3.243H3.844v-3.243a.845.845 0 0 0-1.69 0v4.086c0 .465.379.844.844.844h18a.844.844 0 0 0 .843-.844z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.497 8.729a.842.842 0 0 0 1.436.59l4.278-4.282v11.05a.845.845 0 0 0 1.689 0V5.037l4.21 4.213.008.008.014.014a.845.845 0 0 0 1.171-1.216l-5.65-5.655a.847.847 0 0 0-1.193 0L5.743 8.129a.86.86 0 0 0-.246.6M21.84 16.91a.844.844 0 0 0-.843-.844.84.84 0 0 0-.84.844v3.243H3.844v-3.243a.845.845 0 0 0-1.69 0v4.086c0 .465.379.844.844.844h18a.844.844 0 0 0 .843-.844z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 16.25a.75.75 0 0 1 .75.75v2A2.75 2.75 0 0 1 18 21.75H6A2.75 2.75 0 0 1 3.25 19v-2a.75.75 0 0 1 1.5 0v2l.006.124A1.25 1.25 0 0 0 6 20.25h12A1.25 1.25 0 0 0 19.25 19v-2a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.025 3.251a.8.8 0 0 1 .232.047q.019.004.038.012.027.013.055.03.036.017.07.039a1 1 0 0 1 .11.09l5 5a.75.75 0 1 1-1.06 1.061l-3.72-3.72V16a.75.75 0 0 1-1.5 0V5.81L7.53 9.53a.75.75 0 1 1-1.06-1.06l5-5 .056-.052q.016-.012.033-.022a.7.7 0 0 1 .26-.122l.06-.014.034-.005A1 1 0 0 1 12 3.25z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconExportRegular;

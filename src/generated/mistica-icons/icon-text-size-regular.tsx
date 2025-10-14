@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconTextSizeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11 10.25a.75.75 0 0 1 0 1.5H8.25V19a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5z"
-            />
-            <path
-                fill={fillColor}
-                d="M21 5.75a.75.75 0 0 1 0 1.5h-4.75V19a.75.75 0 0 1-1.5 0V7.25H10a.75.75 0 0 1 0-1.5z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11 10.25a.75.75 0 0 1 0 1.5H8.25V19a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21 5.75a.75.75 0 0 1 0 1.5h-4.75V19a.75.75 0 0 1-1.5 0V7.25H10a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 4.25a.75.75 0 0 1 0 1.5h-5.25V19a.75.75 0 0 1-1.5 0V5.75H4a.75.75 0 0 1 0-1.5zM21 11.25a.75.75 0 0 1 0 1.5h-2.25V19a.75.75 0 0 1-1.5 0v-6.25H15a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTextSizeRegular;

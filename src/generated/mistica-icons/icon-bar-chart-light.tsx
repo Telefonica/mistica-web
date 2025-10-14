@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconBarChartLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-1.5 2A1.5 1.5 0 0 1 17 2.5h1A1.5 1.5 0 0 1 19.5 4v15a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zM9 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 9.5 8v11a1.5 1.5 0 0 0 1.5 1.5h1a1.5 1.5 0 0 0 1.5-1.5V8A1.5 1.5 0 0 0 12 6.5zM3 12a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 3.5 12v7A1.5 1.5 0 0 0 5 20.5h1A1.5 1.5 0 0 0 7.5 19v-7A1.5 1.5 0 0 0 6 10.5z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-1.5 2A1.5 1.5 0 0 1 17 2.5h1A1.5 1.5 0 0 1 19.5 4v15a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zM9 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 9.5 8v11a1.5 1.5 0 0 0 1.5 1.5h1a1.5 1.5 0 0 0 1.5-1.5V8A1.5 1.5 0 0 0 12 6.5zM3 12a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 3.5 12v7A1.5 1.5 0 0 0 5 20.5h1A1.5 1.5 0 0 0 7.5 19v-7A1.5 1.5 0 0 0 6 10.5z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.5 11.25a2.25 2.25 0 0 1 2.25 2.25v5a2.25 2.25 0 0 1-2.25 2.25h-1a2.25 2.25 0 0 1-2.25-2.25v-5a2.25 2.25 0 0 1 2.25-2.25zm-1 1.5a.75.75 0 0 0-.75.75v5c0 .414.336.75.75.75h1a.75.75 0 0 0 .75-.75v-5a.75.75 0 0 0-.75-.75zM12.5 3.25a2.25 2.25 0 0 1 2.25 2.25v13a2.25 2.25 0 0 1-2.25 2.25h-1a2.25 2.25 0 0 1-2.25-2.25v-13a2.25 2.25 0 0 1 2.25-2.25zm-1 1.5a.75.75 0 0 0-.75.75v13c0 .414.336.75.75.75h1a.75.75 0 0 0 .75-.75v-13a.75.75 0 0 0-.75-.75zM19.5 7.25a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-1a2.25 2.25 0 0 1-2.25-2.25v-9a2.25 2.25 0 0 1 2.25-2.25zm-1 1.5a.75.75 0 0 0-.75.75v9c0 .414.336.75.75.75h1a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconBarChartLight;

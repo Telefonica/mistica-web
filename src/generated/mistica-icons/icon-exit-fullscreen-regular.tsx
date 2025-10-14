@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconExitFullscreenRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M8.366 2.155c.465 0 .843.378.843.843v5.353a.844.844 0 0 1-.843.843H3.013a.845.845 0 0 1 0-1.689H7.52V2.998c0-.465.378-.843.846-.843m.843 13.49a.844.844 0 0 0-.843-.843H3.013a.845.845 0 0 0-.812.812.84.84 0 0 0 .812.874h4.51v4.51a.845.845 0 0 0 1.686 0zm12.614.034a.845.845 0 0 0-.813-.877h-5.353a.84.84 0 0 0-.843.843v5.356a.844.844 0 0 0 1.69 0v-4.51h4.506a.846.846 0 0 0 .813-.812M14.817 8.35c0 .465.378.843.843.843h5.353a.846.846 0 0 0 0-1.689h-4.51V2.998a.845.845 0 0 0-1.686 0z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.366 2.155c.465 0 .843.378.843.843v5.353a.844.844 0 0 1-.843.843H3.013a.845.845 0 0 1 0-1.689H7.52V2.998c0-.465.378-.843.846-.843m.843 13.49a.844.844 0 0 0-.843-.843H3.013a.845.845 0 0 0-.812.812.84.84 0 0 0 .812.874h4.51v4.51a.845.845 0 0 0 1.686 0zm12.614.034a.845.845 0 0 0-.813-.877h-5.353a.84.84 0 0 0-.843.843v5.356a.844.844 0 0 0 1.69 0v-4.51h4.506a.846.846 0 0 0 .813-.812M14.817 8.35c0 .465.378.843.843.843h5.353a.846.846 0 0 0 0-1.689h-4.51V2.998a.845.845 0 0 0-1.686 0z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.5 14.25c.69 0 1.25.56 1.25 1.25V19a.75.75 0 0 1-1.5 0v-3.25H5a.75.75 0 0 1 0-1.5zM19 14.25a.75.75 0 0 1 0 1.5h-3.25V19a.75.75 0 0 1-1.5 0v-3.5c0-.69.56-1.25 1.25-1.25zM9 4.25a.75.75 0 0 1 .75.75v3.5c0 .69-.56 1.25-1.25 1.25H5a.75.75 0 0 1 0-1.5h3.25V5A.75.75 0 0 1 9 4.25M15 4.25a.75.75 0 0 1 .75.75v3.25H19a.75.75 0 0 1 0 1.5h-3.5a1.25 1.25 0 0 1-1.25-1.25V5a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconExitFullscreenRegular;

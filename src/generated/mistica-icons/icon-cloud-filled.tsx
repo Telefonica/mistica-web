@@ -16,7 +16,16 @@ const IconCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.628 18.966H6.208a4.06 4.06 0 0 1-4.053-4.054c0-.904.314-1.77.907-2.504a4.24 4.24 0 0 1 2.045-1.395c.053-1.627.628-3.109 1.633-4.19C7.813 5.666 9.32 5.03 10.978 5.03a6.22 6.22 0 0 1 5.594 3.51h.059a5.22 5.22 0 0 1 5.216 5.216c0 2.876-2.345 5.21-5.219 5.21"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M16.628 18.966H6.208a4.06 4.06 0 0 1-4.053-4.054c0-.904.314-1.77.907-2.504a4.24 4.24 0 0 1 2.045-1.395c.053-1.627.628-3.109 1.633-4.19C7.813 5.666 9.32 5.03 10.978 5.03a6.22 6.22 0 0 1 5.594 3.51h.059a5.22 5.22 0 0 1 5.216 5.216c0 2.876-2.345 5.21-5.219 5.21"
+                    d="M10.187 4.783c2.03-.618 4.279-.212 5.9 1.088 1.46 1.167 2.215 2.9 2.04 4.66h.41c2.191 0 3.963 1.787 3.963 3.986s-1.772 3.987-3.965 3.987H6.657q-.028-.002-.055-.006c-2.805-.029-5.102-2.23-5.102-4.981 0-2.641 2.117-4.775 4.768-4.967.54-1.78 2.016-3.187 3.919-3.767"
                 />
             </svg>
         );

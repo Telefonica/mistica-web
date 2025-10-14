@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,38 @@ import type {IconProps} from '../../utils/types';
 const IconOutletRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.105 9.746a1.026 1.026 0 1 0 0 2.052 1.026 1.026 0 0 0 0-2.052M6.87 10.772a1.026 1.026 0 1 1 2.052 0 1.026 1.026 0 0 1-2.053 0M12 11.798a1.026 1.026 0 1 0 0 2.052 1.026 1.026 0 0 0 0-2.052"
-            />
-            <path
-                fill={fillColor}
-                d="M7.285 18.596h9.43a3.72 3.72 0 0 0 2.858-1.338l2.565-3.079a3.72 3.72 0 0 0 0-4.762l-2.565-3.079A3.72 3.72 0 0 0 16.715 5h-9.43a3.72 3.72 0 0 0-2.858 1.338L1.862 9.417a3.72 3.72 0 0 0 0 4.762l2.565 3.079a3.72 3.72 0 0 0 2.858 1.338m9.43-1.282h-9.43c-.723 0-1.41-.322-1.872-.877l-2.565-3.079a2.44 2.44 0 0 1 0-3.12L5.413 7.16a2.44 2.44 0 0 1 1.872-.877h9.43c.723 0 1.41.32 1.872.877l2.566 3.078a2.44 2.44 0 0 1 0 3.12l-2.566 3.079a2.44 2.44 0 0 1-1.872.877"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.105 9.746a1.026 1.026 0 1 0 0 2.052 1.026 1.026 0 0 0 0-2.052M6.87 10.772a1.026 1.026 0 1 1 2.052 0 1.026 1.026 0 0 1-2.053 0M12 11.798a1.026 1.026 0 1 0 0 2.052 1.026 1.026 0 0 0 0-2.052"
+                />
+                <path
+                    fill={fillColor}
+                    d="M7.285 18.596h9.43a3.72 3.72 0 0 0 2.858-1.338l2.565-3.079a3.72 3.72 0 0 0 0-4.762l-2.565-3.079A3.72 3.72 0 0 0 16.715 5h-9.43a3.72 3.72 0 0 0-2.858 1.338L1.862 9.417a3.72 3.72 0 0 0 0 4.762l2.565 3.079a3.72 3.72 0 0 0 2.858 1.338m9.43-1.282h-9.43c-.723 0-1.41-.322-1.872-.877l-2.565-3.079a2.44 2.44 0 0 1 0-3.12L5.413 7.16a2.44 2.44 0 0 1 1.872-.877h9.43c.723 0 1.41.32 1.872.877l2.566 3.078a2.44 2.44 0 0 1 0 3.12l-2.566 3.079a2.44 2.44 0 0 1-1.872.877"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 5.25a6.75 6.75 0 1 1 0 13.5 6.75 6.75 0 0 1 0-13.5m0 1.5a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M18.75 2.25a3 3 0 0 1 3 3v13.5a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3zm-13.5 1.5a1.5 1.5 0 0 0-1.5 1.5v13.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V5.25a1.5 1.5 0 0 0-1.5-1.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconOutletRegular;

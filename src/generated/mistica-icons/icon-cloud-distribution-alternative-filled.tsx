@@ -29,7 +29,7 @@ const IconCloudDistributionAlternativeFilled = ({color, size = 24, ...rest}: Ico
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconCloudDistributionAlternativeFilled = ({color, size = 24, ...rest}: Ico
                 <path
                     fill={fillColor}
                     d="M16.673 6.224A4.78 4.78 0 0 0 12.01 2.5a4.78 4.78 0 0 0-4.664 3.724c-2.555.148-4.592 2.236-4.592 4.844 0 2.68 2.146 4.844 4.815 4.844h3.147v-1.64a2.81 2.81 0 0 1-1.479-2.46c0-1.526 1.26-2.794 2.777-2.794s2.778 1.268 2.778 2.794c0 1.082-.593 2.012-1.48 2.46v1.64h3.148c2.663 0 4.815-2.16 4.815-4.844a4.865 4.865 0 0 0-4.602-4.844"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.113 2.544c2.107-.641 4.442-.222 6.131 1.132 1.446 1.156 2.234 2.853 2.153 4.605h.14c2.33 0 4.213 1.9 4.213 4.236s-1.882 4.237-4.215 4.237H12.75v.862a2.5 2.5 0 0 1 1.633 1.634H21a.75.75 0 0 1 0 1.5h-6.617A2.5 2.5 0 0 1 12 22.5a2.5 2.5 0 0 1-2.383-1.75H3a.75.75 0 0 1 0-1.5h6.617a2.5 2.5 0 0 1 1.633-1.634v-.862H6.656c-2.958-.005-5.406-2.32-5.406-5.238 0-2.725 2.139-4.926 4.834-5.202.605-1.788 2.113-3.186 4.03-3.77"
                 />
             </svg>
         );

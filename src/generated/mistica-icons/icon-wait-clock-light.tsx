@@ -29,7 +29,7 @@ const IconWaitClockLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,19 @@ const IconWaitClockLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
                 <path
                     fill={fillColor}
                     d="M12.141 11.845V4.827c0-.225-.148-.376-.368-.376s-.368.151-.368.376V12a.33.33 0 0 0 .112.262l3.136 3.208a.4.4 0 0 0 .255.114.38.38 0 0 0 .256-.114.37.37 0 0 0 0-.528zM17.298 20.419a.75.75 0 0 0-.61-.866.75.75 0 0 0-.851.629c-.067.412.206.8.61.865a.75.75 0 0 0 .851-.628"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.934 3.81a8.75 8.75 0 1 1 5.244 16.67c-3.639.934-7.394-.532-9.428-3.536v2.063a.75.75 0 1 1-1.5 0v-4a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5H5.772c1.62 2.713 4.87 4.083 8.033 3.272a7.252 7.252 0 0 0 3-12.45A7.252 7.252 0 0 0 4.81 11.063a.75.75 0 1 1-1.487-.196 8.75 8.75 0 0 1 5.611-7.057"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 7.25a.75.75 0 0 1 .75.75v3.69l2.28 2.28a.75.75 0 1 1-1.06 1.06l-2.5-2.5a.75.75 0 0 1-.22-.53V8a.75.75 0 0 1 .75-.75"
                 />
             </svg>
         );

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconEmergencyCrossFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m20.432 8.731-5.168.003-.003-5.162c0-.737-.574-1.41-1.204-1.41l-4.13-.002c-.63 0-1.204.672-1.204 1.409l.003 5.165-5.162.003c-.751 0-1.41.563-1.41 1.204v4.13c0 .64.66 1.204 1.41 1.204l5.168-.003.003 5.163c0 .75.563 1.408 1.204 1.408h4.129c.641 0 1.204-.658 1.204-1.408l-.002-5.169 5.162-.002c.737 0 1.409-.575 1.409-1.205V9.93c0-.627-.672-1.199-1.409-1.199"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m20.432 8.731-5.168.003-.003-5.162c0-.737-.574-1.41-1.204-1.41l-4.13-.002c-.63 0-1.204.672-1.204 1.409l.003 5.165-5.162.003c-.751 0-1.41.563-1.41 1.204v4.13c0 .64.66 1.204 1.41 1.204l5.168-.003.003 5.163c0 .75.563 1.408 1.204 1.408h4.129c.641 0 1.204-.658 1.204-1.408l-.002-5.169 5.162-.002c.737 0 1.409-.575 1.409-1.205V9.93c0-.627-.672-1.199-1.409-1.199"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.82 3.508A1.5 1.5 0 0 1 15.167 5v3.833H19a1.5 1.5 0 0 1 1.5 1.5v3.334l-.008.153A1.5 1.5 0 0 1 19 15.167h-3.833V19a1.5 1.5 0 0 1-1.347 1.492l-.153.008h-3.334a1.5 1.5 0 0 1-1.5-1.5v-3.833H5a1.5 1.5 0 0 1-1.492-1.347l-.008-.153v-3.334a1.5 1.5 0 0 1 1.5-1.5h3.833V5a1.5 1.5 0 0 1 1.5-1.5h3.334z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconEmergencyCrossFilled;

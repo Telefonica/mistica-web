@@ -16,7 +16,16 @@ const IconTimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.997 2.155c6.22 0 9.848 3.14 9.848 9.848 0 6.707-3.628 9.842-9.848 9.842s-9.842-3.135-9.842-9.842 3.623-9.848 9.842-9.848m0 18.87c5.99 0 9.027-3.035 9.027-9.022 0-5.99-3.037-9.027-9.027-9.027-5.987 0-9.021 3.037-9.021 9.027 0 5.987 3.034 9.021 9.021 9.021m3.323-6.013L12.412 12.1l-.006-3.93a.41.41 0 0 0-.818 0v4.1c0 .11.045.214.12.292l3.032 3.029c.157.154.41.154.569 0a.41.41 0 0 0 .011-.58"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -47,7 +56,11 @@ const IconTimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.997 2.155c6.22 0 9.848 3.14 9.848 9.848 0 6.707-3.628 9.842-9.848 9.842s-9.842-3.135-9.842-9.842 3.623-9.848 9.842-9.848m0 18.87c5.99 0 9.027-3.035 9.027-9.022 0-5.99-3.037-9.027-9.027-9.027-5.987 0-9.021 3.037-9.021 9.027 0 5.987 3.034 9.021 9.021 9.021m3.323-6.013L12.412 12.1l-.006-3.93a.41.41 0 0 0-.818 0v4.1c0 .11.045.214.12.292l3.032 3.029c.157.154.41.154.569 0a.41.41 0 0 0 .011-.58"
+                    d="M12 6.25a.75.75 0 0 1 .75.75v4.25h2.75a.75.75 0 0 1 0 1.5H12a.75.75 0 0 1-.75-.75V7a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25a9.75 9.75 0 1 1 0 19.502A9.75 9.75 0 0 1 12 2.25m0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5"
                 />
             </svg>
         );

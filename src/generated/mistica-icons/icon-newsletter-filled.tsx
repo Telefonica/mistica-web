@@ -29,7 +29,7 @@ const IconNewsletterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconNewsletterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 <path
                     fill={fillColor}
                     d="M5.11 22V9.591h13.793V22zm1.63-2.034h4.358v-4.078H6.741zm4.358-5.187v-4.073H6.741v4.073zm1.268 3.703h4.358a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.555.543.555m4.358-5.187a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.554.543.554z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 3.25A1.75 1.75 0 0 1 16.75 5v.25H19A1.75 1.75 0 0 1 20.75 7v11A2.75 2.75 0 0 1 18 20.75H7A3.75 3.75 0 0 1 3.25 17V5A1.75 1.75 0 0 1 5 3.25zM16.75 18a1.25 1.25 0 0 0 2.5 0V7a.25.25 0 0 0-.25-.25h-2.25zM8 15.25a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5z"
                 />
             </svg>
         );

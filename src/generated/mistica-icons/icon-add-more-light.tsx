@@ -16,7 +16,16 @@ const IconAddMoreLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.403 11.402h-7.802V3.599a.6.6 0 0 0-1.2 0v7.803H3.6a.599.599 0 1 0 0 1.199h7.803v7.8a.6.6 0 0 0 1.199 0v-7.8h7.8a.6.6 0 0 0 .002-1.2"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconAddMoreLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20.403 11.402h-7.802V3.599a.6.6 0 0 0-1.2 0v7.803H3.6a.599.599 0 1 0 0 1.199h7.803v7.8a.6.6 0 0 0 1.199 0v-7.8h7.8a.6.6 0 0 0 .002-1.2"
+                    d="M12 4.25a.75.75 0 0 1 .75.75v6.25H19a.75.75 0 0 1 0 1.5h-6.25V19a.75.75 0 0 1-1.5 0v-6.25H5a.75.75 0 0 1 0-1.5h6.25V5a.75.75 0 0 1 .75-.75"
                 />
             </svg>
         );

@@ -25,12 +25,21 @@ const IconCheckLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M21 6.568c.552 0 1-.463 1-1.034S21.552 4.5 21 4.5s-1 .463-1 1.034.448 1.034 1 1.034M2.15 12.877l6.1 6.623L19.351 7.963c.2-.207.2-.518 0-.724a.47.47 0 0 0-.7 0L8.25 17.945l-5.4-5.792a.47.47 0 0 0-.699 0c-.2.207-.2.517 0 .724"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.47 6.47a.75.75 0 1 1 1.06 1.06l-10 10a.75.75 0 0 1-1.06 0l-5-5a.75.75 0 1 1 1.06-1.06L10 15.94z"
                 />
             </svg>
         );

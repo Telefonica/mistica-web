@@ -37,7 +37,7 @@ const IconNetworkHotspotLight = ({color, size = 24, ...rest}: IconProps): JSX.El
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -56,6 +56,20 @@ const IconNetworkHotspotLight = ({color, size = 24, ...rest}: IconProps): JSX.El
                     fill={fillColor}
                     d="M12 22c-.216 0-.356-.144-.356-.356V12c0-.216.144-.356.356-.356s.356.144.356.356v9.644c0 .212-.14.356-.356.356M19.964 18.428a.716.716 0 1 1-1.432 0 .716.716 0 0 1 1.432 0"
                 />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 3.25a9.751 9.751 0 0 1 6.895 16.645.75.75 0 0 1-1.06-1.061 8.251 8.251 0 1 0-11.669 0 .75.75 0 0 1-1.06 1.06A9.75 9.75 0 0 1 12 3.25"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 7.251a5.75 5.75 0 0 1 4.067 9.815.75.75 0 0 1-1.061-1.06 4.25 4.25 0 1 0-6.012 0 .75.75 0 0 1-1.06 1.06A5.75 5.75 0 0 1 12 7.251"
+                />
+                <path fill={fillColor} d="M12 11.25a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5" />
             </svg>
         );
     }

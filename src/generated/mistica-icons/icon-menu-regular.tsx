@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconMenuRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M2.998 6.256a.834.834 0 0 1-.843-.82c0-.451.378-.821.843-.821h17.997c.465 0 .843.367.843.82a.834.834 0 0 1-.843.821zm18 4.922c.465 0 .843.367.843.82a.83.83 0 0 1-.843.822h-18a.83.83 0 0 1-.843-.821c0-.454.378-.821.843-.821zm.843 7.384a.83.83 0 0 0-.843-.821h-18a.83.83 0 0 0-.843.82c.006.46.384.827.843.822h18a.83.83 0 0 0 .843-.821"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.998 6.256a.834.834 0 0 1-.843-.82c0-.451.378-.821.843-.821h17.997c.465 0 .843.367.843.82a.834.834 0 0 1-.843.821zm18 4.922c.465 0 .843.367.843.82a.83.83 0 0 1-.843.822h-18a.83.83 0 0 1-.843-.821c0-.454.378-.821.843-.821zm.843 7.384a.83.83 0 0 0-.843-.821h-18a.83.83 0 0 0-.843.82c.006.46.384.827.843.822h18a.83.83 0 0 0 .843-.821"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 17.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zM20 11.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zM20 5.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconMenuRegular;

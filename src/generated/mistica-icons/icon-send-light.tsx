@@ -16,7 +16,16 @@ const IconSendLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.5 4.201a.704.704 0 0 1 1.018-.628l15.592 7.755a.707.707 0 0 1 .002 1.26L4.55 20.425a.705.705 0 0 1-1.006-.772l1.584-7.711-1.611-7.59a.6.6 0 0 1-.017-.15m16.296 7.755L4.204 4.204l1.645 7.733-1.616 7.857z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconSendLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M3.5 4.201a.704.704 0 0 1 1.018-.628l15.592 7.755a.707.707 0 0 1 .002 1.26L4.55 20.425a.705.705 0 0 1-1.006-.772l1.584-7.711-1.611-7.59a.6.6 0 0 1-.017-.15m16.296 7.755L4.204 4.204l1.645 7.733-1.616 7.857z"
+                    d="m4.79 3.28.176.054.06.026 16.302 7.966a1 1 0 0 1 .078.044l.014.009a.8.8 0 0 1 .187.184q.01.014.02.027.033.052.059.109.007.016.012.034a.8.8 0 0 1 .051.268.8.8 0 0 1-.05.26q-.006.021-.014.041a1 1 0 0 1-.054.1q-.016.024-.034.047a1 1 0 0 1-.052.061l-.027.03a1 1 0 0 1-.13.1q-.03.017-.06.034L5.028 20.641l-.06.027a1.254 1.254 0 0 1-1.473-.449 1.3 1.3 0 0 1-.17-1.196L5.708 12 3.326 4.978a1.3 1.3 0 0 1-.048-.707l.049-.173a1.3 1.3 0 0 1 .28-.456v.001c.171-.18.39-.306.633-.361l.183-.027q.185-.014.366.026m.116 15.749 12.848-6.278H7.037zm2.13-7.78h10.718L4.906 4.972z"
                 />
             </svg>
         );

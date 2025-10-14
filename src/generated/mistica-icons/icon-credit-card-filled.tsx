@@ -16,7 +16,16 @@ const IconCreditCardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.83 8.98q.009.022.01.048v3.764a.2.2 0 0 1-.01.049l-.008.035v4.642c0 .804-.666 1.46-1.484 1.46H3.648c-.82 0-1.487-.656-1.487-1.46v-4.675q-.001-.01-.005-.02-.005-.013-.006-.028V9.028q0-.015.006-.028l.005-.02V6.493c0-.807.667-1.46 1.488-1.46h16.689c.818 0 1.484.653 1.484 1.46v2.45zM3.65 6.265c-.13 0-.233.1-.233.227V8.41H20.57V6.493a.23.23 0 0 0-.232-.227zm16.689 11.479c.126 0 .23-.101.232-.227V13.41H3.416v4.107c0 .126.104.227.233.227z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconCreditCardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M21.83 8.98q.009.022.01.048v3.764a.2.2 0 0 1-.01.049l-.008.035v4.642c0 .804-.666 1.46-1.484 1.46H3.648c-.82 0-1.487-.656-1.487-1.46v-4.675q-.001-.01-.005-.02-.005-.013-.006-.028V9.028q0-.015.006-.028l.005-.02V6.493c0-.807.667-1.46 1.488-1.46h16.689c.818 0 1.484.653 1.484 1.46v2.45zM3.65 6.265c-.13 0-.233.1-.233.227V8.41H20.57V6.493a.23.23 0 0 0-.232-.227zm16.689 11.479c.126 0 .23-.101.232-.227V13.41H3.416v4.107c0 .126.104.227.233.227z"
+                    d="M21.25 9.75a.25.25 0 0 1 .25.25v6a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 16v-6a.25.25 0 0 1 .25-.25zM7 14.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5zM18 4.5A3.5 3.5 0 0 1 21.5 8a.25.25 0 0 1-.25.25H2.75A.25.25 0 0 1 2.5 8 3.5 3.5 0 0 1 6 4.5z"
                 />
             </svg>
         );

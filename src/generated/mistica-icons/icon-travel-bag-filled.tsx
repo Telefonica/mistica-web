@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconTravelBagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M15.15 6.147h1.375c.647 0 1.213.63 1.213 1.35v12.39c0 .733-.555 1.352-1.213 1.352H15.48c-.081.549-.558.6-.686.602h-.068c-.134-.003-.605-.053-.686-.602H9.984c-.081.549-.557.6-.686.602H9.23c-.135 0-.605-.053-.687-.602h-1.08c-.66 0-1.214-.619-1.214-1.353V7.496c0-.72.569-1.35 1.213-1.35h1.375V3.038c0-.479.415-.882.91-.882h4.491c.485 0 .91.412.91.882zm-6.415 5.445h6.52s0-1.706.004-1.706c0-.6-.348-1.221-.925-1.221H9.66c-.577 0-.924.622-.924 1.221zm6.52 6.011h.004v-4.927H8.735v4.927c0 .698.398 1.221.924 1.221h4.675c.524 0 .922-.523.922-1.22M13.92 6.138V3.374H10.07v2.764z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.15 6.147h1.375c.647 0 1.213.63 1.213 1.35v12.39c0 .733-.555 1.352-1.213 1.352H15.48c-.081.549-.558.6-.686.602h-.068c-.134-.003-.605-.053-.686-.602H9.984c-.081.549-.557.6-.686.602H9.23c-.135 0-.605-.053-.687-.602h-1.08c-.66 0-1.214-.619-1.214-1.353V7.496c0-.72.569-1.35 1.213-1.35h1.375V3.038c0-.479.415-.882.91-.882h4.491c.485 0 .91.412.91.882zm-6.415 5.445h6.52s0-1.706.004-1.706c0-.6-.348-1.221-.925-1.221H9.66c-.577 0-.924.622-.924 1.221zm6.52 6.011h.004v-4.927H8.735v4.927c0 .698.398 1.221.924 1.221h4.675c.524 0 .922-.523.922-1.22M13.92 6.138V3.374H10.07v2.764z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.25 16.75a.25.25 0 0 1 .25.25v1a2.5 2.5 0 0 1-2.5 2.5h-.25v.5a.75.75 0 0 1-1.5 0v-.5h-4.5v.5a.75.75 0 0 1-1.5 0v-.5H8A2.5 2.5 0 0 1 5.5 18v-1a.25.25 0 0 1 .25-.25zM18.25 10.75a.25.25 0 0 1 .25.25v4a.25.25 0 0 1-.25.25H5.75A.25.25 0 0 1 5.5 15v-4a.25.25 0 0 1 .25-.25zM13 2.25A2.75 2.75 0 0 1 15.75 5v.5H16A2.5 2.5 0 0 1 18.5 8v1a.25.25 0 0 1-.25.25H5.75A.25.25 0 0 1 5.5 9V8A2.5 2.5 0 0 1 8 5.5h.25V5A2.75 2.75 0 0 1 11 2.25zm-2 1.5A1.25 1.25 0 0 0 9.75 5v.5h4.5V5a1.25 1.25 0 0 0-1.126-1.244L13 3.75z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTravelBagFilled;

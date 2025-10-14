@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconFlagLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17.167 7.174a.36.36 0 0 0 .002.51l3.168 3.16c.303.386.348.845.152 1.237a1.15 1.15 0 0 1-1.031.636H4.175v8.731c0 .216-.18.39-.395.39a.394.394 0 0 1-.395-.393V3.29c0-.628.515-1.138 1.148-1.138h14.925a1.14 1.14 0 0 1 1.03.636c.197.39.152.857-.117 1.199zm2.29 4.759a.35.35 0 0 0 .323-.2.35.35 0 0 0-.036-.374l-3.138-3.126a1.143 1.143 0 0 1 0-1.611l3.168-3.151c.087-.12.034-.278.003-.337a.35.35 0 0 0-.322-.198H4.531a.357.357 0 0 0-.359.355v8.642z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.167 7.174a.36.36 0 0 0 .002.51l3.168 3.16c.303.386.348.845.152 1.237a1.15 1.15 0 0 1-1.031.636H4.175v8.731c0 .216-.18.39-.395.39a.394.394 0 0 1-.395-.393V3.29c0-.628.515-1.138 1.148-1.138h14.925a1.14 1.14 0 0 1 1.03.636c.197.39.152.857-.117 1.199zm2.29 4.759a.35.35 0 0 0 .323-.2.35.35 0 0 0-.036-.374l-3.138-3.126a1.143 1.143 0 0 1 0-1.611l3.168-3.151c.087-.12.034-.278.003-.337a.35.35 0 0 0-.322-.198H4.531a.357.357 0 0 0-.359.355v8.642z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 4.25a.75.75 0 0 1 .53 1.28L15.56 9.5l3.97 3.97a.75.75 0 0 1-.53 1.28H5.75V21a.75.75 0 0 1-1.5 0V5A.75.75 0 0 1 5 4.25zm-13.25 9h11.44l-3.22-3.22a.75.75 0 0 1 0-1.06l3.22-3.22H5.75z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconFlagLight;

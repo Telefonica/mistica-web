@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconHandLeftFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M9.614 18.159q0-.424.118-.773c-.857-.238-1.367-.942-1.367-1.95q.002-.425.118-.776c-.849-.24-1.353-.941-1.353-1.944q0-.37.09-.683H4.316c-1.333 0-2.162-.818-2.162-2.135 0-1.266.77-2.042 2.118-2.129H11.7c-.577-.339-.98-.644-1.271-1.008a1.93 1.93 0 0 1-.432-1.207c0-.404.132-.801.398-1.132.52-.65 1.409-.81 2.263-.409 1.448.68 3.776 1.826 5.647 2.748 1.165.574 2.174 1.07 2.476 1.21.32.146 1.062.49 1.062 1.272v7.787c0 .983-.308 1.82-.866 2.361-.554.538-1.33.81-2.302.81h-6.997c-1.275-.006-2.065-.785-2.065-2.042"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.614 18.159q0-.424.118-.773c-.857-.238-1.367-.942-1.367-1.95q.002-.425.118-.776c-.849-.24-1.353-.941-1.353-1.944q0-.37.09-.683H4.316c-1.333 0-2.162-.818-2.162-2.135 0-1.266.77-2.042 2.118-2.129H11.7c-.577-.339-.98-.644-1.271-1.008a1.93 1.93 0 0 1-.432-1.207c0-.404.132-.801.398-1.132.52-.65 1.409-.81 2.263-.409 1.448.68 3.776 1.826 5.647 2.748 1.165.574 2.174 1.07 2.476 1.21.32.146 1.062.49 1.062 1.272v7.787c0 .983-.308 1.82-.866 2.361-.554.538-1.33.81-2.302.81h-6.997c-1.275-.006-2.065-.785-2.065-2.042"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.086 3.318a1.76 1.76 0 0 1 1.306.163v.001c3.336 1.878 5.256 2.983 5.744 3.298l.003.002.3.2a6.3 6.3 0 0 1 2.061 2.26h.001a6.3 6.3 0 0 1 .749 2.968V14a6.24 6.24 0 0 1-1.832 4.415A6.22 6.22 0 0 1 15 20.25h-4.5a1.748 1.748 0 0 1-1.236-2.986l.03-.028a1.748 1.748 0 0 1-1.03-2.972q.019-.018.039-.037a1.748 1.748 0 0 1-1.04-2.974l.014-.013H3.5a1.748 1.748 0 1 1 0-3.5h7.897l-1.045-1.045a2.126 2.126 0 0 1-.317-2.582 1.72 1.72 0 0 1 1.05-.795"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconHandLeftFilled;

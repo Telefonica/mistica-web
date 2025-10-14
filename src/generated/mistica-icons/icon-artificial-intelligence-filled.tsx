@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArtificialIntelligenceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m4.332 7.975-.79-1.75-1.75-.79a.5.5 0 0 1 0-.91l1.75-.79.79-1.76a.5.5 0 0 1 .91 0l.79 1.75 1.76.79a.5.5 0 0 1 0 .91l-1.75.79-.79 1.76c-.18.39-.74.39-.92 0M6.539 22.014l-.79-1.75-1.75-.79a.5.5 0 0 1 0-.91l1.75-.79.79-1.76a.5.5 0 0 1 .91 0l.79 1.75 1.76.79a.5.5 0 0 1 0 .91l-1.75.79-.79 1.76c-.18.39-.74.39-.92 0M15.006 6l-1.59 3.5-3.5 1.59c-.78.35-.78 1.46 0 1.82l3.5 1.59 1.59 3.5c.35.78 1.46.78 1.82 0l1.59-3.5 3.5-1.59c.78-.35.78-1.46 0-1.82l-3.5-1.59-1.59-3.5c-.35-.78-1.47-.78-1.82 0"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m4.332 7.975-.79-1.75-1.75-.79a.5.5 0 0 1 0-.91l1.75-.79.79-1.76a.5.5 0 0 1 .91 0l.79 1.75 1.76.79a.5.5 0 0 1 0 .91l-1.75.79-.79 1.76c-.18.39-.74.39-.92 0M6.539 22.014l-.79-1.75-1.75-.79a.5.5 0 0 1 0-.91l1.75-.79.79-1.76a.5.5 0 0 1 .91 0l.79 1.75 1.76.79a.5.5 0 0 1 0 .91l-1.75.79-.79 1.76c-.18.39-.74.39-.92 0M15.006 6l-1.59 3.5-3.5 1.59c-.78.35-.78 1.46 0 1.82l3.5 1.59 1.59 3.5c.35.78 1.46.78 1.82 0l1.59-3.5 3.5-1.59c.78-.35.78-1.46 0-1.82l-3.5-1.59-1.59-3.5c-.35-.78-1.47-.78-1.82 0"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.911 7.944a1 1 0 0 1 1.813 0l1.378 2.956 2.955 1.378a1 1 0 0 1 0 1.813l-2.955 1.379-1.378 2.955a1 1 0 0 1-1.813 0L6.532 15.47l-2.955-1.38a1 1 0 0 1 0-1.812L6.532 10.9zM17.354 4.31a.5.5 0 0 1 .925 0l.624 1.516a.5.5 0 0 0 .273.273l1.516.624a.5.5 0 0 1 0 .925l-1.516.623a.5.5 0 0 0-.273.272l-.624 1.517a.5.5 0 0 1-.925 0l-.623-1.517a.5.5 0 0 0-.272-.272l-1.517-.623a.5.5 0 0 1 0-.925l1.517-.624a.5.5 0 0 0 .272-.273z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArtificialIntelligenceFilled;

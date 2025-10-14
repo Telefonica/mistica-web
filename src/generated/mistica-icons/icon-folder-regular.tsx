@@ -16,7 +16,16 @@ const IconFolderRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.62 20.207h16.76c.806 0 1.461-.656 1.461-1.463V7.46c0-.807-.655-1.462-1.462-1.462h-8.154v-.732c0-.806-.658-1.462-1.465-1.462H3.62c-.81 0-1.465.656-1.465 1.462v13.477c0 .81.658 1.465 1.465 1.465M3.432 5.265c0-.106.082-.187.188-.187h7.14c.107 0 .188.081.188.187v1.37c0 .353.285.639.638.639h8.793c.107 0 .188.081.188.188v11.282a.19.19 0 0 1-.188.188H3.62a.184.184 0 0 1-.188-.187z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconFolderRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M3.62 20.207h16.76c.806 0 1.461-.656 1.461-1.463V7.46c0-.807-.655-1.462-1.462-1.462h-8.154v-.732c0-.806-.658-1.462-1.465-1.462H3.62c-.81 0-1.465.656-1.465 1.462v13.477c0 .81.658 1.465 1.465 1.465M3.432 5.265c0-.106.082-.187.188-.187h7.14c.107 0 .188.081.188.187v1.37c0 .353.285.639.638.639h8.793c.107 0 .188.081.188.188v11.282a.19.19 0 0 1-.188.188H3.62a.184.184 0 0 1-.188-.187z"
+                    d="M9 3.25c.199 0 .39.08.53.22l2.78 2.78H19A2.75 2.75 0 0 1 21.75 9v8A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17V6A2.75 2.75 0 0 1 5 3.25zm-4 1.5A1.25 1.25 0 0 0 3.75 6v11A1.25 1.25 0 0 0 5 18.25h14A1.25 1.25 0 0 0 20.25 17V9A1.25 1.25 0 0 0 19 7.75h-7a.75.75 0 0 1-.53-.22L8.69 4.75z"
                 />
             </svg>
         );

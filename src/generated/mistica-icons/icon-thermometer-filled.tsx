@@ -29,7 +29,7 @@ const IconThermometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconThermometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                 <path
                     fill={fillColor}
                     d="M12.726 17.925c0 .408-.325.74-.726.74a.733.733 0 0 1-.726-.74c0-.409.325-.74.726-.74s.726.331.726.74"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A2.75 2.75 0 0 1 14.75 5v8.092a4.75 4.75 0 1 1-5.5 0V5A2.75 2.75 0 0 1 12 2.25m0 1.5A1.25 1.25 0 0 0 10.75 5v3.25h2.5V5A1.25 1.25 0 0 0 12 3.75"
                 />
             </svg>
         );

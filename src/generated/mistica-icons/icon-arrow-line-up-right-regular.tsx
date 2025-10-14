@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineUpRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m16.53 8.465-.063 8.569c.021.378.342.67.722.65a.684.684 0 0 0 .65-.689l.017-10.16c-.002-.043-.02-.083-.028-.126-.008-.04-.011-.082-.027-.121a.7.7 0 0 0-.147-.218.8.8 0 0 0-.219-.144c-.04-.018-.082-.021-.124-.028-.04-.008-.079-.027-.122-.029l-9.974-.045a.684.684 0 0 0-.705.663q-.001 0 0 .003a.687.687 0 0 0 .667.705h8.383l-9.22 9.22a.687.687 0 0 0 .97.97z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m16.53 8.465-.063 8.569c.021.378.342.67.722.65a.684.684 0 0 0 .65-.689l.017-10.16c-.002-.043-.02-.083-.028-.126-.008-.04-.011-.082-.027-.121a.7.7 0 0 0-.147-.218.8.8 0 0 0-.219-.144c-.04-.018-.082-.021-.124-.028-.04-.008-.079-.027-.122-.029l-9.974-.045a.684.684 0 0 0-.705.663q-.001 0 0 .003a.687.687 0 0 0 .667.705h8.383l-9.22 9.22a.687.687 0 0 0 .97.97z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.7 16.95a.75.75 0 0 1-1.5 0V8.86l-8.62 8.62a.75.75 0 0 1-1.06-1.06l8.62-8.62H7.05a.75.75 0 1 1 0-1.5h9.9q.12.002.231.04.026.007.051.015l.01.004q.031.016.061.033a.8.8 0 0 1 .177.128.7.7 0 0 1 .13.177q.016.03.031.062l.004.01q.009.024.016.05.038.11.039.232z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineUpRightRegular;

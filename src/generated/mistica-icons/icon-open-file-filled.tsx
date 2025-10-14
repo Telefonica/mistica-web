@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconOpenFileFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M19.687 8.677h.807c.742 0 1.347.605 1.35 1.353q0 .059-.011.115l-1.448 7.946a1.353 1.353 0 0 1-1.345 1.289H4.27c-.743 0-1.348-.61-1.348-1.356L2.924 18l.001-.02-.77-11.95v-.025a1.4 1.4 0 0 1 1.414-1.39H9.7c.78 0 1.417.616 1.417 1.376v.4h7.1c.782 0 1.418.616 1.418 1.375l.064.813a.2.2 0 0 1-.005.06zM9.698 5.865H3.57c-.106 0-.176.067-.176.123l.45 6.994.558-3.02a1.35 1.35 0 0 1 1.345-1.288h12.717v-.003l-.065-.86c0-.106-.072-.17-.179-.17h-7.723a.62.62 0 0 1-.619-.625V5.988c0-.06-.072-.123-.179-.123"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.687 8.677h.807c.742 0 1.347.605 1.35 1.353q0 .059-.011.115l-1.448 7.946a1.353 1.353 0 0 1-1.345 1.289H4.27c-.743 0-1.348-.61-1.348-1.356L2.924 18l.001-.02-.77-11.95v-.025a1.4 1.4 0 0 1 1.414-1.39H9.7c.78 0 1.417.616 1.417 1.376v.4h7.1c.782 0 1.418.616 1.418 1.375l.064.813a.2.2 0 0 1-.005.06zM9.698 5.865H3.57c-.106 0-.176.067-.176.123l.45 6.994.558-3.02a1.35 1.35 0 0 1 1.345-1.288h12.717v-.003l-.065-.86c0-.106-.072-.17-.179-.17h-7.723a.62.62 0 0 1-.619-.625V5.988c0-.06-.072-.123-.179-.123"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9 3.5a.5.5 0 0 1 .354.146L12.207 6.5H19A2.5 2.5 0 0 1 21.5 9l-.002.823a1.74 1.74 0 0 1 1.228 1.964l-.003.018-.996 5.21a2.75 2.75 0 0 1-.438 1.044 2.5 2.5 0 0 1-2.263 1.441H5A2.5 2.5 0 0 1 2.5 17V6A2.5 2.5 0 0 1 5 3.5zm-.38 7.762a.25.25 0 0 0-.161.15L6.082 17.75h12.943a1.25 1.25 0 0 0 1.228-1.016l.993-5.197a.25.25 0 0 0-.192-.281L21 11.25H8.693z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconOpenFileFilled;

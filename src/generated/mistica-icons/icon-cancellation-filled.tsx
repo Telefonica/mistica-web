@@ -30,7 +30,7 @@ const IconCancellationFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                 <path fill={fillColor} d="M8.693 2.24 3.78 7.17l4.907.008z" />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -42,6 +42,20 @@ const IconCancellationFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     d="M13.89 8.429a4.643 4.643 0 0 1 4.642-4.643V2H9.766v6.25l-6.233-.007V22h15v-8.929A4.643 4.643 0 0 1 13.89 8.43m1.071 9.464h-7.5a.536.536 0 0 1 0-1.072h7.5a.536.536 0 0 1 0 1.072m0-3.572h-7.5a.536.536 0 1 1 0-1.071h7.5a.536.536 0 1 1 0 1.071"
                 />
                 <path fill={fillColor} d="M8.693 2.24 3.78 7.17l4.907.008z" />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.59 16.348a.75.75 0 0 1 1.061 1.06L20.06 19l1.591 1.592a.75.75 0 0 1-1.06 1.06L19 20.06l-1.59 1.591a.75.75 0 0 1-1.061-1.06l1.59-1.592-1.59-1.59a.75.75 0 0 1 1.06-1.061L19 17.938z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6v5.801a.4.4 0 0 1-.117.284l-.206.206a.25.25 0 0 1-.354 0l-.353-.354a2.25 2.25 0 0 0-3.182 3.182l.355.353a.25.25 0 0 1 0 .354l-.355.354a2.24 2.24 0 0 0-.655 1.676c.006.154-.111.294-.266.294H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5z"
+                />
+                <path fill={fillColor} d="M18.957 7.25H15a.25.25 0 0 1-.25-.25V3.043z" />
             </svg>
         );
     }

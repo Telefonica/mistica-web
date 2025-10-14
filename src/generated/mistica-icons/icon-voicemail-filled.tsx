@@ -29,7 +29,7 @@ const IconVoicemailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconVoicemailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 <path
                     fill={fillColor}
                     d="M18.704 5.392v-.18C18.704 3.428 17.292 2 15.53 2H9.178C7.41 2 6 3.428 6 5.212v.18zM6 18.608v.18C6 20.572 7.411 22 9.174 22h6.352c1.762 0 3.174-1.428 3.174-3.212v-.18zm9.277-8.288c-.526-1.216-1.728-2.072-3.103-2.072-1.834 0-3.352 1.54-3.352 3.396s1.518 3.392 3.352 3.392h6.178c.05 0 .111-.009.172-.018.063-.009.126-.018.18-.018v2.532H6V6.46h12.731v1.824c-.103-.036-.245-.036-.352-.036-1.41 0-2.608.86-3.102 2.072"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 8.5a3.5 3.5 0 0 1 3.5 3.5l-.004.174A3.5 3.5 0 0 1 17 15.5H7a3.5 3.5 0 0 1-3.496-3.328L3.5 12A3.5 3.5 0 0 1 7 8.5l.172.004A3.503 3.503 0 0 1 10.5 12l-.004.172A3.5 3.5 0 0 1 9.871 14h4.258A3.498 3.498 0 0 1 17 8.5"
                 />
             </svg>
         );

@@ -16,7 +16,20 @@ const IconPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.597 11.36h.806a1.327 1.327 0 0 1 1.329 1.33v.805a1.33 1.33 0 0 1-1.33 1.33h-.805a1.327 1.327 0 0 1-1.33-1.33v-.806c0-.734.596-1.329 1.33-1.329"
+                />
+                <path
+                    fill={fillColor}
+                    d="M9.603 5.36a1.64 1.64 0 0 1 1.468-.913h1.69c.597 0 1.146.324 1.434.847l.722 1.313h5.345c.96 0 1.738.779 1.738 1.739v9.461c0 .96-.778 1.739-1.738 1.739H3.331A1.33 1.33 0 0 1 2 18.214V8.346c0-.96.778-1.739 1.738-1.739h5.25zm1.994 4.773a2.556 2.556 0 0 0-2.556 2.556v.806a2.556 2.556 0 0 0 2.556 2.556h.806a2.556 2.556 0 0 0 2.556-2.556v-.806a2.556 2.556 0 0 0-2.556-2.556z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -47,11 +60,7 @@ const IconPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.597 11.36h.806a1.327 1.327 0 0 1 1.329 1.33v.805a1.33 1.33 0 0 1-1.33 1.33h-.805a1.327 1.327 0 0 1-1.33-1.33v-.806c0-.734.596-1.329 1.33-1.329"
-                />
-                <path
-                    fill={fillColor}
-                    d="M9.603 5.36a1.64 1.64 0 0 1 1.468-.913h1.69c.597 0 1.146.324 1.434.847l.722 1.313h5.345c.96 0 1.738.779 1.738 1.739v9.461c0 .96-.778 1.739-1.738 1.739H3.331A1.33 1.33 0 0 1 2 18.214V8.346c0-.96.778-1.739 1.738-1.739h5.25zm1.994 4.773a2.556 2.556 0 0 0-2.556 2.556v.806a2.556 2.556 0 0 0 2.556 2.556h.806a2.556 2.556 0 0 0 2.556-2.556v-.806a2.556 2.556 0 0 0-2.556-2.556z"
+                    d="M13.846 3.5a2.5 2.5 0 0 1 2.165 1.25l1.01 1.75H19A2.5 2.5 0 0 1 21.5 9v9a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 18V9A2.5 2.5 0 0 1 5 6.5h1.71l1.012-1.75A2.5 2.5 0 0 1 9.887 3.5zM12 9.75a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5"
                 />
             </svg>
         );

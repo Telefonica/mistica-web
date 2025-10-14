@@ -16,7 +16,16 @@ const IconClipboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.783 3.586c.854 0 1.602.611 1.602 1.306v15.644c0 .709-.734 1.305-1.602 1.305H6.223c-.869 0-1.603-.6-1.603-1.305V4.889c0-.695.75-1.305 1.602-1.305h2.956c.47-.914 1.442-1.429 2.826-1.429 1.686 0 2.468.709 2.829 1.431zm-3.914.748c-.078-.249-.316-1.003-1.865-1.003-1.672 0-1.924.838-1.958 1.57l-.006.346v.003c.012.266.028.65 1.964.65 1.938 0 1.952-.382 1.96-.61v-.323a2.4 2.4 0 0 0-.095-.633m-3.114.404a.55.55 0 0 0 .551.549H12.7a.553.553 0 0 0 .554-.55.553.553 0 0 0-.555-.548h-1.392a.55.55 0 0 0-.551.549"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,11 @@ const IconClipboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M17.783 3.586c.854 0 1.602.611 1.602 1.306v15.644c0 .709-.734 1.305-1.602 1.305H6.223c-.869 0-1.603-.6-1.603-1.305V4.889c0-.695.75-1.305 1.602-1.305h2.956c.47-.914 1.442-1.429 2.826-1.429 1.686 0 2.468.709 2.829 1.431zm-3.914.748c-.078-.249-.316-1.003-1.865-1.003-1.672 0-1.924.838-1.958 1.57l-.006.346v.003c.012.266.028.65 1.964.65 1.938 0 1.952-.382 1.96-.61v-.323a2.4 2.4 0 0 0-.095-.633m-3.114.404a.55.55 0 0 0 .551.549H12.7a.553.553 0 0 0 .554-.55.553.553 0 0 0-.555-.548h-1.392a.55.55 0 0 0-.551.549"
+                    d="M7.997 4.5c.156 0 .273.142.26.298A2.75 2.75 0 0 0 11 7.75h2.001a2.75 2.75 0 0 0 2.742-2.952c-.012-.156.105-.298.26-.298H17A2.5 2.5 0 0 1 19.5 7v12a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V7A2.5 2.5 0 0 1 7 4.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13.124 3.756a1.25 1.25 0 0 1 0 2.488L13 6.25h-2a1.25 1.25 0 0 1 0-2.5h2z"
                 />
             </svg>
         );

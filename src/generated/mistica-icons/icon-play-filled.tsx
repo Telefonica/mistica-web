@@ -16,7 +16,16 @@ const IconPlayFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.496 21.145A1 1 0 0 1 6 20.277V3.723a1 1 0 0 1 1.496-.868l14.485 8.277a1 1 0 0 1 0 1.736z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconPlayFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M7.496 21.145A1 1 0 0 1 6 20.277V3.723a1 1 0 0 1 1.496-.868l14.485 8.277a1 1 0 0 1 0 1.736z"
+                    d="M7.589 5.586a1 1 0 0 1 1.415-.448l10.5 5.999a1 1 0 0 1 0 1.728l-10.5 6a1 1 0 0 1-1.415-.45.5.5 0 0 1-.089-.284V5.87c0-.109.034-.206.089-.285"
                 />
             </svg>
         );
