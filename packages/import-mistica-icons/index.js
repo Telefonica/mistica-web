@@ -227,15 +227,14 @@ const createAllIconKeywordsSource = () => {
 
     const iconKeywords: {[key: string]: {keywords: Array<string>, category: Array<string>}} = ${JSON.stringify(result)};
 
-    export const keywords: { [key: string]: Array<string> } = Object.fromEntries(
+    export const iconKeywords: { [key: string]: Array<string> } = Object.fromEntries(
     Object.entries(iconKeywords).map(([key, value]) => [key, value.keywords])
     );
 
-    export const categories: { [key: string]: Array<string> } = Object.fromEntries(
+    export const iconCategories: { [key: string]: Array<string> } = Object.fromEntries(
     Object.entries(iconKeywords).map(([key, value]) => [key, value.category])
     );
 
-    export default iconKeywords;
     `;
 
     return format(source);
