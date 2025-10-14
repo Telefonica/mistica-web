@@ -225,14 +225,14 @@ const createAllIconKeywordsSource = () => {
      * To update, execute "yarn start" inside "import-mistica-icons"
      */
 
-    const iconKeywords: {[key: string]: {keywords: Array<string>, category: Array<string>}} = ${JSON.stringify(result)};
+    const iconMetadata: {[key: string]: {keywords: Array<string>, category: Array<string>}} = ${JSON.stringify(result)};
 
     export const iconKeywords: { [key: string]: Array<string> } = Object.fromEntries(
-    Object.entries(iconKeywords).map(([key, value]) => [key, value.keywords])
+    Object.entries(iconMetadata).map(([key, value]) => [key, value.keywords])
     );
 
     export const iconCategories: { [key: string]: Array<string> } = Object.fromEntries(
-    Object.entries(iconKeywords).map(([key, value]) => [key, value.category])
+    Object.entries(iconMetadata).map(([key, value]) => [key, value.category])
     );
 
     `;
