@@ -171,6 +171,13 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     ) => {
         const imageId = React.useId();
         const imageRef = React.useRef<HTMLImageElement>();
+        const borderRadiusStyle = props.circular
+            ? styles.circularBorderRadius
+            : noBorderRadius
+              ? styles.withoutBorderRadius
+              : noBorderRadius === false // explicitly set to false, so we set border radius
+                ? styles.withBorderRadius
+                : styles.defaultBorderRadius; // === undefined, use the default border radius (or the setting set by parent component, like cards or slideshow)
         const [isError, setIsError] = React.useState(!src);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
@@ -185,16 +192,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const hasOnlyHeight = !!props.height && !props.width && ratio === 0 && !props.circular;
         const hasOnlyWidth = !!props.width && !props.height && ratio === 0 && !props.circular;
         const effectiveObjectFit = objectFit ?? (hasOnlyHeight || hasOnlyWidth ? 'contain' : 'cover');
-        const autoNoBorderRadius = hasOnlyWidth || hasOnlyHeight ? true : noBorderRadius;
-        const borderRadiusStyle = props.circular
-            ? styles.circularBorderRadius
-            : noBorderRadius
-              ? styles.withoutBorderRadius
-              : noBorderRadius === false // explicitly set to false, so we set border radius
-                ? styles.withBorderRadius
-                : autoNoBorderRadius
-                  ? styles.withoutBorderRadius
-                  : styles.defaultBorderRadius; // === undefined, use the default border radius (or the setting set by parent component, like cards or slideshow)
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
