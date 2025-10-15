@@ -1,3 +1,10 @@
+## [16.42.1](https://github.com/Telefonica/mistica-web/compare/v16.42.0...v16.42.1) (2025-10-15)
+
+
+### Bug Fixes
+
+* **Dialog:** limit height and show scroll for long content ([#1446](https://github.com/Telefonica/mistica-web/issues/1446)) ([41ced0f](https://github.com/Telefonica/mistica-web/commit/41ced0fdc7ac471c52e446d3582d95209f124492)), closes [#1442](https://github.com/Telefonica/mistica-web/issues/1442)
+
 # [16.42.0](https://github.com/Telefonica/mistica-web/compare/v16.41.0...v16.42.0) (2025-10-14)
 
 
