@@ -16,7 +16,16 @@ const IconFunnelLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 22c-.93 0-1.689-.749-1.689-1.668v-4.9L3.046 2.554A.376.376 0 0 1 3.372 2h17.256a.376.376 0 0 1 .326.555L13.689 15.43v4.9c0 .92-.758 1.669-1.689 1.669m-.984-6.853a.35.35 0 0 1 .048.18v5.005c0 .507.418.924.936.924a.93.93 0 0 0 .936-.924v-5.005a.35.35 0 0 1 .048-.18l7.005-12.408H4.011z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconFunnelLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 22c-.93 0-1.689-.749-1.689-1.668v-4.9L3.046 2.554A.376.376 0 0 1 3.372 2h17.256a.376.376 0 0 1 .326.555L13.689 15.43v4.9c0 .92-.758 1.669-1.689 1.669m-.984-6.853a.35.35 0 0 1 .048.18v5.005c0 .507.418.924.936.924a.93.93 0 0 0 .936-.924v-5.005a.35.35 0 0 1 .048-.18l7.005-12.408H4.011z"
+                    d="M20 3.25a.75.75 0 0 1 .75.75v2.172l-.014.272a2.75 2.75 0 0 1-.792 1.672l-.056.051-5.138 4.188V18.5a.75.75 0 0 1-.486.702l-4 1.5A.75.75 0 0 1 9.25 20v-7.643L4.049 8.155a1 1 0 0 1-.084-.079 2.75 2.75 0 0 1-.715-1.848V4A.75.75 0 0 1 4 3.25zM4.75 6.227l.006.116c.023.253.125.494.29.69l5.426 4.384a.75.75 0 0 1 .278.583v6.917l2.5-.937V12a.75.75 0 0 1 .276-.581l5.373-4.38c.196-.204.317-.465.345-.744l.006-.123V4.75H4.75z"
                 />
             </svg>
         );

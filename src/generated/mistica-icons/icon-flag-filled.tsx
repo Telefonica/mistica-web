@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconFlagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17.178 7.655a.16.16 0 0 1-.006-.227l3.14-3.134c.306-.392.356-.927.135-1.373a1.3 1.3 0 0 0-1.177-.728H4.727a1.31 1.31 0 0 0-1.314 1.305v17.745c0 .317.258.575.577.575.32 0 .577-.258.577-.575V12.9h14.7c.505 0 .956-.28 1.177-.729.224-.45.17-.974-.182-1.425.003 0-3.084-3.09-3.084-3.09"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.178 7.655a.16.16 0 0 1-.006-.227l3.14-3.134c.306-.392.356-.927.135-1.373a1.3 1.3 0 0 0-1.177-.728H4.727a1.31 1.31 0 0 0-1.314 1.305v17.745c0 .317.258.575.577.575.32 0 .577-.258.577-.575V12.9h14.7c.505 0 .956-.28 1.177-.729.224-.45.17-.974-.182-1.425.003 0-3.084-3.09-3.084-3.09"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 4.25a.5.5 0 0 1 .354.854L15.207 9.25l4.147 4.147a.5.5 0 0 1-.354.853H5.75V21a.75.75 0 0 1-1.5 0V5A.75.75 0 0 1 5 4.25z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconFlagFilled;

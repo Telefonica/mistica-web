@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M19.949 12.195a.68.68 0 0 0 0-.517c-.016-.041-.046-.07-.066-.105-.023-.036-.04-.075-.071-.11L12.95 4.216a.686.686 0 1 0-.999.943l5.768 6.09H4.662a.688.688 0 0 0 0 1.375h13.057l-5.893 6.22a.69.69 0 0 0 .025.97.69.69 0 0 0 .972-.025l6.989-7.382c.032-.032.046-.073.07-.109.021-.034.05-.064.067-.103"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.949 12.195a.68.68 0 0 0 0-.517c-.016-.041-.046-.07-.066-.105-.023-.036-.04-.075-.071-.11L12.95 4.216a.686.686 0 1 0-.999.943l5.768 6.09H4.662a.688.688 0 0 0 0 1.375h13.057l-5.893 6.22a.69.69 0 0 0 .025.97.69.69 0 0 0 .972-.025l6.989-7.382c.032-.032.046-.073.07-.109.021-.034.05-.064.067-.103"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.47 4.47a.75.75 0 0 1 1.06 0l7 7a.8.8 0 0 1 .118.16q.025.04.044.083a.75.75 0 0 1-.078.715 1 1 0 0 1-.084.102l-7 7a.75.75 0 0 1-1.06-1.06l5.72-5.72H5a.75.75 0 0 1 0-1.5h12.19l-5.72-5.72a.75.75 0 0 1 0-1.06"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineRightRegular;

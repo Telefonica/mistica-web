@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,16 +15,28 @@ import type {IconProps} from '../../utils/types';
 const IconSubtractCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path fill={fillColor} d="M17.481 11.31a.691.691 0 0 1 0 1.38H6.516a.691.691 0 0 1 0-1.38z" />
-            <path
-                fill={fillColor}
-                d="M12.457 1.01c-.247-.007-.538-.01-.82-.01h-.22C9.208 1.019 1 1.776 1 11.966c0 10.201 8.286 11 10.496 11.03q.178.005.357.004c.228 0 .454-.003.651-.006C14.601 22.953 23 22.167 23 12.028 23 1.914 14.617 1.063 12.457 1.01m-.94 20.613c-2.748-.038-9.14-1.058-9.14-9.657 0-8.587 6.33-9.567 9.053-9.592h.207q.394 0 .789.01c2.764.065 9.196 1.14 9.196 9.644 0 8.505-6.395 9.541-9.146 9.591q-.48.01-.958.004"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M17.481 11.31a.691.691 0 0 1 0 1.38H6.516a.691.691 0 0 1 0-1.38z" />
+                <path
+                    fill={fillColor}
+                    d="M12.457 1.01c-.247-.007-.538-.01-.82-.01h-.22C9.208 1.019 1 1.776 1 11.966c0 10.201 8.286 11 10.496 11.03q.178.005.357.004c.228 0 .454-.003.651-.006C14.601 22.953 23 22.167 23 12.028 23 1.914 14.617 1.063 12.457 1.01m-.94 20.613c-2.748-.038-9.14-1.058-9.14-9.657 0-8.587 6.33-9.567 9.053-9.592h.207q.394 0 .789.01c2.764.065 9.196 1.14 9.196 9.644 0 8.505-6.395 9.541-9.146 9.591q-.48.01-.958.004"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M15 11.25a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5z" />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 1.5A8.25 8.25 0 0 0 3.75 12l.01.405A8.25 8.25 0 0 0 12 20.25l.405-.01A8.25 8.25 0 0 0 20.25 12l-.01-.405A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconSubtractCircleRegular;

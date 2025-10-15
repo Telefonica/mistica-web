@@ -29,7 +29,7 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,23 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 <path
                     fill={fillColor}
                     d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.105zM11.334 9.332H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zM18.43 9.332h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.105z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M7 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2M7 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                />
+                <path
+                    fill={fillColor}
+                    d="M11.777 3.25c.773 0 1.502.342 2.03.817.524.471.943 1.16.943 1.933v14.25h4.5V10c0-.256-.136-.575-.405-.845-.27-.27-.589-.405-.845-.405h-1a.75.75 0 0 1 0-1.5h1c.744 0 1.425.364 1.905.845.48.48.845 1.161.845 1.905v10.25H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h.25V6c0-.773.42-1.462.942-1.933.529-.475 1.258-.817 2.03-.817zm-5.554 1.5c-.339 0-.722.158-1.027.433-.31.279-.446.59-.446.817v14.25h3.546A.8.8 0 0 1 8.25 20v-2a.75.75 0 0 1 1.5 0v2a.8.8 0 0 1-.046.25h3.546V6c0-.227-.136-.538-.446-.817-.305-.275-.688-.433-1.027-.433z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M17 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
             </svg>
         );

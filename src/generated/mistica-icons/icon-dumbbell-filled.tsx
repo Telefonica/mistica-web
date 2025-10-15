@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconDumbbellFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M8.2 9.59V6.775c0-.74-.574-1.339-1.28-1.336H5.822c-.692 0-1.255.577-1.275 1.297v10.532c.02.717.583 1.294 1.275 1.294H6.92c.708 0 1.28-.596 1.28-1.336v-2.815h.014V9.59zM20.56 6.887c.706 0 1.28.6 1.28 1.336v7.55c0 .739-.574 1.335-1.28 1.335h-.24V6.884h.24zM2.155 8.227c0-.74.571-1.337 1.28-1.337h.26v10.224h-.26c-.706 0-1.28-.6-1.28-1.336zm6.91 5.792v-4.04h5.894v4.04zm10.4-7.132v-.112c0-.74-.57-1.339-1.28-1.336h-1.097c-.709 0-1.28.597-1.28 1.336v10.448c0 .737.574 1.336 1.28 1.336h1.098c.706 0 1.28-.596 1.28-1.336v-.112h.003V6.887z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.2 9.59V6.775c0-.74-.574-1.339-1.28-1.336H5.822c-.692 0-1.255.577-1.275 1.297v10.532c.02.717.583 1.294 1.275 1.294H6.92c.708 0 1.28-.596 1.28-1.336v-2.815h.014V9.59zM20.56 6.887c.706 0 1.28.6 1.28 1.336v7.55c0 .739-.574 1.335-1.28 1.335h-.24V6.884h.24zM2.155 8.227c0-.74.571-1.337 1.28-1.337h.26v10.224h-.26c-.706 0-1.28-.6-1.28-1.336zm6.91 5.792v-4.04h5.894v4.04zm10.4-7.132v-.112c0-.74-.57-1.339-1.28-1.336h-1.097c-.709 0-1.28.597-1.28 1.336v10.448c0 .737.574 1.336 1.28 1.336h1.098c.706 0 1.28-.596 1.28-1.336v-.112h.003V6.887z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8 5.5A1.5 1.5 0 0 1 9.5 7v4.25h5V7A1.5 1.5 0 0 1 16 5.5h1A1.5 1.5 0 0 1 18.5 7v10a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-4.25h-5V17A1.5 1.5 0 0 1 8 18.5H7A1.5 1.5 0 0 1 5.5 17V7A1.5 1.5 0 0 1 7 5.5zM4 7.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5A1.5 1.5 0 0 1 2.5 15v-2.25H2a.75.75 0 0 1 0-1.5h.5V9A1.5 1.5 0 0 1 4 7.5M20 7.5A1.5 1.5 0 0 1 21.5 9v2.25h.5a.75.75 0 0 1 0 1.5h-.5V15a1.5 1.5 0 0 1-1.5 1.5.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconDumbbellFilled;

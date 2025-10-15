@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconHandDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M14.758 2.16H6.974c-.983 0-1.824.308-2.364.866-.538.554-.81 1.33-.81 2.3v6.996c0 1.272.782 2.062 2.036 2.062q.425 0 .774-.118c.238.857.94 1.367 1.946 1.367q.43 0 .776-.117c.244.848.941 1.353 1.944 1.353q.371 0 .684-.09v2.902c0 1.333.818 2.162 2.134 2.162 1.266 0 2.042-.773 2.129-2.117l.003-.045v-7.384c.339.577.641.98 1.008 1.272.359.286.787.431 1.207.431.404 0 .802-.131 1.132-.398.65-.52.81-1.408.41-2.26a430 430 0 0 0-2.746-5.647c-.574-1.165-1.07-2.17-1.21-2.476-.143-.317-.488-1.059-1.269-1.059"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.758 2.16H6.974c-.983 0-1.824.308-2.364.866-.538.554-.81 1.33-.81 2.3v6.996c0 1.272.782 2.062 2.036 2.062q.425 0 .774-.118c.238.857.94 1.367 1.946 1.367q.43 0 .776-.117c.244.848.941 1.353 1.944 1.353q.371 0 .684-.09v2.902c0 1.333.818 2.162 2.134 2.162 1.266 0 2.042-.773 2.129-2.117l.003-.045v-7.384c.339.577.641.98 1.008 1.272.359.286.787.431 1.207.431.404 0 .802-.131 1.132-.398.65-.52.81-1.408.41-2.26a430 430 0 0 0-2.746-5.647c-.574-1.165-1.07-2.17-1.21-2.476-.143-.317-.488-1.059-1.269-1.059"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.99 2.75c1.656 0 3.239.656 4.415 1.832A6.22 6.22 0 0 1 20.24 9v4.5a1.75 1.75 0 0 1-1.75 1.75c-.467 0-.91-.187-1.236-.514l-.027-.03a1.748 1.748 0 0 1-2.973 1.03q-.019-.019-.036-.039a1.748 1.748 0 0 1-2.975 1.04l-.013-.014V20.5c0 .467-.187.91-.513 1.236A1.748 1.748 0 0 1 7.73 20.5v-7.896l-1.045 1.044a2.126 2.126 0 0 1-2.582.317 1.72 1.72 0 0 1-.795-1.05 1.76 1.76 0 0 1 .163-1.307C5.35 8.271 6.456 6.351 6.772 5.863l.002-.003.199-.3A6.3 6.3 0 0 1 9.232 3.5v-.001A6.3 6.3 0 0 1 12.2 2.75z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconHandDownFilled;

@@ -29,7 +29,7 @@ const IconTagEuroFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconTagEuroFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 <path
                     fill={fillColor}
                     d="M18.093 6.616a.713.713 0 0 1-.5-1.212l3.196-3.197a.71.71 0 0 1 1.004 0 .713.713 0 0 1 0 1.004l-3.196 3.197a.7.7 0 0 1-.504.208"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M1.97 1.97a.75.75 0 0 1 1.06 0l1.083 1.083A3.5 3.5 0 0 1 6 2.5h5.172a2.5 2.5 0 0 1 1.767.732l7.71 7.71a2.91 2.91 0 0 1 0 4.116l-5.591 5.592a2.91 2.91 0 0 1-4.116 0l-7.71-7.71a2.5 2.5 0 0 1-.732-1.768V6c0-.674.195-1.328.553-1.887L1.97 3.03a.75.75 0 0 1 0-1.06m12.28 6.495a3.75 3.75 0 0 0-4.581 1.81c-.16.309-.274.637-.343.975H9a.75.75 0 0 0 0 1.5h.326a3.753 3.753 0 0 0 4.925 2.785.75.75 0 0 0-.501-1.414 2.25 2.25 0 0 1-2.871-1.37h1.12a.75.75 0 0 0 0-1.5h-1.12q.05-.147.122-.285a2.25 2.25 0 0 1 2.749-1.087.75.75 0 0 0 .5-1.414"
                 />
             </svg>
         );

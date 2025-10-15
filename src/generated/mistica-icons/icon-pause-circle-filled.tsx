@@ -16,7 +16,16 @@ const IconPauseCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.218 4.593c-1.67-1.608-4.098-2.423-7.222-2.423-3.123 0-5.552.815-7.218 2.426-1.731 1.67-2.608 4.162-2.608 7.409s.877 5.736 2.608 7.406c1.666 1.608 4.095 2.423 7.218 2.423s5.552-.815 7.222-2.423c1.73-1.67 2.61-4.16 2.61-7.406 0-3.247-.88-5.743-2.61-7.412M8.503 8.412a.8.8 0 1 1 1.6 0v7.177a.8.8 0 1 1-1.6 0zm5.437 0a.8.8 0 1 1 1.6 0v7.177a.8.8 0 1 1-1.6 0z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,11 @@ const IconPauseCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M19.218 4.593c-1.67-1.608-4.098-2.423-7.222-2.423-3.123 0-5.552.815-7.218 2.426-1.731 1.67-2.608 4.162-2.608 7.409s.877 5.736 2.608 7.406c1.666 1.608 4.095 2.423 7.218 2.423s5.552-.815 7.222-2.423c1.73-1.67 2.61-4.16 2.61-7.406 0-3.247-.88-5.743-2.61-7.412M8.503 8.412a.8.8 0 1 1 1.6 0v7.177a.8.8 0 1 1-1.6 0zm5.437 0a.8.8 0 1 1 1.6 0v7.177a.8.8 0 1 1-1.6 0z"
+                    d="M11 15.2a.8.8 0 0 1-.8.8h-.4a.8.8 0 0 1-.8-.8V8.8a.8.8 0 0 1 .8-.8h.4a.8.8 0 0 1 .8.8zM15 15.2a.8.8 0 0 1-.8.8h-.4a.8.8 0 0 1-.8-.8V8.8a.8.8 0 0 1 .8-.8h.4a.8.8 0 0 1 .8.8z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0A8.25 8.25 0 1 0 3.75 12a8.25 8.25 0 0 0 16.5.001"
                 />
             </svg>
         );

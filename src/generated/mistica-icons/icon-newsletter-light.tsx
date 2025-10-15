@@ -25,7 +25,7 @@ const IconNewsletterLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -35,6 +35,19 @@ const IconNewsletterLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 <path
                     fill={fillColor}
                     d="M18.414 20.142a.736.736 0 0 0 .732-.74.736.736 0 0 0-.732-.74.736.736 0 0 0-.732.74c0 .409.328.74.732.74M6.694 10.888v3.703h4.029v-3.703zm.727 2.963v-2.223h2.565v2.223zM12.186 12.367h4.399c.202 0 .366.166.366.37s-.164.37-.366.37h-4.4a.37.37 0 0 1-.365-.37c0-.204.164-.37.366-.37M10.718 19.777H6.689v-3.703h4.029zm-.732-2.963H7.421v2.223h2.565zM12.186 17.553h4.399c.202 0 .366.166.366.37s-.164.37-.366.37h-4.4a.37.37 0 0 1-.365-.37c0-.204.164-.37.366-.37"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 15.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zM12 11.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zM12 7.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M15 3.25A1.75 1.75 0 0 1 16.75 5v.25H19A1.75 1.75 0 0 1 20.75 7v11A2.75 2.75 0 0 1 18 20.75H7A3.75 3.75 0 0 1 3.25 17V5A1.75 1.75 0 0 1 5 3.25zM5 4.75a.25.25 0 0 0-.25.25v12A2.25 2.25 0 0 0 7 19.25h8.553A2.75 2.75 0 0 1 15.25 18V5a.25.25 0 0 0-.25-.25zM16.75 18a1.25 1.25 0 0 0 2.5 0V7a.25.25 0 0 0-.25-.25h-2.25z"
                 />
             </svg>
         );

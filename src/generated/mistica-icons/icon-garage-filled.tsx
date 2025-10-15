@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconGarageFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.743 12.197c.208-.51.084-1.078-.325-1.479l-8.274-8.106c-.62-.608-1.672-.608-2.292 0l-8.274 8.106c-.409.4-.532.97-.322 1.482.232.566.81.933 1.47.933h.625v7.274c0 .79.703 1.434 1.569 1.434h.857v-9.033c0-.342.277-.617.616-.617h9.18c.341 0 .616.278.616.617v9.03h.77c.866 0 1.569-.641 1.569-1.434V13.13h.745c.66 0 1.238-.367 1.47-.933M8.01 15.452v-2.053h7.947v2.053zm0 1.204v2.054h7.947v-2.054zm0 3.135v2.05h7.95v-2.05z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.743 12.197c.208-.51.084-1.078-.325-1.479l-8.274-8.106c-.62-.608-1.672-.608-2.292 0l-8.274 8.106c-.409.4-.532.97-.322 1.482.232.566.81.933 1.47.933h.625v7.274c0 .79.703 1.434 1.569 1.434h.857v-9.033c0-.342.277-.617.616-.617h9.18c.341 0 .616.278.616.617v9.03h.77c.866 0 1.569-.641 1.569-1.434V13.13h.745c.66 0 1.238-.367 1.47-.933M8.01 15.452v-2.053h7.947v2.053zm0 1.204v2.054h7.947v-2.054zm0 3.135v2.05h7.95v-2.05z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 8.25c.227 0 .443.103.586.281l3.775 4.719H19c.724 0 1.425.286 1.94.81l.002.002.005.004c.514.517.803 1.204.803 1.934v4a.75.75 0 0 1-.75.75h-1.356a2.75 2.75 0 0 1-4.589 1.194 2.75 2.75 0 0 1-.699-1.194H9.644a2.75 2.75 0 0 1-5.289 0H3a.75.75 0 0 1-.75-.75v-6q0-.047.006-.092l.005-.033a.7.7 0 0 1 .042-.153l2-5 .05-.103A.75.75 0 0 1 5 8.249zm-7 10.5A1.25 1.25 0 0 0 5.75 20l.006.124A1.25 1.25 0 1 0 7 18.75m10 0a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m-12.893-5.5h7.143v-3.5H5.508zm8.643 0h3.69l-2.802-3.5h-.888zM11.77 1.286a.75.75 0 0 1 .534.028l9 4a.75.75 0 0 1-.609 1.371L12 2.82 3.304 6.685a.75.75 0 0 1-.609-1.37l9-4z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconGarageFilled;

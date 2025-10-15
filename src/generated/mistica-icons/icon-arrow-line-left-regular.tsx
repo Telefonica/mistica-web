@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineLeftRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M19.315 11.375H6.277l5.885-6.228a.69.69 0 0 0-.05-.97.684.684 0 0 0-.947.027L4.187 11.59c-.03.032-.046.073-.07.11-.024.033-.051.065-.067.104a.7.7 0 0 0-.05.257v.005q.003.129.052.253c.016.04.044.073.069.107.022.034.036.075.066.107l6.852 7.252c.26.276.692.29.968.03q.001 0 .002-.003a.687.687 0 0 0 .027-.97l-5.76-6.095h13.039a.687.687 0 0 0 0-1.371"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.315 11.375H6.277l5.885-6.228a.69.69 0 0 0-.05-.97.684.684 0 0 0-.947.027L4.187 11.59c-.03.032-.046.073-.07.11-.024.033-.051.065-.067.104a.7.7 0 0 0-.05.257v.005q.003.129.052.253c.016.04.044.073.069.107.022.034.036.075.066.107l6.852 7.252c.26.276.692.29.968.03q.001 0 .002-.003a.687.687 0 0 0 .027-.97l-5.76-6.095h13.039a.687.687 0 0 0 0-1.371"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.47 4.47a.75.75 0 1 1 1.06 1.06l-5.72 5.72H19a.75.75 0 0 1 0 1.5H6.81l5.72 5.72a.75.75 0 0 1-1.06 1.06l-7-7a.75.75 0 0 1-.22-.53.8.8 0 0 1 .055-.282l.004-.01q.018-.04.042-.078a.8.8 0 0 1 .119-.16z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineLeftRegular;

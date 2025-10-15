@@ -16,7 +16,16 @@ const IconArrowDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.16 12.028q0-.228.084-.44c.176-.434.602-.7 1.106-.694L7 10.89q.031-.015.056-.04l.02-6.882c-.009-.616.145-1.07.467-1.383.323-.314.78-.463 1.393-.443h6.042c.42-.008 1.025.03 1.445.437.42.406.482 1.008.487 1.426l-.002 6.72a.5.5 0 0 0 .053.156l3.563-.005h.005c.858.005 1.149.414 1.247.658.168.418.014.9-.42 1.322l-8.712 8.659c-.084.086-.33.336-.689.333a.82.82 0 0 1-.594-.275l-8.708-8.479c-.32-.305-.493-.692-.493-1.067"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconArrowDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M2.16 12.028q0-.228.084-.44c.176-.434.602-.7 1.106-.694L7 10.89q.031-.015.056-.04l.02-6.882c-.009-.616.145-1.07.467-1.383.323-.314.78-.463 1.393-.443h6.042c.42-.008 1.025.03 1.445.437.42.406.482 1.008.487 1.426l-.002 6.72a.5.5 0 0 0 .053.156l3.563-.005h.005c.858.005 1.149.414 1.247.658.168.418.014.9-.42 1.322l-8.712 8.659c-.084.086-.33.336-.689.333a.82.82 0 0 1-.594-.275l-8.708-8.479c-.32-.305-.493-.692-.493-1.067"
+                    d="M14 2.5A1.5 1.5 0 0 1 15.5 4v7.5h3.086l.111.004a1.501 1.501 0 0 1 1.024 2.476l-.075.08-6.586 6.586a1.5 1.5 0 0 1-2.12 0L4.352 14.06a1.5 1.5 0 0 1 .227-2.307c.246-.165.537-.253.834-.253H8.5V4A1.5 1.5 0 0 1 10 2.5z"
                 />
             </svg>
         );

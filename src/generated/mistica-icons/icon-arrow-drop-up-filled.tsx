@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowDropUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m21.486 14.99-8.571-7.574a1.41 1.41 0 0 0-1.818 0l-8.57 7.423a1.044 1.044 0 0 0-.28 1.23c.197.423.656.703 1.174.709l17.138.15c.52 0 .986-.274 1.185-.7a1.04 1.04 0 0 0-.275-1.238z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.486 14.99-8.571-7.574a1.41 1.41 0 0 0-1.818 0l-8.57 7.423a1.044 1.044 0 0 0-.28 1.23c.197.423.656.703 1.174.709l17.138.15c.52 0 .986-.274 1.185-.7a1.04 1.04 0 0 0-.275-1.238z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.47 8.47a.75.75 0 0 1 1.06 0l6 6a.751.751 0 0 1-.53 1.28H6a.751.751 0 0 1-.53-1.28z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowDropUpFilled;

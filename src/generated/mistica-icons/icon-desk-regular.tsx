@@ -25,12 +25,21 @@ const IconDeskRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M8.543 10.072V8.918h3.847V1.995H3.159v6.923h3.846v1.154H4.313a2.315 2.315 0 0 0-2.308 2.308v8.846c0 .423.346.769.77.769.422 0 .768-.346.768-.77V12.38c0-.424.347-.77.77-.77h10v5.385h6.153v4.23c0 .424.347.77.77.77s.769-.346.769-.77V10.073zM4.697 3.533h6.154V7.38H4.697zm15.77 8.077v1.154H15.85V11.61zm-4.616 3.847v-1.154h4.615v1.153z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 5.25a.75.75 0 0 1 0 1.5h-.25V19a.75.75 0 0 1-1.5 0v-4.75H15a.75.75 0 0 1-.75-.75v-2.75h-9.5V19a.75.75 0 0 1-1.5 0V6.75H3a.75.75 0 0 1 0-1.5zm-5.25 7.5h3.5v-2h-3.5zm0-3.5h3.5v-2.5h-3.5zm-11 0h9.5v-2.5h-9.5z"
                 />
             </svg>
         );

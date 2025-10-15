@@ -16,7 +16,16 @@ const IconChevronRightLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.3 11.997c0-.23-.1-.46-.27-.62l-7.6-7.15a.85.85 0 0 0-1.2.04c-.32.34-.31.88.04 1.2l6.94 6.53-6.94 6.53c-.34.32-.36.86-.04 1.2s.86.36 1.2.04l7.6-7.15c.17-.16.27-.38.27-.62"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconChevronRightLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.3 11.997c0-.23-.1-.46-.27-.62l-7.6-7.15a.85.85 0 0 0-1.2.04c-.32.34-.31.88.04 1.2l6.94 6.53-6.94 6.53c-.34.32-.36.86-.04 1.2s.86.36 1.2.04l7.6-7.15c.17-.16.27-.38.27-.62"
+                    d="M9.47 3.97a.75.75 0 0 1 1.06 0l7 7a.75.75 0 0 1 0 1.06l-7 7a.75.75 0 1 1-1.06-1.06l6.47-6.47-6.47-6.47a.75.75 0 0 1 0-1.06"
                 />
             </svg>
         );

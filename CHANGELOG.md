@@ -1,3 +1,16 @@
+# [16.42.0](https://github.com/Telefonica/mistica-web/compare/v16.41.0...v16.42.0) (2025-10-14)
+
+
+### Bug Fixes
+
+* **CoverCard:** fix gradientOverlayColor when used with skin colors ([#1438](https://github.com/Telefonica/mistica-web/issues/1438)) ([df70ea3](https://github.com/Telefonica/mistica-web/commit/df70ea3568b5f31e1ce0db226dea388e7a23f23e))
+
+
+### Features
+
+* **Feedbacks, Stepper:** include new animated icons ([#1443](https://github.com/Telefonica/mistica-web/issues/1443)) ([becb232](https://github.com/Telefonica/mistica-web/commit/becb232948b7e59aa4794aadf36c81b47da5e97d))
+* **Icons:** new default icon set for Movistar, Telefónica, Esimflag and TU ([#1444](https://github.com/Telefonica/mistica-web/issues/1444)) ([4d609d5](https://github.com/Telefonica/mistica-web/commit/4d609d5d7878ec95f880ecbda37e0daed219c852))
+
 # [16.41.0](https://github.com/Telefonica/mistica-web/compare/v16.40.0...v16.41.0) (2025-10-07)
 
 

@@ -16,7 +16,20 @@ const IconMobileDeviceRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.39 19.862q.18.05.388.05c.353 0 .653-.112.85-.315q.297-.305.298-.835c0-.72-.425-1.15-1.145-1.15s-1.148.43-1.148 1.15q0 .526.298.835.184.188.46.265"
+                />
+                <path
+                    fill={fillColor}
+                    d="M8.396 22.32c-1.141 0-1.974-.275-2.543-.838-.575-.57-.853-1.408-.853-2.558V5.396c0-1.121.278-1.945.85-2.526C6.428 2.286 7.26 2 8.396 2h6.764c1.145 0 1.977.277 2.55.853.572.575.846 1.404.846 2.543v13.528c0 1.15-.28 1.988-.852 2.558-.573.563-1.402.838-2.544.838zm0-19.164c-1.59 0-2.24.65-2.24 2.24v13.528c0 1.633.607 2.24 2.24 2.24h6.764c1.633 0 2.24-.607 2.24-2.24V5.396c0-.818-.168-1.384-.509-1.728s-.91-.512-1.731-.512z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -46,13 +59,10 @@ const IconMobileDeviceRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
     } else {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
                 <path
                     fill={fillColor}
-                    d="M11.39 19.862q.18.05.388.05c.353 0 .653-.112.85-.315q.297-.305.298-.835c0-.72-.425-1.15-1.145-1.15s-1.148.43-1.148 1.15q0 .526.298.835.184.188.46.265"
-                />
-                <path
-                    fill={fillColor}
-                    d="M8.396 22.32c-1.141 0-1.974-.275-2.543-.838-.575-.57-.853-1.408-.853-2.558V5.396c0-1.121.278-1.945.85-2.526C6.428 2.286 7.26 2 8.396 2h6.764c1.145 0 1.977.277 2.55.853.572.575.846 1.404.846 2.543v13.528c0 1.15-.28 1.988-.852 2.558-.573.563-1.402.838-2.544.838zm0-19.164c-1.59 0-2.24.65-2.24 2.24v13.528c0 1.633.607 2.24 2.24 2.24h6.764c1.633 0 2.24-.607 2.24-2.24V5.396c0-.818-.168-1.384-.509-1.728s-.91-.512-1.731-.512z"
+                    d="M16 2.25A2.75 2.75 0 0 1 18.75 5v14A2.75 2.75 0 0 1 16 21.75H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25zm-8 1.5c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h8c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25z"
                 />
             </svg>
         );

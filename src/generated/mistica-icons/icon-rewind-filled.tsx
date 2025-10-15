@@ -16,7 +16,16 @@ const IconRewindFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.999 2.145c3.131 0 5.565.818 7.238 2.429 1.736 1.675 2.616 4.173 2.616 7.425s-.88 5.751-2.616 7.423c-1.673 1.61-4.11 2.429-7.238 2.429-3.13 0-5.563-.818-7.236-2.429C3.03 17.75 2.15 15.254 2.15 12s.88-5.75 2.616-7.425C6.436 2.963 8.867 2.145 12 2.145m5.042 13.092a.56.56 0 0 0 .56-.56V8.711a.56.56 0 0 0-.849-.479l-4.989 2.997a.57.57 0 0 0-.213.232V8.705a.56.56 0 0 0-.849-.479l-4.988 2.997a.56.56 0 0 0 .003.96l4.989 2.97a.56.56 0 0 0 .846-.482v-2.716c.047.098.123.179.215.235l4.989 2.969a.57.57 0 0 0 .286.078"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconRewindFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.999 2.145c3.131 0 5.565.818 7.238 2.429 1.736 1.675 2.616 4.173 2.616 7.425s-.88 5.751-2.616 7.423c-1.673 1.61-4.11 2.429-7.238 2.429-3.13 0-5.563-.818-7.236-2.429C3.03 17.75 2.15 15.254 2.15 12s.88-5.75 2.616-7.425C6.436 2.963 8.867 2.145 12 2.145m5.042 13.092a.56.56 0 0 0 .56-.56V8.711a.56.56 0 0 0-.849-.479l-4.989 2.997a.57.57 0 0 0-.213.232V8.705a.56.56 0 0 0-.849-.479l-4.988 2.997a.56.56 0 0 0 .003.96l4.989 2.97a.56.56 0 0 0 .846-.482v-2.716c.047.098.123.179.215.235l4.989 2.969a.57.57 0 0 0 .286.078"
+                    d="M8.792 5.253c.654-.573 1.679-.108 1.68.763v11.968c-.001.872-1.026 1.337-1.68.763l-6.83-5.983a1.016 1.016 0 0 1 0-1.528zM19.936 5.253c.655-.573 1.68-.108 1.68.763v11.968c0 .872-1.025 1.337-1.68.763l-6.83-5.983a1.016 1.016 0 0 1 0-1.528z"
                 />
             </svg>
         );

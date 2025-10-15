@@ -16,7 +16,16 @@ const IconPinFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.518 8.162-5.66-5.689a1.04 1.04 0 0 0-1.5 0c-.736.743-1.179 1.56-1.316 2.437l-2.53 2.55c-1.456-.253-3.529-.01-5.72 2.195l-.03.034a1.23 1.23 0 0 0-.361.88c0 .33.128.641.36.876l3.444 3.468-5.866 5.854a.634.634 0 0 0-.003.891.626.626 0 0 0 .885.003l5.869-5.857 3.518 3.546a1.2 1.2 0 0 0 .86.359c.333 0 .672-.135.947-.412 1.767-1.782 2.49-3.709 2.143-5.734l2.532-2.552c.876-.148 1.7-.602 2.462-1.37a1 1 0 0 0 .291-.708 1.1 1.1 0 0 0-.325-.77"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconPinFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="m21.518 8.162-5.66-5.689a1.04 1.04 0 0 0-1.5 0c-.736.743-1.179 1.56-1.316 2.437l-2.53 2.55c-1.456-.253-3.529-.01-5.72 2.195l-.03.034a1.23 1.23 0 0 0-.361.88c0 .33.128.641.36.876l3.444 3.468-5.866 5.854a.634.634 0 0 0-.003.891.626.626 0 0 0 .885.003l5.869-5.857 3.518 3.546a1.2 1.2 0 0 0 .86.359c.333 0 .672-.135.947-.412 1.767-1.782 2.49-3.709 2.143-5.734l2.532-2.552c.876-.148 1.7-.602 2.462-1.37a1 1 0 0 0 .291-.708 1.1 1.1 0 0 0-.325-.77"
+                    d="M13.97 3.47a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 1 1-1.06 1.06l-.147-.146-3.393 3.393-1.462 3.899a.5.5 0 0 1-.114.178l-1.5 1.5a.5.5 0 0 1-.708 0l-2.97-2.97L5.03 20.03a.75.75 0 1 1-1.06-1.06l4.146-4.147-2.97-2.97a.5.5 0 0 1 0-.707l1.5-1.5.083-.066a.5.5 0 0 1 .095-.048l3.899-1.462 3.393-3.393-.146-.147a.75.75 0 0 1 0-1.06"
                 />
             </svg>
         );

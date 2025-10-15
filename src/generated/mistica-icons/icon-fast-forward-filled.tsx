@@ -16,7 +16,16 @@ const IconFastForwardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.155 12.001c0 6.437 3.403 9.84 9.846 9.84 6.437 0 9.84-3.403 9.84-9.84 0-6.443-3.403-9.846-9.84-9.846-6.443 0-9.846 3.403-9.846 9.846m8.672-.291L7.66 13.595v-3.79zm5.925-.006-3.168-1.905v3.79zM7.365 8.217l4.953 2.974q.02.013.031.03.01.015.024.027V8.729a.603.603 0 0 1 .917-.518l4.952 2.978a.605.605 0 0 1 0 1.036l-4.953 2.947a.61.61 0 0 1-.915-.521v-2.482a.2.2 0 0 0-.026.027q-.014.019-.033.032L7.362 15.18a.61.61 0 0 1-.916-.52V8.734a.62.62 0 0 1 .308-.527.6.6 0 0 1 .611.009"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconFastForwardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M2.155 12.001c0 6.437 3.403 9.84 9.846 9.84 6.437 0 9.84-3.403 9.84-9.84 0-6.443-3.403-9.846-9.84-9.846-6.443 0-9.846 3.403-9.846 9.846m8.672-.291L7.66 13.595v-3.79zm5.925-.006-3.168-1.905v3.79zM7.365 8.217l4.953 2.974q.02.013.031.03.01.015.024.027V8.729a.603.603 0 0 1 .917-.518l4.952 2.978a.605.605 0 0 1 0 1.036l-4.953 2.947a.61.61 0 0 1-.915-.521v-2.482a.2.2 0 0 0-.026.027q-.014.019-.033.032L7.362 15.18a.61.61 0 0 1-.916-.52V8.734a.62.62 0 0 1 .308-.527.6.6 0 0 1 .611.009"
+                    d="M2.616 6.016c0-.871 1.024-1.336 1.68-.763l6.83 5.983a1.016 1.016 0 0 1 0 1.528l-6.83 5.983c-.656.574-1.68.108-1.68-.763zM13.76 6.016c0-.871 1.025-1.336 1.68-.763l6.83 5.983c.46.404.461 1.124 0 1.528l-6.83 5.983c-.655.574-1.68.109-1.68-.763z"
                 />
             </svg>
         );

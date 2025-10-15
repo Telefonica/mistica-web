@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineDownLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.62 4.471v14.011l-6.783-6.448a.47.47 0 0 0-.829.208.48.48 0 0 0 .19.473l7.573 7.201a.13.13 0 0 0 .066.048.4.4 0 0 0 .075 0 .46.46 0 0 0 .357 0 .4.4 0 0 0 .075 0 .3.3 0 0 0 .075-.048l7.43-7.069a.45.45 0 0 0 .15-.35.46.46 0 0 0-.79-.33l-6.65 6.315V4.472a.47.47 0 0 0-.47-.472.47.47 0 0 0-.469.471q.004 0 0 0"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.62 4.471v14.011l-6.783-6.448a.47.47 0 0 0-.829.208.48.48 0 0 0 .19.473l7.573 7.201a.13.13 0 0 0 .066.048.4.4 0 0 0 .075 0 .46.46 0 0 0 .357 0 .4.4 0 0 0 .075 0 .3.3 0 0 0 .075-.048l7.43-7.069a.45.45 0 0 0 .15-.35.46.46 0 0 0-.79-.33l-6.65 6.315V4.472a.47.47 0 0 0-.47-.472.47.47 0 0 0-.469.471q.004 0 0 0"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 4.25a.75.75 0 0 1 .75.75v12.19l4.72-4.72a.75.75 0 1 1 1.06 1.06l-6 6-.056.052q-.025.019-.05.034a.7.7 0 0 1-.273.118q-.011.002-.024.003a1 1 0 0 1-.127.013 1 1 0 0 1-.133-.013q-.01 0-.017-.003-.01-.002-.02-.006a1 1 0 0 1-.119-.037q-.034-.016-.066-.035a.7.7 0 0 1-.175-.126l-6-6a.75.75 0 1 1 1.06-1.06l4.72 4.72V5a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineDownLight;

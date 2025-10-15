@@ -25,12 +25,21 @@ const IconUndoRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M13.07 3c-4.82 0-8.785 3.886-8.929 8.712l-.928-.935a.69.69 0 0 0-1 0 .7.7 0 0 0 0 1.007l2.644 2.665 2.645-2.665a.7.7 0 0 0 0-1.008.69.69 0 0 0-1 0l-.932.9c.18-3.996 3.464-7.237 7.5-7.237 4.145 0 7.502 3.383 7.502 7.559s-3.357 7.559-7.501 7.559a.72.72 0 0 0-.716.721c0 .4.32.722.716.722C17.999 20.996 22 16.965 22 11.998S18 3 13.07 3"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.47 5.47a.75.75 0 1 1 1.06 1.06L6.81 9.25H16a4.75 4.75 0 0 1 0 9.5h-1a.75.75 0 0 1 0-1.5h1a3.25 3.25 0 0 0 .161-6.496L16 10.75H6.81l2.72 2.72a.75.75 0 1 1-1.06 1.06l-4-4a.75.75 0 0 1-.22-.53.8.8 0 0 1 .055-.282l.004-.01q.022-.05.052-.097a.8.8 0 0 1 .109-.141z"
                 />
             </svg>
         );
