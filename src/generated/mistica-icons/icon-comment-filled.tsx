@@ -29,7 +29,7 @@ const IconCommentFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,15 @@ const IconCommentFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 <path
                     fill={fillColor}
                     d="M12.37 18.374c1.664-.187 2.963-1.267 2.963-3h-3.328c-2.452 0-4.448-2.02-4.448-4.502V7.123H5.333C3.493 7.123 2 8.635 2 10.498V15c0 1.733 1.3 3.187 2.963 3.374v2.252c0 .148.09.288.228.345q.072.03.142.029c.095 0 .19-.038.261-.11l2.518-2.516z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6 9.25a.75.75 0 0 1 0 1.5H4a.25.25 0 0 0-.25.25v8.19l1.72-1.72.114-.094A.75.75 0 0 1 6 17.25h7a.25.25 0 0 0 .25-.25v-2a.75.75 0 0 1 1.5 0v2A1.75 1.75 0 0 1 13 18.75H6.31l-2.78 2.78A.75.75 0 0 1 2.25 21V11A1.75 1.75 0 0 1 4 9.25zM20 2.5A1.5 1.5 0 0 1 21.5 4v10a.5.5 0 0 1-.854.354L17.793 11.5H11A1.5 1.5 0 0 1 9.5 10V4A1.5 1.5 0 0 1 11 2.5z"
                 />
             </svg>
         );

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12.625 19.315V6.277l6.228 5.885a.69.69 0 0 0 .97-.05.684.684 0 0 0-.027-.947L12.41 4.187c-.032-.03-.073-.046-.11-.07-.033-.024-.065-.051-.104-.067A.7.7 0 0 0 11.94 4h-.005a.8.8 0 0 0-.253.052c-.04.016-.073.044-.107.069-.034.022-.075.036-.107.066l-7.252 6.852a.684.684 0 0 0-.027.97c.26.276.694.287.97.027l6.095-5.76v13.039a.687.687 0 0 0 1.371 0"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.625 19.315V6.277l6.228 5.885a.69.69 0 0 0 .97-.05.684.684 0 0 0-.027-.947L12.41 4.187c-.032-.03-.073-.046-.11-.07-.033-.024-.065-.051-.104-.067A.7.7 0 0 0 11.94 4h-.005a.8.8 0 0 0-.253.052c-.04.016-.073.044-.107.069-.034.022-.075.036-.107.066l-7.252 6.852a.684.684 0 0 0-.027.97c.26.276.694.287.97.027l6.095-5.76v13.039a.687.687 0 0 0 1.371 0"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12 4.25.076.004.055.008q.01 0 .017.003.02.005.04.011.05.012.098.03a.8.8 0 0 1 .244.164l6 6a.75.75 0 1 1-1.06 1.06l-4.72-4.72V19a.75.75 0 0 1-1.5 0V6.81l-4.72 4.72a.75.75 0 0 1-1.06-1.06l6-6a.8.8 0 0 1 .16-.12q.037-.023.078-.041l.01-.004q.045-.018.094-.029.019-.006.039-.011l.016-.003A1 1 0 0 1 12 4.25"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineUpRegular;

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconSubtractCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.617 1c.287 0 .588.006.845.013 2.154.05 10.541.901 10.538 11.018 0 10.136-8.397 10.925-10.497 10.963-.195.003-.42.006-.649.006-.118 0-.24 0-.356-.003C9.288 22.966 1 22.167 1 11.966 1 1.776 9.209 1.019 11.42 1zm5.866 11.687a.69.69 0 0 0 .69-.685.69.69 0 0 0-.69-.692H6.516a.689.689 0 1 0 0 1.377z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.617 1c.287 0 .588.006.845.013 2.154.05 10.541.901 10.538 11.018 0 10.136-8.397 10.925-10.497 10.963-.195.003-.42.006-.649.006-.118 0-.24 0-.356-.003C9.288 22.966 1 22.167 1 11.966 1 1.776 9.209 1.019 11.42 1zm5.866 11.687a.69.69 0 0 0 .69-.685.69.69 0 0 0-.69-.692H6.516a.689.689 0 1 0 0 1.377z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a9.5 9.5 0 0 1 9.5 9.5l-.012.467a9.5 9.5 0 0 1-9.021 9.021L12 21.5a9.5 9.5 0 0 1-9.488-9.033L2.5 12A9.5 9.5 0 0 1 12 2.5m-3 8.75a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconSubtractCircleFilled;

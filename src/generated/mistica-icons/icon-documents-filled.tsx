@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,27 @@ import type {IconProps} from '../../utils/types';
 const IconDocumentsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M20.77 9.892c.1.099.17.223.207.358q.047.12.048.247v10.08c0 .687-.583 1.264-1.277 1.264H9.802c-.694 0-1.28-.577-1.28-1.263v-2.613h-4.29c-.668 0-1.253-.58-1.253-1.239V3.396c0-.672.574-1.241 1.255-1.241h9.563c.68 0 1.255.569 1.255 1.24v2.057h.804a.84.84 0 0 1 .588.238zm-6.97-4.44V3.396l-9.568.017-.003 13.313 4.294-.016V6.715c0-.672.597-1.263 1.28-1.263zm4.216 4.633h1.152L16.26 7.259v1.137c0 .501.16.927.468 1.224.31.305.756.465 1.288.465"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.77 9.892c.1.099.17.223.207.358q.047.12.048.247v10.08c0 .687-.583 1.264-1.277 1.264H9.802c-.694 0-1.28-.577-1.28-1.263v-2.613h-4.29c-.668 0-1.253-.58-1.253-1.239V3.396c0-.672.574-1.241 1.255-1.241h9.563c.68 0 1.255.569 1.255 1.24v2.057h.804a.84.84 0 0 1 .588.238zm-6.97-4.44V3.396l-9.568.017-.003 13.313 4.294-.016V6.715c0-.672.597-1.263 1.28-1.263zm4.216 4.633h1.152L16.26 7.259v1.137c0 .501.16.927.468 1.224.31.305.756.465 1.288.465"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.65 2.25a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 16 8.75h4.15a.6.6 0 0 1 .6.6V15A2.75 2.75 0 0 1 18 17.75h-1.25V19A2.75 2.75 0 0 1 14 21.75H7A2.75 2.75 0 0 1 4.25 19V9A2.75 2.75 0 0 1 7 6.25h1.25V5A2.75 2.75 0 0 1 11 2.25zM7 7.75A1.25 1.25 0 0 0 5.75 9v10l.006.124A1.25 1.25 0 0 0 7 20.25h7A1.25 1.25 0 0 0 15.25 19v-1.25H11A2.75 2.75 0 0 1 8.25 15V7.75z"
+                />
+                <path fill={fillColor} d="M20.31 7.25H16a.25.25 0 0 1-.25-.25V2.69z" />
+            </svg>
+        );
+    }
 };
 
 export default IconDocumentsFilled;

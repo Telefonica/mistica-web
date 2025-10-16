@@ -16,7 +16,20 @@ const IconPauseCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.998 16.423a.28.28 0 0 1-.28-.28V7.81a.28.28 0 0 1 .28-.28c.154 0 .28.126.28.28v8.333c0 .154-.126.28-.28.28M8.953 16.451a.28.28 0 0 1-.28-.28V7.838a.28.28 0 0 1 .28-.28.28.28 0 0 1 .28.28v8.333c0 .154-.126.28-.28.28"
+                />
+                <path
+                    fill={fillColor}
+                    d="M11.998 21.838c-6.435 0-9.838-3.4-9.838-9.838s3.4-9.84 9.838-9.84c3.14 0 5.574.812 7.238 2.417C20.96 6.241 21.838 8.74 21.838 12c.003 6.435-3.4 9.838-9.84 9.838m0-19.118C5.844 2.72 2.72 5.843 2.72 12c0 6.154 3.12 9.278 9.278 9.278 6.16 0 9.28-3.12 9.28-9.278.003-6.16-3.12-9.28-9.28-9.28"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,11 +52,11 @@ const IconPauseCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.998 16.423a.28.28 0 0 1-.28-.28V7.81a.28.28 0 0 1 .28-.28c.154 0 .28.126.28.28v8.333c0 .154-.126.28-.28.28M8.953 16.451a.28.28 0 0 1-.28-.28V7.838a.28.28 0 0 1 .28-.28.28.28 0 0 1 .28.28v8.333c0 .154-.126.28-.28.28"
+                    d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 1 1 1.5 0zM14.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
                 />
                 <path
                     fill={fillColor}
-                    d="M11.998 21.838c-6.435 0-9.838-3.4-9.838-9.838s3.4-9.84 9.838-9.84c3.14 0 5.574.812 7.238 2.417C20.96 6.241 21.838 8.74 21.838 12c.003 6.435-3.4 9.838-9.84 9.838m0-19.118C5.844 2.72 2.72 5.843 2.72 12c0 6.154 3.12 9.278 9.278 9.278 6.16 0 9.28-3.12 9.28-9.278.003-6.16-3.12-9.28-9.28-9.28"
+                    d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.502 0 8.25 8.25 0 0 0 16.502 0"
                 />
             </svg>
         );

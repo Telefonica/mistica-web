@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconShoppingBagRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.998 1.81a3.625 3.625 0 0 0-3.625 3.625v1.75H5.4a1.5 1.5 0 0 0-1.496 1.4l-.73 10.934a2.5 2.5 0 0 0 2.495 2.666h12.656a2.5 2.5 0 0 0 2.494-2.666l-.729-10.934a1.5 1.5 0 0 0-1.496-1.4h-2.972v-1.75a3.625 3.625 0 0 0-3.625-3.625m2.375 6.625v2a.625.625 0 1 0 1.25 0v-2h2.972a.25.25 0 0 1 .25.233l.728 10.934a1.25 1.25 0 0 1-1.247 1.333H5.67a1.25 1.25 0 0 1-1.247-1.333l.729-10.934a.25.25 0 0 1 .25-.233h2.97v2a.625.625 0 1 0 1.25 0v-2zm0-1.25h-4.75v-1.75a2.375 2.375 0 0 1 4.75 0z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.998 1.81a3.625 3.625 0 0 0-3.625 3.625v1.75H5.4a1.5 1.5 0 0 0-1.496 1.4l-.73 10.934a2.5 2.5 0 0 0 2.495 2.666h12.656a2.5 2.5 0 0 0 2.494-2.666l-.729-10.934a1.5 1.5 0 0 0-1.496-1.4h-2.972v-1.75a3.625 3.625 0 0 0-3.625-3.625m2.375 6.625v2a.625.625 0 1 0 1.25 0v-2h2.972a.25.25 0 0 1 .25.233l.728 10.934a1.25 1.25 0 0 1-1.247 1.333H5.67a1.25 1.25 0 0 1-1.247-1.333l.729-10.934a.25.25 0 0 1 .25-.233h2.97v2a.625.625 0 1 0 1.25 0v-2zm0-1.25h-4.75v-1.75a2.375 2.375 0 0 1 4.75 0z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.185 2.255A3.75 3.75 0 0 1 15.75 6v1.264a3.75 3.75 0 0 1 3.384 3.166l1.255 8.152a2.754 2.754 0 0 1-1.57 2.917c-.36.165-.753.251-1.15.251H6.332a2.75 2.75 0 0 1-2.718-3.168l1.255-8.152A3.75 3.75 0 0 1 8.25 7.264V6A3.75 3.75 0 0 1 12 2.25zM9.75 8.75V11a.75.75 0 0 1-1.5 0V8.774a2.25 2.25 0 0 0-1.9 1.884l-1.254 8.153a1.25 1.25 0 0 0 .713 1.325c.164.075.342.114.522.114H17.67a1.25 1.25 0 0 0 1.236-1.44l-1.255-8.152a2.25 2.25 0 0 0-1.901-1.884V11a.75.75 0 0 1-1.5 0V8.75zm2.25-5A2.25 2.25 0 0 0 9.75 6v1.25h4.5V6a2.25 2.25 0 0 0-2.027-2.24z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconShoppingBagRegular;

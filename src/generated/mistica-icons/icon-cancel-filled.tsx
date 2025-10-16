@@ -16,7 +16,16 @@ const IconCancelFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M1 12.003C1 4.51 5.048 1 11.997 1 18.947 1 23 4.51 23 12.003S18.946 23 11.997 23C5.047 23 1 19.497 1 12.003m16.362 5.366a.69.69 0 0 0 0-.974L12.964 12l4.398-4.395a.688.688 0 1 0-.973-.974l-4.395 4.399L7.61 6.647a.684.684 0 0 0-.97 0 .684.684 0 0 0 0 .97L11.023 12l-4.382 4.383a.688.688 0 0 0 .97.973l4.383-4.383 4.395 4.396a.69.69 0 0 0 .973 0"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconCancelFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M1 12.003C1 4.51 5.048 1 11.997 1 18.947 1 23 4.51 23 12.003S18.946 23 11.997 23C5.047 23 1 19.497 1 12.003m16.362 5.366a.69.69 0 0 0 0-.974L12.964 12l4.398-4.395a.688.688 0 1 0-.973-.974l-4.395 4.399L7.61 6.647a.684.684 0 0 0-.97 0 .684.684 0 0 0 0 .97L11.023 12l-4.382 4.383a.688.688 0 0 0 .97.973l4.383-4.383 4.395 4.396a.69.69 0 0 0 .973 0"
+                    d="M12 2.5a9.5 9.5 0 0 1 9.5 9.5l-.012.467a9.5 9.5 0 0 1-9.021 9.021L12 21.5a9.5 9.5 0 0 1-9.488-9.033L2.5 12A9.5 9.5 0 0 1 12 2.5m3.53 5.97a.75.75 0 0 0-1.06 0L12 10.94 9.53 8.47a.75.75 0 1 0-1.06 1.06L10.94 12l-2.47 2.47a.75.75 0 1 0 1.06 1.06L12 13.06l2.47 2.47a.75.75 0 0 0 1.06-1.06L13.06 12l2.47-2.47a.75.75 0 0 0 0-1.06"
                 />
             </svg>
         );

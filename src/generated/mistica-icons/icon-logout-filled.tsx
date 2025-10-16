@@ -29,7 +29,7 @@ const IconLogoutFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,19 @@ const IconLogoutFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 <path
                     fill={fillColor}
                     d="M12.06 11.464H3.508l1.394-1.392a.517.517 0 0 0 0-.752.52.52 0 0 0-.753 0L1.5 12l2.649 2.712a.54.54 0 0 0 .397.144.55.55 0 0 0 .396-.144.517.517 0 0 0 0-.752l-1.394-1.392h8.548a.553.553 0 0 0 .537-.536c-.004-.284-.288-.568-.573-.568"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 3.5A2.5 2.5 0 0 1 21.5 6v12a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 9.5 18v-3.35c0-.22.18-.4.4-.4H15a2.25 2.25 0 0 0 2.238-2.02l.012-.23A2.25 2.25 0 0 0 15 9.75H9.9a.4.4 0 0 1-.4-.4V6A2.5 2.5 0 0 1 12 3.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M5.47 8.47a.75.75 0 1 1 1.06 1.06l-1.72 1.72H15a.75.75 0 0 1 0 1.5H4.81l1.72 1.72a.75.75 0 0 1-1.06 1.06l-3-3-.037-.04-.015-.016a.7.7 0 0 1-.111-.187 1 1 0 0 1-.04-.132q-.003-.015-.005-.032a1 1 0 0 1-.01-.102l-.001-.036q.001-.054.01-.109l.005-.027a1 1 0 0 1 .034-.117l.018-.042a1 1 0 0 1 .073-.127l.011-.015.016-.022.052-.056z"
                 />
             </svg>
         );

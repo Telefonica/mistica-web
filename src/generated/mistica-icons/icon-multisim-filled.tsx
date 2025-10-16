@@ -33,7 +33,7 @@ const IconMultisimFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -47,6 +47,19 @@ const IconMultisimFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                 <path
                     fill={fillColor}
                     d="M13.83 12.164H7.736a.083.083 0 0 0-.082.084v6.008h6.26v-6.008a.086.086 0 0 0-.082-.084"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 4.5c.645 0 1.274.228 1.746.647.474.422.754 1.006.754 1.63v12.446c0 .624-.28 1.208-.754 1.63-.472.42-1.1.647-1.746.647H5a2.63 2.63 0 0 1-1.746-.648 2.18 2.18 0 0 1-.754-1.63v-9.041c0-.625.28-1.21.754-1.631l3.828-3.403c.472-.42 1.1-.647 1.746-.647zm-7.5 6.25a1.75 1.75 0 0 0-1.75 1.75v4c0 .966.784 1.75 1.75 1.75h5a1.75 1.75 0 0 0 1.75-1.75v-4a1.75 1.75 0 0 0-1.75-1.75z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M18 1.25c.703 0 1.392.247 1.913.71.523.465.837 1.117.837 1.817v12.446a.75.75 0 0 1-1.5 0V3.777a.94.94 0 0 0-.334-.696A1.39 1.39 0 0 0 18 2.75h-6.172a.75.75 0 0 1 0-1.5z"
                 />
             </svg>
         );

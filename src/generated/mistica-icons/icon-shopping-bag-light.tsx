@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconShoppingBagLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M5.401 7.385h3.172v-1.95a3.425 3.425 0 1 1 6.85 0v1.95h3.172a1.3 1.3 0 0 1 1.297 1.214l.729 10.933a2.3 2.3 0 0 1-2.295 2.453H5.67a2.3 2.3 0 0 1-2.295-2.453L4.105 8.6A1.3 1.3 0 0 1 5.4 7.385m9.172 3.05v-2.2h-5.15v2.2a.425.425 0 1 1-.85 0v-2.2H5.4a.45.45 0 0 0-.449.42L4.223 19.59a1.45 1.45 0 0 0 1.447 1.546h12.656a1.45 1.45 0 0 0 1.447-1.546l-.73-10.934a.45.45 0 0 0-.448-.42h-3.172v2.2a.425.425 0 1 1-.85 0m-5.15-3.05h5.15v-1.95a2.575 2.575 0 0 0-5.15 0z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.401 7.385h3.172v-1.95a3.425 3.425 0 1 1 6.85 0v1.95h3.172a1.3 1.3 0 0 1 1.297 1.214l.729 10.933a2.3 2.3 0 0 1-2.295 2.453H5.67a2.3 2.3 0 0 1-2.295-2.453L4.105 8.6A1.3 1.3 0 0 1 5.4 7.385m9.172 3.05v-2.2h-5.15v2.2a.425.425 0 1 1-.85 0v-2.2H5.4a.45.45 0 0 0-.449.42L4.223 19.59a1.45 1.45 0 0 0 1.447 1.546h12.656a1.45 1.45 0 0 0 1.447-1.546l-.73-10.934a.45.45 0 0 0-.448-.42h-3.172v2.2a.425.425 0 1 1-.85 0m-5.15-3.05h5.15v-1.95a2.575 2.575 0 0 0-5.15 0z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.185 2.255A3.75 3.75 0 0 1 15.75 6v1.264a3.75 3.75 0 0 1 3.384 3.166l1.255 8.152a2.754 2.754 0 0 1-1.57 2.917c-.36.165-.753.251-1.15.251H6.332a2.75 2.75 0 0 1-2.718-3.168l1.255-8.152A3.75 3.75 0 0 1 8.25 7.264V6A3.75 3.75 0 0 1 12 2.25zM9.75 8.75V11a.75.75 0 0 1-1.5 0V8.774a2.25 2.25 0 0 0-1.9 1.884l-1.254 8.153a1.25 1.25 0 0 0 .713 1.325c.164.075.342.114.522.114H17.67a1.25 1.25 0 0 0 1.236-1.44l-1.255-8.152a2.25 2.25 0 0 0-1.901-1.884V11a.75.75 0 0 1-1.5 0V8.75zm2.25-5A2.25 2.25 0 0 0 9.75 6v1.25h4.5V6a2.25 2.25 0 0 0-2.027-2.24z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconShoppingBagLight;

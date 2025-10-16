@@ -16,7 +16,16 @@ const IconSendRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3 3.901a.904.904 0 0 1 1.308-.807l15.591 7.755a.907.907 0 0 1 .004 1.618L4.34 20.302a.906.906 0 0 1-1.292-.99l1.576-7.67-1.602-7.547A.8.8 0 0 1 3 3.901m1.186.366 1.567 7.37-1.54 7.492 14.836-7.472z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconSendRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M3 3.901a.904.904 0 0 1 1.308-.807l15.591 7.755a.907.907 0 0 1 .004 1.618L4.34 20.302a.906.906 0 0 1-1.292-.99l1.576-7.67-1.602-7.547A.8.8 0 0 1 3 3.901m1.186.366 1.567 7.37-1.54 7.492 14.836-7.472z"
+                    d="m4.79 3.28.176.054.06.026 16.302 7.966a1 1 0 0 1 .078.044l.014.009a.8.8 0 0 1 .187.184q.01.014.02.027.033.052.059.109.007.016.012.034a.8.8 0 0 1 .051.268.8.8 0 0 1-.05.26q-.006.021-.014.041a1 1 0 0 1-.054.1q-.016.024-.034.047a1 1 0 0 1-.052.061l-.027.03a1 1 0 0 1-.13.1q-.03.017-.06.034L5.028 20.641l-.06.027a1.254 1.254 0 0 1-1.473-.449 1.3 1.3 0 0 1-.17-1.196L5.708 12 3.326 4.978a1.3 1.3 0 0 1-.048-.707l.049-.173a1.3 1.3 0 0 1 .28-.456v.001c.171-.18.39-.306.633-.361l.183-.027q.185-.014.366.026m.116 15.749 12.848-6.278H7.037zm2.13-7.78h10.718L4.906 4.972z"
                 />
             </svg>
         );

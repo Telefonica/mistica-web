@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconTongueRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M20.708 4.081a.624.624 0 0 1 .854-.17c.283.184.364.56.177.834-.815 1.21-1.9 2.151-3.213 2.846l.007.02q.007.017.01.036c.067.807.1 1.689.1 2.703 0 5.913-1.126 9.852-6.63 9.852S5.38 16.263 5.38 10.35c0-1.036.037-1.938.107-2.754-1.323-.697-2.412-1.641-3.23-2.86a.596.596 0 0 1 .176-.837.625.625 0 0 1 .855.174c1.652 2.467 4.585 3.72 8.714 3.72 4.123 0 7.053-1.25 8.706-3.712M12.01 18.997c4.037 0 5.398-2.182 5.398-8.641 0-.824-.022-1.555-.07-2.224q-2.046.772-4.73.851l.038 7.048a.61.61 0 0 1-.613.608h-.003a.61.61 0 0 1-.616-.603l-.04-7.056Q8.715 8.9 6.68 8.137a33 33 0 0 0-.067 2.219c0 6.459 1.361 8.641 5.397 8.641"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.708 4.081a.624.624 0 0 1 .854-.17c.283.184.364.56.177.834-.815 1.21-1.9 2.151-3.213 2.846l.007.02q.007.017.01.036c.067.807.1 1.689.1 2.703 0 5.913-1.126 9.852-6.63 9.852S5.38 16.263 5.38 10.35c0-1.036.037-1.938.107-2.754-1.323-.697-2.412-1.641-3.23-2.86a.596.596 0 0 1 .176-.837.625.625 0 0 1 .855.174c1.652 2.467 4.585 3.72 8.714 3.72 4.123 0 7.053-1.25 8.706-3.712M12.01 18.997c4.037 0 5.398-2.182 5.398-8.641 0-.824-.022-1.555-.07-2.224q-2.046.772-4.73.851l.038 7.048a.61.61 0 0 1-.613.608h-.003a.61.61 0 0 1-.616-.603l-.04-7.056Q8.715 8.9 6.68 8.137a33 33 0 0 0-.067 2.219c0 6.459 1.361 8.641 5.397 8.641"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 5.25a.75.75 0 0 1 0 1.5h-2.25V13a5.75 5.75 0 0 1-11.5 0V6.75H4a.75.75 0 0 1 0-1.5zM7.75 13a4.25 4.25 0 0 0 8.5 0V6.75h-3.5v4.65a.75.75 0 0 1-1.5 0V6.75h-3.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTongueRegular;

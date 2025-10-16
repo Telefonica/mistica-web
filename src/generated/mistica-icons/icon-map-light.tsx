@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconMapLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m16.919 2.16 4.583.754a.41.41 0 0 1 .341.406V20.68a.409.409 0 0 1-.476.403l-4.487-.74-4.76 1.48a.4.4 0 0 1-.246-.003l-4.56-1.476-4.68.736-.007.001-.058.005a.41.41 0 0 1-.41-.409V3.32a.41.41 0 0 1 .348-.406l4.776-.753.014.001.014.001.016-.004.02-.004q.028.001.053.01l.029.007h.019a.1.1 0 0 1 .026.003l4.532 1.467 4.728-1.47a.1.1 0 0 1 .026-.003h.019l.03-.007a.2.2 0 0 1 .046-.007l.018.004.018.004.01-.001a.04.04 0 0 1 .018-.001M2.981 3.67v16.527l3.958-.625V3.046zm18.045 16.524V3.668l-3.762-.62v16.527zM16.443 3.121l-4.031 1.255v16.496l4.03-1.252zm-8.684.009v16.493l3.835 1.243V4.374z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m16.919 2.16 4.583.754a.41.41 0 0 1 .341.406V20.68a.409.409 0 0 1-.476.403l-4.487-.74-4.76 1.48a.4.4 0 0 1-.246-.003l-4.56-1.476-4.68.736-.007.001-.058.005a.41.41 0 0 1-.41-.409V3.32a.41.41 0 0 1 .348-.406l4.776-.753.014.001.014.001.016-.004.02-.004q.028.001.053.01l.029.007h.019a.1.1 0 0 1 .026.003l4.532 1.467 4.728-1.47a.1.1 0 0 1 .026-.003h.019l.03-.007a.2.2 0 0 1 .046-.007l.018.004.018.004.01-.001a.04.04 0 0 1 .018-.001M2.981 3.67v16.527l3.958-.625V3.046zm18.045 16.524V3.668l-3.762-.62v16.527zM16.443 3.121l-4.031 1.255v16.496l4.03-1.252zm-8.684.009v16.493l3.835 1.243V4.374z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.02 3.251a1 1 0 0 1 .083.007l.026.004.035.008q.06.012.117.035l.025.01.029.014L15 6.161l5.665-2.832A.75.75 0 0 1 21.75 4v13a.75.75 0 0 1-.415.67l-6 3q-.012.006-.025.01a.8.8 0 0 1-.19.06l-.039.005a.8.8 0 0 1-.163 0q-.019-.002-.038-.006a.7.7 0 0 1-.192-.058l-.023-.01L9 17.838 3.335 20.67A.75.75 0 0 1 2.25 20V7a.75.75 0 0 1 .415-.67l6-3 .027-.013.034-.014.02-.008a1 1 0 0 1 .124-.033l.035-.006.046-.004.03-.001L9 3.25zM3.75 7.463v11.323l4.5-2.25V5.213zm6 9.073 4.5 2.25V7.463l-4.5-2.25zm6-9.073v11.323l4.5-2.25V5.213z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconMapLight;

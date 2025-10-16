@@ -16,7 +16,16 @@ const IconTagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.505 2.155c.739.003 1.336.602 1.341 1.339v.003h-.005v8.308c-.076.42-.28.804-.589 1.1l-8.327 8.27c-.275.327-.647.56-1.062.66a1.5 1.5 0 0 1-.274 0 1.13 1.13 0 0 1-.83-.33l-8.288-8.269a1.553 1.553 0 0 1 .291-2.157l8.336-8.327a2.13 2.13 0 0 1 1.062-.597zM15.82 5.71c-.32.277-.515.672-.546 1.092v.022c.033.432.235.835.563 1.118.291.325.697.521 1.134.546a1.6 1.6 0 0 0 1.118-.546c.32-.274.512-.664.538-1.084a1.66 1.66 0 0 0-.563-1.132 1.65 1.65 0 0 0-1.135-.554c-.428.02-.829.213-1.109.538"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconTagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20.505 2.155c.739.003 1.336.602 1.341 1.339v.003h-.005v8.308c-.076.42-.28.804-.589 1.1l-8.327 8.27c-.275.327-.647.56-1.062.66a1.5 1.5 0 0 1-.274 0 1.13 1.13 0 0 1-.83-.33l-8.288-8.269a1.553 1.553 0 0 1 .291-2.157l8.336-8.327a2.13 2.13 0 0 1 1.062-.597zM15.82 5.71c-.32.277-.515.672-.546 1.092v.022c.033.432.235.835.563 1.118.291.325.697.521 1.134.546a1.6 1.6 0 0 0 1.118-.546c.32-.274.512-.664.538-1.084a1.66 1.66 0 0 0-.563-1.132 1.65 1.65 0 0 0-1.135-.554c-.428.02-.829.213-1.109.538"
+                    d="M11.172 2.5a2.5 2.5 0 0 1 1.768.732l7.71 7.71a2.91 2.91 0 0 1 0 4.116l-5.592 5.591a2.91 2.91 0 0 1-4.116 0l-7.71-7.71a2.5 2.5 0 0 1-.732-1.767V6A3.5 3.5 0 0 1 6 2.5zM7.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"
                 />
             </svg>
         );

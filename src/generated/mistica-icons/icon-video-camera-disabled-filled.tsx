@@ -16,7 +16,16 @@ const IconVideoCameraDisabledFilled = ({color, size = 24, ...rest}: IconProps): 
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.512 3.069a.62.62 0 0 0-.877.046L2.382 20.057a.618.618 0 0 0 .463 1.034c.15 0 .339-.069.463-.205l15.25-16.94a.62.62 0 0 0-.046-.874zM14.625 4.74H4.33a2.33 2.33 0 0 0-2.33 2.328v9.868c0 .502.161.968.431 1.35zm-8.38 3.634a.604.604 0 1 1 0 1.21.604.604 0 1 1 0-1.21M20.826 6.941a.8.8 0 0 1 .786.013h-.003a.8.8 0 0 1 .391.682v8.732a.793.793 0 0 1-1.193.683l-3.624-2.026v1.911a2.33 2.33 0 0 1-2.33 2.327H6.314L17.183 7.19v1.787z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -30,7 +39,7 @@ const IconVideoCameraDisabledFilled = ({color, size = 24, ...rest}: IconProps): 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.512 3.069a.62.62 0 0 0-.877.046L2.382 20.057a.618.618 0 0 0 .463 1.034c.15 0 .339-.069.463-.205l15.25-16.94a.62.62 0 0 0-.046-.874zM14.625 4.74H4.33a2.33 2.33 0 0 0-2.33 2.328v9.868c0 .502.161.968.431 1.35zm-8.38 3.634a.604.604 0 1 1 0 1.21.604.604 0 1 1 0-1.21M20.826 6.941a.8.8 0 0 1 .786.013h-.003a.8.8 0 0 1 .391.682v8.732a.793.793 0 0 1-1.193.683l-3.624-2.026v1.911a2.33 2.33 0 0 1-2.33 2.327H6.314L17.183 7.19v1.787z"
+                    d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 1 1-1.06 1.06l-4.818-4.817a2.75 2.75 0 0 1-.708 1.231A2.75 2.75 0 0 1 13 18.75H5A2.75 2.75 0 0 1 2.25 16V8a2.75 2.75 0 0 1 2.036-2.653L2.47 3.53a.75.75 0 0 1 0-1.06M13 5.25A2.75 2.75 0 0 1 15.75 8v.786l3.468-1.733.205-.087a1.752 1.752 0 0 1 2.327 1.651v6.765l-.005.136a1.75 1.75 0 0 1-1.177 1.52.75.75 0 0 1-.773-.18L9.47 6.53A.75.75 0 0 1 10 5.25z"
                 />
             </svg>
         );

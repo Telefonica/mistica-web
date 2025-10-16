@@ -33,7 +33,7 @@ const IconConnectedCarFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -47,6 +47,19 @@ const IconConnectedCarFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                 <path
                     fill={fillColor}
                     d="M14.495 9.741a.71.71 0 0 1-.643-.404.7.7 0 0 1-.07-.27A4.235 4.235 0 0 0 9.178 4.85a.714.714 0 0 1-.57-1.192.71.71 0 0 1 .488-.229 5.63 5.63 0 0 1 4.26 1.453 5.67 5.67 0 0 1 1.852 4.13.714.714 0 0 1-.678.715z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7 5.25c.199 0 .39.08.53.22l4.78 4.78H13A2.75 2.75 0 0 1 15.75 13v4a.75.75 0 0 1-.75.75h-1.356a2.747 2.747 0 0 1-5.288 0H3a.75.75 0 0 1-.75-.75v-6a.75.75 0 0 1 .75-.75h1.25v-3.5H3a.75.75 0 0 1 0-1.5zm4 10.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m-5.25-5.5h4.44l-3.5-3.5h-.94zM12 5.25A6.75 6.75 0 0 1 18.75 12a.75.75 0 0 1-1.5 0c0-2.9-2.35-5.25-5.25-5.25a.75.75 0 0 1 0-1.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75a.75.75 0 0 1-1.5 0A8.25 8.25 0 0 0 12 3.75a.75.75 0 0 1 0-1.5"
                 />
             </svg>
         );

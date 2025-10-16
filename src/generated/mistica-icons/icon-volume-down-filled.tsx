@@ -25,12 +25,21 @@ const IconVolumeDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M15.703 21.63V2.368a.36.36 0 0 0-.185-.318.37.37 0 0 0-.37 0l-10.1 5.875H2.37a.37.37 0 0 0-.37.37v7.407c0 .204.166.37.37.37h2.679l10.1 5.876a.36.36 0 0 0 .37.005.37.37 0 0 0 .184-.323m1.484-10.371h4.073a.74.74 0 0 1 0 1.48h-4.073a.74.74 0 0 1 0-1.48"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.875 5.26a1 1 0 0 1 1.625.78v11.92a1 1 0 0 1-1.625.78l-4.05-3.24H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h1.824zM14.4 7.55a.75.75 0 0 1 1.05-.15 5.75 5.75 0 0 1 0 9.2.75.75 0 0 1-.9-1.2 4.26 4.26 0 0 0 1.7-3.4 4.25 4.25 0 0 0-1.7-3.4.75.75 0 0 1-.15-1.05"
                 />
             </svg>
         );

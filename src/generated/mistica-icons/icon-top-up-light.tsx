@@ -25,7 +25,7 @@ const IconTopUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -35,6 +35,15 @@ const IconTopUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                 <path
                     fill={fillColor}
                     d="M17.755 16.642c.386 0 .698-.32.698-.716a.707.707 0 0 0-.698-.715.707.707 0 0 0-.699.715c0 .396.313.716.699.716"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 9.25q.068 0 .132.012l.016.003q.02.005.04.011.05.012.098.03.044.021.083.045.087.047.161.119l4 4a.75.75 0 1 1-1.06 1.06l-2.72-2.72V20a.75.75 0 0 1-1.5 0v-8.19l-2.72 2.72a.75.75 0 1 1-1.06-1.06l4-4a.8.8 0 0 1 .16-.12q.037-.023.078-.041l.01-.004c.03-.013.062-.02.094-.029q.019-.006.039-.011l.016-.003A1 1 0 0 1 12 9.25M20 3.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5z"
                 />
             </svg>
         );

@@ -16,7 +16,16 @@ const IconCloseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.841 17.853a.722.722 0 0 0 .948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 0 0-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 0 0-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 0 0 1.086.947L12 13.022l4.767 4.767z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconCloseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M16.841 17.853a.722.722 0 0 0 .948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 0 0-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 0 0-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 0 0 1.086.947L12 13.022l4.767 4.767z"
+                    d="M17.47 5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 1 1 1.06-1.06L12 10.94z"
                 />
             </svg>
         );

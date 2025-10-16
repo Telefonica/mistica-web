@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconInformationRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12 1C5.935 1 1 5.935 1 12s4.935 11 11 11 11-4.935 11-11S18.065 1 12 1m-1.375 5.958a1.375 1.375 0 1 1 2.75 0 1.375 1.375 0 0 1-2.75 0m0 4.675c0-.809.616-1.466 1.375-1.466s1.375.657 1.375 1.466v4.4c0 .81-.616 1.467-1.375 1.467s-1.375-.656-1.375-1.467zM2.833 12A9.177 9.177 0 0 1 12 2.833 9.177 9.177 0 0 1 21.167 12 9.177 9.177 0 0 1 12 21.167 9.177 9.177 0 0 1 2.833 12"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 1C5.935 1 1 5.935 1 12s4.935 11 11 11 11-4.935 11-11S18.065 1 12 1m-1.375 5.958a1.375 1.375 0 1 1 2.75 0 1.375 1.375 0 0 1-2.75 0m0 4.675c0-.809.616-1.466 1.375-1.466s1.375.657 1.375 1.466v4.4c0 .81-.616 1.467-1.375 1.467s-1.375-.656-1.375-1.467zM2.833 12A9.177 9.177 0 0 1 12 2.833 9.177 9.177 0 0 1 21.167 12 9.177 9.177 0 0 1 12 21.167 9.177 9.177 0 0 1 2.833 12"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 0 1 0 2.25zM12 17.125A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 22.125a10.125 10.125 0 0 1-.498-20.237L12 1.875A10.126 10.126 0 0 1 22.125 12 10.125 10.125 0 0 1 12 22.125m0-2.25a7.875 7.875 0 0 0 0-15.75l-.388.01A7.875 7.875 0 0 0 12 19.875"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconInformationRegular;

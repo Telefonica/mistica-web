@@ -16,7 +16,20 @@ const IconChipSimCardLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.32 20h9.36c.18 0 .32-.137.32-.305v-9.39a.314.314 0 0 0-.32-.305H7.32a.314.314 0 0 0-.32.305v9.39c0 .168.144.305.32.305m9.04-6.411v2.822H7.64V13.59zm-2.486 5.8v-2.367h2.486v2.367zm-3.12-2.367h2.48v2.367h-2.48zm-3.114 0h2.474v2.367H7.64zm2.474-4.044H7.64v-2.367h2.474zm3.12 0h-2.48v-2.367h2.48zm3.126 0h-2.486v-2.367h2.486z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19 20V4a2 2 0 0 0-2-2h-6.793a.5.5 0 0 0-.353.146L5.146 6.854A.5.5 0 0 0 5 7.207V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2m-.5-16v16a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V7.207L10.207 2.5H17A1.5 1.5 0 0 1 18.5 4"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -47,11 +60,11 @@ const IconChipSimCardLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M7.32 20h9.36c.18 0 .32-.137.32-.305v-9.39a.314.314 0 0 0-.32-.305H7.32a.314.314 0 0 0-.32.305v9.39c0 .168.144.305.32.305m9.04-6.411v2.822H7.64V13.59zm-2.486 5.8v-2.367h2.486v2.367zm-3.12-2.367h2.48v2.367h-2.48zm-3.114 0h2.474v2.367H7.64zm2.474-4.044H7.64v-2.367h2.474zm3.12 0h-2.48v-2.367h2.48zm3.126 0h-2.486v-2.367h2.486z"
+                    d="M14.5 10.25a2.25 2.25 0 0 1 2.25 2.25v4a2.25 2.25 0 0 1-2.25 2.25h-5a2.25 2.25 0 0 1-2.25-2.25v-4a2.25 2.25 0 0 1 2.25-2.25zm-5 1.5a.75.75 0 0 0-.75.75v4c0 .414.336.75.75.75h5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 0-.75-.75z"
                 />
                 <path
                     fill={fillColor}
-                    d="M19 20V4a2 2 0 0 0-2-2h-6.793a.5.5 0 0 0-.353.146L5.146 6.854A.5.5 0 0 0 5 7.207V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2m-.5-16v16a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V7.207L10.207 2.5H17A1.5 1.5 0 0 1 18.5 4"
+                    d="M17 2.25A2.75 2.75 0 0 1 19.75 5v14A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V8.828c0-.73.29-1.429.806-1.944l3.828-3.828a2.75 2.75 0 0 1 1.944-.806zm-6.172 1.5c-.29 0-.57.101-.792.283l-.092.083-3.828 3.828a1.25 1.25 0 0 0-.366.884V19A1.25 1.25 0 0 0 7 20.25h10A1.25 1.25 0 0 0 18.25 19V5A1.25 1.25 0 0 0 17 3.75z"
                 />
             </svg>
         );

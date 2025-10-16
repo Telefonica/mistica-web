@@ -25,12 +25,21 @@ const IconPrinterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M22 7.925c0-1.224-.964-2.224-2.144-2.224h-2.5V2H6.644v3.705h-2.5C2.964 5.705 2 6.705 2 7.93v9.631h4.64V22h10.715v-4.444h4.641v-9.63zM8.073 3.481h7.858v2.225H8.073zm0 17.038v-7.407h7.858v7.407z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 2.25A2.75 2.75 0 0 1 17.75 5v3.5H19a2.5 2.5 0 0 1 2.5 2.5v4a2.5 2.5 0 0 1-2.5 2.5h-1.25V19A2.75 2.75 0 0 1 15 21.75H9A2.75 2.75 0 0 1 6.25 19v-1.5H5A2.5 2.5 0 0 1 2.5 15v-4A2.5 2.5 0 0 1 5 8.5h1.25V5A2.75 2.75 0 0 1 9 2.25zm-6 11.5A1.25 1.25 0 0 0 7.75 15v4l.006.124A1.25 1.25 0 0 0 9 20.25h6A1.25 1.25 0 0 0 16.25 19v-4A1.25 1.25 0 0 0 15 13.75zm0-10A1.25 1.25 0 0 0 7.75 5v3.5h8.5V5a1.25 1.25 0 0 0-1.126-1.244L15 3.75z"
                 />
             </svg>
         );

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconWashingMachineFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.229 3c1.915 0 3.585 1.319 3.758 3.107H4.031C4.204 4.319 5.874 3 7.789 3zM9.665 12.433c0-.92.77-1.664 1.72-1.664h1.156c.95 0 1.72.745 1.72 1.664v1.117c0 .918-.77 1.663-1.72 1.663h-1.156c-.95 0-1.72-.745-1.72-1.663z"
-            />
-            <path
-                fill={fillColor}
-                d="M20 7.566H4.014L4 16.136c0 1.75 1.422 3.118 3.183 3.371v.763c0 .403.338.73.755.73a.74.74 0 0 0 .754-.73v-.72h6.54v.72c0 .403.339.73.755.73a.743.743 0 0 0 .755-.73v-.755c1.79-.23 3.244-1.609 3.244-3.378zM8.156 12.433c0-1.725 1.446-3.124 3.23-3.124h1.155c1.783 0 3.23 1.399 3.23 3.124v1.117c0 1.724-1.447 3.123-3.23 3.123h-1.156c-1.783 0-3.23-1.399-3.23-3.123z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.229 3c1.915 0 3.585 1.319 3.758 3.107H4.031C4.204 4.319 5.874 3 7.789 3zM9.665 12.433c0-.92.77-1.664 1.72-1.664h1.156c.95 0 1.72.745 1.72 1.664v1.117c0 .918-.77 1.663-1.72 1.663h-1.156c-.95 0-1.72-.745-1.72-1.663z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M20 7.566H4.014L4 16.136c0 1.75 1.422 3.118 3.183 3.371v.763c0 .403.338.73.755.73a.74.74 0 0 0 .754-.73v-.72h6.54v.72c0 .403.339.73.755.73a.743.743 0 0 0 .755-.73v-.755c1.79-.23 3.244-1.609 3.244-3.378zM8.156 12.433c0-1.725 1.446-3.124 3.23-3.124h1.155c1.783 0 3.23 1.399 3.23 3.124v1.117c0 1.724-1.447 3.123-3.23 3.123h-1.156c-1.783 0-3.23-1.399-3.23-3.123z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2.5A2.5 2.5 0 0 1 19.5 5v14a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zm-5.336 12.17c-1.121-.56-2.207-.56-3.328 0a.75.75 0 0 1-.524.053 4.25 4.25 0 0 0 7.193 2.282 4.25 4.25 0 0 0 1.178-2.263c-1.496.698-3.025.676-4.519-.071M12 9.75a4.25 4.25 0 0 0-4.184 3.507c1.497-.699 3.026-.675 4.52.072 1.121.561 2.207.561 3.328 0a.74.74 0 0 1 .522-.053A4.25 4.25 0 0 0 12 9.75M8 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m3 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2m3 .25a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconWashingMachineFilled;

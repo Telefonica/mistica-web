@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconBookmarkFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M18.153 3.44v17.11c0 .496-.272.941-.723 1.16a1.4 1.4 0 0 1-.577.134 1.3 1.3 0 0 1-.79-.269l-3.731-3.67a.463.463 0 0 0-.644 0L7.99 21.542c-.442.337-.96.387-1.412.169a1.28 1.28 0 0 1-.73-1.16V3.44c0-.705.585-1.285 1.3-1.285h9.702c.726 0 1.303.58 1.303 1.286"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.153 3.44v17.11c0 .496-.272.941-.723 1.16a1.4 1.4 0 0 1-.577.134 1.3 1.3 0 0 1-.79-.269l-3.731-3.67a.463.463 0 0 0-.644 0L7.99 21.542c-.442.337-.96.387-1.412.169a1.28 1.28 0 0 1-.73-1.16V3.44c0-.705.585-1.285 1.3-1.285h9.702c.726 0 1.303.58 1.303 1.286"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 2.5A4.5 4.5 0 0 1 18.5 7v14a.5.5 0 0 1-.777.416l-5.584-3.723a.25.25 0 0 0-.278 0l-5.584 3.723A.5.5 0 0 1 5.5 21V7A4.5 4.5 0 0 1 10 2.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconBookmarkFilled;

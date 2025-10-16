@@ -16,7 +16,20 @@ const IconSearchFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.125 5.984a5.73 5.73 0 0 0-8.104 0 5.73 5.73 0 0 0 0 8.104 5.73 5.73 0 0 0 9.782-4.053 5.69 5.69 0 0 0-1.678-4.05"
+                />
+                <path
+                    fill={fillColor}
+                    d="M2.175 9.984a7.846 7.846 0 0 0 7.846 7.846 7.8 7.8 0 0 0 5.138-1.918l5.697 5.697a.55.55 0 0 0 .395.165.561.561 0 0 0 .398-.958l-5.704-5.704A7.848 7.848 0 0 0 4.473 4.435a7.85 7.85 0 0 0-2.298 5.55m12.67 4.726a.6.6 0 0 0-.095.094 6.73 6.73 0 0 1-9.485-.064A6.726 6.726 0 0 1 10.02 3.258a6.68 6.68 0 0 1 4.793 2.006 6.725 6.725 0 0 1 .03 9.446"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,11 +52,7 @@ const IconSearchFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.125 5.984a5.73 5.73 0 0 0-8.104 0 5.73 5.73 0 0 0 0 8.104 5.73 5.73 0 0 0 9.782-4.053 5.69 5.69 0 0 0-1.678-4.05"
-                />
-                <path
-                    fill={fillColor}
-                    d="M2.175 9.984a7.846 7.846 0 0 0 7.846 7.846 7.8 7.8 0 0 0 5.138-1.918l5.697 5.697a.55.55 0 0 0 .395.165.561.561 0 0 0 .398-.958l-5.704-5.704A7.848 7.848 0 0 0 4.473 4.435a7.85 7.85 0 0 0-2.298 5.55m12.67 4.726a.6.6 0 0 0-.095.094 6.73 6.73 0 0 1-9.485-.064A6.726 6.726 0 0 1 10.02 3.258a6.68 6.68 0 0 1 4.793 2.006 6.725 6.725 0 0 1 .03 9.446"
+                    d="M10.37 2.509A7.5 7.5 0 0 1 17.5 10l-.009.37a7.5 7.5 0 0 1-1.684 4.376l5.723 5.724a.75.75 0 1 1-1.06 1.06l-5.724-5.723A7.5 7.5 0 0 1 10 17.5a7.5 7.5 0 0 1-7.491-7.13L2.5 10A7.5 7.5 0 0 1 10 2.5z"
                 />
             </svg>
         );

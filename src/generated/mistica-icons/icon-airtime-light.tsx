@@ -29,7 +29,7 @@ const IconAirtimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +39,23 @@ const IconAirtimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 <path
                     fill={fillColor}
                     d="M17.175 5.576a.35.35 0 0 0-.348.356V7.36h-1.042a.35.35 0 0 0-.347.356c0 .197.156.357.347.357h1.39c.191 0 .347-.16.347-.356V5.927a.35.35 0 0 0-.347-.352"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8 4.25a.75.75 0 0 1 0 1.5H7c-.69 0-1.25.56-1.25 1.25v12c0 .69.56 1.25 1.25 1.25h6c.69 0 1.25-.56 1.25-1.25v-2a.75.75 0 0 1 1.5 0v2A2.75 2.75 0 0 1 13 21.75H7A2.75 2.75 0 0 1 4.25 19V7A2.75 2.75 0 0 1 7 4.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M10 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2M16 5.25a.75.75 0 0 1 .75.75v1.002l.968.968a.75.75 0 1 1-1.06 1.06L15.47 7.843a.75.75 0 0 1-.22-.53V6a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21 2.25a.75.75 0 0 1 .75.75v8a.75.75 0 0 1-.75.75h-2.823l-3.842 1.92A.75.75 0 0 1 13.25 13v-1.25H11a.75.75 0 0 1-.75-.75V3a.75.75 0 0 1 .75-.75zm-9.25 8H14a.75.75 0 0 1 .75.75v.786l2.915-1.457.08-.034A.8.8 0 0 1 18 10.25h2.25v-6.5h-8.5z"
                 />
             </svg>
         );

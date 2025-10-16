@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconMoonFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.296 16.355a.42.42 0 0 0-.493-.056c-1.432.812-2.972.96-3.77.98-.2.008-.449.008-.673.008-1.605-.022-6.837-.616-6.837-7.17 0-4.835 2.792-6.446 5.134-6.947a.42.42 0 0 0-.011-.824 11.7 11.7 0 0 0-1.796-.187l-.896-.009c-2.202.031-9.39.82-9.39 9.818 0 1.622.457 9.723 9.457 9.871.297 0 .616 0 .874-.008 1.462-.023 6.395-.457 8.496-4.992a.415.415 0 0 0-.095-.484"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.296 16.355a.42.42 0 0 0-.493-.056c-1.432.812-2.972.96-3.77.98-.2.008-.449.008-.673.008-1.605-.022-6.837-.616-6.837-7.17 0-4.835 2.792-6.446 5.134-6.947a.42.42 0 0 0-.011-.824 11.7 11.7 0 0 0-1.796-.187l-.896-.009c-2.202.031-9.39.82-9.39 9.818 0 1.622.457 9.723 9.457 9.871.297 0 .616 0 .874-.008 1.462-.023 6.395-.457 8.496-4.992a.415.415 0 0 0-.095-.484"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.079 2.5h.314a.502.502 0 0 1 .341.866 7 7 0 0 0-1.14 8.887 7 7 0 0 0 8.532 2.73.5.5 0 0 1 .649.654 9.503 9.503 0 0 1-12.84 4.94 9.5 9.5 0 0 1 4.066-18.085q.039.001.078.008"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconMoonFilled;

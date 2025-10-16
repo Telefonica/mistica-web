@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconMuseumFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.818 9.392a.61.61 0 0 1-.585.432V9.82h-1.799v7.852h1.745c.34 0 .614.277.614.616v2.938a.616.616 0 0 1-.614.616H2.824a.616.616 0 0 1-.614-.616V18.29c0-.34.275-.616.614-.616h1.778V9.82H2.773a.61.61 0 0 1-.585-.431.62.62 0 0 1 .235-.69l9.23-6.43a.62.62 0 0 1 .7 0l9.23 6.43a.63.63 0 0 1 .235.692M8.233 17.675h1.974V9.824H8.233zm5.599 0h1.975V9.824h-1.975z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.818 9.392a.61.61 0 0 1-.585.432V9.82h-1.799v7.852h1.745c.34 0 .614.277.614.616v2.938a.616.616 0 0 1-.614.616H2.824a.616.616 0 0 1-.614-.616V18.29c0-.34.275-.616.614-.616h1.778V9.82H2.773a.61.61 0 0 1-.585-.431.62.62 0 0 1 .235-.69l9.23-6.43a.62.62 0 0 1 .7 0l9.23 6.43a.63.63 0 0 1 .235.692M8.233 17.675h1.974V9.824H8.233zm5.599 0h1.975V9.824h-1.975z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 18.869c.349 0 .632.282.632.631v.238a1.895 1.895 0 0 1-1.895 1.894H4.263a1.896 1.896 0 0 1-1.895-1.894V19.5c0-.349.283-.631.632-.631zM20 9.369c.349 0 .632.283.632.631v7a.63.63 0 0 1-.632.632H4A.63.63 0 0 1 3.368 17v-7c0-.348.283-.632.632-.632zM8 11.25a.75.75 0 0 0-.75.75v3a.75.75 0 0 0 1.5 0v-3a.75.75 0 0 0-.75-.75m4 0a.75.75 0 0 0-.75.75v3a.75.75 0 0 0 1.5 0v-3a.75.75 0 0 0-.75-.75m4 0a.75.75 0 0 0-.75.75v3a.75.75 0 0 0 1.5 0v-3a.75.75 0 0 0-.75-.75M11.775 2.41a.63.63 0 0 1 .52.032l8.5 4.5a.633.633 0 0 1-.295 1.19h-17a.632.632 0 0 1-.296-1.19l8.5-4.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconMuseumFilled;

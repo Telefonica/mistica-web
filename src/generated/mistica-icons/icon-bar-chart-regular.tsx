@@ -16,7 +16,16 @@ const IconBarChartRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-1 2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zM9 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zM3 12a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -30,7 +39,7 @@ const IconBarChartRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M17 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-1 2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zM9 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zM3 12a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1z"
+                    d="M5.5 11.25a2.25 2.25 0 0 1 2.25 2.25v5a2.25 2.25 0 0 1-2.25 2.25h-1a2.25 2.25 0 0 1-2.25-2.25v-5a2.25 2.25 0 0 1 2.25-2.25zm-1 1.5a.75.75 0 0 0-.75.75v5c0 .414.336.75.75.75h1a.75.75 0 0 0 .75-.75v-5a.75.75 0 0 0-.75-.75zM12.5 3.25a2.25 2.25 0 0 1 2.25 2.25v13a2.25 2.25 0 0 1-2.25 2.25h-1a2.25 2.25 0 0 1-2.25-2.25v-13a2.25 2.25 0 0 1 2.25-2.25zm-1 1.5a.75.75 0 0 0-.75.75v13c0 .414.336.75.75.75h1a.75.75 0 0 0 .75-.75v-13a.75.75 0 0 0-.75-.75zM19.5 7.25a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-1a2.25 2.25 0 0 1-2.25-2.25v-9a2.25 2.25 0 0 1 2.25-2.25zm-1 1.5a.75.75 0 0 0-.75.75v9c0 .414.336.75.75.75h1a.75.75 0 0 0 .75-.75v-9a.75.75 0 0 0-.75-.75z"
                 />
             </svg>
         );

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconTrendDownLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.837 14.878v3.68c0 .23-.188.415-.415.412h-3.73a.414.414 0 0 1-.424-.406v-.006c0-.23.185-.411.423-.411h2.81L14.526 9.86l-7.563 3.235a.43.43 0 0 1-.532-.174L2.207 5.648a.414.414 0 0 1 .154-.566q.003-.003.008-.005a.436.436 0 0 1 .577.156l4.036 6.956 7.522-3.219a.416.416 0 0 1 .515.14l5.972 8.275v-2.51c0-.23.185-.412.423-.412a.417.417 0 0 1 .423.415"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.837 14.878v3.68c0 .23-.188.415-.415.412h-3.73a.414.414 0 0 1-.424-.406v-.006c0-.23.185-.411.423-.411h2.81L14.526 9.86l-7.563 3.235a.43.43 0 0 1-.532-.174L2.207 5.648a.414.414 0 0 1 .154-.566q.003-.003.008-.005a.436.436 0 0 1 .577.156l4.036 6.956 7.522-3.219a.416.416 0 0 1 .515.14l5.972 8.275v-2.51c0-.23.185-.412.423-.412a.417.417 0 0 1 .423.415"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.47 6.47a.75.75 0 0 1 1.06 0L9 11.94l3.47-3.47.056-.052a.75.75 0 0 1 1.004.052l6.72 6.72V10a.75.75 0 0 1 1.5 0v7a.7.7 0 0 1-.058.286.75.75 0 0 1-.264.328.8.8 0 0 1-.142.078q-.048.02-.099.03-.019.008-.039.012l-.017.003q-.027.005-.055.009L21 17.75h-7a.75.75 0 0 1 0-1.5h5.19L13 10.06l-3.47 3.47a.75.75 0 0 1-1.06 0l-6-6a.75.75 0 0 1 0-1.06"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTrendDownLight;

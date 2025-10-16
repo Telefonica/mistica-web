@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineDownLeftLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M7.132 16.224 7.094 6.87a.47.47 0 0 0-.733-.44.48.48 0 0 0-.2.469l.064 10.447a.13.13 0 0 0 .012.08q.024.03.053.053a.46.46 0 0 0 .253.253q.024.03.053.053a.3.3 0 0 0 .087.02l10.253.017a.45.45 0 0 0 .354-.141.46.46 0 0 0-.325-.792h-9.17l9.908-9.907a.47.47 0 0 0 .001-.665.47.47 0 0 0-.664.001z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.132 16.224 7.094 6.87a.47.47 0 0 0-.733-.44.48.48 0 0 0-.2.469l.064 10.447a.13.13 0 0 0 .012.08q.024.03.053.053a.46.46 0 0 0 .253.253q.024.03.053.053a.3.3 0 0 0 .087.02l10.253.017a.45.45 0 0 0 .354-.141.46.46 0 0 0-.325-.792h-9.17l9.908-9.907a.47.47 0 0 0 .001-.665.47.47 0 0 0-.664.001z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.47 6.47a.75.75 0 1 1 1.06 1.06l-8.72 8.72H16a.75.75 0 0 1 0 1.5H7l-.077-.004q-.028-.003-.056-.009l-.016-.003q-.02-.005-.04-.011-.05-.012-.098-.03-.044-.02-.083-.045a.8.8 0 0 1-.16-.118.75.75 0 0 1-.22-.53V8a.75.75 0 0 1 1.5 0v7.19z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineDownLeftLight;

@@ -16,7 +16,16 @@ const IconBarChartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2h1a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2M12 6h-1a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M6 10H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -30,7 +39,7 @@ const IconBarChartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M17 2h1a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2M12 6h-1a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M6 10H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2"
+                    d="M5.5 11.5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2zM12.5 3.5a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2zM19.5 7.5a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z"
                 />
             </svg>
         );

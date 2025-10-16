@@ -16,7 +16,20 @@ const IconTrashCanRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10 10.25a.75.75 0 0 1 .743.648l.007.102v6a.75.75 0 0 1-1.493.102L9.25 17v-6a.75.75 0 0 1 .75-.75M14.743 10.898A.75.75 0 0 0 13.25 11v6l.007.102A.75.75 0 0 0 14.75 17v-6z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16.745 4.447C16.667 3.23 15.702 2.25 14.5 2.25h-5l-.155.006C8.165 2.339 7.25 3.37 7.25 4.607V6.25H3l-.102.007A.75.75 0 0 0 3 7.75h1.25V18.5a3.25 3.25 0 0 0 3.25 3.25h9a3.25 3.25 0 0 0 3.25-3.25V7.75H21l.102-.007A.75.75 0 0 0 21 6.25h-4.25V4.607zM15.25 6.25h-6.5V4.607l.006-.11c.048-.43.373-.747.744-.747h5l.092.006c.361.052.658.404.658.851zm-9.5 1.5h12.5V18.5a1.75 1.75 0 0 1-1.75 1.75h-9l-.144-.006A1.75 1.75 0 0 1 5.75 18.5z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -47,11 +60,11 @@ const IconTrashCanRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M10 10.25a.75.75 0 0 1 .743.648l.007.102v6a.75.75 0 0 1-1.493.102L9.25 17v-6a.75.75 0 0 1 .75-.75M14.743 10.898A.75.75 0 0 0 13.25 11v6l.007.102A.75.75 0 0 0 14.75 17v-6z"
+                    d="M10 10.25a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 .75-.75M14 10.25a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 .75-.75"
                 />
                 <path
                     fill={fillColor}
-                    d="M16.745 4.447C16.667 3.23 15.702 2.25 14.5 2.25h-5l-.155.006C8.165 2.339 7.25 3.37 7.25 4.607V6.25H3l-.102.007A.75.75 0 0 0 3 7.75h1.25V18.5a3.25 3.25 0 0 0 3.25 3.25h9a3.25 3.25 0 0 0 3.25-3.25V7.75H21l.102-.007A.75.75 0 0 0 21 6.25h-4.25V4.607zM15.25 6.25h-6.5V4.607l.006-.11c.048-.43.373-.747.744-.747h5l.092.006c.361.052.658.404.658.851zm-9.5 1.5h12.5V18.5a1.75 1.75 0 0 1-1.75 1.75h-9l-.144-.006A1.75 1.75 0 0 1 5.75 18.5z"
+                    d="M14 2.25A1.75 1.75 0 0 1 15.75 4v2.25H20a.75.75 0 0 1 0 1.5h-.31l-.943 11.313A2.747 2.747 0 0 1 16 21.75H8a2.75 2.75 0 0 1-2.747-2.687L4.31 7.75H4a.75.75 0 0 1 0-1.5h4.25V4A1.75 1.75 0 0 1 10 2.25zM6.747 18.938q.003.03.003.062A1.25 1.25 0 0 0 8 20.25h8A1.25 1.25 0 0 0 17.25 19q0-.031.003-.062l.933-11.188H5.814zM10 3.75a.25.25 0 0 0-.25.25v2.25h4.5V4a.25.25 0 0 0-.201-.245L14 3.75z"
                 />
             </svg>
         );

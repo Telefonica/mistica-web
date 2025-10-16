@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconOpenEmailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m21.84 9.488-.008 9.804c.026.221.062.902-.403 1.46-.25.3-.734.66-1.627.677H4.205c-.896-.02-1.381-.378-1.63-.677-.462-.555-.426-1.238-.4-1.457l-.01-9.793c.023-1.017.44-1.524.788-1.773l7.42-4.686c.042-.034.697-.482 1.625-.482.594 0 1.173.174 1.67.502l7.358 4.65c.375.265.792.772.815 1.775m-9.963 5.065c.328-.006.647-.107.919-.292L20.594 9.4c-.022-.32-.112-.56-.263-.667l-7.358-4.65a1.84 1.84 0 0 0-.964-.288 1.84 1.84 0 0 0-.95.271L3.65 8.75c-.142.103-.238.38-.249.767v.003l7.513 4.737c.285.187.622.291.963.297"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.84 9.488-.008 9.804c.026.221.062.902-.403 1.46-.25.3-.734.66-1.627.677H4.205c-.896-.02-1.381-.378-1.63-.677-.462-.555-.426-1.238-.4-1.457l-.01-9.793c.023-1.017.44-1.524.788-1.773l7.42-4.686c.042-.034.697-.482 1.625-.482.594 0 1.173.174 1.67.502l7.358 4.65c.375.265.792.772.815 1.775m-9.963 5.065c.328-.006.647-.107.919-.292L20.594 9.4c-.022-.32-.112-.56-.263-.667l-7.358-4.65a1.84 1.84 0 0 0-.964-.288 1.84 1.84 0 0 0-.95.271L3.65 8.75c-.142.103-.238.38-.249.767v.003l7.513 4.737c.285.187.622.291.963.297"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.684 14.036a.25.25 0 0 1 .32.028l6.033 6.034c.08.08.098.203.035.297q-.133.2-.304.372A2.5 2.5 0 0 1 19 21.5H5a2.5 2.5 0 0 1-2.073-1.105.236.236 0 0 1 .035-.297l6.033-6.034a.25.25 0 0 1 .32-.028l2.255 1.578a.75.75 0 0 0 .86 0zM21.106 9.54a.25.25 0 0 1 .394.205v8.09a.25.25 0 0 1-.427.178l-4.76-4.76a.25.25 0 0 1 .034-.382zM2.5 9.745a.25.25 0 0 1 .394-.205l4.758 3.331a.25.25 0 0 1 .034.382l-4.76 4.759a.25.25 0 0 1-.426-.177z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M11.788 2.547a.5.5 0 0 1 .49.037l7.968 5.311a.25.25 0 0 1 .005.414l-8.107 5.675a.25.25 0 0 1-.288 0L3.748 8.31a.25.25 0 0 1 .005-.414l7.97-5.311z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconOpenEmailFilled;
