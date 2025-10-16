@@ -189,9 +189,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                   : typeof aspectRatio === 'number'
                     ? aspectRatio
                     : RATIO[aspectRatio];
+
         const hasOnlyHeight = !!props.height && !props.width && ratio === 0 && !props.circular;
         const hasOnlyWidth = !!props.width && !props.height && ratio === 0 && !props.circular;
-        const effectiveObjectFit = objectFit ?? (hasOnlyHeight || hasOnlyWidth ? 'contain' : 'cover');
+        const effectiveObjectFit = objectFit ?? (hasOnlyHeight || hasOnlyWidth ? 'contain' : 'cover'); // 'contain' is used for single-dimension cases (only width or only height) to ensure the image fits within the given dimension without cropping.
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
