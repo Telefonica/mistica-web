@@ -1,3 +1,11 @@
+## [16.42.2](https://github.com/Telefonica/mistica-web/compare/v16.42.1...v16.42.2) (2025-10-21)
+
+
+### Bug Fixes
+
+* **Carousel:** useLayoutEffect warning in SSR ([#1448](https://github.com/Telefonica/mistica-web/issues/1448)) ([37feb68](https://github.com/Telefonica/mistica-web/commit/37feb6822598f4c877494eec6377e10737742232))
+* **Image:** images are crop in Safari when only specifying height ([#1445](https://github.com/Telefonica/mistica-web/issues/1445)) ([376ba49](https://github.com/Telefonica/mistica-web/commit/376ba49c76e55ba76043a937d1adab1a8ae9da3b))
+
 ## [16.42.1](https://github.com/Telefonica/mistica-web/compare/v16.42.0...v16.42.1) (2025-10-15)
 
 
