@@ -39,7 +39,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar'>;
+type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu'>;
 
 const themesMap: {
     [skinName in ValidSkinName]: {
@@ -72,11 +72,6 @@ const themesMap: {
         text: 'Blau',
         themeConfig: Blau,
         Icon: () => <BlauLogo size={24} />,
-    },
-    Tu: {
-        text: 'Tu',
-        themeConfig: Tu,
-        Icon: () => <TuLogo size={24} />,
     },
     Esimflag: {
         text: 'Esimflag',
