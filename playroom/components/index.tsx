@@ -12,7 +12,6 @@ import {
     VivoLogo,
     TelefonicaLogo,
     BlauLogo,
-    TuLogo,
     Inline,
     Circle,
     Touchable,
@@ -22,7 +21,7 @@ import {
     O2NewLogo,
     EsimflagLogo,
 } from '../../src';
-import {Movistar_New, Telefonica, Blau, Vivo_New, Tu, O2_New, Esimflag} from '../themes';
+import {Movistar_New, Telefonica, Blau, Vivo_New, O2_New, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
