@@ -39,39 +39,42 @@ export const Default: StoryComponent = () => {
                     <Stack space={24}>
                         <Title4 as="h1">Welcome to Mística Community</Title4>
                         <Stack space={16}>
-                            <Text3 regular>
-                                <p>
-                                    Mística Community is a place to share components which are built with
-                                    Mística tools but are not part of the core of the design system.
-                                </p>
-                                <p>A Mística Community Component must meet the following conditions:</p>
+                            <Paragraph>
+                                Mística Community is a place to share components which are built with Mística
+                                tools but are not part of the core of the design system.
+                            </Paragraph>
+                            <Paragraph>
+                                A Mística Community Component must meet the following conditions:
+                            </Paragraph>
 
-                                <p>
-                                    <UnorderedList>
-                                        <ListItem>
-                                            Its purpose is too coupled to a specific OB or to a specific
-                                            product/app to be part of Mística core. Or has the same purpose as
-                                            a core component already in Mística but we need to explore a
-                                            diferent approach to test if it works better. (Otherwise it should
-                                            be part of Mística core)
-                                        </ListItem>
-                                        <ListItem>
-                                            Lives in the @telefonica/mistica npm package because we have the
-                                            need to share it between different projects repositories.
-                                            (Otherwise it should live in the specific project repository)
-                                        </ListItem>
-                                    </UnorderedList>
-                                </p>
-                                <p>
-                                    Mística Community Components are built with the same quality standards as
-                                    Mística core components. They are designed with accessibility in mind,
-                                    have support for dark mode, are multi skin and are tested in different
-                                    devices and browsers. They are available in Mística Storybook and can be
-                                    used in Playroom to build interactive prototypes.
-                                </p>
+                            <Paragraph>
+                                <UnorderedList>
+                                    <ListItem>
+                                        Its purpose is too coupled to a specific OB or to a specific
+                                        product/app to be part of Mística core. Or has the same purpose as a
+                                        core component already in Mística but we need to explore a diferent
+                                        approach to test if it works better. (Otherwise it should be part of
+                                        Mística core)
+                                    </ListItem>
+                                    <ListItem>
+                                        Lives in the @telefonica/mistica npm package because we have the need
+                                        to share it between different projects repositories. (Otherwise it
+                                        should live in the specific project repository)
+                                    </ListItem>
+                                </UnorderedList>
+                            </Paragraph>
+                            <Paragraph>
+                                Mística Community Components are built with the same quality standards as
+                                Mística core components. They are designed with accessibility in mind, have
+                                support for dark mode, are multi skin and are tested in different devices and
+                                browsers. They are available in Mística Storybook and can be used in Playroom
+                                to build interactive prototypes.
+                            </Paragraph>
 
-                                <p>Mística Community Components can be imported from the community folder:</p>
-                            </Text3>
+                            <Paragraph>
+                                Mística Community Components can be imported from the community folder:
+                            </Paragraph>
+
                             <Text2 regular>
                                 <div
                                     style={{
@@ -88,16 +91,15 @@ export const Default: StoryComponent = () => {
                     </Stack>
                     <Stack space={24}>
                         <Title3>Community Extended Libraries</Title3>
-                        <Text3 regular>
-                            <p>
-                                Community Extended Libraries are additional libraries that complement the
-                                Mística design system. They are built by different teams within the
-                                organization to address specific needs or use cases that are not covered by
-                                the core Mística components. You can explore and use these libraries in your
-                                projects as needed but they are not officially supported as part of Mística
-                                core.
-                            </p>
-                        </Text3>
+
+                        <Paragraph>
+                            Community Extended Libraries are additional libraries that complement the Mística
+                            design system. They are built by different teams within the organization to
+                            address specific needs or use cases that are not covered by the core Mística
+                            components. You can explore and use these libraries in your projects as needed but
+                            they are not officially supported as part of Mística core.
+                        </Paragraph>
+
                         <Grid columns={{minSize: 280}} gap={16}>
                             {Array.from({length: 3}, (_, idx) => (
                                 <CoverCard
