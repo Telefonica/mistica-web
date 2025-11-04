@@ -1,5 +1,22 @@
 import * as React from 'react';
-import {ResponsiveLayout, Box, Stack, Text2, Title3} from '../..';
+import {
+    ResponsiveLayout,
+    Box,
+    Stack,
+    Text2,
+    Title3,
+    Grid,
+    VivoLogo,
+    CoverCard,
+    Tag,
+    IconCreditCardVisaRegular,
+    IconBarChartRegular,
+    Text3,
+    UnorderedList,
+    ListItem,
+    Title4,
+} from '../..';
+import {vars} from '../../skins/skin-contract.css';
 
 export default {
     title: 'Community/Welcome',
@@ -18,42 +35,104 @@ export const Default: StoryComponent = () => {
     return (
         <ResponsiveLayout>
             <Box paddingY={32}>
-                <Stack space={24}>
-                    <Title3 as="h1">Welcome to Mística Community</Title3>
-                    <Stack space={16}>
-                        <Paragraph>
-                            Mística Community is a place to share components which are built with Mística
-                            tools but are not part of the core of the design system.
-                        </Paragraph>
-                        <Paragraph>
-                            A Mística Community Component must meet the following conditions:
-                        </Paragraph>
-                        <Paragraph>
-                            <ul>
-                                <li>
-                                    Its purpose is too coupled to a specific OB or to a specific product/app
-                                    to be part of Mística core. Or has the same purpose as a core component
-                                    already in Mística but we need to explore a diferent approach to test if
-                                    it works better. (Otherwise it should be part of Mística core)
-                                </li>
-                                <li>
-                                    Lives in the @telefonica/mistica npm package because we have the need to
-                                    share it between different projects repositories. (Otherwise it should
-                                    live in the specific project repository)
-                                </li>
-                            </ul>
-                        </Paragraph>
-                        <Paragraph>
-                            Mística Community Components are built with the same quality standards as Mística
-                            core components. They are designed with accessibility in mind, have support for
-                            dark mode, are multi skin and are tested in different devices and browsers. They
-                            are available in Mística Storybook and can be used in Playroom to build
-                            interactive prototypes.
-                        </Paragraph>
-                        <Paragraph>
-                            Mística Community Components can be imported from the community folder:
-                        </Paragraph>
-                        <pre>{`import {SomeComponent} from '@telefonica/mistica/community'`}</pre>
+                <Stack space={64}>
+                    <Stack space={24}>
+                        <Title4 as="h1">Welcome to Mística Community</Title4>
+                        <Stack space={16}>
+                            <Text3 regular>
+                                <p>
+                                    Mística Community is a place to share components which are built with
+                                    Mística tools but are not part of the core of the design system.
+                                </p>
+                                <p>A Mística Community Component must meet the following conditions:</p>
+
+                                <p>
+                                    <UnorderedList>
+                                        <ListItem>
+                                            Its purpose is too coupled to a specific OB or to a specific
+                                            product/app to be part of Mística core. Or has the same purpose as
+                                            a core component already in Mística but we need to explore a
+                                            diferent approach to test if it works better. (Otherwise it should
+                                            be part of Mística core)
+                                        </ListItem>
+                                        <ListItem>
+                                            Lives in the @telefonica/mistica npm package because we have the
+                                            need to share it between different projects repositories.
+                                            (Otherwise it should live in the specific project repository)
+                                        </ListItem>
+                                    </UnorderedList>
+                                </p>
+                                <p>
+                                    Mística Community Components are built with the same quality standards as
+                                    Mística core components. They are designed with accessibility in mind,
+                                    have support for dark mode, are multi skin and are tested in different
+                                    devices and browsers. They are available in Mística Storybook and can be
+                                    used in Playroom to build interactive prototypes.
+                                </p>
+
+                                <p>Mística Community Components can be imported from the community folder:</p>
+                            </Text3>
+                            <Text2 regular>
+                                <div
+                                    style={{
+                                        backgroundColor: vars.colors.backgroundAlternative,
+                                        padding: '8px 24px',
+                                        borderRadius: vars.borderRadii.container,
+                                        width: 'fit-content',
+                                    }}
+                                >
+                                    <pre>{`import {SomeComponent} from '@telefonica/mistica/community'`}</pre>
+                                </div>
+                            </Text2>
+                        </Stack>
+                    </Stack>
+                    <Stack space={24}>
+                        <Title3>Community Extended Libraries</Title3>
+                        <Text3 regular>
+                            <p>
+                                Community Extended Libraries are additional libraries that complement the
+                                Mística design system. They are built by different teams within the
+                                organization to address specific needs or use cases that are not covered by
+                                the core Mística components. You can explore and use these libraries in your
+                                projects as needed but they are not officially supported as part of Mística
+                                core.
+                            </p>
+                        </Text3>
+                        <Grid columns={{minSize: 280}} gap={16}>
+                            {Array.from({length: 3}, (_, idx) => (
+                                <CoverCard
+                                    asset={
+                                        [
+                                            <VivoLogo size={40} />,
+                                            <IconBarChartRegular size={40} />,
+                                            <IconCreditCardVisaRegular size={40} />,
+                                        ][idx]
+                                    }
+                                    aspectRatio="1:1"
+                                    key={idx}
+                                    headline={<Tag type="info">React</Tag>}
+                                    title={['Vivo Extended', 'Novum Extended', 'Global Checkout'][idx]}
+                                    subtitle={
+                                        ['Vivo Design OPS Team', 'TCX Design Team', 'TCX Design Team'][idx]
+                                    }
+                                    description={
+                                        [
+                                            'designops.br@telefonica.com',
+                                            'cx-product-design@telefonica.com',
+                                            'cx-product-design@telefonica.com',
+                                        ][idx]
+                                    }
+                                    href={
+                                        [
+                                            'https://preframeworkbrasilsa.telefonicabigdata.com/fb-core/storybooks/lib/feat/TMNT-63/index.html?path=/story/welcome--welcome',
+                                            'https://storybook.tuenti.io/?path=/story/welcome-welcome--first-steps',
+                                            'https://global-checkout.vercel.app/?path=/story/management-steps-bank-account-list--multiple-bank-accounts',
+                                        ][idx]
+                                    }
+                                    newTab
+                                />
+                            ))}
+                        </Grid>
                     </Stack>
                 </Stack>
             </Box>
