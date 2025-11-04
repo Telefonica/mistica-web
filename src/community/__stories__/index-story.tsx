@@ -90,7 +90,7 @@ export const Default: StoryComponent = () => {
                         </Stack>
                     </Stack>
                     <Stack space={24}>
-                        <Title3>Community Extended Libraries</Title3>
+                        <Title3 as="h2">Community Extended Libraries</Title3>
 
                         <Paragraph>
                             Community Extended Libraries are additional libraries that complement the Mística
