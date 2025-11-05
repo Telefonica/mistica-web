@@ -16,7 +16,16 @@ const IconFolderLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.433 20.178h17.101a1.269 1.269 0 0 0 1.28-1.26V7.332a1.27 1.27 0 0 0-.378-.896 1.26 1.26 0 0 0-.899-.361h-8.538V5.08a1.27 1.27 0 0 0-.378-.896 1.26 1.26 0 0 0-.9-.361H3.434A1.26 1.26 0 0 0 2.181 5.08v13.84a1.266 1.266 0 0 0 1.252 1.258M3 5.08c0-.24.196-.437.434-.437h7.286c.23.014.409.205.409.437v1.407a.41.41 0 0 0 .409.411h9a.433.433 0 0 1 .431.437v11.586a.437.437 0 0 1-.431.437H3.433A.435.435 0 0 1 3 18.92z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -43,7 +52,7 @@ const IconFolderLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M3.433 20.178h17.101a1.269 1.269 0 0 0 1.28-1.26V7.332a1.27 1.27 0 0 0-.378-.896 1.26 1.26 0 0 0-.899-.361h-8.538V5.08a1.27 1.27 0 0 0-.378-.896 1.26 1.26 0 0 0-.9-.361H3.434A1.26 1.26 0 0 0 2.181 5.08v13.84a1.266 1.266 0 0 0 1.252 1.258M3 5.08c0-.24.196-.437.434-.437h7.286c.23.014.409.205.409.437v1.407a.41.41 0 0 0 .409.411h9a.433.433 0 0 1 .431.437v11.586a.437.437 0 0 1-.431.437H3.433A.435.435 0 0 1 3 18.92z"
+                    d="M9 3.25c.199 0 .39.08.53.22l2.78 2.78H19A2.75 2.75 0 0 1 21.75 9v8A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17V6A2.75 2.75 0 0 1 5 3.25zm-4 1.5A1.25 1.25 0 0 0 3.75 6v11A1.25 1.25 0 0 0 5 18.25h14A1.25 1.25 0 0 0 20.25 17V9A1.25 1.25 0 0 0 19 7.75h-7a.75.75 0 0 1-.53-.22L8.69 4.75z"
                 />
             </svg>
         );

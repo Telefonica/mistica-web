@@ -25,12 +25,21 @@ const IconDeskLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M21.213 21.997a.784.784 0 1 0 0-1.569.784.784 0 0 0 0 1.569M14.547 14.94h6.274v3.92c0 .235.156.392.392.392.235 0 .392-.157.392-.392v-8.626H7.88V9.058h4.313V2h-9.41v7.058h4.313v1.176H3.96c-1.097 0-1.96.863-1.96 1.96v9.41c0 .236.157.393.392.393s.392-.157.392-.392v-9.41c0-.667.51-1.177 1.176-1.177h10.587zM3.568 8.273v-5.49h7.842v5.49zm11.763 5.881v-1.176h5.49v1.176zm5.49-3.137v1.176h-5.49v-1.176z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 5.25a.75.75 0 0 1 0 1.5h-.25V19a.75.75 0 0 1-1.5 0v-4.75H15a.75.75 0 0 1-.75-.75v-2.75h-9.5V19a.75.75 0 0 1-1.5 0V6.75H3a.75.75 0 0 1 0-1.5zm-5.25 7.5h3.5v-2h-3.5zm0-3.5h3.5v-2.5h-3.5zm-11 0h9.5v-2.5h-9.5z"
                 />
             </svg>
         );

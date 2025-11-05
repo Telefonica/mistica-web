@@ -1,12 +1,14 @@
 'use client';
 import * as React from 'react';
 import {TAB} from './utils/keys';
+import {fieldFocusRing} from './text-field-components.css';
 
 const TAB_NAVIGATION_CLASS = 'mistica-tab-navigation';
 
 const css = `
     body:not(.${TAB_NAVIGATION_CLASS}) *:focus,
-    body:not(.${TAB_NAVIGATION_CLASS}) *:active {
+    body:not(.${TAB_NAVIGATION_CLASS}) *:active,
+    body:not(.${TAB_NAVIGATION_CLASS}) .${fieldFocusRing} {
         outline: none;
         -webkit-tap-highlight-color: transparent;
     }

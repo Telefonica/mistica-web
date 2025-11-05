@@ -1,3 +1,4 @@
+import type {Variant} from '../../theme-variant-context';
 import type {Colors} from './colors';
 
 export type {Colors} from './colors';
@@ -6,6 +7,7 @@ export type SkinVariant = 'prominent';
 
 export type KnownSkinName =
     | 'Movistar'
+    | 'Movistar-new'
     | 'O2'
     | 'O2-new'
     | 'Vivo'
@@ -40,6 +42,7 @@ type TextTokenConfig<PossibleFontWeights = FontWeight> = {
 
 export type TextPresetsConfig = {
     cardTitle: TextWeightTokenConfig;
+    rowTitle: TextWeightTokenConfig;
     button: TextWeightTokenConfig<'regular' | 'medium'>;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
     title1: TextWeightTokenConfig<'regular' | 'medium'>;
@@ -74,10 +77,17 @@ export type BorderRadiiConfig = {
     popup: string;
     checkbox: string;
     indicator: string;
+    chip: string;
     sheet: string;
     bar: string;
     avatar: string;
     mediaSmall: string;
+    tag: string;
+};
+
+export type ThemeVariantsConfig = {
+    successFeedback: Variant;
+    brandLoadingScreen: Variant;
 };
 
 export type Skin = {
@@ -86,6 +96,7 @@ export type Skin = {
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
+    themeVariants?: ThemeVariantsConfig;
 };
 
 export type KnownSkin = {
@@ -94,4 +105,5 @@ export type KnownSkin = {
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
+    themeVariants?: ThemeVariantsConfig;
 };

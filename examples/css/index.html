@@ -7,16 +7,16 @@
         <title>Mistica CSS Example</title>
         <link rel="stylesheet" href="/style.css" />
     </head>
-    <body data-mistica-skin="o2-new">
+    <body data-mistica-skin="movistar" data-mistica-color-scheme="light">
         <div id="app" class="mistica-responsive-layout">
-            <h1 class="mistica-text-6">Hello mistica css</h1>
+            <h1 class="mistica-text-title4">Mística CSS</h1>
 
             <div class="controls">
                 <div>
-                    <label for="skin-select">Skin:</label>
+                    <label for="skin-select" class="mistica-text-2">Skin:</label>
                     <select id="skin-select">
-                        <option value="o2-new">o2-new</option>
                         <option value="movistar">movistar</option>
+                        <option value="o2-new">o2-new</option>
                         <option value="vivo-new">vivo-new</option>
                         <option value="blau">blau</option>
                         <option value="telefonica">telefonica</option>
@@ -26,22 +26,1109 @@
                 </div>
 
                 <div>
-                    <label for="color-scheme-select">Color scheme:</label>
+                    <label for="color-scheme-select" class="mistica-text-2">Color scheme:</label>
                     <select id="color-scheme-select">
-                        <option value="system">system</option>
                         <option value="light">light</option>
                         <option value="dark">dark</option>
+                        <option value="system">system</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="variant-select" class="mistica-text-2">Variant:</label>
+                    <select id="variant-select">
+                        <option value="default">default</option>
+                        <option value="inverse">inverse</option>
                     </select>
                 </div>
             </div>
 
-            <section class="card mistica-boxed">
-                <div class="tag">Headline</div>
-                <h2 class="mistica-text-cardTitle">Title</h2>
-                <p class="mistica-text-2">Subtitle</p>
-                <p class="description mistica-text-2">Description</p>
-                <button class="button small">Action</button>
-            </section>
+            <div class="components">
+                <h2 class="mistica-text-title3">Components</h2>
+
+                <h3 class="mistica-text-title2">Texts / Titles</h3>
+                <div class="mistica-inline mistica-gap-16">
+                    <div>
+                        <p class="mistica-text-1">Text 1</p>
+                        <p class="mistica-text-2">Text 2</p>
+                        <p class="mistica-text-3">Text 3</p>
+                        <p class="mistica-text-4">Text 4</p>
+                        <p class="mistica-text-5">Text 5</p>
+                        <p class="mistica-text-6">Text 6</p>
+                        <p class="mistica-text-7">Text 7</p>
+                        <p class="mistica-text-8">Text 8</p>
+                        <p class="mistica-text-9">Text 9</p>
+                        <p class="mistica-text-10">Text 10</p>
+                    </div>
+                    <div>
+                        <h4 class="mistica-text-title1">Title 1</h4>
+                        <h3 class="mistica-text-title2">Title 2</h3>
+                        <h2 class="mistica-text-title3">Title 3</h2>
+                        <h1 class="mistica-text-title4">Title 4</h1>
+                    </div>
+                </div>
+
+                <h3 class="mistica-text-title2">TextLink</h3>
+                <p class="mistica-text-2">
+                    This is an example of <a class="mistica-text-link" href="#">text link</a> inside text2 and
+                    this is a <a class="mistica-text-link" href="#" disabled>disabled text link</a> too. You
+                    don't need to add any extra class to &lt;a&gt; elements to make them look like mistica
+                    text links, just put the &lt;a&gt; element inside a .mistica-text-X ancestor. For example,
+                    this is a <a href="#">text link</a> too.
+                </p>
+
+                <h3 class="mistica-text-title2">Boxed</h3>
+                <div class="mistica-boxed" style="padding: 16px">
+                    <h2 class="mistica-text-title2">Title</h2>
+                    <p class="mistica-text-1">Some text</p>
+                </div>
+
+                <h3 class="mistica-text-title2">Tag</h3>
+                <div>
+                    <div class="mistica-tag-promo">Promo</div>
+                    <div class="mistica-tag-active">Active</div>
+                    <div class="mistica-tag-inactive">Inactive</div>
+                    <div class="mistica-tag-success">Success</div>
+                    <div class="mistica-tag-warning">Warning</div>
+                    <div class="mistica-tag-error">Error</div>
+                </div>
+                <h3 class="mistica-text-title2">FeedbackScreen</h3>
+                <div>
+                    <a class="mistica-button-primary" href="/mistica-css/error-feedback.html"
+                        >See ErrorFeedbackScreen</a
+                    >
+                </div>
+
+                <h3 class="mistica-text-title2">Counter</h3>
+                <div class="mistica-counter">
+                    <button class="mistica-counter__button" aria-label="decrease" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+                            <path
+                                fill="currentColor"
+                                d="M3.001 12.047a.88.88 0 0 1 .828-.924h16.34a.876.876 0 0 1 .003 1.752H3.829A.876.876 0 0 1 3 12.047"
+                            />
+                        </svg>
+                    </button>
+                    <input
+                        readonly
+                        type="number"
+                        data-mistica-counter-label="cantidad"
+                        value="0"
+                        min="0"
+                        max="10"
+                        step="1"
+                        tabindex="-1"
+                    />
+                    <button class="mistica-counter__button" aria-label="increase">
+                        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+                            <path
+                                fill="currentColor"
+                                d="M20.169 11.123H12.8V3.829c0-.395-.301-.798-.805-.798a.8.8 0 0 0-.802.798v7.361H3.829c-.485.026-.853.376-.828.857.023.446.382.737.828.76h7.296v7.365a.876.876 0 0 0 1.75 0v-7.297h7.297a.876.876 0 0 0-.003-1.752"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <script type="module" src="/mistica-counter.js"></script>
+
+                <h3 class="mistica-text-title2">TextFields</h3>
+                <h4 class="mistica-text-title1">TextField</h4>
+                <div class="mistica-stack mistica-gap-16">
+                    <div class="mistica-text-field">
+                        <input id="text-field-1" type="text" placeholder=" " />
+                        <label for="text-field-1"
+                            >Label too long to fit in one line too long to fit in one line too long to fit in
+                            one line too long to fit in one line</label
+                        >
+                    </div>
+                    <div class="mistica-text-field">
+                        <input id="text-field-1" type="text" placeholder="Some placeholder" />
+                        <label for="text-field-1">Label</label>
+                    </div>
+                </div>
+                <h4 class="mistica-text-title1">SearchField</h4>
+                <div class="mistica-text-field">
+                    <svg class="mistica-text-field__start-icon" viewBox="0 0 24 24" aria-hidden>
+                        <path
+                            fill="currentColor"
+                            d="M10.021 17.83A7.846 7.846 0 0 1 4.472 4.435a7.848 7.848 0 0 1 11.473 10.677l5.704 5.704a.561.561 0 0 1-.793.793l-5.697-5.697a7.8 7.8 0 0 1-5.138 1.918m0-14.571A6.726 6.726 0 0 0 5.265 14.74a6.73 6.73 0 0 0 9.513-.036 6.724 6.724 0 0 0 0-9.473 6.67 6.67 0 0 0-4.757-1.972"
+                        />
+                    </svg>
+                    <input id="search-field-1" type="search" placeholder=" " />
+                    <label for="search-field-1">Search</label>
+                </div>
+
+                <h3 class="mistica-text-title2">Slider</h3>
+                <input type="range" class="mistica-slider" min="0" max="10" value="2" step="1" />
+                <script>
+                    function setSliderThumbPosition(slider) {
+                        slider.style.setProperty(
+                            '--slider-thumb-position',
+                            `${((slider.value - slider.min) / (slider.max - slider.min)) * 100}%`
+                        );
+                    }
+                    document.querySelectorAll('.mistica-slider').forEach((slider) => {
+                        setSliderThumbPosition(slider);
+                        slider.addEventListener('input', () => {
+                            setSliderThumbPosition(slider);
+                        });
+                    });
+                </script>
+
+                <h3 class="mistica-text-title2">Switch</h3>
+                <input type="checkbox" class="mistica-switch" />
+
+                <h3 class="mistica-text-title2">Checkbox</h3>
+                <h4 class="mistica-text-title1">Without label</h4>
+                <input type="checkbox" class="mistica-checkbox" />
+                <h4 class="mistica-text-title1">With label</h4>
+                <label class="mistica-checkbox-label"
+                    ><input type="checkbox" class="mistica-checkbox" />some label</label
+                >
+                <h4 class="mistica-text-title1">Disabled</h4>
+                <label class="mistica-checkbox-label"
+                    ><input disabled checked type="checkbox" class="mistica-checkbox" />some label</label
+                >
+
+                <h3 class="mistica-text-title2">Lists</h3>
+                <h4 class="mistica-text-title1">RowList</h4>
+                <ul class="mistica-list">
+                    <li class="mistica-row">
+                        <div
+                            class="mistica-row__asset"
+                            style="background: var(--mistica-color-tagBackgroundActive)"
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M11.39 19.862q.18.05.388.05c.353 0 .653-.112.85-.315q.297-.305.298-.835c0-.72-.425-1.15-1.145-1.15s-1.148.43-1.148 1.15q0 .526.298.835.184.188.46.265"
+                                ></path>
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M8.396 22.32c-1.141 0-1.974-.275-2.543-.838-.575-.57-.853-1.408-.853-2.558V5.396c0-1.121.278-1.945.85-2.526C6.428 2.286 7.26 2 8.396 2h6.764c1.145 0 1.977.277 2.55.853.572.575.846 1.404.846 2.543v13.528c0 1.15-.28 1.988-.852 2.558-.573.563-1.402.838-2.544.838zm0-19.164c-1.59 0-2.24.65-2.24 2.24v13.528c0 1.633.607 2.24 2.24 2.24h6.764c1.633 0 2.24-.607 2.24-2.24V5.396c0-.818-.168-1.384-.509-1.728s-.91-.512-1.731-.512z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <div class="mistica-row__body">
+                            <div class="mistica-row__title">Title 1</div>
+                            <div class="mistica-row__subtitle">Subtitle 1</div>
+                        </div>
+                    </li>
+                    <li class="mistica-row">
+                        <a href="#">
+                            <div class="mistica-row__body">
+                                <div class="mistica-row__title">Title 2</div>
+                                <div class="mistica-row__subtitle">Subtitle 2</div>
+                                <div class="mistica-row__description">Description 2</div>
+                            </div>
+                            <svg viewBox="0 0 20 20" class="mistica-row__chevron" aria-hidden>
+                                <path
+                                    fill="currentColor"
+                                    d="M18.81 12c0-.39-.16-.76-.44-1.02l-7.01-6.6c-.56-.53-1.45-.5-1.98.06s-.5 1.45.06 1.98L15.37 12l-5.93 5.58c-.56.53-.59 1.42-.06 1.98s1.42.59 1.98.06l7.01-6.6c.28-.26.44-.63.44-1.02"
+                                />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="mistica-row">
+                        <a href="#">
+                            <div class="mistica-row__body">
+                                <div class="mistica-tag-promo">Headline</div>
+                                <div class="mistica-row__title">Title 3</div>
+                                <div class="mistica-row__subtitle">Subtitle 3</div>
+                                <div class="mistica-row__description">Description 3</div>
+                                <div class="placeholder" style="height: 80px"></div>
+                            </div>
+                            <div class="mistica-row__right">
+                                <div class="placeholder" style="width: 40px; height: 40px"></div>
+                                <svg viewBox="0 0 20 20" class="mistica-row__chevron" aria-hidden>
+                                    <path
+                                        fill="currentColor"
+                                        d="M18.81 12c0-.39-.16-.76-.44-1.02l-7.01-6.6c-.56-.53-1.45-.5-1.98.06s-.5 1.45.06 1.98L15.37 12l-5.93 5.58c-.56.53-.59 1.42-.06 1.98s1.42.59 1.98.06l7.01-6.6c.28-.26.44-.63.44-1.02"
+                                    />
+                                </svg>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <h4 class="mistica-text-title1">BoxedRowList</h4>
+                <ul class="mistica-boxed-list">
+                    <li class="mistica-boxed-row">
+                        <div
+                            class="mistica-row__asset"
+                            style="background: var(--mistica-color-tagBackgroundActive)"
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden>
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M11.39 19.862q.18.05.388.05c.353 0 .653-.112.85-.315q.297-.305.298-.835c0-.72-.425-1.15-1.145-1.15s-1.148.43-1.148 1.15q0 .526.298.835.184.188.46.265"
+                                ></path>
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M8.396 22.32c-1.141 0-1.974-.275-2.543-.838-.575-.57-.853-1.408-.853-2.558V5.396c0-1.121.278-1.945.85-2.526C6.428 2.286 7.26 2 8.396 2h6.764c1.145 0 1.977.277 2.55.853.572.575.846 1.404.846 2.543v13.528c0 1.15-.28 1.988-.852 2.558-.573.563-1.402.838-2.544.838zm0-19.164c-1.59 0-2.24.65-2.24 2.24v13.528c0 1.633.607 2.24 2.24 2.24h6.764c1.633 0 2.24-.607 2.24-2.24V5.396c0-.818-.168-1.384-.509-1.728s-.91-.512-1.731-.512z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <div class="mistica-row__body">
+                            <div class="mistica-row__title">Title 1</div>
+                            <div class="mistica-row__subtitle">Subtitle 1</div>
+                        </div>
+                    </li>
+                    <li class="mistica-boxed-row">
+                        <a href="#">
+                            <div class="mistica-row__body">
+                                <div class="mistica-row__title">Title 2</div>
+                                <div class="mistica-row__subtitle">Subtitle 2</div>
+                                <div class="mistica-row__description">Description 2</div>
+                            </div>
+                            <svg viewBox="0 0 20 20" class="mistica-row__chevron" aria-hidden>
+                                <path
+                                    fill="currentColor"
+                                    d="M18.81 12c0-.39-.16-.76-.44-1.02l-7.01-6.6c-.56-.53-1.45-.5-1.98.06s-.5 1.45.06 1.98L15.37 12l-5.93 5.58c-.56.53-.59 1.42-.06 1.98s1.42.59 1.98.06l7.01-6.6c.28-.26.44-.63.44-1.02"
+                                />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="mistica-boxed-row">
+                        <a href="#">
+                            <div class="mistica-row__body">
+                                <div class="mistica-tag-promo">Headline</div>
+                                <div class="mistica-row__title">Title 3</div>
+                                <div class="mistica-row__subtitle">Subtitle 3</div>
+                                <div class="mistica-row__description">Description 3</div>
+                                <div class="placeholder" style="height: 80px"></div>
+                            </div>
+                            <div class="mistica-row__right">
+                                <div class="placeholder" style="width: 40px; height: 40px"></div>
+                                <svg viewBox="0 0 20 20" class="mistica-row__chevron" aria-hidden>
+                                    <path
+                                        fill="currentColor"
+                                        d="M18.81 12c0-.39-.16-.76-.44-1.02l-7.01-6.6c-.56-.53-1.45-.5-1.98.06s-.5 1.45.06 1.98L15.37 12l-5.93 5.58c-.56.53-.59 1.42-.06 1.98s1.42.59 1.98.06l7.01-6.6c.28-.26.44-.63.44-1.02"
+                                    />
+                                </svg>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <h3 class="mistica-text-title2">Table</h3>
+                <h4 class="mistica-text-title1">Column headings</h4>
+                <table class="mistica-table mistica-table-mobile-collapsed">
+                    <thead>
+                        <tr>
+                            <th>Type of food</th>
+                            <th>Calories</th>
+                            <th>Tasty factor</th>
+                            <th>Price</th>
+                            <th>Average rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-heading="Type of food">Slice of pizza</td>
+                            <td data-heading="Calories">285</td>
+                            <td data-heading="Tasty factor">95%</td>
+                            <td data-heading="Price">5,00€</td>
+                            <td data-heading="Average rating">9/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Hamburger</td>
+                            <td data-heading="Calories">354</td>
+                            <td data-heading="Tasty factor">90%</td>
+                            <td data-heading="Price">6,00€</td>
+                            <td data-heading="Average rating">8/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Sushi</td>
+                            <td data-heading="Calories">200</td>
+                            <td data-heading="Tasty factor">85%</td>
+                            <td data-heading="Price">10,00€</td>
+                            <td data-heading="Average rating">10/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Salad</td>
+                            <td data-heading="Calories">150</td>
+                            <td data-heading="Tasty factor">70%</td>
+                            <td data-heading="Price">4,00€</td>
+                            <td data-heading="Average rating">7/10</td>
+                        </tr>
+                        <tr>
+                            <td data-heading="Type of food">Ice cream</td>
+                            <td data-heading="Calories">250</td>
+                            <td data-heading="Tasty factor">95%</td>
+                            <td data-heading="Price">3,00€</td>
+                            <td data-heading="Average rating">9/10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4 class="mistica-text-title1">Row headings</h4>
+                <table class="mistica-table mistica-table-mobile-collapsed">
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <span class="mistica-text-3">Sistema operativo y procesador</span>
+                            </th>
+                            <td>
+                                <p>Sistema operativo: Android 15 con One UI 7</p>
+                                <p>Procesador: Snapdragon 8 Elite (3nm) - Ray Tracing</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="mistica-text-3">Conectividad</span></th>
+                            <td>
+                                <p>5G</p>
+                                <p>WiFi 802.11 a/b/g/n/ac/ax 2.4 + 5 + 6 Ghz</p>
+                                <p>Bluetooth 5.3</p>
+                                <p>USB type C</p>
+                                <p>GPS</p>
+                                <p>NFC</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="mistica-text-3">Características físicas</span></th>
+                            <td>
+                                <p>Tipo de SIM: Dual SIM (SIM1+SIM2 o eSIM)</p>
+                                <p>Dimensiones: 146,9 x 70,5 x 7,2mm</p>
+                                <p>Peso: 162 g</p>
+                                <p>Colores Disponibles: Gris</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="mistica-text-3">Pantalla</span></th>
+                            <td>6,2" Dynamic AMOLED 2340x1080 FHD+ (1-120 Hz)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3 class="mistica-text-title2">Chip</h3>
+                <div>
+                    <button class="mistica-chip">Chip button</button>
+                    <a href="#" class="mistica-chip">Chip a</a>
+                    <label class="mistica-chip"><input type="checkbox" /><span>Chip checkbox</span></label>
+                    <span class="mistica-chip"
+                        >Chip closable<button aria-label="cerrar">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    fill="currentColor"
+                                    d="M16.841 17.853a.722.722 0 0 0 .948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 0 0-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 0 0-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 0 0 1.086.947L12 13.022l4.767 4.767z"
+                                />
+                            </svg></button
+                    ></span>
+                    <label class="mistica-chip"
+                        ><input type="radio" name="chip-radio-example" /><span>Chip radio 1</span></label
+                    >
+                    <label class="mistica-chip"
+                        ><input type="radio" name="chip-radio-example" /><span>Chip radio 2</span></label
+                    >
+                    <label class="mistica-chip"
+                        ><input type="radio" name="chip-radio-example" /><span>Chip radio 3</span></label
+                    >
+                </div>
+
+                <h3 class="mistica-text-title2">Breadcrumbs</h3>
+                <nav class="mistica-breadcrumb">
+                    <ol>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/">Section</a>
+                        </li>
+                        <li>
+                            <a aria-current="page" href="">Subsection</a>
+                        </li>
+                    </ol>
+                </nav>
+                <nav class="mistica-breadcrumb">
+                    <ol>
+                        <li>
+                            <a href="/">This is a long link in the breadcrumbs</a>
+                        </li>
+                        <li>
+                            <a href="/">This is a long link in the breadcrumbs</a>
+                        </li>
+                        <li>
+                            <a aria-current="page" href="">Subsection</a>
+                        </li>
+                    </ol>
+                </nav>
+
+                <h3 class="mistica-text-title2">Buttons</h3>
+                <div>
+                    <a class="mistica-button-primary" href="#">Primary</a>
+                    <a class="mistica-button-secondary" href="#">Secondary</a>
+                    <a class="mistica-button-danger" href="#">Danger</a>
+                    <a class="mistica-button-link" href="#"
+                        >Link<svg style="margin-left: 2px" width="0.5em" height="0.5em" viewBox="0 0 8 8">
+                            <path
+                                d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                fill="currentColor"
+                            /></svg
+                    ></a>
+                    <a class="mistica-button-primary-small" href="#">Primary</a>
+                    <a class="mistica-button-secondary-small" href="#">Secondary</a>
+                    <a class="mistica-button-danger-small" href="#">Danger</a>
+                    <a class="mistica-button-link-small" href="#"
+                        >Link<svg style="margin-left: 2px" width="0.5em" height="0.5em" viewBox="0 0 8 8">
+                            <path
+                                d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                fill="currentColor"
+                            /></svg
+                    ></a>
+                </div>
+
+                <h3 class="mistica-text-title2">Accordion</h3>
+                <h4 class="mistica-text-title1">Single Open</h4>
+                <div class="mistica-accordion">
+                    <details class="mistica-accordion-item" name="accordion-1">
+                        <summary class="mistica-accordion-item__summary">
+                            <div class="mistica-accordion-item__summary-body">
+                                <div class="mistica-accordion-item__summary-title">Accordion title 1</div>
+                                <div class="mistica-accordion-item__summary-subtitle">Subtitle</div>
+                            </div>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                class="mistica-accordion-item__chevron"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M9.99924 13.7993C9.80757 13.7993 9.6159 13.716 9.48257 13.5743L3.52424 7.24097C3.25757 6.95764 3.27424 6.50764 3.55757 6.24097C3.8409 5.97431 4.2909 5.98264 4.55757 6.27431L9.99924 12.0576L15.4409 6.27431C15.7076 5.99097 16.1576 5.97431 16.4409 6.24097C16.7242 6.50764 16.7409 6.95764 16.4742 7.24097L10.5159 13.5743C10.3826 13.716 10.1992 13.7993 9.99924 13.7993Z"
+                                />
+                            </svg>
+                        </summary>
+                        <div class="mistica-accordion-item__content">
+                            <p class="mistica-text-1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                    </details>
+                    <details class="mistica-accordion-item" name="accordion-1">
+                        <summary class="mistica-accordion-item__summary">
+                            <div class="mistica-accordion-item__summary-body">
+                                <div class="mistica-accordion-item__summary-title">Accordion title 2</div>
+                                <div class="mistica-accordion-item__summary-subtitle">Subtitle</div>
+                            </div>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                class="mistica-accordion-item__chevron"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M9.99924 13.7993C9.80757 13.7993 9.6159 13.716 9.48257 13.5743L3.52424 7.24097C3.25757 6.95764 3.27424 6.50764 3.55757 6.24097C3.8409 5.97431 4.2909 5.98264 4.55757 6.27431L9.99924 12.0576L15.4409 6.27431C15.7076 5.99097 16.1576 5.97431 16.4409 6.24097C16.7242 6.50764 16.7409 6.95764 16.4742 7.24097L10.5159 13.5743C10.3826 13.716 10.1992 13.7993 9.99924 13.7993Z"
+                                />
+                            </svg>
+                        </summary>
+                        <div class="mistica-accordion-item__content">
+                            <p class="mistica-text-1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                    </details>
+                    <details class="mistica-accordion-item" name="accordion-1">
+                        <summary class="mistica-accordion-item__summary">
+                            <div class="mistica-accordion-item__summary-body">
+                                <div class="mistica-accordion-item__summary-title">Accordion title 3</div>
+                                <div class="mistica-accordion-item__summary-subtitle">Subtitle</div>
+                            </div>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                class="mistica-accordion-item__chevron"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M9.99924 13.7993C9.80757 13.7993 9.6159 13.716 9.48257 13.5743L3.52424 7.24097C3.25757 6.95764 3.27424 6.50764 3.55757 6.24097C3.8409 5.97431 4.2909 5.98264 4.55757 6.27431L9.99924 12.0576L15.4409 6.27431C15.7076 5.99097 16.1576 5.97431 16.4409 6.24097C16.7242 6.50764 16.7409 6.95764 16.4742 7.24097L10.5159 13.5743C10.3826 13.716 10.1992 13.7993 9.99924 13.7993Z"
+                                />
+                            </svg>
+                        </summary>
+                        <div class="mistica-accordion-item__content">
+                            <p class="mistica-text-1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                    </details>
+                </div>
+                <h4 class="mistica-text-title1">Multiple Open</h4>
+                <div class="mistica-accordion">
+                    <details class="mistica-accordion-item">
+                        <summary class="mistica-accordion-item__summary">
+                            <div class="mistica-accordion-item__summary-body">
+                                <div class="mistica-accordion-item__summary-title">Accordion title 1</div>
+                                <div class="mistica-accordion-item__summary-subtitle">Subtitle</div>
+                            </div>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                class="mistica-accordion-item__chevron"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M9.99924 13.7993C9.80757 13.7993 9.6159 13.716 9.48257 13.5743L3.52424 7.24097C3.25757 6.95764 3.27424 6.50764 3.55757 6.24097C3.8409 5.97431 4.2909 5.98264 4.55757 6.27431L9.99924 12.0576L15.4409 6.27431C15.7076 5.99097 16.1576 5.97431 16.4409 6.24097C16.7242 6.50764 16.7409 6.95764 16.4742 7.24097L10.5159 13.5743C10.3826 13.716 10.1992 13.7993 9.99924 13.7993Z"
+                                />
+                            </svg>
+                        </summary>
+                        <div class="mistica-accordion-item__content">
+                            <p class="mistica-text-1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                    </details>
+                    <details class="mistica-accordion-item">
+                        <summary class="mistica-accordion-item__summary">
+                            <div class="mistica-accordion-item__summary-body">
+                                <div class="mistica-accordion-item__summary-title">Accordion title 2</div>
+                                <div class="mistica-accordion-item__summary-subtitle">Subtitle</div>
+                            </div>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                class="mistica-accordion-item__chevron"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M9.99924 13.7993C9.80757 13.7993 9.6159 13.716 9.48257 13.5743L3.52424 7.24097C3.25757 6.95764 3.27424 6.50764 3.55757 6.24097C3.8409 5.97431 4.2909 5.98264 4.55757 6.27431L9.99924 12.0576L15.4409 6.27431C15.7076 5.99097 16.1576 5.97431 16.4409 6.24097C16.7242 6.50764 16.7409 6.95764 16.4742 7.24097L10.5159 13.5743C10.3826 13.716 10.1992 13.7993 9.99924 13.7993Z"
+                                />
+                            </svg>
+                        </summary>
+                        <div class="mistica-accordion-item__content">
+                            <p class="mistica-text-1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                    </details>
+                    <details class="mistica-accordion-item">
+                        <summary class="mistica-accordion-item__summary">
+                            <div class="mistica-accordion-item__summary-body">
+                                <div class="mistica-accordion-item__summary-title">Accordion title 3</div>
+                                <div class="mistica-accordion-item__summary-subtitle">Subtitle</div>
+                            </div>
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                class="mistica-accordion-item__chevron"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M9.99924 13.7993C9.80757 13.7993 9.6159 13.716 9.48257 13.5743L3.52424 7.24097C3.25757 6.95764 3.27424 6.50764 3.55757 6.24097C3.8409 5.97431 4.2909 5.98264 4.55757 6.27431L9.99924 12.0576L15.4409 6.27431C15.7076 5.99097 16.1576 5.97431 16.4409 6.24097C16.7242 6.50764 16.7409 6.95764 16.4742 7.24097L10.5159 13.5743C10.3826 13.716 10.1992 13.7993 9.99924 13.7993Z"
+                                />
+                            </svg>
+                        </summary>
+                        <div class="mistica-accordion-item__content">
+                            <p class="mistica-text-1">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                                in culpa qui officia deserunt mollit anim id est laborum
+                            </p>
+                        </div>
+                    </details>
+                </div>
+
+                <h3 class="mistica-text-title2">Cards</h3>
+                <h4 class="mistica-text-title1">MediaCard / DataCard / SnapCard</h4>
+                <div class="mistica-inline mistica-gap-16">
+                    <section class="mistica-card">
+                        <div
+                            class="mistica-card__asset-floating"
+                            style="
+                                border-radius: 50%;
+                                height: 40px;
+                                width: 40px;
+                                background: var(--mistica-color-tagBackgroundActive);
+                            "
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M11.39 19.862q.18.05.388.05c.353 0 .653-.112.85-.315q.297-.305.298-.835c0-.72-.425-1.15-1.145-1.15s-1.148.43-1.148 1.15q0 .526.298.835.184.188.46.265"
+                                ></path>
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M8.396 22.32c-1.141 0-1.974-.275-2.543-.838-.575-.57-.853-1.408-.853-2.558V5.396c0-1.121.278-1.945.85-2.526C6.428 2.286 7.26 2 8.396 2h6.764c1.145 0 1.977.277 2.55.853.572.575.846 1.404.846 2.543v13.528c0 1.15-.28 1.988-.852 2.558-.573.563-1.402.838-2.544.838zm0-19.164c-1.59 0-2.24.65-2.24 2.24v13.528c0 1.633.607 2.24 2.24 2.24h6.764c1.633 0 2.24-.607 2.24-2.24V5.396c0-.818-.168-1.384-.509-1.728s-.91-.512-1.731-.512z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                        <div class="mistica-card__buttons">
+                            <button class="mistica-button-primary-small">Action</button>
+                            <button class="mistica-button-link-small">
+                                Link<svg
+                                    style="margin-left: 2px"
+                                    width="0.5em"
+                                    height="0.5em"
+                                    viewBox="0 0 8 8"
+                                >
+                                    <path
+                                        d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="mistica-card">
+                        <div
+                            class="mistica-card__asset"
+                            style="border-radius: 50%; height: 40px; width: 40px"
+                        >
+                            <image
+                                src="https://mistica-xnuea75b0-flows-projects-65bb050e.vercel.app/static/media/avatar.cb2db2e6.jpg"
+                            />
+                        </div>
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                        <div class="mistica-card__buttons">
+                            <button class="mistica-button-primary-small">Action</button>
+                            <button class="mistica-button-link-small">
+                                Link<svg
+                                    style="margin-left: 2px"
+                                    width="0.5em"
+                                    height="0.5em"
+                                    viewBox="0 0 8 8"
+                                >
+                                    <path
+                                        d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="mistica-snap-card">
+                        <div class="mistica-card__asset">
+                            <image src="https://picsum.photos/250/100" />
+                        </div>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </section>
+                </div>
+                <div class="mistica-inline mistica-gap-16 mistica-padding-top-16">
+                    <section class="mistica-card mistica-card-inverse">
+                        <div
+                            class="mistica-card__asset-floating"
+                            style="
+                                border-radius: 50%;
+                                height: 40px;
+                                width: 40px;
+                                background: var(--mistica-color-tagBackgroundActive);
+                            "
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M11.39 19.862q.18.05.388.05c.353 0 .653-.112.85-.315q.297-.305.298-.835c0-.72-.425-1.15-1.145-1.15s-1.148.43-1.148 1.15q0 .526.298.835.184.188.46.265"
+                                ></path>
+                                <path
+                                    fill="var(--mistica-color-tagTextActive)"
+                                    d="M8.396 22.32c-1.141 0-1.974-.275-2.543-.838-.575-.57-.853-1.408-.853-2.558V5.396c0-1.121.278-1.945.85-2.526C6.428 2.286 7.26 2 8.396 2h6.764c1.145 0 1.977.277 2.55.853.572.575.846 1.404.846 2.543v13.528c0 1.15-.28 1.988-.852 2.558-.573.563-1.402.838-2.544.838zm0-19.164c-1.59 0-2.24.65-2.24 2.24v13.528c0 1.633.607 2.24 2.24 2.24h6.764c1.633 0 2.24-.607 2.24-2.24V5.396c0-.818-.168-1.384-.509-1.728s-.91-.512-1.731-.512z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                        <div class="mistica-card__buttons">
+                            <button class="mistica-button-primary-small">Action</button>
+                            <button class="mistica-button-link-small">
+                                Link<svg
+                                    style="margin-left: 2px"
+                                    width="0.5em"
+                                    height="0.5em"
+                                    viewBox="0 0 8 8"
+                                >
+                                    <path
+                                        d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="mistica-card mistica-card-inverse">
+                        <div
+                            class="mistica-card__asset"
+                            style="border-radius: 50%; height: 40px; width: 40px"
+                        >
+                            <image
+                                src="https://mistica-xnuea75b0-flows-projects-65bb050e.vercel.app/static/media/avatar.cb2db2e6.jpg"
+                            />
+                        </div>
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                        <div class="mistica-card__buttons">
+                            <button class="mistica-button-primary-small">Action</button>
+                            <button class="mistica-button-link-small">
+                                Link<svg
+                                    style="margin-left: 2px"
+                                    width="0.5em"
+                                    height="0.5em"
+                                    viewBox="0 0 8 8"
+                                >
+                                    <path
+                                        d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="mistica-snap-card mistica-card-inverse">
+                        <div class="mistica-card__asset">
+                            <image src="https://picsum.photos/250/100" />
+                        </div>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </section>
+                </div>
+                <div class="mistica-inline mistica-gap-16 mistica-padding-top-16">
+                    <a href="#" class="mistica-card">
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </a>
+                    <a href="#" class="mistica-card">
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </a>
+                    <a href="#" class="mistica-snap-card">
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </a>
+                </div>
+                <h4 class="mistica-text-title1">NakedCard / SmallNakedCard</h4>
+                <div class="mistica-inline mistica-gap-16">
+                    <section class="mistica-naked-card">
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                        <div class="mistica-card__buttons">
+                            <button class="mistica-button-primary-small">Action</button>
+                            <button class="mistica-button-link-small">
+                                Link<svg
+                                    style="margin-left: 2px"
+                                    width="0.5em"
+                                    height="0.5em"
+                                    viewBox="0 0 8 8"
+                                >
+                                    <path
+                                        d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="mistica-small-naked-card">
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </section>
+                </div>
+                <div class="mistica-inline mistica-gap-16 mistica-padding-top-16">
+                    <a href="#" class="mistica-naked-card">
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <div class="mistica-tag-promo">Headline</div>
+                        <h2 class="mistica-card__pretitle">Pretitle</h2>
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </a>
+                    <a href="#" class="mistica-small-naked-card">
+                        <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                        <h2 class="mistica-card__title">Title</h2>
+                        <p class="mistica-card__subtitle">Subtitle</p>
+                        <p class="mistica-card__description">Description</p>
+                    </a>
+                </div>
+
+                <h4 class="mistica-text-title1">DisplayMediaCard / DisplayDataCard</h4>
+                <div class="mistica-inline mistica-gap-16">
+                    <div class="mistica-aspect-ratio" style="--aspect-ratio: 16 / 9">
+                        <section class="mistica-display-card">
+                            <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                            <div class="mistica-tag-promo">Headline</div>
+                            <h2 class="mistica-card__pretitle">Pretitle</h2>
+                            <h2 class="mistica-card__title">Title</h2>
+                            <p class="mistica-card__description">Description</p>
+                            <div class="mistica-card__buttons">
+                                <button class="mistica-button-primary-small">Action</button>
+                                <button class="mistica-button-link-small">
+                                    Link<svg
+                                        style="margin-left: 2px"
+                                        width="0.5em"
+                                        height="0.5em"
+                                        viewBox="0 0 8 8"
+                                    >
+                                        <path
+                                            d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="mistica-aspect-ratio" style="--aspect-ratio: 16 / 9">
+                        <section class="mistica-display-card">
+                            <div class="mistica-tag-promo">Headline</div>
+                            <h2 class="mistica-card__pretitle">Pretitle</h2>
+                            <h2 class="mistica-card__title">Title</h2>
+                            <p class="mistica-card__description">Description</p>
+                            <div class="mistica-card__buttons">
+                                <button class="mistica-button-primary-small">Action</button>
+                                <button class="mistica-button-link-small">
+                                    Link<svg
+                                        style="margin-left: 2px"
+                                        width="0.5em"
+                                        height="0.5em"
+                                        viewBox="0 0 8 8"
+                                    >
+                                        <path
+                                            d="M6.32595 3.46071L3.03801 0.158595L3.03292 0.153747L3.032 0.152903L3.02931 0.150463L3.02848 0.149738L3.02248 0.144353C2.88533 0.021206 2.71386 -0.0126731 2.56343 0.00394249C2.41648 0.0201739 2.27272 0.0856702 2.16886 0.18711C2.06893 0.281844 2.01209 0.42816 2.00175 0.567065C1.99083 0.71377 2.02925 0.889583 2.16869 1.02392L5.24446 4.00145L2.15859 6.96199L2.15375 6.96708L2.1529 6.968L2.15046 6.97069L2.14974 6.97152L2.14435 6.97752C2.02121 7.11467 1.98733 7.28614 2.00394 7.43657C2.02017 7.58352 2.08567 7.72728 2.18711 7.83114C2.28184 7.93107 2.42816 7.98791 2.56706 7.99825C2.71377 8.00917 2.88958 7.97075 3.02392 7.83132L6.32595 4.5422V4.5422C6.6246 4.24355 6.6246 3.75935 6.32595 3.46071V3.46071Z"
+                                            fill="currentColor"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="mistica-inline mistica-gap-16 mistica-padding-top-16">
+                    <div class="mistica-aspect-ratio" style="--aspect-ratio: 16 / 9">
+                        <a href="#" class="mistica-display-card">
+                            <img class="mistica-card__media" src="https://picsum.photos/1200/1200" />
+                            <div class="mistica-tag-promo">Headline</div>
+                            <h2 class="mistica-card__pretitle">Pretitle</h2>
+                            <h2 class="mistica-card__title">Title</h2>
+                            <p class="mistica-card__description">Description</p>
+                        </a>
+                    </div>
+                    <div class="mistica-aspect-ratio" style="--aspect-ratio: 16 / 9">
+                        <a href="#" class="mistica-display-card">
+                            <div class="mistica-tag-promo">Headline</div>
+                            <h2 class="mistica-card__pretitle">Pretitle</h2>
+                            <h2 class="mistica-card__title">Title</h2>
+                            <p class="mistica-card__description">Description</p>
+                        </a>
+                    </div>
+                </div>
+
+                <h3 class="mistica-text-title2">Grid Layout</h3>
+                <h4 class="mistica-text-title1">6 + 6</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">
+                    <div class="mistica-grid-col-6">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-6">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                </section>
+                <h4 class="mistica-text-title1">5 + 4</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">
+                    <div class="mistica-grid-col-1"></div>
+                    <div class="mistica-grid-col-5">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-1"></div>
+                    <div class="mistica-grid-col-4">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-1"></div>
+                </section>
+                <h4 class="mistica-text-title1">4 + 6</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">
+                    <div class="mistica-grid-col-1"></div>
+                    <div class="mistica-grid-col-4">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-6">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-1"></div>
+                </section>
+                <h4 class="mistica-text-title1">8 + 4</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">
+                    <div class="mistica-grid-col-8">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-4">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                </section>
+                <h4 class="mistica-text-title1">3 + 9</h4>
+                <section class="mistica-grid-layout" id="mistica-grid">
+                    <div class="mistica-grid-col-3">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                    <div class="mistica-grid-col-9">
+                        <div class="placeholder" style="height: 120px; width: auto"></div>
+                    </div>
+                </section>
+                <h3 class="mistica-text-title2">Padding</h3>
+                <div class="mistica-padding-8" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-16" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-20" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-24" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-32" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+
+                <div class="mistica-padding-x-8" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-x-16" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-x-20" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-x-24" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-x-32" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+
+                <div class="mistica-padding-y-8" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-y-16" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-y-20" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-y-24" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div class="mistica-padding-y-32" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+                <div
+                    class="mistica-padding-top-8 mistica-padding-right-16 mistica-padding-bottom-24 mistica-padding-left-32"
+                    data-demo-container
+                >
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+
+                <h3 class="mistica-text-title2">Align</h3>
+                <div style="height: 80px" data-demo-container class="mistica-align-start">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-center">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-end">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-x-start">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-x-center">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-x-end">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-y-start">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-y-center">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+                <div style="height: 80px" data-demo-container class="mistica-align-y-end">
+                    <div class="placeholder" style="width: 50px; height: 50px"></div>
+                </div>
+
+                <h3 class="mistica-text-title2">Stack</h3>
+                <div class="mistica-stack mistica-gap-16" data-demo-container>
+                    <div class="placeholder" style="height: 50px"></div>
+                    <div class="placeholder" style="height: 50px"></div>
+                    <div class="placeholder" style="height: 50px"></div>
+                </div>
+
+                <h3 class="mistica-text-title2">Inline</h3>
+                <div class="mistica-inline mistica-gap-16" data-demo-container>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                </div>
+                <div class="mistica-inline-wrap mistica-gap-16" data-demo-container style="width: 280px">
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                    <div class="placeholder" style="height: 50px; width: 50px"></div>
+                </div>
+            </div>
         </div>
         <script type="module" src="/main.js"></script>
     </body>

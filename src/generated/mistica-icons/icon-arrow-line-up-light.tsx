@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconArrowLineUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12.38 19.529V5.518l6.783 6.448a.47.47 0 0 0 .829-.208.48.48 0 0 0-.19-.473L12.23 4.084a.13.13 0 0 0-.066-.048.4.4 0 0 0-.075 0 .46.46 0 0 0-.357 0 .4.4 0 0 0-.075 0 .3.3 0 0 0-.075.048l-7.43 7.069a.45.45 0 0 0-.15.35.46.46 0 0 0 .79.33l6.65-6.315v14.01c0 .26.21.472.47.472a.47.47 0 0 0 .469-.471q-.004 0 0 0"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.38 19.529V5.518l6.783 6.448a.47.47 0 0 0 .829-.208.48.48 0 0 0-.19-.473L12.23 4.084a.13.13 0 0 0-.066-.048.4.4 0 0 0-.075 0 .46.46 0 0 0-.357 0 .4.4 0 0 0-.075 0 .3.3 0 0 0-.075.048l-7.43 7.069a.45.45 0 0 0-.15.35.46.46 0 0 0 .79.33l6.65-6.315v14.01c0 .26.21.472.47.472a.47.47 0 0 0 .469-.471q-.004 0 0 0"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12 4.25.076.004.055.008.018.003q.02.005.039.011.05.012.098.03a.8.8 0 0 1 .244.164l6 6a.75.75 0 1 1-1.06 1.06l-4.72-4.72V19a.75.75 0 0 1-1.5 0V6.81l-4.72 4.72a.75.75 0 0 1-1.06-1.06l6-6a.8.8 0 0 1 .16-.12q.037-.023.078-.041l.01-.004q.046-.018.094-.029.019-.006.039-.011l.016-.003A1 1 0 0 1 12 4.25"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowLineUpLight;

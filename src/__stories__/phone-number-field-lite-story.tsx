@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {Box, Text1, Stack, ResponsiveLayout, PhoneNumberFieldLite, Boxed} from '..';
+import {
+    Box,
+    Text1,
+    Stack,
+    ResponsiveLayout,
+    PhoneNumberFieldLite,
+    Boxed,
+    Text2,
+    UnorderedList,
+    ListItem,
+} from '..';
 import {inspect} from 'util';
 import {phoneNumbersList} from './helpers';
 
@@ -21,6 +31,7 @@ interface PhoneNumberFieldBaseArgs {
     error: boolean;
     inverse: boolean;
     optional: boolean;
+    showOptionalLabel: boolean;
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
@@ -34,6 +45,7 @@ const defaultBaseArgs: PhoneNumberFieldBaseArgs = {
     error: false,
     inverse: false,
     optional: false,
+    showOptionalLabel: true,
     disabled: false,
     readOnly: false,
     preventCopy: false,
@@ -49,18 +61,22 @@ const Description = () => {
         <Boxed>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div>
+                    <Text2 regular>
                         This is a "light" version of the PhoneNumberField component. It does not use google's
                         libphonenumber library to reduce bundle size.
-                    </div>
+                    </Text2>
                     <Stack space={8}>
-                        <div>- Only supported countries are formatted</div>
-                        <div>- Not all phone number types are formatted</div>
-                        <div>- Numbers in E164 are returned unformatted</div>
-                        <div>
-                            - A custom formatter can be provided via props and the formatter used by this
-                            component is exported as `formatPhoneLite`
-                        </div>
+                        <Text2 regular as="div">
+                            <UnorderedList>
+                                <ListItem>Only supported countries are formatted</ListItem>
+                                <ListItem>Not all phone number types are formatted</ListItem>
+                                <ListItem>Numbers in E164 are returned unformatted</ListItem>
+                                <ListItem>
+                                    A custom formatter can be provided via props and the formatter used by
+                                    this component is exported as `formatPhoneLite`
+                                </ListItem>
+                            </UnorderedList>
+                        </Text2>
                     </Stack>
                 </Stack>
             </Box>

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,35 @@ import type {IconProps} from '../../utils/types';
 const IconBarChartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17 2h1a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2M12 6h-1a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M6 10H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2h1a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2M12 6h-1a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2M6 10H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.61 3.044a2.08 2.08 0 0 1 1.473-.61h.834A2.08 2.08 0 0 1 22 4.515v14.972a2.08 2.08 0 0 1-2.083 2.08h-.834A2.08 2.08 0 0 1 17 19.485V4.514c0-.574.234-1.095.61-1.47M10.11 11.361a2.08 2.08 0 0 1 1.473-.609h.834a2.08 2.08 0 0 1 2.083 2.08v6.654a2.08 2.08 0 0 1-2.083 2.08h-.834a2.08 2.08 0 0 1-2.083-2.08v-6.654c0-.574.234-1.095.61-1.47M2.61 8.866a2.08 2.08 0 0 1 1.473-.609h.834A2.08 2.08 0 0 1 7 10.337v9.149a2.08 2.08 0 0 1-2.083 2.08h-.834A2.08 2.08 0 0 1 2 19.485v-9.15c0-.574.234-1.094.61-1.47"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.5 11.5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2zM12.5 3.5a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2zM19.5 7.5a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconBarChartFilled;

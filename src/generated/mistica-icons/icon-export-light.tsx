@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconExportLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.838 2.201a.8.8 0 0 0-.185.126L5.755 8.222a.583.583 0 0 0 .824.823l4.897-4.91v12.08a.581.581 0 0 0 1.16 0V4.134l4.805 4.807a.583.583 0 0 0 .824-.824l-5.792-5.79a1 1 0 0 0-.196-.127.55.55 0 0 0-.44 0m10.007 14.86c0-.32-.26-.58-.58-.58a.577.577 0 0 0-.577.58v3.624H3.315V17.06a.581.581 0 0 0-1.16 0v4.205c0 .32.26.58.58.58h18.53c.32 0 .58-.26.58-.58z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.838 2.201a.8.8 0 0 0-.185.126L5.755 8.222a.583.583 0 0 0 .824.823l4.897-4.91v12.08a.581.581 0 0 0 1.16 0V4.134l4.805 4.807a.583.583 0 0 0 .824-.824l-5.792-5.79a1 1 0 0 0-.196-.127.55.55 0 0 0-.44 0m10.007 14.86c0-.32-.26-.58-.58-.58a.577.577 0 0 0-.577.58v3.624H3.315V17.06a.581.581 0 0 0-1.16 0v4.205c0 .32.26.58.58.58h18.53c.32 0 .58-.26.58-.58z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 16.25a.75.75 0 0 1 .75.75v2A2.75 2.75 0 0 1 18 21.75H6A2.75 2.75 0 0 1 3.25 19v-2a.75.75 0 0 1 1.5 0v2l.006.124A1.25 1.25 0 0 0 6 20.25h12A1.25 1.25 0 0 0 19.25 19v-2a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.025 3.251a.8.8 0 0 1 .232.047q.019.004.038.012.027.013.055.03.036.017.07.039a1 1 0 0 1 .11.09l5 5a.75.75 0 1 1-1.06 1.061l-3.72-3.72V16a.75.75 0 0 1-1.5 0V5.81L7.53 9.53a.75.75 0 1 1-1.06-1.06l5-5 .056-.052q.016-.012.033-.022a.7.7 0 0 1 .26-.122l.06-.014.034-.005A1 1 0 0 1 12 3.25z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconExportLight;

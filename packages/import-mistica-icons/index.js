@@ -201,7 +201,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
 };
 
 /**
- * @typedef {{[key: string]: Array<string>}} IconKeywordsInfo
+ * @typedef {{[key: string]: {category: Array<string>, keywords: Array<string>}}} IconKeywordsInfo
  */
 const createAllIconKeywordsSource = () => {
     const keywordsPath = join(PATH_MISTICA_ICONS_REPO, 'icons', 'icons-keywords.json');
@@ -211,8 +211,12 @@ const createAllIconKeywordsSource = () => {
 
     // map icon names to kebab case
     const result = {};
-    for (const [icon, keywords] of Object.entries(keywordsMap)) {
-        result[kebabCase(icon)] = keywords;
+    for (const [icon, data] of Object.entries(keywordsMap)) {
+        const iconKey = kebabCase(icon);
+        result[iconKey] = {
+            category: data.category || [],
+            keywords: data.keywords || [],
+        };
     }
 
     const source = `/*
@@ -221,9 +225,16 @@ const createAllIconKeywordsSource = () => {
      * To update, execute "yarn start" inside "import-mistica-icons"
      */
 
-    const iconKeywords: {[key: string]: Array<string>} = ${JSON.stringify(result)};
+    const iconMetadata: {[key: string]: {keywords: Array<string>, category: Array<string>}} = ${JSON.stringify(result)};
 
-    export default iconKeywords;
+    export const iconKeywords: { [key: string]: Array<string> } = Object.fromEntries(
+    Object.entries(iconMetadata).map(([key, value]) => [key, value.keywords])
+    );
+
+    export const iconCategories: { [key: string]: Array<string> } = Object.fromEntries(
+    Object.entries(iconMetadata).map(([key, value]) => [key, value.category])
+    );
+
     `;
 
     return format(source);

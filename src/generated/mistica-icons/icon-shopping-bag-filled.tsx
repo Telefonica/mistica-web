@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconShoppingBagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.998 1.81a3.625 3.625 0 0 0-3.625 3.625v1.75H5.4a1.5 1.5 0 0 0-1.497 1.4L3.176 19.52a2.5 2.5 0 0 0 2.494 2.666h12.656a2.5 2.5 0 0 0 2.494-2.666l-.729-10.934a1.5 1.5 0 0 0-1.497-1.4h-2.971v-1.75a3.625 3.625 0 0 0-3.625-3.625m2.375 5.375h-4.75v-1.75a2.375 2.375 0 1 1 4.75 0z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.998 1.81a3.625 3.625 0 0 0-3.625 3.625v1.75H5.4a1.5 1.5 0 0 0-1.497 1.4L3.176 19.52a2.5 2.5 0 0 0 2.494 2.666h12.656a2.5 2.5 0 0 0 2.494-2.666l-.729-10.934a1.5 1.5 0 0 0-1.497-1.4h-2.971v-1.75a3.625 3.625 0 0 0-3.625-3.625m2.375 5.375h-4.75v-1.75a2.375 2.375 0 1 1 4.75 0z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.186 2.255A3.75 3.75 0 0 1 15.75 6v1.515a3.5 3.5 0 0 1 3.137 2.953l1.255 8.152a2.5 2.5 0 0 1-2.203 2.865l-.27.015H6.332a2.5 2.5 0 0 1-2.47-2.88l1.254-8.152A3.5 3.5 0 0 1 8.25 7.515V6A3.75 3.75 0 0 1 12 2.25zM12 3.75A2.25 2.25 0 0 0 9.75 6v1.5h4.5V6a2.25 2.25 0 0 0-2.027-2.24z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconShoppingBagFilled;

@@ -13,7 +13,7 @@ import {IconButton, ToggleIconButton} from './icon-button';
 import {iconContainerSize, iconSize} from './icon-button.css';
 import {TableActionsHeader} from './table-actions-header';
 
-import type {CardAction} from './card';
+import type {CardAction} from './card-internal';
 import type {DataAttributes} from './utils/types';
 
 const TOP_ACTIONS_PADDING = {

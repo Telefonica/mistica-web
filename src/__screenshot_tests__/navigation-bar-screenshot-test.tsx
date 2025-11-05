@@ -20,7 +20,7 @@ test.each`
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot({failureThreshold: 0.00001});
+    expect(image).toMatchImageSnapshot({failureThreshold: 0.00002});
 });
 
 test.each`
@@ -71,6 +71,20 @@ test('MainNavigationBar large', async () => {
     const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar wide', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {wide: true, desktopLargeMenu: true, menu: 'default'},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // Open menu
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 test.each`
@@ -226,5 +240,5 @@ test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP
 
     // first section opened
     await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
 });

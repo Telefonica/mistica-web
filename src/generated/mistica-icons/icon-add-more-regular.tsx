@@ -16,7 +16,16 @@ const IconAddMoreRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.169 11.123H12.8V3.829c0-.395-.301-.798-.805-.798a.8.8 0 0 0-.802.798v7.361H3.829c-.485.026-.853.376-.828.857.023.446.382.737.828.76h7.296v7.365a.876.876 0 0 0 1.75 0v-7.297h7.297a.876.876 0 0 0-.003-1.752"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -48,7 +57,7 @@ const IconAddMoreRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20.169 11.123H12.8V3.829c0-.395-.301-.798-.805-.798a.8.8 0 0 0-.802.798v7.361H3.829c-.485.026-.853.376-.828.857.023.446.382.737.828.76h7.296v7.365a.876.876 0 0 0 1.75 0v-7.297h7.297a.876.876 0 0 0-.003-1.752"
+                    d="M12 4.25a.75.75 0 0 1 .75.75v6.25H19a.75.75 0 0 1 0 1.5h-6.25V19a.75.75 0 0 1-1.5 0v-6.25H5a.75.75 0 0 1 0-1.5h6.25V5a.75.75 0 0 1 .75-.75"
                 />
             </svg>
         );

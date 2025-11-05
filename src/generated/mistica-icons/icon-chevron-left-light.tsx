@@ -16,12 +16,21 @@ const IconChevronLeftLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.8 5.266a.79.79 0 0 0 0-1.049.64.64 0 0 0-.962 0L7.2 11.455A.78.78 0 0 0 7 12a.78.78 0 0 0 .2.545l6.638 7.238c.266.29.697.29.963 0a.79.79 0 0 0 0-1.05L8.624 12z"
+                    d="M5.698 11.997c0-.23.1-.46.27-.62l7.6-7.15c.34-.32.88-.3 1.2.04s.31.88-.04 1.2l-6.94 6.53 6.94 6.53c.34.32.36.86.04 1.2s-.86.36-1.2.04l-7.6-7.15a.85.85 0 0 1-.27-.62"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.601 11.997c0-.21.08-.42.23-.58l6.7-7.15c.32-.34.86-.36 1.2-.04s.36.86.04 1.2l-6.16 6.57 6.16 6.57c.32.34.3.88-.04 1.2s-.88.3-1.2-.04l-6.7-7.15a.85.85 0 0 1-.23-.58"
                 />
             </svg>
         );
@@ -39,7 +48,7 @@ const IconChevronLeftLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.387 4a.58.58 0 0 1 .442.198.644.644 0 0 1 0 .875l-7.356 6.99 7.318 6.865c.242.23.26.622.038.872a.584.584 0 0 1-.846.037L6.19 12.525a.645.645 0 0 1-.025-.886l.025-.025 7.794-7.46A.6.6 0 0 1 14.387 4"
+                    d="M13.47 3.97a.75.75 0 1 1 1.06 1.06L8.06 11.5l6.47 6.47a.75.75 0 1 1-1.06 1.06l-7-7a.75.75 0 0 1 0-1.06z"
                 />
             </svg>
         );

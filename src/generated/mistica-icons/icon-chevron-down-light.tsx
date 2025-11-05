@@ -16,12 +16,21 @@ const IconChevronDownLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M5.266 8.2a.79.79 0 0 0-1.049 0 .64.64 0 0 0 0 .962l7.238 6.639c.15.137.348.204.545.199a.78.78 0 0 0 .545-.2l7.238-6.638a.642.642 0 0 0 0-.963.79.79 0 0 0-1.05 0L12 14.376z"
+                    d="M12 16.56c-.23 0-.46-.1-.62-.27l-7.15-7.6c-.32-.34-.3-.88.04-1.2s.88-.31 1.2.04L12 14.47l6.53-6.94c.32-.34.86-.36 1.2-.04s.36.86.04 1.2l-7.15 7.6c-.16.17-.38.27-.62.27"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 16.619c-.21 0-.42-.08-.58-.23l-7.15-6.7a.85.85 0 0 1-.04-1.2c.32-.34.86-.36 1.2-.04l6.57 6.16 6.57-6.16c.34-.32.88-.3 1.2.04s.3.88-.04 1.2l-7.15 6.7c-.16.15-.37.23-.58.23"
                 />
             </svg>
         );
@@ -39,7 +48,7 @@ const IconChevronDownLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20 7.68a.7.7 0 0 1-.16.45l-7.314 8.658a.577.577 0 0 1-.897 0L4.178 8.129a.71.71 0 0 1 0-.939.595.595 0 0 1 .872 0l7.02 8.171 6.862-8.132a.584.584 0 0 1 .868-.005l.004.005c.114.12.185.28.196.451"
+                    d="M18.47 7.47a.75.75 0 1 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-7-7a.75.75 0 1 1 1.06-1.06L12 13.94z"
                 />
             </svg>
         );

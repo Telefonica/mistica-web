@@ -61,7 +61,7 @@ const commonInputStyles = style([
     }),
     {
         background: 'none',
-        outline: 0,
+        borderRadius: `calc(${vars.borderRadii.input} - 1px)`,
         lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
@@ -117,6 +117,8 @@ export const textArea = style([
         paddingY: 0,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         resize: 'none',
     },
     commonInputStyles,
@@ -153,6 +155,8 @@ export const input = style([
         position: 'relative',
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         margin: 0,
         WebkitAppearance: 'none',
         appearance: 'none',

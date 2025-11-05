@@ -42,7 +42,7 @@ const Icon4GRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -56,6 +56,15 @@ const Icon4GRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                 <path
                     fill={fillColor}
                     d="M8.787 14.856a.714.714 0 1 0 1.426-.004v-.713h.357a.714.714 0 0 0 0-1.426h-.357v-3.57A.714.714 0 0 0 9.5 8.43h-.356a.72.72 0 0 0-.572.284L5.36 13a.72.72 0 0 0-.068.75c.123.242.37.392.64.392h2.856zm-.005-2.143H7.356l1.426-1.901z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.362 8.05a4.75 4.75 0 0 1 5.997.591.75.75 0 0 1-1.06 1.06 3.251 3.251 0 1 0 .861 3.048h-2.38a.75.75 0 0 1 0-1.5H20a.75.75 0 0 1 .75.75 4.752 4.752 0 0 1-6.989 4.19 4.75 4.75 0 0 1-1.641-1.45 1 1 0 0 1-.12.01H9.75V16a.75.75 0 0 1-1.5 0v-1.25H4a.75.75 0 0 1-.576-1.23l5-6a.75.75 0 0 1 1.326.48v5.25h1.667a4.75 4.75 0 0 1 1.945-5.199m-7.76 5.2H8.25v-3.18z"
                 />
             </svg>
         );

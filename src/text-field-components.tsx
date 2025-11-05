@@ -22,7 +22,7 @@ type LabelProps = {
     error?: boolean;
     children: string;
     style?: React.CSSProperties;
-    optional?: boolean;
+    showOptional?: boolean;
 };
 
 export const Label = ({
@@ -32,7 +32,7 @@ export const Label = ({
     error,
     children,
     style,
-    optional,
+    showOptional,
 }: LabelProps): JSX.Element => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const [transitionStyle, setTransitionStyle] = React.useState('initial');
@@ -66,7 +66,7 @@ export const Label = ({
             data-testid="label"
         >
             <span className={styles.labelText}>{children}</span>
-            {optional ? (
+            {showOptional ? (
                 <span>
                     &nbsp;(
                     {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
@@ -114,7 +114,12 @@ export const HelperText = ({
                             <IconWarningRegular color={leftColor} className={styles.warnIcon} />
                         </Text1>
                     )}
-                    <Text1 color={leftColor} regular id={leftTextId}>
+                    <Text1
+                        color={leftColor}
+                        regular
+                        id={leftTextId}
+                        aria-live={error ? 'assertive' : undefined}
+                    >
                         {leftText}
                     </Text1>
                 </p>

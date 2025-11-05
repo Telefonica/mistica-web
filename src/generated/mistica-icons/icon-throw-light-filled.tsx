@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconThrowLightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12.864 2.155h7.586c.773 0 1.397.627 1.397 1.4v7.589c-.003.773-.63 1.4-1.403 1.4a1.4 1.4 0 0 1-.989-.411l-.708-.712-6.222 6.224a1.4 1.4 0 0 1-1.98 0l-4.196-4.199a1.4 1.4 0 0 1 0-1.98l6.221-6.221-.697-.698a1.401 1.401 0 0 1 .992-2.392M2.761 16.861a.56.56 0 0 1-.401-.953l2.294-2.35a.561.561 0 0 1 .801.785l-2.294 2.35a.55.55 0 0 1-.4.168m-.611 4.423a.56.56 0 0 0 .955.395l4.636-4.633a.561.561 0 0 0-.793-.793l-4.633 4.633a.56.56 0 0 0-.165.398m5.036.003a.56.56 0 0 0 .964.392l2.294-2.353.014-.014.004-.004.004-.005a.562.562 0 0 0-.826-.759l-2.294 2.35a.56.56 0 0 0-.16.393"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.864 2.155h7.586c.773 0 1.397.627 1.397 1.4v7.589c-.003.773-.63 1.4-1.403 1.4a1.4 1.4 0 0 1-.989-.411l-.708-.712-6.222 6.224a1.4 1.4 0 0 1-1.98 0l-4.196-4.199a1.4 1.4 0 0 1 0-1.98l6.221-6.221-.697-.698a1.401 1.401 0 0 1 .992-2.392M2.761 16.861a.56.56 0 0 1-.401-.953l2.294-2.35a.561.561 0 0 1 .801.785l-2.294 2.35a.55.55 0 0 1-.4.168m-.611 4.423a.56.56 0 0 0 .955.395l4.636-4.633a.561.561 0 0 0-.793-.793l-4.633 4.633a.56.56 0 0 0-.165.398m5.036.003a.56.56 0 0 0 .964.392l2.294-2.353.014-.014.004-.004.004-.005a.562.562 0 0 0-.826-.759l-2.294 2.35a.56.56 0 0 0-.16.393"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.298 17.47a.75.75 0 0 1 1.06 1.06L3.53 21.358a.75.75 0 1 1-1.06-1.06zM7.298 19.47a.751.751 0 0 1 1.062 1.06l-.83.828a.75.75 0 1 1-1.06-1.06zM19 3.57a1.5 1.5 0 0 1 1.5 1.5v9.315a1.502 1.502 0 0 1-2.56 1.06l-2.184-2.181-4.768 4.767a.5.5 0 0 1-.707 0L6.04 13.788a.5.5 0 0 1 0-.707l4.768-4.767-2.183-2.182-.075-.082A1.5 1.5 0 0 1 9.685 3.57zM3.298 15.47a.751.751 0 0 1 1.062 1.06l-.83.828a.75.75 0 1 1-1.06-1.06z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconThrowLightFilled;

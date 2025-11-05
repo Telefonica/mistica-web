@@ -34,11 +34,17 @@ const ComponentThatReturnsNullComponent = () => <Null />;
 
 type Args = {
     space: string;
+    'aria-live': 'off' | 'polite' | 'assertive';
+    'aria-atomic': boolean;
 };
 
-export const Default: StoryComponent<Args> = ({space}) => (
+export const Default: StoryComponent<Args> = ({space, 'aria-live': ariaLive, 'aria-atomic': ariaAtomic}) => (
     <div style={{height: '100vh'}}>
-        <Stack space={(Number.isInteger(+space) ? +space : space) as never}>
+        <Stack
+            space={(Number.isInteger(+space) ? +space : space) as never}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
+        >
             <ComponentThatReturnsNullComponent />
             <Row>One</Row>
             {null}
@@ -54,7 +60,16 @@ export const Default: StoryComponent<Args> = ({space}) => (
 );
 
 Default.storyName = 'Stack';
-
 Default.args = {
     space: '32',
+    'aria-live': 'off' as const,
+    'aria-atomic': false as const,
+};
+Default.argTypes = {
+    space: {control: {type: 'select'}},
+    'aria-live': {
+        options: ['off', 'polite', 'assertive'],
+        control: {type: 'select'},
+    },
+    'aria-atomic': {control: {type: 'boolean'}},
 };

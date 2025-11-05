@@ -74,6 +74,9 @@ type GridProps = {
     minHeight?: string | number;
     children: React.ReactNode;
     as?: React.ComponentType<any> | string;
+    role?: string;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 };
@@ -93,6 +96,9 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
             minHeight,
             children,
             as = 'div',
+            role,
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
             dataAttributes,
         },
         ref
@@ -151,6 +157,10 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                     }),
                 },
                 ...getPrefixedDataAttributes(dataAttributes),
+                // role="list" is needed in <ul> for accessibility in Safari+VoiceOver. See: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#accessibility
+                role: role ?? (as === 'ul' ? 'list' : undefined),
+                'aria-label': ariaLabel,
+                'aria-labelledby': ariaLabelledby,
             },
             children
         );
@@ -169,6 +179,8 @@ type GridItemProps = {
     alignSelf?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
     children?: React.ReactNode;
     as?: React.ComponentType<any> | string;
+    order?: number;
+    role?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 };
@@ -185,6 +197,8 @@ export const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
             alignSelf,
             children,
             as = 'div',
+            order,
+            role,
             dataAttributes,
         },
         ref
@@ -215,6 +229,10 @@ export const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
                     justifySelf ? styles.justifySelf[justifySelf] : '',
                     alignSelf ? styles.alignSelf[alignSelf] : ''
                 ),
+                style: {
+                    order,
+                },
+                role,
                 ...getPrefixedDataAttributes(dataAttributes),
             },
             children

@@ -5,7 +5,7 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
-import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
+import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
 import {isAndroid, isIos} from './utils/platform';
@@ -16,6 +16,9 @@ import * as textStyles from './text-field-base.css';
 import {Portal} from './portal';
 import {applyCssVars, pxToRem} from './utils/css';
 import {ThemeVariant} from './theme-variant-context';
+import {vars} from './skins/skin-contract.css';
+
+import type {DataAttributes} from './utils/types';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -25,6 +28,7 @@ export type SelectProps = {
     label: string;
     name: string;
     optional?: boolean;
+    showOptionalLabel?: boolean;
     validate?: (value: string | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: string) => void;
     onBlur?: (event: React.FocusEvent<any>) => void;
@@ -38,6 +42,7 @@ export type SelectProps = {
     fullWidth?: boolean;
     native?: boolean;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
 const Select = ({
@@ -51,11 +56,13 @@ const Select = ({
     fullWidth,
     options,
     optional,
+    showOptionalLabel,
     disabled: disabledProp,
     error: errorProp,
     onBlur,
     autoFocus = false,
     native,
+    dataAttributes,
 }: SelectProps): JSX.Element => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
@@ -306,13 +313,14 @@ const Select = ({
     const selectedValue = valueState ?? value;
 
     return (
-        <ThemeVariant isInverse={false}>
+        <ThemeVariant variant="default">
             {shouldUseNative || isServerSide ? (
                 <FieldContainer
                     disabled={disabled}
                     helperText={<HelperText error={error} leftText={helperText} />}
                     fieldRef={fieldRef}
                     fullWidth={fullWidth}
+                    dataAttributes={{testid: 'Select', ...dataAttributes}}
                 >
                     {label && (
                         <Label
@@ -325,7 +333,7 @@ const Select = ({
                                       ? 'filled'
                                       : 'default'
                             }
-                            optional={optional}
+                            showOptional={optional && showOptionalLabel}
                         >
                             {label}
                         </Label>
@@ -383,7 +391,7 @@ const Select = ({
                     </select>
                     <div className={styles.arrowDown} aria-hidden>
                         <div className={styles.iconContainer} data-testid="endIcon">
-                            <ChevronDownRegular size={iconSize} />
+                            <IconChevronDownRegular size={iconSize} color={vars.colors.neutralMedium} />
                         </div>
                     </div>
                 </FieldContainer>
@@ -401,7 +409,10 @@ const Select = ({
                             fullWidth={fullWidth}
                             endIcon={
                                 <div className={styles.iconContainer}>
-                                    <ChevronDownRegular size={iconSize} />
+                                    <IconChevronDownRegular
+                                        size={iconSize}
+                                        color={vars.colors.neutralMedium}
+                                    />
                                 </div>
                             }
                             focus={isFocused}
@@ -416,6 +427,7 @@ const Select = ({
                             error={error}
                             inputRef={inputRef}
                             fieldRef={fieldRef}
+                            dataAttributes={{testid: 'Select', ...dataAttributes}}
                         />
 
                         <div

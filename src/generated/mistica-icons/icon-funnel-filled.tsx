@@ -16,7 +16,16 @@ const IconFunnelFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.255 19.776c0 1.228-1.012 2.224-2.25 2.224s-2.26-.996-2.26-2.224v-4.443L3.09 3.091a.72.72 0 0 1 .019-.73A.75.75 0 0 1 3.752 2h16.497a.75.75 0 0 1 .642.36c.14.223.144.503.02.73l-6.656 12.243z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconFunnelFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.255 19.776c0 1.228-1.012 2.224-2.25 2.224s-2.26-.996-2.26-2.224v-4.443L3.09 3.091a.72.72 0 0 1 .019-.73A.75.75 0 0 1 3.752 2h16.497a.75.75 0 0 1 .642.36c.14.223.144.503.02.73l-6.656 12.243z"
+                    d="M20 3.5a.5.5 0 0 1 .5.5v2.172l-.013.247a2.5 2.5 0 0 1-.757 1.555l-5.23 4.263V18.5a.5.5 0 0 1-.324.468l-4 1.5A.5.5 0 0 1 9.5 20v-7.762L4.206 7.961a1 1 0 0 1-.056-.053 2.5 2.5 0 0 1-.65-1.68V4a.5.5 0 0 1 .5-.5z"
                 />
             </svg>
         );

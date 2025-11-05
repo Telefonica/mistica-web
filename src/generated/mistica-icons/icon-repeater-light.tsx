@@ -37,7 +37,7 @@ const IconRepeaterLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path fill={fillColor} d="M18.609 7.353a.714.714 0 1 0 0-1.429.714.714 0 0 0 0 1.429" />
@@ -56,6 +56,19 @@ const IconRepeaterLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 <path
                     fill={fillColor}
                     d="M16.512 8.322a.36.36 0 0 0 .32-.239.36.36 0 0 0-.113-.393 7.94 7.94 0 0 0-4.36-1.733 7.14 7.14 0 0 0-5.425 1.786.357.357 0 0 0 .2.625h.046a.27.27 0 0 0 .221-.103 6.5 6.5 0 0 1 4.9-1.593 7.24 7.24 0 0 1 3.968 1.564.36.36 0 0 0 .243.086"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 13.25a.75.75 0 0 1 .75.75v1.245h1.255a.75.75 0 0 1 0 1.5H12.75V18a.75.75 0 0 1-1.5 0v-1.255h-1.245a.75.75 0 0 1 0-1.5h1.245V14a.75.75 0 0 1 .75-.75M12 9.25a8.75 8.75 0 0 1 6.188 2.563.751.751 0 0 1-1.062 1.061 7.25 7.25 0 0 0-7.9-1.572c-.88.364-1.68.899-2.353 1.572a.75.75 0 0 1-1.06-1.061A8.75 8.75 0 0 1 12 9.25"
+                />
+                <path
+                    fill={fillColor}
+                    d="M2.985 8.985c4.98-4.98 13.05-4.978 18.058-.002a.75.75 0 0 1-1.056 1.064c-4.425-4.397-11.55-4.394-15.942-.001a.75.75 0 0 1-1.06-1.06"
                 />
             </svg>
         );

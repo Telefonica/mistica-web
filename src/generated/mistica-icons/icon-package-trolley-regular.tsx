@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconPackageTrolleyRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M13.106 17.871c.08.172.284.247.456.166l6.74-3.143a.34.34 0 0 0 .167-.456l-2.897-6.214-7.364 3.434zm-4.887-.474a1.574 1.574 0 1 1 0 3.147 1.574 1.574 0 0 1 0-3.148M5.75 3c.267 0 .51.155.622.396L9.64 10.41 18.235 6.4l3.478 7.457c.4.86.03 1.879-.83 2.28l-6.74 3.143c-.86.4-1.88.03-2.281-.83l-3.478-7.457.011-.005-3.082-6.617H2.686a.686.686 0 0 1 0-1.372z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.106 17.871c.08.172.284.247.456.166l6.74-3.143a.34.34 0 0 0 .167-.456l-2.897-6.214-7.364 3.434zm-4.887-.474a1.574 1.574 0 1 1 0 3.147 1.574 1.574 0 0 1 0-3.148M5.75 3c.267 0 .51.155.622.396L9.64 10.41 18.235 6.4l3.478 7.457c.4.86.03 1.879-.83 2.28l-6.74 3.143c-.86.4-1.88.03-2.281-.83l-3.478-7.457.011-.005-3.082-6.617H2.686a.686.686 0 0 1 0-1.372z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.017 4.252a.7.7 0 0 1 .153.02q.052.01.105.03l.043.02.017.007 2 1a.75.75 0 0 1-.67 1.342l-1.41-.705-7.362 11.044q.026.023.051.046a2.75 2.75 0 1 1-4.636 1.385l-2.724-1.817a.75.75 0 0 1 .832-1.248l2.593 1.73.046-.05a2.75 2.75 0 0 1 2.504-.748l7.817-11.724.022-.031.015-.02a.75.75 0 0 1 .258-.204.8.8 0 0 1 .204-.067q.04-.006.08-.008zM11 17.75a1.25 1.25 0 1 0 0 2.502 1.25 1.25 0 0 0 0-2.502"
+                />
+                <path
+                    fill={fillColor}
+                    d="M8.454 3.79a2.05 2.05 0 0 1 1.54.272l3.307 2.104a2.05 2.05 0 0 1 .624 2.838l-3.094 4.812a2.05 2.05 0 0 1-2.825.62L4.7 12.333a2.05 2.05 0 0 1-.624-2.838l3.094-4.81a2.05 2.05 0 0 1 1.284-.894m.322 1.465a.55.55 0 0 0-.277.155l-.068.085-3.094 4.81a.553.553 0 0 0 .168.762L8.81 13.17l.096.049a.55.55 0 0 0 .662-.216l3.095-4.81a.55.55 0 0 0-.168-.762L9.189 5.327a.55.55 0 0 0-.413-.072"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconPackageTrolleyRegular;

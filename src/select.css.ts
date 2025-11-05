@@ -12,6 +12,7 @@ import {
     mobileFontSize,
 } from './text-field-base.css';
 import {pxToRem} from './utils/css';
+import {browserDefaultFocusOutline} from './text-field-components.css';
 
 const top = createVar();
 const left = createVar();
@@ -69,12 +70,16 @@ const selectContainerBase = style([
         cursor: 'pointer',
     }),
     {
-        outline: 0,
-
+        borderRadius: `calc(${skinVars.borderRadii.input} - 1px)`,
         '@media': {
             [mq.tabletOrSmaller]: {
                 width: '100%',
             },
+        },
+        ':focus': {
+            outline: browserDefaultFocusOutline,
+            border: `1px solid transparent`, // needed for outline to follow border radius in Safari
+            margin: -1, // to avoid layout shift when adding the transparent border
         },
     },
 ]);
@@ -110,12 +115,14 @@ const selectBase = style([
         background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
         paddingY: 0,
+        borderRadius: skinVars.borderRadii.input,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         fontFamily: 'inherit',
         paddingRight: `calc(${iconButtonSize} + ${fieldEndIconGap}px)`,
         paddingLeft: fieldLeftPadding,
-        outline: 0,
         textOverflow: 'ellipsis',
         appearance: 'none',
 

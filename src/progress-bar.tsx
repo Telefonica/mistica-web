@@ -35,11 +35,10 @@ export const ProgressBar = ({
     const isInverse = useIsInverseVariant();
     const progressValue = Math.max(0, Math.min(100, progressPercent));
 
-    const getFormattedLabel = () => {
-        const ariaLabelText = ariaLabel || texts.loading || t(tokens.loading);
-        const completedLabelText = texts.progressBarCompletedLabel || t(tokens.progressBarCompletedLabel);
+    const getFormattedValueText = () => {
+        const completedText = texts.progressBarCompletedLabel || t(tokens.progressBarCompletedLabel);
 
-        return `${ariaLabelText}, ${progressValue}% ${completedLabelText}`;
+        return `${progressValue.toFixed(1)}% ${completedText}`;
     };
 
     const a11yProps =
@@ -50,7 +49,8 @@ export const ProgressBar = ({
                   'aria-valuenow': progressValue,
                   'aria-valuemin': 0,
                   'aria-valuemax': 100,
-                  'aria-label': ariaLabelledBy ? undefined : getFormattedLabel(),
+                  'aria-valuetext': getFormattedValueText(),
+                  'aria-label': ariaLabelledBy ? undefined : ariaLabel || texts.loading || t(tokens.loading),
                   'aria-labelledby': ariaLabelledBy,
               };
 
@@ -106,11 +106,9 @@ export const ProgressBarStepped = ({
         }
     }, [currentStep, steps, step]);
 
-    const getFormattedLabel = () => {
-        const label = (texts.progressBarStepLabel || t(tokens.progressBarStepLabel))
-            .replace('1$s', String(step))
-            .replace('2$s', String(steps));
-        return ariaLabel ? `${ariaLabel}, ${label.toLowerCase()}` : label;
+    const getFormattedValueText = () => {
+        const stepText = t(texts.progressBarStepLabel || tokens.progressBarStepLabel, step, steps);
+        return stepText;
     };
 
     const a11yProps =
@@ -121,7 +119,8 @@ export const ProgressBarStepped = ({
                   'aria-valuenow': step,
                   'aria-valuemin': 0,
                   'aria-valuemax': steps,
-                  'aria-label': ariaLabelledBy ? undefined : getFormattedLabel(),
+                  'aria-valuetext': getFormattedValueText(),
+                  'aria-label': ariaLabelledBy ? undefined : ariaLabel,
                   'aria-labelledby': ariaLabelledBy,
               };
 

@@ -1,4 +1,4 @@
-import type {BorderRadiiConfig, TextPresetsConfig} from './types';
+import type {BorderRadiiConfig, TextPresetsConfig, ThemeVariantsConfig} from './types';
 
 export const defaultTextPresetsConfig: TextPresetsConfig = {
     text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
@@ -12,6 +12,7 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     text9: {weight: 'light', size: {mobile: 40, desktop: 56}, lineHeight: {mobile: 48, desktop: 64}},
     text10: {weight: 'light', size: {mobile: 48, desktop: 64}, lineHeight: {mobile: 56, desktop: 72}},
     cardTitle: {weight: 'regular'},
+    rowTitle: {weight: 'regular'},
     button: {weight: 'medium'},
     link: {weight: 'medium'},
     title1: {weight: 'medium'},
@@ -34,4 +35,11 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     bar: '999px',
     avatar: '50%',
     mediaSmall: '8px',
+    chip: '16px',
+    tag: '24px',
+};
+
+export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
+    brandLoadingScreen: 'inverse',
+    successFeedback: 'inverse',
 };

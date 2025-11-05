@@ -39,6 +39,7 @@ type Props = {
     footer: React.ReactNode;
     footerHeight?: number | string;
     footerBgColor?: string;
+    footerRole?: string;
     containerBgColor?: string;
     children: React.ReactNode;
     onChangeFooterHeight?: (heightInPx: number) => void;
@@ -51,6 +52,7 @@ const FixedFooterLayout = ({
     footer,
     footerHeight = 'auto',
     footerBgColor = vars.colors.background,
+    footerRole,
     containerBgColor = vars.colors.background,
     children,
     onChangeFooterHeight,
@@ -192,7 +194,8 @@ const FixedFooterLayout = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside
+                    <div
+                        role={footerRole}
                         ref={ref}
                         data-component-name="FixedFooter"
                         data-testid="FixedFooter"
@@ -202,7 +205,7 @@ const FixedFooterLayout = ({
                         }}
                     >
                         {footer}
-                    </aside>
+                    </div>
                 )}
             </div>
         </>

@@ -30,7 +30,7 @@ const IconHeadphoneBluetoothFilled = ({color, size = 24, ...rest}: IconProps): J
                 />
             </svg>
         );
-    } else {
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -41,6 +41,19 @@ const IconHeadphoneBluetoothFilled = ({color, size = 24, ...rest}: IconProps): J
                 <path
                     fill={fillColor}
                     d="M12 2C6.484 2 2 6.484 2 12v6.252C2 20.388 3.536 22 5.572 22h1.784v-7.5H5.572a3.5 3.5 0 0 0-2.144.716V12c0-4.724 3.848-8.572 8.572-8.572S20.572 7.276 20.572 12v3.216a3.5 3.5 0 0 0-2.144-.716h-1.784V22h1.784C20.464 22 22 20.388 22 18.248V12c0-5.516-4.484-10-10-10"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 3.25c1.34 0 2.646.307 3.828.882a.75.75 0 0 1-.656 1.348 7.3 7.3 0 0 0-2.757-.718L12 4.75A7.25 7.25 0 0 0 4.75 12v.553A2.75 2.75 0 0 1 6 12.25h1A2.75 2.75 0 0 1 9.75 15v3A2.75 2.75 0 0 1 7 20.75H6A2.75 2.75 0 0 1 3.25 18v-6A8.75 8.75 0 0 1 12 3.25"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16.665 7.33a.75.75 0 0 1 .785.07l4 3a.75.75 0 0 1 0 1.2L18.25 14l3.201 2.4a.75.75 0 0 1 0 1.2l-4 3a.75.75 0 0 1-1.2-.6v-4.501l-2.8 2.1a.75.75 0 0 1-.9-1.199l3.2-2.4-3.2-2.4a.75.75 0 0 1 .9-1.2l2.8 2.1V8a.75.75 0 0 1 .415-.67M17.75 18.5l2-1.5-2-1.501zm0-6 2-1.5-2-1.501z"
                 />
             </svg>
         );

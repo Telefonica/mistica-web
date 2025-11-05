@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconLaptopRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M20.217 15.685V7.212c0-1.217-.964-2.212-2.144-2.212H5.931c-1.179 0-2.144.995-2.144 2.212v8.473H2v.552C2 17.746 3.18 19 4.642 19h14.752C20.821 19 22 17.746 22 16.237v-.552zM5.218 7.212c0-.406.32-.736.713-.736h12.142c.393 0 .713.33.713.736v8.473H5.218zm-.571 10.685c-.677 0-1.248-.481-1.463-1.104h17.678c-.252.623-.823 1.104-1.468 1.104z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.217 15.685V7.212c0-1.217-.964-2.212-2.144-2.212H5.931c-1.179 0-2.144.995-2.144 2.212v8.473H2v.552C2 17.746 3.18 19 4.642 19h14.752C20.821 19 22 17.746 22 16.237v-.552zM5.218 7.212c0-.406.32-.736.713-.736h12.142c.393 0 .713.33.713.736v8.473H5.218zm-.571 10.685c-.677 0-1.248-.481-1.463-1.104h17.678c-.252.623-.823 1.104-1.468 1.104z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 3.25A2.75 2.75 0 0 1 21.75 6v9c0 .461-.116.895-.316 1.277a1.61 1.61 0 0 1 1.316 1.58 2.893 2.893 0 0 1-2.893 2.893H4.143a2.893 2.893 0 0 1-2.893-2.893c0-.787.567-1.442 1.315-1.58A2.74 2.74 0 0 1 2.25 15V6A2.75 2.75 0 0 1 5 3.25zM2.857 17.75a.11.11 0 0 0-.107.107c0 .77.624 1.393 1.393 1.393h15.714c.77 0 1.393-.623 1.393-1.393a.11.11 0 0 0-.107-.107zM5 4.75c-.69 0-1.25.56-1.25 1.25v9c0 .69.56 1.25 1.25 1.25h14c.69 0 1.25-.56 1.25-1.25V6c0-.69-.56-1.25-1.25-1.25z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconLaptopRegular;

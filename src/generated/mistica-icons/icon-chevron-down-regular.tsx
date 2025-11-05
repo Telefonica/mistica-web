@@ -16,12 +16,21 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M19.84 8.16a.545.545 0 0 0-.77 0L12 15.23 4.93 8.16a.545.545 0 0 0-.77.77L12 16.77l7.84-7.84a.545.545 0 0 0 0-.77"
+                    d="M12 16.633a.97.97 0 0 1-.73-.32L4.273 8.876c-.38-.4-.36-1.04.04-1.42.4-.381 1.041-.361 1.422.04L12 14.15l6.266-6.656a1 1 0 0 1 1.42-.04c.401.38.421 1.021.04 1.421l-6.995 7.437c-.19.2-.46.32-.73.32"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12.002 16.942-7.68-7.2a1 1 0 0 1-.05-1.42c.38-.4 1.02-.43 1.42-.05l6.31 5.91 6.31-5.91a1 1 0 0 1 1.42.05 1 1 0 0 1-.05 1.42z"
                 />
             </svg>
         );
@@ -30,7 +39,7 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M5.266 8.2a.79.79 0 0 0-1.049 0 .64.64 0 0 0 0 .962l7.238 6.639c.15.137.348.204.545.199a.78.78 0 0 0 .545-.2l7.238-6.638a.642.642 0 0 0 0-.963.79.79 0 0 0-1.05 0L12 14.376z"
+                    d="M12.002 16.571c-.25 0-.49-.09-.69-.27l-6.99-6.56a1 1 0 0 1-.05-1.42c.38-.4 1.02-.43 1.42-.05l6.31 5.91 6.31-5.91a1 1 0 0 1 1.42.05 1 1 0 0 1-.05 1.42l-6.99 6.56c-.19.18-.44.27-.69.27"
                 />
             </svg>
         );
@@ -48,7 +57,7 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M4 8.339c0-.235.105-.46.285-.617a.93.93 0 0 1 1.256.048l6.518 6.651 6.393-6.646a.93.93 0 0 1 1.256-.055c.355.3.392.82.08 1.163l-.018.02-7.046 7.323a.9.9 0 0 1-.654.274.91.91 0 0 1-.658-.268L4.237 8.907A.8.8 0 0 1 4 8.34"
+                    d="M18.47 7.47a.75.75 0 1 1 1.06 1.06l-7 7a.75.75 0 0 1-1.06 0l-7-7a.75.75 0 1 1 1.06-1.06L12 13.94z"
                 />
             </svg>
         );

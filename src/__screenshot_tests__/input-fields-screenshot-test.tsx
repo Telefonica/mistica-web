@@ -39,6 +39,19 @@ test('TextField - optional', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - optional showOptionalLabel=false', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {defaultValue: '', optional: true, showOptionalLabel: false},
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - multiline and optional', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
@@ -174,6 +187,24 @@ test('TextField - end icon', async () => {
         device: 'MOBILE_IOS',
         args: {icon: true},
     });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextField - prefix and end icon focus-ring', async () => {
+    const page = await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {prefix: 'Prefix', icon: true},
+    });
+
+    // press Tab until the field gets focused
+    do {
+        await page.keyboard.press('Tab');
+    } while ((await page.evaluate(() => document.activeElement?.tagName)) !== 'INPUT');
 
     const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
@@ -370,6 +401,21 @@ test('SearchField', async () => {
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
+});
+
+test('SearchField with suggestions', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-searchfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {suggestions: true},
+    });
+
+    const field = await screen.findByLabelText('Label');
+    await field.type('a');
+
+    const screenshot = await page.screenshot({fullPage: true});
+
+    expect(screenshot).toMatchImageSnapshot();
 });
 
 test('DateField', async () => {

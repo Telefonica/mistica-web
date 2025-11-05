@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
 import {BaseTouchable} from './touchable';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {applyCssVars, pxToRem} from './utils/css';
 import {Text, Text3} from './text';
@@ -276,9 +276,13 @@ interface CommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
+    'aria-current'?: React.AriaAttributes['aria-current'];
+    'aria-description'?: string;
+    'aria-describedby'?: string;
     tabIndex?: number;
     StartIcon?: (props: IconProps) => JSX.Element;
     EndIcon?: (props: IconProps) => JSX.Element;
@@ -312,7 +316,9 @@ type ButtonProps = ExclusifyUnion<
     FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 >;
 
-type ButtonLinkProps = ExclusifyUnion<ToButtonProps | OnPressButtonProps | HrefButtonProps> & {
+type ButtonLinkProps = ExclusifyUnion<
+    FakeButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
+> & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
@@ -327,7 +333,7 @@ const BaseButton = React.forwardRef<
 >((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
-    const isInverse = useIsInverseOrMediaVariant();
+    const variant = useThemeVariant();
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
@@ -386,12 +392,18 @@ const BaseButton = React.forwardRef<
 
     const minWidthProps = props.buttonType.startsWith('link') ? styles.linkMinWidth : styles.buttonMinWidth;
     const finalType =
-        props.buttonType === 'linkDanger' && isDarkMode && isInverse ? 'linkDangerDark' : props.buttonType;
+        props.buttonType === 'linkDanger' && isDarkMode && variant === 'inverse'
+            ? 'linkDangerDark'
+            : props.buttonType;
 
     const commonProps = {
         ref,
         className: classnames(
-            isInverse ? styles.inverseButtonVariants[finalType] : styles.buttonVariants[finalType],
+            variant === 'media'
+                ? styles.mediaButtonVariants[finalType]
+                : variant === 'inverse'
+                  ? styles.inverseButtonVariants[finalType]
+                  : styles.buttonVariants[finalType],
             props.className,
             {
                 [styles.small]: props.small,
@@ -430,9 +442,13 @@ const BaseButton = React.forwardRef<
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
+        'aria-labelledby': props['aria-labelledby'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-haspopup': props['aria-haspopup'],
+        'aria-current': props['aria-current'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
         children: renderButtonContent({
             showSpinner,
@@ -456,7 +472,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return <BaseTouchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
+        return <BaseTouchable maybe {...commonProps} />;
     }
 
     if (props.submit) {

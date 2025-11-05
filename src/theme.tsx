@@ -2,7 +2,14 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {BorderRadiiConfig, Colors, Skin, SkinName, TextPresetsConfig} from './skins/types';
+import type {
+    BorderRadiiConfig,
+    Colors,
+    Skin,
+    SkinName,
+    TextPresetsConfig,
+    ThemeVariantsConfig,
+} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 import type {Dictionary, TextToken} from './text-tokens';
 
@@ -138,6 +145,7 @@ export type ThemeConfig = Readonly<{
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;
+    /** @deprecated Better use default browser behavior for :focus-visible */
     enableTabFocus?: boolean;
     preventCopyInFormFields?: boolean;
 }>;
@@ -164,10 +172,11 @@ export type Theme = {
     colorValues: Colors;
     borderRadii: BorderRadiiConfig;
     textPresets: TextPresetsConfig;
+    themeVariants: ThemeVariantsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
-    t: (token: TextToken, ...params: Array<string | number>) => string;
+    t: (token: TextToken | string, ...params: Array<string | number>) => string;
     preventCopyInFormFields: boolean;
 };

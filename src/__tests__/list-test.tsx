@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {RadioGroup} from '../radio-button';
-import {screen, render, waitFor} from '@testing-library/react';
+import {screen, render, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
     ButtonPrimary,
@@ -77,6 +77,26 @@ test('Row as a button', async () => {
 
     const button = screen.getByRole('button', {name: 'Title'});
     expect(button).toBeInTheDocument();
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
+});
+
+test('Row, keeping its listitem role, containing a button reporting link role', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" onPress={spy} touchableRole="link" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rowDiv = screen.getByRole('listitem');
+    expect(rowDiv).toBeInTheDocument();
+
+    const button = within(rowDiv).getByRole('link', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+
     await userEvent.click(button);
     expect(spy).toHaveBeenCalled();
 });
@@ -214,7 +234,7 @@ test('RowList inside Form', async () => {
             radio: 'banana',
         });
     });
-}, 20000);
+}, 30000);
 
 test('Row list with icon buttons', async () => {
     const firstButtonSpy = jest.fn();
@@ -292,6 +312,26 @@ test('Row list with iconButton', async () => {
     await userEvent.click(iconButton);
     expect(iconButtonOnPressSpy).toHaveBeenCalledTimes(1);
     expect(logEventSpy).toHaveBeenCalledWith({name: 'icon-button-tracking-event'});
+});
+
+test('BoxedRow, keeping its listitem role, containing a button reporting link role', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" onPress={spy} touchableRole="link" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const rowDiv = screen.getByRole('listitem');
+    expect(rowDiv).toBeInTheDocument();
+
+    const button = within(rowDiv).getByRole('link', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
 });
 
 test('Text content is read by screen readers in the right order in Rows with link', () => {

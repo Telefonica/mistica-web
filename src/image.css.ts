@@ -31,12 +31,16 @@ export const image = style([
     },
 ]);
 
-export const noBorderRadius = style({
+export const withoutBorderRadius = style({
     borderRadius: 0,
 });
 
 export const circularBorderRadius = style({
     borderRadius: '50%',
+});
+
+export const withBorderRadius = style({
+    borderRadius: skinVars.borderRadii.container,
 });
 
 export const defaultBorderRadius = style({

@@ -7,9 +7,11 @@ import {
     IconQuestionRegular,
     IconCloseRegular,
     Text2,
+    Placeholder,
 } from '..';
 import {vars} from '../skins/skin-contract.css';
 
+import type {PadSize} from '../box';
 import type {Variant} from '../theme-variant-context';
 
 export default {
@@ -20,14 +22,22 @@ export default {
     },
 };
 
-type Args = {variant: Variant; border: boolean};
+type Args = {
+    variant: Variant;
+    border: boolean;
+    customLogo: boolean;
+    wide?: boolean;
+    paddingX?: PadSize | 'undefined';
+};
 
-export const Default: StoryComponent<Args> = ({variant, border}) => {
+export const Default: StoryComponent<Args> = ({variant, border, customLogo, wide, paddingX}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
             withBorder={border}
             variant={variant}
+            logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
+            wide={wide ? (paddingX === 'undefined' ? true : {paddingX}) : false}
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="need help?" href="/help">
@@ -53,11 +63,19 @@ Default.storyName = 'FunnelNavigationBar';
 Default.args = {
     variant: 'default',
     border: true,
+    customLogo: false,
+    wide: false,
+    paddingX: 'undefined',
 };
 
 Default.argTypes = {
     variant: {
         options: ['default', 'inverse', 'alternative'],
         control: {type: 'select'},
+    },
+    paddingX: {
+        options: ['undefined', 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80],
+        control: {type: 'select'},
+        if: {arg: 'wide'},
     },
 };

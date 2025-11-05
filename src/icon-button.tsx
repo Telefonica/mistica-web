@@ -53,8 +53,6 @@ export const RawIconButton = React.forwardRef<
             type = 'neutral',
             backgroundType = 'transparent',
             hasOverlay = true,
-            'aria-label': ariaLabel,
-            'aria-labelledby': ariaLabelledby,
             small,
             Icon,
             bleedLeft,
@@ -91,8 +89,6 @@ export const RawIconButton = React.forwardRef<
             ref,
             trackingEvent,
             role,
-            'aria-label': ariaLabel,
-            'aria-labelledby': ariaLabelledby,
             dataAttributes: {'component-name': 'IconButton', testid: 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],

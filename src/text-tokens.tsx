@@ -36,13 +36,20 @@ export type Dictionary = {
     mainNavigationBarSectionSeeAll: string;
     backNavigationBar: string;
     clearButton: string;
+    carouselRegion: string;
+    carouselPauseAutoplay: string;
+    carouselEnableAutoplay: string;
+    carouselReloadAutoplay: string;
     carouselNextButton: string;
     carouselPrevButton: string;
+    carouselPageNumber: string;
     playIconButtonLabel: string;
     pauseIconButtonLabel: string;
     sheetConfirmButton: string;
     progressBarCompletedLabel: string;
     progressBarStepLabel: string;
+    stepperCurrentStep: string;
+    stepperCompletedStep: string;
     pinFieldInputLabel: string;
     counterRemoveLabel: string;
     counterIncreaseLabel: string;
@@ -72,6 +79,7 @@ export type Dictionary = {
     ratingGoodLabel: string;
     ratingVeryGoodLabel: string;
     ratingQuantitativeLabel: string;
+    skipLinkNavLabel: string;
 };
 
 export type TextToken = Record<Language, string>;
@@ -321,18 +329,53 @@ export const clearButton: TextToken = {
     pt: 'Apagar',
 };
 
+export const carouselRegion: TextToken = {
+    es: 'Carrusel',
+    en: 'Carousel',
+    de: 'Karussell',
+    pt: 'Carrossel',
+};
+
+export const carouselPauseAutoplay: TextToken = {
+    es: 'Pausar carrusel automático',
+    en: 'Pause automatic carousel',
+    de: 'Automatisches Karussell pausieren',
+    pt: 'Pausar carrossel automático',
+};
+
+export const carouselEnableAutoplay: TextToken = {
+    es: 'Reproducir carrusel automático',
+    en: 'Play automatic carousel',
+    de: 'Automatisches Karussell abspielen',
+    pt: 'Reproduzir carrossel automático',
+};
+
+export const carouselReloadAutoplay: TextToken = {
+    es: 'Reiniciar reproducción automática',
+    en: 'Restart automatic carousel',
+    de: 'Automatisches Karussell neu starten',
+    pt: 'Reiniciar carrossel automático',
+};
+
 export const carouselNextButton: TextToken = {
-    es: 'siguiente',
-    en: 'next',
-    de: 'nächste',
-    pt: 'próximo',
+    es: 'Página siguiente',
+    en: 'Next slide',
+    de: 'Nächste seite',
+    pt: 'Página seguinte',
 };
 
 export const carouselPrevButton: TextToken = {
-    es: 'anterior',
-    en: 'previous',
-    de: 'vorherige',
-    pt: 'anterior',
+    es: 'Página anterior',
+    en: 'Previous slide',
+    de: 'Vorherige seite',
+    pt: 'Página anterior',
+};
+
+export const carouselPageNumber: TextToken = {
+    es: '1$s de 2$s',
+    en: '1$s of 2$s',
+    de: '1$s von 2$s',
+    pt: '1$s de 2$s',
 };
 
 export const playIconButtonLabel: TextToken = {
@@ -368,6 +411,20 @@ export const progressBarStepLabel: TextToken = {
     en: 'Step 1$s of 2$s',
     de: 'Schritt 1$s von 2$s',
     pt: 'Etapa 1$s de 2$s',
+};
+
+export const stepperCurrentStep: TextToken = {
+    es: 'En curso',
+    en: 'Current',
+    de: 'Aktuell',
+    pt: 'Em andamento',
+};
+
+export const stepperCompletedStep: TextToken = {
+    es: 'Completado',
+    en: 'Completed',
+    de: 'Abgeschlossen',
+    pt: 'Concluído',
 };
 
 export const pinFieldInputLabel: TextToken = {
@@ -593,4 +650,11 @@ export const meterSectionLabel: TextToken = {
     en: 'Segment 1$s: 2$s%',
     de: 'Abschnitt 1$s: 2$s%',
     pt: 'Seção 1$s: 2$s%',
+};
+
+export const skipLinkNavLabel: TextToken = {
+    es: 'Accesos directos',
+    en: 'Skip links',
+    de: 'Direkt zum Inhalt',
+    pt: 'Acesso rápido',
 };

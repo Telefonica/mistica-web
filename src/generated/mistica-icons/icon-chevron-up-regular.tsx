@@ -16,12 +16,21 @@ const IconChevronUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M4.16 16.612a.545.545 0 0 0 .77 0L12 9.542l7.07 7.07a.544.544 0 1 0 .77-.771L12 8l-7.84 7.84a.545.545 0 0 0 0 .772"
+                    d="M12 7.179a.97.97 0 0 0-.73.32l-6.997 7.437c-.38.4-.36 1.04.04 1.42.4.381 1.041.361 1.422-.04L12 9.662l6.266 6.656a1 1 0 0 0 1.42.04c.401-.38.421-1.021.04-1.421l-6.995-7.437c-.19-.2-.46-.32-.73-.32"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12.002 8.057-7.68 7.2a1 1 0 0 0-.05 1.42c.38.4 1.02.43 1.42.05l6.31-5.91 6.31 5.91a1 1 0 0 0 1.42-.05 1 1 0 0 0-.05-1.42z"
                 />
             </svg>
         );
@@ -30,7 +39,7 @@ const IconChevronUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.734 15.8a.79.79 0 0 0 1.049 0 .64.64 0 0 0 0-.962L12.545 8.2A.78.78 0 0 0 12 8a.78.78 0 0 0-.545.2l-7.238 6.638a.64.64 0 0 0 0 .963.79.79 0 0 0 1.05 0L12 9.624z"
+                    d="M12.002 7.427c-.25 0-.49.09-.69.27l-6.99 6.56a1 1 0 0 0-.05 1.42c.38.4 1.02.43 1.42.05l6.31-5.91 6.31 5.91a1 1 0 0 0 1.42-.05 1 1 0 0 0-.05-1.42l-6.99-6.56c-.19-.18-.44-.27-.69-.27"
                 />
             </svg>
         );
@@ -48,7 +57,7 @@ const IconChevronUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20 15.661a.82.82 0 0 1-.285.617.93.93 0 0 1-1.256-.048L11.94 9.579l-6.392 6.647a.93.93 0 0 1-1.257.054.804.804 0 0 1-.08-1.163l.018-.02 7.046-7.323a.9.9 0 0 1 .654-.274.91.91 0 0 1 .658.268l7.175 7.325a.8.8 0 0 1 .237.568"
+                    d="M11.47 7.47a.75.75 0 0 1 1.06 0l7 7a.75.75 0 1 1-1.06 1.06L12 9.06l-6.47 6.47a.75.75 0 0 1-1.06-1.06z"
                 />
             </svg>
         );

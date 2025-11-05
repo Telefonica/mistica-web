@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconEthernetFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M4 3.25a.75.75 0 0 0-.75.75v16c0 .414.336.75.75.75h16a.75.75 0 0 0 .75-.75V4a.75.75 0 0 0-.75-.75zM2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm4 3v8a1 1 0 0 0 1 1h3v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h3a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1m4.625 3.86a.625.625 0 0 1-1.25 0V7.235h1.25zm2 0a.625.625 0 0 1-1.25 0V7.235h1.25zm2 0a.625.625 0 0 1-1.25 0V7.235h1.25z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4 3.25a.75.75 0 0 0-.75.75v16c0 .414.336.75.75.75h16a.75.75 0 0 0 .75-.75V4a.75.75 0 0 0-.75-.75zM2 4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm4 3v8a1 1 0 0 0 1 1h3v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h3a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1m4.625 3.86a.625.625 0 0 1-1.25 0V7.235h1.25zm2 0a.625.625 0 0 1-1.25 0V7.235h1.25zm2 0a.625.625 0 0 1-1.25 0V7.235h1.25z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 2.5A3.5 3.5 0 0 1 21.5 6v12a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 18V6A3.5 3.5 0 0 1 6 2.5zM8.5 6.75A1.75 1.75 0 0 0 6.75 8.5v4.546c0 .966.784 1.75 1.75 1.75h.821l.443 1.285c.034.101.13.169.236.169h4a.25.25 0 0 0 .236-.169l.443-1.285h.821a1.75 1.75 0 0 0 1.75-1.75V8.5a1.75 1.75 0 0 0-1.75-1.75h-.25V9.5a.75.75 0 0 1-1.5 0V6.75h-1V9.5a.75.75 0 0 1-1.5 0V6.75h-1V9.5a.75.75 0 0 1-1.5 0V6.75z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconEthernetFilled;

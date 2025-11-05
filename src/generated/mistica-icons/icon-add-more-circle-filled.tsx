@@ -16,7 +16,16 @@ const IconAddMoreCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.El
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.617 1c.287 0 .588.006.845.013 2.154.05 10.541.901 10.538 11.018 0 10.136-8.397 10.925-10.497 10.963-.195.003-.42.006-.649.006-.118 0-.24 0-.356-.003C9.288 22.966 1 22.167 1 11.966 1 1.776 9.209 1.019 11.42 1zm1.067 11.654h4.8a.69.69 0 0 0 .688-.685.69.69 0 0 0-.688-.689h-4.8V6.534a.689.689 0 0 0-1.378 0v4.743h-4.79a.689.689 0 1 0 0 1.377h4.79v4.812a.689.689 0 0 0 1.378 0z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,7 +48,7 @@ const IconAddMoreCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.El
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.617 1c.287 0 .588.006.845.013 2.154.05 10.541.901 10.538 11.018 0 10.136-8.397 10.925-10.497 10.963-.195.003-.42.006-.649.006-.118 0-.24 0-.356-.003C9.288 22.966 1 22.167 1 11.966 1 1.776 9.209 1.019 11.42 1zm1.067 11.654h4.8a.69.69 0 0 0 .688-.685.69.69 0 0 0-.688-.689h-4.8V6.534a.689.689 0 0 0-1.378 0v4.743h-4.79a.689.689 0 1 0 0 1.377h4.79v4.812a.689.689 0 0 0 1.378 0z"
+                    d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m-.005 4.75a.75.75 0 0 0-.75.75v3.245H8a.75.75 0 0 0 0 1.5h3.245V16a.75.75 0 0 0 1.5 0v-3.255H16a.75.75 0 0 0 0-1.5h-3.255V8a.75.75 0 0 0-.75-.75"
                 />
             </svg>
         );

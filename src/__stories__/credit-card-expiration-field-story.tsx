@@ -13,6 +13,7 @@ interface CreditCardExpirationFieldBaseArgs {
     error: boolean;
     inverse: boolean;
     optional: boolean;
+    showOptionalLabel: boolean;
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
@@ -24,6 +25,7 @@ const defaultBaseArgs: CreditCardExpirationFieldBaseArgs = {
     error: false,
     inverse: false,
     optional: false,
+    showOptionalLabel: true,
     disabled: false,
     readOnly: false,
     preventCopy: false,

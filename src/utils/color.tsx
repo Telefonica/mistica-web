@@ -26,9 +26,19 @@ export const applyAlpha = (color: string, alpha: number): string => {
         if (color.startsWith('var(')) {
             // it's a css variable with rgb components. See skin-contract rawColors
             return `rgba(${color}, ${alpha})`;
-        } else {
+        } else if (color.startsWith('#')) {
             // it's a hex color
             return `rgba(${fromHexToRgb(color).join(',')}, ${alpha})`;
+        } else if (color.startsWith('rgb(')) {
+            // it's an rgb color
+            return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+        } else if (color.startsWith('rgba(')) {
+            // it's already an rgba color
+            return color.replace(/, [\d.]+\)$/, `, ${alpha})`);
+        } else {
+            // it's a different color format (color name, hsl, etc). We try to use css relative color syntax
+            // Note that this won't work in old browsers https://caniuse.com/css-relative-colors
+            return `rgb(from ${color} r g b / ${Math.round(alpha * 100)}%)`;
         }
     } catch (e) {
         return color;

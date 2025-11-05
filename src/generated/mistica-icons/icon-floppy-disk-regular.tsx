@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,30 @@ import type {IconProps} from '../../utils/types';
 const IconFloppyDiskRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17.385 2c.204 0 .4.081.543.225l3.847 3.846a.77.77 0 0 1 .225.544v11.539A3.846 3.846 0 0 1 18.154 22H5.846A3.846 3.846 0 0 1 2 18.154V5.846A3.846 3.846 0 0 1 5.846 2zM3.538 5.846v12.308a2.31 2.31 0 0 0 2.308 2.308h12.308a2.31 2.31 0 0 0 2.308-2.308V6.934l-3.396-3.396h-.45v3.847c0 .85-.69 1.538-1.54 1.538H8.924c-.85 0-1.538-.689-1.538-1.538V3.538H5.846a2.31 2.31 0 0 0-2.308 2.308m11.539-2.308H8.923v3.847h6.154z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.385 2c.204 0 .4.081.543.225l3.847 3.846a.77.77 0 0 1 .225.544v11.539A3.846 3.846 0 0 1 18.154 22H5.846A3.846 3.846 0 0 1 2 18.154V5.846A3.846 3.846 0 0 1 5.846 2zM3.538 5.846v12.308a2.31 2.31 0 0 0 2.308 2.308h12.308a2.31 2.31 0 0 0 2.308-2.308V6.934l-3.396-3.396h-.45v3.847c0 .85-.69 1.538-1.54 1.538H8.924c-.85 0-1.538-.689-1.538-1.538V3.538H5.846a2.31 2.31 0 0 0-2.308 2.308m11.539-2.308H8.923v3.847h6.154z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 11.25a2.75 2.75 0 1 1 0 5.499 2.75 2.75 0 0 1 0-5.499m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 3.25c.199 0 .39.08.53.22l4 4c.14.14.22.331.22.53v10A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25zM6 4.75A1.25 1.25 0 0 0 4.75 6v12A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V8.31l-3.56-3.56h-.94V8a.75.75 0 0 1-.75.75H8A.75.75 0 0 1 7.25 8V4.75zm2.75 2.5h4.5v-2.5h-4.5z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconFloppyDiskRegular;

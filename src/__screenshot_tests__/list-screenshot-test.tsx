@@ -281,3 +281,79 @@ test('BoxedRows danger', async () => {
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(devices)('UnorderedList', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--unordered-list-story',
+        device,
+    });
+
+    const list = await screen.findByLabelText('Unordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('UnorderedList default icons', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--unordered-list-story',
+        device,
+        args: {customIcon: false},
+    });
+
+    const list = await screen.findByLabelText('Unordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('UnorderedList without marker', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--unordered-list-story',
+        device,
+        args: {withMarker: false},
+    });
+
+    const list = await screen.findByLabelText('Unordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('OrderedList', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--ordered-list-story',
+        device,
+    });
+
+    const list = await screen.findByLabelText('Ordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('OrderedList default icons', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--ordered-list-story',
+        device,
+        args: {customIcon: false},
+    });
+
+    const list = await screen.findByLabelText('Ordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('OrderedList without marker', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--ordered-list-story',
+        device,
+        args: {withMarker: false},
+    });
+
+    const list = await screen.findByLabelText('Ordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

@@ -25,6 +25,15 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                 />
             </svg>
         );
+    } else if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M22.001 12 12 2 1.999 12l.481 1.162h1.916v5.378c0 1.33 1.082 2.41 2.411 2.41h10.386a2.414 2.414 0 0 0 2.411-2.41v-5.378h1.916zM13.6 17.49h-3.2v-3.2h3.2z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
@@ -48,7 +57,7 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="m21.423 10.71-8.258-8.115c-.596-.586-1.725-.586-2.324 0l-8.258 8.117a1.33 1.33 0 0 0-.311 1.502c.24.552.818.907 1.47.907h.611v7.283c0 .793.709 1.437 1.583 1.437h3.109c.23.006.423-.18.426-.409v-4.045h5.112v4.045a.42.42 0 0 0 .425.412h2.939c.874 0 1.582-.644 1.582-1.437v-7.283h.729c.652 0 1.232-.356 1.47-.907.23-.521.112-1.099-.305-1.507"
+                    d="M10.262 3.987a2.5 2.5 0 0 1 3.476 0l6 5.806c.487.471.762 1.12.762 1.797V19a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 19v-7.41c0-.677.275-1.326.762-1.797zM12 13.749A2.25 2.25 0 0 0 9.75 16v3.5c0 .139.112.25.25.25h4a.25.25 0 0 0 .25-.25V16A2.25 2.25 0 0 0 12 13.75"
                 />
             </svg>
         );

@@ -1,6 +1,8 @@
 import {capitalize} from 'lodash';
 
 const imagePlaceholder = 'https://picsum.photos/1200/1200';
+const videoPlaceholder =
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4';
 
 type Snippet = {group: string; name: string; code: string};
 
@@ -498,6 +500,10 @@ const formSnippets: Array<Snippet> = [
     ],
     ['CvvField', '<CvvField name="cvv" label="CVV"/>'],
     ['SearchField', '<SearchField name="search" label="Search"/>'],
+    [
+        'SearchField (with suggestions)',
+        '<SearchField name="search2" label="Search" getSuggestions={() => ["aa", "bb", "cc", "dd"]}/>',
+    ],
     ['Switch', '<Switch name="switch"/>'],
     ['Checkbox', '<Checkbox name="checkbox">Checkbox</Checkbox>'],
     [
@@ -1133,13 +1139,18 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (without icons)',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex', 0)}
-            onChange={setState('tabIndex')}
+            selectedIndex={getState('selectedTab', 0)}
+            onChange={setState('selectedTab')}
             tabs={[
                 {text: 'Tab 1'},
                 {text: 'Tab 2'},
                 {text: 'Tab 3'},
             ]}
+            renderPanel={({selectedIndex, panelProps}) => (
+                <div {...panelProps}>
+                    <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                </div>
+            )}
         />`,
     },
     {
@@ -1147,13 +1158,18 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (with icons)',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex', 0)}
-            onChange={setState('tabIndex')}
+            selectedIndex={getState('selectedTab', 0)}
+            onChange={setState('selectedTab')}
             tabs={[
                 {text: 'Tab 1', Icon: IconAppointmentRegular},
                 {text: 'Tab 2', Icon: IconBrainRegular},
                 {text: 'Tab 3', Icon: IconBusRegular},
             ]}
+            renderPanel={({selectedIndex, panelProps}) => (
+                <div {...panelProps}>
+                    <Text3 regular>Panel {selectedIndex + 1}</Text3>
+                </div>
+            )}
         />`,
     },
 ];
@@ -1161,15 +1177,32 @@ const tabsSnippets: Array<Snippet> = [
 const cardSnippets: Array<Snippet> = [
     {
         group: 'Cards',
-        name: 'HighlightedCard',
+        name: 'MediaCard right media position',
         code: `
-        <HighlightedCard
+        <MediaCard
+            mediaPosition="right"
             title="Title"
             description="Some description here"
-            imageUrl="${imagePlaceholder}"
-            imageFit="fill"
+            imageSrc="${imagePlaceholder}"
             onClose={() => {}}
-            button={
+            buttonPrimary={
+                <ButtonPrimary href="#" small>
+                    ButtonPrimary
+                </ButtonPrimary>
+            }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard left media position',
+        code: `
+        <MediaCard
+            mediaPosition="left"
+            title="Title"
+            description="Some description here"
+            imageSrc="${imagePlaceholder}"
+            onClose={() => {}}
+            buttonPrimary={
                 <ButtonPrimary href="#" small>
                     ButtonPrimary
                 </ButtonPrimary>
@@ -1181,15 +1214,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
             asset={<Avatar size={40} src="${imagePlaceholder}" />}
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1202,15 +1236,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Video',
         code: `
         <MediaCard
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            videoSrc="${videoPlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
             asset={<Avatar size={40} src="${imagePlaceholder}" />}
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1232,8 +1267,8 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1243,9 +1278,10 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'SnapCard',
+        name: 'DataCard snap size',
         code: `
-        <SnapCard
+        <DataCard
+            size="snap"
             asset={
               <Circle size={40} backgroundColor={colors.brandLow}>
                 <IconAcademicRegular color={colors.brand} />
@@ -1258,9 +1294,10 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayDataCard',
+        name: 'DataCard display size',
         code: `
-        <DisplayDataCard
+        <DataCard
+          size="display"
           asset={
             <Circle size={40} backgroundColor={colors.brandLow}>
               <IconInvoicePlanFileRegular color={colors.brand} />
@@ -1276,7 +1313,7 @@ const cardSnippets: Array<Snippet> = [
             </ButtonPrimary>
           }
           onClose={() => {}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1299,21 +1336,22 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with image',
+        name: 'CoverCard display size with image',
         code: `
-        <DisplayMediaCard
+        <CoverCard
+          size="display"
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="${imagePlaceholder}"
-          button={
+          imageSrc="${imagePlaceholder}"
+          buttonPrimary={
             <ButtonPrimary small href="https://google.com">
               Action
             </ButtonPrimary>
           }
           onClose={() => {}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1336,70 +1374,17 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with video',
+        name: 'CoverCard display size with video',
         code: `
-        <DisplayMediaCard
+        <CoverCard
+          size="display"
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="${imagePlaceholder}"
-          button={
-            <ButtonPrimary small href="https://google.com">
-              Action
-            </ButtonPrimary>
-          }
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with image',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          subtitle="Subtitle"
-          description="Description"
-          backgroundImage="${imagePlaceholder}"
-          onClose={() => {}}
-          onPress={() => {alert({ title: "pressed" });}}
-          actions={[
-            {
-              Icon: IconLightningRegular,
-              onPress: () => {},
-              label: "Lightning",
-            },
-            {
-              checkedProps: {
-                  Icon: IconStarFilled,
-                  label: 'checked',
-              },
-              uncheckedProps: {
-                  Icon: IconStarRegular,
-                  label: 'unchecked',
-              },
-              defaultChecked: false,
-              onChange: () => {},
-          },
-          ]}
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with video',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          subtitle="Subtitle"
-          description="Description"
-          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="${imagePlaceholder}"
-          onPress={() => {alert({ title: "pressed" });}}
-          button={
+          videoSrc="${videoPlaceholder}"
+          imageSrc="${imagePlaceholder}"
+          buttonPrimary={
             <ButtonPrimary small href="https://google.com">
               Action
             </ButtonPrimary>
@@ -1408,18 +1393,18 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard inverse',
+        name: 'CoverCard with image',
         code: `
-        <PosterCard
+        <CoverCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           subtitle="Subtitle"
           description="Description"
-          isInverse
+          imageSrc="${imagePlaceholder}"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1442,19 +1427,73 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard with backgroundColor',
+        name: 'CoverCard with video',
         code: `
-        <PosterCard
+        <CoverCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          videoSrc="${videoPlaceholder}"
+          imageSrc="${imagePlaceholder}"
+          onPress={() => {alert({ title: "pressed" });}}
+          buttonPrimary={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'CoverCard inverse',
+        code: `
+        <CoverCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          variant="inverse"
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          topActions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'CoverCard with backgroundColor',
+        code: `
+        <CoverCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           subtitle="Subtitle"
           description="Description"
           backgroundColor={colors.promo}
-          isInverse
+          variant="inverse"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1481,14 +1520,15 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Image',
         code: `
         <NakedCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1501,14 +1541,15 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Video',
         code: `
         <NakedCard
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            videoSrc="${videoPlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1519,10 +1560,12 @@ const cardSnippets: Array<Snippet> = [
 
     {
         group: 'Cards',
-        name: 'SmallNakedCard',
+        name: 'NakedCard snap size',
         code: `
-        <SmallNakedCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+        <NakedCard
+            size="snap"
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             title="Title"
             subtitle="Subtitle"
             description="Description"
@@ -2840,6 +2883,7 @@ const navigationBarSnippets = [
                                 "Movistar Cloud",
                               ].map((title, index) => (
                                 <TextLink
+                                  underline={false}
                                   key={index}
                                   onPress={() => {}}
                                   style={{ color: colors.textPrimary }}
@@ -4292,6 +4336,113 @@ const timelineSnippets: Array<Snippet> = [
     },
 ];
 
+const orderedListSnippets: Array<Snippet> = [
+    {
+        group: 'OrderedList',
+        name: 'OrderedList',
+        code: `
+        <Text3 regular as="div">
+  <OrderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <OrderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </OrderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </OrderedList>
+</Text3>`,
+    },
+    {
+        group: 'OrderedList',
+        name: 'OrderedList (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <OrderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </OrderedList>
+</Text3>`,
+    },
+];
+
+const unorderedListSnippets: Array<Snippet> = [
+    {
+        group: 'UnorderedList',
+        name: 'UnorderedList',
+        code: `
+        <Text3 regular as="div">
+  <UnorderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <UnorderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </UnorderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </UnorderedList>
+</Text3>`,
+    },
+    {
+        group: 'Ul',
+        name: 'Ul (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <UnorderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </UnorderedList>
+</Text3>`,
+    },
+];
+
+const listItemSnippets = [
+    {
+        group: 'ListItem',
+        name: 'ListItem',
+        code: `<ListItem>List item</ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem with icon',
+        code: `<ListItem Icon={IconLightningFilled}>List item</ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem with custom icon',
+        code: `<ListItem icon={<IconLightningFilled size="1em" color={colors.error} />}>
+      List item with custom icon rendering
+    </ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem without marker',
+        code: `<ListItem withMarker={false}>List item</Li>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4314,6 +4465,11 @@ export default [
     {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     {
+        group: 'TextLink',
+        name: 'TextLink',
+        code: '<Text3>This is a <TextLink href="https://example.org" newTab>text link</TextLink> in the middle of a text</Text3>',
+    },
+    {
         group: 'Counter',
         name: 'Counter',
         code: `
@@ -4333,6 +4489,8 @@ export default [
     ...accordionSnippets,
     ...listSnippets,
     ...listSnippetsAvatar,
+    ...orderedListSnippets,
+    ...unorderedListSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
     ...sliderSnippets,
@@ -4485,5 +4643,6 @@ export default [
     ...loadingScreenSnippets,
     ...tableSnippets,
     ...timelineSnippets,
+    ...listItemSnippets,
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

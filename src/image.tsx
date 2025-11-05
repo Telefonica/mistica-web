@@ -124,6 +124,8 @@ type CommonImageProps = {
     loadingFallback?: boolean;
     errorFallback?: boolean;
     border?: boolean;
+    objectFit?: 'contain' | 'cover' | 'fill' | 'none';
+    objectPosition?: 'center' | 'top' | 'bottom' | 'left' | 'right' | string;
 };
 
 type RectangularImageProps = {
@@ -161,6 +163,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             onLoad,
             loadingFallback = true,
             errorFallback = true,
+            objectFit,
+            objectPosition,
             ...props
         },
         ref
@@ -170,9 +174,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const borderRadiusStyle = props.circular
             ? styles.circularBorderRadius
             : noBorderRadius
-              ? styles.noBorderRadius
-              : styles.defaultBorderRadius;
-
+              ? styles.withoutBorderRadius
+              : noBorderRadius === false // explicitly set to false, so we set border radius
+                ? styles.withBorderRadius
+                : styles.defaultBorderRadius; // === undefined, use the default border radius (or the setting set by parent component, like cards or slideshow)
         const [isError, setIsError] = React.useState(!src);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
@@ -184,6 +189,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                   : typeof aspectRatio === 'number'
                     ? aspectRatio
                     : RATIO[aspectRatio];
+
+        const hasOnlyHeight = !!props.height && !props.width && ratio === 0 && !props.circular;
+        const hasOnlyWidth = !!props.width && !props.height && ratio === 0 && !props.circular;
+        const effectiveObjectFit = objectFit ?? (hasOnlyHeight || hasOnlyWidth ? 'contain' : 'cover'); // 'contain' is used for single-dimension cases (only width or only height) to ensure the image fits within the given dimension without cropping.
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
@@ -229,6 +238,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     style={{
                         opacity: isLoading && withLoadingFallback ? 0 : 1,
                         position: ratio !== 0 ? 'absolute' : 'static',
+                        objectFit: effectiveObjectFit,
+                        objectPosition,
                     }}
                     ref={combineRefs(imageRef, ref)}
                     src={src}

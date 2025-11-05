@@ -29,7 +29,18 @@ console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
 
-const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'o2-new', 'telefonica', 'vivo', 'vivo-new', 'tu', 'esimflag'];
+const KNOWN_SKINS = [
+    'blau',
+    'movistar',
+    'movistar-new',
+    'o2',
+    'o2-new',
+    'telefonica',
+    'vivo',
+    'vivo-new',
+    'tu',
+    'esimflag',
+];
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
@@ -145,6 +156,14 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 .join(',')}
         },
         textPresets: ${JSON.stringify(jsonSort(textTokens))},
+        themeVariants: {
+            ${Object.entries(designTokens.themeVariant)
+                .map(
+                    ([componentName, variantDescription]) =>
+                        `'${componentName}': '${variantDescription.value}'`
+                )
+                .join(',')},
+        },
     };
     return skin;
 };
