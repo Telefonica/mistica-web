@@ -19,28 +19,28 @@ export const Welcome = () => {
             <Box paddingY={32}>
                 <Stack space={24}>
                     <Stack space={16}>
-                        <Text6 as="h2">Welcome to Mistica Storybook</Text6>
-                        <img src={logo} alt="Mistica loves react" />
+                        <Text6 as="h2">Welcome to Mística Storybook</Text6>
+                        <img src={logo} alt="Mística loves react" />
                     </Stack>
                     <Stack space={16}>
                         <Paragraph>
                             Browse the stories in the sidebar menu to know the different React components in
-                            the Mistica catalog and see usage examples for every component.
+                            the Mística catalog and see usage examples for every component.
                         </Paragraph>
                         <Paragraph>
                             Looking for a specific component? You can use the search bar or just press '/' and
                             start typing.
                         </Paragraph>
                         <Paragraph>
-                            Mistica comes with builtin support for the different Telefonica brand color
+                            Mística comes with builtin support for the different Telefonica brand color
                             schemes. Use the theme selector in the toolbar above to switch between the
                             supported themes (Telefónica, Movistar, O2, Blau and Vivo)
                         </Paragraph>
                         <Paragraph>
-                            For quick prototyping using Mistica components, use the{' '}
-                            <TextLink href="/playroom">Mistica Playroom</TextLink>. Using the Playroom you can
+                            For quick prototyping using Mística components, use the{' '}
+                            <TextLink href="/playroom">Mística Playroom</TextLink>. Using the Playroom you can
                             simultaneously design across a variety of themes and screen sizes, powered by JSX
-                            and Mistica components library. It's the perfect tool to create quick mock-ups and
+                            and Mística components library. It's the perfect tool to create quick mock-ups and
                             interactive prototypes with real code. It also allows you to share your work with
                             others by simply copying the URL.
                         </Paragraph>
@@ -48,7 +48,7 @@ export const Welcome = () => {
                     <nav style={{margin: '0 -8px'}}>
                         <Inline space={8} wrap>
                             <ButtonLink small href="https://github.com/Telefonica/mistica">
-                                About Mistica
+                                About Mística
                             </ButtonLink>
                             <ButtonLink
                                 small
