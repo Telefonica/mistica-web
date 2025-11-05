@@ -370,7 +370,7 @@ export const InfoFeedbackScreen = ({
                 testid: 'InfoFeedbackScreen',
                 ...dataAttributes,
             }}
-            asset={<Icon size="100%" />}
+            asset={<Icon size="100%" color={vars.colors.brand} />}
             {...props}
         />
     );
