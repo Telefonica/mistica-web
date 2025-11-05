@@ -202,10 +202,7 @@ export const parameters = {
                 'Hooks',
                 'Mística Lab',
                 'Community',
-                [
-                    'Welcome', // This story appears first inside "Community"
-                    '*', // The rest follow alphabetically
-                ],
+                ['Welcome', '*'],
             ],
         },
     },
