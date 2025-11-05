@@ -15,6 +15,7 @@ import {
     UnorderedList,
     ListItem,
     Title4,
+    IconWorkflowRegular,
 } from '../..';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -101,25 +102,39 @@ export const Default: StoryComponent = () => {
                         </Paragraph>
 
                         <Grid columns={{minSize: 280}} gap={16}>
-                            {Array.from({length: 3}, (_, idx) => (
+                            {Array.from({length: 4}, (_, idx) => (
                                 <CoverCard
                                     asset={
                                         [
                                             <VivoLogo size={40} />,
                                             <IconBarChartRegular size={40} />,
                                             <IconCreditCardVisaRegular size={40} />,
+                                            <IconWorkflowRegular size={40} />,
                                         ][idx]
                                     }
                                     aspectRatio="1:1"
                                     key={idx}
                                     headline={<Tag type="info">React</Tag>}
-                                    title={['Vivo Extended', 'Novum Extended', 'Global Checkout'][idx]}
+                                    title={
+                                        [
+                                            'Vivo Extended',
+                                            'Novum Extended',
+                                            'Global Checkout',
+                                            'CMS Extended',
+                                        ][idx]
+                                    }
                                     subtitle={
-                                        ['Vivo Design OPS Team', 'TCX Design Team', 'TCX Design Team'][idx]
+                                        [
+                                            'Vivo Design OPS Team',
+                                            'TCX Design Team',
+                                            'TCX Design Team',
+                                            'TCX Design Team',
+                                        ][idx]
                                     }
                                     description={
                                         [
                                             'designops.br@telefonica.com',
+                                            'cx-product-design@telefonica.com',
                                             'cx-product-design@telefonica.com',
                                             'cx-product-design@telefonica.com',
                                         ][idx]
@@ -129,6 +144,7 @@ export const Default: StoryComponent = () => {
                                             'https://preframeworkbrasilsa.telefonicabigdata.com/fb-core/storybooks/lib/feat/TMNT-63/index.html?path=/story/welcome--welcome',
                                             'https://storybook.tuenti.io/?path=/story/welcome-welcome--first-steps',
                                             'https://global-checkout.vercel.app/?path=/story/management-steps-bank-account-list--multiple-bank-accounts',
+                                            'https://cms-storybook.tooling-dev.svc.dev.tuenti.io/?path=/story/common-components-sortedmultiselect--default',
                                         ][idx]
                                     }
                                     newTab
