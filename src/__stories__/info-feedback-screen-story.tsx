@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {InfoFeedbackScreen} from '../feedback';
 import {ButtonPrimary} from '../button';
-import IconError from '../icons/icon-error';
 import {Placeholder} from '../placeholder';
 import IconShoppingBagRegular from '../generated/mistica-icons/icon-shopping-bag-regular';
 
