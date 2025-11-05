@@ -11,7 +11,6 @@ import {
     Tag,
     IconCreditCardVisaRegular,
     IconBarChartRegular,
-    Text3,
     UnorderedList,
     ListItem,
     Title4,
