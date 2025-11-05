@@ -48,8 +48,8 @@ Success.storyName = 'SuccessFeedbackScreen';
 Success.args = {
     imageUrl: emptyStateImg,
     imageFit: 'fit',
-    title: "I'm the Title",
-    description: "I'm the Description",
+    title: "I'm the title",
+    description: "I'm the description",
     multipleParagraphs: false,
     extra: false,
 };

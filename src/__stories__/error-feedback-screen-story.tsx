@@ -37,8 +37,8 @@ export const Error: StoryComponent<Args> = ({
 
 Error.storyName = 'ErrorFeedbackScreen';
 Error.args = {
-    title: "I'm the Title",
-    description: "I'm the Description",
+    title: "I'm the title",
+    description: "I'm the description",
     multipleParagraphs: false,
     extra: false,
     errorReference: 'Error reference: #95001',

@@ -39,8 +39,8 @@ export const Info: StoryComponent<Args> = ({asset, title, description, multipleP
 Info.storyName = 'InfoFeedbackScreen';
 Info.args = {
     asset: 'default',
-    title: "I'm the Title",
-    description: "I'm the Description",
+    title: "I'm the title",
+    description: "I'm the description",
     multipleParagraphs: false,
     extra: false,
 };
