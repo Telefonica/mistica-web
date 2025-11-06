@@ -14,7 +14,6 @@ const AVAILABLE_SKINS = [
     'Vivo',
     'Telefonica',
     'Blau',
-    'Tu',
     'Esimflag',
 ];
 

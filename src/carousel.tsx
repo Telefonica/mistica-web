@@ -2,7 +2,7 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import classNames from 'classnames';
 import {useIsInverseOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
@@ -1106,7 +1106,7 @@ export const Slideshow = ({
         ? Math.floor((scrollLeft + carouselRef.current.clientWidth / 2) / carouselRef.current.clientWidth)
         : 0;
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const carouselEl = carouselRef.current;
         if (carouselEl) {
             const handleCarouselChange = () => {
