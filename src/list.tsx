@@ -28,6 +28,7 @@ import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
+import {has} from 'lodash';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -270,7 +271,9 @@ type ControlProps = {
     onChange?: (checked: boolean) => void;
 };
 
-type BasicRowContentProps = CommonProps;
+interface BasicRowContentProps extends CommonProps {
+    atomicReading?: boolean;
+}
 
 interface SwitchRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
@@ -395,6 +398,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         right,
         'aria-label': ariaLabelProp,
         tabIndex,
+        atomicReading,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
@@ -402,19 +406,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [rightText, setRightText] = React.useState<string>('');
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-    const computedAriaLabelForLink = [
-        title,
-        headlineText,
-        subtitle,
-        description,
-        extraText,
-        detail,
-        rightText,
-    ]
+    const computedAriaLabel = [title, headlineText, subtitle, description, extraText, detail, rightText]
         .filter(Boolean)
         .join(' ');
 
-    const ariaLabel = ariaLabelProp ?? (props.href || props.to ? computedAriaLabelForLink : undefined);
+    const ariaLabel = ariaLabelProp ?? (props.href || props.to ? computedAriaLabel : undefined);
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
@@ -657,22 +653,28 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
               );
     }
 
-    const hasCustomAriaLabel = !!props['aria-label'];
+    const shouldRenderScreenReaderOnly = !!ariaLabelProp || atomicReading;
 
     return (
-        <div
-            className={classNames(styles.rowContent, styles.rowContentPadding)}
-            role={role}
-            {...getPrefixedDataAttributes(dataAttributes)}
-            ref={ref as React.Ref<HTMLDivElement>}
-            tabIndex={tabIndex}
-        >
-            <div aria-hidden={hasCustomAriaLabel}>{renderContent({role})}</div>
-            {hasCustomAriaLabel && (
-                <ScreenReaderOnly className={styles.screenReaderOnly}>
-                    <span>{props['aria-label']}</span>
-                </ScreenReaderOnly>
-            )}
+        <div role={role}>
+            <div
+                className={classNames(styles.rowContent, styles.rowContentPadding)}
+                // role="text" makes VoiceOver read the whole div as a single text block. This is needed for VoiceOver rectangle to
+                // cover the whole row, otherwise it only covers the text inside ScreenReaderOnly
+                role={shouldRenderScreenReaderOnly ? 'text' : undefined}
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref as React.Ref<HTMLDivElement>}
+                tabIndex={tabIndex}
+            >
+                <div aria-hidden={shouldRenderScreenReaderOnly}>{renderContent({role})}</div>
+                {shouldRenderScreenReaderOnly && (
+                    <>
+                        <ScreenReaderOnly>
+                            <span>{ariaLabelProp ?? computedAriaLabel}</span>
+                        </ScreenReaderOnly>
+                    </>
+                )}
+            </div>
         </div>
     );
 });
