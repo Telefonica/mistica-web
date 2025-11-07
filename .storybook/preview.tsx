@@ -202,6 +202,7 @@ export const parameters = {
                 'Hooks',
                 'Mística Lab',
                 'Community',
+                ['Welcome', '*'],
             ],
         },
     },
