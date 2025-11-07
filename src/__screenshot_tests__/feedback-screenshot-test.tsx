@@ -27,9 +27,7 @@ const getExtraContentCases = () => {
     const cases: Array<[string, Device]> = [];
     for (const device of testableDevices) {
         for (const feedbackType of feedbackTypes) {
-            if (!feedbackType.includes('error')) {
-                cases.push([feedbackType, device]);
-            }
+            cases.push([feedbackType, device]);
         }
     }
     return cases;

@@ -320,7 +320,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
     );
 };
 
-interface ErrorFeedbackScreenProps extends Omit<FeedbackProps, 'extra'> {
+interface ErrorFeedbackScreenProps extends FeedbackProps {
     errorReference?: string;
 }
 
@@ -342,6 +342,7 @@ export const ErrorFeedbackScreen = ({
             }}
             extra={
                 <Stack space={16}>
+                    {otherProps.extra}
                     {errorReference && (
                         <Text2 color={vars.colors.textSecondary} regular>
                             {errorReference}
@@ -369,7 +370,7 @@ export const InfoFeedbackScreen = ({
                 testid: 'InfoFeedbackScreen',
                 ...dataAttributes,
             }}
-            asset={<Icon size="100%" />}
+            asset={<Icon size="100%" color={vars.colors.brand} />}
             {...props}
         />
     );
