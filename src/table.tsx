@@ -2,8 +2,7 @@ import * as React from 'react';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './table.css';
 import {vars} from './skins/skin-contract.css';
-import Text, {Text1, Text2} from './text';
-import * as textProps from './text-props';
+import {Text1, Text2} from './text';
 import {InternalBoxed} from './boxed';
 import classNames from 'classnames';
 import Box from './box';
@@ -12,6 +11,7 @@ import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
 import {iconContainerSize, iconSize} from './icon-button.css';
 import {TableActionsHeader} from './table-actions-header';
+import TableCellText from './table-cell-text';
 
 import type {CardAction} from './card-internal';
 import type {DataAttributes} from './utils/types';
@@ -256,23 +256,10 @@ export const Table = React.forwardRef(
                                                         </div>
                                                     )}
 
-                                                <Text
-                                                    desktopSize={textProps.text2.desktopSize}
-                                                    desktopLineHeight={textProps.text2.desktopLineHeight}
-                                                    // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
-                                                    {...(idx === rowHeaderIndex && collapsedRowsMode
-                                                        ? {
-                                                              mobileSize: textProps.text4.mobileSize,
-                                                              mobileLineHeight:
-                                                                  textProps.text4.mobileLineHeight,
-                                                          }
-                                                        : {
-                                                              mobileSize: textProps.text2.mobileSize,
-                                                              mobileLineHeight:
-                                                                  textProps.text2.mobileLineHeight,
-                                                          })}
-                                                    as="div"
-                                                    wordBreak={false}
+                                                <TableCellText
+                                                    isCollapsedRowTitle={
+                                                        idx === rowHeaderIndex && collapsedRowsMode
+                                                    }
                                                 >
                                                     <div
                                                         className={classNames(
@@ -286,7 +273,7 @@ export const Table = React.forwardRef(
                                                     >
                                                         {cell}
                                                     </div>
-                                                </Text>
+                                                </TableCellText>
                                             </CellComponent>
                                         );
                                     })}

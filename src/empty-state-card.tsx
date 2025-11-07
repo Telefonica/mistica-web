@@ -4,8 +4,7 @@ import Box from './box';
 import {Boxed} from './boxed';
 import {useTheme} from './hooks';
 import Stack from './stack';
-import {Text2, Text} from './text';
-import * as textProps from './text-props';
+import {Text2, Text, useTextPresetSizes} from './text';
 import ButtonGroup from './button-group';
 import * as styles from './empty-state-card.css';
 import {vars} from './skins/skin-contract.css';
@@ -51,6 +50,7 @@ const EmptyStateCard = ({
     dataAttributes,
 }: Props): JSX.Element => {
     const {textPresets} = useTheme();
+    const text4Sizes = useTextPresetSizes('text4');
 
     let image;
     if (imageUrl) {
@@ -67,7 +67,7 @@ const EmptyStateCard = ({
                         {image ?? (asset && <div className={styles.assetContainer}>{asset}</div>)}
                         <Box>
                             <Stack space={8}>
-                                <Text {...textProps.text4} weight={textPresets.cardTitle.weight} as={titleAs}>
+                                <Text {...text4Sizes} weight={textPresets.cardTitle.weight} as={titleAs}>
                                     {title}
                                 </Text>
                                 <Text2 regular color={vars.colors.textSecondary}>
