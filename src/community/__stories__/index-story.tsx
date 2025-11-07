@@ -101,51 +101,45 @@ export const Default: StoryComponent = () => {
                         </Paragraph>
 
                         <Grid columns={{minSize: 280}} gap={16}>
-                            {Array.from({length: 4}, (_, idx) => (
+                            {[
+                                {
+                                    asset: <VivoLogo size={40} />,
+                                    title: 'Vivo Extended',
+                                    subtitle: 'Vivo Design OPS Team',
+                                    description: 'designops.br@telefonica.com',
+                                    href: 'https://preframeworkbrasilsa.telefonicabigdata.com/fb-core/storybooks/lib/feat/TMNT-63/index.html?path=/story/welcome--welcome',
+                                },
+                                {
+                                    asset: <IconBarChartRegular size={40} />,
+                                    title: 'Novum Extended',
+                                    subtitle: 'TCX Design Team',
+                                    description: 'cx-product-design@telefonica.com',
+                                    href: 'https://storybook.tuenti.io/?path=/story/welcome-welcome--first-steps',
+                                },
+                                {
+                                    asset: <IconCreditCardVisaRegular size={40} />,
+                                    title: 'Global Checkout',
+                                    subtitle: 'TCX Design Team',
+                                    description: 'cx-product-design@telefonica.com',
+                                    href: 'https://global-checkout.vercel.app/?path=/story/management-steps-bank-account-list--multiple-bank-accounts',
+                                },
+                                {
+                                    asset: <IconWorkflowRegular size={40} />,
+                                    title: 'CMS Extended',
+                                    subtitle: 'TCX Design Team',
+                                    description: 'cx-product-design@telefonica.com',
+                                    href: 'https://cms-storybook.tooling-dev.svc.dev.tuenti.io/?path=/story/common-components-sortedmultiselect--default',
+                                },
+                            ].map(({asset, title, subtitle, description, href}, idx) => (
                                 <CoverCard
-                                    asset={
-                                        [
-                                            <VivoLogo size={40} />,
-                                            <IconBarChartRegular size={40} />,
-                                            <IconCreditCardVisaRegular size={40} />,
-                                            <IconWorkflowRegular size={40} />,
-                                        ][idx]
-                                    }
+                                    asset={asset}
                                     aspectRatio="1:1"
                                     key={idx}
                                     headline={<Tag type="info">React</Tag>}
-                                    title={
-                                        [
-                                            'Vivo Extended',
-                                            'Novum Extended',
-                                            'Global Checkout',
-                                            'CMS Extended',
-                                        ][idx]
-                                    }
-                                    subtitle={
-                                        [
-                                            'Vivo Design OPS Team',
-                                            'TCX Design Team',
-                                            'TCX Design Team',
-                                            'TCX Design Team',
-                                        ][idx]
-                                    }
-                                    description={
-                                        [
-                                            'designops.br@telefonica.com',
-                                            'cx-product-design@telefonica.com',
-                                            'cx-product-design@telefonica.com',
-                                            'cx-product-design@telefonica.com',
-                                        ][idx]
-                                    }
-                                    href={
-                                        [
-                                            'https://preframeworkbrasilsa.telefonicabigdata.com/fb-core/storybooks/lib/feat/TMNT-63/index.html?path=/story/welcome--welcome',
-                                            'https://storybook.tuenti.io/?path=/story/welcome-welcome--first-steps',
-                                            'https://global-checkout.vercel.app/?path=/story/management-steps-bank-account-list--multiple-bank-accounts',
-                                            'https://cms-storybook.tooling-dev.svc.dev.tuenti.io/?path=/story/common-components-sortedmultiselect--default',
-                                        ][idx]
-                                    }
+                                    title={title}
+                                    subtitle={subtitle}
+                                    description={description}
+                                    href={href}
                                     newTab
                                 />
                             ))}
