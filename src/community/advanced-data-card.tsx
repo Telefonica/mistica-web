@@ -8,7 +8,6 @@ import * as styles from './advanced-data-card.css';
 import * as mediaStyles from '../image.css';
 import Divider from '../divider';
 import {Text2, Text, useTextPresetSizes} from '../text';
-import * as textProps from '../text-props';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
@@ -150,7 +149,7 @@ const CardContent = ({
                     {title && (
                         <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                             <Text
-                                {...textProps.text4}
+                                {...text4Sizes}
                                 truncate={titleLinesMax}
                                 weight={textPresets.cardTitle.weight}
                                 as={titleAs}
