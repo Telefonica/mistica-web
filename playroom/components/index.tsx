@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {ThemeVariant} from '../../dist';
 import {
     Select,
     IconSettingsRegular,
@@ -20,18 +21,23 @@ import {
     Portal,
     O2NewLogo,
     EsimflagLogo,
+    IconCloseRegular,
+    IconMoonRegular,
+    IconSunRegular,
+    IconCodeSquareRegular,
+    ResponsiveLayout,
+    Text2,
 } from '../../src';
 import {Movistar_New, Telefonica, Blau, Vivo_New, O2_New, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
-import IconSun from '../icons/icon-sun';
-import IconMoon from '../icons/icon-moon';
 import IconAppleOn from '../icons/icon-apple-on';
 import IconAppleOff from '../icons/icon-apple-off';
-import IconCode from '../icons/icon-code';
+import IconPalette from '../icons/icon-palette';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
 
 import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src';
+import type {Variant} from '../../src/theme-variant-context';
 
 export * from '../../src';
 export * from '../../src/community';
@@ -39,6 +45,28 @@ export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
 type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu'>;
+
+// Shared variant configuration
+type VariantOption = {
+    variant: Variant;
+    color: string;
+    label: string;
+};
+
+const variantOptions: Array<VariantOption> = [
+    {variant: 'default' as Variant, color: skinVars.colors.background, label: 'Default'},
+    {variant: 'inverse' as Variant, color: skinVars.colors.backgroundBrand, label: 'Inverse'},
+    {
+        variant: 'alternative' as Variant,
+        color: skinVars.colors.backgroundAlternative,
+        label: 'Alternative',
+    },
+    {
+        variant: 'media' as Variant,
+        color: skinVars.colors.backgroundBrand,
+        label: 'Media',
+    },
+];
 
 const themesMap: {
     [skinName in ValidSkinName]: {
@@ -140,11 +168,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         )}
                         <ToggleIconButton
                             checkedProps={{
-                                Icon: IconSun as (props: IconProps) => JSX.Element,
+                                Icon: IconSunRegular as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Switch to light mode',
                             }}
                             uncheckedProps={{
-                                Icon: IconMoon as (props: IconProps) => JSX.Element,
+                                Icon: IconMoonRegular as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Switch to dark mode',
                             }}
                             checked={colorScheme === alternativeColorScheme}
@@ -159,7 +187,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         <IconButton
                             bleedRight
                             aria-label="Edit in Playroom"
-                            Icon={IconCode as (props: IconProps) => JSX.Element}
+                            Icon={IconCodeSquareRegular as (props: IconProps) => JSX.Element}
                             onPress={onEditStoryPress}
                         />
                     </Inline>
@@ -195,11 +223,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         )}
                         <ToggleIconButton
                             checkedProps={{
-                                Icon: IconSun as (props: IconProps) => JSX.Element,
+                                Icon: IconSunRegular as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Change color scheme',
                             }}
                             uncheckedProps={{
-                                Icon: IconMoon as (props: IconProps) => JSX.Element,
+                                Icon: IconMoonRegular as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Change color scheme',
                             }}
                             checked={colorScheme === alternativeColorScheme}
@@ -214,7 +242,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         <IconButton
                             bleedRight
                             aria-label="Edit in Playroom"
-                            Icon={IconCode as (props: IconProps) => JSX.Element}
+                            Icon={IconCodeSquareRegular as (props: IconProps) => JSX.Element}
                             onPress={onEditStoryPress}
                         />
                     </Inline>
@@ -223,6 +251,87 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
         }
     }
 );
+
+type ContextToggleProps = {
+    onCirclePress: (index: number) => void;
+    currentVariant: Variant;
+};
+
+const ContextToggle = ({onCirclePress, currentVariant}: ContextToggleProps): JSX.Element => {
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    const toggleMenu = (checked: boolean) => {
+        setIsOpen(checked);
+    };
+
+    const handleCirclePress = (index: number) => {
+        onCirclePress(index);
+    };
+
+    // Use shared variant options
+
+    return (
+        <Portal>
+            {/* Context toggle container */}
+            <div className={styles.contextToggle}>
+                {/* Context items */}
+                <div
+                    className={`${styles.contextToggleItems} ${isOpen ? styles.contextToggleItemsOpen : styles.contextToggleItemsClosed}`}
+                >
+                    {variantOptions.map((option, index) => {
+                        const isSelected = currentVariant === option.variant;
+
+                        // Clases de animación individual para cada elemento
+                        const animationClasses = [
+                            [styles.contextToggleItem0Open, styles.contextToggleItem0Closed],
+                            [styles.contextToggleItem1Open, styles.contextToggleItem1Closed],
+                            [styles.contextToggleItem2Open, styles.contextToggleItem2Closed],
+                            [styles.contextToggleItem3Open, styles.contextToggleItem3Closed],
+                        ];
+
+                        const [openClass, closedClass] = animationClasses[index] || animationClasses[0];
+                        const animationClass = isOpen ? openClass : closedClass;
+
+                        return (
+                            <Touchable
+                                key={option.variant}
+                                onPress={() => handleCirclePress(index)}
+                                className={`${styles.contextToggleItemCircle} ${animationClass} ${isSelected ? styles.contextToggleItemCircleSelected : ''}`}
+                            >
+                                <Inline space={8} alignItems="center">
+                                    <Circle backgroundColor={option.color} size={24} border />
+                                    <Text2 medium={isSelected} color={skinVars.colors.textPrimary}>
+                                        {option.label}
+                                    </Text2>
+                                </Inline>
+                            </Touchable>
+                        );
+                    })}
+                </div>
+
+                {/* Toggle button */}
+                <div className={styles.contextToggleButton}>
+                    <ToggleIconButton
+                        checkedProps={{
+                            Icon: IconCloseRegular,
+                            type: 'brand',
+                            backgroundType: 'soft',
+                            'aria-label': 'close menu',
+                        }}
+                        uncheckedProps={{
+                            Icon: IconPalette,
+                            type: 'neutral',
+                            backgroundType: 'soft',
+                            'aria-label': 'open menu',
+                        }}
+                        checked={isOpen}
+                        onChange={toggleMenu}
+                    />
+                </div>
+            </div>
+        </Portal>
+    );
+};
 
 type PreviewToolsProps = {
     floating?: boolean;
@@ -233,6 +342,7 @@ type PreviewToolsProps = {
     forceDesktop?: boolean;
     forceTabs?: boolean;
     hide?: boolean;
+    showContextToggle?: boolean;
     children: React.ReactNode;
 };
 
@@ -247,6 +357,7 @@ export const PreviewTools = ({
     forceDesktop = false,
     forceTabs = false,
     hide,
+    showContextToggle = false,
 }: PreviewToolsProps): JSX.Element => {
     const {
         skinName: initialSkinName,
@@ -255,7 +366,15 @@ export const PreviewTools = ({
     const [skinName, setSkinName] = React.useState<ValidSkinName>(initialSkinName as ValidSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
+    const [currentVariant, setCurrentVariant] = React.useState<Variant>('default');
     const overrideTheme = useOverrideTheme();
+
+    const handleCirclePress = (index: number) => {
+        const variants: Array<Variant> = ['default', 'inverse', 'alternative', 'media'];
+        const selectedVariant = variants[index];
+        setCurrentVariant(selectedVariant);
+        console.log(`Theme variant changed to: ${selectedVariant}`);
+    };
 
     const [showControls, setShowControls] = React.useState(false);
     const controlsRef = React.useRef<HTMLDivElement | null>(null);
@@ -326,10 +445,21 @@ export const PreviewTools = ({
     if (hide) {
         return <>{children}</>;
     }
+
+    // Conditionally render ContextToggle
+    const contextToggleComponent = showContextToggle ? (
+        <ThemeContextProvider theme={theme} as="div">
+            <ContextToggle onCirclePress={handleCirclePress} currentVariant={currentVariant} />
+        </ThemeContextProvider>
+    ) : null;
+
     if (floating) {
         return (
             <>
-                {children}
+                <ResponsiveLayout fullWidth variant={currentVariant}>
+                    {children}
+                </ResponsiveLayout>
+                {contextToggleComponent}
                 <Portal>
                     <CSSTransition
                         in={showControls}
@@ -407,9 +537,10 @@ export const PreviewTools = ({
     } else {
         return (
             <>
+                {contextToggleComponent}
                 <Portal>{controls}</Portal>
                 <div className={styles.controlsHeight} />
-                {children}
+                <ThemeVariant variant={currentVariant}>{children}</ThemeVariant>
             </>
         );
     }
