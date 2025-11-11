@@ -24,6 +24,7 @@ interface SimpleChipProps {
     id?: string;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
+    small?: boolean;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
@@ -86,8 +87,15 @@ const Chip = (props: ChipProps): JSX.Element => {
                 className={classnames(
                     overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
                     styles.chipWrapper,
-                    Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
-                    styles.rightPadding.withIcon
+                    Icon
+                        ? props.small
+                            ? styles.leftPadding.withIconSmall
+                            : styles.leftPadding.withIcon
+                        : props.small
+                          ? styles.leftPadding.small
+                          : styles.leftPadding.default,
+                    props.small ? styles.rightPadding.withIconSmall : styles.rightPadding.withIcon,
+                    {[styles.containerSmall]: props.small}
                 )}
                 {...getPrefixedDataAttributes(chipDataAttributes)}
             >
@@ -134,9 +142,22 @@ const Chip = (props: ChipProps): JSX.Element => {
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.interactive]: isInteractive,
+                    [styles.containerSmall]: props.small,
                 },
-                Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
-                badge ? styles.rightPadding.withIcon : styles.rightPadding.default
+                Icon
+                    ? props.small
+                        ? styles.leftPadding.withIconSmall
+                        : styles.leftPadding.withIcon
+                    : props.small
+                      ? styles.leftPadding.small
+                      : styles.leftPadding.default,
+                badge
+                    ? props.small
+                        ? styles.rightPadding.withIconSmall
+                        : styles.rightPadding.withIcon
+                    : props.small
+                      ? styles.rightPadding.small
+                      : styles.rightPadding.default
             )}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
