@@ -1,4 +1,4 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
@@ -16,26 +16,59 @@ export const wrappedContent = sprinkles({
     alignItems: 'center',
 });
 
+const minButtonArea = {
+    pointer: '48px',
+    touchable: '48px',
+};
+
+const interactiveAreaSize = createVar();
+
+const minimumInteractiveArea = style({
+    vars: {
+        [interactiveAreaSize]: minButtonArea.pointer,
+    },
+    '@media': {
+        [mq.touchableOnly]: {
+            vars: {
+                [interactiveAreaSize]: minButtonArea.touchable,
+            },
+        },
+    },
+
+    position: 'relative',
+    '::after': {
+        content: '',
+        position: 'absolute',
+        /**
+         * min() is not supported in old browsers (https://caniuse.com/css-math-functions).
+         * We don't force the minimum touchable area in that case.
+         */
+        top: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+        bottom: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+        left: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+        right: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+    },
+});
+
 const containerBase = style([
     sprinkles({
         border: 'regular',
+        minHeight: 40,
+        minWidth: 72,
     }),
     {
         borderRadius: vars.borderRadii.chip,
         verticalAlign: 'middle',
-        minHeight: 32,
-        minWidth: 56,
         cursor: 'default',
         borderColor: vars.colors.control,
-
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                minHeight: 40,
-                minWidth: 72,
-            },
-        },
     },
+    minimumInteractiveArea,
 ]);
+
+export const containerSmall = style({
+    minHeight: 32,
+    minWidth: 56,
+});
 
 const chipActive = style({});
 
@@ -93,7 +126,6 @@ export const chipVariants = styleVariants({
 
 export const interactive = style({
     position: 'relative',
-    overflow: 'hidden',
     userSelect: 'none',
     cursor: 'pointer',
 });
@@ -115,6 +147,7 @@ export const interactiveChipOverlay = style([
     {
         backgroundColor: 'transparent',
         transition: 'background-color 0.1s ease-in-out',
+        borderRadius: vars.borderRadii.chip,
         selectors: {
             [`${interactive}:active &`]: {
                 backgroundColor: vars.colors.backgroundContainerPressed,
@@ -158,11 +191,15 @@ export const iconActive = style([
 ]);
 
 export const leftPadding = styleVariants({
-    default: [sprinkles({paddingLeft: {mobile: 20, desktop: 12}})],
-    withIcon: [sprinkles({paddingLeft: {mobile: 16, desktop: 8}})],
+    default: [sprinkles({paddingLeft: 20})],
+    small: [sprinkles({paddingLeft: 12})],
+    withIcon: [sprinkles({paddingLeft: 16})],
+    withIconSmall: [sprinkles({paddingLeft: 8})],
 });
 
 export const rightPadding = styleVariants({
-    default: [sprinkles({paddingRight: {mobile: 20, desktop: 12}})],
-    withIcon: [sprinkles({paddingRight: {mobile: 16, desktop: 8}})],
+    default: [sprinkles({paddingRight: 20})],
+    small: [sprinkles({paddingRight: 12})],
+    withIcon: [sprinkles({paddingRight: 16})],
+    withIconSmall: [sprinkles({paddingRight: 8})],
 });

@@ -25,6 +25,23 @@ test.each(CHIP_OPTIONS)('Chip - %s', async (option) => {
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
+test.each(CHIP_OPTIONS)('Chip small - %s', async (option) => {
+    await openStoryPage({
+        id: 'components-chip--default',
+        device: 'DESKTOP',
+        args: {
+            badge: option.includes('badge') ? '2' : 'undefined',
+            icon: option.includes('icon'),
+            closable: option.includes('closable'),
+            small: true,
+        },
+    });
+
+    const story = await screen.findByTestId('chip');
+
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
+
 test.each`
     selection     | inverse  | badge
     ${'single'}   | ${false} | ${undefined}

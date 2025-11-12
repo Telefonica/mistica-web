@@ -26,6 +26,7 @@ type Args = {
     active: boolean;
     badge: string;
     href: string;
+    small: boolean;
 };
 
 type Props = {
@@ -57,12 +58,14 @@ export const Default: StoryComponent<Args> = ({
     badge,
     active: chipActive,
     href: hrefProp,
+    small,
 }) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
         href: hrefProp !== 'undefined' ? hrefProp : '',
         active: chipActive,
+        small,
     };
 
     const {href, active, ...rest} = props;
@@ -80,10 +83,11 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon}) => {
+export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon, small}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        small,
     };
 
     return (
@@ -120,10 +124,11 @@ export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse
     );
 };
 
-export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon}) => {
+export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon, small}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        small,
     };
 
     return (
@@ -161,12 +166,14 @@ export const NavigableChip: StoryComponent<{
     inverse: boolean;
     icon: boolean;
     badge: string;
-}> = ({inverse, icon, badge}) => {
+    small: boolean;
+}> = ({inverse, icon, badge, small}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
         href: 'https://example.com',
         active: true,
+        small,
     };
 
     return (
@@ -182,6 +189,7 @@ const defaultArgs = {
     badge: '0',
     icon: false,
     closable: false,
+    small: false,
     href: 'undefined',
 };
 
@@ -189,6 +197,7 @@ const navigableArgs = {
     inverse: false,
     badge: '0',
     icon: false,
+    small: false,
 };
 
 const defaultArgTypes = {
