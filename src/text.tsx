@@ -262,6 +262,18 @@ const getWeight = (props: LightRegularMediumProps) => {
     return undefined;
 };
 
+type TextSizes =
+    | {
+          size: number;
+          lineHeight: string | number;
+      }
+    | {
+          mobileSize: number;
+          mobileLineHeight: string | number;
+          desktopSize: number;
+          desktopLineHeight: string | number;
+      };
+
 const getTextSizes = ({
     forceMobileSizes,
     textPreset,
@@ -274,12 +286,12 @@ const getTextSizes = ({
     };
     // textProps is used as a fallback for textPreset values from textProps.tsx
     textProps: {
-        mobileSize?: number;
-        mobileLineHeight?: string | number;
-        desktopSize?: number;
-        desktopLineHeight?: string | number;
+        mobileSize: number;
+        mobileLineHeight: string | number;
+        desktopSize: number;
+        desktopLineHeight: string | number;
     };
-}) => {
+}): TextSizes => {
     const mobileSize = textPreset.size.mobile || textProps.mobileSize;
     const mobileLineHeight = textPreset.lineHeight.mobile || textProps.mobileLineHeight;
     const desktopSize = textPreset.size.desktop || textProps.desktopSize;
@@ -298,6 +310,12 @@ const getTextSizes = ({
             desktopLineHeight,
         };
     }
+};
+
+export const useTextPresetSizes = (presetName: keyof typeof textProps): TextSizes => {
+    const {textPresets} = useTheme();
+    const textPreset = textPresets[presetName];
+    return getTextSizes({textPreset, textProps: textProps[presetName]});
 };
 
 export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {

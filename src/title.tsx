@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
-import Text, {Text1, Text2, Text6} from './text';
-import * as textProps from './text-props';
+import Text, {Text1, Text2, Text6, useTextPresetSizes} from './text';
 import Inline from './inline';
 import Box from './box';
 import {vars} from './skins/skin-contract.css';
@@ -68,7 +67,7 @@ export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
     return (
         <TitleLayout
             title={
-                <Text as={as} id={id} {...textProps.text3} weight={textPresets.title2.weight}>
+                <Text as={as} id={id} {...useTextPresetSizes('text3')} weight={textPresets.title2.weight}>
                     {children}
                 </Text>
             }

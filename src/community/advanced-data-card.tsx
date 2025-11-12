@@ -7,8 +7,7 @@ import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import * as mediaStyles from '../image.css';
 import Divider from '../divider';
-import {Text2, Text} from '../text';
-import * as textProps from '../text-props';
+import {Text2, Text, useTextPresetSizes} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
@@ -88,6 +87,7 @@ const CardContent = ({
     descriptionLinesMax,
 }: CardContentProps) => {
     const {textPresets} = useTheme();
+    const text4Sizes = useTextPresetSizes('text4');
 
     return (
         /** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */
@@ -97,7 +97,7 @@ const CardContent = ({
                     {title && (
                         <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                             <Text
-                                {...textProps.text4}
+                                {...text4Sizes}
                                 truncate={titleLinesMax}
                                 weight={textPresets.cardTitle.weight}
                                 as={titleAs}
@@ -149,7 +149,7 @@ const CardContent = ({
                     {title && (
                         <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                             <Text
-                                {...textProps.text4}
+                                {...text4Sizes}
                                 truncate={titleLinesMax}
                                 weight={textPresets.cardTitle.weight}
                                 as={titleAs}
