@@ -66,6 +66,19 @@ const skinToLang: Record<string, string> = {
 
 const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
     const {isModalOpen} = useModalState();
+    React.useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://cloud.umami.is/script.js';
+        script.defer = true;
+        script.setAttribute('data-website-id', '3c566ba6-9c6b-45b9-88f7-154f968277a2');
+        document.head.appendChild(script);
+
+        return () => {
+            if (document.head.contains(script)) {
+                document.head.removeChild(script);
+            }
+        };
+    }, []);
     const lang = skinToLang[skinName] || 'en';
 
     React.useEffect(() => {
