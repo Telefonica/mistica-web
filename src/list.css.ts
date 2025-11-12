@@ -2,7 +2,6 @@ import {style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
-import {pxToRem} from './utils/css';
 
 export const disabled = style({
     opacity: 0.5,
@@ -79,14 +78,6 @@ export const rowContent = style([
         },
     },
 ]);
-
-// Position the ScreenReaderOnly text in a natural place inside the row, this makes VoiceOver "focus" appear in a good position
-export const screenReaderOnly = style({
-    position: 'absolute',
-    top: 16,
-    left: 16,
-    fontSize: pxToRem(16),
-});
 
 export const rowContentPadding = sprinkles({
     paddingX: 16,
