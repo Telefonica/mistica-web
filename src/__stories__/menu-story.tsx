@@ -154,7 +154,12 @@ export const InsideCard: StoryComponent = () => {
                             position="right"
                             width={200}
                             renderTarget={({ref, onPress}) => (
-                                <Touchable ref={ref} onPress={onPress} data-testid="menuTarget">
+                                <Touchable
+                                    ref={ref}
+                                    onPress={onPress}
+                                    data-testid="menuTarget"
+                                    aria-label="Menu"
+                                >
                                     <Inline space={16}>
                                         <IconKebabMenuLight />
                                     </Inline>
