@@ -583,7 +583,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             : renderRowWithSingleControl(
                   <div
                       aria-live={props.switchDisclosure?.live ?? 'off'}
-                      aria-atomic
+                      aria-atomic={props.switchDisclosure?.live !== 'off'}
                       aria-busy={rowIsBusy || undefined}
                   >
                       <Control
