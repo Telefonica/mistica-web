@@ -276,12 +276,12 @@ interface BasicRowContentProps extends CommonProps {
 }
 
 type SwitchDisclosure = {
-    expanded: boolean; // ¿hay contenido mostrado debajo?
-    controlsId?: string; // id de la región expandida (si existe)
-    live?: 'off' | 'polite' | 'assertive'; // canal de anuncio al cambiar expanded
-    busy?: boolean; // bloquea UI y marca aria-busy
-    showSpinner?: boolean; // muestra spinner en la derecha
-    onLabelWhenExpanded?: string; // mensaje cuando expanded = true
+    expanded: boolean; // is the related content expanded
+    controlsId?: string; // id of the related content (if any)
+    live?: 'off' | 'polite' | 'assertive'; // announcement channel when changing expanded
+    busy?: boolean; // blocks UI and sets aria-busy
+    showSpinner?: boolean; // shows spinner on the right
+    onLabelWhenExpanded?: string; // message when expanded = true
 };
 
 interface SwitchRowContentProps extends CommonProps {
