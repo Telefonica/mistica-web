@@ -28,6 +28,7 @@ import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
+import Spinner from './spinner';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -274,11 +275,21 @@ interface BasicRowContentProps extends CommonProps {
     atomicReading?: boolean;
 }
 
+type SwitchDisclosure = {
+    expanded: boolean; // ¿hay contenido mostrado debajo?
+    controlsId?: string; // id de la región expandida (si existe)
+    live?: 'off' | 'polite' | 'assertive'; // canal de anuncio al cambiar expanded
+    busy?: boolean; // bloquea UI y marca aria-busy
+    showSpinner?: boolean; // muestra spinner en la derecha
+    onLabelWhenExpanded?: string; // mensaje cuando expanded = true
+};
+
 interface SwitchRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     switch: ControlProps | undefined;
+    switchDisclosure?: SwitchDisclosure;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
@@ -545,15 +556,24 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.switch || props.checkbox) {
         const Control = props.switch ? Switch : Checkbox;
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+        const computedAriaLabel =
+            ariaLabel ??
+            (props.switchDisclosure?.expanded
+                ? `${title} ${props.switchDisclosure?.onLabelWhenExpanded ?? 'Options available below.'}`
+                : ariaLabel);
+        const rowIsBusy = !!props.switchDisclosure?.busy;
+        const showSpinner = !!props.switchDisclosure?.showSpinner;
 
         return isInteractive
             ? renderRowWithDoubleInteraction(
                   <Control
-                      disabled={disabled}
+                      disabled={disabled || rowIsBusy}
                       name={name}
                       checked={isChecked}
-                      aria-label={ariaLabel}
+                      aria-label={computedAriaLabel}
                       aria-labelledby={titleId}
+                      aria-controls={props.switchDisclosure?.controlsId}
+                      aria-expanded={props.switchDisclosure?.expanded}
                       onChange={toggle}
                       render={({controlElement}) => (
                           <div className={styles.dualActionRight}>{controlElement}</div>
@@ -561,22 +581,37 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                   />
               )
             : renderRowWithSingleControl(
-                  <Control
-                      disabled={disabled}
-                      name={name}
-                      checked={isChecked}
-                      aria-label={ariaLabel}
-                      aria-labelledby={titleId}
-                      onChange={toggle}
-                      render={({controlElement, labelId}) => (
-                          <Box paddingX={16} role={role}>
-                              {renderContent({
-                                  labelId,
-                                  control: <Stack space="around">{controlElement}</Stack>,
-                              })}
-                          </Box>
+                  <div
+                      aria-live={props.switchDisclosure?.live ?? 'off'}
+                      aria-atomic
+                      aria-busy={rowIsBusy || undefined}
+                  >
+                      <Control
+                          disabled={disabled || rowIsBusy}
+                          name={name}
+                          checked={isChecked}
+                          aria-label={computedAriaLabel}
+                          aria-labelledby={titleId}
+                          aria-controls={props.switchDisclosure?.controlsId}
+                          aria-expanded={props.switchDisclosure?.expanded}
+                          onChange={toggle}
+                          render={({controlElement, labelId}) => (
+                              <Box paddingX={16} role={role}>
+                                  {renderContent({
+                                      labelId,
+                                      control: <Stack space="around">{controlElement}</Stack>,
+                                  })}
+                              </Box>
+                          )}
+                      />
+                      {showSpinner && (
+                          <div className={styles.rightContent}>
+                              <div className={styles.center}>
+                                  <Spinner aria-hidden />
+                              </div>
+                          </div>
                       )}
-                  />,
+                  </div>,
                   true
               );
     }
