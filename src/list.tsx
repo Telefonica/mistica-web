@@ -48,6 +48,7 @@ interface CommonProps {
     descriptionLinesMax?: number;
     detail?: string;
     asset?: React.ReactNode;
+    assetAlt?: string;
     badge?: boolean | number;
     role?: string;
     touchableRole?: string;
@@ -378,6 +379,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const isInverse = useIsInverseOrMediaVariant();
     const {
         asset,
+        assetAlt,
         headline,
         title,
         titleAs,
@@ -405,18 +407,27 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [rightText, setRightText] = React.useState<string>('');
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-    const computedAriaLabel = [title, headlineText, subtitle, description, extraText, detail, rightText]
+    const computedAriaLabel = [
+        title,
+        assetAlt,
+        headlineText,
+        subtitle,
+        description,
+        extraText,
+        detail,
+        rightText,
+    ]
         .filter(Boolean)
         .join(' ');
 
-    const ariaLabel = ariaLabelProp ?? (props.href || props.to ? computedAriaLabel : undefined);
+    const isInteractive = !!props.onPress || !!props.href || !!props.to;
+    const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
     const hasHoverDefault = !disabled && !isInverse;
     const hasHoverInverse = !disabled && isInverse;
     const hasControl = hasControlProps(props);
-    const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
 
     const interactiveProps = {
