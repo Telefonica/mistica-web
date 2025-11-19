@@ -29,6 +29,7 @@ import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
 import Spinner from './spinner';
+import * as tokens from './text-tokens';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -429,6 +430,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const hasControl = hasControlProps(props);
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
+    const {texts, t} = useTheme();
 
     const interactiveProps = {
         href: props.href,
@@ -559,7 +561,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         const computedAriaLabel =
             ariaLabel ??
             (props.switchDisclosure?.expanded
-                ? `${title} ${props.switchDisclosure?.onLabelWhenExpanded ?? 'Options available below.'}`
+                ? `${title} ${props.switchDisclosure?.onLabelWhenExpanded ?? (texts.optionsAvailableBelowAnnouncement || t(tokens.optionsAvailableBelowAnnouncement))}`
                 : ariaLabel);
         const rowIsBusy = !!props.switchDisclosure?.busy;
         const showSpinner = !!props.switchDisclosure?.showSpinner;

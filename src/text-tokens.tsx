@@ -80,6 +80,7 @@ export type Dictionary = {
     ratingVeryGoodLabel: string;
     ratingQuantitativeLabel: string;
     skipLinkNavLabel: string;
+    optionsAvailableBelowAnnouncement: string;
 };
 
 export type TextToken = Record<Language, string>;
@@ -657,4 +658,11 @@ export const skipLinkNavLabel: TextToken = {
     en: 'Skip links',
     de: 'Direkt zum Inhalt',
     pt: 'Acesso rápido',
+};
+
+export const optionsAvailableBelowAnnouncement: TextToken = {
+    es: 'Opciones disponibles a continuación',
+    en: 'Options available below',
+    de: 'Optionen unten verfügbar',
+    pt: 'Opções disponíveis a seguir',
 };
