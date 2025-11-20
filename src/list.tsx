@@ -374,6 +374,20 @@ const hasControlProps = (
     return ['switch', 'checkbox', 'radioValue', 'iconButton'].some((prop) => obj[prop] !== undefined);
 };
 
+const getNodeText = (node: HTMLElement | null): string => {
+    const raw = node?.innerText || node?.textContent || '';
+
+    return (
+        raw
+            // Normalise whitespace sequences to a single space
+            .replace(/\s+/g, ' ')
+            // Insert space between "non-space character" + "Uppercase"
+            // Ex: "lineExtra" -> "line Extra", "1Extra" -> "1 Extra"
+            .replace(/([^ ])([A-ZÁÉÍÓÚÑ])/g, '$1 $2')
+            .trim()
+    );
+};
+
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
     const isInverse = useIsInverseOrMediaVariant();
@@ -458,7 +472,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             headline={headline}
             headlineRef={(node) => {
                 if (node) {
-                    setHeadlineText(node.textContent || '');
+                    setHeadlineText(getNodeText(node));
                 }
             }}
             title={title}
@@ -475,7 +489,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             rightRef={(node) => {
                 if (node) {
                     // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
-                    setRightText(node.innerText || node.textContent || '');
+                    setRightText(getNodeText(node));
                 }
             }}
             control={contentProps?.control}
@@ -483,7 +497,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             extra={extra}
             extraRef={(node) => {
                 if (node) {
-                    setExtraText(node.innerText || node.textContent || '');
+                    setExtraText(getNodeText(node));
                 }
             }}
             labelId={contentProps?.labelId}
