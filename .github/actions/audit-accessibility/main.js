@@ -1,7 +1,6 @@
 // @ts-check
 const path = require('path');
 const os = require('os');
-const {execSync} = require('child_process');
 const handler = require('serve-handler');
 const http = require('http');
 const {AxePuppeteer} = require('@axe-core/puppeteer');
@@ -36,7 +35,7 @@ const getStories = () => {
 /**
  * @returns {Promise<{
  *     closeStorybook: () => void,
- *     getStoryUrl: (id: string) => string}
+ *     getStoryUrl: (id: string, skin: string) => string}
  * >}
  */
 const startStorybook = () => {
@@ -53,7 +52,8 @@ const startStorybook = () => {
         storybookServer.listen(port, () => {
             console.log(`Serving static storybook at: http://localhost:${port}`);
             resolve({
-                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                getStoryUrl: (id, skin) =>
+                    `http://localhost:${port}/iframe.html?viewMode=story&id=${id}&skin=${skin}`,
                 closeStorybook: () => {
                     console.log('Stopping static storybook server');
                     storybookServer.close();
@@ -78,16 +78,6 @@ const audit = async (browser, url, disabledRules = []) => {
         .disableRules([
             // ignored because some stories don't include an H1 header
             'page-has-heading-one',
-            // ignored because we use invented autocomplete values to workaround related chrome issues
-            'autocomplete-valid',
-            // ignored because disabled input fields have a low contrast by design spec
-            'color-contrast',
-            // https://jira.tid.es/browse/WEB-612
-            'scrollable-region-focusable',
-            // https://jira.tid.es/browse/WEB-616
-            'role-img-alt',
-            // https://jira.tid.es/browse/WEB-627
-            'button-name',
             ...disabledRules,
         ])
         .analyze();
@@ -96,44 +86,44 @@ const audit = async (browser, url, disabledRules = []) => {
 };
 
 /**
- * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
  * @returns {Promise<Map<string, {json: String, html: string}>>}
  */
 const writeReportsToDisk = async (results) => {
     rimraf.sync(PATH_REPORTS);
     mkdirp.sync(PATH_REPORTS);
     const files = new Map();
-    for (const [name, result] of results) {
-        const jsonFilename = path.join(PATH_REPORTS, name + '.json');
-        const htmlFilename = path.join(PATH_REPORTS, name + '.html');
+    for (const [story, skin, result] of results) {
+        const jsonFilename = path.join(PATH_REPORTS, `${story}--${skin}.json`);
+        const htmlFilename = path.join(PATH_REPORTS, `${story}--${skin}.html`);
 
         fs.writeFileSync(jsonFilename, JSON.stringify(result, null, 2));
         createHtmlReport({
             results: result,
             options: {
                 outputDir: path.relative(process.cwd(), PATH_REPORTS),
-                reportFileName: name + '.html',
+                reportFileName: `${story}--${skin}.html`,
             },
         });
 
-        files.set(name, {json: jsonFilename, html: htmlFilename});
+        files.set(`${story}--${skin}`, {json: jsonFilename, html: htmlFilename});
     }
     return files;
 };
 
 /**
- * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
  */
 const generateReportForConsole = async (results) => {
     const files = await writeReportsToDisk(results);
 
     const lines = [];
-    for (const [name, result] of results) {
+    for (const [story, skin, result] of results) {
         if (result.violations.length) {
             lines.push(
-                `${name} (${result.violations.length} violations)`,
-                `    - HTML: ${files.get(name)?.html}`,
-                `    - JSON: ${files.get(name)?.json}`
+                `${story} [${skin}] (${result.violations.length} violations)`,
+                `    - HTML: ${files.get(`${story}--${skin}`)?.html}`,
+                `    - JSON: ${files.get(`${story}--${skin}`)?.json}`
             );
         }
     }
@@ -142,30 +132,30 @@ const generateReportForConsole = async (results) => {
 };
 
 /**
- * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
  */
 const generateReportForGithub = async (results) => {
     const files = await writeReportsToDisk(results);
 
     let lines = ['**Accessibility report**'];
 
-    const problemsCount = results.reduce((acc, [, result]) => acc + result.violations.length, 0);
+    const problemsCount = results.reduce((acc, [, , result]) => acc + result.violations.length, 0);
 
     if (problemsCount > 0) {
         core.setFailed('Accessibility problems detected');
         lines.push(`<details>`);
         lines.push(`<summary>❌ <b>${problemsCount}</b> problems detected</summary><br />`);
 
-        for (const [name, result] of results) {
+        for (const [story, skin, result] of results) {
             const [jsonUrl, htmlUrl] = await Promise.all([
-                uploadFile(files.get(name)?.json ?? '', 'application/json'),
-                uploadFile(files.get(name)?.html ?? '', 'text/html'),
+                uploadFile(files.get(`${story}--${skin}`)?.json ?? '', 'application/json'),
+                uploadFile(files.get(`${story}--${skin}`)?.html ?? '', 'text/html'),
             ]);
 
             if (result.violations.length) {
                 lines.push(
                     `<details>`,
-                    `  <summary><b>${name}</b> (${result.violations.length} violations)</summary>`,
+                    `  <summary><b>${story} [${skin}]</b> (${result.violations.length} violations)</summary>`,
                     `  <ul>`,
                     `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
                     `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
@@ -183,9 +173,54 @@ const generateReportForGithub = async (results) => {
     require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
-const disabledRules = {
-    'components-carousel-centeredcarousel--default': ['scrollable-region-focusable'],
-    'components-carousel-slideshow--default': ['scrollable-region-focusable'],
+/**
+ * @type {Record<string, Record<string, Array<string>>>}
+ */
+const disabledRulesByStoryAndSkin = {
+    'components-carousels-slideshow--default': {
+        all: ['scrollable-region-focusable'],
+    },
+    'components-carousels-slideshow--with-carousel-context': {
+        all: ['scrollable-region-focusable'],
+    },
+    'components-carousels-centeredcarousel--default': {
+        all: ['scrollable-region-focusable'],
+    },
+    'components-carousels-centeredcarousel--with-controls': {
+        all: ['scrollable-region-focusable'],
+    },
+    'layout-horizontalscroll--default': {
+        all: ['scrollable-region-focusable'],
+    },
+
+    'patterns-loading--loading-screen-story': {
+        all: ['color-contrast'],
+    },
+    'patterns-loading--brand-loading-screen-story': {
+        all: ['color-contrast'],
+    },
+
+    'patterns-feedback-feedbackscreen--feedback-screen-story': {
+        Blau: ['color-contrast'],
+    },
+    'community-examplecomponent--default': {
+        Blau: ['color-contrast'],
+    },
+    'private-components-in-different-skins--default': {
+        Blau: ['color-contrast'],
+    },
+};
+
+/**
+ * @param {string} story
+ * @param {string} skin
+ * @returns {Array<string>}
+ */
+const getDisabledRules = (story, skin) => {
+    const disabledRulesForStory = disabledRulesByStoryAndSkin[story] || {};
+    const disabledRulesForSkin = disabledRulesForStory[skin] || [];
+    const disabledRulesForAllSkins = disabledRulesForStory['all'] || [];
+    return [...disabledRulesForSkin, ...disabledRulesForAllSkins];
 };
 
 const main = async () => {
@@ -198,6 +233,18 @@ const main = async () => {
     }
 
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
+    const skins = ['Movistar-new', 'O2-new', 'Vivo-new', 'Blau'];
+
+    /**
+     * @type Array<[story: string, skin: string]>
+     */
+    const storySkinCombos = [];
+    for (const story of stories) {
+        for (const skin of skins) {
+            storySkinCombos.push([story, skin]);
+        }
+    }
+
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
     const browser = await puppeteer.launch({
@@ -206,21 +253,22 @@ const main = async () => {
         args: ['--incognito', '--no-sandbox'],
     });
 
-    /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
+    /** @type Array<[story: string, skin: string, results: import('axe-core').AxeResults]> */
     const results = [];
 
     const t = Date.now();
 
     /** @returns {null | Promise<void>} */
     const job = () => {
-        const story = stories.shift();
-        if (!story) {
+        const storySkinTuple = storySkinCombos.shift();
+        if (!storySkinTuple) {
             return null;
         }
+        const [story, skin] = storySkinTuple;
         return new Promise((resolve) => {
-            console.log(story);
-            audit(browser, getStoryUrl(story), disabledRules[story]).then((result) => {
-                results.push([story, result]);
+            console.log(`${story} [${skin}]`);
+            audit(browser, getStoryUrl(story, skin), getDisabledRules(story, skin)).then((result) => {
+                results.push([story, skin, result]);
                 resolve();
             });
         });

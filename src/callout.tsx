@@ -36,7 +36,7 @@ type Props = {
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
-    children?: void;
+    variant?: 'default' | 'inverse';
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
     role?: string;
@@ -52,11 +52,12 @@ const Callout = ({
     button,
     secondaryButton,
     buttonLink,
+    variant = 'default',
     'aria-label': ariaLabel,
     dataAttributes,
     role,
 }: Props): JSX.Element => {
-    const variant = useThemeVariant();
+    const outsideVariant = useThemeVariant();
     const {texts, t} = useTheme();
 
     const isTitleObject = typeof title === 'object';
@@ -67,7 +68,7 @@ const Callout = ({
 
     return (
         <section
-            className={classNames(styles.container, styles.background[variant])}
+            className={classNames(styles.container, styles.background[`${variant}-over-${outsideVariant}`])}
             style={applyCssVars({
                 [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
             })}
@@ -75,7 +76,7 @@ const Callout = ({
             role={role}
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
-            <ThemeVariant isInverse={false}>
+            <ThemeVariant variant={variant}>
                 {asset && (
                     <Box paddingRight={16} dataAttributes={{testid: 'asset'}}>
                         {asset}

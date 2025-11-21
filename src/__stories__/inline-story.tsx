@@ -150,7 +150,7 @@ export const NegativeSpace: StoryComponent = () => {
     return (
         <Inline space={-16}>
             {Array.from({length: 8}, (_, i) => (
-                <Avatar key={i} size={64} src={avatarImg} />
+                <Avatar key={i} size={64} src={avatarImg} aria-label={`Avatar ${i + 1}`} />
             ))}
         </Inline>
     );
