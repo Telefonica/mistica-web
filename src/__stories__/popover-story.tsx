@@ -101,7 +101,11 @@ export const Default: StoryComponent<PopoverArgs> = ({
                                 transform: `translate(${translateX}, ${translateY})`,
                             }}
                         >
-                            <Touchable onPress={() => {}} dataAttributes={{testid: 'target'}}>
+                            <Touchable
+                                onPress={() => {}}
+                                dataAttributes={{testid: 'target'}}
+                                aria-label="Popover target"
+                            >
                                 <IconShopRegular style={{display: 'block'}} />
                             </Touchable>
                         </div>

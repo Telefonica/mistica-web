@@ -40,12 +40,12 @@ export const BlockRow: StoryComponent<RowBlockArgs> = ({title, description, stac
                                     maxItems={3}
                                     moreItemsStyle={{type: 'circle', size: 40}}
                                 >
-                                    <Avatar size={40} src={imgExample} />
-                                    <Avatar size={40} src={imgExample} />
-                                    <Avatar size={40} src={imgExample} />
-                                    <Avatar size={40} src={imgExample} />
-                                    <Avatar size={40} src={imgExample} />
-                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} aria-label="Avatar 1" />
+                                    <Avatar size={40} src={imgExample} aria-label="Avatar 2" />
+                                    <Avatar size={40} src={imgExample} aria-label="Avatar 3" />
+                                    <Avatar size={40} src={imgExample} aria-label="Avatar 4" />
+                                    <Avatar size={40} src={imgExample} aria-label="Avatar 5" />
+                                    <Avatar size={40} src={imgExample} aria-label="Avatar 6" />
                                 </StackingGroup>
                             ) : undefined
                         }
