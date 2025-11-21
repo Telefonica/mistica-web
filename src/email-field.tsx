@@ -37,7 +37,7 @@ const EmailField = ({
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return '';
+            return undefined;
         }
         if (!RE_EMAIL.test(value)) {
             return texts.formEmailError || t(tokens.formEmailError);
