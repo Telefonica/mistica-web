@@ -170,6 +170,24 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             description="Description"
                             button={
                                 <ButtonSecondary
+                                    small
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonSecondary
+                                </ButtonSecondary>
+                            }
+                        />
+                        <Callout
+                            variant="inverse"
+                            asset={<IconBoxLight />}
+                            onClose={() => {}}
+                            title="Title"
+                            description="Description"
+                            button={
+                                <ButtonSecondary
+                                    small
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
                                     onPress={() => {}}

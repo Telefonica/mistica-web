@@ -1,18 +1,22 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    actions              | title           | inverse  | closable | asset    | case
-    ${'button and link'} | ${'Some title'} | ${false} | ${true}  | ${true}  | ${''}
-    ${'button and link'} | ${'Some title'} | ${true}  | ${true}  | ${true}  | ${'over inverse'}
-    ${'button and link'} | ${'Some title'} | ${false} | ${false} | ${true}  | ${'not closable'}
-    ${'link'}            | ${'Some title'} | ${false} | ${true}  | ${true}  | ${'with button link'}
-    ${'none'}            | ${'Some title'} | ${false} | ${true}  | ${true}  | ${'without actions'}
-    ${'none'}            | ${''}           | ${false} | ${false} | ${false} | ${'only description'}
-    ${'none'}            | ${''}           | ${false} | ${true}  | ${false} | ${'only description and closable'}
-`('Callout $case', async ({actions, title, inverse, closable, asset}) => {
+    actions              | title           | variant      | variantOutside   | closable | asset    | case
+    ${'button and link'} | ${'Some title'} | ${'default'} | ${'default'}     | ${true}  | ${true}  | ${''}
+    ${'button and link'} | ${'Some title'} | ${'default'} | ${'inverse'}     | ${true}  | ${true}  | ${'over inverse'}
+    ${'button and link'} | ${'Some title'} | ${'default'} | ${'alternative'} | ${true}  | ${true}  | ${'over alternative'}
+    ${'button and link'} | ${'Some title'} | ${'inverse'} | ${'default'}     | ${true}  | ${true}  | ${'inverse'}
+    ${'button and link'} | ${'Some title'} | ${'inverse'} | ${'inverse'}     | ${true}  | ${true}  | ${'inverse over inverse'}
+    ${'button and link'} | ${'Some title'} | ${'inverse'} | ${'alternative'} | ${true}  | ${true}  | ${'inverse over alternative'}
+    ${'button and link'} | ${'Some title'} | ${'default'} | ${'default'}     | ${false} | ${true}  | ${'not closable'}
+    ${'link'}            | ${'Some title'} | ${'default'} | ${'default'}     | ${true}  | ${true}  | ${'with button link'}
+    ${'none'}            | ${'Some title'} | ${'default'} | ${'default'}     | ${true}  | ${true}  | ${'without actions'}
+    ${'none'}            | ${''}           | ${'default'} | ${'default'}     | ${false} | ${false} | ${'only description'}
+    ${'none'}            | ${''}           | ${'default'} | ${'default'}     | ${true}  | ${false} | ${'only description and closable'}
+`('Callout $case', async ({actions, title, variant, variantOutside, closable, asset}) => {
     await openStoryPage({
         id: 'components-callout--default',
-        args: {actions, title, inverse, closable, asset},
+        args: {actions, title, variant, variantOutside, closable, asset},
     });
 
     const callout = await screen.findByRole('region');
