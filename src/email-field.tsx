@@ -36,7 +36,10 @@ const EmailField = ({
     const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
-        if (!RE_EMAIL.test(value ?? '')) {
+        if (!value) {
+            return texts.emptyFieldAnnouncement || t(tokens.emptyFieldAnnouncement);
+        }
+        if (!RE_EMAIL.test(value)) {
             return texts.formEmailError || t(tokens.formEmailError);
         }
         return validateProp?.(value, rawValue);
