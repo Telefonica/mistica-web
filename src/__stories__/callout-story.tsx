@@ -1,11 +1,21 @@
 import * as React from 'react';
 import {Callout, ButtonPrimary, ButtonLink, IconBoxLight, ResponsiveLayout, Box, ButtonSecondary} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Callout',
     argTypes: {
         actions: {
             options: ['none', 'button', 'link', 'button and secondary', 'button and link'],
+            control: {type: 'select'},
+        },
+        variantOutside: {
+            options: ['default', 'inverse', 'alternative'],
+            control: {type: 'select'},
+        },
+        variant: {
+            options: ['default', 'inverse'],
             control: {type: 'select'},
         },
     },
@@ -18,10 +28,19 @@ type Args = {
     actions: string;
     asset: boolean;
     closable: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
+    variant: 'default' | 'inverse';
 };
 
-export const Default: StoryComponent<Args> = ({title, description, asset, actions, closable, inverse}) => {
+export const Default: StoryComponent<Args> = ({
+    title,
+    description,
+    asset,
+    actions,
+    closable,
+    variantOutside,
+    variant,
+}) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary small onPress={() => {}}>
             Action
@@ -41,9 +60,10 @@ export const Default: StoryComponent<Args> = ({title, description, asset, action
     ) : undefined;
 
     return (
-        <ResponsiveLayout isInverse={inverse}>
+        <ResponsiveLayout variant={variantOutside}>
             <Box paddingY={24}>
                 <Callout
+                    variant={variant}
                     asset={asset ? <IconBoxLight /> : undefined}
                     onClose={closable ? () => {} : undefined}
                     title={title}
@@ -66,5 +86,6 @@ Default.args = {
     actions: 'button and link',
     asset: true,
     closable: true,
-    inverse: false,
+    variantOutside: 'default',
+    variant: 'default',
 };
