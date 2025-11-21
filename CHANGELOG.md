@@ -1,3 +1,21 @@
+# [16.43.0](https://github.com/Telefonica/mistica-web/compare/v16.42.2...v16.43.0) (2025-11-21)
+
+
+### Bug Fixes
+
+* **icons:** fix face rating icons and minor changes in other icons ([#1452](https://github.com/Telefonica/mistica-web/issues/1452)) ([f4020bf](https://github.com/Telefonica/mistica-web/commit/f4020bff80c0b663666acc59930927716a2faa23))
+* **Image, Video:** use new icon style in broken source ([#1447](https://github.com/Telefonica/mistica-web/issues/1447)) ([46c8060](https://github.com/Telefonica/mistica-web/commit/46c8060c03c6ee6c7a5ad5d615bdf52d812fa489))
+* **PhoneNumberField:** format BR mobile numbers as you type ([#1459](https://github.com/Telefonica/mistica-web/issues/1459)) ([c232fa4](https://github.com/Telefonica/mistica-web/commit/c232fa49a5de204e697edef419ef9cab9a29b768))
+* **Title2, EmptyStateCard, AdvancedDataCard, Table:** wrong usage of text presets ([#1457](https://github.com/Telefonica/mistica-web/issues/1457)) ([254ccb0](https://github.com/Telefonica/mistica-web/commit/254ccb083a26b5b30e61d5b438013f0715cbcbcc))
+
+
+### Features
+
+* **Callout:** inverse variant ([#1460](https://github.com/Telefonica/mistica-web/issues/1460)) ([d2f26e6](https://github.com/Telefonica/mistica-web/commit/d2f26e696240f6184306b2c81530b30721d4651e))
+* **Chip:** small variant ([#1458](https://github.com/Telefonica/mistica-web/issues/1458)) ([6e9e10f](https://github.com/Telefonica/mistica-web/commit/6e9e10fac51c03e76080eecba0f177710ab0e99f))
+* **ErrorFeedbackScreen:** Include extra prop ([#1454](https://github.com/Telefonica/mistica-web/issues/1454)) ([f2eda6d](https://github.com/Telefonica/mistica-web/commit/f2eda6dc58135bcdc295c26137a7907a20672e2d))
+* **Row:** allow configuring screen readers to read informative rows as a whole instead of line by line ([#1456](https://github.com/Telefonica/mistica-web/issues/1456)) ([5aa9689](https://github.com/Telefonica/mistica-web/commit/5aa9689c5a13bd2e85046a89bbc0a23a329dbbb6))
+
 ## [16.42.2](https://github.com/Telefonica/mistica-web/compare/v16.42.1...v16.42.2) (2025-10-21)
 
 
