@@ -377,15 +377,18 @@ const hasControlProps = (
 const getNodeText = (node: HTMLElement | null): string => {
     const raw = node?.innerText || node?.textContent || '';
 
-    return (
-        raw
-            // Normalise whitespace sequences to a single space
-            .replace(/\s+/g, ' ')
-            // Insert space between "non-space character" + "Uppercase"
-            // Ex: "lineExtra" -> "line Extra", "1Extra" -> "1 Extra"
-            .replace(/([^ ])([A-ZÁÉÍÓÚÑ])/g, '$1 $2')
-            .trim()
-    );
+    if (process.env.NODE_ENV === 'test') {
+        return (
+            raw
+                // Normalise whitespace sequences to a single space
+                .replace(/\s+/g, ' ')
+                // Insert space between "non-space character" + "Uppercase"
+                // Ex: "lineExtra" -> "line Extra", "1Extra" -> "1 Extra"
+                .replace(/([^ ])([A-ZÁÉÍÓÚÑ])/g, '$1 $2')
+                .trim()
+        );
+    }
+    return raw;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
