@@ -85,8 +85,20 @@ export const formatPhoneLite = (regionCode: RegionCode, number: string): string 
         let national: string | undefined;
         if (digits.length === 11) {
             national = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`.replace(/\D+$/, '');
-        } else if (digits.length > 2 && digits.length <= 11 && digits[2] <= '5') {
-            national = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`.replace(/\D+$/, '');
+        } else if (digits.length > 2 && digits.length < 11) {
+            if (digits[2] > '5') {
+                // mobile
+                national = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`.replace(
+                    /\D+$/,
+                    ''
+                );
+            } else {
+                // landline
+                national = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`.replace(
+                    /\D+$/,
+                    ''
+                );
+            }
         }
         if (national) {
             return isE164 ? asE164(national, formattingRegionCode) : national;

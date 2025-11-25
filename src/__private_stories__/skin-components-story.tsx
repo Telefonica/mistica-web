@@ -148,8 +148,8 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                         {/** Avatar */}
                         <Inline space={16} alignItems="center" wrap>
-                            <Avatar src={avatarImg} size={64} badge={5} />
-                            <Avatar size={64} />
+                            <Avatar src={avatarImg} size={64} badge={5} aria-label="Avatar with badge" />
+                            <Avatar size={64} aria-label="Avatar unknown" />
                             <Avatar initials="MK" size={64} border />
                         </Inline>
 
@@ -170,6 +170,24 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             description="Description"
                             button={
                                 <ButtonSecondary
+                                    small
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonSecondary
+                                </ButtonSecondary>
+                            }
+                        />
+                        <Callout
+                            variant="inverse"
+                            asset={<IconBoxLight />}
+                            onClose={() => {}}
+                            title="Title"
+                            description="Description"
+                            button={
+                                <ButtonSecondary
+                                    small
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
                                     onPress={() => {}}
