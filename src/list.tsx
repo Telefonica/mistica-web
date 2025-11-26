@@ -48,7 +48,6 @@ interface CommonProps {
     descriptionLinesMax?: number;
     detail?: string;
     asset?: React.ReactNode;
-    assetAlt?: string;
     badge?: boolean | number;
     role?: string;
     touchableRole?: string;
@@ -374,6 +373,30 @@ const hasControlProps = (
     return ['switch', 'checkbox', 'radioValue', 'iconButton'].some((prop) => obj[prop] !== undefined);
 };
 
+const getAssetText = (asset: React.ReactNode): string => {
+    let text = '';
+
+    const visit = (node: React.ReactNode) => {
+        if (!node) return;
+
+        if (React.isValidElement(node)) {
+            const props: any = node.props;
+
+            if (typeof props.alt === 'string' && props.alt.trim()) {
+                text += (text ? ' ' : '') + props.alt.trim();
+            }
+            if (typeof props['aria-label'] === 'string' && props['aria-label'].trim()) {
+                text += (text ? ' ' : '') + props['aria-label'].trim();
+            }
+            React.Children.forEach(props.children, visit);
+        }
+    };
+
+    visit(asset);
+
+    return text.trim();
+};
+
 const getNodeText = (node: HTMLElement | null): string => {
     const raw = node?.innerText || node?.textContent || '';
 
@@ -396,7 +419,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const isInverse = useIsInverseOrMediaVariant();
     const {
         asset,
-        assetAlt,
         headline,
         title,
         titleAs,
@@ -422,11 +444,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [headlineText, setHeadlineText] = React.useState<string>('');
     const [extraText, setExtraText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
+    const assetText = getAssetText(asset);
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
     const computedAriaLabel = [
         title,
-        assetAlt,
+        assetText,
         headlineText,
         subtitle,
         description,
