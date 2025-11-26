@@ -21,7 +21,7 @@ const EmailField = ({
     helperText,
     name,
     label,
-    optional = false,
+    optional,
     validate: validateProp,
     validateOnBlurInsideForm,
     onChange,
@@ -67,11 +67,6 @@ const EmailField = ({
             {...fieldProps}
             type="email"
             inputMode="email"
-            showOptionalLabel={optional}
-            required={false}
-            inputProps={{
-                'aria-required': optional ? undefined : 'true',
-            }}
             autoComplete={autoComplete}
             dataAttributes={{'component-name': 'EmailField', testid: 'EmailField', ...dataAttributes}}
         />
