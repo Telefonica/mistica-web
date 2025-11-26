@@ -24,7 +24,6 @@ export type Dictionary = {
     formCreditCardExpirationError: string;
     formCreditCardNumberError: string;
     formDateOutOfRangeError: string;
-    emptyFieldAnnouncement: string;
     formEmailError: string;
     formIbanError: string;
     formTextMultilineMaxCount: string;
@@ -244,13 +243,6 @@ export const formDateOutOfRangeError: TextToken = {
     en: 'Invalid date',
     de: 'Unzulässiges Datum',
     pt: 'Data não permitida',
-};
-
-export const emptyFieldAnnouncement: TextToken = {
-    es: 'Campo vacío',
-    en: 'Empty field',
-    de: 'Leeres Feld',
-    pt: 'Campo vazio',
 };
 
 export const formEmailError: TextToken = {

@@ -21,7 +21,7 @@ const EmailField = ({
     helperText,
     name,
     label,
-    optional,
+    optional = false,
     validate: validateProp,
     validateOnBlurInsideForm,
     onChange,
@@ -36,10 +36,7 @@ const EmailField = ({
     const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return texts.emptyFieldAnnouncement || t(tokens.emptyFieldAnnouncement);
-        }
-        if (!RE_EMAIL.test(value)) {
+        if (!RE_EMAIL.test(value ?? '')) {
             return texts.formEmailError || t(tokens.formEmailError);
         }
         return validateProp?.(value, rawValue);
@@ -70,6 +67,11 @@ const EmailField = ({
             {...fieldProps}
             type="email"
             inputMode="email"
+            showOptionalLabel={optional}
+            required={false}
+            inputProps={{
+                'aria-required': optional ? undefined : 'true',
+            }}
             autoComplete={autoComplete}
             dataAttributes={{'component-name': 'EmailField', testid: 'EmailField', ...dataAttributes}}
         />
