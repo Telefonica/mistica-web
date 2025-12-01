@@ -401,6 +401,7 @@ const getNodeText = (node: HTMLElement | null): string => {
     const raw = node?.innerText || node?.textContent || '';
 
     if (process.env.NODE_ENV === 'test') {
+        // jsdom doesn't support innerText so we use this to separate lines in tests
         return (
             raw
                 // Normalise whitespace sequences to a single space
@@ -514,7 +515,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             right={right}
             rightRef={(node) => {
                 if (node) {
-                    // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
                     setRightText(getNodeText(node));
                 }
             }}
