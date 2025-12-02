@@ -40,7 +40,7 @@ test.each(getBrandLogoCases())(
         await openStoryPage({
             id: 'components-logo--default',
             device: 'DESKTOP',
-            args: {forceBrandLogo: true, brand, type, isInverse},
+            args: {forceBrandLogo: true, brand, type, variantOutside: isInverse ? 'brand' : 'default'},
             isDarkMode: isDarkMode as boolean,
         });
 

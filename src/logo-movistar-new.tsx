@@ -10,14 +10,14 @@ const MovistarNewLogoImage = ({
     size,
     type,
     isDarkMode,
-    isInverse,
+    isOverBrand,
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors, darkModeColors} = getMovistarNewSkin();
-    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
+    const color = colorProp || (isOverBrand && !isDarkMode ? colors.inverse : colors.brand);
     const wordmarkColor =
         colorProp ||
-        (isDarkMode ? darkModeColors?.neutralHigh : isInverse ? colors.inverse : colors.neutralHigh);
+        (isDarkMode ? darkModeColors?.neutralHigh : isOverBrand ? colors.inverse : colors.neutralHigh);
 
     if (type === 'vertical') {
         return (

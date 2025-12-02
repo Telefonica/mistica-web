@@ -45,19 +45,19 @@ export const outerCircleVariants = styleVariants({
     ],
 });
 
-export const inverseOuterCircleVariants = styleVariants({
+export const overBrandOuterCircleVariants = styleVariants({
     default: [
         outerCircleBase,
-        {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlInverse}`},
+        {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlBrand}`},
     ],
     ios: [
         outerCircleBase,
-        {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlInverse}`},
+        {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlBrand}`},
     ],
     checked: [
         outerCircleBase,
         {
-            boxShadow: `inset 0 0 0 2px ${vars.colors.controlActivatedInverse}`,
+            boxShadow: `inset 0 0 0 2px ${vars.colors.controlActivatedBrand}`,
             // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
             background: 'transparent',
         },
@@ -65,8 +65,8 @@ export const inverseOuterCircleVariants = styleVariants({
     checkedIos: [
         outerCircleBase,
         {
-            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedInverse}`,
-            background: `radial-gradient(circle, ${vars.colors.controlKnobInverse} 0%, ${vars.colors.controlKnobInverse} 64%, transparent 64%, transparent 100%)`,
+            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedBrand}`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 64%, transparent 64%, transparent 100%)`,
         },
     ],
 });
@@ -99,12 +99,12 @@ export const innerCircleVariant = styleVariants({
     ],
 });
 
-export const inverseInnerCircleVariant = styleVariants({
+export const overBrandInnerCircleVariant = styleVariants({
     default: [innerCircleBase],
     checked: [
         innerCircleBase,
         sprinkles({
-            background: vars.colors.controlActivatedInverse,
+            background: vars.colors.controlActivatedBrand,
         }),
         {
             opacity: 1,

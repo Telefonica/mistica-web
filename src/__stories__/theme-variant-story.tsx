@@ -69,7 +69,7 @@ Default.args = {
 };
 Default.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'media'],
+        options: ['default', 'brand', 'negative', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };
@@ -143,7 +143,7 @@ ComponentsOverDifferentThemeVariants.args = {
 ComponentsOverDifferentThemeVariants.parameters = {fullScreen: true};
 ComponentsOverDifferentThemeVariants.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'media'],
+        options: ['default', 'brand', 'negative', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };

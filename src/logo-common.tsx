@@ -8,7 +8,7 @@ export type LogoImageProps = {
     size: ByBreakpoint<number>;
     type: LogoType;
     isDarkMode: boolean;
-    isInverse: boolean;
+    isOverBrand: boolean;
     color?: string;
 };
 

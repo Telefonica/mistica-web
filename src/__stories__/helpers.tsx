@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useIsInverseOrMediaVariant, Select, TextField, Checkbox, skinVars} from '..';
+import {Text, Select, TextField, Checkbox, skinVars, Box} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
@@ -8,19 +8,13 @@ type Props = {
 };
 
 export const StorySection = ({title, children}: Props): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
     return (
         <div style={{marginBottom: 32}}>
-            <h1
-                style={{
-                    color: isInverse ? skinVars.colors.textSecondaryInverse : skinVars.colors.textSecondary,
-                    fontWeight: 'normal',
-                    fontSize: 20,
-                    margin: '16px 0px',
-                }}
-            >
-                {title}
-            </h1>
+            <Box paddingY={16}>
+                <Text as="h1" color={skinVars.colors.textSecondary} size={20}>
+                    {title}
+                </Text>
+            </Box>
             {children}
         </div>
     );

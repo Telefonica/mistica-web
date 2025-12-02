@@ -1,5 +1,13 @@
 import {openStoryPage, screen} from '../test-utils';
 
+const normalizeArgs = (args: Record<string, any>) => {
+    const {inverse, ...rest} = args;
+    return {
+        ...rest,
+        variantOutside: inverse ? 'brand' : 'default',
+    };
+};
+
 test.each`
     givenStoryPageArgs
     ${{inverse: false}}
@@ -14,7 +22,7 @@ test.each`
         await openStoryPage({
             id: 'components-skeletons-skeletoncircle',
             device: 'MOBILE_IOS',
-            args: givenStoryPageArgs,
+            args: normalizeArgs(givenStoryPageArgs),
         });
 
         const element = await screen.findByTestId('skeleton-circle');
@@ -30,7 +38,7 @@ test.each`
     await openStoryPage({
         id: 'components-skeletons-skeletonrow',
         device: 'MOBILE_IOS',
-        args: givenStoryPageArgs,
+        args: normalizeArgs(givenStoryPageArgs),
     });
 
     const element = await screen.findByTestId('skeleton-row');
@@ -50,7 +58,7 @@ test.each`
         await openStoryPage({
             id: 'components-skeletons-skeletonrectangle',
             device: 'MOBILE_IOS',
-            args: givenStoryPageArgs,
+            args: normalizeArgs(givenStoryPageArgs),
         });
 
         const element = await screen.findByTestId('skeleton-rectangle');
@@ -66,7 +74,7 @@ test.each`
     await openStoryPage({
         id: 'components-skeletons-skeletontext',
         device: 'MOBILE_IOS',
-        args: givenStoryPageArgs,
+        args: normalizeArgs(givenStoryPageArgs),
     });
 
     const element = await screen.findByTestId('skeleton-text');
@@ -81,7 +89,7 @@ test.each`
     await openStoryPage({
         id: 'components-skeletons-skeletonline',
         device: 'MOBILE_IOS',
-        args: givenStoryPageArgs,
+        args: normalizeArgs(givenStoryPageArgs),
     });
 
     const element = await screen.findByTestId('skeleton-line');

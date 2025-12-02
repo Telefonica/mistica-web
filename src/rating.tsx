@@ -229,10 +229,10 @@ const InternalRating = ({
     };
 
     const getIconElement = (icon: RatingIconProps, index: number) => {
-        const activeColor = variant === 'inverse' ? vars.colors.inverse : iconList[index].color;
+        const activeColor = variant === 'brand' ? vars.colors.controlActivatedInverse : iconList[index].color;
         const inactiveColor =
-            variant === 'inverse'
-                ? vars.colors.inverse
+            variant === 'brand'
+                ? vars.colors.controlInverse
                 : isInteractive
                   ? vars.colors.control
                   : iconList[0].color;

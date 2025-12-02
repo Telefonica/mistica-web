@@ -570,7 +570,7 @@ export const BaseTooltip = ({
                                                 [styles.tooltipCenter]: hasCenteredContent,
                                             })}
                                         >
-                                            <ThemeVariant isInverse={false}>
+                                            <ThemeVariant variant="default">
                                                 {content}
 
                                                 {onClose && (

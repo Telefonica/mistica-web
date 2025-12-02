@@ -12,7 +12,7 @@ import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
 import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useIsBrandOrMediaVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
 import {
@@ -36,12 +36,12 @@ const CONTENT_BACKGROUND_COLOR = {
     none: 'transparent',
 };
 
-type LayoutProps = {children: React.ReactNode; isInverse: boolean; backgroundColor?: string};
+type LayoutProps = {children: React.ReactNode; variant: 'default' | 'brand'; backgroundColor?: string};
 
-const Layout = ({children, isInverse, backgroundColor}: LayoutProps) => {
+const Layout = ({children, variant, backgroundColor}: LayoutProps) => {
     return (
         <InternalResponsiveLayout
-            isInverse={isInverse}
+            variant={variant}
             className={styles.layout}
             innerDivClassName={styles.layout}
             shouldExpandWhenNested
@@ -185,11 +185,12 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         const {isTabletOrSmaller} = useScreenSize();
         const slideshowContext = useSlideshowContext();
         const hasSlideshowBullets = !!slideshowContext?.withBullets;
-        const isInverseOutside = useIsInverseOrMediaVariant();
-        const isInverse =
+        const isBrandOutside = useIsBrandOrMediaVariant();
+        const isBrandVariant =
             background === 'none'
-                ? isInverseOutside
+                ? isBrandOutside
                 : background === 'brand' || background === 'brand-secondary';
+        const variant = isBrandVariant ? 'brand' : 'default';
 
         if (isTabletOrSmaller) {
             return (
@@ -212,10 +213,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         >
                             {media}
 
-                            <Layout
-                                isInverse={isInverse}
-                                backgroundColor={CONTENT_BACKGROUND_COLOR[background]}
-                            >
+                            <Layout variant={variant} backgroundColor={CONTENT_BACKGROUND_COLOR[background]}>
                                 <div className={styles.expandedContent}>
                                     <div
                                         style={{
@@ -266,7 +264,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                 }}
                 className={styles.hero}
             >
-                <Layout isInverse={isInverse}>
+                <Layout variant={variant}>
                     <GridLayout
                         template="6+6"
                         left={

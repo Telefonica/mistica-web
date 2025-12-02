@@ -7,7 +7,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import classNames from 'classnames';
 import Inline from './inline';
 import * as tokens from './text-tokens';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsBrandVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -32,7 +32,7 @@ export const ProgressBar = ({
     reverse = false,
 }: ProgressBarProps): JSX.Element => {
     const {texts, t} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const isOverBrand = useIsBrandVariant();
     const progressValue = Math.max(0, Math.min(100, progressPercent));
 
     const getFormattedValueText = () => {
@@ -57,7 +57,7 @@ export const ProgressBar = ({
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
-            className={styles.barBackground[isInverse ? 'inverse' : 'default']}
+            className={styles.barBackground[isOverBrand ? 'overBrand' : 'default']}
             {...a11yProps}
         >
             <div
@@ -66,7 +66,7 @@ export const ProgressBar = ({
                     maxWidth: `${progressValue}%`,
                     backgroundColor:
                         color ??
-                        (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated),
+                        (isOverBrand ? vars.colors.controlActivatedBrand : vars.colors.controlActivated),
                 }}
             />
         </div>
@@ -93,7 +93,7 @@ export const ProgressBarStepped = ({
     'aria-hidden': ariaHidden,
 }: ProgressBarSteppedProps): JSX.Element => {
     const {texts, t} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const isOverBrand = useIsBrandVariant();
 
     const [step, setStep] = React.useState(Math.ceil(currentStep));
     const [isBack, setIsBack] = React.useState(false);
@@ -140,7 +140,7 @@ export const ProgressBarStepped = ({
                     return (
                         <div
                             key={index}
-                            className={styles.barBackground[isInverse ? 'inverse' : 'default']}
+                            className={styles.barBackground[isOverBrand ? 'overBrand' : 'default']}
                             aria-hidden="true"
                         >
                             {(isCompleted || isCurrent) && (
@@ -152,8 +152,8 @@ export const ProgressBarStepped = ({
                                     style={{
                                         backgroundColor:
                                             color ??
-                                            (isInverse
-                                                ? vars.colors.controlActivatedInverse
+                                            (isOverBrand
+                                                ? vars.colors.controlActivatedBrand
                                                 : vars.colors.controlActivated),
                                         maxWidth: isCompleted || (hasAnimation && !isBack) ? '100%' : '0',
                                     }}

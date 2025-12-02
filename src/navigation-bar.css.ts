@@ -190,9 +190,9 @@ export const section = style([
     },
 ]);
 
-export const selectedSectionVariantes = styleVariants({
+export const selectedSectionVariants = styleVariants({
     default: {borderColor: vars.colors.controlActivated},
-    inverse: {borderColor: vars.colors.inverse},
+    brand: {borderColor: vars.colors.inverse},
 });
 
 export const textWrapperVariants = styleVariants({
@@ -206,12 +206,12 @@ export const textWrapperVariants = styleVariants({
             },
         },
     },
-    inverse: {
-        color: vars.colors.textPrimaryInverse,
+    brand: {
+        color: vars.colors.textPrimaryBrand,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    color: vars.colors.textSecondaryInverse,
+                    color: vars.colors.textSecondaryBrand,
                 },
             },
         },

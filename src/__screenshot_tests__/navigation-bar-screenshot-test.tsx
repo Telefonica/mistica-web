@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
@@ -14,7 +15,7 @@ test.each`
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {variant},
+        args: {variant: normalizeVariant(variant)},
         isDarkMode,
     });
 
@@ -35,7 +36,7 @@ test.each`
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {variant},
+        args: {variant: normalizeVariant(variant)},
         isDarkMode,
     });
 
@@ -107,7 +108,7 @@ test.each`
         const page = await openStoryPage({
             id: 'components-navigation-bars-navigationbar--default',
             device,
-            args: {variant},
+            args: {variant: normalizeVariant(variant)},
             isDarkMode,
         });
 
@@ -137,7 +138,7 @@ test.each`
         const page = await openStoryPage({
             id: 'components-navigation-bars-funnelnavigationbar--default',
             device,
-            args: {variant},
+            args: {variant: normalizeVariant(variant)},
             isDarkMode,
         });
 
@@ -235,7 +236,7 @@ test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'inverse'},
+        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'brand'},
     });
 
     // first section opened

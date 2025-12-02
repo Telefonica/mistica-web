@@ -17,7 +17,7 @@ test.each(SKINS)('Components in %s', async (skin) => {
 test.each(SKINS)('Components in %s (inverse)', async (skin) => {
     await openStoryPage({
         id: 'private-components-in-different-skins--default',
-        args: {variant: 'inverse'},
+        args: {variant: 'brand'},
         skin,
     });
 
@@ -56,7 +56,7 @@ test.each(SKINS)('Components in %s (dark mode)', async (skin) => {
 test.each(SKINS)('Components in %s (inverse and dark mode)', async (skin) => {
     await openStoryPage({
         id: 'private-components-in-different-skins--default',
-        args: {variant: 'inverse'},
+        args: {variant: 'brand'},
         isDarkMode: true,
         skin,
     });

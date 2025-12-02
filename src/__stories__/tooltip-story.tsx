@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular, Touchable} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Tooltip',
     argTypes: {
@@ -16,6 +18,10 @@ export default {
             options: ['top', 'bottom', 'left', 'right'],
             control: {type: 'select'},
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
     parameters: {fullScreen: true},
 };
@@ -28,7 +34,7 @@ type Args = {
     description: string;
     extra: boolean;
     delay: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -39,7 +45,7 @@ export const Default: StoryComponent<Args> = ({
     description,
     extra,
     delay,
-    inverse,
+    variantOutside,
 }) => {
     let left,
         right,
@@ -77,7 +83,7 @@ export const Default: StoryComponent<Args> = ({
     }
 
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <div style={{width: '100vw', height: '100vh'}}>
                 <Tooltip
                     position={position}
@@ -121,5 +127,5 @@ Default.args = {
     description: 'A description',
     extra: false,
     delay: false,
-    inverse: false,
+    variantOutside: 'default',
 };

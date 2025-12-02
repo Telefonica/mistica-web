@@ -107,7 +107,7 @@ const EmptyState = ({
                         <Text3
                             regular
                             as="p"
-                            color={isInverse ? vars.colors.inverse : vars.colors.textSecondary}
+                            color={vars.colors.textSecondary}
                             dataAttributes={{testid: 'description'}}
                         >
                             {description}

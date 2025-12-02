@@ -9,12 +9,12 @@ import type {LogoImageProps} from './logo-common';
 const VivoLogoImage = ({
     size,
     type,
-    isInverse,
+    isOverBrand,
     isDarkMode,
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors} = getVivoSkin();
-    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
+    const color = colorProp || (isOverBrand && !isDarkMode ? colors.inverse : colors.brand);
 
     if (type === 'vertical') {
         return (

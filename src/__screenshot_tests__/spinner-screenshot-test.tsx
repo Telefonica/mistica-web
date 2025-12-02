@@ -18,7 +18,7 @@ test.each(DEVICES)('Spinner - inverse %s', async (device) => {
     await openStoryPage({
         id: 'components-spinner--default',
         device,
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const spinner = await screen.findByLabelText('Cargando');

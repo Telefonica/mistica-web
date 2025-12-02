@@ -13,6 +13,7 @@ import GridLayout from './grid-layout';
 import {CoverHeroMedia} from './cover-hero-media';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isBiggerHeading} from './utils/headings';
+import {normalizeVariant, type Variant} from './theme-variant-context';
 
 import type {DataAttributes, HeadingType} from './utils/types';
 import type {ImageProps, VideoProps} from './cover-hero-media';
@@ -21,7 +22,6 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
-import type {Variant} from './theme-variant-context';
 
 type BaseProps = {
     headline?: RendersNullableElement<typeof Tag>;
@@ -104,10 +104,11 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             : mediaProps.background ||
               {
                   default: vars.colors.background,
-                  inverse: vars.colors.backgroundBrand,
+                  brand: vars.colors.backgroundBrand,
+                  negative: vars.colors.backgroundNegative,
                   alternative: vars.colors.backgroundAlternative,
                   media: 'none',
-              }[variant ?? 'default'];
+              }[normalizeVariant(variant ?? 'default')];
 
         const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 

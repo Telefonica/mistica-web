@@ -1,4 +1,5 @@
 import {openStoryPage} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 const themeVariants = ['default', 'inverse', 'alternative', 'media'] as const;
 
@@ -12,10 +13,10 @@ test.each(themeVariants)('ThemeVariant %s', async (themeVariant) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(themeVariants)('ThemeVariant in darkMode %s', async (themeVariant) => {
+test.each(themeVariants)('ThemeVariant in darkMode %s', async (variant) => {
     const page = await openStoryPage({
         id: 'utilities-themevariant--components-over-different-theme-variants',
-        args: {themeVariant},
+        args: {variant: normalizeVariant(variant)},
         isDarkMode: true,
     });
 

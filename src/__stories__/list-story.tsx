@@ -43,6 +43,8 @@ import avatarImg from './images/avatar.jpg';
 import touchImg from './images/touch.jpg';
 import personPortraitImg from './images/person-portrait.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Lists',
     parameters: {
@@ -64,7 +66,7 @@ type Args = {
     extra: boolean;
     disabled: boolean;
     danger: boolean;
-    overInverse: boolean;
+    variantOutside: Variant;
     'aria-live': 'off' | 'polite' | 'assertive';
     'aria-atomic': boolean;
 };
@@ -72,7 +74,7 @@ type Args = {
 const Template: StoryComponent<
     Args & {
         boxed?: boolean;
-        inverse?: boolean;
+        variant?: 'default' | 'brand';
     }
 > = ({
     boxed,
@@ -88,8 +90,8 @@ const Template: StoryComponent<
     oneLineDescription,
     extra,
     disabled,
-    overInverse,
-    inverse,
+    variant,
+    variantOutside,
     danger,
     'aria-live': ariaLive,
     'aria-atomic': ariaAtomic,
@@ -264,7 +266,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -281,7 +283,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -302,7 +304,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -319,7 +321,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -336,7 +338,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -353,7 +355,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -370,7 +372,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -387,7 +389,7 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -404,14 +406,14 @@ const Template: StoryComponent<
                 extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={inverse}
+                variant={variant}
                 {...getControlProps(row++)}
             />
         </ListComponent>
     );
 
     const withLayout = (
-        <ResponsiveLayout isInverse={overInverse}>
+        <ResponsiveLayout variant={variantOutside}>
             {boxed ? list : <NegativeBox>{list}</NegativeBox>}
         </ResponsiveLayout>
     );
@@ -439,10 +441,10 @@ const defaultArgs = {
     extra: false,
     disabled: false,
     danger: false,
-    overInverse: false,
-    'aria-live': 'off' as const,
-    'aria-atomic': false as const,
-};
+    variantOutside: 'default',
+    'aria-live': 'off',
+    'aria-atomic': false,
+} as const;
 
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
 RowListStory.storyName = 'RowList';
@@ -475,15 +477,15 @@ RowListStory.argTypes = {
     },
 };
 
-export const BoxedRowListStory: StoryComponent<Args & {inverse: boolean}> = (args) => (
+export const BoxedRowListStory: StoryComponent<Args & {variant: 'default' | 'brand'}> = (args) => (
     <Template boxed {...args} />
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
-BoxedRowListStory.args = {...defaultArgs, inverse: false};
-BoxedRowListStory.argTypes = {...RowListStory.argTypes, danger: {if: {arg: 'inverse', eq: false}}};
+BoxedRowListStory.args = {...defaultArgs, variant: 'default'};
+BoxedRowListStory.argTypes = {...RowListStory.argTypes, danger: {if: {arg: 'variant', eq: 'default'}}};
 
 type UnorderedListArgs = {
-    inverse: boolean;
+    variantOutside: Variant;
     textPreset:
         | 'Text1'
         | 'Text2'
@@ -500,7 +502,7 @@ type UnorderedListArgs = {
 };
 
 export const UnorderedListStory: StoryComponent<UnorderedListArgs> = ({
-    inverse,
+    variantOutside,
     textPreset,
     customIcon,
     withMarker,
@@ -519,7 +521,7 @@ export const UnorderedListStory: StoryComponent<UnorderedListArgs> = ({
     }[textPreset];
     const Icon = customIcon ? IconLightningFilled : undefined;
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : 'default'}>
+        <ResponsiveLayout variant={variantOutside}>
             <TextComponent as="div" regular>
                 <Box paddingY={24}>
                     <Stack space={16}>
@@ -577,7 +579,7 @@ const unorderedListArgTypes = {
 } as const;
 
 const unorderedListArgs = {
-    inverse: false,
+    variantOutside: 'default',
     textPreset: 'Text1',
     customIcon: true,
     withMarker: true,
@@ -590,7 +592,7 @@ UnorderedListStory.args = unorderedListArgs;
 type OrderedListArgs = UnorderedListArgs;
 
 export const OrderedListStory: StoryComponent<OrderedListArgs> = ({
-    inverse,
+    variantOutside,
     textPreset,
     customIcon,
     withMarker,
@@ -609,7 +611,7 @@ export const OrderedListStory: StoryComponent<OrderedListArgs> = ({
     }[textPreset];
     const Icon = customIcon ? IconLightningFilled : undefined;
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : 'default'}>
+        <ResponsiveLayout variant={variantOutside}>
             <TextComponent as="div" regular>
                 <Box paddingY={24}>
                     <Stack space={16}>

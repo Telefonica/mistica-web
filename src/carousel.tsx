@@ -5,7 +5,7 @@ import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-righ
 import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import classNames from 'classnames';
-import {useIsInverseOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {useIsBrandOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
@@ -167,7 +167,7 @@ export const useCarouselContext = (): CarouselControls => React.useContext(Carou
 export const CarouselContextConsumer = CarouselContext.Consumer;
 
 export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const isOverBrand = useIsBrandOrMediaVariant();
     const {isTablet, isDesktopOrBigger} = useScreenSize();
     const pagesCount =
         typeof numPages === 'number'
@@ -181,7 +181,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
     const getClassNames = (bulletIndex: number) => {
         const classNames: {[key: string]: boolean} = {};
 
-        if (isInverse) {
+        if (isOverBrand) {
             classNames[currentIndex === bulletIndex ? styles.bulletActiveInverse : styles.bulletInverse] =
                 true;
         } else {

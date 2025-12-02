@@ -14,7 +14,7 @@ test.each`
     await openStoryPage({
         id: 'components-stackinggroup--default',
         device: 'DESKTOP',
-        args: {type, stacked, inverse},
+        args: {type, stacked, variantOutside: inverse ? 'brand' : 'default'},
     });
 
     const element = await screen.findByTestId('stacking-group');

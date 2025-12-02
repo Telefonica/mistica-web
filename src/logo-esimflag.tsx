@@ -10,12 +10,12 @@ const EsimflagLogoImage = ({
     size,
     type,
     isDarkMode,
-    isInverse,
+    isOverBrand,
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors} = getEsimflagSkin();
     const color =
-        colorProp || (isDarkMode ? colors.inverse : isInverse ? colors.inverse : colors.backgroundBrand);
+        colorProp || (isDarkMode ? colors.inverse : isOverBrand ? colors.inverse : colors.backgroundBrand);
 
     if (type === 'vertical') {
         return (

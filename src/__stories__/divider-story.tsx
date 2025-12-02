@@ -1,12 +1,20 @@
 import * as React from 'react';
 import {Divider, ResponsiveLayout, skinVars} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Divider',
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 const Container = ({children}: {children: React.ReactNode}) => {
@@ -26,9 +34,9 @@ const Container = ({children}: {children: React.ReactNode}) => {
     );
 };
 
-export const Default: StoryComponent<Args> = ({inverse}) => {
+export const Default: StoryComponent<Args> = ({variantOutside}) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse} dataAttributes={{testid: 'divider-story'}}>
+        <ResponsiveLayout variant={variantOutside} fullWidth dataAttributes={{testid: 'divider-story'}}>
             <Container>
                 <Divider />
             </Container>
@@ -38,5 +46,5 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
 
 Default.storyName = 'Divider';
 Default.args = {
-    inverse: false,
+    variantOutside: 'default',
 };

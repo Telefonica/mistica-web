@@ -59,7 +59,7 @@ const defaultThumbBase = style([
 
 export const defaultThumb = styleVariants({
     default: [defaultThumbBase, sprinkles({background: vars.colors.controlActivated})],
-    inverse: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedInverse})],
+    overBrand: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedBrand})],
 });
 
 export const iosThumb = style([
@@ -86,11 +86,11 @@ export const thumbHover = styleVariants({
             },
         },
     ],
-    inverse: [
+    overBrand: [
         {
             '@media': {
                 [mq.supportsHover]: {
-                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedInverse, 0.2)}`,
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedBrand, 0.2)}`,
                 },
             },
         },
@@ -103,9 +103,9 @@ export const thumbActive = styleVariants({
             boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
         },
     ],
-    inverse: [
+    overBrand: [
         {
-            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedInverse, 0.2)}`,
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedBrand, 0.2)}`,
         },
     ],
 });

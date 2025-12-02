@@ -6,7 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {Text1} from './text';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useIsBrandOrMediaVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -27,7 +27,7 @@ type Props = {
  * </Badge>
  */
 const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Element | null => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const isOverBrand = useIsBrandOrMediaVariant();
     const {textPresets} = useTheme();
     if (children && value === 0) {
         return <>{children}</>;
@@ -38,7 +38,7 @@ const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Elemen
     }
 
     const isBigNumber = value && value > 9;
-    const hasBorder = isInverse || !!children;
+    const hasBorder = isOverBrand || !!children;
 
     return (
         <div className={classes.container} {...getPrefixedDataAttributes(dataAttributes, 'Badge')}>
@@ -57,7 +57,7 @@ const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Elemen
                     <Text1
                         forceMobileSizes
                         weight={textPresets.indicator.weight}
-                        color={vars.colors.textPrimaryInverse}
+                        color={vars.colors.textPrimaryNegative}
                     >
                         {isBigNumber ? '+9' : value}
                     </Text1>

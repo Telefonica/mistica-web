@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {pxToRem, applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
@@ -157,14 +157,30 @@ export const Text = ({
     dataAttributes,
 }: TextProps): JSX.Element | null => {
     const {skinName} = useTheme();
-    const isInverse = useIsInverseOrMediaVariant();
+    const variant = useThemeVariant();
     const lineClampValue = lineClamp(truncate);
 
-    const inverseColorsMap = {
-        [vars.colors.textPrimary]: vars.colors.textPrimaryInverse,
-        [vars.colors.textSecondary]: vars.colors.textSecondaryInverse,
-        [vars.colors.textLink]: vars.colors.textLinkInverse,
-        [vars.colors.textError]: vars.colors.textErrorInverse,
+    const variantColorsMap = {
+        [vars.colors.textPrimary]: {
+            brand: vars.colors.textPrimaryBrand,
+            media: vars.colors.textPrimaryMedia,
+            negative: vars.colors.textPrimaryNegative,
+        },
+        [vars.colors.textSecondary]: {
+            brand: vars.colors.textSecondaryBrand,
+            media: vars.colors.textSecondaryMedia,
+            negative: vars.colors.textSecondaryNegative,
+        },
+        [vars.colors.textLink]: {
+            brand: vars.colors.textLinkBrand,
+            media: vars.colors.textLinkMedia,
+            negative: vars.colors.textLinkNegative,
+        },
+        [vars.colors.textError]: {
+            brand: vars.colors.textErrorBrand,
+            media: vars.colors.textErrorBrand,
+            negative: vars.colors.textErrorNegative,
+        },
     };
 
     if (!children && children !== 0) {
@@ -212,7 +228,10 @@ export const Text = ({
                 textTransform: transform || 'inherit',
                 textDecoration: decoration ?? 'inherit',
                 overflowWrap: wordBreak ? 'anywhere' : 'inherit',
-                color: isInverse ? inverseColorsMap[color] ?? color : color,
+                color:
+                    variant !== 'default' && variant !== 'alternative'
+                        ? variantColorsMap[color]?.[variant] ?? color
+                        : color,
                 textAlign,
                 textShadow,
                 // When rendering as <pre/>, spaces are preserved and we don't want to remove them

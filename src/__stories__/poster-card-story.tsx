@@ -55,7 +55,7 @@ type PosterCardArgs = {
     height: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
     emptySource: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const Default: StoryComponent<PosterCardArgs> = ({
@@ -81,7 +81,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     height,
     aspectRatio: aspectRatioArg,
     emptySource,
-    inverse,
+    variantOutside,
 }) => {
     const aspectRatio = aspectRatioArg.replace(' ', ':');
     let assetElement;
@@ -145,7 +145,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     console.log('aspectRatio:', aspectRatio);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <PosterCard
                     dataAttributes={{testid: 'poster-card'}}
@@ -195,7 +195,7 @@ Default.args = {
     height: '',
     aspectRatio: 'auto',
     emptySource: false,
-    inverse: false,
+    variantOutside: 'default',
 };
 
 Default.argTypes = {
@@ -221,13 +221,14 @@ Default.argTypes = {
         if: {arg: 'background', eq: 'color from skin'},
     },
     variant: {
-        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        options: ['', 'default', 'brand', 'negative', 'alternative', 'media'],
         control: {
             type: 'select',
             labels: {
                 '': 'undefined',
                 default: 'default',
-                inverse: 'inverse',
+                brand: 'brand',
+                negative: 'negative',
                 alternative: 'alternative',
                 media: 'media',
             },

@@ -13,7 +13,7 @@ import {Text, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useIsBrandOrMediaVariant} from './theme-variant-context';
 import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
@@ -105,7 +105,7 @@ export const Content = ({
     disabled,
     control,
 }: ContentProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const isOverBrand = useIsBrandOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
@@ -126,10 +126,10 @@ export const Content = ({
                         className={styles.asset}
                         style={applyCssVars({
                             color: danger
-                                ? isInverse
+                                ? isOverBrand
                                     ? vars.colors.textErrorInverse
                                     : vars.colors.textError
-                                : isInverse
+                                : isOverBrand
                                   ? vars.colors.textPrimaryInverse
                                   : vars.colors.textPrimary,
                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
@@ -247,7 +247,9 @@ export const Content = ({
                         >
                             <IconChevronRightFilled
                                 size={16}
-                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
+                                color={
+                                    isOverBrand ? vars.colors.textSecondaryBrand : vars.colors.neutralMedium
+                                }
                             />
                         </div>
                     )}
@@ -375,7 +377,7 @@ const hasControlProps = (
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
-    const isInverse = useIsInverseOrMediaVariant();
+    const isOverBrand = useIsBrandOrMediaVariant();
     const {
         asset,
         headline,
@@ -413,8 +415,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
-    const hasHoverDefault = !disabled && !isInverse;
-    const hasHoverInverse = !disabled && isInverse;
+    const hasHoverDefault = !disabled && !isOverBrand;
+    const hasHoverInverse = !disabled && isOverBrand;
     const hasControl = hasControlProps(props);
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;

@@ -6,7 +6,7 @@ import * as mediaStyles from './image.css';
 import * as tokens from './text-tokens';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useIsBrandVariant, useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import Stack from './stack';
 import Image from './image';
@@ -135,7 +135,7 @@ type FooterProps = {
     showFooter?: boolean;
     footerSlot?: React.ReactNode;
     footerBackgroundColor?: string;
-    footerVariant?: 'default' | 'inverse';
+    footerVariant?: 'default' | 'brand' | 'inverse';
 };
 
 type NoChildrenProps = {
@@ -1168,14 +1168,15 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
-        const isInverseOutside = useIsInverseVariant();
-        const externalVariant = isInverseOutside ? 'inverse' : 'default';
-        const backgroundVariant = variantProp || externalVariant;
-        const variant: Variant =
-            variantProp || (type === 'cover' && hasCustomBackground ? 'media' : 'default');
+        const isOverBrand = useIsBrandVariant();
+        const externalVariant = isOverBrand ? 'brand' : 'default';
+        const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;
+        const variant =
+            (variantProp && normalizeVariant(variantProp)) ||
+            (type === 'cover' && hasCustomBackground ? 'media' : 'default');
 
         const overlayStyle =
-            variant === 'inverse' ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
+            variant === 'brand' ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
 
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
@@ -1203,7 +1204,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 ? 'transparent'
                 : backgroundColorProp ||
                   (variant === 'media'
-                      ? isInverseOutside
+                      ? isOverBrand
                           ? skinVars.colors.backgroundContainerBrandOverInverse
                           : skinVars.colors.backgroundBrand
                       : variant === 'alternative'
@@ -1461,7 +1462,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         buttonSecondary={buttonSecondary}
                         buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
-                        isInverseOutside={isInverseOutside}
+                        isInverseOutside={isOverBrand}
                         overlayColor={footerOverlayBackground}
                     />
                 )}

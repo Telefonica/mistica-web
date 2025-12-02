@@ -69,13 +69,13 @@ export const barVariants = styleVariants({
     checkedIos: [barBase, {background: colorsVars.colors.controlActivated, height: 31}],
 });
 
-export const inverseBarVariants = styleVariants({
-    default: [barBase, {background: colorsVars.colors.controlInverse, height: 14}],
+export const overBrandBarVariants = styleVariants({
+    default: [barBase, {background: colorsVars.colors.controlBrand, height: 14}],
     // Hardcoded color because the native switch in iOS doesn't allow modification of this color
     ios: [barBase, {background: '#E9E9EA', height: 31}],
     iosDark: [barBase, {background: '#39393D', height: 31}],
     checked: [barBase, {background: colorsVars.colors.toggleAndroidBackgroundActive, height: 14}],
-    checkedIos: [barBase, {background: colorsVars.colors.controlActivatedInverse, height: 31}],
+    checkedIos: [barBase, {background: colorsVars.colors.controlActivatedBrand, height: 31}],
 });
 
 const containerBase = style({
@@ -148,15 +148,12 @@ export const ballVariants = styleVariants({
     checkedIos: [ballVariantsBase.ios, {right: 6, backgroundColor: colorsVars.colors.iosControlKnob}],
 });
 
-export const inverseBallVariants = styleVariants({
+export const overBrandBallVariants = styleVariants({
     default: [
         ballVariantsBase.default,
         {right: 21, backgroundColor: colorsVars.colors.toggleAndroidInactive},
     ],
     ios: [ballVariantsBase.ios, {right: 26, backgroundColor: colorsVars.colors.iosControlKnob}],
-    checked: [
-        ballVariantsBase.default,
-        {right: 1, backgroundColor: colorsVars.colors.controlActivatedInverse},
-    ],
-    checkedIos: [ballVariantsBase.ios, {right: 6, backgroundColor: colorsVars.colors.controlKnobInverse}],
+    checked: [ballVariantsBase.default, {right: 1, backgroundColor: colorsVars.colors.controlActivatedBrand}],
+    checkedIos: [ballVariantsBase.ios, {right: 6, backgroundColor: colorsVars.colors.controlKnobBrand}],
 });

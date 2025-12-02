@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './radio-button.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsBrandVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -81,7 +81,7 @@ const RadioButton = ({
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const {isIos} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const isOverBrand = useIsBrandVariant();
 
     /**
      * The radio will gain focus with tab navigation if:
@@ -129,8 +129,8 @@ const RadioButton = ({
     const radio = (
         <div
             className={classnames(
-                isInverse
-                    ? styles.inverseOuterCircleVariants[outerCircleVariant]
+                isOverBrand
+                    ? styles.overBrandOuterCircleVariants[outerCircleVariant]
                     : styles.outerCircleVariants[outerCircleVariant],
                 {
                     [styles.disabled]: disabled,
@@ -140,8 +140,8 @@ const RadioButton = ({
             {!isIos && (
                 <div
                     className={
-                        isInverse
-                            ? styles.inverseInnerCircleVariant[innerCircleVariant]
+                        isOverBrand
+                            ? styles.overBrandInnerCircleVariant[innerCircleVariant]
                             : styles.innerCircleVariant[innerCircleVariant]
                     }
                 />

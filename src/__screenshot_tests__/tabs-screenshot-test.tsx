@@ -1,5 +1,6 @@
 import {within} from '@telefonica/acceptance-testing';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 const THEME_VARIANTS = ['default', 'inverse', 'alternative'] as const;
 
@@ -75,11 +76,11 @@ test('Tabs selected line appears properly', async () => {
     expect(thirdTabActive).toMatchImageSnapshot();
 });
 
-test.each(THEME_VARIANTS)('Tabs in %s theme', async (theme) => {
+test.each(THEME_VARIANTS)('Tabs in %s theme', async (variant) => {
     await openStoryPage({
         id: 'components-tabs--default',
         device: 'MOBILE_IOS',
-        args: {theme},
+        args: {variant: normalizeVariant(variant)},
     });
     const image = await (await screen.findByRole('tablist')).screenshot();
     expect(image).toMatchImageSnapshot();
