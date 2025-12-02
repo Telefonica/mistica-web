@@ -4,7 +4,7 @@
 import * as React from 'react';
 import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
-import {useIsBrandOrMediaVariant, useThemeVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import * as classes from './avatar.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';

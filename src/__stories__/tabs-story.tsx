@@ -23,6 +23,10 @@ export default {
             options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
 };
 

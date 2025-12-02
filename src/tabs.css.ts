@@ -1,18 +1,20 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
-import {vars} from './skins/skin-contract.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
 const TAB_MAX_WIDTH = 284;
 const TAB_HEIGHT = 56;
 
-export const outerBorder = style({
-    borderBottom: `1px solid ${vars.colors.divider}`,
-});
+const borderColor = createVar();
 
-export const outerBorderInverse = style({
-    borderBottom: `1px solid ${vars.colors.dividerInverse}`,
+export const vars = {
+    borderColor,
+};
+
+export const outerBorder = style({
+    borderBottom: `1px solid ${vars.borderColor}`,
 });
 
 export const outer = style([
@@ -100,27 +102,42 @@ export const tabHover = styleVariants({
         style({
             ':focus-visible': {
                 ...focusOutlineStyles,
-                color: vars.colors.textPrimary,
+                color: skinVars.colors.textPrimary,
             },
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
-                        color: vars.colors.textPrimary,
+                        color: skinVars.colors.textPrimary,
                     },
                 },
             },
         }),
     ],
-    inverse: [
+    brand: [
         style({
             ':focus-visible': {
                 ...focusOutlineStyles,
-                color: vars.colors.textPrimaryInverse,
+                color: skinVars.colors.textPrimaryBrand,
             },
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
-                        color: vars.colors.textPrimaryInverse,
+                        color: skinVars.colors.textPrimaryBrand,
+                    },
+                },
+            },
+        }),
+    ],
+    negative: [
+        style({
+            ':focus-visible': {
+                ...focusOutlineStyles,
+                color: skinVars.colors.textPrimaryNegative,
+            },
+            '@media': {
+                [mq.supportsHover]: {
+                    ':hover': {
+                        color: skinVars.colors.textPrimaryNegative,
                     },
                 },
             },
@@ -131,36 +148,53 @@ export const tabHover = styleVariants({
 export const tabSelectionVariants = styleVariants({
     noSelected: [
         sprinkles({
-            color: vars.colors.textSecondary,
+            color: skinVars.colors.textSecondary,
         }),
     ],
-    noSelectedInverse: [
+    noSelectedBrand: [
         sprinkles({
-            color: vars.colors.textSecondaryInverse,
+            color: skinVars.colors.textSecondaryBrand,
+        }),
+    ],
+    noSelectedNegative: [
+        sprinkles({
+            color: skinVars.colors.textSecondaryNegative,
         }),
     ],
     selected: [
         style({
-            borderBottom: `2px solid ${vars.colors.controlActivated}`,
-            color: vars.colors.textPrimary,
+            borderBottom: `2px solid ${skinVars.colors.controlActivated}`,
+            color: skinVars.colors.textPrimary,
         }),
     ],
-    selectedInverse: [
+    selectedBrand: [
         style({
-            borderBottom: `2px solid ${vars.colors.controlActivatedInverse}`,
-            color: vars.colors.textPrimaryInverse,
+            borderBottom: `2px solid ${skinVars.colors.controlActivatedBrand}`,
+            color: skinVars.colors.textPrimaryBrand,
+        }),
+    ],
+    selectedNegative: [
+        style({
+            borderBottom: `2px solid ${skinVars.colors.controlActivatedNegative}`,
+            color: skinVars.colors.textPrimaryNegative,
         }),
     ],
     selectedAnimating: [
         style({
             borderBottom: '2px solid transparent',
-            color: vars.colors.textPrimary,
+            color: skinVars.colors.textPrimary,
         }),
     ],
-    selectedAnimatingInverse: [
+    selectedAnimatingBrand: [
         style({
             borderBottom: '2px solid transparent',
-            color: vars.colors.textPrimaryInverse,
+            color: skinVars.colors.textPrimaryBrand,
+        }),
+    ],
+    selectedAnimatingNegative: [
+        style({
+            borderBottom: '2px solid transparent',
+            color: skinVars.colors.textPrimaryNegative,
         }),
     ],
 });
