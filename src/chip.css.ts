@@ -23,7 +23,7 @@ const minButtonArea = {
 
 const interactiveAreaSize = createVar();
 
-const minimumInteractiveArea = style({
+export const minimumInteractiveArea = style({
     vars: {
         [interactiveAreaSize]: minButtonArea.pointer,
     },
@@ -62,7 +62,6 @@ const containerBase = style([
         cursor: 'default',
         borderColor: vars.colors.control,
     },
-    minimumInteractiveArea,
 ]);
 
 export const containerSmall = style({

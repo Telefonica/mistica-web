@@ -1,3 +1,10 @@
+## [16.43.1](https://github.com/Telefonica/mistica-web/compare/v16.43.0...v16.43.1) (2025-12-02)
+
+
+### Bug Fixes
+
+* **Chip:** close button not working with mouse/touch ([#1467](https://github.com/Telefonica/mistica-web/issues/1467)) ([87648ce](https://github.com/Telefonica/mistica-web/commit/87648ceb7df6f12cd116ae2f3b955f0f195fd286))
+
 # [16.43.0](https://github.com/Telefonica/mistica-web/compare/v16.42.2...v16.43.0) (2025-11-21)
 
 
