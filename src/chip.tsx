@@ -127,6 +127,7 @@ const Chip = (props: ChipProps): JSX.Element => {
     const renderContent = (dataAttributes?: DataAttributes) => (
         <div
             className={classnames(
+                isTouchable ? styles.minimumInteractiveArea : undefined,
                 styles.chipVariants[
                     active
                         ? isTouchable
