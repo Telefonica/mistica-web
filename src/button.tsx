@@ -403,7 +403,9 @@ const BaseButton = React.forwardRef<
                 ? styles.overMediaButtonVariants[finalType]
                 : variant === 'brand'
                   ? styles.overBrandButtonVariants[finalType]
-                  : styles.buttonVariants[finalType],
+                  : variant === 'negative'
+                    ? styles.overNegativeButtonVariants[finalType]
+                    : styles.buttonVariants[finalType],
             props.className,
             {
                 [styles.small]: props.small,

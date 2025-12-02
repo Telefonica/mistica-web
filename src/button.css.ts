@@ -204,6 +204,37 @@ const lightPrimaryOverBrand: ComplexStyleRule = [
     },
 ];
 
+const lightPrimaryOverNegative: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonPrimaryNegative,
+        background: vars.colors.buttonPrimaryBackgroundNegative,
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
+                color: vars.colors.textButtonPrimaryNegativePressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        color: vars.colors.textButtonPrimaryNegativePressed,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
+                        color: vars.colors.textButtonPrimaryNegativePressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 const lightPrimaryMedia: ComplexStyleRule = [
     button,
     sprinkles({
@@ -299,6 +330,41 @@ const lightSecondaryOverBrand: ComplexStyleRule = [
                         borderColor: vars.colors.buttonSecondaryBorderBrandPressed,
                         color: vars.colors.textButtonSecondaryBrandPressed,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundBrandPressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
+const lightSecondaryOverNegative: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonSecondaryNegative,
+        background: vars.colors.buttonSecondaryBackgroundBrand,
+    }),
+    {
+        borderColor: vars.colors.buttonSecondaryBorderNegative,
+        selectors: {
+            '&:not([disabled]):active': {
+                borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
+                color: vars.colors.textButtonSecondaryNegativePressed,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundNegativePressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
+                        color: vars.colors.textButtonSecondaryNegativePressed,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundNegativeHover,
+                    },
+                    '&:not([disabled]):active': {
+                        borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
+                        color: vars.colors.textButtonSecondaryNegativePressed,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundNegativePressed,
                     },
                 },
             },
@@ -426,6 +492,34 @@ export const defaultLinkOverBrand: ComplexStyleRule = [
     },
 ];
 
+export const defaultLinkOverNegative: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkNegative,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 export const defaultLinkMedia: ComplexStyleRule = [
     button,
     sprinkles({
@@ -510,6 +604,34 @@ const dangerLinkOverBrand: ComplexStyleRule = [
     },
 ];
 
+const dangerLinkOverNegative: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: vars.colors.buttonLinkDangerBackgroundNegative,
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 const dangerLinkMedia: ComplexStyleRule = [
     button,
     sprinkles({
@@ -566,6 +688,34 @@ const dangerLinkOverBrandDark: ComplexStyleRule = [
     },
 ];
 
+const dangerLinkOverNegativeDark: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
+                    },
+                },
+            },
+        },
+    },
+];
+
 export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
@@ -582,6 +732,15 @@ export const overBrandButtonVariants = styleVariants({
     link: defaultLinkOverBrand,
     linkDanger: dangerLinkOverBrand,
     linkDangerDark: dangerLinkOverBrandDark,
+});
+
+export const overNegativeButtonVariants = styleVariants({
+    primary: lightPrimaryOverNegative,
+    secondary: lightSecondaryOverNegative,
+    danger,
+    link: defaultLinkOverNegative,
+    linkDanger: dangerLinkOverNegative,
+    linkDangerDark: dangerLinkOverNegativeDark,
 });
 
 export const overMediaButtonVariants = styleVariants({

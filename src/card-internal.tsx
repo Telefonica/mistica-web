@@ -40,7 +40,7 @@ import type {
 } from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
-import type {Variant} from './theme-variant-context';
+import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
 
@@ -726,9 +726,9 @@ const Media = ({
 type PrivateFooterProps = {
     type: CardType;
     size: CardSize;
-    variant?: Variant;
+    variant: NonDeprecatedVariant;
     hasBackgroundImageOrVideo?: boolean;
-    isInverseOutside: boolean;
+    isOverBrand: boolean;
     overlayColor: string;
 };
 
@@ -743,20 +743,26 @@ const Footer = ({
     hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
-    isInverseOutside,
+    isOverBrand,
     overlayColor,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
     const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
     const has3Buttons = !!(buttonPrimary && buttonSecondary && buttonLink);
-    const isInverseCard = variant === 'inverse' || variant === 'media';
+    const dividerColor = {
+        default: skinVars.colors.divider,
+        brand: skinVars.colors.dividerBrand,
+        negative: skinVars.colors.dividerNegative,
+        media: skinVars.colors.dividerBrand,
+        alternative: skinVars.colors.divider,
+    }[variant];
     const isNaked = type === 'naked';
     const backgroundColor =
         footerBackgroundColor ||
         (footerVariant && footerVariant !== variant
             ? footerVariant === 'default'
                 ? skinVars.colors.backgroundContainer
-                : isInverseOutside
-                  ? skinVars.colors.backgroundContainerBrandOverInverse
+                : isOverBrand
+                  ? skinVars.colors.backgroundContainerBrandOverBrand
                   : skinVars.colors.backgroundContainerBrand
             : undefined);
 
@@ -775,9 +781,7 @@ const Footer = ({
                 <div
                     // The divider is outside the footer because it has a conditional right margin
                     style={{
-                        borderTop: backgroundColor
-                            ? undefined
-                            : `1px solid ${isInverseCard ? skinVars.colors.dividerInverse : skinVars.colors.divider}`,
+                        borderTop: backgroundColor ? undefined : `1px solid ${dividerColor}`,
                         marginRight: isNaked ? 16 : 0,
                     }}
                 />
@@ -851,7 +855,7 @@ const TextContent = ({
     withTextShadow,
 }: TextContentProps & PrivateTextContentProps): JSX.Element => {
     const {textPresets, colorValues} = useTheme();
-    const themeVariant = useThemeVariant();
+    const externalVariant = useThemeVariant();
 
     const commonProps = {
         hyphens: 'auto',
@@ -864,20 +868,26 @@ const TextContent = ({
             subtitle: colorValues.textPrimary,
             description: colorValues.textSecondary,
         },
-        inverse: {
-            pretitle: colorValues.textPrimaryInverse,
-            title: colorValues.textPrimaryInverse,
-            subtitle: colorValues.textPrimaryInverse,
-            description: colorValues.textSecondaryInverse,
+        brand: {
+            pretitle: colorValues.textPrimaryBrand,
+            title: colorValues.textPrimaryBrand,
+            subtitle: colorValues.textPrimaryBrand,
+            description: colorValues.textSecondaryBrand,
+        },
+        negative: {
+            pretitle: colorValues.textPrimaryNegative,
+            title: colorValues.textPrimaryNegative,
+            subtitle: colorValues.textPrimaryNegative,
+            description: colorValues.textSecondaryNegative,
         },
         media: {
-            pretitle: colorValues.textPrimaryInverse,
-            title: colorValues.textPrimaryInverse,
-            subtitle: colorValues.textPrimaryInverse,
+            pretitle: colorValues.textPrimaryBrand,
+            title: colorValues.textPrimaryBrand,
+            subtitle: colorValues.textPrimaryBrand,
             description:
                 type === 'cover' && hasCustomBackground
-                    ? colorValues.textPrimaryInverse
-                    : colorValues.textSecondaryInverse,
+                    ? colorValues.textPrimaryBrand
+                    : colorValues.textSecondaryBrand,
         },
     } as const;
 
@@ -976,7 +986,7 @@ const TextContent = ({
 
     const colors =
         colorVariants[variant as keyof typeof colorVariants] ||
-        colorVariants[themeVariant as keyof typeof colorVariants] ||
+        colorVariants[externalVariant as keyof typeof colorVariants] ||
         colorVariants.default;
     const textVariant = textVariants[size] || textVariants.default;
     const textShadowStyle = withTextShadow ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
@@ -1205,7 +1215,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 : backgroundColorProp ||
                   (variant === 'media'
                       ? isOverBrand
-                          ? skinVars.colors.backgroundContainerBrandOverInverse
+                          ? skinVars.colors.backgroundContainerBrandOverBrand
                           : skinVars.colors.backgroundBrand
                       : variant === 'alternative'
                         ? skinVars.colors.backgroundAlternative
@@ -1462,7 +1472,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         buttonSecondary={buttonSecondary}
                         buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
-                        isInverseOutside={isOverBrand}
+                        isOverBrand={isOverBrand}
                         overlayColor={footerOverlayBackground}
                     />
                 )}

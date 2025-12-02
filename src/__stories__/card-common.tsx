@@ -237,7 +237,7 @@ export const commonArgTypes = {
         },
     },
     variant: {
-        options: ['', 'default', 'brand', 'alternative', 'media'],
+        options: ['', 'default', 'brand', 'negative', 'alternative', 'media'],
         control: {
             type: 'select',
             labels: {
