@@ -64,6 +64,15 @@ export const overBrandBoxVariant = styleVariants({
     ],
 });
 
+export const overNegativeBoxVariant = styleVariants({
+    ios: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlNegative}`}],
+    rest: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlNegative}`}],
+    checked: [
+        boxBase,
+        {background: 'transparent', boxShadow: `inset 0 0 0 12px ${vars.colors.controlActivatedNegative}`},
+    ],
+});
+
 export const check = style([
     sprinkles({
         display: 'block',

@@ -105,14 +105,22 @@ const bulletBase = style([
     },
 ]);
 export const bullet = style([bulletBase, sprinkles({background: skinVars.colors.control})]);
-export const bulletInverse = style([
+export const bulletBrand = style([
     bulletBase,
     {background: applyAlpha(skinVars.rawColors.controlBrand, 0.5)},
 ]);
+export const bulletNegative = style([
+    bulletBase,
+    {background: applyAlpha(skinVars.rawColors.controlNegative, 0.5)},
+]);
 export const bulletActive = style([bulletBase, sprinkles({background: skinVars.colors.controlActivated})]);
-export const bulletActiveInverse = style([
+export const bulletActiveBrand = style([
     bulletBase,
     sprinkles({background: skinVars.colors.controlActivatedBrand}),
+]);
+export const bulletActiveNegative = style([
+    bulletBase,
+    sprinkles({background: skinVars.colors.controlActivatedNegative}),
 ]);
 
 export const bulletInactiveSizing = style([

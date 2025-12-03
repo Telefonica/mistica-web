@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './radio-button.css';
-import {useIsBrandVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -81,7 +81,7 @@ const RadioButton = ({
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const {isIos} = useTheme();
-    const isOverBrand = useIsBrandVariant();
+    const themeVariant = useThemeVariant();
 
     /**
      * The radio will gain focus with tab navigation if:
@@ -129,9 +129,11 @@ const RadioButton = ({
     const radio = (
         <div
             className={classnames(
-                isOverBrand
+                themeVariant === 'brand' || themeVariant === 'media'
                     ? styles.overBrandOuterCircleVariants[outerCircleVariant]
-                    : styles.outerCircleVariants[outerCircleVariant],
+                    : themeVariant === 'negative'
+                      ? styles.overNegativeOuterCircleVariants[outerCircleVariant]
+                      : styles.outerCircleVariants[outerCircleVariant],
                 {
                     [styles.disabled]: disabled,
                 }
@@ -140,9 +142,11 @@ const RadioButton = ({
             {!isIos && (
                 <div
                     className={
-                        isOverBrand
+                        themeVariant === 'brand' || themeVariant === 'media'
                             ? styles.overBrandInnerCircleVariant[innerCircleVariant]
-                            : styles.innerCircleVariant[innerCircleVariant]
+                            : themeVariant === 'negative'
+                              ? styles.overNegativeInnerCircleVariant[innerCircleVariant]
+                              : styles.innerCircleVariant[innerCircleVariant]
                     }
                 />
             )}

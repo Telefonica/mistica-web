@@ -6,7 +6,7 @@ import * as mediaStyles from './image.css';
 import * as tokens from './text-tokens';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {ThemeVariant, normalizeVariant, useIsBrandVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import Tag from './tag';
 import Stack from './stack';
 import Image from './image';
@@ -728,7 +728,7 @@ type PrivateFooterProps = {
     size: CardSize;
     variant: NonDeprecatedVariant;
     hasBackgroundImageOrVideo?: boolean;
-    isOverBrand: boolean;
+    externalVariant: NonDeprecatedVariant;
     overlayColor: string;
 };
 
@@ -743,7 +743,7 @@ const Footer = ({
     hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
-    isOverBrand,
+    externalVariant,
     overlayColor,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
     const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
@@ -761,7 +761,7 @@ const Footer = ({
         (footerVariant && footerVariant !== variant
             ? footerVariant === 'default'
                 ? skinVars.colors.backgroundContainer
-                : isOverBrand
+                : externalVariant === 'brand' || externalVariant === 'media' || externalVariant === 'negative'
                   ? skinVars.colors.backgroundContainerBrandOverBrand
                   : skinVars.colors.backgroundContainerBrand
             : undefined);
@@ -1178,8 +1178,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
         );
 
-        const isOverBrand = useIsBrandVariant();
-        const externalVariant = isOverBrand ? 'brand' : 'default';
+        const externalVariant = useThemeVariant();
         const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;
         const variant =
             (variantProp && normalizeVariant(variantProp)) ||
@@ -1214,7 +1213,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 ? 'transparent'
                 : backgroundColorProp ||
                   (variant === 'media'
-                      ? isOverBrand
+                      ? externalVariant === 'brand' ||
+                        externalVariant === 'media' ||
+                        externalVariant === 'negative'
                           ? skinVars.colors.backgroundContainerBrandOverBrand
                           : skinVars.colors.backgroundBrand
                       : variant === 'alternative'
@@ -1472,7 +1473,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         buttonSecondary={buttonSecondary}
                         buttonLink={buttonLink}
                         hasBackgroundImageOrVideo={hasBackgroundImageOrVideo}
-                        isOverBrand={isOverBrand}
+                        externalVariant={externalVariant}
                         overlayColor={footerOverlayBackground}
                     />
                 )}

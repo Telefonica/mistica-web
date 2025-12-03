@@ -5,7 +5,7 @@ import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-righ
 import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import classNames from 'classnames';
-import {useIsBrandOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
@@ -167,7 +167,7 @@ export const useCarouselContext = (): CarouselControls => React.useContext(Carou
 export const CarouselContextConsumer = CarouselContext.Consumer;
 
 export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Element => {
-    const isOverBrand = useIsBrandOrMediaVariant();
+    const themeVariant = useThemeVariant();
     const {isTablet, isDesktopOrBigger} = useScreenSize();
     const pagesCount =
         typeof numPages === 'number'
@@ -181,8 +181,10 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
     const getClassNames = (bulletIndex: number) => {
         const classNames: {[key: string]: boolean} = {};
 
-        if (isOverBrand) {
-            classNames[currentIndex === bulletIndex ? styles.bulletActiveInverse : styles.bulletInverse] =
+        if (themeVariant === 'brand' || themeVariant === 'media') {
+            classNames[currentIndex === bulletIndex ? styles.bulletActiveBrand : styles.bulletBrand] = true;
+        } else if (themeVariant === 'negative') {
+            classNames[currentIndex === bulletIndex ? styles.bulletActiveNegative : styles.bulletNegative] =
                 true;
         } else {
             classNames[currentIndex === bulletIndex ? styles.bulletActive : styles.bullet] = true;

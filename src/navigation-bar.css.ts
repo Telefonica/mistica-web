@@ -206,12 +206,42 @@ export const textWrapperVariants = styleVariants({
             },
         },
     },
+    alternative: {
+        color: vars.colors.textPrimary,
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    color: vars.colors.textSecondary,
+                },
+            },
+        },
+    },
     brand: {
         color: vars.colors.textPrimaryBrand,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
                     color: vars.colors.textSecondaryBrand,
+                },
+            },
+        },
+    },
+    negative: {
+        color: vars.colors.textPrimaryNegative,
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    color: vars.colors.textSecondaryNegative,
+                },
+            },
+        },
+    },
+    media: {
+        color: vars.colors.textPrimaryMedia,
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    color: vars.colors.textSecondaryMedia,
                 },
             },
         },

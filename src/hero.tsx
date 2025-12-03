@@ -12,7 +12,7 @@ import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
 import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {useIsBrandOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
 import {
@@ -23,6 +23,7 @@ import {
 } from './utils/types';
 import {isBiggerHeading} from './utils/headings';
 
+import type {NonDeprecatedVariant} from './theme-variant-context';
 import type Image from './image';
 import type Video from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -36,7 +37,7 @@ const CONTENT_BACKGROUND_COLOR = {
     none: 'transparent',
 };
 
-type LayoutProps = {children: React.ReactNode; variant: 'default' | 'brand'; backgroundColor?: string};
+type LayoutProps = {children: React.ReactNode; variant: NonDeprecatedVariant; backgroundColor?: string};
 
 const Layout = ({children, variant, backgroundColor}: LayoutProps) => {
     return (
@@ -185,12 +186,18 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         const {isTabletOrSmaller} = useScreenSize();
         const slideshowContext = useSlideshowContext();
         const hasSlideshowBullets = !!slideshowContext?.withBullets;
-        const isBrandOutside = useIsBrandOrMediaVariant();
-        const isBrandVariant =
+        const outsideVariant = useThemeVariant();
+        const variant =
             background === 'none'
-                ? isBrandOutside
-                : background === 'brand' || background === 'brand-secondary';
-        const variant = isBrandVariant ? 'brand' : 'default';
+                ? outsideVariant
+                : (
+                      {
+                          default: 'default',
+                          alternative: 'alternative',
+                          brand: 'brand',
+                          'brand-secondary': 'negative',
+                      } as const
+                  )[background];
 
         if (isTabletOrSmaller) {
             return (

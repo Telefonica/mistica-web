@@ -6,7 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {Text1} from './text';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
-import {useIsBrandOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -27,7 +27,7 @@ type Props = {
  * </Badge>
  */
 const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Element | null => {
-    const isOverBrand = useIsBrandOrMediaVariant();
+    const themeVariant = useThemeVariant();
     const {textPresets} = useTheme();
     if (children && value === 0) {
         return <>{children}</>;
@@ -38,7 +38,8 @@ const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Elemen
     }
 
     const isBigNumber = value && value > 9;
-    const hasBorder = isOverBrand || !!children;
+    const hasBorder =
+        themeVariant === 'brand' || themeVariant === 'negative' || themeVariant === 'media' || !!children;
 
     return (
         <div className={classes.container} {...getPrefixedDataAttributes(dataAttributes, 'Badge')}>

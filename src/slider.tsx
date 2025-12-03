@@ -10,7 +10,7 @@ import Tooltip from './tooltip';
 import Box from './box';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
-import {useIsBrandVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -179,8 +179,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         const [isThumbHovered, setIsThumbHovered] = React.useState(false);
         const [isFocused, setIsFocused] = React.useState(false);
         const {isIos} = useTheme();
-        const isOverBrand = useIsBrandVariant();
-        const thumbVariant = isOverBrand ? 'overBrand' : 'default';
+        const themeVariant = useThemeVariant();
 
         const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
             const box = element?.getBoundingClientRect();
@@ -238,9 +237,9 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
 
         const thumb = (
             <div
-                className={classNames(isIos ? styles.iosThumb : styles.defaultThumb[thumbVariant], {
-                    [styles.thumbHover[thumbVariant]]: !isIos && isThumbHovered && !isPointerDown,
-                    [styles.thumbActive[thumbVariant]]: !isIos && isPointerDown,
+                className={classNames(isIos ? styles.iosThumb : styles.defaultThumb[themeVariant], {
+                    [styles.thumbHover[themeVariant]]: !isIos && isThumbHovered && !isPointerDown,
+                    [styles.thumbActive[themeVariant]]: !isIos && isPointerDown,
                 })}
             />
         );
@@ -298,7 +297,23 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                         className={styles.track}
                         ref={trackRef}
                         style={{
-                            background: `linear-gradient(to right, ${isOverBrand ? vars.colors.controlActivatedBrand : vars.colors.controlActivated} ${trackProgressPosition}, ${isOverBrand ? vars.colors.barTrackBrand : vars.colors.barTrack} ${trackProgressPosition}`,
+                            background: `linear-gradient(to right, ${
+                                {
+                                    default: vars.colors.controlActivated,
+                                    alternative: vars.colors.controlActivated,
+                                    brand: vars.colors.controlActivatedBrand,
+                                    media: vars.colors.controlActivatedBrand,
+                                    negative: vars.colors.controlActivatedNegative,
+                                }[themeVariant]
+                            } ${trackProgressPosition}, ${
+                                {
+                                    default: vars.colors.barTrack,
+                                    alternative: vars.colors.barTrack,
+                                    brand: vars.colors.barTrackBrand,
+                                    media: vars.colors.barTrackBrand,
+                                    negative: vars.colors.barTrackNegative,
+                                }[themeVariant]
+                            } ${trackProgressPosition}`,
                         }}
                     />
                     <div

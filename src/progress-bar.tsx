@@ -7,7 +7,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import classNames from 'classnames';
 import Inline from './inline';
 import * as tokens from './text-tokens';
-import {useIsBrandVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -32,7 +32,7 @@ export const ProgressBar = ({
     reverse = false,
 }: ProgressBarProps): JSX.Element => {
     const {texts, t} = useTheme();
-    const isOverBrand = useIsBrandVariant();
+    const themeVariant = useThemeVariant();
     const progressValue = Math.max(0, Math.min(100, progressPercent));
 
     const getFormattedValueText = () => {
@@ -57,7 +57,7 @@ export const ProgressBar = ({
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
-            className={styles.barBackground[isOverBrand ? 'overBrand' : 'default']}
+            className={styles.barBackground[themeVariant]}
             {...a11yProps}
         >
             <div
@@ -66,7 +66,13 @@ export const ProgressBar = ({
                     maxWidth: `${progressValue}%`,
                     backgroundColor:
                         color ??
-                        (isOverBrand ? vars.colors.controlActivatedBrand : vars.colors.controlActivated),
+                        {
+                            default: vars.colors.controlActivated,
+                            alternative: vars.colors.controlActivated,
+                            brand: vars.colors.controlActivatedBrand,
+                            media: vars.colors.controlActivatedBrand,
+                            negative: vars.colors.controlActivatedNegative,
+                        }[themeVariant],
                 }}
             />
         </div>
@@ -93,7 +99,7 @@ export const ProgressBarStepped = ({
     'aria-hidden': ariaHidden,
 }: ProgressBarSteppedProps): JSX.Element => {
     const {texts, t} = useTheme();
-    const isOverBrand = useIsBrandVariant();
+    const themeVariant = useThemeVariant();
 
     const [step, setStep] = React.useState(Math.ceil(currentStep));
     const [isBack, setIsBack] = React.useState(false);
@@ -138,11 +144,7 @@ export const ProgressBarStepped = ({
                     const hasAnimation = index === step - 1;
 
                     return (
-                        <div
-                            key={index}
-                            className={styles.barBackground[isOverBrand ? 'overBrand' : 'default']}
-                            aria-hidden="true"
-                        >
+                        <div key={index} className={styles.barBackground[themeVariant]} aria-hidden="true">
                             {(isCompleted || isCurrent) && (
                                 <div
                                     className={classNames(styles.bar, {
@@ -152,9 +154,13 @@ export const ProgressBarStepped = ({
                                     style={{
                                         backgroundColor:
                                             color ??
-                                            (isOverBrand
-                                                ? vars.colors.controlActivatedBrand
-                                                : vars.colors.controlActivated),
+                                            {
+                                                default: vars.colors.controlActivated,
+                                                alternative: vars.colors.controlActivated,
+                                                brand: vars.colors.controlActivatedBrand,
+                                                media: vars.colors.controlActivatedBrand,
+                                                negative: vars.colors.controlActivatedNegative,
+                                            }[themeVariant],
                                         maxWidth: isCompleted || (hasAnimation && !isBack) ? '100%' : '0',
                                     }}
                                 />

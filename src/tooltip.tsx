@@ -12,7 +12,7 @@ import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
-import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
@@ -20,11 +20,19 @@ import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import * as tokens from './text-tokens';
 
+import type {NonDeprecatedVariant} from './theme-variant-context';
 import type {BoundingRect} from './hooks';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
-const getBorderStyle = (isInverse: boolean): React.CSSProperties => {
-    return {border: `1px solid ${isInverse ? vars.colors.backgroundContainer : vars.colors.border}`};
+const getBorderStyle = (variant: NonDeprecatedVariant): React.CSSProperties => {
+    const borderColor = {
+        default: vars.colors.border,
+        alternative: vars.colors.border,
+        brand: vars.colors.backgroundContainer,
+        negative: vars.colors.backgroundContainer,
+        media: vars.colors.backgroundContainer,
+    }[variant];
+    return {border: `1px solid ${borderColor}`};
 };
 
 const TOOLTIP_MAX_WIDTH = 496;
@@ -196,7 +204,7 @@ export const BaseTooltip = ({
     const hasControlledValue = open !== undefined;
     const [isFocused, setIsFocused] = React.useState(false);
     const isTooltipOpen = hasControlledValue ? open : tooltipId === openTooltipId;
-    const isInverse = useIsInverseOrMediaVariant();
+    const themeVariant = useThemeVariant();
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
     const tooltipRect = useBoundingRect(tooltipRef, isTooltipOpen, true);
@@ -362,7 +370,6 @@ export const BaseTooltip = ({
         windowSize,
         tooltipComputedStyles,
         arrowComputedStyles,
-        isInverse,
         isTouchable,
         tooltipId,
         resetTooltipInteractions,
@@ -561,7 +568,7 @@ export const BaseTooltip = ({
                                         className={styles.tooltip}
                                         style={{
                                             width,
-                                            ...getBorderStyle(isInverse),
+                                            ...getBorderStyle(themeVariant),
                                             maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
                                         }}
                                     >
@@ -596,7 +603,7 @@ export const BaseTooltip = ({
                                         <div className={styles.arrowContainer} style={arrowComputedStyles}>
                                             <div
                                                 className={classNames(styles.arrow)}
-                                                style={getBorderStyle(isInverse)}
+                                                style={getBorderStyle(themeVariant)}
                                             />
                                         </div>
                                     </div>

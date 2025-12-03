@@ -71,6 +71,32 @@ export const overBrandOuterCircleVariants = styleVariants({
     ],
 });
 
+export const overNegativeOuterCircleVariants = styleVariants({
+    default: [
+        outerCircleBase,
+        {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlBrand}`},
+    ],
+    ios: [
+        outerCircleBase,
+        {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlBrand}`},
+    ],
+    checked: [
+        outerCircleBase,
+        {
+            boxShadow: `inset 0 0 0 2px ${vars.colors.controlActivatedBrand}`,
+            // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
+            background: 'transparent',
+        },
+    ],
+    checkedIos: [
+        outerCircleBase,
+        {
+            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedBrand}`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 64%, transparent 64%, transparent 100%)`,
+        },
+    ],
+});
+
 const innerCircleBase = style([
     sprinkles({
         display: 'flex',
@@ -105,6 +131,20 @@ export const overBrandInnerCircleVariant = styleVariants({
         innerCircleBase,
         sprinkles({
             background: vars.colors.controlActivatedBrand,
+        }),
+        {
+            opacity: 1,
+            transform: 'none',
+        },
+    ],
+});
+
+export const overNegativeInnerCircleVariant = styleVariants({
+    default: [innerCircleBase],
+    checked: [
+        innerCircleBase,
+        sprinkles({
+            background: vars.colors.controlActivatedNegative,
         }),
         {
             opacity: 1,

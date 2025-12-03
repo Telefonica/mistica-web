@@ -11,7 +11,10 @@ const barBackgroundBase = sprinkles({
 
 export const barBackground = styleVariants({
     default: [barBackgroundBase, {background: vars.colors.barTrack}],
-    overBrand: [barBackgroundBase, {background: vars.colors.barTrackBrand}],
+    alternative: [barBackgroundBase, {background: vars.colors.barTrack}],
+    brand: [barBackgroundBase, {background: vars.colors.barTrackBrand}],
+    media: [barBackgroundBase, {background: vars.colors.barTrackBrand}],
+    negative: [barBackgroundBase, {background: vars.colors.barTrackNegative}],
 });
 
 export const bar = sprinkles({

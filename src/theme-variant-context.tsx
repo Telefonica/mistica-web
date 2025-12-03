@@ -37,19 +37,15 @@ export const ThemeVariant = ({isInverse, variant, children}: ThemeVariantProps):
 export const useThemeVariant = (): NonDeprecatedVariant =>
     normalizeVariant(React.useContext(ThemeVariantContext));
 
-export const useIsBrandVariant = (): boolean => useThemeVariant() === 'brand';
+/**
+ * @deprecated use `useThemeVariant` instead
+ */
+export const useIsInverseVariant = (): boolean => useThemeVariant() === 'brand';
 
-export const useIsBrandOrMediaVariant = (): boolean => {
+/**
+ * @deprecated use `useThemeVariant` instead
+ */
+export const useIsInverseOrMediaVariant = (): boolean => {
     const variant = useThemeVariant();
     return variant === 'brand' || variant === 'media';
 };
-
-/**
- * @deprecated use `useIsBrandVariant` instead
- */
-export const useIsInverseVariant = useIsBrandVariant;
-
-/**
- * @deprecated use `useIsBrandOrMediaVariant` instead
- */
-export const useIsInverseOrMediaVariant = useIsBrandOrMediaVariant;

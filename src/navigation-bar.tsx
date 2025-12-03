@@ -12,7 +12,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import {IconButton} from './icon-button';
 import {Row, RowList} from './list';
-import {ThemeVariant, normalizeVariant, useIsBrandOrMediaVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
 import {Portal} from './portal';
 import GridLayout from './grid-layout';
@@ -1566,14 +1566,14 @@ export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupPro
 type NavigationBarActionProps = TouchableProps;
 
 export const NavigationBarAction = ({children, ...touchableProps}: NavigationBarActionProps): JSX.Element => {
-    const isOverBrand = useIsBrandOrMediaVariant();
+    const themeVariant = useThemeVariant();
     return (
         <BaseTouchable
             {...touchableProps}
             className={classnames(
                 styles.navigationBarAction,
                 styles.lineHeightFix,
-                styles.textWrapperVariants[isOverBrand ? 'brand' : 'default']
+                styles.textWrapperVariants[themeVariant]
             )}
             dataAttributes={{'component-name': 'NavigationBarAction'}}
         >
