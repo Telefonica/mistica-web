@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, Select, TextField, Checkbox, skinVars, Box} from '..';
+import {Text, Select, TextField, Checkbox, skinVars} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
