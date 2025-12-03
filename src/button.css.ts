@@ -341,7 +341,7 @@ const lightSecondaryOverNegative: ComplexStyleRule = [
     button,
     sprinkles({
         color: vars.colors.textButtonSecondaryNegative,
-        background: vars.colors.buttonSecondaryBackgroundBrand,
+        background: 'transparent',
     }),
     {
         borderColor: vars.colors.buttonSecondaryBorderNegative,

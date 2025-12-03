@@ -14,9 +14,9 @@
     --mistica-o2-new-beyondBlue10: #e5edff;
     --mistica-o2-new-beyondBlue30: #80a7ff;
     --mistica-o2-new-grey45: #8a8a98;
+    --mistica-o2-new-grey60: #6e6e77;
     --mistica-o2-new-beyondBlue15: #ccdcff;
     --mistica-o2-new-black: #00001e;
-    --mistica-o2-new-grey60: #6e6e77;
     --mistica-o2-new-o2Green: #00dc7d;
     --mistica-o2-new-o2Orange60: #f06c00;
     --mistica-o2-new-o2Pink: #fa96ff;
@@ -188,6 +188,7 @@
     --mistica-color-controlActivatedNegative: var(--mistica-o2-new-white);
     --mistica-color-controlActivatedBrand: var(--mistica-o2-new-white);
     --mistica-color-controlError: var(--mistica-o2-new-o2Red60);
+    --mistica-color-chevronIndicator: var(--mistica-o2-new-grey60);
     --mistica-color-barTrack: var(--mistica-o2-new-grey30);
     --mistica-color-barTrackInverse: rgba(var(--mistica-o2-new-raw-white), 0.3);
     --mistica-color-barTrackNegative: rgba(var(--mistica-o2-new-raw-white), 0.3);
@@ -217,6 +218,8 @@
     --mistica-color-inverse: var(--mistica-o2-new-white);
     --mistica-color-negative: var(--mistica-o2-new-white);
     --mistica-color-neutralHigh: var(--mistica-o2-new-black);
+    --mistica-color-neutralHighNegative: var(--mistica-o2-new-white);
+    --mistica-color-neutralHighBrand: var(--mistica-o2-new-white);
     --mistica-color-neutralMedium: var(--mistica-o2-new-grey60);
     --mistica-color-neutralMediumInverse: var(--mistica-o2-new-grey60);
     --mistica-color-neutralMediumNegative: var(--mistica-o2-new-grey60);
@@ -385,13 +388,33 @@
     --mistica-line-height-tabsLabel: 1.5rem;
     --mistica-font-weight-tabsLabel: 500;
     --mistica-font-weight-link: 500;
+    --mistica-font-size-title1: 0.75rem;
+    --mistica-line-height-title1: 1rem;
     --mistica-font-weight-title1: 500;
+    --mistica-font-size-title2: 1rem;
+    --mistica-line-height-title2: 1.5rem;
     --mistica-font-weight-title2: 700;
     --mistica-font-size-title3: 1.25rem;
     --mistica-line-height-title3: 1.5rem;
     --mistica-font-weight-title3: 700;
+    --mistica-font-size-title4: 1.5rem;
+    --mistica-line-height-title4: 2rem;
+    --mistica-font-weight-title4: 700;
     --mistica-font-weight-indicator: 500;
     --mistica-font-weight-navigationBar: 500;
+    --mistica-font-size-chipLabel: 0.875rem;
+    --mistica-line-height-chipLabel: 1.25rem;
+    --mistica-font-weight-chipLabel: 500;
+    --mistica-font-size-inputLabel: 0.75rem;
+    --mistica-line-height-inputLabel: 1rem;
+    --mistica-font-size-inputValue: 1rem;
+    --mistica-line-height-inputValue: 1.5rem;
+    --mistica-font-size-inputHelperText: 0.75rem;
+    --mistica-line-height-inputHelperText: 1rem;
+    --mistica-font-size-stepperStepLabel: 0.875rem;
+    --mistica-line-height-stepperStepLabel: 1.25rem;
+    --mistica-font-size-loadingScreenTitle: 1.125rem;
+    --mistica-line-height-loadingScreenTitle: 1.5rem;
 }
 
 [data-mistica-skin='o2-new'][data-mistica-color-scheme='dark'] {
@@ -526,6 +549,7 @@
     --mistica-color-controlActivatedNegative: var(--mistica-o2-new-darkModeBeyondBlue);
     --mistica-color-controlActivatedBrand: var(--mistica-o2-new-darkModeBeyondBlue);
     --mistica-color-controlError: var(--mistica-o2-new-o2Red45);
+    --mistica-color-chevronIndicator: var(--mistica-o2-new-grey60);
     --mistica-color-barTrack: var(--mistica-o2-new-darkModeGrey6);
     --mistica-color-barTrackInverse: var(--mistica-o2-new-darkModeGrey6);
     --mistica-color-barTrackNegative: var(--mistica-o2-new-darkModeGrey6);
@@ -555,6 +579,8 @@
     --mistica-color-inverse: var(--mistica-o2-new-grey30);
     --mistica-color-negative: var(--mistica-o2-new-grey30);
     --mistica-color-neutralHigh: var(--mistica-o2-new-grey30);
+    --mistica-color-neutralHighBrand: var(--mistica-o2-new-grey30);
+    --mistica-color-neutralHighNegative: var(--mistica-o2-new-grey30);
     --mistica-color-neutralMedium: var(--mistica-o2-new-grey60);
     --mistica-color-neutralMediumInverse: var(--mistica-o2-new-grey60);
     --mistica-color-neutralMediumNegative: var(--mistica-o2-new-grey60);
@@ -809,6 +835,7 @@
         --mistica-color-controlActivatedNegative: var(--mistica-o2-new-darkModeBeyondBlue);
         --mistica-color-controlActivatedBrand: var(--mistica-o2-new-darkModeBeyondBlue);
         --mistica-color-controlError: var(--mistica-o2-new-o2Red45);
+        --mistica-color-chevronIndicator: var(--mistica-o2-new-grey60);
         --mistica-color-barTrack: var(--mistica-o2-new-darkModeGrey6);
         --mistica-color-barTrackInverse: var(--mistica-o2-new-darkModeGrey6);
         --mistica-color-barTrackNegative: var(--mistica-o2-new-darkModeGrey6);
@@ -838,6 +865,8 @@
         --mistica-color-inverse: var(--mistica-o2-new-grey30);
         --mistica-color-negative: var(--mistica-o2-new-grey30);
         --mistica-color-neutralHigh: var(--mistica-o2-new-grey30);
+        --mistica-color-neutralHighBrand: var(--mistica-o2-new-grey30);
+        --mistica-color-neutralHighNegative: var(--mistica-o2-new-grey30);
         --mistica-color-neutralMedium: var(--mistica-o2-new-grey60);
         --mistica-color-neutralMediumInverse: var(--mistica-o2-new-grey60);
         --mistica-color-neutralMediumNegative: var(--mistica-o2-new-grey60);
@@ -1098,6 +1127,7 @@
         --mistica-color-controlActivatedNegative: var(--mistica-o2-new-white);
         --mistica-color-controlActivatedBrand: var(--mistica-o2-new-white);
         --mistica-color-controlError: var(--mistica-o2-new-o2Red60);
+        --mistica-color-chevronIndicator: var(--mistica-o2-new-grey60);
         --mistica-color-barTrack: var(--mistica-o2-new-grey30);
         --mistica-color-barTrackInverse: rgba(var(--mistica-o2-new-raw-white), 0.3);
         --mistica-color-barTrackNegative: rgba(var(--mistica-o2-new-raw-white), 0.3);
@@ -1127,6 +1157,8 @@
         --mistica-color-inverse: var(--mistica-o2-new-white);
         --mistica-color-negative: var(--mistica-o2-new-white);
         --mistica-color-neutralHigh: var(--mistica-o2-new-black);
+        --mistica-color-neutralHighBrand: var(--mistica-o2-new-white);
+        --mistica-color-neutralHighNegative: var(--mistica-o2-new-white);
         --mistica-color-neutralMedium: var(--mistica-o2-new-grey60);
         --mistica-color-neutralMediumInverse: var(--mistica-o2-new-grey60);
         --mistica-color-neutralMediumNegative: var(--mistica-o2-new-grey60);
@@ -1275,7 +1307,26 @@
         --mistica-font-size-tabsLabel: 1.125rem;
         --mistica-line-height-tabsLabel: 1.5rem;
 
+        --mistica-font-size-title1: 0.875rem;
+        --mistica-line-height-title1: 1.25rem;
+        --mistica-font-size-title2: 1.125rem;
+        --mistica-line-height-title2: 1.5rem;
         --mistica-font-size-title3: 1.75rem;
         --mistica-line-height-title3: 2rem;
+        --mistica-font-size-title4: 2rem;
+        --mistica-line-height-title4: 2.5rem;
+
+        --mistica-font-size-chipLabel: 1rem;
+        --mistica-line-height-chipLabel: 1.5rem;
+        --mistica-font-size-inputLabel: 0.875rem;
+        --mistica-line-height-inputLabel: 1.25rem;
+        --mistica-font-size-inputValue: 1.125rem;
+        --mistica-line-height-inputValue: 1.5rem;
+        --mistica-font-size-inputHelperText: 0.875rem;
+        --mistica-line-height-inputHelperText: 1.25rem;
+        --mistica-font-size-stepperStepLabel: 1rem;
+        --mistica-line-height-stepperStepLabel: 1.5rem;
+        --mistica-font-size-loadingScreenTitle: 1.25rem;
+        --mistica-line-height-loadingScreenTitle: 1.75rem;
     }
 }

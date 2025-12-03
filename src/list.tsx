@@ -259,9 +259,9 @@ export const Content = ({
                                     {
                                         default: vars.colors.neutralMedium,
                                         alternative: vars.colors.neutralMedium,
-                                        brand: vars.colors.neutralMediumBrand,
-                                        negative: vars.colors.neutralMediumNegative,
-                                        media: vars.colors.neutralMediumBrand,
+                                        brand: vars.colors.textSecondaryBrand,
+                                        negative: vars.colors.textSecondaryNegative,
+                                        media: vars.colors.textSecondaryBrand,
                                     }[outsideVariant]
                                 }
                             />

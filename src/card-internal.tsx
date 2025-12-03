@@ -881,9 +881,9 @@ const TextContent = ({
             description: colorValues.textSecondaryNegative,
         },
         media: {
-            pretitle: colorValues.textPrimaryBrand,
-            title: colorValues.textPrimaryBrand,
-            subtitle: colorValues.textPrimaryBrand,
+            pretitle: colorValues.textPrimaryMedia,
+            title: colorValues.textPrimaryMedia,
+            subtitle: colorValues.textPrimaryMedia,
             description:
                 type === 'cover' && hasCustomBackground
                     ? colorValues.textPrimaryBrand

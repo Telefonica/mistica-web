@@ -170,6 +170,7 @@
     --mistica-color-controlActivatedNegative: var(--mistica-vivo-new-white);
     --mistica-color-controlActivatedBrand: var(--mistica-vivo-new-white);
     --mistica-color-controlError: var(--mistica-vivo-new-pepper);
+    --mistica-color-chevronIndicator: var(--mistica-vivo-new-grey5);
     --mistica-color-barTrack: var(--mistica-vivo-new-grey3);
     --mistica-color-barTrackInverse: rgba(var(--mistica-vivo-new-raw-white), 0.5);
     --mistica-color-barTrackNegative: rgba(var(--mistica-vivo-new-raw-white), 0.5);
@@ -199,6 +200,8 @@
     --mistica-color-inverse: var(--mistica-vivo-new-white);
     --mistica-color-negative: var(--mistica-vivo-new-white);
     --mistica-color-neutralHigh: var(--mistica-vivo-new-grey6);
+    --mistica-color-neutralHighNegative: var(--mistica-vivo-new-white);
+    --mistica-color-neutralHighBrand: var(--mistica-vivo-new-white);
     --mistica-color-neutralMedium: var(--mistica-vivo-new-grey5);
     --mistica-color-neutralMediumInverse: var(--mistica-vivo-new-grey5);
     --mistica-color-neutralMediumNegative: var(--mistica-vivo-new-grey5);
@@ -367,13 +370,33 @@
     --mistica-line-height-tabsLabel: 1.5rem;
     --mistica-font-weight-tabsLabel: 500;
     --mistica-font-weight-link: 500;
+    --mistica-font-size-title1: 0.75rem;
+    --mistica-line-height-title1: 1rem;
     --mistica-font-weight-title1: 500;
+    --mistica-font-size-title2: 1rem;
+    --mistica-line-height-title2: 1.5rem;
     --mistica-font-weight-title2: 500;
     --mistica-font-size-title3: 1.125rem;
     --mistica-line-height-title3: 1.5rem;
     --mistica-font-weight-title3: 500;
+    --mistica-font-size-title4: 1.5rem;
+    --mistica-line-height-title4: 2rem;
+    --mistica-font-weight-title4: 500;
     --mistica-font-weight-indicator: 500;
     --mistica-font-weight-navigationBar: 400;
+    --mistica-font-size-chipLabel: 0.875rem;
+    --mistica-line-height-chipLabel: 1.25rem;
+    --mistica-font-weight-chipLabel: 500;
+    --mistica-font-size-inputLabel: 0.75rem;
+    --mistica-line-height-inputLabel: 1rem;
+    --mistica-font-size-inputValue: 1rem;
+    --mistica-line-height-inputValue: 1.5rem;
+    --mistica-font-size-inputHelperText: 0.75rem;
+    --mistica-line-height-inputHelperText: 1rem;
+    --mistica-font-size-stepperStepLabel: 0.875rem;
+    --mistica-line-height-stepperStepLabel: 1.25rem;
+    --mistica-font-size-loadingScreenTitle: 1.125rem;
+    --mistica-line-height-loadingScreenTitle: 1.5rem;
 }
 
 [data-mistica-skin='vivo-new'][data-mistica-color-scheme='dark'] {
@@ -508,6 +531,7 @@
     --mistica-color-controlActivatedNegative: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-controlActivatedBrand: var(--mistica-vivo-new-vivoPurpleLight80);
     --mistica-color-controlError: var(--mistica-vivo-new-pepper);
+    --mistica-color-chevronIndicator: var(--mistica-vivo-new-grey5);
     --mistica-color-barTrack: var(--mistica-vivo-new-darkModeGrey6);
     --mistica-color-barTrackInverse: var(--mistica-vivo-new-darkModeGrey6);
     --mistica-color-barTrackNegative: var(--mistica-vivo-new-darkModeGrey6);
@@ -537,6 +561,8 @@
     --mistica-color-inverse: var(--mistica-vivo-new-grey2);
     --mistica-color-negative: var(--mistica-vivo-new-grey2);
     --mistica-color-neutralHigh: var(--mistica-vivo-new-grey2);
+    --mistica-color-neutralHighBrand: var(--mistica-vivo-new-grey2);
+    --mistica-color-neutralHighNegative: var(--mistica-vivo-new-grey2);
     --mistica-color-neutralMedium: var(--mistica-vivo-new-grey5);
     --mistica-color-neutralMediumInverse: var(--mistica-vivo-new-grey5);
     --mistica-color-neutralMediumNegative: var(--mistica-vivo-new-grey5);
@@ -800,6 +826,7 @@
         --mistica-color-controlActivatedNegative: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-controlActivatedBrand: var(--mistica-vivo-new-vivoPurpleLight80);
         --mistica-color-controlError: var(--mistica-vivo-new-pepper);
+        --mistica-color-chevronIndicator: var(--mistica-vivo-new-grey5);
         --mistica-color-barTrack: var(--mistica-vivo-new-darkModeGrey6);
         --mistica-color-barTrackInverse: var(--mistica-vivo-new-darkModeGrey6);
         --mistica-color-barTrackNegative: var(--mistica-vivo-new-darkModeGrey6);
@@ -829,6 +856,8 @@
         --mistica-color-inverse: var(--mistica-vivo-new-grey2);
         --mistica-color-negative: var(--mistica-vivo-new-grey2);
         --mistica-color-neutralHigh: var(--mistica-vivo-new-grey2);
+        --mistica-color-neutralHighBrand: var(--mistica-vivo-new-grey2);
+        --mistica-color-neutralHighNegative: var(--mistica-vivo-new-grey2);
         --mistica-color-neutralMedium: var(--mistica-vivo-new-grey5);
         --mistica-color-neutralMediumInverse: var(--mistica-vivo-new-grey5);
         --mistica-color-neutralMediumNegative: var(--mistica-vivo-new-grey5);
@@ -1085,6 +1114,7 @@
         --mistica-color-controlActivatedNegative: var(--mistica-vivo-new-white);
         --mistica-color-controlActivatedBrand: var(--mistica-vivo-new-white);
         --mistica-color-controlError: var(--mistica-vivo-new-pepper);
+        --mistica-color-chevronIndicator: var(--mistica-vivo-new-grey5);
         --mistica-color-barTrack: var(--mistica-vivo-new-grey3);
         --mistica-color-barTrackInverse: rgba(var(--mistica-vivo-new-raw-white), 0.5);
         --mistica-color-barTrackNegative: rgba(var(--mistica-vivo-new-raw-white), 0.5);
@@ -1114,6 +1144,8 @@
         --mistica-color-inverse: var(--mistica-vivo-new-white);
         --mistica-color-negative: var(--mistica-vivo-new-white);
         --mistica-color-neutralHigh: var(--mistica-vivo-new-grey6);
+        --mistica-color-neutralHighBrand: var(--mistica-vivo-new-white);
+        --mistica-color-neutralHighNegative: var(--mistica-vivo-new-white);
         --mistica-color-neutralMedium: var(--mistica-vivo-new-grey5);
         --mistica-color-neutralMediumInverse: var(--mistica-vivo-new-grey5);
         --mistica-color-neutralMediumNegative: var(--mistica-vivo-new-grey5);
@@ -1262,7 +1294,26 @@
         --mistica-font-size-tabsLabel: 1.125rem;
         --mistica-line-height-tabsLabel: 1.5rem;
 
+        --mistica-font-size-title1: 0.875rem;
+        --mistica-line-height-title1: 1.25rem;
+        --mistica-font-size-title2: 1.125rem;
+        --mistica-line-height-title2: 1.5rem;
         --mistica-font-size-title3: 1.5rem;
         --mistica-line-height-title3: 1.75rem;
+        --mistica-font-size-title4: 2rem;
+        --mistica-line-height-title4: 2.5rem;
+
+        --mistica-font-size-chipLabel: 1rem;
+        --mistica-line-height-chipLabel: 1.5rem;
+        --mistica-font-size-inputLabel: 0.875rem;
+        --mistica-line-height-inputLabel: 1.25rem;
+        --mistica-font-size-inputValue: 1.125rem;
+        --mistica-line-height-inputValue: 1.5rem;
+        --mistica-font-size-inputHelperText: 0.875rem;
+        --mistica-line-height-inputHelperText: 1.25rem;
+        --mistica-font-size-stepperStepLabel: 1rem;
+        --mistica-line-height-stepperStepLabel: 1.5rem;
+        --mistica-font-size-loadingScreenTitle: 1.5rem;
+        --mistica-line-height-loadingScreenTitle: 1.75rem;
     }
 }

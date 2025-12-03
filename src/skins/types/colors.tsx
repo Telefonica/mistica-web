@@ -130,6 +130,7 @@ export type Colors = {
     controlActivatedNegative: string;
     controlActivatedBrand: string;
     controlError: string;
+    chevronIndicator: string;
     barTrack: string;
     barTrackInverse: string;
     barTrackNegative: string;
@@ -159,6 +160,8 @@ export type Colors = {
     inverse: string;
     negative: string;
     neutralHigh: string;
+    neutralHighNegative: string;
+    neutralHighBrand: string;
     neutralMedium: string;
     neutralMediumInverse: string;
     neutralMediumNegative: string;
