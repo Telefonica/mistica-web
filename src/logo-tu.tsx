@@ -6,10 +6,19 @@ import {calcInlineVars} from './logo-common';
 
 import type {LogoImageProps} from './logo-common';
 
-const TuLogoImage = ({size, isDarkMode, isOverBrand, color: colorProp}: LogoImageProps): JSX.Element => {
+const TuLogoImage = ({size, isDarkMode, themeVariant, color: colorProp}: LogoImageProps): JSX.Element => {
     const {colors} = getTuSkin();
     const color =
-        colorProp || (isDarkMode ? colors.inverse : isOverBrand ? colors.inverse : colors.backgroundBrand);
+        colorProp ||
+        (isDarkMode
+            ? colors.inverse
+            : {
+                  default: colors.backgroundBrand,
+                  alternative: colors.backgroundBrand,
+                  brand: colors.neutralHighBrand,
+                  media: colors.neutralHighBrand,
+                  negative: colors.neutralHighNegative,
+              }[themeVariant]);
     return (
         <svg
             className={styles.svg}

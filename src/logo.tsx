@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useTheme} from './hooks';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
@@ -95,7 +95,7 @@ type LogoBaseProps = {
 };
 
 const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX.Element => {
-    const isOverBrand = useIsInverseOrMediaVariant();
+    const themeVariant = useThemeVariant();
     const {isDarkMode} = useTheme();
     switch (skinName) {
         case 'Movistar':
@@ -104,7 +104,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -114,7 +114,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -125,7 +125,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -135,7 +135,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -145,7 +145,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -155,7 +155,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -165,7 +165,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -175,7 +175,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );
@@ -185,7 +185,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
-                    isOverBrand={isOverBrand}
+                    themeVariant={themeVariant}
                     color={color}
                 />
             );

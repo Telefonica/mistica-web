@@ -10,11 +10,21 @@ const MovistarLogoImage = ({
     size,
     type,
     isDarkMode,
-    isOverBrand,
+    themeVariant,
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors} = getMovistarSkin();
-    const color = colorProp || (isOverBrand && !isDarkMode ? colors.inverse : colors.brand);
+    const color =
+        colorProp ||
+        (isDarkMode
+            ? colors.brand
+            : {
+                  default: colors.brand,
+                  alternative: colors.brand,
+                  brand: colors.neutralHighBrand,
+                  media: colors.neutralHighBrand,
+                  negative: colors.neutralHighNegative,
+              }[themeVariant]);
     if (type === 'vertical') {
         return (
             <svg

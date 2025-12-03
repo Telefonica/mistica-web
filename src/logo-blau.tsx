@@ -10,12 +10,32 @@ const BlauLogoImage = ({
     size,
     type,
     isDarkMode,
-    isOverBrand,
+    themeVariant,
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors} = getBlauSkin();
-    const color = colorProp || (isOverBrand && !isDarkMode ? colors.inverse : colors.brand);
-    const colorSecondary = colorProp || (isOverBrand && !isDarkMode ? colors.inverse : colors.promo);
+    const color =
+        colorProp ||
+        (isDarkMode
+            ? colors.brand
+            : {
+                  default: colors.brand,
+                  alternative: colors.brand,
+                  brand: colors.neutralHighBrand,
+                  media: colors.neutralHighBrand,
+                  negative: colors.neutralHighNegative,
+              }[themeVariant]);
+    const colorSecondary =
+        colorProp ||
+        (isDarkMode
+            ? colors.promo
+            : {
+                  default: colors.promo,
+                  alternative: colors.promo,
+                  brand: colors.neutralHighBrand,
+                  media: colors.neutralHighBrand,
+                  negative: colors.neutralHighNegative,
+              }[themeVariant]);
 
     if (type === 'vertical') {
         return (
