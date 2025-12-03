@@ -10,11 +10,11 @@ type Props = {
 export const StorySection = ({title, children}: Props): JSX.Element => {
     return (
         <div style={{marginBottom: 32}}>
-            <Box paddingY={16}>
+            <div style={{margin: '16px 0'}}>
                 <Text as="h1" color={skinVars.colors.textSecondary} size={20}>
                     {title}
                 </Text>
-            </Box>
+            </div>
             {children}
         </div>
     );
