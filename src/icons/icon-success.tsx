@@ -8,8 +8,8 @@ import {
     mergeProperties,
 } from '../utils/animation';
 import {useTheme} from '../hooks';
-import {useIsInverseOrMediaVariant} from '../theme-variant-context';
 import {vars} from '../skins/skin-contract.css';
+import {useThemeVariant} from '../../dist/theme-variant-context';
 
 type Props = {
     size?: number | string;
@@ -18,14 +18,21 @@ type Props = {
 };
 
 const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
     const {platformOverrides} = useTheme();
+
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.brand;
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g
-                stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
-                fill={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
+                stroke={color ? undefined : defaultColor}
+                fill={color ? undefined : defaultColor}
                 strokeLinecap="round"
                 strokeLinejoin="round"
             >
@@ -60,14 +67,21 @@ const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.El
 };
 
 const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
     const {platformOverrides} = useTheme();
+
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.brand;
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g
-                stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
-                fill={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
+                stroke={color ? undefined : defaultColor}
+                fill={color ? undefined : defaultColor}
                 strokeLinecap="round"
                 strokeWidth="4"
             >
@@ -95,12 +109,19 @@ const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX
 };
 
 const IconSuccessVivo = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
     const {platformOverrides} = useTheme();
+
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.brand;
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
-            <g stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}>
+            <g stroke={color ? undefined : defaultColor}>
                 <path
                     vectorEffect="non-scaling-stroke"
                     fill="none"
@@ -132,12 +153,19 @@ const IconSuccessVivo = ({size = 48, color, skipAnimation = false}: Props): JSX.
 };
 
 const IconSuccessDefault = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
     const {platformOverrides} = useTheme();
+
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.brand;
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
-            <g stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}>
+            <g stroke={color ? undefined : defaultColor}>
                 <path
                     fill="none"
                     stroke={color ? color : undefined}
