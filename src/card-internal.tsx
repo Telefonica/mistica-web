@@ -886,8 +886,8 @@ const TextContent = ({
             subtitle: colorValues.textPrimaryMedia,
             description:
                 type === 'cover' && hasCustomBackground
-                    ? colorValues.textPrimaryBrand
-                    : colorValues.textSecondaryBrand,
+                    ? colorValues.textPrimaryMedia
+                    : colorValues.textSecondaryMedia,
         },
     } as const;
 
