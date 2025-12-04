@@ -471,6 +471,10 @@ RowListStory.argTypes = {
         ],
         control: {type: 'select'},
     },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
     'aria-live': {
         options: ['off', 'polite', 'assertive'],
         control: {type: 'select'},
@@ -482,7 +486,14 @@ export const BoxedRowListStory: StoryComponent<Args & {variant: 'default' | 'bra
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = {...defaultArgs, variant: 'default'};
-BoxedRowListStory.argTypes = {...RowListStory.argTypes, danger: {if: {arg: 'variant', eq: 'default'}}};
+BoxedRowListStory.argTypes = {
+    ...RowListStory.argTypes,
+    variant: {
+        options: ['default', 'brand'],
+        control: {type: 'select'},
+    },
+    danger: {if: {arg: 'variant', eq: 'default'}},
+};
 
 type UnorderedListArgs = {
     variantOutside: Variant;

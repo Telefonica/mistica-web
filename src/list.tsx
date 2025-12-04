@@ -754,15 +754,27 @@ export const RowList = ({
 // danger + isInverse is not allowed
 type CommonBoxedRowProps =
     | {
+          /**
+           * @deprecated Use variant instead
+           */
           isInverse?: false;
+          variant?: 'default';
           danger: true;
       }
     | {
+          /**
+           * @deprecated Use variant instead
+           */
           isInverse?: boolean;
+          variant?: 'brand' | 'default';
           danger?: false;
       }
     | {
+          /**
+           * @deprecated Use variant instead
+           */
           isInverse?: false;
+          variant?: 'default';
           danger: boolean;
       };
 
@@ -782,7 +794,7 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
     <InternalBoxed
         overflow="visible"
         className={styles.boxed}
-        variant={props.isInverse ? 'inverse' : 'default'}
+        variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
     >
