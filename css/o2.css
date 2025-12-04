@@ -258,6 +258,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-o2-white);
     --mistica-color-textAppBar: var(--mistica-o2-grey4);
     --mistica-color-textAppBarSelected: var(--mistica-o2-o2BluePrimary);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-o2BluePrimary);
     --mistica-color-customTabsBackground: var(--mistica-o2-o2BluePrimary);
     --mistica-color-tagTextPromo: var(--mistica-o2-o2Purple);
     --mistica-color-tagTextActive: var(--mistica-o2-o2BluePrimary);
@@ -619,6 +620,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-o2-grey2);
     --mistica-color-textAppBar: var(--mistica-o2-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-o2-grey2);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-white);
     --mistica-color-customTabsBackground: var(--mistica-o2-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-o2-o2Purple30);
     --mistica-color-tagTextActive: var(--mistica-o2-o2BluePrimary30);
@@ -902,6 +904,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-o2-grey2);
         --mistica-color-textAppBar: var(--mistica-o2-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-o2-grey2);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-white);
         --mistica-color-customTabsBackground: var(--mistica-o2-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-o2-o2Purple30);
         --mistica-color-tagTextActive: var(--mistica-o2-o2BluePrimary30);
@@ -1184,6 +1187,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-o2-white);
         --mistica-color-textAppBar: var(--mistica-o2-grey4);
         --mistica-color-textAppBarSelected: var(--mistica-o2-o2BluePrimary);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-o2BluePrimary);
         --mistica-color-customTabsBackground: var(--mistica-o2-o2BluePrimary);
         --mistica-color-tagTextPromo: var(--mistica-o2-o2Purple);
         --mistica-color-tagTextActive: var(--mistica-o2-o2BluePrimary);

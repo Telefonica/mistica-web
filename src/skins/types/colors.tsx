@@ -214,6 +214,7 @@ export type Colors = {
     textNavigationSearchBarText: string;
     textAppBar: string;
     textAppBarSelected: string;
+    iosGlassAppBarSelected: string;
     customTabsBackground: string;
     tagTextPromo: string;
     tagTextActive: string;

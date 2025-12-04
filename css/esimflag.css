@@ -276,6 +276,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-esimflag-white);
     --mistica-color-textAppBar: var(--mistica-esimflag-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-esimflag-blue55);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-esimflag-blue55);
     --mistica-color-customTabsBackground: var(--mistica-esimflag-blue);
     --mistica-color-tagTextPromo: var(--mistica-esimflag-blue85);
     --mistica-color-tagTextActive: var(--mistica-esimflag-blue85);
@@ -637,6 +638,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-esimflag-grey3);
     --mistica-color-textAppBar: var(--mistica-esimflag-grey4);
     --mistica-color-textAppBarSelected: var(--mistica-esimflag-blue15);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-esimflag-white);
     --mistica-color-customTabsBackground: var(--mistica-esimflag-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-esimflag-blush);
     --mistica-color-tagTextActive: var(--mistica-esimflag-blue30);
@@ -932,6 +934,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-esimflag-grey3);
         --mistica-color-textAppBar: var(--mistica-esimflag-grey4);
         --mistica-color-textAppBarSelected: var(--mistica-esimflag-blue15);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-esimflag-white);
         --mistica-color-customTabsBackground: var(--mistica-esimflag-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-esimflag-blush);
         --mistica-color-tagTextActive: var(--mistica-esimflag-blue30);
@@ -1230,6 +1233,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-esimflag-white);
         --mistica-color-textAppBar: var(--mistica-esimflag-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-esimflag-blue55);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-esimflag-blue55);
         --mistica-color-customTabsBackground: var(--mistica-esimflag-blue);
         --mistica-color-tagTextPromo: var(--mistica-esimflag-blue85);
         --mistica-color-tagTextActive: var(--mistica-esimflag-blue85);

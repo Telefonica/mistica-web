@@ -191,9 +191,9 @@
     --mistica-color-toggleAndroidBackgroundActiveBrand: var(--mistica-blau-blauBlueSecondary30);
     --mistica-color-toggleAndroidBackgroundInactiveBrand: var(--mistica-blau-grey2);
     --mistica-color-iosControlKnob: var(--mistica-blau-white);
-    --mistica-color-controlKnobInverse: var(--mistica-blau-blauBlueSecondary);
+    --mistica-color-controlKnobInverse: var(--mistica-blau-blauBluePrimary);
     --mistica-color-controlKnobNegative: var(--mistica-blau-blauBlueSecondary);
-    --mistica-color-controlKnobBrand: var(--mistica-blau-blauBlueSecondary);
+    --mistica-color-controlKnobBrand: var(--mistica-blau-blauBluePrimary);
     --mistica-color-divider: var(--mistica-blau-grey3);
     --mistica-color-dividerInverse: rgba(var(--mistica-blau-raw-grey6), 0.2);
     --mistica-color-dividerNegative: rgba(var(--mistica-blau-raw-white), 0.2);
@@ -261,6 +261,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey6);
     --mistica-color-textAppBar: var(--mistica-blau-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
     --mistica-color-customTabsBackground: var(--mistica-blau-blauBluePrimary);
     --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple);
     --mistica-color-tagTextActive: var(--mistica-blau-blauBlueSecondary);
@@ -622,6 +623,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey2);
     --mistica-color-textAppBar: var(--mistica-blau-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-blau-grey2);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-white);
     --mistica-color-customTabsBackground: var(--mistica-blau-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple30);
     --mistica-color-tagTextActive: var(--mistica-blau-blauBluePrimary);
@@ -911,6 +913,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey2);
         --mistica-color-textAppBar: var(--mistica-blau-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-blau-grey2);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-white);
         --mistica-color-customTabsBackground: var(--mistica-blau-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple30);
         --mistica-color-tagTextActive: var(--mistica-blau-blauBluePrimary);
@@ -1123,9 +1126,9 @@
         --mistica-color-toggleAndroidBackgroundActiveBrand: var(--mistica-blau-blauBlueSecondary30);
         --mistica-color-toggleAndroidBackgroundInactiveBrand: var(--mistica-blau-grey2);
         --mistica-color-iosControlKnob: var(--mistica-blau-white);
-        --mistica-color-controlKnobInverse: var(--mistica-blau-blauBlueSecondary);
+        --mistica-color-controlKnobInverse: var(--mistica-blau-blauBluePrimary);
         --mistica-color-controlKnobNegative: var(--mistica-blau-blauBlueSecondary);
-        --mistica-color-controlKnobBrand: var(--mistica-blau-blauBlueSecondary);
+        --mistica-color-controlKnobBrand: var(--mistica-blau-blauBluePrimary);
         --mistica-color-divider: var(--mistica-blau-grey3);
         --mistica-color-dividerInverse: rgba(var(--mistica-blau-raw-grey6), 0.2);
         --mistica-color-dividerNegative: rgba(var(--mistica-blau-raw-white), 0.2);
@@ -1193,6 +1196,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey6);
         --mistica-color-textAppBar: var(--mistica-blau-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
         --mistica-color-customTabsBackground: var(--mistica-blau-blauBluePrimary);
         --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple);
         --mistica-color-tagTextActive: var(--mistica-blau-blauBlueSecondary);

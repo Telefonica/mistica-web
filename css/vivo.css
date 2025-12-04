@@ -254,6 +254,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-white);
     --mistica-color-textAppBar: var(--mistica-vivo-grey4);
     --mistica-color-textAppBarSelected: var(--mistica-vivo-vivoPurple);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-vivoPurple);
     --mistica-color-customTabsBackground: var(--mistica-vivo-vivoPurple);
     --mistica-color-tagTextPromo: var(--mistica-vivo-vivoPurple);
     --mistica-color-tagTextActive: var(--mistica-vivo-vivoPurple);
@@ -615,6 +616,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-grey2);
     --mistica-color-textAppBar: var(--mistica-vivo-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-vivo-grey2);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-vivoPurpleLight20);
     --mistica-color-customTabsBackground: var(--mistica-vivo-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-vivo-vivoPurpleLight50);
     --mistica-color-tagTextActive: var(--mistica-vivo-vivoPurpleLight80);
@@ -898,6 +900,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-grey2);
         --mistica-color-textAppBar: var(--mistica-vivo-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-vivo-grey2);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-vivoPurpleLight20);
         --mistica-color-customTabsBackground: var(--mistica-vivo-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-vivo-vivoPurpleLight50);
         --mistica-color-tagTextActive: var(--mistica-vivo-vivoPurpleLight80);
@@ -1180,6 +1183,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-white);
         --mistica-color-textAppBar: var(--mistica-vivo-grey4);
         --mistica-color-textAppBarSelected: var(--mistica-vivo-vivoPurple);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-vivoPurple);
         --mistica-color-customTabsBackground: var(--mistica-vivo-vivoPurple);
         --mistica-color-tagTextPromo: var(--mistica-vivo-vivoPurple);
         --mistica-color-tagTextActive: var(--mistica-vivo-vivoPurple);

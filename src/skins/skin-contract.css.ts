@@ -277,6 +277,7 @@ const colors: Colors = {
     tagBackgroundErrorBrand: '',
     cardContentOverlay: '',
     cardFooterOverlay: '',
+    iosGlassAppBarSelected: '',
 };
 
 const borderRadii: BorderRadiiConfig = {

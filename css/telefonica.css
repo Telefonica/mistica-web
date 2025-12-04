@@ -267,6 +267,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
     --mistica-color-textAppBar: var(--mistica-telefonica-grey4);
     --mistica-color-textAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-customTabsBackground: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid80);
     --mistica-color-tagTextActive: var(--mistica-telefonica-telefonicaBlue70);
@@ -643,6 +644,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
     --mistica-color-textAppBar: var(--mistica-telefonica-grey2);
     --mistica-color-textAppBarSelected: var(--mistica-telefonica-white);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-white);
     --mistica-color-customTabsBackground: var(--mistica-telefonica-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid40);
     --mistica-color-tagTextActive: var(--mistica-telefonica-telefonicaBlue20);
@@ -965,6 +967,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
         --mistica-color-textAppBar: var(--mistica-telefonica-grey2);
         --mistica-color-textAppBarSelected: var(--mistica-telefonica-white);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-white);
         --mistica-color-customTabsBackground: var(--mistica-telefonica-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid40);
         --mistica-color-tagTextActive: var(--mistica-telefonica-telefonicaBlue20);
@@ -1262,6 +1265,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
         --mistica-color-textAppBar: var(--mistica-telefonica-grey4);
         --mistica-color-textAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-customTabsBackground: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid80);
         --mistica-color-tagTextActive: var(--mistica-telefonica-telefonicaBlue70);

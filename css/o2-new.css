@@ -26,11 +26,11 @@
     --mistica-o2-new-o2Pink15: #feeaff;
     --mistica-o2-new-o2Green80: #006338;
     --mistica-o2-new-o2Orange75: #996336;
+    --mistica-o2-new-beyondBlue55: #0044d9;
     --mistica-o2-new-darkModeBlack: #00001c;
     --mistica-o2-new-darkModeGrey: #08132b;
     --mistica-o2-new-darkModeGrey6: #14213d;
     --mistica-o2-new-darkModeBeyondBlue: #1a62ff;
-    --mistica-o2-new-beyondBlue55: #0044d9;
     --mistica-o2-new-beyondBlue40: #4d84ff;
     --mistica-o2-new-o2Red45: #ff7b7b;
     --mistica-o2-new-o2Orange: #ffa55a;
@@ -272,6 +272,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-o2-new-white);
     --mistica-color-textAppBar: var(--mistica-o2-new-grey60);
     --mistica-color-textAppBarSelected: var(--mistica-o2-new-beyondBlue);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-new-beyondBlue55);
     --mistica-color-customTabsBackground: var(--mistica-o2-new-beyondBlue);
     --mistica-color-tagTextPromo: var(--mistica-o2-new-o2Pink80);
     --mistica-color-tagTextActive: var(--mistica-o2-new-beyondBlue);
@@ -633,6 +634,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-o2-new-grey30);
     --mistica-color-textAppBar: var(--mistica-o2-new-grey45);
     --mistica-color-textAppBarSelected: var(--mistica-o2-new-beyondBlue40);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-new-beyondBlue15);
     --mistica-color-customTabsBackground: var(--mistica-o2-new-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-o2-new-o2Pink);
     --mistica-color-tagTextActive: var(--mistica-o2-new-beyondBlue30);
@@ -919,6 +921,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-o2-new-grey30);
         --mistica-color-textAppBar: var(--mistica-o2-new-grey45);
         --mistica-color-textAppBarSelected: var(--mistica-o2-new-beyondBlue40);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-new-beyondBlue15);
         --mistica-color-customTabsBackground: var(--mistica-o2-new-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-o2-new-o2Pink);
         --mistica-color-tagTextActive: var(--mistica-o2-new-beyondBlue30);
@@ -1211,6 +1214,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-o2-new-white);
         --mistica-color-textAppBar: var(--mistica-o2-new-grey60);
         --mistica-color-textAppBarSelected: var(--mistica-o2-new-beyondBlue);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-o2-new-beyondBlue55);
         --mistica-color-customTabsBackground: var(--mistica-o2-new-beyondBlue);
         --mistica-color-tagTextPromo: var(--mistica-o2-new-o2Pink80);
         --mistica-color-tagTextActive: var(--mistica-o2-new-beyondBlue);
