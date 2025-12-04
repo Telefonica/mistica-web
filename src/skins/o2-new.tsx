@@ -75,7 +75,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             backgroundOverlay: applyAlpha(palette.black, 0.6),
             backgroundSkeleton: palette.grey30,
             backgroundSkeletonInverse: palette.beyondBlue70,
-            backgroundSkeletonNegative: palette.beyondBlue70,
+            backgroundSkeletonNegative: applyAlpha(palette.black, 0.2),
             backgroundSkeletonBrand: palette.beyondBlue70,
             backgroundBrandTop: palette.darkBlue,
             backgroundBrandBottom: palette.beyondBlue45,

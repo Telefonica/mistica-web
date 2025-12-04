@@ -40,8 +40,8 @@
     --mistica-tu-raw-grey9: 3, 26, 52;
     --mistica-tu-raw-grey1: 242, 244, 255;
     --mistica-tu-raw-primary: 43, 52, 71;
-    --mistica-tu-raw-white: 255, 255, 255;
     --mistica-tu-raw-black: 0, 0, 0;
+    --mistica-tu-raw-white: 255, 255, 255;
     --mistica-tu-raw-darkModeGrey: 32, 39, 53;
     --mistica-tu-raw-darkModeBlack: 22, 26, 36;
     --mistica-tu-raw-grey2: 209, 213, 228;
@@ -66,7 +66,7 @@
     --mistica-color-backgroundOverlay: rgba(var(--mistica-tu-raw-primary), 0.8);
     --mistica-color-backgroundSkeleton: var(--mistica-tu-grey2);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-tu-primary65);
-    --mistica-color-backgroundSkeletonNegative: var(--mistica-tu-primary65);
+    --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-tu-raw-black), 0.2);
     --mistica-color-backgroundSkeletonBrand: var(--mistica-tu-primary65);
     --mistica-color-navigationBarBackground: var(--mistica-tu-primary);
     --mistica-color-backgroundAlternative: var(--mistica-tu-grey1);
@@ -995,7 +995,7 @@
         --mistica-color-backgroundOverlay: rgba(var(--mistica-tu-raw-primary), 0.8);
         --mistica-color-backgroundSkeleton: var(--mistica-tu-grey2);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-tu-primary65);
-        --mistica-color-backgroundSkeletonNegative: var(--mistica-tu-primary65);
+        --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-tu-raw-black), 0.2);
         --mistica-color-backgroundSkeletonBrand: var(--mistica-tu-primary65);
         --mistica-color-backgroundBrandTop: var(--mistica-tu-primary);
         --mistica-color-backgroundBrandBottom: var(--mistica-tu-primary);

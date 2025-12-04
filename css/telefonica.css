@@ -71,7 +71,7 @@
     --mistica-color-backgroundOverlay: rgba(var(--mistica-telefonica-raw-grey6), 0.8);
     --mistica-color-backgroundSkeleton: var(--mistica-telefonica-grey2);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-telefonica-telefonicaBlue70);
-    --mistica-color-backgroundSkeletonNegative: var(--mistica-telefonica-telefonicaBlue70);
+    --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-telefonica-raw-black), 0.2);
     --mistica-color-backgroundSkeletonBrand: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-navigationBarBackground: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-backgroundAlternative: var(--mistica-telefonica-grey1);
@@ -1060,7 +1060,7 @@
         --mistica-color-backgroundOverlay: rgba(var(--mistica-telefonica-raw-grey6), 0.8);
         --mistica-color-backgroundSkeleton: var(--mistica-telefonica-grey2);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-telefonica-telefonicaBlue70);
-        --mistica-color-backgroundSkeletonNegative: var(--mistica-telefonica-telefonicaBlue70);
+        --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-telefonica-raw-black), 0.2);
         --mistica-color-backgroundSkeletonBrand: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-backgroundBrandTop: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-backgroundBrandBottom: var(--mistica-telefonica-telefonicaBlue);

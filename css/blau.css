@@ -39,8 +39,8 @@
     /* Raw palette colors, for use with rgba() */
     --mistica-blau-raw-blauBlueSecondary: 0, 114, 188;
     --mistica-blau-raw-darkModeBlack: 25, 25, 25;
-    --mistica-blau-raw-white: 255, 255, 255;
     --mistica-blau-raw-grey6: 0, 0, 0;
+    --mistica-blau-raw-white: 255, 255, 255;
     --mistica-blau-raw-darkModeGrey: 36, 36, 36;
     --mistica-blau-raw-blauRed: 209, 41, 55;
     --mistica-blau-raw-blauPurple: 120, 20, 179;
@@ -65,7 +65,7 @@
     --mistica-color-backgroundOverlay: rgba(var(--mistica-blau-raw-blauBlueSecondary), 0.75);
     --mistica-color-backgroundSkeleton: var(--mistica-blau-grey3);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-blau-blauBlueSecondary);
-    --mistica-color-backgroundSkeletonNegative: var(--mistica-blau-blauBlueSecondary);
+    --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-blau-raw-grey6), 0.2);
     --mistica-color-backgroundSkeletonBrand: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-backgroundBrandTop: var(--mistica-blau-blauBluePrimary);
     --mistica-color-backgroundBrandBottom: var(--mistica-blau-blauBluePrimary);
@@ -1000,7 +1000,7 @@
         --mistica-color-backgroundOverlay: rgba(var(--mistica-blau-raw-blauBlueSecondary), 0.75);
         --mistica-color-backgroundSkeleton: var(--mistica-blau-grey3);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-blau-blauBlueSecondary);
-        --mistica-color-backgroundSkeletonNegative: var(--mistica-blau-blauBlueSecondary);
+        --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-blau-raw-grey6), 0.2);
         --mistica-color-backgroundSkeletonBrand: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-backgroundBrandTop: var(--mistica-blau-blauBluePrimary);
         --mistica-color-backgroundBrandBottom: var(--mistica-blau-blauBluePrimary);

@@ -76,7 +76,7 @@
     --mistica-color-backgroundOverlay: rgba(var(--mistica-o2-new-raw-black), 0.6);
     --mistica-color-backgroundSkeleton: var(--mistica-o2-new-grey30);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-o2-new-beyondBlue70);
-    --mistica-color-backgroundSkeletonNegative: var(--mistica-o2-new-beyondBlue70);
+    --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-o2-new-raw-black), 0.2);
     --mistica-color-backgroundSkeletonBrand: var(--mistica-o2-new-beyondBlue70);
     --mistica-color-backgroundBrandTop: var(--mistica-o2-new-darkBlue);
     --mistica-color-backgroundBrandBottom: var(--mistica-o2-new-beyondBlue45);
@@ -1018,7 +1018,7 @@
         --mistica-color-backgroundOverlay: rgba(var(--mistica-o2-new-raw-black), 0.6);
         --mistica-color-backgroundSkeleton: var(--mistica-o2-new-grey30);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-o2-new-beyondBlue70);
-        --mistica-color-backgroundSkeletonNegative: var(--mistica-o2-new-beyondBlue70);
+        --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-o2-new-raw-black), 0.2);
         --mistica-color-backgroundSkeletonBrand: var(--mistica-o2-new-beyondBlue70);
         --mistica-color-backgroundBrandTop: var(--mistica-o2-new-darkBlue);
         --mistica-color-backgroundBrandBottom: var(--mistica-o2-new-beyondBlue45);

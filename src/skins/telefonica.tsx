@@ -76,7 +76,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             backgroundOverlay: applyAlpha(palette.grey6, 0.8),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.telefonicaBlue70,
-            backgroundSkeletonNegative: palette.telefonicaBlue70,
+            backgroundSkeletonNegative: applyAlpha(palette.black, 0.2),
             backgroundSkeletonBrand: palette.telefonicaBlue70,
             navigationBarBackground: palette.telefonicaBlue,
             backgroundAlternative: palette.grey1,

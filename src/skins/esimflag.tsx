@@ -72,7 +72,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             backgroundOverlay: applyAlpha(palette.black, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.blue55,
-            backgroundSkeletonNegative: palette.blue55,
+            backgroundSkeletonNegative: applyAlpha(palette.black, 0.2),
             backgroundSkeletonBrand: palette.blue55,
             backgroundBrandTop: palette.blue65,
             backgroundBrandBottom: palette.purple,

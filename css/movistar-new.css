@@ -43,8 +43,8 @@
 
     /* Raw palette colors, for use with rgba() */
     --mistica-movistar-new-raw-movistarBlack: 38, 36, 35;
-    --mistica-movistar-new-raw-white: 255, 255, 255;
     --mistica-movistar-new-raw-black: 0, 0, 0;
+    --mistica-movistar-new-raw-white: 255, 255, 255;
     --mistica-movistar-new-raw-darkModeGrey: 21, 20, 20;
     --mistica-movistar-new-raw-darkModeBlack: 7, 7, 6;
     --mistica-movistar-new-raw-movistarWhite: 254, 250, 245;
@@ -69,7 +69,7 @@
     --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-new-raw-movistarBlack), 0.6);
     --mistica-color-backgroundSkeleton: var(--mistica-movistar-new-grey200);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-new-blue800);
-    --mistica-color-backgroundSkeletonNegative: var(--mistica-movistar-new-blue800);
+    --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-movistar-new-raw-black), 0.2);
     --mistica-color-backgroundSkeletonBrand: var(--mistica-movistar-new-blue800);
     --mistica-color-backgroundBrandTop: var(--mistica-movistar-new-movistarBlue);
     --mistica-color-backgroundBrandBottom: var(--mistica-movistar-new-movistarBlue);
@@ -1052,7 +1052,7 @@
         --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-new-raw-movistarBlack), 0.6);
         --mistica-color-backgroundSkeleton: var(--mistica-movistar-new-grey200);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-new-blue800);
-        --mistica-color-backgroundSkeletonNegative: var(--mistica-movistar-new-blue800);
+        --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-movistar-new-raw-black), 0.2);
         --mistica-color-backgroundSkeletonBrand: var(--mistica-movistar-new-blue800);
         --mistica-color-backgroundBrandTop: var(--mistica-movistar-new-movistarBlue);
         --mistica-color-backgroundBrandBottom: var(--mistica-movistar-new-movistarBlue);

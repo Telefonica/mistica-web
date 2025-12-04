@@ -65,7 +65,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey3,
             backgroundSkeletonInverse: palette.vivoPurpleDark,
-            backgroundSkeletonNegative: palette.vivoPurpleDark,
+            backgroundSkeletonNegative: applyAlpha(palette.grey6, 0.2),
             backgroundSkeletonBrand: palette.vivoPurpleDark,
             backgroundBrandTop: palette.vivoPurple,
             backgroundBrandBottom: palette.vivoPurple,
