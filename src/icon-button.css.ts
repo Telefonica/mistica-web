@@ -191,7 +191,7 @@ export const iconButtonTokens = styleVariants({
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
             [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
-            [iconColor]: skinVars.colors.inverse,
+            [iconColor]: skinVars.colors.neutralHighBrand,
         },
     },
     'neutral-transparent-negative': {
