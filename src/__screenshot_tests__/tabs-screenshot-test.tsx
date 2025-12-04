@@ -80,7 +80,7 @@ test.each(THEME_VARIANTS)('Tabs in %s theme', async (variant) => {
     await openStoryPage({
         id: 'components-tabs--default',
         device: 'MOBILE_IOS',
-        args: {variant: normalizeVariant(variant)},
+        args: {variantOutside: normalizeVariant(variant)},
     });
     const image = await (await screen.findByRole('tablist')).screenshot();
     expect(image).toMatchImageSnapshot();
