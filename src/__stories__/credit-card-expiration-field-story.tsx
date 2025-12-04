@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, CreditCardExpirationField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 
 export default {
     title: 'Components/Input fields/CreditCardExpirationField',
@@ -60,13 +60,13 @@ export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs>
                     />
                     <Stack space={8}>
                         <Text1 regular>
-                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${String(value)}`}
                         </Text1>
                         <Text1 regular>
                             rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
-                                : `(${typeof rawValue}) ${inspect(rawValue)}`}
+                                : `(${typeof rawValue}) ${String(rawValue)}`}
                         </Text1>
                     </Stack>
                 </Stack>

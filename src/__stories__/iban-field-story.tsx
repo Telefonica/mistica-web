@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, IbanField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 
 export default {
     title: 'Components/Input fields/IbanField',

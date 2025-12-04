@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, MonthField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import {getLocalYearMonthString} from '../utils/time';
 
 export default {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, PhoneNumberField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import {phoneNumbersList} from './helpers';
 
 export default {

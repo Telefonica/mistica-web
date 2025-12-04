@@ -10,7 +10,7 @@ import {
     UnorderedList,
     ListItem,
 } from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import {phoneNumbersList} from './helpers';
 
 export default {

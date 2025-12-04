@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, DecimalField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 
 export default {
     title: 'Components/Input fields/DecimalField',
