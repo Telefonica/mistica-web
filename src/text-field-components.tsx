@@ -103,8 +103,8 @@ export const HelperText = ({
                     data-testid={error ? 'errorText' : 'helperText'}
                 >
                     {error && (
-                        <Text1 regular>
-                            <IconWarningRegular color={leftColor} className={styles.warnIcon} />
+                        <Text1 regular color={leftColor}>
+                            <IconWarningRegular color="currentColor" className={styles.warnIcon} />
                         </Text1>
                     )}
                     <Text1
