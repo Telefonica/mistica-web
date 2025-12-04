@@ -21,8 +21,8 @@ const BlauLogoImage = ({
             : {
                   default: colors.brand,
                   alternative: colors.brand,
-                  brand: colors.neutralHighBrand,
-                  media: colors.neutralHighBrand,
+                  brand: colors.neutralHighNegative,
+                  media: colors.neutralHighNegative,
                   negative: colors.neutralHighNegative,
               }[themeVariant]);
     const colorSecondary =
@@ -32,8 +32,8 @@ const BlauLogoImage = ({
             : {
                   default: colors.promo,
                   alternative: colors.promo,
-                  brand: colors.neutralHighBrand,
-                  media: colors.neutralHighBrand,
+                  brand: colors.promo,
+                  media: colors.promo,
                   negative: colors.neutralHighNegative,
               }[themeVariant]);
 
