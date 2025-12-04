@@ -208,7 +208,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             controlKnobInverse: palette.movistarBlue,
             controlKnobNegative: palette.movistarBlue,
             controlKnobBrand: palette.movistarBlue,
-            divider: palette.grey200,
+            divider: palette.grey300,
             dividerInverse: applyAlpha(palette.white, 0.2),
             dividerNegative: applyAlpha(palette.white, 0.2),
             dividerBrand: applyAlpha(palette.white, 0.2),
@@ -252,7 +252,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             warningLow: palette.yellow200,
             errorLow: palette.salmon100,
             promoLow: palette.salmon100,
-            brandLow: palette.blueLight,
+            brandLow: palette.blue100,
             successHigh: palette.green700,
             warningHigh: palette.yellowHigh,
             errorHigh: palette.redHigh,
@@ -668,7 +668,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             title4: {lineHeight: {desktop: 28, mobile: 26}, size: {desktop: 24, mobile: 20}, weight: 'bold'},
         },
         themeVariants: {
-            successFeedback: 'inverse',
+            successFeedback: 'default',
             brandLoadingScreen: 'default',
         },
     };
