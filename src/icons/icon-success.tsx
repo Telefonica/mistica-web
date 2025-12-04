@@ -9,7 +9,7 @@ import {
 } from '../utils/animation';
 import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
-import {useThemeVariant} from '../../dist/theme-variant-context';
+import {useThemeVariant} from '../theme-variant-context';
 
 type Props = {
     size?: number | string;
