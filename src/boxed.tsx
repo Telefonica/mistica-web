@@ -114,7 +114,9 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                             {
                                 default: vars.colors.backgroundContainer,
                                 brand:
-                                    externalVariant === 'brand' || externalVariant === 'negative'
+                                    externalVariant === 'brand' ||
+                                    externalVariant === 'negative' ||
+                                    externalVariant === 'media'
                                         ? vars.colors.backgroundContainerBrandOverBrand
                                         : vars.colors.backgroundContainerBrand,
                                 negative: vars.colors.backgroundContainerNegative,

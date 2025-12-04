@@ -3,10 +3,10 @@ import {normalizeVariant} from '../theme-variant-context';
 
 const themeVariants = ['default', 'inverse', 'alternative', 'media'] as const;
 
-test.each(themeVariants)('ThemeVariant %s', async (themeVariant) => {
+test.each(themeVariants)('ThemeVariant %s', async (variant) => {
     const page = await openStoryPage({
         id: 'utilities-themevariant--components-over-different-theme-variants',
-        args: {themeVariant},
+        args: {variant: normalizeVariant(variant)},
     });
 
     const image = await page.screenshot();
