@@ -7,15 +7,15 @@ export default {
 };
 
 type Args = {
-    inverse: boolean;
-    overInverse: boolean;
+    variant: 'default' | 'brand' | 'negative' | 'alternative';
+    variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
 };
 
-export const Default: StoryComponent<Args> = ({inverse, overInverse}) => {
+export const Default: StoryComponent<Args> = ({variant, variantOutside}) => {
     return (
-        <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth isInverse={overInverse}>
+        <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth variant={variantOutside}>
             <Box padding={16}>
-                <Boxed isInverse={inverse}>
+                <Boxed variant={variant}>
                     <Box padding={16}>
                         <Text8>Text</Text8>
                     </Box>
@@ -27,6 +27,6 @@ export const Default: StoryComponent<Args> = ({inverse, overInverse}) => {
 
 Default.storyName = 'Boxed';
 Default.args = {
-    inverse: false,
-    overInverse: false,
+    variant: 'default',
+    variantOutside: 'default',
 };

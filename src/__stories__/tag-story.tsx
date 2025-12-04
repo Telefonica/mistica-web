@@ -13,12 +13,14 @@ import {
     skinVars,
 } from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
 type Args = {
     label: string;
     icon: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     badge: string;
     colorConfig: 'default' | 'color from skin' | 'custom color';
     textColorFromSkin: string;
@@ -41,7 +43,7 @@ export default {
 export const Default: StoryComponent<Args> = ({
     label: labelFromArgs,
     icon,
-    inverse,
+    variantOutside,
     badge,
     textColorFromSkin,
     textColorCustom,
@@ -55,7 +57,7 @@ export const Default: StoryComponent<Args> = ({
     const backgroundColor = backgroundColorFromSkin || backgroundColorCustom;
 
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'tags'}}>
                 <Stack space={16}>
                     <Tag
@@ -132,10 +134,10 @@ Default.storyName = 'Tag';
 Default.args = {
     label: '',
     icon: true,
-    inverse: false,
+    variantOutside: 'default',
     badge: '0',
     colorConfig: 'default',
-    textColorFromSkin: skinVars.colors.inverse,
+    textColorFromSkin: skinVars.colors.textPrimaryBrand,
     backgroundColorFromSkin: skinVars.colors.neutralHigh,
     textColorCustom: '#fff',
     backgroundColorCustom: 'red',
@@ -163,5 +165,9 @@ Default.argTypes = {
     backgroundColorCustom: {
         control: {type: 'color'},
         if: {arg: 'colorConfig', eq: 'custom color'},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
     },
 };

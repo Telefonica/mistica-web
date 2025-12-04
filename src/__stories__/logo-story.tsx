@@ -13,6 +13,8 @@ import {
 } from '../logo';
 import {Box, ResponsiveLayout, useTheme} from '../index';
 
+import type {Variant} from '../theme-variant-context';
+
 const COLOR_OPTIONS = ['default', 'neutralHigh', 'neutralMedium', '#000000'] as const;
 
 export default {
@@ -32,7 +34,7 @@ export default {
 type Args = {
     type: 'isotype' | 'imagotype' | 'vertical';
     size: number;
-    inverse: boolean;
+    variantOutside: Variant;
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
     brand: 'Movistar' | 'Movistar-new' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu' | 'Esimflag';
@@ -65,7 +67,7 @@ const getLogoActionProps = (action: string) => {
 export const Default: StoryComponent<Args> = ({
     type,
     size,
-    inverse,
+    variantOutside,
     action,
     forceBrandLogo,
     brand,
@@ -93,7 +95,7 @@ export const Default: StoryComponent<Args> = ({
     }[forceBrandLogo ? brand : 'default'];
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <CurrentLogo {...logoProps} dataAttributes={{testid: 'logo'}} />
             </Box>
@@ -107,7 +109,7 @@ Default.args = {
     type: 'isotype',
     action: 'none',
     size: 48,
-    inverse: false,
+    variantOutside: 'default',
     forceBrandLogo: false,
     brand: 'Movistar',
     color: 'default',
@@ -129,5 +131,9 @@ Default.argTypes = {
     },
     size: {
         control: {type: 'range', min: 8, max: 480, step: 8},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
     },
 };

@@ -40,8 +40,8 @@ const DEFAULT_COLORS = [
     vars.colors.promo,
 ];
 
-const DEFAULT_COLORS_INVERSE = [
-    vars.colors.controlActivatedInverse,
+const DEFAULT_COLORS_OVER_BRAND = [
+    vars.colors.controlActivatedBrand,
     vars.colors.warning,
     vars.colors.success,
     vars.colors.highlight,
@@ -151,8 +151,10 @@ const MeterComponent = ({
     const hasRoundLineCaps = parseInt(borderRadii.bar) !== 0;
     const themeVariant = useThemeVariant();
     const isOverMedia = themeVariant === 'media';
-    const isInverse = themeVariant === 'inverse';
-    const segmentColors = colors || (isInverse || isOverMedia ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
+    const isOverBrand = themeVariant === 'brand';
+    const isOverNegative = themeVariant === 'negative';
+    const segmentColors =
+        colors || (isOverBrand || isOverMedia || isOverNegative ? DEFAULT_COLORS_OVER_BRAND : DEFAULT_COLORS);
     const [width, setWidth] = React.useState<number>(typeof widthProp === 'number' ? widthProp : 0);
     const scaleFactor = width === 0 ? 1 : VIEW_BOX_WIDTH / width;
     const lineCapRadiusPx = hasRoundLineCaps ? STROKE_WIDTH_PX / 2 : 0;
@@ -196,8 +198,8 @@ const MeterComponent = ({
 
     const trackbarColor = isOverMedia
         ? vars.colors.inverse
-        : isInverse
-          ? vars.colors.barTrackInverse
+        : isOverBrand
+          ? vars.colors.barTrackBrand
           : vars.colors.barTrack;
 
     //  scale values to the range [0, 1]

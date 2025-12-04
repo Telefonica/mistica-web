@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Box, ProgressBar, ProgressBarStepped, ResponsiveLayout} from '..';
 import {vars} from '../skins/skin-contract.css';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Progress bars',
     argTypes: {
@@ -17,16 +19,16 @@ type ProgressBarStoryArgs = {
     reverse: boolean;
     progressPercent: number;
     color: 'default' | 'error';
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = ({
     reverse,
     progressPercent,
     color,
-    inverse,
+    variantOutside,
 }) => (
-    <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+    <ResponsiveLayout variant={variantOutside} fullWidth>
         <Box padding={16}>
             <ProgressBar
                 dataAttributes={{testid: 'progress-bar'}}
@@ -43,23 +45,29 @@ ProgressBarStory.args = {
     reverse: false,
     progressPercent: 30,
     color: 'default',
-    inverse: false,
+    variantOutside: 'default',
+} as const;
+ProgressBarStory.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
 };
 
 type ProgressBarSteppedStoryArgs = {
     steps: number;
     currentStep: number;
     color: 'default' | 'error';
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const ProgressBarSteppedStory: StoryComponent<ProgressBarSteppedStoryArgs> = ({
     steps,
     currentStep,
     color,
-    inverse,
+    variantOutside,
 }) => (
-    <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+    <ResponsiveLayout variant={variantOutside} fullWidth>
         <Box padding={16}>
             <ProgressBarStepped
                 aria-label="Progreso"
@@ -77,10 +85,14 @@ ProgressBarSteppedStory.args = {
     steps: 4,
     currentStep: 3,
     color: 'default',
-    inverse: false,
+    variantOutside: 'default',
 };
 ProgressBarSteppedStory.argTypes = {
     steps: {
         control: {type: 'range', min: 1, max: 6, step: 1},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
     },
 };

@@ -249,7 +249,7 @@ test('TextField - inverse and helper text', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
-        args: {inverse: true, helperText: 'Helper text'},
+        args: {variantOutside: 'brand', helperText: 'Helper text'},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
@@ -262,7 +262,7 @@ test('TextField - inverse and prefix', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
-        args: {inverse: true, prefix: 'Prefix'},
+        args: {variantOutside: 'brand', prefix: 'Prefix'},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
@@ -275,7 +275,7 @@ test('TextField - inverse and error', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
-        args: {inverse: true, error: true, helperText: 'I am a descriptive error'},
+        args: {variantOutside: 'brand', error: true, helperText: 'I am a descriptive error'},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');

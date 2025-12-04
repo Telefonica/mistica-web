@@ -392,7 +392,7 @@ const BaseButton = React.forwardRef<
 
     const minWidthProps = props.buttonType.startsWith('link') ? styles.linkMinWidth : styles.buttonMinWidth;
     const finalType =
-        props.buttonType === 'linkDanger' && isDarkMode && variant === 'inverse'
+        props.buttonType === 'linkDanger' && isDarkMode && variant === 'brand'
             ? 'linkDangerDark'
             : props.buttonType;
 
@@ -400,10 +400,12 @@ const BaseButton = React.forwardRef<
         ref,
         className: classnames(
             variant === 'media'
-                ? styles.mediaButtonVariants[finalType]
-                : variant === 'inverse'
-                  ? styles.inverseButtonVariants[finalType]
-                  : styles.buttonVariants[finalType],
+                ? styles.overMediaButtonVariants[finalType]
+                : variant === 'brand'
+                  ? styles.overBrandButtonVariants[finalType]
+                  : variant === 'negative'
+                    ? styles.overNegativeButtonVariants[finalType]
+                    : styles.buttonVariants[finalType],
             props.className,
             {
                 [styles.small]: props.small,

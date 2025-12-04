@@ -10,12 +10,21 @@ const TelefonicaLogoImage = ({
     size,
     type,
     isDarkMode,
-    isInverse,
+    themeVariant,
     color: colorProp,
 }: LogoImageProps): JSX.Element => {
     const {colors} = getTelefonicaSkin();
-    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
-
+    const color =
+        colorProp ||
+        (isDarkMode
+            ? colors.brand
+            : {
+                  default: colors.brand,
+                  alternative: colors.brand,
+                  brand: colors.neutralHighBrand,
+                  media: colors.neutralHighBrand,
+                  negative: colors.neutralHighNegative,
+              }[themeVariant]);
     if (type === 'vertical') {
         return (
             <svg

@@ -31,7 +31,7 @@ test('Tags inverse', async () => {
     await openStoryPage({
         id: 'components-tag--default',
         device: 'DESKTOP',
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const tag = await screen.findByTestId('tags');
@@ -58,7 +58,7 @@ test('Tags inverse and dark mode', async () => {
         id: 'components-tag--default',
         device: 'DESKTOP',
         isDarkMode: true,
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const tag = await screen.findByTestId('tags');

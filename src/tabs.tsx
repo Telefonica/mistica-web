@@ -9,9 +9,10 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './tabs.css';
 import Inline from './inline';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import {LEFT, RIGHT} from './utils/keys';
+import {applyCssVars} from './utils/css';
 
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
@@ -71,7 +72,7 @@ const Tabs = ({
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
     const scrollableContainerRef = React.useRef<HTMLDivElement>(null);
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const isInverse = useIsInverseOrMediaVariant();
+    const externalVariant = useThemeVariant();
 
     const getTabId = (index: number) => {
         return tabs[index].id ?? `${id}-tab-${index}`;
@@ -134,7 +135,18 @@ const Tabs = ({
                 id={id}
                 role="tablist"
                 ref={ref}
-                className={isInverse ? styles.outerBorderInverse : styles.outerBorder}
+                className={styles.outerBorder}
+                style={{
+                    ...applyCssVars({
+                        [styles.vars.borderColor]: {
+                            default: vars.colors.divider,
+                            alternative: vars.colors.divider,
+                            brand: vars.colors.dividerInverse,
+                            media: vars.colors.dividerInverse,
+                            negative: vars.colors.dividerNegative,
+                        }[externalVariant],
+                    }),
+                }}
                 {...getPrefixedDataAttributes(dataAttributes, 'Tabs')}
                 aria-label={otherProps['aria-label']}
                 aria-labelledby={otherProps['aria-labelledby']}
@@ -158,17 +170,28 @@ const Tabs = ({
                                                 styles.tabVariants[getTabVariant(tabs.length)],
                                                 isSelected
                                                     ? isAnimating
-                                                        ? isInverse
+                                                        ? externalVariant === 'brand'
                                                             ? styles.tabSelectionVariants
-                                                                  .selectedAnimatingInverse
-                                                            : styles.tabSelectionVariants.selectedAnimating
-                                                        : isInverse
-                                                          ? styles.tabSelectionVariants.selectedInverse
-                                                          : styles.tabSelectionVariants.selected
-                                                    : isInverse
-                                                      ? styles.tabSelectionVariants.noSelectedInverse
-                                                      : styles.tabSelectionVariants.noSelected,
-                                                isInverse ? styles.tabHover.inverse : styles.tabHover.default
+                                                                  .selectedAnimatingBrand
+                                                            : externalVariant === 'negative'
+                                                              ? styles.tabSelectionVariants
+                                                                    .selectedAnimatingNegative
+                                                              : styles.tabSelectionVariants.selectedAnimating
+                                                        : externalVariant === 'brand'
+                                                          ? styles.tabSelectionVariants.selectedBrand
+                                                          : externalVariant === 'negative'
+                                                            ? styles.tabSelectionVariants.selectedNegative
+                                                            : styles.tabSelectionVariants.selected
+                                                    : externalVariant === 'brand'
+                                                      ? styles.tabSelectionVariants.noSelectedBrand
+                                                      : externalVariant === 'negative'
+                                                        ? styles.tabSelectionVariants.noSelectedNegative
+                                                        : styles.tabSelectionVariants.noSelected,
+                                                externalVariant === 'brand'
+                                                    ? styles.tabHover.brand
+                                                    : externalVariant === 'negative'
+                                                      ? styles.tabHover.negative
+                                                      : styles.tabHover.default
                                             )}
                                             onPress={() => {
                                                 if (!isAnimating && selectedIndex !== index) {
@@ -213,9 +236,12 @@ const Tabs = ({
                             ref={animatedLineRef}
                             className={styles.animatedLine}
                             style={{
-                                background: isInverse
-                                    ? vars.colors.controlActivatedInverse
-                                    : vars.colors.controlActivated,
+                                background:
+                                    externalVariant === 'brand'
+                                        ? vars.colors.controlActivatedBrand
+                                        : externalVariant === 'negative'
+                                          ? vars.colors.controlActivatedNegative
+                                          : vars.colors.controlActivated,
                             }}
                         />
                     </div>

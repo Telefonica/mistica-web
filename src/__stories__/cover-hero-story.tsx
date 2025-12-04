@@ -27,7 +27,7 @@ type Args = {
     background: 'image' | 'video' | 'custom color' | 'color from skin';
     backgroundColorCustom: string;
     backgroundColorFromSkin: string;
-    variant: 'default' | 'inverse' | 'alternative';
+    variant: 'default' | 'brand' | 'alternative';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -157,7 +157,7 @@ Default.argTypes = {
         if: {arg: 'background', eq: 'color from skin'},
     },
     variant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'alternative'],
         control: {type: 'select'},
         // This control should only be visible when background is set to 'color from skin' or 'custom color'.
         // That could look similar to this in a future storybook version (see https://github.com/ComponentDriven/csf/pull/76):

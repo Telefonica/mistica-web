@@ -6,18 +6,24 @@ export default {
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        variant: {
+            options: ['default', 'brand'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
     title: string;
     description: string;
     buttonLabel: string;
-    inverse: boolean;
+    variant: 'default' | 'brand';
 };
 
-export const Default: StoryComponent<Args> = ({title, description, buttonLabel, inverse}) => {
+export const Default: StoryComponent<Args> = ({title, description, buttonLabel, variant}) => {
     return (
-        <MainSectionHeaderLayout isInverse={inverse} dataAttributes={{testid: 'header-layout'}}>
+        <MainSectionHeaderLayout variant={variant} dataAttributes={{testid: 'header-layout'}}>
             <MainSectionHeader
                 title={title}
                 description={description}
@@ -33,5 +39,5 @@ Default.args = {
     title: 'Support',
     description: 'How can I help you?',
     buttonLabel: 'Action',
-    inverse: false,
+    variant: 'default',
 };

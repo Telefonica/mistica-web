@@ -17,13 +17,15 @@ import {
 } from '..';
 import {vars} from '../skins/skin-contract.css';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Rating',
     parameters: {fullScreen: true},
 };
 
 type RatingArgs = {
-    inverse: boolean;
+    variantOutside: Variant;
     count: number;
     size: number;
     type: 'quantitative' | 'qualitative';
@@ -32,7 +34,7 @@ type RatingArgs = {
 };
 
 export const RatingStory: StoryComponent<RatingArgs> = ({
-    inverse,
+    variantOutside,
     count,
     size,
     type,
@@ -40,7 +42,7 @@ export const RatingStory: StoryComponent<RatingArgs> = ({
     customIcons,
 }) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="rating-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Rating
@@ -103,7 +105,7 @@ RatingStory.args = {
     count: 5,
     size: 32,
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
     customIcons: false,
 };
 
@@ -119,10 +121,14 @@ RatingStory.argTypes = {
     size: {
         control: {type: 'range', min: 16, max: 64, step: 4},
     },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
 };
 
 type InfoRatingArgs = {
-    inverse: boolean;
+    variantOutside: Variant;
     count: number;
     value: number;
     size: number;
@@ -131,7 +137,7 @@ type InfoRatingArgs = {
 };
 
 export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
-    inverse,
+    variantOutside,
     count,
     value,
     size,
@@ -139,7 +145,7 @@ export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
     customIcons,
 }) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <InfoRating
                     value={value}
@@ -165,7 +171,7 @@ export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
 InfoRatingStory.storyName = 'InfoRating';
 
 InfoRatingStory.args = {
-    inverse: false,
+    variantOutside: 'default',
     withHalfValue: false,
     count: 5,
     size: 16,
