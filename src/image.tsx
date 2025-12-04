@@ -47,9 +47,9 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
         const color = {
             default: vars.colors.neutralMedium,
             alternative: vars.colors.neutralMedium,
-            brand: vars.colors.neutralMediumBrand,
-            media: vars.colors.neutralMediumBrand,
-            negative: vars.colors.neutralMediumNegative,
+            brand: vars.colors.negative,
+            media: vars.colors.negative,
+            negative: vars.colors.negative,
         }[externalVariant];
 
         return (
