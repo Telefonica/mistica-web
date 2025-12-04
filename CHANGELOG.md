@@ -1,3 +1,10 @@
+# [16.44.0](https://github.com/Telefonica/mistica-web/compare/v16.43.1...v16.44.0) (2025-12-04)
+
+
+### Features
+
+* **ThemeVariant:** deprecated inverse variant (replaced by brand) and added new negative variant ([#1466](https://github.com/Telefonica/mistica-web/issues/1466)) ([e708c22](https://github.com/Telefonica/mistica-web/commit/e708c22a4174072d402d8c6244182971bfcaaa29))
+
 ## [16.43.1](https://github.com/Telefonica/mistica-web/compare/v16.43.0...v16.43.1) (2025-12-02)
 
 
