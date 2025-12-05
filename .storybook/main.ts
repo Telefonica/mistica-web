@@ -1,4 +1,4 @@
-import {dirname} from 'path';
+import {dirname, resolve} from 'path';
 import {fileURLToPath} from 'url';
 import {VanillaExtractPlugin} from '@vanilla-extract/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -6,6 +6,9 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type {StorybookConfig} from '@storybook/react-webpack5';
 
 type WebpackConfig = Parameters<NonNullable<StorybookConfig['webpackFinal']>>[0];
+
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -67,9 +70,23 @@ const config: StorybookConfig = {
     stories,
     addons: [
         getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
+        {
+            name: '@storybook/addon-storysource',
+            options: {
+                rule: {
+                    test: [/-story\.tsx/, /welcome-story\.js/],
+                    include: [resolve(__dirname, '..', 'src'), __dirname],
+                },
+                loaderOptions: {
+                    prettierConfig: {printWidth: 80, singleQuote: false},
+                },
+            },
+        },
         './theme-selector-addon/preset.ts',
         './dark-mode-addon/preset.ts',
         './font-size-addon/preset.ts',
+        './theme-selector-addon/preset.ts',
+        './platform-selector-addon/preset.ts',
     ],
     framework: getAbsolutePath('@storybook/react-webpack5'),
     webpackFinal: async (config) => {

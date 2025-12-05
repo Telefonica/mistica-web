@@ -1,5 +1,5 @@
 import './css/roboto.css';
-import {addons} from '@storybook/addons';
+import {addons} from 'storybook/manager-api';
 import {createStorybookTheme} from './storybook-manager-theme';
 
 // https://storybook.js.org/docs/react/configure/features-and-behavior

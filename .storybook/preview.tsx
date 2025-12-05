@@ -124,7 +124,6 @@ const MisticaThemeProvider = ({
 
     return (
         <React.StrictMode>
-            <pre>{JSON.stringify({skin, colorScheme, platform}, null, 2)}</pre>
             {/**
              * Avoid rendering story until storybook addons finish loading skin, color scheme and platform.
              * If story is opened in a new tab, we always render it because the addons don't exist in there.
