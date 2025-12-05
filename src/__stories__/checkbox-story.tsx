@@ -1,20 +1,28 @@
 import * as React from 'react';
 import {Checkbox, Text3, Inline, IconCheckRegular, IconCloseRegular, ResponsiveLayout, Box} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Checkbox',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
     disabled: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, inverse}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => {
     const [checked, onChange] = React.useState(false);
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Checkbox name="checkbox" checked={checked} onChange={onChange} disabled={disabled}>
@@ -29,12 +37,12 @@ export const Controlled: StoryComponent<Args> = ({disabled, inverse}) => {
 Controlled.storyName = 'controlled';
 Controlled.args = {
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, inverse}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) => {
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Checkbox name="checkbox" defaultChecked={false} disabled={disabled}>
@@ -49,12 +57,12 @@ export const Uncontrolled: StoryComponent<Args> = ({disabled, inverse}) => {
 Uncontrolled.storyName = 'uncontrolled';
 Uncontrolled.args = {
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
 };
 
-export const CustomRender: StoryComponent<Args> = ({disabled, inverse}) => {
+export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) => {
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Checkbox
@@ -85,5 +93,5 @@ export const CustomRender: StoryComponent<Args> = ({disabled, inverse}) => {
 CustomRender.storyName = 'custom render';
 CustomRender.args = {
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
 };

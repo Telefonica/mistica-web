@@ -2,6 +2,8 @@ import * as React from 'react';
 import {ResponsiveLayout, skinVars} from '..';
 import {Placeholder} from '../placeholder';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Layout/Responsive layout',
     parameters: {
@@ -10,13 +12,13 @@ export default {
 };
 
 type Args = {
-    inverse: boolean;
+    variant: Variant;
     backgroundColor: 'undefined' | 'backgroundAlternative';
 };
 
-export const Default: StoryComponent<Args> = ({inverse, backgroundColor}) => (
+export const Default: StoryComponent<Args> = ({variant, backgroundColor}) => (
     <ResponsiveLayout
-        isInverse={inverse}
+        variant={variant}
         backgroundColor={backgroundColor === 'undefined' ? undefined : skinVars.colors[backgroundColor]}
     >
         <Placeholder />
@@ -26,7 +28,7 @@ export const Default: StoryComponent<Args> = ({inverse, backgroundColor}) => (
 Default.storyName = 'Responsive layout';
 
 Default.args = {
-    inverse: false,
+    variant: 'default',
     backgroundColor: 'undefined',
 };
 
@@ -35,12 +37,16 @@ Default.argTypes = {
         options: ['undefined', 'backgroundAlternative'],
         control: {type: 'select'},
     },
+    variant: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
 };
 
 export const Nested: StoryComponent = () => (
     <ResponsiveLayout variant="alternative">
         <Placeholder />
-        <ResponsiveLayout variant="inverse">
+        <ResponsiveLayout variant="brand">
             <Placeholder />
             <ResponsiveLayout variant="default" backgroundColor="gray">
                 <Placeholder />

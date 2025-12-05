@@ -13,7 +13,7 @@ test('TextLink - light mode', async () => {
 test('TextLink - inverse', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const textLink = await screen.findByTestId('text-link');
@@ -86,7 +86,7 @@ test('TextLink - underline on hover', async () => {
 test('TextLink - underline on hover - inverse', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {inverse: true, underline: 'on hover'},
+        args: {variantOutside: 'brand', underline: 'on hover'},
     });
 
     const textLink = await screen.findByTestId('text-link');
@@ -113,7 +113,7 @@ test('TextLink - underline on hover - dark mode', async () => {
 test('TextLink - underline on hover - inverse - dark mode', async () => {
     await openStoryPage({
         id: 'components-textlink--default',
-        args: {inverse: true, underline: 'on hover'},
+        args: {variantOutside: 'brand', underline: 'on hover'},
         isDarkMode: true,
     });
 

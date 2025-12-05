@@ -11,7 +11,7 @@ test.each`
         id: 'components-breadcrumbs--default',
         device,
         isDarkMode: dark,
-        args: {inverse},
+        args: {variantOutside: inverse ? 'brand' : 'default'},
     });
 
     const element = await screen.findByTestId('story');

@@ -50,7 +50,7 @@ export const touchableBackground = style({
     selectors: boxedTouchableBorderRadiusStyles,
 });
 
-export const touchableBackgroundInverse = style({
+export const touchableBackgroundOverBrand = style({
     transition: 'background-color 0.1s ease-in-out',
     ':active': {
         background: vars.colors.backgroundContainerBrandPressed,

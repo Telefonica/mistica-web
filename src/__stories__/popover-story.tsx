@@ -11,6 +11,8 @@ import {
 } from '..';
 import avatarImg from './images/avatar.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Popover',
     component: Popover,
@@ -25,7 +27,7 @@ type PopoverArgs = {
     extra: boolean;
     targetHorizontalPosition: 'left' | 'center' | 'right';
     targetVerticalPosition: 'top' | 'center' | 'bottom';
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const Default: StoryComponent<PopoverArgs> = ({
@@ -36,7 +38,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
     extra,
     targetHorizontalPosition,
     targetVerticalPosition,
-    inverse,
+    variantOutside,
 }) => {
     let icon;
     if (asset === 'icon') {
@@ -85,7 +87,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
     }
 
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <div style={{width: '100vw', height: '100vh'}}>
                 <Popover
                     asset={icon}
@@ -126,9 +128,9 @@ Default.args = {
     title: 'Title',
     description: 'A description',
     extra: false,
-    inverse: false,
+    variantOutside: 'default',
     asset: 'icon',
-};
+} as const;
 
 Default.argTypes = {
     targetHorizontalPosition: {
@@ -145,6 +147,10 @@ Default.argTypes = {
     },
     asset: {
         options: ['icon', 'image', 'none'],
+        control: {type: 'select'},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
         control: {type: 'select'},
     },
 };

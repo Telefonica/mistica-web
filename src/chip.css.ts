@@ -110,7 +110,7 @@ export const chipVariants = styleVariants({
             cursor: 'pointer',
         },
     ],
-    navigationActiveInverse: [
+    navigationActiveOverBrand: [
         containerBase,
         sprinkles({
             color: vars.colors.textActivated,
@@ -176,10 +176,10 @@ export const icon = style([
 ]);
 export const iconNavigation = style([
     sprinkles({paddingRight: 4}),
-    {color: vars.colors.textPrimaryInverse, paddingRight: 4},
+    {color: vars.colors.textPrimaryBrand, paddingRight: 4},
 ]);
 
-export const iconNavigationInverse = style([
+export const iconNavigationOverBrand = style([
     sprinkles({paddingRight: 4}),
     {color: vars.colors.controlActivated, paddingRight: 4},
 ]);

@@ -40,7 +40,7 @@ const Tag = ({
 }: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
-    const isInverse = themeVariant === 'inverse' || themeVariant === 'media';
+    const isOverBrand = themeVariant === 'brand' || themeVariant === 'media';
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
@@ -51,55 +51,55 @@ const Tag = ({
         // [textColor, inverseTextColor, backgroundColor, backgroundColorInverse]
         promo: [
             colors.tagTextPromo,
-            colors.tagTextPromoInverse,
+            colors.tagTextPromoBrand,
             colors.tagBackgroundPromo,
-            colors.tagBackgroundPromoInverse,
+            colors.tagBackgroundPromoBrand,
         ],
         info: [
             colors.tagTextInfo,
-            colors.tagTextInfoInverse,
+            colors.tagTextInfoBrand,
             colors.tagBackgroundInfo,
-            colors.tagBackgroundInfoInverse,
+            colors.tagBackgroundInfoBrand,
         ],
         active: [
             colors.tagTextActive,
-            colors.tagTextActiveInverse,
+            colors.tagTextActiveBrand,
             colors.tagBackgroundActive,
-            colors.tagBackgroundActiveInverse,
+            colors.tagBackgroundActiveBrand,
         ],
         inactive: [
             colors.tagTextInactive,
-            colors.tagTextInactiveInverse,
+            colors.tagTextInactiveBrand,
             // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
             themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
-            colors.tagBackgroundInactiveInverse,
+            colors.tagBackgroundInactiveBrand,
         ],
         success: [
             colors.tagTextSuccess,
-            colors.tagTextSuccessInverse,
+            colors.tagTextSuccessBrand,
             colors.tagBackgroundSuccess,
-            colors.tagBackgroundSuccessInverse,
+            colors.tagBackgroundSuccessBrand,
         ],
         warning: [
             colors.tagTextWarning,
-            colors.tagTextWarningInverse,
+            colors.tagTextWarningBrand,
             colors.tagBackgroundWarning,
-            colors.tagBackgroundWarningInverse,
+            colors.tagBackgroundWarningBrand,
         ],
         error: [
             colors.tagTextError,
-            colors.tagTextErrorInverse,
+            colors.tagTextErrorBrand,
             colors.tagBackgroundError,
-            colors.tagBackgroundErrorInverse,
+            colors.tagBackgroundErrorBrand,
         ],
     } as const;
 
     const [defaultTextColor, inverseTextColor, defaultBackgroundColor, backgroundColorInverse] =
         tagTypeToColors[type];
 
-    const textColor = customTextColor || (isInverse ? inverseTextColor : defaultTextColor);
+    const textColor = customTextColor || (isOverBrand ? inverseTextColor : defaultTextColor);
     const backgroundColor =
-        customBackgroundColor || (isInverse ? backgroundColorInverse : defaultBackgroundColor);
+        customBackgroundColor || (isOverBrand ? backgroundColorInverse : defaultBackgroundColor);
 
     return (
         <span

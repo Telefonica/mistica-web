@@ -5,9 +5,17 @@ import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
 import {countriesList} from './helpers';
 import {iconSize} from '../icon-button.css';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/TextField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const getCountrySuggestions = (value: string) =>
@@ -21,7 +29,7 @@ interface TextFieldBaseArgs {
     helperText: string;
     prefix: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     multiline: boolean;
@@ -38,7 +46,7 @@ const defaultBaseArgs: TextFieldBaseArgs = {
     helperText: '',
     prefix: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     multiline: false,
@@ -55,7 +63,7 @@ interface TextFieldControlledArgs extends TextFieldBaseArgs {
 }
 
 export const Controlled: StoryComponent<TextFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     maxLength,
     icon,
@@ -66,7 +74,7 @@ export const Controlled: StoryComponent<TextFieldControlledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <TextField
@@ -112,7 +120,7 @@ interface TextFieldUncontrolledArgs extends TextFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<TextFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     maxLength,
     icon,
@@ -122,7 +130,7 @@ export const Uncontrolled: StoryComponent<TextFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <TextField

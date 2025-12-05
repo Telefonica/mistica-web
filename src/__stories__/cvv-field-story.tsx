@@ -2,9 +2,17 @@ import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, CvvField} from '..';
 import {inspect} from './utils';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/CvvField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 interface CvvFieldBaseArgs {
@@ -12,7 +20,7 @@ interface CvvFieldBaseArgs {
     placeholder: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -25,24 +33,28 @@ const defaultBaseArgs: CvvFieldBaseArgs = {
     placeholder: '',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
     readOnly: false,
     preventCopy: false,
-};
+} as const;
 
 interface CvvFieldControlledArgs extends CvvFieldBaseArgs {
     initialValue: string;
 }
 
-export const Controlled: StoryComponent<CvvFieldControlledArgs> = ({inverse, initialValue, ...rest}) => {
+export const Controlled: StoryComponent<CvvFieldControlledArgs> = ({
+    variantOutside,
+    initialValue,
+    ...rest
+}) => {
     const [rawValue, setRawValue] = React.useState<any>(initialValue);
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <CvvField
@@ -83,12 +95,16 @@ interface CvvFieldUncontrolledArgs extends CvvFieldBaseArgs {
     defaultValue: string;
 }
 
-export const Uncontrolled: StoryComponent<CvvFieldUncontrolledArgs> = ({inverse, defaultValue, ...rest}) => {
+export const Uncontrolled: StoryComponent<CvvFieldUncontrolledArgs> = ({
+    variantOutside,
+    defaultValue,
+    ...rest
+}) => {
     const [rawValue, setRawValue] = React.useState<any>(undefined);
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <CvvField

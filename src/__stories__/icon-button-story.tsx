@@ -70,7 +70,7 @@ IconButtonStory.argTypes = {
         control: {type: 'select'},
     },
     themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'alternative'],
         control: {type: 'select'},
     },
 };
@@ -160,7 +160,7 @@ ToggleIconButtonStory.argTypes = {
         control: {type: 'select'},
     },
     themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'alternative'],
         control: {type: 'select'},
     },
 };

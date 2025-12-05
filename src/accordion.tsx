@@ -11,7 +11,7 @@ import {vars as skinVars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
 import {InternalBoxed} from './boxed';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
 import Inline from './inline';
@@ -139,7 +139,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
-        const isInverse = useIsInverseOrMediaVariant();
+        const variant = useThemeVariant();
         const labelId = React.useId();
         const panelId = React.useId();
 
@@ -150,13 +150,23 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
             setItemIndex(getAccordionItemIndex(itemRef.current));
         }, []);
 
+        const iconColor = {
+            default: isOpen ? skinVars.colors.neutralHigh : skinVars.colors.neutralMedium,
+            alternative: isOpen ? skinVars.colors.neutralHigh : skinVars.colors.neutralMedium,
+            brand: skinVars.colors.textSecondaryBrand,
+            media: skinVars.colors.textSecondaryBrand,
+            negative: skinVars.colors.textSecondaryNegative,
+        }[variant];
+
         return (
             <div ref={itemRef} {...getPrefixedDataAttributes({...dataAttributes, 'accordion-item': true})}>
                 <BaseTouchable
                     ref={ref}
                     className={classNames(
                         styles.itemContent,
-                        isInverse ? styles.touchableBackgroundInverse : styles.touchableBackground
+                        variant === 'brand' || variant === 'media' || variant === 'negative'
+                            ? styles.touchableBackgroundOverBrand
+                            : styles.touchableBackground
                     )}
                     onPress={() => {
                         if (itemIndex !== undefined) toggle(itemIndex);
@@ -183,13 +193,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                             size={20}
                                             transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
                                             direction={isOpen ? 'up' : 'down'}
-                                            color={
-                                                isInverse
-                                                    ? skinVars.colors.inverse
-                                                    : isOpen
-                                                      ? skinVars.colors.neutralHigh
-                                                      : skinVars.colors.neutralMedium
-                                            }
+                                            color={iconColor}
                                         />
                                     </div>
                                 </Inline>
@@ -291,15 +295,19 @@ export const Accordion = ({
 };
 
 interface BoxedAccordionItemProps extends AccordionItemContentProps {
+    /**
+     * @deprecated Use `variant="brand"` instead.
+     */
     isInverse?: boolean;
+    variant?: 'default' | 'brand';
 }
 
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
-    ({dataAttributes, isInverse, ...props}, ref) => (
+    ({dataAttributes, isInverse, variant, ...props}, ref) => (
         <InternalBoxed
             overflow="visible"
             className={styles.boxed}
-            variant={isInverse ? 'inverse' : 'default'}
+            variant={variant ?? (isInverse ? 'brand' : 'default')}
             ref={ref}
             dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
         >

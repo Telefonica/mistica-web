@@ -3,9 +3,17 @@ import {Box, Text1, Stack, ResponsiveLayout, PhoneNumberField} from '..';
 import {inspect} from './utils';
 import {phoneNumbersList} from './helpers';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/PhoneNumberField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const getPhoneNumberSuggestions = (value: string) =>
@@ -19,7 +27,7 @@ interface PhoneNumberFieldBaseArgs {
     prefix: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -34,14 +42,14 @@ const defaultBaseArgs: PhoneNumberFieldBaseArgs = {
     prefix: '',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
     readOnly: false,
     preventCopy: false,
     e164: true,
-};
+} as const;
 
 interface PhoneNumberFieldControlledArgs extends PhoneNumberFieldBaseArgs {
     initialValue: string;
@@ -49,7 +57,7 @@ interface PhoneNumberFieldControlledArgs extends PhoneNumberFieldBaseArgs {
 }
 
 export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     suggestions,
     ...rest
@@ -58,7 +66,7 @@ export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <PhoneNumberField
@@ -102,7 +110,7 @@ interface PhoneNumberFieldUncontrolledArgs extends PhoneNumberFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     ...rest
 }) => {
@@ -110,7 +118,7 @@ export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <PhoneNumberField

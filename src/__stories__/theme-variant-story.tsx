@@ -40,19 +40,19 @@ const OtherComponent = (): JSX.Element => {
 };
 
 type Args = {
-    themeVariant: Variant;
+    variant: Variant;
 };
 
-export const Default: StoryComponent<Args> = ({themeVariant}) => {
+export const Default: StoryComponent<Args> = ({variant}) => {
     return (
         <div style={{position: 'relative'}}>
-            {themeVariant === 'media' && (
+            {variant === 'media' && (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                     <Image src={beachImg} width="100%" height="100%" noBorderRadius />
                 </div>
             )}
             <div style={{position: 'relative'}}>
-                <ResponsiveLayout variant={themeVariant}>
+                <ResponsiveLayout variant={variant}>
                     <Box paddingY={24}>
                         <OtherComponent />
                     </Box>
@@ -65,25 +65,25 @@ export const Default: StoryComponent<Args> = ({themeVariant}) => {
 Default.storyName = 'ThemeVariant';
 Default.parameters = {fullScreen: true};
 Default.args = {
-    themeVariant: 'default',
+    variant: 'default',
 };
 Default.argTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'media'],
+    variant: {
+        options: ['default', 'brand', 'negative', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };
 
-export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({themeVariant}) => {
+export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({variant}) => {
     return (
         <div style={{position: 'relative'}}>
-            {themeVariant === 'media' && (
+            {variant === 'media' && (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                     <Image src={beachImg} width="100%" height="100%" noBorderRadius />
                 </div>
             )}
             <div style={{position: 'relative'}}>
-                <ResponsiveLayout variant={themeVariant}>
+                <ResponsiveLayout variant={variant}>
                     <Box paddingY={24}>
                         <Stack space={16}>
                             <Callout
@@ -138,12 +138,12 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
 
 ComponentsOverDifferentThemeVariants.storyName = 'Components over different theme variants';
 ComponentsOverDifferentThemeVariants.args = {
-    themeVariant: 'default',
+    variant: 'default',
 };
 ComponentsOverDifferentThemeVariants.parameters = {fullScreen: true};
 ComponentsOverDifferentThemeVariants.argTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'media'],
+    variant: {
+        options: ['default', 'brand', 'negative', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };

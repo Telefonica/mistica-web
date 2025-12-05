@@ -47,9 +47,9 @@ type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableC
 const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, badge, active, onClose, closeButtonLabel} = props;
     const {texts, textPresets, t} = useTheme();
-    const themeVariante = useThemeVariant();
-    const overAlternative = themeVariante === 'alternative';
-    const overInverse = themeVariante === 'inverse';
+    const themeVariant = useThemeVariant();
+    const isOverAlternative = themeVariant === 'alternative';
+    const isOverBrand = themeVariant === 'brand' || themeVariant === 'media' || themeVariant === 'negative';
 
     const isTouchable = props.href || props.onPress || props.to;
     const isInteractive = active !== undefined || isTouchable;
@@ -61,8 +61,8 @@ const Chip = (props: ChipProps): JSX.Element => {
                     className={
                         active
                             ? isTouchable
-                                ? overInverse
-                                    ? styles.iconNavigationInverse
+                                ? isOverBrand
+                                    ? styles.iconNavigationOverBrand
                                     : styles.iconNavigation
                                 : styles.iconActive
                             : styles.icon
@@ -85,7 +85,7 @@ const Chip = (props: ChipProps): JSX.Element => {
         return (
             <div
                 className={classnames(
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    isOverAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
                     styles.chipWrapper,
                     Icon
                         ? props.small
@@ -131,11 +131,11 @@ const Chip = (props: ChipProps): JSX.Element => {
                 styles.chipVariants[
                     active
                         ? isTouchable
-                            ? overInverse
-                                ? 'navigationActiveInverse'
+                            ? isOverBrand
+                                ? 'navigationActiveOverBrand'
                                 : 'navigationActive'
                             : 'active'
-                        : overAlternative
+                        : isOverAlternative
                           ? 'overAlternative'
                           : 'default'
                 ],

@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 test.each`
     values                 | type          | themeVariant | extraContent
@@ -30,7 +31,7 @@ test.each`
     await openStoryPage({
         id: 'components-data-visualizations-meter--meter-story',
         args: {
-            themeVariant,
+            variantOutside: normalizeVariant(themeVariant),
             width: 200,
             type,
             valuesCount: values.length,

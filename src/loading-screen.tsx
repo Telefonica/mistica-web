@@ -19,8 +19,8 @@ import * as tokens from './text-tokens';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
-const BackgroundColor = ({isInverse}: {isInverse: boolean}) => {
-    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;
+const BackgroundColor = ({isBrandVariant}: {isBrandVariant: boolean}) => {
+    const css = `body {background:${isBrandVariant ? vars.colors.backgroundBrand : vars.colors.background}}`;
     return <style>{css}</style>;
 };
 
@@ -129,7 +129,7 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
 };
 
 type Props = {
-    isInverse?: boolean;
+    variant: 'default' | 'brand';
     isLoading?: boolean;
     animateText?: boolean;
     animateBackground?: boolean;
@@ -141,7 +141,7 @@ type Props = {
 const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
     (
         {
-            isInverse,
+            variant,
             children,
             isLoading = true,
             animateText,
@@ -198,21 +198,17 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 
         const centerContent = !children;
 
-        useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+        useSetOverscrollColor(variant === 'brand' ? {topColor: vars.colors.backgroundBrandTop} : {});
 
         return (
-            <ThemeVariant isInverse={isInverse}>
+            <ThemeVariant variant={variant}>
                 <div
                     ref={ref}
                     {...getPrefixedDataAttributes(dataAttributes)}
-                    className={classnames(
-                        styles.loadingScreen,
-                        styles.screenBackground[isInverse ? 'inverse' : 'default'],
-                        {
-                            [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
-                            [styles.screenBackgroundAnimated]: animateBackground,
-                        }
-                    )}
+                    className={classnames(styles.loadingScreen, styles.screenBackground[variant], {
+                        [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
+                        [styles.screenBackgroundAnimated]: animateBackground,
+                    })}
                     style={{
                         justifyContent: centerContent ? 'center' : 'space-between',
                     }}
@@ -224,7 +220,11 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
                     {children ? (
                         <div className={styles.loadingScreenChildren}>{children}</div>
                     ) : (
-                        <Spinner delay="0s" size={32} color={isInverse ? vars.colors.inverse : undefined} />
+                        <Spinner
+                            delay="0s"
+                            size={32}
+                            color={variant === 'brand' ? vars.colors.inverse : undefined}
+                        />
                     )}
                     <LoadingScreenTexts
                         animateText={animateText}
@@ -235,14 +235,16 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
                     {!centerContent && <div style={{height: 104}} />}
                 </div>
                 {/* needed for overscroll. TODO: review the case for brands with gradient like O2 */}
-                {isLoading && inAnimationEnd && <BackgroundColor isInverse={!!isInverse} />}
+                {isLoading && inAnimationEnd && <BackgroundColor isBrandVariant={variant === 'brand'} />}
             </ThemeVariant>
         );
     }
 );
 
 type LoadingScreenProps = {
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
+    variant?: 'default' | 'brand';
     isLoading?: boolean;
     onClose?: () => void;
     children?: React.ReactNode;
@@ -254,6 +256,7 @@ export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps
         <BaseLoadingScreen
             ref={ref}
             {...props}
+            variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
             dataAttributes={{'component-name': 'LoadingScreen', ...props.dataAttributes}}
             animateBackground
         />
@@ -338,7 +341,12 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
         return (
             <BaseLoadingScreen
                 ref={ref}
-                isInverse={themeVariants.brandLoadingScreen === 'inverse'}
+                variant={
+                    themeVariants.brandLoadingScreen === 'inverse' ||
+                    themeVariants.brandLoadingScreen === 'brand'
+                        ? 'brand'
+                        : 'default'
+                }
                 {...textProps}
                 isLoading={isLoading || !isClosing}
                 onClose={() => {

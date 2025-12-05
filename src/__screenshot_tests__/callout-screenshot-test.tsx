@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 test.each`
     actions              | title           | variant      | variantOutside   | closable | asset    | case
@@ -16,7 +17,14 @@ test.each`
 `('Callout $case', async ({actions, title, variant, variantOutside, closable, asset}) => {
     await openStoryPage({
         id: 'components-callout--default',
-        args: {actions, title, variant, variantOutside, closable, asset},
+        args: {
+            actions,
+            title,
+            variant: normalizeVariant(variant),
+            variantOutside: normalizeVariant(variantOutside),
+            closable,
+            asset,
+        },
     });
 
     const callout = await screen.findByRole('region');

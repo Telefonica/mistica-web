@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {ButtonPrimary} from './button';
 import {useTheme} from './hooks';
 import Stack from './stack';
@@ -65,7 +65,9 @@ const EmptyState = ({
     dataAttributes,
 }: Props): JSX.Element => {
     const {isDarkMode} = useTheme();
-    const isInverse = useIsInverseOrMediaVariant();
+    const externalVariant = useThemeVariant();
+    const isOverBrand =
+        externalVariant === 'brand' || externalVariant === 'media' || externalVariant === 'negative';
 
     const image = imageUrl ? (
         <img data-testid="image" className={styles.smallImage} alt="" src={imageUrl} />
@@ -78,10 +80,10 @@ const EmptyState = ({
 
     return (
         <div
-            className={classnames(styles.container, isInverse ? styles.inverseBorder : styles.border)}
+            className={classnames(styles.container, isOverBrand ? styles.borderOverBrand : styles.border)}
             style={applyCssVars({
                 [styles.vars.backgroundColor]:
-                    isInverse && !isDarkMode ? vars.colors.backgroundBrand : vars.colors.backgroundContainer,
+                    isOverBrand && !isDarkMode ? 'transparent' : vars.colors.backgroundContainer,
             })}
             aria-label={ariaLabel}
             role="region"
@@ -107,7 +109,7 @@ const EmptyState = ({
                         <Text3
                             regular
                             as="p"
-                            color={isInverse ? vars.colors.inverse : vars.colors.textSecondary}
+                            color={vars.colors.textSecondary}
                             dataAttributes={{testid: 'description'}}
                         >
                             {description}

@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './responsive-layout.css';
-import {ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 
 import type {Variant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
@@ -12,7 +12,7 @@ type Props = {
     children: React.ReactNode;
     fullWidth?: boolean;
     className?: string;
-    /** @deprecated Use variant = 'inverse' instead */
+    /** @deprecated Use variant = 'brand' instead */
     isInverse?: boolean;
     variant?: Variant;
     backgroundColor?: string;
@@ -32,7 +32,7 @@ export const InternalResponsiveLayout = ({
 }: Props & {shouldExpandWhenNested?: boolean | 'desktop'; innerDivClassName?: string}): JSX.Element => {
     // @deprecated @TODO https://jira.tid.es/browse/WEB-1611
     const outsideVariant: Variant = useThemeVariant();
-    const internalVariant: Variant | undefined = variant || (isInverse && 'inverse') || undefined;
+    const internalVariant: Variant | undefined = variant || (isInverse && 'brand') || undefined;
 
     return (
         <ThemeVariant variant={internalVariant ?? outsideVariant}>
@@ -41,7 +41,7 @@ export const InternalResponsiveLayout = ({
                     className,
                     internalVariant &&
                         internalVariant !== 'default' &&
-                        styles.backgroundVariant[internalVariant],
+                        styles.backgroundVariant[normalizeVariant(internalVariant)],
                     ...(fullWidth
                         ? []
                         : [

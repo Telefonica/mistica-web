@@ -2,16 +2,24 @@ import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, CreditCardExpirationField} from '..';
 import {inspect} from './utils';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/CreditCardExpirationField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 interface CreditCardExpirationFieldBaseArgs {
     label: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -23,7 +31,7 @@ const defaultBaseArgs: CreditCardExpirationFieldBaseArgs = {
     label: 'Label',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
@@ -36,7 +44,7 @@ interface CreditCardExpirationFieldControlledArgs extends CreditCardExpirationFi
 }
 
 export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     ...rest
 }) => {
@@ -44,7 +52,7 @@ export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs>
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <CreditCardExpirationField
@@ -86,7 +94,7 @@ interface CreditCardExpirationFieldUncontrolledArgs extends CreditCardExpiration
 }
 
 export const Uncontrolled: StoryComponent<CreditCardExpirationFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     ...rest
 }) => {
@@ -94,7 +102,7 @@ export const Uncontrolled: StoryComponent<CreditCardExpirationFieldUncontrolledA
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <CreditCardExpirationField

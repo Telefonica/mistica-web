@@ -3,9 +3,17 @@ import {Box, Text1, Stack, ResponsiveLayout, DateField} from '..';
 import {inspect} from './utils';
 import {getLocalDateString} from '../utils/time';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/DateField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
@@ -13,7 +21,7 @@ const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 interface DateFieldBaseArgs {
     label: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -26,7 +34,7 @@ interface DateFieldBaseArgs {
 const defaultBaseArgs: DateFieldBaseArgs = {
     label: 'Label',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
@@ -41,7 +49,7 @@ interface DateFieldControlledArgs extends DateFieldBaseArgs {
 }
 
 export const Controlled: StoryComponent<DateFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     min,
     max,
@@ -54,7 +62,7 @@ export const Controlled: StoryComponent<DateFieldControlledArgs> = ({
     const maxDate = new Date(Date.now() + 7 * ONE_DAY_IN_MS);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Box paddingBottom={8}>
                     <Text1 regular>
@@ -105,7 +113,7 @@ interface DateFieldUncontrolledArgs extends DateFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<DateFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     min,
     max,
@@ -118,7 +126,7 @@ export const Uncontrolled: StoryComponent<DateFieldUncontrolledArgs> = ({
     const maxDate = new Date(Date.now() + 7 * ONE_DAY_IN_MS);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Box paddingBottom={8}>
                     <Text1 regular>

@@ -1,3 +1,17 @@
+## [16.44.1](https://github.com/Telefonica/mistica-web/compare/v16.44.0...v16.44.1) (2025-12-04)
+
+
+### Bug Fixes
+
+* **Snackbar:** text color in Blau ([#1468](https://github.com/Telefonica/mistica-web/issues/1468)) ([2cd5dbe](https://github.com/Telefonica/mistica-web/commit/2cd5dbef34835bcd5838c58e81bb5f84fc30aafc))
+
+# [16.44.0](https://github.com/Telefonica/mistica-web/compare/v16.43.1...v16.44.0) (2025-12-04)
+
+
+### Features
+
+* **ThemeVariant:** deprecated inverse variant (replaced by brand) and added new negative variant ([#1466](https://github.com/Telefonica/mistica-web/issues/1466)) ([e708c22](https://github.com/Telefonica/mistica-web/commit/e708c22a4174072d402d8c6244182971bfcaaa29))
+
 ## [16.43.1](https://github.com/Telefonica/mistica-web/compare/v16.43.0...v16.43.1) (2025-12-02)
 
 

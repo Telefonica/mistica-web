@@ -4,7 +4,7 @@
 import * as React from 'react';
 import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import * as classes from './avatar.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -67,10 +67,12 @@ const Avatar = ({
     dataAttributes,
     ...props
 }: AvatarProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const variant = useThemeVariant();
+    const isOverBrand = variant === 'brand' || variant === 'media' || variant === 'negative';
     const backgroundColor =
-        props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
-    const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand);
+        props.backgroundColor ?? (isOverBrand ? vars.colors.brandHigh : vars.colors.brandLow);
+    const textColor =
+        props.textColor ?? (isOverBrand ? vars.colors.textPrimaryNegative : vars.colors.textBrand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
