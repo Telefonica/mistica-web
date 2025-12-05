@@ -2,6 +2,9 @@ import * as React from 'react';
 import {IconButton, TooltipLinkList, WithTooltip} from 'storybook/internal/components';
 import {addons, type API, types} from 'storybook/manager-api';
 
+const ADDON_ID = 'dark-mode';
+const PANEL_ID = `${ADDON_ID}/panel`;
+
 const COLOR_SCHEMES = [
     {id: 'auto', title: 'Auto', tooltipLabel: 'Auto (OS setting)'},
     {id: 'dark', title: 'Dark'},
@@ -46,7 +49,7 @@ const DarkModeAddon = ({api}: {api: API}) => {
             <IconButton title="Change color scheme">
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <span style={{marginLeft: 8}}>
-                        Color scheme: {COLOR_SCHEMES.find(({id}) => id === colorScheme).title}
+                        Color scheme: {COLOR_SCHEMES.find(({id}) => id === colorScheme)?.title}
                     </span>
                 </div>
             </IconButton>
@@ -54,8 +57,8 @@ const DarkModeAddon = ({api}: {api: API}) => {
     );
 };
 
-addons.register('dark-mode', (api) => {
-    addons.add('dark-mode/panel', {
+addons.register(ADDON_ID, (api) => {
+    addons.add(PANEL_ID, {
         type: types.TOOL,
         title: 'Dark mode',
         render: () => <DarkModeAddon api={api} />,

@@ -1,8 +1,11 @@
 import * as React from 'react';
-import {addons, type API, types} from 'storybook/manager-api';
+import {addons, types} from 'storybook/manager-api';
 import {IconButton, TooltipLinkList, WithTooltip} from 'storybook/internal/components';
-import {AVAILABLE_SKINS, getColors, type Skin} from '../colors';
+import {AVAILABLE_SKINS, getColors} from '../colors';
 import {createStorybookTheme} from '../storybook-manager-theme';
+
+import type {API} from 'storybook/manager-api';
+import type {Skin} from '../colors';
 
 const ADDON_ID = 'theme-selector';
 const PANEL_ID = `${ADDON_ID}/panel`;
