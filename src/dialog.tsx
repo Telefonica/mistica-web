@@ -89,7 +89,9 @@ const InternalDialog = (props: InternalDialogProps) => {
         <div className={classnames(styles.variants[isDialog ? 'dialog' : 'default'], className)}>
             {asset && (
                 <Box paddingBottom={24}>
-                    <div className={styles.iconContainer}>{React.cloneElement(asset, {size: '100%'})}</div>
+                    <div className={styles.iconContainer}>
+                        {React.cloneElement<any>(asset, {size: '100%'})}
+                    </div>
                 </Box>
             )}
             {title && (

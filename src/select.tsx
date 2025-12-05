@@ -358,7 +358,6 @@ const Select = ({
                         }}
                         ref={(actualRef) => {
                             [inputRef, focusableRef].forEach((currentRef) => {
-                                // @ts-expect-error current is typed as read-only
                                 currentRef.current = actualRef;
                             });
                         }}

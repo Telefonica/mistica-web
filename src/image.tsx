@@ -170,7 +170,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         ref
     ) => {
         const imageId = React.useId();
-        const imageRef = React.useRef<HTMLImageElement>();
+        const imageRef = React.useRef<HTMLImageElement>(null);
         const borderRadiusStyle = props.circular
             ? styles.circularBorderRadius
             : noBorderRadius
