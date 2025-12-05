@@ -2,6 +2,7 @@ import {dirname, resolve} from 'path';
 import {fileURLToPath} from 'url';
 import {VanillaExtractPlugin} from '@vanilla-extract/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpack from 'webpack';
 
 import type {StorybookConfig} from '@storybook/react-webpack5';
 
@@ -99,6 +100,15 @@ const config: StorybookConfig = {
                 '**/__screenshot_tests__',
             ],
         };
+
+        // Define process.env variables for browser
+        config.plugins?.push(
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+                'process.env.SSR_TEST': JSON.stringify(''),
+            }) as any
+        );
+
         addVanillaExtractSupport(config);
         return config;
     },
