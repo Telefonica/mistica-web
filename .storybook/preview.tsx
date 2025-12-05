@@ -1,18 +1,4 @@
-// import type { Preview } from '@storybook/react-webpack5'
-
-// const preview: Preview = {
-//   parameters: {
-//     controls: {
-//       matchers: {
-//        color: /(background|color)$/i,
-//        date: /Date$/i,
-//       },
-//     },
-//   },
-// };
-
-// export default preview;
-
+import {addons} from 'storybook/preview-api';
 import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
@@ -36,9 +22,9 @@ import {
     ESIMFLAG_SKIN,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
-// import {addons} from '@storybook/addons';
 import {getPlatform} from '../src/utils/platform';
 
+import type {Preview} from '@storybook/react-webpack5';
 import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
@@ -46,25 +32,25 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return (
-        [
-            MOVISTAR_SKIN,
-            MOVISTAR_NEW_SKIN,
-            O2_SKIN,
-            O2_NEW_SKIN,
-            VIVO_SKIN,
-            VIVO_NEW_SKIN,
-            TELEFONICA_SKIN,
-            BLAU_SKIN,
-            TU_SKIN,
-            ESIMFLAG_SKIN,
-        ].find((skin) => skin === qsSkin) || MOVISTAR_SKIN
-    );
+    return [
+        MOVISTAR_SKIN,
+        MOVISTAR_NEW_SKIN,
+        O2_SKIN,
+        O2_NEW_SKIN,
+        VIVO_SKIN,
+        VIVO_NEW_SKIN,
+        TELEFONICA_SKIN,
+        BLAU_SKIN,
+        TU_SKIN,
+        ESIMFLAG_SKIN,
+    ].find((skin) => skin === qsSkin);
 };
 
 const getColorScheme = (searchParams: URLSearchParams): ColorScheme | undefined => {
     const colorScheme = searchParams.get('colorScheme');
-    return colorScheme === 'light' || colorScheme === 'dark' || colorScheme === 'auto' ? colorScheme : 'auto';
+    return colorScheme === 'light' || colorScheme === 'dark' || colorScheme === 'auto'
+        ? colorScheme
+        : undefined;
 };
 
 const getPlatformByValue = (value?: string | null): Platform | undefined => {
@@ -76,7 +62,7 @@ const getPlatformByValue = (value?: string | null): Platform | undefined => {
 };
 
 const getPlatformByUrl = (searchParams: URLSearchParams): Platform | undefined => {
-    return getPlatformByValue(searchParams.get('platform')) || 'desktop';
+    return getPlatformByValue(searchParams.get('platform'));
 };
 
 const getTheme = (
@@ -117,26 +103,28 @@ const MisticaThemeProvider = ({
     const [colorScheme, setColorScheme] = React.useState(getColorScheme(searchParams));
     const isStoryOnNewTab = window.frameElement === null;
 
-    // React.useEffect(() => {
-    //     const channel = addons.getChannel();
-    //     channel.on('skin-selected', setSkin);
-    //     channel.on('color-scheme-selected', setColorScheme);
-    //     channel.emit('story-mounted');
-    //     channel.on('platform-selected', (value) => {
-    //         setPlatform(getPlatformByValue(value));
-    //     });
+    React.useEffect(() => {
+        const channel = addons.getChannel();
+        channel.on('skin-selected', setSkin);
+        channel.on('color-scheme-selected', setColorScheme);
+        channel.on('platform-selected', (value) => {
+            setPlatform(getPlatformByValue(value));
+        });
 
-    //     return () => {
-    //         channel.off('skin-selected', setSkin);
-    //         channel.off('color-scheme-selected', setColorScheme);
-    //         channel.off('platform-selected', (value) => {
-    //             setPlatform(getPlatformByValue(value));
-    //         });
-    //     };
-    // }, []);
+        channel.emit('story-mounted');
+
+        return () => {
+            channel.off('skin-selected', setSkin);
+            channel.off('color-scheme-selected', setColorScheme);
+            channel.off('platform-selected', (value) => {
+                setPlatform(getPlatformByValue(value));
+            });
+        };
+    }, []);
 
     return (
         <React.StrictMode>
+            <pre>{JSON.stringify({skin, colorScheme, platform}, null, 2)}</pre>
             {/**
              * Avoid rendering story until storybook addons finish loading skin, color scheme and platform.
              * If story is opened in a new tab, we always render it because the addons don't exist in there.
@@ -167,14 +155,14 @@ const withMisticaThemeProvider: Decorator = (Story, context) => (
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);
-    // React.useEffect(() => {
-    //     const channel = addons.getChannel();
-    //     channel.on('font-size-selected', setFontSize);
+    React.useEffect(() => {
+        const channel = addons.getChannel();
+        channel.on('font-size-selected', setFontSize);
 
-    //     return () => {
-    //         channel.off('font-size-selected', setFontSize);
-    //     };
-    // }, []);
+        return () => {
+            channel.off('font-size-selected', setFontSize);
+        };
+    }, []);
     const fontSizeStyle = `html {font-size: ${fontSize}px}`;
     const bodyBackground = `body {background: ${skinVars.colors.background}}`;
     return (
@@ -223,9 +211,18 @@ const parameters = {
     },
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
     docs: {source: {type: 'code'}},
+
+    controls: {
+        matchers: {
+            color: /(background|color)$/i,
+            date: /Date$/i,
+        },
+    },
 };
 
-export default {
+const preview: Preview = {
     parameters,
     decorators,
 };
+
+export default preview;
