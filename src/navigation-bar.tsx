@@ -1087,7 +1087,7 @@ const MainNavigationBarDesktopSection = ({
     selectedIndex?: number;
     isFirstSection: boolean;
     isLastSection: boolean;
-    navigationBarRef: React.RefObject<HTMLDivElement>;
+    navigationBarRef: React.RefObject<HTMLDivElement | null>;
     variant: NonDeprecatedVariant;
     isLargeNavigationBar: boolean;
     desktopLargeMenu?: boolean;
@@ -1298,7 +1298,7 @@ const MainNavigationBarDesktopSections = ({
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
-    navigationBarRef: React.RefObject<HTMLDivElement>;
+    navigationBarRef: React.RefObject<HTMLDivElement | null>;
     variant: NonDeprecatedVariant;
     hasRightContent: boolean;
     isLargeNavigationBar: boolean;

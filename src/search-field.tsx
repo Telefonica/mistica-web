@@ -42,7 +42,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         ref
     ) => {
         const {texts, t} = useTheme();
-        const inputRef = React.useRef<HTMLInputElement>();
+        const inputRef = React.useRef<HTMLInputElement>(null);
         const [searchValue, setSearchValue] = React.useState(defaultValue || '');
 
         const isControlledByParent = typeof value !== 'undefined';

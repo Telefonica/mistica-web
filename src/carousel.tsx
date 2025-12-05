@@ -27,7 +27,7 @@ import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 const useShouldAutoplay = (
     autoplay: boolean,
-    ref: React.RefObject<HTMLElement>
+    ref: React.RefObject<HTMLElement | null>
 ): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setShouldAutoPlay: (enabled: boolean) => void} => {
     const reducedMotion = isClientSide()
         ? window.matchMedia('(prefers-reduced-motion: reduce)').matches

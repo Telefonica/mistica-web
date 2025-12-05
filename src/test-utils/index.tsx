@@ -181,7 +181,6 @@ export const openStoryPage = ({
         | 'O2-new'
         | 'Telefonica'
         | 'Blau'
-        | 'Tu'
         | 'Esimflag';
     args?: StoryArgs;
     isDarkMode?: boolean;

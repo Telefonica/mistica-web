@@ -81,7 +81,7 @@ const Options = ({
     closeMenu,
     elementRef,
 }: OptionsProps) => {
-    const scrollRef = React.useRef<HTMLDivElement>();
+    const scrollRef = React.useRef<HTMLDivElement>(null);
     const optionRefs = React.useRef(new Map<string, HTMLDivElement>());
     const [tentativeValueState, setTentativeValueState] = React.useState('');
 
@@ -206,7 +206,7 @@ type AutocompleteSelectFieldProps = {
 };
 
 const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) => {
-    const inputRef = React.useRef<HTMLInputElement>();
+    const inputRef = React.useRef<HTMLInputElement>(null);
     const [filteredOptions, setFilteredOptions] = React.useState(options);
     const [filterValue, setFilterValue] = React.useState('');
     const [selectedValue, setSelectedValue] = React.useState('');

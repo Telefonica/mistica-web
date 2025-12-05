@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, SearchField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import {countriesList} from './helpers';
 
 import type {Variant} from '../theme-variant-context';
