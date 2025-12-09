@@ -123,10 +123,12 @@ const Form = ({
         const errors: FormErrors = {};
         for (const [name, {input, validator, required}] of fieldRegistrations.current) {
             if (input) {
+                const isRequired = required ?? input.required;
+
                 if (input.disabled) {
                     continue;
                 }
-                if (required && !rawValues[name]?.trim()) {
+                if (isRequired && !rawValues[name]?.trim()) {
                     errors[name] = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
                 } else {
                     const error = validator?.(values[name], rawValues[name]);
