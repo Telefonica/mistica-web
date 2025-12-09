@@ -14,6 +14,8 @@ import {
 } from '..';
 import tennisImg from './images/tennis.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Buttons',
     parameters: {fullScreen: true},
@@ -42,7 +44,7 @@ const defaultArgTypes = {
     },
     newTab: {if: {arg: 'action', eq: 'href'}},
     variantOutside: {
-        options: ['default', 'inverse', 'media'],
+        options: ['default', 'brand', 'media', 'negative', 'alternative'],
         control: {type: 'select'},
     },
 };
@@ -51,7 +53,7 @@ type Args = {
     text: string;
     loadingText: string;
     icon: string;
-    variantOutside: 'default' | 'inverse' | 'media';
+    variantOutside: Variant;
     disabled: boolean;
     showSpinner: boolean;
     small: boolean;
@@ -77,7 +79,7 @@ const getButtonActionProps = (action: string, newTab: boolean) => {
 };
 
 type Props = {
-    variant: 'default' | 'inverse' | 'media';
+    variant: Variant;
     children: React.ReactNode;
 };
 

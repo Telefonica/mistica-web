@@ -11,11 +11,11 @@ export default {
             control: {type: 'select'},
         },
         variantOutside: {
-            options: ['default', 'inverse', 'alternative'],
+            options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
         },
         variant: {
-            options: ['default', 'inverse'],
+            options: ['default', 'brand'],
             control: {type: 'select'},
         },
     },
@@ -29,7 +29,7 @@ type Args = {
     asset: boolean;
     closable: boolean;
     variantOutside: Variant;
-    variant: 'default' | 'inverse';
+    variant: 'default' | 'brand';
 };
 
 export const Default: StoryComponent<Args> = ({

@@ -187,7 +187,7 @@ test('Rows over inverse background', async () => {
         id: 'components-lists--row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse: true,
+            variantOutside: 'brand',
         },
     });
 
@@ -201,7 +201,7 @@ test('BoxedRows over inverse background', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse: true,
+            variantOutside: 'brand',
         },
     });
 
@@ -215,7 +215,7 @@ test('BoxedRows inverse', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            inverse: true,
+            variant: 'brand',
         },
     });
 
@@ -229,8 +229,8 @@ test('BoxedRows inverse over inverse', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            inverse: true,
-            overInverse: true,
+            variant: 'brand',
+            variantOutside: 'brand',
         },
     });
 
@@ -258,7 +258,7 @@ test('Rows danger over inverse background', async () => {
         id: 'components-lists--row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse: true,
+            variantOutside: 'brand',
             danger: true,
         },
     });

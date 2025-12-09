@@ -20,7 +20,7 @@ test('Counter. isInverse', async () => {
     await openStoryPage({
         id: 'components-counter--default',
         device: 'DESKTOP',
-        args: {isInverse: true, defaultValue: 1},
+        args: {variantOutside: 'brand', defaultValue: 1},
     });
 
     const counter = await screen.findByTestId('counter');

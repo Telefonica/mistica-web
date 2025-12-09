@@ -9,7 +9,7 @@ test('Divider', async () => {
 });
 
 test('Divider - inverse', async () => {
-    await openStoryPage({id: 'components-divider--default', args: {inverse: true}});
+    await openStoryPage({id: 'components-divider--default', args: {variantOutside: 'brand'}});
 
     const story = await screen.findByTestId('divider-story');
 

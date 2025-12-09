@@ -10,6 +10,7 @@ import {
     VIVO_SKIN,
 } from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 const STORY_IDS: Record<any, string> = {
     cover: 'components-cards-covercard--default',
@@ -84,7 +85,7 @@ test.each`
             args: {
                 ...argsReset,
                 size,
-                variant,
+                variant: normalizeVariant(variant),
                 asset,
                 topActions,
                 mediaPosition,
@@ -168,7 +169,7 @@ test.each`
         device: 'MOBILE_IOS',
         args: {
             ...argsReset,
-            variant,
+            variant: normalizeVariant(variant),
             backgroundColor,
             description,
             topActions: true,
@@ -267,9 +268,9 @@ test.each`
                 headline: '',
                 pretitle: '',
                 title: 'Footer and divider',
-                variantOutside,
-                variant,
-                footerVariant,
+                variantOutside: normalizeVariant(variantOutside),
+                variant: normalizeVariant(variant),
+                footerVariant: normalizeVariant(footerVariant),
                 footerBackgroundColor,
                 description,
                 topActions: false,
@@ -297,8 +298,8 @@ test.each`
         device: 'MOBILE_IOS',
         args: {
             ...argsReset,
-            variant,
-            variantOutside,
+            variant: normalizeVariant(variant),
+            variantOutside: normalizeVariant(variantOutside),
             description,
             showFooter: true,
             footerSlot: true,
@@ -370,7 +371,7 @@ test('NakedCard over inverse', async () => {
         device: 'MOBILE_IOS',
         args: {
             ...argsReset,
-            variantOutside: 'inverse',
+            variantOutside: 'brand',
         },
     });
 

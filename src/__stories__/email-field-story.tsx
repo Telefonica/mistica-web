@@ -2,9 +2,17 @@ import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, EmailField} from '..';
 import {inspect} from 'util';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/EmailField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 interface EmailFieldBaseArgs {
@@ -12,7 +20,7 @@ interface EmailFieldBaseArgs {
     placeholder: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -25,7 +33,7 @@ const defaultBaseArgs: EmailFieldBaseArgs = {
     placeholder: '',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
@@ -37,12 +45,16 @@ interface EmailFieldControlledArgs extends EmailFieldBaseArgs {
     initialValue: string;
 }
 
-export const Controlled: StoryComponent<EmailFieldControlledArgs> = ({inverse, initialValue, ...rest}) => {
+export const Controlled: StoryComponent<EmailFieldControlledArgs> = ({
+    variantOutside,
+    initialValue,
+    ...rest
+}) => {
     const [rawValue, setRawValue] = React.useState<any>(initialValue);
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <EmailField
@@ -84,7 +96,7 @@ interface EmailFieldUncontrolledArgs extends EmailFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<EmailFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     ...rest
 }) => {
@@ -92,7 +104,7 @@ export const Uncontrolled: StoryComponent<EmailFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <EmailField

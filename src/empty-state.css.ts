@@ -110,6 +110,6 @@ export const border = sprinkles({
     border: 'regular',
 });
 
-export const inverseBorder = style({
+export const borderOverBrand = style({
     border: `1px solid ${skin.vars.colors.backgroundContainer}`,
 });

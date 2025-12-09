@@ -1,20 +1,28 @@
 import * as React from 'react';
 import {Stack, RadioGroup, RadioButton, Inline, Text3, IconHandRightRegular, ResponsiveLayout, Box} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Radio Button',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
     disabled: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, inverse}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => {
     const [value, setValue] = React.useState('first');
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="radio-group-wrapper" style={{maxWidth: 'fit-content'}}>
                     <RadioGroup name="radio-group" disabled={disabled} onChange={setValue} value={value}>
@@ -36,13 +44,13 @@ export const Controlled: StoryComponent<Args> = ({disabled, inverse}) => {
 Controlled.storyName = 'controlled';
 Controlled.args = {
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, inverse}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) => {
     const [value, setValue] = React.useState('first');
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="radio-group-wrapper" style={{maxWidth: 'fit-content'}}>
                     <RadioGroup
@@ -69,13 +77,13 @@ export const Uncontrolled: StoryComponent<Args> = ({disabled, inverse}) => {
 Uncontrolled.storyName = 'uncontrolled';
 Uncontrolled.args = {
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
 };
 
-export const CustomRender: StoryComponent<Args> = ({disabled, inverse}) => {
+export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) => {
     const [value, setValue] = React.useState('first');
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="radio-group-wrapper" style={{maxWidth: 'fit-content'}}>
                     <RadioGroup
@@ -135,5 +143,5 @@ export const CustomRender: StoryComponent<Args> = ({disabled, inverse}) => {
 CustomRender.storyName = 'custom render';
 CustomRender.args = {
     disabled: false,
-    inverse: false,
+    variantOutside: 'default',
 };

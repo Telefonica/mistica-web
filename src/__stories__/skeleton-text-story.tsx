@@ -1,37 +1,40 @@
 import * as React from 'react';
-import {ThemeVariant, skinVars} from '..';
+import {Box, ResponsiveLayout} from '..';
 import {SkeletonText} from '../skeletons';
+
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Skeletons/SkeletonText',
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
     ariaLabel: string;
 };
 
-export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
+export const Default: StoryComponent<Args> = ({variantOutside, ariaLabel}) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    padding: 16,
-                }}
-            >
+        <ResponsiveLayout variant={variantOutside}>
+            <Box paddingY={16}>
                 <SkeletonText ariaLabel={ariaLabel} dataAttributes={{testid: 'skeleton-text'}} />
-            </div>
-        </ThemeVariant>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'SkeletonText';
 
 Default.args = {
-    inverse: false,
+    variantOutside: 'default',
     ariaLabel: '',
 };

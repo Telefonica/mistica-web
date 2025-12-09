@@ -124,7 +124,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                     shouldShowDismissButton && hasLongButton ? {paddingRight: 32} : undefined
                                 }
                             >
-                                <Text2 regular color={vars.colors.textPrimaryInverse}>
+                                <Text2 regular color={vars.colors.textPrimaryNegative}>
                                     {message}
                                 </Text2>
                             </div>
@@ -148,7 +148,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                             truncate
                                             color={
                                                 type === 'CRITICAL'
-                                                    ? vars.colors.textPrimaryInverse
+                                                    ? vars.colors.textPrimaryNegative
                                                     : vars.colors.textLinkSnackbar
                                             }
                                         >

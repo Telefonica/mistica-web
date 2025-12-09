@@ -2,9 +2,17 @@ import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, CreditCardNumberField} from '..';
 import {inspect} from 'util';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/CreditCardNumberField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 interface CreditCardNumberFieldBaseArgs {
@@ -12,7 +20,7 @@ interface CreditCardNumberFieldBaseArgs {
     placeholder: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -25,7 +33,7 @@ const defaultBaseArgs: CreditCardNumberFieldBaseArgs = {
     placeholder: '',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
@@ -38,7 +46,7 @@ interface CreditCardNumberFieldControlledArgs extends CreditCardNumberFieldBaseA
 }
 
 export const Controlled: StoryComponent<CreditCardNumberFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     ...rest
 }) => {
@@ -46,7 +54,7 @@ export const Controlled: StoryComponent<CreditCardNumberFieldControlledArgs> = (
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <CreditCardNumberField
@@ -88,7 +96,7 @@ interface CreditCardNumberFieldUncontrolledArgs extends CreditCardNumberFieldBas
 }
 
 export const Uncontrolled: StoryComponent<CreditCardNumberFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     ...rest
 }) => {
@@ -96,7 +104,7 @@ export const Uncontrolled: StoryComponent<CreditCardNumberFieldUncontrolledArgs>
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <CreditCardNumberField

@@ -1,9 +1,17 @@
 import * as React from 'react';
 import {Box, ResponsiveLayout, Slider} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Slider',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
@@ -12,13 +20,13 @@ type Args = {
     max: number;
     min: number;
     tooltip: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tooltip, inverse}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tooltip, variantOutside}) => {
     const [value, setValue] = React.useState(min);
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined}>
+        <ResponsiveLayout variant={variantOutside}>
             <Box paddingX={16} paddingY={64}>
                 <Slider
                     name="slider"
@@ -44,12 +52,12 @@ Controlled.args = {
     max: 100,
     min: 0,
     tooltip: false,
-    inverse: false,
+    variantOutside: 'default',
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, step, max, min, tooltip, inverse}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, step, max, min, tooltip, variantOutside}) => {
     return (
-        <ResponsiveLayout variant={inverse ? 'inverse' : undefined}>
+        <ResponsiveLayout variant={variantOutside}>
             <Box paddingX={16} paddingY={64}>
                 <Slider
                     name="slider"
@@ -74,5 +82,5 @@ Uncontrolled.args = {
     max: 100,
     min: 0,
     tooltip: false,
-    inverse: false,
+    variantOutside: 'default',
 };
