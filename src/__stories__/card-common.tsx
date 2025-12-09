@@ -33,7 +33,7 @@ export type CommonCardArgs = {
     size: CardSize;
     variant: Variant | '';
     aspectRatio: number | string;
-    variantOutside: 'default' | 'inverse' | 'alternative';
+    variantOutside: 'default' | 'brand' | 'alternative';
     width?: number | string;
     height?: number | string;
 
@@ -68,7 +68,7 @@ export type CommonCardArgs = {
     // footer
     showFooter: boolean;
     footerSlot: boolean;
-    footerVariant: 'default' | 'inverse' | '';
+    footerVariant: 'default' | 'brand' | '';
 };
 
 export const getAsset = (asset: CommonCardArgs['asset']): JSX.Element | undefined => {
@@ -142,11 +142,13 @@ export const ThemeVariantWrapper = ({
                 style={{
                     padding: 16,
                     backgroundColor:
-                        variant === 'inverse'
+                        variant === 'brand'
                             ? skinVars.colors.backgroundBrand
                             : variant === 'alternative'
                               ? skinVars.colors.backgroundAlternative
-                              : undefined,
+                              : variant === 'negative'
+                                ? skinVars.colors.backgroundNegative
+                                : undefined,
                 }}
             >
                 {children}
@@ -235,25 +237,26 @@ export const commonArgTypes = {
         },
     },
     variant: {
-        options: ['', 'default', 'inverse', 'alternative', 'media'],
+        options: ['', 'default', 'brand', 'negative', 'alternative', 'media'],
         control: {
             type: 'select',
             labels: {
                 '': 'undefined',
                 default: 'default',
-                inverse: 'inverse',
+                brand: 'brand',
                 alternative: 'alternative',
                 media: 'media',
             },
         },
     },
     variantOutside: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'negative', 'alternative'],
         control: {
             type: 'select',
             labels: {
                 default: 'default',
-                inverse: 'inverse',
+                brand: 'brand',
+                negative: 'negative',
                 alternative: 'alternative',
             },
         },
@@ -289,13 +292,13 @@ export const commonArgTypes = {
         },
     },
     footerVariant: {
-        options: ['', 'default', 'inverse'],
+        options: ['', 'default', 'brand'],
         control: {
             type: 'select',
             labels: {
                 '': 'undefined',
                 default: 'default',
-                inverse: 'inverse',
+                brand: 'brand',
             },
         },
     },

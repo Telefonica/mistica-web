@@ -3,6 +3,8 @@ import {Box, ResponsiveLayout, Text} from '../..';
 import {kebabCase, camelCase, upperFirst, sortBy} from 'lodash';
 import {iconKeywords, iconCategories} from '../../generated/mistica-icons/icons-keywords';
 
+import type {Variant} from '../../theme-variant-context';
+
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
  */
@@ -32,6 +34,10 @@ export default {
             control: {type: 'select'},
             options: availableCategories,
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
     parameters: {fullScreen: true},
 };
@@ -43,7 +49,7 @@ type Args = {
     regular: boolean;
     light: boolean;
     filled: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     names: boolean;
     background: boolean;
 };
@@ -55,7 +61,7 @@ export const Catalog: StoryComponent<Args> = ({
     regular,
     light,
     filled,
-    inverse,
+    variantOutside,
     names,
     background,
 }) => {
@@ -129,7 +135,7 @@ export const Catalog: StoryComponent<Args> = ({
     const iconBackgroundColor = background ? '#aaa' : 'none';
 
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             {misticaIcons
                 .filter(({componentName}) => filterIcon(componentName))
                 .sort((a, b) => compareNames(a.componentName, b.componentName))
@@ -175,7 +181,7 @@ Catalog.args = {
     regular: true,
     light: true,
     filled: true,
-    inverse: false,
+    variantOutside: 'default',
     names: true,
     background: false,
 };

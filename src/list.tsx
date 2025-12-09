@@ -13,7 +13,7 @@ import {Text, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
@@ -106,7 +106,7 @@ export const Content = ({
     disabled,
     control,
 }: ContentProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const outsideVariant = useThemeVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
@@ -127,12 +127,20 @@ export const Content = ({
                         className={styles.asset}
                         style={applyCssVars({
                             color: danger
-                                ? isInverse
-                                    ? vars.colors.textErrorInverse
-                                    : vars.colors.textError
-                                : isInverse
-                                  ? vars.colors.textPrimaryInverse
-                                  : vars.colors.textPrimary,
+                                ? {
+                                      default: vars.colors.textError,
+                                      alternative: vars.colors.textError,
+                                      brand: vars.colors.textErrorBrand,
+                                      negative: vars.colors.textErrorNegative,
+                                      media: vars.colors.textErrorBrand,
+                                  }[outsideVariant]
+                                : {
+                                      default: vars.colors.textPrimary,
+                                      alternative: vars.colors.textPrimary,
+                                      brand: vars.colors.textPrimaryBrand,
+                                      negative: vars.colors.textPrimaryNegative,
+                                      media: vars.colors.textPrimaryMedia,
+                                  }[outsideVariant],
                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                         })}
                     >
@@ -248,7 +256,15 @@ export const Content = ({
                         >
                             <IconChevronRightFilled
                                 size={16}
-                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
+                                color={
+                                    {
+                                        default: vars.colors.neutralMedium,
+                                        alternative: vars.colors.neutralMedium,
+                                        brand: vars.colors.textSecondaryBrand,
+                                        negative: vars.colors.textSecondaryNegative,
+                                        media: vars.colors.textSecondaryBrand,
+                                    }[outsideVariant]
+                                }
                             />
                         </div>
                     )}
@@ -391,7 +407,9 @@ const hasControlProps = (
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
-    const isInverse = useIsInverseOrMediaVariant();
+    const outsideVariant = useThemeVariant();
+    const isOverBrand =
+        outsideVariant === 'brand' || outsideVariant === 'media' || outsideVariant === 'negative';
     const {
         asset,
         headline,
@@ -429,8 +447,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
-    const hasHoverDefault = !disabled && !isInverse;
-    const hasHoverInverse = !disabled && isInverse;
+    const hasHoverDefault = !disabled && !isOverBrand;
+    const hasHoverInverse = !disabled && isOverBrand;
     const hasControl = hasControlProps(props);
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
@@ -504,7 +522,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 ref={ref}
                 className={classNames(styles.rowContent, {
                     [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
+                    [styles.touchableBackgroundBrand]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 {...interactiveProps}
@@ -532,7 +550,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={touchableRole}
                 className={classNames(styles.dualActionLeft, {
                     [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
+                    [styles.touchableBackgroundBrand]: hasHoverInverse,
                 })}
                 tabIndex={tabIndex}
             >
@@ -549,7 +567,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         <div
             className={classNames(styles.rowContent, {
                 [styles.touchableBackground]: hasHoverDefault && isContentInsideControl,
-                [styles.touchableBackgroundInverse]: hasHoverInverse && isContentInsideControl,
+                [styles.touchableBackgroundBrand]: hasHoverInverse && isContentInsideControl,
                 [styles.pointer]: !disabled && isContentInsideControl,
             })}
             ref={ref as React.Ref<HTMLDivElement>}
@@ -796,15 +814,27 @@ export const RowList = ({
 // danger + isInverse is not allowed
 type CommonBoxedRowProps =
     | {
+          /**
+           * @deprecated Use variant instead
+           */
           isInverse?: false;
+          variant?: 'default';
           danger: true;
       }
     | {
+          /**
+           * @deprecated Use variant instead
+           */
           isInverse?: boolean;
+          variant?: 'brand' | 'default';
           danger?: false;
       }
     | {
+          /**
+           * @deprecated Use variant instead
+           */
           isInverse?: false;
+          variant?: 'default';
           danger: boolean;
       };
 
@@ -824,7 +854,7 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
     <InternalBoxed
         overflow="visible"
         className={styles.boxed}
-        variant={props.isInverse ? 'inverse' : 'default'}
+        variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
     >

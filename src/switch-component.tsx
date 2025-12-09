@@ -14,7 +14,7 @@ import Inline from './inline';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './switch-component.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -57,7 +57,7 @@ type PropsChildren = {
 
 const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
     const {isIos, isDarkMode} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const themeVariant = useThemeVariant();
     const reactId = React.useId();
     const labelId = props['aria-labelledby'] || reactId;
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
@@ -123,14 +123,20 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
                 <div className={styles.switchCheckboxLabel}>
                     <span
                         className={
-                            isInverse ? styles.inverseBarVariants[barVariant] : styles.barVariants[barVariant]
+                            themeVariant === 'brand' || themeVariant === 'media'
+                                ? styles.overBrandBarVariants[barVariant]
+                                : themeVariant === 'negative'
+                                  ? styles.overNegativeBarVariants[barVariant]
+                                  : styles.barVariants[barVariant]
                         }
                     />
                     <span
                         className={
-                            isInverse
-                                ? styles.inverseBallVariants[ballVariant]
-                                : styles.ballVariants[ballVariant]
+                            themeVariant === 'brand' || themeVariant === 'media'
+                                ? styles.overBrandBallVariants[ballVariant]
+                                : themeVariant === 'negative'
+                                  ? styles.overNegativeBallVariants[ballVariant]
+                                  : styles.ballVariants[ballVariant]
                         }
                     />
                 </div>

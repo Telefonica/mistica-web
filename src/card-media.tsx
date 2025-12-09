@@ -75,7 +75,7 @@ export type MediaCardProps = {
     closeButtonLabel?: string;
     showFooter?: boolean;
     footerBackgroundColor?: string;
-    footerVariant?: 'default' | 'inverse';
+    footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
 };
 
@@ -107,7 +107,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
 type DeprecatedHighlightedCardProps = Omit<MediaCardProps, 'size' | 'mediaPosition'> & {
     /** @deprecated use imageSrc */
     imageUrl?: string;
-    /** @deprecated use variant */
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
 };
 

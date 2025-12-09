@@ -1,4 +1,5 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 import type {Device} from '../test-utils';
 
@@ -115,10 +116,10 @@ test.each(TESTABLE_DEVICES)('PosterCard with asset in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(['inverse', 'alternative', 'default'])('PosterCard with variant %s', async (variant) => {
+test.each(['inverse', 'alternative', 'default'] as const)('PosterCard with variant %s', async (variant) => {
     await openStoryPage({
         id: 'private-deprecated-card-stories-postercard--default',
-        args: {variant, background: 'color from skin'},
+        args: {variant: normalizeVariant(variant), background: 'color from skin'},
     });
 
     const posterCard = await screen.findByTestId('poster-card');
@@ -144,7 +145,7 @@ test('PosterCard with custom background color', async () => {
 test('PosterCard with custom background color inverse', async () => {
     await openStoryPage({
         id: 'private-deprecated-card-stories-postercard--default',
-        args: {background: 'custom color', backgroundColorCustom: '#000', variant: 'inverse'},
+        args: {background: 'custom color', backgroundColorCustom: '#000', variant: 'brand'},
     });
 
     const posterCard = await screen.findByTestId('poster-card');
@@ -176,7 +177,7 @@ test.each`
 `('PosterCard with $background, empty source and inverse=$inverse', async ({background, inverse}) => {
     await openStoryPage({
         id: 'private-deprecated-card-stories-postercard--default',
-        args: {background, emptySource: true, inverse},
+        args: {background, emptySource: true, variantOutside: inverse ? 'brand' : 'default'},
     });
 
     const posterCard = await screen.findByTestId('poster-card');

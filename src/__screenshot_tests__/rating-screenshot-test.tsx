@@ -40,7 +40,7 @@ test('InfoRating - inverse', async () => {
     await openStoryPage({
         id: 'components-rating--info-rating-story',
         device: 'MOBILE_IOS',
-        args: {inverse: true, value: 3},
+        args: {variantOutside: 'brand', value: 3},
     });
 
     const rating = await screen.findByTestId('info-rating');
@@ -138,7 +138,7 @@ test('Rating - qualitative inverse', async () => {
     const page = await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
-        args: {type: 'qualitative', inverse: true},
+        args: {type: 'qualitative', variantOutside: 'brand'},
     });
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
@@ -167,7 +167,7 @@ test('Rating - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');

@@ -19,7 +19,7 @@ const cases = [
         'desktop with variant inverse',
         {
             device: 'DESKTOP',
-            args: {background: 'color from skin', variant: 'inverse'},
+            args: {background: 'color from skin', variant: 'brand'},
         },
     ],
     [

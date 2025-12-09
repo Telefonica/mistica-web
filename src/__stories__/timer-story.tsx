@@ -12,7 +12,7 @@ export default {
 };
 
 interface BaseArgs {
-    themeVariant: Variant;
+    variantOutside: Variant;
     minTimeUnit: TimeUnit;
     maxTimeUnit: TimeUnit;
     days: number;
@@ -27,7 +27,7 @@ const HOUR = MINUTE * 60;
 const DAY = HOUR * 24;
 
 const baseArgs: BaseArgs = {
-    themeVariant: 'default',
+    variantOutside: 'default',
     minTimeUnit: 'seconds',
     maxTimeUnit: 'hours',
     days: 1,
@@ -37,8 +37,8 @@ const baseArgs: BaseArgs = {
 };
 
 const baseArgTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'media'],
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative', 'media'],
         control: {type: 'select'},
     },
     minTimeUnit: {
@@ -55,7 +55,7 @@ type TextTimerArgs = BaseArgs & {labelType: 'none' | 'short' | 'long'};
 
 export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     labelType,
-    themeVariant,
+    variantOutside,
     minTimeUnit,
     maxTimeUnit,
     days,
@@ -73,7 +73,7 @@ export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     }, [days, hours, minutes, seconds]);
 
     return (
-        <ResponsiveLayout fullWidth variant={themeVariant}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16}>
                 <Stack space={16}>
                     <Text3 regular>
@@ -121,7 +121,7 @@ TextTimerStory.argTypes = {
 type TimerArgs = BaseArgs & {boxed: boolean};
 
 export const TimerStory: StoryComponent<TimerArgs> = ({
-    themeVariant,
+    variantOutside,
     minTimeUnit,
     maxTimeUnit,
     days,
@@ -140,11 +140,13 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
     }, [days, hours, minutes, seconds]);
 
     return (
-        <ResponsiveLayout fullWidth variant={themeVariant}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <div
                 style={{
                     background:
-                        themeVariant === 'media' ? `url(${mediaBackgroundImg}) center/cover` : 'transparent',
+                        variantOutside === 'media'
+                            ? `url(${mediaBackgroundImg}) center/cover`
+                            : 'transparent',
                 }}
             >
                 <Box padding={16}>

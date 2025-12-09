@@ -1,9 +1,17 @@
 import * as React from 'react';
 import {ResponsiveLayout, Box, Counter} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Counter',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
@@ -11,13 +19,20 @@ type Args = {
     max: number;
     defaultValue: number;
     removable: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     disabled: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({min, max, defaultValue, removable, inverse, disabled}) => {
+export const Default: StoryComponent<Args> = ({
+    min,
+    max,
+    defaultValue,
+    removable,
+    variantOutside,
+    disabled,
+}) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16}>
                 <Counter
                     min={min}
@@ -39,5 +54,5 @@ Default.args = {
     defaultValue: 0,
     disabled: false,
     removable: false,
-    inverse: false,
+    variantOutside: 'default',
 };

@@ -32,7 +32,7 @@ type Args = {
     titleAs: HeadingType;
     description: string;
     small: boolean;
-    inverse: boolean;
+    variant: 'default' | 'brand';
     extra: boolean;
     sideBySideExtraOnDesktop: boolean;
     breadcrumbs: boolean;
@@ -42,7 +42,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     header,
-    inverse,
+    variant,
     bleed,
     sideBySideExtraOnDesktop,
     breadcrumbs,
@@ -62,7 +62,7 @@ export const Default: StoryComponent<Args> = ({
         <Stack space={16}>
             <HeaderLayout
                 dataAttributes={{testid: 'header-layout'}}
-                isInverse={inverse}
+                variant={variant}
                 bleed={bleed}
                 sideBySideExtraOnDesktop={sideBySideExtraOnDesktop}
                 noPaddingY={noPaddingY}
@@ -114,7 +114,7 @@ Default.args = {
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
-    inverse: false,
+    variant: 'default',
     breadcrumbs: true,
     noPaddingY: false,
     extra: true,
@@ -145,4 +145,8 @@ Default.argTypes = {
     small: {if: {arg: 'header'}},
     sideBySideExtraOnDesktop: {if: {arg: 'extra'}},
     bleed: {if: {arg: 'extra'}},
+    variant: {
+        options: ['default', 'brand'],
+        control: {type: 'select'},
+    },
 };

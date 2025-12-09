@@ -43,12 +43,19 @@ type TextTokenConfig<PossibleFontWeights = FontWeight> = {
 export type TextPresetsConfig = {
     cardTitle: TextWeightTokenConfig;
     rowTitle: TextWeightTokenConfig;
+    stepperStepLabel: TextSizeTokenConfig;
     button: TextWeightTokenConfig<'regular' | 'medium'>;
+    chipLabel: TextTokenConfig;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
-    title1: TextWeightTokenConfig<'regular' | 'medium'>;
-    title2: TextWeightTokenConfig;
+    loadingScreenTitle: TextSizeTokenConfig;
+    title1: TextTokenConfig<'regular' | 'medium'>;
+    title2: TextTokenConfig;
     title3: TextTokenConfig;
+    title4: TextTokenConfig;
     indicator: TextWeightTokenConfig<'regular' | 'medium'>;
+    inputHelperText: TextSizeTokenConfig;
+    inputLabel: TextSizeTokenConfig;
+    inputValue: TextSizeTokenConfig;
     tabsLabel: TextTokenConfig;
     navigationBar: TextWeightTokenConfig;
     text1: TextSizeTokenConfig;

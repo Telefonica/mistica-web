@@ -33,7 +33,7 @@ export const touchableBackground = style({
     },
 });
 
-export const touchableBackgroundInverse = style({
+export const touchableBackgroundBrand = style({
     transition: 'background-color 0.1s ease-in-out',
     ':active': {
         background: vars.colors.backgroundContainerBrandPressed,

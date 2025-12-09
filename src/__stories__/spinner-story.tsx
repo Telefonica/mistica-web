@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Box, ResponsiveLayout, Spinner} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Spinner',
     component: Spinner,
@@ -8,18 +10,22 @@ export default {
         size: {
             control: {type: 'range', min: 24, max: 100, step: 4},
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
     parameters: {fullScreen: true},
 };
 
 type Args = {
     size: number;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
-export const Default: StoryComponent<Args> = ({size, inverse}) => {
+export const Default: StoryComponent<Args> = ({size, variantOutside}) => {
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Spinner size={size} />
             </Box>
@@ -30,5 +36,5 @@ export const Default: StoryComponent<Args> = ({size, inverse}) => {
 Default.storyName = 'Spinner';
 Default.args = {
     size: 24,
-    inverse: false,
+    variantOutside: 'default',
 };

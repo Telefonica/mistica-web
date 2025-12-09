@@ -6,9 +6,19 @@ import {calcInlineVars} from './logo-common';
 
 import type {LogoImageProps} from './logo-common';
 
-const O2LogoImage = ({size, isDarkMode, isInverse, color: colorProp}: LogoImageProps): JSX.Element => {
+const O2LogoImage = ({size, isDarkMode, themeVariant, color: colorProp}: LogoImageProps): JSX.Element => {
     const {colors} = getO2Skin();
-    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
+    const color =
+        colorProp ||
+        (isDarkMode
+            ? colors.brand
+            : {
+                  default: colors.brand,
+                  alternative: colors.brand,
+                  brand: colors.neutralHighBrand,
+                  media: colors.neutralHighBrand,
+                  negative: colors.neutralHighNegative,
+              }[themeVariant]);
 
     return (
         <svg

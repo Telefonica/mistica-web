@@ -62,16 +62,22 @@ export const variants = styleVariants({
             color: vars.colors.textLink,
         }),
     ],
-    inverseLight: [
+    brand: [
         base,
         sprinkles({
-            color: vars.colors.textLinkInverse,
+            color: vars.colors.textLinkBrand,
         }),
     ],
-    inverseDark: [
+    negative: [
         base,
         sprinkles({
-            color: vars.colors.textLink,
+            color: vars.colors.textLinkNegative,
+        }),
+    ],
+    media: [
+        base,
+        sprinkles({
+            color: vars.colors.textLinkMedia,
         }),
     ],
 });

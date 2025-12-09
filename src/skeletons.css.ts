@@ -6,7 +6,10 @@ const transition = '1.5s linear';
 
 export const background = styleVariants({
     default: [sprinkles({background: vars.colors.backgroundSkeleton})],
-    inverse: [sprinkles({background: vars.colors.backgroundSkeletonInverse})],
+    alternative: [sprinkles({background: vars.colors.backgroundSkeleton})],
+    brand: [sprinkles({background: vars.colors.backgroundSkeletonBrand})],
+    negative: [sprinkles({background: vars.colors.backgroundSkeletonNegative})],
+    media: [sprinkles({background: vars.colors.backgroundSkeletonNegative})],
 });
 
 const pulseKeyframes = keyframes({

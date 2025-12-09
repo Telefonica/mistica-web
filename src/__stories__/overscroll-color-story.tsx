@@ -12,7 +12,7 @@ export const Default: StoryComponent = () => {
     useSetOverscrollColor({topColor: skinVars.colors.backgroundBrand});
     return (
         <>
-            <ResponsiveLayout fullWidth isInverse>
+            <ResponsiveLayout fullWidth variant="brand">
                 <div style={{height: 200}} />
             </ResponsiveLayout>
 

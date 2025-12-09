@@ -70,7 +70,7 @@ Default.args = {
 
 Default.argTypes = {
     variant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'alternative'],
         control: {type: 'select'},
     },
     paddingX: {

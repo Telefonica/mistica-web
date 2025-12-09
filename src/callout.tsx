@@ -4,7 +4,7 @@ import Stack from './stack';
 import Inline from './inline';
 import Box from './box';
 import {useTheme} from './hooks';
-import {ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
@@ -36,7 +36,7 @@ type Props = {
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
-    variant?: 'default' | 'inverse';
+    variant?: 'default' | 'brand' | 'inverse';
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
     role?: string;
@@ -66,9 +66,14 @@ const Callout = ({
     const titleAriaLabel = isTitleObject ? title?.['aria-label'] : undefined;
     const titleText = isTitleObject ? title?.text : title;
 
+    const normalizedVariant = normalizeVariant(variant);
+
     return (
         <section
-            className={classNames(styles.container, styles.background[`${variant}-over-${outsideVariant}`])}
+            className={classNames(
+                styles.container,
+                styles.background[`${normalizedVariant}-over-${outsideVariant}`]
+            )}
             style={applyCssVars({
                 [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
             })}

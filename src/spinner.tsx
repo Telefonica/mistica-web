@@ -5,7 +5,7 @@ import FadeIn from './fade-in';
 import {useTheme} from './hooks';
 import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import * as tokens from './text-tokens';
 import ScreenReaderOnly from './screen-reader-only';
 
@@ -31,8 +31,16 @@ const Spinner = ({
     'aria-label': ariaLabel,
 }: Props): JSX.Element => {
     const {texts, platformOverrides, t} = useTheme();
-    const isInverse = useIsInverseOrMediaVariant();
-    color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
+    const variant = useThemeVariant();
+    color =
+        color ||
+        {
+            default: vars.colors.controlActivated,
+            alternative: vars.colors.controlActivated,
+            brand: vars.colors.controlBrand,
+            negative: vars.colors.controlNegative,
+            media: vars.colors.controlNegative,
+        }[variant];
     const label = ariaLabel || texts.loading || t(tokens.loading);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
