@@ -399,9 +399,11 @@ const getAssetText = (asset: React.ReactNode): string => {
 
 const getNodeText = (node: HTMLElement | null): string => {
     const raw = node?.innerText || node?.textContent || '';
-
+    /* In the real browser, innerText preserves line breaks between elements, but jsdom does not. 
+    As a result, when rows contain multiline content (e.g. `extra` with several Text components), jsdom returns the text concatenated without spaces. 
+    This causes the computed aria-label to differ from the real behaviour. 
+    To make tests reflect what VoiceOver would read in the browser, we normalise whitespace and insert missing spaces in test mode. */
     if (process.env.NODE_ENV === 'test') {
-        // jsdom doesn't support innerText so we use this to separate lines in tests
         return (
             raw
                 // Normalise whitespace sequences to a single space
