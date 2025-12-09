@@ -20,7 +20,11 @@ export default {
             control: {type: 'range', min: 1, max: 5, step: 1},
         },
         theme: {
-            options: ['default', 'inverse', 'alternative'],
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
         },
     },
@@ -29,14 +33,14 @@ export default {
 type Args = {
     tabCount: number;
     text: string;
-    theme: Variant;
+    variantOutside: Variant;
     icon: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({tabCount, text, theme, icon}) => {
+export const Default: StoryComponent<Args> = ({tabCount, text, variantOutside, icon}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     return (
-        <ResponsiveLayout fullWidth variant={theme}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16}>
                 <Tabs
                     selectedIndex={selectedIndex}
@@ -62,6 +66,6 @@ Default.storyName = 'Tabs';
 Default.args = {
     tabCount: 3,
     text: 'Tab',
-    theme: 'default',
+    variantOutside: 'default',
     icon: false,
 };

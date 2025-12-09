@@ -26,7 +26,7 @@ type DataCardProps = {
     height?: number | string;
     backgroundColor?: string;
     variant?: Variant;
-    /** @deprecated use variant */
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -59,7 +59,7 @@ type DataCardProps = {
     topActions?: TopActionsArray;
     showFooter?: boolean;
     footerBackgroundColor?: string;
-    footerVariant?: 'default' | 'inverse';
+    footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
 };
 

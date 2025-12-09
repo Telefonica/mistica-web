@@ -193,7 +193,9 @@ export const MainSectionHeader = ({
 };
 
 type HeaderLayoutProps = {
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
+    variant?: 'default' | 'brand';
     breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
     /**
      * Intentionally not forced to RendersElement<typeof Header> to allow skeletons for example
@@ -210,6 +212,7 @@ type HeaderLayoutProps = {
 
 export const HeaderLayout = ({
     isInverse = false,
+    variant = 'default',
     breadcrumbs,
     header,
     extra,
@@ -218,7 +221,8 @@ export const HeaderLayout = ({
     bleed = false,
     noPaddingY = false,
 }: HeaderLayoutProps): JSX.Element => {
-    const isBleedActivated = bleed && isInverse && extra;
+    const isBrandVariant = isInverse || variant === 'brand';
+    const isBleedActivated = bleed && isBrandVariant && extra;
 
     const mainContent = (
         <div>
@@ -227,11 +231,11 @@ export const HeaderLayout = ({
         </div>
     );
 
-    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+    useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
 
     return (
         <div {...getPrefixedDataAttributes(dataAttributes, 'HeaderLayout')}>
-            <ResponsiveLayout variant={isInverse ? 'inverse' : undefined}>
+            <ResponsiveLayout variant={isBrandVariant ? 'brand' : undefined}>
                 <Box
                     paddingTop={
                         noPaddingY
@@ -277,20 +281,24 @@ export const HeaderLayout = ({
 };
 
 type MainSectionHeaderLayoutProps = {
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
+    variant?: 'default' | 'brand';
     children: RendersElement<typeof MainSectionHeader>;
     dataAttributes?: DataAttributes;
 };
 
 export const MainSectionHeaderLayout = ({
     isInverse = false,
+    variant = 'default',
     children,
     dataAttributes,
 }: MainSectionHeaderLayoutProps): JSX.Element => {
-    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+    const isBrandVariant = isInverse || variant === 'brand';
+    useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
-            variant={isInverse ? 'inverse' : undefined}
+            variant={isBrandVariant ? 'brand' : undefined}
             dataAttributes={{
                 'component-name': 'MainSectionHeaderLayout',
                 testid: 'MainSectionHeaderLayout',

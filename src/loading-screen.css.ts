@@ -33,7 +33,7 @@ export const screenBackground = styleVariants({
     default: {
         background: skinVars.colors.background,
     },
-    inverse: {
+    brand: {
         background: skinVars.colors.backgroundBrand,
     },
 });

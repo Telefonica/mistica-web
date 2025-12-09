@@ -3,9 +3,17 @@ import {Box, Text1, Stack, ResponsiveLayout, SearchField} from '..';
 import {inspect} from 'util';
 import {countriesList} from './helpers';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/SearchField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const getCountrySuggestions = (value: string) =>
@@ -18,7 +26,7 @@ interface SearchFieldBaseArgs {
     placeholder: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     withStartIcon: boolean;
@@ -32,7 +40,7 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
     placeholder: '',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     withStartIcon: true,
@@ -47,7 +55,7 @@ interface SearchFieldControlledArgs extends SearchFieldBaseArgs {
 }
 
 export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     suggestions,
     ...rest
@@ -56,7 +64,7 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <SearchField
@@ -100,7 +108,7 @@ interface SearchFieldUncontrolledArgs extends SearchFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     ...rest
 }) => {
@@ -108,7 +116,7 @@ export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <SearchField

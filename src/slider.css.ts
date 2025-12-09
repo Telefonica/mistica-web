@@ -59,7 +59,10 @@ const defaultThumbBase = style([
 
 export const defaultThumb = styleVariants({
     default: [defaultThumbBase, sprinkles({background: vars.colors.controlActivated})],
-    inverse: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedInverse})],
+    alternative: [defaultThumbBase, sprinkles({background: vars.colors.controlActivated})],
+    brand: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedBrand})],
+    media: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedBrand})],
+    negative: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedNegative})],
 });
 
 export const iosThumb = style([
@@ -86,11 +89,38 @@ export const thumbHover = styleVariants({
             },
         },
     ],
-    inverse: [
+    alternative: [
         {
             '@media': {
                 [mq.supportsHover]: {
-                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedInverse, 0.2)}`,
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
+                },
+            },
+        },
+    ],
+    brand: [
+        {
+            '@media': {
+                [mq.supportsHover]: {
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedBrand, 0.2)}`,
+                },
+            },
+        },
+    ],
+    media: [
+        {
+            '@media': {
+                [mq.supportsHover]: {
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedBrand, 0.2)}`,
+                },
+            },
+        },
+    ],
+    negative: [
+        {
+            '@media': {
+                [mq.supportsHover]: {
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedNegative, 0.2)}`,
                 },
             },
         },
@@ -103,9 +133,24 @@ export const thumbActive = styleVariants({
             boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
         },
     ],
-    inverse: [
+    alternative: [
         {
-            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedInverse, 0.2)}`,
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
+        },
+    ],
+    brand: [
+        {
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedBrand, 0.2)}`,
+        },
+    ],
+    media: [
+        {
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedBrand, 0.2)}`,
+        },
+    ],
+    negative: [
+        {
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedNegative, 0.2)}`,
         },
     ],
 });

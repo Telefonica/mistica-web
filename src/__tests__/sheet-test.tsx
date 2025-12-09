@@ -50,7 +50,7 @@ test('Sheet', async () => {
     await userEvent.click(closeButton);
 
     await waitFor(() => expect(sheet).not.toBeInTheDocument());
-}, 30000);
+});
 
 test('RadioListSheet', async () => {
     const selectSpy = jest.fn();
@@ -100,7 +100,7 @@ test('RadioListSheet', async () => {
 
     await waitFor(() => expect(sheet).not.toBeInTheDocument());
     expect(selectSpy).toHaveBeenCalledWith('1');
-}, 30000);
+});
 
 test('ActionsListSheet', async () => {
     const selectSpy = jest.fn();
@@ -155,7 +155,7 @@ test('ActionsListSheet', async () => {
     );
 
     expect(selectSpy).toHaveBeenCalledWith('1');
-}, 30000);
+});
 
 test('InfoSheet', async () => {
     const TestComponent = () => {
@@ -204,7 +204,7 @@ test('InfoSheet', async () => {
 
     const items = await within(itemList).findAllByRole('listitem');
     expect(items).toHaveLength(2);
-}, 30000);
+});
 
 test('ActionsSheet', async () => {
     const onPressButtonSpy = jest.fn();
@@ -266,7 +266,7 @@ test('ActionsSheet', async () => {
     );
 
     expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
-}, 30000);
+});
 
 test('showSheet INFO', async () => {
     const resultSpy = jest.fn();
@@ -300,7 +300,7 @@ test('showSheet INFO', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
@@ -338,7 +338,7 @@ test('showSheet ACTIONS_LIST', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-}, 30000);
+});
 
 test('showSheet ACTIONS_LIST dismiss', async () => {
     const resultSpy = jest.fn();
@@ -375,7 +375,7 @@ test('showSheet ACTIONS_LIST dismiss', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet RADIO_LIST', async () => {
     const resultSpy = jest.fn();
@@ -415,7 +415,7 @@ test('showSheet RADIO_LIST', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-}, 30000);
+});
 
 test('showSheet RADIO_LIST dismiss', async () => {
     const resultSpy = jest.fn();
@@ -452,7 +452,7 @@ test('showSheet RADIO_LIST dismiss', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet ACTIONS', async () => {
     const resultSpy = jest.fn();
@@ -497,7 +497,7 @@ test('showSheet ACTIONS', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-}, 30000);
+});
 
 test('showSheet ACTIONS dismiss', async () => {
     const resultSpy = jest.fn();
@@ -535,7 +535,7 @@ test('showSheet ACTIONS dismiss', async () => {
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet fails if SheetRoot is not rendered', async () => {
     await expect(
@@ -547,7 +547,7 @@ test('showSheet fails if SheetRoot is not rendered', async () => {
             },
         })
     ).rejects.toThrow('Tried to show a Sheet but the SheetRoot component was not mounted');
-}, 30000);
+});
 
 test('showSheet fails if there is already a sheet open', async () => {
     render(
@@ -588,7 +588,7 @@ test('showSheet fails if there is already a sheet open', async () => {
         },
         {timeout: 5000}
     );
-}, 30000);
+});
 
 test('showSheet with native implementation INFO', async () => {
     const resultSpy = jest.fn();
@@ -625,7 +625,7 @@ test('showSheet with native implementation INFO', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalled();
-}, 30000);
+});
 
 test('showSheet with native implementation ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
@@ -673,7 +673,7 @@ test('showSheet with native implementation ACTIONS_LIST', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-}, 30000);
+});
 
 test('showSheet with native implementation RADIO_LIST', async () => {
     const resultSpy = jest.fn();
@@ -722,7 +722,7 @@ test('showSheet with native implementation RADIO_LIST', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-}, 30000);
+});
 
 test('showSheet with native implementation ACTIONS', async () => {
     const resultSpy = jest.fn();
@@ -769,7 +769,7 @@ test('showSheet with native implementation ACTIONS', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-}, 30000);
+});
 
 test('showSheet with native implementation fallbacks to web if native fails', async () => {
     const nativeImplementation = jest.fn(() =>
@@ -813,4 +813,4 @@ test('showSheet with native implementation fallbacks to web if native fails', as
     );
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-}, 30000);
+});

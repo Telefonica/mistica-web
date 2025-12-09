@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
@@ -12,7 +12,7 @@ import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
     children: React.ReactNode;
-    /** @deprecated use variant instead */
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
     variant?: Variant;
     className?: string;
@@ -36,11 +36,14 @@ type InternalProps = {
     overflow?: 'hidden' | 'visible';
 };
 
-const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
-    if (isInverseOutside || isInverseInside) {
-        return styles.noBorder;
+const getBorderStyle = (internalVariant: Variant, externalVariant: Variant) => {
+    if (
+        internalVariant === 'default' &&
+        (externalVariant === 'default' || externalVariant === 'alternative')
+    ) {
+        return styles.boxBorder;
     }
-    return styles.boxBorder;
+    return styles.noBorder;
 };
 
 const normalizeDimension = (value: number | string | undefined) => {
@@ -93,8 +96,8 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         },
         ref
     ) => {
-        const isInverseOutside = useIsInverseOrMediaVariant();
-        const isInverseInside = isInverse || variant === 'inverse' || variant === 'media';
+        const externalVariant = normalizeVariant(useThemeVariant());
+        const internalVariant = normalizeVariant(variant ?? (isInverse ? 'brand' : 'default'));
 
         return (
             <div
@@ -107,11 +110,19 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                         ...calcCssVars('height', height),
                         ...calcCssVars('minHeight', minHeight),
                         [styles.vars.background]:
-                            background ?? isInverseInside
-                                ? isInverseOutside
-                                    ? vars.colors.backgroundContainerBrandOverInverse
-                                    : vars.colors.backgroundContainerBrand
-                                : vars.colors.backgroundContainer,
+                            background ??
+                            {
+                                default: vars.colors.backgroundContainer,
+                                brand:
+                                    externalVariant === 'brand' ||
+                                    externalVariant === 'negative' ||
+                                    externalVariant === 'media'
+                                        ? vars.colors.backgroundContainerBrandOverBrand
+                                        : vars.colors.backgroundContainerBrand,
+                                negative: vars.colors.backgroundContainerNegative,
+                                alternative: vars.colors.backgroundContainerAlternative,
+                                media: vars.colors.backgroundContainer,
+                            }[internalVariant],
                         [styles.vars.borderRadius]: borderRadius,
                     }),
                     background,
@@ -120,7 +131,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 className={classnames(
                     className,
                     styles.boxed,
-                    getBorderStyle(isInverseOutside, isInverseInside),
+                    getBorderStyle(internalVariant, externalVariant),
                     {
                         [styles.desktopOnly]: desktopOnly,
                         [styles.overflowHidden]: overflow !== 'visible',
@@ -131,9 +142,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <ThemeVariant variant={variant ?? (isInverseInside ? 'inverse' : undefined)}>
-                    {children}
-                </ThemeVariant>
+                <ThemeVariant variant={internalVariant}>{children}</ThemeVariant>
             </div>
         );
     }

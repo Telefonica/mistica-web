@@ -15,12 +15,31 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     rowTitle: {weight: 'regular'},
     button: {weight: 'medium'},
     link: {weight: 'medium'},
-    title1: {weight: 'medium'},
-    title2: {weight: 'light'},
+    title1: {
+        lineHeight: {desktop: 20, mobile: 16},
+        size: {desktop: 14, mobile: 12},
+        weight: 'medium',
+    },
+    title2: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 18, mobile: 16}, weight: 'bold'},
     title3: {weight: 'light', size: {mobile: 20, desktop: 28}, lineHeight: {mobile: 24, desktop: 32}},
+    title4: {
+        lineHeight: {desktop: 40, mobile: 32},
+        size: {desktop: 32, mobile: 24},
+        weight: 'medium',
+    },
     navigationBar: {weight: 'medium'},
     indicator: {weight: 'medium'},
     tabsLabel: {weight: 'medium', size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
+    chipLabel: {
+        lineHeight: {desktop: 24, mobile: 20},
+        size: {desktop: 16, mobile: 14},
+        weight: 'medium',
+    },
+    inputHelperText: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+    inputLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+    inputValue: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 18, mobile: 16}},
+    loadingScreenTitle: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
+    stepperStepLabel: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
 };
 
 export const defaultBorderRadiiConfig: BorderRadiiConfig = {

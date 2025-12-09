@@ -3,9 +3,17 @@ import {Box, Text1, Stack, ResponsiveLayout, MonthField} from '..';
 import {inspect} from 'util';
 import {getLocalYearMonthString} from '../utils/time';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/MonthField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const ONE_MONTH_IN_MS = 31 * 24 * 60 * 60 * 1000;
@@ -13,7 +21,7 @@ const ONE_MONTH_IN_MS = 31 * 24 * 60 * 60 * 1000;
 interface MonthFieldBaseArgs {
     label: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -26,7 +34,7 @@ interface MonthFieldBaseArgs {
 const defaultBaseArgs: MonthFieldBaseArgs = {
     label: 'Label',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
@@ -34,14 +42,14 @@ const defaultBaseArgs: MonthFieldBaseArgs = {
     preventCopy: false,
     min: false,
     max: false,
-};
+} as const;
 
 interface MonthFieldControlledArgs extends MonthFieldBaseArgs {
     initialValue: string;
 }
 
 export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     min,
     max,
@@ -54,7 +62,7 @@ export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
     const maxDate = new Date(Date.now() + 4 * ONE_MONTH_IN_MS);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Box paddingBottom={8}>
                     <Text1 regular>
@@ -105,7 +113,7 @@ interface MonthFieldUncontrolledArgs extends MonthFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     min,
     max,
@@ -118,7 +126,7 @@ export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
     const maxDate = new Date(Date.now() + 4 * ONE_MONTH_IN_MS);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Box paddingBottom={8}>
                     <Text1 regular>

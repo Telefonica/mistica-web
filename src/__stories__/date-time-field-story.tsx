@@ -3,9 +3,17 @@ import {Box, Text1, Stack, ResponsiveLayout, DateTimeField} from '..';
 import {inspect} from 'util';
 import {getLocalDateTimeString} from '../utils/time';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Input fields/DateTimeField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
@@ -13,7 +21,7 @@ const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 interface DateTimeFieldBaseArgs {
     label: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     disabled: boolean;
@@ -26,7 +34,7 @@ interface DateTimeFieldBaseArgs {
 const defaultBaseArgs: DateTimeFieldBaseArgs = {
     label: 'Label',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     disabled: false,
@@ -34,14 +42,14 @@ const defaultBaseArgs: DateTimeFieldBaseArgs = {
     preventCopy: false,
     min: false,
     max: false,
-};
+} as const;
 
 interface DateTimeFieldControlledArgs extends DateTimeFieldBaseArgs {
     initialValue: string;
 }
 
 export const Controlled: StoryComponent<DateTimeFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     min,
     max,
@@ -54,7 +62,7 @@ export const Controlled: StoryComponent<DateTimeFieldControlledArgs> = ({
     const maxDate = new Date(Date.now() + 7 * ONE_DAY_IN_MS);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Box paddingBottom={8}>
                     <Text1 regular>
@@ -105,7 +113,7 @@ interface DateTimeFieldUncontrolledArgs extends DateTimeFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<DateTimeFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     min,
     max,
@@ -118,7 +126,7 @@ export const Uncontrolled: StoryComponent<DateTimeFieldUncontrolledArgs> = ({
     const maxDate = new Date(Date.now() + 7 * ONE_DAY_IN_MS);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Box paddingBottom={8}>
                     <Text1 regular>

@@ -1,18 +1,26 @@
 import * as React from 'react';
 import {Box, NavigationBreadcrumbs, ResponsiveLayout} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Breadcrumbs',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
-export const Default: StoryComponent<Args> = ({inverse}) => {
+export const Default: StoryComponent<Args> = ({variantOutside}) => {
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <NavigationBreadcrumbs
                     dataAttributes={{testid: 'story'}}
@@ -30,5 +38,5 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
 Default.storyName = 'Breadcrumbs';
 
 Default.args = {
-    inverse: false,
+    variantOutside: 'default',
 };

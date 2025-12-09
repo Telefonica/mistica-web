@@ -62,8 +62,8 @@ import usingVrImg from '../__stories__/images/using-vr.jpg';
 export default {
     title: 'Private/Components in different skins',
     argTypes: {
-        variant: {
-            options: ['default', 'inverse', 'alternative'],
+        variantOutside: {
+            options: ['default', 'brand', 'alternative', 'negative'],
             control: {type: 'select'},
         },
     },
@@ -73,7 +73,7 @@ export default {
 };
 
 type Args = {
-    variant: 'default' | 'inverse' | 'alternative';
+    variantOutside: 'default' | 'brand' | 'alternative' | 'negative';
 };
 
 const ComponentsGroup = ({children}: {children: React.ReactNode}): JSX.Element => {
@@ -84,17 +84,17 @@ const ComponentsGroup = ({children}: {children: React.ReactNode}): JSX.Element =
     );
 };
 
-export const Default: StoryComponent<Args> = ({variant}) => {
+export const Default: StoryComponent<Args> = ({variantOutside}) => {
     // Only show inverse header when the rest of the screen is default
-    const inverseHeader = variant === 'default';
+    const brandHeader = variantOutside === 'default';
     return (
-        <ResponsiveLayout variant={variant}>
-            <Box paddingTop={inverseHeader ? 0 : {mobile: 32, desktop: 48}} paddingBottom={16}>
+        <ResponsiveLayout variant={variantOutside}>
+            <Box paddingTop={brandHeader ? 0 : {mobile: 32, desktop: 48}} paddingBottom={16}>
                 <Stack space={32}>
                     <ComponentsGroup>
                         {/** Header */}
                         <HeaderLayout
-                            isInverse={inverseHeader}
+                            variant={brandHeader ? 'brand' : 'default'}
                             bleed
                             header={
                                 <Header
@@ -104,7 +104,7 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                                 />
                             }
                             extra={<Placeholder />}
-                            noPaddingY={!inverseHeader}
+                            noPaddingY={!brandHeader}
                         />
 
                         {/** Row */}
@@ -598,5 +598,5 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
 Default.storyName = 'Components in different skins';
 Default.args = {
-    variant: 'default',
+    variantOutside: 'default',
 };

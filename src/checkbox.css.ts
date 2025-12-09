@@ -55,12 +55,21 @@ export const boxVariant = styleVariants({
     ],
 });
 
-export const inverseBoxVariant = styleVariants({
-    ios: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlInverse}`}],
-    rest: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlInverse}`}],
+export const overBrandBoxVariant = styleVariants({
+    ios: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlBrand}`}],
+    rest: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlBrand}`}],
     checked: [
         boxBase,
-        {background: 'transparent', boxShadow: `inset 0 0 0 12px ${vars.colors.controlActivatedInverse}`},
+        {background: 'transparent', boxShadow: `inset 0 0 0 12px ${vars.colors.controlActivatedBrand}`},
+    ],
+});
+
+export const overNegativeBoxVariant = styleVariants({
+    ios: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlNegative}`}],
+    rest: [boxBase, {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlNegative}`}],
+    checked: [
+        boxBase,
+        {background: 'transparent', boxShadow: `inset 0 0 0 12px ${vars.colors.controlActivatedNegative}`},
     ],
 });
 

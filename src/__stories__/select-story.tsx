@@ -2,10 +2,18 @@ import * as React from 'react';
 import {fruitEntries} from './helpers';
 import {Box, ResponsiveLayout, Select} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Select',
     component: Select,
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
@@ -16,7 +24,7 @@ type Args = {
     native: boolean;
     optional: boolean;
     showOptionalLabel: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 const defaultArgs = {
@@ -27,8 +35,8 @@ const defaultArgs = {
     native: false,
     optional: false,
     showOptionalLabel: true,
-    inverse: false,
-};
+    variantOutside: 'default',
+} as const;
 
 export const Controlled: StoryComponent<Args> = ({
     label,
@@ -38,7 +46,7 @@ export const Controlled: StoryComponent<Args> = ({
     native,
     optional,
     showOptionalLabel,
-    inverse,
+    variantOutside,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
@@ -46,7 +54,7 @@ export const Controlled: StoryComponent<Args> = ({
     const [value, setValue] = React.useState('');
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
                     <Select
@@ -79,13 +87,13 @@ export const Uncontrolled: StoryComponent<Args> = ({
     native,
     optional,
     showOptionalLabel,
-    inverse,
+    variantOutside,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
                     <Select

@@ -14,7 +14,7 @@ test.each`
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
-        args: {inverse},
+        args: {variant: inverse ? 'brand' : 'default'},
     });
 
     const story = await screen.findByTestId('header-layout');
@@ -60,7 +60,7 @@ test.each`
         await openStoryPage({
             id: 'components-headers-header--default',
             device,
-            args: {noPaddingY: true, bleed, sideBySideExtraOnDesktop, inverse: true},
+            args: {noPaddingY: true, bleed, sideBySideExtraOnDesktop, variant: 'brand'},
         });
 
         const story = await screen.findByTestId('header-layout');
@@ -81,7 +81,7 @@ test.each`
         await openStoryPage({
             id: 'components-headers-mainsectionheader--default',
             device,
-            args: {inverse},
+            args: {variant: inverse ? 'brand' : 'default'},
         });
 
         const story = await screen.findByTestId('header-layout');
@@ -123,7 +123,7 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
-        args: {bleed: true, sideBySideExtraOnDesktop: false, inverse: true},
+        args: {bleed: true, sideBySideExtraOnDesktop: false, variant: 'brand'},
     });
 
     const story = await screen.findByTestId('header-layout');

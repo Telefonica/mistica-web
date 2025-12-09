@@ -8,7 +8,6 @@ import * as React from 'react';
 import {Text1} from './text';
 import {getPrefixedDataAttributes} from './utils/dom';
 import TextLink from './text-link';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as styles from './navigation-breadcrumbs.css';
 import {vars} from './skins/skin-contract.css';
 
@@ -34,26 +33,14 @@ const NavigationBreadcrumbs = ({
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
 }: NavigationBreadcrumbsProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
             <ol className={styles.list}>
                 {breadcrumbs.map(({title, url, onNavigate}, index) => (
                     <li key={index} className={styles.listItem}>
-                        <Text1 regular>
-                            <TextLink
-                                to={url}
-                                style={{
-                                    color: isInverse
-                                        ? vars.colors.textPrimaryInverse
-                                        : vars.colors.textPrimary,
-                                }}
-                                className={styles.link}
-                                onNavigate={onNavigate}
-                            >
-                                {title}
-                            </TextLink>
-                        </Text1>
+                        <TextLink to={url} className={styles.link} onNavigate={onNavigate}>
+                            <Text1 regular>{title}</Text1>
+                        </TextLink>
                         <span role="presentation">
                             <Text1 regular>{BREADCRUMB_SEPARATOR}</Text1>
                         </span>
@@ -69,10 +56,7 @@ const NavigationBreadcrumbs = ({
                             e.preventDefault();
                         }}
                     >
-                        <Text1
-                            regular
-                            color={isInverse ? vars.colors.textSecondaryInverse : vars.colors.textSecondary}
-                        >
+                        <Text1 regular color={vars.colors.textSecondary}>
                             {title}
                         </Text1>
                     </a>

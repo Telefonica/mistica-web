@@ -130,13 +130,13 @@ const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: Button
 };
 
 const renderFeedback = ({
-    isInverse,
+    isBrandVariant,
     body,
     imageFit,
     imageUrl,
     dataAttributes,
 }: {
-    isInverse: boolean;
+    isBrandVariant: boolean;
     body: React.ReactNode;
     imageFit?: 'fit' | 'fill';
     imageUrl?: string;
@@ -145,7 +145,7 @@ const renderFeedback = ({
     <InternalBoxed
         borderRadius={vars.borderRadii.legacyDisplay}
         desktopOnly
-        variant={isInverse ? 'inverse' : 'default'}
+        variant={isBrandVariant ? 'brand' : 'default'}
         dataAttributes={dataAttributes}
     >
         <div className={styles.desktopContainer}>
@@ -199,7 +199,11 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
     asset?: React.ReactNode;
     animateText?: boolean;
+    /**
+     * @deprecated use variant="brand" instead
+     */
     isInverse?: boolean;
+    variant?: 'default' | 'brand';
 }
 
 export const FeedbackScreen = ({
@@ -213,6 +217,7 @@ export const FeedbackScreen = ({
     asset,
     animateText = false,
     isInverse = false,
+    variant = 'default',
     unstable_inlineInDesktop,
     imageUrl,
     imageFit,
@@ -237,13 +242,15 @@ export const FeedbackScreen = ({
         });
     }
 
+    const isBrandVariant = variant === 'brand' || isInverse;
+
     return (
         <div style={{position: 'relative'}}>
             <ResponsiveLayout>
-                {isInverse && <FeedbackScreenOverscrollColor />}
+                {isBrandVariant && <FeedbackScreenOverscrollColor />}
                 <Box paddingTop={{desktop: 64, mobile: 0}}>
                     {renderFeedback({
-                        isInverse,
+                        isBrandVariant,
                         body: (
                             // We need this reset because the ButtonFixedFooterLayout adds a ResponsiveLayout that
                             // doesn't expand when nested in mobile. This can cause double margin when footer is not fixed
@@ -254,12 +261,12 @@ export const FeedbackScreen = ({
                                     secondaryButton={secondaryButton}
                                     link={link}
                                     footerBgColor={
-                                        isInverse && !isDarkMode
+                                        isBrandVariant && !isDarkMode
                                             ? vars.colors.backgroundBrandBottom
                                             : undefined
                                     }
                                     containerBgColor={
-                                        isInverse ? vars.colors.backgroundBrand : vars.colors.background
+                                        isBrandVariant ? vars.colors.backgroundBrand : vars.colors.background
                                     }
                                 >
                                     <ResponsiveLayout>
@@ -294,9 +301,11 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
     return (
         <FeedbackScreen
             {...props}
-            isInverse={
-                themeVariants.successFeedback === 'inverse' &&
+            variant={
+                (themeVariants.successFeedback === 'brand' || themeVariants.successFeedback === 'inverse') &&
                 (!props.unstable_inlineInDesktop || isTabletOrSmaller)
+                    ? 'brand'
+                    : 'default'
             }
             hapticFeedback="success"
             asset={
@@ -408,12 +417,13 @@ export const SuccessFeedback = ({
         link,
     });
 
-    const isInverse = themeVariants.successFeedback === 'inverse';
+    const isBrandVariant =
+        themeVariants.successFeedback === 'inverse' || themeVariants.successFeedback === 'brand';
 
     return renderFeedback({
-        isInverse,
+        isBrandVariant,
         body: (
-            <div className={isInverse ? styles.backgroundBrand : undefined}>
+            <div className={isBrandVariant ? styles.backgroundBrand : undefined}>
                 <Box paddingX={{mobile: 16, tablet: 24, desktop: 0}}>
                     <Box paddingBottom={{desktop: 0, mobile: 48}} paddingTop={64}>
                         {inlineFeedbackBody}

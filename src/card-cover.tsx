@@ -58,7 +58,7 @@ type CoverCardProps = {
     children?: undefined;
     showFooter?: boolean;
     footerBackgroundColor?: string;
-    footerVariant?: 'default' | 'inverse';
+    footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
 };
 
@@ -86,7 +86,7 @@ type PosterCardBaseProps = {
     'aria-description'?: string;
     'aria-describedby'?: string;
     aspectRatio?: CardAspectRatio;
-    /** @deprecated use variant */
+    /** @deprecated use variant="brand" instead */
     isInverse?: boolean;
     variant?: Variant;
     size?: CardSize;

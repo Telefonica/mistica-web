@@ -56,7 +56,7 @@ test.each`
     const page = await openStoryPage({
         id: `components-chip--${selection}-selection`,
         device: 'DESKTOP',
-        args: {inverse, icon: true, badge},
+        args: {variantOutside: inverse ? 'brand' : 'default', icon: true, badge},
     });
 
     const story = await screen.findByTestId(`chip-${selection}-selection`);
@@ -99,7 +99,7 @@ test('Chip - navigable with href and active and inverse', async () => {
         device: 'DESKTOP',
         args: {
             icon: true,
-            inverse: true,
+            variantOutside: 'brand',
         },
     });
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Box, Meter, ResponsiveLayout} from '..';
 import beachImg from './images/beach.jpg';
 
+import type {Variant} from '../theme-variant-context';
 import type {MeterType} from '../meter';
 
 type MeterExtraAlignment = 'start' | 'center' | 'end';
@@ -13,8 +14,8 @@ export default {
             options: ['angular', 'circular', 'linear'] as Array<MeterType>,
             control: {type: 'select'},
         },
-        themeVariant: {
-            options: ['default', 'inverse', 'media'],
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'media', 'alternative'],
             control: {type: 'select'},
         },
         valuesCount: {
@@ -65,7 +66,7 @@ type MeterStoryArgs = {
     type: MeterType;
     reverse: boolean;
     ariaLabel: string;
-    themeVariant: 'default' | 'inverse' | 'media';
+    variantOutside: Variant;
     fullWidth: boolean;
     width: number;
     valuesCount: number;
@@ -84,7 +85,7 @@ type MeterStoryArgs = {
 export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     type,
     reverse,
-    themeVariant,
+    variantOutside,
     valuesCount,
     fullWidth,
     width,
@@ -97,12 +98,12 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     return (
         <div
             style={{
-                backgroundImage: themeVariant === 'media' ? `url(${beachImg})` : '',
+                backgroundImage: variantOutside === 'media' ? `url(${beachImg})` : '',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
             }}
         >
-            <ResponsiveLayout variant={themeVariant} fullWidth>
+            <ResponsiveLayout variant={variantOutside} fullWidth>
                 <Box padding={16}>
                     <Meter
                         aria-label={ariaLabel || undefined}
@@ -135,7 +136,7 @@ MeterStory.args = {
     type: 'angular',
     reverse: false,
     ariaLabel: 'Meter example',
-    themeVariant: 'default',
+    variantOutside: 'default',
     fullWidth: false,
     width: 400,
     valuesCount: 8,
