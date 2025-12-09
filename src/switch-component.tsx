@@ -35,6 +35,8 @@ type PropsRender = {
     children?: undefined;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    'aria-controls'?: string;
+    'aria-expanded'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
@@ -48,6 +50,8 @@ type PropsChildren = {
     render?: undefined;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    'aria-controls'?: string;
+    'aria-expanded'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
@@ -153,6 +157,8 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-disabled={disabled}
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : labelId}
+            aria-controls={props['aria-controls']}
+            aria-expanded={props['aria-expanded']}
             {...getPrefixedDataAttributes(props.dataAttributes, 'Switch')}
         >
             {props.render ? (
