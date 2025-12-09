@@ -74,13 +74,14 @@ const Form = ({
     }, []);
 
     const register = React.useCallback(
-        (name: string, {input, validator, focusableElement, label}: FieldRegistration) => {
+        (name: string, {input, validator, focusableElement, label, required}: FieldRegistration) => {
             if (input || focusableElement) {
                 fieldRegistrations.current.set(name, {
                     input,
                     validator,
                     focusableElement,
                     label,
+                    required,
                 });
             } else {
                 fieldRegistrations.current.delete(name);
@@ -120,12 +121,12 @@ const Form = ({
      */
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
-        for (const [name, {input, validator}] of fieldRegistrations.current) {
+        for (const [name, {input, validator, required}] of fieldRegistrations.current) {
             if (input) {
                 if (input.disabled) {
                     continue;
                 }
-                if (input.required && !rawValues[name]?.trim()) {
+                if (required && !rawValues[name]?.trim()) {
                     errors[name] = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
                 } else {
                     const error = validator?.(values[name], rawValues[name]);
