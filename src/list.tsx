@@ -453,6 +453,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
     const {texts, t} = useTheme();
+    const optionsBelowText =
+        texts.optionsAvailableBelowAnnouncement || t(tokens.optionsAvailableBelowAnnouncement);
+    const controlDisclosure =
+        props.switch?.controlDisclosure ||
+        props.checkbox?.controlDisclosure ||
+        props.radio?.controlDisclosure;
+    const announcementSuffix = controlDisclosure?.onLabelWhenExpanded ?? optionsBelowText;
+    const expandedAriaLabel =
+        ariaLabel ?? (controlDisclosure?.expanded ? `${title} ${announcementSuffix}` : ariaLabel);
+    const rowIsBusy = !!controlDisclosure?.['aria-busy'];
 
     const interactiveProps = {
         href: props.href,
@@ -581,30 +591,21 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         const Control = props.switch ? Switch : Checkbox;
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
 
-        const controlProps = props.switch ?? props.checkbox;
-        const disclosure = controlProps?.controlDisclosure;
-
-        const optionsBelowText =
-            texts.optionsAvailableBelowAnnouncement || t(tokens.optionsAvailableBelowAnnouncement);
-        const announcementSuffix = disclosure?.onLabelWhenExpanded ?? optionsBelowText;
-        const computedAriaLabel = ariaLabel ?? (disclosure?.expanded ? announcementSuffix : ariaLabel);
-        const rowIsBusy = !!disclosure?.['aria-busy'];
-
         return isInteractive
             ? renderRowWithDoubleInteraction(
                   <div
-                      aria-live={disclosure?.['aria-live'] ?? 'off'}
-                      aria-atomic={disclosure?.['aria-live'] !== 'off'}
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
                       aria-busy={rowIsBusy || undefined}
                   >
                       <Control
                           disabled={disabled || rowIsBusy}
                           name={name}
                           checked={isChecked}
-                          aria-label={computedAriaLabel}
+                          aria-label={expandedAriaLabel}
                           aria-labelledby={titleId}
-                          aria-controls={disclosure?.controlsId}
-                          aria-expanded={disclosure?.expanded}
+                          aria-controls={controlDisclosure?.controlsId}
+                          aria-expanded={controlDisclosure?.expanded}
                           onChange={toggle}
                           render={({controlElement}) => (
                               <div className={styles.dualActionRight}>{controlElement}</div>
@@ -614,18 +615,18 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
               )
             : renderRowWithSingleControl(
                   <div
-                      aria-live={disclosure?.['aria-live'] ?? 'off'}
-                      aria-atomic={disclosure?.['aria-live'] !== 'off'}
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
                       aria-busy={rowIsBusy || undefined}
                   >
                       <Control
                           disabled={disabled || rowIsBusy}
                           name={name}
                           checked={isChecked}
-                          aria-label={computedAriaLabel}
+                          aria-label={expandedAriaLabel}
                           aria-labelledby={titleId}
-                          aria-controls={disclosure?.controlsId}
-                          aria-expanded={disclosure?.expanded}
+                          aria-controls={controlDisclosure?.controlsId}
+                          aria-expanded={controlDisclosure?.expanded}
                           onChange={toggle}
                           render={({controlElement, labelId}) => (
                               <Box paddingX={16} role={role}>
@@ -642,21 +643,19 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     if (props.radioValue) {
-        const disclosure = props.radio?.controlDisclosure;
-
         return isInteractive
             ? renderRowWithDoubleInteraction(
                   <div
-                      aria-live={disclosure?.['aria-live'] ?? 'off'}
-                      aria-atomic={disclosure?.['aria-live'] !== 'off'}
-                      aria-busy={disclosure?.['aria-busy'] || undefined}
-                      aria-expanded={disclosure?.expanded}
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
+                      aria-busy={controlDisclosure?.['aria-busy'] || undefined}
+                      aria-expanded={controlDisclosure?.expanded}
                   >
                       <RadioButton
                           value={props.radioValue}
-                          aria-label={ariaLabel}
+                          aria-label={expandedAriaLabel}
                           aria-labelledby={titleId}
-                          aria-controls={disclosure?.controlsId}
+                          aria-controls={controlDisclosure?.controlsId}
                           render={({controlElement}) => (
                               <Stack space="around">
                                   <Box paddingX={16}>{controlElement}</Box>
@@ -667,16 +666,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
               )
             : renderRowWithSingleControl(
                   <div
-                      aria-live={disclosure?.['aria-live'] ?? 'off'}
-                      aria-atomic={disclosure?.['aria-live'] !== 'off'}
-                      aria-busy={disclosure?.['aria-busy'] || undefined}
-                      aria-expanded={disclosure?.expanded}
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
+                      aria-busy={controlDisclosure?.['aria-busy'] || undefined}
+                      aria-expanded={controlDisclosure?.expanded}
                   >
                       <RadioButton
                           value={props.radioValue}
-                          aria-label={ariaLabel}
+                          aria-label={expandedAriaLabel}
                           aria-labelledby={titleId}
-                          aria-controls={disclosure?.controlsId}
+                          aria-controls={controlDisclosure?.controlsId}
                           render={({controlElement}) => (
                               <Box paddingX={16} role={role}>
                                   {renderContent({
