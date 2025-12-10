@@ -151,8 +151,8 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         }, []);
 
         const iconColor = {
-            default: isOpen ? skinVars.colors.neutralHigh : skinVars.colors.neutralMedium,
-            alternative: isOpen ? skinVars.colors.neutralHigh : skinVars.colors.neutralMedium,
+            default: isOpen ? skinVars.colors.chevronIndicator : skinVars.colors.chevronIndicator,
+            alternative: isOpen ? skinVars.colors.chevronIndicator : skinVars.colors.chevronIndicator,
             brand: skinVars.colors.textSecondaryBrand,
             media: skinVars.colors.textSecondaryBrand,
             negative: skinVars.colors.textSecondaryNegative,

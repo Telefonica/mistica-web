@@ -208,7 +208,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             controlKnobInverse: palette.movistarBlue,
             controlKnobNegative: palette.movistarBlue,
             controlKnobBrand: palette.movistarBlue,
-            divider: palette.grey300,
+            divider: palette.grey200,
             dividerInverse: applyAlpha(palette.white, 0.2),
             dividerNegative: applyAlpha(palette.white, 0.2),
             dividerBrand: applyAlpha(palette.white, 0.2),
@@ -670,7 +670,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             title4: {lineHeight: {desktop: 28, mobile: 26}, size: {desktop: 24, mobile: 20}, weight: 'bold'},
         },
         themeVariants: {
-            successFeedback: 'default',
+            successFeedback: 'inverse',
             brandLoadingScreen: 'default',
         },
     };
