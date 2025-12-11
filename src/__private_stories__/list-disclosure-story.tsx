@@ -49,7 +49,6 @@ export const ControlDisclosureExample: StoryComponent = () => {
                                     radio={{
                                         controlDisclosure: {
                                             expanded: fruit === 'banana',
-                                            controlsId: 'panel-banana',
                                             'aria-live': 'assertive',
                                         },
                                     }}
@@ -63,7 +62,6 @@ export const ControlDisclosureExample: StoryComponent = () => {
                                     radio={{
                                         controlDisclosure: {
                                             expanded: fruit === 'apple',
-                                            controlsId: 'panel-apple',
                                             'aria-live': 'assertive',
                                         },
                                     }}
@@ -111,7 +109,6 @@ export const ControlDisclosureExample: StoryComponent = () => {
                                         onChange: setSwitchA,
                                         controlDisclosure: {
                                             expanded: switchA,
-                                            controlsId: 'switch-a-panel',
                                             'aria-live': 'assertive',
                                             onLabelWhenExpanded: 'Options available below.',
                                         },
@@ -127,7 +124,6 @@ export const ControlDisclosureExample: StoryComponent = () => {
                                         onChange: setCheckboxB,
                                         controlDisclosure: {
                                             expanded: checkboxB,
-                                            controlsId: 'switch-b-panel',
                                             'aria-live': 'assertive',
                                             onLabelWhenExpanded: 'Options available below.',
                                         },

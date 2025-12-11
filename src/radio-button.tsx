@@ -46,7 +46,6 @@ type PropsRender = {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    'aria-controls'?: string;
 };
 
 type PropsChildren = {
@@ -57,7 +56,6 @@ type PropsChildren = {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    'aria-controls'?: string;
 };
 
 const RadioButton = ({
@@ -166,7 +164,6 @@ const RadioButton = ({
             aria-disabled={disabled}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
-            aria-controls={rest['aria-controls']}
             onClick={(e) => {
                 e.stopPropagation();
                 if (!disabled) {

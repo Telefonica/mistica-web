@@ -84,8 +84,6 @@ type RenderProps = {
     disabled?: boolean;
     'aria-labelledby'?: string;
     'aria-label'?: string;
-    'aria-controls'?: string;
-    'aria-expanded'?: boolean;
     role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
@@ -101,8 +99,6 @@ type ChildrenProps = {
     disabled?: boolean;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    'aria-controls'?: string;
-    'aria-expanded'?: boolean;
     role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
@@ -161,8 +157,6 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
-            aria-controls={props['aria-controls']}
-            aria-expanded={props['aria-expanded']}
             aria-disabled={disabled}
             {...getPrefixedDataAttributes(props.dataAttributes, 'Checkbox')}
         >
