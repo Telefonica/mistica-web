@@ -604,7 +604,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             bar: '999px',
             button: '32px',
             checkbox: '2px',
-            container: '16px',
+            container: '24px',
             indicator: '24px',
             chip: '24px',
             tag: '24px',
@@ -612,7 +612,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             legacyDisplay: '16px',
             popup: '8px',
             sheet: '16px',
-            mediaSmall: '8px',
+            mediaSmall: '12px',
         },
         textPresets: {
             button: {weight: 'medium'},
