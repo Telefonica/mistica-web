@@ -67,6 +67,12 @@ const stories = [
     '../src/community/__stories__/*-story.tsx',
 ];
 
+const shouldIncludePrivateStories = !process.env.VERCEL_PROD_BUILD;
+
+if (shouldIncludePrivateStories) {
+    stories.push('../src/**/__private_stories__/*-story.tsx');
+}
+
 const config: StorybookConfig = {
     stories,
     addons: [

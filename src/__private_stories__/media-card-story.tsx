@@ -1,32 +1,39 @@
 import * as React from 'react';
 import {
     Stack,
-    DataCard,
     ButtonPrimary,
     ButtonLink,
     Text2,
-    ResponsiveLayout,
-    IconMobileDeviceRegular,
-    skinVars,
-    Circle,
+    Video,
+    Image,
     Tag,
+    IconMobileDeviceRegular,
+    Circle,
+    skinVars,
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    MediaCard,
 } from '..';
+import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
-import avatarImg from './images/avatar.jpg';
+import tennisImg from '../__stories__/images/tennis.jpg';
+import beachVideo from '../__stories__/videos/beach.mp4';
+import avatarImg from '../__stories__/images/avatar.jpg';
 
-import type {CardAspectRatio} from '../card-internal';
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Private/Deprecated Card Stories/DataCard',
+    title: 'Private/Deprecated Card Stories/MediaCard',
 };
 
-type DataCardArgs = {
-    asset: 'icon' | 'image' | 'none';
+const VIDEO_SRC = beachVideo;
+const IMAGE_SRC = tennisImg;
+
+type Args = {
+    asset: 'circle with icon' | 'circle with image' | 'none';
+    media: 'image' | 'video';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -35,18 +42,14 @@ type DataCardArgs = {
     titleAs: HeadingType;
     subtitle: string;
     description: string;
-    ariaLabel: string;
     extra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     topAction: boolean;
-    aspectRatio: string;
+    emptySource: boolean;
 };
 
-const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
-
-export const Default: StoryComponent<DataCardArgs> = ({
-    asset = 'icon',
+export const Default: StoryComponent<Args> = ({
     headline,
     headlineType,
     pretitle,
@@ -55,21 +58,22 @@ export const Default: StoryComponent<DataCardArgs> = ({
     titleAs,
     subtitle,
     description,
-    ariaLabel,
-    extra,
     actions = 'button',
+    extra,
     closable,
     topAction,
-    aspectRatio,
+    media,
+    asset,
+    emptySource,
 }) => {
     let assetElement;
-    if (asset === 'icon') {
+    if (asset === 'circle with icon') {
         assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if (asset === 'image') {
+    } else if (asset === 'circle with image') {
         assetElement = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
@@ -79,6 +83,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 Action
             </ButtonPrimary>
         ) : undefined,
+
         buttonLink: actions.includes('link') ? (
             <ButtonLink small href="#">
                 Link
@@ -88,20 +93,15 @@ export const Default: StoryComponent<DataCardArgs> = ({
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
     } as
-        | {button?: JSX.Element; buttonLink?: JSX.Element}
+        | {button?: JSX.Element; buttonLink?: JSX.Element; secondaryButton?: JSX.Element}
         | {onPress: () => void}
         | {to: string}
         | {href: string}
         | {[key: string]: never};
 
-    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
-        ? aspectRatio.replace(' ', ':')
-        : aspectRatio;
-
     return (
-        <DataCard
-            onClose={closable ? () => {} : undefined}
-            asset={assetElement}
+        <MediaCard
+            dataAttributes={{testid: 'media-card'}}
             headline={headline && <Tag type={headlineType}>{headline}</Tag>}
             pretitle={pretitle}
             pretitleAs={pretitleAs}
@@ -109,11 +109,21 @@ export const Default: StoryComponent<DataCardArgs> = ({
             titleAs={titleAs}
             subtitle={subtitle}
             description={description}
-            extra={extra ? <Placeholder /> : undefined}
+            asset={assetElement}
+            media={
+                media === 'video' ? (
+                    <Video
+                        src={emptySource ? '' : VIDEO_SRC}
+                        aspectRatio="16:9"
+                        dataAttributes={{qsysid: 'video'}}
+                    />
+                ) : (
+                    <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
+                )
+            }
             {...interactiveActions}
-            aspectRatio={aspectRatioValue as CardAspectRatio}
-            dataAttributes={{testid: 'data-card'}}
-            aria-label={ariaLabel}
+            extra={extra ? <Placeholder /> : undefined}
+            onClose={closable ? () => {} : undefined}
             actions={
                 topAction
                     ? [
@@ -143,9 +153,10 @@ export const Default: StoryComponent<DataCardArgs> = ({
     );
 };
 
-Default.storyName = 'DataCard';
+Default.storyName = 'MediaCard';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
+    media: 'image',
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
@@ -156,14 +167,17 @@ Default.args = {
     description: 'This is a description for the card',
     extra: false,
     actions: 'button',
-    ariaLabel: '',
     closable: false,
     topAction: false,
-    aspectRatio: 'auto',
+    emptySource: false,
 };
 Default.argTypes = {
     asset: {
-        options: ['icon', 'image', 'none'],
+        options: ['circle with icon', 'circle with image', 'none'],
+        control: {type: 'select'},
+    },
+    media: {
+        options: ['image', 'video'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -173,18 +187,6 @@ Default.argTypes = {
     actions: {
         options: ['button', 'link', 'button and link', 'onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
-    },
-    aspectRatio: {
-        options: ['auto', ...fixedAspectRatioValues],
-        control: {
-            type: 'select',
-            labels: {
-                '1 1': '1:1',
-                '16 9': '16:9',
-                '7 10': '7:10',
-                '9 10': '9:10',
-            },
-        },
     },
     pretitleAs: {
         options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
@@ -206,31 +208,23 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Carousel
                     items={[
-                        <DataCard
+                        <MediaCard
                             headline={<Tag type="promo">Headline</Tag>}
                             pretitle="Pretitle"
                             title="Title"
                             subtitle="Subtitle"
                             description="Description"
-                            asset={
-                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            }
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={
                                 <ButtonLink small href="https://google.com">
                                     Link
                                 </ButtonLink>
                             }
                         />,
-                        <DataCard
+                        <MediaCard
                             title="Title"
                             description="Description"
-                            asset={
-                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            }
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={
                                 <ButtonLink small href="https://google.com">
                                     Link
@@ -244,4 +238,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'DataCard group';
+Group.storyName = 'MediaCard group';

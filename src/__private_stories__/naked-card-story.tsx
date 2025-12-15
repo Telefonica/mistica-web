@@ -18,10 +18,10 @@ import {
     IconStarRegular,
 } from '..';
 import {Placeholder} from '../placeholder';
-import tennisImg from './images/tennis.jpg';
-import beachVideo from './videos/beach.mp4';
+import tennisImg from '../__stories__/images/tennis.jpg';
+import beachVideo from '../__stories__/videos/beach.mp4';
 import {SmallNakedCard} from '../card-naked';
-import avatarImg from './images/avatar.jpg';
+import avatarImg from '../__stories__/images/avatar.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';

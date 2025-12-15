@@ -11,7 +11,7 @@ import {
     Carousel,
 } from '..';
 import {Placeholder} from '../placeholder';
-import avatarImg from './images/avatar.jpg';
+import avatarImg from '../__stories__/images/avatar.jpg';
 import {SnapCard} from '../card-data';
 
 import type {CardAspectRatio, SlotAlignment} from '../card-internal';

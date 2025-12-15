@@ -15,10 +15,10 @@ import {
     Placeholder,
 } from '..';
 import {PosterCard} from '../card-cover';
-import usingVrImg from './images/using-vr.jpg';
-import avatarImg from './images/avatar.jpg';
-import beachVideo from './videos/beach.mp4';
-import beachImg from './images/beach.jpg';
+import usingVrImg from '../__stories__/images/using-vr.jpg';
+import avatarImg from '../__stories__/images/avatar.jpg';
+import beachVideo from '../__stories__/videos/beach.mp4';
+import beachImg from '../__stories__/images/beach.jpg';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';

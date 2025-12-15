@@ -1,36 +1,43 @@
 import * as React from 'react';
 import {
-    DisplayDataCard,
+    DisplayMediaCard,
     ButtonPrimary,
     ButtonLink,
     IconInvoicePlanFileRegular,
     skinVars,
     Circle,
     Tag,
-    Image,
     ButtonSecondary,
     IconLightningRegular,
     ResponsiveLayout,
     Stack,
     Text2,
+    Box,
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    Placeholder,
 } from '..';
-import {Placeholder} from '../placeholder';
-import avatarImg from './images/avatar.jpg';
+import usingVrImg from '../__stories__/images/using-vr.jpg';
+import avatarImg from '../__stories__/images/avatar.jpg';
+import beachVideo from '../__stories__/videos/beach.mp4';
+import beachImg from '../__stories__/images/beach.jpg';
 
-import type {CardAspectRatio} from '../card-internal';
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
-    title: 'Private/Deprecated Card Stories/DisplayDataCard',
+    title: 'Private/Deprecated Card Stories/DisplayMediaCard',
 };
 
-type DisplayDataCardArgs = {
-    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+const BACKGROUND_IMAGE_SRC = usingVrImg;
+const BACKGROUND_VIDEO_SRC = beachVideo;
+const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
+
+type DisplayMediaCardArgs = {
+    asset: 'circle with icon' | 'circle with image' | 'none';
     headlineType: TagType;
+    background: 'image' | 'video';
     headline: string;
     pretitle: string;
     pretitleAs: HeadingType;
@@ -49,16 +56,17 @@ type DisplayDataCardArgs = {
         | 'href'
         | 'to'
         | 'none';
-    isInverse: boolean;
-    aspectRatio: string;
+    width: string;
+    aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+    emptySource: boolean;
+    inverse: boolean;
 };
 
-const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
-
-export const Default: StoryComponent<DisplayDataCardArgs> = ({
-    asset = 'icon',
+export const Default: StoryComponent<DisplayMediaCardArgs> = ({
+    asset,
     headline,
     headlineType,
+    background,
     pretitle,
     pretitleAs,
     title,
@@ -68,22 +76,20 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     actions = 'button',
     closable,
     topAction,
-    isInverse,
+    width,
     aspectRatio,
+    emptySource,
+    inverse,
 }) => {
     let assetElement;
-    if (asset === 'circle + icon') {
+    if (asset === 'circle with icon') {
         assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if (asset === 'circle + image') {
+    } else if (asset === 'circle with image') {
         assetElement = <Circle size={40} backgroundImage={avatarImg} />;
-    } else if (asset === 'icon') {
-        assetElement = <IconInvoicePlanFileRegular size={40} />;
-    } else if (asset === 'image') {
-        assetElement = <Image src={avatarImg} width={40} height={40} />;
     }
 
     const interactiveActions = {
@@ -112,57 +118,67 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
         | {href: string}
         | {[key: string]: never};
 
-    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
-        ? aspectRatio.replace(' ', ':')
-        : aspectRatio;
+    const backgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: topAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                            {
+                                checkedProps: {
+                                    Icon: IconStarFilled,
+                                    label: 'checked',
+                                },
+                                uncheckedProps: {
+                                    Icon: IconStarRegular,
+                                    label: 'unchecked',
+                                },
+                                defaultChecked: false,
+                                onChange: () => {},
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: emptySource ? '' : BACKGROUND_IMAGE_SRC,
+              }
+            : {
+                  backgroundVideo: emptySource ? '' : BACKGROUND_VIDEO_SRC,
+                  poster: emptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
+              };
 
     return (
-        <DisplayDataCard
-            isInverse={isInverse}
-            onClose={closable ? () => {} : undefined}
-            actions={
-                topAction
-                    ? [
-                          {
-                              Icon: IconLightningRegular,
-                              onPress: () => {},
-                              label: 'Lightning',
-                          },
-                          {
-                              checkedProps: {
-                                  Icon: IconStarFilled,
-                                  label: 'checked',
-                              },
-                              uncheckedProps: {
-                                  Icon: IconStarRegular,
-                                  label: 'unchecked',
-                              },
-                              defaultChecked: false,
-                              onChange: () => {},
-                          },
-                      ]
-                    : undefined
-            }
-            asset={assetElement}
-            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-            pretitle={pretitle}
-            pretitleAs={pretitleAs}
-            title={title}
-            titleAs={titleAs}
-            description={description}
-            aspectRatio={aspectRatioValue as CardAspectRatio}
-            extra={extra ? <Placeholder /> : undefined}
-            {...interactiveActions}
-            dataAttributes={{testid: 'display-data-card'}}
-            aria-label="Display data card label"
-        />
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <DisplayMediaCard
+                    {...backgroundProps}
+                    asset={assetElement}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    pretitleAs={pretitleAs}
+                    title={title}
+                    titleAs={titleAs}
+                    description={description}
+                    {...interactiveActions}
+                    aria-label="Display media card label"
+                    width={width}
+                    aspectRatio={aspectRatio}
+                    extra={extra ? <Placeholder /> : undefined}
+                    dataAttributes={{testid: 'display-media-card'}}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-Default.storyName = 'DisplayDataCard';
+Default.storyName = 'DisplayMediaCard';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
     headlineType: 'promo',
+    background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
     pretitleAs: 'span',
@@ -173,12 +189,14 @@ Default.args = {
     actions: 'button',
     closable: false,
     topAction: false,
-    isInverse: false,
+    width: 'auto',
     aspectRatio: 'auto',
+    emptySource: false,
+    inverse: false,
 };
 Default.argTypes = {
     asset: {
-        options: ['icon', 'circle + icon', 'image', 'circle + image', 'none'],
+        options: ['circle with icon', 'circle with image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -198,17 +216,13 @@ Default.argTypes = {
         ],
         control: {type: 'select'},
     },
+    background: {
+        options: ['image', 'video'],
+        control: {type: 'select'},
+    },
     aspectRatio: {
-        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
-        control: {
-            type: 'select',
-            labels: {
-                '1 1': '1:1',
-                '16 9': '16:9',
-                '7 10': '7:10',
-                '9 10': '9:10',
-            },
-        },
+        options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
+        control: {type: 'select'},
     },
     pretitleAs: {
         options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
@@ -219,6 +233,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
 };
+Default.parameters = {fullScreen: true};
 
 export const Group: StoryComponent = () => {
     return (
@@ -229,30 +244,25 @@ export const Group: StoryComponent = () => {
                     aligned to the bottom.
                 </Text2>
                 <Carousel
+                    itemsPerPage={3}
                     items={[
-                        <DisplayDataCard
+                        <DisplayMediaCard
                             headline={<Tag type="promo">Headline</Tag>}
                             pretitle="Pretitle"
                             title="Title"
                             description="Description"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
                             button={
                                 <ButtonPrimary small href="https://google.com">
                                     Action
                                 </ButtonPrimary>
                             }
                         />,
-                        <DisplayDataCard
-                            asset={
-                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                    <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            }
+                        <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />,
+                        <DisplayMediaCard
                             title="Title"
-                            button={
-                                <ButtonPrimary small href="https://google.com">
-                                    Action
-                                </ButtonPrimary>
-                            }
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            onClose={() => {}}
                         />,
                     ]}
                 />
@@ -261,4 +271,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'DisplayDataCard group';
+Group.storyName = 'DisplayMediaCard group';

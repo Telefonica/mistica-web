@@ -9,7 +9,7 @@ import {
     Text2,
     Carousel,
 } from '..';
-import personPortraitImg from './images/person-portrait.jpg';
+import personPortraitImg from '../__stories__/images/person-portrait.jpg';
 
 export default {
     title: 'Private/Deprecated Card Stories/HighlightedCard',
