@@ -11,7 +11,6 @@ const SKINS: Array<KnownSkinName> = [
     'Vivo-new',
     'Telefonica',
     'Blau',
-    'Tu',
     'Esimflag',
 ];
 const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];

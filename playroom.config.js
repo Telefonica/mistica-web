@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const {VanillaExtractPlugin} = require('@vanilla-extract/webpack-plugin');
 
 // We deploy 3 different builds of playroom, one with all the breakpoints, one forcing mobile,
 // and one forcing desktop. This is needed for Brand Factory documentation site, where we need
@@ -121,6 +122,7 @@ const config = {
             ],
         },
         plugins: [
+            new VanillaExtractPlugin(),
             new webpack.DefinePlugin({
                 'process.env.MISTICA_MEDIA_QUERIES_CONFIG': JSON.stringify(
                     JSON.stringify(getMediaQueriesConfig())
