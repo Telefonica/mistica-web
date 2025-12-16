@@ -616,6 +616,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
         },
         textPresets: {
             button: {weight: 'medium'},
+            cardTitle: {weight: 'medium'},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 16, mobile: 14},

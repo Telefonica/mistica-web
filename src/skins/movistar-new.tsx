@@ -630,6 +630,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
         },
         textPresets: {
             button: {weight: 'medium'},
+            cardTitle: {weight: 'bold'},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 18, mobile: 14},

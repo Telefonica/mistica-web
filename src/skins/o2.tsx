@@ -622,6 +622,7 @@ export const getO2Skin: GetKnownSkin = () => {
         },
         textPresets: {
             button: {weight: 'medium'},
+            cardTitle: {weight: 'regular'},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 16, mobile: 14},
