@@ -139,7 +139,8 @@
         "swc-loader": "^0.2.3",
         "typescript": "^5.9.3",
         "vite": "^4.5.0",
-        "vite-plugin-no-bundle": "^2.0.3"
+        "vite-plugin-no-bundle": "^2.0.3",
+        "webpack-react-component-name": "^5.0.5"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
