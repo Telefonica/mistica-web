@@ -679,7 +679,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             title2: {lineHeight: {desktop: 24, mobile: 22}, size: {desktop: 18, mobile: 16}, weight: 'bold'},
-            title3: {lineHeight: {desktop: 26, mobile: 24}, size: {desktop: 20, mobile: 18}, weight: 'bold'},
+            title3: {lineHeight: {desktop: 28, mobile: 26}, size: {desktop: 24, mobile: 20}, weight: 'bold'},
             title4: {lineHeight: {desktop: 28, mobile: 26}, size: {desktop: 24, mobile: 20}, weight: 'bold'},
         },
         themeVariants: {
