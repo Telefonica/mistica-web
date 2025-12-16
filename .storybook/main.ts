@@ -74,6 +74,7 @@ if (shouldIncludePrivateStories) {
 
 const config: StorybookConfig = {
     stories,
+
     addons: [
         getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
         getAbsolutePath('@storybook/addon-docs'),
@@ -83,7 +84,11 @@ const config: StorybookConfig = {
         './theme-selector-addon/preset.ts',
         './platform-selector-addon/preset.ts',
     ],
+
     framework: getAbsolutePath('@storybook/react-webpack5'),
+
+    staticDirs: ['./css/fonts'],
+
     webpackFinal: async (config) => {
         config.watchOptions = {
             ...config.watchOptions,
@@ -108,6 +113,7 @@ const config: StorybookConfig = {
         addVanillaExtractSupport(config);
         return config;
     },
+
     // building stories is slow without this workaround
     // https://github.com/storybookjs/storybook/issues/10784#issuecomment-868329216
     typescript: {

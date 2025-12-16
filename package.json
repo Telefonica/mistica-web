@@ -35,7 +35,7 @@
         "build-mistica-css": "cd examples/css && yarn && yarn build && cp -r dist ../../public/mistica-css",
         "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/ && yarn build-mistica-css",
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/ && yarn build-mistica-css",
-        "storybook-static": "rimraf public && storybook build -s ./.storybook/css/fonts -o public --quiet",
+        "storybook-static": "rimraf public && storybook build -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
@@ -139,8 +139,7 @@
         "swc-loader": "^0.2.3",
         "typescript": "^5.9.3",
         "vite": "^4.5.0",
-        "vite-plugin-no-bundle": "^2.0.3",
-        "webpack-react-component-name": "^5.0.5"
+        "vite-plugin-no-bundle": "^2.0.3"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
