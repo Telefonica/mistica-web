@@ -21,10 +21,23 @@ export default {
     component: MainNavigationBar,
     parameters: {
         fullScreen: true,
+        docs: {
+            source: {
+                type: 'code',
+                code: '// Disabled as workaround for https://github.com/storybookjs/storybook/issues/19575',
+            },
+        },
     },
 };
 
 const sectionTitles = ['Start', 'Account', 'Explore', 'Support'] as const;
+
+const sectionDefaultMenuItemsCount = {
+    Start: 3,
+    Account: 1,
+    Explore: 2,
+    Support: 3,
+};
 
 type Args = {
     variant: Variant;
@@ -54,13 +67,6 @@ export const Default: StoryComponent<Args> = ({
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
 
-    const sectionDefaultMenuItemsCount = {
-        Start: 3,
-        Account: 1,
-        Explore: 2,
-        Support: 3,
-    };
-
     return (
         <MainNavigationBar
             variant={variant}
@@ -75,26 +81,25 @@ export const Default: StoryComponent<Args> = ({
                           title,
                           onPress: () => setSelectedIndex(idx),
                           menu:
-                              menu === 'undefined'
-                                  ? undefined
-                                  : menu === 'default'
+                              menu === 'default'
+                                  ? {
+                                        title: `${title} menu`,
+                                        columns: Array.from(
+                                            {length: desktopLargeMenu ? 2 : 1},
+                                            (_, columnIndex) => ({
+                                                title: `${title} ${columnIndex + 1}`,
+                                                items: Array.from(
+                                                    {length: sectionDefaultMenuItemsCount[title]},
+                                                    (_, index) => ({
+                                                        title: `item ${index + 1}`,
+                                                        onPress: () => {},
+                                                    })
+                                                ),
+                                            })
+                                        ),
+                                    }
+                                  : menu === 'custom'
                                     ? {
-                                          title: `${title} menu`,
-                                          columns: Array.from(
-                                              {length: desktopLargeMenu ? 2 : 1},
-                                              (_, columnIndex) => ({
-                                                  title: `${title} ${columnIndex + 1}`,
-                                                  items: Array.from(
-                                                      {length: sectionDefaultMenuItemsCount[title]},
-                                                      (_, index) => ({
-                                                          title: `item ${index + 1}`,
-                                                          onPress: () => {},
-                                                      })
-                                                  ),
-                                              })
-                                          ),
-                                      }
-                                    : {
                                           content: (
                                               <Stack space={16}>
                                                   <Text3 regular>{title} menu</Text3>
@@ -106,7 +111,8 @@ export const Default: StoryComponent<Args> = ({
                                                   )}
                                               </Stack>
                                           ),
-                                      },
+                                      }
+                                    : undefined,
                       }))
                     : undefined
             }

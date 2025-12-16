@@ -4,9 +4,6 @@ import * as React from 'react';
 
 export default {
     title: 'Welcome',
-    parameters: {
-        codePanel: false,
-    },
 };
 
 const Paragraph = ({children}: {children: React.ReactNode}) => {
