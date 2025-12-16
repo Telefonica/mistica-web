@@ -1,7 +1,3 @@
-// @ts-check
-// Storybook fails when importing .tsx files from "manager.js" or "manager.tsx"
-// This module replaces the required parts from ./src/skins
-
 export const AVAILABLE_SKINS = [
     'Movistar-new',
     'Movistar',

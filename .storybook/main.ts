@@ -1,15 +1,14 @@
-import {dirname, resolve} from 'path';
+import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import {VanillaExtractPlugin} from '@vanilla-extract/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// @ts-expect-error Missing types
+import WebpackReactComponentNamePlugin from 'webpack-react-component-name';
 import webpack from 'webpack';
 
 import type {StorybookConfig} from '@storybook/react-webpack5';
 
 type WebpackConfig = Parameters<NonNullable<StorybookConfig['webpackFinal']>>[0];
-
-// eslint-disable-next-line no-underscore-dangle
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -77,18 +76,7 @@ const config: StorybookConfig = {
     stories,
     addons: [
         getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
-        {
-            name: '@storybook/addon-storysource',
-            options: {
-                rule: {
-                    test: [/-story\.tsx/, /welcome-story\.js/],
-                    include: [resolve(__dirname, '..', 'src'), __dirname],
-                },
-                loaderOptions: {
-                    prettierConfig: {printWidth: 80, singleQuote: false},
-                },
-            },
-        },
+        getAbsolutePath('@storybook/addon-docs'),
         './theme-selector-addon/preset.ts',
         './dark-mode-addon/preset.ts',
         './font-size-addon/preset.ts',
@@ -109,6 +97,8 @@ const config: StorybookConfig = {
 
         // Define process.env variables for browser
         config.plugins?.push(
+            /** workaround for: https://github.com/storybookjs/storybook/issues/22287 */
+            new WebpackReactComponentNamePlugin(),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
                 'process.env.SSR_TEST': JSON.stringify(''),
@@ -124,5 +114,15 @@ const config: StorybookConfig = {
         check: false,
         reactDocgen: false,
     },
+
+    /** hide interactions tab */
+    features: {
+        interactions: false,
+    },
+
+    core: {
+        disableWhatsNewNotifications: true,
+    },
 };
+
 export default config;

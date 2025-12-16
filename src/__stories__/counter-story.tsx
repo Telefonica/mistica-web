@@ -12,6 +12,7 @@ export default {
             control: {type: 'select'},
         },
     },
+    component: Counter,
 };
 
 type Args = {

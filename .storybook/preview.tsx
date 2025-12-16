@@ -208,14 +208,23 @@ const parameters = {
             ],
         },
     },
-    // Workaround for: https://github.com/storybookjs/storybook/issues/17098
-    docs: {source: {type: 'code'}},
+
+    docs: {
+        codePanel: true,
+    },
 
     controls: {
         matchers: {
             color: /(background|color)$/i,
             date: /Date$/i,
         },
+        /** Disable the "You modified this story. Do you want to save your changes?" dialog */
+        disableSaveFromUI: true,
+    },
+
+    /** Hide actions tab */
+    actions: {
+        disable: true,
     },
 };
 

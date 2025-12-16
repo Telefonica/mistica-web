@@ -68,6 +68,7 @@
         "@azure/storage-blob": "^12.9.0",
         "@semantic-release/changelog": "^6.0.1",
         "@semantic-release/git": "^10.0.1",
+        "@storybook/addon-docs": "^10.1.9",
         "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
         "@storybook/react-webpack5": "^10.1.4",
         "@swc/cli": "^0.1.62",
@@ -138,7 +139,8 @@
         "swc-loader": "^0.2.3",
         "typescript": "^5.9.3",
         "vite": "^4.5.0",
-        "vite-plugin-no-bundle": "^2.0.3"
+        "vite-plugin-no-bundle": "^2.0.3",
+        "webpack-react-component-name": "^5.0.5"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",

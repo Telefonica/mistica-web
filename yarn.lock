@@ -3557,6 +3557,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mdx-js/react@npm:^3.0.0":
+  version: 3.1.1
+  resolution: "@mdx-js/react@npm:3.1.1"
+  dependencies:
+    "@types/mdx": ^2.0.0
+  peerDependencies:
+    "@types/react": ">=16"
+    react: ">=16"
+  checksum: 7e1742c530dd4b5b586f9ccbc8451062b9a1b4c3c8dd00537aa910b34c7404e4120d50dbd0a19f1697ae8e600d9e5848e29fad846d2975b7c5c7d8d2bd798c83
+  languageName: node
+  linkType: hard
+
 "@mole-inc/bin-wrapper@npm:^8.0.1":
   version: 8.0.1
   resolution: "@mole-inc/bin-wrapper@npm:8.0.1"
@@ -4442,6 +4454,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-docs@npm:^10.1.9":
+  version: 10.1.9
+  resolution: "@storybook/addon-docs@npm:10.1.9"
+  dependencies:
+    "@mdx-js/react": ^3.0.0
+    "@storybook/csf-plugin": 10.1.9
+    "@storybook/icons": ^2.0.0
+    "@storybook/react-dom-shim": 10.1.9
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    ts-dedent: ^2.0.0
+  peerDependencies:
+    storybook: ^10.1.9
+  checksum: 68e41e3f1c26fe09a855b2a5f4f5dd364af74728b0c93d2627fcfc81805126181fdb1479fa785854b44e9c8c487fa305dd6dd00faa94a61ff166d3e38cfd04a8
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-webpack5-compiler-swc@npm:^4.0.2":
   version: 4.0.2
   resolution: "@storybook/addon-webpack5-compiler-swc@npm:4.0.2"
@@ -4491,6 +4520,30 @@ __metadata:
   peerDependencies:
     storybook: ^10.1.4
   checksum: 85bd77d745eb0c0ee28763e05d0705b060f39f83ba65b00123e35f68e75449241efe1bf096ef9e2c15d412e909252c45d72dc07b25a65403b569f7e1c9b4f1e8
+  languageName: node
+  linkType: hard
+
+"@storybook/csf-plugin@npm:10.1.9":
+  version: 10.1.9
+  resolution: "@storybook/csf-plugin@npm:10.1.9"
+  dependencies:
+    unplugin: ^2.3.5
+  peerDependencies:
+    esbuild: "*"
+    rollup: "*"
+    storybook: ^10.1.9
+    vite: "*"
+    webpack: "*"
+  peerDependenciesMeta:
+    esbuild:
+      optional: true
+    rollup:
+      optional: true
+    vite:
+      optional: true
+    webpack:
+      optional: true
+  checksum: 241c28b9a247108fd60003393003fe2155629bfabe22d2bb895c5eec77dc51c9e36e3f25f2a9c9bb20cd1cb25662ad10c0273b91df32140dba5ee72aff9a016f
   languageName: node
   linkType: hard
 
@@ -4561,6 +4614,17 @@ __metadata:
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     storybook: ^10.1.4
   checksum: 859659004a6af3dae90524f44c077eea9bdd852d281a110bed6d6407f31419bb876a733439dbda96d7d181ce2f7f1cf4125af3e4115aa037d0766afa4b3c2d2f
+  languageName: node
+  linkType: hard
+
+"@storybook/react-dom-shim@npm:10.1.9":
+  version: 10.1.9
+  resolution: "@storybook/react-dom-shim@npm:10.1.9"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    storybook: ^10.1.9
+  checksum: 15cc1f15a3477791c8c5313a093d8d40bd7789c68d0ee040f3b619b5470f929b6e1c0ce02be236ed4d9e7b0f9094b2320f2f8d6122e5228d4b66cd46d206a746
   languageName: node
   linkType: hard
 
@@ -4997,6 +5061,7 @@ __metadata:
     "@juggle/resize-observer": ^3.3.1
     "@semantic-release/changelog": ^6.0.1
     "@semantic-release/git": ^10.0.1
+    "@storybook/addon-docs": ^10.1.9
     "@storybook/addon-webpack5-compiler-swc": ^4.0.2
     "@storybook/react-webpack5": ^10.1.4
     "@swc/cli": ^0.1.62
@@ -5084,6 +5149,7 @@ __metadata:
     typescript: ^5.9.3
     vite: ^4.5.0
     vite-plugin-no-bundle: ^2.0.3
+    webpack-react-component-name: ^5.0.5
   peerDependencies:
     react: ^18.0.0 || ^19.2.0
     react-dom: ^18.0.0 || ^19.2.0
@@ -5610,6 +5676,13 @@ __metadata:
   version: 4.17.21
   resolution: "@types/lodash@npm:4.17.21"
   checksum: e09e3eaf29b18b6c8e130fcbafd8e3c4ecc2110f35255079245e7d1bd310a5a8f93e4e70266533dce672f253bba899c721bc6870097e0a8c5448e0b628136d39
+  languageName: node
+  linkType: hard
+
+"@types/mdx@npm:^2.0.0":
+  version: 2.0.13
+  resolution: "@types/mdx@npm:2.0.13"
+  checksum: 195137b548e75a85f0558bb1ca5088aff1c01ae0fc64454da06085b7513a043356d0bb51ed559d3cbc7ad724ccd8cef2a7d07d014b89a47a74dff8875ceb3b15
   languageName: node
   linkType: hard
 
@@ -6924,6 +6997,13 @@ __metadata:
   peerDependencies:
     acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
   checksum: c3d3b2a89c9a056b205b69530a37b972b404ee46ec8e5b341666f9513d3163e2a4f214a71f4dfc7370f5a9c07472d2fd1c11c91c3f03d093e37637d95da98950
+  languageName: node
+  linkType: hard
+
+"acorn-walk@npm:7.2.0":
+  version: 7.2.0
+  resolution: "acorn-walk@npm:7.2.0"
+  checksum: 9252158a79b9d92f1bc0dd6acc0fcfb87a67339e84bcc301bb33d6078936d27e35d606b4d35626d2962cd43c256d6f27717e70cbe15c04fff999ab0b2260b21f
   languageName: node
   linkType: hard
 
@@ -15634,6 +15714,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:5.1.0":
+  version: 5.1.0
+  resolution: "minimatch@npm:5.1.0"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^5.0.1":
   version: 5.0.1
   resolution: "minimatch@npm:5.0.1"
@@ -21083,6 +21172,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"unplugin@npm:^2.3.5":
+  version: 2.3.11
+  resolution: "unplugin@npm:2.3.11"
+  dependencies:
+    "@jridgewell/remapping": ^2.3.5
+    acorn: ^8.15.0
+    picomatch: ^4.0.3
+    webpack-virtual-modules: ^0.6.2
+  checksum: 9ed52ac0d154ed269b2a0844aa04b78900728db45a61bf9d78eadcef1c5a3ccb2751aba229df20972713bd8f43f2640a9c5b57a2d395b8e6ce6ba76ebf0c9ab8
+  languageName: node
+  linkType: hard
+
 "unset-value@npm:^1.0.0":
   version: 1.0.0
   resolution: "unset-value@npm:1.0.0"
@@ -21665,6 +21766,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webpack-react-component-name@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "webpack-react-component-name@npm:5.0.5"
+  dependencies:
+    acorn-walk: 7.2.0
+    minimatch: 5.1.0
+  peerDependencies:
+    webpack: 5.x
+  checksum: fbd0ca26a11b9bdc1460c3f5e6473e6d887f7050809a1ea879c0d5a53bfcdf3668795833c867922b7b14c0c50c0b9679d49498cef4ff4e8a130f346f2ae2633a
+  languageName: node
+  linkType: hard
+
 "webpack-sources@npm:^1.1.0":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
@@ -21689,7 +21802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-virtual-modules@npm:^0.6.0":
+"webpack-virtual-modules@npm:^0.6.0, webpack-virtual-modules@npm:^0.6.2":
   version: 0.6.2
   resolution: "webpack-virtual-modules@npm:0.6.2"
   checksum: 7e8e1d63f35864c815420cc2f27da8561a1e028255040698a352717de0ba46d3b3faf16f06c1a1965217054c4c2894eb9af53a85451870e919b5707ce9c5822d
