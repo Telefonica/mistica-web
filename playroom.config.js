@@ -108,7 +108,7 @@ const config = {
                 {
                     test: /\.vanilla\.css/i,
                     // Don't process vanilla files from Playroom as they are handled separately.
-                    exclude: /node_modules\/playroom/,
+                    exclude: /node_modules\//,
                     use: [
                         'style-loader',
                         {
