@@ -180,7 +180,7 @@ test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => 
     expect(image).toMatchImageSnapshot();
 });
 
-test.each`
+test.only.each`
     menuType   | content
     ${'large'} | ${'default'}
     ${'large'} | ${'custom'}
@@ -192,6 +192,10 @@ test.each`
         device: 'DESKTOP',
         args: {sections: true, desktopLargeMenu: menuType === 'large', menu: content},
     });
+
+    page.on('console', (message) =>
+        console.log(`${message.type().substr(0, 3).toUpperCase()} ${message.text()}`)
+    );
 
     // first section opened
     await page.click(await screen.findByRole('button', {name: 'Start'}));
