@@ -1227,8 +1227,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             (ariaLabeledByProp
                 ? undefined
                 : (title && isBiggerHeading(titleAs, pretitleAs)
-                      ? [title, headlineText, pretitle, subtitle, description, slotText]
-                      : [pretitle, headlineText, title, subtitle, description, slotText]
+                      ? [title, imageAlt, headlineText, pretitle, subtitle, description, slotText]
+                      : [pretitle, headlineText, title, imageAlt, subtitle, description, slotText]
                   )
                       .filter(Boolean)
                       .join(' '));
