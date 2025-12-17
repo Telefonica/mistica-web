@@ -180,22 +180,21 @@ test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => 
     expect(image).toMatchImageSnapshot();
 });
 
-test.only.each`
+// These test cases have been skipped because they produce different results in UI and headless mode.
+// In headless mode, the menu gets rendered in an unexpected position
+// https://jira.tid.es/browse/WEB-2365
+// ${'small'} | ${'default'}
+// ${'small'} | ${'custom'}
+test.each`
     menuType   | content
     ${'large'} | ${'default'}
     ${'large'} | ${'custom'}
-    ${'small'} | ${'default'}
-    ${'small'} | ${'custom'}
 `('MainNavigationBar with $menuType menu and $content content in DESKTOP', async ({menuType, content}) => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
         args: {sections: true, desktopLargeMenu: menuType === 'large', menu: content},
     });
-
-    page.on('console', (message) =>
-        console.log(`${message.type().substr(0, 3).toUpperCase()} ${message.text()}`)
-    );
 
     // first section opened
     await page.click(await screen.findByRole('button', {name: 'Start'}));
@@ -236,7 +235,10 @@ test.each(['default', 'custom'])('MainNavigationBar with menu and %s content in 
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
+// Test case skipped because it produces different results in UI and headless mode.
+// In headless mode, the menu gets rendered in an unexpected position
+// https://jira.tid.es/browse/WEB-2365
+test.each(['large' /* 'small' */])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',

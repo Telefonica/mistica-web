@@ -1121,12 +1121,6 @@ const MainNavigationBarDesktopSection = ({
                     (navigationBarRef.current?.getBoundingClientRect().right || 0) -
                     styles.DESKTOP_SMALL_MENU_WIDTH;
 
-                console.log(
-                    '>>>>>>>>>>>>>>>>>',
-                    left,
-                    right,
-                    left <= maxLeftOffset ? left : right - styles.DESKTOP_SMALL_MENU_WIDTH
-                );
                 return left <= maxLeftOffset ? left : right - styles.DESKTOP_SMALL_MENU_WIDTH;
             };
             if (!desktopLargeMenu) {
@@ -1197,12 +1191,9 @@ const MainNavigationBarDesktopSection = ({
     );
 
     return (
-        <div
-            className={styles.desktopMenuSectionWithArrowWrapper}
-            ref={sectionRef}
-            style={{border: '4px solid blue'}}
-        >
+        <div className={styles.desktopMenuSectionWithArrowWrapper}>
             <div
+                ref={sectionRef}
                 className={classnames(styles.desktopMenuSectionContainer, {
                     [styles.desktopMenuFirstSection]: isFirstSection,
                     [styles.desktopMenuLastSection]: isLastSection,
