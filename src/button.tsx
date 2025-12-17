@@ -14,10 +14,10 @@ import {BaseTouchable} from './touchable';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import {getTextFromChildren} from './utils/common';
 import {applyCssVars, pxToRem} from './utils/css';
+import {getPlatform} from './utils/platform';
 
 import type {Location} from 'history';
 import type {TouchableElement} from './touchable';
-import {getPlatform} from './utils/platform';
 import type {
     DataAttributes,
     IconProps,
