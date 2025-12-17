@@ -1,21 +1,23 @@
 'use client';
-import * as React from 'react';
 import classnames from 'classnames';
-import Spinner from './spinner';
-import {BaseTouchable} from './touchable';
-import {useThemeVariant} from './theme-variant-context';
-import {useForm} from './form-context';
-import {applyCssVars, pxToRem} from './utils/css';
-import {Text, Text3} from './text';
+import * as React from 'react';
 import Box from './box';
-import {getTextFromChildren} from './utils/common';
-import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
-import {useTheme} from './hooks';
-import {flattenChildren} from './skins/utils';
 import * as styles from './button.css';
+import {useForm} from './form-context';
+import {useTheme} from './hooks';
 import {VIVO_NEW_SKIN} from './skins/constants';
+import {flattenChildren} from './skins/utils';
+import Spinner from './spinner';
+import {Text, Text3} from './text';
+import {useThemeVariant} from './theme-variant-context';
+import {BaseTouchable} from './touchable';
+import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
+import {getTextFromChildren} from './utils/common';
+import {applyCssVars, pxToRem} from './utils/css';
 
+import type {Location} from 'history';
 import type {TouchableElement} from './touchable';
+import {getPlatform} from './utils/platform';
 import type {
     DataAttributes,
     IconProps,
@@ -23,7 +25,6 @@ import type {
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
-import type {Location} from 'history';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 const ButtonTextRenderer = ({element, small}: {element: React.ReactNode; small?: boolean}) => {
@@ -238,6 +239,7 @@ const renderButtonContent = ({
                 {shouldRenderSpinner ? (
                     <Spinner
                         aria-hidden={!!loadingText}
+                        aria-live={getPlatform() === 'android' ? 'polite' : 'off'}
                         color="currentcolor"
                         delay="0s"
                         size={spinnerSizeRem}
