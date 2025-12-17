@@ -4,7 +4,6 @@ import {render, screen, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {MainNavigationBar} from '../navigation-bar';
 import userEvent from '@testing-library/user-event';
-import {act} from 'react-dom/test-utils';
 import {ButtonPrimary} from '../button';
 
 test('MainNavigationBar section with interaction is accessible', async () => {
@@ -61,7 +60,7 @@ test('MainNavigationBar section with interaction is accessible', async () => {
     expect(screen.queryByText('item 2-1')).not.toBeInTheDocument();
 
     // Focus arrow in order for it to appear in the screen
-    await act(async () => {
+    await React.act(async () => {
         firstSectionMenuButton.focus();
     });
 
