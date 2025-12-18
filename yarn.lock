@@ -16061,7 +16061,7 @@ __metadata:
 
 "playroom@patch:playroom@npm%3A1.0.3#./.yarn/patches/playroom-npm-1.0.3-d8e0669615.patch::locator=%40telefonica%2Fmistica%40workspace%3A.":
   version: 1.0.3
-  resolution: "playroom@patch:playroom@npm%3A1.0.3#./.yarn/patches/playroom-npm-1.0.3-d8e0669615.patch::version=1.0.3&hash=64da83&locator=%40telefonica%2Fmistica%40workspace%3A."
+  resolution: "playroom@patch:playroom@npm%3A1.0.3#./.yarn/patches/playroom-npm-1.0.3-d8e0669615.patch::version=1.0.3&hash=3e88c5&locator=%40telefonica%2Fmistica%40workspace%3A."
   dependencies:
     "@babel/core": ^7.20.5
     "@babel/parser": ^7.23.4
@@ -16120,7 +16120,7 @@ __metadata:
     react-dom: ^18 || ^19
   bin:
     playroom: bin/cli.cjs
-  checksum: 25a40aba584a0574783ed303b8c293e997aab6c2f09a70bee23e0c06982e301e762f4d3719b9814e05a529802567f980e1ec3f20db060acd8643e19bfad2d9b2
+  checksum: 028e0f5daca92cd1c5721fb97353162a6eb6f0ec7a5abb73a1f5e0a909b565aab64be76a32c46bbc97d5bf3ad8345df81423ff022967b5649eb69058f92b194b
   languageName: node
   linkType: hard
 
