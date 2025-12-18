@@ -12,6 +12,7 @@ export type FieldRegistration = {
     validator?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
     label?: string;
+    required?: boolean;
 };
 
 type Context = {
@@ -182,7 +183,8 @@ export const useFieldProps = ({
                   onBlur?.(e);
               }
             : onBlur,
-        inputRef: (input: HTMLInputElement | null) => register(name, {input, validator: validate, label}),
+        inputRef: (input: HTMLInputElement | null) =>
+            register(name, {input, validator: validate, label, required: !optional}),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = event.currentTarget.value;
             const value = processValue(rawValue);
