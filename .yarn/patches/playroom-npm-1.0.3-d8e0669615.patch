@@ -1,0 +1,13 @@
+diff --git a/src/components/Preview/Preview.tsx b/src/components/Preview/Preview.tsx
+index 4431c0abe73040cc889164c25ceb92c46469ea53..57ae39c1fe28f82b2bebd24db360c2197b3afab2 100644
+--- a/src/components/Preview/Preview.tsx
++++ b/src/components/Preview/Preview.tsx
+@@ -59,7 +59,7 @@ const PreviewFooter = ({ editorHref }: { editorHref: string }) => (
+ export default ({ title, code, themeName }: PreviewProps) => {
+   useDocumentTitle({ title, suffix: 'Playroom Preview' });
+ 
+-  const [headerHidden, setHeaderHidden] = useState(false);
++  const [headerHidden, setHeaderHidden] = useState(true); // false
+   const editorHref = window.location.href.replace(
+     window.location.pathname,
+     window.location.pathname.replace(/\/preview\/$/, '/')

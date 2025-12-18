@@ -202,7 +202,8 @@
         "@types/react-dom": "19.2.3",
         "@testing-library/dom": "^8.19.1",
         "lottie-react@^2.4.0": "patch:lottie-react@npm%3A2.4.0#./.yarn/patches/lottie-react-npm-2.4.0-d4d95c55aa.patch",
-        "playroom@^0.39.0": "patch:playroom@npm%3A0.39.0#./.yarn/patches/playroom-npm-0.39.0-24448abd08.patch"
+        "playroom@^0.39.0": "patch:playroom@npm%3A0.39.0#./.yarn/patches/playroom-npm-0.39.0-24448abd08.patch",
+        "playroom@^1.0.3": "patch:playroom@npm%3A1.0.3#./.yarn/patches/playroom-npm-1.0.3-d8e0669615.patch"
     },
     "packageManager": "yarn@3.6.1",
     "workspaces": [
