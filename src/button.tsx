@@ -26,6 +26,7 @@ import type {
     TrackingEvent,
 } from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
+import {Theme} from './theme';
 
 const ButtonTextRenderer = ({element, small}: {element: React.ReactNode; small?: boolean}) => {
     const {textPresets} = useTheme();
@@ -140,6 +141,7 @@ const renderButtonContent = ({
     StartIcon,
     EndIcon,
     withChevron,
+    platformOverrides,
 }: {
     showSpinner: boolean;
     children: React.ReactNode;
@@ -150,6 +152,7 @@ const renderButtonContent = ({
     StartIcon?: (props: IconProps) => JSX.Element;
     EndIcon?: (props: IconProps) => JSX.Element;
     withChevron?: boolean;
+    platformOverrides: Theme['platformOverrides'];
 }): React.ReactNode => {
     const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
     const spinnerSizeRem = small ? styles.spinnerSize.small : styles.spinnerSize.default;
@@ -239,7 +242,7 @@ const renderButtonContent = ({
                 {shouldRenderSpinner ? (
                     <Spinner
                         aria-hidden={!!loadingText}
-                        aria-live={getPlatform() === 'android' ? 'polite' : 'off'}
+                        aria-live={getPlatform(platformOverrides) === 'android' ? 'polite' : 'off'} // Android screen readers don't announce spinner presence unless aria-live is set to polite
                         color="currentcolor"
                         delay="0s"
                         size={spinnerSizeRem}
@@ -339,7 +342,7 @@ const BaseButton = React.forwardRef<
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
-    const {isDarkMode} = useTheme();
+    const {isDarkMode, platformOverrides} = useTheme();
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
@@ -464,6 +467,7 @@ const BaseButton = React.forwardRef<
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
             withChevron: showChevron,
+            platformOverrides,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
