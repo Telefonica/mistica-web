@@ -75,7 +75,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         }, [handleChangeValue, onChange]);
 
         React.useEffect(() => {
-            // When clearing the field, we need to blur and focus again the input to recalculate suggestions after the value is cleared.
+            // When clearing the field, we need to blur and focus again the input so suggestions are reloaded
             if (didClearFieldRef.current && controlledValue === '') {
                 didClearFieldRef.current = false;
                 inputRef?.current?.blur();
