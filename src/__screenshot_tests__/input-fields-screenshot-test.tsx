@@ -418,6 +418,21 @@ test('SearchField with suggestions', async () => {
     expect(screenshot).toMatchImageSnapshot();
 });
 
+test('SearchField without suggestions', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-searchfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {suggestions: true},
+    });
+
+    const field = await screen.findByLabelText('Label');
+    await field.type('merry xmas');
+
+    const screenshot = await page.screenshot({fullPage: true});
+
+    expect(screenshot).toMatchImageSnapshot();
+});
+
 test('DateField', async () => {
     await openStoryPage({
         id: 'components-input-fields-datefield--uncontrolled',
