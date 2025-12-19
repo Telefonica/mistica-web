@@ -257,8 +257,8 @@ export const Content = ({
                                 size={16}
                                 color={
                                     {
-                                        default: vars.colors.neutralMedium,
-                                        alternative: vars.colors.neutralMedium,
+                                        default: vars.colors.chevronIndicator,
+                                        alternative: vars.colors.chevronIndicator,
                                         brand: vars.colors.textSecondaryBrand,
                                         negative: vars.colors.textSecondaryNegative,
                                         media: vars.colors.textSecondaryBrand,
