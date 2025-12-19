@@ -1,6 +1,7 @@
 import type {Language} from './utils/locale';
 
 export type Dictionary = {
+    searchFieldSuggestionsEmptyCase: string;
     expirationDatePlaceholder: string;
     enablePasswordVisibility: string;
     disablePasswordVisibility: string;
@@ -83,6 +84,13 @@ export type Dictionary = {
 };
 
 export type TextToken = Record<Language, string>;
+
+export const searchFieldSuggestionsEmptyCase: TextToken = {
+    es: 'Sin sugerencias',
+    en: 'No suggestions',
+    de: 'Keine Vorschläge',
+    pt: 'Sem sugestões',
+};
 
 export const expirationDatePlaceholder: TextToken = {
     es: 'MM/AA',

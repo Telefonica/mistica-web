@@ -1,20 +1,26 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
-import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import {useTheme} from './hooks';
-import {createChangeEvent} from './utils/dom';
-import {combineRefs} from './utils/common';
 import {iconSize} from './icon-button.css';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import * as tokens from './text-tokens';
+import {combineRefs} from './utils/common';
+import {createChangeEvent} from './utils/dom';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    /**
+     * Indicates when suggestions should be shown.
+     * - 'focus': Show suggestions when the input is focused.
+     * - number: Show suggestions after a certain number of characters have been typed.
+     */
+    shouldShowSuggestions?: 'focus' | number;
     inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
     withStartIcon?: boolean;
 }
@@ -44,6 +50,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         const {texts, t} = useTheme();
         const inputRef = React.useRef<HTMLInputElement>();
         const [searchValue, setSearchValue] = React.useState(defaultValue || '');
+        const didClearFieldRef = React.useRef(false);
 
         const isControlledByParent = typeof value !== 'undefined';
 
@@ -60,12 +67,21 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         );
 
         const clearInput = React.useCallback(() => {
+            didClearFieldRef.current = true;
             handleChangeValue('', '');
             if (inputRef.current) {
                 onChange?.(createChangeEvent(inputRef.current, ''));
-                inputRef.current.focus();
             }
         }, [handleChangeValue, onChange]);
+
+        React.useEffect(() => {
+            // When clearing the field, we need to blur and focus again the input to recalculate suggestions after the value is cleared.
+            if (didClearFieldRef.current && controlledValue === '') {
+                didClearFieldRef.current = false;
+                inputRef?.current?.blur();
+                inputRef?.current?.focus();
+            }
+        }, [controlledValue]);
 
         const fieldProps = useFieldProps({
             name,
