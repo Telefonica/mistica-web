@@ -26,7 +26,7 @@ import type {
     TrackingEvent,
 } from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
-import {Theme} from './theme';
+import type {Theme} from './theme';
 
 const ButtonTextRenderer = ({element, small}: {element: React.ReactNode; small?: boolean}) => {
     const {textPresets} = useTheme();
