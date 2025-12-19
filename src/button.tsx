@@ -1,20 +1,22 @@
 'use client';
-import * as React from 'react';
 import classnames from 'classnames';
-import Spinner from './spinner';
-import {BaseTouchable} from './touchable';
-import {useThemeVariant} from './theme-variant-context';
-import {useForm} from './form-context';
-import {applyCssVars, pxToRem} from './utils/css';
-import {Text, Text3} from './text';
+import * as React from 'react';
 import Box from './box';
-import {getTextFromChildren} from './utils/common';
-import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
-import {useTheme} from './hooks';
-import {flattenChildren} from './skins/utils';
 import * as styles from './button.css';
+import {useForm} from './form-context';
+import {useTheme} from './hooks';
 import {VIVO_NEW_SKIN} from './skins/constants';
+import {flattenChildren} from './skins/utils';
+import Spinner from './spinner';
+import {Text, Text3} from './text';
+import {useThemeVariant} from './theme-variant-context';
+import {BaseTouchable} from './touchable';
+import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
+import {getTextFromChildren} from './utils/common';
+import {applyCssVars, pxToRem} from './utils/css';
+import {getPlatform} from './utils/platform';
 
+import type {Location} from 'history';
 import type {TouchableElement} from './touchable';
 import type {
     DataAttributes,
@@ -23,8 +25,8 @@ import type {
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
-import type {Location} from 'history';
 import type {ExclusifyUnion} from './utils/utility-types';
+import type {Theme} from './theme';
 
 const ButtonTextRenderer = ({element, small}: {element: React.ReactNode; small?: boolean}) => {
     const {textPresets} = useTheme();
@@ -139,6 +141,7 @@ const renderButtonContent = ({
     StartIcon,
     EndIcon,
     withChevron,
+    platformOverrides,
 }: {
     showSpinner: boolean;
     children: React.ReactNode;
@@ -149,6 +152,7 @@ const renderButtonContent = ({
     StartIcon?: (props: IconProps) => JSX.Element;
     EndIcon?: (props: IconProps) => JSX.Element;
     withChevron?: boolean;
+    platformOverrides: Theme['platformOverrides'];
 }): React.ReactNode => {
     const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
     const spinnerSizeRem = small ? styles.spinnerSize.small : styles.spinnerSize.default;
@@ -238,6 +242,7 @@ const renderButtonContent = ({
                 {shouldRenderSpinner ? (
                     <Spinner
                         aria-hidden={!!loadingText}
+                        aria-live={getPlatform(platformOverrides) === 'android' ? 'polite' : 'off'} // Android screen readers don't announce spinner presence unless aria-live is set to polite
                         color="currentcolor"
                         delay="0s"
                         size={spinnerSizeRem}
@@ -337,7 +342,7 @@ const BaseButton = React.forwardRef<
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
-    const {isDarkMode} = useTheme();
+    const {isDarkMode, platformOverrides} = useTheme();
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
@@ -462,6 +467,7 @@ const BaseButton = React.forwardRef<
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
             withChevron: showChevron,
+            platformOverrides,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
