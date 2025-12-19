@@ -218,6 +218,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             dataAttributes,
             preventCopy,
             showOptionalLabel = true,
+            required,
             ...rest
         },
         ref
@@ -234,7 +235,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         );
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
-        const hasLabel = !!label || !rest.required;
+        const hasLabel = !!label || !required;
 
         const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
         const valueRef = React.useRef<string | undefined>(undefined);
@@ -373,7 +374,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             forId={id}
                             inputState={inputState}
                             shrinkLabel={shrinkLabel}
-                            showOptional={!rest.required && showOptionalLabel}
+                            showOptional={!required && showOptionalLabel}
                         >
                             {label}
                         </Label>
@@ -384,6 +385,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 ...inputRefProps,
                                 ...props,
                                 id,
+                                ...(required && {'aria-required': true}),
+                                ...(error && {'aria-invalid': true}),
                                 style: {
                                     paddingRight: endIcon
                                         ? 0
