@@ -28,6 +28,7 @@ import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
+import * as tokens from './text-tokens';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -279,11 +280,23 @@ export const Content = ({
     );
 };
 
+type ControlDisclosure = {
+    /* is the related content expanded */
+    expanded: boolean;
+    /* announcement channel when changing expanded */
+    'aria-live'?: 'off' | 'polite' | 'assertive';
+    /* blocks UI and sets aria-busy */
+    'aria-busy'?: boolean;
+    /* message  of the SR when expanded = true */
+    onLabelWhenExpanded?: string;
+};
+
 type ControlProps = {
     name?: string;
     value?: boolean;
     defaultValue?: boolean;
     onChange?: (checked: boolean) => void;
+    controlDisclosure?: ControlDisclosure;
 };
 
 interface BasicRowContentProps extends CommonProps {
@@ -309,6 +322,7 @@ interface RadioRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     radioValue: string;
+    radio?: ControlProps | undefined;
 }
 
 interface IconButtonRowContentProps extends CommonProps {
@@ -490,6 +504,17 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const hasHoverInverse = !disabled && isOverBrand;
     const hasControl = hasControlProps(props);
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
+    const {texts, t} = useTheme();
+    const optionsBelowText =
+        texts.optionsAvailableBelowAnnouncement || t(tokens.optionsAvailableBelowAnnouncement);
+    const controlDisclosure =
+        props.switch?.controlDisclosure ||
+        props.checkbox?.controlDisclosure ||
+        props.radio?.controlDisclosure;
+    const announcementSuffix = controlDisclosure?.onLabelWhenExpanded ?? optionsBelowText;
+    const expandedAriaLabel =
+        ariaLabel ?? (controlDisclosure?.expanded ? `${title} ${announcementSuffix}` : ariaLabel);
+    const rowIsBusy = !!controlDisclosure?.['aria-busy'];
 
     const interactiveProps = {
         href: props.href,
@@ -619,35 +644,47 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
         return isInteractive
             ? renderRowWithDoubleInteraction(
-                  <Control
-                      disabled={disabled}
-                      name={name}
-                      checked={isChecked}
-                      aria-label={ariaLabel}
-                      aria-labelledby={titleId}
-                      onChange={toggle}
-                      render={({controlElement}) => (
-                          <div className={styles.dualActionRight}>{controlElement}</div>
-                      )}
-                  />
+                  <div
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
+                      aria-busy={rowIsBusy || undefined}
+                  >
+                      <Control
+                          disabled={disabled || rowIsBusy}
+                          name={name}
+                          checked={isChecked}
+                          aria-label={expandedAriaLabel}
+                          aria-labelledby={titleId}
+                          onChange={toggle}
+                          render={({controlElement}) => (
+                              <div className={styles.dualActionRight}>{controlElement}</div>
+                          )}
+                      />
+                  </div>
               )
             : renderRowWithSingleControl(
-                  <Control
-                      disabled={disabled}
-                      name={name}
-                      checked={isChecked}
-                      aria-label={ariaLabel}
-                      aria-labelledby={titleId}
-                      onChange={toggle}
-                      render={({controlElement, labelId}) => (
-                          <Box paddingX={16} role={role}>
-                              {renderContent({
-                                  labelId,
-                                  control: <Stack space="around">{controlElement}</Stack>,
-                              })}
-                          </Box>
-                      )}
-                  />,
+                  <div
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
+                      aria-busy={rowIsBusy || undefined}
+                  >
+                      <Control
+                          disabled={disabled || rowIsBusy}
+                          name={name}
+                          checked={isChecked}
+                          aria-label={expandedAriaLabel}
+                          aria-labelledby={titleId}
+                          onChange={toggle}
+                          render={({controlElement, labelId}) => (
+                              <Box paddingX={16} role={role}>
+                                  {renderContent({
+                                      labelId,
+                                      control: <Stack space="around">{controlElement}</Stack>,
+                                  })}
+                              </Box>
+                          )}
+                      />
+                  </div>,
                   true
               );
     }
@@ -655,31 +692,43 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.radioValue) {
         return isInteractive
             ? renderRowWithDoubleInteraction(
-                  <RadioButton
-                      value={props.radioValue}
-                      aria-label={ariaLabel}
-                      aria-labelledby={titleId}
-                      render={({controlElement}) => (
-                          <Stack space="around">
-                              <Box paddingX={16}>{controlElement}</Box>
-                          </Stack>
-                      )}
-                  />
+                  <div
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
+                      aria-busy={controlDisclosure?.['aria-busy'] || undefined}
+                  >
+                      <RadioButton
+                          value={props.radioValue}
+                          aria-label={expandedAriaLabel}
+                          aria-labelledby={titleId}
+                          render={({controlElement}) => (
+                              <Stack space="around">
+                                  <Box paddingX={16}>{controlElement}</Box>
+                              </Stack>
+                          )}
+                      />
+                  </div>
               )
             : renderRowWithSingleControl(
-                  <RadioButton
-                      value={props.radioValue}
-                      aria-label={ariaLabel}
-                      aria-labelledby={titleId}
-                      render={({controlElement}) => (
-                          <Box paddingX={16} role={role}>
-                              {renderContent({
-                                  labelId: titleId,
-                                  control: <Stack space="around">{controlElement}</Stack>,
-                              })}
-                          </Box>
-                      )}
-                  />,
+                  <div
+                      aria-live={controlDisclosure?.['aria-live'] ?? 'off'}
+                      aria-atomic={controlDisclosure?.['aria-live'] !== 'off'}
+                      aria-busy={controlDisclosure?.['aria-busy'] || undefined}
+                  >
+                      <RadioButton
+                          value={props.radioValue}
+                          aria-label={expandedAriaLabel}
+                          aria-labelledby={titleId}
+                          render={({controlElement}) => (
+                              <Box paddingX={16} role={role}>
+                                  {renderContent({
+                                      labelId: titleId,
+                                      control: <Stack space="around">{controlElement}</Stack>,
+                                  })}
+                              </Box>
+                          )}
+                      />
+                  </div>,
                   true
               );
     }
