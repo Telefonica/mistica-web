@@ -29,7 +29,7 @@ process.on('unhandledRejection', (error) => {
 
 const getStories = () => {
     console.log('Extracting stories information');
-    return Object.keys(require('../../../public/stories.json').stories);
+    return Object.keys(require('../../../public/index.json').entries);
 };
 
 /**

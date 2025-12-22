@@ -1,0 +1,64 @@
+diff --git a/src/components/Preview/Preview.tsx b/src/components/Preview/Preview.tsx
+index 4431c0abe73040cc889164c25ceb92c46469ea53..42b612edf5a09feafbec1868f0871f289b3aac19 100644
+--- a/src/components/Preview/Preview.tsx
++++ b/src/components/Preview/Preview.tsx
+@@ -27,33 +27,35 @@ const PreviewHeader = ({
+   editorHref: string;
+   onHideHeader: () => void;
+ }) => (
+-  <div className={styles.header}>
+-    <div className={styles.leftGroup}>
+-      <Logo size={logoSize} wordmark />
+-      <span className={styles.headerDescription}>
+-        <Text tone="secondary" size="small">
+-          View is the result of user-provided code
+-        </Text>
+-      </span>
+-    </div>
+-    <div className={styles.actions}>
+-      <Button as="a" href={editorHref} target="_blank" rel="noreferrer">
+-        Edit
+-      </Button>
+-      <ButtonIcon label="Dismiss" icon={<X />} onClick={onHideHeader} />
+-    </div>
+-  </div>
++  null
++  // <div className={styles.header}>
++  //   <div className={styles.leftGroup}>
++  //     <Logo size={logoSize} wordmark />
++  //     <span className={styles.headerDescription}>
++  //       <Text tone="secondary" size="small">
++  //         View is the result of user-provided code
++  //       </Text>
++  //     </span>
++  //   </div>
++  //   <div className={styles.actions}>
++  //     <Button as="a" href={editorHref} target="_blank" rel="noreferrer">
++  //       Edit
++  //     </Button>
++  //     <ButtonIcon label="Dismiss" icon={<X />} onClick={onHideHeader} />
++  //   </div>
++  // </div>
+ );
+ 
+ const PreviewFooter = ({ editorHref }: { editorHref: string }) => (
+-  <div className={styles.footer}>
+-    <Logo size={logoSize} wordmark />
+-    <div className={styles.actions}>
+-      <Button as="a" href={editorHref} target="_blank" rel="noreferrer">
+-        Open
+-      </Button>
+-    </div>
+-  </div>
++  null
++  // <div className={styles.footer}>
++  //   <Logo size={logoSize} wordmark />
++  //   <div className={styles.actions}>
++  //     <Button as="a" href={editorHref} target="_blank" rel="noreferrer">
++  //       Open
++  //     </Button>
++  //   </div>
++  // </div>
+ );
+ 
+ export default ({ title, code, themeName }: PreviewProps) => {

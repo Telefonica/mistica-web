@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, Form, CreditCardFields} from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {act} from 'react-dom/test-utils';
 
 test('Credit card fields validation, all fields empty', async () => {
     const onValidationErrorsSpy = jest.fn();
@@ -155,7 +154,7 @@ test('Credit card fields validation, clear expiration date', async () => {
     expect(screen.getByText('Fecha no válida')).toBeInTheDocument();
 
     await userEvent.clear(expirationDateField);
-    act(() => {
+    React.act(() => {
         expirationDateField.blur();
     });
     expect(screen.queryByText('Fecha no válida')).toBeNull();

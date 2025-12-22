@@ -140,7 +140,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
     ) => {
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
         const videoRef = React.useRef<HTMLVideoElement>(null);
-        const loadedSource = React.useRef<VideoSource>();
+        const loadedSource = React.useRef<VideoSource>(null);
         const posterRef = React.useRef<HTMLDivElement>(null);
 
         const ratio =

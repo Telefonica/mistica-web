@@ -215,7 +215,7 @@ type IntersectionObserverOptions = {
 };
 
 export const useIsInViewport = (
-    ref: React.RefObject<Element>,
+    ref: React.RefObject<Element | null>,
     defaultValue: boolean,
     options?: IntersectionObserverOptions
 ): boolean => {
@@ -264,7 +264,7 @@ const getBoundingClientRect = (element: Element): BoundingRect => {
 };
 
 export const useBoundingRect = (
-    ref: React.RefObject<Element>,
+    ref: React.RefObject<Element | null>,
     computeOnEveryFrame = true,
     trackIfNotVisible = false
 ): BoundingRect | undefined => {

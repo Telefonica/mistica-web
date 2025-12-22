@@ -1,0 +1,8 @@
+{
+    "name": "dark-mode-addon",
+    "version": "0.0.0",
+    "type": "module",
+    "exports": {
+        "./manager": "./manager.tsx"
+    }
+}

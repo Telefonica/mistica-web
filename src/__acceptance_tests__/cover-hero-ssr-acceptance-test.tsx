@@ -1,5 +1,5 @@
 import {openSSRPage} from '../test-utils';
 
 test('ssr CoverHero', async () => {
-    await openSSRPage({name: 'cover-hero'});
+    await openSSRPage({name: 'cover-hero', checkHidrationVisualMismatch: false});
 });

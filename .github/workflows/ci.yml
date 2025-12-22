@@ -18,14 +18,14 @@ concurrency:
 jobs:
     build:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
 
         steps:
             - uses: actions/checkout@v4
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
               run: yarn install --immutable --immutable-cache
 
             - run: yarn lint
@@ -44,7 +44,7 @@ jobs:
 
     build-acceptance:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
         strategy:
             matrix:
                 shard: [1, 2, 3]
@@ -55,7 +55,7 @@ jobs:
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
               run: yarn install --immutable --immutable-cache
 
             - run: yarn storybook-static
@@ -69,16 +69,16 @@ jobs:
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
         needs: [build, build-acceptance]
-        if: '!cancelled()'
+        if: "!cancelled()"
 
         steps:
             - uses: actions/checkout@v4
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
               run: yarn install --immutable --immutable-cache
 
             - if: needs.build.result == 'failure' || needs.build-acceptance.result == 'failure'
@@ -88,8 +88,8 @@ jobs:
                   merge-multiple: true
                   path: src/
 
-            - name: 'Upload failed screenshot diffs'
-              uses: './.github/actions/upload-failed-screenshots'
+            - name: "Upload failed screenshot diffs"
+              uses: "./.github/actions/upload-failed-screenshots"
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
