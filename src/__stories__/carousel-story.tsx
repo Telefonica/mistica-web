@@ -20,12 +20,6 @@ import {CarouselAutoplayControl, CarouselPageControls} from '../carousel';
 
 export default {
     title: 'Components/Carousels/Carousel',
-    docs: {
-        source: {
-            type: 'code',
-            code: 'Disabled as workaround for https://github.com/storybookjs/storybook/issues/19575',
-        },
-    },
 };
 
 const mobilePageOffsetOptions = ['regular', 'large'] as const;

@@ -21,12 +21,6 @@ export default {
     component: MainNavigationBar,
     parameters: {
         fullScreen: true,
-        docs: {
-            source: {
-                type: 'code',
-                code: '// Disabled as workaround for https://github.com/storybookjs/storybook/issues/19575',
-            },
-        },
     },
 };
 

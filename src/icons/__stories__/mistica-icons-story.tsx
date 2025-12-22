@@ -41,9 +41,6 @@ export default {
     },
     parameters: {
         fullScreen: true,
-        docs: {
-            codePanel: false,
-        },
     },
 };
 
