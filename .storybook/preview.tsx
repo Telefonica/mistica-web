@@ -210,7 +210,8 @@ const parameters = {
     },
 
     docs: {
-        codePanel: true,
+        /** Disable the `code` tab */
+        codePanel: false,
     },
 
     controls: {
