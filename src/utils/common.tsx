@@ -8,7 +8,6 @@ export const combineRefs =
                 if (typeof ref === 'function') {
                     ref(refValue);
                 } else if ('current' in ref) {
-                    // @ts-expect-error - current is typed as read-only
                     ref.current = refValue;
                 }
             }

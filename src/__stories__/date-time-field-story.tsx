@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, DateTimeField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import {getLocalDateTimeString} from '../utils/time';
 
 import type {Variant} from '../theme-variant-context';

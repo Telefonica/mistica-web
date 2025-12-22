@@ -149,7 +149,7 @@ type FieldContainerProps = {
     children: React.ReactNode;
     helperText?: React.ReactNode;
     className?: string;
-    fieldRef?: React.RefObject<HTMLDivElement>;
+    fieldRef?: React.RefObject<HTMLDivElement | null>;
     fullWidth?: boolean;
     readOnly?: boolean;
     dataAttributes?: DataAttributes;

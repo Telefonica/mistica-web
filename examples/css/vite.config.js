@@ -1,16 +1,13 @@
-import {dirname, resolve} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {resolve} from 'node:path';
 import {defineConfig} from 'vite';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
     base: '/mistica-css/',
     build: {
         rollupOptions: {
             input: {
-                main: resolve(__dirname, 'index.html'),
-                'error-feedback': resolve(__dirname, 'error-feedback.html'),
+                main: resolve(import.meta.dirname, 'index.html'),
+                'error-feedback': resolve(import.meta.dirname, 'error-feedback.html'),
             },
         },
     },

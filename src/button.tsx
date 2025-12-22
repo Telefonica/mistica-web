@@ -80,7 +80,10 @@ const renderButtonElement = ({
             if (accText.length) {
                 flushAccText();
             }
-            const sizeInPx = element.props.size !== undefined ? pxToRem(element.props.size) : defaultIconSize;
+            const sizeInPx =
+                (element.props as any).size !== undefined
+                    ? pxToRem((element.props as any).size)
+                    : defaultIconSize;
             resultChildrenArr.push(
                 <div
                     key={resultChildrenArr.length}
