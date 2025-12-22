@@ -371,8 +371,9 @@ export const suggestionsContainer = style([
         position: 'absolute',
     }),
     {
+        marginTop: 8,
         boxSizing: 'border-box',
-        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        boxShadow: '0px 2px 4px 0px #00000033',
         padding: 8,
         background: skinVars.colors.backgroundContainer,
         borderRadius: skinVars.borderRadii.popup,
