@@ -526,6 +526,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         return (
                             <TextFieldBase
                                 key={key}
+                                role="combobox" // react-autosuggest adds this role to the container, but according to ARIA specs it should be on the input
                                 {...(inputPropsWithoutKey as TextFieldBaseProps)}
                                 fieldRef={containerRef}
                                 inputRef={combineRefs(inputRef, props.inputRef, ref)}
