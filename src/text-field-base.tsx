@@ -164,6 +164,7 @@ interface TextFieldBaseProps {
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    suggestionEmptyCase?: string;
     shouldShowSuggestions?: 'focus' | number;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -476,9 +477,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
 export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
-    ({getSuggestions, id: idProp, shouldShowSuggestions = 'focus', ...props}, ref) => {
+    ({getSuggestions, id: idProp, shouldShowSuggestions = 'focus', suggestionEmptyCase, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
-        const [isEmptyCase, setIsEmptyCase] = React.useState(false);
+        const [areSuggestionsShown, setAreSuggestionsShown] = React.useState(false);
         const inputRef = React.useRef<HTMLInputElement>(null);
         const containerRef = React.useRef<HTMLDivElement>(null);
         const {platformOverrides, texts, t} = useTheme();
@@ -539,11 +540,11 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                     }
                     onSuggestionsFetchRequested={({value}) => {
                         const matchedSuggestions = getSuggestions(value);
-                        setIsEmptyCase(matchedSuggestions.length === 0);
+                        setAreSuggestionsShown(true);
                         setSuggestions(matchedSuggestions);
                     }}
                     onSuggestionsClearRequested={() => {
-                        setIsEmptyCase(false);
+                        setAreSuggestionsShown(false);
                         setSuggestions([]);
                     }}
                     getSuggestionValue={(suggestion: any) => suggestion}
@@ -558,23 +559,25 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         </div>
                     )}
                     renderSuggestionsContainer={(options) => {
-                        if (!isEmptyCase && options.children === null) {
+                        if (!areSuggestionsShown) {
                             return null;
                         }
 
                         // extract key from containerProps to avoid React warning:
                         // "A props object containing a "key" prop is being spread into JSX"
                         const {key, ...containerPropsWithoutKey} = options.containerProps;
-                        const children = isEmptyCase ? (
-                            <div role="status" className={classNames(styles.emptyCase)}>
-                                <Text3 regular color={vars.colors.textSecondary}>
-                                    {texts.searchFieldSuggestionsEmptyCase ||
-                                        t(tokens.searchFieldSuggestionsEmptyCase)}
-                                </Text3>
-                            </div>
-                        ) : (
-                            options.children
-                        );
+                        const children =
+                            suggestions.length === 0 ? (
+                                <div role="status" className={classNames(styles.emptyCase)}>
+                                    <Text3 regular color={vars.colors.textSecondary}>
+                                        {suggestionEmptyCase ||
+                                            texts.searchFieldSuggestionsEmptyCase ||
+                                            t(tokens.searchFieldSuggestionsEmptyCase)}
+                                    </Text3>
+                                </div>
+                            ) : (
+                                options.children
+                            );
 
                         return (
                             <div

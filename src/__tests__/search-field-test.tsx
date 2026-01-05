@@ -10,7 +10,7 @@ const getSuggestions = (value: string) => {
     return allSuggestions.filter((item) => item.toLowerCase().includes(value.toLowerCase()));
 };
 
-test('Show show suggestions on focus when shouldShowSuggestions is "focus"', async () => {
+test('Should show suggestions on focus when shouldShowSuggestions is "focus"', async () => {
     await act(async () =>
         render(
             <ThemeContextProvider theme={makeTheme()}>

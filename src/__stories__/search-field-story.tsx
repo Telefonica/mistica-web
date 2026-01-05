@@ -52,6 +52,7 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
 interface SearchFieldControlledArgs extends SearchFieldBaseArgs {
     initialValue: string;
     suggestions: boolean;
+    suggestionEmptyCase: string;
     shouldShowSuggestions: 'focus' | number;
 }
 
@@ -102,6 +103,7 @@ Controlled.args = {
     ...defaultBaseArgs,
     initialValue: '',
     suggestions: false,
+    suggestionEmptyCase: '',
     shouldShowSuggestions: 'focus',
 };
 Controlled.argTypes = {
