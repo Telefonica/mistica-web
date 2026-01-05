@@ -2,6 +2,7 @@ import type {Language} from './utils/locale';
 
 export type Dictionary = {
     searchFieldSuggestionsEmptyCase: string;
+    autocompleteEmptyCase: string;
     expirationDatePlaceholder: string;
     enablePasswordVisibility: string;
     disablePasswordVisibility: string;
@@ -90,6 +91,13 @@ export const searchFieldSuggestionsEmptyCase: TextToken = {
     en: 'No suggestions',
     de: 'Keine Vorschläge',
     pt: 'Sem sugestões',
+};
+
+export const autocompleteEmptyCase: TextToken = {
+    es: 'Sin opciones',
+    en: 'No option',
+    de: 'Keine Option',
+    pt: 'Sem opções',
 };
 
 export const expirationDatePlaceholder: TextToken = {
