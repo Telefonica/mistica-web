@@ -422,7 +422,7 @@ test('SearchField without suggestions', async () => {
     await openStoryPage({
         id: 'components-input-fields-searchfield--controlled',
         device: 'MOBILE_IOS',
-        args: {suggestions: true, showSuggestionsEmptyCase: true},
+        args: {suggestions: true, withSuggestionsEmptyCase: true},
     });
 
     const field = await screen.findByLabelText('Label');

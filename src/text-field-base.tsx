@@ -164,8 +164,7 @@ interface TextFieldBaseProps {
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
-    showSuggestionsEmptyCase?: boolean;
-    suggestionEmptyCase?: string;
+    withSuggestionsEmptyCase?: boolean | string;
     shouldShowSuggestions?: 'focus' | number;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -483,8 +482,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
             getSuggestions,
             id: idProp,
             shouldShowSuggestions = 'focus',
-            suggestionEmptyCase,
-            showSuggestionsEmptyCase = false,
+            withSuggestionsEmptyCase = false,
             ...props
         },
         ref
@@ -497,6 +495,11 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
         const reactId = React.useId();
         const id = idProp || reactId;
         const autoSuggestId = React.useId();
+
+        const suggestionEmptyCaseText =
+            typeof withSuggestionsEmptyCase === 'string'
+                ? withSuggestionsEmptyCase
+                : texts.searchFieldSuggestionsEmptyCase || t(tokens.searchFieldSuggestionsEmptyCase);
 
         if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
             throw Error('Fields with suggestions must be used in controlled mode');
@@ -578,12 +581,10 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         // "A props object containing a "key" prop is being spread into JSX"
                         const {key, ...containerPropsWithoutKey} = options.containerProps;
                         const children =
-                            suggestions.length === 0 && showSuggestionsEmptyCase ? (
+                            suggestions.length === 0 && withSuggestionsEmptyCase ? (
                                 <div role="status" className={classNames(styles.menuItemBase)}>
                                     <Text3 regular color={vars.colors.textSecondary}>
-                                        {suggestionEmptyCase ||
-                                            texts.searchFieldSuggestionsEmptyCase ||
-                                            t(tokens.searchFieldSuggestionsEmptyCase)}
+                                        {suggestionEmptyCaseText}
                                     </Text3>
                                 </div>
                             ) : (

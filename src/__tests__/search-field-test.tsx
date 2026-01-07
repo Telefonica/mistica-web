@@ -85,7 +85,7 @@ test('Should not show suggestions empty case if enabled', async () => {
                 <SearchField
                     getSuggestions={getSuggestions}
                     shouldShowSuggestions="focus"
-                    showSuggestionsEmptyCase
+                    withSuggestionsEmptyCase
                     label="Search"
                     name="search"
                 />

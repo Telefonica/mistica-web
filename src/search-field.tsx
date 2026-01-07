@@ -16,8 +16,12 @@ import type {CommonFormFieldProps} from './text-field-base';
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
-    showSuggestionsEmptyCase?: boolean;
-    suggestionEmptyCase?: string;
+    /**
+     * Content to show when there are no suggestions. By default it is not shown.
+     * - true: Show default "no suggestions" text.
+     * - string: Show custom text.
+     */
+    withSuggestionsEmptyCase?: boolean | string;
     /**
      * Indicates when suggestions should be shown.
      * - 'focus': Show suggestions when the input is focused.
