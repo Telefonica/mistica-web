@@ -21,13 +21,14 @@ const getOptionId = (baseId: string, index: number) => `${baseId}-option-${index
 export interface AutocompleteProps extends CommonFormFieldProps {
     autoComplete?: undefined;
     defaultValue?: undefined;
+    suggestionEmptyCase?: string;
     getSuggestions: (value: string) => ReadonlyArray<string>;
     value: string;
     onChangeValue: (value: string, rawValue: string) => void;
 }
 
 const Autocomplete = React.forwardRef<any, AutocompleteProps>(
-    ({getSuggestions, onChangeValue, ...rest}, refProp) => {
+    ({getSuggestions, onChangeValue, suggestionEmptyCase, ...rest}, refProp) => {
         const [showOptions, setShowOptions] = React.useState(false);
         const id = React.useId();
         const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -220,7 +221,9 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                         {options.length === 0 && showOptions && (
                             <div className={styles.optionBaseItem}>
                                 <Text3 regular color={vars.colors.textSecondary}>
-                                    {texts.autocompleteEmptyCase || t(tokens.autocompleteEmptyCase)}
+                                    {suggestionEmptyCase ||
+                                        texts.autocompleteEmptyCase ||
+                                        t(tokens.autocompleteEmptyCase)}
                                 </Text3>
                             </div>
                         )}
