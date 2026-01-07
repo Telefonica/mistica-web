@@ -52,6 +52,8 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
 interface SearchFieldControlledArgs extends SearchFieldBaseArgs {
     initialValue: string;
     suggestions: boolean;
+    withSuggestionsEmptyCase: boolean | string;
+    shouldShowSuggestions: 'focus' | number;
 }
 
 export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
@@ -98,9 +100,21 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
 
 Controlled.storyName = 'controlled';
 Controlled.args = {
-    initialValue: '',
     ...defaultBaseArgs,
+    initialValue: '',
     suggestions: false,
+    withSuggestionsEmptyCase: false,
+    shouldShowSuggestions: 'focus',
+};
+Controlled.argTypes = {
+    shouldShowSuggestions: {
+        options: ['focus', 1, 2, 3, 4, 5],
+        control: {type: 'select'},
+    },
+    withSuggestionsEmptyCase: {
+        options: [false, true, 'Custom no suggestions text'],
+        control: {type: 'select'},
+    },
 };
 
 interface SearchFieldUncontrolledArgs extends SearchFieldBaseArgs {

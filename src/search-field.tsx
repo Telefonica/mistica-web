@@ -1,20 +1,33 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
-import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import {useTheme} from './hooks';
-import {createChangeEvent} from './utils/dom';
-import {combineRefs} from './utils/common';
 import {iconSize} from './icon-button.css';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import * as tokens from './text-tokens';
+import {combineRefs} from './utils/common';
+import {createChangeEvent} from './utils/dom';
+import {flushSync} from 'react-dom';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    /**
+     * Content to show when there are no suggestions. By default it is not shown.
+     * - true: Show default "no suggestions" text.
+     * - string: Show custom text.
+     */
+    withSuggestionsEmptyCase?: boolean | string;
+    /**
+     * Indicates when suggestions should be shown.
+     * - 'focus': Show suggestions when the input is focused.
+     * - number: Show suggestions after a certain number of characters have been typed.
+     */
+    shouldShowSuggestions?: 'focus' | number;
     inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
     withStartIcon?: boolean;
 }
@@ -60,11 +73,15 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         );
 
         const clearInput = React.useCallback(() => {
-            handleChangeValue('', '');
-            if (inputRef.current) {
-                onChange?.(createChangeEvent(inputRef.current, ''));
-                inputRef.current.focus();
-            }
+            flushSync(() => {
+                handleChangeValue('', '');
+                if (inputRef.current) {
+                    onChange?.(createChangeEvent(inputRef.current, ''));
+                }
+            });
+            // When clearing the field, we need to blur and focus again the input so suggestions are reloaded
+            inputRef?.current?.blur();
+            inputRef?.current?.focus();
         }, [handleChangeValue, onChange]);
 
         const fieldProps = useFieldProps({
