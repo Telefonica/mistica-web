@@ -484,7 +484,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
             id: idProp,
             shouldShowSuggestions = 'focus',
             suggestionEmptyCase,
-            showSuggestionsEmptyCase,
+            showSuggestionsEmptyCase = false,
             ...props
         },
         ref
