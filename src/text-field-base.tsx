@@ -111,7 +111,6 @@ export type AutoComplete =
     | 'cc-csc' // The security code; on credit cards, this is the 3-digit verification number on the back of the card
     | 'username'; // Username or account name, when used with a password field the browser offers to save credentials together
 
-// TODO: Showing empty suggestion is optional!
 export interface CommonFormFieldProps<T = HTMLInputElement> {
     autoFocus?: boolean;
     disabled?: boolean;
