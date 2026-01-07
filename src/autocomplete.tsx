@@ -62,6 +62,8 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
             }
         }, [showOptions]);
 
+        // TODO: Unit tests / acceptance tests (keyboard ??) / screenshots
+
         const showOptionsList = () => {
             setShowOptions(true);
         };
@@ -71,12 +73,19 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
             setFocusIndex(-1);
         };
 
-        const updateTextFieldValue = (val: string, rawVal: string) => {
-            onChangeValue(val, rawVal);
-            setFocusIndex(-1);
-        };
+        const updateTextFieldValue = React.useCallback(
+            (val: string, rawVal: string) => {
+                onChangeValue(val, rawVal);
+                setFocusIndex(-1);
+            },
+            [onChangeValue]
+        );
 
-        // TODO: Remove the other misticalabs autocomplete
+        const validateFieldValue = React.useCallback(() => {
+            if (!options.includes(rest.value)) {
+                updateTextFieldValue('', '');
+            }
+        }, [options, rest.value, updateTextFieldValue]);
 
         React.useEffect(() => {
             if (focusIndex !== -1) {
@@ -86,19 +95,25 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
             }
         }, [focusIndex]);
 
+        React.useEffect(() => {
+            const handleClickOutside = (event: MouseEvent) => {
+                if (!containerRef.current?.contains(event.target as Node)) {
+                    hideOptionsList();
+                    validateFieldValue();
+                }
+            };
+
+            document.addEventListener('pointerup', handleClickOutside);
+            return () => {
+                document.removeEventListener('pointerup', handleClickOutside);
+            };
+        }, [options, rest.value, validateFieldValue]);
+
         return (
             <div
                 tabIndex={-1}
                 className={styles.autocompleteContainer}
                 ref={containerRef}
-                onBlur={(event) => {
-                    if (!containerRef.current?.contains(event.relatedTarget)) {
-                        hideOptionsList();
-                        if (!options.includes(rest.value)) {
-                            updateTextFieldValue('', '');
-                        }
-                    }
-                }}
                 onKeyDown={(e) => {
                     switch (e.key) {
                         case DOWN:
@@ -136,12 +151,14 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                             break;
                         }
                         case TAB: {
+                            hideOptionsList();
                             // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/combobox_role#tab
                             const option = options[focusIndex];
-                            if (option) {
-                                updateTextFieldValue(option, option);
-                                hideOptionsList();
+                            if (!option) {
+                                validateFieldValue();
+                                return;
                             }
+                            updateTextFieldValue(option, option);
                             break;
                         }
                         default:
@@ -161,8 +178,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                         showOptionsList();
                         updateTextFieldValue(val, rawVal);
                     }}
-                    onPress={() => {
-                        // TODO: When tabbing to the input element suggestions are not shown automatically
+                    onFocus={() => {
                         showOptionsList();
                     }}
                 />
@@ -172,7 +188,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                     role="listbox"
                     aria-label={rest.label}
                     className={styles.optionsList}
-                    style={{display: showOptions ? 'block' : 'none', top}}
+                    style={{display: showOptions && options.length !== 0 ? 'block' : 'none', top}}
                 >
                     {options.map((option, index) => (
                         <li
@@ -183,21 +199,23 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                             className={classnames(styles.optionItem, {
                                 [styles.optionItemSelected]: focusIndex === index,
                             })}
+                            onMouseDown={(e) => {
+                                // Prevent blur and lost input focus
+                                e.preventDefault();
+                            }}
                             onClick={() => {
                                 updateTextFieldValue(option, option);
                                 hideOptionsList();
-                                inputRef.current?.focus();
                             }}
                         >
                             <Text3 regular>{option}</Text3>
                         </li>
                     ))}
                 </ul>
-                {/* TODO: This is announced correctly multiple times in iOS. Test Android. */}
                 <div aria-live="polite">
                     <div
                         className={styles.optionsList}
-                        style={{display: showOptions && options.length === 0 ? 'block' : 'none'}}
+                        style={{display: showOptions && options.length === 0 ? 'block' : 'none', top}}
                     >
                         {options.length === 0 && showOptions && (
                             <div className={styles.optionBaseItem}>

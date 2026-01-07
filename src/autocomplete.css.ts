@@ -15,6 +15,7 @@ export const optionsList = style([
         borderRadius: vars.borderRadii.popup,
     }),
     {
+        zIndex: 2,
         left: 0,
         right: 0,
         boxShadow: '0px 2px 4px 0px #00000033',
