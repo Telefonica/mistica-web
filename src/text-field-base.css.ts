@@ -1,9 +1,9 @@
 import {globalStyle, style} from '@vanilla-extract/css';
-import {sprinkles} from './sprinkles.css';
-import {vars} from './skins/skin-contract.css';
-import * as mq from './media-queries.css';
-import {pxToRem} from './utils/css';
 import {iconContainerSize} from './icon-button.css';
+import * as mq from './media-queries.css';
+import {vars as skinVars, vars} from './skins/skin-contract.css';
+import {sprinkles} from './sprinkles.css';
+import {pxToRem} from './utils/css';
 
 const borderSize = 1;
 
@@ -328,26 +328,39 @@ export const prefix = style([
     },
 ]);
 
-export const menuItem = style([
+export const menuItemBase = style([
     sprinkles({
         display: 'flex',
         alignItems: 'center',
-        cursor: 'pointer',
     }),
     {
-        height: pxToRem(48),
-        padding: '6px 16px',
-        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        selectors: {
-            '&:hover': {
-                background: 'rgba(0, 0, 0, 0.08)',
-            },
-        },
+        minHeight: pxToRem(48),
+        padding: '6px 8px',
+        userSelect: 'none',
     },
 ]);
 
-export const menuItemSelected = sprinkles({
-    background: vars.colors.backgroundAlternative,
+export const menuItem = style([
+    menuItemBase,
+    sprinkles({
+        cursor: 'pointer',
+    }),
+    {
+        transition: 'background-color 0.1s ease-in-out',
+    },
+]);
+
+export const menuItemSelected = style({
+    backgroundColor: skinVars.colors.backgroundContainerHover,
+    ':active': {
+        backgroundColor: skinVars.colors.backgroundContainerPressed,
+    },
+    '@media': {
+        [mq.touchableOnly]: {
+            backgroundColor: 'transparent',
+            transition: 'none',
+        },
+    },
 });
 
 export const suggestionsContainer = style([
@@ -355,9 +368,12 @@ export const suggestionsContainer = style([
         position: 'absolute',
     }),
     {
-        boxShadow:
-            '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
-        background: 'white',
+        marginTop: 8,
+        boxSizing: 'border-box',
+        boxShadow: '0px 2px 4px 0px #00000033',
+        padding: 8,
+        background: skinVars.colors.backgroundContainer,
+        borderRadius: skinVars.borderRadii.popup,
 
         // one more than TextField label
         zIndex: 2,
