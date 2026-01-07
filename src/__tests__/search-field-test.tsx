@@ -77,3 +77,42 @@ test('Should reload suggestions when clearing the field', async () => {
 
     expect(screen.getByRole('menuitem', {name: 'Apple'})).toBeInTheDocument();
 });
+
+test('Should not show suggestions empty case if enabled', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions="focus"
+                    showSuggestionsEmptyCase
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'invent');
+
+    expect(screen.getByText('Sin sugerencias')).toBeInTheDocument();
+});
+
+test('Should not show suggestions empty case by default', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions="focus"
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'invent');
+
+    expect(screen.queryByText('Sin sugerencias')).not.toBeInTheDocument();
+});

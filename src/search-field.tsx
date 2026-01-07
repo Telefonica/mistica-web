@@ -16,6 +16,7 @@ import type {CommonFormFieldProps} from './text-field-base';
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    showSuggestionsEmptyCase?: boolean;
     suggestionEmptyCase?: string;
     /**
      * Indicates when suggestions should be shown.

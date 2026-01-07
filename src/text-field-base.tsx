@@ -111,6 +111,7 @@ export type AutoComplete =
     | 'cc-csc' // The security code; on credit cards, this is the 3-digit verification number on the back of the card
     | 'username'; // Username or account name, when used with a password field the browser offers to save credentials together
 
+// TODO: Showing empty suggestion is optional!
 export interface CommonFormFieldProps<T = HTMLInputElement> {
     autoFocus?: boolean;
     disabled?: boolean;
@@ -164,6 +165,7 @@ interface TextFieldBaseProps {
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    showSuggestionsEmptyCase?: boolean;
     suggestionEmptyCase?: string;
     shouldShowSuggestions?: 'focus' | number;
     onClick?: (event: React.MouseEvent) => void;
@@ -477,7 +479,17 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
 export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
-    ({getSuggestions, id: idProp, shouldShowSuggestions = 'focus', suggestionEmptyCase, ...props}, ref) => {
+    (
+        {
+            getSuggestions,
+            id: idProp,
+            shouldShowSuggestions = 'focus',
+            suggestionEmptyCase,
+            showSuggestionsEmptyCase,
+            ...props
+        },
+        ref
+    ) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const [areSuggestionsShown, setAreSuggestionsShown] = React.useState(false);
         const inputRef = React.useRef<HTMLInputElement>(null);
@@ -567,8 +579,8 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         // "A props object containing a "key" prop is being spread into JSX"
                         const {key, ...containerPropsWithoutKey} = options.containerProps;
                         const children =
-                            suggestions.length === 0 ? (
-                                <div role="status" className={classNames(styles.emptyCase)}>
+                            suggestions.length === 0 && showSuggestionsEmptyCase ? (
+                                <div role="status" className={classNames(styles.menuItemBase)}>
                                     <Text3 regular color={vars.colors.textSecondary}>
                                         {suggestionEmptyCase ||
                                             texts.searchFieldSuggestionsEmptyCase ||
@@ -578,6 +590,10 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                             ) : (
                                 options.children
                             );
+
+                        if (!children) {
+                            return null;
+                        }
 
                         return (
                             <div

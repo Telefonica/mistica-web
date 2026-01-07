@@ -328,27 +328,24 @@ export const prefix = style([
     },
 ]);
 
-export const emptyCase = style([
+export const menuItemBase = style([
     sprinkles({
         display: 'flex',
         alignItems: 'center',
     }),
     {
-        height: pxToRem(48),
-        padding: '6px 16px',
+        minHeight: pxToRem(48),
+        padding: '6px 8px',
         userSelect: 'none',
     },
 ]);
 
 export const menuItem = style([
+    menuItemBase,
     sprinkles({
-        display: 'flex',
-        alignItems: 'center',
         cursor: 'pointer',
     }),
     {
-        height: pxToRem(48),
-        padding: '6px 16px',
         transition: 'background-color 0.1s ease-in-out',
     },
 ]);
