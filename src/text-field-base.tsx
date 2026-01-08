@@ -262,9 +262,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             }
             valueRef.current = value;
 
-            if (inputState !== 'focused') {
-                setCharacterCount(finalValue?.length ?? 0);
-                setInputState(finalValue?.length ? 'filled' : 'default');
+            if (inputState !== 'focused' && typeof finalValue === 'string') {
+                setCharacterCount(finalValue.length);
+                setInputState(finalValue.length ? 'filled' : 'default');
             }
             if (focus) {
                 setInputState('focused');
