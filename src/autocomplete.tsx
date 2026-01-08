@@ -30,7 +30,8 @@ export interface AutocompleteProps extends CommonFormFieldProps {
 const Autocomplete = React.forwardRef<any, AutocompleteProps>(
     ({getSuggestions, onChangeValue, suggestionEmptyCase, ...rest}, refProp) => {
         const [showOptions, setShowOptions] = React.useState(false);
-        const id = React.useId();
+        const menuId = React.useId();
+        const statusId = React.useId();
         const containerRef = React.useRef<HTMLDivElement | null>(null);
         const inputRef = React.useRef<HTMLInputElement | null>(null);
         const menuRef = React.useRef<HTMLUListElement | null>(null);
@@ -62,8 +63,6 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                 setTop(comboboxHeight + menuSpacing);
             }
         }, [showOptions]);
-
-        // TODO: Unit tests / acceptance tests (keyboard ??) / screenshots
 
         const showOptionsList = () => {
             setShowOptions(true);
@@ -171,10 +170,10 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                     ref={combineRefs(inputRef, refProp)}
                     autoComplete="off"
                     role="combobox"
-                    aria-controls={id}
+                    aria-controls={menuId}
                     aria-expanded={showOptions}
                     aria-autocomplete="list"
-                    aria-activedescendant={focusIndex > -1 ? getOptionId(id, focusIndex) : undefined}
+                    aria-activedescendant={focusIndex > -1 ? getOptionId(menuId, focusIndex) : undefined}
                     onChangeValue={(val, rawVal) => {
                         showOptionsList();
                         updateTextFieldValue(val, rawVal);
@@ -185,7 +184,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                 />
                 <ul
                     ref={menuRef}
-                    id={id}
+                    id={menuId}
                     role="listbox"
                     aria-label={rest.label}
                     className={styles.optionsList}
@@ -193,7 +192,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                 >
                     {options.map((option, index) => (
                         <li
-                            id={getOptionId(id, index)}
+                            id={getOptionId(menuId, index)}
                             key={index}
                             role="option"
                             aria-selected={focusIndex === index}
@@ -213,14 +212,14 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                         </li>
                     ))}
                 </ul>
-                <div aria-live="polite">
+                <div role="status" aria-labelledby={statusId}>
                     <div
                         className={styles.optionsList}
                         style={{display: showOptions && options.length === 0 ? 'block' : 'none', top}}
                     >
                         {options.length === 0 && showOptions && (
                             <div className={styles.optionBaseItem}>
-                                <Text3 regular color={vars.colors.textSecondary}>
+                                <Text3 regular color={vars.colors.textSecondary} id={statusId}>
                                     {suggestionEmptyCase ||
                                         texts.autocompleteEmptyCase ||
                                         t(tokens.autocompleteEmptyCase)}
