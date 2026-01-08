@@ -3,7 +3,7 @@ import {countriesList} from './helpers';
 import Autocomplete from '../autocomplete';
 import {Box, ResponsiveLayout} from '../../src';
 
-import type {Meta} from '@storybook/react';
+import type {Meta} from '@storybook/react-webpack5';
 
 export default {
     title: 'Components/Input fields/Autocomplete',
