@@ -3,8 +3,6 @@ import {countriesList} from './helpers';
 import Autocomplete from '../autocomplete';
 import {Box, ResponsiveLayout} from '../../src';
 
-import type {Meta} from '@storybook/react-webpack5';
-
 export default {
     title: 'Components/Input fields/Autocomplete',
     parameters: {fullScreen: true},
@@ -22,7 +20,7 @@ export default {
         suggestionEmptyCase: '',
         verticalPosition: 'top',
     },
-} satisfies Meta<ControlledArgs>;
+};
 
 const getCountrySuggestions = (value: string) =>
     countriesList
