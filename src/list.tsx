@@ -567,7 +567,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 disabled={disabled}
                 tabIndex={tabIndex}
             >
-                <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
+                <Box
+                    paddingX={16}
+                    aria-hidden={!!props.to || !!props.href || props.touchableRole === 'link' || undefined}
+                    dataAttributes={{testid: 'content-container'}}
+                >
                     {renderContent({role})}
                 </Box>
             </BaseTouchable>

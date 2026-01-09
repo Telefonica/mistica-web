@@ -97,6 +97,8 @@ test('Row, keeping its listitem role, containing a button reporting link role', 
     const button = within(rowDiv).getByRole('link', {name: 'Title'});
     expect(button).toBeInTheDocument();
 
+    expect(screen.getByTestId('content-container')).toHaveAttribute('aria-hidden', 'true');
+
     await userEvent.click(button);
     expect(spy).toHaveBeenCalled();
 });
