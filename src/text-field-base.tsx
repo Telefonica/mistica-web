@@ -249,6 +249,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
              * it's opacity to 0 to avoid showing it.
              */
             const finalValue = isDateInput && !isValidInputValue(value, rest.type) ? '' : value;
+            const isControlled = value !== undefined;
 
             // if value prop has changed, we need to set the input state to default if the new value is not valid
             if (
@@ -262,9 +263,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             }
             valueRef.current = value;
 
-            if (inputState !== 'focused' && typeof finalValue === 'string') {
-                setCharacterCount(finalValue.length);
-                setInputState(finalValue.length ? 'filled' : 'default');
+            if (inputState !== 'focused' && isControlled) {
+                setCharacterCount(finalValue?.length ?? 0);
+                setInputState(finalValue?.length ? 'filled' : 'default');
             }
             if (focus) {
                 setInputState('focused');
