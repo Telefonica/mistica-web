@@ -19,8 +19,8 @@ const mod = (n: number, m: number) => ((n % m) + m) % m;
 const getOptionId = (baseId: string, index: number) => `${baseId}-option-${index}`;
 
 export interface AutocompleteProps extends CommonFormFieldProps {
-    autoComplete?: undefined;
-    defaultValue?: undefined;
+    autoComplete?: never;
+    defaultValue?: never;
     suggestionEmptyCase?: string;
     getSuggestions: (value: string) => ReadonlyArray<string>;
     value: string;
