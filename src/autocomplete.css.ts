@@ -1,6 +1,6 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
-import {vars} from './skins/skin-contract.css';
+import {vars, vars as skinVars} from './skins/skin-contract.css';
 
 export const autocompleteContainer = style([
     sprinkles({
@@ -31,6 +31,7 @@ export const optionBaseItem = style([
         paddingY: 12,
     }),
     {
+        borderRadius: skinVars.borderRadii.popup,
         height: 48,
         userSelect: 'none',
         display: 'block',
