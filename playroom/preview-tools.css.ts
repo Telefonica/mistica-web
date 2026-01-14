@@ -85,7 +85,7 @@ export const previewBorder = style([
         boxSizing: 'border-box',
         border: '1px solid',
         borderColor: skinVars.colors.border,
-        borderRadius: 8,
+        borderRadius: 12,
         pointerEvents: 'none',
         zIndex: 3,
     },
