@@ -233,6 +233,7 @@ type PreviewToolsProps = {
     forceDesktop?: boolean;
     forceTabs?: boolean;
     hide?: boolean;
+    showBorder?: boolean;
     children: React.ReactNode;
 };
 
@@ -247,6 +248,7 @@ export const PreviewTools = ({
     forceDesktop = false,
     forceTabs = false,
     hide,
+    showBorder = false,
 }: PreviewToolsProps): JSX.Element => {
     const {
         skinName: initialSkinName,
@@ -323,6 +325,10 @@ export const PreviewTools = ({
             />
         </ThemeContextProvider>
     );
+
+    const borderColor = React.useMemo(() => themesMap[skinName].themeConfig.skin.colors.border, [skinName]);
+    const border = showBorder ? <div className={styles.previewBorder} style={{borderColor}} /> : null;
+
     if (hide) {
         return <>{children}</>;
     }
@@ -407,7 +413,10 @@ export const PreviewTools = ({
     } else {
         return (
             <>
-                <Portal>{controls}</Portal>
+                <Portal>
+                    {border}
+                    {controls}
+                </Portal>
                 <div className={styles.controlsHeight} />
                 {children}
             </>
