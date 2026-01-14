@@ -330,7 +330,12 @@ export const PreviewTools = ({
     const border = showBorder ? <div className={styles.previewBorder} style={{borderColor}} /> : null;
 
     if (hide) {
-        return <>{children}</>;
+        return (
+            <>
+                {border}
+                {children}
+            </>
+        );
     }
     if (floating) {
         return (
