@@ -82,7 +82,6 @@ export const previewBorder = style([
     }),
     {
         height: '100vh',
-
         boxSizing: 'border-box',
         border: '1px solid',
         borderColor: skinVars.colors.border,
