@@ -62,7 +62,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                 }
                 setTop(comboboxHeight + menuSpacing);
             }
-        }, [showOptions]);
+        }, [showOptions, rest.value]);
 
         const showOptionsList = () => {
             setShowOptions(true);
