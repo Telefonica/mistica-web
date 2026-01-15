@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import url from 'url';
 // eslint-disable-next-line import/extensions
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
 import prettier from 'prettier';
@@ -17,17 +16,14 @@ To run this script locally using a custom path for the tokens, you can do the fo
     DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
 */
 
-// in node >= 20 we could use import.meta.dirname instead
-// @ts-ignore
-const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
-
 const DESIGN_TOKENS_FOLDER =
-    process.env.DESIGN_TOKENS_FOLDER || path.join(currentDir, '../../.github/mistica-design/tokens/');
+    process.env.DESIGN_TOKENS_FOLDER ||
+    path.join(import.meta.dirname, '../../.github/mistica-design/tokens/');
 
 console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 
-const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
-const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
+const SKINS_FOLDER = path.join(import.meta.dirname, '..', '..', 'src', 'skins');
+const CSS_FOLDER = path.join(import.meta.dirname, '..', '..', 'css');
 
 const KNOWN_SKINS = [
     'blau',

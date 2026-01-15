@@ -3,7 +3,7 @@ import * as React from 'react';
 import {isEqual} from './utils/helpers';
 
 const useDeepCompareMemoize = (value: any) => {
-    const ref = React.useRef();
+    const ref = React.useRef(undefined);
 
     if (!isEqual(value, ref.current)) {
         ref.current = value;

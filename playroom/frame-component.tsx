@@ -100,10 +100,6 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 : ''
         }
         ${skinName === MOVISTAR_NEW_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
-
-        *[class^='_1fu0koy1'] {
-            display: none;
-        }
     `;
 
     return (
