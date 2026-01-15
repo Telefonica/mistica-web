@@ -65,6 +65,9 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
         }, [showOptions, rest.value]);
 
         const showOptionsList = () => {
+            if (rest.readOnly) {
+                return;
+            }
             setShowOptions(true);
         };
 
