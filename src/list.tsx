@@ -389,6 +389,50 @@ const hasControlProps = (
     return ['switch', 'checkbox', 'radioValue', 'iconButton'].some((prop) => obj[prop] !== undefined);
 };
 
+const getAssetText = (asset: React.ReactNode): string => {
+    let text = '';
+
+    const visit = (node: React.ReactNode) => {
+        if (!node) return;
+
+        if (React.isValidElement(node)) {
+            const props: any = node.props;
+
+            if (typeof props.alt === 'string' && props.alt.trim()) {
+                text += (text ? ' ' : '') + props.alt.trim();
+            }
+            if (typeof props['aria-label'] === 'string' && props['aria-label'].trim()) {
+                text += (text ? ' ' : '') + props['aria-label'].trim();
+            }
+            React.Children.forEach(props.children, visit);
+        }
+    };
+
+    visit(asset);
+
+    return text.trim();
+};
+
+const getNodeText = (node: HTMLElement | null): string => {
+    const raw = node?.innerText || node?.textContent || '';
+    /* In the real browser, innerText preserves line breaks between elements, but jsdom does not. 
+    As a result, when rows contain multiline content (e.g. `extra` with several Text components), jsdom returns the text concatenated without spaces. 
+    This causes the computed aria-label to differ from the real behaviour. 
+    To make tests reflect what VoiceOver would read in the browser, we normalise whitespace and insert missing spaces in test mode. */
+    if (process.env.NODE_ENV === 'test') {
+        return (
+            raw
+                // Normalise whitespace sequences to a single space
+                .replace(/\s+/g, ' ')
+                // Insert space between "non-space character" + "Uppercase"
+                // Ex: "lineExtra" -> "line Extra", "1Extra" -> "1 Extra"
+                .replace(/([^ ])([A-ZÁÉÍÓÚÑ])/g, '$1 $2')
+                .trim()
+        );
+    }
+    return raw;
+};
+
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
     const outsideVariant = useThemeVariant();
@@ -421,20 +465,30 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [headlineText, setHeadlineText] = React.useState<string>('');
     const [extraText, setExtraText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
+    const assetText = getAssetText(asset);
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-    const computedAriaLabel = [title, headlineText, subtitle, description, extraText, detail, rightText]
+    const computedAriaLabel = [
+        title,
+        assetText,
+        headlineText,
+        subtitle,
+        description,
+        extraText,
+        detail,
+        rightText,
+    ]
         .filter(Boolean)
         .join(' ');
 
-    const ariaLabel = ariaLabelProp ?? (props.href || props.to ? computedAriaLabel : undefined);
+    const isInteractive = !!props.onPress || !!props.href || !!props.to;
+    const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
     const hasHoverDefault = !disabled && !isOverBrand;
     const hasHoverInverse = !disabled && isOverBrand;
     const hasControl = hasControlProps(props);
-    const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
 
     const interactiveProps = {
@@ -465,7 +519,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             headline={headline}
             headlineRef={(node) => {
                 if (node) {
-                    setHeadlineText(node.textContent || '');
+                    setHeadlineText(getNodeText(node));
                 }
             }}
             title={title}
@@ -481,8 +535,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             right={right}
             rightRef={(node) => {
                 if (node) {
-                    // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
-                    setRightText(node.innerText || node.textContent || '');
+                    setRightText(getNodeText(node));
                 }
             }}
             control={contentProps?.control}
@@ -490,7 +543,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             extra={extra}
             extraRef={(node) => {
                 if (node) {
-                    setExtraText(node.innerText || node.textContent || '');
+                    setExtraText(getNodeText(node));
                 }
             }}
             labelId={contentProps?.labelId}

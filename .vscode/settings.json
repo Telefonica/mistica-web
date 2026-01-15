@@ -6,7 +6,8 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "search.exclude": {
         "**/node_modules": true,
-        "**/.yarn": true
+        "**/.yarn": true,
+        "**/yarn.lock": true
     },
     // required by Markdown TOC extension
     "files.eol": "\n",

@@ -123,6 +123,22 @@ const getAccordionItemIndex = (element: Element | null) => {
         .findIndex((e) => e === element);
 };
 
+const getAssetText = (asset: React.ReactNode): string => {
+    if (!React.isValidElement(asset)) return '';
+
+    const props = asset.props as {alt?: unknown; 'aria-label'?: unknown};
+
+    if (typeof props.alt === 'string' && props.alt.trim()) {
+        return props.alt.trim();
+    }
+
+    if (typeof props['aria-label'] === 'string' && props['aria-label'].trim()) {
+        return props['aria-label'].trim();
+    }
+
+    return '';
+};
+
 const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemContentProps>(
     (
         {
@@ -142,6 +158,10 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         const variant = useThemeVariant();
         const labelId = React.useId();
         const panelId = React.useId();
+
+        const assetText = getAssetText(props.asset);
+
+        const computedAriaLabel = ariaLabel ?? [props.title, assetText].filter(Boolean).join(' ');
 
         const [itemIndex, setItemIndex] = React.useState<number>();
         const isOpen = itemIndex !== undefined && index?.includes(itemIndex);
@@ -174,7 +194,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     trackingEvent={trackingEvent}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    aria-label={ariaLabel}
+                    aria-label={computedAriaLabel}
                     aria-labelledby={ariaLabelledby}
                 >
                     <Box paddingX={16}>

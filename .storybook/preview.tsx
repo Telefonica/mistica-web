@@ -1,3 +1,4 @@
+import {addons} from 'storybook/preview-api';
 import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
@@ -21,9 +22,9 @@ import {
     ESIMFLAG_SKIN,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
-import {addons} from '@storybook/addons';
 import {getPlatform} from '../src/utils/platform';
 
+import type {Preview} from '@storybook/react-webpack5';
 import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
@@ -106,10 +107,11 @@ const MisticaThemeProvider = ({
         const channel = addons.getChannel();
         channel.on('skin-selected', setSkin);
         channel.on('color-scheme-selected', setColorScheme);
-        channel.emit('story-mounted');
         channel.on('platform-selected', (value) => {
             setPlatform(getPlatformByValue(value));
         });
+
+        channel.emit('story-mounted');
 
         return () => {
             channel.off('skin-selected', setSkin);
@@ -182,9 +184,9 @@ const withLayoutDecorator: Decorator = (Story, context) => {
     );
 };
 
-export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
+const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 
-export const parameters = {
+const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
 
@@ -206,6 +208,30 @@ export const parameters = {
             ],
         },
     },
-    // Workaround for: https://github.com/storybookjs/storybook/issues/17098
-    docs: {source: {type: 'code'}},
+
+    docs: {
+        /** Disable the `code` tab */
+        codePanel: false,
+    },
+
+    controls: {
+        matchers: {
+            color: /(background|color)$/i,
+            date: /Date$/i,
+        },
+        /** Disable the "You modified this story. Do you want to save your changes?" dialog */
+        disableSaveFromUI: true,
+    },
+
+    /** Hide actions tab */
+    actions: {
+        disable: true,
+    },
 };
+
+const preview: Preview = {
+    parameters,
+    decorators,
+};
+
+export default preview;
