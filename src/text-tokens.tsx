@@ -42,7 +42,9 @@ export type Dictionary = {
     carouselEnableAutoplay: string;
     carouselReloadAutoplay: string;
     carouselNextButton: string;
+    carouselLastButton: string;
     carouselPrevButton: string;
+    carouselFirstButton: string;
     carouselPageNumber: string;
     playIconButtonLabel: string;
     pauseIconButtonLabel: string;
@@ -366,17 +368,31 @@ export const carouselReloadAutoplay: TextToken = {
 };
 
 export const carouselNextButton: TextToken = {
-    es: 'Página siguiente',
+    es: 'Contenido siguiente',
     en: 'Next slide',
-    de: 'Nächste seite',
+    de: 'Nächste Seite',
     pt: 'Página seguinte',
 };
 
+export const carouselLastButton: TextToken = {
+    es: 'Último contenido',
+    en: 'Last slide',
+    de: 'Letzte Seite',
+    pt: 'Última página',
+};
+
 export const carouselPrevButton: TextToken = {
-    es: 'Página anterior',
+    es: 'Contenido anterior',
     en: 'Previous slide',
-    de: 'Vorherige seite',
+    de: 'Vorherige Seite',
     pt: 'Página anterior',
+};
+
+export const carouselFirstButton: TextToken = {
+    es: 'Primer contenido',
+    en: 'First slide',
+    de: 'Erste Seite',
+    pt: 'Primeira página',
 };
 
 export const carouselPageNumber: TextToken = {

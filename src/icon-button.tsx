@@ -36,6 +36,7 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     hasOverlay?: boolean;
+    showDisabledStyle?: boolean;
 }
 
 export type IconButtonProps = TouchableComponentProps<BaseProps & IconButtonBaseProps & AriaProps>;
@@ -59,6 +60,7 @@ export const RawIconButton = React.forwardRef<
             bleedRight,
             bleedY,
             showSpinner: showSpinnerProp,
+            showDisabledStyle,
             ...touchableProps
         },
         ref
@@ -95,8 +97,8 @@ export const RawIconButton = React.forwardRef<
                 styles.iconButtonTokens[buttonTokensKey],
                 styles.minimumInteractiveArea,
                 {
-                    [styles.disabled]: disabled,
-                    [styles.overlayContainer]: !disabled && !showSpinner,
+                    [styles.disabled]: disabled || showDisabledStyle,
+                    [styles.overlayContainer]: !disabled && !showSpinner && !showDisabledStyle,
                     [styles.bleedLeft[buttonSize]]: bleedLeft,
                     [styles.bleedRight[buttonSize]]: bleedRight,
                     [styles.bleedY[buttonSize]]: bleedY,
@@ -150,12 +152,12 @@ export const RawIconButton = React.forwardRef<
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<IconButtonProps & InternalIconButtonBaseProps>
+    IconButtonProps & InternalIconButtonBaseProps
 >((props, ref) => <RawIconButton ref={ref} {...props} />);
 
-export const IconButton = React.forwardRef<TouchableElement, ExclusifyUnion<IconButtonProps>>(
-    (props, ref) => <InternalIconButton ref={ref} {...props} />
-);
+export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((props, ref) => (
+    <InternalIconButton ref={ref} {...props} />
+));
 
 type ToggleStateProps = {
     Icon: (props: IconProps) => JSX.Element;

@@ -15,7 +15,7 @@ import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
-import {IconButton, ToggleIconButton} from './icon-button';
+import {IconButton, InternalIconButton, ToggleIconButton} from './icon-button';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import IconReloadRegular from './generated/mistica-icons/icon-reload-regular';
@@ -23,7 +23,7 @@ import * as tokens from './text-tokens';
 import {isClientSide} from './utils/environment';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
-import type {ByBreakpoint, DataAttributes} from './utils/types';
+import type {ByBreakpoint, DataAttributes, IconProps} from './utils/types';
 
 const useShouldAutoplay = (
     autoplay: boolean,
@@ -274,6 +274,36 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
     );
 };
 
+const useControlLabel = (type: 'prev' | 'next', pageIndex?: number, pageCount?: number) => {
+    const {texts, t} = useTheme();
+
+    if (pageIndex === undefined || pageCount === undefined) {
+        return '';
+    }
+
+    const isFirstPage = pageIndex === 0;
+    const isLastPage = pageIndex === pageCount - 1;
+
+    const getPageNumber = () => {
+        if (type === 'prev') {
+            return isFirstPage ? pageIndex + 1 : pageIndex;
+        }
+        return isLastPage ? pageIndex + 1 : pageIndex + 2;
+    };
+
+    const pageNumberText = `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, getPageNumber(), pageCount)}`;
+
+    if (type === 'prev') {
+        return isFirstPage
+            ? (texts.carouselFirstButton || t(tokens.carouselFirstButton)) + pageNumberText
+            : (texts.carouselPrevButton || t(tokens.carouselPrevButton)) + pageNumberText;
+    }
+
+    return isLastPage
+        ? (texts.carouselLastButton || t(tokens.carouselLastButton)) + pageNumberText
+        : (texts.carouselNextButton || t(tokens.carouselNextButton)) + pageNumberText;
+};
+
 type CarouselPageControlsProps = PageControlsProps & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
@@ -294,48 +324,62 @@ export const CarouselPageControls = ({
     pagesCount,
     currentPageIndex,
 }: CarouselPageControlsProps): JSX.Element => {
-    const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const prevPageNumberText =
-        prevArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
-            ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, currentPageIndex, pagesCount)}`
-            : '';
-    const nextPageNumberText =
-        nextArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
-            ? `, ${t(
-                  texts.carouselPageNumber || tokens.carouselPageNumber,
-                  currentPageIndex + 2,
-                  pagesCount
-              )}`
-            : '';
-    return (
-        <Inline space={variant === 'media' ? 16 : 8}>
-            <IconButton
-                Icon={IconChevronLeftRegular}
-                aria-label={(texts.carouselPrevButton || t(tokens.carouselPrevButton)) + prevPageNumberText}
+    const prevPageLabel = useControlLabel('prev', currentPageIndex, pagesCount);
+    const nextPageLabel = useControlLabel('next', currentPageIndex, pagesCount);
+
+    const renderControl = ({
+        Icon,
+        disabled,
+        ariaLabel,
+        onPress,
+        bleedLeft,
+        bleedRight,
+    }: {
+        Icon: (props: IconProps) => JSX.Element;
+        disabled?: boolean;
+        ariaLabel: string;
+        onPress: () => void;
+        bleedLeft?: boolean;
+        bleedRight?: boolean;
+    }) => (
+        <div style={disabled ? {pointerEvents: 'none'} : undefined} aria-disabled={disabled}>
+            <InternalIconButton
+                Icon={Icon}
+                aria-label={ariaLabel}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
                 bleedLeft={bleedLeft}
-                onPress={() => {
+                bleedRight={bleedRight}
+                onPress={onPress}
+                showDisabledStyle={disabled}
+            />
+        </div>
+    );
+
+    return (
+        <Inline space={variant === 'media' ? 16 : 8}>
+            {renderControl({
+                Icon: IconChevronLeftRegular,
+                disabled: !prevArrowEnabled,
+                ariaLabel: prevPageLabel,
+                onPress: () => {
                     goPrev();
                     setShouldAutoplay(false);
-                }}
-                disabled={!prevArrowEnabled}
-            />
-            <IconButton
-                Icon={IconChevronRightRegular}
-                aria-label={(texts.carouselNextButton || t(tokens.carouselNextButton)) + nextPageNumberText}
-                type="neutral"
-                backgroundType={variant === 'media' ? 'transparent' : 'soft'}
-                small
-                bleedRight={bleedRight}
-                onPress={() => {
+                },
+                bleedLeft,
+            })}
+            {renderControl({
+                Icon: IconChevronRightRegular,
+                disabled: !nextArrowEnabled,
+                ariaLabel: nextPageLabel,
+                onPress: () => {
                     goNext();
                     setShouldAutoplay(false);
-                }}
-                disabled={!nextArrowEnabled}
-            />
+                },
+                bleedRight,
+            })}
         </Inline>
     );
 };
