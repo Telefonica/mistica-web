@@ -1,3 +1,10 @@
+# [16.46.0](https://github.com/Telefonica/mistica-web/compare/v16.45.0...v16.46.0) (2026-01-15)
+
+
+### Features
+
+* **Skin:** Update border radius definition in Vivo ([#1471](https://github.com/Telefonica/mistica-web/issues/1471)) ([92cd5e0](https://github.com/Telefonica/mistica-web/commit/92cd5e0f5bb99c7f1de7758e36725a41089c8306))
+
 # [16.45.0](https://github.com/Telefonica/mistica-web/compare/v16.44.1...v16.45.0) (2026-01-15)
 
 
