@@ -135,7 +135,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         disabled: props.disabled,
         style: {
             ...props.style,
-            ...(props['aria-disabled'] ? {pointerEvents: 'none'} : {}),
+            ...(props['aria-disabled'] ? ({pointerEvents: 'none'} as const) : {}),
         },
         role: props.role,
         tabIndex: props.tabIndex,

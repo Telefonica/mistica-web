@@ -23,8 +23,7 @@ import * as tokens from './text-tokens';
 import {isClientSide} from './utils/environment';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
-import type {ByBreakpoint, DataAttributes, IconProps} from './utils/types';
-import {bleedLeft} from './icon-button.css';
+import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 const useShouldAutoplay = (
     autoplay: boolean,
