@@ -28,6 +28,7 @@ interface CommonProps {
     dataAttributes?: DataAttributes;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
+    'aria-disabled'?: boolean;
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
@@ -132,9 +133,13 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         className: props.className,
         id: props.id,
         disabled: props.disabled,
-        style: props.style,
+        style: {
+            ...props.style,
+            ...(props['aria-disabled'] ? {pointerEvents: 'none'} : {}),
+        },
         role: props.role,
         tabIndex: props.tabIndex,
+        'aria-disabled': props['aria-disabled'],
         'aria-hidden': props['aria-hidden'],
         'aria-live': props['aria-live'],
         ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
@@ -143,7 +148,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     // aria props that we want to apply to both <a> and <button> elements, not applicable to <div>
     const touchableAriaProps = {
         'aria-checked': props['aria-checked'],
-        'aria-disabled': props.disabled ? true : undefined,
+        'aria-disabled': props.disabled || props['aria-disabled'] ? true : undefined,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-haspopup': props['aria-haspopup'],

@@ -24,6 +24,7 @@ import {isClientSide} from './utils/environment';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes, IconProps} from './utils/types';
+import {bleedLeft} from './icon-button.css';
 
 const useShouldAutoplay = (
     autoplay: boolean,
@@ -328,58 +329,34 @@ export const CarouselPageControls = ({
     const prevPageLabel = useControlLabel('prev', currentPageIndex, pagesCount);
     const nextPageLabel = useControlLabel('next', currentPageIndex, pagesCount);
 
-    const renderControl = ({
-        Icon,
-        disabled,
-        ariaLabel,
-        onPress,
-        bleedLeft,
-        bleedRight,
-    }: {
-        Icon: (props: IconProps) => JSX.Element;
-        disabled?: boolean;
-        ariaLabel: string;
-        onPress: () => void;
-        bleedLeft?: boolean;
-        bleedRight?: boolean;
-    }) => (
-        <div style={disabled ? {pointerEvents: 'none'} : undefined} aria-disabled={disabled}>
+    return (
+        <Inline space={variant === 'media' ? 16 : 8}>
             <InternalIconButton
-                Icon={Icon}
-                aria-label={ariaLabel}
+                Icon={IconChevronLeftRegular}
+                aria-label={prevPageLabel}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
                 bleedLeft={bleedLeft}
-                bleedRight={bleedRight}
-                onPress={onPress}
-                showDisabledStyle={disabled}
-            />
-        </div>
-    );
-
-    return (
-        <Inline space={variant === 'media' ? 16 : 8}>
-            {renderControl({
-                Icon: IconChevronLeftRegular,
-                disabled: !prevArrowEnabled,
-                ariaLabel: prevPageLabel,
-                onPress: () => {
+                onPress={() => {
                     goPrev();
                     setShouldAutoplay(false);
-                },
-                bleedLeft,
-            })}
-            {renderControl({
-                Icon: IconChevronRightRegular,
-                disabled: !nextArrowEnabled,
-                ariaLabel: nextPageLabel,
-                onPress: () => {
+                }}
+                aria-disabled={!prevArrowEnabled}
+            />
+            <InternalIconButton
+                Icon={IconChevronRightRegular}
+                aria-label={nextPageLabel}
+                type="neutral"
+                backgroundType={variant === 'media' ? 'transparent' : 'soft'}
+                small
+                bleedRight={bleedRight}
+                onPress={() => {
                     goNext();
                     setShouldAutoplay(false);
-                },
-                bleedRight,
-            })}
+                }}
+                aria-disabled={!nextArrowEnabled}
+            />
         </Inline>
     );
 };

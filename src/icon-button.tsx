@@ -36,7 +36,7 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     hasOverlay?: boolean;
-    showDisabledStyle?: boolean;
+    'aria-disabled'?: boolean;
 }
 
 export type IconButtonProps = TouchableComponentProps<BaseProps & IconButtonBaseProps & AriaProps>;
@@ -60,7 +60,7 @@ export const RawIconButton = React.forwardRef<
             bleedRight,
             bleedY,
             showSpinner: showSpinnerProp,
-            showDisabledStyle,
+            'aria-disabled': ariaDisabled,
             ...touchableProps
         },
         ref
@@ -88,6 +88,7 @@ export const RawIconButton = React.forwardRef<
 
         const commonProps = {
             disabled: disabled || showSpinner,
+            'aria-disabled': ariaDisabled,
             ref,
             trackingEvent,
             role,
@@ -97,8 +98,8 @@ export const RawIconButton = React.forwardRef<
                 styles.iconButtonTokens[buttonTokensKey],
                 styles.minimumInteractiveArea,
                 {
-                    [styles.disabled]: disabled || showDisabledStyle,
-                    [styles.overlayContainer]: !disabled && !showSpinner && !showDisabledStyle,
+                    [styles.disabled]: disabled || ariaDisabled,
+                    [styles.overlayContainer]: !disabled && !showSpinner && !ariaDisabled,
                     [styles.bleedLeft[buttonSize]]: bleedLeft,
                     [styles.bleedRight[buttonSize]]: bleedRight,
                     [styles.bleedY[buttonSize]]: bleedY,
