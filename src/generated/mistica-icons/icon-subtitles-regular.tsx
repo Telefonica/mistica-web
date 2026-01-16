@@ -45,7 +45,7 @@ const IconSubtitlesRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 12.25a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zM17 12.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5zM9 8.25a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zM17 8.25a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1 0-1.5z"
+                    d="M12 12.25a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zm5 0a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5zm-8-4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zm8 0a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1 0-1.5z"
                 />
                 <path
                     fill={fillColor}

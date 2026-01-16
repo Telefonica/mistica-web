@@ -23,7 +23,7 @@ const IconOutletLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
 
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path fill={fillColor} d="M10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+            <path fill={fillColor} d="M10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
             <path
                 fill={fillColor}
                 d="M12 5.25a6.75 6.75 0 1 1 0 13.5 6.75 6.75 0 0 1 0-13.5m0 1.5a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5"

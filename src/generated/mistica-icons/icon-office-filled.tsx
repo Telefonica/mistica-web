@@ -49,7 +49,7 @@ const IconOfficeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 />
                 <path
                     fill={fillColor}
-                    d="M17 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M17 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M17 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
             </svg>
         );

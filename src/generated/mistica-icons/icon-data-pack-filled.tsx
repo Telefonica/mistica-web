@@ -25,7 +25,7 @@ const IconDataPackFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M16.5 12.75a.75.75 0 0 1 0 1.5h-1.75v-1.5zM16.5 9.75a.75.75 0 0 1 0 1.5h-1.75v-1.5z"
+                d="M16.5 12.75a.75.75 0 0 1 0 1.5h-1.75v-1.5zm0-3a.75.75 0 0 1 0 1.5h-1.75v-1.5z"
             />
             <path
                 fill={fillColor}

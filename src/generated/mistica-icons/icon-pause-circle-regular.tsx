@@ -27,7 +27,7 @@ const IconPauseCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M9.268 16.386a.56.56 0 0 1-.56-.56V8.177c0-.308.252-.56.56-.56s.56.252.56.56v7.647c0 .309-.252.56-.56.56M14.73 16.386a.56.56 0 0 1-.56-.56V8.177c0-.308.252-.56.56-.56s.56.252.56.56v7.647c0 .309-.252.56-.56.56"
+                    d="M9.268 16.386a.56.56 0 0 1-.56-.56V8.177c0-.308.252-.56.56-.56s.56.252.56.56v7.647c0 .309-.252.56-.56.56m5.462.002a.56.56 0 0 1-.56-.56V8.177c0-.308.252-.56.56-.56s.56.252.56.56v7.647c0 .309-.252.56-.56.56"
                 />
                 <path
                     fill={fillColor}
@@ -58,7 +58,7 @@ const IconPauseCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0zM14.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
+                    d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0zm4 0a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
                 />
                 <path
                     fill={fillColor}

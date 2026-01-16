@@ -25,7 +25,7 @@ const IconCastLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M3 18a1 1 0 1 1 0 2 1 1 0 0 1 0-2M3 14.25A4.75 4.75 0 0 1 7.75 19a.75.75 0 0 1-1.5 0A3.25 3.25 0 0 0 3 15.75a.75.75 0 0 1 0-1.5"
+                d="M3 18a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3.75A4.75 4.75 0 0 1 7.75 19a.75.75 0 0 1-1.5 0A3.25 3.25 0 0 0 3 15.75a.75.75 0 0 1 0-1.5"
             />
             <path
                 fill={fillColor}

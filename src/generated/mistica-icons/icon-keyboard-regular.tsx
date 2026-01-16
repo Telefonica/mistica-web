@@ -45,7 +45,7 @@ const IconKeyboardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M6 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M18 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14.002 13.26a.75.75 0 0 1-.004 1.5l-4-.01a.75.75 0 0 1 .004-1.5zM6 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2M10 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2M18 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M6 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2m12 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-3.998.26a.75.75 0 0 1-.004 1.5l-4-.01a.75.75 0 0 1 .004-1.5zM6 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
                 <path
                     fill={fillColor}

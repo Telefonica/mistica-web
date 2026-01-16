@@ -2055,6 +2055,12 @@ export {default as IconShuffleRegular} from './generated/mistica-icons/icon-shuf
 export {default as IconSilenceFilled} from './generated/mistica-icons/icon-silence-filled';
 export {default as IconSilenceLight} from './generated/mistica-icons/icon-silence-light';
 export {default as IconSilenceRegular} from './generated/mistica-icons/icon-silence-regular';
+export {default as IconSimPortInFilled} from './generated/mistica-icons/icon-sim-port-in-filled';
+export {default as IconSimPortInLight} from './generated/mistica-icons/icon-sim-port-in-light';
+export {default as IconSimPortInRegular} from './generated/mistica-icons/icon-sim-port-in-regular';
+export {default as IconSimPortOutFilled} from './generated/mistica-icons/icon-sim-port-out-filled';
+export {default as IconSimPortOutLight} from './generated/mistica-icons/icon-sim-port-out-light';
+export {default as IconSimPortOutRegular} from './generated/mistica-icons/icon-sim-port-out-regular';
 export {default as IconSingleparentFamilyFilled} from './generated/mistica-icons/icon-singleparent-family-filled';
 export {default as IconSingleparentFamilyLight} from './generated/mistica-icons/icon-singleparent-family-light';
 export {default as IconSingleparentFamilyRegular} from './generated/mistica-icons/icon-singleparent-family-regular';
