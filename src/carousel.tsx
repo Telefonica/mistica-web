@@ -277,21 +277,20 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
 const useControlLabel = (type: 'prev' | 'next', pageIndex?: number, pageCount?: number) => {
     const {texts, t} = useTheme();
 
-    if (pageIndex === undefined || pageCount === undefined) {
-        return '';
-    }
+    const hasPageInfo = pageIndex !== undefined && pageCount !== undefined;
+    const isFirstPage = hasPageInfo && pageIndex === 0;
+    const isLastPage = hasPageInfo && pageIndex === pageCount - 1;
 
-    const isFirstPage = pageIndex === 0;
-    const isLastPage = pageIndex === pageCount - 1;
-
-    const getPageNumber = () => {
+    const getPageNumber = (pageIndex: number) => {
         if (type === 'prev') {
             return isFirstPage ? pageIndex + 1 : pageIndex;
         }
         return isLastPage ? pageIndex + 1 : pageIndex + 2;
     };
 
-    const pageNumberText = `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, getPageNumber(), pageCount)}`;
+    const pageNumberText = hasPageInfo
+        ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, getPageNumber(pageIndex), pageCount)}`
+        : '';
 
     if (type === 'prev') {
         return isFirstPage
