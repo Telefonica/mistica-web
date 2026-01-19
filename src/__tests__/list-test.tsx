@@ -97,6 +97,8 @@ test('Row, keeping its listitem role, containing a button reporting link role', 
     const button = within(rowDiv).getByRole('link', {name: 'Title'});
     expect(button).toBeInTheDocument();
 
+    expect(screen.getByTestId('content-container')).toHaveAttribute('aria-hidden', 'true');
+
     await userEvent.click(button);
     expect(spy).toHaveBeenCalled();
 });
@@ -359,8 +361,7 @@ test('Text content is read by screen readers in the right order in Rows with lin
     );
 
     const row = screen.getByRole('link', {
-        // WARN: There should be a space between the extra lines, but jsdom doesn't support .innerText method, so we fallback to .textContent https://github.com/jsdom/jsdom/issues/1245
-        name: 'Title Headline Subtitle Description Extra line 1Extra line 2 Detail right',
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail right',
     });
     expect(row).toBeInTheDocument();
 });

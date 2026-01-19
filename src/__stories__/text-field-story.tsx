@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {TextField, Box, Text1, Stack, ResponsiveLayout} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
 import {countriesList} from './helpers';
 import {iconSize} from '../icon-button.css';

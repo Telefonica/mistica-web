@@ -151,7 +151,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             textButtonSecondaryInverse: palette.blauBlueSecondary,
             textButtonSecondaryNegative: palette.white,
             textButtonSecondaryBrand: palette.blauBlueSecondary,
-            textButtonSecondaryMedia: palette.blauBlueSecondary,
+            textButtonSecondaryMedia: palette.white,
             textButtonSecondaryPressed: palette.blauBlueSecondary60,
             textButtonSecondaryInversePressed: palette.blauBlueSecondary60,
             textButtonSecondaryNegativePressed: palette.white,

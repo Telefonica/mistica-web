@@ -210,8 +210,8 @@ test.each(STORY_TYPES)('PinField (%s)', async (storyType) => {
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
     await firstDigitField.type('123456');
 
-    await screen.findByText("value: (string) '123456'");
-    await screen.findByText("rawValue: (string) '123456'");
+    await screen.findByText('value: (string) "123456"');
+    await screen.findByText('rawValue: (string) "123456"');
 });
 test.each(STORY_TYPES)('PinField (hideCode) (%s)', async (storyType) => {
     await openStoryPage({...getStoryOfType('pinfield', storyType), args: {hideCode: true}});
@@ -220,8 +220,8 @@ test.each(STORY_TYPES)('PinField (hideCode) (%s)', async (storyType) => {
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
     await firstDigitField.type('123456');
 
-    await screen.findByText("value: (string) '123456'");
-    await screen.findByText("rawValue: (string) '123456'");
+    await screen.findByText('value: (string) "123456"');
+    await screen.findByText('rawValue: (string) "123456"');
 });
 
 test('PinField focus management', async () => {
@@ -262,7 +262,7 @@ test('PinField focus management', async () => {
 
     // type a number to overwrite the first field value
     await firstDigitField.type('9');
-    await screen.findByText("value: (string) '92'");
+    await screen.findByText('value: (string) "92"');
     expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
 
     // move to next field with right arrow
@@ -271,24 +271,24 @@ test('PinField focus management', async () => {
 
     // type a new number
     await thirdDigitField.type('3');
-    await screen.findByText("value: (string) '923'");
+    await screen.findByText('value: (string) "923"');
     expect(await forthDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
 
     // go back with Backspace
     await forthDigitField.press('Backspace');
-    await screen.findByText("value: (string) '923'");
+    await screen.findByText('value: (string) "923"');
     expect(await thirdDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
 
     // delete with Backspace
     await thirdDigitField.press('Backspace');
-    await screen.findByText("value: (string) '92'");
+    await screen.findByText('value: (string) "92"');
     expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
 
     // move left with left arrow and delete with Delete key
     await secondDigitField.press('ArrowLeft');
     expect(await firstDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
     await firstDigitField.press('Delete');
-    await screen.findByText("value: (string) '2'");
+    await screen.findByText('value: (string) "2"');
 }, 1200000);
 
 const copyFieldContentToClipboard = async (page: PageApi, field: ElementHandle) => {

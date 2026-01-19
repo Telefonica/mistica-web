@@ -1,3 +1,26 @@
+# [16.46.0](https://github.com/Telefonica/mistica-web/compare/v16.45.0...v16.46.0) (2026-01-15)
+
+
+### Features
+
+* **Skin:** Update border radius definition in Vivo ([#1471](https://github.com/Telefonica/mistica-web/issues/1471)) ([92cd5e0](https://github.com/Telefonica/mistica-web/commit/92cd5e0f5bb99c7f1de7758e36725a41089c8306))
+
+# [16.45.0](https://github.com/Telefonica/mistica-web/compare/v16.44.1...v16.45.0) (2026-01-15)
+
+
+### Bug Fixes
+
+* **EmailField:** being announced as error by screen readers when empty ([#1464](https://github.com/Telefonica/mistica-web/issues/1464)) ([d2cf200](https://github.com/Telefonica/mistica-web/commit/d2cf200713c7b5ed6b7f3cc5a9de305d895f74a9))
+* **WEB-2318:** Modify spinner not to be announced twice ([#1472](https://github.com/Telefonica/mistica-web/issues/1472)) ([598479c](https://github.com/Telefonica/mistica-web/commit/598479c036da4207a156208622e570df8be1b91c))
+
+
+### Features
+
+* **Accordion, Lists, SuccessFeedback, Divider:** color changes to align with movistar.es ([#1470](https://github.com/Telefonica/mistica-web/issues/1470)) ([96b4540](https://github.com/Telefonica/mistica-web/commit/96b454068e46872b871425f18103e23a0db6e590))
+* **React:** React 19 support ([#1469](https://github.com/Telefonica/mistica-web/issues/1469)) ([a3fa78a](https://github.com/Telefonica/mistica-web/commit/a3fa78a9f4abaa3e30646b32f40f7355f5630409))
+* **Row, Cards, Accordion:** make screen readers read asset alt as part of the label ([#1463](https://github.com/Telefonica/mistica-web/issues/1463)) ([8997229](https://github.com/Telefonica/mistica-web/commit/89972293a47c3fc95cc0ea379eeeaca895b138cd))
+* **SearchField:** empty suggestion and improvements ([#1473](https://github.com/Telefonica/mistica-web/issues/1473)) ([0fc543f](https://github.com/Telefonica/mistica-web/commit/0fc543f7160ce93afb9b20d6a90ea105db82594c))
+
 ## [16.44.1](https://github.com/Telefonica/mistica-web/compare/v16.44.0...v16.44.1) (2025-12-04)
 
 
