@@ -536,6 +536,18 @@ const formSnippets: Array<Snippet> = [
             </Box>
         </Form>`,
     ],
+    [
+        'Autocomplete',
+        `<Autocomplete
+          label="Search fruits"
+          getSuggestions={(value) => {
+            const fruits = ['apple', 'banana', 'coconut']
+            return fruits.filter(fruit => fruit.startsWith(value));
+          }}
+          value={getState('autocomplete') ?? ''}
+          onChangeValue={setState('autocomplete')}
+        />`,
+    ],
 ].map(([name, code]) => ({
     group: 'Forms',
     name,

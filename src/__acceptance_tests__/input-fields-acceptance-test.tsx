@@ -18,6 +18,16 @@ const getStoryOfType = (component: string, storyType: StoryType) => ({
     id: `components-input-fields-${component}--${storyType}`,
 });
 
+test('Autocomplete', async () => {
+    await openStoryPage(getStoryOfType('autocomplete', 'controlled'));
+
+    const field = await screen.findByRole('combobox', {name: 'Label'});
+
+    await field.focus();
+    const items = await screen.findAllByRole('option');
+    expect(items).toHaveLength(5);
+});
+
 test('TextField with suggestions', async () => {
     const page = await openStoryPage({
         ...getStoryOfType('textfield', 'controlled'),

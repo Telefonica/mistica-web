@@ -15,7 +15,7 @@ import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
-import {IconButton, ToggleIconButton} from './icon-button';
+import {InternalIconButton, ToggleIconButton} from './icon-button';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import IconReloadRegular from './generated/mistica-icons/icon-reload-regular';
@@ -274,6 +274,35 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
     );
 };
 
+const useControlLabel = (type: 'prev' | 'next', pageIndex?: number, pageCount?: number) => {
+    const {texts, t} = useTheme();
+
+    const hasPageInfo = pageIndex !== undefined && pageCount !== undefined;
+    const isFirstPage = hasPageInfo && pageIndex === 0;
+    const isLastPage = hasPageInfo && pageIndex === pageCount - 1;
+
+    const getPageNumber = (pageIndex: number) => {
+        if (type === 'prev') {
+            return isFirstPage ? pageIndex + 1 : pageIndex;
+        }
+        return isLastPage ? pageIndex + 1 : pageIndex + 2;
+    };
+
+    const pageNumberText = hasPageInfo
+        ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, getPageNumber(pageIndex), pageCount)}`
+        : '';
+
+    if (type === 'prev') {
+        return isFirstPage
+            ? (texts.carouselFirstButton || t(tokens.carouselFirstButton)) + pageNumberText
+            : (texts.carouselPrevButton || t(tokens.carouselPrevButton)) + pageNumberText;
+    }
+
+    return isLastPage
+        ? (texts.carouselLastButton || t(tokens.carouselLastButton)) + pageNumberText
+        : (texts.carouselNextButton || t(tokens.carouselNextButton)) + pageNumberText;
+};
+
 type CarouselPageControlsProps = PageControlsProps & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
@@ -294,25 +323,15 @@ export const CarouselPageControls = ({
     pagesCount,
     currentPageIndex,
 }: CarouselPageControlsProps): JSX.Element => {
-    const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const prevPageNumberText =
-        prevArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
-            ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, currentPageIndex, pagesCount)}`
-            : '';
-    const nextPageNumberText =
-        nextArrowEnabled && pagesCount !== undefined && currentPageIndex !== undefined
-            ? `, ${t(
-                  texts.carouselPageNumber || tokens.carouselPageNumber,
-                  currentPageIndex + 2,
-                  pagesCount
-              )}`
-            : '';
+    const prevPageLabel = useControlLabel('prev', currentPageIndex, pagesCount);
+    const nextPageLabel = useControlLabel('next', currentPageIndex, pagesCount);
+
     return (
         <Inline space={variant === 'media' ? 16 : 8}>
-            <IconButton
+            <InternalIconButton
                 Icon={IconChevronLeftRegular}
-                aria-label={(texts.carouselPrevButton || t(tokens.carouselPrevButton)) + prevPageNumberText}
+                aria-label={prevPageLabel}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
@@ -321,11 +340,11 @@ export const CarouselPageControls = ({
                     goPrev();
                     setShouldAutoplay(false);
                 }}
-                disabled={!prevArrowEnabled}
+                aria-disabled={!prevArrowEnabled}
             />
-            <IconButton
+            <InternalIconButton
                 Icon={IconChevronRightRegular}
-                aria-label={(texts.carouselNextButton || t(tokens.carouselNextButton)) + nextPageNumberText}
+                aria-label={nextPageLabel}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
@@ -334,7 +353,7 @@ export const CarouselPageControls = ({
                     goNext();
                     setShouldAutoplay(false);
                 }}
-                disabled={!nextArrowEnabled}
+                aria-disabled={!nextArrowEnabled}
             />
         </Inline>
     );

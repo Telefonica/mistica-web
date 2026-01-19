@@ -2,6 +2,7 @@ import type {Language} from './utils/locale';
 
 export type Dictionary = {
     searchFieldSuggestionsEmptyCase: string;
+    autocompleteEmptyCase: string;
     expirationDatePlaceholder: string;
     enablePasswordVisibility: string;
     disablePasswordVisibility: string;
@@ -42,7 +43,9 @@ export type Dictionary = {
     carouselEnableAutoplay: string;
     carouselReloadAutoplay: string;
     carouselNextButton: string;
+    carouselLastButton: string;
     carouselPrevButton: string;
+    carouselFirstButton: string;
     carouselPageNumber: string;
     playIconButtonLabel: string;
     pauseIconButtonLabel: string;
@@ -90,6 +93,13 @@ export const searchFieldSuggestionsEmptyCase: TextToken = {
     en: 'No suggestions',
     de: 'Keine Vorschläge',
     pt: 'Sem sugestões',
+};
+
+export const autocompleteEmptyCase: TextToken = {
+    es: 'Sin opciones',
+    en: 'No option',
+    de: 'Keine Option',
+    pt: 'Sem opções',
 };
 
 export const expirationDatePlaceholder: TextToken = {
@@ -366,17 +376,31 @@ export const carouselReloadAutoplay: TextToken = {
 };
 
 export const carouselNextButton: TextToken = {
-    es: 'Página siguiente',
+    es: 'Contenido siguiente',
     en: 'Next slide',
-    de: 'Nächste seite',
+    de: 'Nächste Seite',
     pt: 'Página seguinte',
 };
 
+export const carouselLastButton: TextToken = {
+    es: 'Último contenido',
+    en: 'Last slide',
+    de: 'Letzte Seite',
+    pt: 'Última página',
+};
+
 export const carouselPrevButton: TextToken = {
-    es: 'Página anterior',
+    es: 'Contenido anterior',
     en: 'Previous slide',
-    de: 'Vorherige seite',
+    de: 'Vorherige Seite',
     pt: 'Página anterior',
+};
+
+export const carouselFirstButton: TextToken = {
+    es: 'Primer contenido',
+    en: 'First slide',
+    de: 'Erste Seite',
+    pt: 'Primeira página',
 };
 
 export const carouselPageNumber: TextToken = {

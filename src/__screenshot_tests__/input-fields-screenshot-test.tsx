@@ -384,6 +384,37 @@ test('TextField - multiline', async () => {
     expect(filledFocusScreenshot).toMatchImageSnapshot();
 });
 
+test.each(['top', 'bottom'])('Autocomplete menu renders on %s', async (verticalPosition) => {
+    await openStoryPage({
+        id: 'components-input-fields-autocomplete--controlled',
+        device: 'MOBILE_IOS',
+        args: {verticalPosition},
+    });
+
+    const field = await screen.findByRole('combobox', {name: 'Label'});
+    await field.focus();
+
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+});
+
+test('Autocomplete scrolls to active option on keyboard navigation', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-autocomplete--controlled',
+        device: 'MOBILE_IOS',
+        viewport: {width: 375, height: 200},
+    });
+
+    const field = await screen.findByRole('combobox', {name: 'Label'});
+    await field.focus();
+
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('SearchField', async () => {
     await openStoryPage({
         id: 'components-input-fields-searchfield--controlled',
