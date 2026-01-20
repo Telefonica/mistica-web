@@ -32,6 +32,7 @@ import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
 
 import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src';
+import {useIsOsDarkModeEnabled} from '../../src/theme-context-provider';
 
 export * from '../../src';
 export * from '../../src/community';
@@ -50,32 +51,50 @@ const themesMap: {
     'Movistar-new': {
         text: 'Movistar',
         themeConfig: Movistar_New,
-        Icon: () => <MovistarNewLogo size={24} />,
+        Icon: () => {
+            const {isDarkMode} = useTheme();
+            return <MovistarNewLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+        },
     },
     'Vivo-new': {
         text: 'Vivo',
         themeConfig: Vivo_New,
-        Icon: () => <VivoLogo size={24} />,
+        Icon: () => {
+            const {isDarkMode} = useTheme();
+            return <VivoLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+        },
     },
     'O2-new': {
         text: 'O2',
         themeConfig: O2_New,
-        Icon: () => <O2NewLogo size={24} />,
+        Icon: () => {
+            const {isDarkMode} = useTheme();
+            return <O2NewLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+        },
     },
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,
-        Icon: () => <TelefonicaLogo size={24} />,
+        Icon: () => {
+            const {isDarkMode} = useTheme();
+            return <TelefonicaLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+        },
     },
     Blau: {
         text: 'Blau',
         themeConfig: Blau,
-        Icon: () => <BlauLogo size={24} />,
+        Icon: () => {
+            const {isDarkMode} = useTheme();
+            return <BlauLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+        },
     },
     Esimflag: {
         text: 'Esimflag',
         themeConfig: Esimflag,
-        Icon: () => <EsimflagLogo size={24} />,
+        Icon: () => {
+            const {isDarkMode} = useTheme();
+            return <EsimflagLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+        },
     },
 };
 
@@ -233,6 +252,7 @@ type PreviewToolsProps = {
     forceDesktop?: boolean;
     forceTabs?: boolean;
     hide?: boolean;
+    showBorder?: boolean;
     children: React.ReactNode;
 };
 
@@ -247,6 +267,7 @@ export const PreviewTools = ({
     forceDesktop = false,
     forceTabs = false,
     hide,
+    showBorder = false,
 }: PreviewToolsProps): JSX.Element => {
     const {
         skinName: initialSkinName,
@@ -256,6 +277,7 @@ export const PreviewTools = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
+    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const [showControls, setShowControls] = React.useState(false);
     const controlsRef = React.useRef<HTMLDivElement | null>(null);
@@ -300,12 +322,12 @@ export const PreviewTools = ({
             platformOverrides: {platform: os},
             // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
             enableTabFocus: false,
-            colorScheme: 'light',
+            colorScheme,
             dimensions: {
                 headerMobileHeight: 'mistica',
             },
         };
-    }, [os, skinName]);
+    }, [colorScheme, os, skinName]);
 
     const controls = (
         <ThemeContextProvider theme={theme} as="div">
@@ -323,8 +345,21 @@ export const PreviewTools = ({
             />
         </ThemeContextProvider>
     );
+
+    const borderColor = React.useMemo(() => themesMap[skinName].themeConfig.skin.colors.border, [skinName]);
+    const isDarkMode = colorScheme === 'dark' || (colorScheme === 'auto' && isOsDarkModeEnabled);
+    const border =
+        showBorder && !isDarkMode ? (
+            <div className={styles.previewBorder} style={{borderColor}} />
+        ) : undefined;
+
     if (hide) {
-        return <>{children}</>;
+        return (
+            <>
+                {border}
+                {children}
+            </>
+        );
     }
     if (floating) {
         return (
@@ -407,7 +442,10 @@ export const PreviewTools = ({
     } else {
         return (
             <>
-                <Portal>{controls}</Portal>
+                <Portal>
+                    {border}
+                    {controls}
+                </Portal>
                 <div className={styles.controlsHeight} />
                 {children}
             </>

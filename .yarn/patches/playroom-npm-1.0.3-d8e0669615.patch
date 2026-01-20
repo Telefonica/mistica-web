@@ -1,3 +1,26 @@
+diff --git a/src/components/Preview/Preview.css.ts b/src/components/Preview/Preview.css.ts
+index 4431c0abe73040cc889164c25ceb92c46469ea53..42b612edf5a09feafbec1868f0871f289b3aac19 100644
+--- a/src/components/Preview/Preview.css.ts
++++ b/src/components/Preview/Preview.css.ts
+@@ -18,12 +18,10 @@ export const root = style([
+ ]);
+
+-export const rootEmbedded = style([
+-  sprinkles({
+-    borderRadius: 'medium',
+-  }),
+-  {
+-    border: `1px solid ${colorPaletteVars.border.standard}`,
+-  },
+-]);
++export const rootEmbedded = style([
++  {
++    borderRadius: '12px',
++  },
++  // Remove border for embedded previews
++]);
+
+ export const header = style([
 diff --git a/src/components/Preview/Preview.tsx b/src/components/Preview/Preview.tsx
 index 4431c0abe73040cc889164c25ceb92c46469ea53..42b612edf5a09feafbec1868f0871f289b3aac19 100644
 --- a/src/components/Preview/Preview.tsx
@@ -62,24 +85,3 @@ index 4431c0abe73040cc889164c25ceb92c46469ea53..42b612edf5a09feafbec1868f0871f28
  );
  
  export default ({ title, code, themeName }: PreviewProps) => {
-diff --git a/src/contexts/StoreContext.tsx b/src/contexts/StoreContext.tsx
-index 831392a328827a4fdaf4469175878c12ef007879..633cdf7f337e59eb5b7fabd1fa0e241e9961a650 100644
---- a/src/contexts/StoreContext.tsx
-+++ b/src/contexts/StoreContext.tsx
-@@ -189,7 +189,15 @@ const sortStoredPlayrooms = (storedPlayrooms: State['storedPlayrooms']) =>
-     )
-   );
- 
--const createPlayroomId = () => self.crypto.randomUUID();
-+const createPlayroomId = () => self.crypto.randomUUID
-+    ? self.crypto.randomUUID()
-+    : '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
-+        (
-+          Number(c) ^
-+          (crypto.getRandomValues(new Uint8Array(1))[0] &
-+            (15 >> (Number(c) / 4)))
-+        ).toString(16)
-+      );
- 
- const reducer = (state: State, action: Action): State => {
-   switch (action.type) {
