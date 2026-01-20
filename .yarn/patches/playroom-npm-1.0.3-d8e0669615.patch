@@ -2,7 +2,7 @@ diff --git a/src/components/Preview/Preview.css.ts b/src/components/Preview/Prev
 index 4431c0abe73040cc889164c25ceb92c46469ea53..42b612edf5a09feafbec1868f0871f289b3aac19 100644
 --- a/src/components/Preview/Preview.css.ts
 +++ b/src/components/Preview/Preview.css.ts
-@@ -18,12 +18,7 @@ export const root = style([
+@@ -18,12 +18,10 @@ export const root = style([
  ]);
 
 -export const rootEmbedded = style([
