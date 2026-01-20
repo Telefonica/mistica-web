@@ -346,12 +346,8 @@ export const PreviewTools = ({
         </ThemeContextProvider>
     );
 
-    const borderColor = React.useMemo(() => themesMap[skinName].themeConfig.skin.colors.border, [skinName]);
     const isDarkMode = colorScheme === 'dark' || (colorScheme === 'auto' && isOsDarkModeEnabled);
-    const border =
-        showBorder && !isDarkMode ? (
-            <div className={styles.previewBorder} style={{borderColor}} />
-        ) : undefined;
+    const border = showBorder && !isDarkMode ? <div className={styles.previewBorder} /> : undefined;
 
     if (hide) {
         return (
