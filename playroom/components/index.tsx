@@ -30,9 +30,9 @@ import IconAppleOff from '../icons/icon-apple-off';
 import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
+import {useIsOsDarkModeEnabled} from '../../src/theme-context-provider';
 
 import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src';
-import {useIsOsDarkModeEnabled} from '../../src/theme-context-provider';
 
 export * from '../../src';
 export * from '../../src/community';

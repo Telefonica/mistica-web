@@ -30,7 +30,7 @@ export const controls = style([
 
         gap: 8,
         zIndex: 2,
-        borderBottom: `1px solid ${skinVars.colors.border}`,
+        borderBottom: `1px solid ${skinVars.colors.divider}`,
     },
     controlsHeight,
 ]);
