@@ -311,8 +311,12 @@ export const PreviewTools = ({
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
     const editStory = () => {
-        if (window.location.href.includes('/preview')) {
-            window.open(window.location.href.replace('/preview', ''));
+        const topWindow = window.top ?? window;
+        const currentUrl = topWindow.location.href;
+
+        if (currentUrl.includes('/preview')) {
+            const editUrl = currentUrl.replace('/preview', '');
+            topWindow.open(editUrl, '_blank');
         }
     };
 
