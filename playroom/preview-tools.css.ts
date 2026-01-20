@@ -30,7 +30,7 @@ export const controls = style([
 
         gap: 8,
         zIndex: 2,
-        background: 'white',
+
         borderBottom: `1px solid ${skinVars.colors.divider}`,
     },
     controlsHeight,
