@@ -337,6 +337,7 @@ export const menuItemBase = style([
         minHeight: pxToRem(48),
         padding: '6px 8px',
         userSelect: 'none',
+        borderRadius: skinVars.borderRadii.popup,
     },
 ]);
 
