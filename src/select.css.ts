@@ -43,8 +43,7 @@ export const optionsContainer = style([
         top,
         left,
         minWidth,
-        boxShadow:
-            '0px 2px 4px 0px #00000033',
+        boxShadow: '0px 2px 4px 0px #00000033',
         padding: 8,
         transformOrigin,
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
