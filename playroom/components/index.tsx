@@ -311,26 +311,8 @@ export const PreviewTools = ({
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
     const editStory = () => {
-        const getScopeWindow = () => {
-            try {
-                if (window.top && window.top !== window) {
-                    if (window.top.location.origin === window.location.origin) {
-                        return window.top;
-                    }
-                }
-            } catch (_err) {
-                // Swallow cross-origin access errors and fall back to the current window
-                return window;
-            }
-            return window;
-        };
-
-        const scopeWindow = getScopeWindow();
-        const currentUrl = scopeWindow.location.href;
-
-        if (currentUrl.includes('/preview')) {
-            const editUrl = currentUrl.replace('/preview', '');
-            scopeWindow.open(editUrl, '_blank');
+        if (window.location.href.includes('/preview')) {
+            window.open(window.location.href.replace('/preview', ''));
         }
     };
 
