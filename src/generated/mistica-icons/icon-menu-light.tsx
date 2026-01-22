@@ -36,7 +36,7 @@ const IconMenuLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20 17.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zM20 11.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zM20 5.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5z"
+                    d="M20 17.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zm0-6a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zm0-6a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5z"
                 />
             </svg>
         );

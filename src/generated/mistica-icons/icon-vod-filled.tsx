@@ -45,7 +45,7 @@ const IconVodFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12.447 9.765a.75.75 0 0 1 .603.735v3l-.015.148a.75.75 0 0 1-.588.587l-.147.015a.75.75 0 0 1-.75-.75v-3a.75.75 0 0 1 .75-.75zM17.947 9.765a.75.75 0 0 1 .603.735v3a.75.75 0 0 1-.75.75h-.75v-4.5h.75z"
+                    d="M12.447 9.765a.75.75 0 0 1 .603.735v3l-.015.148a.75.75 0 0 1-.588.587l-.147.015a.75.75 0 0 1-.75-.75v-3a.75.75 0 0 1 .75-.75zm5.5 0a.75.75 0 0 1 .603.735v3a.75.75 0 0 1-.75.75h-.75v-4.5h.75z"
                 />
                 <path
                     fill={fillColor}

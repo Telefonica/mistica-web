@@ -27,7 +27,7 @@ const IconReloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.2 7.905h-4.405v-1.25h2.321a6.75 6.75 0 0 0-10.865 5.45H4l-.001-.1A8 8 0 0 1 16.95 5.72V3.5h1.25zM5.8 16.105h4.405v1.25H7.884a6.75 6.75 0 0 0 10.866-5.45H20v.1A8 8 0 0 1 7.05 18.29v2.22H5.8z"
+                    d="M18.2 7.905h-4.405v-1.25h2.321a6.75 6.75 0 0 0-10.865 5.45H4l-.001-.1A8 8 0 0 1 16.95 5.72V3.5h1.25zm-12.4 8.2h4.405v1.25H7.884a6.75 6.75 0 0 0 10.866-5.45H20v.1A8 8 0 0 1 7.05 18.29v2.22H5.8z"
                 />
             </svg>
         );

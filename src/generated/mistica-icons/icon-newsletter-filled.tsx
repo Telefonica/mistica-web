@@ -27,7 +27,7 @@ const IconNewsletterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M5.11 2h13.793v2.039H5.11zM5.11 5.148h13.793v3.334H5.11zM7.832 17.002h2.18v1.854h-2.18zM10.011 11.815H7.832v1.854h2.18z"
+                    d="M5.11 2h13.793v2.039H5.11zm0 3.148h13.793v3.334H5.11zm2.722 11.854h2.18v1.854h-2.18zm2.179-5.187H7.832v1.854h2.18z"
                 />
                 <path
                     fill={fillColor}
@@ -40,7 +40,7 @@ const IconNewsletterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M5.11 2h13.793v2.039H5.11zM5.11 5.148h13.793v3.334H5.11zM7.832 17.002h2.18v1.854h-2.18zM10.011 11.815H7.832v1.854h2.18z"
+                    d="M5.11 2h13.793v2.039H5.11zm0 3.148h13.793v3.334H5.11zm2.722 11.854h2.18v1.854h-2.18zm2.179-5.187H7.832v1.854h2.18z"
                 />
                 <path
                     fill={fillColor}

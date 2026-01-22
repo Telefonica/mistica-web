@@ -25,7 +25,7 @@ const IconBuildingTreeRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M10 12.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zM10 8.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
+                d="M10 12.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm0-4a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
             />
             <path
                 fill={fillColor}

@@ -25,7 +25,7 @@ const IconCodeSquareRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M8.47 9.47a.75.75 0 1 1 1.06 1.06L8.06 12l1.47 1.47a.75.75 0 1 1-1.06 1.06l-2-2a.75.75 0 0 1 0-1.06zM14.47 9.47a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.75.75 0 1 1-1.06-1.06L15.94 12l-1.47-1.47a.75.75 0 0 1 0-1.06"
+                d="M8.47 9.47a.75.75 0 1 1 1.06 1.06L8.06 12l1.47 1.47a.75.75 0 1 1-1.06 1.06l-2-2a.75.75 0 0 1 0-1.06zm6 0a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.75.75 0 1 1-1.06-1.06L15.94 12l-1.47-1.47a.75.75 0 0 1 0-1.06"
             />
             <path
                 fill={fillColor}

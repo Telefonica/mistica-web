@@ -25,7 +25,7 @@ const IconCalendarWeekLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M8 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2M8 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                d="M8 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-3-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
             />
             <path
                 fill={fillColor}
