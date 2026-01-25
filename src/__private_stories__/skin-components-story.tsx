@@ -403,15 +403,44 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                         </Inline>
 
                         {/** Tag */}
-                        <Inline space={16} wrap>
-                            <Tag type="promo">Promo</Tag>
-                            <Tag type="active">Active</Tag>
-                            <Tag type="inactive">Inactive</Tag>
-                            <Tag type="success">Success</Tag>
-                            <Tag type="warning">Warning</Tag>
-                            <Tag type="error">Error</Tag>
-                            <Tag type="info">Info</Tag>
-                        </Inline>
+                        <Stack space={16}>
+                            <Inline space={16} wrap>
+                                <Tag type="promo">Promo</Tag>
+                                <Tag type="active">Active</Tag>
+                                <Tag type="inactive">Inactive</Tag>
+                                <Tag type="success">Success</Tag>
+                                <Tag type="warning">Warning</Tag>
+                                <Tag type="error" badge>
+                                    Error
+                                </Tag>
+                                <Tag type="info" badge={5}>
+                                    Info
+                                </Tag>
+                            </Inline>
+                            <Inline space={16} wrap>
+                                <Tag type="promo" small>
+                                    Promo
+                                </Tag>
+                                <Tag type="active" small>
+                                    Active
+                                </Tag>
+                                <Tag type="inactive" small>
+                                    Inactive
+                                </Tag>
+                                <Tag type="success" small>
+                                    Success
+                                </Tag>
+                                <Tag type="warning" small>
+                                    Warning
+                                </Tag>
+                                <Tag type="error" small badge>
+                                    Error
+                                </Tag>
+                                <Tag type="info" small badge={5}>
+                                    Info
+                                </Tag>
+                            </Inline>
+                        </Stack>
 
                         {/** IconButton */}
                         <Inline space={16} wrap>

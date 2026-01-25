@@ -25,6 +25,7 @@ export type TagProps = {
     badge?: boolean | number;
     backgroundColor?: string;
     textColor?: string;
+    small?: boolean;
 };
 
 const {colors} = vars;
@@ -37,6 +38,7 @@ const Tag = ({
     badge,
     backgroundColor: customBackgroundColor,
     textColor: customTextColor,
+    small = false,
 }: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
@@ -101,13 +103,16 @@ const Tag = ({
     const backgroundColor =
         customBackgroundColor || (isOverBrand ? backgroundColorInverse : defaultBackgroundColor);
 
+    const size = small ? 'small' : 'default';
+    const tagSize = styles.tagSize[size];
+    const paddingLeft = Icon ? styles.withIconPadding[size] : undefined;
+    const paddingRight = badge ? styles.withBadgePadding[size] : undefined;
+
     return (
         <span
             {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
-            className={classNames(styles.tag)}
+            className={classNames(styles.tag, tagSize, paddingLeft, paddingRight)}
             style={{
-                paddingLeft: Icon ? 8 : 12,
-                paddingRight: badgeValue !== 0 ? 8 : 12,
                 background: backgroundColor,
             }}
         >
@@ -119,8 +124,8 @@ const Tag = ({
             <ThemeVariant isInverse={false}>
                 <Text
                     color={textColor}
-                    size={14}
-                    lineHeight={20}
+                    size={small ? 12 : 14}
+                    lineHeight={small ? 16 : 20}
                     weight={textPresets.indicator.weight}
                     truncate
                 >

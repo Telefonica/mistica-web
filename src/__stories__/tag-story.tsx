@@ -27,6 +27,7 @@ type Args = {
     textColorCustom: string;
     backgroundColorFromSkin: string;
     backgroundColorCustom: string;
+    small: boolean;
 };
 
 export default {
@@ -49,6 +50,7 @@ export const Default: StoryComponent<Args> = ({
     textColorCustom,
     backgroundColorFromSkin,
     backgroundColorCustom,
+    small,
 }) => {
     const getLabel = (fallback: string) => labelFromArgs || fallback;
     // eslint-disable-next-line no-eval
@@ -67,6 +69,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Promo')}
                     </Tag>
@@ -76,6 +79,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Info')}
                     </Tag>
@@ -85,6 +89,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Active')}
                     </Tag>
@@ -94,6 +99,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Inactive')}
                     </Tag>
@@ -103,6 +109,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Success')}
                     </Tag>
@@ -112,6 +119,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Warning')}
                     </Tag>
@@ -121,6 +129,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Error')}
                     </Tag>
@@ -141,6 +150,7 @@ Default.args = {
     backgroundColorFromSkin: skinVars.colors.neutralHigh,
     textColorCustom: '#fff',
     backgroundColorCustom: 'red',
+    small: false,
 };
 
 Default.argTypes = {
@@ -170,4 +180,5 @@ Default.argTypes = {
         options: ['default', 'brand', 'negative', 'alternative'],
         control: {type: 'select'},
     },
+    small: {control: {type: 'boolean'}},
 };
