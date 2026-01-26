@@ -106,7 +106,11 @@ const Tag = ({
     const size = small ? 'small' : 'default';
     const tagSize = styles.tagSize[size];
     const paddingLeft = Icon ? styles.withIconPadding[size] : undefined;
-    const paddingRight = badge ? styles.withBadgePadding[size] : undefined;
+    const paddingRight = badge
+        ? badge === true
+            ? styles.withBadgePadding[size]
+            : styles.withBadgeNumericPadding[size]
+        : undefined;
 
     return (
         <span

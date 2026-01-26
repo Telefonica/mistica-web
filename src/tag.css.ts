@@ -23,9 +23,9 @@ export const tagSize = styleVariants({
     small: {
         minWidth: 40,
         minHeight: 22,
-        paddingTop: 3,
+        paddingTop: 2,
         paddingRight: 8,
-        paddingBottom: 3,
+        paddingBottom: 2,
         paddingLeft: 8,
     },
 });
@@ -35,9 +35,14 @@ export const withIconPadding = styleVariants({
     small: {paddingLeft: 4},
 });
 
-export const withBadgePadding = styleVariants({
+export const withBadgeNumericPadding = styleVariants({
     default: {paddingRight: 8},
     small: {paddingRight: 2},
+});
+
+export const withBadgePadding = styleVariants({
+    default: {paddingRight: 8},
+    small: {paddingRight: 4},
 });
 
 export const icon = sprinkles({display: 'block'});
