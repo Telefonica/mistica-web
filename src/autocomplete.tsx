@@ -11,6 +11,7 @@ import classnames from 'classnames';
 import {vars} from './skins/skin-contract.css';
 import * as tokens from './text-tokens';
 import {useTheme} from './hooks';
+import {ThemeVariant} from './theme-variant-context';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -185,36 +186,39 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                         showOptionsList();
                     }}
                 />
-                <ul
-                    ref={menuRef}
-                    id={menuId}
-                    role="listbox"
-                    aria-label={rest.label}
-                    className={styles.optionsList}
-                    style={{display: showOptions && options.length !== 0 ? 'block' : 'none', top}}
-                >
-                    {options.map((option, index) => (
-                        <li
-                            id={getOptionId(menuId, index)}
-                            key={index}
-                            role="option"
-                            aria-selected={focusIndex === index}
-                            className={classnames(styles.optionItem, {
-                                [styles.optionItemSelected]: focusIndex === index,
-                            })}
-                            onMouseDown={(e) => {
-                                // Prevent blur and lost input focus
-                                e.preventDefault();
-                            }}
-                            onClick={() => {
-                                updateTextFieldValue(option, option);
-                                hideOptionsList();
-                            }}
-                        >
-                            <Text3 regular>{option}</Text3>
-                        </li>
-                    ))}
-                </ul>
+                <ThemeVariant variant="default">
+                    <ul
+                        ref={menuRef}
+                        id={menuId}
+                        role="listbox"
+                        aria-label={rest.label}
+                        className={styles.optionsList}
+                        style={{display: showOptions && options.length !== 0 ? 'block' : 'none', top}}
+                    >
+                        {options.map((option, index) => (
+                            <li
+                                id={getOptionId(menuId, index)}
+                                key={index}
+                                role="option"
+                                aria-selected={focusIndex === index}
+                                className={classnames(styles.optionItem, {
+                                    [styles.optionItemSelected]: focusIndex === index,
+                                })}
+                                onMouseDown={(e) => {
+                                    // Prevent blur and lost input focus
+                                    e.preventDefault();
+                                }}
+                                onClick={() => {
+                                    updateTextFieldValue(option, option);
+                                    hideOptionsList();
+                                }}
+                            >
+                                <Text3 regular>{option}</Text3>
+                            </li>
+                        ))}
+                    </ul>
+                </ThemeVariant>
+
                 <div role="status" aria-labelledby={statusId}>
                     <div
                         className={styles.optionsList}

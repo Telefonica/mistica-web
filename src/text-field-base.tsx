@@ -597,17 +597,21 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         }
 
                         return (
-                            <div
-                                {...containerPropsWithoutKey}
-                                key={key}
-                                style={{
-                                    width: containerRef.current ? containerRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
-                                }}
-                                className={styles.suggestionsContainer}
-                                aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
-                            >
-                                {children}
-                            </div>
+                            <ThemeVariant variant="default">
+                                <div
+                                    {...containerPropsWithoutKey}
+                                    key={key}
+                                    style={{
+                                        width: containerRef.current
+                                            ? containerRef.current.clientWidth + 2
+                                            : 0, // +2 due to borders (input)
+                                    }}
+                                    className={styles.suggestionsContainer}
+                                    aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
+                                >
+                                    {children}
+                                </div>
+                            </ThemeVariant>
                         );
                     }}
                 />
