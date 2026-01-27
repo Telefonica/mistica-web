@@ -17,6 +17,14 @@ const StoryCodeDecorator: Decorator = (Story, context) => {
 
         const handleCodeRequest = () => {
             const fileName = context.parameters.fileName;
+            const focusParam = context.parameters.storyCode?.focus;
+
+            const focus =
+                Array.isArray(focusParam) &&
+                focusParam.length === 2 &&
+                focusParam.every((n) => typeof n === 'number' && Number.isFinite(n) && n > 0)
+                    ? ([focusParam[0], focusParam[1]] as [number, number])
+                    : undefined;
 
             // Try to get the source from our global variable
             let storySource: string | undefined;
@@ -43,14 +51,14 @@ const StoryCodeDecorator: Decorator = (Story, context) => {
             }
 
             if (storySource) {
-                channel.emit('story-code-update', storySource);
+                channel.emit('story-code-update', {code: storySource, focus});
             } else if (fileName) {
-                channel.emit(
-                    'story-code-update',
-                    `// Story file: ${fileName}\n// No source code available. The source should be added to story parameters.\n\n// Available sources: ${Object.keys(window.__STORY_SOURCE__ || {}).join(', ')}`
-                );
+                channel.emit('story-code-update', {
+                    code: `// Story file: ${fileName}\n// No source code available. The source should be added to story parameters.\n\n// Available sources: ${Object.keys(window.__STORY_SOURCE__ || {}).join(', ')}`,
+                    focus,
+                });
             } else {
-                channel.emit('story-code-update', '// Story source not available');
+                channel.emit('story-code-update', {code: '// Story source not available', focus});
             }
         };
 

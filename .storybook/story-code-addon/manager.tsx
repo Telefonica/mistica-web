@@ -6,19 +6,28 @@ import type {API} from 'storybook/manager-api';
 
 const ADDON_ID = 'story-code';
 const PANEL_ID = `${ADDON_ID}/panel`;
-const PANEL_TITLE = 'Story Code';
+const PANEL_TITLE = 'Code';
+
+interface StoryCodePayload {
+    code: string;
+    focus?: [number, number];
+}
 
 interface StoryCodePanelProps {
     api: API;
 }
 
 // Simple syntax highlighting for TypeScript/React
-const highlightCode = (code: string): React.ReactElement => {
+const highlightCode = (code: string, focus?: [number, number]): React.ReactElement => {
     const lines = code.split('\n');
+    let focusAnchorAssigned = false;
 
     return (
         <>
             {lines.map((line, lineIndex) => {
+                const lineNumber = lineIndex + 1;
+                const isFocused =
+                    focus && focus.length === 2 && lineNumber >= focus[0] && lineNumber <= focus[1];
                 // Process each line character by character to apply syntax highlighting
                 const tokens: Array<{text: string; color: string}> = [];
                 let currentToken = '';
@@ -194,8 +203,20 @@ const highlightCode = (code: string): React.ReactElement => {
                     tokens.push({text: currentToken, color: currentColor});
                 }
 
+                const anchorId = isFocused && !focusAnchorAssigned ? 'story-code-focus-start' : undefined;
+                if (anchorId) focusAnchorAssigned = true;
+
+                const focusedStyle = isFocused
+                    ? {
+                          backgroundColor: 'rgba(0, 102, 255, 0.2)',
+                          display: 'block',
+                          margin: '0 -32px',
+                          padding: '0 32px',
+                      }
+                    : undefined;
+
                 return (
-                    <div key={lineIndex}>
+                    <div key={lineIndex} id={anchorId} style={focusedStyle}>
                         {tokens.map((token, tokenIndex) => (
                             <span key={tokenIndex} style={{color: token.color}}>
                                 {token.text}
@@ -210,14 +231,16 @@ const highlightCode = (code: string): React.ReactElement => {
 };
 
 const StoryCodePanel = ({api}: StoryCodePanelProps): React.ReactElement => {
-    const [storyCode, setStoryCode] = React.useState<string>('');
+    const [storyCode, setStoryCode] = React.useState<StoryCodePayload | null>(null);
     const [loading, setLoading] = React.useState<boolean>(true);
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
 
     React.useEffect(() => {
         const channel = addons.getChannel();
 
-        const handleStoryCodeUpdate = (code: string) => {
-            setStoryCode(code);
+        const handleStoryCodeUpdate = (payload: string | StoryCodePayload) => {
+            const normalized: StoryCodePayload = typeof payload === 'string' ? {code: payload} : payload;
+            setStoryCode(normalized);
             setLoading(false);
         };
 
@@ -240,13 +263,26 @@ const StoryCodePanel = ({api}: StoryCodePanelProps): React.ReactElement => {
         };
     }, [api]);
 
+    // Scroll to the focused range when story or focus changes
+    React.useEffect(() => {
+        if (!storyCode?.focus) return;
+        const container = containerRef.current;
+        if (!container) return;
+
+        const anchor = container.querySelector('#story-code-focus-start');
+        if (anchor && anchor instanceof HTMLElement) {
+            anchor.scrollIntoView({block: 'start', behavior: 'smooth'});
+        }
+    }, [storyCode?.focus, storyCode?.code]);
+
     return (
         <div
+            ref={containerRef}
             style={{
                 padding: '16px',
                 height: '100%',
                 overflow: 'auto',
-                backgroundColor: '#1e1e1e',
+                backgroundColor: '#000',
                 color: '#d4d4d4',
                 fontFamily: 'Menlo, Monaco, "Courier New", monospace',
                 fontSize: '13px',
@@ -257,7 +293,7 @@ const StoryCodePanel = ({api}: StoryCodePanelProps): React.ReactElement => {
                 <div style={{color: '#888'}}>Loading story code...</div>
             ) : storyCode ? (
                 <pre style={{margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
-                    {highlightCode(storyCode)}
+                    {highlightCode(storyCode.code, storyCode.focus)}
                 </pre>
             ) : (
                 <div style={{color: '#888'}}>No code available for this story</div>
