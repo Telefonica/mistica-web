@@ -1,0 +1,5 @@
+{
+    "name": "story-code-addon",
+    "version": "0.0.1",
+    "main": "preset.ts"
+}
