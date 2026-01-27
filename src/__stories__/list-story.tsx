@@ -678,3 +678,323 @@ const orderedListArgTypes = unorderedListArgTypes;
 OrderedListStory.storyName = 'OrderedList';
 OrderedListStory.argTypes = orderedListArgTypes;
 OrderedListStory.args = orderedListArgs;
+
+type ExpandableRowsArgs = {
+    variantOutside: Variant;
+    expandDelay: number;
+};
+
+export const ExpandableRowsStory: StoryComponent<ExpandableRowsArgs> = ({variantOutside, expandDelay}) => {
+    const [switchExpanded, setSwitchExpanded] = React.useState(false);
+    const [checkboxExpanded, setCheckboxExpanded] = React.useState(false);
+    const [iconButtonExpanded, setIconButtonExpanded] = React.useState(false);
+    const [onPressExpanded, setOnPressExpanded] = React.useState(false);
+
+    return (
+        <ResponsiveLayout variant={variantOutside}>
+            <NegativeBox>
+                <RowList>
+                    {/* Expandable Switch row */}
+                    <Row
+                        title="Notifications"
+                        description="Turn on to receive push notifications"
+                        switch={{
+                            value: switchExpanded,
+                            onChange: setSwitchExpanded,
+                        }}
+                        aria-expanded={switchExpanded}
+                        aria-controls="switch-content"
+                        expandDelay={expandDelay}
+                    />
+                    {switchExpanded && (
+                        <div
+                            id="switch-content"
+                            style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                        >
+                            <Text2 regular>
+                                Notification settings expanded. Configure your preferences here.
+                            </Text2>
+                        </div>
+                    )}
+
+                    {/* Expandable Checkbox row */}
+                    <Row
+                        title="Terms and Conditions"
+                        description="Agree to terms and view details"
+                        checkbox={{
+                            value: checkboxExpanded,
+                            onChange: setCheckboxExpanded,
+                        }}
+                        aria-expanded={checkboxExpanded}
+                        aria-controls="checkbox-content"
+                        expandDelay={expandDelay}
+                    />
+                    {checkboxExpanded && (
+                        <div
+                            id="checkbox-content"
+                            style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                        >
+                            <Text2 regular>
+                                Terms and conditions content. Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit.
+                            </Text2>
+                        </div>
+                    )}
+
+                    {/* Expandable IconButton row */}
+                    <Row
+                        title="Music Player"
+                        description="Toggle playback and view details"
+                        iconButton={{
+                            checkedProps: {
+                                Icon: IconPauseFilled,
+                                'aria-label': 'Pause',
+                                type: 'brand',
+                                backgroundType: 'solid',
+                            },
+                            uncheckedProps: {
+                                Icon: IconPlayFilled,
+                                'aria-label': 'Play',
+                                type: 'brand',
+                                backgroundType: 'solid',
+                            },
+                            checked: iconButtonExpanded,
+                            onChange: setIconButtonExpanded,
+                        }}
+                        aria-expanded={iconButtonExpanded}
+                        aria-controls="iconbutton-content"
+                        expandDelay={expandDelay}
+                    />
+                    {iconButtonExpanded && (
+                        <div
+                            id="iconbutton-content"
+                            style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                        >
+                            <Text2 regular>Now playing: Example Track - Artist Name</Text2>
+                        </div>
+                    )}
+
+                    {/* Expandable OnPress row */}
+                    <Row
+                        title="Account Details"
+                        description="Tap to expand or collapse"
+                        onPress={() => setOnPressExpanded(!onPressExpanded)}
+                        aria-expanded={onPressExpanded}
+                        aria-controls="onpress-content"
+                        expandDelay={expandDelay}
+                    />
+                    {onPressExpanded && (
+                        <div
+                            id="onpress-content"
+                            style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                        >
+                            <Stack space={8}>
+                                <Text2 medium>Account Information</Text2>
+                                <Text2 regular>Email: user@example.com</Text2>
+                                <Text2 regular>Member since: January 2024</Text2>
+                            </Stack>
+                        </div>
+                    )}
+                </RowList>
+            </NegativeBox>
+        </ResponsiveLayout>
+    );
+};
+
+ExpandableRowsStory.storyName = 'Expandable Rows';
+ExpandableRowsStory.args = {
+    variantOutside: 'default',
+    expandDelay: 300,
+};
+ExpandableRowsStory.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
+    expandDelay: {
+        control: {type: 'number', min: 0, max: 1000, step: 50},
+    },
+};
+
+type DualInteractionExpandableArgs = {
+    variantOutside: Variant;
+    expandDelay: number;
+};
+
+export const DualInteractionExpandableStory: StoryComponent<DualInteractionExpandableArgs> = ({
+    variantOutside,
+    expandDelay,
+}) => {
+    const [switchExpanded, setSwitchExpanded] = React.useState(false);
+    const [switchValue, setSwitchValue] = React.useState(false);
+
+    return (
+        <ResponsiveLayout variant={variantOutside}>
+            <NegativeBox>
+                <RowList>
+                    {/* Dual interaction: onPress navigates, switch expands */}
+                    <Row
+                        title="Wi-Fi Settings"
+                        description="Tap row to navigate to settings, toggle switch to expand details"
+                        onPress={() => alert('Navigating to Wi-Fi settings page')}
+                        switch={{
+                            value: switchExpanded,
+                            onChange: (checked) => {
+                                setSwitchExpanded(checked);
+                                setSwitchValue(checked);
+                            },
+                        }}
+                        aria-expanded={switchExpanded}
+                        aria-controls="dual-switch-content"
+                        expandDelay={expandDelay}
+                    />
+                    {switchExpanded && (
+                        <div
+                            id="dual-switch-content"
+                            style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                        >
+                            <Stack space={8}>
+                                <Text2 medium>Wi-Fi Status: {switchValue ? 'Enabled' : 'Disabled'}</Text2>
+                                <Text2 regular>Network: MyNetwork-5G</Text2>
+                                <Text2 regular>Signal strength: Excellent</Text2>
+                            </Stack>
+                        </div>
+                    )}
+                </RowList>
+            </NegativeBox>
+        </ResponsiveLayout>
+    );
+};
+
+DualInteractionExpandableStory.storyName = 'Dual Interaction Expandable';
+DualInteractionExpandableStory.args = {
+    variantOutside: 'default',
+    expandDelay: 300,
+};
+DualInteractionExpandableStory.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
+    expandDelay: {
+        control: {type: 'number', min: 0, max: 1000, step: 50},
+    },
+};
+
+type ExpandDelayDemoArgs = {
+    variantOutside: Variant;
+};
+
+export const ExpandDelayDemoStory: StoryComponent<ExpandDelayDemoArgs> = ({variantOutside}) => {
+    const [expanded0, setExpanded0] = React.useState(false);
+    const [expanded100, setExpanded100] = React.useState(false);
+    const [expanded300, setExpanded300] = React.useState(false);
+    const [expanded500, setExpanded500] = React.useState(false);
+
+    return (
+        <ResponsiveLayout variant={variantOutside}>
+            <NegativeBox>
+                <Stack space={16}>
+                    <Box paddingY={16}>
+                        <Text2 regular>
+                            Compare different expandDelay values. The delay helps screen readers by preventing
+                            premature announcements during CSS transitions.
+                        </Text2>
+                    </Box>
+                    <RowList>
+                        <Row
+                            title="expandDelay=0 (immediate)"
+                            description="aria-expanded updates immediately"
+                            switch={{
+                                value: expanded0,
+                                onChange: setExpanded0,
+                            }}
+                            aria-expanded={expanded0}
+                            aria-controls="content-0"
+                            expandDelay={0}
+                        />
+                        {expanded0 && (
+                            <div
+                                id="content-0"
+                                style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                            >
+                                <Text2 regular>Content with 0ms delay</Text2>
+                            </div>
+                        )}
+
+                        <Row
+                            title="expandDelay=100"
+                            description="100ms delay before aria-expanded updates"
+                            switch={{
+                                value: expanded100,
+                                onChange: setExpanded100,
+                            }}
+                            aria-expanded={expanded100}
+                            aria-controls="content-100"
+                            expandDelay={100}
+                        />
+                        {expanded100 && (
+                            <div
+                                id="content-100"
+                                style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                            >
+                                <Text2 regular>Content with 100ms delay</Text2>
+                            </div>
+                        )}
+
+                        <Row
+                            title="expandDelay=300 (recommended)"
+                            description="300ms delay matches typical CSS transitions"
+                            switch={{
+                                value: expanded300,
+                                onChange: setExpanded300,
+                            }}
+                            aria-expanded={expanded300}
+                            aria-controls="content-300"
+                            expandDelay={300}
+                        />
+                        {expanded300 && (
+                            <div
+                                id="content-300"
+                                style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                            >
+                                <Text2 regular>Content with 300ms delay (recommended)</Text2>
+                            </div>
+                        )}
+
+                        <Row
+                            title="expandDelay=500"
+                            description="500ms delay for slower transitions"
+                            switch={{
+                                value: expanded500,
+                                onChange: setExpanded500,
+                            }}
+                            aria-expanded={expanded500}
+                            aria-controls="content-500"
+                            expandDelay={500}
+                        />
+                        {expanded500 && (
+                            <div
+                                id="content-500"
+                                style={{padding: '16px', background: skinVars.colors.backgroundAlternative}}
+                            >
+                                <Text2 regular>Content with 500ms delay</Text2>
+                            </div>
+                        )}
+                    </RowList>
+                </Stack>
+            </NegativeBox>
+        </ResponsiveLayout>
+    );
+};
+
+ExpandDelayDemoStory.storyName = 'Expand Delay Comparison';
+ExpandDelayDemoStory.args = {
+    variantOutside: 'default',
+};
+ExpandDelayDemoStory.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
+};

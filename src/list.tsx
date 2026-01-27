@@ -295,6 +295,49 @@ interface SwitchRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     switch: ControlProps | undefined;
+    /**
+     * Indicates whether the element controls a collapsible region that is currently expanded or collapsed.
+     * Used to implement the ARIA accordion/expandable pattern for accessible expandable rows.
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     * @example
+     * ```tsx
+     * <RowList>
+     *   <SwitchRow
+     *     title="Settings"
+     *     switch={{checked: expanded}}
+     *     aria-expanded={expanded}
+     *     aria-controls="settings-content"
+     *   />
+     *   <div id="settings-content" hidden={!expanded}>
+     *     Content goes here
+     *   </div>
+     * </RowList>
+     * ```
+     */
+    'aria-expanded'?: boolean;
+    /**
+     * ID of the element whose contents or presence is controlled by this row.
+     * Must reference the ID of the controlled element (e.g., the expandable content region).
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     */
+    'aria-controls'?: string;
+    /**
+     * Delay in milliseconds before updating the aria-expanded attribute after state changes.
+     * Useful for screen readers when content has expand/collapse animations, allowing them to
+     * announce state changes after animations complete. Set to 0 for immediate updates.
+     * @default 0
+     * @example
+     * ```tsx
+     * <SwitchRow
+     *   title="Settings"
+     *   switch={{checked: expanded}}
+     *   aria-expanded={expanded}
+     *   aria-controls="settings-content"
+     *   expandDelay={300} // Wait 300ms for animation to complete
+     * />
+     * ```
+     */
+    expandDelay?: number;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
@@ -302,6 +345,49 @@ interface CheckboxRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     checkbox: ControlProps | undefined;
+    /**
+     * Indicates whether the element controls a collapsible region that is currently expanded or collapsed.
+     * Used to implement the ARIA accordion/expandable pattern for accessible expandable rows.
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     * @example
+     * ```tsx
+     * <RowList>
+     *   <CheckboxRow
+     *     title="Options"
+     *     checkbox={{checked: expanded}}
+     *     aria-expanded={expanded}
+     *     aria-controls="options-content"
+     *   />
+     *   <div id="options-content" hidden={!expanded}>
+     *     Content goes here
+     *   </div>
+     * </RowList>
+     * ```
+     */
+    'aria-expanded'?: boolean;
+    /**
+     * ID of the element whose contents or presence is controlled by this row.
+     * Must reference the ID of the controlled element (e.g., the expandable content region).
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     */
+    'aria-controls'?: string;
+    /**
+     * Delay in milliseconds before updating the aria-expanded attribute after state changes.
+     * Useful for screen readers when content has expand/collapse animations, allowing them to
+     * announce state changes after animations complete. Set to 0 for immediate updates.
+     * @default 0
+     * @example
+     * ```tsx
+     * <CheckboxRow
+     *   title="Options"
+     *   checkbox={{checked: expanded}}
+     *   aria-expanded={expanded}
+     *   aria-controls="options-content"
+     *   expandDelay={300} // Wait 300ms for animation to complete
+     * />
+     * ```
+     */
+    expandDelay?: number;
 }
 
 interface RadioRowContentProps extends CommonProps {
@@ -316,6 +402,49 @@ interface IconButtonRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     iconButton: ExclusifyUnion<IconButtonProps | ToggleIconButtonProps> | undefined;
+    /**
+     * Indicates whether the element controls a collapsible region that is currently expanded or collapsed.
+     * Used to implement the ARIA accordion/expandable pattern for accessible expandable rows.
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     * @example
+     * ```tsx
+     * <RowList>
+     *   <IconButtonRow
+     *     title="Advanced"
+     *     iconButton={{Icon: IconChevronDown, onPress: toggle}}
+     *     aria-expanded={expanded}
+     *     aria-controls="advanced-content"
+     *   />
+     *   <div id="advanced-content" hidden={!expanded}>
+     *     Content goes here
+     *   </div>
+     * </RowList>
+     * ```
+     */
+    'aria-expanded'?: boolean;
+    /**
+     * ID of the element whose contents or presence is controlled by this row.
+     * Must reference the ID of the controlled element (e.g., the expandable content region).
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     */
+    'aria-controls'?: string;
+    /**
+     * Delay in milliseconds before updating the aria-expanded attribute after state changes.
+     * Useful for screen readers when content has expand/collapse animations, allowing them to
+     * announce state changes after animations complete. Set to 0 for immediate updates.
+     * @default 0
+     * @example
+     * ```tsx
+     * <IconButtonRow
+     *   title="Advanced"
+     *   iconButton={{Icon: IconChevronDown, onPress: toggle}}
+     *   aria-expanded={expanded}
+     *   aria-controls="advanced-content"
+     *   expandDelay={300} // Wait 300ms for animation to complete
+     * />
+     * ```
+     */
+    expandDelay?: number;
 }
 
 type TouchableCommonProps = {
@@ -344,6 +473,49 @@ interface ToRowContentProps extends CommonProps, TouchableCommonProps {
 
 interface OnPressRowContentProps extends CommonProps, TouchableCommonProps {
     onPress: (() => void) | undefined;
+    /**
+     * Indicates whether the element controls a collapsible region that is currently expanded or collapsed.
+     * Used to implement the ARIA accordion/expandable pattern for accessible expandable rows.
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     * @example
+     * ```tsx
+     * <RowList>
+     *   <RowWithOnPress
+     *     title="Details"
+     *     onPress={toggle}
+     *     aria-expanded={expanded}
+     *     aria-controls="details-content"
+     *   />
+     *   <div id="details-content" hidden={!expanded}>
+     *     Content goes here
+     *   </div>
+     * </RowList>
+     * ```
+     */
+    'aria-expanded'?: boolean;
+    /**
+     * ID of the element whose contents or presence is controlled by this row.
+     * Must reference the ID of the controlled element (e.g., the expandable content region).
+     * @see https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
+     */
+    'aria-controls'?: string;
+    /**
+     * Delay in milliseconds before updating the aria-expanded attribute after state changes.
+     * Useful for screen readers when content has expand/collapse animations, allowing them to
+     * announce state changes after animations complete. Set to 0 for immediate updates.
+     * @default 0
+     * @example
+     * ```tsx
+     * <RowWithOnPress
+     *   title="Details"
+     *   onPress={toggle}
+     *   aria-expanded={expanded}
+     *   aria-controls="details-content"
+     *   expandDelay={300} // Wait 300ms for animation to complete
+     * />
+     * ```
+     */
+    expandDelay?: number;
 }
 
 type RowContentProps = ExclusifyUnion<
@@ -377,6 +549,24 @@ const useControlState = ({
     };
 
     return [isControlledByParent ? !!value : isChecked, toggle];
+};
+
+const useDelayedExpanded = (ariaExpanded?: boolean, expandDelay: number = 0): boolean | undefined => {
+    const [delayedExpanded, setDelayedExpanded] = React.useState(ariaExpanded);
+
+    React.useEffect(() => {
+        if (expandDelay === 0) {
+            setDelayedExpanded(ariaExpanded);
+        } else {
+            const timeoutId = setTimeout(() => {
+                setDelayedExpanded(ariaExpanded);
+            }, expandDelay);
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [ariaExpanded, expandDelay]);
+
+    return delayedExpanded;
 };
 
 const hasControlProps = (
@@ -553,6 +743,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     );
 
     if (isInteractive && !hasControl) {
+        const delayedExpanded = useDelayedExpanded(props['aria-expanded'], props.expandDelay);
+
         return (
             <BaseTouchable
                 ref={ref}
@@ -566,6 +758,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 tabIndex={tabIndex}
+                aria-expanded={delayedExpanded}
+                aria-controls={props['aria-controls']}
             >
                 <Box
                     paddingX={16}
@@ -620,6 +814,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.switch || props.checkbox) {
         const Control = props.switch ? Switch : Checkbox;
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+        const delayedExpanded = useDelayedExpanded(props['aria-expanded'], props.expandDelay);
 
         return isInteractive
             ? renderRowWithDoubleInteraction(
@@ -629,6 +824,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       checked={isChecked}
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
+                      aria-expanded={delayedExpanded}
+                      aria-controls={props['aria-controls']}
                       onChange={toggle}
                       render={({controlElement}) => (
                           <div className={styles.dualActionRight}>{controlElement}</div>
@@ -642,6 +839,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       checked={isChecked}
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
+                      aria-expanded={delayedExpanded}
+                      aria-controls={props['aria-controls']}
                       onChange={toggle}
                       render={({controlElement, labelId}) => (
                           <Box paddingX={16} role={role}>
@@ -689,14 +888,26 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     if (props.iconButton) {
+        const delayedExpanded = useDelayedExpanded(props['aria-expanded'], props.expandDelay);
+
         return isInteractive
             ? renderRowWithDoubleInteraction(
                   <Box padding={16}>
                       <Stack space="around">
                           {props.iconButton.Icon ? (
-                              <IconButton {...props.iconButton} disabled={props.disabled} />
+                              <IconButton
+                                  {...props.iconButton}
+                                  disabled={props.disabled}
+                                  aria-expanded={delayedExpanded}
+                                  aria-controls={props['aria-controls']}
+                              />
                           ) : (
-                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                              <ToggleIconButton
+                                  {...props.iconButton}
+                                  disabled={props.disabled}
+                                  aria-expanded={delayedExpanded}
+                                  aria-controls={props['aria-controls']}
+                              />
                           )}
                       </Stack>
                   </Box>
@@ -712,12 +923,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                                           {...props.iconButton}
                                           disabled={props.disabled}
                                           role={role}
+                                          aria-expanded={delayedExpanded}
+                                          aria-controls={props['aria-controls']}
                                       />
                                   ) : (
                                       <ToggleIconButton
                                           {...props.iconButton}
                                           disabled={props.disabled}
                                           role={role}
+                                          aria-expanded={delayedExpanded}
+                                          aria-controls={props['aria-controls']}
                                       />
                                   )}
                               </Stack>

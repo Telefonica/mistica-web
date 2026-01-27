@@ -2,6 +2,7 @@ import * as React from 'react';
 import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {RadioGroup} from '../radio-button';
 import {screen, render, waitFor, within} from '@testing-library/react';
+import {act} from 'react';
 import userEvent from '@testing-library/user-event';
 import {
     ButtonPrimary,
@@ -503,4 +504,446 @@ test('aria-label is read by screen readers in informative rows', () => {
     );
 
     expect(screen.getByText('Some custom label')).toBeInTheDocument();
+});
+
+test('Switch row with aria-expanded=true renders correctly in single interaction mode', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    switch={{defaultValue: false}}
+                    aria-expanded={true}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
+    expect(switchEl).toHaveAttribute('aria-expanded', 'true');
+    expect(switchEl).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('Switch row with aria-expanded=false renders correctly', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    switch={{defaultValue: false}}
+                    aria-expanded={false}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
+    expect(switchEl).toHaveAttribute('aria-expanded', 'false');
+    expect(switchEl).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('Dual interaction Switch row applies aria attributes to switch element not left touchable', () => {
+    const onPressSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    onPress={onPressSpy}
+                    switch={{defaultValue: false}}
+                    aria-expanded={true}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
+    expect(switchEl).toHaveAttribute('aria-expanded', 'true');
+    expect(switchEl).toHaveAttribute('aria-controls', 'controlled-content');
+
+    const button = screen.getByRole('button', {name: 'Title'});
+    expect(button).not.toHaveAttribute('aria-expanded');
+    expect(button).not.toHaveAttribute('aria-controls');
+});
+
+test('Switch row without new props has no regression', async () => {
+    const spyOnChange = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" switch={{defaultValue: false, onChange: spyOnChange}} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
+    expect(switchEl).not.toHaveAttribute('aria-expanded');
+    expect(switchEl).not.toHaveAttribute('aria-controls');
+
+    expect(switchEl).not.toBeChecked();
+    await userEvent.click(switchEl);
+    expect(switchEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
+});
+
+test('Checkbox row with aria-expanded=true renders correctly', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    checkbox={{defaultValue: false}}
+                    aria-expanded={true}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
+    expect(checkboxEl).toHaveAttribute('aria-expanded', 'true');
+    expect(checkboxEl).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('Checkbox row with aria-expanded=false renders correctly', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    checkbox={{defaultValue: false}}
+                    aria-expanded={false}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
+    expect(checkboxEl).toHaveAttribute('aria-expanded', 'false');
+    expect(checkboxEl).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('Checkbox row without new props has no regression', async () => {
+    const spyOnChange = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" checkbox={{defaultValue: false, onChange: spyOnChange}} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
+    expect(checkboxEl).not.toHaveAttribute('aria-expanded');
+    expect(checkboxEl).not.toHaveAttribute('aria-controls');
+
+    expect(checkboxEl).not.toBeChecked();
+    await userEvent.click(checkboxEl);
+    expect(checkboxEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
+});
+
+test('IconButton row with aria-expanded=true renders correctly', () => {
+    const onPressSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: onPressSpy,
+                        'aria-label': 'test-button',
+                    }}
+                    aria-expanded={true}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'test-button'});
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('IconButton row with aria-expanded=false renders correctly', () => {
+    const onPressSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: onPressSpy,
+                        'aria-label': 'test-button',
+                    }}
+                    aria-expanded={false}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'test-button'});
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(button).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('ToggleIconButton with aria attributes', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    iconButton={{
+                        checkedProps: {
+                            Icon: IconPlayFilled,
+                            'aria-label': 'toggle-button',
+                        },
+                        uncheckedProps: {
+                            Icon: IconPlayFilled,
+                            'aria-label': 'toggle-button',
+                        },
+                    }}
+                    aria-expanded={true}
+                    aria-controls="controlled-content"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'toggle-button'});
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-controls', 'controlled-content');
+});
+
+test('IconButton row without new props has no regression', async () => {
+    const onPressSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Title"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: onPressSpy,
+                        'aria-label': 'test-button',
+                    }}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'test-button'});
+    expect(button).not.toHaveAttribute('aria-expanded');
+    expect(button).not.toHaveAttribute('aria-controls');
+
+    await userEvent.click(button);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+});
+
+test('OnPress row with aria-expanded=true and aria-controls renders correctly', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Expandable row"
+                    onPress={() => {}}
+                    aria-expanded={true}
+                    aria-controls="content-1"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Expandable row'});
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-controls', 'content-1');
+});
+
+test('OnPress row with aria-expanded=false renders correctly', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Collapsed row"
+                    onPress={() => {}}
+                    aria-expanded={false}
+                    aria-controls="content-2"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Collapsed row'});
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(button).toHaveAttribute('aria-controls', 'content-2');
+});
+
+test('OnPress row without new props has no regression', async () => {
+    const onPressSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Regular row" onPress={onPressSpy} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Regular row'});
+    expect(button).not.toHaveAttribute('aria-expanded');
+    expect(button).not.toHaveAttribute('aria-controls');
+
+    await userEvent.click(button);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+});
+
+test('expandDelay=0 applies aria-expanded immediately', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Expandable row"
+                    onPress={() => {}}
+                    aria-expanded={true}
+                    aria-controls="content-1"
+                    expandDelay={0}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Expandable row'});
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-controls', 'content-1');
+});
+
+test('expandDelay=100 delays aria-expanded update by 100ms', () => {
+    jest.useFakeTimers();
+
+    const {rerender} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Expandable row"
+                    onPress={() => {}}
+                    aria-expanded={false}
+                    aria-controls="content-2"
+                    expandDelay={100}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Expandable row'});
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+
+    // Change to expanded
+    rerender(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Expandable row"
+                    onPress={() => {}}
+                    aria-expanded={true}
+                    aria-controls="content-2"
+                    expandDelay={100}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    // Should still be false immediately after change
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+
+    // Fast-forward time by 99ms - still false
+    act(() => {
+        jest.advanceTimersByTime(99);
+    });
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+
+    // Fast-forward time by 1ms more (total 100ms) - now true
+    act(() => {
+        jest.advanceTimersByTime(1);
+    });
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+
+    jest.useRealTimers();
+});
+
+test('changing aria-expanded from true to false with delay', () => {
+    jest.useFakeTimers();
+
+    const {rerender} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Expandable row"
+                    onPress={() => {}}
+                    aria-expanded={true}
+                    aria-controls="content-3"
+                    expandDelay={150}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Expandable row'});
+
+    // Initially true, delay doesn't matter on initial render
+    act(() => {
+        jest.advanceTimersByTime(150);
+    });
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+
+    // Change to collapsed
+    rerender(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Expandable row"
+                    onPress={() => {}}
+                    aria-expanded={false}
+                    aria-controls="content-3"
+                    expandDelay={150}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    // Should still be true immediately after change
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+
+    // Fast-forward time by 149ms - still true
+    act(() => {
+        jest.advanceTimersByTime(149);
+    });
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+
+    // Fast-forward time by 1ms more (total 150ms) - now false
+    act(() => {
+        jest.advanceTimersByTime(1);
+    });
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+
+    jest.useRealTimers();
 });

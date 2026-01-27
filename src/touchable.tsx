@@ -82,6 +82,8 @@ export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefPr
         | 'aria-description'
         | 'aria-describedby'
         | 'aria-current'
+        | 'aria-expanded'
+        | 'aria-controls'
     >;
 
 export type TouchableComponentProps<Props> = ExclusifyUnion<
@@ -97,6 +99,8 @@ export type TouchableComponentProps<Props> = ExclusifyUnion<
         | 'aria-description'
         | 'aria-describedby'
         | 'aria-current'
+        | 'aria-expanded'
+        | 'aria-controls'
     >;
 
 type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};

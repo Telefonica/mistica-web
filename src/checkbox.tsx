@@ -84,6 +84,8 @@ type RenderProps = {
     disabled?: boolean;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    'aria-expanded'?: boolean;
+    'aria-controls'?: string;
     role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
@@ -99,6 +101,8 @@ type ChildrenProps = {
     disabled?: boolean;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    'aria-expanded'?: boolean;
+    'aria-controls'?: string;
     role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
@@ -145,6 +149,8 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             id={props.id}
             role={props.role || 'checkbox'}
             aria-checked={value ?? checkedState}
+            aria-expanded={props['aria-expanded']}
+            aria-controls={props['aria-controls']}
             onKeyDown={disabled ? undefined : handleKeyDown}
             onClick={(e) => {
                 e.stopPropagation();
