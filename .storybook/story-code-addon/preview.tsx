@@ -6,7 +6,6 @@ import type {Decorator} from '@storybook/react';
 // Extend window type to include our global variable
 declare global {
     interface Window {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         __STORY_SOURCE__?: Record<string, string>;
     }
 }
@@ -29,8 +28,10 @@ const StoryCodeDecorator: Decorator = (Story, context) => {
             // Try to get the source from our global variable
             let storySource: string | undefined;
 
+            // eslint-disable-next-line no-underscore-dangle
             if (typeof window !== 'undefined' && window.__STORY_SOURCE__) {
                 // Try to find the source by matching the file path
+                // eslint-disable-next-line no-underscore-dangle
                 const sources = window.__STORY_SOURCE__;
 
                 // Find a matching key in the sources object
@@ -54,7 +55,7 @@ const StoryCodeDecorator: Decorator = (Story, context) => {
                 channel.emit('story-code-update', {code: storySource, focus});
             } else if (fileName) {
                 channel.emit('story-code-update', {
-                    code: `// Story file: ${fileName}\n// No source code available. The source should be added to story parameters.\n\n// Available sources: ${Object.keys(window.__STORY_SOURCE__ || {}).join(', ')}`,
+                    code: `// Story file: ${fileName}\n// No source code available. The source should be added to story parameters.\n\n// Available sources: ${Object.keys(window['__STORY_SOURCE__'] || {}).join(', ')}`,
                     focus,
                 });
             } else {
