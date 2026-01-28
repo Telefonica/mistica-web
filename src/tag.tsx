@@ -25,6 +25,7 @@ export type TagProps = {
     badge?: boolean | number;
     backgroundColor?: string;
     textColor?: string;
+    small?: boolean;
 };
 
 const {colors} = vars;
@@ -37,6 +38,7 @@ const Tag = ({
     badge,
     backgroundColor: customBackgroundColor,
     textColor: customTextColor,
+    small = false,
 }: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
@@ -101,13 +103,22 @@ const Tag = ({
     const backgroundColor =
         customBackgroundColor || (isOverBrand ? backgroundColorInverse : defaultBackgroundColor);
 
+    // Compute padding based on small variant, icon presence, and badge type
+    const paddingLeft = small ? (Icon ? 4 : 8) : Icon ? 8 : 12;
+
+    const hasNumericBadge = typeof badge === 'number' && badge !== 0;
+    const hasNonNumericBadge = badge === true;
+    const hasBadge = hasNumericBadge || hasNonNumericBadge;
+
+    const paddingRight = small ? (hasNumericBadge ? 2 : hasNonNumericBadge ? 4 : 8) : hasBadge ? 8 : 12;
+
     return (
         <span
             {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
-            className={classNames(styles.tag)}
+            className={classNames(small ? styles.smallTag : styles.tag)}
             style={{
-                paddingLeft: Icon ? 8 : 12,
-                paddingRight: badgeValue !== 0 ? 8 : 12,
+                paddingLeft,
+                paddingRight,
                 background: backgroundColor,
             }}
         >
@@ -119,8 +130,8 @@ const Tag = ({
             <ThemeVariant isInverse={false}>
                 <Text
                     color={textColor}
-                    size={14}
-                    lineHeight={20}
+                    size={small ? 12 : 14}
+                    lineHeight={small ? 16 : 20}
                     weight={textPresets.indicator.weight}
                     truncate
                 >
