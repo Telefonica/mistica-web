@@ -60,6 +60,7 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                         subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
+                        closeModal={closeModal}
                         button={
                             button ? (
                                 <ButtonPrimary onPress={closeModal}>{button.text}</ButtonPrimary>

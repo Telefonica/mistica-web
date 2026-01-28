@@ -261,16 +261,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
                                     : children}
-                                <div className={styles.modalCloseButton}>
-                                    <InternalIconButton
-                                        onPress={closeModal}
-                                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                                        Icon={IconCloseRegular}
-                                        bleedLeft
-                                        bleedRight
-                                        bleedY
-                                    />
-                                </div>
                                 {/**
                                  * We put a button behind the top dragging area so that the sheet can
                                  * be closed while navigating with the keyboard or with a screen reader.
@@ -307,6 +297,7 @@ type SheetBodyProps = {
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
     modalTitleId: string;
+    closeModal?: () => void;
     children?: React.ReactNode;
 };
 
@@ -315,11 +306,13 @@ export const SheetBody = ({
     subtitle,
     description,
     modalTitleId,
+    closeModal,
     button,
     secondaryButton,
     link,
     children,
 }: SheetBodyProps): JSX.Element => {
+    const {texts, t} = useTheme();
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
@@ -339,15 +332,32 @@ export const SheetBody = ({
     });
 
     const hasButtons = !!button || !!secondaryButton || !!link;
+    const showDismissButton = !!closeModal;
     return (
         <>
             <div ref={topScrollSignalRef} />
             <div className={styles.stickyTitle}>
-                {title ? (
+                {showDismissButton || title ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}} paddingX={paddingX}>
-                        <Text5 as="h2" id={modalTitleId} truncate>
-                            {title}
-                        </Text5>
+                        <div className={styles.titleContainer}>
+                            {title && (
+                                <Text5 as="h2" id={modalTitleId} truncate>
+                                    {title}
+                                </Text5>
+                            )}
+                            {showDismissButton && (
+                                <div className={styles.titleDismissButton}>
+                                    <InternalIconButton
+                                        onPress={closeModal}
+                                        aria-label={texts.modalClose || t(tokens.modalClose)}
+                                        Icon={IconCloseRegular}
+                                        bleedLeft
+                                        bleedRight
+                                        bleedY
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </Box>
                 ) : (
                     <Box paddingTop={{mobile: 0, desktop: 40}} />

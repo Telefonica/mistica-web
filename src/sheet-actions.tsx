@@ -62,6 +62,7 @@ const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
                         subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
+                        closeModal={closeModal}
                         button={
                             <ButtonPrimary
                                 {...getButtonProps(button)}

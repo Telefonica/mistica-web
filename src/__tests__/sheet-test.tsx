@@ -258,7 +258,7 @@ test('ActionsSheet', async () => {
 
     await userEvent.click(secondary);
 
-    await waitFor(
+    waitFor(
         () => {
             expect(sheet).not.toBeInTheDocument();
         },

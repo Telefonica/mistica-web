@@ -188,57 +188,6 @@ export const handleBar = sprinkles({
     borderRadius: 2,
 });
 
-export const modalCloseButton = style([
-    sprinkles({
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        padding: 24,
-    }),
-    {
-        zIndex: 1,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                display: 'none',
-            },
-        },
-    },
-]);
-
-export const modalCloseButtonIcon = style([
-    sprinkles({
-        width: 32,
-        height: 32,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-    }),
-    {
-        transition: 'background-color 0.1s ease-in-out',
-        selectors: {
-            ':not(:disabled) > &:active': {
-                background: skinVars.colors.backgroundContainerPressed,
-            },
-        },
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    ':not(:disabled) > &:hover': {
-                        background: skinVars.colors.backgroundContainerHover,
-                    },
-                    ':not(:disabled) > &:active': {
-                        background: skinVars.colors.backgroundContainerPressed,
-                    },
-                },
-            },
-            [mq.touchableOnly]: {
-                transition: 'none',
-            },
-        },
-    },
-]);
-
 const overlayClosedStyle = {opacity: 0};
 const overlayAnimation = keyframes({
     '0%': overlayClosedStyle,
@@ -261,6 +210,30 @@ export const overlay = style([
 ]);
 
 export const closingOverlay = style(overlayClosedStyle);
+
+export const titleContainer = style([
+    sprinkles({
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        width: '100%',
+    }),
+    {
+        gap: 8,
+    },
+]);
+
+export const titleDismissButton = style([
+    sprinkles({
+        display: 'flex',
+        flexShrink: 0,
+    }),
+    {
+        marginTop: -8,
+        marginRight: -8,
+    },
+]);
 
 export const stickyTitle = style([
     sprinkles({
