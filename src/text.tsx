@@ -9,10 +9,9 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './text.css';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import ScreenReaderOnly from './screen-reader-only';
-import * as textProps from './text-props';
 
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {FontWeight} from './skins/types';
+import type {FontWeight, TextSizeTokenConfig, TextTokenConfig} from './skins/types';
 import type {DataAttributes} from './utils/types';
 
 export const mapToWeight = {
@@ -296,25 +295,14 @@ type TextSizes =
 const getTextSizes = ({
     forceMobileSizes,
     textPreset,
-    textProps,
 }: {
     forceMobileSizes?: boolean;
-    textPreset: {
-        size: {mobile?: number; desktop?: number};
-        lineHeight: {mobile?: string | number; desktop?: string | number};
-    };
-    // textProps is used as a fallback for textPreset values from textProps.tsx
-    textProps: {
-        mobileSize: number;
-        mobileLineHeight: string | number;
-        desktopSize: number;
-        desktopLineHeight: string | number;
-    };
+    textPreset: TextSizeTokenConfig | TextTokenConfig;
 }): TextSizes => {
-    const mobileSize = textPreset.size.mobile || textProps.mobileSize;
-    const mobileLineHeight = textPreset.lineHeight.mobile || textProps.mobileLineHeight;
-    const desktopSize = textPreset.size.desktop || textProps.desktopSize;
-    const desktopLineHeight = textPreset.lineHeight.desktop || textProps.desktopLineHeight;
+    const mobileSize = textPreset.size.mobile;
+    const mobileLineHeight = textPreset.lineHeight.mobile;
+    const desktopSize = textPreset.size.desktop;
+    const desktopLineHeight = textPreset.lineHeight.desktop;
 
     if (forceMobileSizes) {
         return {
@@ -331,10 +319,22 @@ const getTextSizes = ({
     }
 };
 
-export const useTextPresetSizes = (presetName: keyof typeof textProps): TextSizes => {
+export type TextPresetName =
+    | 'text1'
+    | 'text2'
+    | 'text3'
+    | 'text4'
+    | 'text5'
+    | 'text6'
+    | 'text7'
+    | 'text8'
+    | 'text9'
+    | 'text10';
+
+export const useTextPresetSizes = (presetName: TextPresetName): TextSizes => {
     const {textPresets} = useTheme();
     const textPreset = textPresets[presetName];
-    return getTextSizes({textPreset, textProps: textProps[presetName]});
+    return getTextSizes({textPreset});
 };
 
 export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
@@ -344,7 +344,6 @@ export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetP
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text10,
-                textProps: textProps.text10,
             })}
             weight={textPresets.text10.weight}
             dataAttributes={{'component-name': 'Text10', testid: 'Text10', ...dataAttributes}}
@@ -360,7 +359,6 @@ export const Text9 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text9,
-                textProps: textProps.text9,
             })}
             weight={textPresets.text9.weight}
             dataAttributes={{'component-name': 'Text9', testid: 'Text9', ...dataAttributes}}
@@ -376,7 +374,6 @@ export const Text8 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text8,
-                textProps: textProps.text8,
             })}
             weight={textPresets.text8.weight}
             dataAttributes={{'component-name': 'Text8', testid: 'Text8', ...dataAttributes}}
@@ -392,7 +389,6 @@ export const Text7 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text7,
-                textProps: textProps.text7,
             })}
             weight={textPresets.text7.weight}
             dataAttributes={{'component-name': 'Text7', testid: 'Text7', ...dataAttributes}}
@@ -408,7 +404,6 @@ export const Text6 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text6,
-                textProps: textProps.text6,
             })}
             weight={textPresets.text6.weight}
             dataAttributes={{'component-name': 'Text6', testid: 'Text6', ...dataAttributes}}
@@ -424,7 +419,6 @@ export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text5,
-                textProps: textProps.text5,
             })}
             weight={textPresets.text5.weight}
             dataAttributes={{'component-name': 'Text5', testid: 'Text5', ...dataAttributes}}
@@ -440,7 +434,6 @@ export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegular
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text4,
-                textProps: textProps.text4,
             })}
             weight={getWeight(props)}
             dataAttributes={{'component-name': 'Text4', testid: 'Text4', ...dataAttributes}}
@@ -456,7 +449,6 @@ export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegular
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text3,
-                textProps: textProps.text3,
             })}
             weight={getWeight(props)}
             dataAttributes={{'component-name': 'Text3', testid: 'Text3', ...dataAttributes}}
@@ -472,7 +464,6 @@ export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text2,
-                textProps: textProps.text2,
             })}
             weight={getWeight(props)}
             dataAttributes={{'component-name': 'Text2', testid: 'Text2', ...dataAttributes}}
@@ -488,7 +479,6 @@ export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
             {...getTextSizes({
                 forceMobileSizes,
                 textPreset: textPresets.text1,
-                textProps: textProps.text1,
             })}
             weight={getWeight(props)}
             dataAttributes={{'component-name': 'Text1', testid: 'Text1', ...dataAttributes}}

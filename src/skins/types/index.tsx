@@ -28,13 +28,13 @@ type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     lineHeight?: never;
 };
 
-type TextSizeTokenConfig = {
+export type TextSizeTokenConfig = {
     weight?: never;
     size: {mobile: number; desktop: number};
     lineHeight: {mobile: number; desktop: number};
 };
 
-type TextTokenConfig<PossibleFontWeights = FontWeight> = {
+export type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size: {mobile: number; desktop: number};
     lineHeight: {mobile: number; desktop: number};

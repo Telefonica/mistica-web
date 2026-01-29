@@ -1,31 +1,30 @@
 import * as React from 'react';
 import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, Stack, Title1} from '..';
 import {useTheme} from '../hooks';
-import * as textProps from '../text-props';
 import {isSafari} from '../utils/platform';
+
+import type {TextPresetName} from '../text';
+import type {TextSizeTokenConfig, TextTokenConfig} from '../skins/types';
 
 export default {
     title: 'Components/Text',
     component: Text,
 };
 
-const getDisplaySizes = (textPreset: any, textProp: any) => {
-    const mobileSize = textPreset.size.mobile || textProp.mobileSize;
-    const mobileLineHeight = textPreset.lineHeight.mobile || textProp.mobileLineHeight;
-    const desktopSize = textPreset.size.desktop || textProp.desktopSize;
-    const desktopLineHeight = textPreset.lineHeight.desktop || textProp.desktopLineHeight;
+const getDisplaySizes = (textPreset: TextSizeTokenConfig | TextTokenConfig) => {
+    const mobileSize = textPreset.size.mobile;
+    const mobileLineHeight = textPreset.lineHeight.mobile;
+    const desktopSize = textPreset.size.desktop;
+    const desktopLineHeight = textPreset.lineHeight.desktop;
 
     return `${mobileSize}/${mobileLineHeight} (Mobile) | ${desktopSize}/${desktopLineHeight} (Desktop)`;
 };
 
-type TextKey = keyof typeof textProps;
-
-const useTextDisplayContent = (textKey: TextKey, weight?: string) => {
+const useTextDisplayContent = (textKey: TextPresetName, weight?: string) => {
     const {textPresets} = useTheme();
-    const textProp = textProps[textKey];
     const textPreset = textPresets[textKey];
 
-    const sizeInfo = getDisplaySizes(textPreset, textProp);
+    const sizeInfo = getDisplaySizes(textPreset);
     const weightText = weight ? ` ${weight.charAt(0).toUpperCase() + weight.slice(1)}` : '';
     const displayText = `${textKey.charAt(0).toUpperCase() + textKey.slice(1)}${weightText} ${sizeInfo}`;
 
