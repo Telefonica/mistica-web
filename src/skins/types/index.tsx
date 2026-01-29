@@ -45,6 +45,15 @@ export type TextPresetsConfig = {
     rowTitle: TextWeightTokenConfig;
     stepperStepLabel: TextSizeTokenConfig;
     button: TextWeightTokenConfig<'regular' | 'medium'>;
+    cardDescriptionDefault: TextSizeTokenConfig;
+    cardDescriptionSnap: TextSizeTokenConfig;
+    cardPretitleDefault: TextSizeTokenConfig;
+    cardPretitleSnap: TextSizeTokenConfig;
+    cardSubtitleDefault: TextSizeTokenConfig;
+    cardSubtitleSnap: TextSizeTokenConfig;
+    cardTitleDefault: TextSizeTokenConfig;
+    cardTitleSnap: TextSizeTokenConfig;
+    drawerTitle: TextTokenConfig;
     chipLabel: TextTokenConfig;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
     loadingScreenTitle: TextSizeTokenConfig;
