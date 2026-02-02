@@ -5,7 +5,8 @@ import type {ElementHandle} from 'puppeteer';
 
 const isDisabled = async (element: ElementHandle) => {
     const disabledProp = await element.getProperty('disabled');
-    return await disabledProp?.jsonValue();
+    const ariaDisabledProp = await element.evaluate((el) => el.getAttribute('aria-disabled'));
+    return (await disabledProp?.jsonValue()) || ariaDisabledProp === 'true';
 };
 
 test('Carousel mobile', async () => {
@@ -145,7 +146,7 @@ test('Carousel desktop', async () => {
         args: {numItems: 9},
     });
 
-    const prevArrow = await screen.findByRole('button', {name: /anterior/i});
+    const prevArrow = await screen.findByRole('button', {name: /primer/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     // https://jira.tid.es/browse/WEB-680
@@ -203,7 +204,7 @@ test('Carousel desktop with controls and autoplay', async () => {
         args: {numItems: 9, autoplay: true},
     });
 
-    const prevArrow = await screen.findByRole('button', {name: /anterior/i});
+    const prevArrow = await screen.findByRole('button', {name: /primer/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
@@ -311,7 +312,7 @@ test('Slideshow mobile, with controls and autoplay', async () => {
         args: {numItems: 3, autoplay: true},
     });
 
-    const prevArrow = await screen.findByRole('button', {name: /anterior/i});
+    const prevArrow = await screen.findByRole('button', {name: /primer/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     expect(await page.screenshot()).toMatchImageSnapshot();
@@ -338,7 +339,7 @@ test('Slideshow desktop', async () => {
         args: {numItems: 3},
     });
 
-    const prevArrow = await screen.findByRole('button', {name: /anterior/i});
+    const prevArrow = await screen.findByRole('button', {name: /primer/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     expect(await page.screenshot()).toMatchImageSnapshot();
@@ -375,7 +376,7 @@ test('Slideshow desktop, with controls and autoplay', async () => {
         args: {numItems: 3, autoplay: true},
     });
 
-    const prevArrow = await screen.findByRole('button', {name: /anterior/i});
+    const prevArrow = await screen.findByRole('button', {name: /primer/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     expect(await page.screenshot()).toMatchImageSnapshot();

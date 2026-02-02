@@ -27,7 +27,7 @@ const IconTopUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.673 5.393C18.571 3.5 17.026 2 15.166 2H8.85c-1.86 0-3.405 1.5-3.507 3.393zM12.531 21.996h2.635c1.86 0 3.405-1.5 3.507-3.393h-6.142z"
+                    d="M18.673 5.393C18.571 3.5 17.026 2 15.166 2H8.85C6.99 2 5.445 3.5 5.343 5.393zm-6.142 16.603h2.635c1.86 0 3.405-1.5 3.507-3.393h-6.142z"
                 />
                 <path
                     fill={fillColor}
@@ -40,7 +40,7 @@ const IconTopUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.673 5.393C18.571 3.5 17.026 2 15.166 2H8.85c-1.86 0-3.405 1.5-3.507 3.393zM12.531 21.996h2.635c1.86 0 3.405-1.5 3.507-3.393h-6.142z"
+                    d="M18.673 5.393C18.571 3.5 17.026 2 15.166 2H8.85C6.99 2 5.445 3.5 5.343 5.393zm-6.142 16.603h2.635c1.86 0 3.405-1.5 3.507-3.393h-6.142z"
                 />
                 <path
                     fill={fillColor}

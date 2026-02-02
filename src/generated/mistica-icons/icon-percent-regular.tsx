@@ -36,7 +36,7 @@ const IconPercentRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M17.47 5.47a.75.75 0 1 1 1.06 1.06l-12 12a.75.75 0 1 1-1.06-1.06zM17 15.25a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5M7 5.25a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5"
+                    d="M17.47 5.47a.75.75 0 1 1 1.06 1.06l-12 12a.75.75 0 1 1-1.06-1.06zM17 15.25a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5m-10-10a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5"
                 />
             </svg>
         );

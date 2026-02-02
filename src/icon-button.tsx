@@ -36,6 +36,7 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     hasOverlay?: boolean;
+    'aria-disabled'?: boolean;
 }
 
 export type IconButtonProps = TouchableComponentProps<BaseProps & IconButtonBaseProps & AriaProps>;
@@ -59,6 +60,7 @@ export const RawIconButton = React.forwardRef<
             bleedRight,
             bleedY,
             showSpinner: showSpinnerProp,
+            'aria-disabled': ariaDisabled,
             ...touchableProps
         },
         ref
@@ -86,6 +88,7 @@ export const RawIconButton = React.forwardRef<
 
         const commonProps = {
             disabled: disabled || showSpinner,
+            'aria-disabled': ariaDisabled,
             ref,
             trackingEvent,
             role,
@@ -95,8 +98,8 @@ export const RawIconButton = React.forwardRef<
                 styles.iconButtonTokens[buttonTokensKey],
                 styles.minimumInteractiveArea,
                 {
-                    [styles.disabled]: disabled,
-                    [styles.overlayContainer]: !disabled && !showSpinner,
+                    [styles.disabled]: disabled || ariaDisabled,
+                    [styles.overlayContainer]: !disabled && !showSpinner && !ariaDisabled,
                     [styles.bleedLeft[buttonSize]]: bleedLeft,
                     [styles.bleedRight[buttonSize]]: bleedRight,
                     [styles.bleedY[buttonSize]]: bleedY,
@@ -150,12 +153,12 @@ export const RawIconButton = React.forwardRef<
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<IconButtonProps & InternalIconButtonBaseProps>
+    IconButtonProps & InternalIconButtonBaseProps
 >((props, ref) => <RawIconButton ref={ref} {...props} />);
 
-export const IconButton = React.forwardRef<TouchableElement, ExclusifyUnion<IconButtonProps>>(
-    (props, ref) => <InternalIconButton ref={ref} {...props} />
-);
+export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((props, ref) => (
+    <InternalIconButton ref={ref} {...props} />
+));
 
 type ToggleStateProps = {
     Icon: (props: IconProps) => JSX.Element;

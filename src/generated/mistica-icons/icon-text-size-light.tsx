@@ -37,7 +37,7 @@ const IconTextSizeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M16 4.25a.75.75 0 0 1 0 1.5h-5.25V19a.75.75 0 0 1-1.5 0V5.75H4a.75.75 0 0 1 0-1.5zM21 11.25a.75.75 0 0 1 0 1.5h-2.25V19a.75.75 0 0 1-1.5 0v-6.25H15a.75.75 0 0 1 0-1.5z"
+                    d="M16 4.25a.75.75 0 0 1 0 1.5h-5.25V19a.75.75 0 0 1-1.5 0V5.75H4a.75.75 0 0 1 0-1.5zm5 7a.75.75 0 0 1 0 1.5h-2.25V19a.75.75 0 0 1-1.5 0v-6.25H15a.75.75 0 0 1 0-1.5z"
                 />
             </svg>
         );

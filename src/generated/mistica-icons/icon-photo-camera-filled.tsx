@@ -27,7 +27,7 @@ const IconPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.597 11.36h.806a1.327 1.327 0 0 1 1.329 1.33v.805a1.33 1.33 0 0 1-1.33 1.33h-.805a1.327 1.327 0 0 1-1.33-1.33v-.806c0-.734.596-1.329 1.33-1.329"
+                    d="M11.597 11.36h.806a1.327 1.327 0 0 1 1.329 1.33v.805a1.33 1.33 0 0 1-1.33 1.33h-.805a1.327 1.327 0 0 1-1.33-1.33v-.806a1.33 1.33 0 0 1 1.33-1.329"
                 />
                 <path
                     fill={fillColor}
