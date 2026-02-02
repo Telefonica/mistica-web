@@ -28,6 +28,7 @@ import IconFileMp3Regular from './generated/mistica-icons/icon-file-mp-3-regular
 import IconFileMusicRegular from './generated/mistica-icons/icon-file-music-regular';
 import IconClipRegular from './generated/mistica-icons/icon-clip-regular';
 import * as styles from './file-upload.css';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
@@ -116,6 +117,7 @@ const FileUpload = ({
     const [isDragActive, setIsDragActive] = React.useState(false);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const dragCounterRef = React.useRef(0);
+    const outsideVariant = useThemeVariant();
 
     const handleFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = event.target.files;
@@ -258,26 +260,28 @@ const FileUpload = ({
             <Stack space={4}>
                 <div {...dropZoneHandlers}>
                     <div className={contentClassName}>
-                        <Stack space={16}>
-                            <div className={assetClassName}>{asset}</div>
-                            <Stack space={4}>
-                                <Text3 regular as="div" dataAttributes={{testid: 'title'}}>
-                                    <label htmlFor={id}>{title}</label>
-                                </Text3>
-                                {description && (
-                                    <Text2
-                                        regular
-                                        as="div"
-                                        color={skinVars.colors.textSecondary}
-                                        dataAttributes={{testid: 'description'}}
-                                    >
-                                        {description}
-                                    </Text2>
-                                )}
+                        <ThemeVariant variant={withDropZone ? 'default' : outsideVariant}>
+                            <Stack space={16}>
+                                <div className={assetClassName}>{asset}</div>
+                                <Stack space={4}>
+                                    <Text3 regular as="div" dataAttributes={{testid: 'title'}}>
+                                        <label htmlFor={id}>{title}</label>
+                                    </Text3>
+                                    {description && (
+                                        <Text2
+                                            regular
+                                            as="div"
+                                            color={skinVars.colors.textSecondary}
+                                            dataAttributes={{testid: 'description'}}
+                                        >
+                                            {description}
+                                        </Text2>
+                                    )}
+                                </Stack>
+                                {slot}
+                                {renderButton({onPress: handleButtonPress, small: true})}
                             </Stack>
-                            {slot}
-                            {renderButton({onPress: handleButtonPress, small: true})}
-                        </Stack>
+                        </ThemeVariant>
                     </div>
 
                     <input
