@@ -220,6 +220,7 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     showFooter: true,
     footerSlot: true,
     footerVariant: '',
+    footerDivider: undefined,
     slot: true,
 };
 
@@ -302,6 +303,10 @@ export const commonArgTypes = {
                 brand: 'brand',
             },
         },
+    },
+    footerDivider: {
+        options: [undefined, true, false],
+        control: {type: 'select'},
     },
 };
 
