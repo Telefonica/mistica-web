@@ -1,3 +1,18 @@
+# [16.47.0](https://github.com/Telefonica/mistica-web/compare/v16.46.0...v16.47.0) (2026-01-29)
+
+
+### Bug Fixes
+
+* **Row:** a11y issue when used with onPress and touchableRole=link ([#1477](https://github.com/Telefonica/mistica-web/issues/1477)) ([fdcb7ad](https://github.com/Telefonica/mistica-web/commit/fdcb7ade1c4303a6f28655caee42756403603b12))
+
+
+### Features
+
+* **Autocomplete:** Autocomplete component ([#1476](https://github.com/Telefonica/mistica-web/issues/1476)) ([6315055](https://github.com/Telefonica/mistica-web/commit/6315055c981aa06139a281a5ee12a6970d5075f9))
+* **Carousel:** add data-testid to carousel bullets ([#1483](https://github.com/Telefonica/mistica-web/issues/1483)) ([786e832](https://github.com/Telefonica/mistica-web/commit/786e8324dbf2426a2fb85da7d63e793558cdfaa0))
+* **Carousel:** Make disabled button focusable and change text to improve a11y ([#1479](https://github.com/Telefonica/mistica-web/issues/1479)) ([933dc7c](https://github.com/Telefonica/mistica-web/commit/933dc7c2007ede16d1493b28941098f6a6430fb9))
+* **Icons:** include new sim port in/out icons ([#1480](https://github.com/Telefonica/mistica-web/issues/1480)) ([5bc1648](https://github.com/Telefonica/mistica-web/commit/5bc1648b9e144c946c3eb9b76f632a30314da013))
+
 # [16.46.0](https://github.com/Telefonica/mistica-web/compare/v16.45.0...v16.46.0) (2026-01-15)
 
 
