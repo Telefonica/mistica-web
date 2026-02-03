@@ -29,8 +29,7 @@ export const smallTag = style([
         minWidth: 40,
     }),
     {
-        paddingTop: 3,
-        paddingBottom: 3,
+        minHeight: 22,
     },
 ]);
 

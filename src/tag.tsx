@@ -103,14 +103,25 @@ const Tag = ({
     const backgroundColor =
         customBackgroundColor || (isOverBrand ? backgroundColorInverse : defaultBackgroundColor);
 
-    // Compute padding based on small variant, icon presence, and badge type
-    const paddingLeft = small ? (Icon ? 4 : 8) : Icon ? 8 : 12;
-
     const hasNumericBadge = typeof badge === 'number' && badge !== 0;
     const hasNonNumericBadge = badge === true;
     const hasBadge = hasNumericBadge || hasNonNumericBadge;
 
-    const paddingRight = small ? (hasNumericBadge ? 2 : hasNonNumericBadge ? 4 : 8) : hasBadge ? 8 : 12;
+    const calcPaddings = () => {
+        if (small) {
+            return {
+                paddingLeft: Icon ? 4 : 8,
+                paddingRight: hasNumericBadge ? 2 : hasNonNumericBadge ? 4 : 8,
+            };
+        } else {
+            return {
+                paddingLeft: Icon ? 8 : 12,
+                paddingRight: hasBadge ? 8 : 12,
+            };
+        }
+    };
+
+    const {paddingLeft, paddingRight} = calcPaddings();
 
     return (
         <span
