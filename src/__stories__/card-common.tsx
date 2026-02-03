@@ -69,6 +69,7 @@ export type CommonCardArgs = {
     showFooter: boolean;
     footerSlot: boolean;
     footerVariant: 'default' | 'brand' | '';
+    footerDivider?: boolean;
 };
 
 export const getAsset = (asset: CommonCardArgs['asset']): JSX.Element | undefined => {
