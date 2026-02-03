@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import Text, {Text1, Text2, Text6, useTextPresetSizes} from './text';
+import Text, {Text2} from './text';
 import Inline from './inline';
 import Box from './box';
 import {vars} from './skins/skin-contract.css';
