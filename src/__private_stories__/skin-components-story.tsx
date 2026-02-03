@@ -412,6 +412,29 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             <Tag type="error">Error</Tag>
                             <Tag type="info">Info</Tag>
                         </Inline>
+                        <Inline space={16} wrap>
+                            <Tag small type="promo">
+                                Promo
+                            </Tag>
+                            <Tag small type="active">
+                                Active
+                            </Tag>
+                            <Tag small type="inactive">
+                                Inactive
+                            </Tag>
+                            <Tag small type="success">
+                                Success
+                            </Tag>
+                            <Tag small type="warning">
+                                Warning
+                            </Tag>
+                            <Tag small type="error" badge>
+                                Error
+                            </Tag>
+                            <Tag small type="info" badge={5}>
+                                Info
+                            </Tag>
+                        </Inline>
 
                         {/** IconButton */}
                         <Inline space={16} wrap>
