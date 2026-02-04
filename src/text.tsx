@@ -253,18 +253,26 @@ interface RegularProps extends TextPresetProps {
     regular: boolean;
 }
 
+interface BoldProps extends TextPresetProps {
+    bold: boolean;
+}
+
 interface RestrictedWeightTextProps<T> extends TextPresetProps {
     weight: T;
 }
 
-type RegularMediumProps = ExclusifyUnion<
-    RegularProps | MediumProps | RestrictedWeightTextProps<'regular' | 'medium'>
+type RegularMediumBoldProps = ExclusifyUnion<
+    RegularProps | MediumProps | BoldProps | RestrictedWeightTextProps<'regular' | 'medium' | 'bold'>
 >;
-type LightRegularMediumProps = ExclusifyUnion<
-    LightProps | RegularProps | MediumProps | RestrictedWeightTextProps<'light' | 'regular' | 'medium'>
+type LightRegularMediumBoldProps = ExclusifyUnion<
+    | LightProps
+    | RegularProps
+    | MediumProps
+    | BoldProps
+    | RestrictedWeightTextProps<'light' | 'regular' | 'medium' | 'bold'>
 >;
 
-const getWeight = (props: LightRegularMediumProps) => {
+const getWeight = (props: LightRegularMediumBoldProps) => {
     if (props.light) {
         return 'light';
     }
@@ -273,6 +281,9 @@ const getWeight = (props: LightRegularMediumProps) => {
     }
     if (props.medium) {
         return 'medium';
+    }
+    if (props.bold) {
+        return 'bold';
     }
     if (props.weight) {
         return props.weight;
@@ -294,7 +305,7 @@ type TextSizes =
 
 type TextPreset = TextSizeTokenConfig | TextTokenConfig;
 
-const getTextSizes = ({
+export const getTextSizes = ({
     forceMobileSizes,
     textPreset,
 }: {
@@ -321,7 +332,7 @@ const getTextSizes = ({
     }
 };
 
-const getTextSizesWithWeight = ({
+export const getTextSizesWithWeight = ({
     forceMobileSizes,
     textPreset,
 }: {
@@ -434,7 +445,11 @@ export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
     );
 };
 
-export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => {
+export const Text4 = ({
+    dataAttributes,
+    forceMobileSizes,
+    ...props
+}: LightRegularMediumBoldProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -449,7 +464,11 @@ export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegular
     );
 };
 
-export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => {
+export const Text3 = ({
+    dataAttributes,
+    forceMobileSizes,
+    ...props
+}: LightRegularMediumBoldProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -464,7 +483,7 @@ export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegular
     );
 };
 
-export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => {
+export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumBoldProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -479,7 +498,7 @@ export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
     );
 };
 
-export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => {
+export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumBoldProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text

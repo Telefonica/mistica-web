@@ -2,7 +2,7 @@
 'use client';
 import * as React from 'react';
 import Stack from './stack';
-import {Text3, Text4, Text5} from './text';
+import {getTextSizesWithWeight, Text3, Text4, Text} from './text';
 import {vars} from './skins/skin-contract.css';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
@@ -189,7 +189,7 @@ const Drawer = ({
     const [scrollableParentElement, setScrollableParentElement] = React.useState<HTMLElement | null>(null);
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
-    const {t, texts} = useTheme();
+    const {t, texts, textPresets} = useTheme();
 
     const paddingX = {
         mobile: PADDING_X_MOBILE,
@@ -234,9 +234,13 @@ const Drawer = ({
                 {title && (
                     <div className={styles.titleContainer}>
                         <Box paddingX={paddingX}>
-                            <Text5 as={titleAs} dataAttributes={{testid: 'title'}}>
+                            <Text
+                                {...getTextSizesWithWeight({textPreset: textPresets.drawerTitle})}
+                                as={titleAs}
+                                dataAttributes={{testid: 'title'}}
+                            >
                                 {title}
-                            </Text5>
+                            </Text>
                         </Box>
                     </div>
                 )}

@@ -7,6 +7,8 @@ import {pxToRem} from './utils/css';
 
 const borderSize = 1;
 
+// TODO: Create vars here and assign values to them in text-field-base and select
+
 // We need to substract border size from padding because the container has boxSizing: border-box
 export const fieldVerticalPadding = 8 - borderSize;
 export const fieldLeftPadding = 12 - borderSize;
