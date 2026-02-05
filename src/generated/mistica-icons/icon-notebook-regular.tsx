@@ -25,7 +25,7 @@ const IconNotebookRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M15 11.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5zM15 7.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5z"
+                d="M15 11.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5zm0-4a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5z"
             />
             <path
                 fill={fillColor}

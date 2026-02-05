@@ -27,7 +27,7 @@ const IconPauseCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.998 16.423a.28.28 0 0 1-.28-.28V7.81a.28.28 0 0 1 .28-.28c.154 0 .28.126.28.28v8.333c0 .154-.126.28-.28.28M8.953 16.451a.28.28 0 0 1-.28-.28V7.838a.28.28 0 0 1 .28-.28.28.28 0 0 1 .28.28v8.333c0 .154-.126.28-.28.28"
+                    d="M14.998 16.423a.28.28 0 0 1-.28-.28V7.81a.28.28 0 0 1 .28-.28.28.28 0 0 1 .28.28v8.333a.28.28 0 0 1-.28.28m-6.045.028a.28.28 0 0 1-.28-.28V7.838a.28.28 0 0 1 .28-.28.28.28 0 0 1 .28.28v8.333a.28.28 0 0 1-.28.28"
                 />
                 <path
                     fill={fillColor}
@@ -58,7 +58,7 @@ const IconPauseCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 1 1 1.5 0zM14.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
+                    d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 1 1 1.5 0zm4 0a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
                 />
                 <path
                     fill={fillColor}

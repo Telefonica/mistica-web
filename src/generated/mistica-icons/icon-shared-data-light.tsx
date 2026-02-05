@@ -40,7 +40,7 @@ const IconSharedDataLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M21 13.25a1.75 1.75 0 1 1-.97 3.206l-2.289 1.373a1.8 1.8 0 0 1 0 .34l2.29 1.374a1.75 1.75 0 1 1-.773 1.286l-2.29-1.373a1.75 1.75 0 1 1 0-2.913l2.29-1.373A1.75 1.75 0 0 1 21 13.25"
+                    d="M21 13.25a1.75 1.75 0 1 1-.97 3.206l-2.289 1.373a2 2 0 0 1 0 .34l2.29 1.374a1.75 1.75 0 1 1-.773 1.286l-2.29-1.373a1.75 1.75 0 1 1 0-2.913l2.29-1.373A1.75 1.75 0 0 1 21 13.25"
                 />
                 <path
                     fill={fillColor}

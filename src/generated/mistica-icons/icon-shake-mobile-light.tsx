@@ -25,7 +25,7 @@ const IconShakeMobileLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M16.42 19.247a.75.75 0 0 1 1.06 1.062 5.75 5.75 0 0 1-8.131 0 .751.751 0 0 1 1.06-1.062 4.25 4.25 0 0 0 6.011 0M13.415 13.414a1 1 0 1 1 1.414 1.416 1 1 0 0 1-1.414-1.416"
+                d="M16.42 19.247a.75.75 0 0 1 1.06 1.062 5.75 5.75 0 0 1-8.131 0 .751.751 0 0 1 1.06-1.062 4.25 4.25 0 0 0 6.011 0m-3.005-5.833a1 1 0 1 1 1.414 1.416 1 1 0 0 1-1.414-1.416"
             />
             <path
                 fill={fillColor}

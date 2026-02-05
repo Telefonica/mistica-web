@@ -27,7 +27,7 @@ const IconSearchFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M14.125 5.984a5.73 5.73 0 0 0-8.104 0 5.73 5.73 0 0 0 0 8.104 5.73 5.73 0 0 0 9.782-4.053 5.69 5.69 0 0 0-1.678-4.05"
+                    d="M14.125 5.984a5.73 5.73 0 0 0-8.104 0 5.73 5.73 0 0 0 0 8.104 5.73 5.73 0 0 0 9.782-4.053 5.7 5.7 0 0 0-1.678-4.05"
                 />
                 <path
                     fill={fillColor}

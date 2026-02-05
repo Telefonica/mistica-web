@@ -36,7 +36,7 @@ const IconBatteryMediumRegular = ({color, size = 24, ...rest}: IconProps): JSX.E
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M7 9.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4A.75.75 0 0 1 7 9.25M10 9.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75"
+                    d="M7 9.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4A.75.75 0 0 1 7 9.25m3 0a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75"
                 />
                 <path
                     fill={fillColor}

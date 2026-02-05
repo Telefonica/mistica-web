@@ -31,7 +31,7 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
                 <path
                     fill={fillColor}
-                    d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.106zM11.334 9.332H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zM18.43 9.332h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.106z"
+                    d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.106zm-5.762-5.558H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zm8.43 2.668h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.106z"
                 />
             </svg>
         );
@@ -40,11 +40,11 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M3.796 2H20.2c.494 0 .885.398.89.887V22H10.007v-6.667H7.343v6.661H2.91V2.887c0-.489.397-.887.886-.887m7.98 11.553v6.666h7.54V3.776H4.68V20.22h.886v-6.667z"
+                    d="M3.796 2H20.2a.89.89 0 0 1 .89.887V22H10.007v-6.667H7.343v6.661H2.91V2.887c0-.489.397-.887.886-.887m7.98 11.553v6.666h7.54V3.776H4.68V20.22h.886v-6.667z"
                 />
                 <path
                     fill={fillColor}
-                    d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.105zM11.334 9.332H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zM18.43 9.332h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.105z"
+                    d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.105zm-5.762-5.558H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zm8.43 2.668h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.105z"
                 />
             </svg>
         );
@@ -53,7 +53,7 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M7 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M7 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2M7 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2M11 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M7 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-4-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2M7 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
                 <path
                     fill={fillColor}
@@ -61,7 +61,7 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 />
                 <path
                     fill={fillColor}
-                    d="M17 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2M17 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M17 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
             </svg>
         );
