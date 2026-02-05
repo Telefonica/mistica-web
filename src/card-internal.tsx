@@ -1331,7 +1331,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                      * otherwise it only renders a small rectangle in the begining of the <a> element.
                      * This workaround is only needed for <a> not for <button> (ask safari developers why)
                      */}
-                    <div role={touchableProps.href || touchableProps.to ? 'text' : undefined}>
+                    <div
+                        style={{display: 'contents'}}
+                        role={touchableProps.href || touchableProps.to ? 'text' : undefined}
+                    >
                         {isTouchable && <div className={overlayStyle} />}
                         {hasDeprecatedMedia && (
                             <div
