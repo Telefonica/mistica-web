@@ -168,7 +168,6 @@ type SheetProps = {
 };
 
 const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
-    const {texts, t} = useTheme();
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
     const modalTitleId = React.useId();
@@ -261,19 +260,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
                                     : children}
-                                {/**
-                                 * We put a button behind the top dragging area so that the sheet can
-                                 * be closed while navigating with the keyboard or with a screen reader.
-                                 */}
-                                <div className={styles.handleContainer}>
-                                    <Touchable
-                                        onPress={closeModal}
-                                        className={styles.handleTouchable}
-                                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                                    >
-                                        <div className={styles.handleBar} />
-                                    </Touchable>
-                                </div>
+                                <div className={styles.handleBar} />
                             </section>
                         </div>
                     </div>
@@ -337,7 +324,7 @@ export const SheetBody = ({
         <>
             <div ref={topScrollSignalRef} />
             <div className={styles.stickyTitle}>
-                {showDismissButton || title ? (
+                {showDismissButton ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}} paddingX={paddingX}>
                         <div className={styles.titleContainer}>
                             {title && (
@@ -345,18 +332,16 @@ export const SheetBody = ({
                                     {title}
                                 </Text5>
                             )}
-                            {showDismissButton && (
-                                <div className={styles.titleDismissButton}>
-                                    <InternalIconButton
-                                        onPress={closeModal}
-                                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                                        Icon={IconCloseRegular}
-                                        bleedLeft
-                                        bleedRight
-                                        bleedY
-                                    />
-                                </div>
-                            )}
+                            <div className={styles.titleDismissButton}>
+                                <InternalIconButton
+                                    onPress={closeModal}
+                                    aria-label={texts.modalClose || t(tokens.modalClose)}
+                                    Icon={IconCloseRegular}
+                                    bleedLeft
+                                    bleedRight
+                                    bleedY
+                                />
+                            </div>
                         </div>
                     </Box>
                 ) : (
