@@ -1325,139 +1325,152 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         zIndex: 1, // this way the touchable focus ring is above the footer
                     }}
                 >
-                    {isTouchable && <div className={overlayStyle} />}
-                    {hasDeprecatedMedia && (
-                        <div
-                            style={{
-                                // for some reason, this width is required to pass headless screenshot tests
-                                // otherwise, it gets 0px width and the media is not visible
-                                width: '100%',
-                                ...(type === 'naked'
-                                    ? undefined
-                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
-                            }}
-                        >
-                            {media}
-                        </div>
-                    )}
-                    {hasDeprecatedMedia && <Asset absolute size={size} asset={asset} type={type} />}
-
-                    {hasMedia && (
-                        <Media
-                            type={type}
-                            size={size}
-                            mediaAspectRatio={mediaAspectRatio}
-                            mediaPosition={mediaPosition}
-                            asset={asset}
-                            video={video}
-                            imageFit={imageFit}
-                            imageSrc={imageSrc}
-                            imageSrcSet={imageSrcSet}
-                            imageAlt={imageAlt}
-                            mediaWidth={mediaWidth}
-                            circledImage={circledImage}
-                        />
-                    )}
-                    <div
-                        aria-hidden={isTouchable}
-                        data-testid="body"
-                        className={classnames(styles.touchable, {
-                            [styles.containerPaddingTopVariants[size]]:
-                                !!asset && type !== 'naked' && (!hasMedia || mediaPosition === 'right'),
-                        })}
-                    >
-                        {(!hasMedia || mediaPosition === 'right') && (
-                            <Asset size={size} asset={asset} type={type} />
+                    {/**
+                     * role="text" makes VoiceOver read the whole div as a single text block. This is needed
+                     * for VoiceOver rectangle to cover the whole card when using aria-label in <a> elements,
+                     * otherwise it only renders a small rectangle in the begining of the <a> element.
+                     * This workaround is only needed for <a> not for <button> (ask safari developers why)
+                     */}
+                    {/* eslint-disable-next-line jsx-a11y/aria-role */}
+                    <div role="text">
+                        {isTouchable && <div className={overlayStyle} />}
+                        {hasDeprecatedMedia && (
+                            <div
+                                style={{
+                                    // for some reason, this width is required to pass headless screenshot tests
+                                    // otherwise, it gets 0px width and the media is not visible
+                                    width: '100%',
+                                    ...(type === 'naked'
+                                        ? undefined
+                                        : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
+                                }}
+                            >
+                                {media}
+                            </div>
                         )}
-                        {isAssetConfigA && (
-                            <Filler
-                                minHeight={type === 'cover' && topActionsLength > 0 && !asset ? 48 + 8 : 0}
+                        {hasDeprecatedMedia && <Asset absolute size={size} asset={asset} type={type} />}
+
+                        {hasMedia && (
+                            <Media
+                                type={type}
+                                size={size}
+                                mediaAspectRatio={mediaAspectRatio}
+                                mediaPosition={mediaPosition}
+                                asset={asset}
+                                video={video}
+                                imageFit={imageFit}
+                                imageSrc={imageSrc}
+                                imageSrcSet={imageSrcSet}
+                                imageAlt={imageAlt}
+                                mediaWidth={mediaWidth}
+                                circledImage={circledImage}
                             />
                         )}
                         <div
-                            className={classnames(
-                                styles.containerPaddingXVariants[size],
-                                styles.containerPaddingBottomVariants[size],
-                                styles.containerPaddingTopVariants[size]
-                            )}
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: isAssetConfigA ? undefined : '100%',
-                                background: hasBackgroundImageOrVideo ? contentOverlayBackground : undefined,
-                                // padding overrides for specific cases
-                                paddingTop:
-                                    isAssetConfigA && hasBackgroundImageOrVideo
-                                        ? 40
-                                        : asset
-                                          ? 16
-                                          : isNaked && mediaPosition !== 'top'
-                                            ? 16
-                                            : isNaked && !hasMedia
-                                              ? 0
-                                              : undefined,
-                                paddingLeft:
-                                    isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
-                                paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
-                                paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
-                                borderBottomLeftRadius: shouldShowFooter ? 0 : borderRadius,
-                                borderBottomRightRadius: shouldShowFooter ? 0 : borderRadius,
-                            }}
+                            aria-hidden={isTouchable}
+                            data-testid="body"
+                            className={classnames(styles.touchable, {
+                                [styles.containerPaddingTopVariants[size]]:
+                                    !!asset && type !== 'naked' && (!hasMedia || mediaPosition === 'right'),
+                            })}
                         >
-                            <div className={styles.contentContainer}>
-                                <div className={styles.textContent}>
-                                    <TextContent
-                                        type={type}
-                                        hasCustomBackground={hasCustomBackground}
-                                        headlineRef={headlineRef}
-                                        variant={variant}
-                                        size={size}
-                                        headline={headline}
-                                        pretitle={pretitle}
-                                        pretitleAs={pretitleAs}
-                                        pretitleLinesMax={pretitleLinesMax}
-                                        title={title}
-                                        titleAs={titleAs}
-                                        titleLinesMax={titleLinesMax}
-                                        subtitle={subtitle}
-                                        subtitleLinesMax={subtitleLinesMax}
-                                        description={description}
-                                        descriptionLinesMax={descriptionLinesMax}
-                                        withTextShadow={hasBackgroundImageOrVideo}
-                                    />
+                            {(!hasMedia || mediaPosition === 'right') && (
+                                <Asset size={size} asset={asset} type={type} />
+                            )}
+                            {isAssetConfigA && (
+                                <Filler
+                                    minHeight={
+                                        type === 'cover' && topActionsLength > 0 && !asset ? 48 + 8 : 0
+                                    }
+                                />
+                            )}
+                            <div
+                                className={classnames(
+                                    styles.containerPaddingXVariants[size],
+                                    styles.containerPaddingBottomVariants[size],
+                                    styles.containerPaddingTopVariants[size]
+                                )}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: isAssetConfigA ? undefined : '100%',
+                                    background: hasBackgroundImageOrVideo
+                                        ? contentOverlayBackground
+                                        : undefined,
+                                    // padding overrides for specific cases
+                                    paddingTop:
+                                        isAssetConfigA && hasBackgroundImageOrVideo
+                                            ? 40
+                                            : asset
+                                              ? 16
+                                              : isNaked && mediaPosition !== 'top'
+                                                ? 16
+                                                : isNaked && !hasMedia
+                                                  ? 0
+                                                  : undefined,
+                                    paddingLeft:
+                                        isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
+                                    paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
+                                    paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
+                                    borderBottomLeftRadius: shouldShowFooter ? 0 : borderRadius,
+                                    borderBottomRightRadius: shouldShowFooter ? 0 : borderRadius,
+                                }}
+                            >
+                                <div className={styles.contentContainer}>
+                                    <div className={styles.textContent}>
+                                        <TextContent
+                                            type={type}
+                                            hasCustomBackground={hasCustomBackground}
+                                            headlineRef={headlineRef}
+                                            variant={variant}
+                                            size={size}
+                                            headline={headline}
+                                            pretitle={pretitle}
+                                            pretitleAs={pretitleAs}
+                                            pretitleLinesMax={pretitleLinesMax}
+                                            title={title}
+                                            titleAs={titleAs}
+                                            titleLinesMax={titleLinesMax}
+                                            subtitle={subtitle}
+                                            subtitleLinesMax={subtitleLinesMax}
+                                            description={description}
+                                            descriptionLinesMax={descriptionLinesMax}
+                                            withTextShadow={hasBackgroundImageOrVideo}
+                                        />
+                                    </div>
+                                    {shouldAddContentSpacingForTopActions && (
+                                        <div
+                                            style={{
+                                                flexShrink: 0,
+                                                flexGrow: 0,
+                                                width:
+                                                    topActionsLengthWithoutVideo * 48 -
+                                                    // required space depends on the card padding
+                                                    (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
+                                                    //
+                                                    8,
+                                            }}
+                                        />
+                                    )}
                                 </div>
-                                {shouldAddContentSpacingForTopActions && (
-                                    <div
-                                        style={{
-                                            flexShrink: 0,
-                                            flexGrow: 0,
-                                            width:
-                                                topActionsLengthWithoutVideo * 48 -
-                                                // required space depends on the card padding
-                                                (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
-                                                //
-                                                8,
-                                        }}
+                                {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
+                                {slot && (
+                                    <div ref={slotRef} data-testid="slot">
+                                        {slot}
+                                    </div>
+                                )}
+                                {!isAssetConfigA && slotAlignment === 'content' && showButtonsInBody && (
+                                    <Filler />
+                                )}
+                                {showButtonsInBody && (
+                                    <Buttons
+                                        size={size}
+                                        buttonPrimary={buttonPrimary}
+                                        buttonSecondary={buttonSecondary}
+                                        buttonLink={buttonLink}
                                     />
                                 )}
                             </div>
-                            {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
-                            {slot && (
-                                <div ref={slotRef} data-testid="slot">
-                                    {slot}
-                                </div>
-                            )}
-                            {!isAssetConfigA && slotAlignment === 'content' && showButtonsInBody && (
-                                <Filler />
-                            )}
-                            {showButtonsInBody && (
-                                <Buttons
-                                    size={size}
-                                    buttonPrimary={buttonPrimary}
-                                    buttonSecondary={buttonSecondary}
-                                    buttonLink={buttonLink}
-                                />
-                            )}
                         </div>
                     </div>
                 </BaseTouchable>
