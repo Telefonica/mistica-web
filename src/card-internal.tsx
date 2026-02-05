@@ -767,7 +767,7 @@ const Footer = ({
                   ? skinVars.colors.backgroundContainerBrandOverBrand
                   : skinVars.colors.backgroundContainerBrand
             : undefined);
-    const divider = footerDivider ?? !backgroundColor;
+    const withDivider = footerDivider ?? !backgroundColor;
 
     return (
         <ThemeVariant variant={footerVariant || variant}>
@@ -784,7 +784,7 @@ const Footer = ({
                 <div
                     // The divider is outside the footer because it has a conditional right margin
                     style={{
-                        borderTop: divider ? `1px solid ${dividerColor}` : undefined,
+                        borderTop: withDivider ? `1px solid ${dividerColor}` : undefined,
                         marginRight: isNaked ? 16 : 0,
                     }}
                 />
