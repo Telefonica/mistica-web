@@ -9,6 +9,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 import ScreenReaderOnly from './screen-reader-only';
+import { useApplyCssVars } from './text-field-base';
 
 import type {DataAttributes} from './utils/types';
 
@@ -166,6 +167,7 @@ export const FieldContainer = ({
     readOnly,
     dataAttributes,
 }: FieldContainerProps): JSX.Element => {
+    const cssVarStyles = useApplyCssVars();
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
@@ -176,6 +178,7 @@ export const FieldContainer = ({
                 // We want to focus the input when the user clicks anywhere in the container (like in the label or the prefix)
                 e.currentTarget.querySelector(multiline ? 'textarea' : 'input')?.focus();
             }}
+            style={cssVarStyles}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             <div

@@ -6,7 +6,7 @@ import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
-import {TextFieldBaseAutosuggest} from './text-field-base';
+import {TextFieldBaseAutosuggest, useApplyCssVars} from './text-field-base';
 import Overlay from './overlay';
 import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
@@ -95,6 +95,7 @@ const Select = ({
         register,
     } = useForm();
     const {platformOverrides} = useTheme();
+    const cssVarStyles = useApplyCssVars();
 
     const shouldUseNative =
         native ||
@@ -402,6 +403,7 @@ const Select = ({
                         aria-haspopup="listbox"
                         ref={focusableRef as React.Ref<HTMLDivElement>}
                         {...(!disabled && containerActiveProps)}
+                        style={cssVarStyles}
                     >
                         <TextFieldBaseAutosuggest
                             style={{visibility: 'hidden'}}

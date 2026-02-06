@@ -3,13 +3,11 @@ import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {
-    desktopFontSize,
     fieldEndIconGap,
     fieldLeftPadding,
     fieldRightPadding,
+    fieldVars,
     iconButtonSize,
-    inputLineHeight,
-    mobileFontSize,
 } from './text-field-base.css';
 import {pxToRem} from './utils/css';
 import {browserDefaultFocusOutline} from './text-field-components.css';
@@ -126,11 +124,12 @@ const selectBase = style([
         textOverflow: 'ellipsis',
         appearance: 'none',
 
-        lineHeight: inputLineHeight,
-        fontSize: desktopFontSize,
+        lineHeight: fieldVars.mobileLineHeight,
+        fontSize: fieldVars.mobileFontSize,
         '@media': {
-            [mq.tabletOrSmaller]: {
-                fontSize: mobileFontSize,
+            [mq.desktopOrBigger]: {
+                fontSize: fieldVars.desktopFontSize,
+                lineHeight: fieldVars.desktopLineHeight,
             },
         },
     },
@@ -163,11 +162,12 @@ const selectTextBase = style([
         top: 1, // for border
         left: fieldLeftPadding + 1, // +1 for border
         right: `calc(${iconButtonSize} + ${fieldEndIconGap}px + 1px)`, // +1 for border
-        lineHeight: inputLineHeight,
-        fontSize: desktopFontSize,
+        fontSize: fieldVars.mobileFontSize,
+        lineHeight: fieldVars.mobileLineHeight,
         '@media': {
-            [mq.tabletOrSmaller]: {
-                fontSize: mobileFontSize,
+            [mq.desktopOrBigger]: {
+                lineHeight: fieldVars.desktopLineHeight,
+                fontSize: fieldVars.desktopFontSize,
             },
         },
         textOverflow: 'ellipsis',

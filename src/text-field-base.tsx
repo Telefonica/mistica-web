@@ -8,16 +8,41 @@ import {vars} from './skins/skin-contract.css';
 import {Text3} from './text';
 import * as styles from './text-field-base.css';
 import {FieldContainer, HelperText, Label} from './text-field-components';
-import {LABEL_SCALE_DESKTOP, LABEL_SCALE_MOBILE} from './text-field-components.css';
+import {fieldVars} from './text-field-base.css';
 import * as tokens from './text-tokens';
 import {ThemeVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {isFirefox, isRunningAcceptanceTest} from './utils/platform';
+import {applyCssVars, pxToRem} from './utils/css';
 
 import type {FieldValidator} from './form-context';
 import type {InputState} from './text-field-components';
 import type {DataAttributes, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
+
+export const useApplyCssVars = (): Record<string, string> => {
+    const {textPresets} = useTheme();
+
+    return applyCssVars({
+        [fieldVars.mobileFontSize]: pxToRem(textPresets.inputValue.size.mobile),
+        [fieldVars.desktopFontSize]: pxToRem(textPresets.inputValue.size.desktop),
+        [fieldVars.mobileLineHeight]: pxToRem(textPresets.inputValue.lineHeight.mobile),
+        [fieldVars.desktopLineHeight]: pxToRem(textPresets.inputValue.lineHeight.desktop),
+
+        [fieldVars.shrinkedLabelMobileFontSize]: pxToRem(textPresets.inputLabel.size.mobile),
+        [fieldVars.shrinkedLabelDesktopFontSize]: pxToRem(textPresets.inputLabel.size.desktop),
+        [fieldVars.shrinkedLabelMobileLineHeight]: pxToRem(textPresets.inputLabel.lineHeight.mobile),
+        [fieldVars.shrinkedLabelDesktopLineHeight]: pxToRem(textPresets.inputLabel.lineHeight.desktop),
+
+        [fieldVars.helperTextMobileFontSize]: pxToRem(textPresets.inputHelperText.size.mobile),
+        [fieldVars.helperTextDesktopFontSize]: pxToRem(textPresets.inputHelperText.size.desktop),
+        [fieldVars.helperTextMobileLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.mobile),
+        [fieldVars.helperTextDesktopLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.desktop),
+
+        [fieldVars.labelScaleMobile]: `calc(${textPresets.inputLabel.size.mobile} / ${textPresets.inputValue.size.mobile})`,
+        [fieldVars.labelScaleDesktop]: `calc(${textPresets.inputLabel.size.desktop} / ${textPresets.inputValue.size.desktop})`,
+    });
+};
 
 const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttribute) => {
     if (!inputType) {
@@ -305,7 +330,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-        const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
+        const scale = isShrinked
+            ? isTabletOrSmaller
+                ? fieldVars.labelScaleMobile
+                : fieldVars.labelScaleDesktop
+            : 1;
         const labelStyle = {
             left: `calc(${styles.fieldLeftPadding}px + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
