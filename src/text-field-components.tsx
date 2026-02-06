@@ -9,7 +9,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 import ScreenReaderOnly from './screen-reader-only';
-import { useApplyCssVars } from './text-field-base';
+import {useApplyCssVars} from './text-field-base';
 
 import type {DataAttributes} from './utils/types';
 

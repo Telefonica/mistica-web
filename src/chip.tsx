@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Badge from './badge';
 import Box from './box';
-import Text, {getTextSizes, getTextSizesWithWeight, Text2} from './text';
+import Text, {getTextSizesWithWeight} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
