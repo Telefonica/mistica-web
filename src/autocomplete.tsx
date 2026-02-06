@@ -215,7 +215,6 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                         </li>
                     ))}
                 </ul>
-
                 <div role="status" aria-labelledby={statusId}>
                     <div
                         className={styles.optionsList}
