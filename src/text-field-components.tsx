@@ -9,7 +9,8 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 import ScreenReaderOnly from './screen-reader-only';
-import {useApplyCssVars} from './text-field-base';
+import {fieldVars} from './text-field-base.css';
+import {applyCssVars, pxToRem} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -194,4 +195,27 @@ export const FieldContainer = ({
             {helperText && <div className={styles.helperContainer}>{helperText}</div>}
         </div>
     );
+};
+export const useApplyCssVars = (): Record<string, string> => {
+    const {textPresets} = useTheme();
+
+    return applyCssVars({
+        [fieldVars.mobileFontSize]: pxToRem(textPresets.inputValue.size.mobile),
+        [fieldVars.desktopFontSize]: pxToRem(textPresets.inputValue.size.desktop),
+        [fieldVars.mobileLineHeight]: pxToRem(textPresets.inputValue.lineHeight.mobile),
+        [fieldVars.desktopLineHeight]: pxToRem(textPresets.inputValue.lineHeight.desktop),
+
+        [fieldVars.shrinkedLabelMobileFontSize]: pxToRem(textPresets.inputLabel.size.mobile),
+        [fieldVars.shrinkedLabelDesktopFontSize]: pxToRem(textPresets.inputLabel.size.desktop),
+        [fieldVars.shrinkedLabelMobileLineHeight]: pxToRem(textPresets.inputLabel.lineHeight.mobile),
+        [fieldVars.shrinkedLabelDesktopLineHeight]: pxToRem(textPresets.inputLabel.lineHeight.desktop),
+
+        [fieldVars.helperTextMobileFontSize]: pxToRem(textPresets.inputHelperText.size.mobile),
+        [fieldVars.helperTextDesktopFontSize]: pxToRem(textPresets.inputHelperText.size.desktop),
+        [fieldVars.helperTextMobileLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.mobile),
+        [fieldVars.helperTextDesktopLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.desktop),
+
+        [fieldVars.labelScaleMobile]: `calc(${textPresets.inputLabel.size.mobile} / ${textPresets.inputValue.size.mobile})`,
+        [fieldVars.labelScaleDesktop]: `calc(${textPresets.inputLabel.size.desktop} / ${textPresets.inputValue.size.desktop})`,
+    });
 };
