@@ -1,3 +1,15 @@
+# [16.48.0](https://github.com/Telefonica/mistica-web/compare/v16.47.0...v16.48.0) (2026-02-09)
+
+
+### Bug Fixes
+
+* **NakedCard:** added missing circledImage prop ([#1492](https://github.com/Telefonica/mistica-web/issues/1492)) ([33d7dbc](https://github.com/Telefonica/mistica-web/commit/33d7dbc574c19c282ed32446e8bd3c64174b7c1b))
+
+
+### Features
+
+* **Tag:** small variant ([#1487](https://github.com/Telefonica/mistica-web/issues/1487)) ([a71ff92](https://github.com/Telefonica/mistica-web/commit/a71ff9280a5f5c26399b07fb8639bc285b2ca021))
+
 # [16.47.0](https://github.com/Telefonica/mistica-web/compare/v16.46.0...v16.47.0) (2026-01-29)
 
 
