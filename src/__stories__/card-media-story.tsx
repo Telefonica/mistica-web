@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MediaCard, Placeholder} from '..';
+import {MediaCard, Placeholder, Tag} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
@@ -67,7 +67,22 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     ariaLabel,
     ariaDescription,
     imageFit,
-    ...args
+    size,
+    headlineType,
+    headline,
+    pretitle,
+    pretitleLinesMax,
+    title,
+    titleLinesMax,
+    subtitle,
+    subtitleLinesMax,
+    description,
+    descriptionLinesMax,
+    showFooter,
+    backgroundColor,
+    footerBackgroundColor,
+    imageAlt,
+    mediaPosition,
 }) => {
     return (
         <ThemeVariantWrapper variant={variantOutside}>
@@ -96,7 +111,21 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
                 imageFit={imageFit || undefined}
-                {...args}
+                size={size}
+                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                pretitle={pretitle}
+                pretitleLinesMax={pretitleLinesMax}
+                title={title}
+                titleLinesMax={titleLinesMax}
+                subtitle={subtitle}
+                subtitleLinesMax={subtitleLinesMax}
+                description={description}
+                descriptionLinesMax={descriptionLinesMax}
+                showFooter={showFooter}
+                backgroundColor={backgroundColor}
+                footerBackgroundColor={footerBackgroundColor}
+                imageAlt={imageAlt}
+                mediaPosition={mediaPosition}
             />
         </ThemeVariantWrapper>
     );

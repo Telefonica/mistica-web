@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NakedCard, Placeholder} from '..';
+import {NakedCard, Placeholder, Tag} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
@@ -61,7 +61,23 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     ariaLabel,
     ariaDescription,
     imageFit,
-    ...args
+    size,
+    width,
+    height,
+    headlineType,
+    headline,
+    pretitle,
+    pretitleLinesMax,
+    title,
+    titleLinesMax,
+    subtitle,
+    subtitleLinesMax,
+    description,
+    descriptionLinesMax,
+    showFooter,
+    imageAlt,
+    mediaPosition,
+    circledImage,
 }) => {
     return (
         <ThemeVariantWrapper variant={variantOutside}>
@@ -86,7 +102,22 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
                 imageFit={imageFit || undefined}
-                {...args}
+                size={size}
+                width={width}
+                height={height}
+                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                pretitle={pretitle}
+                pretitleLinesMax={pretitleLinesMax}
+                title={title}
+                titleLinesMax={titleLinesMax}
+                subtitle={subtitle}
+                subtitleLinesMax={subtitleLinesMax}
+                description={description}
+                descriptionLinesMax={descriptionLinesMax}
+                showFooter={showFooter}
+                imageAlt={imageAlt}
+                mediaPosition={mediaPosition}
+                circledImage={circledImage}
             />
         </ThemeVariantWrapper>
     );
