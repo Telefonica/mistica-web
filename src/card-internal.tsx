@@ -142,6 +142,7 @@ type FooterProps = {
     footerSlot?: React.ReactNode;
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
+    footerDivider?: boolean;
 };
 
 type NoChildrenProps = {
@@ -776,6 +777,7 @@ const Footer = ({
     hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
+    footerDivider,
     externalVariant,
     overlayColor,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
@@ -798,6 +800,7 @@ const Footer = ({
                   ? skinVars.colors.backgroundContainerBrandOverBrand
                   : skinVars.colors.backgroundContainerBrand
             : undefined);
+    const withDivider = footerDivider ?? !backgroundColor;
 
     return (
         <ThemeVariant variant={footerVariant || variant}>
@@ -814,7 +817,7 @@ const Footer = ({
                 <div
                     // The divider is outside the footer because it has a conditional right margin
                     style={{
-                        borderTop: backgroundColor ? undefined : `1px solid ${dividerColor}`,
+                        borderTop: withDivider ? `1px solid ${dividerColor}` : undefined,
                         marginRight: isNaked ? 16 : 0,
                     }}
                 />
@@ -1165,6 +1168,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             footerBackgroundColor,
             footerVariant,
             footerSlot,
+            footerDivider,
             topActions,
             onClose,
             closeButtonLabel,
@@ -1509,6 +1513,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         variant={variant}
                         footerVariant={footerVariant}
                         footerBackgroundColor={footerBackgroundColor}
+                        footerDivider={footerDivider}
                         size={size}
                         footerSlot={footerSlot}
                         buttonPrimary={buttonPrimary}

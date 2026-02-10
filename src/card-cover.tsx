@@ -63,6 +63,7 @@ type CoverCardProps = {
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
+    footerDivider?: boolean;
 };
 
 export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(
