@@ -60,6 +60,12 @@ export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimar
 export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
 export type CardActionButtonLink = RendersNullableElement<typeof ButtonLink>;
 
+export type CardVideoProps = {
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
+    videoDataAttributes?: DataAttributes;
+};
+
 type ContainerProps = {
     type: CardType;
     size: CardSize;
@@ -98,7 +104,7 @@ type MediaProps = {
     /** Ignored when mediaPosition === 'top' */
     mediaWidth?: string | number;
     circledImage?: boolean;
-};
+} & CardVideoProps;
 
 type TextContentProps = {
     type: CardType;
@@ -396,12 +402,23 @@ const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={colo
 
 const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
 
-export const useVideoWithControls = (
-    videoSrc?: VideoSource,
-    poster?: string,
-    videoRef?: React.RefObject<VideoElement>,
-    autoHeight?: boolean
-): {
+export const useVideoWithControls = ({
+    src,
+    poster,
+    ref: videoRef,
+    autoHeight,
+    loop,
+    autoPlay,
+    dataAttributes,
+}: {
+    src?: VideoSource;
+    poster?: string;
+    ref?: React.RefObject<VideoElement>;
+    autoHeight?: boolean;
+    loop?: boolean;
+    autoPlay?: boolean;
+    dataAttributes?: DataAttributes;
+}): {
     video?: React.ReactNode;
     videoAction?: CardAction;
 } => {
@@ -420,33 +437,49 @@ export const useVideoWithControls = (
             clearTimeout(loadingTimeoutId);
             dispatch('reset');
         };
-    }, [videoSrc]);
+    }, [src]);
 
     const video = React.useMemo(() => {
-        return videoSrc !== undefined ? (
+        if (src === undefined) {
+            return undefined;
+        }
+
+        const handleLoadedData = () => {
+            // When autoPlay is false, the video loads but doesn't play.
+            // We need to transition to 'paused' state to show the play button instead of spinner.
+            if (autoPlay === false) {
+                dispatch('pause');
+            }
+        };
+
+        return (
             <Video
                 ref={combineRefs(videoController, videoRef)}
-                src={videoSrc}
+                src={src}
                 poster={poster}
                 width="100%"
                 height={autoHeight ? undefined : '100%'}
+                loop={loop}
+                autoPlay={autoPlay}
+                dataAttributes={dataAttributes}
+                onLoad={handleLoadedData}
                 onError={() => dispatch('fail')}
                 onPause={() => dispatch('pause')}
                 onPlay={() => dispatch('play')}
             />
-        ) : undefined;
-    }, [videoRef, videoSrc, poster, autoHeight]);
+        );
+    }, [videoRef, src, poster, autoHeight, loop, autoPlay, dataAttributes]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;
-        if (video) {
-            if (videoStatus === 'loading') {
-                dispatch('showSpinner');
-            } else if (videoStatus === 'paused') {
-                video.play();
-            } else if (videoStatus === 'playing') {
-                video.pause();
-            }
+        if (!video) {
+            return;
+        }
+
+        if (videoStatus === 'playing') {
+            video.pause();
+        } else {
+            void video.play();
         }
     };
 
@@ -1140,6 +1173,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             'aria-description': ariaDescriptionProp,
             'aria-describedby': ariaDescribedByProp,
             gradientOverlayColor,
+            videoLoop,
+            videoAutoPlay,
+            videoDataAttributes,
             ...touchableProps
         },
         ref
@@ -1171,12 +1207,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
-        const {video, videoAction} = useVideoWithControls(
-            shouldShowVideo ? videoSrc : undefined,
-            imageSrc,
-            videoRef,
-            type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
-        );
+        const {video, videoAction} = useVideoWithControls({
+            src: shouldShowVideo ? videoSrc : undefined,
+            poster: imageSrc,
+            ref: videoRef,
+            autoHeight:
+                type === 'cover' || mediaPosition !== 'top'
+                    ? false
+                    : aspectRatioToNumber(mediaAspectRatio) === 0,
+            loop: videoLoop,
+            autoPlay: videoAutoPlay,
+            dataAttributes: videoDataAttributes,
+        });
 
         const externalVariant = useThemeVariant();
         const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;

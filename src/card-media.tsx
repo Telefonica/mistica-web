@@ -44,6 +44,9 @@ export type MediaCardProps = {
     imageSrcSet?: string;
     circledImage?: boolean;
     videoSrc?: VideoSource;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
+    videoDataAttributes?: DataAttributes;
     /** @deprecated use imageSrc */
     poster?: string;
     variant?: Variant;
