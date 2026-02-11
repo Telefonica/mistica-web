@@ -22,10 +22,7 @@ export default defineConfig({
         vanillaExtractPlugin({
             identifiers: ({hash}) => `${version}_${hash}`,
         }),
-        noBundlePlugin({
-            // Change .css.js files to something else so that they don't get re-processed by consumer apps using vanilla extract too
-            fileNames: ({name}) => `${name.replace(/\.css$/, '.css-mistica')}.js`,
-        }),
+        noBundlePlugin(),
         {
             ...preserveDirectivesPlugin(),
             enforce: 'post',
@@ -47,6 +44,9 @@ export default defineConfig({
                 path.resolve(__dirname, 'src', 'community', 'index.tsx'),
             ],
             formats: ['es'],
+            cssFileName: 'style',
+            // Change .css.js files to something else so that they don't get re-processed by consumer apps using vanilla extract too
+            fileName: (_, entryName) => `${entryName.replace(/\.css$/, '.css-mistica')}.js`,
         },
         outDir: 'dist-es',
         // https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
