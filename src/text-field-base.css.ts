@@ -22,6 +22,8 @@ export const desktopFontSize = pxToRem(18);
 export const labelLineHeight = pxToRem(24);
 export const inputLineHeight = pxToRem(24);
 
+export const suggestionsContainerPadding = 8;
+
 export const shrinkedLabelLineHeight = {
     mobile: pxToRem(16),
     desktop: pxToRem(20),
@@ -337,6 +339,7 @@ export const menuItemBase = style([
         minHeight: pxToRem(48),
         padding: '6px 8px',
         userSelect: 'none',
+        borderRadius: `calc(${skinVars.borderRadii.popup} - ${suggestionsContainerPadding / 2}px)`,
     },
 ]);
 
@@ -371,7 +374,7 @@ export const suggestionsContainer = style([
         marginTop: 8,
         boxSizing: 'border-box',
         boxShadow: '0px 2px 4px 0px #00000033',
-        padding: 8,
+        padding: suggestionsContainerPadding,
         background: skinVars.colors.backgroundContainer,
         borderRadius: skinVars.borderRadii.popup,
 

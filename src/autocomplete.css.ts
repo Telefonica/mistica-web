@@ -2,6 +2,8 @@ import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars, vars as skinVars} from './skins/skin-contract.css';
 
+export const optionListContainerPadding = 8;
+
 export const autocompleteContainer = style([
     sprinkles({
         position: 'relative',
@@ -11,7 +13,7 @@ export const autocompleteContainer = style([
 export const optionsList = style([
     sprinkles({
         position: 'absolute',
-        padding: 8,
+        padding: optionListContainerPadding,
         borderRadius: vars.borderRadii.popup,
     }),
     {
@@ -31,7 +33,7 @@ export const optionBaseItem = style([
         paddingY: 12,
     }),
     {
-        borderRadius: skinVars.borderRadii.popup,
+        borderRadius: `calc(${skinVars.borderRadii.popup} - ${optionListContainerPadding / 2}px)`,
         height: 48,
         userSelect: 'none',
         display: 'block',
