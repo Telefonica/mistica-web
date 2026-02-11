@@ -156,10 +156,28 @@ export const sheetTopDraggingArea = style([
     },
 ]);
 
+export const handleContainer = style([
+    sprinkles({
+        display: 'none',
+    }),
+    {
+        '@media': {
+            // Handle is rendered only in mobile version
+            [mq.tabletOrSmaller]: {
+                position: 'absolute',
+                top: 8,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+            },
+        },
+    },
+]);
+
 export const handleBar = sprinkles({
     background: skinVars.colors.control,
-    width: '100%',
-    height: '100%',
+    width: 24,
+    height: 4,
     borderRadius: 2,
 });
 
@@ -186,30 +204,20 @@ export const overlay = style([
 
 export const closingOverlay = style(overlayClosedStyle);
 
-export const titleContainer = style([
+export const dismissButton = style([
     sprinkles({
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
-        width: '100%',
+        position: 'absolute',
     }),
     {
-        gap: 8,
-    },
-]);
-
-export const titleDismissButton = style([
-    sprinkles({
-        display: 'flex',
-        flexShrink: 0,
-        position: 'relative',
-    }),
-    {
-        marginTop: -8,
-        marginRight: -8,
-        marginLeft: 'auto', // Always push button to the right, even without title
-        zIndex: 2, // Ensure dismiss button appears above content
+        zIndex: 1,
+        top: 24,
+        right: 16,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                top: 28,
+                right: 28,
+            },
+        },
     },
 ]);
 
@@ -220,7 +228,7 @@ export const stickyTitle = style([
         background: skinVars.colors.background,
     }),
     {
-        zIndex: 2, // Ensure sticky title (and dismiss button within it) appears above content
+        zIndex: 1,
     },
 ]);
 

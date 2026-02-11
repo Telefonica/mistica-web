@@ -21,12 +21,11 @@ import Box from './box';
 import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {InternalIconButton} from './icon-button';
+import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
-import Touchable from './touchable';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -260,7 +259,9 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
                                     : children}
-                                <div className={styles.handleBar} />
+                                <div className={styles.handleContainer}>
+                                    <div className={styles.handleBar} />
+                                </div>
                             </section>
                         </div>
                     </div>
@@ -300,6 +301,7 @@ export const SheetBody = ({
     children,
 }: SheetBodyProps): JSX.Element => {
     const {texts, t} = useTheme();
+    const {isTabletOrSmaller} = useScreenSize();
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
@@ -319,36 +321,31 @@ export const SheetBody = ({
     });
 
     const hasButtons = !!button || !!secondaryButton || !!link;
-    const showDismissButton = !!closeModal;
     return (
         <>
             <div ref={topScrollSignalRef} />
             <div className={styles.stickyTitle}>
-                {showDismissButton ? (
+                {title ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}} paddingX={paddingX}>
-                        <div className={styles.titleContainer}>
-                            {title && (
-                                <Text5 as="h2" id={modalTitleId} truncate>
-                                    {title}
-                                </Text5>
-                            )}
-                            <div className={styles.titleDismissButton}>
-                                <InternalIconButton
-                                    onPress={closeModal}
-                                    aria-label={texts.modalClose || t(tokens.modalClose)}
-                                    Icon={IconCloseRegular}
-                                    bleedLeft
-                                    bleedRight
-                                    bleedY
-                                />
-                            </div>
-                        </div>
+                        <Text5 as="h2" id={modalTitleId} truncate>
+                            {title}
+                        </Text5>
                     </Box>
                 ) : (
                     <Box paddingTop={{mobile: 0, desktop: 40}} />
                 )}
                 {showTitleDivider && <Divider />}
             </div>
+            {!!closeModal && (
+                <div className={styles.dismissButton}>
+                    <IconButton
+                        small={isTabletOrSmaller}
+                        onPress={closeModal}
+                        aria-label={texts.modalClose || t(tokens.modalClose)}
+                        Icon={IconCloseRegular}
+                    />
+                </div>
+            )}
             <div className={styles.bodyContent}>
                 <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}} paddingX={paddingX}>
                     <Stack space={8}>

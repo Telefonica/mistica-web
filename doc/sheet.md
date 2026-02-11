@@ -95,18 +95,6 @@ using the visible dismiss button (close icon) that appears in the top-right corn
 `onClose` callback is called when the closing animation finishes, that's the right place to unmount the sheet
 as shown in the example above.
 
-### Dismiss button
-
-When using the predefined sheets (`RadioListSheet`, `ActionsListSheet`, `InfoSheet`, `ActionsSheet`) or the
-`SheetBody` component with a title, a visible dismiss button (close icon) is automatically shown in the
-top-right corner, aligned with the title. The dismiss button is accessible via keyboard navigation and
-includes proper ARIA labels for screen readers, using the translation token `modalClose` (defaults to "Cerrar"
-in Spanish or "Close" in English).
-
-The dismiss button is positioned using a flex layout with `justifyContent: space-between` to ensure it's
-always aligned with the title on both mobile and desktop screens. It uses the `InternalIconButton` component
-which provides built-in keyboard support (Tab navigation, Enter/Space activation).
-
 You can also close the sheet programmatically using the render prop:
 
 ```jsx
