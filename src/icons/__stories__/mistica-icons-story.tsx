@@ -13,14 +13,17 @@ const fileNameToComponentName = (fileName: string) => {
     return upperFirst(camelCase(fileName.slice(lastSlashIdx + 1).replace('.tsx', '')));
 };
 
+const iconModules = import.meta.glob(
+    ['../../generated/mistica-icons/**/*.tsx', '!../../generated/mistica-icons/icons-keywords.tsx'],
+    {eager: true}
+);
+
 // require all icons
-const misticaIcons = ((requireContext) => {
-    return requireContext.keys().map((id: string) => {
-        const component = requireContext(id).default;
-        component.componentName = fileNameToComponentName(id);
-        return component;
-    });
-})(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
+const misticaIcons = Object.entries(iconModules).map(([id, module]) => {
+    const component = (module as any).default;
+    component.componentName = fileNameToComponentName(id);
+    return component;
+});
 
 const availableCategories = ['All', ...new Set(sortBy(Object.values(iconCategories).flat()))];
 
