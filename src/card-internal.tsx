@@ -1194,7 +1194,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
         const shouldShowFooter =
-            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
+            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && isTouchable);
 
         const showButtonsInBody = !shouldShowFooter && hasButtons;
 
