@@ -652,7 +652,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             indicator: {weight: 'medium'},
             inputHelperText: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             inputLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
-            inputValue: {lineHeight: {desktop: 22, mobile: 22}, size: {desktop: 16, mobile: 16}},
+            inputValue: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 16, mobile: 16}},
             link: {weight: 'medium'},
             loadingScreenTitle: {lineHeight: {desktop: 32, mobile: 28}, size: {desktop: 28, mobile: 24}},
             navigationBar: {weight: 'medium'},
