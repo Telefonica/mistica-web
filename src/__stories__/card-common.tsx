@@ -69,6 +69,7 @@ export type CommonCardArgs = {
     showFooter: boolean;
     footerSlot: boolean;
     footerVariant: 'default' | 'brand' | '';
+    footerDivider?: boolean;
 };
 
 export const getAsset = (asset: CommonCardArgs['asset']): JSX.Element | undefined => {
@@ -219,6 +220,7 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     showFooter: true,
     footerSlot: true,
     footerVariant: '',
+    footerDivider: undefined,
     slot: true,
 };
 
@@ -301,6 +303,10 @@ export const commonArgTypes = {
                 brand: 'brand',
             },
         },
+    },
+    footerDivider: {
+        options: [undefined, true, false],
+        control: {type: 'select'},
     },
 };
 

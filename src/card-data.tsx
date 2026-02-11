@@ -61,6 +61,7 @@ type DataCardProps = {
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
+    footerDivider?: boolean;
 };
 
 export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
