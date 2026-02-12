@@ -78,6 +78,7 @@ export type MediaCardProps = {
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
+    footerDivider?: boolean;
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
