@@ -11,7 +11,7 @@ on:
 jobs:
     update-screenshots:
         name: update-screenshots
-        runs-on: [self-hosted, cdorunner-life-novum, Linux, cdorunner-life-large]
+        runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
         strategy:
             matrix:
