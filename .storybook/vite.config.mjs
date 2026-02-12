@@ -14,7 +14,4 @@ export default defineConfig({
             targets: [path.resolve(__dirname, '../src', 'index.tsx')],
         }),
     ],
-    server: {
-        allowedHosts: ['host.docker.internal'],
-    },
 });

@@ -34,6 +34,14 @@ const config: StorybookConfig = {
         interactions: false,
     },
 
+    viteFinal: (config) => {
+        config.server = {
+            ...config.server,
+            allowedHosts: ['host.docker.internal'],
+        };
+        return config;
+    },
+
     core: {
         disableWhatsNewNotifications: true,
         builder: {
