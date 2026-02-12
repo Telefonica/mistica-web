@@ -8,7 +8,7 @@ import {vars} from './skins/skin-contract.css';
 import {Text3} from './text';
 import * as styles from './text-field-base.css';
 import {FieldContainer, HelperText, Label} from './text-field-components';
-import {LABEL_SCALE_DESKTOP, LABEL_SCALE_MOBILE} from './text-field-components.css';
+import {fieldVars} from './text-field-base.css';
 import * as tokens from './text-tokens';
 import {ThemeVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
@@ -305,7 +305,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-        const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
+        const scale = isShrinked
+            ? isTabletOrSmaller
+                ? fieldVars.labelScaleMobile
+                : fieldVars.labelScaleDesktop
+            : 1;
         const labelStyle = {
             left: `calc(${styles.fieldLeftPadding}px + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
