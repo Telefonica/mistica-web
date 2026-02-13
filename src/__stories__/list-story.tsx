@@ -414,7 +414,6 @@ const Template: StoryComponent<
 
     const withLayout = (
         <ResponsiveLayout variant={variantOutside}>
-            cucacacaca
             {boxed ? list : <NegativeBox>{list}</NegativeBox>}
         </ResponsiveLayout>
     );
