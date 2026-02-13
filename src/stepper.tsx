@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {Text2, Text1} from './text';
+import {Text, Text1, getTextSizes} from './text';
 import {useElementDimensions, useTheme} from './hooks';
 import * as tokens from './text-tokens';
 import IconSuccess from './icons/icon-success';
@@ -115,9 +115,10 @@ const Stepper = ({
                             )}
 
                             <div className={styles.textContainer} aria-hidden="true" ref={ref}>
-                                <Text2
+                                <Text
+                                    {...getTextSizes({textPreset: textPresets.stepperStepLabel})}
+                                    weight="regular"
                                     as="div"
-                                    regular
                                     color={
                                         isCompleted || isCurrent
                                             ? vars.colors.textPrimary
@@ -125,7 +126,7 @@ const Stepper = ({
                                     }
                                 >
                                     {text}
-                                </Text2>
+                                </Text>
                             </div>
 
                             <ScreenReaderOnly>

@@ -28,13 +28,13 @@ type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     lineHeight?: never;
 };
 
-type TextSizeTokenConfig = {
+export type TextSizeTokenConfig = {
     weight?: never;
     size: {mobile: number; desktop: number};
     lineHeight: {mobile: number; desktop: number};
 };
 
-type TextTokenConfig<PossibleFontWeights = FontWeight> = {
+export type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size: {mobile: number; desktop: number};
     lineHeight: {mobile: number; desktop: number};
@@ -45,6 +45,15 @@ export type TextPresetsConfig = {
     rowTitle: TextWeightTokenConfig;
     stepperStepLabel: TextSizeTokenConfig;
     button: TextWeightTokenConfig<'regular' | 'medium'>;
+    cardDescriptionDefault: TextSizeTokenConfig;
+    cardDescriptionSnap: TextSizeTokenConfig;
+    cardPretitleDefault: TextSizeTokenConfig;
+    cardPretitleSnap: TextSizeTokenConfig;
+    cardSubtitleDefault: TextSizeTokenConfig;
+    cardSubtitleSnap: TextSizeTokenConfig;
+    cardTitleDefault: TextSizeTokenConfig;
+    cardTitleSnap: TextSizeTokenConfig;
+    drawerTitle: TextTokenConfig;
     chipLabel: TextTokenConfig;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
     loadingScreenTitle: TextSizeTokenConfig;
