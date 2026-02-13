@@ -1,4 +1,4 @@
-import {dirname} from 'path';
+import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 import {VanillaExtractPlugin} from '@vanilla-extract/webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -83,6 +83,7 @@ const config: StorybookConfig = {
         './font-size-addon/preset.ts',
         './theme-selector-addon/preset.ts',
         './platform-selector-addon/preset.ts',
+        './story-code-addon/preset.ts',
     ],
 
     framework: getAbsolutePath('@storybook/react-webpack5'),
@@ -99,6 +100,17 @@ const config: StorybookConfig = {
                 '**/__screenshot_tests__',
             ],
         };
+
+        // Add loader for story source code
+        config.module?.rules?.push({
+            test: /-story\.tsx$/,
+            use: [
+                {
+                    loader: join(import.meta.dirname, './story-code-addon/story-source-loader.js'),
+                },
+            ],
+            enforce: 'pre',
+        });
 
         // Define process.env variables for browser
         config.plugins?.push(
