@@ -74,8 +74,8 @@ export const TextComponents: StoryComponent = () => {
             <Text2 medium>{text2MediumContent}</Text2>
             <Text2 regular>{text2RegularContent}</Text2>
             <Text1 bold>{text1BoldContent}</Text1>
-            <Text1 medium>{text1MediumContent}</Text1>
             <Text1 regular>{text1RegularContent}</Text1>
+            <Text1 medium>{text1MediumContent}</Text1>
         </Stack>
     );
 };
