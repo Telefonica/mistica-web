@@ -58,24 +58,24 @@ export const TextComponents: StoryComponent = () => {
         <Stack space={16} dataAttributes={{testid: 'text'}}>
             <Text10 dataAttributes={{qsysid: 'text10'}}>{text10Content}</Text10>
             <Text9>{text9Content}</Text9>
-            <Text7>{text7Content}</Text7>
             <Text8>{text8Content}</Text8>
+            <Text7>{text7Content}</Text7>
             <Text6>{text6Content}</Text6>
             <Text5>{text5Content}</Text5>
             <Text4 bold>{text4BoldContent}</Text4>
-            <Text4 regular>{text4RegularContent}</Text4>
             <Text4 medium>{text4MediumContent}</Text4>
+            <Text4 regular>{text4RegularContent}</Text4>
             <Text4 light>{text4LightContent}</Text4>
             <Text3 bold>{text3BoldContent}</Text3>
-            <Text3 regular>{text3RegularContent}</Text3>
             <Text3 medium>{text3MediumContent}</Text3>
+            <Text3 regular>{text3RegularContent}</Text3>
             <Text3 light>{text3LightContent}</Text3>
             <Text2 bold>{text2BoldContent}</Text2>
             <Text2 medium>{text2MediumContent}</Text2>
             <Text2 regular>{text2RegularContent}</Text2>
             <Text1 bold>{text1BoldContent}</Text1>
-            <Text1 regular>{text1RegularContent}</Text1>
             <Text1 medium>{text1MediumContent}</Text1>
+            <Text1 regular>{text1RegularContent}</Text1>
         </Stack>
     );
 };
