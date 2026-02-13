@@ -48,7 +48,6 @@ const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetProps>(
                         subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
-                        closeModal={closeModal}
                         button={
                             isDesktopOrBigger ? (
                                 <ButtonPrimary

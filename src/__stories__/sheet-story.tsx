@@ -61,8 +61,8 @@ export const Default: StoryComponent = () => {
                         setOpen(false);
                     }}
                 >
-                    {({modalTitleId, closeModal}) => (
-                        <SheetBody modalTitleId={modalTitleId} closeModal={closeModal}>
+                    {({modalTitleId}) => (
+                        <SheetBody modalTitleId={modalTitleId}>
                             <Box paddingBottom={{mobile: 16, desktop: 0}}>
                                 <Placeholder />
                             </Box>

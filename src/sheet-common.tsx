@@ -167,6 +167,8 @@ type SheetProps = {
 };
 
 const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
+    const {texts, t} = useTheme();
+    const {isTabletOrSmaller} = useScreenSize();
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
     const modalTitleId = React.useId();
@@ -262,6 +264,14 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 <div className={styles.handleContainer}>
                                     <div className={styles.handleBar} />
                                 </div>
+                                <div className={styles.dismissButton}>
+                                    <IconButton
+                                        small={isTabletOrSmaller}
+                                        onPress={closeModal}
+                                        aria-label={texts.modalClose || t(tokens.modalClose)}
+                                        Icon={IconCloseRegular}
+                                    />
+                                </div>
                             </section>
                         </div>
                     </div>
@@ -285,7 +295,6 @@ type SheetBodyProps = {
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
     modalTitleId: string;
-    closeModal?: () => void;
     children?: React.ReactNode;
 };
 
@@ -294,14 +303,11 @@ export const SheetBody = ({
     subtitle,
     description,
     modalTitleId,
-    closeModal,
     button,
     secondaryButton,
     link,
     children,
 }: SheetBodyProps): JSX.Element => {
-    const {texts, t} = useTheme();
-    const {isTabletOrSmaller} = useScreenSize();
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
@@ -336,16 +342,6 @@ export const SheetBody = ({
                 )}
                 {showTitleDivider && <Divider />}
             </div>
-            {!!closeModal && (
-                <div className={styles.dismissButton}>
-                    <IconButton
-                        small={isTabletOrSmaller}
-                        onPress={closeModal}
-                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                        Icon={IconCloseRegular}
-                    />
-                </div>
-            )}
             <div className={styles.bodyContent}>
                 <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}} paddingX={paddingX}>
                     <Stack space={8}>

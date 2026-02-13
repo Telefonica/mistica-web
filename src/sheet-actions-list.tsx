@@ -54,7 +54,6 @@ const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>
                         subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
-                        closeModal={closeModal}
                     >
                         <NegativeBox>
                             {items.map(({id, style, title, icon}) => (
