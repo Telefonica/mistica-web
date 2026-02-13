@@ -33,12 +33,24 @@ jobs:
             - run: yarn storybook-static
             - run: yarn test-acceptance -u --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
+            - name: Collect changed screenshots
+              id: collect
+              run: |
+                  mkdir -p changed-screenshots
+                  # List modified/untracked PNGs under __image_snapshots__
+                  git status --porcelain | awk '{print $2}' | grep -E '__image_snapshots__/.+\.png$' | while read -r f; do
+                    mkdir -p "changed-screenshots/$(dirname "$f")"
+                    cp "$f" "changed-screenshots/$f"
+                  done
+                  echo "CHANGED_COUNT=$(find changed-screenshots -type f | wc -l)" >> $GITHUB_OUTPUT
+
             - name: upload-changes
-              if: always()
+              if: ${{ steps.collect.outputs.CHANGED_COUNT != '0' }}
               uses: actions/upload-artifact@v4
               with:
                   name: updated-screenshots-${{ matrix.shard }}
-                  path: src/**/__image_snapshots__/*.png
+                  path: changed-screenshots
+                  if-no-files-found: ignore
 
     upload-changes:
         needs: update-screenshots
@@ -58,6 +70,16 @@ jobs:
               with:
                   pattern: updated-screenshots-*
                   merge-multiple: true
+
+            - name: Restore changed screenshots to original paths
+              run: |
+                  if [ -d changed-screenshots ]; then
+                    find changed-screenshots -type f -name '*.png' -print0 | while IFS= read -r -d '' f; do
+                      dest="${f#changed-screenshots/}"
+                      mkdir -p "$(dirname "$dest")"
+                      cp "$f" "$dest"
+                    done
+                  fi
 
             - name: commit-changes
               run: |
