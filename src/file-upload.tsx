@@ -29,7 +29,7 @@ import IconFileMp3Regular from './generated/mistica-icons/icon-file-mp-3-regular
 import IconFileMusicRegular from './generated/mistica-icons/icon-file-music-regular';
 import IconClipRegular from './generated/mistica-icons/icon-clip-regular';
 import * as styles from './file-upload.css';
-import {ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
