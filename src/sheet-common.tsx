@@ -21,12 +21,11 @@ import Box from './box';
 import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {InternalIconButton} from './icon-button';
+import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
-import Touchable from './touchable';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -169,6 +168,7 @@ type SheetProps = {
 
 const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
     const {texts, t} = useTheme();
+    const {isTabletOrSmaller} = useScreenSize();
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
     const modalTitleId = React.useId();
@@ -261,28 +261,16 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
                                     : children}
-                                <div className={styles.modalCloseButton}>
-                                    <InternalIconButton
+                                <div className={styles.handleContainer}>
+                                    <div className={styles.handleBar} />
+                                </div>
+                                <div className={styles.dismissButton}>
+                                    <IconButton
+                                        small={isTabletOrSmaller}
                                         onPress={closeModal}
                                         aria-label={texts.modalClose || t(tokens.modalClose)}
                                         Icon={IconCloseRegular}
-                                        bleedLeft
-                                        bleedRight
-                                        bleedY
                                     />
-                                </div>
-                                {/**
-                                 * We put a button behind the top dragging area so that the sheet can
-                                 * be closed while navigating with the keyboard or with a screen reader.
-                                 */}
-                                <div className={styles.handleContainer}>
-                                    <Touchable
-                                        onPress={closeModal}
-                                        className={styles.handleTouchable}
-                                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                                    >
-                                        <div className={styles.handleBar} />
-                                    </Touchable>
                                 </div>
                             </section>
                         </div>
