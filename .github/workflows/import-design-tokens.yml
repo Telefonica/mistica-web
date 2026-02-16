@@ -11,6 +11,10 @@ on:
                 description: 'Create a draft PR'
                 required: false
                 default: false
+            branch:
+                description: 'Branch name for the PR. By default it is "import-design-tokens-${ref}"'
+                required: false
+                default: 'import-design-tokens-${{github.event.inputs.ref}}'
 
 jobs:
     import-design-tokens:
@@ -44,7 +48,7 @@ jobs:
                   add-paths: 'src/skins'
                   commit-message: 'feat(skin): update design tokens'
                   title: 'feat(skin): update design tokens'
-                  branch: 'import-design-tokens-${{github.event.inputs.ref}}'
+                  branch: ${{github.event.inputs.branch}}
                   reviewers: 'atabel,pladaria'
                   delete-branch: true
                   draft: ${{github.event.inputs.draft}}
