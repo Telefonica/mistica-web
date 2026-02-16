@@ -679,6 +679,32 @@ export const getVivoSkin: GetKnownSkin = () => {
             successFeedback: 'inverse',
             brandLoadingScreen: 'inverse',
         },
+        spacing: {
+            buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            buttonSmallPadding: {left: {mobile: 12, desktop: 12}, right: {mobile: 12, desktop: 12}},
+            cardDefaultPadding: {
+                top: {mobile: 16, desktop: 24},
+                bottom: {mobile: 16, desktop: 24},
+                left: {mobile: 16, desktop: 24},
+                right: {mobile: 16, desktop: 24},
+            },
+            inputPadding: {top: {mobile: 8, desktop: 8}, bottom: {mobile: 8, desktop: 8}},
+            tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},
+            feedbackScreenPadding: {
+                top: {mobile: 64, desktop: 64},
+                bottom: {mobile: 16, desktop: 64},
+                left: {mobile: 16, desktop: 64},
+                right: {mobile: 16, desktop: 64},
+            },
+            heroPadding: {top: {mobile: 24, desktop: 56}, bottom: {mobile: 24, desktop: 56}},
+            headerPadding: {top: {mobile: 24, desktop: 48}, bottom: {mobile: 24, desktop: 48}},
+            drawerPadding: {
+                top: {mobile: 32, desktop: 40},
+                bottom: {mobile: 16, desktop: 24},
+                left: {mobile: 16, desktop: 40},
+                right: {mobile: 16, desktop: 40},
+            },
+        },
     };
     return skin;
 };

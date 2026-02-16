@@ -694,6 +694,32 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             successFeedback: 'inverse',
             brandLoadingScreen: 'default',
         },
+        spacing: {
+            buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            buttonSmallPadding: {left: {mobile: 8, desktop: 12}, right: {mobile: 8, desktop: 12}},
+            cardDefaultPadding: {
+                top: {mobile: 16, desktop: 16},
+                bottom: {mobile: 16, desktop: 16},
+                left: {mobile: 16, desktop: 16},
+                right: {mobile: 16, desktop: 16},
+            },
+            inputPadding: {top: {mobile: 9, desktop: 3}, bottom: {mobile: 9, desktop: 3}},
+            tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
+            feedbackScreenPadding: {
+                top: {mobile: 64, desktop: 40},
+                bottom: {mobile: 16, desktop: 40},
+                left: {mobile: 16, desktop: 40},
+                right: {mobile: 16, desktop: 40},
+            },
+            heroPadding: {top: {mobile: 16, desktop: 56}, bottom: {mobile: 16, desktop: 56}},
+            headerPadding: {top: {mobile: 16, desktop: 48}, bottom: {mobile: 16, desktop: 48}},
+            drawerPadding: {
+                top: {mobile: 32, desktop: 32},
+                bottom: {mobile: 16, desktop: 32},
+                left: {mobile: 16, desktop: 24},
+                right: {mobile: 16, desktop: 24},
+            },
+        },
     };
     return skin;
 };
