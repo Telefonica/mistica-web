@@ -20,6 +20,7 @@ const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 type Args = {
     label: string;
     icon: boolean;
+    small: boolean;
     variantOutside: Variant;
     badge: string;
     colorConfig: 'default' | 'color from skin' | 'custom color';
@@ -43,6 +44,7 @@ export default {
 export const Default: StoryComponent<Args> = ({
     label: labelFromArgs,
     icon,
+    small,
     variantOutside,
     badge,
     textColorFromSkin,
@@ -67,6 +69,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Promo')}
                     </Tag>
@@ -76,6 +79,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Info')}
                     </Tag>
@@ -85,6 +89,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Active')}
                     </Tag>
@@ -94,6 +99,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Inactive')}
                     </Tag>
@@ -103,6 +109,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Success')}
                     </Tag>
@@ -112,6 +119,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Warning')}
                     </Tag>
@@ -121,6 +129,7 @@ export const Default: StoryComponent<Args> = ({
                         badge={badgeValue}
                         backgroundColor={backgroundColor}
                         textColor={textColor}
+                        small={small}
                     >
                         {getLabel('Error')}
                     </Tag>
@@ -134,6 +143,7 @@ Default.storyName = 'Tag';
 Default.args = {
     label: '',
     icon: true,
+    small: false,
     variantOutside: 'default',
     badge: '0',
     colorConfig: 'default',

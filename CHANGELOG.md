@@ -1,3 +1,28 @@
+# [16.49.0](https://github.com/Telefonica/mistica-web/compare/v16.48.0...v16.49.0) (2026-02-13)
+
+
+### Bug Fixes
+
+* **Cards:** VoiceOver rectangle doesn't cover the whole card when using href/to ([#1491](https://github.com/Telefonica/mistica-web/issues/1491)) ([047d7c0](https://github.com/Telefonica/mistica-web/commit/047d7c05d0d0beea0d5ef9cf3a67d12620204df2))
+
+
+### Features
+
+* **Cards:** add footerDivider prop ([#1490](https://github.com/Telefonica/mistica-web/issues/1490)) ([3240127](https://github.com/Telefonica/mistica-web/commit/324012708e95374f77f18815fe687da0aebef28f))
+* **skin:** update design tokens ([#1488](https://github.com/Telefonica/mistica-web/issues/1488)) ([6e3d012](https://github.com/Telefonica/mistica-web/commit/6e3d012a0982c5f68f73022c205f5acda907a4b7))
+
+# [16.48.0](https://github.com/Telefonica/mistica-web/compare/v16.47.0...v16.48.0) (2026-02-09)
+
+
+### Bug Fixes
+
+* **NakedCard:** added missing circledImage prop ([#1492](https://github.com/Telefonica/mistica-web/issues/1492)) ([33d7dbc](https://github.com/Telefonica/mistica-web/commit/33d7dbc574c19c282ed32446e8bd3c64174b7c1b))
+
+
+### Features
+
+* **Tag:** small variant ([#1487](https://github.com/Telefonica/mistica-web/issues/1487)) ([a71ff92](https://github.com/Telefonica/mistica-web/commit/a71ff9280a5f5c26399b07fb8639bc285b2ca021))
+
 # [16.47.0](https://github.com/Telefonica/mistica-web/compare/v16.46.0...v16.47.0) (2026-01-29)
 
 
