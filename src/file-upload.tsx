@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import classnames from 'classnames';
 import Stack from './stack';
 import {Text1, Text2, Text3} from './text';
 import Inline from './inline';
@@ -246,8 +247,14 @@ const FileUpload = ({
           }
         : {};
 
+    const isBrandVariant = outsideVariant === 'brand';
     const contentClassName = withDropZone
-        ? `${styles.dropZoneContainer} ${isDragActive ? styles.dropZoneActive : ''}`
+        ? classnames({
+              [styles.dropZoneContainerBrand]: isBrandVariant,
+              [styles.dropZoneContainer]: !isBrandVariant,
+              [styles.dropZoneActiveBrand]: isDragActive && isBrandVariant,
+              [styles.dropZoneActive]: isDragActive && !isBrandVariant,
+          })
         : '';
 
     const assetClassName = withDropZone && isDragActive ? styles.assetScaleActive : '';

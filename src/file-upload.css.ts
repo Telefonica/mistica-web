@@ -18,7 +18,7 @@ export const fileItem = style([
     },
 ]);
 
-export const dropZoneContainer = style([
+const dropZoneBase = style([
     sprinkles({
         borderRadius: 16,
         paddingY: 40,
@@ -29,19 +29,48 @@ export const dropZoneContainer = style([
         border: `1px dashed ${skinVars.colors.inputBorder}`,
         textAlign: 'center',
         transition: 'border 200ms ease, background-color 200ms ease',
+    },
+]);
 
+export const dropZoneContainer = style([
+    dropZoneBase,
+    {
         selectors: {
             '&:hover': {
-                backgroundColor: '#E6F5FD', // TODO: missing token
+                backgroundColor: skinVars.colors.backgroundDropZoneHover,
             },
         },
     },
 ]);
 
-export const dropZoneActive = style({
+export const dropZoneContainerBrand = style([
+    dropZoneBase,
+    {
+        selectors: {
+            '&:hover': {
+                backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
+            },
+        },
+    },
+]);
+
+const dropZoneActiveBase = style({
     border: `1px solid ${skinVars.colors.borderSelected}`,
-    backgroundColor: '#CEEBFB', // TODO: missing token
 });
+
+export const dropZoneActive = style([
+    dropZoneActiveBase,
+    {
+        backgroundColor: skinVars.colors.backgroundDropZoneDragover,
+    },
+]);
+
+export const dropZoneActiveBrand = style([
+    dropZoneActiveBase,
+    {
+        backgroundColor: skinVars.colors.backgroundDropZoneBrandDragover,
+    },
+]);
 
 const scaleAnimation = keyframes({
     '0%': {
