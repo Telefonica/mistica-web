@@ -8,6 +8,9 @@ on:
                 required: true
                 default: ''
 
+permissions:
+    contents: write
+
 jobs:
     update-screenshots:
         name: update-screenshots
@@ -21,7 +24,7 @@ jobs:
             ACTION_INPUT_BRANCH: ${{ github.event.inputs.branch || 'master' }}
         steps:
             - name: checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
                   ref: ${{ env.ACTION_INPUT_BRANCH }}

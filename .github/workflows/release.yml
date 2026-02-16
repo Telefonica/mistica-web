@@ -6,12 +6,19 @@ on:
                 description: 'CLI args'
                 required: false
                 default: ''
+
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
 jobs:
     release:
         name: Release
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            # Necesita persist-credentials: true porque FLOW_GITHUB_TOKEN se usa para semantic-release que hace commits y tags
+            - uses: actions/checkout@v6
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
 

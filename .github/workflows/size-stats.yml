@@ -4,6 +4,10 @@ on:
     pull_request:
         branches: [master]
 
+permissions:
+    contents: read
+    pull-requests: write
+
 concurrency:
     group: size-stats-${{ github.ref }}
     cancel-in-progress: true
@@ -19,7 +23,9 @@ jobs:
             lib-overhead-gzip: ${{ steps.stats.outputs.lib-overhead-gzip }}
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             - run: yarn install --immutable --immutable-cache
 
@@ -38,9 +44,10 @@ jobs:
             lib-overhead-gzip: ${{ steps.stats.outputs.lib-overhead-gzip }}
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
               with:
                   ref: master
+                  persist-credentials: false
 
             - run: yarn install --immutable --immutable-cache
 
@@ -53,12 +60,17 @@ jobs:
         runs-on: ubuntu-latest
         needs: [master-size-stats, branch-size-stats]
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  ref: master
+                  persist-credentials: false
+
+            - uses: actions/checkout@v6
               with:
                   repository: Telefonica/github-actions
-                  token: '${{ secrets.NOVUM_PRIVATE_REPOS }}'
+                  token: '${{ secrets.GITHUB_TOKEN_ACTIONS }}'
                   path: .github/shared-actions
+                  persist-credentials: false
 
             - run: yarn install --immutable --immutable-cache
 

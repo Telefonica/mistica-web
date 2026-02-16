@@ -4,6 +4,10 @@ on:
     pull_request:
         branches: [master]
 
+permissions:
+    contents: read
+    pull-requests: write
+
 jobs:
     lint-pr:
         # This job validates the PR title against the conventional commit format. Needed for semantic-release to generate release notes.
