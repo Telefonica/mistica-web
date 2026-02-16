@@ -4,7 +4,6 @@ import {
     ButtonPrimary,
     ButtonSecondary,
     IconExportRegular,
-    skinVars,
     ResponsiveLayout,
     Box,
     Placeholder,
@@ -15,43 +14,6 @@ import type {Variant} from '../theme-variant-context';
 export default {
     title: 'Components/FileUpload',
     parameters: {fullScreen: true},
-    argTypes: {
-        withDropZone: {
-            control: {type: 'boolean'},
-        },
-        multiple: {
-            control: {type: 'boolean'},
-        },
-        allowAppend: {
-            control: {type: 'boolean'},
-        },
-        accept: {
-            control: {type: 'text'},
-        },
-        withAsset: {
-            control: {type: 'boolean'},
-        },
-        withSlot: {
-            control: {type: 'boolean'},
-        },
-        errorText: {
-            control: {type: 'text'},
-        },
-        buttonType: {
-            options: ['primary', 'secondary'],
-            control: {type: 'select'},
-        },
-        title: {
-            control: {type: 'text'},
-        },
-        description: {
-            control: {type: 'text'},
-        },
-        variantOutside: {
-            options: ['default', 'brand', 'alternative'],
-            control: {type: 'select'},
-        },
-    },
 };
 
 type Args = {
@@ -82,7 +44,7 @@ export const Default: StoryComponent<Args> = ({
     variantOutside,
 }) => {
     return (
-        <ResponsiveLayout variant={variantOutside} fullWidth>
+        <ResponsiveLayout variant={variantOutside}>
             <Box padding={16}>
                 <FileUpload
                     name="file-upload"
@@ -90,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
                     multiple={multiple}
                     allowAppend={allowAppend}
                     withDropZone={withDropZone}
-                    asset={withAsset ? <IconExportRegular color={skinVars.colors.brand} /> : undefined}
+                    asset={withAsset ? <IconExportRegular color="currentColor" /> : undefined}
                     title={title}
                     description={description}
                     slot={withSlot ? <Placeholder /> : undefined}
@@ -125,4 +87,41 @@ Default.args = {
     title: 'Drag or upload your file',
     description: 'File can be up to 50Mb',
     variantOutside: 'default',
+};
+Default.argTypes = {
+    withDropZone: {
+        control: {type: 'boolean'},
+    },
+    multiple: {
+        control: {type: 'boolean'},
+    },
+    allowAppend: {
+        control: {type: 'boolean'},
+    },
+    accept: {
+        control: {type: 'text'},
+    },
+    withAsset: {
+        control: {type: 'boolean'},
+    },
+    withSlot: {
+        control: {type: 'boolean'},
+    },
+    errorText: {
+        control: {type: 'text'},
+    },
+    buttonType: {
+        options: ['primary', 'secondary'],
+        control: {type: 'select'},
+    },
+    title: {
+        control: {type: 'text'},
+    },
+    description: {
+        control: {type: 'text'},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'alternative'],
+        control: {type: 'select'},
+    },
 };

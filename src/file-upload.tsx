@@ -244,6 +244,7 @@ const FileUpload = ({
               onDragLeave: handleDragLeave,
               onDragOver: handleDragOver,
               onDrop: handleDrop,
+              onClick: withDropZone ? handleButtonPress : undefined,
           }
         : {};
 
@@ -267,28 +268,37 @@ const FileUpload = ({
             <Stack space={4}>
                 <div {...dropZoneHandlers}>
                     <div className={contentClassName}>
-                        <ThemeVariant variant={withDropZone ? 'default' : outsideVariant}>
-                            <Stack space={16}>
-                                <div className={assetClassName}>{asset}</div>
-                                <Stack space={4}>
-                                    <Text3 regular as="div" dataAttributes={{testid: 'title'}}>
-                                        <label htmlFor={id}>{title}</label>
-                                    </Text3>
-                                    {description && (
-                                        <Text2
-                                            regular
-                                            as="div"
-                                            color={skinVars.colors.textSecondary}
-                                            dataAttributes={{testid: 'description'}}
-                                        >
-                                            {description}
-                                        </Text2>
-                                    )}
-                                </Stack>
-                                {slot}
-                                {renderButton({onPress: handleButtonPress, small: true})}
+                        <Stack space={16}>
+                            {asset && (
+                                <div
+                                    className={assetClassName}
+                                    style={{
+                                        color: isBrandVariant
+                                            ? skinVars.colors.neutralHighBrand
+                                            : skinVars.colors.brand,
+                                    }}
+                                >
+                                    {asset}
+                                </div>
+                            )}
+                            <Stack space={4}>
+                                <Text3 regular as="div" dataAttributes={{testid: 'title'}}>
+                                    <label htmlFor={id}>{title}</label>
+                                </Text3>
+                                {description && (
+                                    <Text2
+                                        regular
+                                        as="div"
+                                        color={skinVars.colors.textSecondary}
+                                        dataAttributes={{testid: 'description'}}
+                                    >
+                                        {description}
+                                    </Text2>
+                                )}
                             </Stack>
-                        </ThemeVariant>
+                            {slot}
+                            {renderButton({onPress: handleButtonPress, small: true})}
+                        </Stack>
                     </div>
 
                     <input

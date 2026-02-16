@@ -25,8 +25,6 @@ const dropZoneBase = style([
         paddingX: 32,
     }),
     {
-        backgroundColor: skinVars.colors.backgroundContainer,
-        border: `1px dashed ${skinVars.colors.inputBorder}`,
         textAlign: 'center',
         transition: 'border 200ms ease, background-color 200ms ease',
     },
@@ -35,8 +33,10 @@ const dropZoneBase = style([
 export const dropZoneContainer = style([
     dropZoneBase,
     {
+        border: `1px dashed ${skinVars.colors.inputBorder}`,
         selectors: {
             '&:hover': {
+                border: `1px solid ${skinVars.colors.borderSelected}`,
                 backgroundColor: skinVars.colors.backgroundDropZoneHover,
             },
         },
@@ -46,31 +46,25 @@ export const dropZoneContainer = style([
 export const dropZoneContainerBrand = style([
     dropZoneBase,
     {
+        border: `1px dashed ${skinVars.colors.inputBorderBrand}`,
         selectors: {
             '&:hover': {
+                border: `1px solid ${skinVars.colors.inputBorderBrand}`,
                 backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
             },
         },
     },
 ]);
 
-const dropZoneActiveBase = style({
+export const dropZoneActive = style({
     border: `1px solid ${skinVars.colors.borderSelected}`,
+    backgroundColor: skinVars.colors.backgroundDropZoneDragover,
 });
 
-export const dropZoneActive = style([
-    dropZoneActiveBase,
-    {
-        backgroundColor: skinVars.colors.backgroundDropZoneDragover,
-    },
-]);
-
-export const dropZoneActiveBrand = style([
-    dropZoneActiveBase,
-    {
-        backgroundColor: skinVars.colors.backgroundDropZoneBrandDragover,
-    },
-]);
+export const dropZoneActiveBrand = style({
+    border: `1px solid ${skinVars.colors.inputBorderBrand}`,
+    backgroundColor: skinVars.colors.backgroundDropZoneBrandDragover,
+});
 
 const scaleAnimation = keyframes({
     '0%': {
