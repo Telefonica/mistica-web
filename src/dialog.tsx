@@ -96,13 +96,7 @@ const InternalDialog = (props: InternalDialogProps) => {
             )}
             {title && (
                 <Box paddingBottom={16}>
-                    {isDialog ? (
-                        <Text5 as="h2">{title}</Text5>
-                    ) : (
-                        <Text4 regular as="h2">
-                            {title}
-                        </Text4>
-                    )}
+                    <Text5 as="h2">{title}</Text5>
                 </Box>
             )}
             {props.subtitle && (

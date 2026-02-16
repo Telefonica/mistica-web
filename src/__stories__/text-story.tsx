@@ -1,31 +1,30 @@
 import * as React from 'react';
 import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, Stack, Title1} from '..';
 import {useTheme} from '../hooks';
-import * as textProps from '../text-props';
 import {isSafari} from '../utils/platform';
+
+import type {TextPresetName} from '../text';
+import type {TextSizeTokenConfig, TextTokenConfig} from '../skins/types';
 
 export default {
     title: 'Components/Text',
     component: Text,
 };
 
-const getDisplaySizes = (textPreset: any, textProp: any) => {
-    const mobileSize = textPreset.size.mobile || textProp.mobileSize;
-    const mobileLineHeight = textPreset.lineHeight.mobile || textProp.mobileLineHeight;
-    const desktopSize = textPreset.size.desktop || textProp.desktopSize;
-    const desktopLineHeight = textPreset.lineHeight.desktop || textProp.desktopLineHeight;
+const getDisplaySizes = (textPreset: TextSizeTokenConfig | TextTokenConfig) => {
+    const mobileSize = textPreset.size.mobile;
+    const mobileLineHeight = textPreset.lineHeight.mobile;
+    const desktopSize = textPreset.size.desktop;
+    const desktopLineHeight = textPreset.lineHeight.desktop;
 
     return `${mobileSize}/${mobileLineHeight} (Mobile) | ${desktopSize}/${desktopLineHeight} (Desktop)`;
 };
 
-type TextKey = keyof typeof textProps;
-
-const useTextDisplayContent = (textKey: TextKey, weight?: string) => {
+const useTextDisplayContent = (textKey: TextPresetName, weight?: string) => {
     const {textPresets} = useTheme();
-    const textProp = textProps[textKey];
     const textPreset = textPresets[textKey];
 
-    const sizeInfo = getDisplaySizes(textPreset, textProp);
+    const sizeInfo = getDisplaySizes(textPreset);
     const weightText = weight ? ` ${weight.charAt(0).toUpperCase() + weight.slice(1)}` : '';
     const displayText = `${textKey.charAt(0).toUpperCase() + textKey.slice(1)}${weightText} ${sizeInfo}`;
 
@@ -40,14 +39,18 @@ export const TextComponents: StoryComponent = () => {
     const text7Content = useTextDisplayContent('text7');
     const text6Content = useTextDisplayContent('text6');
     const text5Content = useTextDisplayContent('text5');
+    const text4BoldContent = useTextDisplayContent('text4', 'bold');
     const text4MediumContent = useTextDisplayContent('text4', 'medium');
     const text4RegularContent = useTextDisplayContent('text4', 'regular');
     const text4LightContent = useTextDisplayContent('text4', 'light');
+    const text3BoldContent = useTextDisplayContent('text3', 'bold');
     const text3MediumContent = useTextDisplayContent('text3', 'medium');
     const text3RegularContent = useTextDisplayContent('text3', 'regular');
     const text3LightContent = useTextDisplayContent('text3', 'light');
+    const text2BoldContent = useTextDisplayContent('text2', 'bold');
     const text2MediumContent = useTextDisplayContent('text2', 'medium');
     const text2RegularContent = useTextDisplayContent('text2', 'regular');
+    const text1BoldContent = useTextDisplayContent('text1', 'bold');
     const text1MediumContent = useTextDisplayContent('text1', 'medium');
     const text1RegularContent = useTextDisplayContent('text1', 'regular');
 
@@ -59,14 +62,18 @@ export const TextComponents: StoryComponent = () => {
             <Text7>{text7Content}</Text7>
             <Text6>{text6Content}</Text6>
             <Text5>{text5Content}</Text5>
+            <Text4 bold>{text4BoldContent}</Text4>
             <Text4 medium>{text4MediumContent}</Text4>
             <Text4 regular>{text4RegularContent}</Text4>
             <Text4 light>{text4LightContent}</Text4>
+            <Text3 bold>{text3BoldContent}</Text3>
             <Text3 medium>{text3MediumContent}</Text3>
             <Text3 regular>{text3RegularContent}</Text3>
             <Text3 light>{text3LightContent}</Text3>
+            <Text2 bold>{text2BoldContent}</Text2>
             <Text2 medium>{text2MediumContent}</Text2>
             <Text2 regular>{text2RegularContent}</Text2>
+            <Text1 bold>{text1BoldContent}</Text1>
             <Text1 medium>{text1MediumContent}</Text1>
             <Text1 regular>{text1RegularContent}</Text1>
         </Stack>
