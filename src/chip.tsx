@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Badge from './badge';
 import Box from './box';
-import {Text2} from './text';
+import Text, {getTextSizesWithWeight} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
@@ -72,9 +72,14 @@ const Chip = (props: ChipProps): JSX.Element => {
                 </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
-                <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
+                <Text
+                    id={id}
+                    {...getTextSizesWithWeight({textPreset: textPresets.chipLabel})}
+                    truncate={1}
+                    color="currentColor"
+                >
                     {children}
-                </Text2>
+                </Text>
             </Box>
         </>
     );

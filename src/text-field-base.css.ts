@@ -1,4 +1,4 @@
-import {globalStyle, style} from '@vanilla-extract/css';
+import {createVar, globalStyle, style} from '@vanilla-extract/css';
 import {iconContainerSize} from './icon-button.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars, vars} from './skins/skin-contract.css';
@@ -16,30 +16,49 @@ export const fieldElementsGap = 12;
 export const fieldEndIconGap = 4;
 export const iconButtonSize = iconContainerSize.default;
 
-export const mobileFontSize = pxToRem(16);
-export const desktopFontSize = pxToRem(18);
+const mobileFontSize = createVar();
+const desktopFontSize = createVar();
+const mobileLineHeight = createVar();
+const desktopLineHeight = createVar();
 
-export const labelLineHeight = pxToRem(24);
-export const inputLineHeight = pxToRem(24);
+const shrinkedLabelMobileFontSize = createVar();
+const shrinkedLabelDesktopFontSize = createVar();
+const shrinkedLabelMobileLineHeight = createVar();
+const shrinkedLabelDesktopLineHeight = createVar();
 
-export const shrinkedLabelLineHeight = {
-    mobile: pxToRem(16),
-    desktop: pxToRem(20),
-};
+const helperTextMobileFontSize = createVar();
+const helperTextDesktopFontSize = createVar();
+const helperTextMobileLineHeight = createVar();
+const helperTextDesktopLineHeight = createVar();
 
-export const labelFontSize = {
-    mobile: pxToRem(16),
-    desktop: pxToRem(18),
+const labelScaleDesktop = createVar();
+const labelScaleMobile = createVar();
+
+export const fieldVars = {
+    mobileFontSize,
+    desktopFontSize,
+    mobileLineHeight,
+    desktopLineHeight,
+    shrinkedLabelMobileFontSize,
+    shrinkedLabelDesktopFontSize,
+    shrinkedLabelMobileLineHeight,
+    shrinkedLabelDesktopLineHeight,
+    helperTextMobileFontSize,
+    helperTextDesktopFontSize,
+    helperTextMobileLineHeight,
+    helperTextDesktopLineHeight,
+    labelScaleDesktop,
+    labelScaleMobile,
 };
 
 const topSpaceWithLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} + ${fieldVerticalPadding}px)`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} + ${fieldVerticalPadding}px)`,
 };
 
 const topSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldVerticalPadding}px)`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldVerticalPadding}px)`,
 };
 
 const bottomSpaceWithLabel = {
@@ -48,8 +67,8 @@ const bottomSpaceWithLabel = {
 };
 
 const bottomSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldVerticalPadding}px)`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldVerticalPadding}px)`,
 };
 
 const commonInputStyles = style([
@@ -62,11 +81,12 @@ const commonInputStyles = style([
     {
         background: 'none',
         borderRadius: `calc(${vars.borderRadii.input} - 1px)`,
-        lineHeight: inputLineHeight,
+        lineHeight: desktopLineHeight,
         fontSize: desktopFontSize,
         '@media': {
             [mq.tabletOrSmaller]: {
                 fontSize: mobileFontSize,
+                lineHeight: mobileLineHeight,
             },
         },
         caretColor: vars.colors.controlActivated,
@@ -145,7 +165,12 @@ export const emptyDateValue = style({
      */
     selectors: {
         '&::-webkit-date-and-time-value': {
-            minHeight: inputLineHeight,
+            minHeight: desktopLineHeight,
+            '@media': {
+                [mq.tabletOrSmaller]: {
+                    minHeight: mobileLineHeight,
+                },
+            },
         },
     },
 });
