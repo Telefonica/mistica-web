@@ -35,6 +35,8 @@ type MediaCardArgs = CommonCardArgs & {
     imageSrc: string;
     imageAlt: string;
     videoSrc: string;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
     mediaWidth: string;
@@ -59,6 +61,8 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     footerVariant,
     imageSrc,
     videoSrc,
+    videoLoop,
+    videoAutoPlay,
     slot,
     slotAlignment,
     footerSlot,
@@ -99,6 +103,8 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
+                videoLoop={videoLoop}
+                videoAutoPlay={videoAutoPlay}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}

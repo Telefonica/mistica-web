@@ -60,7 +60,7 @@ export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimar
 export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
 export type CardActionButtonLink = RendersNullableElement<typeof ButtonLink>;
 
-export type CardVideoProps = {
+type CardVideoProps = {
     videoLoop?: boolean;
     videoAutoPlay?: boolean;
     videoDataAttributes?: DataAttributes;
@@ -477,7 +477,9 @@ export const useVideoWithControls = ({
             return;
         }
 
-        if (videoStatus === 'playing') {
+        if (videoStatus === 'loading') {
+            dispatch('showSpinner');
+        } else if (videoStatus === 'playing') {
             video.pause();
         } else {
             void video.play();
