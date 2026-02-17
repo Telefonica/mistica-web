@@ -108,7 +108,7 @@ const Form = ({
             if (element.tagName === 'SELECT') {
                 return false;
             }
-            if (['date', 'datetime-local', 'month'].includes(element.type)) {
+            if (['date', 'datetime-local', 'time', 'month'].includes(element.type)) {
                 return false;
             }
             return true;
