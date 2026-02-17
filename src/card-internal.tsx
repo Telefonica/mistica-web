@@ -499,24 +499,21 @@ export const useVideoWithControls = ({
         return {video};
     }
 
+    const isVideoLoading = videoStatus === 'loading' || videoStatus === 'loadingTimeout';
+
     const videoAction: CardAction | undefined = video
         ? {
               uncheckedProps: {
                   Icon:
-                      videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
-                          ? CardActionSpinner
-                          : CardActionPauseIcon,
-                  label:
-                      videoStatus === 'loadingTimeout'
-                          ? ''
-                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
+                      isVideoLoading && !isRunningAcceptanceTest() ? CardActionSpinner : CardActionPauseIcon,
+                  label: isVideoLoading ? '' : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
                   label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
               },
               onChange: onVideoControlPress,
-              disabled: isRunningAcceptanceTest() ? false : videoStatus === 'loadingTimeout',
+              disabled: isRunningAcceptanceTest() ? false : isVideoLoading,
               checked: videoStatus === 'paused',
           }
         : undefined;
