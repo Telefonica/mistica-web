@@ -4,7 +4,7 @@ import {prepareFile} from '@telefonica/acceptance-testing';
 
 test('FileUpload - with drop zone', async () => {
     await openStoryPage({
-        id: 'components-fileupload--default',
+        id: 'components-input-fields-fileupload--default',
         device: 'MOBILE_IOS',
         args: {withDropZone: true, withAsset: true},
     });
@@ -22,7 +22,7 @@ test('FileUpload - with drop zone', async () => {
 
 test('FileUpload - without drop zone', async () => {
     await openStoryPage({
-        id: 'components-fileupload--default',
+        id: 'components-input-fields-fileupload--default',
         device: 'MOBILE_IOS',
         args: {withDropZone: false, withAsset: true},
     });
@@ -35,7 +35,7 @@ test('FileUpload - without drop zone', async () => {
 
 test('FileUpload - with error', async () => {
     await openStoryPage({
-        id: 'components-fileupload--default',
+        id: 'components-input-fields-fileupload--default',
         device: 'MOBILE_IOS',
         args: {
             withDropZone: true,
@@ -52,7 +52,7 @@ test('FileUpload - with error', async () => {
 
 test('FileUpload - upload multiple files and remove', async () => {
     await openStoryPage({
-        id: 'components-fileupload--default',
+        id: 'components-input-fields-fileupload--default',
         device: 'MOBILE_IOS',
         args: {withDropZone: true, withAsset: true, allowAppend: true, multiple: true},
     });
