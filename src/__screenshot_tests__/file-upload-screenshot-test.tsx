@@ -86,3 +86,24 @@ test('FileUpload - upload multiple files and remove', async () => {
     const imageAfterRemoval = await fileUploader.screenshot();
     expect(imageAfterRemoval).toMatchImageSnapshot();
 });
+
+test('FileUpload - custom gallery', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-fileupload--custom-gallery',
+        device: 'MOBILE_IOS',
+    });
+
+    const fileUploader = await screen.findByTestId('FileUpload');
+    const fileInput = await screen.findByLabelText('Gallery');
+    const firstFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-2.svg'));
+    const secondFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-3.svg'));
+
+    await fileInput.uploadFile(firstFixturePath);
+    await screen.findByLabelText('Remove file-upload-2.svg');
+
+    await fileInput.uploadFile(secondFixturePath);
+    await screen.findByLabelText('Remove file-upload-3.svg');
+
+    const image = await fileUploader.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
