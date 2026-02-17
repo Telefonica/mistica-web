@@ -482,7 +482,10 @@ export const useVideoWithControls = ({
         } else if (videoStatus === 'playing') {
             video.pause();
         } else {
-            void video.play();
+            video.play().then(
+                () => dispatch('play'),
+                () => {}
+            );
         }
     };
 
