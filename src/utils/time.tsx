@@ -11,8 +11,12 @@ export const getLocalYearMonthString = (date: Date): string => {
     return `${yyyy}-${mm}`;
 };
 
-export const getLocalDateTimeString = (date: Date): string => {
+export const getLocalTimeString = (date: Date): string => {
     const h = String(date.getHours()).padStart(2, '0');
     const m = String(date.getMinutes()).padStart(2, '0');
-    return `${getLocalDateString(date)}T${h}:${m}`;
+    return `${h}:${m}`;
+};
+
+export const getLocalDateTimeString = (date: Date): string => {
+    return `${getLocalDateString(date)}T${getLocalTimeString(date)}`;
 };

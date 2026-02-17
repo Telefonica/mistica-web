@@ -238,7 +238,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !required;
 
-        const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
+        const isDateInput =
+            rest.type === 'date' ||
+            rest.type === 'datetime-local' ||
+            rest.type === 'time' ||
+            rest.type === 'month';
         const valueRef = React.useRef<string | undefined>(undefined);
 
         useIsomorphicLayoutEffect(() => {
