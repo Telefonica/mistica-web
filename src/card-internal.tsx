@@ -425,12 +425,14 @@ export const useVideoWithControls = ({
 } => {
     const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
+    const initialLoadDoneRef = React.useRef(false);
     const [videoStatus, dispatch] = React.useReducer(
         videoReducer,
         process.env.NODE_ENV === 'test' ? 'playing' : 'loading'
     );
 
     React.useEffect(() => {
+        initialLoadDoneRef.current = false;
         const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
         videoController.current?.load();
 
@@ -448,7 +450,11 @@ export const useVideoWithControls = ({
         const handleLoadedData = () => {
             // When autoPlay is false, the video loads but doesn't play.
             // We need to transition to 'paused' state to show the play button instead of spinner.
-            if (autoPlay === false) {
+            // We use initialLoadDoneRef to ensure this only happens once per video source,
+            // because Chrome can fire onCanPlayThrough multiple times for network videos,
+            // which would revert the card to 'paused' state even while the video is playing.
+            if (autoPlay === false && !initialLoadDoneRef.current) {
+                initialLoadDoneRef.current = true;
                 dispatch('pause');
             }
         };
