@@ -21,22 +21,23 @@ import {vars as skinVars} from '../skins/skin-contract.css';
 import type {Variant} from '../theme-variant-context';
 
 export default {
-    title: 'Components/FileUpload',
+    title: 'Components/Input fields/FileUpload',
     parameters: {fullScreen: true},
 };
 
 type Args = {
+    variantOutside: Variant;
     withDropZone: boolean;
     multiple: boolean;
     allowAppend: boolean;
     accept: string;
+    disabled: boolean;
     withAsset: boolean;
-    withSlot: boolean;
-    errorText: string;
-    buttonType: 'primary' | 'secondary';
     title: string;
     description: string;
-    variantOutside: Variant;
+    withSlot: boolean;
+    buttonType: 'primary' | 'secondary' | 'icon';
+    errorText: string;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -47,6 +48,7 @@ export const Default: StoryComponent<Args> = ({
     withAsset,
     withSlot,
     errorText,
+    disabled,
     buttonType,
     title,
     description,
@@ -61,22 +63,41 @@ export const Default: StoryComponent<Args> = ({
                     multiple={multiple}
                     allowAppend={allowAppend}
                     withDropZone={withDropZone}
+                    disabled={disabled}
                     asset={withAsset ? <IconExportRegular color="currentColor" /> : undefined}
                     title={title}
                     description={description}
                     slot={withSlot ? <Placeholder /> : undefined}
                     errorText={errorText || undefined}
-                    renderButton={({onPress, small}) =>
-                        buttonType === 'primary' ? (
-                            <ButtonPrimary small={small} onPress={onPress}>
-                                Choose file
-                            </ButtonPrimary>
-                        ) : (
-                            <ButtonSecondary small={small} onPress={onPress}>
-                                Choose file
-                            </ButtonSecondary>
-                        )
-                    }
+                    renderButton={({onPress, small, disabled}) => {
+                        switch (buttonType) {
+                            case 'primary':
+                                return (
+                                    <ButtonPrimary small={small} onPress={onPress} disabled={disabled}>
+                                        Choose file
+                                    </ButtonPrimary>
+                                );
+                            case 'secondary':
+                                return (
+                                    <ButtonSecondary small={small} onPress={onPress} disabled={disabled}>
+                                        Choose file
+                                    </ButtonSecondary>
+                                );
+                            case 'icon':
+                                return (
+                                    <IconButton
+                                        Icon={IconExportRegular}
+                                        backgroundType="solid"
+                                        small={small}
+                                        onPress={onPress}
+                                        aria-label="Choose file"
+                                        disabled={disabled}
+                                    />
+                                );
+                            default:
+                                return null;
+                        }
+                    }}
                 />
             </Box>
         </ResponsiveLayout>
@@ -85,19 +106,24 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'FileUpload';
 Default.args = {
+    variantOutside: 'default',
     withDropZone: true,
     multiple: false,
     allowAppend: false,
     accept: '',
+    disabled: false,
     withAsset: true,
-    withSlot: true,
-    errorText: '',
-    buttonType: 'primary',
     title: 'Drag or upload your file',
     description: 'File can be up to 50Mb',
-    variantOutside: 'default',
+    withSlot: true,
+    buttonType: 'primary',
+    errorText: '',
 };
 Default.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'alternative', 'negative'],
+        control: {type: 'select'},
+    },
     withDropZone: {
         control: {type: 'boolean'},
     },
@@ -110,18 +136,11 @@ Default.argTypes = {
     accept: {
         control: {type: 'text'},
     },
+    disabled: {
+        control: {type: 'boolean'},
+    },
     withAsset: {
         control: {type: 'boolean'},
-    },
-    withSlot: {
-        control: {type: 'boolean'},
-    },
-    errorText: {
-        control: {type: 'text'},
-    },
-    buttonType: {
-        options: ['primary', 'secondary'],
-        control: {type: 'select'},
     },
     title: {
         control: {type: 'text'},
@@ -129,9 +148,15 @@ Default.argTypes = {
     description: {
         control: {type: 'text'},
     },
-    variantOutside: {
-        options: ['default', 'brand', 'alternative'],
+    withSlot: {
+        control: {type: 'boolean'},
+    },
+    buttonType: {
+        options: ['primary', 'secondary', 'icon'],
         control: {type: 'select'},
+    },
+    errorText: {
+        control: {type: 'text'},
     },
 };
 

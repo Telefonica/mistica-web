@@ -96,6 +96,7 @@ type UseFileUploadProps = {
     accept?: string;
     capture?: boolean | 'user' | 'environment';
     multiple?: boolean;
+    disabled?: boolean;
     errorText?: string;
     /** When enabled, new files will be appended to the existing files instead of replacing them */
     allowAppend?: boolean;
@@ -116,6 +117,7 @@ type UseFileUploadReturn = {
         accept?: string;
         capture?: boolean | 'user' | 'environment';
         multiple?: boolean;
+        disabled?: boolean;
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
         'aria-describedby'?: string;
         'aria-invalid'?: boolean;
@@ -139,6 +141,7 @@ const useFileUpload = ({
     accept,
     capture,
     multiple,
+    disabled = false,
     errorText,
     allowAppend = false,
     files: filesProp,
@@ -164,6 +167,9 @@ const useFileUpload = ({
     };
 
     const handleFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (disabled) {
+            return;
+        }
         const newFiles = event.target.files;
         if (!newFiles) {
             return;
@@ -190,6 +196,9 @@ const useFileUpload = ({
     };
 
     const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+        if (disabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
         dragCounterRef.current++;
@@ -199,6 +208,9 @@ const useFileUpload = ({
     };
 
     const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+        if (disabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
         dragCounterRef.current--;
@@ -208,11 +220,17 @@ const useFileUpload = ({
     };
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+        if (disabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
     };
 
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        if (disabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
         setIsDragActive(false);
@@ -246,6 +264,9 @@ const useFileUpload = ({
     };
 
     const removeFile = (file: File) => {
+        if (disabled) {
+            return;
+        }
         const dataTransfer = new DataTransfer();
         if (files) {
             for (let i = 0; i < files.length; i++) {
@@ -259,10 +280,16 @@ const useFileUpload = ({
     };
 
     const openFileDialog = () => {
+        if (disabled) {
+            return;
+        }
         inputRef.current?.click();
     };
 
     const handleDropZoneClick = (event: React.MouseEvent<HTMLElement>) => {
+        if (disabled) {
+            return;
+        }
         if (event.defaultPrevented) {
             return;
         }
@@ -292,6 +319,7 @@ const useFileUpload = ({
             accept,
             capture,
             multiple,
+            disabled,
             onChange: handleFilesChange,
             'aria-describedby': errorText ? errorTextId : undefined,
             'aria-invalid': !!errorText,
@@ -359,6 +387,7 @@ type Props = {
     accept?: string;
     capture?: boolean | 'user' | 'environment';
     multiple?: boolean;
+    disabled?: boolean;
     errorText?: string;
     /** When enabled, new files will be appended to the existing files instead of replacing them */
     allowAppend?: boolean;
@@ -381,6 +410,7 @@ type Props = {
               openFileDialog: () => void;
               removeFile: (file: File) => void;
               errorTextId: string;
+              disabled: boolean;
           }) => React.ReactNode;
       }
     | {
@@ -388,7 +418,7 @@ type Props = {
           title?: string;
           description?: string;
           slot?: React.ReactNode;
-          renderButton: (props: {onPress: () => void; small: boolean}) => React.ReactNode;
+          renderButton: (props: {onPress: () => void; small: boolean; disabled: boolean}) => React.ReactNode;
           renderFiles?: (props: {
               files: FileList | null;
               removeFile: (file: File) => void;
@@ -404,6 +434,7 @@ const FileUpload = (props: Props): JSX.Element => {
         accept,
         capture,
         multiple,
+        disabled = false,
         errorText,
         allowAppend = false,
         dataAttributes,
@@ -425,6 +456,7 @@ const FileUpload = (props: Props): JSX.Element => {
         accept,
         capture,
         multiple,
+        disabled,
         errorText,
         allowAppend,
     });
@@ -447,6 +479,7 @@ const FileUpload = (props: Props): JSX.Element => {
                     openFileDialog,
                     removeFile,
                     errorTextId,
+                    disabled,
                 })}
                 <input style={{display: 'none'}} {...inputProps} />
             </div>
@@ -455,17 +488,16 @@ const FileUpload = (props: Props): JSX.Element => {
 
     const {asset, title, description, slot, renderButton, renderFiles, withDropZone = false} = props;
 
-    const dropZoneHandlers = withDropZone ? dropZoneProps : {};
+    const dropZoneHandlers = withDropZone && !disabled ? dropZoneProps : {};
 
     const isBrandVariant = outsideVariant === 'brand';
-    const contentClassName = withDropZone
-        ? classnames({
-              [styles.dropZoneContainerBrand]: isBrandVariant,
-              [styles.dropZoneContainer]: !isBrandVariant,
-              [styles.dropZoneActiveBrand]: isDragActive && isBrandVariant,
-              [styles.dropZoneActive]: isDragActive && !isBrandVariant,
-          })
-        : '';
+    const contentClassName = classnames({
+        [styles.dropZoneContainerBrand]: withDropZone && isBrandVariant,
+        [styles.dropZoneContainer]: withDropZone && !isBrandVariant,
+        [styles.dropZoneActiveBrand]: withDropZone && isDragActive && isBrandVariant,
+        [styles.dropZoneActive]: withDropZone && isDragActive && !isBrandVariant,
+        [styles.disabled]: disabled,
+    });
 
     const assetClassName = withDropZone && isDragActive ? styles.assetScaleActive : '';
 
@@ -477,7 +509,7 @@ const FileUpload = (props: Props): JSX.Element => {
             <Stack space={4}>
                 <div {...dropZoneHandlers}>
                     <div className={contentClassName}>
-                        <Stack space={16}>
+                        <Stack space={8}>
                             {asset && (
                                 <div
                                     className={assetClassName}
@@ -505,27 +537,37 @@ const FileUpload = (props: Props): JSX.Element => {
                                     </Text2>
                                 )}
                             </Stack>
-                            {slot}
-                            {renderButton({onPress: openFileDialog, small: true})}
                         </Stack>
+                        {slot}
+                        <Box paddingTop={16}>
+                            {withDropZone ? (
+                                <div className={styles.centeredButton}>
+                                    {renderButton({onPress: openFileDialog, small: true, disabled})}
+                                </div>
+                            ) : (
+                                renderButton({onPress: openFileDialog, small: true, disabled})
+                            )}
+                        </Box>
                     </div>
 
                     <input style={{display: 'none'}} {...inputProps} />
                 </div>
                 {errorText && (
-                    <Text1
-                        regular
-                        color={skinVars.colors.textError}
-                        as="div"
-                        id={errorTextId}
-                        aria-live="assertive"
-                        dataAttributes={{testid: 'error-text'}}
-                    >
-                        <Inline space={4}>
-                            <IconWarningRegular size={16} color="currentColor" />
-                            {errorText}
-                        </Inline>
-                    </Text1>
+                    <div className={disabled ? styles.disabled : ''}>
+                        <Text1
+                            regular
+                            color={skinVars.colors.textError}
+                            as="div"
+                            id={errorTextId}
+                            aria-live="assertive"
+                            dataAttributes={{testid: 'error-text'}}
+                        >
+                            <Inline space={4}>
+                                <IconWarningRegular size={16} color="currentColor" />
+                                {errorText}
+                            </Inline>
+                        </Text1>
+                    </div>
                 )}
             </Stack>
             {renderFiles

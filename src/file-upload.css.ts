@@ -1,32 +1,29 @@
 import {style, keyframes} from '@vanilla-extract/css';
+import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-export const fileItem = style([
-    sprinkles({
-        display: 'flex',
-        border: 'regular',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderRadius: 4,
-        paddingY: 8,
-        paddingX: 12,
-    }),
-    {
-        marginBottom: 8,
-        backgroundColor: skinVars.colors.backgroundContainer,
-    },
-]);
+export const disabled = style({
+    opacity: 0.5,
+});
 
 const dropZoneBase = style([
     sprinkles({
-        borderRadius: 16,
-        paddingY: 40,
-        paddingX: 32,
+        borderRadius: skinVars.borderRadii.container,
+        paddingY: 32,
+        paddingX: 24,
     }),
     {
         textAlign: 'center',
         transition: 'border 200ms ease, background-color 200ms ease',
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingTop: 24,
+                paddingBottom: 24,
+                paddingLeft: 16,
+                paddingRight: 16,
+            },
+        },
     },
 ]);
 
@@ -35,7 +32,7 @@ export const dropZoneContainer = style([
     {
         border: `1px dashed ${skinVars.colors.inputBorder}`,
         selectors: {
-            '&:hover': {
+            [`&:hover:not(${disabled})`]: {
                 border: `1px solid ${skinVars.colors.borderSelected}`,
                 backgroundColor: skinVars.colors.backgroundDropZoneHover,
             },
@@ -48,7 +45,7 @@ export const dropZoneContainerBrand = style([
     {
         border: `1px dashed ${skinVars.colors.inputBorderBrand}`,
         selectors: {
-            '&:hover': {
+            [`&:hover:not(${disabled})`]: {
                 border: `1px solid ${skinVars.colors.inputBorderBrand}`,
                 backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
             },
@@ -88,4 +85,11 @@ export const centeredContent = style([
     {
         gap: '16px',
     },
+]);
+
+export const centeredButton = style([
+    sprinkles({
+        display: 'flex',
+        justifyContent: 'center',
+    }),
 ]);
