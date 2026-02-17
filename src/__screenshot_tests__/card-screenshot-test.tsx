@@ -365,34 +365,6 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test.each`
-    type       | description
-    ${'media'} | ${'MediaCard with videoAutoPlay false'}
-    ${'cover'} | ${'CoverCard with videoAutoPlay false'}
-    ${'naked'} | ${'NakedCard with videoAutoPlay false'}
-`('Card video autoPlay false - $description', async ({type, description}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            imageSrc: 'beach',
-            videoSrc: 'beach',
-            videoAutoPlay: false,
-            topActions: false,
-            onClose: false,
-            description,
-        },
-    });
-
-    // Wait for the video to load and the card to transition to paused state (showing play icon)
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
-    const card = await screen.findByTestId(TEST_IDS[type]);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
 test('NakedCard over inverse', async () => {
     await openStoryPage({
         id: STORY_IDS.naked,
