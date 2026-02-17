@@ -68,7 +68,7 @@ jobs:
             - uses: actions/checkout@v6
               with:
                   repository: Telefonica/github-actions
-                  token: '${{ secrets.GITHUB_TOKEN_ACTIONS }}'
+                  token: '${{ secrets.GH_TOKEN_ACTIONS }}'
                   path: .github/shared-actions
                   persist-credentials: false
 

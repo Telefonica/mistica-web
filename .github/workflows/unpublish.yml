@@ -16,7 +16,7 @@ jobs:
         steps:
             - uses: actions/checkout@v6
               with:
-                  token: ${{ secrets.GITHUB_TOKEN_MISTICA }}
+                  token: ${{ secrets.GH_TOKEN_MISTICA }}
                   persist-credentials: false
 
             - name: Install dependencies
