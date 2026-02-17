@@ -491,6 +491,7 @@ const formSnippets: Array<Snippet> = [
     ['IbanField', '<IbanField name="bankAccount" label="IBAN" />'],
     ['CreditCardFields', '<CreditCardFields/>'],
     ['DateField', '<DateField name="date" label="Date"/>'],
+    ['TimeField', '<TimeField name="time" label="Time"/>'],
     ['DecimalField', '<DecimalField name="decimal" label="Decimal"/>'],
     ['IntegerField', '<IntegerField name="integer" label="Integer"/>'],
     ['PasswordField', '<PasswordField name="password" label="Password"/>'],
