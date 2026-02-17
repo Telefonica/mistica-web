@@ -30,8 +30,10 @@ import IconFileMusicRegular from './generated/mistica-icons/icon-file-music-regu
 import IconClipRegular from './generated/mistica-icons/icon-clip-regular';
 import * as styles from './file-upload.css';
 import {useThemeVariant} from './theme-variant-context';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, IconProps} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const FileIcon = ({file}: {file: File}) => {
     if (file.type.startsWith('image/')) {
@@ -75,50 +77,91 @@ const formatSize = (sizeInBytes: number, locale?: string): string => {
     }
 };
 
-type Props = {
+const updateInputFiles = (input: HTMLInputElement | null, files: FileList | null) => {
+    if (!input) {
+        return;
+    }
+    if (files && files.length > 0) {
+        input.files = files;
+    } else {
+        const dataTransfer = new DataTransfer();
+        input.value = '';
+        input.files = dataTransfer.files;
+    }
+};
+
+type UseFileUploadProps = {
     id?: string;
     name?: string;
     accept?: string;
     capture?: boolean | 'user' | 'environment';
     multiple?: boolean;
-    asset?: React.ReactNode;
-    title?: string;
-    description?: string;
-    slot?: React.ReactNode;
-    renderButton: (props: {onPress: () => void; small: boolean}) => React.ReactNode;
-    withDropZone?: boolean;
     errorText?: string;
     /** When enabled, new files will be appended to the existing files instead of replacing them */
     allowAppend?: boolean;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
-    dataAttributes?: DataAttributes;
+    files?: FileList | null;
+    defaultFiles?: FileList | null;
+    onFilesChange?: (files: FileList | null) => void;
 };
 
-const FileUpload = ({
+type UseFileUploadReturn = {
+    id: string;
+    files: FileList | null;
+    setFiles: (files: FileList | null) => void;
+    inputProps: {
+        ref: React.RefObject<HTMLInputElement | null>;
+        type: 'file';
+        id: string;
+        name?: string;
+        accept?: string;
+        capture?: boolean | 'user' | 'environment';
+        multiple?: boolean;
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+        'aria-describedby'?: string;
+        'aria-invalid'?: boolean;
+    };
+    dropZoneProps: {
+        onDragEnter: (event: React.DragEvent<HTMLDivElement>) => void;
+        onDragLeave: (event: React.DragEvent<HTMLDivElement>) => void;
+        onDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+        onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+        onClick: (event: React.MouseEvent<HTMLElement>) => void;
+    };
+    isDragActive: boolean;
+    openFileDialog: () => void;
+    removeFile: (file: File) => void;
+    errorTextId: string;
+};
+
+const useFileUpload = ({
     id: idProp,
     name,
     accept,
     capture,
     multiple,
-    asset,
-    title,
-    description,
-    slot,
-    renderButton,
-    withDropZone = false,
     errorText,
     allowAppend = false,
-    dataAttributes,
-}: Props): JSX.Element => {
-    const {i18n} = useTheme();
+    files: filesProp,
+    defaultFiles = null,
+    onFilesChange,
+}: UseFileUploadProps): UseFileUploadReturn => {
     const generatedId = React.useId();
     const id = idProp || generatedId;
     const errorTextId = `${id}-error-text`;
-    const [files, setFiles] = React.useState<FileList | null>(null);
+    const [filesState, setFilesState] = React.useState<FileList | null>(defaultFiles);
     const [isDragActive, setIsDragActive] = React.useState(false);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const dragCounterRef = React.useRef(0);
-    const outsideVariant = useThemeVariant();
+    const isControlled = typeof filesProp !== 'undefined';
+    const files = isControlled ? filesProp : filesState;
+
+    const setFiles = (nextFiles: FileList | null) => {
+        if (!isControlled) {
+            setFilesState(nextFiles);
+        }
+        onFilesChange?.(nextFiles);
+        updateInputFiles(inputRef.current, nextFiles);
+    };
 
     const handleFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = event.target.files;
@@ -127,16 +170,13 @@ const FileUpload = ({
         }
 
         if (allowAppend && files && files.length > 0) {
-            // Append new files to existing files
             const dataTransfer = new DataTransfer();
-            // Add existing files
             for (let i = 0; i < files.length; i++) {
                 const existingFile = files.item(i);
                 if (existingFile) {
                     dataTransfer.items.add(existingFile);
                 }
             }
-            // Add new files
             for (let i = 0; i < newFiles.length; i++) {
                 const newFile = newFiles.item(i);
                 if (newFile) {
@@ -183,15 +223,12 @@ const FileUpload = ({
             const dataTransfer = new DataTransfer();
 
             if (allowAppend && files && files.length > 0) {
-                // Append new files to existing files
-                // Add existing files first
                 for (let i = 0; i < files.length; i++) {
                     const existingFile = files.item(i);
                     if (existingFile) {
                         dataTransfer.items.add(existingFile);
                     }
                 }
-                // Add dropped files
                 for (let i = 0; i < droppedFiles.length; i++) {
                     const droppedFile = droppedFiles.item(i);
                     if (droppedFile) {
@@ -199,21 +236,11 @@ const FileUpload = ({
                     }
                 }
                 setFiles(dataTransfer.files);
-                if (inputRef.current) {
-                    inputRef.current.files = dataTransfer.files;
-                }
             } else if (!multiple && droppedFiles.length > 1) {
-                // Only take the first file if multiple is not allowed
                 dataTransfer.items.add(droppedFiles[0]);
                 setFiles(dataTransfer.files);
-                if (inputRef.current) {
-                    inputRef.current.files = dataTransfer.files;
-                }
             } else {
                 setFiles(droppedFiles);
-                if (inputRef.current) {
-                    inputRef.current.files = droppedFiles;
-                }
             }
         }
     };
@@ -228,25 +255,207 @@ const FileUpload = ({
                 }
             }
             setFiles(dataTransfer.files);
-            if (inputRef.current) {
-                inputRef.current.files = dataTransfer.files;
-            }
         }
     };
 
-    const handleButtonPress = () => {
+    const openFileDialog = () => {
         inputRef.current?.click();
     };
 
-    const dropZoneHandlers = withDropZone
-        ? {
-              onDragEnter: handleDragEnter,
-              onDragLeave: handleDragLeave,
-              onDragOver: handleDragOver,
-              onDrop: handleDrop,
-              onClick: withDropZone ? handleButtonPress : undefined,
-          }
-        : {};
+    const handleDropZoneClick = (event: React.MouseEvent<HTMLElement>) => {
+        if (event.defaultPrevented) {
+            return;
+        }
+
+        const target = event.target instanceof HTMLElement ? event.target : null;
+        // Ignore clicks on interactive descendants to avoid reopening the dialog.
+        if (target?.closest('button, a, input, select, textarea, [role="button"]')) {
+            return;
+        }
+
+        openFileDialog();
+    };
+
+    React.useEffect(() => {
+        updateInputFiles(inputRef.current, files ?? null);
+    }, [files]);
+
+    return {
+        id,
+        files,
+        setFiles,
+        inputProps: {
+            ref: inputRef,
+            type: 'file' as const,
+            id,
+            name,
+            accept,
+            capture,
+            multiple,
+            onChange: handleFilesChange,
+            'aria-describedby': errorText ? errorTextId : undefined,
+            'aria-invalid': !!errorText,
+        },
+        dropZoneProps: {
+            onDragEnter: handleDragEnter,
+            onDragLeave: handleDragLeave,
+            onDragOver: handleDragOver,
+            onDrop: handleDrop,
+            onClick: handleDropZoneClick,
+        },
+        isDragActive,
+        openFileDialog,
+        removeFile,
+        errorTextId,
+    };
+};
+
+type FileItemProps = {
+    file: File;
+    onRemove: (file: File) => void;
+    formatSize?: (sizeInBytes: number) => string;
+    removeLabel?: string;
+};
+
+export const FileItem = ({
+    file,
+    onRemove,
+    formatSize: formatSizeProp,
+    removeLabel,
+}: FileItemProps): JSX.Element => {
+    const {i18n} = useTheme();
+    const format = formatSizeProp ?? ((sizeInBytes: number) => formatSize(sizeInBytes, i18n.locale));
+    const label = removeLabel ?? `Remove file ${file.name}`;
+
+    return (
+        <Boxed>
+            <Box paddingX={8} paddingY={16}>
+                <Inline space="between" alignItems="center">
+                    <Inline space={8} alignItems="center">
+                        <FileIcon file={file} />
+                        <Text2 regular>{file.name}</Text2>
+                    </Inline>
+                    <Inline space={16} alignItems="center">
+                        <Text2 regular color={skinVars.colors.textSecondary}>
+                            {format(file.size)}
+                        </Text2>
+                        <IconButton
+                            Icon={IconCloseRegular}
+                            type="neutral"
+                            small
+                            onPress={() => onRemove(file)}
+                            aria-label={label}
+                        />
+                    </Inline>
+                </Inline>
+            </Box>
+        </Boxed>
+    );
+};
+
+type Props = {
+    id?: string;
+    name?: string;
+    accept?: string;
+    capture?: boolean | 'user' | 'environment';
+    multiple?: boolean;
+    errorText?: string;
+    /** When enabled, new files will be appended to the existing files instead of replacing them */
+    allowAppend?: boolean;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
+} & ExclusifyUnion<
+    | {
+          render: (props: {
+              id: string;
+              files: FileList | null;
+              setFiles: (files: FileList | null) => void;
+              dropZoneProps: {
+                  onDragEnter: (event: React.DragEvent<HTMLDivElement>) => void;
+                  onDragLeave: (event: React.DragEvent<HTMLDivElement>) => void;
+                  onDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+                  onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+                  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+              };
+              isDragActive: boolean;
+              openFileDialog: () => void;
+              removeFile: (file: File) => void;
+              errorTextId: string;
+          }) => React.ReactNode;
+      }
+    | {
+          asset?: React.ReactNode;
+          title?: string;
+          description?: string;
+          slot?: React.ReactNode;
+          renderButton: (props: {onPress: () => void; small: boolean}) => React.ReactNode;
+          renderFiles?: (props: {
+              files: FileList | null;
+              removeFile: (file: File) => void;
+          }) => React.ReactNode;
+          withDropZone?: boolean;
+      }
+>;
+
+const FileUpload = (props: Props): JSX.Element => {
+    const {
+        id: idProp,
+        name,
+        accept,
+        capture,
+        multiple,
+        errorText,
+        allowAppend = false,
+        dataAttributes,
+    } = props;
+    const outsideVariant = useThemeVariant();
+    const {
+        id,
+        files,
+        setFiles,
+        inputProps,
+        dropZoneProps,
+        isDragActive,
+        openFileDialog,
+        removeFile,
+        errorTextId,
+    } = useFileUpload({
+        id: idProp,
+        name,
+        accept,
+        capture,
+        multiple,
+        errorText,
+        allowAppend,
+    });
+
+    if (props.render) {
+        return (
+            <div
+                {...getPrefixedDataAttributes({
+                    'component-name': 'FileUpload',
+                    testid: 'FileUpload',
+                    ...dataAttributes,
+                })}
+            >
+                {props.render({
+                    id,
+                    files,
+                    setFiles,
+                    dropZoneProps,
+                    isDragActive,
+                    openFileDialog,
+                    removeFile,
+                    errorTextId,
+                })}
+                <input style={{display: 'none'}} {...inputProps} />
+            </div>
+        );
+    }
+
+    const {asset, title, description, slot, renderButton, renderFiles, withDropZone = false} = props;
+
+    const dropZoneHandlers = withDropZone ? dropZoneProps : {};
 
     const isBrandVariant = outsideVariant === 'brand';
     const contentClassName = withDropZone
@@ -297,23 +506,11 @@ const FileUpload = ({
                                 )}
                             </Stack>
                             {slot}
-                            {renderButton({onPress: handleButtonPress, small: true})}
+                            {renderButton({onPress: openFileDialog, small: true})}
                         </Stack>
                     </div>
 
-                    <input
-                        style={{display: 'none'}}
-                        ref={inputRef}
-                        type="file"
-                        id={id}
-                        name={name}
-                        accept={accept}
-                        capture={capture}
-                        multiple={multiple}
-                        onChange={handleFilesChange}
-                        aria-describedby={errorText ? errorTextId : undefined}
-                        aria-invalid={!!errorText}
-                    />
+                    <input style={{display: 'none'}} {...inputProps} />
                 </div>
                 {errorText && (
                     <Text1
@@ -331,34 +528,16 @@ const FileUpload = ({
                     </Text1>
                 )}
             </Stack>
-            {files && files.length > 0 && (
-                <Stack space={8} role="list">
-                    {Array.from(files).map((file, index) => (
-                        <Boxed key={index}>
-                            <Box paddingX={8} paddingY={16}>
-                                <Inline space="between" alignItems="center">
-                                    <Inline space={8} alignItems="center">
-                                        <FileIcon file={file} />
-                                        <Text2 regular>{file.name}</Text2>
-                                    </Inline>
-                                    <Inline space={16} alignItems="center">
-                                        <Text2 regular color={skinVars.colors.textSecondary}>
-                                            {formatSize(file.size, i18n.locale)}
-                                        </Text2>
-                                        <IconButton
-                                            Icon={IconCloseRegular}
-                                            type="neutral"
-                                            small
-                                            onPress={() => removeFile(file)}
-                                            aria-label={`Remove file ${file.name}`}
-                                        />
-                                    </Inline>
-                                </Inline>
-                            </Box>
-                        </Boxed>
-                    ))}
-                </Stack>
-            )}
+            {renderFiles
+                ? renderFiles({files, removeFile})
+                : files &&
+                  files.length > 0 && (
+                      <Stack space={8} role="list">
+                          {Array.from(files).map((file, index) => (
+                              <FileItem key={index} file={file} onRemove={removeFile} />
+                          ))}
+                      </Stack>
+                  )}
         </Stack>
     );
 };
