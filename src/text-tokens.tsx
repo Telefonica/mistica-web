@@ -84,6 +84,8 @@ export type Dictionary = {
     ratingVeryGoodLabel: string;
     ratingQuantitativeLabel: string;
     skipLinkNavLabel: string;
+    fileUploadRemoveFile: string;
+    fileUploadListLabel: string;
 };
 
 export type TextToken = Record<Language, string>;
@@ -689,4 +691,18 @@ export const skipLinkNavLabel: TextToken = {
     en: 'Skip links',
     de: 'Direkt zum Inhalt',
     pt: 'Acesso rápido',
+};
+
+export const fileUploadRemoveFile: TextToken = {
+    es: 'Eliminar archivo 1$s',
+    en: 'Remove file 1$s',
+    de: 'Datei 1$s entfernen',
+    pt: 'Remover arquivo 1$s',
+};
+
+export const fileUploadListLabel: TextToken = {
+    es: 'Archivos subidos',
+    en: 'Uploaded files',
+    de: 'Hochgeladene Dateien',
+    pt: 'Arquivos enviados',
 };

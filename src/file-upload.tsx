@@ -9,6 +9,7 @@ import {vars as skinVars} from './skins/skin-contract.css';
 import {Boxed} from './boxed';
 import Box from './box';
 import {useTheme} from './hooks';
+import * as textTokens from './text-tokens';
 import {IconButton} from './icon-button';
 import Image from './image';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
@@ -345,15 +346,8 @@ type FileItemProps = {
     removeLabel?: string;
 };
 
-export const FileItem = ({
-    file,
-    onRemove,
-    formatSize: formatSizeProp,
-    removeLabel,
-}: FileItemProps): JSX.Element => {
-    const {i18n} = useTheme();
-    const format = formatSizeProp ?? ((sizeInBytes: number) => formatSize(sizeInBytes, i18n.locale));
-    const label = removeLabel ?? `Remove file ${file.name}`;
+export const FileItem = ({file, onRemove, removeLabel}: FileItemProps): JSX.Element => {
+    const {i18n, t, texts} = useTheme();
 
     return (
         <Boxed>
@@ -365,14 +359,18 @@ export const FileItem = ({
                     </Inline>
                     <Inline space={16} alignItems="center">
                         <Text2 regular color={skinVars.colors.textSecondary}>
-                            {format(file.size)}
+                            {formatSize(file.size, i18n.locale)}
                         </Text2>
                         <IconButton
                             Icon={IconCloseRegular}
                             type="neutral"
                             small
                             onPress={() => onRemove(file)}
-                            aria-label={label}
+                            aria-label={
+                                removeLabel ??
+                                texts.fileUploadRemoveFile ??
+                                t(textTokens.fileUploadRemoveFile, file.name)
+                            }
                         />
                     </Inline>
                 </Inline>
@@ -439,6 +437,7 @@ const FileUpload = (props: Props): JSX.Element => {
         allowAppend = false,
         dataAttributes,
     } = props;
+    const {texts, t} = useTheme();
     const outsideVariant = useThemeVariant();
     const {
         id,
@@ -574,7 +573,11 @@ const FileUpload = (props: Props): JSX.Element => {
                 ? renderFiles({files, removeFile})
                 : files &&
                   files.length > 0 && (
-                      <Stack space={8} role="list">
+                      <Stack
+                          space={8}
+                          role="list"
+                          aria-label={texts.fileUploadListLabel ?? t(textTokens.fileUploadListLabel)}
+                      >
                           {Array.from(files).map((file, index) => (
                               <FileItem key={index} file={file} onRemove={removeFile} />
                           ))}
