@@ -43,6 +43,8 @@ const argsReset = {
     mediaAspectRatio: '16 9',
     asset: 'icon',
     slot: false,
+    videoLoop: false,
+    videoAutoPlay: false,
 };
 
 test.each`
