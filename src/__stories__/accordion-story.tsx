@@ -35,6 +35,15 @@ export default {
             control: {type: 'select'},
         },
     },
+    decorators: [
+        (Story: any, context: any) => (
+            <ResponsiveLayout fullWidth variant={context.args.variantOutside || 'default'}>
+                <Box padding={16}>
+                    <Story />
+                </Box>
+            </ResponsiveLayout>
+        ),
+    ],
 };
 
 type Args = {
@@ -55,7 +64,6 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
     right,
     singleOpen,
     variant,
-    variantOutside,
     type,
 }) => {
     const content = <Placeholder height={100} />;
@@ -79,66 +87,62 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
     };
 
     return (
-        <ResponsiveLayout fullWidth variant={variantOutside}>
-            <Box padding={16}>
-                <AccordionComponent singleOpen={singleOpen} dataAttributes={{testid: 'accordion'}}>
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        dataAttributes={{testid: 'accordion-item-1'}}
-                    />
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<IconThumbUpFilled size={24} />}
-                        dataAttributes={{testid: 'accordion-item-2'}}
-                    />
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={
-                            <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
-                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                            </Circle>
-                        }
-                        dataAttributes={{testid: 'accordion-item-3'}}
-                    />
+        <AccordionComponent singleOpen={singleOpen} dataAttributes={{testid: 'accordion'}}>
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                dataAttributes={{testid: 'accordion-item-1'}}
+            />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<IconThumbUpFilled size={24} />}
+                dataAttributes={{testid: 'accordion-item-2'}}
+            />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={
+                    <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+                        <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                    </Circle>
+                }
+                dataAttributes={{testid: 'accordion-item-3'}}
+            />
 
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<Circle size={40} backgroundImage={laptopImg} />}
-                        dataAttributes={{testid: 'accordion-item-4'}}
-                    />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<Circle size={40} backgroundImage={laptopImg} />}
+                dataAttributes={{testid: 'accordion-item-4'}}
+            />
 
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<Image src={usingVrImg} height={80} aspectRatio="16:9" />}
-                        dataAttributes={{testid: 'accordion-item-5'}}
-                    />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<Image src={usingVrImg} height={80} aspectRatio="16:9" />}
+                dataAttributes={{testid: 'accordion-item-5'}}
+            />
 
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<Image src={personPortraitImg} width={80} aspectRatio="7:10" />}
-                        dataAttributes={{testid: 'accordion-item-6'}}
-                    />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<Image src={personPortraitImg} width={80} aspectRatio="7:10" />}
+                dataAttributes={{testid: 'accordion-item-6'}}
+            />
 
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<Image src={touchImg} width={80} aspectRatio="1:1" />}
-                        dataAttributes={{testid: 'accordion-item-7'}}
-                    />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<Image src={touchImg} width={80} aspectRatio="1:1" />}
+                dataAttributes={{testid: 'accordion-item-7'}}
+            />
 
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<Avatar size={40} src={avatarImg} />}
-                        dataAttributes={{testid: 'accordion-item-8'}}
-                    />
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<Avatar size={40} src={avatarImg} />}
+                dataAttributes={{testid: 'accordion-item-8'}}
+            />
 
-                    <ItemComponent
-                        {...getAccordionItemContentProps()}
-                        asset={<Avatar size={40} initials="MS" />}
-                        dataAttributes={{testid: 'accordion-item-9'}}
-                    />
-                </AccordionComponent>
-            </Box>
-        </ResponsiveLayout>
+            <ItemComponent
+                {...getAccordionItemContentProps()}
+                asset={<Avatar size={40} initials="MS" />}
+                dataAttributes={{testid: 'accordion-item-9'}}
+            />
+        </AccordionComponent>
     );
 };
 

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ResponsiveLayout, Box} from '..';
+import { Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ResponsiveLayout, Box } from '..';
 import avatarImg from './images/avatar.jpg';
 
-import type {Variant} from '../theme-variant-context';
+import type { Variant } from '../theme-variant-context';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -10,24 +10,41 @@ export default {
     title: 'Components/Avatar',
     argTypes: {
         size: {
-            control: {type: 'range', min: 24, max: 128, step: 4},
+            control: { type: 'range', min: 24, max: 128, step: 4 },
         },
         badge: {
             options: badgeOptions,
-            control: {type: 'select'},
+            control: { type: 'select' },
         },
         icon: {
             options: ['undefined', 'IconStarFilled', 'IconFireRegular', 'IconBrainRegular'],
-            control: {type: 'select'},
+            control: { type: 'select' },
         },
         variantOutside: {
             options: ['default', 'brand', 'negative', 'alternative'],
-            control: {type: 'select'},
+            control: { type: 'select' },
         },
     },
     parameters: {
         fullScreen: true,
     },
+    decorators: [
+        (Story: any, context: any) => (
+            <ResponsiveLayout variant={context.args.variantOutside || 'default'} fullWidth>
+                <Box padding={16} width="fit-content" dataAttributes={{ testid: 'avatar' }}>
+                    <div
+                        style={{
+                            // prevent line-height from affecting the height of the container;
+                            // happens when changing the base font size
+                            lineHeight: 0,
+                        }}
+                    >
+                        <Story />
+                    </div>
+                </Box>
+            </ResponsiveLayout>
+        ),
+    ],
 };
 
 type Args = {
@@ -49,7 +66,6 @@ export const Default: StoryComponent<Args> = ({
     badge,
     src,
     icon,
-    variantOutside,
     hideImage,
     hideInitials,
     ariaLabel,
@@ -57,30 +73,18 @@ export const Default: StoryComponent<Args> = ({
 }) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
-    const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
+    const Icon = { IconStarFilled, IconFireRegular, IconBrainRegular }[icon];
 
     return (
-        <ResponsiveLayout variant={variantOutside} fullWidth>
-            <Box padding={16} width="fit-content" dataAttributes={{testid: 'avatar'}}>
-                <div
-                    style={{
-                        // prevent line-height from affecting the height of the container;
-                        // happens when changing the base font size
-                        lineHeight: 0,
-                    }}
-                >
-                    <Avatar
-                        size={size}
-                        src={hideImage ? undefined : src || undefined}
-                        initials={hideInitials ? undefined : initials}
-                        badge={badgeValue}
-                        Icon={Icon}
-                        aria-label={ariaLabel}
-                        border={border}
-                    />
-                </div>
-            </Box>
-        </ResponsiveLayout>
+        <Avatar
+            size={size}
+            src={hideImage ? undefined : src || undefined}
+            initials={hideInitials ? undefined : initials}
+            badge={badgeValue}
+            Icon={Icon}
+            aria-label={ariaLabel}
+            border={border}
+        />
     );
 };
 

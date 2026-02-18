@@ -19,6 +19,13 @@ export default {
             control: {type: 'range', min: 200, max: 400, step: 20},
         },
     },
+    decorators: [
+        (Story: any) => (
+            <div style={{display: 'inline-block', border: '1px solid red'}}>
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 type Props = {
@@ -30,11 +37,9 @@ type Props = {
 
 export const Default: StoryComponent<Props> = ({x, y, width, height}) => {
     return (
-        <div style={{display: 'inline-block', border: '1px solid red'}}>
-            <Align width={width} height={height} x={x} y={y} dataAttributes={{testid: 'story'}}>
-                <Text2 regular>Content</Text2>
-            </Align>
-        </div>
+        <Align width={width} height={height} x={x} y={y} dataAttributes={{testid: 'story'}}>
+            <Text2 regular>Content</Text2>
+        </Align>
     );
 };
 

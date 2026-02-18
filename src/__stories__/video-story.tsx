@@ -37,6 +37,63 @@ export default {
             if: {arg: 'type', neq: 'width and height'},
         },
     },
+    decorators: [
+        (Story: any) => {
+            const videoRef = React.useRef<VideoElement>(null);
+            
+            return (
+                <Stack space={32}>
+                    <Stack space={8}>
+                        <Title3>Video component issues/limitations</Title3>
+                        <Text3 regular as="p">
+                            1. Using automatic aspect ratio (`aspectRatio={0}`), if the poster and video have
+                            different aspect ratios, the video size will resize when playing/stopping the video. This
+                            is how the HTML `video` element works and happens in all browsers.
+                        </Text3>
+                        <Text3 regular as="p">
+                            2. In Safari, with automatic aspect ratio. On the first video reproduction a strange
+                            resize happens. After stoping and playing the same video, it works as expected.
+                        </Text3>
+                        <Text3 regular as="p">
+                            To avoid these issues always try to use a specific aspect ratio or a fixed width and
+                            height.
+                        </Text3>
+                    </Stack>
+
+                    <Stack space={16}>
+                        <Inline space={16}>
+                            <ButtonPrimary
+                                small
+                                onPress={() => {
+                                    videoRef.current?.play();
+                                }}
+                            >
+                                Play
+                            </ButtonPrimary>
+                            <ButtonPrimary
+                                small
+                                onPress={() => {
+                                    videoRef.current?.pause();
+                                }}
+                            >
+                                Pause
+                            </ButtonPrimary>
+                            <ButtonPrimary
+                                small
+                                onPress={() => {
+                                    videoRef.current?.stop();
+                                }}
+                            >
+                                Stop
+                            </ButtonPrimary>
+                        </Inline>
+
+                        <Story videoRef={videoRef} />
+                    </Stack>
+                </Stack>
+            );
+        },
+    ],
 };
 
 const VIDEO_SRC = beachVideo;
@@ -60,9 +117,7 @@ export const Default: StoryComponent<Args> = ({
     autoPlay,
     poster,
     emptySource,
-}) => {
-    const videoRef = React.useRef<VideoElement>(null);
-
+}, {videoRef}: any) => {
     const props = {
         width: type !== 'full width' ? width : undefined,
         height: type === 'width and height' ? height : undefined,
@@ -77,59 +132,7 @@ export const Default: StoryComponent<Args> = ({
         dataAttributes: {testid: 'video'},
     };
 
-    const video = <Video src={!emptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
-
-    return (
-        <Stack space={32}>
-            <Stack space={8}>
-                <Title3>Video component issues/limitations</Title3>
-                <Text3 regular as="p">
-                    1. Using automatic aspect ratio (`aspectRatio={0}`), if the poster and video have
-                    different aspect ratios, the video size will resize when playing/stopping the video. This
-                    is how the HTML `video` element works and happens in all browsers.
-                </Text3>
-                <Text3 regular as="p">
-                    2. In Safari, with automatic aspect ratio. On the first video reproduction a strange
-                    resize happens. After stoping and playing the same video, it works as expected.
-                </Text3>
-                <Text3 regular as="p">
-                    To avoid these issues always try to use a specific aspect ratio or a fixed width and
-                    height.
-                </Text3>
-            </Stack>
-
-            <Stack space={16}>
-                <Inline space={16}>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            videoRef.current?.play();
-                        }}
-                    >
-                        Play
-                    </ButtonPrimary>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            videoRef.current?.pause();
-                        }}
-                    >
-                        Pause
-                    </ButtonPrimary>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            videoRef.current?.stop();
-                        }}
-                    >
-                        Stop
-                    </ButtonPrimary>
-                </Inline>
-
-                {video}
-            </Stack>
-        </Stack>
-    );
+    return <Video src={!emptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
 };
 
 Default.storyName = 'Video';

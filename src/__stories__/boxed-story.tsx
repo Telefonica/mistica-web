@@ -4,6 +4,15 @@ import {Box, Boxed, Text8, ResponsiveLayout} from '..';
 export default {
     title: 'Components/Primitives/Boxed',
     parameters: {fullScreen: true},
+    decorators: [
+        (Story: any, context: any) => (
+            <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth variant={context.args.variantOutside || 'default'}>
+                <Box padding={16}>
+                    <Story />
+                </Box>
+            </ResponsiveLayout>
+        ),
+    ],
 };
 
 type Args = {
@@ -11,17 +20,13 @@ type Args = {
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
 };
 
-export const Default: StoryComponent<Args> = ({variant, variantOutside}) => {
+export const Default: StoryComponent<Args> = ({variant}) => {
     return (
-        <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth variant={variantOutside}>
+        <Boxed variant={variant}>
             <Box padding={16}>
-                <Boxed variant={variant}>
-                    <Box padding={16}>
-                        <Text8>Text</Text8>
-                    </Box>
-                </Boxed>
+                <Text8>Text</Text8>
             </Box>
-        </ResponsiveLayout>
+        </Boxed>
     );
 };
 

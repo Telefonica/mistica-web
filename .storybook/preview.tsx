@@ -211,7 +211,7 @@ const parameters = {
 
     docs: {
         /** Disable the `code` tab */
-        codePanel: false,
+        codePanel: true,
     },
 
     controls: {
@@ -227,6 +227,8 @@ const parameters = {
     actions: {
         disable: true,
     },
+
+    tags: ['autodocs'],
 };
 
 const preview: Preview = {

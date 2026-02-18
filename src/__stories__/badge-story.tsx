@@ -16,6 +16,15 @@ export default {
         },
     },
     parameters: {fullScreen: true},
+    decorators: [
+        (Story: any, context: any) => (
+            <ResponsiveLayout variant={context.args.variantOutside || 'default'} fullWidth>
+                <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
+                    <Story />
+                </Box>
+            </ResponsiveLayout>
+        ),
+    ],
 };
 
 type Args = {
@@ -23,21 +32,17 @@ type Args = {
     value: string;
 };
 
-export const Default: StoryComponent<Args> = ({variantOutside, value}) => {
+export const Default: StoryComponent<Args> = ({value}) => {
     return (
-        <ResponsiveLayout variant={variantOutside} fullWidth>
-            <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
-                <Badge value={value !== 'undefined' ? +value : undefined}>
-                    <Touchable
-                        style={{display: 'inline-block', width: 24, height: 24}}
-                        onPress={() => {}}
-                        aria-label="Read notifications"
-                    >
-                        <IconBellFilled />
-                    </Touchable>
-                </Badge>
-            </Box>
-        </ResponsiveLayout>
+        <Badge value={value !== 'undefined' ? +value : undefined}>
+            <Touchable
+                style={{display: 'inline-block', width: 24, height: 24}}
+                onPress={() => {}}
+                aria-label="Read notifications"
+            >
+                <IconBellFilled />
+            </Touchable>
+        </Badge>
     );
 };
 

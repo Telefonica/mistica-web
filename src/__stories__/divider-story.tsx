@@ -11,6 +11,15 @@ export default {
             control: {type: 'select'},
         },
     },
+    decorators: [
+        (Story: any, context: any) => (
+            <ResponsiveLayout variant={context.args.variantOutside || 'default'} fullWidth dataAttributes={{testid: 'divider-story'}}>
+                <Container>
+                    <Story />
+                </Container>
+            </ResponsiveLayout>
+        ),
+    ],
 };
 
 type Args = {
@@ -34,14 +43,8 @@ const Container = ({children}: {children: React.ReactNode}) => {
     );
 };
 
-export const Default: StoryComponent<Args> = ({variantOutside}) => {
-    return (
-        <ResponsiveLayout variant={variantOutside} fullWidth dataAttributes={{testid: 'divider-story'}}>
-            <Container>
-                <Divider />
-            </Container>
-        </ResponsiveLayout>
-    );
+export const Default: StoryComponent<Args> = () => {
+    return <Divider />;
 };
 
 Default.storyName = 'Divider';
