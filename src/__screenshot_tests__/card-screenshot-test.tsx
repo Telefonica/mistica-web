@@ -116,6 +116,9 @@ test.each`
             ...argsReset,
             imageSrc: 'beach',
             videoSrc: 'beach',
+            // In acceptance tests, videos never autoplay, but `videoAutoPlay: false` forces the
+            // card into "paused" state after load (changing the overlay icon and breaking snapshots).
+            videoAutoPlay: true,
             topActions: false,
             onClose: true,
             showFooter: true,
