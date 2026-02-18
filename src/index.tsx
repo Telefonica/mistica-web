@@ -174,6 +174,7 @@ export {default as CvvField} from './cvv-field';
 export {default as DateField} from './date-field';
 export {default as MonthField} from './month-field';
 export {default as DateTimeField} from './date-time-field';
+export {default as TimeField} from './time-field';
 export {default as IntegerField} from './integer-field';
 export {default as DecimalField} from './decimal-field';
 export {default as PasswordField} from './password-field';
