@@ -52,6 +52,8 @@ export const Default: StoryComponent<CoverCardArgs> = ({
     footerVariant,
     imageSrc,
     videoSrc,
+    videoLoop,
+    videoAutoPlay,
     slot,
     footerSlot,
     titleAs,
@@ -74,6 +76,8 @@ export const Default: StoryComponent<CoverCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
+                videoLoop={videoLoop}
+                videoAutoPlay={videoAutoPlay}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
@@ -98,8 +102,6 @@ Default.args = {
     footerBackgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
-    videoLoop: false,
-    videoAutoPlay: false,
 };
 
 Default.argTypes = {
