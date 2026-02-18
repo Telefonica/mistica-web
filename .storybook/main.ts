@@ -39,6 +39,30 @@ const config: StorybookConfig = {
             ...config.server,
             allowedHosts: ['host.docker.internal'],
         };
+        config.build = {
+            ...config.build,
+            rollupOptions: {
+                ...config.build?.rollupOptions,
+                // https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
+                onLog(level, log, handler) {
+                    if (
+                        log.cause &&
+                        (log.cause as {message?: string}).message ===
+                            `Can't resolve original location of error.`
+                    ) {
+                        return;
+                    }
+                    handler(level, log);
+                },
+                // https://github.com/remix-run/remix/issues/8891#issuecomment-1965244096
+                onwarn(warning, warn) {
+                    if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+                        return;
+                    }
+                    warn(warning);
+                },
+            },
+        };
         return config;
     },
 
