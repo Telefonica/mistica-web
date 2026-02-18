@@ -89,7 +89,7 @@ const EmptyState = ({
             role="region"
             {...getPrefixedDataAttributes(dataAttributes, 'EmptyState')}
         >
-            <div style={{flex: 1}}>
+            <Stack space={32} className={styles.contentContainer}>
                 <Stack
                     space={24}
                     className={
@@ -115,9 +115,9 @@ const EmptyState = ({
                             {description}
                         </Text3>
                     </Stack>
-                    <ButtonGroup {...buttons} />
                 </Stack>
-            </div>
+                <ButtonGroup {...buttons} />
+            </Stack>
             <div style={{flex: 1, position: 'relative'}}>
                 {largeImageUrl && (
                     <AspectRatioContainer

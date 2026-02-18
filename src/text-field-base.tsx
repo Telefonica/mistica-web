@@ -67,6 +67,7 @@ export const FieldEndIcon = ({
                     onChange={onChange}
                     hasOverlay={hasBackgroundColor}
                     disabled={disabled}
+                    small
                 />
             ) : (
                 <InternalIconButton
@@ -75,6 +76,7 @@ export const FieldEndIcon = ({
                     aria-label={ariaLabel || ''}
                     onPress={onPress}
                     hasOverlay={hasBackgroundColor}
+                    small
                 />
             )}
         </div>

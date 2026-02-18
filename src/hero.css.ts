@@ -39,7 +39,7 @@ export const containerDesktop = sprinkles({alignItems: 'center', height: '100%'}
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
-    {marginTop: 24},
+    {marginTop: 32},
 ]);
 
 export const layout = style({

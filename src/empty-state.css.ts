@@ -113,3 +113,7 @@ export const border = sprinkles({
 export const borderOverBrand = style({
     border: `1px solid ${skin.vars.colors.backgroundContainer}`,
 });
+
+export const contentContainer = style({
+    flex: 1,
+});
