@@ -147,6 +147,8 @@ Default.args = {
     imageSrc: 'beach',
     imageAlt: 'Image Alt Text',
     videoSrc: 'undefined',
+    videoLoop: false,
+    videoAutoPlay: false,
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',
