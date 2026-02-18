@@ -102,6 +102,8 @@ Default.args = {
     footerBackgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
+    videoLoop: false,
+    videoAutoPlay: false,
 };
 
 Default.argTypes = {
