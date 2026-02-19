@@ -426,8 +426,11 @@ export const useVideoWithControls = ({
 
     React.useEffect(() => {
         initialLoadDoneRef.current = false;
-        dispatch('reset');
         videoController.current?.load();
+
+        return () => {
+            dispatch('reset');
+        };
     }, [src]);
 
     const video = React.useMemo(() => {
