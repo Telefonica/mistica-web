@@ -356,19 +356,12 @@ const BackgroundImageOrVideo = ({
     );
 };
 
-type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
+type VideoState = 'loading' | 'playing' | 'paused' | 'error';
 
-type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
+type VideoAction = 'play' | 'pause' | 'fail' | 'reset';
 
 const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
     loading: {
-        showSpinner: 'loadingTimeout',
-        play: 'playing',
-        pause: 'paused',
-        fail: 'error',
-    },
-
-    loadingTimeout: {
         play: 'playing',
         pause: 'paused',
         fail: 'error',
@@ -433,13 +426,8 @@ export const useVideoWithControls = ({
 
     React.useEffect(() => {
         initialLoadDoneRef.current = false;
-        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
+        dispatch('reset');
         videoController.current?.load();
-
-        return () => {
-            clearTimeout(loadingTimeoutId);
-            dispatch('reset');
-        };
     }, [src]);
 
     const video = React.useMemo(() => {
@@ -483,9 +471,7 @@ export const useVideoWithControls = ({
             return;
         }
 
-        if (videoStatus === 'loading') {
-            dispatch('showSpinner');
-        } else if (videoStatus === 'playing') {
+        if (videoStatus === 'playing') {
             video.pause();
         } else {
             video.play().then(
@@ -499,7 +485,7 @@ export const useVideoWithControls = ({
         return {video};
     }
 
-    const isVideoLoading = videoStatus === 'loading' || videoStatus === 'loadingTimeout';
+    const isVideoLoading = videoStatus === 'loading';
 
     const videoAction: CardAction | undefined = video
         ? {
