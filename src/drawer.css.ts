@@ -4,6 +4,7 @@ import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
 export const ANIMATION_DURATION_MS = 350;
+const WIDTH_CONTENT = 388;
 
 export const container = style([
     sprinkles({
@@ -16,16 +17,15 @@ export const container = style([
         overflow: 'hidden',
     }),
     {
+        left: 0,
+        transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.5, 0, 0.5, 1)`,
         paddingBottom: 'env(safe-area-inset-bottom)',
         '@media': {
-            [mq.mobile]: {
-                left: 0,
-                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.5, 0, 0.5, 1)`,
-            },
             [mq.tabletOrBigger]: {
+                left: 'auto',
                 borderTopLeftRadius: vars.borderRadii.container,
                 borderBottomLeftRadius: vars.borderRadii.container,
-                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.5, 0, 0.5, 1)`,
+                minWidth: `calc(${WIDTH_CONTENT}px + ${vars.spacing.drawerPadding.left} + ${vars.spacing.drawerPadding.right})`,
                 maxWidth: 'calc(100vw - 40px)',
             },
         },
@@ -34,11 +34,13 @@ export const container = style([
 
 export const drawer = style([
     sprinkles({
-        paddingTop: 40,
         display: 'flex',
         flexDirection: 'column',
         flexGrow: 1,
     }),
+    {
+        paddingTop: vars.spacing.drawerPadding.top,
+    },
 ]);
 
 export const titleContainer = style([
@@ -100,4 +102,22 @@ export const closeButtonContainer = sprinkles({
     position: 'absolute',
     top: 8,
     right: 8,
+});
+
+export const horizontalPadding = style({
+    paddingLeft: vars.spacing.drawerPadding.left,
+    paddingRight: vars.spacing.drawerPadding.right,
+});
+
+export const bottomPadding = style({
+    paddingBottom: vars.spacing.drawerPadding.bottom,
+});
+
+export const buttonsLayoutContainer = style({
+    padding: `16px ${vars.spacing.drawerPadding.right} ${vars.spacing.drawerPadding.bottom} ${vars.spacing.drawerPadding.left}`,
+    '@media': {
+        [mq.tabletOrBigger]: {
+            padding: `24px ${vars.spacing.drawerPadding.right} ${vars.spacing.drawerPadding.bottom} ${vars.spacing.drawerPadding.left}`,
+        },
+    },
 });
