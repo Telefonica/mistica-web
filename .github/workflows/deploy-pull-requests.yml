@@ -12,6 +12,9 @@ concurrency:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        # Security: only deploy PRs from same repo, not from forks
+        # Prevents malicious code in package.json from accessing VERCEL_TOKEN
+        if: github.event.pull_request.head.repo.full_name == github.repository
         steps:
             - uses: actions/checkout@v6
               with:

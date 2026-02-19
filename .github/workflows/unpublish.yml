@@ -13,6 +13,8 @@ jobs:
     release:
         name: Unpublish
         runs-on: ubuntu-latest
+        # Requires manual approval - protects NPM_PUBLISH_TOKEN
+        environment: production
         steps:
             - uses: actions/checkout@v6
               with:
@@ -29,8 +31,21 @@ jobs:
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
+            - name: Validate version input
+              id: validate
+              env:
+                  VERSION_INPUT: ${{ github.event.inputs.version }}
+              run: |
+                  # Strict validation: semver format (x.y.z with optional -alpha.1, -beta.2, etc.)
+                  if ! echo "$VERSION_INPUT" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+(\.[0-9]+)?)?$'; then
+                    echo "Error: Invalid version format. Must be semver (e.g., 1.2.3 or 1.2.3-alpha.1)"
+                    exit 1
+                  fi
+                  # Preventive escaping
+                  SAFE_VERSION=$(printf "%q" "$VERSION_INPUT")
+                  echo "safe_version=$SAFE_VERSION" >> $GITHUB_OUTPUT
+
             - name: Unpublish npm package version
               env:
-                  GITHUB_TOKEN: ${{ secrets.FLOW_GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-              run: npm unpublish @telefonica/mistica@${{ github.event.inputs.version }}
+              run: npm unpublish "@telefonica/mistica@${{ steps.validate.outputs.safe_version }}"
