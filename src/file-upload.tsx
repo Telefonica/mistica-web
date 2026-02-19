@@ -155,6 +155,10 @@ const useFileUpload = ({
     const [filesState, setFilesState] = React.useState<FileList | null>(defaultFiles);
     const [isDragActive, setIsDragActive] = React.useState(false);
     const inputRef = React.useRef<HTMLInputElement>(null);
+    // we need a counter because browsers trigger dragenter and dragleave multiple times when dragging over
+    // the drop zone, especially when there are child elements. The counter helps us determine when the drag
+    // is actually leaving the drop zone (counter goes to 0) vs just moving between child elements (counter > 0).
+    // Without this, the drop zone would flicker between active and inactive states as you move the mouse over it.
     const dragCounterRef = React.useRef(0);
     const isControlled = typeof filesProp !== 'undefined';
     const files = isControlled ? filesProp : filesState;
