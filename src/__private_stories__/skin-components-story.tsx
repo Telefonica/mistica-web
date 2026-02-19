@@ -99,8 +99,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             header={
                                 <Header
                                     title="Components in different skins"
-                                    description="This story is created to verify how some of the components look like when using
-                        different skins"
+                                    description="This story is created to verify how some of the components look like when using different skins"
                                 />
                             }
                             extra={<Placeholder />}
