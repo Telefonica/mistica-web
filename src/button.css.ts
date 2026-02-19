@@ -36,9 +36,14 @@ export const spinnerSize = {
     small: pxToRem(16),
 };
 
-export const buttonPaddingX = {
-    default: `calc(16px - ${borderSize})`,
-    small: `calc(12px - ${borderSize})`,
+export const buttonPaddingLeft = {
+    default: `calc(${vars.spacing.buttonDefaultPadding.left} - ${borderSize})`,
+    small: `calc(${vars.spacing.buttonSmallPadding.left} - ${borderSize})`,
+};
+
+export const buttonPaddingRight = {
+    default: `calc(${vars.spacing.buttonDefaultPadding.right} - ${borderSize})`,
+    small: `calc(${vars.spacing.buttonSmallPadding.right} - ${borderSize})`,
 };
 
 export const buttonPaddingY = {
@@ -99,16 +104,16 @@ export const loadingContent = style([
         alignItems: 'center',
     }),
     {
-        left: buttonPaddingX.default,
-        right: buttonPaddingX.default,
+        left: buttonPaddingLeft.default,
+        right: buttonPaddingRight.default,
         opacity: 0,
         transform: 'translateY(2rem)',
         transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
-                left: buttonPaddingX.small,
-                right: buttonPaddingX.small,
+                left: buttonPaddingLeft.small,
+                right: buttonPaddingRight.small,
             },
             [`${isLoading} &`]: {
                 transform: 'translateY(0)',
@@ -125,13 +130,13 @@ export const textContent = style([
         justifyContent: 'center',
     }),
     {
-        padding: `${buttonPaddingY.default} ${buttonPaddingX.default}`, // height 48
+        padding: `${buttonPaddingY.default} ${buttonPaddingRight.default} ${buttonPaddingY.default} ${buttonPaddingLeft.default}`, // height 48
         opacity: 1,
         transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
-                padding: `${buttonPaddingY.small} ${buttonPaddingX.small}`, // height 32
+                padding: `${buttonPaddingY.small} ${buttonPaddingRight.small} ${buttonPaddingY.small} ${buttonPaddingLeft.small}`, // height 32
             },
             [`${isLoading} &`]: {
                 transform: 'translateY(-2rem)',

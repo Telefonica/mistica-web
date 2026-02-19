@@ -4,9 +4,13 @@ import * as mq from './media-queries.css';
 import * as buttonStyles from './button.css';
 
 const buttonLayoutSpacing = '16px';
-const buttonLinkPadding = {
-    default: `calc(${buttonStyles.buttonPaddingX.default} + ${buttonStyles.borderSize})`,
-    small: `calc(${buttonStyles.buttonPaddingX.small} + ${buttonStyles.borderSize})`,
+const buttonLinkPaddingLeft = {
+    default: `calc(${buttonStyles.buttonPaddingLeft.default} + ${buttonStyles.borderSize})`,
+    small: `calc(${buttonStyles.buttonPaddingLeft.small} + ${buttonStyles.borderSize})`,
+};
+const buttonLinkPaddingRight = {
+    default: `calc(${buttonStyles.buttonPaddingRight.default} + ${buttonStyles.borderSize})`,
+    small: `calc(${buttonStyles.buttonPaddingRight.small} + ${buttonStyles.borderSize})`,
 };
 
 export const container = style([
@@ -82,10 +86,10 @@ export const linkInNewLine = styleVariants({
     left: [
         linkBase,
         style({
-            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingLeft.default})`,
             selectors: {
                 [`&:has(${buttonStyles.smallLink})`]: {
-                    marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                    marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingLeft.small})`,
                 },
             },
         }),
@@ -93,10 +97,10 @@ export const linkInNewLine = styleVariants({
     right: [
         linkBase,
         style({
-            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingRight.default})`,
             selectors: {
                 [`&:has(${buttonStyles.smallLink})`]: {
-                    marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                    marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingRight.small})`,
                 },
             },
         }),
@@ -109,7 +113,7 @@ export const linkInNewLine = styleVariants({
                 [`${alignVariant['full-width']} &`]: {
                     '@media': {
                         [mq.desktopOrBigger]: {
-                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingLeft.default})`,
                         },
                     },
                 },
@@ -117,7 +121,7 @@ export const linkInNewLine = styleVariants({
                 [`${alignVariant['full-width']}:has(${buttonStyles.smallLink}) &`]: {
                     '@media': {
                         [mq.desktopOrBigger]: {
-                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingLeft.small})`,
                         },
                     },
                 },
@@ -131,13 +135,13 @@ export const smallLinkInNewLine = styleVariants({
     left: [
         linkBase,
         style({
-            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingLeft.small})`,
         }),
     ],
     right: [
         linkBase,
         style({
-            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingRight.small})`,
         }),
     ],
     'full-width': [
@@ -148,7 +152,7 @@ export const smallLinkInNewLine = styleVariants({
                 [`${alignVariant['full-width']} &`]: {
                     '@media': {
                         [mq.desktopOrBigger]: {
-                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPaddingLeft.small})`,
                         },
                     },
                 },
