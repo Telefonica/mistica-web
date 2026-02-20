@@ -60,6 +60,12 @@ export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimar
 export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
 export type CardActionButtonLink = RendersNullableElement<typeof ButtonLink>;
 
+type CardVideoProps = {
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
+    videoDataAttributes?: DataAttributes;
+};
+
 type ContainerProps = {
     type: CardType;
     size: CardSize;
@@ -98,7 +104,7 @@ type MediaProps = {
     /** Ignored when mediaPosition === 'top' */
     mediaWidth?: string | number;
     circledImage?: boolean;
-};
+} & CardVideoProps;
 
 type TextContentProps = {
     type: CardType;
@@ -350,19 +356,12 @@ const BackgroundImageOrVideo = ({
     );
 };
 
-type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
+type VideoState = 'loading' | 'playing' | 'paused' | 'error';
 
-type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
+type VideoAction = 'play' | 'pause' | 'fail' | 'reset';
 
 const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
     loading: {
-        showSpinner: 'loadingTimeout',
-        play: 'playing',
-        pause: 'paused',
-        fail: 'error',
-    },
-
-    loadingTimeout: {
         play: 'playing',
         pause: 'paused',
         fail: 'error',
@@ -397,57 +396,91 @@ const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={colo
 
 const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
 
-export const useVideoWithControls = (
-    videoSrc?: VideoSource,
-    poster?: string,
-    videoRef?: React.RefObject<VideoElement>,
-    autoHeight?: boolean
-): {
+export const useVideoWithControls = ({
+    src,
+    poster,
+    ref: videoRef,
+    autoHeight,
+    loop,
+    autoPlay,
+    dataAttributes,
+}: {
+    src?: VideoSource;
+    poster?: string;
+    ref?: React.RefObject<VideoElement>;
+    autoHeight?: boolean;
+    loop?: boolean;
+    autoPlay?: boolean;
+    dataAttributes?: DataAttributes;
+}): {
     video?: React.ReactNode;
     videoAction?: CardAction;
 } => {
     const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
+    const initialLoadDoneRef = React.useRef(false);
     const [videoStatus, dispatch] = React.useReducer(
         videoReducer,
         process.env.NODE_ENV === 'test' ? 'playing' : 'loading'
     );
 
     React.useEffect(() => {
-        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
+        initialLoadDoneRef.current = false;
         videoController.current?.load();
 
         return () => {
-            clearTimeout(loadingTimeoutId);
             dispatch('reset');
         };
-    }, [videoSrc]);
+    }, [src]);
 
     const video = React.useMemo(() => {
-        return videoSrc !== undefined ? (
+        if (src === undefined) {
+            return undefined;
+        }
+
+        const handleLoadedData = () => {
+            // When autoPlay is false, the video loads but doesn't play.
+            // We need to transition to 'paused' state to show the play button instead of spinner.
+            // We use initialLoadDoneRef to ensure this only happens once per video source,
+            // because Chrome can fire onCanPlayThrough multiple times for network videos,
+            // which would revert the card to 'paused' state even while the video is playing.
+            if (autoPlay === false && !initialLoadDoneRef.current) {
+                initialLoadDoneRef.current = true;
+                dispatch('pause');
+            }
+        };
+
+        return (
             <Video
                 ref={combineRefs(videoController, videoRef)}
-                src={videoSrc}
+                src={src}
                 poster={poster}
                 width="100%"
                 height={autoHeight ? undefined : '100%'}
+                loop={loop}
+                autoPlay={autoPlay}
+                dataAttributes={dataAttributes}
+                onLoad={handleLoadedData}
                 onError={() => dispatch('fail')}
                 onPause={() => dispatch('pause')}
                 onPlay={() => dispatch('play')}
             />
-        ) : undefined;
-    }, [videoRef, videoSrc, poster, autoHeight]);
+        );
+    }, [videoRef, src, poster, autoHeight, loop, autoPlay, dataAttributes]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;
-        if (video) {
-            if (videoStatus === 'loading') {
-                dispatch('showSpinner');
-            } else if (videoStatus === 'paused') {
-                video.play();
-            } else if (videoStatus === 'playing') {
-                video.pause();
-            }
+        if (!video) {
+            return;
+        }
+
+        if (videoStatus === 'playing') {
+            video.pause();
+        } else {
+            video.play().then(
+                () => dispatch('play'),
+                () => {}
+            );
         }
     };
 
@@ -455,24 +488,21 @@ export const useVideoWithControls = (
         return {video};
     }
 
+    const isVideoLoading = videoStatus === 'loading';
+
     const videoAction: CardAction | undefined = video
         ? {
               uncheckedProps: {
                   Icon:
-                      videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
-                          ? CardActionSpinner
-                          : CardActionPauseIcon,
-                  label:
-                      videoStatus === 'loadingTimeout'
-                          ? ''
-                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
+                      isVideoLoading && !isRunningAcceptanceTest() ? CardActionSpinner : CardActionPauseIcon,
+                  label: isVideoLoading ? '' : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
                   label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
               },
               onChange: onVideoControlPress,
-              disabled: isRunningAcceptanceTest() ? false : videoStatus === 'loadingTimeout',
+              disabled: isRunningAcceptanceTest() ? false : isVideoLoading,
               checked: videoStatus === 'paused',
           }
         : undefined;
@@ -1144,6 +1174,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             'aria-description': ariaDescriptionProp,
             'aria-describedby': ariaDescribedByProp,
             gradientOverlayColor,
+            videoLoop,
+            videoAutoPlay,
+            videoDataAttributes,
             ...touchableProps
         },
         ref
@@ -1175,12 +1208,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
-        const {video, videoAction} = useVideoWithControls(
-            shouldShowVideo ? videoSrc : undefined,
-            imageSrc,
-            videoRef,
-            type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
-        );
+        const {video, videoAction} = useVideoWithControls({
+            src: shouldShowVideo ? videoSrc : undefined,
+            poster: imageSrc,
+            ref: videoRef,
+            autoHeight:
+                type === 'cover' || mediaPosition !== 'top'
+                    ? false
+                    : aspectRatioToNumber(mediaAspectRatio) === 0,
+            loop: videoLoop,
+            autoPlay: videoAutoPlay,
+            dataAttributes: videoDataAttributes,
+        });
 
         const externalVariant = useThemeVariant();
         const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;
