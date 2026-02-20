@@ -15,10 +15,14 @@ const dropZoneBase = style([
         paddingX: 24,
     }),
     {
-        cursor: 'pointer',
         position: 'relative',
         textAlign: 'center',
         transition: 'border 200ms ease, background-color 200ms ease',
+        selectors: {
+            [`&:not(.${disabled})`]: {
+                cursor: 'pointer',
+            },
+        },
         '@media': {
             [mq.tabletOrSmaller]: {
                 paddingTop: 24,
@@ -36,7 +40,7 @@ export const dropZoneContainer = style([
         border: `1px dashed ${skinVars.colors.inputBorder}`,
         '@media': {
             [mq.supportsHover]: {
-                [`&:hover:not(${disabled})`]: {
+                [`&:hover:not(.${disabled})`]: {
                     border: `1px solid ${skinVars.colors.borderSelected}`,
                     backgroundColor: skinVars.colors.backgroundDropZoneHover,
                 },
@@ -51,7 +55,7 @@ export const dropZoneContainerBrand = style([
         border: `1px dashed ${skinVars.colors.inputBorderBrand}`,
         '@media': {
             [mq.supportsHover]: {
-                [`&:hover:not(${disabled})`]: {
+                [`&:hover:not(.${disabled})`]: {
                     border: `1px solid ${skinVars.colors.inputBorderBrand}`,
                     backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
                 },
