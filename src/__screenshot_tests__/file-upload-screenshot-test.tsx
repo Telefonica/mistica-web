@@ -5,7 +5,7 @@ import {prepareFile} from '@telefonica/acceptance-testing';
 test('FileUpload - with drop zone', async () => {
     await openStoryPage({
         id: 'components-input-fields-fileupload--default',
-        device: 'MOBILE_IOS',
+        device: 'DESKTOP',
         args: {withDropZone: true, withAsset: true},
     });
 
@@ -72,13 +72,13 @@ test('FileUpload - upload multiple files and remove', async () => {
     // Upload second file
     await fileInput.uploadFile(secondFixturePath);
     await screen.findByText('file-upload-2.svg');
-    await screen.findAllByRole('button', {name: /^Remove file/});
+    await screen.findAllByRole('button', {name: /^Eliminar archivo/});
 
     const imageWithTwoFiles = await fileUploader.screenshot();
     expect(imageWithTwoFiles).toMatchImageSnapshot();
 
     // Remove one file
-    const removeButtons = await screen.findAllByRole('button', {name: /^Remove file/});
+    const removeButtons = await screen.findAllByRole('button', {name: /^Eliminar archivo/});
     await removeButtons[0].click();
     await screen.findByText('file-upload-2.svg');
     await expect(screen.findByText('file-upload-1.txt')).rejects.toThrow();

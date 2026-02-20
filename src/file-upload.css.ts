@@ -40,9 +40,11 @@ export const dropZoneContainer = style([
         border: `1px dashed ${skinVars.colors.inputBorder}`,
         '@media': {
             [mq.supportsHover]: {
-                [`&:hover:not(.${disabled})`]: {
-                    border: `1px solid ${skinVars.colors.borderSelected}`,
-                    backgroundColor: skinVars.colors.backgroundDropZoneHover,
+                selectors: {
+                    [`&:hover:not(.${disabled})`]: {
+                        border: `1px solid ${skinVars.colors.borderSelected}`,
+                        backgroundColor: skinVars.colors.backgroundDropZoneHover,
+                    },
                 },
             },
         },
@@ -55,9 +57,11 @@ export const dropZoneContainerBrand = style([
         border: `1px dashed ${skinVars.colors.inputBorderBrand}`,
         '@media': {
             [mq.supportsHover]: {
-                [`&:hover:not(.${disabled})`]: {
-                    border: `1px solid ${skinVars.colors.inputBorderBrand}`,
-                    backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
+                selectors: {
+                    [`&:hover:not(.${disabled})`]: {
+                        border: `1px solid ${skinVars.colors.inputBorderBrand}`,
+                        backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
+                    },
                 },
             },
         },
