@@ -114,26 +114,30 @@ export const touchable = style([
     sprinkles({
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative',
         padding: 0,
         border: 'none',
         background: 'transparent',
         width: '100%',
         height: '100%',
     }),
-    {
-        isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
-    },
 ]);
 
 export const touchableContainer = style({});
 
-export const touchableContent = sprinkles({
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
-});
+export const touchableContent = style([
+    sprinkles({
+        position: 'relative',
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+    }),
+    {
+        zIndex: 1, // this way the touchable focus ring is above the footer
+        justifyItems: 'stretch',
+    },
+]);
 
 const touchableCardOverlayBase = style({
     height: '100%',
