@@ -128,6 +128,11 @@ export const touchable = style([
 
 export const touchableContainer = style({});
 
+export const touchableContent = sprinkles({
+    display: 'flex',
+    flexDirection: 'column',
+});
+
 const touchableCardOverlayBase = style({
     height: '100%',
     width: '100%',

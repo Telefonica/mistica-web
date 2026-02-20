@@ -1375,7 +1375,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                      * This workaround is only needed for <a> not for <button> (ask safari developers why)
                      */}
                     <div
-                        style={{display: 'contents'}}
+                        className={styles.touchableContent}
                         role={touchableProps.href || touchableProps.to ? 'text' : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
