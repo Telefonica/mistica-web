@@ -1,3 +1,11 @@
+# [16.50.0](https://github.com/Telefonica/mistica-web/compare/v16.49.0...v16.50.0) (2026-02-20)
+
+
+### Features
+
+* **Sheet:** add dismiss button ([#1497](https://github.com/Telefonica/mistica-web/issues/1497)) ([83e38da](https://github.com/Telefonica/mistica-web/commit/83e38da04591abb070d334da6cd68a9fcaf1bfdf))
+* **TimeField:** add new TimeField component ([#1495](https://github.com/Telefonica/mistica-web/issues/1495)) ([867c192](https://github.com/Telefonica/mistica-web/commit/867c19277fd76d7fd50237422880aaaceae8c077))
+
 # [16.49.0](https://github.com/Telefonica/mistica-web/compare/v16.48.0...v16.49.0) (2026-02-13)
 
 
