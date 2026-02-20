@@ -2,6 +2,7 @@ import {style, keyframes} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+import {browserDefaultFocusOutline} from './text-field-components.css';
 
 export const disabled = style({
     opacity: 0.5,
@@ -14,6 +15,8 @@ const dropZoneBase = style([
         paddingX: 24,
     }),
     {
+        cursor: 'pointer',
+        position: 'relative',
         textAlign: 'center',
         transition: 'border 200ms ease, background-color 200ms ease',
         '@media': {
@@ -31,10 +34,12 @@ export const dropZoneContainer = style([
     dropZoneBase,
     {
         border: `1px dashed ${skinVars.colors.inputBorder}`,
-        selectors: {
-            [`&:hover:not(${disabled})`]: {
-                border: `1px solid ${skinVars.colors.borderSelected}`,
-                backgroundColor: skinVars.colors.backgroundDropZoneHover,
+        '@media': {
+            [mq.supportsHover]: {
+                [`&:hover:not(${disabled})`]: {
+                    border: `1px solid ${skinVars.colors.borderSelected}`,
+                    backgroundColor: skinVars.colors.backgroundDropZoneHover,
+                },
             },
         },
     },
@@ -44,10 +49,12 @@ export const dropZoneContainerBrand = style([
     dropZoneBase,
     {
         border: `1px dashed ${skinVars.colors.inputBorderBrand}`,
-        selectors: {
-            [`&:hover:not(${disabled})`]: {
-                border: `1px solid ${skinVars.colors.inputBorderBrand}`,
-                backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
+        '@media': {
+            [mq.supportsHover]: {
+                [`&:hover:not(${disabled})`]: {
+                    border: `1px solid ${skinVars.colors.inputBorderBrand}`,
+                    backgroundColor: skinVars.colors.backgroundDropZoneBrandHover,
+                },
             },
         },
     },
@@ -76,16 +83,23 @@ export const assetScaleActive = style({
     animation: `${scaleAnimation} 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards`,
 });
 
-export const centeredContent = style([
-    sprinkles({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    }),
-    {
-        gap: '16px',
+export const dropZoneButton = style({
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    padding: 0,
+    margin: 0,
+    border: 0,
+    background: 'transparent',
+    cursor: 'inherit',
+    outline: 'none',
+    selectors: {
+        '&:focus-visible': {
+            outline: browserDefaultFocusOutline,
+        },
     },
-]);
+});
 
 export const centeredButton = style([
     sprinkles({

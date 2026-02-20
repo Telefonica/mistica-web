@@ -69,29 +69,19 @@ export const Default: StoryComponent<Args> = ({
                     description={description}
                     slot={withSlot ? <Placeholder /> : undefined}
                     errorText={errorText || undefined}
-                    renderButton={({onPress, small, disabled}) => {
+                    renderButton={(buttonProps) => {
                         switch (buttonType) {
                             case 'primary':
-                                return (
-                                    <ButtonPrimary small={small} onPress={onPress} disabled={disabled}>
-                                        Choose file
-                                    </ButtonPrimary>
-                                );
+                                return <ButtonPrimary {...buttonProps}>Choose file</ButtonPrimary>;
                             case 'secondary':
-                                return (
-                                    <ButtonSecondary small={small} onPress={onPress} disabled={disabled}>
-                                        Choose file
-                                    </ButtonSecondary>
-                                );
+                                return <ButtonSecondary {...buttonProps}>Choose file</ButtonSecondary>;
                             case 'icon':
                                 return (
                                     <IconButton
+                                        {...buttonProps}
                                         Icon={IconExportRegular}
                                         backgroundType="solid"
-                                        small={small}
-                                        onPress={onPress}
                                         aria-label="Choose file"
-                                        disabled={disabled}
                                     />
                                 );
                             default:
@@ -170,10 +160,8 @@ export const CustomFilesList: StoryComponent = () => {
                     allowAppend
                     title="Upload documents"
                     description="PDF, DOCX or TXT"
-                    renderButton={({onPress, small}) => (
-                        <ButtonPrimary small={small} onPress={onPress}>
-                            Choose files
-                        </ButtonPrimary>
+                    renderButton={(buttonProps) => (
+                        <ButtonPrimary {...buttonProps}>Choose files</ButtonPrimary>
                     )}
                     renderFiles={({files, removeFile}) => {
                         const filesArray = Array.from(files ?? []);

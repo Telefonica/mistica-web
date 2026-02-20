@@ -8,7 +8,7 @@ import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {Boxed} from './boxed';
 import Box from './box';
-import {useTheme} from './hooks';
+import {useInnerText, useTheme} from './hooks';
 import * as textTokens from './text-tokens';
 import {IconButton} from './icon-button';
 import Image from './image';
@@ -38,7 +38,7 @@ import type {ExclusifyUnion} from './utils/utility-types';
 
 const FileIcon = ({file}: {file: File}) => {
     if (file.type.startsWith('image/')) {
-        return <Image src={URL.createObjectURL(file)} alt={file.name} width={40} height={40} />;
+        return <Image src={URL.createObjectURL(file)} width={40} height={40} />;
     }
 
     const fileExtensionToIconComponent: {[key: string]: (props: IconProps) => JSX.Element} = {
@@ -301,8 +301,11 @@ const useFileUpload = ({
 
         const target = event.target instanceof HTMLElement ? event.target : null;
         // Ignore clicks on interactive descendants to avoid reopening the dialog.
-        if (target?.closest('button, a, input, select, textarea, [role="button"]')) {
-            return;
+        if (target) {
+            const interactiveAncestor = target.closest('button, a, input, select, textarea, [role="button"]');
+            if (interactiveAncestor && interactiveAncestor !== event.currentTarget) {
+                return;
+            }
         }
 
         openFileDialog();
@@ -420,7 +423,13 @@ type Props = {
           title?: string;
           description?: string;
           slot?: React.ReactNode;
-          renderButton: (props: {onPress: () => void; small: boolean; disabled: boolean}) => React.ReactNode;
+          renderButton: (props: {
+              onPress: () => void;
+              small?: boolean;
+              disabled?: boolean;
+              tabIndex?: number;
+              'aria-hidden'?: boolean | 'true' | 'false';
+          }) => React.ReactNode;
           renderFiles?: (props: {
               files: FileList | null;
               removeFile: (file: File) => void;
@@ -443,6 +452,7 @@ const FileUpload = (props: Props): JSX.Element => {
     } = props;
     const {texts, t} = useTheme();
     const outsideVariant = useThemeVariant();
+    const {ref: buttonRef, text: buttonText} = useInnerText();
     const {
         id,
         files,
@@ -492,6 +502,8 @@ const FileUpload = (props: Props): JSX.Element => {
     const {asset, title, description, slot, renderButton, renderFiles, withDropZone = false} = props;
 
     const dropZoneHandlers = withDropZone && !disabled ? dropZoneProps : {};
+    const descriptionId = description ? `${id}-dropzone-description` : undefined;
+    const slotId = slot ? `${id}-dropzone-slot` : undefined;
 
     const isBrandVariant = outsideVariant === 'brand';
     const contentClassName = classnames({
@@ -510,49 +522,68 @@ const FileUpload = (props: Props): JSX.Element => {
             dataAttributes={{'component-name': 'FileUpload', testid: 'FileUpload', ...dataAttributes}}
         >
             <Stack space={4}>
-                <div {...dropZoneHandlers}>
-                    <div className={contentClassName}>
-                        <Stack space={8}>
-                            {asset && (
-                                <div
-                                    className={assetClassName}
-                                    style={{
-                                        color: isBrandVariant
-                                            ? skinVars.colors.neutralHighBrand
-                                            : skinVars.colors.brand,
-                                    }}
-                                >
-                                    {asset}
-                                </div>
-                            )}
-                            <Stack space={4}>
+                <div {...dropZoneHandlers} className={contentClassName}>
+                    {withDropZone && !disabled && (
+                        <button
+                            type="button"
+                            className={styles.dropZoneButton}
+                            aria-label={[title, buttonText].filter(Boolean).join('. ')}
+                            aria-describedby={[descriptionId, slotId].filter(Boolean).join(' ')}
+                            onClick={openFileDialog}
+                        />
+                    )}
+                    <Stack space={8}>
+                        {asset && (
+                            <div
+                                className={assetClassName}
+                                style={{
+                                    color: isBrandVariant
+                                        ? skinVars.colors.neutralHighBrand
+                                        : skinVars.colors.brand,
+                                }}
+                            >
+                                {asset}
+                            </div>
+                        )}
+                        <Stack space={4}>
+                            {title && (
                                 <Text3 regular as="div" dataAttributes={{testid: 'title'}}>
                                     <label htmlFor={id}>{title}</label>
                                 </Text3>
-                                {description && (
-                                    <Text2
-                                        regular
-                                        as="div"
-                                        color={skinVars.colors.textSecondary}
-                                        dataAttributes={{testid: 'description'}}
-                                    >
-                                        {description}
-                                    </Text2>
-                                )}
-                            </Stack>
-                        </Stack>
-                        {slot}
-                        <Box paddingTop={16}>
-                            {withDropZone ? (
-                                <div className={styles.centeredButton}>
-                                    {renderButton({onPress: openFileDialog, small: true, disabled})}
-                                </div>
-                            ) : (
-                                renderButton({onPress: openFileDialog, small: true, disabled})
                             )}
-                        </Box>
-                    </div>
-
+                            {description && (
+                                <Text2
+                                    regular
+                                    as="div"
+                                    color={skinVars.colors.textSecondary}
+                                    dataAttributes={{testid: 'description'}}
+                                    id={descriptionId}
+                                >
+                                    {description}
+                                </Text2>
+                            )}
+                        </Stack>
+                    </Stack>
+                    {slot && <div id={slotId}>{slot}</div>}
+                    <Box paddingTop={16}>
+                        {withDropZone ? (
+                            <div className={styles.centeredButton} ref={buttonRef} aria-hidden="true">
+                                {renderButton({
+                                    onPress: openFileDialog,
+                                    small: true,
+                                    disabled,
+                                    tabIndex: -1,
+                                    'aria-hidden': true,
+                                })}
+                            </div>
+                        ) : (
+                            renderButton({
+                                onPress: openFileDialog,
+                                small: true,
+                                disabled,
+                            })
+                        )}
+                    </Box>
                     <input style={{display: 'none'}} {...inputProps} />
                 </div>
                 {errorText && (
