@@ -131,6 +131,8 @@ export const touchableContainer = style({});
 export const touchableContent = sprinkles({
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+    height: '100%',
 });
 
 const touchableCardOverlayBase = style({
