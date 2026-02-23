@@ -78,9 +78,17 @@ const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
             isTabletOrSmaller,
             isDesktopOrBigger: isServerSide ? false : !isTabletOrSmaller,
             isLargeDesktop,
-            isExtraLargeDesktop
+            isExtraLargeDesktop,
         }),
-        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop, isExtraLargeDesktop, isServerSide]
+        [
+            isMobile,
+            isTablet,
+            isTabletOrBigger,
+            isTabletOrSmaller,
+            isLargeDesktop,
+            isExtraLargeDesktop,
+            isServerSide,
+        ]
     );
 
     return <ScreenSizeContext.Provider value={value}>{children}</ScreenSizeContext.Provider>;
