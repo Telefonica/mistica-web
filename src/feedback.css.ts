@@ -55,7 +55,7 @@ export const innerContainer = style({
 export const innerContainerWithButtons = style({
     '@media': {
         [mq.desktopOrBigger]: {
-            paddingBottom: 32,
+            paddingBottom: 40,
         },
     },
 });

@@ -27,7 +27,6 @@ import IconSuccessVivoNew from './icons/icon-success-vivo-new';
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
-import {skinVars} from '.';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isRunningAcceptanceTest(platformOverrides);
@@ -394,7 +393,7 @@ export const SuccessFeedback = ({
     dataAttributes,
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
-    const {skinName, platformOverrides, themeVariants, spacing} = useTheme();
+    const {skinName, platformOverrides, themeVariants} = useTheme();
 
     const asset =
         skinName === VIVO_SKIN ? (

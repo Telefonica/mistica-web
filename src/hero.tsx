@@ -225,7 +225,11 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                     <div
                                         style={{
                                             paddingTop: skinVars.spacing.heroPadding.top,
-                                            paddingBottom: hasSlideshowBullets ? 48 : noPaddingY ? 0 : skinVars.spacing.heroPadding.bottom,
+                                            paddingBottom: hasSlideshowBullets
+                                                ? 48
+                                                : noPaddingY
+                                                  ? 0
+                                                  : skinVars.spacing.heroPadding.bottom,
                                         }}
                                         className={styles.layout}
                                     >
