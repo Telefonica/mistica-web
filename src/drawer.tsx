@@ -55,7 +55,7 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
     ({width, children, onClose, onDismiss}, ref) => {
         useSetModalStateEffect();
         useRestoreFocus();
-        const {isMobile, isTablet} = useScreenSize();
+        const {isMobile} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
         const widthStyle = isMobile ? 'auto' : width;
 

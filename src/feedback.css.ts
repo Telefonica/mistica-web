@@ -13,7 +13,17 @@ export const desktopContainer = style({
 });
 
 export const desktopContent = style({
-    '@media': {[mq.desktopOrBigger]: {width: '50%'}},
+    paddingRight: 0,
+    paddingLeft: 0,
+    paddingBlock: 0,
+    '@media': {
+        [mq.desktopOrBigger]: {
+            width: '50%',
+            paddingRight: vars.spacing.feedbackScreenPadding.right,
+            paddingLeft: vars.spacing.feedbackScreenPadding.left,
+            paddingBottom: vars.spacing.feedbackScreenPadding.bottom,
+        },
+    },
 });
 
 export const desktopImage = style({
@@ -34,7 +44,8 @@ export const container = style([
 
 export const innerContainer = style({
     textAlign: 'left',
-    padding: '64px 0px 16px',
+    paddingTop: vars.spacing.feedbackScreenPadding.top,
+    paddingBottom: 16,
     zIndex: 1, // needed to support hack for o2-classic
     position: 'relative', // needed to support hack for o2-classic
     display: 'flex',
@@ -101,4 +112,8 @@ export const backgroundBrand = style({
             background: vars.colors.backgroundBrand,
         },
     },
+});
+
+export const successFeedbackContainer = style({
+    paddingTop: vars.spacing.feedbackScreenPadding.top,
 });
