@@ -1,3 +1,19 @@
+# [16.51.0](https://github.com/Telefonica/mistica-web/compare/v16.50.0...v16.51.0) (2026-02-23)
+
+
+### Features
+
+* **card:** add videoLoop, videoAutoPlay, videoDataAttributes to cards ([#1494](https://github.com/Telefonica/mistica-web/issues/1494)) ([2566651](https://github.com/Telefonica/mistica-web/commit/25666512f1ce61e794ab238e1f0530f21f52cf25))
+* **webview-bridge:** update to v4.0.0 ([#1502](https://github.com/Telefonica/mistica-web/issues/1502)) ([ef94133](https://github.com/Telefonica/mistica-web/commit/ef941330693abcd0a0af364362f32d0082af9216))
+
+# [16.50.0](https://github.com/Telefonica/mistica-web/compare/v16.49.0...v16.50.0) (2026-02-20)
+
+
+### Features
+
+* **Sheet:** add dismiss button ([#1497](https://github.com/Telefonica/mistica-web/issues/1497)) ([83e38da](https://github.com/Telefonica/mistica-web/commit/83e38da04591abb070d334da6cd68a9fcaf1bfdf))
+* **TimeField:** add new TimeField component ([#1495](https://github.com/Telefonica/mistica-web/issues/1495)) ([867c192](https://github.com/Telefonica/mistica-web/commit/867c19277fd76d7fd50237422880aaaceae8c077))
+
 # [16.49.0](https://github.com/Telefonica/mistica-web/compare/v16.48.0...v16.49.0) (2026-02-13)
 
 

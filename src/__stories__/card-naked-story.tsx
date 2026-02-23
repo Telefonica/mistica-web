@@ -31,6 +31,8 @@ type NakedCardArgs = Omit<CommonCardArgs, 'variant' | 'footerVariant'> & {
     slotAlignment: SlotAlignment | '';
     imageSrc: string;
     videoSrc: string;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
     imageAlt: string;
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
@@ -53,6 +55,8 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     buttonLink,
     imageSrc,
     videoSrc,
+    videoLoop,
+    videoAutoPlay,
     slot,
     slotAlignment,
     footerSlot,
@@ -91,6 +95,8 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
+                videoLoop={videoLoop}
+                videoAutoPlay={videoAutoPlay}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
@@ -133,6 +139,8 @@ Default.args = {
     imageSrc: 'beach',
     imageAlt: 'Image Alt Text',
     videoSrc: 'undefined',
+    videoLoop: false,
+    videoAutoPlay: false,
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',

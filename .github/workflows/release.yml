@@ -6,14 +6,24 @@ on:
                 description: 'CLI args'
                 required: false
                 default: ''
+
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
 jobs:
     release:
         name: Release
         runs-on: ubuntu-latest
+        # Requires manual approval to run - protects NPM_PUBLISH_TOKEN secret
+        environment: production
         steps:
-            - uses: actions/checkout@v4
+            # persist-credentials: false - git remote configured manually in Release step with GH_TOKEN_MISTICA
+            - uses: actions/checkout@v6
               with:
-                  token: ${{ secrets.FLOW_GITHUB_TOKEN }}
+                token: ${{ secrets.GITHUB_TOKEN }}
+                persist-credentials: false
 
             - name: Install dependencies
               env:
@@ -29,8 +39,46 @@ jobs:
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
+            - name: Validate cli args
+              id: validate
+              env:
+                  CLI_ARGS_INPUT: ${{ github.event.inputs.cliArgs }}
+              run: |
+                  if [ -z "$CLI_ARGS_INPUT" ]; then
+                    echo "safe_args=" >> $GITHUB_OUTPUT
+                    exit 0
+                  fi
+
+                  # Build allowlist from semantic-release help
+                  ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
+
+                  # Validate tokens: flags must be in allowlist, values must follow flags
+                  PREV_WAS_FLAG=false
+                  for TOKEN in $CLI_ARGS_INPUT; do
+                    if echo "$TOKEN" | grep -qE '^-'; then
+                      if ! echo "$TOKEN" | grep -qE "^($ALLOWED_FLAGS)$"; then
+                        echo "Error: Invalid flag: $TOKEN"
+                        exit 1
+                      fi
+                      PREV_WAS_FLAG=true
+                    else
+                      if [ "$PREV_WAS_FLAG" != "true" ]; then
+                        echo "Error: Value must follow a flag: $TOKEN"
+                        exit 1
+                      fi
+                      PREV_WAS_FLAG=false
+                    fi
+                  done
+
+                  # Preventive escaping
+                  SAFE_ARGS=$(printf "%q" "$CLI_ARGS_INPUT")
+                  echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
+
             - name: Release
               env:
-                  GITHUB_TOKEN: ${{ secrets.FLOW_GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-              run: npx semantic-release ${{ github.event.inputs.cliArgs }}
+              run: |
+                  # Configure git remote with token for push
+                  git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+                  npx semantic-release ${{ steps.validate.outputs.safe_args }}

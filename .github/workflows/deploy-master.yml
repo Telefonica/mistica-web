@@ -2,14 +2,22 @@ name: deploy-master
 on:
     push:
         branches: [master]
+
+permissions:
+    contents: read
+    deployments: write
+
 concurrency:
     group: deploy-master-${{ github.ref }}
     cancel-in-progress: true
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             - uses: amondnet/vercel-action@master
               with:

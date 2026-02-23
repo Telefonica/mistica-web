@@ -11,6 +11,10 @@ on:
     merge_group:
         branches: [master]
 
+permissions:
+    contents: read
+    pull-requests: write
+
 concurrency:
     group: ci-${{ github.ref }}
     cancel-in-progress: true
@@ -21,7 +25,9 @@ jobs:
         container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             - name: Install dependencies
               env:
@@ -51,7 +57,9 @@ jobs:
             fail-fast: false
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             - name: Install dependencies
               env:
@@ -74,7 +82,9 @@ jobs:
         if: '!cancelled()'
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             - name: Install dependencies
               env:

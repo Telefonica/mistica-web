@@ -319,6 +319,12 @@ export const imageAndVideoArgTypes = {
         options: Object.keys(videoNameToUrl),
         control: {type: 'select'},
     },
+    videoLoop: {
+        control: {type: 'boolean'},
+    },
+    videoAutoPlay: {
+        control: {type: 'boolean'},
+    },
 };
 
 export const mediaArgTypes = {
