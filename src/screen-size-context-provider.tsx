@@ -34,7 +34,7 @@ const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
     );
 
     const [isLargeDesktop, setIsLargeDesktop] = React.useState(
-        () => !isServerSide && window.matchMedia(mq.largeDesktopOrBigger).matches
+        () => !isServerSide && window.matchMedia(mq.largeDesktop).matches
     );
     const [isExtraLargeDesktop, setIsExtraLargeDesktop] = React.useState(
         () => !isServerSide && window.matchMedia(mq.extraLargeDesktop).matches
@@ -50,8 +50,7 @@ const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
             [mq.tablet, setIsTablet],
             [mq.tabletOrBigger, setIsTabletOrBigger],
             [mq.tabletOrSmaller, setIsTabletOrSmaller],
-            [mq.largeDesktopOrBigger, setIsLargeDesktop],
-            [mq.extraLargeDesktop, setIsExtraLargeDesktop],
+            [mq.largeDesktop, setIsLargeDesktop],
             [mq.extraLargeDesktop, setIsExtraLargeDesktop],
         ];
 
