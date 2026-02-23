@@ -1,3 +1,11 @@
+# [16.51.0](https://github.com/Telefonica/mistica-web/compare/v16.50.0...v16.51.0) (2026-02-23)
+
+
+### Features
+
+* **card:** add videoLoop, videoAutoPlay, videoDataAttributes to cards ([#1494](https://github.com/Telefonica/mistica-web/issues/1494)) ([2566651](https://github.com/Telefonica/mistica-web/commit/25666512f1ce61e794ab238e1f0530f21f52cf25))
+* **webview-bridge:** update to v4.0.0 ([#1502](https://github.com/Telefonica/mistica-web/issues/1502)) ([ef94133](https://github.com/Telefonica/mistica-web/commit/ef941330693abcd0a0af364362f32d0082af9216))
+
 # [16.50.0](https://github.com/Telefonica/mistica-web/compare/v16.49.0...v16.50.0) (2026-02-20)
 
 
