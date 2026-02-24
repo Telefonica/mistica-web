@@ -100,9 +100,6 @@ export const RawIconButton = React.forwardRef<
                 {
                     [styles.disabled]: disabled || ariaDisabled,
                     [styles.overlayContainer]: !disabled && !showSpinner && !ariaDisabled,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft,
-                    [styles.bleedRight[buttonSize]]: bleedRight,
-                    [styles.bleedY[buttonSize]]: bleedY,
                 }
             ),
             resetMargin: !bleedLeft && !bleedRight && !bleedY,
@@ -144,7 +141,13 @@ export const RawIconButton = React.forwardRef<
         }
 
         return (
-            <div className={styles.buttonContainer[buttonSize]}>
+            <div
+                className={classNames(styles.buttonContainer[buttonSize], {
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
+                })}
+            >
                 <BaseTouchable {...commonProps} {...touchableProps} maybe>
                     {content}
                 </BaseTouchable>
