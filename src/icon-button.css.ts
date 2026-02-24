@@ -304,8 +304,8 @@ export const iconButtonTokens = styleVariants({
     'danger-transparent-alternative': {
         vars: {
             [background]: 'transparent',
-            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
-            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
