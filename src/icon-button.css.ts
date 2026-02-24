@@ -280,32 +280,32 @@ export const iconButtonTokens = styleVariants({
     'danger-transparent-default': {
         vars: {
             [background]: 'transparent',
-            [backgroundHover]: skinVars.colors.backgroundContainerHover,
-            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
     'danger-transparent-brand': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundBrand,
-            [backgroundHover]: skinVars.colors.backgroundContainerHover,
-            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
     'danger-transparent-negative': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundBrand,
-            [backgroundHover]: skinVars.colors.backgroundContainerHover,
-            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
     'danger-transparent-alternative': {
         vars: {
             [background]: 'transparent',
-            [backgroundHover]: skinVars.colors.backgroundContainerHover,
-            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
