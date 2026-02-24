@@ -1350,23 +1350,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                     className={classnames(styles.touchable, styles.touchableContainer)}
                     {...touchableProps}
-                    style={{
-                        flexDirection:
-                            mediaPosition === 'top'
-                                ? 'column'
-                                : mediaPosition === 'left'
-                                  ? 'row'
-                                  : 'row-reverse',
-                        justifyItems: 'stretch',
-                        borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
-                        borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
-                        borderBottomLeftRadius:
-                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
-                        borderBottomRightRadius:
-                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
-                        overflow: 'hidden',
-                        zIndex: 1, // this way the touchable focus ring is above the footer
-                    }}
                 >
                     {/**
                      * role="text" makes VoiceOver read the whole div as a single text block. This is needed
@@ -1375,8 +1358,22 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                      * This workaround is only needed for <a> not for <button> (ask safari developers why)
                      */}
                     <div
-                        style={{display: 'contents'}}
                         role={touchableProps.href || touchableProps.to ? 'text' : undefined}
+                        className={styles.touchableContent}
+                        style={{
+                            flexDirection:
+                                mediaPosition === 'top'
+                                    ? 'column'
+                                    : mediaPosition === 'left'
+                                      ? 'row'
+                                      : 'row-reverse',
+                            borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                            borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                            borderBottomLeftRadius:
+                                shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                            borderBottomRightRadius:
+                                shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                        }}
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         {hasDeprecatedMedia && (
