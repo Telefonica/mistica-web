@@ -94,7 +94,7 @@ export const RawIconButton = React.forwardRef<
             role,
             dataAttributes: {'component-name': 'IconButton', testid: 'IconButton', ...dataAttributes},
             className: classNames(
-                styles.buttonContainer[buttonSize],
+                styles.button,
                 styles.iconButtonTokens[buttonTokensKey],
                 styles.minimumInteractiveArea,
                 {
@@ -144,9 +144,11 @@ export const RawIconButton = React.forwardRef<
         }
 
         return (
-            <BaseTouchable {...commonProps} {...touchableProps} maybe>
-                {content}
-            </BaseTouchable>
+            <div className={styles.buttonContainer[buttonSize]}>
+                <BaseTouchable {...commonProps} {...touchableProps} maybe>
+                    {content}
+                </BaseTouchable>
+            </div>
         );
     }
 );
