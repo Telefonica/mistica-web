@@ -26,7 +26,7 @@ export const outerCircleVariants = styleVariants({
     ],
     ios: [
         outerCircleBase,
-        {background: vars.colors.background, boxShadow: `inset 0 0 0 1px ${vars.colors.control}`},
+        {background: vars.colors.background, boxShadow: `inset 0 0 0 2px ${vars.colors.control}`},
     ],
     checked: [
         outerCircleBase,
@@ -39,8 +39,8 @@ export const outerCircleVariants = styleVariants({
     checkedIos: [
         outerCircleBase,
         {
-            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivated}`,
-            background: `radial-gradient(circle, ${vars.colors.iosControlKnob} 0%, ${vars.colors.iosControlKnob} 64%, transparent 64%, transparent 100%)`,
+            boxShadow: `inset 0 0 0 6px ${vars.colors.controlActivated}`,
+            background: `radial-gradient(circle, ${vars.colors.iosControlKnob} 0%, ${vars.colors.iosControlKnob} 60%, transparent 60%, transparent 100%)`,
         },
     ],
 });
@@ -52,7 +52,7 @@ export const overBrandOuterCircleVariants = styleVariants({
     ],
     ios: [
         outerCircleBase,
-        {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlBrand}`},
+        {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlBrand}`},
     ],
     checked: [
         outerCircleBase,
@@ -65,8 +65,8 @@ export const overBrandOuterCircleVariants = styleVariants({
     checkedIos: [
         outerCircleBase,
         {
-            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedBrand}`,
-            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 64%, transparent 64%, transparent 100%)`,
+            boxShadow: `inset 0 0 0 6px ${vars.colors.controlActivatedBrand}`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 60%, transparent 60%, transparent 100%)`,
         },
     ],
 });
@@ -78,7 +78,7 @@ export const overNegativeOuterCircleVariants = styleVariants({
     ],
     ios: [
         outerCircleBase,
-        {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlBrand}`},
+        {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlBrand}`},
     ],
     checked: [
         outerCircleBase,
@@ -91,8 +91,8 @@ export const overNegativeOuterCircleVariants = styleVariants({
     checkedIos: [
         outerCircleBase,
         {
-            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedBrand}`,
-            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 64%, transparent 64%, transparent 100%)`,
+            boxShadow: `inset 0 0 0 6px ${vars.colors.controlActivatedBrand}`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 60%, transparent 60%, transparent 100%)`,
         },
     ],
 });

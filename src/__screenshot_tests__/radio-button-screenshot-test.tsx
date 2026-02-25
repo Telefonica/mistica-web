@@ -25,6 +25,18 @@ test.each(DEVICES)('RadioButton - inverse (%s)', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(DEVICES)('RadioButton - negative (%s)', async (device) => {
+    await openStoryPage({
+        id: 'components-radio-button--controlled',
+        device,
+        args: {variantOutside: 'negative'},
+    });
+
+    const wrapper = await screen.findByTestId('radio-group-wrapper');
+    const image = await wrapper.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test('RadioButton - uncontrolled', async () => {
     await openStoryPage({
         id: 'components-radio-button--uncontrolled',
