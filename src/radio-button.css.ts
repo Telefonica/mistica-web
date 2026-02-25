@@ -15,7 +15,7 @@ const outerCircleBase = style([
         width: 20,
         height: 20,
         verticalAlign: 'middle',
-        transition: 'background 0.3s, box-shadow 0.3s',
+        transition: 'background 0.1s cubic-bezier(0.77, 0, 0.175, 1), box-shadow 0.3s cubic-bezier(0.77, 0, 0.175, 1)',
     },
 ]);
 
@@ -40,7 +40,7 @@ export const outerCircleVariants = styleVariants({
         outerCircleBase,
         {
             boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivated}`,
-            background: `radial-gradient(circle, ${vars.colors.iosControlKnob} 0%, ${vars.colors.iosControlKnob} 64%, transparent 64%, transparent 100%)`,
+            background: `radial-gradient(circle, ${vars.colors.iosControlKnob} 0%, ${vars.colors.iosControlKnob} 50%, transparent 50%, transparent 100%)`,
         },
     ],
 });
@@ -66,7 +66,7 @@ export const overBrandOuterCircleVariants = styleVariants({
         outerCircleBase,
         {
             boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedBrand}`,
-            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 64%, transparent 64%, transparent 100%)`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 50%, transparent 50%, transparent 100%)`,
         },
     ],
 });
@@ -92,7 +92,7 @@ export const overNegativeOuterCircleVariants = styleVariants({
         outerCircleBase,
         {
             boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedBrand}`,
-            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 64%, transparent 64%, transparent 100%)`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobBrand} 0%, ${vars.colors.controlKnobBrand} 50%, transparent 50%, transparent 100%)`,
         },
     ],
 });
