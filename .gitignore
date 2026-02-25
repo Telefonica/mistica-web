@@ -5,6 +5,7 @@ coverage/
 .directory
 .DS_Store
 .idea/
+.env
 *.js.map
 *.orig
 *.rej
