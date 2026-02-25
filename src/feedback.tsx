@@ -122,7 +122,7 @@ const renderFeedbackBody = (
 const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
     const hasButtons = checkHasButtons(buttons);
     return (
-        <Stack space={{desktop: 40, mobile: 24}}>
+        <Stack space={{desktop: 32, mobile: 24}}>
             {feedbackBody}
             {hasButtons && <ButtonGroup {...buttons} />}
         </Stack>
