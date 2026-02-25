@@ -7,8 +7,9 @@ figma.connect(
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=13264%3A3773',
     {
         props: {
+            label: figma.textContent('Label'),
             helperText: figma.boolean('Helper text', {
-                true: 'Helper text',
+                true: figma.textContent('Helper text'),
                 false: undefined,
             }),
             length: figma.enum('Length', {
@@ -25,7 +26,7 @@ figma.connect(
         },
         example: (props) => (
             <PinField
-                label="Label"
+                label={props.label}
                 name="pin-field"
                 length={props.length}
                 hideCode={props.hideCode}

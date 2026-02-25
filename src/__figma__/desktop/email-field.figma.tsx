@@ -7,8 +7,9 @@ figma.connect(
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=31751%3A7427',
     {
         props: {
+            label: figma.textContent('Label'),
             helperText: figma.boolean('Helper text', {
-                true: 'Helper text',
+                true: figma.textContent('Helper text'),
                 false: undefined,
             }),
             error: figma.boolean('Error'),
@@ -17,7 +18,7 @@ figma.connect(
         },
         example: (props) => (
             <EmailField
-                label="Label"
+                label={props.label}
                 name="email-field"
                 helperText={props.helperText}
                 error={props.error}

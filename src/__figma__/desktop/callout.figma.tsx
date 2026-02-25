@@ -8,7 +8,7 @@ figma.connect(
   {
     props: {
       asset: figma.boolean("Asset", {
-        true: figma.children(['Avatar', 'Tab 2']),
+        true: figma.children('*'),
         false: undefined,
       }),
       dismissable: figma.boolean("Dismissable", {
