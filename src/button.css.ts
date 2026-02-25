@@ -18,8 +18,8 @@ export const buttonMinWidth = {
 };
 
 export const linkMinWidth = {
-    default: '40px',
-    small: '40px',
+    default: '24px',
+    small: '24px',
 };
 
 export const borderSize = '1.5px';
