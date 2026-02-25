@@ -24,17 +24,17 @@ export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
 type ResponsiveValue<T> = {mobile: T; desktop: T};
 
-type PaddingTBValues = {
+type PaddingY = {
     top: ResponsiveValue<number>;
     bottom: ResponsiveValue<number>;
 };
 
-type PaddingLRValues = {
+type PaddingXValues = {
     left: ResponsiveValue<number>;
     right: ResponsiveValue<number>;
 };
 
-type PaddingValues = PaddingTBValues & PaddingLRValues;
+type PaddingValues = PaddingY & PaddingXValues;
 
 type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
@@ -116,14 +116,14 @@ export type BorderRadiiConfig = {
 };
 
 export type SpacingConfig = {
-    buttonDefaultPadding: PaddingLRValues;
-    buttonSmallPadding: PaddingLRValues;
+    buttonDefaultPadding: PaddingXValues;
+    buttonSmallPadding: PaddingXValues;
     cardDefaultPadding: PaddingValues;
-    inputPadding: PaddingTBValues;
-    tagPadding: PaddingTBValues;
+    inputPadding: PaddingY;
+    tagPadding: PaddingY;
     feedbackScreenPadding: PaddingValues;
-    heroPadding: PaddingTBValues;
-    headerPadding: PaddingTBValues;
+    heroPadding: PaddingY;
+    headerPadding: PaddingY;
     drawerPadding: PaddingValues;
 };
 

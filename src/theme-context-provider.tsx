@@ -261,10 +261,10 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
             return {
                 [token]: {
-                    ...('top' in values && {top: `${values.top.mobile ?? values.top}px`}),
-                    ...('right' in values && {right: `${values.right.mobile ?? values.right}px`}),
-                    ...('bottom' in values && {bottom: `${values.bottom.mobile ?? values.bottom}px`}),
-                    ...('left' in values && {left: `${values.left.mobile ?? values.left}px`}),
+                    ...('top' in values && {top: `${values.top.mobile}px`}),
+                    ...('right' in values && {right: `${values.right.mobile}px`}),
+                    ...('bottom' in values && {bottom: `${values.bottom.mobile}px`}),
+                    ...('left' in values && {left: `${values.left.mobile}px`}),
                 },
             };
         });
