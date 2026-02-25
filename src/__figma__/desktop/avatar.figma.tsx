@@ -7,16 +7,39 @@ figma.connect(
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=2725%3A4164',
     {
         props: {
-            initials: figma.string('Initials'),
-            badge: figma.boolean('Badge'),
-            border: figma.boolean('Border'),
-            size: figma.boolean('\u2264 40px', {
-                true: 40,
-                false: 64,
+            initials: figma.enum('Type', {
+                Letters: figma.string('Initials'),
             }),
+            src: figma.enum('Type', {
+                Image: 'https://picsum.photos/1200/1200',
+            }),
+            Icon: figma.enum('Type', {
+                Icon: figma.children('*'),
+            }),
+            badge: figma.boolean('Badge', {
+                true: figma.nestedProps('Badge [D]', {
+                    value: figma.boolean('+9', {
+                        true: 15,
+                        false: figma.boolean('Non-numeric', {
+                            true: true,
+                            false: 2,
+                        }),
+                    }),
+                }),
+                false: {value: undefined},
+            }),
+            border: figma.boolean('Border'),
+            size: 64,
         },
         example: (props) => (
-            <Avatar size={props.size} initials={props.initials} badge={props.badge} border={props.border} />
+            <Avatar
+                src={props.src}
+                size={props.size}
+                initials={props.initials}
+                Icon={props.Icon}
+                badge={props.badge.value}
+                border={props.border}
+            />
         ),
     }
 );
