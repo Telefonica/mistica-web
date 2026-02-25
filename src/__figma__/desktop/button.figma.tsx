@@ -14,23 +14,24 @@ figma.connect(
                 Loading: true,
             }),
             small: figma.boolean('Small'),
-            startIcon: figma.enum('Icon', {
+            StartIcon: figma.enum('Icon', {
                 startIcon: figma.children('*'),
             }),
-            endIcon: figma.enum('Icon', {
+            EndIcon: figma.enum('Icon', {
                 endIcon: figma.children('*'),
             }),
+            children: figma.textContent('Action'),
         },
         example: (props) => (
             <ButtonDanger
                 small={props.small}
                 disabled={props.disabled}
                 showSpinner={props.showSpinner}
-                StartIcon={props.startIcon}
-                EndIcon={props.endIcon}
+                StartIcon={props.StartIcon}
+                EndIcon={props.EndIcon}
                 onPress={() => {}}
             >
-                Button
+                {props.children}
             </ButtonDanger>
         ),
     }
@@ -51,12 +52,13 @@ figma.connect(
             bleedLeft: figma.boolean('BleedLeft'),
             bleedRight: figma.boolean('BleedRight'),
             bleedY: figma.boolean('BleedY'),
-            startIcon: figma.enum('Icon', {
+            StartIcon: figma.enum('Icon', {
                 startIcon: figma.children('*'),
             }),
-            endIcon: figma.enum('Icon', {
+            EndIcon: figma.enum('Icon', {
                 endIcon: figma.children('*'),
             }),
+            children: figma.textContent('Action'),
         },
         example: (props) => (
             <ButtonLink
@@ -66,11 +68,11 @@ figma.connect(
                 bleedLeft={props.bleedLeft}
                 bleedRight={props.bleedRight}
                 bleedY={props.bleedY}
-                StartIcon={props.startIcon}
-                EndIcon={props.endIcon}
+                StartIcon={props.StartIcon}
+                EndIcon={props.EndIcon}
                 onPress={() => {}}
             >
-                Button
+                {props.children}
             </ButtonLink>
         ),
     }
@@ -91,12 +93,13 @@ figma.connect(
             bleedLeft: figma.boolean('BleedLeft'),
             bleedRight: figma.boolean('BleedRight'),
             bleedY: figma.boolean('BleedY'),
-            startIcon: figma.enum('Icon', {
+            StartIcon: figma.enum('Icon', {
                 startIcon: figma.children('*'),
             }),
-            endIcon: figma.enum('Icon', {
+            EndIcon: figma.enum('Icon', {
                 endIcon: figma.children('*'),
             }),
+            children: figma.textContent('Action'),
         },
         example: (props) => (
             <ButtonLinkDanger
@@ -106,11 +109,11 @@ figma.connect(
                 bleedLeft={props.bleedLeft}
                 bleedRight={props.bleedRight}
                 bleedY={props.bleedY}
-                StartIcon={props.startIcon}
-                EndIcon={props.endIcon}
+                StartIcon={props.StartIcon}
+                EndIcon={props.EndIcon}
                 onPress={() => {}}
             >
-                Button
+                {props.children}
             </ButtonLinkDanger>
         ),
     }
@@ -128,23 +131,24 @@ figma.connect(
                 Loading: true,
             }),
             small: figma.boolean('Small'),
-            startIcon: figma.enum('Icon', {
+            StartIcon: figma.enum('Icon', {
                 startIcon: figma.children('*'),
             }),
-            endIcon: figma.enum('Icon', {
+            EndIcon: figma.enum('Icon', {
                 endIcon: figma.children('*'),
             }),
+            children: figma.textContent('Action'),
         },
         example: (props) => (
             <ButtonPrimary
                 small={props.small}
                 disabled={props.disabled}
                 showSpinner={props.showSpinner}
-                StartIcon={props.startIcon}
-                EndIcon={props.endIcon}
+                StartIcon={props.StartIcon}
+                EndIcon={props.EndIcon}
                 onPress={() => {}}
             >
-                Button
+                {props.children}
             </ButtonPrimary>
         ),
     }
@@ -162,23 +166,24 @@ figma.connect(
                 Loading: true,
             }),
             small: figma.boolean('Small'),
-            startIcon: figma.enum('Icon', {
+            StartIcon: figma.enum('Icon', {
                 startIcon: figma.children('*'),
             }),
-            endIcon: figma.enum('Icon', {
+            EndIcon: figma.enum('Icon', {
                 endIcon: figma.children('*'),
             }),
+            children: figma.textContent('Action'),
         },
         example: (props) => (
             <ButtonSecondary
                 small={props.small}
                 disabled={props.disabled}
                 showSpinner={props.showSpinner}
-                StartIcon={props.startIcon}
-                EndIcon={props.endIcon}
+                StartIcon={props.StartIcon}
+                EndIcon={props.EndIcon}
                 onPress={() => {}}
             >
-                Button
+                {props.children}
             </ButtonSecondary>
         ),
     }

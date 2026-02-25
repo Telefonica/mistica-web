@@ -15,15 +15,22 @@ figma.connect(
             disabled: figma.boolean('Disabled'),
             readOnly: figma.boolean('Read only'),
             multiline: figma.boolean('Multiline'),
+            endIcon: figma.boolean('End icon', {
+                true: figma.children('*'),
+                false: undefined,
+            }),
+            label: figma.textContent('Label'),
         },
         example: (props) => (
             <TextField
+                label={props.label}
                 name="text-field"
                 helperText={props.helperText}
                 error={props.error}
                 disabled={props.disabled}
                 readOnly={props.readOnly}
                 multiline={props.multiline}
+                endIcon={props.endIcon}
             />
         ),
     }
