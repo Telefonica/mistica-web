@@ -2,17 +2,19 @@ import React from 'react';
 import Dialog from '../dialog';
 import figma from '@figma/code-connect';
 
-// Confirm dialog
+const dialogProps = {
+    title: figma.boolean('Title', {
+        true: 'Title',
+        false: undefined,
+    }),
+};
+
+// Desktop - Confirm dialog
 figma.connect(
     Dialog,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=5689%3A4566',
     {
-        props: {
-            title: figma.boolean('Title', {
-                true: 'Title',
-                false: undefined,
-            }),
-        },
+        props: dialogProps,
         example: (props) => (
             <Dialog
                 type="confirm"
@@ -27,17 +29,12 @@ figma.connect(
     }
 );
 
-// Alert dialog
+// Desktop - Alert dialog
 figma.connect(
     Dialog,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=1217%3A4059',
     {
-        props: {
-            title: figma.boolean('Title', {
-                true: 'Title',
-                false: undefined,
-            }),
-        },
+        props: dialogProps,
         example: (props) => (
             <Dialog
                 type="alert"
@@ -50,7 +47,7 @@ figma.connect(
     }
 );
 
-// Extended dialog
+// Desktop - Extended dialog
 figma.connect(
     Dialog,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=5680%3A5004',
@@ -73,6 +70,26 @@ figma.connect(
                 message="Message"
                 acceptText="Accept"
                 onAccept={() => {}}
+            />
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    Dialog,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=10722%3A6907',
+    {
+        props: dialogProps,
+        example: (props) => (
+            <Dialog
+                type="confirm"
+                title={props.title}
+                message="Message"
+                acceptText="Accept"
+                cancelText="Cancel"
+                onAccept={() => {}}
+                onCancel={() => {}}
             />
         ),
     }

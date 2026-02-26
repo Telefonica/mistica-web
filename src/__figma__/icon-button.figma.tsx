@@ -2,29 +2,32 @@ import React from 'react';
 import {IconButton, ToggleIconButton} from '../icon-button';
 import figma from '@figma/code-connect';
 
+const iconButtonProps = {
+    type: figma.enum('Type', {
+        Brand: 'brand',
+        Danger: 'danger',
+        Neutral: 'neutral',
+    }),
+    backgroundType: figma.enum('Background type', {
+        Soft: 'soft',
+        Solid: 'solid',
+        Transparent: 'transparent',
+    }),
+    disabled: figma.enum('State', {
+        Disabled: true,
+    }),
+    showSpinner: figma.enum('State', {
+        Loading: true,
+    }),
+    small: figma.boolean('Small'),
+};
+
+// Desktop
 figma.connect(
     IconButton,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=2166%3A4324',
     {
-        props: {
-            type: figma.enum('Type', {
-                Brand: 'brand',
-                Danger: 'danger',
-                Neutral: 'neutral',
-            }),
-            backgroundType: figma.enum('Background type', {
-                Soft: 'soft',
-                Solid: 'solid',
-                Transparent: 'transparent',
-            }),
-            disabled: figma.enum('State', {
-                Disabled: true,
-            }),
-            showSpinner: figma.enum('State', {
-                Loading: true,
-            }),
-            small: figma.boolean('Small'),
-        },
+        props: iconButtonProps,
         example: (props) => (
             <IconButton
                 type={props.type}
@@ -58,6 +61,26 @@ figma.connect(
                 }}
                 checked={props.checked}
                 onChange={() => {}}
+            />
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    IconButton,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=2044%3A7604',
+    {
+        props: iconButtonProps,
+        example: (props) => (
+            <IconButton
+                type={props.type}
+                backgroundType={props.backgroundType}
+                small={props.small}
+                disabled={props.disabled}
+                showSpinner={props.showSpinner}
+                aria-label="icon button"
+                onPress={() => {}}
             />
         ),
     }

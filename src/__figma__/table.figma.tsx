@@ -2,17 +2,19 @@ import React from 'react';
 import Table from '../table';
 import figma from '@figma/code-connect';
 
-// Table row
+const tableRowProps = {
+    // rowVerticalAlign: figma.enum('Content alignment', {
+    //     Top: 'top',
+    //     Center: 'middle',
+    // }),
+};
+
+// Desktop - Table row
 figma.connect(
     Table,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=18880%3A1222',
     {
-        props: {
-            rowVerticalAlign: figma.enum('Content alignment', {
-                Top: 'top',
-                Center: 'middle',
-            }),
-        },
+        props: tableRowProps,
         example: (props) => (
             <Table
                 heading={['Column 1', 'Column 2', 'Column 3']}
@@ -20,7 +22,7 @@ figma.connect(
                     ['Cell 1', 'Cell 2', 'Cell 3'],
                     ['Cell 4', 'Cell 5', 'Cell 6'],
                 ]}
-                rowVerticalAlign={props.rowVerticalAlign}
+                // rowVerticalAlign={props.rowVerticalAlign}
             />
         ),
     }
@@ -89,6 +91,25 @@ figma.connect(
                         actions: [{Icon: () => null, onPress: () => {}, label: 'Action'}],
                     },
                 ]}
+            />
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    Table,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=39455%3A1048',
+    {
+        props: tableRowProps,
+        example: (props) => (
+            <Table
+                heading={['Column 1', 'Column 2', 'Column 3']}
+                content={[
+                    ['Cell 1', 'Cell 2', 'Cell 3'],
+                    ['Cell 4', 'Cell 5', 'Cell 6'],
+                ]}
+                // rowVerticalAlign={props.rowVerticalAlign}
             />
         ),
     }

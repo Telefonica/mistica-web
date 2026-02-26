@@ -3,9 +3,24 @@ import ButtonFixedFooterLayout from '../button-fixed-footer-layout';
 import {ButtonPrimary} from '../button';
 import figma from '@figma/code-connect';
 
+// Desktop
 figma.connect(
     ButtonFixedFooterLayout,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=5212%3A4201',
+    {
+        props: {},
+        example: () => (
+            <ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Primary</ButtonPrimary>}>
+                Content
+            </ButtonFixedFooterLayout>
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    ButtonFixedFooterLayout,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=37%3A5257',
     {
         props: {},
         example: () => (

@@ -2,6 +2,7 @@ import React from 'react';
 import {ErrorFeedbackScreen, InfoFeedbackScreen, SuccessFeedback, SuccessFeedbackScreen} from '../feedback';
 import figma from '@figma/code-connect';
 
+// Desktop
 figma.connect(
     ErrorFeedbackScreen,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=567%3A9999',
@@ -35,5 +36,15 @@ figma.connect(
     {
         props: {},
         example: () => <SuccessFeedbackScreen title="Success title" description="Success description" />,
+    }
+);
+
+// Mobile
+figma.connect(
+    ErrorFeedbackScreen,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=567%3A9999',
+    {
+        props: {},
+        example: () => <ErrorFeedbackScreen title="Error title" description="Error description" />,
     }
 );

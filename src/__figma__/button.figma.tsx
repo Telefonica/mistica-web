@@ -2,6 +2,24 @@ import React from 'react';
 import {ButtonDanger, ButtonLink, ButtonLinkDanger, ButtonPrimary, ButtonSecondary} from '../button';
 import figma from '@figma/code-connect';
 
+const buttonPrimaryProps = {
+    disabled: figma.enum('State', {
+        Disabled: true,
+    }),
+    showSpinner: figma.enum('State', {
+        Loading: true,
+    }),
+    small: figma.boolean('Small'),
+    StartIcon: figma.enum('Icon', {
+        startIcon: figma.children('*'),
+    }),
+    EndIcon: figma.enum('Icon', {
+        endIcon: figma.children('*'),
+    }),
+    children: figma.textContent('Action'),
+};
+
+// Desktop
 figma.connect(
     ButtonDanger,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=10659%3A9868',
@@ -123,22 +141,7 @@ figma.connect(
     ButtonPrimary,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=2166%3A4125',
     {
-        props: {
-            disabled: figma.enum('State', {
-                Disabled: true,
-            }),
-            showSpinner: figma.enum('State', {
-                Loading: true,
-            }),
-            small: figma.boolean('Small'),
-            StartIcon: figma.enum('Icon', {
-                startIcon: figma.children('*'),
-            }),
-            EndIcon: figma.enum('Icon', {
-                endIcon: figma.children('*'),
-            }),
-            children: figma.textContent('Action'),
-        },
+        props: buttonPrimaryProps,
         example: (props) => (
             <ButtonPrimary
                 small={props.small}
@@ -185,6 +188,27 @@ figma.connect(
             >
                 {props.children}
             </ButtonSecondary>
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    ButtonPrimary,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=22230%3A10269',
+    {
+        props: buttonPrimaryProps,
+        example: (props) => (
+            <ButtonPrimary
+                small={props.small}
+                disabled={props.disabled}
+                showSpinner={props.showSpinner}
+                StartIcon={props.StartIcon}
+                EndIcon={props.EndIcon}
+                onPress={() => {}}
+            >
+                {props.children}
+            </ButtonPrimary>
         ),
     }
 );

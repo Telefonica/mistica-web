@@ -2,25 +2,28 @@ import React from 'react';
 import {Timer, TextTimer} from '../timer';
 import figma from '@figma/code-connect';
 
+const timerProps = {
+    boxed: figma.boolean('Boxed'),
+    maxTimeUnit: figma.enum('Max value', {
+        Days: 'days',
+        Hours: 'hours',
+        Minutes: 'minutes',
+        Seconds: 'seconds',
+    }),
+    minTimeUnit: figma.enum('Min value', {
+        Seconds: 'seconds',
+        Minutes: 'minutes',
+        Hours: 'hours',
+        Days: 'days',
+    }),
+};
+
+// Desktop
 figma.connect(
     Timer,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=18327%3A466',
     {
-        props: {
-            boxed: figma.boolean('Boxed'),
-            maxTimeUnit: figma.enum('Max value', {
-                Days: 'days',
-                Hours: 'hours',
-                Minutes: 'minutes',
-                Seconds: 'seconds',
-            }),
-            minTimeUnit: figma.enum('Min value', {
-                Seconds: 'seconds',
-                Minutes: 'minutes',
-                Hours: 'hours',
-                Days: 'days',
-            }),
-        },
+        props: timerProps,
         example: (props) => (
             <Timer
                 endTimestamp={new Date('2025-12-31T23:59:59')}
@@ -61,6 +64,23 @@ figma.connect(
                 maxTimeUnit={props.maxTimeUnit}
                 minTimeUnit={props.minTimeUnit}
                 labelType={props.labelType}
+            />
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    Timer,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=38945%3A1300',
+    {
+        props: timerProps,
+        example: (props) => (
+            <Timer
+                endTimestamp={new Date('2025-12-31T23:59:59')}
+                maxTimeUnit={props.maxTimeUnit}
+                minTimeUnit={props.minTimeUnit}
+                boxed={props.boxed}
             />
         ),
     }

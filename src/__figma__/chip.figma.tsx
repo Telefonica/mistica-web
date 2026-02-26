@@ -103,3 +103,18 @@ figma.connect(Chip, chipUrl, {
         </RadioGroup>
     ),
 });
+
+// Mobile - Closable chip
+figma.connect(
+    Chip,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=3610%3A9110',
+    {
+        variant: {Closable: true},
+        props: commonProps,
+        example: (props) => (
+            <Chip small={props.small} active={props.active} Icon={props.Icon} onClose={() => {}}>
+                {props.children}
+            </Chip>
+        ),
+    }
+);

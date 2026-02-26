@@ -2,31 +2,34 @@ import React from 'react';
 import {BoxedRow, OrderedList, Row, UnorderedList} from '../list';
 import figma from '@figma/code-connect';
 
+const boxedRowProps = {
+    nested: figma.nestedProps('List Structure', {
+        asset: figma.boolean('Asset', {
+            true: figma.instance('Choose icon'),
+            false: undefined,
+        }),
+        title: figma.textContent('Title'),
+        subtitle: figma.textContent('Subtitle'),
+        description: figma.textContent('Description'),
+        badge: figma.boolean('Slot', {
+            true: figma.children('Badge*'),
+            false: undefined,
+        }),
+        extra: figma.boolean('Slot', {
+            true: figma.instance('🔄 Replace Slot'),
+            false: undefined,
+        }),
+    }),
+    disabled: figma.boolean('Disabled'),
+    danger: figma.boolean('Danger'),
+};
+
+// Desktop
 figma.connect(
     BoxedRow,
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=1298%3A5658',
     {
-        props: {
-            nested: figma.nestedProps('List Structure', {
-                asset: figma.boolean('Asset', {
-                    true: figma.instance('Choose icon'),
-                    false: undefined,
-                }),
-                title: figma.textContent('Title'),
-                subtitle: figma.textContent('Subtitle'),
-                description: figma.textContent('Description'),
-                badge: figma.boolean('Slot', {
-                    true: figma.children('Badge*'),
-                    false: undefined,
-                }),
-                extra: figma.boolean('Slot', {
-                    true: figma.instance('🔄 Replace Slot'),
-                    false: undefined,
-                }),
-            }),
-            disabled: figma.boolean('Disabled'),
-            danger: figma.boolean('Danger'),
-        },
+        props: boxedRowProps,
         example: (props) => (
             <BoxedRow
                 title={props.nested.title}
@@ -102,6 +105,26 @@ figma.connect(
         example: () => (
             <UnorderedList
                 items={[{content: 'First item'}, {content: 'Second item'}, {content: 'Third item'}]}
+            />
+        ),
+    }
+);
+
+// Mobile
+figma.connect(
+    BoxedRow,
+    'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=1428%3A8270',
+    {
+        props: boxedRowProps,
+        example: (props) => (
+            <BoxedRow
+                title={props.nested.title}
+                subtitle={props.nested.subtitle}
+                description={props.nested.description}
+                badge={props.nested.badge}
+                disabled={props.disabled}
+                danger={props.danger}
+                extra={props.nested.extra}
             />
         ),
     }
