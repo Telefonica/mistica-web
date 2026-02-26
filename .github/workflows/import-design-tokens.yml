@@ -12,19 +12,41 @@ on:
                 required: false
                 default: false
 
+permissions:
+    contents: write
+    pull-requests: write
+
 jobs:
     import-design-tokens:
         runs-on: ubuntu-latest
+        # Requires manual approval - uses GH_TOKEN_MISTICA to access private repo
+        environment: production
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
-            - name: Checkout mistica-design repo with the tokens
-              uses: actions/checkout@v4
+            - name: Validate ref input
+              id: validate
+              env:
+                  REF_INPUT: ${{ github.event.inputs.ref }}
+              run: |
+                  # Validate: only safe characters for git refs
+                  if ! echo "$REF_INPUT" | grep -qE '^[a-zA-Z0-9._/-]+$'; then
+                    echo "Error: Invalid ref format"
+                    exit 1
+                  fi
+                  echo "ref=$REF_INPUT" >> $GITHUB_OUTPUT
+
+            - name: Checkout mistica-design repo
+              uses: actions/checkout@v6
               with:
                   repository: Telefonica/mistica-design
                   path: '.github/mistica-design'
-                  ref: ${{github.event.inputs.ref}}
-                  token: ${{ secrets.FLOW_GITHUB_TOKEN }}
+                  ref: ${{ steps.validate.outputs.ref }}
+                  # Requires GH_TOKEN_MISTICA to access private Telefonica/mistica-design repo
+                  token: ${{ secrets.GH_TOKEN_MISTICA }}
+                  persist-credentials: false
 
             - name: Install dependencies
               env:
@@ -40,11 +62,11 @@ jobs:
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v5
               with:
-                  token: ${{ secrets.FLOW_GITHUB_TOKEN }}
+                  token: ${{ secrets.GH_TOKEN_MISTICA }}
                   add-paths: 'src/skins'
                   commit-message: 'feat(skin): update design tokens'
                   title: 'feat(skin): update design tokens'
-                  branch: 'import-design-tokens-${{github.event.inputs.ref}}'
+                  branch: import-design-tokens-${{ steps.validate.outputs.ref }}
                   reviewers: 'atabel,pladaria'
                   delete-branch: true
                   draft: ${{github.event.inputs.draft}}

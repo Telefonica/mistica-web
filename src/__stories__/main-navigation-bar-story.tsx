@@ -18,7 +18,6 @@ import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Navigation bars/MainNavigationBar',
-    component: MainNavigationBar,
     parameters: {
         fullScreen: true,
     },

@@ -8,23 +8,43 @@ on:
                 required: true
                 default: ''
 
+permissions:
+    contents: write
+
 jobs:
     update-screenshots:
         name: update-screenshots
-        runs-on: [self-hosted, cdorunner-life-novum, Linux, cdorunner-life-large]
+        runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
+        # Requires manual approval - uses GH_TOKEN_MISTICA with write access
+        environment: production
         strategy:
             matrix:
                 shard: [1, 2, 3]
             fail-fast: false
-        env:
-            ACTION_INPUT_BRANCH: ${{github.event.inputs.branch || 'master'}}
+        outputs:
+            branch: ${{ steps.validate.outputs.branch }}
         steps:
+            - name: Validate branch input
+              id: validate
+              env:
+                  BRANCH_INPUT: ${{ github.event.inputs.branch }}
+              run: |
+                  # Use master if empty
+                  BRANCH="${BRANCH_INPUT:-master}"
+                  # Validate: only safe characters for branch names
+                  if ! echo "$BRANCH" | grep -qE '^[a-zA-Z0-9._/-]+$'; then
+                    echo "Error: Invalid branch format"
+                    exit 1
+                  fi
+                  echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
             - name: checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
               with:
-                  token: ${{secrets.FLOW_GITHUB_TOKEN}}
-                  ref: ${{github.event.inputs.branch}}
+                  ref: ${{ steps.validate.outputs.branch }}
+                  persist-credentials: false
+
             - name: Install dependencies
               env:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
@@ -33,15 +53,66 @@ jobs:
             - run: yarn storybook-static
             - run: yarn test-acceptance -u --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
+            - name: Collect changed screenshots
+              id: collect
+              run: |
+                  mkdir -p changed-screenshots
+                  # List modified/untracked PNGs under __image_snapshots__
+                  git status --porcelain | awk '{print $2}' | grep -E '__image_snapshots__/.+\.png$' | while read -r f; do
+                    mkdir -p "changed-screenshots/$(dirname "$f")"
+                    cp "$f" "changed-screenshots/$f"
+                  done
+                  echo "CHANGED_COUNT=$(find changed-screenshots -type f | wc -l)" >> $GITHUB_OUTPUT
+
+            - name: upload-changes
+              if: ${{ steps.collect.outputs.CHANGED_COUNT != '0' }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: updated-screenshots-${{ matrix.shard }}
+                  path: changed-screenshots
+                  if-no-files-found: ignore
+
+    upload-changes:
+        needs: update-screenshots
+        runs-on: ubuntu-latest
+        if: always()
+        steps:
+            - name: checkout
+              uses: actions/checkout@v6
+              with:
+                  ref: ${{ needs.update-screenshots.outputs.branch }}
+                  persist-credentials: false
+
+            - name: Download updated screenshots
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: updated-screenshots-*
+                  merge-multiple: true
+
+            - name: Restore changed screenshots to original paths
+              run: |
+                  if [ -d changed-screenshots ]; then
+                    find changed-screenshots -type f -name '*.png' -print0 | while IFS= read -r -d '' f; do
+                      dest="${f#changed-screenshots/}"
+                      mkdir -p "$(dirname "$dest")"
+                      cp "$f" "$dest"
+                    done
+                  fi
+
             - name: commit-changes
+              env:
+                  GH_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
+                  BRANCH: ${{ needs.update-screenshots.outputs.branch }}
               run: |
                   git status --porcelain
                   if [ ! -z "$(git status --porcelain)" ]; then
-                    git config --global user.name ${GITHUB_ACTOR}
-                    git config --global user.email ${GITHUB_ACTOR}@users.noreply.github.com
+                    # Configure git with token only when needed
+                    git config user.name "${GITHUB_ACTOR}"
+                    git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+                    git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
                     git add -A
                     git commit -m "[bot] Update screenshots"
-                    git push origin HEAD:$ACTION_INPUT_BRANCH
+                    git push origin "HEAD:${BRANCH}"
                   else
                     echo "No changes to commit"
                   fi

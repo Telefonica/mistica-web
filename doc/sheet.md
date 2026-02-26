@@ -90,7 +90,8 @@ const MyComponent = () => {
 };
 ```
 
-The sheet will close when the user does the swipe down gesture or when the background overlay is touched. The
+The sheet will close when the user does the swipe down gesture, when the background overlay is touched, or by
+using the visible dismiss button (close icon) that appears in the top-right corner aligned with the title. The
 `onClose` callback is called when the closing animation finishes, that's the right place to unmount the sheet
 as shown in the example above.
 
