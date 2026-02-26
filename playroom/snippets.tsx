@@ -4663,7 +4663,7 @@ export default [
         <FileUpload
             name="file"
             withDropZone
-            asset={<IconExportRegular color={colors.brand} />}
+            asset={<IconExportRegular color="currentColor" />}
             title="Drag or upload your file"
             description="File can be up to 50Mb"
             renderButton={(props) => (
@@ -4679,7 +4679,7 @@ export default [
         code: `
         <FileUpload
             name="file"
-            asset={<IconExportRegular color={colors.brand} />}
+            asset={<IconExportRegular color="currentColor" />}
             title="Upload your file"
             description="File can be up to 50Mb"
             renderButton={(props) => (
