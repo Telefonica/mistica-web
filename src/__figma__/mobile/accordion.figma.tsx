@@ -14,6 +14,12 @@ figma.connect(
     Accordion,
     'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=25050%3A313',
     {
+        links: [
+            {
+                name: 'Mobile',
+                url: 'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/Mística-Mobile?node-id=25050%3A313',
+            },
+        ],
         props: {
             divider: figma.boolean('Divider'),
             replaceSlot: figma.instance('🔄 Replace slot'),
