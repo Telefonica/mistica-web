@@ -13,7 +13,7 @@ const avatarProps = {
         Icon: figma.children('*'),
     }),
     badge: figma.boolean('Badge', {
-        true: figma.nestedProps('Badge [D]', {
+        true: figma.nestedProps('Badge', {
             value: figma.boolean('+9', {
                 true: 15,
                 false: figma.boolean('Non-numeric', {
