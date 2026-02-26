@@ -1,5 +1,5 @@
 import React from 'react';
-import {Accordion, AccordionItem} from '../../accordion';
+import {Accordion, AccordionItem, BoxedAccordion, BoxedAccordionItem} from '../../accordion';
 import figma from '@figma/code-connect';
 
 figma.connect(
@@ -8,12 +8,76 @@ figma.connect(
     {
         props: {
             singleOpen: figma.boolean('Auto collapse'),
+            asset: figma.boolean('Asset', {
+                true: figma.children('*'),
+                false: undefined,
+            }),
+            title: figma.textContent('Title'),
+            subtitle: figma.boolean('Subtitle', {
+                true: figma.textContent('Subtitle'),
+                false: undefined,
+            }),
+            content: figma.textContent('Body content'),
+            detail: figma.boolean('Detail', {
+                true: figma.textContent('Detail'),
+                false: undefined,
+            }),
+            right: figma.boolean('Right slot', {
+                true: figma.children('*'),
+                false: undefined,
+            }),
         },
         example: (props) => (
             <Accordion singleOpen={props.singleOpen}>
-                <AccordionItem title="Title" content="Content" />
-                <AccordionItem title="Title" content="Content" />
+                <AccordionItem
+                    asset={props.asset}
+                    title={props.title}
+                    subtitle={props.subtitle}
+                    content={<Text3 color={skinVars.colors.textSecondary}>{props.content}</Text3>}
+                    detail={props.detail}
+                    right={props.right}
+                />
             </Accordion>
+        ),
+    }
+);
+
+figma.connect(
+    BoxedAccordion,
+    'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=13418-3207&t=8UVll5NPxiYViFwL-4',
+    {
+        props: {
+            singleOpen: figma.boolean('Auto collapse'),
+            asset: figma.boolean('Asset', {
+                true: figma.children('*'),
+                false: undefined,
+            }),
+            title: figma.textContent('Title'),
+            subtitle: figma.boolean('Subtitle', {
+                true: figma.textContent('Subtitle'),
+                false: undefined,
+            }),
+            content: figma.textContent('Body content'),
+            detail: figma.boolean('Detail', {
+                true: figma.textContent('Detail'),
+                false: undefined,
+            }),
+            right: figma.boolean('Right slot', {
+                true: figma.children('*'),
+                false: undefined,
+            }),
+        },
+        example: (props) => (
+            <BoxedAccordion singleOpen={props.singleOpen}>
+                <BoxedAccordionItem
+                    asset={props.asset}
+                    title={props.title}
+                    subtitle={props.subtitle}
+                    content={<Text3 color={skinVars.colors.textSecondary}>{props.content}</Text3>}
+                    detail={props.detail}
+                    right={props.right}
+                />
+            </BoxedAccordion>
         ),
     }
 );
