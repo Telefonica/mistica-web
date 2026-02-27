@@ -97,15 +97,21 @@ export const createNestableContext = <Value,>(
         const [values, dispatch] = React.useReducer(reducer, []);
         let computedValue: Value = defaultValue;
         if (values.length) {
+            console.warn('[NESTABLE-CONTEXT] reducing values', values);
             if (isObject(values[0])) {
+                console.warn('[NESTABLE-CONTEXT] is object');
                 if (valuesReducer) {
+                    console.warn('[NESTABLE-CONTEXT] with reducer');
                     computedValue = valuesReducer(values);
                 } else {
+                    console.warn('[NESTABLE-CONTEXT] without reducer');
                     computedValue = Object.assign({}, defaultValue, ...values);
                 }
             } else {
+                console.warn('[NESTABLE-CONTEXT] is not object');
                 computedValue = values[values.length - 1];
             }
+            console.log('[NESTABLE-CONTEXT] computed value', computedValue);
         }
 
         return (
