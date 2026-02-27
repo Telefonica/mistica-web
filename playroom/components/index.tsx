@@ -234,7 +234,6 @@ type PreviewToolsProps = {
     floating?: boolean;
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     showPlatformSelector?: boolean;
-    showColorSchemeSelector?: boolean;
     forceMobile?: boolean;
     forceDesktop?: boolean;
     forceTabs?: boolean;
