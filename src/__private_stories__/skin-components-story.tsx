@@ -55,6 +55,8 @@ import {
     TimelineItem,
     IconShopRegular,
     CoverCard,
+    IconExportRegular,
+    FileUpload,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -348,6 +350,16 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             optional
                             endIcon={<IconLightningRegular />}
                             helperText="Helper text"
+                        />
+
+                        {/** FileUpload */}
+                        <FileUpload
+                            name="file"
+                            withDropZone
+                            asset={<IconExportRegular color="currentColor" />}
+                            title="Drag or upload your file"
+                            description="File can be up to 50Mb"
+                            renderButton={(props) => <ButtonPrimary {...props}>Choose file</ButtonPrimary>}
                         />
 
                         {/** ProgressBar */}
