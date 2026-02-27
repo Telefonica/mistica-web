@@ -505,13 +505,11 @@ const FileUpload = (props: Props): JSX.Element => {
     const descriptionId = description ? `${id}-dropzone-description` : undefined;
     const slotId = slot ? `${id}-dropzone-slot` : undefined;
 
-    const isBrandVariant = outsideVariant === 'brand';
     const contentClassName = classnames({
-        [styles.dropZoneContainerBrand]: withDropZone && isBrandVariant,
-        [styles.dropZoneContainer]: withDropZone && !isBrandVariant,
-        [styles.dropZoneActiveBrand]: withDropZone && isDragActive && isBrandVariant,
-        [styles.dropZoneActive]: withDropZone && isDragActive && !isBrandVariant,
         [styles.disabled]: disabled,
+        [styles.dropZoneContainerBase]: withDropZone,
+        [styles.dropZoneVariant[outsideVariant]]: withDropZone,
+        [styles.dropZoneActive]: withDropZone && isDragActive,
     });
 
     const assetClassName = withDropZone && isDragActive ? styles.assetScaleActive : '';
@@ -537,9 +535,13 @@ const FileUpload = (props: Props): JSX.Element => {
                             <div
                                 className={assetClassName}
                                 style={{
-                                    color: isBrandVariant
-                                        ? skinVars.colors.neutralHighBrand
-                                        : skinVars.colors.brand,
+                                    color: {
+                                        default: skinVars.colors.brand,
+                                        alternative: skinVars.colors.brand,
+                                        brand: skinVars.colors.neutralHighBrand,
+                                        negative: skinVars.colors.negative,
+                                        media: skinVars.colors.negative,
+                                    }[outsideVariant],
                                 }}
                             >
                                 {asset}

@@ -17,6 +17,7 @@ import {
     IconCloseRegular,
 } from '..';
 import {vars as skinVars} from '../skins/skin-contract.css';
+import beachImg from './images/beach.jpg';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -55,42 +56,50 @@ export const Default: StoryComponent<Args> = ({
     variantOutside,
 }) => {
     return (
-        <ResponsiveLayout variant={variantOutside}>
-            <Box padding={16}>
-                <FileUpload
-                    name="file-upload"
-                    accept={accept || undefined}
-                    multiple={multiple}
-                    allowAppend={allowAppend}
-                    withDropZone={withDropZone}
-                    disabled={disabled}
-                    asset={withAsset ? <IconExportRegular color="currentColor" /> : undefined}
-                    title={title}
-                    description={description}
-                    slot={withSlot ? <Placeholder /> : undefined}
-                    errorText={errorText || undefined}
-                    renderButton={(buttonProps) => {
-                        switch (buttonType) {
-                            case 'primary':
-                                return <ButtonPrimary {...buttonProps}>Choose file</ButtonPrimary>;
-                            case 'secondary':
-                                return <ButtonSecondary {...buttonProps}>Choose file</ButtonSecondary>;
-                            case 'icon':
-                                return (
-                                    <IconButton
-                                        {...buttonProps}
-                                        Icon={IconExportRegular}
-                                        backgroundType="solid"
-                                        aria-label="Choose file"
-                                    />
-                                );
-                            default:
-                                return null;
-                        }
-                    }}
-                />
-            </Box>
-        </ResponsiveLayout>
+        <div
+            style={{
+                backgroundImage: variantOutside === 'media' ? `url(${beachImg})` : undefined,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+            }}
+        >
+            <ResponsiveLayout variant={variantOutside}>
+                <Box padding={16}>
+                    <FileUpload
+                        name="file-upload"
+                        accept={accept || undefined}
+                        multiple={multiple}
+                        allowAppend={allowAppend}
+                        withDropZone={withDropZone}
+                        disabled={disabled}
+                        asset={withAsset ? <IconExportRegular color="currentColor" /> : undefined}
+                        title={title}
+                        description={description}
+                        slot={withSlot ? <Placeholder /> : undefined}
+                        errorText={errorText || undefined}
+                        renderButton={(buttonProps) => {
+                            switch (buttonType) {
+                                case 'primary':
+                                    return <ButtonPrimary {...buttonProps}>Choose file</ButtonPrimary>;
+                                case 'secondary':
+                                    return <ButtonSecondary {...buttonProps}>Choose file</ButtonSecondary>;
+                                case 'icon':
+                                    return (
+                                        <IconButton
+                                            {...buttonProps}
+                                            Icon={IconExportRegular}
+                                            backgroundType="solid"
+                                            aria-label="Choose file"
+                                        />
+                                    );
+                                default:
+                                    return null;
+                            }
+                        }}
+                    />
+                </Box>
+            </ResponsiveLayout>
+        </div>
     );
 };
 
@@ -111,7 +120,7 @@ Default.args = {
 };
 Default.argTypes = {
     variantOutside: {
-        options: ['default', 'brand', 'alternative', 'negative'],
+        options: ['default', 'brand', 'alternative', 'negative', 'media'],
         control: {type: 'select'},
     },
     withDropZone: {

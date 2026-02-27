@@ -2,11 +2,13 @@ import path from 'path';
 import {openStoryPage, screen} from '../test-utils';
 import {prepareFile} from '@telefonica/acceptance-testing';
 
-test('FileUpload - with drop zone', async () => {
+const variants = ['default', 'brand', 'alternative', 'negative', 'media'] as const;
+
+test.each(variants)('FileUpload - with drop zone (%s)', async (variantOutside) => {
     await openStoryPage({
         id: 'components-input-fields-fileupload--default',
         device: 'DESKTOP',
-        args: {withDropZone: true, withAsset: true},
+        args: {withDropZone: true, withAsset: true, variantOutside},
     });
 
     const fileUploader = await screen.findByTestId('FileUpload');
