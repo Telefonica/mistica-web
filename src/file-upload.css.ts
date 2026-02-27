@@ -42,7 +42,7 @@ export const dropZoneContainer = style([
             [mq.supportsHover]: {
                 selectors: {
                     [`&:hover:not(.${disabled})`]: {
-                        border: `1px solid ${skinVars.colors.borderSelected}`,
+                        border: `1px solid ${skinVars.colors.controlActivatedNegative}`,
                         backgroundColor: skinVars.colors.backgroundDropZoneHover,
                     },
                 },
@@ -69,7 +69,7 @@ export const dropZoneContainerBrand = style([
 ]);
 
 export const dropZoneActive = style({
-    border: `1px solid ${skinVars.colors.borderSelected}`,
+    border: `1px solid ${skinVars.colors.controlActivatedNegative}`,
     backgroundColor: skinVars.colors.backgroundDropZoneDragover,
 });
 

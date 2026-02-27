@@ -75,6 +75,10 @@
     --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-blau-raw-blauBlueSecondary), 0.08);
     --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-blau-raw-grey6), 0.05);
     --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-blau-raw-grey6), 0.08);
+    --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-blau-raw-white), 0.1);
+    --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-blau-raw-white), 0.17);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-blau-raw-grey6), 0.05);
+    --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-blau-raw-grey6), 0.08);
     --mistica-color-skeletonWave: var(--mistica-blau-grey2);
     --mistica-color-borderLow: var(--mistica-blau-grey1);
     --mistica-color-border: var(--mistica-blau-grey3);
@@ -441,6 +445,10 @@
     --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-blau-raw-white), 0.08);
     --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-blau-raw-white), 0.03);
     --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-blau-raw-white), 0.05);
+    --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-blau-raw-white), 0.15);
+    --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-blau-raw-white), 0.15);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-blau-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-blau-raw-white), 0.05);
     --mistica-color-skeletonWave: var(--mistica-blau-grey5);
     --mistica-color-borderLow: var(--mistica-blau-darkModeBlack);
     --mistica-color-border: var(--mistica-blau-darkModeGrey);
@@ -729,6 +737,10 @@
         --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-blau-raw-white), 0.08);
         --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-blau-raw-white), 0.03);
         --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-blau-raw-white), 0.05);
+        --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-blau-raw-white), 0.15);
+        --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-blau-raw-white), 0.15);
+        --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-blau-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-blau-raw-white), 0.05);
         --mistica-color-skeletonWave: var(--mistica-blau-grey5);
         --mistica-color-borderLow: var(--mistica-blau-darkModeBlack);
         --mistica-color-border: var(--mistica-blau-darkModeGrey);
@@ -1022,6 +1034,10 @@
         --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-blau-raw-blauBlueSecondary), 0.08);
         --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-blau-raw-grey6), 0.05);
         --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-blau-raw-grey6), 0.08);
+        --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-blau-raw-white), 0.1);
+        --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-blau-raw-white), 0.17);
+        --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-blau-raw-grey6), 0.05);
+        --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-blau-raw-grey6), 0.08);
         --mistica-color-skeletonWave: var(--mistica-blau-grey2);
         --mistica-color-borderLow: var(--mistica-blau-grey1);
         --mistica-color-border: var(--mistica-blau-grey3);
