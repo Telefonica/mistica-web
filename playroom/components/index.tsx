@@ -297,8 +297,9 @@ export const PreviewTools = ({
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
     const editStory = () => {
-        if (window.location.href.includes('/preview')) {
-            window.open(window.location.href.replace('/preview', ''));
+        const href = window.top?.location.href ?? window.location.href;
+        if (href.includes('/preview')) {
+            window.open(href.replace('/preview', ''));
         }
     };
 
