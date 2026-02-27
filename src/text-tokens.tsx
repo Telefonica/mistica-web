@@ -695,14 +695,14 @@ export const skipLinkNavLabel: TextToken = {
 
 export const fileUploadRemoveFile: TextToken = {
     es: 'Eliminar archivo 1$s',
-    en: 'Remove file 1$s',
-    de: 'Datei 1$s entfernen',
-    pt: 'Remover arquivo 1$s',
+    en: 'Delete file 1$s',
+    de: 'Datei löschen 1$s',
+    pt: 'Excluir arquivo 1$s',
 };
 
 export const fileUploadListLabel: TextToken = {
     es: 'Archivos subidos',
-    en: 'Uploaded files',
+    en: 'Files uploaded',
     de: 'Hochgeladene Dateien',
     pt: 'Arquivos enviados',
 };
