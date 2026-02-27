@@ -41,6 +41,11 @@ export {default as Animation} from './animation';
 
 type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu'>;
 
+const BrandIcon = ({Logo}: {Logo: React.ComponentType<{size: number; color?: string}>}) => {
+    const {isDarkMode} = useTheme();
+    return <Logo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+};
+
 const themesMap: {
     [skinName in ValidSkinName]: {
         themeConfig: ThemeConfig;
@@ -51,50 +56,32 @@ const themesMap: {
     'Movistar-new': {
         text: 'Movistar',
         themeConfig: Movistar_New,
-        Icon: () => {
-            const {isDarkMode} = useTheme();
-            return <MovistarNewLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
-        },
+        Icon: () => <BrandIcon Logo={MovistarNewLogo} />,
     },
     'Vivo-new': {
         text: 'Vivo',
         themeConfig: Vivo_New,
-        Icon: () => {
-            const {isDarkMode} = useTheme();
-            return <VivoLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
-        },
+        Icon: () => <BrandIcon Logo={VivoLogo} />,
     },
     'O2-new': {
         text: 'O2',
         themeConfig: O2_New,
-        Icon: () => {
-            const {isDarkMode} = useTheme();
-            return <O2NewLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
-        },
+        Icon: () => <BrandIcon Logo={O2NewLogo} />,
     },
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,
-        Icon: () => {
-            const {isDarkMode} = useTheme();
-            return <TelefonicaLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
-        },
+        Icon: () => <BrandIcon Logo={TelefonicaLogo} />,
     },
     Blau: {
         text: 'Blau',
         themeConfig: Blau,
-        Icon: () => {
-            const {isDarkMode} = useTheme();
-            return <BlauLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
-        },
+        Icon: () => <BrandIcon Logo={BlauLogo} />,
     },
     Esimflag: {
         text: 'Esimflag',
         themeConfig: Esimflag,
-        Icon: () => {
-            const {isDarkMode} = useTheme();
-            return <EsimflagLogo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
-        },
+        Icon: () => <BrandIcon Logo={EsimflagLogo} />,
     },
 };
 
