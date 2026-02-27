@@ -1,3 +1,16 @@
+# [16.52.0](https://github.com/Telefonica/mistica-web/compare/v16.51.0...v16.52.0) (2026-02-27)
+
+
+### Bug Fixes
+
+* **Card:** VoiceOver rectangle doesn't cover the whole card when using href/to ([#1501](https://github.com/Telefonica/mistica-web/issues/1501)) ([025d066](https://github.com/Telefonica/mistica-web/commit/025d066bfaeec13a006c273928d69c49f2853f18)), closes [#1489](https://github.com/Telefonica/mistica-web/issues/1489)
+* **IconButton:** change touchable area implementation ([#1504](https://github.com/Telefonica/mistica-web/issues/1504)) ([81777ad](https://github.com/Telefonica/mistica-web/commit/81777ade0ecffa2b5198c2a7cf72eb9f85527db0))
+
+
+### Features
+
+* **Square:** add primitive Square component (WEB-2403) ([#1508](https://github.com/Telefonica/mistica-web/issues/1508)) ([4743a11](https://github.com/Telefonica/mistica-web/commit/4743a11576a4d56df99d21e6aec2e1e2b97fead0))
+
 # [16.51.0](https://github.com/Telefonica/mistica-web/compare/v16.50.0...v16.51.0) (2026-02-23)
 
 
