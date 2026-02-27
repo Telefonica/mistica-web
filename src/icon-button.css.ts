@@ -288,16 +288,16 @@ export const iconButtonTokens = styleVariants({
     'danger-transparent-brand': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundBrand,
-            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
-            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundBrandPressed,
+            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundBrandPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
     'danger-transparent-negative': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundBrand,
-            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundPressed,
-            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundPressed,
+            [backgroundHover]: skinVars.colors.buttonLinkDangerBackgroundNegativePressed,
+            [backgroundActive]: skinVars.colors.buttonLinkDangerBackgroundNegativePressed,
             [iconColor]: skinVars.colors.error,
         },
     },
