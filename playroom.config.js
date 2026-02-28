@@ -81,6 +81,15 @@ const config = {
     scope: './playroom/use-scope.tsx',
     widths: getWidths(),
     exampleCode,
+    frameSettings: [
+        {id: 'rtl', label: 'RTL Layout', defaultValue: false},
+        {id: 'reduceMotion', label: 'Reduce Motion', defaultValue: false},
+        {id: 'outlines', label: 'Show Outlines', defaultValue: false},
+        {id: 'largeText', label: 'Large Text', defaultValue: false},
+        {id: 'invertColors', label: 'Invert Colors', defaultValue: false},
+        {id: 'focusVisible', label: 'Force Focus', defaultValue: false},
+        {id: 'grayscale', label: 'Grayscale', defaultValue: false},
+    ],
     webpackConfig: () => ({
         module: {
             rules: [
