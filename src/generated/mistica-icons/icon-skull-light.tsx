@@ -36,7 +36,7 @@ const IconSkullLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M9 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3M15 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"
+                    d="M9 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3m6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"
                 />
                 <path
                     fill={fillColor}

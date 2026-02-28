@@ -99,8 +99,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             header={
                                 <Header
                                     title="Components in different skins"
-                                    description="This story is created to verify how some of the components look like when using
-                        different skins"
+                                    description="This story is created to verify how some of the components look like when using different skins"
                                 />
                             }
                             extra={<Placeholder />}
@@ -411,6 +410,29 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             <Tag type="warning">Warning</Tag>
                             <Tag type="error">Error</Tag>
                             <Tag type="info">Info</Tag>
+                        </Inline>
+                        <Inline space={16} wrap>
+                            <Tag small type="promo">
+                                Promo
+                            </Tag>
+                            <Tag small type="active">
+                                Active
+                            </Tag>
+                            <Tag small type="inactive">
+                                Inactive
+                            </Tag>
+                            <Tag small type="success">
+                                Success
+                            </Tag>
+                            <Tag small type="warning">
+                                Warning
+                            </Tag>
+                            <Tag small type="error" badge>
+                                Error
+                            </Tag>
+                            <Tag small type="info" badge={5}>
+                                Info
+                            </Tag>
                         </Inline>
 
                         {/** IconButton */}

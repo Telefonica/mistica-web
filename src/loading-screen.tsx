@@ -4,7 +4,7 @@ import {useSetOverscrollColor} from './overscroll-color-context';
 import {ThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import ResponsiveLayout from './responsive-layout';
-import {Text2, Text4} from './text';
+import {Text2, Text, getTextSizes} from './text';
 import Stack from './stack';
 import * as styles from './loading-screen.css';
 import Spinner from './spinner';
@@ -50,6 +50,7 @@ type LoadingScreenTextsProps = {
 };
 
 const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScreenTextsProps) => {
+    const {textPresets} = useTheme();
     const [currentTextsIndex, setCurrentTextsIndex] = React.useState(0);
     const [isClosing, setIsClosing] = React.useState(false);
 
@@ -107,9 +108,14 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
                 <Stack space={8}>
                     {currentTitle && (
                         <div className={animateText ? styles.loadingScreenTextAnimated : undefined}>
-                            <Text4 textAlign="center" regular as="h1">
+                            <Text
+                                {...getTextSizes({textPreset: textPresets.loadingScreenTitle})}
+                                textAlign="center"
+                                weight="regular"
+                                as="h1"
+                            >
                                 {currentTitle}
-                            </Text4>
+                            </Text>
                         </div>
                     )}
                     {currentDescription && (

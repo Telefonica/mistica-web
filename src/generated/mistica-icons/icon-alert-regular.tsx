@@ -27,7 +27,7 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.35 9.766v4.25a.625.625 0 1 0 1.25 0v-4.25a.625.625 0 1 0-1.25 0M11.975 17.131a.625.625 0 1 0 0-1.25.625.625 0 0 0 0 1.25"
+                    d="M11.35 9.766v4.25a.625.625 0 1 0 1.25 0v-4.25a.625.625 0 1 0-1.25 0m.625 7.365a.625.625 0 1 0 0-1.25.625.625 0 0 0 0 1.25"
                 />
                 <path
                     fill={fillColor}
@@ -58,7 +58,7 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 15A1 1 0 1 1 12 17 1 1 0 0 1 12 15M12 8.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75"
+                    d="M12 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-6.75a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75"
                 />
                 <path
                     fill={fillColor}

@@ -25,7 +25,7 @@ const IconMessageRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M14 12.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zM16 8.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
+                d="M14 12.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm2-4a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
             />
             <path
                 fill={fillColor}

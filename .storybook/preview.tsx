@@ -24,7 +24,7 @@ import {
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {getPlatform} from '../src/utils/platform';
 
-import type {Preview} from '@storybook/react-webpack5';
+import type {Preview} from '@storybook/react-vite';
 import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
@@ -207,11 +207,6 @@ const parameters = {
                 ['Welcome', '*'],
             ],
         },
-    },
-
-    docs: {
-        /** Disable the `code` tab */
-        codePanel: false,
     },
 
     controls: {

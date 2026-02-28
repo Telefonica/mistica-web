@@ -1,11 +1,12 @@
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import {keyframes, style} from '@vanilla-extract/css';
-import {desktopFontSize, mobileFontSize} from './text-field-base.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
 export const pinInputLineHeight = pxToRem(16);
+const mobileFontSize = pxToRem(16);
+const desktopFontSize = pxToRem(18);
 
 export const fieldContainer = style({
     width: 'fit-content',

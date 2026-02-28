@@ -36,7 +36,7 @@ const IconApartmentBuildingFilled = ({color, size = 24, ...rest}: IconProps): JS
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M5 2h13.623c.203 0 .368.169.377.377v19.618h-7.735v-6.414H6.843V22H5zm1.838 10.94h4.422V9.92H6.838zm4.422-5.284V4.642H6.838v3.014zM12.73 18.6h4.422V15.58h-4.421zm4.422-5.66V9.92h-4.421v3.02zm-4.421-5.284h4.421V4.642h-4.421z"
+                    d="M5 2h13.623c.203 0 .368.169.377.377v19.618h-7.735v-6.414H6.843V22H5zm1.838 10.94h4.422V9.92H6.838zm4.422-5.284V4.642H6.838v3.014zM12.73 18.6h4.422v-3.02h-4.421zm4.422-5.66V9.92h-4.421v3.02zm-4.421-5.284h4.421V4.642h-4.421z"
                 />
             </svg>
         );
@@ -45,7 +45,7 @@ const IconApartmentBuildingFilled = ({color, size = 24, ...rest}: IconProps): JS
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M5 2h13.623c.203 0 .368.169.377.377v19.618h-7.735v-6.414H6.843V22H5zm1.838 10.94h4.422V9.92H6.838zm4.422-5.284V4.642H6.838v3.014zM12.73 18.6h4.422V15.58h-4.421zm4.422-5.66V9.92h-4.421v3.02zm-4.421-5.284h4.421V4.642h-4.421z"
+                    d="M5 2h13.623c.203 0 .368.169.377.377v19.618h-7.735v-6.414H6.843V22H5zm1.838 10.94h4.422V9.92H6.838zm4.422-5.284V4.642H6.838v3.014zM12.73 18.6h4.422v-3.02h-4.421zm4.422-5.66V9.92h-4.421v3.02zm-4.421-5.284h4.421V4.642h-4.421z"
                 />
             </svg>
         );

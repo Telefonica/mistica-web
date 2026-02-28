@@ -35,6 +35,9 @@ type CoverCardProps = {
     imageSrcSet?: string;
     videoSrc?: VideoSource;
     videoRef?: React.RefObject<VideoElement>;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
+    videoDataAttributes?: DataAttributes;
     topActions?: ReadonlyArray<CardAction | React.ReactElement>;
     buttonPrimary?: CardActionButtonPrimary;
     buttonSecondary?: CardActionButtonSecondary;
@@ -60,6 +63,7 @@ type CoverCardProps = {
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
+    footerDivider?: boolean;
 };
 
 export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(

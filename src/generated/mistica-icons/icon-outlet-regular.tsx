@@ -40,7 +40,7 @@ const IconOutletRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M10 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
                 <path
                     fill={fillColor}

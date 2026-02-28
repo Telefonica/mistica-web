@@ -25,7 +25,7 @@ const IconTvControlRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M10 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2M10 14a1 1 0 1 1 0 2 1 1 0 0 1 0-2M14 14a1 1 0 1 1 0 2 1 1 0 0 1 0-2M12 7.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+                d="M10 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-4-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-2-6.75a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
             />
             <path
                 fill={fillColor}

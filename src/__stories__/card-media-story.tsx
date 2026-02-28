@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MediaCard, Placeholder} from '..';
+import {MediaCard, Placeholder, Tag} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
@@ -35,6 +35,8 @@ type MediaCardArgs = CommonCardArgs & {
     imageSrc: string;
     imageAlt: string;
     videoSrc: string;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
     mediaWidth: string;
@@ -59,6 +61,8 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     footerVariant,
     imageSrc,
     videoSrc,
+    videoLoop,
+    videoAutoPlay,
     slot,
     slotAlignment,
     footerSlot,
@@ -67,7 +71,22 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     ariaLabel,
     ariaDescription,
     imageFit,
-    ...args
+    size,
+    headlineType,
+    headline,
+    pretitle,
+    pretitleLinesMax,
+    title,
+    titleLinesMax,
+    subtitle,
+    subtitleLinesMax,
+    description,
+    descriptionLinesMax,
+    showFooter,
+    backgroundColor,
+    footerBackgroundColor,
+    imageAlt,
+    mediaPosition,
 }) => {
     return (
         <ThemeVariantWrapper variant={variantOutside}>
@@ -84,6 +103,8 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
+                videoLoop={videoLoop}
+                videoAutoPlay={videoAutoPlay}
                 slot={slot ? <Placeholder height={50} /> : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
@@ -96,7 +117,21 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
                 imageFit={imageFit || undefined}
-                {...args}
+                size={size}
+                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                pretitle={pretitle}
+                pretitleLinesMax={pretitleLinesMax}
+                title={title}
+                titleLinesMax={titleLinesMax}
+                subtitle={subtitle}
+                subtitleLinesMax={subtitleLinesMax}
+                description={description}
+                descriptionLinesMax={descriptionLinesMax}
+                showFooter={showFooter}
+                backgroundColor={backgroundColor}
+                footerBackgroundColor={footerBackgroundColor}
+                imageAlt={imageAlt}
+                mediaPosition={mediaPosition}
             />
         </ThemeVariantWrapper>
     );
@@ -112,6 +147,8 @@ Default.args = {
     imageSrc: 'beach',
     imageAlt: 'Image Alt Text',
     videoSrc: 'undefined',
+    videoLoop: false,
+    videoAutoPlay: false,
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',

@@ -154,3 +154,42 @@ test('Tags with custom colors', async () => {
     const image = await tag.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Tags small variant', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {small: true},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags small variant without icon', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {small: true, icon: false},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(BADGE_OPTIONS)('Tags small variant with badge={%s}', async (badge) => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {small: true, badge},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
