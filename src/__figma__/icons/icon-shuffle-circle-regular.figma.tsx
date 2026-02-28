@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=7874%3A9035",
   {
     props: {},
-    example: (props) => <IconShuffleCircleRegular />,
+    example: () => <IconShuffleCircleRegular />,
   },
 )

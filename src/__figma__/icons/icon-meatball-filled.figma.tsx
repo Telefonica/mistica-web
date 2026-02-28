@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=3763%3A219",
   {
     props: {},
-    example: (props) => <IconMeatballFilled />,
+    example: () => <IconMeatballFilled />,
   },
 )

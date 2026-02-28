@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=13698%3A29398",
   {
     props: {},
-    example: (props) => <IconSkipForwardCircleLight />,
+    example: () => <IconSkipForwardCircleLight />,
   },
 )

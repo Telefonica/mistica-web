@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=13698%3A29442",
   {
     props: {},
-    example: (props) => <IconDiscLight />,
+    example: () => <IconDiscLight />,
   },
 )

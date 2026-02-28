@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=7874%3A10294",
   {
     props: {},
-    example: (props) => <IconDoorLockRegular />,
+    example: () => <IconDoorLockRegular />,
   },
 )

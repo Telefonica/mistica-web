@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=36%3A4347",
   {
     props: {},
-    example: (props) => <IconPercentRegular />,
+    example: () => <IconPercentRegular />,
   },
 )

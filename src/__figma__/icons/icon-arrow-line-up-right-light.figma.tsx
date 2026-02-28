@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=746%3A928",
   {
     props: {},
-    example: (props) => <IconArrowLineUpRightLight />,
+    example: () => <IconArrowLineUpRightLight />,
   },
 )

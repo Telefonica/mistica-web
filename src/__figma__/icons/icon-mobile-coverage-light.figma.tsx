@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=7849%3A32158",
   {
     props: {},
-    example: (props) => <IconMobileCoverageLight />,
+    example: () => <IconMobileCoverageLight />,
   },
 )

@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=3399%3A239",
   {
     props: {},
-    example: (props) => <IconSingleparentFamilyLight />,
+    example: () => <IconSingleparentFamilyLight />,
   },
 )

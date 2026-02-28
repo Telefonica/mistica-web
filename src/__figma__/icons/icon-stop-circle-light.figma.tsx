@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=13698%3A29391",
   {
     props: {},
-    example: (props) => <IconStopCircleLight />,
+    example: () => <IconStopCircleLight />,
   },
 )

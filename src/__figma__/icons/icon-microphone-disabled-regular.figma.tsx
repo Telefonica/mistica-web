@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=8841%3A3898",
   {
     props: {},
-    example: (props) => <IconMicrophoneDisabledRegular />,
+    example: () => <IconMicrophoneDisabledRegular />,
   },
 )

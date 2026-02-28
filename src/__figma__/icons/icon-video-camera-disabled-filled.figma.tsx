@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=8998%3A3623",
   {
     props: {},
-    example: (props) => <IconVideoCameraDisabledFilled />,
+    example: () => <IconVideoCameraDisabledFilled />,
   },
 )

@@ -15,6 +15,6 @@ figma.connect(
   "https://www.figma.com/design/JHuzksh01yxExMeMQBvymq/M%C3%ADstica-Icons?node-id=13698%3A34053",
   {
     props: {},
-    example: (props) => <IconAccesibleCircleFilled />,
+    example: () => <IconAccesibleCircleFilled />,
   },
 )
