@@ -1,5 +1,7 @@
 import React from 'react';
 import {Accordion, AccordionItem, BoxedAccordion, BoxedAccordionItem} from '../accordion';
+import {Text3} from '../text';
+import {vars as skinVars} from '../skins/skin-contract.css';
 import figma from '@figma/code-connect';
 
 const accordionProps = {
@@ -36,7 +38,7 @@ figma.connect(
                     asset={props.asset}
                     title={props.title}
                     subtitle={props.subtitle}
-                    content={<Text3 color={skinVars.colors.textSecondary}>{props.content}</Text3>}
+                    content={<Text3 regular color={skinVars.colors.textSecondary}>{props.content}</Text3>}
                     detail={props.detail}
                     right={props.right}
                 />
@@ -56,7 +58,7 @@ figma.connect(
                     asset={props.asset}
                     title={props.title}
                     subtitle={props.subtitle}
-                    content={<Text3 color={skinVars.colors.textSecondary}>{props.content}</Text3>}
+                    content={<Text3 regular color={skinVars.colors.textSecondary}>{props.content}</Text3>}
                     detail={props.detail}
                     right={props.right}
                 />
@@ -77,7 +79,7 @@ figma.connect(
                     asset={props.asset}
                     title={props.title}
                     subtitle={props.subtitle}
-                    content={<Text3 color={skinVars.colors.textSecondary}>{props.content}</Text3>}
+                    content={<Text3 regular color={skinVars.colors.textSecondary}>{props.content}</Text3>}
                     detail={props.detail}
                     right={props.right}
                 />

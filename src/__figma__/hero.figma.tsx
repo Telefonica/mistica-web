@@ -10,10 +10,10 @@ const heroProps = {
         'Brand Secondary': 'brand-secondary',
         Alternative: 'alternative',
     }),
-    // desktopMediaPosition: figma.enum('Image position', {
-    //     Right: 'right',
-    //     Left: 'left',
-    // }),
+    desktopMediaPosition: figma.enum('Image position', {
+        Right: 'right',
+        Left: 'left',
+    }),
     noPaddingY: figma.boolean('NoPaddingY'),
 };
 

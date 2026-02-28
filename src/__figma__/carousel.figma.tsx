@@ -4,7 +4,7 @@ import figma from '@figma/code-connect';
 
 const carouselProps = {
     autoplay: figma.boolean('Autoplay'),
-    // withBullets: figma.boolean('Show bullets'),
+    withBullets: figma.boolean('Show bullets'),
     withControls: figma.boolean('Controls'),
 };
 

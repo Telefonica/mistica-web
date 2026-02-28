@@ -46,7 +46,7 @@ figma.connect(
                 description={props.description}
                 variant={props.variant}
                 size={props.size}
-                backgroundSrc="https://example.com/image.jpg"
+                imageSrc="https://example.com/image.jpg"
                 onPress={() => {}}
             />
         ),
@@ -67,7 +67,7 @@ figma.connect(
                 description={props.description}
                 variant={props.variant}
                 size={props.size}
-                backgroundSrc="https://example.com/image.jpg"
+                imageSrc="https://example.com/image.jpg"
                 onPress={() => {}}
             />
         ),

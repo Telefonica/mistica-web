@@ -33,6 +33,12 @@ figma.connect(
             centered: figma.boolean('Centered'),
             noPaddingY: figma.boolean('NoPaddingY'),
         },
-        example: (props) => <CoverHero />,
+        example: (props) => (
+            <CoverHero
+                title="Title"
+                centered={props.centered}
+                noPaddingY={props.noPaddingY}
+            />
+        ),
     }
 );

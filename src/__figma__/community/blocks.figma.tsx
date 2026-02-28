@@ -51,7 +51,7 @@ figma.connect(
     'https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=10815%3A10713',
     {
         props: {},
-        example: () => <ProgressBlock />,
+        example: () => <ProgressBlock heading={{value: '75%', text: 'Progress'}} />,
     }
 );
 

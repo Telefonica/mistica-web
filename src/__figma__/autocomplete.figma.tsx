@@ -8,22 +8,25 @@ figma.connect(
     {
         props: {
             helperText: figma.boolean('Helper text', {
-                true: 'Helper text',
+                true: figma.textContent('Helper text'),
                 false: undefined,
             }),
             error: figma.boolean('Error'),
             disabled: figma.boolean('Disabled'),
             readOnly: figma.boolean('Read only'),
+            label: figma.textContent('Label'),
         },
         example: (props) => (
             <Autocomplete
-                label="Label"
+                label={props.label}
                 name="autocomplete"
+                value=""
+                onChangeValue={() => {}}
                 helperText={props.helperText}
                 error={props.error}
                 disabled={props.disabled}
                 readOnly={props.readOnly}
-                getSuggestions={(value) => []}
+                getSuggestions={(_value) => []}
             />
         ),
     }

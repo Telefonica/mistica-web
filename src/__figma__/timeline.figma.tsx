@@ -1,5 +1,5 @@
 import React from 'react';
-import {Timeline, TimelineItem} from '../timeline';
+import Timeline, {TimelineItem} from '../timeline';
 import figma from '@figma/code-connect';
 
 const timelineProps = {

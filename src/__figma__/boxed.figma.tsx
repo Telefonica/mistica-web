@@ -15,14 +15,16 @@ figma.connect(
     'https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=2203%3A7639',
     {
         props: {
-            slot: figma.boolean('Slot'),
-            replaceSlot: figma.instance('Replace slot'),
+            children: figma.boolean('Slot', {
+                true: figma.instance('🔄 Replace slot'),
+                false: undefined,
+            }),
             themeContext: figma.enum('Theme context', {
                 Default: 'default',
                 Inverse: 'inverse',
             }),
             inverse: figma.boolean('Inverse'),
         },
-        example: (props) => <Boxed />,
+        example: (props) => <Boxed>{props.children}</Boxed>,
     }
 );
