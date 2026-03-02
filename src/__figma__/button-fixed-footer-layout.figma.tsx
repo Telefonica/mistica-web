@@ -4,14 +4,14 @@ import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
 import figma from '@figma/code-connect';
 
 const buttonFixedFooterLayoutProps = {
-    secondaryButton: figma.boolean('Secondary', {
-        true: <ButtonSecondary onPress={() => {}}>Secondary</ButtonSecondary>,
-        false: undefined,
-    }),
-    link: figma.boolean('Add link', {
-        true: <ButtonLink onPress={() => {}}>Link</ButtonLink>,
-        false: undefined,
-    }),
+    // secondaryButton: figma.boolean('Secondary', {
+    //     true: <ButtonSecondary onPress={() => {}}>Secondary</ButtonSecondary>,
+    //     false: undefined,
+    // }),
+    // link: figma.boolean('Add link', {
+    //     true: <ButtonLink onPress={() => {}}>Link</ButtonLink>,
+    //     false: undefined,
+    // }),
 };
 
 // Desktop

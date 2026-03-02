@@ -3,10 +3,10 @@ import Checkbox from '../checkbox';
 import figma from '@figma/code-connect';
 
 const checkboxProps = {
-    defaultChecked: figma.boolean('State', {
-        true: true,
-        false: undefined,
-    }),
+    // defaultChecked: figma.boolean('State', {
+    //     true: true,
+    //     false: undefined,
+    // }),
     disabled: figma.boolean('Disabled', {
         true: true,
         false: undefined,

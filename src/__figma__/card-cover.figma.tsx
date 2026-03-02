@@ -3,22 +3,6 @@ import {CoverCard} from '../card-cover';
 import figma from '@figma/code-connect';
 
 const coverCardProps = {
-    title: figma.boolean('Title', {
-        true: 'Title',
-        false: undefined,
-    }),
-    pretitle: figma.boolean('Pretitle', {
-        true: 'Pretitle',
-        false: undefined,
-    }),
-    subtitle: figma.boolean('Subtitle', {
-        true: 'Subtitle',
-        false: undefined,
-    }),
-    description: figma.boolean('Description', {
-        true: 'Description',
-        false: undefined,
-    }),
     variant: figma.enum('Variant', {
         Brand: 'brand',
         Default: 'default',
@@ -30,6 +14,43 @@ const coverCardProps = {
         Default: 'default',
         Snap: 'snap',
     }),
+    title: figma.boolean('Title', {
+        true: figma.textContent('Title'),
+        false: undefined,
+    }),
+    pretitle: figma.boolean('Pretitle', {
+        true: figma.textContent('Pretitle'),
+        false: undefined,
+    }),
+    subtitle: figma.boolean('Subtitle', {
+        true: figma.textContent('Subtitle'),
+        false: undefined,
+    }),
+    description: figma.boolean('Description', {
+        true: figma.textContent('Description'),
+        false: undefined,
+    }),
+    headline: figma.boolean('Tag', {
+        true: figma.children('Tag [D]'),
+        false: undefined,
+    }),
+    topActions: figma.boolean('Top actions', {
+        true: figma.instance('Top actions'),
+        false: undefined,
+    }),
+    asset: figma.boolean('Asset', {
+        true: figma.instance('Asset'),
+        false: undefined,
+    }),
+    actions: figma.boolean('Actions'),
+    slot: figma.boolean('Slot', {
+        true: figma.instance('🔄 Replace slot'),
+        false: undefined,
+    }),
+    footerSlot: figma.boolean('Footer slot', {
+        true: figma.instance('🔄 Replace footer slot'),
+        false: undefined,
+    }),
 };
 
 // Desktop
@@ -40,14 +61,19 @@ figma.connect(
         props: coverCardProps,
         example: (props) => (
             <CoverCard
-                title={props.title}
+                headline={props.headline}
                 pretitle={props.pretitle}
+                title={props.title}
                 subtitle={props.subtitle}
                 description={props.description}
                 variant={props.variant}
                 size={props.size}
+                asset={props.asset}
                 imageSrc="https://example.com/image.jpg"
                 onPress={() => {}}
+                topActions={props.topActions}
+                slot={props.slot}
+                footerSlot={props.footerSlot}
             />
         ),
     }
@@ -61,14 +87,19 @@ figma.connect(
         props: coverCardProps,
         example: (props) => (
             <CoverCard
-                title={props.title}
+                headline={props.headline}
                 pretitle={props.pretitle}
+                title={props.title}
                 subtitle={props.subtitle}
                 description={props.description}
                 variant={props.variant}
                 size={props.size}
+                asset={props.asset}
                 imageSrc="https://example.com/image.jpg"
                 onPress={() => {}}
+                topActions={props.topActions}
+                slot={props.slot}
+                footerSlot={props.footerSlot}
             />
         ),
     }
