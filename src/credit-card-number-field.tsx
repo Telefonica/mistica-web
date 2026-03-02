@@ -78,20 +78,20 @@ const CreditCardInput = ({inputRef, value, defaultValue, onChange, ...other}: Pr
 
 const getAnimationTarget = (value?: string) => {
     if (isVisa(value)) {
-        return <IconVisa size={iconSize.default} />;
+        return <IconVisa size={iconSize.small} />;
     }
     if (isMasterCard(value)) {
-        return <IconMastercard size={iconSize.default} />;
+        return <IconMastercard size={iconSize.small} />;
     }
     if (isAmericanExpress(value)) {
-        return <IconAmex size={iconSize.default} />;
+        return <IconAmex size={iconSize.small} />;
     }
     return null;
 };
 
 const initialState = {
     showBackface: false,
-    animationTarget: <IconCreditCardVisaRegular size={iconSize.default} />,
+    animationTarget: <IconCreditCardVisaRegular size={iconSize.small} />,
     isAnimating: false,
 };
 
@@ -139,7 +139,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={styles.flipFront}>
-                    <IconCreditCardVisaRegular size={iconSize.default} color={vars.colors.neutralMedium} />
+                    <IconCreditCardVisaRegular size={iconSize.small} color={vars.colors.neutralMedium} />
                 </div>
                 <div className={styles.flipBack}>{animationTarget}</div>
             </div>

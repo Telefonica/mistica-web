@@ -8,7 +8,8 @@ import {pxToRem} from './utils/css';
 const borderSize = 1;
 
 // We need to substract border size from padding because the container has boxSizing: border-box
-export const fieldVerticalPadding = 8 - borderSize;
+export const fieldTopPadding = `calc(${vars.spacing.inputPadding.top} - ${borderSize}px)`;
+export const fieldBottomPadding = `calc(${vars.spacing.inputPadding.bottom} - ${borderSize}px)`;
 export const fieldLeftPadding = 12 - borderSize;
 export const fieldRightPadding = 16 - borderSize;
 
@@ -52,23 +53,23 @@ export const fieldVars = {
 };
 
 const topSpaceWithLabel = {
-    desktop: `calc(${shrinkedLabelDesktopLineHeight} + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelMobileLineHeight} + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} + ${fieldTopPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} + ${fieldTopPadding})`,
 };
 
 const topSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldTopPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldTopPadding})`,
 };
 
 const bottomSpaceWithLabel = {
-    desktop: fieldVerticalPadding,
-    mobile: fieldVerticalPadding,
+    desktop: fieldBottomPadding,
+    mobile: fieldBottomPadding,
 };
 
 const bottomSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldBottomPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldBottomPadding})`,
 };
 
 const commonInputStyles = style([

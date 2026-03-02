@@ -820,10 +820,13 @@ const Footer = ({
                 />
                 <div
                     data-testid="footer"
-                    className={classnames({[styles.containerPaddingXVariants[size]]: !isNaked})}
+                    className={classnames({
+                        [styles.containerPaddingXVariants[size]]: !isNaked,
+                        [styles.containerPaddingBottomVariants[size]]: !isNaked,
+                    })}
                     style={{
                         paddingTop: 16,
-                        paddingBottom: isNaked ? 0 : 16,
+                        paddingBottom: isNaked ? 0 : undefined,
                         paddingRight: isNaked ? 16 : undefined,
                     }}
                 >
