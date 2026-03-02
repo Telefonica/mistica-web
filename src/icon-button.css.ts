@@ -371,7 +371,10 @@ const baseButtonContainer = style({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'visible',
+    overflow: 'hidden',
+    ':focus-within': {
+        overflow: 'visible',
+    },
 });
 
 export const buttonContainer = styleVariants({
