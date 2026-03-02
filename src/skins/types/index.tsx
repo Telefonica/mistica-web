@@ -24,7 +24,7 @@ export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
 type ResponsiveValue<T> = {mobile: T; desktop: T};
 
-type PaddingY = {
+type PaddingYValues = {
     top: ResponsiveValue<number>;
     bottom: ResponsiveValue<number>;
 };
@@ -34,7 +34,7 @@ type PaddingXValues = {
     right: ResponsiveValue<number>;
 };
 
-type PaddingValues = PaddingY & PaddingXValues;
+type PaddingValues = PaddingYValues & PaddingXValues;
 
 type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
@@ -119,11 +119,11 @@ export type SpacingConfig = {
     buttonDefaultPadding: PaddingXValues;
     buttonSmallPadding: PaddingXValues;
     cardDefaultPadding: PaddingValues;
-    inputPadding: PaddingY;
-    tagPadding: PaddingY;
+    inputPadding: PaddingYValues;
+    tagPadding: PaddingYValues;
     feedbackScreenPadding: PaddingValues;
-    heroPadding: PaddingY;
-    headerPadding: PaddingY;
+    heroPadding: PaddingYValues;
+    headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
 };
 
