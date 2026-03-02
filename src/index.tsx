@@ -195,6 +195,7 @@ export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
 export {default as Circle} from './circle';
+export {default as Square} from './square';
 
 export {
     useTheme,

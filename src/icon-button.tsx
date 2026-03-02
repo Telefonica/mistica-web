@@ -94,15 +94,12 @@ export const RawIconButton = React.forwardRef<
             role,
             dataAttributes: {'component-name': 'IconButton', testid: 'IconButton', ...dataAttributes},
             className: classNames(
-                styles.buttonContainer[buttonSize],
+                styles.button,
                 styles.iconButtonTokens[buttonTokensKey],
                 styles.minimumInteractiveArea,
                 {
                     [styles.disabled]: disabled || ariaDisabled,
                     [styles.overlayContainer]: !disabled && !showSpinner && !ariaDisabled,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft,
-                    [styles.bleedRight[buttonSize]]: bleedRight,
-                    [styles.bleedY[buttonSize]]: bleedY,
                 }
             ),
             resetMargin: !bleedLeft && !bleedRight && !bleedY,
@@ -144,9 +141,17 @@ export const RawIconButton = React.forwardRef<
         }
 
         return (
-            <BaseTouchable {...commonProps} {...touchableProps} maybe>
-                {content}
-            </BaseTouchable>
+            <div
+                className={classNames(styles.buttonContainer[buttonSize], {
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
+                })}
+            >
+                <BaseTouchable {...commonProps} {...touchableProps} maybe>
+                    {content}
+                </BaseTouchable>
+            </div>
         );
     }
 );
