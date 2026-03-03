@@ -411,8 +411,3 @@ globalStyle(`${suggestionsContainer} > ul`, {
     padding: 0,
     margin: 0,
 });
-
-export const fieldEndIconContainer = style({
-    // remove extra button space on the right so that icon is not too far from field's container
-    marginRight: -12,
-});

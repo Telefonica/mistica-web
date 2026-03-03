@@ -58,28 +58,26 @@ export const FieldEndIcon = ({
     uncheckedProps,
     'aria-label': ariaLabel,
 }: FieldEndIconProps): JSX.Element => {
-    return (
-        <div className={styles.fieldEndIconContainer}>
-            {checkedProps ? (
-                <InternalToggleIconButton
-                    checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
-                    uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
-                    onChange={onChange}
-                    hasOverlay={hasBackgroundColor}
-                    disabled={disabled}
-                    small
-                />
-            ) : (
-                <InternalIconButton
-                    Icon={Icon}
-                    disabled={disabled}
-                    aria-label={ariaLabel || ''}
-                    onPress={onPress}
-                    hasOverlay={hasBackgroundColor}
-                    small
-                />
-            )}
-        </div>
+    return checkedProps ? (
+        <InternalToggleIconButton
+            checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
+            uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
+            onChange={onChange}
+            hasOverlay={hasBackgroundColor}
+            disabled={disabled}
+            small
+            bleedRight
+        />
+    ) : (
+        <InternalIconButton
+            Icon={Icon}
+            disabled={disabled}
+            aria-label={ariaLabel || ''}
+            onPress={onPress}
+            hasOverlay={hasBackgroundColor}
+            small
+            bleedRight
+        />
     );
 };
 
@@ -307,7 +305,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const startIconWidth = `calc(${iconSize.default} + ${styles.fieldElementsGap}px)`;
+        const startIconWidth = `calc(${iconSize.small} + ${styles.fieldElementsGap}px)`;
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';

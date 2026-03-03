@@ -396,7 +396,7 @@ const Select = ({
                     </div>
                 </FieldContainer>
             ) : (
-                <>
+                <div>
                     <div
                         className={styles.selectContainerVariants[fullWidth ? 'fullWidth' : 'default']}
                         role="button"
@@ -409,12 +409,7 @@ const Select = ({
                             style={{visibility: 'hidden'}}
                             fullWidth={fullWidth}
                             endIcon={
-                                <div className={styles.iconContainer}>
-                                    <IconChevronDownRegular
-                                        size={iconSize}
-                                        color={vars.colors.neutralMedium}
-                                    />
-                                </div>
+                                <IconChevronDownRegular size={iconSize} color={vars.colors.neutralMedium} />
                             }
                             focus={isFocused}
                             label={label}
@@ -504,7 +499,7 @@ const Select = ({
                             </Portal>
                         </Overlay>
                     )}
-                </>
+                </div>
             )}
         </ThemeVariant>
     );
