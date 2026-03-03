@@ -1,6 +1,6 @@
-## createNestableContext
+## TrackingConfig
 
-createNestableContext provides reusable behavior to keep component logic consistent across the product.
+TrackingConfig provides reusable behavior to keep component logic consistent across the product.
 
 ### Use for
 
@@ -12,9 +12,9 @@ createNestableContext provides reusable behavior to keep component logic consist
 - Do not duplicate equivalent logic when this utility already exists
 - Do not use it without understanding its side effects and scope
 
-## NestableContext
+## useTrackingConfig
 
-NestableContext provides reusable behavior to keep component logic consistent across the product.
+useTrackingConfig provides reusable behavior to keep component logic consistent across the product.
 
 ### Use for
 

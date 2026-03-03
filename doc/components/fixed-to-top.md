@@ -1,11 +1,7 @@
----
-name: FixedToTop
-description:
-  'FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap
-  between layered sticky regions.'
----
+## FixedToTop
 
-## Usage
+FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap
+  between layered sticky regions.
 
 ### Use for
 
@@ -20,3 +16,17 @@ description:
 - Do not hardcode top offsets that can conflict with accumulated fixed-top height
 - Do not mix unmanaged fixed-position elements with FixedToTop-managed layers in the same stack
 - Do not treat FixedToTop as a visual component; its role is layout coordination
+
+## TopDistanceContext
+
+TopDistanceContext provides reusable behavior to keep component logic consistent across the product.
+
+### Use for
+
+- Sharing common state and behavior across multiple components
+- Keeping implementation aligned with Mística patterns
+
+### Don't use for
+
+- Do not duplicate equivalent logic when this utility already exists
+- Do not use it without understanding its side effects and scope

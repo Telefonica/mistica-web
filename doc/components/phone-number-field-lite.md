@@ -1,11 +1,7 @@
----
-name: PhoneNumberFieldLite
-description:
-  'PhoneNumberFieldLite captures phone numbers with a lightweight formatter for a limited country set and
-  common numbering patterns.'
----
+## PhoneNumberFieldLite
 
-## Usage
+PhoneNumberFieldLite captures phone numbers with a lightweight formatter for a limited country set and
+  common numbering patterns.
 
 ### Use for
 
@@ -21,3 +17,17 @@ description:
 - Do not assume all national formats are covered; Lite intentionally handles a subset of cases
 - Do not use it when strict telecom-grade formatting fidelity is required across many countries
 - Do not hide regional limitations from product requirements and validation strategy
+
+## formatPhoneLite
+
+formatPhoneLite allows users to enter and validate form information in a consistent and accessible way.
+
+### Use for
+
+- Collecting user input with clear labels and contextual help text
+- Supporting validation and accessible feedback in form flows
+
+### Don't use for
+
+- Do not use this component to display read-only information
+- Do not hide validation context that users need to complete the task

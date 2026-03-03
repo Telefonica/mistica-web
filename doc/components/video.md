@@ -1,11 +1,7 @@
----
-name: Video
-description:
-  'Use video for embedded media playback with responsive sizing, poster/error fallbacks, and controllable
-  autoplay/loading behavior.'
----
+## Video
 
-## Usage
+Use video for embedded media playback with responsive sizing, poster/error fallbacks, and controllable
+  autoplay/loading behavior.
 
 ### Use for
 
@@ -22,3 +18,17 @@ description:
 - Do not use heavy video assets in contexts where lightweight images communicate the same message
 - Do not choose inconsistent aspect ratios across related media blocks if visual rhythm matters
 - Do not treat this as background decoration only when no meaningful media interaction/value is provided
+
+## VideoElement
+
+VideoElement is a Mística component used to build consistent and accessible product interfaces.
+
+### Use for
+
+- Applying the documented component pattern in product UI
+- Keeping user experience coherent across screens and flows
+
+### Don't use for
+
+- Do not replace a more suitable semantic component with this one
+- Do not customize behavior in ways that conflict with Mística guidance
