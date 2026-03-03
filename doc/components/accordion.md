@@ -1,6 +1,7 @@
-Typologies: Accordion (boxed: false), BoxedAccordion (boxed: true)
+Typologies: Accordion, BoxedAccordion
 
 Children:
+
 - AccordionItem → Accordion
 - BoxedAccordionItem → BoxedAccordion
 
@@ -8,23 +9,27 @@ Children:
 
 ## AccordionItem
 
-AccordionItem is the interactive unit inside an Accordion: it renders a tappable header that toggles an accessible, animated content panel.
+AccordionItem is the interactive unit inside an Accordion: it renders a tappable header that toggles an
+accessible, animated content panel.
 
 ### Use for
 
 - Building each expandable row inside an Accordion group
 - Showing a header (title/asset/right content) that toggles panel visibility with chevron state
-- Providing accessible expand/collapse behavior with `aria-expanded`, `aria-controls`, and labelled panel region
+- Providing accessible expand/collapse behavior with `aria-expanded`, `aria-controls`, and labelled panel
+  region
 
 ### Don't use for
 
-- Do not use AccordionItem outside an Accordion context, since open state and toggle come from `useAccordionContext`
+- Do not use AccordionItem outside an Accordion context, since open state and toggle come from
+  `useAccordionContext`
 - Do not omit meaningful title/asset labelling when relying on computed accessibility labels
 - Do not bypass the built-in toggle/transition behavior for custom interaction patterns that break consistency
 
 ## BoxedAccordionItem
 
-BoxedAccordionItem is the interactive unit of a BoxedAccordion: it behaves like AccordionItem and applies the visible boxed styling at item level.
+BoxedAccordionItem is the interactive unit of a BoxedAccordion: it behaves like AccordionItem and applies the
+visible boxed styling at item level.
 
 ### Use for
 
@@ -40,8 +45,8 @@ BoxedAccordionItem is the interactive unit of a BoxedAccordion: it behaves like 
 
 ## Accordion
 
-Accordion groups multiple AccordionItem components stacked vertically, helping present expandable content
-  as a coherent set.
+Accordion groups multiple AccordionItem components stacked vertically, helping present expandable content as a
+coherent set.
 
 ### Use for
 
@@ -58,7 +63,8 @@ Accordion groups multiple AccordionItem components stacked vertically, helping p
 
 ## BoxedAccordion
 
-BoxedAccordion groups multiple BoxedAccordionItem components in a stacked expandable set; the visible box treatment is applied by each item.
+BoxedAccordion groups multiple BoxedAccordionItem components in a stacked expandable set; the visible box
+treatment is applied by each item.
 
 ### Use for
 
