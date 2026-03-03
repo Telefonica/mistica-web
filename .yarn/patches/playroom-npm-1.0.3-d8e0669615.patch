@@ -106,4 +106,3 @@ index 831392a328827a4fdaf4469175878c12ef007879..633cdf7f337e59eb5b7fabd1fa0e241e
  
  const reducer = (state: State, action: Action): State => {
    switch (action.type) {
-    
