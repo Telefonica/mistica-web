@@ -25,6 +25,7 @@ import {
 import {Movistar_New as defaultThemeConfig} from './themes';
 
 import type {ThemeConfig} from '../src';
+import type {FrameSettingsValues} from 'playroom/utils';
 
 type OverrideTheme = (theme: ThemeConfig) => void;
 
@@ -64,7 +65,13 @@ const skinToLang: Record<string, string> = {
     [ESIMFLAG_SKIN]: 'es-ES',
 };
 
-const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
+type AppProps = {
+    children: React.ReactNode;
+    skinName: string;
+    frameSettings?: FrameSettingsValues;
+};
+
+const App = ({children, skinName, frameSettings}: AppProps) => {
     const {isModalOpen} = useModalState();
     React.useEffect(() => {
         const script = document.createElement('script');
@@ -100,26 +107,35 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 : ''
         }
         ${skinName === MOVISTAR_NEW_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
+
+        ${frameSettings?.reduceMotion ? '*, *::before, *::after { animation-duration: 0s !important; animation-delay: 0s !important; transition-duration: 0s !important; transition-delay: 0s !important; }' : ''}
+        ${frameSettings?.outlines ? '* { outline: 1px solid rgba(255, 0, 0, 0.5) !important; }' : ''}
+        ${frameSettings?.largeText ? ':root { font-size: 150%; }' : ''}
+        ${frameSettings?.invertColors ? 'html { filter: invert(1) hue-rotate(180deg); } img, video, picture { filter: invert(1) hue-rotate(180deg); }' : ''}
+        ${frameSettings?.focusVisible ? 'a:focus, button:focus, input:focus, select:focus, textarea:focus, [tabindex]:focus, [role="button"]:focus, [role="link"]:focus, [role="checkbox"]:focus, [role="radio"]:focus, [role="tab"]:focus, [role="switch"]:focus { outline: 2px solid Highlight !important; outline: 2px solid -webkit-focus-ring-color !important; outline-offset: 2px !important; }' : ''}
+        ${frameSettings?.grayscale ? 'html { filter: grayscale(1); }' : ''}
     `;
 
     return (
-        <main lang={lang} aria-hidden={isModalOpen}>
+        <main lang={lang} aria-hidden={isModalOpen} dir={frameSettings?.rtl ? 'rtl' : 'ltr'}>
             <style>{styles}</style>
             {children}
         </main>
     );
 };
 
-type Props = {children: React.ReactNode; theme?: ThemeConfig};
+type Props = {children: React.ReactNode; theme?: ThemeConfig; frameSettings?: FrameSettingsValues};
 
-const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.ReactNode => (
+const FrameComponent = ({children, theme = defaultThemeConfig, frameSettings}: Props): React.ReactNode => (
     <React.StrictMode>
         <ThemeOverriderContextProvider>
             {(overridenTheme) => (
                 <ThemeContextProvider theme={overridenTheme ?? theme}>
                     <SheetRoot />
                     <OverscrollColorProvider>
-                        <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
+                        <App frameSettings={frameSettings} skinName={(overridenTheme ?? theme).skin.name}>
+                            {children}
+                        </App>
                     </OverscrollColorProvider>
                 </ThemeContextProvider>
             )}
