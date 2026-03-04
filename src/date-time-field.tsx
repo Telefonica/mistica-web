@@ -109,7 +109,7 @@ const FormDateField = ({
             type="datetime-local"
             endIconOverlay={
                 <div className={dateStyles.iconContainer} data-testid="endIcon">
-                    <IconCalendarRegular size={iconSize.default} />
+                    <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
             dataAttributes={{'component-name': 'DateTimeField', testid: 'DateTimeField', ...dataAttributes}}

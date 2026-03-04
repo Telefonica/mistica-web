@@ -19,14 +19,18 @@ export const tag = style([
     tagCommon,
     sprinkles({
         minWidth: 56,
-        paddingY: 4,
     }),
+    {
+        paddingBottom: vars.spacing.tagPadding.bottom,
+        paddingTop: vars.spacing.tagPadding.top,
+    },
 ]);
 
 export const smallTag = style([
     tagCommon,
     sprinkles({
         minWidth: 40,
+        paddingY: 2,
     }),
     {
         minHeight: 22,

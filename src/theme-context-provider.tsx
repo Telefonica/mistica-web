@@ -17,6 +17,7 @@ import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
 import {
     defaultBorderRadiiConfig,
+    defaultSpacing,
     defaultTextPresetsConfig,
     defaultThemeVariantsConfig,
 } from './skins/defaults';
@@ -199,6 +200,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             },
             borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
             textPresets,
+            spacing: theme.skin.spacing ?? defaultSpacing,
             themeVariants: theme.skin.themeVariants ?? defaultThemeVariantsConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
@@ -241,6 +243,34 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         return Object.assign({}, ...tokenValues) as TextPresetsVars;
     }, [contextTheme]);
 
+    const spacingDesktopVars = React.useMemo(() => {
+        const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
+            return {
+                [token]: {
+                    ...('top' in values && {top: `${values.top.desktop}px`}),
+                    ...('right' in values && {right: `${values.right.desktop}px`}),
+                    ...('bottom' in values && {bottom: `${values.bottom.desktop}px`}),
+                    ...('left' in values && {left: `${values.left.desktop}px`}),
+                },
+            };
+        });
+        return Object.assign({}, ...tokenValues) as typeof vars.spacing;
+    }, [contextTheme]);
+
+    const spacingMobileVars = React.useMemo(() => {
+        const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
+            return {
+                [token]: {
+                    ...('top' in values && {top: `${values.top.mobile}px`}),
+                    ...('right' in values && {right: `${values.right.mobile}px`}),
+                    ...('bottom' in values && {bottom: `${values.bottom.mobile}px`}),
+                    ...('left' in values && {left: `${values.left.mobile}px`}),
+                },
+            };
+        });
+        return Object.assign({}, ...tokenValues) as typeof vars.spacing;
+    }, [contextTheme]);
+
     const renderStyles = (selector: string) => {
         if (withoutStyles || (process.env.NODE_ENV === 'test' && !process.env.SSR_TEST)) {
             return null;
@@ -273,11 +303,13 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                         rawColors: defaultRawColors,
                         textPresets: textPresetsVars,
                         borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+                        spacing: spacingDesktopVars,
                     })}
                 }
                 @media ${mq.tabletOrSmaller} {
                     ${selector} {
                         ${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}
+                        ${assignInlineVars(vars.spacing, spacingMobileVars)}
                     }
                 }
                 ${darkModeMediaQuery}
