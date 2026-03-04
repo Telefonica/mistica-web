@@ -1515,10 +1515,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 934b0a0460f7d06637d93fcd1a44ac49adc33518d17253b5a0b55ff4cb90a45d8fe78bf034b448911dbec7aff2a90b918697559f78d21c99ff8dbadae9565b55
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.28.6":
+  version: 7.28.6
+  resolution: "@babel/runtime@npm:7.28.6"
+  checksum: 42d8a868c2fc2e9a77927945a6daa7ec03c7ea49e611e0d15442933cdabb12f20e3a6849c729259076c10a4247adec229331d1f94c2d0073ea0979d7853e29fd
   languageName: node
   linkType: hard
 
@@ -1558,17 +1565,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@base-ui-components/react@npm:1.0.0-beta.4":
-  version: 1.0.0-beta.4
-  resolution: "@base-ui-components/react@npm:1.0.0-beta.4"
+"@base-ui/react@npm:^1.1.0":
+  version: 1.2.0
+  resolution: "@base-ui/react@npm:1.2.0"
   dependencies:
-    "@babel/runtime": ^7.28.4
-    "@base-ui-components/utils": 0.1.2
+    "@babel/runtime": ^7.28.6
+    "@base-ui/utils": 0.2.5
     "@floating-ui/react-dom": ^2.1.6
     "@floating-ui/utils": ^0.2.10
-    reselect: ^5.1.1
-    tabbable: ^6.2.0
-    use-sync-external-store: ^1.5.0
+    tabbable: ^6.4.0
+    use-sync-external-store: ^1.6.0
   peerDependencies:
     "@types/react": ^17 || ^18 || ^19
     react: ^17 || ^18 || ^19
@@ -1576,18 +1582,18 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 591dc4359e18b9a02f693c11adc2952aeed4746c3a144b758454276a47221bf5ea61830de4da507ad8a275490040e7ea5a78266f325226e5c23b727b3ef6b7ff
+  checksum: 0f41fc11e701ee6a65bc79949932fe8a8585db2cba19fb9d98b2497c9310c00340877b386d3d65994fd2760a7cd1b8faaf59e5ae637f1441a27ee9d8efa9871a
   languageName: node
   linkType: hard
 
-"@base-ui-components/utils@npm:0.1.2, @base-ui-components/utils@npm:^0.1.0":
-  version: 0.1.2
-  resolution: "@base-ui-components/utils@npm:0.1.2"
+"@base-ui/utils@npm:0.2.5, @base-ui/utils@npm:^0.2.3":
+  version: 0.2.5
+  resolution: "@base-ui/utils@npm:0.2.5"
   dependencies:
-    "@babel/runtime": ^7.28.4
+    "@babel/runtime": ^7.28.6
     "@floating-ui/utils": ^0.2.10
     reselect: ^5.1.1
-    use-sync-external-store: ^1.5.0
+    use-sync-external-store: ^1.6.0
   peerDependencies:
     "@types/react": ^17 || ^18 || ^19
     react: ^17 || ^18 || ^19
@@ -1595,7 +1601,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: b5213da6b1ede5cb27bd61b2b602ee3812a770b4a9a5a58ea571806b8656ea28fc14b7b2916402c0189a354348d3ac8cc4ae4c2a468530cc9a5003ad3e24d4dc
+  checksum: fc2e5d02d6b39f0c759241a0c48ac6938de1d9552a9ebc75b0892c95c6f07513fcc833c4bb9f937a1bdf38a6293b8d4e3581442184a5624158525c411e5b0175
   languageName: node
   linkType: hard
 
@@ -4248,7 +4254,7 @@ __metadata:
     mini-css-extract-plugin: ^1.6.2
     moment: ^2.29.1
     node-fetch: ^2.6.7
-    playroom: ^1.0.3
+    playroom: ^1.2.1
     postcss: ^8.4.18
     postcss-loader: ^4.2.0
     prettier: ^3.3.2
@@ -4416,13 +4422,6 @@ __metadata:
   dependencies:
     "@babel/types": ^7.28.2
   checksum: e3124e6575b2f70de338eab8a9c704d315a86c46a8e395b6ec78a0157ab7b5fd877289556a57dcf28e4ff3543714e359cc1182d4afc4bcb4f3575a0bbafa0dad
-  languageName: node
-  linkType: hard
-
-"@types/base64-url@npm:^2.2.0":
-  version: 2.2.2
-  resolution: "@types/base64-url@npm:2.2.2"
-  checksum: 2991597ff57dab723b7e3f19e9d953a31e3b6b9cad55bcc6cc045a97be0b96e8fd67cd12403b842a6416cfa2a2b198f4abfba421b14ff83ef7cf3c32d780ce8b
   languageName: node
   linkType: hard
 
@@ -7522,16 +7521,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cmdk-base@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "cmdk-base@npm:0.0.8"
+"cmdk-base@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "cmdk-base@npm:1.0.0"
   dependencies:
-    "@base-ui-components/utils": ^0.1.0
+    "@base-ui/utils": ^0.2.3
   peerDependencies:
-    "@base-ui-components/react": ^1.0.0-beta.2
+    "@base-ui/react": ^1.0.0
     react: ^18 || ^19 || ^19.0.0-rc
     react-dom: ^18 || ^19 || ^19.0.0-rc
-  checksum: 195b28c68c4dc2e8cb4251f942d804c31c253ec54eab5f4c1003e4bfaf205f32cca4bc4eeed29ca9edd0258db3eca3b7da79013f2222ef52e98f191e949ba891
+  checksum: 641fd99ee09704a8cd1dee774508cf91a91be2c8e758aedbaf9373044db095daa21018383cbdf42f6bec52c7d5ef46934d97037a41d8bc31141b976ca27ace8d
   languageName: node
   linkType: hard
 
@@ -15955,20 +15954,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playroom@npm:1.0.3":
-  version: 1.0.3
-  resolution: "playroom@npm:1.0.3"
+"playroom@npm:1.2.1":
+  version: 1.2.1
+  resolution: "playroom@npm:1.2.1"
   dependencies:
     "@babel/core": ^7.20.5
     "@babel/parser": ^7.23.4
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
-    "@base-ui-components/react": 1.0.0-beta.4
+    "@base-ui/react": ^1.1.0
     "@capsizecss/metrics": ^3.5.0
     "@capsizecss/vanilla-extract": ^2.0.4
     "@soda/friendly-errors-webpack-plugin": ^1.8.1
-    "@types/base64-url": ^2.2.0
     "@types/codemirror": ^5.60.5
     "@types/prettier": ^2.7.1
     "@types/react": ^18.0.0 || ^19.0.0
@@ -15982,7 +15980,7 @@ __metadata:
     "@zumer/snapdom": ^1.9.14
     babel-loader: ^9.1.0
     clsx: ^2.1.1
-    cmdk-base: ^0.0.8
+    cmdk-base: ^1.0.0
     codemirror: ^5.65.10
     command-line-args: ^5.2.1
     command-line-usage: ^6.1.3
@@ -16004,7 +16002,7 @@ __metadata:
     react-error-boundary: ^4.0.13
     read-pkg-up: ^7.0.1
     scope-eval: ^1.0.0
-    sucrase: ^3.34.0
+    sucrase: ^3.35.1
     tinyglobby: ^0.2.12
     typescript: ">=5.0.0"
     use-debounce: ^10.0.0
@@ -16016,24 +16014,23 @@ __metadata:
     react-dom: ^18 || ^19
   bin:
     playroom: bin/cli.cjs
-  checksum: 9d9c14f96e4ed1ec5174659a235682a3f6e01abe22d8e1b34ae1c8a4e8c23db1da4dc0d1c7439b1a6811f78b9ba249eae69752c00a79bb9a2cf44d4a59fe5a8a
+  checksum: b09f8341914a00f0893b77f64255356969e7f4f584a0a14f3bc19a9ebe4003bdf25c4bbbca911b95fafb2b18e2c6d1fae70446910aca9ec04a294dd8691f3585
   languageName: node
   linkType: hard
 
-"playroom@patch:playroom@npm%3A1.0.3#./.yarn/patches/playroom-npm-1.0.3-d8e0669615.patch::locator=%40telefonica%2Fmistica%40workspace%3A.":
-  version: 1.0.3
-  resolution: "playroom@patch:playroom@npm%3A1.0.3#./.yarn/patches/playroom-npm-1.0.3-d8e0669615.patch::version=1.0.3&hash=a1519d&locator=%40telefonica%2Fmistica%40workspace%3A."
+"playroom@patch:playroom@npm%3A1.2.1#./.yarn/patches/playroom-npm-1.2.1-6d189aed91.patch::locator=%40telefonica%2Fmistica%40workspace%3A.":
+  version: 1.2.1
+  resolution: "playroom@patch:playroom@npm%3A1.2.1#./.yarn/patches/playroom-npm-1.2.1-6d189aed91.patch::version=1.2.1&hash=97db4d&locator=%40telefonica%2Fmistica%40workspace%3A."
   dependencies:
     "@babel/core": ^7.20.5
     "@babel/parser": ^7.23.4
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.18.6
-    "@base-ui-components/react": 1.0.0-beta.4
+    "@base-ui/react": ^1.1.0
     "@capsizecss/metrics": ^3.5.0
     "@capsizecss/vanilla-extract": ^2.0.4
     "@soda/friendly-errors-webpack-plugin": ^1.8.1
-    "@types/base64-url": ^2.2.0
     "@types/codemirror": ^5.60.5
     "@types/prettier": ^2.7.1
     "@types/react": ^18.0.0 || ^19.0.0
@@ -16047,7 +16044,7 @@ __metadata:
     "@zumer/snapdom": ^1.9.14
     babel-loader: ^9.1.0
     clsx: ^2.1.1
-    cmdk-base: ^0.0.8
+    cmdk-base: ^1.0.0
     codemirror: ^5.65.10
     command-line-args: ^5.2.1
     command-line-usage: ^6.1.3
@@ -16069,7 +16066,7 @@ __metadata:
     react-error-boundary: ^4.0.13
     read-pkg-up: ^7.0.1
     scope-eval: ^1.0.0
-    sucrase: ^3.34.0
+    sucrase: ^3.35.1
     tinyglobby: ^0.2.12
     typescript: ">=5.0.0"
     use-debounce: ^10.0.0
@@ -16081,7 +16078,7 @@ __metadata:
     react-dom: ^18 || ^19
   bin:
     playroom: bin/cli.cjs
-  checksum: 269599093b98df249321a985728e7af42aad809f3ba7ffbd621bbfe90cc06b2d437b88b6ec7b6e7fa0e10fab5f99bffb34b05f05f911aeb0a0cd1736a0e22742
+  checksum: eaf7ea733c59fb86197ded9c41f73fb6534e5a65095c3e68c1e8ca6609a9a661fd25df3a5a317e7470724b8b8204b77f757ed7c6c3611a44d48b99bc3154269f
   languageName: node
   linkType: hard
 
@@ -18631,7 +18628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sucrase@npm:^3.34.0":
+"sucrase@npm:^3.35.1":
   version: 3.35.1
   resolution: "sucrase@npm:3.35.1"
   dependencies:
@@ -18726,10 +18723,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tabbable@npm:^6.2.0":
-  version: 6.3.0
-  resolution: "tabbable@npm:6.3.0"
-  checksum: 5ffeb2db569db7f3fe11b766f599bc0b67100697034e5c6264995555e8dead029c2e51d6b1e5ea65781e9077bf05ca40d3313c1c47351124a7e68727bc0f3968
+"tabbable@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "tabbable@npm:6.4.0"
+  checksum: 7084cba269ebbc7dcdeed5aca7f90c0a0fb59a295dd1e83703ab89cca5e6c53b78d02020e3d1065481984cd64bba7dd1ea3c0a48e92fdba83d586e6e86d62a74
   languageName: node
   linkType: hard
 
@@ -19740,7 +19737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.5.0":
+"use-sync-external-store@npm:^1.5.0, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
   peerDependencies:
