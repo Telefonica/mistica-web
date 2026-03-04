@@ -22,7 +22,7 @@ const getMediaQueriesConfig = () => {
         return {
             tabletMinWidth: 0,
             desktopMinWidth: 0,
-            largeDesktopMinWidth: 0,
+            largeDesktopMinWidth: impossibleSize,
             extraLargeDesktopMinWidth: impossibleSize,
             desktopOrTabletMinHeight: 0,
         };
