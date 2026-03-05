@@ -80,16 +80,16 @@
     --mistica-color-backgroundBrandBottom: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
     --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.08);
-    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.2);
+    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue80), 0.2);
     --mistica-color-backgroundDropZoneBrandDragover: rgba(
-        var(--mistica-telefonica-raw-telefonicaBlue70),
+        var(--mistica-telefonica-raw-telefonicaBlue80),
         0.4
     );
     --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-telefonica-raw-white), 0.1);
     --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-telefonica-raw-white), 0.17);
-    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.2);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue80), 0.2);
     --mistica-color-backgroundDropZoneMediaDragover: rgba(
-        var(--mistica-telefonica-raw-telefonicaBlue70),
+        var(--mistica-telefonica-raw-telefonicaBlue80),
         0.4
     );
     --mistica-color-skeletonWave: var(--mistica-telefonica-grey2);
@@ -1125,21 +1125,21 @@
             0.08
         );
         --mistica-color-backgroundDropZoneBrandHover: rgba(
-            var(--mistica-telefonica-raw-telefonicaBlue70),
+            var(--mistica-telefonica-raw-telefonicaBlue80),
             0.2
         );
         --mistica-color-backgroundDropZoneBrandDragover: rgba(
-            var(--mistica-telefonica-raw-telefonicaBlue70),
+            var(--mistica-telefonica-raw-telefonicaBlue80),
             0.4
         );
         --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-telefonica-raw-white), 0.1);
         --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-telefonica-raw-white), 0.17);
         --mistica-color-backgroundDropZoneMediaHover: rgba(
-            var(--mistica-telefonica-raw-telefonicaBlue70),
+            var(--mistica-telefonica-raw-telefonicaBlue80),
             0.2
         );
         --mistica-color-backgroundDropZoneMediaDragover: rgba(
-            var(--mistica-telefonica-raw-telefonicaBlue70),
+            var(--mistica-telefonica-raw-telefonicaBlue80),
             0.4
         );
         --mistica-color-skeletonWave: var(--mistica-telefonica-grey2);
