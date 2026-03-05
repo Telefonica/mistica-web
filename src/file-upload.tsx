@@ -6,11 +6,9 @@ import {Text1, Text2, Text3} from './text';
 import Inline from './inline';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {Boxed} from './boxed';
 import Box from './box';
 import {useInnerText, useTheme} from './hooks';
 import * as textTokens from './text-tokens';
-import {IconButton} from './icon-button';
 import Image from './image';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconFilePdfRegular from './generated/mistica-icons/icon-file-pdf-regular';
@@ -32,6 +30,7 @@ import IconClipRegular from './generated/mistica-icons/icon-clip-regular';
 import * as styles from './file-upload.css';
 import {useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {BoxedRow, BoxedRowList} from './list';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -349,7 +348,6 @@ const useFileUpload = ({
 type FileItemProps = {
     file: File;
     onRemove: (file: File) => void;
-    formatSize?: (sizeInBytes: number) => string;
     removeLabel?: string;
 };
 
@@ -357,32 +355,21 @@ export const FileItem = ({file, onRemove, removeLabel}: FileItemProps): JSX.Elem
     const {i18n, t, texts} = useTheme();
 
     return (
-        <Boxed>
-            <Box paddingX={8} paddingY={16}>
-                <Inline space="between" alignItems="center">
-                    <Inline space={8} alignItems="center">
-                        <FileIcon file={file} />
-                        <Text2 regular>{file.name}</Text2>
-                    </Inline>
-                    <Inline space={16} alignItems="center">
-                        <Text2 regular color={skinVars.colors.textSecondary}>
-                            {formatSize(file.size, i18n.locale)}
-                        </Text2>
-                        <IconButton
-                            Icon={IconCloseRegular}
-                            type="neutral"
-                            small
-                            onPress={() => onRemove(file)}
-                            aria-label={
-                                removeLabel ??
-                                texts.fileUploadRemoveFile ??
-                                t(textTokens.fileUploadRemoveFile, file.name)
-                            }
-                        />
-                    </Inline>
-                </Inline>
-            </Box>
-        </Boxed>
+        <BoxedRow
+            title={file.name}
+            asset={<FileIcon file={file} />}
+            detail={formatSize(file.size, i18n.locale)}
+            iconButton={{
+                type: 'neutral',
+                Icon: IconCloseRegular,
+                small: true,
+                onPress: () => onRemove(file),
+                'aria-label':
+                    removeLabel ??
+                    texts.fileUploadRemoveFile ??
+                    t(textTokens.fileUploadRemoveFile, file.name),
+            }}
+        />
     );
 };
 
@@ -610,15 +597,13 @@ const FileUpload = (props: Props): JSX.Element => {
                 ? renderFiles({files, removeFile})
                 : files &&
                   files.length > 0 && (
-                      <Stack
-                          space={8}
-                          role="list"
+                      <BoxedRowList
                           aria-label={texts.fileUploadListLabel ?? t(textTokens.fileUploadListLabel)}
                       >
                           {Array.from(files).map((file, index) => (
                               <FileItem key={index} file={file} onRemove={removeFile} />
                           ))}
-                      </Stack>
+                      </BoxedRowList>
                   )}
         </Stack>
     );

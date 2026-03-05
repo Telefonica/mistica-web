@@ -770,6 +770,11 @@ type CommonAccessibilityProps = {
 
 type RowListProps = {
     children: React.ReactNode;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    /**
+     * @deprecated Use 'aria-labelledby' instead. This will be removed in a future release.
+     */
     ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
@@ -779,6 +784,8 @@ export const RowList = ({
     children,
     ariaLabelledby,
     role = 'list',
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy = ariaLabelledby,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
@@ -789,7 +796,8 @@ export const RowList = ({
     return (
         <div
             role={role}
-            aria-labelledby={ariaLabelledby}
+            aria-labelledby={ariaLabelledBy}
+            aria-label={ariaLabel}
             aria-live={ariaLive}
             aria-atomic={ariaAtomic}
             {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
@@ -861,6 +869,11 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
 
 type BoxedRowListProps = {
     children: React.ReactNode;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    /**
+     * @deprecated Use 'aria-labelledby' instead. This will be removed in a future release.
+     */
     ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
@@ -871,13 +884,16 @@ export const BoxedRowList = ({
     ariaLabelledby,
     role = 'list',
     dataAttributes,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy = ariaLabelledby,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
 }: BoxedRowListProps): JSX.Element => (
     <Stack
         space={16}
         role={role}
-        aria-labelledby={ariaLabelledby}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
         aria-live={ariaLive}
         aria-atomic={ariaAtomic}
         dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
