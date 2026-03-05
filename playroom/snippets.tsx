@@ -3414,6 +3414,7 @@ const alertSnippets = [
       "Lime",
     ].map((fruit, idx) => ({
       id: String(idx),
+      tag: {type: 'promo', text: 'Tag'},
       title: fruit,
       description: "Description",
       asset: (
