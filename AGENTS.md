@@ -15,3 +15,9 @@ React component library for Telefonica's Design System.
 - Prefer semantic queries (`getByRole`, `getByLabelText`) over `getByTestId`
 
 **Conventions**: `type` over `interface`, `export type` for types, `'use client';` for client components
+
+**Components**:
+
+- If you create a new component always create a snippet for playroom.
+- If you add props to a component always update stories accordingly and add the new props to args and
+  argTypes.

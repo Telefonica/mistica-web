@@ -74,6 +74,10 @@
     --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-vivo-new-raw-white), 0.17);
     --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-vivo-new-raw-darkModeBlack), 0.3);
     --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-vivo-new-raw-darkModeBlack), 0.5);
+    --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-vivo-new-raw-vivoPurple), 0.06);
+    --mistica-color-backgroundDropZoneDragover: var(--mistica-vivo-new-vivoPurpleLight10);
+    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-vivo-new-raw-vivoPurpleDark), 0.3);
+    --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-vivo-new-raw-vivoPurpleDark), 0.5);
     --mistica-color-skeletonWave: var(--mistica-vivo-new-grey2);
     --mistica-color-borderLow: var(--mistica-vivo-new-grey1);
     --mistica-color-border: var(--mistica-vivo-new-grey3);
@@ -334,16 +338,16 @@
     --mistica-border-radius-avatar: 50%;
     --mistica-border-radius-bar: 999px;
     --mistica-border-radius-button: 32px;
-    --mistica-border-radius-checkbox: 2px;
-    --mistica-border-radius-container: 16px;
+    --mistica-border-radius-checkbox: 4px;
+    --mistica-border-radius-container: 24px;
     --mistica-border-radius-indicator: 24px;
     --mistica-border-radius-chip: 24px;
-    --mistica-border-radius-tag: 24px;
-    --mistica-border-radius-input: 12px;
-    --mistica-border-radius-legacyDisplay: 16px;
-    --mistica-border-radius-popup: 8px;
-    --mistica-border-radius-sheet: 16px;
-    --mistica-border-radius-mediaSmall: 8px;
+    --mistica-border-radius-tag: 10px;
+    --mistica-border-radius-input: 16px;
+    --mistica-border-radius-legacyDisplay: 24px;
+    --mistica-border-radius-popup: 16px;
+    --mistica-border-radius-sheet: 24px;
+    --mistica-border-radius-mediaSmall: 12px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -375,6 +379,9 @@
     --mistica-font-size-cardTitle: 1.25rem;
     --mistica-line-height-cardTitle: 1.5rem;
     --mistica-font-weight-cardTitle: 500;
+    --mistica-font-size-drawerTitle: 1.25rem;
+    --mistica-line-height-drawerTitle: 1.5rem;
+    --mistica-font-weight-drawerTitle: 500;
     --mistica-font-weight-rowTitle: 400;
     --mistica-font-weight-button: 500;
     --mistica-font-size-tabsLabel: 1.125rem;
@@ -398,6 +405,22 @@
     --mistica-font-size-chipLabel: 0.875rem;
     --mistica-line-height-chipLabel: 1.25rem;
     --mistica-font-weight-chipLabel: 500;
+    --mistica-font-size-cardPretitleSnap: 0.875rem;
+    --mistica-line-height-cardPretitleSnap: 1.25rem;
+    --mistica-font-size-cardTitleSnap: 0.875rem;
+    --mistica-line-height-cardTitleSnap: 1.25rem;
+    --mistica-font-size-cardSubtitleSnap: 0.875rem;
+    --mistica-line-height-cardSubtitleSnap: 1.25rem;
+    --mistica-font-size-cardDescriptionSnap: 0.875rem;
+    --mistica-line-height-cardDescriptionSnap: 1.25rem;
+    --mistica-font-size-cardPretitleDefault: 0.875rem;
+    --mistica-line-height-cardPretitleDefault: 1.25rem;
+    --mistica-font-size-cardTitleDefault: 1.125rem;
+    --mistica-line-height-cardTitleDefault: 1.5rem;
+    --mistica-font-size-cardSubtitleDefault: 0.875rem;
+    --mistica-line-height-cardSubtitleDefault: 1.25rem;
+    --mistica-font-size-cardDescriptionDefault: 0.875rem;
+    --mistica-line-height-cardDescriptionDefault: 1.25rem;
     --mistica-font-size-inputLabel: 0.75rem;
     --mistica-line-height-inputLabel: 1rem;
     --mistica-font-size-inputValue: 1rem;
@@ -1039,6 +1062,13 @@
         --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-vivo-new-raw-white), 0.17);
         --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-vivo-new-raw-darkModeBlack), 0.3);
         --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-vivo-new-raw-darkModeBlack), 0.5);
+        --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-vivo-new-raw-vivoPurple), 0.06);
+        --mistica-color-backgroundDropZoneDragover: var(--mistica-vivo-new-vivoPurpleLight10);
+        --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-vivo-new-raw-vivoPurpleDark), 0.3);
+        --mistica-color-backgroundDropZoneBrandDragover: rgba(
+            var(--mistica-vivo-new-raw-vivoPurpleDark),
+            0.5
+        );
         --mistica-color-skeletonWave: var(--mistica-vivo-new-grey2);
         --mistica-color-borderLow: var(--mistica-vivo-new-grey1);
         --mistica-color-border: var(--mistica-vivo-new-grey3);
@@ -1328,6 +1358,8 @@
         --mistica-line-height-10: 4.5rem;
         --mistica-font-size-cardTitle: 1.5rem;
         --mistica-line-height-cardTitle: 1.75rem;
+        --mistica-font-size-drawerTitle: 1.75rem;
+        --mistica-line-height-drawerTitle: 2rem;
 
         --mistica-font-size-tabsLabel: 1.125rem;
         --mistica-line-height-tabsLabel: 1.5rem;
@@ -1343,6 +1375,22 @@
 
         --mistica-font-size-chipLabel: 1rem;
         --mistica-line-height-chipLabel: 1.5rem;
+        --mistica-font-size-cardPretitleSnap: 1rem;
+        --mistica-line-height-cardPretitleSnap: 1.5rem;
+        --mistica-font-size-cardTitleSnap: 1rem;
+        --mistica-line-height-cardTitleSnap: 1.5rem;
+        --mistica-font-size-cardSubtitleSnap: 1rem;
+        --mistica-line-height-cardSubtitleSnap: 1.5rem;
+        --mistica-font-size-cardDescriptionSnap: 1rem;
+        --mistica-line-height-cardDescriptionSnap: 1.5rem;
+        --mistica-font-size-cardPretitleDefault: 1rem;
+        --mistica-line-height-cardPretitleDefault: 1.5rem;
+        --mistica-font-size-cardTitleDefault: 1.5rem;
+        --mistica-line-height-cardTitleDefault: 1.75rem;
+        --mistica-font-size-cardSubtitleDefault: 1rem;
+        --mistica-line-height-cardSubtitleDefault: 1.5rem;
+        --mistica-font-size-cardDescriptionDefault: 1rem;
+        --mistica-line-height-cardDescriptionDefault: 1.5rem;
         --mistica-font-size-inputLabel: 0.875rem;
         --mistica-line-height-inputLabel: 1.25rem;
         --mistica-font-size-inputValue: 1.125rem;

@@ -30,10 +30,14 @@ test('"to" uses a Link Component', () => {
     );
 
     expect(asFragment()).toMatchInlineSnapshot(`
-        <DocumentFragment>
-          (Link Component)
-        </DocumentFragment>
-    `);
+<DocumentFragment>
+  <div
+    class="icon-button_buttonContainer_default__yqt1oe1c icon-button_baseButtonContainer__yqt1oe1b"
+  >
+    (Link Component)
+  </div>
+</DocumentFragment>
+`);
 });
 
 test('<a> is rendered when using "to" prop', () => {

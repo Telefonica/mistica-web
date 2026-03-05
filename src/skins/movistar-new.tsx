@@ -668,7 +668,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
             indicator: {weight: 'medium'},
             inputHelperText: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             inputLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
-            inputValue: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 16, mobile: 16}},
+            inputValue: {lineHeight: {desktop: 22, mobile: 22}, size: {desktop: 16, mobile: 16}},
             link: {weight: 'medium'},
             loadingScreenTitle: {lineHeight: {desktop: 32, mobile: 28}, size: {desktop: 28, mobile: 24}},
             navigationBar: {weight: 'medium'},
@@ -701,6 +701,32 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
         themeVariants: {
             successFeedback: 'inverse',
             brandLoadingScreen: 'default',
+        },
+        spacing: {
+            buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            buttonSmallPadding: {left: {mobile: 8, desktop: 12}, right: {mobile: 8, desktop: 12}},
+            cardDefaultPadding: {
+                top: {mobile: 16, desktop: 16},
+                bottom: {mobile: 16, desktop: 16},
+                left: {mobile: 16, desktop: 16},
+                right: {mobile: 16, desktop: 16},
+            },
+            inputPadding: {top: {mobile: 9, desktop: 3}, bottom: {mobile: 9, desktop: 3}},
+            tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
+            feedbackScreenPadding: {
+                top: {mobile: 64, desktop: 40},
+                bottom: {mobile: 16, desktop: 40},
+                left: {mobile: 16, desktop: 40},
+                right: {mobile: 16, desktop: 40},
+            },
+            heroPadding: {top: {mobile: 16, desktop: 56}, bottom: {mobile: 16, desktop: 56}},
+            headerPadding: {top: {mobile: 16, desktop: 48}, bottom: {mobile: 16, desktop: 48}},
+            drawerPadding: {
+                top: {mobile: 32, desktop: 32},
+                bottom: {mobile: 16, desktop: 32},
+                left: {mobile: 16, desktop: 24},
+                right: {mobile: 16, desktop: 24},
+            },
         },
     };
     return skin;

@@ -358,13 +358,23 @@ const bleedArea = {
     small: `calc((${iconContainerSize.small} - ${iconSize.small}) / 2)`,
 };
 
-const baseButtonContainer = sprinkles({
+export const button = sprinkles({
     padding: 0,
     border: 'none',
     background: 'transparent',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+});
+
+const baseButtonContainer = style({
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    ':focus-within': {
+        overflow: 'visible',
+    },
 });
 
 export const buttonContainer = styleVariants({
@@ -408,19 +418,8 @@ export const minimumInteractiveArea = style({
         },
     },
 
-    position: 'relative',
-    '::after': {
-        content: '',
-        position: 'absolute',
-        /**
-         * min() is not supported in old browsers (https://caniuse.com/css-math-functions).
-         * We don't force the minimum touchable area in that case.
-         */
-        top: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
-        bottom: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
-        left: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
-        right: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
-    },
+    minWidth: interactiveAreaSize,
+    minHeight: interactiveAreaSize,
 });
 
 export const bleedLeft = styleVariants({
