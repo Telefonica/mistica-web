@@ -4657,5 +4657,38 @@ export default [
     ...tableSnippets,
     ...timelineSnippets,
     ...listItemSnippets,
+    {
+        group: 'Forms',
+        name: 'FileUpload (with drop zone)',
+        code: `
+        <FileUpload
+            name="file"
+            withDropZone
+            asset={<IconExportRegular color="currentColor" />}
+            title="Drag or upload your file"
+            description="File can be up to 50Mb"
+            renderButton={(props) => (
+                <ButtonPrimary {...props}>
+                    Choose file
+                </ButtonPrimary>
+            )}
+        />`,
+    },
+    {
+        group: 'Forms',
+        name: 'FileUpload',
+        code: `
+        <FileUpload
+            name="file"
+            asset={<IconExportRegular color="currentColor" />}
+            title="Upload your file"
+            description="File can be up to 50Mb"
+            renderButton={(props) => (
+                <ButtonPrimary {...props}>
+                    Choose file
+                </ButtonPrimary>
+            )}
+        />`,
+    },
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
