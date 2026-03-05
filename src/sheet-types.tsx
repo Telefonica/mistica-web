@@ -1,6 +1,5 @@
 export type NativeSheetImplementation = (typeof import('@tef-novum/webview-bridge'))['bottomSheet'];
 
-import type {TagType} from './tag';
 import type {ExclusifyUnion, Id} from './utils/utility-types';
 
 type InfoIcon = ExclusifyUnion<
@@ -25,10 +24,6 @@ export type SheetPropsByType = {
         selectedId?: string;
         items: Array<{
             id: string;
-            tag?: {
-                type?: TagType;
-                text: string;
-            };
             title?: string;
             description?: string;
             icon?: {
