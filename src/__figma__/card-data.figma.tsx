@@ -1,32 +1,115 @@
 import React from 'react';
 import {DataCard} from '../card-data';
 import figma from '@figma/code-connect';
+import {
+    Avatar,
+    Image,
+    Circle,
+    skinVars,
+    IconLightningRegular,
+    ButtonPrimary,
+    ButtonSecondary,
+    ButtonLink,
+    IconStarFilled,
+    IconStarRegular,
+} from '../../dist';
 
 const dataCardProps = {
-    title: figma.boolean('Title', {
-        true: 'Title',
+    variant: figma.enum('Variant', {
+        Default: undefined,
+        Brand: 'brand',
+    }),
+    size: figma.enum('Size', {
+        Display: 'display',
+        Default: undefined,
+        Snap: 'snap',
+    }),
+    aspectRatio: figma.enum('Aspect ratio', {
+        true: '7:10',
+        false: undefined,
+    }),
+    asset: figma.nestedProps('Asset', {
+        type: figma.enum('Asset type', {
+            Icon: <IconLightningRegular size={24} color={skinVars.colors.brand} />,
+            'Circle icon': (
+                <Circle size={40}>
+                    <IconLightningRegular size={24} color={skinVars.colors.brand} />
+                </Circle>
+            ),
+            Avatar: <Avatar size={40} src="https://example.com/avatar.jpg" />,
+            Image: <Image src="https://example.com/image.jpg" />,
+            Slot: figma.children('*'),
+        }),
+    }),
+    headline: figma.boolean('Tag', {
+        true: figma.children('Tag [D]'),
         false: undefined,
     }),
     pretitle: figma.boolean('Pretitle', {
-        true: 'Pretitle',
+        true: figma.textContent('Pretitle'),
+        false: undefined,
+    }),
+    title: figma.boolean('Title', {
+        true: figma.textContent('Title'),
         false: undefined,
     }),
     subtitle: figma.boolean('Subtitle', {
-        true: 'Subtitle',
+        true: figma.textContent('Subtitle'),
         false: undefined,
     }),
     description: figma.boolean('Description', {
-        true: 'Description',
+        true: figma.textContent('Description'),
         false: undefined,
     }),
-    variant: figma.enum('Variant', {
-        Brand: 'brand',
-        Default: 'default',
+    topActions: figma.boolean('Top actions', {
+        true: [
+            {
+                Icon: IconLightningRegular,
+                onPress: () => {},
+                label: 'Icon',
+            },
+            {
+                checkedProps: {
+                    Icon: IconStarFilled,
+                    label: 'checked',
+                },
+                uncheckedProps: {
+                    Icon: IconStarRegular,
+                    label: 'unchecked',
+                },
+                defaultChecked: false,
+                onChange: () => {},
+            },
+        ],
+        false: undefined,
     }),
-    size: figma.enum('Size', {
-        Default: 'default',
-        Display: 'display',
-        Snap: 'snap',
+    slot: figma.boolean('Slot', {
+        true: figma.instance('🔄 Replace slot'),
+        false: undefined,
+    }),
+    onPress: figma.boolean('Actions', {
+        true: undefined,
+        false: () => {},
+    }),
+    buttonPrimary: figma.boolean('Actions', {
+        true: <ButtonPrimary onPress={() => {}}>Primary</ButtonPrimary>,
+        false: undefined,
+    }),
+    buttonSecondary: figma.boolean('Actions', {
+        true: <ButtonSecondary onPress={() => {}}>Secondary</ButtonSecondary>,
+        false: undefined,
+    }),
+    buttonLink: figma.boolean('Actions', {
+        true: <ButtonLink onPress={() => {}}>Link</ButtonLink>,
+        false: undefined,
+    }),
+    showFooter: figma.enum('Footer', {
+        true: true,
+        false: false,
+    }),
+    footerSlot: figma.boolean('Footer slot', {
+        true: figma.instance('🔄 Replace footer slot'),
+        false: undefined,
     }),
 };
 
@@ -38,13 +121,23 @@ figma.connect(
         props: dataCardProps,
         example: (props) => (
             <DataCard
-                title={props.title}
-                pretitle={props.pretitle}
-                subtitle={props.subtitle}
-                description={props.description}
                 variant={props.variant}
                 size={props.size}
-                onPress={() => {}}
+                aspectRatio={props.aspectRatio}
+                asset={props.asset.type}
+                headline={props.headline}
+                pretitle={props.pretitle}
+                title={props.title}
+                subtitle={props.subtitle}
+                description={props.description}
+                onPress={props.onPress}
+                topActions={props.topActions}
+                showFooter={props.showFooter}
+                slot={props.slot}
+                footerSlot={props.footerSlot}
+                buttonPrimary={props.buttonPrimary}
+                buttonSecondary={props.buttonSecondary}
+                buttonLink={props.buttonLink}
             />
         ),
     }
@@ -58,13 +151,23 @@ figma.connect(
         props: dataCardProps,
         example: (props) => (
             <DataCard
-                title={props.title}
-                pretitle={props.pretitle}
-                subtitle={props.subtitle}
-                description={props.description}
                 variant={props.variant}
                 size={props.size}
-                onPress={() => {}}
+                aspectRatio={props.aspectRatio}
+                asset={props.asset.type}
+                headline={props.headline}
+                pretitle={props.pretitle}
+                title={props.title}
+                subtitle={props.subtitle}
+                description={props.description}
+                onPress={props.onPress}
+                topActions={props.topActions}
+                showFooter={props.showFooter}
+                slot={props.slot}
+                footerSlot={props.footerSlot}
+                buttonPrimary={props.buttonPrimary}
+                buttonSecondary={props.buttonSecondary}
+                buttonLink={props.buttonLink}
             />
         ),
     }
