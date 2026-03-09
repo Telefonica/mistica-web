@@ -2,7 +2,7 @@
 const docgen = require('react-docgen-typescript');
 const fs = require('fs');
 const path = require('path');
-const {categories} = require('./component-categories');
+const {categories} = require('../doc/components/component-categories');
 
 const ROOT = path.resolve(__dirname, '..');
 const INDEX_FILE = path.join(ROOT, 'src/index.tsx');
