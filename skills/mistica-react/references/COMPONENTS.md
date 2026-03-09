@@ -4,10 +4,10 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Accordions](components/accordions.md)
 
-- [Accordion](components/accordions.md#accordion) — Accordion groups multiple AccordionItem components stacked vertically, helping present expandable content as a cohere...
-- [AccordionItem](components/accordions.md#accordionitem) — AccordionItem is the interactive unit inside an Accordion: it renders a tappable header that toggles an accessible, a...
-- [BoxedAccordion](components/accordions.md#boxedaccordion) — BoxedAccordion groups multiple BoxedAccordionItem components in a stacked expandable set; the visible box treatment i...
-- [BoxedAccordionItem](components/accordions.md#boxedaccordionitem) — BoxedAccordionItem is the interactive unit of a BoxedAccordion: it behaves like AccordionItem and applies the visible...
+- [Accordion](components/accordions.md#accordion) — Accordion groups multiple AccordionItem components stacked vertically, helping present expandable content as a coherent set.
+- [AccordionItem](components/accordions.md#accordionitem) — AccordionItem is the interactive unit inside an Accordion: it renders a tappable header that toggles an accessible, animated content panel.
+- [BoxedAccordion](components/accordions.md#boxedaccordion) — BoxedAccordion groups multiple BoxedAccordionItem components in a stacked expandable set; the visible box treatment is applied by each item.
+- [BoxedAccordionItem](components/accordions.md#boxedaccordionitem) — BoxedAccordionItem is the interactive unit of a BoxedAccordion: it behaves like AccordionItem and applies the visible boxed styling at item level.
 
 ## [Buttons](components/buttons.md)
 
@@ -16,23 +16,23 @@ Component reference for Mística React. Components are grouped by category in `c
 - [ButtonDanger](components/buttons.md#buttondanger) — ButtonDanger is reserved for high-risk, destructive actions that require clear visual warning.
 - [ButtonLink](components/buttons.md#buttonlink) — ButtonLink provides low-emphasis actions and lightweight navigation in button form.
 - [ButtonLinkDanger](components/buttons.md#buttonlinkdanger) — ButtonLinkDanger is a low-emphasis destructive action used when risk exists but should not dominate the interface.
-- [IconButton](components/buttons.md#iconbutton) — IconButton exposes a compact icon-only action with accessible labeling, visual variants, and optional loading feedbac...
-- [ToggleIconButton](components/buttons.md#toggleiconbutton) — ToggleIconButton switches between checked and unchecked icon states using the same compact visual language as IconBut...
-- [ButtonGroup](components/buttons.md#buttongroup) — ButtonGroup organizes primary, secondary, and optional link actions into a coherent action block with responsive alig...
+- [IconButton](components/buttons.md#iconbutton) — IconButton exposes a compact icon-only action with accessible labeling, visual variants, and optional loading feedback for async interactions.
+- [ToggleIconButton](components/buttons.md#toggleiconbutton) — ToggleIconButton switches between checked and unchecked icon states using the same compact visual language as IconButton.
+- [ButtonGroup](components/buttons.md#buttongroup) — ButtonGroup organizes primary, secondary, and optional link actions into a coherent action block with responsive alignment.
 
 ## [Cards](components/cards.md)
 
-- [DataCard](components/cards.md#datacard) — DataCard presents structured informational content with optional media, hierarchy, actions, and supporting slots in a...
-- [MediaCard](components/cards.md#mediacard) — MediaCard combines media and content in one card surface, balancing visual storytelling with clear text hierarchy and...
-- [CoverCard](components/cards.md#covercard) — CoverCard is a media-first card pattern that combines image or video backgrounds with layered content, actions, and o...
-- [NakedCard](components/cards.md#nakedcard) — NakedCard is a transparent card surface that inherits the surrounding theme context while keeping card content struct...
+- [DataCard](components/cards.md#datacard) — DataCard presents structured informational content with optional media, hierarchy, actions, and supporting slots in a reusable card surface.
+- [MediaCard](components/cards.md#mediacard) — MediaCard combines media and content in one card surface, balancing visual storytelling with clear text hierarchy and actions.
+- [CoverCard](components/cards.md#covercard) — CoverCard is a media-first card pattern that combines image or video backgrounds with layered content, actions, and optional footer content.
+- [NakedCard](components/cards.md#nakedcard) — NakedCard is a transparent card surface that inherits the surrounding theme context while keeping card content structure and actions.
 - [HighlightedCard](components/cards.md#highlightedcard) — HighlightedCard is a legacy highlighted media-card pattern; use the equivalent MediaCard layout in new designs.
 - [PosterCard](components/cards.md#postercard) — PosterCard is a legacy media-first card kept for backward compatibility; use CoverCard for new designs.
 - [SnapCard](components/cards.md#snapcard) — Deprecated alias of `DataCard` in snap size for compact, actionable data cards.
 - [SmallNakedCard](components/cards.md#smallnakedcard) — Deprecated alias of `NakedCard` in snap size, for compact transparent cards that inherit the surrounding theme variant.
-- [DisplayDataCard](components/cards.md#displaydatacard) — DisplayDataCard is the display-sized data card pattern for high-prominence information blocks; prefer the equivalent ...
-- [DisplayMediaCard](components/cards.md#displaymediacard) — DisplayMediaCard is the large-format media card variant for prominent visual modules; prefer equivalent sizing throug...
-- [EmptyStateCard](components/cards.md#emptystatecard) — EmptyStateCard communicates absence of content in a boxed surface with supportive messaging and optional recovery act...
+- [DisplayDataCard](components/cards.md#displaydatacard) — DisplayDataCard is the display-sized data card pattern for high-prominence information blocks; prefer the equivalent DataCard size variant in new designs.
+- [DisplayMediaCard](components/cards.md#displaymediacard) — DisplayMediaCard is the large-format media card variant for prominent visual modules; prefer equivalent sizing through modern media-card patterns in new designs.
+- [EmptyStateCard](components/cards.md#emptystatecard) — EmptyStateCard communicates absence of content in a boxed surface with supportive messaging and optional recovery actions.
 - [CardActionIconButton](components/cards.md#cardactioniconbutton)
 - [CardActionSpinner](components/cards.md#cardactionspinner)
 
@@ -42,36 +42,36 @@ Component reference for Mística React. Components are grouped by category in `c
 - [CenteredCarousel](components/carousels.md#centeredcarousel) — CenteredCarousel emphasizes one item at a time on mobile while preserving multi-item browsing on larger screens.
 - [Slideshow](components/carousels.md#slideshow) — Use slideshow for full-width, page-by-page sequences of visual content with optional bullets, controls, and autoplay.
 - [PageBullets](components/carousels.md#pagebullets) — PageBullets indicates carousel pagination state, helping users understand position and progress across pages.
-- [HorizontalMosaic](components/carousels.md#horizontalmosaic) — HorizontalMosaic groups content into swipeable mosaic pages with alternating layouts to keep discovery flows visually...
-- [VerticalMosaic](components/carousels.md#verticalmosaic) — VerticalMosaic arranges content in static mosaic blocks with list semantics, combining vertical and square slots for ...
-- [CarouselAutoplayControl](components/carousels.md#carouselautoplaycontrol) — CarouselAutoplayControl toggles carousel autoplay state, including pause/play and restart behavior when the last page...
-- [CarouselContextConsumer](components/carousels.md#carouselcontextconsumer) — CarouselContextConsumer reads shared carousel actions and state to render custom controls aligned with active carouse...
-- [CarouselContextProvider](components/carousels.md#carouselcontextprovider) — CarouselContextProvider shares carousel navigation and state props so custom controls stay synchronized with carousel...
-- [CarouselPageControls](components/carousels.md#carouselpagecontrols) — CarouselPageControls provides previous/next arrow navigation for carousels, with contextual enable/disable behavior a...
+- [HorizontalMosaic](components/carousels.md#horizontalmosaic) — HorizontalMosaic groups content into swipeable mosaic pages with alternating layouts to keep discovery flows visually dynamic.
+- [VerticalMosaic](components/carousels.md#verticalmosaic) — VerticalMosaic arranges content in static mosaic blocks with list semantics, combining vertical and square slots for scannable editorial layouts.
+- [CarouselAutoplayControl](components/carousels.md#carouselautoplaycontrol) — CarouselAutoplayControl toggles carousel autoplay state, including pause/play and restart behavior when the last page is reached.
+- [CarouselContextConsumer](components/carousels.md#carouselcontextconsumer) — CarouselContextConsumer reads shared carousel actions and state to render custom controls aligned with active carousel behavior.
+- [CarouselContextProvider](components/carousels.md#carouselcontextprovider) — CarouselContextProvider shares carousel navigation and state props so custom controls stay synchronized with carousel behavior.
+- [CarouselPageControls](components/carousels.md#carouselpagecontrols) — CarouselPageControls provides previous/next arrow navigation for carousels, with contextual enable/disable behavior and page-aware labeling.
 - [useCarouselContext](components/carousels.md#usecarouselcontext) — useCarouselContext provides reusable behavior to keep component logic consistent across the product.
 
 ## [Data Visualizations](components/data-visualizations.md)
 
-- [Meter](components/data-visualizations.md#meter) — Meter visualizes values within a bounded range using segmented linear, angular, or circular shapes, with optional ext...
-- [Rating](components/data-visualizations.md#rating) — Rating captures user feedback through an interactive icon scale, supporting quantitative and qualitative evaluation p...
+- [Meter](components/data-visualizations.md#meter) — Meter visualizes values within a bounded range using segmented linear, angular, or circular shapes, with optional extra content for context.
+- [Rating](components/data-visualizations.md#rating) — Rating captures user feedback through an interactive icon scale, supporting quantitative and qualitative evaluation patterns.
 - [InfoRating](components/data-visualizations.md#inforating) — InfoRating displays read-only scores with rating icons, including accessible value narration for assistive technologies.
 
 ## [Progress Indicators](components/progress-indicators.md)
 
 - [ProgressBar](components/progress-indicators.md#progressbar) — ProgressBar provides continuous linear feedback for task completion progress as a percentage.
-- [ProgressBarStepped](components/progress-indicators.md#progressbarstepped) — ProgressBarStepped shows progress across discrete milestones, highlighting completed and current steps in multi-step ...
+- [ProgressBarStepped](components/progress-indicators.md#progressbarstepped) — ProgressBarStepped shows progress across discrete milestones, highlighting completed and current steps in multi-step flows.
 
 ## [Empty States](components/empty-states.md)
 
-- [EmptyState](components/empty-states.md#emptystate) — EmptyState communicates full-page absence scenarios with clear messaging, supportive imagery, and optional recovery a...
+- [EmptyState](components/empty-states.md#emptystate) — EmptyState communicates full-page absence scenarios with clear messaging, supportive imagery, and optional recovery actions.
 
 ## [Feedback](components/feedback.md)
 
-- [FeedbackScreen](components/feedback.md#feedbackscreen) — FeedbackScreen is the base full-screen feedback pattern for communicating important status moments with message hiera...
-- [ErrorFeedbackScreen](components/feedback.md#errorfeedbackscreen) — ErrorFeedbackScreen presents a dedicated full-screen error state with clear explanation and recovery actions when in-...
-- [InfoFeedbackScreen](components/feedback.md#infofeedbackscreen) — InfoFeedbackScreen presents neutral, informative full-screen feedback with optional actions to help users decide the ...
-- [SuccessFeedbackScreen](components/feedback.md#successfeedbackscreen) — SuccessFeedbackScreen communicates completion of an important action with positive visual reinforcement and optional ...
-- [SuccessFeedback](components/feedback.md#successfeedback) — Use success feedback for inline or section-level confirmation after a completed action, with optional supporting text...
+- [FeedbackScreen](components/feedback.md#feedbackscreen) — FeedbackScreen is the base full-screen feedback pattern for communicating important status moments with message hierarchy and optional actions.
+- [ErrorFeedbackScreen](components/feedback.md#errorfeedbackscreen) — ErrorFeedbackScreen presents a dedicated full-screen error state with clear explanation and recovery actions when in-flow error handling is not enough.
+- [InfoFeedbackScreen](components/feedback.md#infofeedbackscreen) — InfoFeedbackScreen presents neutral, informative full-screen feedback with optional actions to help users decide the next step.
+- [SuccessFeedbackScreen](components/feedback.md#successfeedbackscreen) — SuccessFeedbackScreen communicates completion of an important action with positive visual reinforcement and optional follow-up actions.
+- [SuccessFeedback](components/feedback.md#successfeedback) — Use success feedback for inline or section-level confirmation after a completed action, with optional supporting text, actions, and image.
 
 ## [Snackbar](components/snackbar.md)
 
@@ -84,11 +84,11 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Tooltip](components/tooltip.md)
 
-- [Tooltip](components/tooltip.md#tooltip) — Tooltip shows short, contextual helper text near a target on hover, focus, or touch, then dismisses when interaction ...
+- [Tooltip](components/tooltip.md#tooltip) — Tooltip shows short, contextual helper text near a target on hover, focus, or touch, then dismisses when interaction ends.
 
 ## [Popover](components/popover.md)
 
-- [Popover](components/popover.md#popover) — Popover presents richer contextual content in a dismissible anchored surface, suitable for guidance that needs more s...
+- [Popover](components/popover.md#popover) — Popover presents richer contextual content in a dismissible anchored surface, suitable for guidance that needs more space than a tooltip.
 
 ## [Forms](components/forms.md)
 
@@ -103,7 +103,7 @@ Component reference for Mística React. Components are grouped by category in `c
 ## [Radio Button](components/radio-button.md)
 
 - [RadioButton](components/radio-button.md#radiobutton) — RadioButton represents a single mutually exclusive option within a RadioGroup, enabling clear one-choice selection.
-- [RadioGroup](components/radio-button.md#radiogroup) — RadioGroup manages a set of mutually exclusive options, including selection state and keyboard navigation across radi...
+- [RadioGroup](components/radio-button.md#radiogroup) — RadioGroup manages a set of mutually exclusive options, including selection state and keyboard navigation across radio items.
 
 ## [Select](components/select.md)
 
@@ -123,15 +123,15 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Headers](components/headers.md)
 
-- [Header](components/headers.md#header) — Header organizes section-level textual hierarchy with optional headline, pretitle, title, and description in a readab...
-- [HeaderLayout](components/headers.md#headerlayout) — HeaderLayout provides the responsive shell for page headers, combining breadcrumbs, header content, and optional extr...
-- [MainSectionHeader](components/headers.md#mainsectionheader) — MainSectionHeader introduces major sections with high-prominence title, optional supporting description, and optional...
-- [MainSectionHeaderLayout](components/headers.md#mainsectionheaderlayout) — MainSectionHeaderLayout wraps MainSectionHeader in a responsive, brand-aware top-area layout with consistent spacing ...
+- [Header](components/headers.md#header) — Header organizes section-level textual hierarchy with optional headline, pretitle, title, and description in a readable, accessible structure.
+- [HeaderLayout](components/headers.md#headerlayout) — HeaderLayout provides the responsive shell for page headers, combining breadcrumbs, header content, and optional extra areas in one coherent top section.
+- [MainSectionHeader](components/headers.md#mainsectionheader) — MainSectionHeader introduces major sections with high-prominence title, optional supporting description, and optional primary action.
+- [MainSectionHeaderLayout](components/headers.md#mainsectionheaderlayout) — MainSectionHeaderLayout wraps MainSectionHeader in a responsive, brand-aware top-area layout with consistent spacing and width control.
 
 ## [Hero](components/hero.md)
 
-- [Hero](components/hero.md#hero) — A hero is a promotional section at the top of the page with clear call-to-action focus; use CoverHero instead when yo...
-- [CoverHero](components/hero.md#coverhero) — CoverHero is a high-impact hero section that combines strong heading hierarchy, optional media background, and groupe...
+- [Hero](components/hero.md#hero) — A hero is a promotional section at the top of the page with clear call-to-action focus; use CoverHero instead when you need media as the background.
+- [CoverHero](components/hero.md#coverhero) — CoverHero is a high-impact hero section that combines strong heading hierarchy, optional media background, and grouped call-to-action buttons; choose it instead of Hero when media needs to be the section background.
 
 ## [Hooks](components/hooks.md)
 
@@ -150,24 +150,24 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Input Fields](components/input-fields.md)
 
-- [TextField](components/input-fields.md#textfield) — Use text field as the default Mística input for free-text entry, with built-in form integration, validation support, ...
-- [TextFieldBase](components/input-fields.md#textfieldbase) — Foundation primitive used to build Mística text-input fields, including labeling, helper/error feedback, and shared i...
+- [TextField](components/input-fields.md#textfield) — Use text field as the default Mística input for free-text entry, with built-in form integration, validation support, and optional suggestions.
+- [TextFieldBase](components/input-fields.md#textfieldbase) — Foundation primitive used to build Mística text-input fields, including labeling, helper/error feedback, and shared interaction states.
 - [EmailField](components/input-fields.md#emailfield) — EmailField captures email addresses with email-optimized input behavior and built-in format validation.
-- [PasswordField](components/input-fields.md#passwordfield) — PasswordField captures sensitive credentials with masked input, accessible show/hide control, and form validation sup...
-- [SearchField](components/input-fields.md#searchfield) — SearchField captures query input for discovery flows with optional search icon, clear action, and autosuggest integra...
+- [PasswordField](components/input-fields.md#passwordfield) — PasswordField captures sensitive credentials with masked input, accessible show/hide control, and form validation support.
+- [SearchField](components/input-fields.md#searchfield) — SearchField captures query input for discovery flows with optional search icon, clear action, and autosuggest integration.
 - [IntegerField](components/input-fields.md#integerfield) — IntegerField captures whole-number input with digit-only sanitization and numeric keypad support on mobile devices.
 - [DecimalField](components/input-fields.md#decimalfield) — DecimalField captures numeric values with fractional precision, adapting decimal separator behavior to the user locale.
-- [PhoneNumberField](components/input-fields.md#phonenumberfield) — PhoneNumberField captures phone numbers with robust as-you-type international formatting and optional E.164 normaliza...
-- [PhoneNumberFieldLite](components/input-fields.md#phonenumberfieldlite) — PhoneNumberFieldLite captures phone numbers with a lightweight formatter for a limited country set and common numberi...
-- [IbanField](components/input-fields.md#ibanfield) — IbanField captures IBAN account identifiers with automatic formatting, uppercase normalization, and built-in IBAN val...
-- [PinField](components/input-fields.md#pinfield) — PinField captures short verification codes in segmented digit inputs, with optional masked display and SMS one-time-c...
-- [Autocomplete](components/input-fields.md#autocomplete) — Autocomplete helps users choose a valid value from suggested options while typing, with fast keyboard and touch inter...
+- [PhoneNumberField](components/input-fields.md#phonenumberfield) — PhoneNumberField captures phone numbers with robust as-you-type international formatting and optional E.164 normalization.
+- [PhoneNumberFieldLite](components/input-fields.md#phonenumberfieldlite) — PhoneNumberFieldLite captures phone numbers with a lightweight formatter for a limited country set and common numbering patterns.
+- [IbanField](components/input-fields.md#ibanfield) — IbanField captures IBAN account identifiers with automatic formatting, uppercase normalization, and built-in IBAN validity checks.
+- [PinField](components/input-fields.md#pinfield) — PinField captures short verification codes in segmented digit inputs, with optional masked display and SMS one-time-code autofill support.
+- [Autocomplete](components/input-fields.md#autocomplete) — Autocomplete helps users choose a valid value from suggested options while typing, with fast keyboard and touch interaction.
 - [DateField](components/input-fields.md#datefield) — DateField captures calendar dates with platform-appropriate picker behavior and optional range constraints.
 - [DateTimeField](components/input-fields.md#datetimefield) — DateTimeField captures a combined date and time value with platform-appropriate picker behavior and range validation.
 - [TimeField](components/input-fields.md#timefield) — information that the user needs to enter in the field.
-- [MonthField](components/input-fields.md#monthfield) — MonthField captures month-and-year values with calendar affordance, range validation, and adaptive native/fallback pi...
+- [MonthField](components/input-fields.md#monthfield) — MonthField captures month-and-year values with calendar affordance, range validation, and adaptive native/fallback picker behavior.
 - [CreditCardFields](components/input-fields.md#creditcardfields) — CreditCardFields groups card number, expiration date, and CVV into a single, optimized payment input block.
-- [CreditCardNumberField](components/input-fields.md#creditcardnumberfield) — CreditCardNumberField captures payment card numbers with guided spacing, card-type recognition, and validity-aware pr...
+- [CreditCardNumberField](components/input-fields.md#creditcardnumberfield) — CreditCardNumberField captures payment card numbers with guided spacing, card-type recognition, and validity-aware progression.
 - [CreditCardExpirationField](components/input-fields.md#creditcardexpirationfield) — CreditCardExpirationField captures card expiry in a guided `MM/YY` format with built-in validity checks.
 - [CvvField](components/input-fields.md#cvvfield) — CvvField captures the card security code with numeric input, card-aware guidance, and strict length validation.
 - [DoubleField](components/input-fields.md#doublefield) — DoubleField arranges two related form inputs side by side to reduce vertical space and keep paired data entry coherent.
@@ -175,74 +175,74 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Layout](components/layout.md)
 
-- [ResponsiveLayout](components/layout.md#responsivelayout) — ResponsiveLayout provides a responsive page container that keeps content within adaptive bounds or expands to full wi...
+- [ResponsiveLayout](components/layout.md#responsivelayout) — ResponsiveLayout provides a responsive page container that keeps content within adaptive bounds or expands to full width when needed.
 - [Grid](components/layout.md#grid) — Grid is a responsive layout primitive for arranging content in rows and columns with controlled spacing and alignment.
 - [GridItem](components/layout.md#griditem) — GridItem defines how each element occupies and aligns within a Grid, including span, start position, and ordering.
-- [GridLayout](components/layout.md#gridlayout) — GridLayout provides predefined responsive column templates to compose balanced page sections with predictable proport...
-- [Stack](components/layout.md#stack) — Use stack to arrange content vertically with a predefined spacing scale, including responsive spacing and distributio...
-- [Inline](components/layout.md#inline) — Inline arranges elements in a horizontal row with controlled spacing, optional wrapping, and responsive gap behavior ...
+- [GridLayout](components/layout.md#gridlayout) — GridLayout provides predefined responsive column templates to compose balanced page sections with predictable proportions.
+- [Stack](components/layout.md#stack) — Use stack to arrange content vertically with a predefined spacing scale, including responsive spacing and distribution modes.
+- [Inline](components/layout.md#inline) — Inline arranges elements in a horizontal row with controlled spacing, optional wrapping, and responsive gap behavior across breakpoints.
 - [Box](components/layout.md#box) — Box is a low-level spacing primitive used to apply consistent, responsive padding around content.
-- [NegativeBox](components/layout.md#negativebox) — NegativeBox offsets horizontal container gutters by applying negative side margins, allowing content to bleed to one ...
+- [NegativeBox](components/layout.md#negativebox) — NegativeBox offsets horizontal container gutters by applying negative side margins, allowing content to bleed to one or both edges.
 - [Boxed](components/layout.md#boxed) — Boxed is a themed surface container used to group content inside a bounded, variant-aware block.
-- [Align](components/layout.md#align) — Align is a layout primitive that positions children on the horizontal and vertical axes using x/y alignment props, wi...
-- [FixedFooterLayout](components/layout.md#fixedfooterlayout) — FixedFooterLayout keeps footer content anchored to the bottom when space allows, while preserving readable scrollable...
+- [Align](components/layout.md#align) — Align is a layout primitive that positions children on the horizontal and vertical axes using x/y alignment props, with optional width and height constraints.
+- [FixedFooterLayout](components/layout.md#fixedfooterlayout) — FixedFooterLayout keeps footer content anchored to the bottom when space allows, while preserving readable scrollable content above it.
 - [ButtonFixedFooterLayout](components/layout.md#buttonfixedfooterlayout) — ButtonFixedFooterLayout keeps primary actions anchored in a fixed footer while content scrolls independently.
-- [ButtonLayout](components/layout.md#buttonlayout) — ButtonLayout arranges primary, secondary, and optional link actions into a structured block with explicit alignment v...
-- [FixedToTop](components/layout.md#fixedtotop) — FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap between layered ...
-- [MasterDetailLayout](components/layout.md#masterdetaillayout) — MasterDetailLayout adapts list-detail experiences across breakpoints, switching from single-pane on smaller screens t...
-- [HorizontalScroll](components/layout.md#horizontalscroll) — HorizontalScroll creates a horizontal overflow area so content can be explored by sideways scrolling when items do no...
+- [ButtonLayout](components/layout.md#buttonlayout) — ButtonLayout arranges primary, secondary, and optional link actions into a structured block with explicit alignment variants.
+- [FixedToTop](components/layout.md#fixedtotop) — FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap between layered sticky regions.
+- [MasterDetailLayout](components/layout.md#masterdetaillayout) — MasterDetailLayout adapts list-detail experiences across breakpoints, switching from single-pane on smaller screens to split-pane on larger screens.
+- [HorizontalScroll](components/layout.md#horizontalscroll) — HorizontalScroll creates a horizontal overflow area so content can be explored by sideways scrolling when items do not fit in the available width.
 - [Divider](components/layout.md#divider) — Divider is a subtle visual separator used to split related content areas while preserving rhythm and scanability.
 
 ## [Lists](components/lists.md)
 
-- [Row](components/lists.md#row) — Row is a flexible list item pattern for navigation, selection, and status display with optional leading asset and tra...
+- [Row](components/lists.md#row) — Row is a flexible list item pattern for navigation, selection, and status display with optional leading asset and trailing actions.
 - [RowList](components/lists.md#rowlist) — RowList groups multiple Row items into a single accessible list with consistent spacing and separators.
 - [BoxedRow](components/lists.md#boxedrow) — BoxedRow applies the Row interaction model inside a boxed container for stronger visual separation and emphasis.
 - [BoxedRowList](components/lists.md#boxedrowlist) — BoxedRowList stacks multiple BoxedRow items with consistent spacing to create separated, card-like list groups.
-- [OrderedList](components/lists.md#orderedlist) — OrderedList presents items in an explicit sequence, helping users follow ordered steps, ranked priorities, or procedu...
-- [UnorderedList](components/lists.md#unorderedlist) — UnorderedList groups related items where sequence is not meaningful, preserving semantic list structure for accessibi...
-- [ListItem](components/lists.md#listitem) — ListItem is the content unit used inside ordered and unordered lists, supporting default markers, custom icons, or ma...
+- [OrderedList](components/lists.md#orderedlist) — OrderedList presents items in an explicit sequence, helping users follow ordered steps, ranked priorities, or procedural flows.
+- [UnorderedList](components/lists.md#unorderedlist) — UnorderedList groups related items where sequence is not meaningful, preserving semantic list structure for accessibility and scanning.
+- [ListItem](components/lists.md#listitem) — ListItem is the content unit used inside ordered and unordered lists, supporting default markers, custom icons, or markerless variants.
 
 ## [Loading](components/loading.md)
 
 - [LoadingScreen](components/loading.md#loadingscreen) — LoadingScreen communicates blocking progress states with a centered loading indicator and short contextual messaging.
-- [BrandLoadingScreen](components/loading.md#brandloadingscreen) — BrandLoadingScreen adds brand-led loading motion and styling to full-screen waiting states while preserving clear pro...
-- [LoadingBar](components/loading.md#loadingbar) — LoadingBar shows a global, indeterminate progress indicator for ongoing background activity while the current screen ...
+- [BrandLoadingScreen](components/loading.md#brandloadingscreen) — BrandLoadingScreen adds brand-led loading motion and styling to full-screen waiting states while preserving clear progress messaging.
+- [LoadingBar](components/loading.md#loadingbar) — LoadingBar shows a global, indeterminate progress indicator for ongoing background activity while the current screen remains usable.
 - [Spinner](components/loading.md#spinner) — spinner. You can see how to apply spinner in buttons here.
 
 ## [Modals](components/modals.md)
 
-- [Sheet](components/modals.md#sheet) — Sheet presents temporary, focus-trapped bottom-sheet content for contextual decisions, actions, and lightweight task ...
-- [SheetBody](components/modals.md#sheetbody) — SheetBody structures sheet content with sticky title/actions regions, optional descriptive text, and scroll-aware div...
+- [Sheet](components/modals.md#sheet) — Sheet presents temporary, focus-trapped bottom-sheet content for contextual decisions, actions, and lightweight task flows.
+- [SheetBody](components/modals.md#sheetbody) — SheetBody structures sheet content with sticky title/actions regions, optional descriptive text, and scroll-aware dividers.
 - [SheetRoot](components/modals.md#sheetroot) — SheetRoot is the global host that mounts and resolves sheet experiences triggered through showSheet.
 - [showSheet](components/modals.md#showsheet) — showSheet opens a typed sheet flow imperatively and returns a promise with user outcome or dismissal result.
 - [NativeSheetImplementation](components/modals.md#nativesheetimplementation) — NativeSheetImplementation is a Mística component used to build consistent and accessible product interfaces.
-- [ActionsSheet](components/modals.md#actionssheet) — ActionsSheet presents a short decision block in a bottom sheet using a primary action, optional secondary action, and...
-- [ActionsListSheet](components/modals.md#actionslistsheet) — ActionsListSheet presents a bottom sheet with a clear list of selectable actions, optionally enriched with icons and ...
-- [InfoSheet](components/modals.md#infosheet) — InfoSheet presents explanatory content in a modal sheet with a titled context, optional supporting copy, and a struct...
-- [RadioListSheet](components/modals.md#radiolistsheet) — RadioListSheet presents single-choice options inside a bottom sheet using radio-list rows, optimized for responsive s...
+- [ActionsSheet](components/modals.md#actionssheet) — ActionsSheet presents a short decision block in a bottom sheet using a primary action, optional secondary action, and optional text link.
+- [ActionsListSheet](components/modals.md#actionslistsheet) — ActionsListSheet presents a bottom sheet with a clear list of selectable actions, optionally enriched with icons and destructive emphasis.
+- [InfoSheet](components/modals.md#infosheet) — InfoSheet presents explanatory content in a modal sheet with a titled context, optional supporting copy, and a structured list of informational items.
+- [RadioListSheet](components/modals.md#radiolistsheet) — RadioListSheet presents single-choice options inside a bottom sheet using radio-list rows, optimized for responsive selection flows.
 - [Drawer](components/modals.md#drawer) — The drawer component is only meant for web implementations. When designing for native we recommend to use a modal view.
 - [useDialog](components/modals.md#usedialog) — useDialog provides reusable behavior to keep component logic consistent across the product.
-- [Menu](components/modals.md#menu) — Menu displays contextual actions from a trigger, with adaptive positioning, keyboard navigation, and dismiss behavior...
-- [MenuItem](components/modals.md#menuitem) — MenuItem represents an actionable row inside a menu, with optional icon, destructive emphasis, disabled state, or che...
+- [Menu](components/modals.md#menu) — Menu displays contextual actions from a trigger, with adaptive positioning, keyboard navigation, and dismiss behavior through overlay interaction.
+- [MenuItem](components/modals.md#menuitem) — MenuItem represents an actionable row inside a menu, with optional icon, destructive emphasis, disabled state, or checkbox control behavior.
 - [MenuSection](components/modals.md#menusection) — MenuSection groups related menu items and automatically renders a divider between sections for clearer scanability.
 
 ## [Navigation](components/navigation-bars.md)
 
-- [MainNavigationBar](components/navigation-bars.md#mainnavigationbar) — MainNavigationBar provides primary product navigation with section switching, responsive desktop menus, and mobile bu...
-- [NavigationBar](components/navigation-bars.md#navigationbar) — NavigationBar is the standard top app bar for page-level navigation, supporting back navigation, title, and contextua...
+- [MainNavigationBar](components/navigation-bars.md#mainnavigationbar) — MainNavigationBar provides primary product navigation with section switching, responsive desktop menus, and mobile burger-menu behavior.
+- [NavigationBar](components/navigation-bars.md#navigationbar) — NavigationBar is the standard top app bar for page-level navigation, supporting back navigation, title, and contextual right-side actions.
 - [NavigationBarAction](components/navigation-bars.md#navigationbaraction) — NavigationBarAction is an interactive header control used for concise contextual actions in navigation bars.
 - [NavigationBarActionGroup](components/navigation-bars.md#navigationbaractiongroup) — NavigationBarActionGroup arranges multiple navigation-bar actions into a compact, coherent right-side action cluster.
-- [FunnelNavigationBar](components/navigation-bars.md#funnelnavigationbar) — FunnelNavigationBar is a simplified top bar for focused transactional flows, keeping only essential branding and cont...
-- [NavigationBreadcrumbs](components/navigation-bars.md#navigationbreadcrumbs) — Breadcrumbs are a navigational element to help users to understand where they are in a website as well as content str...
+- [FunnelNavigationBar](components/navigation-bars.md#funnelnavigationbar) — FunnelNavigationBar is a simplified top bar for focused transactional flows, keeping only essential branding and contextual actions.
+- [NavigationBreadcrumbs](components/navigation-bars.md#navigationbreadcrumbs) — Breadcrumbs are a navigational element to help users to understand where they are in a website as well as content structure and hierarchy.
 - [Tabs](components/navigation-bars.md#tabs) — Use tabs to switch between related sections within the same context, with one active tab at a time.
 - [Stepper](components/navigation-bars.md#stepper) — Use stepper to show progress through a linear multi-step flow, highlighting completed and current steps.
-- [SkipLink](components/navigation-bars.md#skiplink) — A skip link allows keyboard and screen reader users to bypass repeated blocks of content and jump directly to other c...
+- [SkipLink](components/navigation-bars.md#skiplink) — A skip link allows keyboard and screen reader users to bypass repeated blocks of content and jump directly to other content of the page.
 - [SkipLinkNav](components/navigation-bars.md#skiplinknav) — SkipLinkNav groups multiple skip links inside a labeled navigation landmark for accessible quick-jump navigation.
 
 ## [Avatar](components/avatar.md)
 
-- [Avatar](components/avatar.md#avatar) — Avatar is the visual representation of a user or entity, using photo, initials, or icon depending on available identi...
+- [Avatar](components/avatar.md#avatar) — Avatar is the visual representation of a user or entity, using photo, initials, or icon depending on available identity content.
 
 ## [Badge](components/badge.md)
 
@@ -258,18 +258,18 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [StackingGroup](components/stacking-group.md)
 
-- [StackingGroup](components/stacking-group.md#stackinggroup) — Use stacking group to display a compact set of similarly sized items, optionally overlapped, with a `+N` overflow ind...
+- [StackingGroup](components/stacking-group.md#stackinggroup) — Use stacking group to display a compact set of similarly sized items, optionally overlapped, with a `+N` overflow indicator.
 
 ## [Primitives](components/primitives.md)
 
-- [Image](components/primitives.md#image) — Image displays responsive media with controlled aspect ratio, loading skeleton, and graceful error fallback to keep l...
-- [Video](components/primitives.md#video) — Use video for embedded media playback with responsive sizing, poster/error fallbacks, and controllable autoplay/loadi...
+- [Image](components/primitives.md#image) — Image displays responsive media with controlled aspect ratio, loading skeleton, and graceful error fallback to keep layouts stable while assets load or fail.
+- [Video](components/primitives.md#video) — Use video for embedded media playback with responsive sizing, poster/error fallbacks, and controllable autoplay/loading behavior.
 - [VideoElement](components/primitives.md#videoelement) — VideoElement is a Mística component used to build consistent and accessible product interfaces.
-- [Circle](components/primitives.md#circle) — Circle is a circular container used to frame visual content or compact UI elements with optional background and borde...
+- [Circle](components/primitives.md#circle) — Circle is a circular container used to frame visual content or compact UI elements with optional background and border styling.
 - [Touchable](components/primitives.md#touchable) — Touchable is a Mística component used to build consistent and accessible product interfaces.
 - [TouchableElement](components/primitives.md#touchableelement) — TouchableElement is a Mística component used to build consistent and accessible product interfaces.
-- [Placeholder](components/primitives.md#placeholder) — Placeholder renders a neutral framed block for temporary visual stand-ins when real media or content is not yet avail...
-- [FadeIn](components/primitives.md#fadein) — Emotional branded animations enhance the brand identity by visually connecting with users. They help convey emotions ...
+- [Placeholder](components/primitives.md#placeholder) — Placeholder renders a neutral framed block for temporary visual stand-ins when real media or content is not yet available.
+- [FadeIn](components/primitives.md#fadein) — Emotional branded animations enhance the brand identity by visually connecting with users. They help convey emotions and reinforce the brand’s values, creating.
 - [ScreenReaderOnly](components/primitives.md#screenreaderonly) — ScreenReaderOnly exposes content to assistive technologies while keeping it visually hidden in the interface.
 
 ## [Skeletons](components/skeletons.md)
@@ -282,7 +282,7 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Text](components/text.md)
 
-- [Text](components/text.md#text) — Foundational typography primitive for custom text rendering when preset components (`Text1`–`Text10`) do not cover th...
+- [Text](components/text.md#text) — Foundational typography primitive for custom text rendering when preset components (`Text1`–`Text10`) do not cover the need.
 - [Text1](components/text.md#text1) — Small preset text level for compact supporting information and dense UI metadata.
 - [Text2](components/text.md#text2) — Low-emphasis preset text level for secondary copy that remains more readable than compact metadata styles.
 - [Text3](components/text.md#text3) — Baseline preset text level for standard body copy in most product interfaces.
@@ -303,7 +303,7 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Timeline](components/timeline.md)
 
-- [Timeline](components/timeline.md#timeline) — The Timeline component is used to represent events in a chronological timeline. It can be used to visually and organi...
+- [Timeline](components/timeline.md#timeline) — The Timeline component is used to represent events in a chronological timeline. It can be used to visually and organizedly display processes,.
 - [TimelineItem](components/timeline.md#timelineitem) — TimelineItem is a Mística component used to build consistent and accessible product interfaces.
 - [Table](components/timeline.md#table) — Use table for structured row-and-column data, with responsive behavior for mobile scrolling or collapsed row cards.
 
@@ -331,7 +331,7 @@ Component reference for Mística React. Components are grouped by category in `c
 - [OverscrollColorProvider](components/utilities.md#overscrollcolorprovider) — OverscrollColorProvider provides reusable behavior to keep component logic consistent across the product.
 - [useSetOverscrollColor](components/utilities.md#usesetoverscrollcolor) — useSetOverscrollColor provides reusable behavior to keep component logic consistent across the product.
 - [TopDistanceContext](components/utilities.md#topdistancecontext) — TopDistanceContext provides reusable behavior to keep component logic consistent across the product.
-- [Overlay](components/utilities.md#overlay) — Overlay provides a full-viewport interaction layer behind temporary surfaces, enabling outside-click dismissal and op...
+- [Overlay](components/utilities.md#overlay) — Overlay provides a full-viewport interaction layer behind temporary surfaces, enabling outside-click dismissal and optional body scroll lock.
 - [FocusTrap](components/utilities.md#focustrap) — FocusTrap is a Mística component used to build consistent and accessible product interfaces.
 - [Portal](components/utilities.md#portal) — Portal is a Mística component used to build consistent and accessible product interfaces.
 - [applyAlpha](components/utilities.md#applyalpha) — applyAlpha is a Mística component used to build consistent and accessible product interfaces.

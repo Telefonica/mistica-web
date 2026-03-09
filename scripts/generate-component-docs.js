@@ -487,9 +487,8 @@ function main() {
             .map((name) => {
                 const anchor = name.toLowerCase();
                 const desc = designDocCache.get(name)?.description || '';
-                const shortDesc = desc.length > 120 ? desc.slice(0, 117) + '...' : desc;
-                return shortDesc
-                    ? `- [${name}](components/${entry.slug}.md#${anchor}) — ${escapeMarkdown(shortDesc)}`
+                return desc
+                    ? `- [${name}](components/${entry.slug}.md#${anchor}) — ${escapeMarkdown(desc)}`
                     : `- [${name}](components/${entry.slug}.md#${anchor})`;
             });
         index += compLinks.join('\n') + '\n\n';
