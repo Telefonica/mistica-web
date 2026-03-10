@@ -84,7 +84,7 @@ Usage example (TypeScript / TSX):
 
 ```tsx
 import React from 'react';
-import {Box, Stack, Divider, Inline, TextLink, ButtonSecondary, Text2, skinVars} from '@telefonica/mistica';
+import {Box, Stack, Divider, Inline, TextLink, Text2, skinVars} from '@telefonica/mistica';
 
 type FooterLink = {label: string; href: string};
 
@@ -104,7 +104,7 @@ export const FooterPreview: React.FC<FooterPreviewProps> = ({items, logo, right,
         <Divider />
         <Inline fullWidth space="between">
           <nav aria-label="Footer navigation" style={{flex: 1}}>
-            <GridLayout verticalSpace={24}>
+            <Inline space={24}>
               {items.map((col, idx) => (
                 <Stack space={8} key={idx}>
                   {col.title && <Text2 weight="medium">{col.title}</Text2>}
@@ -117,7 +117,7 @@ export const FooterPreview: React.FC<FooterPreviewProps> = ({items, logo, right,
                   </Stack>
                 </Stack>
               ))}
-            </GridLayout>
+            </Inline>
           </nav>
 
           {right}

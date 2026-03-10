@@ -142,6 +142,25 @@ ActionsListSheet presents a bottom sheet with a clear list of selectable actions
 - Do not mark multiple actions as destructive unless they are truly high-risk
 - Do not rely only on icons to communicate meaning; labels must remain clear on their own
 
+#### Example
+
+```tsx
+showSheet({
+  type: 'ACTIONS_LIST',
+  props: {
+    title: 'Options',
+    items: [
+      {id: 'edit', title: 'Edit'},
+      {id: 'share', title: 'Share', icon: {url: '/icons/share.svg'}},
+      {id: 'delete', title: 'Delete', style: 'destructive'},
+    ],
+  },
+});
+```
+
+> The `icon` field in items accepts `{ url: string; urlDark?: string }`. The `{ Icon: ComponentType }` variant
+> is **deprecated** — use `url` instead.
+
 ## InfoSheet
 
 InfoSheet presents explanatory content in a modal sheet with a titled context, optional supporting copy, and a structured list of informational items.

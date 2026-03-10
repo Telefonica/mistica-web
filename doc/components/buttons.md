@@ -114,6 +114,14 @@ IconButton exposes a compact icon-only action with accessible labeling, visual v
 - Do not place too many icon buttons together without clear hierarchy and grouping
 - Do not use IconButton when visible text is needed to remove action ambiguity
 
+#### Example
+
+> **Important:** `Icon` receives the component reference (not a JSX element). Do not use children.
+
+```tsx
+<IconButton Icon={IconTrashCanRegular} aria-label="Delete" onPress={handleDelete} type="danger" />
+```
+
 ## ToggleIconButton
 
 ToggleIconButton switches between checked and unchecked icon states using the same compact visual language as IconButton.
@@ -133,6 +141,17 @@ ToggleIconButton switches between checked and unchecked icon states using the sa
 - Do not use the same icon/label for checked and unchecked states when meaning changes
 - Do not omit accessible naming for each state; state intent must be understandable to assistive tech
 - Do not use toggle interactions when the action is not reversible or does not represent a true on/off state
+
+#### Example
+
+```tsx
+<ToggleIconButton
+  checkedProps={{ Icon: IconStarFilled, 'aria-label': 'Remove from favorites', type: 'brand' }}
+  uncheckedProps={{ Icon: IconStarRegular, 'aria-label': 'Add to favorites' }}
+  checked={isFavorite}
+  onChange={setIsFavorite}
+/>
+```
 
 ## ButtonGroup
 
