@@ -1,6 +1,3 @@
----
-category: Loading
----
 
 # Loading
 

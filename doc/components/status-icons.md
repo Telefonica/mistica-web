@@ -1,6 +1,3 @@
----
-category: Status Icons
----
 
 # Status Icons
 

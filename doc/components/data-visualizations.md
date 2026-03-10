@@ -1,6 +1,3 @@
----
-category: Data Visualizations
----
 
 # Data Visualizations
 

@@ -1,6 +1,3 @@
----
-category: Input Fields
----
 
 # Input Fields
 

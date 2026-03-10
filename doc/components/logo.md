@@ -1,6 +1,3 @@
----
-category: Logo
----
 
 # Logo
 

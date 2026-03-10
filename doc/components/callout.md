@@ -1,6 +1,3 @@
----
-category: Callout
----
 
 # Callout
 

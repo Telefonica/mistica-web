@@ -1,6 +1,3 @@
----
-category: Progress Indicators
----
 
 # Progress Indicators
 

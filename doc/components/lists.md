@@ -1,6 +1,3 @@
----
-category: Lists
----
 
 # Lists
 

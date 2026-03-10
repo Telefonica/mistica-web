@@ -1,6 +1,3 @@
----
-category: Hero
----
 
 # Hero
 

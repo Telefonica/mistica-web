@@ -1,6 +1,3 @@
----
-category: Empty States
----
 
 # Empty States
 

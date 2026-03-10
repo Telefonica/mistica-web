@@ -1,6 +1,3 @@
----
-category: Carousels
----
 
 # Carousels
 

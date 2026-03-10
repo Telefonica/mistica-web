@@ -1,6 +1,3 @@
----
-category: Checkbox
----
 
 # Checkbox
 

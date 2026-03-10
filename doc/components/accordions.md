@@ -1,6 +1,3 @@
----
-category: Accordions
----
 
 # Accordions
 

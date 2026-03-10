@@ -1,6 +1,3 @@
----
-category: Select
----
 
 # Select
 

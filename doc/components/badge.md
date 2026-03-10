@@ -1,6 +1,3 @@
----
-category: Badge
----
 
 # Badge
 

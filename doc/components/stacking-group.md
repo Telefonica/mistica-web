@@ -1,6 +1,3 @@
----
-category: StackingGroup
----
 
 # StackingGroup
 

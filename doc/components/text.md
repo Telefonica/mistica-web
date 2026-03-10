@@ -1,6 +1,3 @@
----
-category: Text
----
 
 # Text
 
