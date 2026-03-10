@@ -1,4 +1,3 @@
-// @ts-check
 const docgen = require('react-docgen-typescript');
 const fs = require('fs');
 const path = require('path');
@@ -203,7 +202,16 @@ function buildDesignDocCache() {
         ? fs.readdirSync(DESIGN_DOCS_DIR).filter((f) => f.endsWith('.md'))
         : [];
 
+    // Build lookup: file slug -> number of components in that category
+    const singleComponentCategories = new Map();
+    for (const [slug, cat] of Object.entries(categories)) {
+        if (cat.components.length === 1) {
+            singleComponentCategories.set(slug, cat.components[0]);
+        }
+    }
+
     for (const file of files) {
+        const slug = path.basename(file, '.md');
         const content = fs.readFileSync(path.join(DESIGN_DOCS_DIR, file), 'utf-8');
 
         // Strip YAML frontmatter
@@ -215,7 +223,23 @@ function buildDesignDocCache() {
             }
         }
 
-        // Split by ## headings (component sections)
+        // Single-component category: use the component name from categories
+        // and treat the entire file body (after H1) as the component content
+        const singleComponentName = singleComponentCategories.get(slug);
+        if (singleComponentName) {
+            // Strip the # H1 line
+            const afterH1 = body.replace(/^#\s+.+\n?/, '').trim();
+
+            // Extract description (first paragraph before any heading)
+            const descMatch = afterH1.match(/^([^#\n][^\n]*(?:\n[^#\n][^\n]*)*)/);
+            const description = descMatch ? descMatch[1].trim() : '';
+            const bodyAfterDesc = description ? afterH1.slice(description.length).trim() : afterH1;
+
+            cache.set(singleComponentName, {description, body: bodyAfterDesc});
+            continue;
+        }
+
+        // Multi-component category: split by ## headings
         const sections = body.split(/^## /m);
 
         for (const section of sections) {
@@ -232,9 +256,7 @@ function buildDesignDocCache() {
             const description = descMatch ? descMatch[1].trim() : '';
 
             // The rest is the body (Usage, Use for, Don't use for sections)
-            const bodyAfterDesc = description
-                ? sectionBody.slice(description.length).trim()
-                : sectionBody;
+            const bodyAfterDesc = description ? sectionBody.slice(description.length).trim() : sectionBody;
 
             cache.set(heading, {description, body: bodyAfterDesc});
         }
@@ -243,12 +265,13 @@ function buildDesignDocCache() {
     return cache;
 }
 
-// Generate props table markdown for a component (as H3 under a component H2)
-function generatePropsSection(doc) {
+// Generate props table markdown for a component
+function generatePropsSection(doc, {propsHeadingLevel = 3} = {}) {
     const props = Object.values(doc.props);
     if (props.length === 0) return '';
 
-    let md = `### Props\n\n`;
+    const heading = '#'.repeat(propsHeadingLevel);
+    let md = `${heading} Props\n\n`;
     md += `| Prop | Type | Required | Default | Description |\n`;
     md += `|------|------|----------|---------|-------------|\n`;
 
@@ -428,6 +451,8 @@ function main() {
         let md = `# ${cat.title}\n\n`;
         let categoryComponentCount = 0;
 
+        const isSingleComponent = cat.components.length === 1;
+
         for (const compName of cat.components) {
             const doc = docsByName.get(compName);
             const designDoc = designDocCache.get(compName);
@@ -435,7 +460,9 @@ function main() {
             // Skip components with no docgen data and no design doc
             if (!doc && !designDoc) continue;
 
-            md += `## ${compName}\n\n`;
+            if (!isSingleComponent) {
+                md += `## ${compName}\n\n`;
+            }
             categoryComponentCount++;
 
             // Add design doc content (description + usage)
@@ -457,7 +484,9 @@ function main() {
 
             // Add props table
             if (doc) {
-                const propsSection = generatePropsSection(doc);
+                const propsSection = generatePropsSection(doc, {
+                    propsHeadingLevel: isSingleComponent ? 2 : 3,
+                });
                 if (propsSection) {
                     md += propsSection + '\n';
                 }

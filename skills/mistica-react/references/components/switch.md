@@ -1,19 +1,17 @@
 # Switch
 
-## Switch
-
 Use switch for immediate on/off settings, ensuring each control has a clear visible or accessible label.
 
-### Usage
+## Usage
 
-#### Use for
+### Use for
 
 - Binary preferences or settings that can be turned on and off independently
 - Cases where the state change is immediate and does not require a separate confirmation action
 - Interfaces with short, explicit labels (or accessible labels) so users understand the effect of each toggle
 - Optional custom switch row compositions where the control remains semantically exposed as a switch
 
-#### Don't use for
+### Don't use for
 
 - Do not use for choosing one option among many; use radio/select patterns for single-choice selection
 - Do not use for irreversible, high-impact actions that require explicit confirmation
@@ -21,7 +19,7 @@ Use switch for immediate on/off settings, ensuring each control has a clear visi
   `aria-label`/`aria-labelledby`
 - Do not use as a read-only status indicator; use non-interactive status text or badges instead
 
-### Props
+## Props
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
