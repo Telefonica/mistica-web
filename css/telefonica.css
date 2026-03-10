@@ -282,6 +282,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
     --mistica-color-textAppBar: var(--mistica-telefonica-grey4);
     --mistica-color-textAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
+    --mistica-color-iosGlassAppBar: var(--mistica-telefonica-grey9);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-customTabsBackground: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid80);
@@ -352,16 +353,16 @@
     --mistica-border-radius-avatar: 50%;
     --mistica-border-radius-bar: 0px;
     --mistica-border-radius-button: 32px;
-    --mistica-border-radius-checkbox: 0px;
-    --mistica-border-radius-container: 0px;
+    --mistica-border-radius-checkbox: 2px;
+    --mistica-border-radius-container: 4px;
     --mistica-border-radius-indicator: 24px;
     --mistica-border-radius-chip: 24px;
     --mistica-border-radius-tag: 24px;
-    --mistica-border-radius-input: 0px;
+    --mistica-border-radius-input: 8px;
     --mistica-border-radius-legacyDisplay: 0px;
-    --mistica-border-radius-popup: 0px;
+    --mistica-border-radius-popup: 4px;
     --mistica-border-radius-sheet: 0px;
-    --mistica-border-radius-mediaSmall: 0px;
+    --mistica-border-radius-mediaSmall: 2px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -686,6 +687,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
     --mistica-color-textAppBar: var(--mistica-telefonica-grey2);
     --mistica-color-textAppBarSelected: var(--mistica-telefonica-white);
+    --mistica-color-iosGlassAppBar: var(--mistica-telefonica-white);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-white);
     --mistica-color-customTabsBackground: var(--mistica-telefonica-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid40);
@@ -1020,6 +1022,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
         --mistica-color-textAppBar: var(--mistica-telefonica-grey2);
         --mistica-color-textAppBarSelected: var(--mistica-telefonica-white);
+        --mistica-color-iosGlassAppBar: var(--mistica-telefonica-white);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-white);
         --mistica-color-customTabsBackground: var(--mistica-telefonica-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid40);
@@ -1341,6 +1344,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
         --mistica-color-textAppBar: var(--mistica-telefonica-grey4);
         --mistica-color-textAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
+        --mistica-color-iosGlassAppBar: var(--mistica-telefonica-grey9);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-customTabsBackground: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid80);

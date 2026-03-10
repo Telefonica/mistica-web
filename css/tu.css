@@ -271,6 +271,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-tu-white);
     --mistica-color-textAppBar: var(--mistica-tu-grey6);
     --mistica-color-textAppBarSelected: var(--mistica-tu-primary);
+    --mistica-color-iosGlassAppBar: var(--mistica-tu-grey9);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-tu-primary);
     --mistica-color-customTabsBackground: var(--mistica-tu-white);
     --mistica-color-tagTextPromo: var(--mistica-tu-blue);
@@ -660,6 +661,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-tu-grey2);
     --mistica-color-textAppBar: var(--mistica-tu-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-tu-grey2);
+    --mistica-color-iosGlassAppBar: var(--mistica-tu-white);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-tu-blue30);
     --mistica-color-customTabsBackground: var(--mistica-tu-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-tu-blue30);
@@ -952,6 +954,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-tu-grey2);
         --mistica-color-textAppBar: var(--mistica-tu-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-tu-grey2);
+        --mistica-color-iosGlassAppBar: var(--mistica-tu-white);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-tu-blue30);
         --mistica-color-customTabsBackground: var(--mistica-tu-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-tu-blue30);
@@ -1243,6 +1246,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-tu-white);
         --mistica-color-textAppBar: var(--mistica-tu-grey6);
         --mistica-color-textAppBarSelected: var(--mistica-tu-primary);
+        --mistica-color-iosGlassAppBar: var(--mistica-tu-grey9);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-tu-primary);
         --mistica-color-customTabsBackground: var(--mistica-tu-white);
         --mistica-color-tagTextPromo: var(--mistica-tu-blue);
