@@ -12,9 +12,9 @@ on:
                 required: false
                 default: false
             branch:
-                description: 'Branch name for the PR. By default it is "import-design-tokens-${ref}"'
+                description: 'Branch name for the PR. By default it is "import-design-tokens-production"'
                 required: false
-                default: 'import-design-tokens-${{github.event.inputs.ref}}'
+                default: 'import-design-tokens-production'
 
 permissions:
     contents: write
