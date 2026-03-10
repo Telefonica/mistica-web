@@ -241,12 +241,14 @@ export const openSSRPage = async ({
     skin = MOVISTAR_NEW_SKIN,
     checkHidrationVisualMismatch = true,
     prefersColorScheme,
+    waitUntil,
 }: {
     name: string;
     device?: Device;
     skin?: string;
     checkHidrationVisualMismatch?: boolean;
     prefersColorScheme?: 'light' | 'dark';
+    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2';
 }): Promise<PageApi> => {
     const globalPage = getGlobalPage();
     const port = (global as any)['__SSR_SERVER__'].address().port;
@@ -270,6 +272,7 @@ export const openSSRPage = async ({
         url: `http://${serverHostName}:${port}/${name}?skin=${skin}`,
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
+        waitUntil,
     });
 
     if (prefersColorScheme) {
