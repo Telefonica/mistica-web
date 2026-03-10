@@ -1,25 +1,34 @@
 # Custom Components
 
-These are product-specific components that are not part of the core Mistica design system but are useful to cover product requirements that are too specific for the shared library.
+These are product-specific components that are not part of the core Mistica design system but are useful to
+cover product requirements that are too specific for the shared library.
 
 Guiding principles
 
-- Build on Mistica primitives: compose existing Mistica components (Box, Text, Button, Card, Row, Grid, etc.) rather than reimplementing visual primitives.
-- Respect tokens and spacing: use Mistica design tokens (colors, typography, radii, spacing) so custom components remain consistent with the core system and respond to theming.
-- Reuse primitives and utilities: accessibility helpers, trackingEvent props, layout primitives and any `dataAttributes` patterns should be preserved.
-- Keep API minimal: surface only the props product teams need. Accept `className` / `style` / `dataAttributes` and a `ref` when relevant.
-- Make accessibility explicit: label, role, keyboard interaction, and focus behavior must be documented and implemented.
+- Build on Mistica primitives: compose existing Mistica components (Box, Text, Button, Card, Row, Grid, etc.)
+  rather than reimplementing visual primitives.
+- Respect tokens and spacing: use Mistica design tokens (colors, typography, radii, spacing) so custom
+  components remain consistent with the core system and respond to theming.
+- Reuse primitives and utilities: accessibility helpers, trackingEvent props, layout primitives and any
+  `dataAttributes` patterns should be preserved.
+- Keep API minimal: surface only the props product teams need. Accept `className` / `style` / `dataAttributes`
+  and a `ref` when relevant.
+- Make accessibility explicit: label, role, keyboard interaction, and focus behavior must be documented and
+  implemented.
 
 When to create a custom component
 
-- The UI requirement cannot be satisfied by composition of existing Mistica components without repeated boilerplate.
-- The visual or interaction model is product-specific (e.g., a unique promotional carousel with business rules).
+- The UI requirement cannot be satisfied by composition of existing Mistica components without repeated
+  boilerplate.
+- The visual or interaction model is product-specific (e.g., a unique promotional carousel with business
+  rules).
 - There is a clear reuse surface across multiple screens or flows in the product.
 
 API design recommendations
 
 - Keep props focused: content, options, and callbacks.
-- Prefer `children` for content composition; provide named slots (e.g., `primaryAction`, `secondaryAction`) when helpful.
+- Prefer `children` for content composition; provide named slots (e.g., `primaryAction`, `secondaryAction`)
+  when helpful.
 - Support `dataAttributes` and `trackingEvent` when the component triggers analytics.
 - Accept `style` and `className` only for last-resort visual overrides; prefer token-driven variants.
 
@@ -33,9 +42,8 @@ Usage example (TypeScript / TSX):
 
 ```tsx
 // Custom color chip — uses Mistica tokens and primitives
-import React from "react";
-import { Inline, Circle, Text2 } from "mistica";
-import { colors, skinVars } from "mistica-tokens";
+import React from 'react';
+import {Inline, Circle, Text2, skinVars} from '@telefonica/mistica';
 
 type ColorChipProps = {
   color?: string;
@@ -43,20 +51,16 @@ type ColorChipProps = {
   active?: boolean;
 };
 
-export const ColorChip: React.FC<ColorChipProps> = ({
-  color = "red",
-  label = "Red",
-  active = false,
-}) => (
+export const ColorChip: React.FC<ColorChipProps> = ({color = 'red', label = 'Red', active = false}) => (
   <div
     style={{
       minHeight: 40,
-      padding: "0 12px",
-      border: `1px solid ${active ? colors.controlActivated : colors.control}`,
+      padding: '0 12px',
+      border: `1px solid ${active ? skinVars.colors.controlActivated : skinVars.colors.control}`,
       borderRadius: skinVars.borderRadii.chip,
-      display: "flex",
-      alignItems: "center",
-      background: active ? colors.brandLow : undefined,
+      display: 'flex',
+      alignItems: 'center',
+      background: active ? skinVars.colors.brandLow : undefined,
     }}
   >
     <Inline space={4} alignItems="center">
@@ -67,30 +71,24 @@ export const ColorChip: React.FC<ColorChipProps> = ({
 );
 ```
 
-This is a custom chip to select color. When the chip is active pass `active={true}`: the border uses the `controlActivated` token and the chip background uses the `brandLow` token so selection is token-driven and theme-aware.
+This is a custom chip to select color. When the chip is active pass `active={true}`: the border uses the
+`controlActivated` token and the chip background uses the `brandLow` token so selection is token-driven and
+theme-aware.
 
 2. FooterPreview — footer block with configurable columns, logo and footer text
 
-Props: `items: { title?: string; links: { label: string; href: string }[] }[]`, `logo?: React.ReactNode`, `right?: React.ReactNode`, `footerText?: string`
+Props: `items: { title?: string; links: { label: string; href: string }[] }[]`, `logo?: React.ReactNode`,
+`right?: React.ReactNode`, `footerText?: string`
 
 Usage example (TypeScript / TSX):
 
 ```tsx
-import React from "react";
-import {
-  Box,
-  Stack,
-  Divider,
-  Inline,
-  TextLink,
-  ButtonSecondary,
-  Text2,
-} from "mistica";
-import { skinVars } from "mistica-tokens";
+import React from 'react';
+import {Box, Stack, Divider, Inline, TextLink, ButtonSecondary, Text2, skinVars} from '@telefonica/mistica';
 
-type FooterLink = { label: string; href: string };
+type FooterLink = {label: string; href: string};
 
-type FooterColumn = { title?: string; links: FooterLink[] };
+type FooterColumn = {title?: string; links: FooterLink[]};
 
 type FooterPreviewProps = {
   items: FooterColumn[]; // array of columns; each column has optional title and items
@@ -99,18 +97,13 @@ type FooterPreviewProps = {
   footerText?: string; // configurable bottom text
 };
 
-export const FooterPreview: React.FC<FooterPreviewProps> = ({
-  items,
-  logo,
-  right,
-  footerText,
-}) => {
+export const FooterPreview: React.FC<FooterPreviewProps> = ({items, logo, right, footerText}) => {
   return (
     <Box as="footer" padding={16} role="contentinfo">
       <Stack space={16}>
         <Divider />
         <Inline fullWidth space="between">
-          <nav aria-label="Footer navigation" style={{ flex: 1 }}>
+          <nav aria-label="Footer navigation" style={{flex: 1}}>
             <GridLayout verticalSpace={24}>
               {items.map((col, idx) => (
                 <Stack space={8} key={idx}>
@@ -132,7 +125,7 @@ export const FooterPreview: React.FC<FooterPreviewProps> = ({
         <Divider />
 
         <Inline space="between" alignItems="center">
-          {logo && <div style={{ marginRight: 8 }}>{logo}</div>}
+          {logo && <div style={{marginRight: 8}}>{logo}</div>}
           <Text2 weight="regular" color={skinVars.colors.textSecondary}>
             {footerText}
           </Text2>
@@ -143,11 +136,15 @@ export const FooterPreview: React.FC<FooterPreviewProps> = ({
 };
 ```
 
-Notes: `FooterPreview` now accepts `items`, an array where each entry represents a column and includes an optional `title` and an `links` array. This makes column structure explicit and gives each column a header. `logo` and `footerText` are configurable; `right` remains a slot for additional content. Use `aria-label` on the nav and prefer `TextLink` for accessible links.
+Notes: `FooterPreview` now accepts `items`, an array where each entry represents a column and includes an
+optional `title` and an `links` array. This makes column structure explicit and gives each column a header.
+`logo` and `footerText` are configurable; `right` remains a slot for additional content. Use `aria-label` on
+the nav and prefer `TextLink` for accessible links.
 
 Testing and QA
 
-- Accessibility: test with keyboard navigation and screen reader labels; include role and aria attributes in examples.
+- Accessibility: test with keyboard navigation and screen reader labels; include role and aria attributes in
+  examples.
 - Performance: avoid heavy layout reflows; lazy-load images in cards when possible.
 
 Accessibility checklist (quick)
