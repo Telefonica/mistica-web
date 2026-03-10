@@ -46,14 +46,16 @@ const categories = {
             'CenteredCarousel',
             'Slideshow',
             'PageBullets',
-            'HorizontalMosaic',
-            'VerticalMosaic',
             'CarouselAutoplayControl',
             'CarouselContextConsumer',
             'CarouselContextProvider',
             'CarouselPageControls',
             'useCarouselContext',
         ],
+    },
+    mosaic: {
+        title: 'Mosaic',
+        components: ['HorizontalMosaic', 'VerticalMosaic'],
     },
     'data-visualizations': {
         title: 'Data Visualizations',
@@ -225,10 +227,11 @@ const categories = {
             'RadioListSheet',
             'Drawer',
             'useDialog',
-            'Menu',
-            'MenuItem',
-            'MenuSection',
         ],
+    },
+    menu: {
+        title: 'Menu',
+        components: ['Menu', 'MenuItem', 'MenuSection'],
     },
     'navigation-bars': {
         title: 'Navigation',

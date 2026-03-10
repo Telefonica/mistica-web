@@ -42,13 +42,16 @@ Component reference for Mística React. Components are grouped by category in `c
 - [CenteredCarousel](components/carousels.md#centeredcarousel) — CenteredCarousel emphasizes one item at a time on mobile while preserving multi-item browsing on larger screens.
 - [Slideshow](components/carousels.md#slideshow) — Use slideshow for full-width, page-by-page sequences of visual content with optional bullets, controls, and autoplay.
 - [PageBullets](components/carousels.md#pagebullets) — PageBullets indicates carousel pagination state, helping users understand position and progress across pages.
-- [HorizontalMosaic](components/carousels.md#horizontalmosaic) — HorizontalMosaic groups content into swipeable mosaic pages with alternating layouts to keep discovery flows visually dynamic.
-- [VerticalMosaic](components/carousels.md#verticalmosaic) — VerticalMosaic arranges content in static mosaic blocks with list semantics, combining vertical and square slots for scannable editorial layouts.
 - [CarouselAutoplayControl](components/carousels.md#carouselautoplaycontrol) — CarouselAutoplayControl toggles carousel autoplay state, including pause/play and restart behavior when the last page is reached.
 - [CarouselContextConsumer](components/carousels.md#carouselcontextconsumer) — CarouselContextConsumer reads shared carousel actions and state to render custom controls aligned with active carousel behavior.
 - [CarouselContextProvider](components/carousels.md#carouselcontextprovider) — CarouselContextProvider shares carousel navigation and state props so custom controls stay synchronized with carousel behavior.
 - [CarouselPageControls](components/carousels.md#carouselpagecontrols) — CarouselPageControls provides previous/next arrow navigation for carousels, with contextual enable/disable behavior and page-aware labeling.
 - [useCarouselContext](components/carousels.md#usecarouselcontext) — useCarouselContext provides reusable behavior to keep component logic consistent across the product.
+
+## [Mosaic](components/mosaic.md)
+
+- [HorizontalMosaic](components/mosaic.md#horizontalmosaic) — HorizontalMosaic groups content into swipeable mosaic pages with alternating layouts to keep discovery flows visually dynamic.
+- [VerticalMosaic](components/mosaic.md#verticalmosaic) — VerticalMosaic arranges content in static mosaic blocks with list semantics, combining vertical and square slots for scannable editorial layouts.
 
 ## [Data Visualizations](components/data-visualizations.md)
 
@@ -223,9 +226,12 @@ Component reference for Mística React. Components are grouped by category in `c
 - [RadioListSheet](components/modals.md#radiolistsheet) — RadioListSheet presents single-choice options inside a bottom sheet using radio-list rows, optimized for responsive selection flows.
 - [Drawer](components/modals.md#drawer) — The drawer component is only meant for web implementations. When designing for native we recommend to use a modal view.
 - [useDialog](components/modals.md#usedialog) — useDialog provides reusable behavior to keep component logic consistent across the product.
-- [Menu](components/modals.md#menu) — Menu displays contextual actions from a trigger, with adaptive positioning, keyboard navigation, and dismiss behavior through overlay interaction.
-- [MenuItem](components/modals.md#menuitem) — MenuItem represents an actionable row inside a menu, with optional icon, destructive emphasis, disabled state, or checkbox control behavior.
-- [MenuSection](components/modals.md#menusection) — MenuSection groups related menu items and automatically renders a divider between sections for clearer scanability.
+
+## [Menu](components/menu.md)
+
+- [Menu](components/menu.md#menu) — Menu displays contextual actions from a trigger, with adaptive positioning, keyboard navigation, and dismiss behavior through overlay interaction.
+- [MenuItem](components/menu.md#menuitem) — MenuItem represents an actionable row inside a menu, with optional icon, destructive emphasis, disabled state, or checkbox control behavior.
+- [MenuSection](components/menu.md#menusection) — MenuSection groups related menu items and automatically renders a divider between sections for clearer scanability.
 
 ## [Navigation](components/navigation-bars.md)
 
