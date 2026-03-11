@@ -203,8 +203,8 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
 const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
     const {testPath, currentTestName} = expect.getState();
     const tmpdir = os.tmpdir();
-    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}`);
-    const baselineImagePath = path.join(tmpdir, `${snapshotId}-snap.png`);
+    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}-snap`);
+    const baselineImagePath = path.join(tmpdir, `${snapshotId}.png`);
     await page.screenshot({path: baselineImagePath});
 
     await hydrateSSRPage(page);
