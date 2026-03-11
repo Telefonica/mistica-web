@@ -12,7 +12,7 @@ import {
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from '../__stories__/images/avatar.jpg';
-import {SnapCard} from '../card-data';
+import {DataCard} from '../card-data';
 
 import type {CardAspectRatio, SlotAlignment} from '../card-internal';
 
@@ -72,7 +72,8 @@ export const Default: StoryComponent<Args> = ({
     } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
 
     return (
-        <SnapCard
+        <DataCard
+            size="snap"
             asset={assetToIcon[asset]}
             title={title}
             subtitle={subtitle}
@@ -136,7 +137,8 @@ export const Group: StoryComponent = () => {
                     <Carousel
                         itemsPerPage={4}
                         items={[
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 title="Title 1"
                                 subtitle="Subtitle"
                                 asset={
@@ -145,7 +147,8 @@ export const Group: StoryComponent = () => {
                                     </Circle>
                                 }
                             />,
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 title="Title 2"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
@@ -153,11 +156,12 @@ export const Group: StoryComponent = () => {
                                     </Circle>
                                 }
                             />,
-                            <SnapCard title="Title 3" />,
-                            <SnapCard
+                            <DataCard size="snap" title="Title 3" />,
+                            <DataCard
+                                size="snap"
                                 title="Data left"
                                 slotAlignment="bottom"
-                                extra={
+                                slot={
                                     <Stack space={4}>
                                         <Text4 regular>10 GB</Text4>
                                         <Text2 regular>out of 50</Text2>
