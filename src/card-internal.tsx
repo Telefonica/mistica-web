@@ -43,7 +43,6 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
-import classNames from 'classnames';
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
@@ -1504,7 +1503,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                     <div
                                         ref={slotRef}
                                         data-testid="slot"
-                                        className={classNames(
+                                        className={classnames(
                                             slotAlignment === 'space-between' &&
                                                 styles.slotContainerSpaceBetween
                                         )}

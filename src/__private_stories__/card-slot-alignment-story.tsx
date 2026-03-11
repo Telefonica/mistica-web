@@ -1,15 +1,5 @@
 import * as React from 'react';
-import {
-    ButtonLink,
-    Inline,
-    MediaCard,
-    Placeholder,
-    Stack,
-    DataCard,
-    SnapCard,
-    NakedCard,
-    SmallNakedCard,
-} from '..';
+import {ButtonLink, Inline, MediaCard, Placeholder, Stack, DataCard, NakedCard} from '..';
 import tennisImg from '../__stories__/images/tennis.jpg';
 
 export default {
