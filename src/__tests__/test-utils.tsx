@@ -18,8 +18,10 @@ type ThemeOverrides = {
         phoneNumberFormattingRegionCode: RegionCode;
     };
     platformOverrides?: {
-        platform?: 'ios' | 'android';
+        platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
+        userAgent?: string;
+        platformStyle?: 'material-design-3' | 'liquid-glass';
     };
     texts?: Partial<Dictionary>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>; eventFormat?: EventFormat};

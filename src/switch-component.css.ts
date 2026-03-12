@@ -60,6 +60,40 @@ const barBase = style([
     },
 ]);
 
+const liquidGlassBarBase = style([
+    barBase,
+    {
+        height: 31,
+        borderRadius: 40,
+        position: 'relative',
+        overflow: 'hidden',
+        selectors: {
+            '&::before': {
+                content: '',
+                position: 'absolute',
+                left: 2,
+                right: 2,
+                top: 1,
+                height: 10,
+                borderRadius: 999,
+                background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0))',
+                pointerEvents: 'none',
+            },
+            '&::after': {
+                content: '',
+                position: 'absolute',
+                left: 2,
+                right: 2,
+                bottom: 1,
+                height: 9,
+                borderRadius: 999,
+                background: 'linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.08))',
+                pointerEvents: 'none',
+            },
+        },
+    },
+]);
+
 export const barVariants = styleVariants({
     default: [barBase, {background: colorsVars.colors.control, height: 14}],
     // Hardcoded color because the native switch in iOS doesn't allow modification of this color
@@ -67,6 +101,11 @@ export const barVariants = styleVariants({
     iosDark: [barBase, {background: '#39393D', height: 31}],
     checked: [barBase, {background: colorsVars.colors.toggleAndroidBackgroundActive, height: 14}],
     checkedIos: [barBase, {background: colorsVars.colors.controlActivated, height: 31}],
+    liquidGlass: [liquidGlassBarBase, {backgroundColor: '#C4C4C6', border: '1px solid rgba(0, 0, 0, 0.08)'}],
+    checkedLiquidGlass: [
+        liquidGlassBarBase,
+        {backgroundColor: '#0A7AFF', boxShadow: 'inset 0 0 0 0.5px rgba(255, 255, 255, 0.2)'},
+    ],
 });
 
 export const overBrandBarVariants = styleVariants({
@@ -76,6 +115,11 @@ export const overBrandBarVariants = styleVariants({
     iosDark: [barBase, {background: '#39393D', height: 31}],
     checked: [barBase, {background: colorsVars.colors.toggleAndroidBackgroundActive, height: 14}],
     checkedIos: [barBase, {background: colorsVars.colors.controlActivatedBrand, height: 31}],
+    liquidGlass: [liquidGlassBarBase, {backgroundColor: '#C4C4C6', border: '1px solid rgba(0, 0, 0, 0.08)'}],
+    checkedLiquidGlass: [
+        liquidGlassBarBase,
+        {backgroundColor: '#0A7AFF', boxShadow: 'inset 0 0 0 0.5px rgba(255, 255, 255, 0.2)'},
+    ],
 });
 
 export const overNegativeBarVariants = styleVariants({
@@ -85,6 +129,11 @@ export const overNegativeBarVariants = styleVariants({
     iosDark: [barBase, {background: '#39393D', height: 31}],
     checked: [barBase, {background: colorsVars.colors.toggleAndroidBackgroundActive, height: 14}],
     checkedIos: [barBase, {background: colorsVars.colors.controlActivatedNegative, height: 31}],
+    liquidGlass: [liquidGlassBarBase, {backgroundColor: '#C4C4C6', border: '1px solid rgba(0, 0, 0, 0.08)'}],
+    checkedLiquidGlass: [
+        liquidGlassBarBase,
+        {backgroundColor: '#0A7AFF', boxShadow: 'inset 0 0 0 0.5px rgba(255, 255, 255, 0.2)'},
+    ],
 });
 
 const containerBase = style({
@@ -142,6 +191,32 @@ const ballBase = style([
     {margin: -4, transition: `all ${SWITCH_ANIMATION}`},
 ]);
 
+const liquidGlassBallBase = style([
+    ballBase,
+    {
+        top: 6,
+        width: 27,
+        height: 27,
+        boxShadow: '1px 2px 4px rgba(0, 0, 0, 0.3)',
+        border: '0.5px solid rgba(0, 0, 0, 0.08)',
+        position: 'absolute',
+        overflow: 'hidden',
+        selectors: {
+            '&::before': {
+                content: '',
+                position: 'absolute',
+                left: 3,
+                right: 3,
+                top: 2,
+                height: 7,
+                borderRadius: 999,
+                background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0))',
+                pointerEvents: 'none',
+            },
+        },
+    },
+]);
+
 const ballVariantsBase = styleVariants({
     default: [ballBase, {top: 1, width: 20, height: 20, boxShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)'}],
     ios: [ballBase, {top: 6, width: 27, height: 27, boxShadow: '1px 2px 4px rgba(0, 0, 0, 0.3)'}],
@@ -155,6 +230,8 @@ export const ballVariants = styleVariants({
     ios: [ballVariantsBase.ios, {right: 26, backgroundColor: colorsVars.colors.iosControlKnob}],
     checked: [ballVariantsBase.default, {right: 1, backgroundColor: colorsVars.colors.controlActivated}],
     checkedIos: [ballVariantsBase.ios, {right: 6, backgroundColor: colorsVars.colors.iosControlKnob}],
+    liquidGlass: [liquidGlassBallBase, {right: 26, backgroundColor: colorsVars.colors.iosControlKnob}],
+    checkedLiquidGlass: [liquidGlassBallBase, {right: 6, backgroundColor: colorsVars.colors.iosControlKnob}],
 });
 
 export const overBrandBallVariants = styleVariants({
@@ -165,6 +242,8 @@ export const overBrandBallVariants = styleVariants({
     ios: [ballVariantsBase.ios, {right: 26, backgroundColor: colorsVars.colors.iosControlKnob}],
     checked: [ballVariantsBase.default, {right: 1, backgroundColor: colorsVars.colors.controlActivatedBrand}],
     checkedIos: [ballVariantsBase.ios, {right: 6, backgroundColor: colorsVars.colors.controlKnobBrand}],
+    liquidGlass: [liquidGlassBallBase, {right: 26, backgroundColor: colorsVars.colors.iosControlKnob}],
+    checkedLiquidGlass: [liquidGlassBallBase, {right: 6, backgroundColor: colorsVars.colors.iosControlKnob}],
 });
 
 export const overNegativeBallVariants = styleVariants({
@@ -178,4 +257,6 @@ export const overNegativeBallVariants = styleVariants({
         {right: 1, backgroundColor: colorsVars.colors.controlActivatedNegative},
     ],
     checkedIos: [ballVariantsBase.ios, {right: 6, backgroundColor: colorsVars.colors.controlKnobNegative}],
+    liquidGlass: [liquidGlassBallBase, {right: 26, backgroundColor: colorsVars.colors.iosControlKnob}],
+    checkedLiquidGlass: [liquidGlassBallBase, {right: 6, backgroundColor: colorsVars.colors.iosControlKnob}],
 });

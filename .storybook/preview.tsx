@@ -28,7 +28,7 @@ import type {Preview} from '@storybook/react-vite';
 import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
-type Platform = 'android' | 'desktop' | 'ios';
+type Platform = 'android' | 'desktop' | 'ios' | 'ios-lg';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
@@ -54,7 +54,7 @@ const getColorScheme = (searchParams: URLSearchParams): ColorScheme | undefined 
 };
 
 const getPlatformByValue = (value?: string | null): Platform | undefined => {
-    if (value === 'ios' || value === 'android' || value === 'desktop') {
+    if (value === 'ios' || value === 'ios-lg' || value === 'android' || value === 'desktop') {
         return value;
     }
 
@@ -78,8 +78,9 @@ const getTheme = (
         ...(selectedPlatform
             ? {
                   platformOverrides: {
-                      platform: selectedPlatform,
+                      platform: selectedPlatform === 'ios-lg' ? 'ios' : selectedPlatform,
                       insideNovumNativeApp: selectedPlatform !== 'desktop',
+                      platformStyle: selectedPlatform === 'ios-lg' ? 'liquid-glass' : undefined,
                   },
               }
             : {}),

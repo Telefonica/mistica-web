@@ -52,8 +52,9 @@ type PropsChildren = {
 };
 
 const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
-    const {isIos, isDarkMode} = useTheme();
+    const {isIos, isDarkMode, platformOverrides} = useTheme();
     const themeVariant = useThemeVariant();
+    const isLiquidGlass = isIos && platformOverrides.platformStyle === 'liquid-glass';
     const reactId = React.useId();
     const labelId = props['aria-labelledby'] || reactId;
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
@@ -95,17 +96,51 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
         }
     };
 
-    const barVariant = isIos
+    const barVariant = isLiquidGlass
         ? isChecked
-            ? 'checkedIos'
-            : isDarkMode
-              ? 'iosDark'
-              : 'ios'
-        : isChecked
-          ? 'checked'
-          : 'default';
+            ? 'checkedLiquidGlass'
+            : 'liquidGlass'
+        : isIos
+          ? isChecked
+              ? 'checkedIos'
+              : isDarkMode
+                ? 'iosDark'
+                : 'ios'
+          : isChecked
+            ? 'checked'
+            : 'default';
 
-    const ballVariant = isIos ? (isChecked ? 'checkedIos' : 'ios') : isChecked ? 'checked' : 'default';
+    const ballVariant = isLiquidGlass
+        ? isChecked
+            ? 'checkedLiquidGlass'
+            : 'liquidGlass'
+        : isIos
+          ? isChecked
+              ? 'checkedIos'
+              : 'ios'
+          : isChecked
+            ? 'checked'
+            : 'default';
+
+    const barClassName = isLiquidGlass
+        ? themeVariant === 'brand' || themeVariant === 'media' || themeVariant === 'negative'
+            ? styles.overBrandBarVariants[barVariant]
+            : styles.barVariants[barVariant]
+        : themeVariant === 'brand' || themeVariant === 'media'
+          ? styles.overBrandBarVariants[barVariant]
+          : themeVariant === 'negative'
+            ? styles.overNegativeBarVariants[barVariant]
+            : styles.barVariants[barVariant];
+
+    const ballClassName = isLiquidGlass
+        ? themeVariant === 'brand' || themeVariant === 'media' || themeVariant === 'negative'
+            ? styles.overBrandBallVariants[ballVariant]
+            : styles.ballVariants[ballVariant]
+        : themeVariant === 'brand' || themeVariant === 'media'
+          ? styles.overBrandBallVariants[ballVariant]
+          : themeVariant === 'negative'
+            ? styles.overNegativeBallVariants[ballVariant]
+            : styles.ballVariants[ballVariant];
 
     const switchEl = (
         <div
@@ -117,24 +152,8 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
         >
             <div className={styles.switchCheckboxContainerVariants[isIos ? 'ios' : 'default']}>
                 <div className={styles.switchCheckboxLabel}>
-                    <span
-                        className={
-                            themeVariant === 'brand' || themeVariant === 'media'
-                                ? styles.overBrandBarVariants[barVariant]
-                                : themeVariant === 'negative'
-                                  ? styles.overNegativeBarVariants[barVariant]
-                                  : styles.barVariants[barVariant]
-                        }
-                    />
-                    <span
-                        className={
-                            themeVariant === 'brand' || themeVariant === 'media'
-                                ? styles.overBrandBallVariants[ballVariant]
-                                : themeVariant === 'negative'
-                                  ? styles.overNegativeBallVariants[ballVariant]
-                                  : styles.ballVariants[ballVariant]
-                        }
-                    />
+                    <span className={barClassName} />
+                    <span className={ballClassName} />
                 </div>
             </div>
         </div>

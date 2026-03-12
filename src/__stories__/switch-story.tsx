@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {Switch, Inline, Text3, IconCheckRegular, IconCloseRegular, ResponsiveLayout, Box} from '..';
+import {
+    Switch,
+    Inline,
+    Text3,
+    IconCheckRegular,
+    IconCloseRegular,
+    ResponsiveLayout,
+    Box,
+    ThemeContextProvider,
+    getMovistarNewSkin,
+} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -93,6 +103,37 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
 
 CustomRender.storyName = 'custom render';
 CustomRender.args = {
+    disabled: false,
+    variantOutside: 'default',
+};
+
+const liquidGlassTheme = {
+    skin: getMovistarNewSkin(),
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    colorScheme: 'light',
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+} as const;
+
+export const ControlledLiquidGlass: StoryComponent<Args> = ({disabled, variantOutside}) => {
+    const [checked, onChange] = React.useState(false);
+
+    return (
+        <ThemeContextProvider theme={liquidGlassTheme}>
+            <ResponsiveLayout variant={variantOutside} fullWidth>
+                <Box padding={16}>
+                    <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
+                        <Switch name="switch" checked={checked} onChange={onChange} disabled={disabled}>
+                            switch content
+                        </Switch>
+                    </div>
+                </Box>
+            </ResponsiveLayout>
+        </ThemeContextProvider>
+    );
+};
+
+ControlledLiquidGlass.storyName = 'controlled liquid glass';
+ControlledLiquidGlass.args = {
     disabled: false,
     variantOutside: 'default',
 };

@@ -250,7 +250,7 @@ export const PreviewTools = ({
 }: PreviewToolsProps): JSX.Element => {
     const {
         skinName: initialSkinName,
-        platformOverrides: {platform: initialOs = 'android'},
+        platformOverrides: {platform: initialOs = 'ios'},
     } = useTheme();
     const [skinName, setSkinName] = React.useState<ValidSkinName>(initialSkinName as ValidSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
@@ -284,7 +284,10 @@ export const PreviewTools = ({
         overrideTheme({
             ...selectedThemeConfig,
             colorScheme,
-            platformOverrides: {platform: os},
+            platformOverrides: {
+                platform: os,
+                ...(os === 'ios' ? {platformStyle: 'liquid-glass'} : {}),
+            },
         });
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
@@ -297,7 +300,10 @@ export const PreviewTools = ({
     const theme: ThemeConfig = React.useMemo(() => {
         return {
             ...themesMap[skinName].themeConfig,
-            platformOverrides: {platform: os},
+            platformOverrides: {
+                platform: os,
+                ...(os === 'ios' ? {platformStyle: 'liquid-glass'} : {}),
+            },
             // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
             enableTabFocus: false,
             colorScheme: 'light',

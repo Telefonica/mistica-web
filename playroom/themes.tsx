@@ -17,9 +17,27 @@ export const Telefonica: ThemeConfig = {...themes.Telefonica, ...common};
 export const Blau: ThemeConfig = {...themes.Blau, ...common};
 export const Esimflag: ThemeConfig = {...themes.Esimflag, ...common};
 
-export const Movistar_New_iOS: ThemeConfig = {...Movistar_New, platformOverrides: {platform: 'ios'}};
-export const Vivo_New_iOS: ThemeConfig = {...Vivo_New, platformOverrides: {platform: 'ios'}};
-export const O2_New_iOS: ThemeConfig = {...O2_New, platformOverrides: {platform: 'ios'}};
-export const Telefonica_iOS: ThemeConfig = {...Telefonica, platformOverrides: {platform: 'ios'}};
-export const Blau_iOS: ThemeConfig = {...Blau, platformOverrides: {platform: 'ios'}};
-export const Esimflag_iOS: ThemeConfig = {...Esimflag, platformOverrides: {platform: 'ios'}};
+export const Movistar_New_iOS: ThemeConfig = {
+    ...Movistar_New,
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+};
+export const Vivo_New_iOS: ThemeConfig = {
+    ...Vivo_New,
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+};
+export const O2_New_iOS: ThemeConfig = {
+    ...O2_New,
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+};
+export const Telefonica_iOS: ThemeConfig = {
+    ...Telefonica,
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+};
+export const Blau_iOS: ThemeConfig = {
+    ...Blau,
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+};
+export const Esimflag_iOS: ThemeConfig = {
+    ...Esimflag,
+    platformOverrides: {platform: 'ios', platformStyle: 'liquid-glass'},
+};

@@ -99,3 +99,33 @@ test('Switch - control element aligned correctly with long content', async () =>
     const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Switch - liquid glass', async () => {
+    await openStoryPage({
+        id: 'components-switch--controlled-liquid-glass',
+        device: 'MOBILE_IOS',
+    });
+
+    const wrapper = await screen.findByTestId('switch-wrapper');
+    const element = await screen.findByRole('switch');
+
+    const image = await wrapper.screenshot();
+    expect(image).toMatchImageSnapshot();
+
+    await element.click();
+
+    const imageChecked = await wrapper.screenshot();
+    expect(imageChecked).toMatchImageSnapshot();
+});
+
+test('Switch - liquid glass disabled', async () => {
+    await openStoryPage({
+        id: 'components-switch--controlled-liquid-glass',
+        device: 'MOBILE_IOS',
+        args: {disabled: true},
+    });
+
+    const wrapper = await screen.findByTestId('switch-wrapper');
+    const image = await wrapper.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

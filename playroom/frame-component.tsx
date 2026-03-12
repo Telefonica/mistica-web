@@ -22,7 +22,7 @@ import {
     VIVO_SKIN,
     BLAU_SKIN,
 } from '../src';
-import {Movistar_New as defaultThemeConfig} from './themes';
+import {Movistar_New_iOS as defaultThemeConfig} from './themes';
 
 import type {ThemeConfig} from '../src';
 

@@ -10,6 +10,7 @@ const PANEL_ID = `${ADDON_ID}/panel`;
 const PLATFORMS = [
     {id: 'auto', title: 'Auto'},
     {id: 'ios', title: 'iOS'},
+    {id: 'ios-lg', title: 'iOS (LG)'},
     {id: 'android', title: 'Android'},
     {id: 'desktop', title: 'Desktop'},
 ];

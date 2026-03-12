@@ -132,6 +132,7 @@ export type ThemeConfig = Readonly<{
         platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
         userAgent?: string;
+        platformStyle?: 'material-design-3' | 'liquid-glass';
     }>;
     texts?: Partial<Dictionary>;
     analytics?: Readonly<{
@@ -162,6 +163,7 @@ export type Theme = {
         platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
         userAgent?: string;
+        platformStyle?: 'material-design-3' | 'liquid-glass';
     };
     texts: Partial<Dictionary>;
     analytics: {
