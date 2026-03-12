@@ -1478,15 +1478,7 @@ export const MainNavigationBar = ({
                     desktopLargeMenu={desktopLargeMenu}
                 >
                     <NavigationBarSideMargins wide={wide}>
-                        {topSlot && (
-                            <div
-                                ref={topSlotRef}
-                                data-component-name="MainNavigationBarTopSlot"
-                                data-testid="MainNavigationBarTopSlot"
-                            >
-                                {topSlot}
-                            </div>
-                        )}
+                        {topSlot && <div ref={topSlotRef}>{topSlot}</div>}
                         <NavigationBarContentContainer
                             ref={navigationBarRef}
                             right={right}
@@ -1519,13 +1511,7 @@ export const MainNavigationBar = ({
                     </NavigationBarSideMargins>
                 </MainNavigationBarContentWrapper>
             </Header>
-            {topFixed && topSlotHeight > 0 && (
-                <div
-                    style={{height: topSlotHeight}}
-                    data-component-name="MainNavigationBarTopSlotSpacer"
-                    data-testid="MainNavigationBarTopSlotSpacer"
-                />
-            )}
+            {topFixed && topSlotHeight > 0 && <div style={{height: topSlotHeight}} />}
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
         </ThemeVariant>
     );
