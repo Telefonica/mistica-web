@@ -2677,6 +2677,7 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar',
         code: `
           <MainNavigationBar
+            topSlot={<Placeholder height={24} />}
             sections={[
               {
                 title: "Start",

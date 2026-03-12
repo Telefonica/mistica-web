@@ -88,6 +88,32 @@ test('MainNavigationBar wide', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar desktop with topSlot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {topSlot: true, desktopLargeMenu: true, menu: 'default'},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar mobile with topSlot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {topSlot: true},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test.each`
     variant          | isDarkMode | device
     ${'default'}     | ${false}   | ${'DESKTOP'}

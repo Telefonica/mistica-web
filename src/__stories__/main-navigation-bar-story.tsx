@@ -41,6 +41,7 @@ type Args = {
     menu: 'undefined' | 'default' | 'custom';
     desktopLargeMenu: boolean;
     customLogo: boolean;
+    topSlot: boolean;
     wide: boolean;
     paddingX: PadSize | 'undefined';
 };
@@ -54,6 +55,7 @@ export const Default: StoryComponent<Args> = ({
     menu,
     desktopLargeMenu,
     customLogo,
+    topSlot,
     wide,
     paddingX,
 }) => {
@@ -68,6 +70,7 @@ export const Default: StoryComponent<Args> = ({
             burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
             desktopLargeMenu={desktopLargeMenu}
             logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
+            topSlot={topSlot ? <Placeholder height={24} /> : undefined}
             sections={
                 sections
                     ? sectionTitles.map((title, idx) => ({
@@ -139,6 +142,7 @@ Default.args = {
     menu: 'undefined',
     desktopLargeMenu: false,
     customLogo: false,
+    topSlot: false,
     wide: false,
     paddingX: 'undefined',
 };
