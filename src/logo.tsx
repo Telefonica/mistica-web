@@ -234,115 +234,59 @@ const MaybeTouchableLogo = (
     );
 };
 
-export const Logo = ({
+const LogoInternal = ({
     size = DEFAULT_HEIGHT_PX,
     type = 'isotype',
     color,
+    skinName,
     ...props
-}: LogoProps): JSX.Element => {
-    const {skinName} = useTheme();
+}: LogoProps & {skinName: KnownSkinName}): JSX.Element => {
     return (
         <MaybeTouchableLogo size={size} {...props}>
-            <LogoBase skinName={skinName as KnownSkinName} type={type} size={size} color={color} />
+            <LogoBase skinName={skinName} type={type} size={size} color={color} />
         </MaybeTouchableLogo>
     );
 };
 
-export const MovistarLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Movistar" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const Logo = ({size, type, color, ...props}: LogoProps): JSX.Element => {
+    const {skinName} = useTheme();
+    return (
+        <LogoInternal size={size} type={type} color={color} skinName={skinName as KnownSkinName} {...props} />
+    );
+};
+
+export const MovistarLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Movistar" {...props} />
 );
 
-export const MovistarNewLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Movistar-new" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const MovistarNewLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Movistar-new" {...props} />
 );
 
-export const VivoLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Vivo" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const VivoLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Vivo" {...props} />
 );
 
-export const O2Logo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const O2Logo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="O2" {...props} />
 );
 
-export const O2NewLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2-new" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const O2NewLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="O2-new" {...props} />
 );
 
-export const TelefonicaLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Telefonica" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const TelefonicaLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Telefonica" {...props} />
 );
 
-export const BlauLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Blau" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const BlauLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Blau" {...props} />
 );
 
-export const TuLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Tu" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const TuLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Tu" {...props} />
 );
 
-export const EsimflagLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Esimflag" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const EsimflagLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Esimflag" {...props} />
 );
