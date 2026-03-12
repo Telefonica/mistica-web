@@ -24,6 +24,14 @@ export type Colors = {
     backgroundBrandBottom: string;
     appBarBackground: string;
     navigationBarBackground: string;
+    backgroundDropZoneHover: string;
+    backgroundDropZoneDragover: string;
+    backgroundDropZoneBrandHover: string;
+    backgroundDropZoneBrandDragover: string;
+    backgroundDropZoneNegativeHover: string;
+    backgroundDropZoneNegativeDragover: string;
+    backgroundDropZoneMediaHover: string;
+    backgroundDropZoneMediaDragover: string;
     skeletonWave: string;
     borderLow: string;
     border: string;

@@ -224,7 +224,7 @@ const renderButtonContent = ({
                     loadingText
                         ? {
                               paddingLeft: spinnerSizeRem,
-                              paddingRight: `calc(${styles.iconMargin} + 2 * ${small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default})`,
+                              paddingRight: `calc(${styles.iconMargin} + ${small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default} + ${small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default})`,
                           }
                         : undefined
                 }
@@ -431,12 +431,12 @@ const BaseButton = React.forwardRef<
              */
             ...(props.bleedLeft
                 ? {
-                      marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default}))`,
+                      marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default}))`,
                   }
                 : undefined),
             ...(props.bleedRight
                 ? {
-                      marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default}))`,
+                      marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default}))`,
                   }
                 : undefined),
             ...(props.bleedY
