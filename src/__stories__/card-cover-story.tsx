@@ -2,6 +2,7 @@ import * as React from 'react';
 import {CoverCard, Placeholder} from '..';
 import {
     commonArgTypes,
+    dataArgTypes,
     defaultCommonCardArgs,
     getAsset,
     getButtonLink,
@@ -109,4 +110,5 @@ Default.args = {
 Default.argTypes = {
     ...commonArgTypes,
     ...imageAndVideoArgTypes,
+    ...dataArgTypes,
 };
