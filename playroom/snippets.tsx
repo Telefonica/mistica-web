@@ -2677,6 +2677,21 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar',
         code: `
           <MainNavigationBar
+            topSlotBackgroundColor={colors.backgroundNegative}
+            topSlot={
+              <ThemeVariant variant="negative">
+                <Box paddingY={8}>
+                  <Align x="center">
+                    <Inline space={24} alignItems="center">
+                      <Text2 medium>BLACK FRIDAY - 60% en tecnología</Text2>
+                      <ButtonSecondary small onPress={() => {}}>
+                        See offers
+                      </ButtonSecondary>
+                    </Inline>
+                  </Align>
+                </Box>
+              </ThemeVariant>
+            }
             sections={[
               {
                 title: "Start",
