@@ -1,3 +1,30 @@
+# [16.54.0](https://github.com/Telefonica/mistica-web/compare/v16.53.0...v16.54.0) (2026-03-13)
+
+
+### Bug Fixes
+
+* **Hero:** Restore padding in hero mobile layouts ([#1514](https://github.com/Telefonica/mistica-web/issues/1514)) ([0513c35](https://github.com/Telefonica/mistica-web/commit/0513c35ce295be991a7367326853d25977092cef))
+
+
+### Features
+
+* **Card:** Add space-between alignment for card slot ([#1516](https://github.com/Telefonica/mistica-web/issues/1516)) ([0900ebb](https://github.com/Telefonica/mistica-web/commit/0900ebbfd02a1cee68e2e3e48aef0781094498c7))
+* **Layout:** add extraLargeDesktop breakpoint ([#1503](https://github.com/Telefonica/mistica-web/issues/1503)) ([229ace4](https://github.com/Telefonica/mistica-web/commit/229ace49286cb1faf2ce82d0ef7b3ef8afce6699))
+* **MainNavigationBar:** topSlot support ([#1518](https://github.com/Telefonica/mistica-web/issues/1518)) ([818748f](https://github.com/Telefonica/mistica-web/commit/818748f1bf2f8a1d012c5085312ca91fef6eede5))
+
+# [16.53.0](https://github.com/Telefonica/mistica-web/compare/v16.52.0...v16.53.0) (2026-03-06)
+
+
+### Bug Fixes
+
+* **Input:** WEB-2382 Fix some misalignements and make startIcon small ([#1510](https://github.com/Telefonica/mistica-web/issues/1510)) ([686a092](https://github.com/Telefonica/mistica-web/commit/686a0925b80aaae8dc352ed35f95cb7a0ac92932))
+
+
+### Features
+
+* **FileUpload:** new component ([#1489](https://github.com/Telefonica/mistica-web/issues/1489)) ([8b623cf](https://github.com/Telefonica/mistica-web/commit/8b623cf45b14153b5bcb2b6bdd79ff14ca64cd8c))
+* **skin:** WEB-2382 Movistar alignment p2 ([#1499](https://github.com/Telefonica/mistica-web/issues/1499)) ([86213c8](https://github.com/Telefonica/mistica-web/commit/86213c87cb1c87f06edd564214c50e4d6c6fe7fb))
+
 # [16.52.0](https://github.com/Telefonica/mistica-web/compare/v16.51.0...v16.52.0) (2026-02-27)
 
 

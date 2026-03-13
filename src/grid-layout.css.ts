@@ -16,6 +16,10 @@ const collapsedGrid = {
 export const grid = style({
     display: 'grid',
     '@media': {
+        [mq.extraLargeDesktop]: {
+            gridTemplateColumns: 'repeat(12, 1fr)',
+            gridColumnGap: 24,
+        },
         [mq.largeDesktop]: {
             gridTemplateColumns: 'repeat(12, 1fr)',
             gridColumnGap: 24,
