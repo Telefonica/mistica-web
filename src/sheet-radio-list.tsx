@@ -7,7 +7,9 @@ import {ButtonPrimary} from './button';
 import {RadioGroup} from './radio-button';
 import {Row, RowList} from './list';
 import * as tokens from './text-tokens';
+import Tag from './tag';
 
+import type {TagType} from './tag';
 import type {DataAttributes} from './utils/types';
 
 type RadioListSheetProps = {
@@ -16,6 +18,10 @@ type RadioListSheetProps = {
     description?: string | ReadonlyArray<string>;
     items: ReadonlyArray<{
         id: string;
+        tag?: {
+            type?: TagType;
+            text: string;
+        };
         title?: string;
         description?: string;
         asset?: React.ReactNode;
@@ -88,6 +94,11 @@ const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetProps>(
                                     {items.map((item) => (
                                         <Row
                                             key={item.id}
+                                            headline={
+                                                item.tag ? (
+                                                    <Tag type={item.tag.type}>{item.tag.text}</Tag>
+                                                ) : undefined
+                                            }
                                             title={item.title ?? ''}
                                             description={item.description}
                                             asset={item.asset}
