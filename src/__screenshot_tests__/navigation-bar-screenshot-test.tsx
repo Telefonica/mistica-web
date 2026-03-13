@@ -114,6 +114,16 @@ test('MainNavigationBar mobile with topSlot', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar desktop with topSlot and custom background', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {topSlot: true, topSlotBackgroundColor: '#FABADA'},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test.each`
     variant          | isDarkMode | device
     ${'default'}     | ${false}   | ${'DESKTOP'}

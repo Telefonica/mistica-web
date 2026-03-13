@@ -144,12 +144,14 @@ type WideConfig = {
 const NavigationBarSideMargins = ({
     children,
     wide,
+    backgroundColor,
 }: {
     children: React.ReactNode;
     wide: boolean | WideConfig;
+    backgroundColor?: string;
 }) => {
     if (!wide) {
-        return <ResponsiveLayout>{children}</ResponsiveLayout>;
+        return <ResponsiveLayout backgroundColor={backgroundColor}>{children}</ResponsiveLayout>;
     }
 
     const defaultWidePaddingX: BoxProps['paddingX'] = {
@@ -171,6 +173,7 @@ const NavigationBarSideMargins = ({
                             ...wide.paddingX,
                         }
             }
+            background={backgroundColor}
         >
             {children}
         </Box>
@@ -312,6 +315,7 @@ type MainNavigationBarProps = {
     selectedIndex?: number;
     right?: React.ReactElement;
     topSlot?: React.ReactElement;
+    topSlotBackgroundColor?: string;
     logo?: React.ReactElement;
     variant?: Variant;
     children?: undefined;
@@ -1408,6 +1412,7 @@ export const MainNavigationBar = ({
     selectedIndex,
     right,
     topSlot,
+    topSlotBackgroundColor,
     variant = 'default',
     topFixed = true,
     withBorder = true,
@@ -1477,8 +1482,12 @@ export const MainNavigationBar = ({
                     topSlotHeight={topSlotHeight}
                     desktopLargeMenu={desktopLargeMenu}
                 >
+                    {topSlot && (
+                        <NavigationBarSideMargins wide={wide} backgroundColor={topSlotBackgroundColor}>
+                            <div ref={topSlotRef}>{topSlot}</div>
+                        </NavigationBarSideMargins>
+                    )}
                     <NavigationBarSideMargins wide={wide}>
-                        {topSlot && <div ref={topSlotRef}>{topSlot}</div>}
                         <NavigationBarContentContainer
                             ref={navigationBarRef}
                             right={right}

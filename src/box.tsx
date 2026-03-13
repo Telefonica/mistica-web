@@ -17,6 +17,7 @@ export type BoxProps = {
     paddingBottom?: ByBreakpoint<PadSize>;
     paddingLeft?: ByBreakpoint<PadSize>;
     paddingRight?: ByBreakpoint<PadSize>;
+    background?: string;
     as?: React.ComponentType<any> | string;
     children?: React.ReactNode;
     /**
@@ -46,6 +47,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             paddingBottom = paddingY,
             paddingLeft = paddingX,
             paddingRight = paddingX,
+            background,
             role,
             id,
             dataAttributes,
@@ -99,6 +101,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
                     ...applyPaddingVars(styles.vars.paddingLeft, paddingLeftValues),
                     ...applyPaddingVars(styles.vars.paddingRight, paddingRightValues),
                     ...(width !== undefined ? {width, boxSizing: 'border-box'} : {}),
+                    background,
                 }}
                 id={id}
             >

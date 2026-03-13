@@ -42,6 +42,7 @@ type Args = {
     desktopLargeMenu: boolean;
     customLogo: boolean;
     topSlot: boolean;
+    topSlotBackgroundColor: string;
     wide: boolean;
     paddingX: PadSize | 'undefined';
 };
@@ -56,6 +57,7 @@ export const Default: StoryComponent<Args> = ({
     desktopLargeMenu,
     customLogo,
     topSlot,
+    topSlotBackgroundColor,
     wide,
     paddingX,
 }) => {
@@ -71,6 +73,7 @@ export const Default: StoryComponent<Args> = ({
             desktopLargeMenu={desktopLargeMenu}
             logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
             topSlot={topSlot ? <Placeholder height={24} /> : undefined}
+            topSlotBackgroundColor={topSlotBackgroundColor || undefined}
             sections={
                 sections
                     ? sectionTitles.map((title, idx) => ({
@@ -143,6 +146,7 @@ Default.args = {
     desktopLargeMenu: false,
     customLogo: false,
     topSlot: false,
+    topSlotBackgroundColor: '',
     wide: false,
     paddingX: 'undefined',
 };
@@ -158,6 +162,10 @@ Default.argTypes = {
         if: {arg: 'sections'},
     },
     desktopLargeMenu: {if: {arg: 'sections'}},
+    topSlotBackgroundColor: {
+        control: {type: 'color'},
+        if: {arg: 'topSlot'},
+    },
     paddingX: {
         options: ['undefined', 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80],
         control: {type: 'select'},
