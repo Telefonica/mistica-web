@@ -79,7 +79,7 @@ export const Default: StoryComponent<CoverCardArgs> = ({
                 videoSrc={videoNameToUrl[videoSrc as never]}
                 videoLoop={videoLoop}
                 videoAutoPlay={videoAutoPlay}
-                slot={slot ? <Placeholder height={50} /> : undefined}
+                slot={slot ? [<Placeholder height={30} />, <Placeholder height={30} />] : undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
                 buttonSecondary={getButtonSecondary(buttonSecondary)}
