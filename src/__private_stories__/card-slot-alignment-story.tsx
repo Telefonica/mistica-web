@@ -1,5 +1,16 @@
 import * as React from 'react';
-import {ButtonLink, Inline, MediaCard, Placeholder, Stack, DataCard, NakedCard} from '..';
+import {
+    ButtonLink,
+    Inline,
+    MediaCard,
+    Placeholder,
+    Image,
+    Stack,
+    DataCard,
+    SnapCard,
+    NakedCard,
+    SmallNakedCard,
+} from '..';
 import tennisImg from '../__stories__/images/tennis.jpg';
 
 export default {
@@ -18,9 +29,8 @@ export const SlotAlignment: StoryComponent = () => {
                 <MediaCard
                     title="Default"
                     subtitle="Media card"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={100} />}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={100} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -31,9 +41,8 @@ export const SlotAlignment: StoryComponent = () => {
                     title="Content"
                     subtitle="Media card"
                     slotAlignment="content"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={50} />}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={50} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -44,22 +53,8 @@ export const SlotAlignment: StoryComponent = () => {
                     title="Bottom"
                     subtitle="Media card"
                     slotAlignment="bottom"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={50} />}
-                    buttonLink={
-                        <ButtonLink small href="https://google.com">
-                            Link
-                        </ButtonLink>
-                    }
-                />
-                <MediaCard
-                    title="Space Between"
-                    subtitle="Media card"
-                    slotAlignment="space-between"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={[<Placeholder height={30} />, <Placeholder height={30} />]}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={50} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -71,9 +66,8 @@ export const SlotAlignment: StoryComponent = () => {
                 <NakedCard
                     title="Default"
                     subtitle="Naked card"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={100} />}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={100} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -84,9 +78,8 @@ export const SlotAlignment: StoryComponent = () => {
                     title="Content"
                     subtitle="Naked card"
                     slotAlignment="content"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={50} />}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={50} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -97,22 +90,8 @@ export const SlotAlignment: StoryComponent = () => {
                     title="Bottom"
                     subtitle="Naked card"
                     slotAlignment="bottom"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={50} />}
-                    buttonLink={
-                        <ButtonLink small href="https://google.com">
-                            Link
-                        </ButtonLink>
-                    }
-                />
-                <NakedCard
-                    title="Space Between"
-                    subtitle="Naked card"
-                    slotAlignment="space-between"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={[<Placeholder height={30} />, <Placeholder height={30} />]}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={50} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -121,47 +100,32 @@ export const SlotAlignment: StoryComponent = () => {
                 />
             </Inline>
             <Inline space={16}>
-                <NakedCard
-                    size="snap"
+                <SmallNakedCard
                     title="Default"
                     subtitle="Small Naked card"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={100} />}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={100} />}
                 />
-                <NakedCard
-                    size="snap"
+                <SmallNakedCard
                     title="Content"
                     subtitle="Small Naked card"
                     slotAlignment="content"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={50} />}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={50} />}
                 />
-                <NakedCard
-                    size="snap"
+                <SmallNakedCard
                     title="Bottom"
                     subtitle="Small Naked card"
                     slotAlignment="bottom"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={<Placeholder height={50} />}
-                />
-                <NakedCard
-                    size="snap"
-                    title="Space Between"
-                    subtitle="Small Naked card"
-                    slotAlignment="space-between"
-                    imageSrc={IMAGE_SRC}
-                    aspectRatio="16:9"
-                    slot={[<Placeholder height={30} />, <Placeholder height={30} />]}
+                    media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                    extra={<Placeholder height={50} />}
                 />
             </Inline>
             <Inline space={16}>
                 <DataCard
                     title="Default"
                     subtitle="Data card"
-                    slot={<Placeholder height={100} />}
+                    extra={<Placeholder height={100} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -172,7 +136,7 @@ export const SlotAlignment: StoryComponent = () => {
                     title="Content"
                     subtitle="Data card"
                     slotAlignment="content"
-                    slot={<Placeholder height={50} />}
+                    extra={<Placeholder height={50} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -183,18 +147,7 @@ export const SlotAlignment: StoryComponent = () => {
                     title="Bottom"
                     subtitle="Data card"
                     slotAlignment="bottom"
-                    slot={<Placeholder height={50} />}
-                    buttonLink={
-                        <ButtonLink small href="https://google.com">
-                            Link
-                        </ButtonLink>
-                    }
-                />
-                <DataCard
-                    title="Space Between"
-                    subtitle="Data card"
-                    slotAlignment="space-between"
-                    slot={[<Placeholder height={30} />, <Placeholder height={30} />]}
+                    extra={<Placeholder height={50} />}
                     buttonLink={
                         <ButtonLink small href="https://google.com">
                             Link
@@ -203,32 +156,18 @@ export const SlotAlignment: StoryComponent = () => {
                 />
             </Inline>
             <Inline space={16}>
-                <DataCard
-                    size="snap"
-                    title="Default"
-                    subtitle="Snap card"
-                    slot={<Placeholder height={100} />}
-                />
-                <DataCard
-                    size="snap"
+                <SnapCard title="Default" subtitle="Snap card" extra={<Placeholder height={100} />} />
+                <SnapCard
                     title="Content"
                     subtitle="Snap card"
                     slotAlignment="content"
-                    slot={<Placeholder height={50} />}
+                    extra={<Placeholder height={50} />}
                 />
-                <DataCard
-                    size="snap"
+                <SnapCard
                     title="Bottom"
                     subtitle="Snap card"
                     slotAlignment="bottom"
-                    slot={<Placeholder height={50} />}
-                />
-                <DataCard
-                    size="snap"
-                    title="Space Between"
-                    subtitle="Snap card"
-                    slotAlignment="space-between"
-                    slot={[<Placeholder height={30} />, <Placeholder height={30} />]}
+                    extra={<Placeholder height={50} />}
                 />
             </Inline>
         </Stack>
