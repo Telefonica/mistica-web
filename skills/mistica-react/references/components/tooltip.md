@@ -1,5 +1,7 @@
 # Tooltip
 
+# Tooltip
+
 Tooltip shows short, contextual helper text near a target on hover, focus, or touch, then dismisses when interaction ends.
 
 ## Usage

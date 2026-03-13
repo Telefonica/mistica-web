@@ -66,7 +66,7 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Empty States](components/empty-states.md)
 
-- [EmptyState](components/empty-states.md#emptystate) — EmptyState communicates full-page absence scenarios with clear messaging, supportive imagery, and optional recovery actions.
+- [EmptyState](components/empty-states.md#emptystate)
 
 ## [Feedback](components/feedback.md)
 
@@ -83,15 +83,15 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Callout](components/callout.md)
 
-- [Callout](components/callout.md#callout) — A snippet of information that draws attention to important content. Always includes a description.
+- [Callout](components/callout.md#callout)
 
 ## [Tooltip](components/tooltip.md)
 
-- [Tooltip](components/tooltip.md#tooltip) — Tooltip shows short, contextual helper text near a target on hover, focus, or touch, then dismisses when interaction ends.
+- [Tooltip](components/tooltip.md#tooltip)
 
 ## [Popover](components/popover.md)
 
-- [Popover](components/popover.md#popover) — Popover presents richer contextual content in a dismissible anchored surface, suitable for guidance that needs more space than a tooltip.
+- [Popover](components/popover.md#popover)
 
 ## [Forms](components/forms.md)
 
@@ -101,7 +101,7 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Checkbox](components/checkbox.md)
 
-- [Checkbox](components/checkbox.md#checkbox) — Checkbox lets users select one, several, or no options, with each option operating independently.
+- [Checkbox](components/checkbox.md#checkbox)
 
 ## [Radio Button](components/radio-button.md)
 
@@ -110,19 +110,19 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Select](components/select.md)
 
-- [Select](components/select.md#select) — Allow users to make a single selection between multiple options.
+- [Select](components/select.md#select)
 
 ## [Switch](components/switch.md)
 
-- [Switch](components/switch.md#switch) — Use switch for immediate on/off settings, ensuring each control has a clear visible or accessible label.
+- [Switch](components/switch.md#switch)
 
 ## [Slider](components/slider.md)
 
-- [Slider](components/slider.md#slider) — Use slider for selecting a value by dragging along a bounded range, with optional tooltip feedback while interacting.
+- [Slider](components/slider.md#slider)
 
 ## [Counter](components/counter.md)
 
-- [Counter](components/counter.md#counter) — A counter is a component used to increase or decrease a numeric value.
+- [Counter](components/counter.md#counter)
 
 ## [Headers](components/headers.md)
 
@@ -248,23 +248,23 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Avatar](components/avatar.md)
 
-- [Avatar](components/avatar.md#avatar) — Avatar is the visual representation of a user or entity, using photo, initials, or icon depending on available identity content.
+- [Avatar](components/avatar.md#avatar)
 
 ## [Badge](components/badge.md)
 
-- [Badge](components/badge.md#badge) — Badge is a compact, decorative indicator used to signal unread or pending status on top of another UI element.
+- [Badge](components/badge.md#badge)
 
 ## [Tag](components/tag.md)
 
-- [Tag](components/tag.md#tag) — Use tag to display short categorical or status labels, with optional icon and badge count in a compact visual token.
+- [Tag](components/tag.md#tag)
 
 ## [Chip](components/chip.md)
 
-- [Chip](components/chip.md#chip) — Chip is a compact label-action element used for navigation, selection state, or removable contextual metadata.
+- [Chip](components/chip.md#chip)
 
 ## [StackingGroup](components/stacking-group.md)
 
-- [StackingGroup](components/stacking-group.md#stackinggroup) — Use stacking group to display a compact set of similarly sized items, optionally overlapped, with a `+N` overflow indicator.
+- [StackingGroup](components/stacking-group.md#stackinggroup)
 
 ## [Primitives](components/primitives.md)
 
@@ -346,13 +346,13 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Community](components/community.md)
 
-- [CommunityAdvancedDataCard](components/community.md#communityadvanceddatacard)
-- [CommunityHighlightedValueBlock](components/community.md#communityhighlightedvalueblock)
-- [CommunityInformationBlock](components/community.md#communityinformationblock)
-- [CommunityProgressBlock](components/community.md#communityprogressblock)
-- [CommunityRowBlock](components/community.md#communityrowblock)
-- [CommunitySimpleBlock](components/community.md#communitysimpleblock)
-- [CommunityValueBlock](components/community.md#communityvalueblock)
+- [AdvancedDataCard](components/community.md#advanceddatacard)
+- [HighlightedValueBlock](components/community.md#highlightedvalueblock)
+- [InformationBlock](components/community.md#informationblock)
+- [ProgressBlock](components/community.md#progressblock)
+- [RowBlock](components/community.md#rowblock)
+- [SimpleBlock](components/community.md#simpleblock)
+- [ValueBlock](components/community.md#valueblock)
 
 ## [Status Icons](components/status-icons.md)
 

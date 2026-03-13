@@ -1,5 +1,7 @@
 # StackingGroup
 
+# StackingGroup
+
 Use stacking group to display a compact set of similarly sized items, optionally overlapped, with a `+N` overflow indicator.
 
 ## Usage

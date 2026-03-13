@@ -1,5 +1,7 @@
 # Counter
 
+# Counter
+
 A counter is a component used to increase or decrease a numeric value.
 
 ## Usage

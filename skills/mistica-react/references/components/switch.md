@@ -1,5 +1,7 @@
 # Switch
 
+# Switch
+
 Use switch for immediate on/off settings, ensuring each control has a clear visible or accessible label.
 
 ## Usage

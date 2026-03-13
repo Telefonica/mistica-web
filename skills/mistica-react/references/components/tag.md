@@ -1,5 +1,7 @@
 # Tag
 
+# Tag
+
 Use tag to display short categorical or status labels, with optional icon and badge count in a compact visual token.
 
 ## Usage

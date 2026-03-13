@@ -1,5 +1,7 @@
 # Slider
 
+# Slider
+
 Use slider for selecting a value by dragging along a bounded range, with optional tooltip feedback while interacting.
 
 ## Usage

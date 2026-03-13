@@ -5,14 +5,15 @@ const {categories} = require('../doc/components/component-categories');
 
 const ROOT = path.resolve(__dirname, '..');
 const INDEX_FILE = path.join(ROOT, 'src/index.tsx');
+const COMMUNITY_INDEX_FILE = path.join(ROOT, 'src/community/index.tsx');
 const TSCONFIG = path.join(ROOT, 'tsconfig.json');
 const REFERENCE_DIR = path.join(ROOT, 'skills', 'mistica-react', 'references');
 const COMPONENTS_DIR = path.join(REFERENCE_DIR, 'components');
 const INDEX_OUTPUT = path.join(REFERENCE_DIR, 'COMPONENTS.md');
 const DESIGN_DOCS_DIR = path.join(ROOT, 'doc', 'components');
 
-function resolveFile(relPath) {
-    const base = path.resolve(ROOT, 'src', relPath);
+function resolveFile(relPath, baseDir = path.join(ROOT, 'src')) {
+    const base = path.resolve(baseDir, relPath);
     for (const ext of ['.tsx', '.ts']) {
         const full = base + ext;
         if (fs.existsSync(full)) return full;
@@ -22,7 +23,6 @@ function resolveFile(relPath) {
 
 // Extract exported component names and source file paths from barrel export
 function getExportedComponents() {
-    const content = fs.readFileSync(INDEX_FILE, 'utf-8');
     const files = new Set();
     const exportedNames = new Set();
     const nameMap = new Map();
@@ -32,46 +32,53 @@ function getExportedComponents() {
         nameMap.get(filePath).set(internalName.toLowerCase(), exportedName);
     }
 
-    const exportRegex = /export\s+\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/gs;
-    const starExportRegex = /export\s+\*\s+as\s+(\w+)\s+from\s+['"]([^'"]+)['"]/g;
+    function parseBarrelExports(indexFile, baseDir) {
+        const content = fs.readFileSync(indexFile, 'utf-8');
 
-    let match;
-    while ((match = exportRegex.exec(content)) !== null) {
-        const namesStr = match[1];
-        const relPath = match[2];
+        const exportRegex = /export\s+\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/gs;
+        const starExportRegex = /export\s+\*\s+as\s+(\w+)\s+from\s+['"]([^'"]+)['"]/g;
 
-        if (relPath.includes('generated/mistica-icons')) continue;
+        let match;
+        while ((match = exportRegex.exec(content)) !== null) {
+            const namesStr = match[1];
+            const relPath = match[2];
 
-        const prefix = content.slice(Math.max(0, match.index - 10), match.index + 7);
-        if (/export\s+type\s+\{/.test(prefix)) continue;
+            if (relPath.includes('generated/mistica-icons')) continue;
 
-        const filePath = resolveFile(relPath);
-        if (filePath) files.add(filePath);
+            const prefix = content.slice(Math.max(0, match.index - 10), match.index + 7);
+            if (/export\s+type\s+\{/.test(prefix)) continue;
 
-        const names = namesStr.split(',');
-        for (let name of names) {
-            name = name.replace(/\/\*.*?\*\//gs, '').trim();
-            if (!name || name.startsWith('type ') || name === '') continue;
+            const filePath = resolveFile(relPath, baseDir);
+            if (filePath) files.add(filePath);
 
-            const aliasMatch = name.match(/(\w+)\s+as\s+(\w+)/);
-            if (aliasMatch) {
-                const [, internalName, exportedName] = aliasMatch;
-                exportedNames.add(exportedName);
-                if (filePath) addMapping(filePath, internalName, exportedName);
-            } else if (/^\w+$/.test(name)) {
-                exportedNames.add(name);
-                if (filePath) addMapping(filePath, name, name);
+            const names = namesStr.split(',');
+            for (let name of names) {
+                name = name.replace(/\/\*.*?\*\//gs, '').trim();
+                if (!name || name.startsWith('type ') || name === '') continue;
+
+                const aliasMatch = name.match(/(\w+)\s+as\s+(\w+)/);
+                if (aliasMatch) {
+                    const [, internalName, exportedName] = aliasMatch;
+                    exportedNames.add(exportedName);
+                    if (filePath) addMapping(filePath, internalName, exportedName);
+                } else if (/^\w+$/.test(name)) {
+                    exportedNames.add(name);
+                    if (filePath) addMapping(filePath, name, name);
+                }
             }
+        }
+
+        while ((match = starExportRegex.exec(content)) !== null) {
+            exportedNames.add(match[1]);
+            const relPath = match[2];
+            if (relPath.includes('generated/mistica-icons')) continue;
+            const filePath = resolveFile(relPath, baseDir);
+            if (filePath) files.add(filePath);
         }
     }
 
-    while ((match = starExportRegex.exec(content)) !== null) {
-        exportedNames.add(match[1]);
-        const relPath = match[2];
-        if (relPath.includes('generated/mistica-icons')) continue;
-        const filePath = resolveFile(relPath);
-        if (filePath) files.add(filePath);
-    }
+    parseBarrelExports(INDEX_FILE, path.join(ROOT, 'src'));
+    parseBarrelExports(COMMUNITY_INDEX_FILE, path.join(ROOT, 'src', 'community'));
 
     return {files: [...files], exportedNames, nameMap};
 }

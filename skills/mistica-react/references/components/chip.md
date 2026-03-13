@@ -1,5 +1,7 @@
 # Chip
 
+# Chip
+
 Chip is a compact label-action element used for navigation, selection state, or removable contextual metadata.
 
 ## Usage

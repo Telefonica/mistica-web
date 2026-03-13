@@ -1,5 +1,7 @@
 # Avatar
 
+# Avatar
+
 Avatar is the visual representation of a user or entity, using photo, initials, or icon depending on available identity content.
 
 ## Usage

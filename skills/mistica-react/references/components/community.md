@@ -1,6 +1,6 @@
 # Community
 
-## CommunityAdvancedDataCard
+## AdvancedDataCard
 
 ### Props
 
@@ -38,7 +38,7 @@
 | to | `string` | No | - |  |
 | trackingEvent | `Readonly<LegacyAnalyticsEvent> \| Readonly<FirebaseEvent> \| readonly TrackingEvent[]` | No | - |  |
 
-## CommunityHighlightedValueBlock
+## HighlightedValueBlock
 
 ### Props
 
@@ -52,7 +52,7 @@
 | strikedValue | `string` | No | - |  |
 | title | `string` | No | - |  |
 
-## CommunityInformationBlock
+## InformationBlock
 
 ### Props
 
@@ -65,7 +65,7 @@
 | value | `string` | No | - |  |
 | valueColor | `string` | No | vars.colors.textPrimary |  |
 
-## CommunityProgressBlock
+## ProgressBlock
 
 ### Props
 
@@ -79,7 +79,7 @@
 | stackingGroup | `RendersNullableElement<StackingGroup>` | No | - |  |
 | title | `string` | No | - |  |
 
-## CommunityRowBlock
+## RowBlock
 
 ### Props
 
@@ -90,7 +90,7 @@
 | stackingGroup | `RendersNullableElement<StackingGroup>` | No | - |  |
 | title | `string` | No | - |  |
 
-## CommunitySimpleBlock
+## SimpleBlock
 
 ### Props
 
@@ -101,7 +101,7 @@
 | image | `RendersNullableElement<Image>` | No | - |  |
 | rightText | `string` | No | - |  |
 
-## CommunityValueBlock
+## ValueBlock
 
 ### Props
 

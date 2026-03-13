@@ -351,13 +351,13 @@ const categories = {
     community: {
         title: 'Community',
         components: [
-            'CommunityAdvancedDataCard',
-            'CommunityHighlightedValueBlock',
-            'CommunityInformationBlock',
-            'CommunityProgressBlock',
-            'CommunityRowBlock',
-            'CommunitySimpleBlock',
-            'CommunityValueBlock',
+            'AdvancedDataCard',
+            'HighlightedValueBlock',
+            'InformationBlock',
+            'ProgressBlock',
+            'RowBlock',
+            'SimpleBlock',
+            'ValueBlock',
         ],
     },
     'status-icons': {
