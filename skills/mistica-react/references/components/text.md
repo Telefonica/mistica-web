@@ -45,7 +45,7 @@ Foundational typography primitive for custom text rendering when preset componen
 | mobileSize | `number` | No | - | in pixels, will be converted to rem in runtime |
 | role | `string` | No | - |  |
 | size | `number` | No | - | in pixels, will be converted to rem in runtime |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -89,7 +89,7 @@ Small preset text level for compact supporting information and dense UI metadata
 | medium | `boolean` | No | - |  |
 | regular | `boolean` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -133,7 +133,7 @@ Low-emphasis preset text level for secondary copy that remains more readable tha
 | medium | `boolean` | No | - |  |
 | regular | `boolean` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -178,7 +178,7 @@ Baseline preset text level for standard body copy in most product interfaces.
 | medium | `boolean` | No | - |  |
 | regular | `boolean` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -223,7 +223,7 @@ Emphasized text preset for short content blocks that need more presence than sta
 | medium | `boolean` | No | - |  |
 | regular | `boolean` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -264,7 +264,7 @@ High-emphasis text preset for section-leading copy and compact subheading use ca
 | hyphens | `"none" \| "auto" \| "manual"` | No | auto |  |
 | id | `string` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -304,7 +304,7 @@ Heading-oriented preset for strong section titles and key interface messages.
 | hyphens | `"none" \| "auto" \| "manual"` | No | auto |  |
 | id | `string` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -344,7 +344,7 @@ Prominent heading preset for high-priority titles that need stronger visual impa
 | hyphens | `"none" \| "auto" \| "manual"` | No | auto |  |
 | id | `string` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -384,7 +384,7 @@ Display-oriented preset for large headings in standout surfaces such as hero or 
 | hyphens | `"none" \| "auto" \| "manual"` | No | auto |  |
 | id | `string` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -424,7 +424,7 @@ Large display text preset for very prominent titles and high-impact messaging mo
 | hyphens | `"none" \| "auto" \| "manual"` | No | auto |  |
 | id | `string` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |
@@ -464,7 +464,7 @@ Top display typography level for the most prominent titles in exceptional, high-
 | hyphens | `"none" \| "auto" \| "manual"` | No | auto |  |
 | id | `string` | No | - |  |
 | role | `string` | No | - |  |
-| textAlign | `"center" \| "right" \| "left"` | No | - |  |
+| textAlign | `"left" \| "right" \| "center"` | No | - |  |
 | textShadow | `string` | No | - |  |
 | transform | `"inherit" \| "none" \| "uppercase" \| "capitalize" \| "lowercase"` | No | - |  |
 | truncate | `number \| boolean` | No | - |  |

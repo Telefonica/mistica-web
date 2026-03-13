@@ -90,8 +90,10 @@ RowList groups multiple Row items into a single accessible list with consistent 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
 | aria-atomic | `boolean` | No | - |  |
+| aria-label | `string` | No | - |  |
+| aria-labelledby | `string` | No | - |  |
 | aria-live | `"polite" \| "off" \| "assertive"` | No | - |  |
-| ariaLabelledby | `string` | No | - |  |
+| ariaLabelledby | `string` | No | - | @deprecated Use 'aria-labelledby' instead. This will be removed in a future release. |
 | dataAttributes | `DataAttributes` | No | - |  |
 | role | `string` | No | list |  |
 
@@ -182,8 +184,10 @@ BoxedRowList stacks multiple BoxedRow items with consistent spacing to create se
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
 | aria-atomic | `boolean` | No | - |  |
+| aria-label | `string` | No | - |  |
+| aria-labelledby | `string` | No | - |  |
 | aria-live | `"polite" \| "off" \| "assertive"` | No | - |  |
-| ariaLabelledby | `string` | No | - |  |
+| ariaLabelledby | `string` | No | - | @deprecated Use 'aria-labelledby' instead. This will be removed in a future release. |
 | dataAttributes | `DataAttributes` | No | - |  |
 | role | `string` | No | list |  |
 

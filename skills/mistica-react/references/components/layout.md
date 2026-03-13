@@ -170,6 +170,7 @@ Use stack to arrange content vertically with a predefined spacing scale, includi
 |------|------|----------|---------|-------------|
 | space | `0 \| "between" \| "around" \| "evenly" \| 2 \| 4 \| 8 \| 12 \| 16 \| 24 \| 32 \| 40 \| 48 \| 56 \| 64 \| 72 \| 80 \| { mobile: NumericSpace; tablet?: NumericSpace \| undefined; desktop: NumericSpac...` | Yes | - |  |
 | aria-atomic | `boolean` | No | - |  |
+| aria-label | `string` | No | - |  |
 | aria-labelledby | `string` | No | - |  |
 | aria-live | `"polite" \| "off" \| "assertive"` | No | - |  |
 | className | `string` | No | - |  |

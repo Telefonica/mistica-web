@@ -175,6 +175,8 @@ Component reference for Mística React. Components are grouped by category in `c
 - [CvvField](components/input-fields.md#cvvfield) — CvvField captures the card security code with numeric input, card-aware guidance, and strict length validation.
 - [DoubleField](components/input-fields.md#doublefield) — DoubleField arranges two related form inputs side by side to reduce vertical space and keep paired data entry coherent.
 - [formatPhoneLite](components/input-fields.md#formatphonelite) — formatPhoneLite allows users to enter and validate form information in a consistent and accessible way.
+- [FileUpload](components/input-fields.md#fileupload) — FileUpload handles file selection through click-to-browse and optional drag-and-drop, with built-in file list display, error feedback, and support for single or multiple file uploads.
+- [FileItem](components/input-fields.md#fileitem) — FileItem displays a single selected file inside a FileUpload, showing file name, type-aware icon, formatted size, and a remove button.
 
 ## [Layout](components/layout.md)
 

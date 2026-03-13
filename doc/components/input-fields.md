@@ -443,3 +443,38 @@ formatPhoneLite allows users to enter and validate form information in a consist
 
 - Do not use this component to display read-only information
 - Do not hide validation context that users need to complete the task
+
+## FileUpload
+
+FileUpload handles file selection through click-to-browse and optional drag-and-drop, with built-in file list display, error feedback, and support for single or multiple file uploads.
+
+### Usage
+
+#### Use for
+
+- Collecting user files (documents, images, media) in forms with click-to-browse or drag-and-drop interaction
+- Displaying selected files with type-aware icons, file size, and individual remove actions
+- Supporting multiple file selection with optional append mode to accumulate files across interactions
+- Building custom upload experiences using the render prop for full control over layout and behavior
+
+#### Don't use for
+
+- Do not use FileUpload for inline image editing or cropping workflows
+- Do not use it for large batch uploads that need progress tracking per file — handle progress externally via the render prop
+- Do not rely on the default file list when custom file presentation (thumbnails, status badges) is required — use renderFiles or the render prop instead
+
+## FileItem
+
+FileItem displays a single selected file inside a FileUpload, showing file name, type-aware icon, formatted size, and a remove button.
+
+### Usage
+
+#### Use for
+
+- Rendering individual file entries within the default or custom file list of a FileUpload
+- Providing a consistent file row with icon, name, size, and remove action
+
+#### Don't use for
+
+- Do not use FileItem outside of a file upload context
+- Do not use it when files need custom status indicators (progress, errors per file) — build a custom file row instead

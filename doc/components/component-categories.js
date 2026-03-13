@@ -173,6 +173,8 @@ const categories = {
             'CvvField',
             'DoubleField',
             'formatPhoneLite',
+            'FileUpload',
+            'FileItem',
         ],
     },
     layout: {
