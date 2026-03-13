@@ -1,3 +1,11 @@
+# [16.55.0](https://github.com/Telefonica/mistica-web/compare/v16.54.0...v16.55.0) (2026-03-13)
+
+
+### Features
+
+* **Sheet:** Allow headline tags in RadioListSheet ([#1512](https://github.com/Telefonica/mistica-web/issues/1512)) ([38642d5](https://github.com/Telefonica/mistica-web/commit/38642d5069a4bcf2de98670e34549d122903024b))
+* **Skins:** Update skins tokens ([#1515](https://github.com/Telefonica/mistica-web/issues/1515)) ([3207330](https://github.com/Telefonica/mistica-web/commit/320733021bf40b0c456514e59e783a16d814120f))
+
 # [16.54.0](https://github.com/Telefonica/mistica-web/compare/v16.53.0...v16.54.0) (2026-03-13)
 
 
