@@ -14,6 +14,7 @@ const getMediaQueriesConfig = () => {
             tabletMinWidth: impossibleSize,
             desktopMinWidth: impossibleSize,
             largeDesktopMinWidth: impossibleSize,
+            extraLargeDesktopMinWidth: impossibleSize,
             desktopOrTabletMinHeight: impossibleSize,
         };
     }
@@ -22,6 +23,7 @@ const getMediaQueriesConfig = () => {
             tabletMinWidth: 0,
             desktopMinWidth: 0,
             largeDesktopMinWidth: impossibleSize,
+            extraLargeDesktopMinWidth: impossibleSize,
             desktopOrTabletMinHeight: 0,
         };
     }
@@ -49,7 +51,7 @@ const getWidths = () => {
     if (process.env.FORCE_DESKTOP) {
         return [1024];
     }
-    return [320, 360, 768, 1024, 1512];
+    return [360, 768, 1024, 1512, 1832];
 };
 
 const exampleCode = `
