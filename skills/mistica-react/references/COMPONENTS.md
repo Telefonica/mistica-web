@@ -346,13 +346,13 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Community](components/community.md)
 
-- [AdvancedDataCard](components/community.md#advanceddatacard)
-- [HighlightedValueBlock](components/community.md#highlightedvalueblock)
-- [InformationBlock](components/community.md#informationblock)
-- [ProgressBlock](components/community.md#progressblock)
-- [RowBlock](components/community.md#rowblock)
-- [SimpleBlock](components/community.md#simpleblock)
-- [ValueBlock](components/community.md#valueblock)
+- [AdvancedDataCard](components/community.md#advanceddatacard) — AdvancedDataCard is an extended data card that combines structured content (title hierarchy, description) with composable extra blocks, optional footer actions, and touchable behavior in a single card surface.
+- [HighlightedValueBlock](components/community.md#highlightedvalueblock) — HighlightedValueBlock displays prominent numeric or text values with optional headline, pretitle, strikethrough pricing, and supporting descriptions. Designed to be used as an extra block inside AdvancedDataCard.
+- [InformationBlock](components/community.md#informationblock) — InformationBlock presents a title and description alongside a right-aligned value with optional secondary strikethrough value. Designed to be used as an extra block inside AdvancedDataCard.
+- [ProgressBlock](components/community.md#progressblock) — ProgressBlock combines a title, progress bar, heading value, and optional description in a single block. Designed to be used as an extra block inside AdvancedDataCard.
+- [RowBlock](components/community.md#rowblock) — RowBlock displays a title with either a right-aligned description or a stacking group in a horizontal row layout. Designed to be used as an extra block inside AdvancedDataCard.
+- [SimpleBlock](components/community.md#simpleblock) — SimpleBlock displays an image alongside a description with an optional right-aligned text. Designed to be used as an extra block inside AdvancedDataCard.
+- [ValueBlock](components/community.md#valueblock) — ValueBlock displays a title with a large prominent value and optional description lines. Designed to be used as an extra block inside AdvancedDataCard.
 
 ## [Status Icons](components/status-icons.md)
 
