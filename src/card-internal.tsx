@@ -54,7 +54,7 @@ export type MediaPosition = 'top' | 'left' | 'right';
 /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
 export type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
-export type SlotAlignment = 'content' | 'bottom';
+export type SlotAlignment = 'content' | 'bottom' | 'space-between';
 
 export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimary>;
 export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
@@ -1500,7 +1500,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 </div>
                                 {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
                                 {slot && (
-                                    <div ref={slotRef} data-testid="slot">
+                                    <div
+                                        ref={slotRef}
+                                        data-testid="slot"
+                                        className={classnames(
+                                            slotAlignment === 'space-between' &&
+                                                styles.slotContainerSpaceBetween
+                                        )}
+                                    >
                                         {slot}
                                     </div>
                                 )}
