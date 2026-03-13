@@ -286,6 +286,7 @@ const colors: Colors = {
     cardContentOverlay: '',
     cardFooterOverlay: '',
     iosGlassAppBarSelected: '',
+    iosGlassAppBar: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
