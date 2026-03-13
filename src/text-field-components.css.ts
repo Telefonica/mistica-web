@@ -2,7 +2,7 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {fieldVerticalPadding, fieldLeftPadding, fieldRightPadding, fieldVars} from './text-field-base.css';
+import {fieldTopPadding, fieldLeftPadding, fieldRightPadding, fieldVars} from './text-field-base.css';
 
 export const DEFAULT_WIDTH = 328;
 
@@ -14,7 +14,7 @@ export const labelContainer = style([
     }),
     {
         left: fieldLeftPadding,
-        top: fieldVerticalPadding,
+        top: fieldTopPadding,
         pointerEvents: 'none',
         transformOrigin: '0 0',
         fontSize: fieldVars.desktopFontSize,

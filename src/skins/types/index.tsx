@@ -22,6 +22,20 @@ export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
+type ResponsiveValue<T> = {mobile: T; desktop: T};
+
+type PaddingYValues = {
+    top: ResponsiveValue<number>;
+    bottom: ResponsiveValue<number>;
+};
+
+type PaddingXValues = {
+    left: ResponsiveValue<number>;
+    right: ResponsiveValue<number>;
+};
+
+type PaddingValues = PaddingYValues & PaddingXValues;
+
 type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size?: never;
@@ -30,14 +44,14 @@ type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
 
 export type TextSizeTokenConfig = {
     weight?: never;
-    size: {mobile: number; desktop: number};
-    lineHeight: {mobile: number; desktop: number};
+    size: ResponsiveValue<number>;
+    lineHeight: ResponsiveValue<number>;
 };
 
 export type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
-    size: {mobile: number; desktop: number};
-    lineHeight: {mobile: number; desktop: number};
+    size: ResponsiveValue<number>;
+    lineHeight: ResponsiveValue<number>;
 };
 
 export type TextPresetsConfig = {
@@ -101,6 +115,18 @@ export type BorderRadiiConfig = {
     tag: string;
 };
 
+export type SpacingConfig = {
+    buttonDefaultPadding: PaddingXValues;
+    buttonSmallPadding: PaddingXValues;
+    cardDefaultPadding: PaddingValues;
+    inputPadding: PaddingYValues;
+    tagPadding: PaddingYValues;
+    feedbackScreenPadding: PaddingValues;
+    heroPadding: PaddingYValues;
+    headerPadding: PaddingYValues;
+    drawerPadding: PaddingValues;
+};
+
 export type ThemeVariantsConfig = {
     successFeedback: Variant;
     brandLoadingScreen: Variant;
@@ -113,6 +139,7 @@ export type Skin = {
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
+    spacing?: SpacingConfig;
 };
 
 export type KnownSkin = {
@@ -122,4 +149,5 @@ export type KnownSkin = {
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
+    spacing: SpacingConfig;
 };

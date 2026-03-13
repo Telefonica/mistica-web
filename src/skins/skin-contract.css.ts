@@ -1,6 +1,6 @@
 import {createThemeContract} from '@vanilla-extract/css';
 
-import type {BorderRadiiConfig, Colors, TextPresetsConfig} from './types';
+import type {BorderRadiiConfig, Colors, SpacingConfig, TextPresetsConfig} from './types';
 
 const colors: Colors = {
     background: '',
@@ -26,8 +26,16 @@ const colors: Colors = {
     backgroundSkeletonBrand: '',
     backgroundBrandTop: '',
     backgroundBrandBottom: '',
+    backgroundDropZoneHover: '',
+    backgroundDropZoneDragover: '',
+    backgroundDropZoneBrandHover: '',
+    backgroundDropZoneBrandDragover: '',
     appBarBackground: '',
     navigationBarBackground: '',
+    backgroundDropZoneNegativeHover: '',
+    backgroundDropZoneNegativeDragover: '',
+    backgroundDropZoneMediaHover: '',
+    backgroundDropZoneMediaDragover: '',
     skeletonWave: '',
     borderLow: '',
     border: '',
@@ -345,6 +353,18 @@ const textPresets: ToThemeTokens<TextPresetsConfig> = {
     },
 };
 
+const spacing: ToThemeTokens<SpacingConfig> = {
+    buttonDefaultPadding: {left: '', right: ''},
+    buttonSmallPadding: {left: '', right: ''},
+    cardDefaultPadding: {left: '', right: '', top: '', bottom: ''},
+    inputPadding: {top: '', bottom: ''},
+    tagPadding: {top: '', bottom: ''},
+    feedbackScreenPadding: {top: '', bottom: '', left: '', right: ''},
+    heroPadding: {top: '', bottom: ''},
+    headerPadding: {top: '', bottom: ''},
+    drawerPadding: {top: '', bottom: '', left: '', right: ''},
+};
+
 export const vars = createThemeContract({
     colors,
     /**
@@ -355,4 +375,5 @@ export const vars = createThemeContract({
     rawColors: colors,
     borderRadii,
     textPresets,
+    spacing,
 });

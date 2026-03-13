@@ -198,7 +198,7 @@ export const iconContainer = style({
     alignItems: 'center',
     justifyContent: 'center',
     // remove extra button space on the right so that icon is not too far from field's container
-    marginRight: -12,
+    marginRight: -14,
 });
 
 export const menuItem = style([

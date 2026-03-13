@@ -224,8 +224,12 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 <div className={styles.expandedContent}>
                                     <div
                                         style={{
-                                            paddingTop: 24,
-                                            paddingBottom: hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24,
+                                            paddingTop: skinVars.spacing.heroPadding.top,
+                                            paddingBottom: hasSlideshowBullets
+                                                ? 48
+                                                : noPaddingY
+                                                  ? 0
+                                                  : skinVars.spacing.heroPadding.bottom,
                                         }}
                                         className={styles.layout}
                                     >
@@ -277,8 +281,11 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         left={
                             <div
                                 style={{
-                                    paddingTop: noPaddingY ? 0 : 56,
-                                    paddingBottom: noPaddingY && !hasSlideshowBullets ? 0 : 56,
+                                    paddingTop: noPaddingY ? 0 : skinVars.spacing.heroPadding.top,
+                                    paddingBottom:
+                                        noPaddingY && !hasSlideshowBullets
+                                            ? 0
+                                            : skinVars.spacing.heroPadding.bottom,
                                 }}
                                 className={classnames(styles.container, styles.containerDesktop, {
                                     [styles.containerMinHeight]: !noPaddingY,
@@ -290,8 +297,11 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         right={
                             <div
                                 style={{
-                                    paddingTop: noPaddingY ? 0 : 56,
-                                    paddingBottom: noPaddingY && !hasSlideshowBullets ? 0 : 56,
+                                    paddingTop: noPaddingY ? 0 : skinVars.spacing.heroPadding.top,
+                                    paddingBottom:
+                                        noPaddingY && !hasSlideshowBullets
+                                            ? 0
+                                            : skinVars.spacing.heroPadding.bottom,
                                 }}
                                 className={classnames(styles.container, styles.containerDesktop)}
                             >
