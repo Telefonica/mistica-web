@@ -6,7 +6,7 @@ import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 import Inline from './inline';
 import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
-import {useScreenSize, useTheme} from './hooks';
+import {useElementDimensions, useScreenSize, useTheme} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
@@ -25,7 +25,7 @@ import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as tokens from './text-tokens';
-import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE} from './theme';
+import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import TextLink from './text-link';
 import {Title1, Title3} from './title';
 import {ButtonLink} from './button';
@@ -144,12 +144,14 @@ type WideConfig = {
 const NavigationBarSideMargins = ({
     children,
     wide,
+    backgroundColor,
 }: {
     children: React.ReactNode;
     wide: boolean | WideConfig;
+    backgroundColor?: string;
 }) => {
     if (!wide) {
-        return <ResponsiveLayout>{children}</ResponsiveLayout>;
+        return <ResponsiveLayout backgroundColor={backgroundColor}>{children}</ResponsiveLayout>;
     }
 
     const defaultWidePaddingX: BoxProps['paddingX'] = {
@@ -171,6 +173,7 @@ const NavigationBarSideMargins = ({
                             ...wide.paddingX,
                         }
             }
+            background={backgroundColor}
         >
             {children}
         </Box>
@@ -311,6 +314,8 @@ type MainNavigationBarProps = {
     sections?: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     right?: React.ReactElement;
+    topSlot?: React.ReactElement;
+    topSlotBackgroundColor?: string;
     logo?: React.ReactElement;
     variant?: Variant;
     children?: undefined;
@@ -441,6 +446,7 @@ const MainNavigationBarBurgerMenu = ({
     extra,
     closeMenu,
     open,
+    topSlotHeight,
     id,
     disableFocusTrap,
     setDisableFocusTrap,
@@ -449,6 +455,7 @@ const MainNavigationBarBurgerMenu = ({
     extra: React.ReactNode;
     closeMenu: () => void;
     open: boolean;
+    topSlotHeight: number;
     id: string;
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
@@ -509,7 +516,10 @@ const MainNavigationBarBurgerMenu = ({
                 >
                     <nav
                         className={styles.burgerMenu}
-                        style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
+                        style={{
+                            boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`,
+                            top: NAVBAR_HEIGHT_MOBILE + topSlotHeight,
+                        }}
                         id={id}
                         ref={menuRef}
                     >
@@ -864,18 +874,21 @@ const MainNavigationBarDesktopMenuContent = ({
     section,
     index,
     isLargeNavigationBar,
+    topSlotHeight,
     wide,
 }: {
     section: MainNavigationBarSection;
     index: number;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     wide: boolean | WideConfig;
 }): JSX.Element => {
     const menuRef = React.useRef<HTMLDivElement>(null);
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
 
     const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
     const bottomSpace = 40;
 
     const {menuStatus, isMenuOpen, openedSection, closeMenu, setIsMenuHovered, setMenuHeight} =
@@ -990,10 +1003,13 @@ const MainNavigationBarDesktopMenuContent = ({
 // when using the keyboard or a screen reader to navigate
 const MainNavigationBarDesktopMenuBackground = ({
     isLargeNavigationBar,
+    topSlotHeight,
 }: {
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
 }): JSX.Element => {
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
 
     return (
@@ -1013,15 +1029,18 @@ const MainNavigationBarDesktopMenuBackground = ({
 const MainNavigationBarDesktopSmallMenu = ({
     section,
     isLargeNavigationBar,
+    topSlotHeight,
     leftPosition,
     index,
 }: {
     section: MainNavigationBarSection;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     leftPosition: number;
     index: number;
 }): JSX.Element => {
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
     const bottomSpace = 40;
 
     const columns = section.menu?.columns || [];
@@ -1079,6 +1098,7 @@ const MainNavigationBarDesktopSection = ({
     navigationBarRef,
     variant,
     isLargeNavigationBar,
+    topSlotHeight,
     desktopLargeMenu,
     wide,
 }: {
@@ -1090,6 +1110,7 @@ const MainNavigationBarDesktopSection = ({
     navigationBarRef: React.RefObject<HTMLDivElement | null>;
     variant: NonDeprecatedVariant;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     desktopLargeMenu?: boolean;
     wide: boolean | WideConfig;
 }): JSX.Element => {
@@ -1269,6 +1290,7 @@ const MainNavigationBarDesktopSection = ({
                         <MainNavigationBarDesktopMenuContent
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
+                            topSlotHeight={topSlotHeight}
                             index={index}
                             wide={wide}
                         />
@@ -1276,6 +1298,7 @@ const MainNavigationBarDesktopSection = ({
                         <MainNavigationBarDesktopSmallMenu
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
+                            topSlotHeight={topSlotHeight}
                             leftPosition={smallMenuLeftPosition}
                             index={index}
                         />
@@ -1292,6 +1315,7 @@ const MainNavigationBarDesktopSections = ({
     navigationBarRef,
     variant,
     isLargeNavigationBar,
+    topSlotHeight,
     hasRightContent,
     desktopLargeMenu,
     wide,
@@ -1302,6 +1326,7 @@ const MainNavigationBarDesktopSections = ({
     variant: NonDeprecatedVariant;
     hasRightContent: boolean;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     desktopLargeMenu: boolean;
     wide: boolean | WideConfig;
 }): JSX.Element => {
@@ -1336,6 +1361,7 @@ const MainNavigationBarDesktopSections = ({
                         variant={variant}
                         section={section}
                         isLargeNavigationBar={isLargeNavigationBar}
+                        topSlotHeight={topSlotHeight}
                         desktopLargeMenu={desktopLargeMenu}
                         wide={wide}
                     />
@@ -1352,14 +1378,17 @@ const MainNavigationBarDesktopSections = ({
 const MainNavigationBarContentWrapper = ({
     children,
     isLargeNavigationBar,
+    topSlotHeight,
     desktopLargeMenu,
 }: {
     children: React.ReactNode;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     desktopLargeMenu: boolean;
 }): JSX.Element => {
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
 
     return (
         <div
@@ -1382,6 +1411,8 @@ export const MainNavigationBar = ({
     sections = [],
     selectedIndex,
     right,
+    topSlot,
+    topSlotBackgroundColor,
     variant = 'default',
     topFixed = true,
     withBorder = true,
@@ -1400,6 +1431,7 @@ export const MainNavigationBar = ({
     const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
     const [disableFocusTrap, setDisableFocusTrap] = React.useState(true);
     const navigationBarRef = React.useRef<HTMLDivElement>(null);
+    const {height: topSlotHeight, ref: topSlotRef} = useElementDimensions();
     const setModalState = useSetModalState();
 
     const normalizedVariant = normalizeVariant(variant);
@@ -1412,6 +1444,7 @@ export const MainNavigationBar = ({
             variant={normalizedVariant}
             hasRightContent={!!right}
             isLargeNavigationBar={hasBottomSections}
+            topSlotHeight={topSlotHeight}
             desktopLargeMenu={desktopLargeMenu}
             wide={wide}
         />
@@ -1439,12 +1472,21 @@ export const MainNavigationBar = ({
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
                 {desktopLargeMenu && (
-                    <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
+                    <MainNavigationBarDesktopMenuBackground
+                        isLargeNavigationBar={hasBottomSections}
+                        topSlotHeight={topSlotHeight}
+                    />
                 )}
                 <MainNavigationBarContentWrapper
                     isLargeNavigationBar={hasBottomSections}
+                    topSlotHeight={topSlotHeight}
                     desktopLargeMenu={desktopLargeMenu}
                 >
+                    {topSlot && (
+                        <NavigationBarSideMargins wide={wide} backgroundColor={topSlotBackgroundColor}>
+                            <div ref={topSlotRef}>{topSlot}</div>
+                        </NavigationBarSideMargins>
+                    )}
                     <NavigationBarSideMargins wide={wide}>
                         <NavigationBarContentContainer
                             ref={navigationBarRef}
@@ -1478,6 +1520,7 @@ export const MainNavigationBar = ({
                     </NavigationBarSideMargins>
                 </MainNavigationBarContentWrapper>
             </Header>
+            {topFixed && topSlotHeight > 0 && <div style={{height: topSlotHeight}} />}
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
         </ThemeVariant>
     );
@@ -1497,6 +1540,7 @@ export const MainNavigationBar = ({
                         sections={sections}
                         extra={burgerMenuExtra}
                         closeMenu={closeMenu}
+                        topSlotHeight={topSlotHeight}
                         disableFocusTrap={disableFocusTrap}
                         setDisableFocusTrap={setDisableFocusTrap}
                     />

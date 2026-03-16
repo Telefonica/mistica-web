@@ -241,3 +241,10 @@ export const backgroundImageOrVideoContainer = style([
         zIndex: 0,
     },
 ]);
+
+export const slotContainerSpaceBetween = sprinkles({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+});

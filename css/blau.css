@@ -269,6 +269,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey6);
     --mistica-color-textAppBar: var(--mistica-blau-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
+    --mistica-color-iosGlassAppBar: var(--mistica-blau-grey6);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
     --mistica-color-customTabsBackground: var(--mistica-blau-blauBluePrimary);
     --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple);
@@ -658,6 +659,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey2);
     --mistica-color-textAppBar: var(--mistica-blau-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-blau-grey2);
+    --mistica-color-iosGlassAppBar: var(--mistica-blau-white);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-white);
     --mistica-color-customTabsBackground: var(--mistica-blau-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple30);
@@ -956,6 +958,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey2);
         --mistica-color-textAppBar: var(--mistica-blau-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-blau-grey2);
+        --mistica-color-iosGlassAppBar: var(--mistica-blau-white);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-white);
         --mistica-color-customTabsBackground: var(--mistica-blau-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple30);
@@ -1247,6 +1250,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-blau-grey6);
         --mistica-color-textAppBar: var(--mistica-blau-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
+        --mistica-color-iosGlassAppBar: var(--mistica-blau-grey6);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-blau-blauBlueSecondary60);
         --mistica-color-customTabsBackground: var(--mistica-blau-blauBluePrimary);
         --mistica-color-tagTextPromo: var(--mistica-blau-blauPurple);

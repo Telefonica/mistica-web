@@ -2,11 +2,13 @@ export const mediaQueriesConfig: {
     tabletMinWidth: number;
     desktopMinWidth: number;
     largeDesktopMinWidth: number;
+    extraLargeDesktopMinWidth: number;
     desktopOrTabletMinHeight: number;
 } = {
     tabletMinWidth: 768,
     desktopMinWidth: 1024,
     largeDesktopMinWidth: 1512,
+    extraLargeDesktopMinWidth: 1832,
     desktopOrTabletMinHeight: 550,
     ...(process.env.MISTICA_MEDIA_QUERIES_CONFIG ? JSON.parse(process.env.MISTICA_MEDIA_QUERIES_CONFIG) : {}),
 };
@@ -25,6 +27,15 @@ export const desktop =
     `and (min-width: ${mediaQueriesConfig.desktopMinWidth}px) ` +
     `and (max-width: ${mediaQueriesConfig.largeDesktopMinWidth - 1}px)`;
 export const largeDesktop =
+    `only screen ` +
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.largeDesktopMinWidth}px) ` +
+    `and (max-width: ${mediaQueriesConfig.extraLargeDesktopMinWidth - 1}px)`;
+export const extraLargeDesktop =
+    `only screen ` +
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.extraLargeDesktopMinWidth}px)`;
+export const largeDesktopOrBigger =
     `only screen ` +
     `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
     `and (min-width: ${mediaQueriesConfig.largeDesktopMinWidth}px)`;

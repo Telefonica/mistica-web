@@ -401,7 +401,6 @@ export const burgerMenuButton = style({
 
 export const burgerMenu = sprinkles({
     position: 'fixed',
-    top: NAVBAR_HEIGHT_MOBILE,
     left: 0,
     right: 0,
     bottom: 0,
