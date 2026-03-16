@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, RadioGroup, RadioButton, Inline, Text3, IconHandRightRegular, ResponsiveLayout, Box} from '..';
+import {Stack, RadioGroup, RadioButton, Inline, Text3, Icon, ResponsiveLayout, Box} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -80,6 +80,8 @@ Uncontrolled.args = {
     variantOutside: 'default',
 };
 
+const IconHandRightRegular = () => <Icon name="hand-right-regular" size={20} />;
+
 export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) => {
     const [value, setValue] = React.useState('first');
     return (
@@ -101,7 +103,7 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
                                             <div
                                                 style={{visibility: value === 'first' ? 'visible' : 'hidden'}}
                                             >
-                                                <IconHandRightRegular size={20} />
+                                                <IconHandRightRegular />
                                             </div>
 
                                             {/* set the text id to match the radio button name, so this text can be linked as label for accessibility */}
@@ -122,7 +124,7 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
                                                     visibility: value === 'second' ? 'visible' : 'hidden',
                                                 }}
                                             >
-                                                <IconHandRightRegular size={20} />
+                                                <IconHandRightRegular />
                                             </div>
                                             {/* set the text id to match the radio button name, so this text can be linked as label for accessibility */}
                                             <Text3 regular id={labelId}>

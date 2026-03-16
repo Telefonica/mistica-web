@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, skinVars, Image, ButtonSecondary} from '..';
+import {EmptyStateCard, ButtonPrimary, ButtonLink, skinVars, Image, ButtonSecondary, Icon} from '..';
 import avatars4Img from './images/avatars4.png';
 
 export default {
@@ -28,7 +28,7 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
 
     if (asset === 'Icon') {
         assetProps = {
-            asset: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
+            asset: <Icon name="box-light" size="100%" color={skinVars.colors.brand} />,
         };
     } else if (asset === 'icon as Image') {
         assetProps = {

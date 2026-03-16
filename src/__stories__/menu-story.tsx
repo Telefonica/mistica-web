@@ -5,12 +5,12 @@ import {
     Stack,
     Inline,
     Text3,
-    IconKebabMenuLight,
     DataCard,
     Text2,
     MenuItem,
     IconLightningRegular,
     MenuSection,
+    Icon,
     useDialog,
 } from '..';
 
@@ -26,6 +26,8 @@ type MenuArgs = {
     icon: boolean;
     checkbox: boolean;
 };
+
+const IconKebabMenuLight = () => <Icon name="kebab-menu-light" />;
 
 export const Default: StoryComponent<MenuArgs> = ({
     menuOptionsCount,

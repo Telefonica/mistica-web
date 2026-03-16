@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Callout, ButtonPrimary, ButtonLink, IconBoxLight, ResponsiveLayout, Box, ButtonSecondary} from '..';
+import {Callout, ButtonPrimary, ButtonLink, ResponsiveLayout, Box, ButtonSecondary, Icon} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -64,7 +64,7 @@ export const Default: StoryComponent<Args> = ({
             <Box paddingY={24}>
                 <Callout
                     variant={variant}
-                    asset={asset ? <IconBoxLight /> : undefined}
+                    asset={asset ? <Icon name="box-light" /> : undefined}
                     onClose={closable ? () => {} : undefined}
                     title={title}
                     description={description}

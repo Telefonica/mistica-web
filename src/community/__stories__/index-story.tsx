@@ -10,11 +10,10 @@ import {
     CoverCard,
     Tag,
     IconCreditCardVisaRegular,
-    IconBarChartRegular,
     UnorderedList,
     ListItem,
     Title4,
-    IconWorkflowRegular,
+    Icon,
 } from '../..';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -110,7 +109,7 @@ export const Default: StoryComponent = () => {
                                     href: 'https://preframeworkbrasilsa.telefonicabigdata.com/fb-core/storybooks/lib/feat/TMNT-63/index.html?path=/story/welcome--welcome',
                                 },
                                 {
-                                    asset: <IconBarChartRegular size={40} />,
+                                    asset: <Icon name="bar-chart-regular" size={40} />,
                                     title: 'Novum Extended',
                                     subtitle: 'TCX Design Team',
                                     description: 'cx-product-design@telefonica.com',
@@ -124,7 +123,7 @@ export const Default: StoryComponent = () => {
                                     href: 'https://global-checkout.vercel.app/?path=/story/management-steps-bank-account-list--multiple-bank-accounts',
                                 },
                                 {
-                                    asset: <IconWorkflowRegular size={40} />,
+                                    asset: <Icon name="workflow-regular" size={40} />,
                                     title: 'CMS Extended',
                                     subtitle: 'TCX Design Team',
                                     description: 'cx-product-design@telefonica.com',

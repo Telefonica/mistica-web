@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ResponsiveLayout, Box} from '..';
+import {Avatar, IconStarFilled, ResponsiveLayout, Box, Icon} from '..';
 import avatarImg from './images/avatar.jpg';
 
 import type {Variant} from '../theme-variant-context';
@@ -43,6 +43,9 @@ type Args = {
     border: boolean;
 };
 
+const IconFireRegular = () => <Icon name="fire-regular" />;
+const IconBrainRegular = () => <Icon name="brain-regular" />;
+
 export const Default: StoryComponent<Args> = ({
     size,
     initials,
@@ -57,7 +60,11 @@ export const Default: StoryComponent<Args> = ({
 }) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
-    const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
+    const Icon = {
+        IconStarFilled,
+        IconFireRegular,
+        IconBrainRegular,
+    }[icon];
 
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>

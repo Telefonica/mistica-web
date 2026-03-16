@@ -337,3 +337,6 @@ export {default as IconTrashCanRegular} from './generated/mistica-icons/icon-tra
 export {default as IconUserAccountRegular} from './generated/mistica-icons/icon-user-account-regular';
 export {default as IconVideoRegular} from './generated/mistica-icons/icon-video-regular';
 export {default as IconWarningRegular} from './generated/mistica-icons/icon-warning-regular';
+export {default as IconLightningFilled} from './generated/mistica-icons/icon-lightning-filled';
+export {default as IconLightningRegular} from './generated/mistica-icons/icon-lightning-regular';
+export {default as IconMobileDeviceRegular} from './generated/mistica-icons/icon-mobile-device-regular';

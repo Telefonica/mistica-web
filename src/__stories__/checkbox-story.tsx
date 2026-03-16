@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Checkbox, Text3, Inline, IconCheckRegular, IconCloseRegular, ResponsiveLayout, Box} from '..';
+import {Checkbox, Text3, Inline, IconCloseRegular, ResponsiveLayout, Box, Icon} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -72,7 +72,7 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
                             <div style={{opacity: disabled ? 0.5 : undefined}}>
                                 <Inline alignItems="center" space={16}>
                                     {checked ? (
-                                        <IconCheckRegular size={18} />
+                                        <Icon name="check-regular" size={18} />
                                     ) : (
                                         <IconCloseRegular size={18} />
                                     )}

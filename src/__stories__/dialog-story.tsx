@@ -1,15 +1,5 @@
 import * as React from 'react';
-import {
-    ButtonPrimary,
-    ButtonLayout,
-    useDialog,
-    IconInformationUserLight,
-    ButtonLink,
-    Stack,
-    skinVars,
-    Select,
-    Text1,
-} from '..';
+import {ButtonPrimary, ButtonLayout, useDialog, Icon, ButtonLink, Stack, skinVars, Select, Text1} from '..';
 
 export default {
     title: 'Components/Modals',
@@ -121,7 +111,7 @@ export const Dialog: StoryComponent<DialogArgs> = ({
                             ) : undefined,
                             link: link ? <ButtonLink href="https://google.com">Link</ButtonLink> : undefined,
                             asset: asset ? (
-                                <IconInformationUserLight color={skinVars.colors.brand} />
+                                <Icon name="information-user-light" color={skinVars.colors.brand} />
                             ) : undefined,
                             onAccept: onAccept ? () => console.log('Accepted') : undefined,
                             onCancel: onCancel ? () => console.log('Canceled') : undefined,

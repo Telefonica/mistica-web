@@ -7,7 +7,7 @@ import {
     ResponsiveLayout,
     Placeholder,
     Callout,
-    IconInformationUserLight,
+    Icon,
     Tag,
 } from '..';
 
@@ -91,7 +91,7 @@ export const Default: StoryComponent<Args> = ({
             />
             <ResponsiveLayout>
                 <Callout
-                    asset={<IconInformationUserLight />}
+                    asset={<Icon name="information-user-light" />}
                     title="Note:"
                     description="A HeaderLayout can be rendered without a Header (in webviews) to allow delegating the
                         header visualization to the native app. For example, in Novum App (Mi Movistar, Meu

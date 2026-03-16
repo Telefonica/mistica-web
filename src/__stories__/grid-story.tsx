@@ -1,16 +1,5 @@
 import * as React from 'react';
-import {
-    Grid,
-    GridItem,
-    Stack,
-    Box,
-    SnapCard,
-    Circle,
-    IconAcademicRegular,
-    skinVars,
-    ResponsiveLayout,
-    Title1,
-} from '..';
+import {Grid, GridItem, Stack, Box, SnapCard, Circle, Icon, skinVars, ResponsiveLayout, Title1} from '..';
 
 export default {
     title: 'Layout/Grid',
@@ -30,6 +19,8 @@ type Args = {
     gap: React.ComponentProps<typeof Grid>['gap'];
 };
 
+const IconAcademicRegularBrand = () => <Icon name="academic-regular" color={skinVars.colors.brand} />;
+
 export const Default: StoryComponent<Args> = ({gap}) => (
     <ResponsiveLayout>
         <Box paddingY={24}>
@@ -41,7 +32,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 1"
@@ -52,7 +43,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 2"
@@ -63,7 +54,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 3"
@@ -74,7 +65,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 4"
@@ -85,7 +76,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 5"
@@ -96,7 +87,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 6"
@@ -113,7 +104,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 1"
@@ -124,7 +115,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 2"
@@ -135,7 +126,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 3"
@@ -146,7 +137,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 4"
@@ -157,7 +148,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 5"
@@ -168,7 +159,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 6"
@@ -185,7 +176,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 1"
@@ -196,7 +187,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 2"
@@ -207,7 +198,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             <SnapCard
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                        <IconAcademicRegular color={skinVars.colors.brand} />
+                                        <IconAcademicRegularBrand />
                                     </Circle>
                                 }
                                 title="Title 3"
@@ -242,7 +233,7 @@ export const AutoColumns: StoryComponent<AutoColumnsArgs> = ({gap, columnsMinSiz
                         key={idx}
                         asset={
                             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                <IconAcademicRegular color={skinVars.colors.brand} />
+                                <IconAcademicRegularBrand />
                             </Circle>
                         }
                         title={`Title ${idx + 1}`}

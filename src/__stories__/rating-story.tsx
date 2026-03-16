@@ -1,23 +1,9 @@
 import * as React from 'react';
-import {
-    Box,
-    IconBatteryChargingFilled,
-    IconBatteryChargingRegular,
-    IconBatteryFullFilled,
-    IconBatteryFullRegular,
-    IconBatteryLowFilled,
-    IconBatteryLowRegular,
-    IconBatteryMediumFilled,
-    IconBatteryMediumRegular,
-    IconCheckedFilled,
-    IconCheckedRegular,
-    InfoRating,
-    Rating,
-    ResponsiveLayout,
-} from '..';
+import {Box, Icon, InfoRating, Rating, ResponsiveLayout} from '..';
 import {vars} from '../skins/skin-contract.css';
 
 import type {Variant} from '../theme-variant-context';
+import type {IconPropsWithoutName} from '../icon';
 
 export default {
     title: 'Components/Rating',
@@ -32,6 +18,27 @@ type RatingArgs = {
     disabled: boolean;
     customIcons: boolean;
 };
+
+const IconBatteryChargingFilled = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="battery-charging-filled" />
+);
+const IconBatteryChargingRegular = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="battery-charging-regular" />
+);
+const IconBatteryLowFilled = (props: IconPropsWithoutName) => <Icon {...props} name="battery-low-filled" />;
+const IconBatteryLowRegular = (props: IconPropsWithoutName) => <Icon {...props} name="battery-low-regular" />;
+const IconBatteryMediumFilled = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="battery-medium-filled" />
+);
+const IconBatteryMediumRegular = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="battery-medium-regular" />
+);
+const IconBatteryFullFilled = (props: IconPropsWithoutName) => <Icon {...props} name="battery-full-filled" />;
+const IconBatteryFullRegular = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="battery-full-regular" />
+);
+const IconCheckedFilled = (props: IconPropsWithoutName) => <Icon {...props} name="checked-filled" />;
+const IconCheckedRegular = (props: IconPropsWithoutName) => <Icon {...props} name="checked-regular" />;
 
 export const RatingStory: StoryComponent<RatingArgs> = ({
     variantOutside,

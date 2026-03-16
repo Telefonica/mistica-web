@@ -19,6 +19,8 @@ export interface IconProps {
     dataAttributes?: DataAttributes;
 }
 
+export type IconPropsWithoutName = Omit<React.ComponentProps<typeof Icon>, 'name'>;
+
 type ErrorFallbackIconProps = {
     className?: string;
     style?: React.CSSProperties;

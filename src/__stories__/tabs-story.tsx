@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-    Box,
-    IconAppointmentRegular,
-    IconBrainRegular,
-    IconBusRegular,
-    ResponsiveLayout,
-    Tabs,
-    Text3,
-} from '..';
+import {Box, Icon, ResponsiveLayout, Tabs, Text3} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -36,6 +28,10 @@ type Args = {
     variantOutside: Variant;
     icon: boolean;
 };
+
+const IconAppointmentRegular = () => <Icon name="appointment-regular" />;
+const IconBrainRegular = () => <Icon name="brain-regular" />;
+const IconBusRegular = () => <Icon name="bus-regular" />;
 
 export const Default: StoryComponent<Args> = ({tabCount, text, variantOutside, icon}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
