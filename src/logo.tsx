@@ -211,7 +211,7 @@ const MaybeTouchableLogo = (
     const dataAttributes = getPrefixedDataAttributes(props.dataAttributes, 'Logo');
 
     if (props.to || props.href || props.onPress) {
-        return <Touchable {...props} />;
+        return <Touchable {...props} />; // TODO: I think this should also have a suspense wrapper
     }
 
     return (
