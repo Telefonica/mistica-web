@@ -12,8 +12,10 @@ import {
     Stack,
     IconStarFilled,
     IconStarRegular,
+    Icon,
 } from '..';
-import Icon, {IconPropsWithoutName} from '../icon';
+
+import type {IconPropsWithoutName} from '../icon';
 
 export default {
     title: 'Private/Deprecated Card Stories/Utils/CardActionIconButton',
