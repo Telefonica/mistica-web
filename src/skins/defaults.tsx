@@ -1,4 +1,4 @@
-import type {BorderRadiiConfig, TextPresetsConfig, ThemeVariantsConfig} from './types';
+import type {BorderRadiiConfig, SpacingConfig, TextPresetsConfig, ThemeVariantsConfig} from './types';
 
 export const defaultTextPresetsConfig: TextPresetsConfig = {
     text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
@@ -14,7 +14,20 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     cardTitle: {weight: 'regular'},
     rowTitle: {weight: 'regular'},
     button: {weight: 'medium'},
+    cardDescriptionDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    cardDescriptionSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    cardPretitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    cardPretitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    cardSubtitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    cardSubtitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 20, mobile: 18}},
+    cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
     link: {weight: 'medium'},
+    drawerTitle: {
+        lineHeight: {desktop: 32, mobile: 24},
+        size: {desktop: 28, mobile: 20},
+        weight: 'bold',
+    },
     title1: {
         lineHeight: {desktop: 20, mobile: 16},
         size: {desktop: 14, mobile: 12},
@@ -61,4 +74,31 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
 export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
     brandLoadingScreen: 'inverse',
     successFeedback: 'inverse',
+};
+
+export const defaultSpacing: SpacingConfig = {
+    buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+    buttonSmallPadding: {left: {mobile: 8, desktop: 12}, right: {mobile: 8, desktop: 12}},
+    cardDefaultPadding: {
+        top: {mobile: 16, desktop: 16},
+        bottom: {mobile: 16, desktop: 16},
+        left: {mobile: 16, desktop: 16},
+        right: {mobile: 16, desktop: 16},
+    },
+    inputPadding: {top: {mobile: 9, desktop: 3}, bottom: {mobile: 9, desktop: 3}},
+    tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
+    feedbackScreenPadding: {
+        top: {mobile: 64, desktop: 40},
+        bottom: {mobile: 16, desktop: 40},
+        left: {mobile: 16, desktop: 40},
+        right: {mobile: 16, desktop: 40},
+    },
+    heroPadding: {top: {mobile: 16, desktop: 56}, bottom: {mobile: 16, desktop: 56}},
+    headerPadding: {top: {mobile: 16, desktop: 48}, bottom: {mobile: 16, desktop: 48}},
+    drawerPadding: {
+        top: {mobile: 32, desktop: 32},
+        bottom: {mobile: 16, desktop: 32},
+        left: {mobile: 16, desktop: 24},
+        right: {mobile: 16, desktop: 24},
+    },
 };

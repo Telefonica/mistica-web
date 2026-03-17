@@ -257,6 +257,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
                                   }
                         )}
                         key={i}
+                        data-testid={currentIndex === i ? 'active-bullet' : 'bullet'}
                         style={{
                             ...applyCssVars({
                                 [styles.vars.desktopBulletLeftPosition]:

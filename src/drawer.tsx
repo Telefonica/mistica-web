@@ -2,11 +2,10 @@
 'use client';
 import * as React from 'react';
 import Stack from './stack';
-import {Text3, Text4, Text5} from './text';
+import {getTextSizesWithWeight, Text3, Text4, Text} from './text';
 import {vars} from './skins/skin-contract.css';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import Box from './box';
 import * as styles from './drawer.css';
 import classnames from 'classnames';
 import {Portal} from './portal';
@@ -20,13 +19,6 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
 import type {DataAttributes, HeadingType, TrackingEvent} from './utils/types';
-
-const PADDING_X_DESKTOP = 40;
-const PADDING_X_TABLET = 32;
-const PADDING_X_MOBILE = 16;
-const WIDTH_CONTENT = 388;
-const MIN_WIDTH_DESKTOP = WIDTH_CONTENT + PADDING_X_DESKTOP * 2;
-const MIN_WIDTH_TABLET = WIDTH_CONTENT + PADDING_X_TABLET * 2;
 
 /**
  * Renders divider or a div with transparent border to avoid the small but noticeable layout shift on scroll
@@ -63,9 +55,8 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
     ({width, children, onClose, onDismiss}, ref) => {
         useSetModalStateEffect();
         useRestoreFocus();
-        const {isMobile, isTablet} = useScreenSize();
+        const {isMobile} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
-        const minWidthStyle = isMobile ? 'none' : isTablet ? MIN_WIDTH_TABLET : MIN_WIDTH_DESKTOP;
         const widthStyle = isMobile ? 'auto' : width;
 
         const open = React.useCallback((node: HTMLDivElement) => {
@@ -117,7 +108,7 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                     <div
                         data-testid="drawerLayout"
                         ref={open}
-                        style={{width: widthStyle, minWidth: minWidthStyle}}
+                        style={{width: widthStyle}}
                         className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
                     >
                         {children}
@@ -189,13 +180,7 @@ const Drawer = ({
     const [scrollableParentElement, setScrollableParentElement] = React.useState<HTMLElement | null>(null);
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
-    const {t, texts} = useTheme();
-
-    const paddingX = {
-        mobile: PADDING_X_MOBILE,
-        tablet: PADDING_X_TABLET,
-        desktop: PADDING_X_DESKTOP,
-    } as const;
+    const {t, texts, textPresets} = useTheme();
 
     const handleButtonPress = (pressHandlerFromProps?: () => unknown) => {
         layoutRef.current?.close().then(() => pressHandlerFromProps?.());
@@ -232,18 +217,20 @@ const Drawer = ({
                     </div>
                 )}
                 {title && (
-                    <div className={styles.titleContainer}>
-                        <Box paddingX={paddingX}>
-                            <Text5 as={titleAs} dataAttributes={{testid: 'title'}}>
-                                {title}
-                            </Text5>
-                        </Box>
+                    <div className={classnames(styles.titleContainer, styles.horizontalPadding)}>
+                        <Text
+                            {...getTextSizesWithWeight({textPreset: textPresets.drawerTitle})}
+                            as={titleAs}
+                            dataAttributes={{testid: 'title'}}
+                        >
+                            {title}
+                        </Text>
                     </div>
                 )}
                 <MaybeDivider show={showTitleDivider} />
                 <div className={styles.scrollableSection}>
                     <div ref={topScrollSignalRef} />
-                    <Box paddingX={paddingX}>
+                    <div className={styles.horizontalPadding}>
                         <Stack space={16}>
                             {subtitle && (
                                 <Text4 regular dataAttributes={{testid: 'subtitle'}}>
@@ -261,13 +248,13 @@ const Drawer = ({
                             )}
                             {children}
                         </Stack>
-                    </Box>
-                    {!hasActions && <Box paddingBottom={{mobile: 16, desktop: 24}} />}
+                    </div>
+                    {!hasActions && <div className={styles.bottomPadding} />}
                     <div ref={bottomScrollSignalRef} />
                 </div>
                 <MaybeDivider show={hasActions && showButtonsDivider} />
                 {hasActions && (
-                    <Box paddingX={paddingX} paddingY={{mobile: 16, desktop: 24}}>
+                    <div className={styles.buttonsLayoutContainer}>
                         <ButtonLayout
                             primaryButton={
                                 button && (
@@ -307,7 +294,7 @@ const Drawer = ({
                                 )
                             }
                         />
-                    </Box>
+                    </div>
                 )}
             </section>
         </DrawerLayout>

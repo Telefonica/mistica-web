@@ -536,6 +536,28 @@ test('DateTimeField', async () => {
     expect(filledScreenshot).toMatchImageSnapshot();
 });
 
+test('TimeField', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-timefield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {defaultValue: ''},
+    });
+
+    const fieldWrapper = await screen.findByTestId('time-field');
+    const field = await screen.findByLabelText('Label');
+
+    const emptyScreenshot = await fieldWrapper.screenshot();
+
+    expect(emptyScreenshot).toMatchImageSnapshot();
+
+    await field.focus();
+    await field.type('09' + '00');
+
+    const filledScreenshot = await fieldWrapper.screenshot();
+
+    expect(filledScreenshot).toMatchImageSnapshot();
+});
+
 test('MonthField', async () => {
     const page = await openStoryPage({
         id: 'components-input-fields-monthfield--uncontrolled',

@@ -45,7 +45,7 @@ const IconInformationUserRegular = ({color, size = 24, ...rest}: IconProps): JSX
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 17.356a.72.72 0 0 1-.716-.716V9.856c0-.392.32-.716.716-.716.392 0 .716.32.716.716v6.784a.72.72 0 0 1-.716.716M12 8.072a.892.892 0 1 0 0-1.784.892.892 0 0 0 0 1.784"
+                    d="M12 17.356a.72.72 0 0 1-.716-.716V9.856c0-.392.32-.716.716-.716.392 0 .716.32.716.716v6.784a.72.72 0 0 1-.716.716m0-9.284a.892.892 0 1 0 0-1.784.892.892 0 0 0 0 1.784"
                 />
                 <path
                     fill={fillColor}
@@ -58,7 +58,7 @@ const IconInformationUserRegular = ({color, size = 24, ...rest}: IconProps): JSX
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 17.356a.72.72 0 0 1-.716-.716V9.856c0-.392.32-.716.716-.716.392 0 .716.32.716.716v6.784a.72.72 0 0 1-.716.716M12 8.072a.892.892 0 1 0 0-1.784.892.892 0 0 0 0 1.784"
+                    d="M12 17.356a.72.72 0 0 1-.716-.716V9.856c0-.392.32-.716.716-.716.392 0 .716.32.716.716v6.784a.72.72 0 0 1-.716.716m0-9.284a.892.892 0 1 0 0-1.784.892.892 0 0 0 0 1.784"
                 />
                 <path
                     fill={fillColor}
@@ -71,7 +71,7 @@ const IconInformationUserRegular = ({color, size = 24, ...rest}: IconProps): JSX
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2M12 16.75a.75.75 0 0 1-.75-.75v-4.241a.75.75 0 0 1 1.5 0V16a.75.75 0 0 1-.75.75"
+                    d="M12 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2m0 7.75a.75.75 0 0 1-.75-.75v-4.241a.75.75 0 0 1 1.5 0V16a.75.75 0 0 1-.75.75"
                 />
                 <path
                     fill={fillColor}

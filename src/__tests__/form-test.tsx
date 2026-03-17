@@ -11,6 +11,7 @@ import {
     PhoneNumberField,
     DateField,
     DateTimeField,
+    TimeField,
     Select,
     MonthField,
 } from '..';
@@ -351,11 +352,13 @@ test.each`
     platform     | type                | expectedFocus
     ${'ios'}     | ${'date'}           | ${false}
     ${'ios'}     | ${'datetime-local'} | ${false}
+    ${'ios'}     | ${'time'}           | ${false}
     ${'ios'}     | ${'month'}          | ${false}
     ${'ios'}     | ${'select'}         | ${false}
     ${'ios'}     | ${'text'}           | ${true}
     ${'android'} | ${'date'}           | ${true}
     ${'android'} | ${'datetime-local'} | ${true}
+    ${'android'} | ${'time'}           | ${true}
     ${'android'} | ${'month'}          | ${true}
     ${'android'} | ${'select'}         | ${true}
     ${'android'} | ${'text'}           | ${true}
@@ -366,6 +369,7 @@ test.each`
                 <Form onSubmit={() => {}}>
                     {type === 'date' && <DateField label="Field" name="field" />}
                     {type === 'datetime-local' && <DateTimeField label="Field" name="field" />}
+                    {type === 'time' && <TimeField label="Field" name="field" />}
                     {type === 'month' && <MonthField label="Field" name="field" />}
                     {type === 'select' && (
                         <Select name="field" label="Field" options={[{value: '1', text: '1'}]} />

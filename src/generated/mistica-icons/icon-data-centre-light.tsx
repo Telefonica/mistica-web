@@ -45,7 +45,7 @@ const IconDataCentreLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M7 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2M17 15.25a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1 0-1.5zM7 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2M17 7.25a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1 0-1.5z"
+                    d="M7 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2m10 .25a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1 0-1.5zM7 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2m10 .25a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1 0-1.5z"
                 />
                 <path
                     fill={fillColor}

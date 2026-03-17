@@ -54,11 +54,17 @@ export type MediaPosition = 'top' | 'left' | 'right';
 /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
 export type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
-export type SlotAlignment = 'content' | 'bottom';
+export type SlotAlignment = 'content' | 'bottom' | 'space-between';
 
 export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimary>;
 export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
 export type CardActionButtonLink = RendersNullableElement<typeof ButtonLink>;
+
+type CardVideoProps = {
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
+    videoDataAttributes?: DataAttributes;
+};
 
 type ContainerProps = {
     type: CardType;
@@ -98,7 +104,7 @@ type MediaProps = {
     /** Ignored when mediaPosition === 'top' */
     mediaWidth?: string | number;
     circledImage?: boolean;
-};
+} & CardVideoProps;
 
 type TextContentProps = {
     type: CardType;
@@ -136,6 +142,7 @@ type FooterProps = {
     footerSlot?: React.ReactNode;
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
+    footerDivider?: boolean;
 };
 
 type NoChildrenProps = {
@@ -349,19 +356,12 @@ const BackgroundImageOrVideo = ({
     );
 };
 
-type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
+type VideoState = 'loading' | 'playing' | 'paused' | 'error';
 
-type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
+type VideoAction = 'play' | 'pause' | 'fail' | 'reset';
 
 const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
     loading: {
-        showSpinner: 'loadingTimeout',
-        play: 'playing',
-        pause: 'paused',
-        fail: 'error',
-    },
-
-    loadingTimeout: {
         play: 'playing',
         pause: 'paused',
         fail: 'error',
@@ -396,57 +396,91 @@ const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={colo
 
 const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
 
-export const useVideoWithControls = (
-    videoSrc?: VideoSource,
-    poster?: string,
-    videoRef?: React.RefObject<VideoElement>,
-    autoHeight?: boolean
-): {
+export const useVideoWithControls = ({
+    src,
+    poster,
+    ref: videoRef,
+    autoHeight,
+    loop,
+    autoPlay,
+    dataAttributes,
+}: {
+    src?: VideoSource;
+    poster?: string;
+    ref?: React.RefObject<VideoElement>;
+    autoHeight?: boolean;
+    loop?: boolean;
+    autoPlay?: boolean;
+    dataAttributes?: DataAttributes;
+}): {
     video?: React.ReactNode;
     videoAction?: CardAction;
 } => {
     const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
+    const initialLoadDoneRef = React.useRef(false);
     const [videoStatus, dispatch] = React.useReducer(
         videoReducer,
         process.env.NODE_ENV === 'test' ? 'playing' : 'loading'
     );
 
     React.useEffect(() => {
-        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
+        initialLoadDoneRef.current = false;
         videoController.current?.load();
 
         return () => {
-            clearTimeout(loadingTimeoutId);
             dispatch('reset');
         };
-    }, [videoSrc]);
+    }, [src]);
 
     const video = React.useMemo(() => {
-        return videoSrc !== undefined ? (
+        if (src === undefined) {
+            return undefined;
+        }
+
+        const handleLoadedData = () => {
+            // When autoPlay is false, the video loads but doesn't play.
+            // We need to transition to 'paused' state to show the play button instead of spinner.
+            // We use initialLoadDoneRef to ensure this only happens once per video source,
+            // because Chrome can fire onCanPlayThrough multiple times for network videos,
+            // which would revert the card to 'paused' state even while the video is playing.
+            if (autoPlay === false && !initialLoadDoneRef.current) {
+                initialLoadDoneRef.current = true;
+                dispatch('pause');
+            }
+        };
+
+        return (
             <Video
                 ref={combineRefs(videoController, videoRef)}
-                src={videoSrc}
+                src={src}
                 poster={poster}
                 width="100%"
                 height={autoHeight ? undefined : '100%'}
+                loop={loop}
+                autoPlay={autoPlay}
+                dataAttributes={dataAttributes}
+                onLoad={handleLoadedData}
                 onError={() => dispatch('fail')}
                 onPause={() => dispatch('pause')}
                 onPlay={() => dispatch('play')}
             />
-        ) : undefined;
-    }, [videoRef, videoSrc, poster, autoHeight]);
+        );
+    }, [videoRef, src, poster, autoHeight, loop, autoPlay, dataAttributes]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;
-        if (video) {
-            if (videoStatus === 'loading') {
-                dispatch('showSpinner');
-            } else if (videoStatus === 'paused') {
-                video.play();
-            } else if (videoStatus === 'playing') {
-                video.pause();
-            }
+        if (!video) {
+            return;
+        }
+
+        if (videoStatus === 'playing') {
+            video.pause();
+        } else {
+            video.play().then(
+                () => dispatch('play'),
+                () => {}
+            );
         }
     };
 
@@ -454,24 +488,21 @@ export const useVideoWithControls = (
         return {video};
     }
 
+    const isVideoLoading = videoStatus === 'loading';
+
     const videoAction: CardAction | undefined = video
         ? {
               uncheckedProps: {
                   Icon:
-                      videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
-                          ? CardActionSpinner
-                          : CardActionPauseIcon,
-                  label:
-                      videoStatus === 'loadingTimeout'
-                          ? ''
-                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
+                      isVideoLoading && !isRunningAcceptanceTest() ? CardActionSpinner : CardActionPauseIcon,
+                  label: isVideoLoading ? '' : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
                   label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
               },
               onChange: onVideoControlPress,
-              disabled: isRunningAcceptanceTest() ? false : videoStatus === 'loadingTimeout',
+              disabled: isRunningAcceptanceTest() ? false : isVideoLoading,
               checked: videoStatus === 'paused',
           }
         : undefined;
@@ -743,6 +774,7 @@ const Footer = ({
     hasBackgroundImageOrVideo,
     footerVariant,
     footerBackgroundColor,
+    footerDivider,
     externalVariant,
     overlayColor,
 }: FooterProps & ButtonsProps & PrivateFooterProps): JSX.Element => {
@@ -765,6 +797,7 @@ const Footer = ({
                   ? skinVars.colors.backgroundContainerBrandOverBrand
                   : skinVars.colors.backgroundContainerBrand
             : undefined);
+    const withDivider = footerDivider ?? !backgroundColor;
 
     return (
         <ThemeVariant variant={footerVariant || variant}>
@@ -781,16 +814,19 @@ const Footer = ({
                 <div
                     // The divider is outside the footer because it has a conditional right margin
                     style={{
-                        borderTop: backgroundColor ? undefined : `1px solid ${dividerColor}`,
+                        borderTop: withDivider ? `1px solid ${dividerColor}` : undefined,
                         marginRight: isNaked ? 16 : 0,
                     }}
                 />
                 <div
                     data-testid="footer"
-                    className={classnames({[styles.containerPaddingXVariants[size]]: !isNaked})}
+                    className={classnames({
+                        [styles.containerPaddingXVariants[size]]: !isNaked,
+                        [styles.containerPaddingBottomVariants[size]]: !isNaked,
+                    })}
                     style={{
                         paddingTop: 16,
-                        paddingBottom: isNaked ? 0 : 16,
+                        paddingBottom: isNaked ? 0 : undefined,
                         paddingRight: isNaked ? 16 : undefined,
                     }}
                 >
@@ -894,61 +930,61 @@ const TextContent = ({
     const textVariants = {
         snap: {
             pretitle: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardPretitleSnap.size.mobile,
+                desktopSize: textPresets.cardPretitleSnap.size.desktop,
+                mobileLineHeight: textPresets.cardPretitleSnap.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardPretitleSnap.lineHeight.desktop,
                 weight: 'regular',
             },
             title: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardTitleSnap.size.mobile,
+                desktopSize: textPresets.cardTitleSnap.size.desktop,
+                mobileLineHeight: textPresets.cardTitleSnap.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardTitleSnap.lineHeight.desktop,
                 weight: textPresets.cardTitle.weight,
             },
             subtitle: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardSubtitleSnap.size.mobile,
+                desktopSize: textPresets.cardSubtitleSnap.size.desktop,
+                mobileLineHeight: textPresets.cardSubtitleSnap.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardSubtitleSnap.lineHeight.desktop,
                 weight: 'regular',
             },
             description: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardDescriptionSnap.size.mobile,
+                desktopSize: textPresets.cardDescriptionSnap.size.desktop,
+                mobileLineHeight: textPresets.cardDescriptionSnap.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardDescriptionSnap.lineHeight.desktop,
                 weight: 'regular',
             },
         },
         default: {
             pretitle: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardPretitleDefault.size.mobile,
+                desktopSize: textPresets.cardPretitleDefault.size.desktop,
+                mobileLineHeight: textPresets.cardPretitleDefault.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardPretitleDefault.lineHeight.desktop,
                 weight: 'regular',
             },
             title: {
-                mobileSize: textPresets.text4.size.mobile,
-                desktopSize: textPresets.text4.size.desktop,
-                mobileLineHeight: textPresets.text4.lineHeight.mobile,
-                desktopLineHeight: textPresets.text4.lineHeight.desktop,
+                mobileSize: textPresets.cardTitleDefault.size.mobile,
+                desktopSize: textPresets.cardTitleDefault.size.desktop,
+                mobileLineHeight: textPresets.cardTitleDefault.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardTitleDefault.lineHeight.desktop,
                 weight: textPresets.cardTitle.weight,
             },
             subtitle: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardSubtitleDefault.size.mobile,
+                desktopSize: textPresets.cardSubtitleDefault.size.desktop,
+                mobileLineHeight: textPresets.cardSubtitleDefault.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardSubtitleDefault.lineHeight.desktop,
                 weight: 'regular',
             },
             description: {
-                mobileSize: textPresets.text2.size.mobile,
-                desktopSize: textPresets.text2.size.desktop,
-                mobileLineHeight: textPresets.text2.lineHeight.mobile,
-                desktopLineHeight: textPresets.text2.lineHeight.desktop,
+                mobileSize: textPresets.cardDescriptionDefault.size.mobile,
+                desktopSize: textPresets.cardDescriptionDefault.size.desktop,
+                mobileLineHeight: textPresets.cardDescriptionDefault.lineHeight.mobile,
+                desktopLineHeight: textPresets.cardDescriptionDefault.lineHeight.desktop,
                 weight: 'regular',
             },
         },
@@ -1132,6 +1168,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             footerBackgroundColor,
             footerVariant,
             footerSlot,
+            footerDivider,
             topActions,
             onClose,
             closeButtonLabel,
@@ -1140,6 +1177,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             'aria-description': ariaDescriptionProp,
             'aria-describedby': ariaDescribedByProp,
             gradientOverlayColor,
+            videoLoop,
+            videoAutoPlay,
+            videoDataAttributes,
             ...touchableProps
         },
         ref
@@ -1171,12 +1211,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const hasBackgroundImageOrVideo = hasBackgroundImage || hasBackgroundVideo;
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
-        const {video, videoAction} = useVideoWithControls(
-            shouldShowVideo ? videoSrc : undefined,
-            imageSrc,
-            videoRef,
-            type === 'cover' || mediaPosition !== 'top' ? false : aspectRatioToNumber(mediaAspectRatio) === 0
-        );
+        const {video, videoAction} = useVideoWithControls({
+            src: shouldShowVideo ? videoSrc : undefined,
+            poster: imageSrc,
+            ref: videoRef,
+            autoHeight:
+                type === 'cover' || mediaPosition !== 'top'
+                    ? false
+                    : aspectRatioToNumber(mediaAspectRatio) === 0,
+            loop: videoLoop,
+            autoPlay: videoAutoPlay,
+            dataAttributes: videoDataAttributes,
+        });
 
         const externalVariant = useThemeVariant();
         const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;
@@ -1190,7 +1236,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
         const shouldShowFooter =
-            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && touchableProps.onPress);
+            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && isTouchable);
 
         const showButtonsInBody = !shouldShowFooter && hasButtons;
 
@@ -1307,157 +1353,176 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
                     className={classnames(styles.touchable, styles.touchableContainer)}
                     {...touchableProps}
-                    style={{
-                        flexDirection:
-                            mediaPosition === 'top'
-                                ? 'column'
-                                : mediaPosition === 'left'
-                                  ? 'row'
-                                  : 'row-reverse',
-                        justifyItems: 'stretch',
-                        borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
-                        borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
-                        borderBottomLeftRadius:
-                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
-                        borderBottomRightRadius:
-                            shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
-                        overflow: 'hidden',
-                        zIndex: 1, // this way the touchable focus ring is above the footer
-                    }}
                 >
-                    {isTouchable && <div className={overlayStyle} />}
-                    {hasDeprecatedMedia && (
-                        <div
-                            style={{
-                                // for some reason, this width is required to pass headless screenshot tests
-                                // otherwise, it gets 0px width and the media is not visible
-                                width: '100%',
-                                ...(type === 'naked'
-                                    ? undefined
-                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
-                            }}
-                        >
-                            {media}
-                        </div>
-                    )}
-                    {hasDeprecatedMedia && <Asset absolute size={size} asset={asset} type={type} />}
-
-                    {hasMedia && (
-                        <Media
-                            type={type}
-                            size={size}
-                            mediaAspectRatio={mediaAspectRatio}
-                            mediaPosition={mediaPosition}
-                            asset={asset}
-                            video={video}
-                            imageFit={imageFit}
-                            imageSrc={imageSrc}
-                            imageSrcSet={imageSrcSet}
-                            imageAlt={imageAlt}
-                            mediaWidth={mediaWidth}
-                            circledImage={circledImage}
-                        />
-                    )}
+                    {/**
+                     * role="text" makes VoiceOver read the whole div as a single text block. This is needed
+                     * for VoiceOver rectangle to cover the whole card when using aria-label in <a> elements,
+                     * otherwise it only renders a small rectangle in the begining of the <a> element.
+                     * This workaround is only needed for <a> not for <button> (ask safari developers why)
+                     */}
                     <div
-                        aria-hidden={isTouchable}
-                        data-testid="body"
-                        className={classnames(styles.touchable, {
-                            [styles.containerPaddingTopVariants[size]]:
-                                !!asset && type !== 'naked' && (!hasMedia || mediaPosition === 'right'),
-                        })}
+                        role={touchableProps.href || touchableProps.to ? 'text' : undefined}
+                        className={styles.touchableContent}
+                        style={{
+                            flexDirection:
+                                mediaPosition === 'top'
+                                    ? 'column'
+                                    : mediaPosition === 'left'
+                                      ? 'row'
+                                      : 'row-reverse',
+                            borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                            borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
+                            borderBottomLeftRadius:
+                                shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                            borderBottomRightRadius:
+                                shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
+                        }}
                     >
-                        {(!hasMedia || mediaPosition === 'right') && (
-                            <Asset size={size} asset={asset} type={type} />
+                        {isTouchable && <div className={overlayStyle} />}
+                        {hasDeprecatedMedia && (
+                            <div
+                                style={{
+                                    // for some reason, this width is required to pass headless screenshot tests
+                                    // otherwise, it gets 0px width and the media is not visible
+                                    width: '100%',
+                                    ...(type === 'naked'
+                                        ? undefined
+                                        : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
+                                }}
+                            >
+                                {media}
+                            </div>
                         )}
-                        {isAssetConfigA && (
-                            <Filler
-                                minHeight={type === 'cover' && topActionsLength > 0 && !asset ? 48 + 8 : 0}
+                        {hasDeprecatedMedia && <Asset absolute size={size} asset={asset} type={type} />}
+
+                        {hasMedia && (
+                            <Media
+                                type={type}
+                                size={size}
+                                mediaAspectRatio={mediaAspectRatio}
+                                mediaPosition={mediaPosition}
+                                asset={asset}
+                                video={video}
+                                imageFit={imageFit}
+                                imageSrc={imageSrc}
+                                imageSrcSet={imageSrcSet}
+                                imageAlt={imageAlt}
+                                mediaWidth={mediaWidth}
+                                circledImage={circledImage}
                             />
                         )}
                         <div
-                            className={classnames(
-                                styles.containerPaddingXVariants[size],
-                                styles.containerPaddingBottomVariants[size],
-                                styles.containerPaddingTopVariants[size]
-                            )}
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: isAssetConfigA ? undefined : '100%',
-                                background: hasBackgroundImageOrVideo ? contentOverlayBackground : undefined,
-                                // padding overrides for specific cases
-                                paddingTop:
-                                    isAssetConfigA && hasBackgroundImageOrVideo
-                                        ? 40
-                                        : asset
-                                          ? 16
-                                          : isNaked && mediaPosition !== 'top'
-                                            ? 16
-                                            : isNaked && !hasMedia
-                                              ? 0
-                                              : undefined,
-                                paddingLeft:
-                                    isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
-                                paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
-                                paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
-                                borderBottomLeftRadius: shouldShowFooter ? 0 : borderRadius,
-                                borderBottomRightRadius: shouldShowFooter ? 0 : borderRadius,
-                            }}
+                            aria-hidden={isTouchable}
+                            data-testid="body"
+                            className={classnames(styles.touchable, {
+                                [styles.containerPaddingTopVariants[size]]:
+                                    !!asset && type !== 'naked' && (!hasMedia || mediaPosition === 'right'),
+                            })}
                         >
-                            <div className={styles.contentContainer}>
-                                <div className={styles.textContent}>
-                                    <TextContent
-                                        type={type}
-                                        hasCustomBackground={hasCustomBackground}
-                                        headlineRef={headlineRef}
-                                        variant={variant}
-                                        size={size}
-                                        headline={headline}
-                                        pretitle={pretitle}
-                                        pretitleAs={pretitleAs}
-                                        pretitleLinesMax={pretitleLinesMax}
-                                        title={title}
-                                        titleAs={titleAs}
-                                        titleLinesMax={titleLinesMax}
-                                        subtitle={subtitle}
-                                        subtitleLinesMax={subtitleLinesMax}
-                                        description={description}
-                                        descriptionLinesMax={descriptionLinesMax}
-                                        withTextShadow={hasBackgroundImageOrVideo}
-                                    />
+                            {(!hasMedia || mediaPosition === 'right') && (
+                                <Asset size={size} asset={asset} type={type} />
+                            )}
+                            {isAssetConfigA && (
+                                <Filler
+                                    minHeight={
+                                        type === 'cover' && topActionsLength > 0 && !asset ? 48 + 8 : 0
+                                    }
+                                />
+                            )}
+                            <div
+                                className={classnames(
+                                    styles.containerPaddingXVariants[size],
+                                    styles.containerPaddingBottomVariants[size],
+                                    styles.containerPaddingTopVariants[size]
+                                )}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: isAssetConfigA ? undefined : '100%',
+                                    background: hasBackgroundImageOrVideo
+                                        ? contentOverlayBackground
+                                        : undefined,
+                                    // padding overrides for specific cases
+                                    paddingTop:
+                                        isAssetConfigA && hasBackgroundImageOrVideo
+                                            ? 40
+                                            : asset
+                                              ? 16
+                                              : isNaked && mediaPosition !== 'top'
+                                                ? 16
+                                                : isNaked && !hasMedia
+                                                  ? 0
+                                                  : undefined,
+                                    paddingLeft:
+                                        isNaked && (mediaPosition !== 'left' || !hasMedia) ? 0 : undefined,
+                                    paddingRight: isNaked && mediaPosition !== 'right' ? 16 : undefined,
+                                    paddingBottom: shouldShowFooter ? 16 : isNaked ? 0 : undefined,
+                                    borderBottomLeftRadius: shouldShowFooter ? 0 : borderRadius,
+                                    borderBottomRightRadius: shouldShowFooter ? 0 : borderRadius,
+                                }}
+                            >
+                                <div className={styles.contentContainer}>
+                                    <div className={styles.textContent}>
+                                        <TextContent
+                                            type={type}
+                                            hasCustomBackground={hasCustomBackground}
+                                            headlineRef={headlineRef}
+                                            variant={variant}
+                                            size={size}
+                                            headline={headline}
+                                            pretitle={pretitle}
+                                            pretitleAs={pretitleAs}
+                                            pretitleLinesMax={pretitleLinesMax}
+                                            title={title}
+                                            titleAs={titleAs}
+                                            titleLinesMax={titleLinesMax}
+                                            subtitle={subtitle}
+                                            subtitleLinesMax={subtitleLinesMax}
+                                            description={description}
+                                            descriptionLinesMax={descriptionLinesMax}
+                                            withTextShadow={hasBackgroundImageOrVideo}
+                                        />
+                                    </div>
+                                    {shouldAddContentSpacingForTopActions && (
+                                        <div
+                                            style={{
+                                                flexShrink: 0,
+                                                flexGrow: 0,
+                                                width:
+                                                    topActionsLengthWithoutVideo * 48 -
+                                                    // required space depends on the card padding
+                                                    (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
+                                                    //
+                                                    8,
+                                            }}
+                                        />
+                                    )}
                                 </div>
-                                {shouldAddContentSpacingForTopActions && (
+                                {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
+                                {slot && (
                                     <div
-                                        style={{
-                                            flexShrink: 0,
-                                            flexGrow: 0,
-                                            width:
-                                                topActionsLengthWithoutVideo * 48 -
-                                                // required space depends on the card padding
-                                                (type === 'naked' ? 0 : size === 'display' ? 24 : 16) -
-                                                //
-                                                8,
-                                        }}
+                                        ref={slotRef}
+                                        data-testid="slot"
+                                        className={classnames(
+                                            slotAlignment === 'space-between' &&
+                                                styles.slotContainerSpaceBetween
+                                        )}
+                                    >
+                                        {slot}
+                                    </div>
+                                )}
+                                {!isAssetConfigA && slotAlignment === 'content' && showButtonsInBody && (
+                                    <Filler />
+                                )}
+                                {showButtonsInBody && (
+                                    <Buttons
+                                        size={size}
+                                        buttonPrimary={buttonPrimary}
+                                        buttonSecondary={buttonSecondary}
+                                        buttonLink={buttonLink}
                                     />
                                 )}
                             </div>
-                            {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
-                            {slot && (
-                                <div ref={slotRef} data-testid="slot">
-                                    {slot}
-                                </div>
-                            )}
-                            {!isAssetConfigA && slotAlignment === 'content' && showButtonsInBody && (
-                                <Filler />
-                            )}
-                            {showButtonsInBody && (
-                                <Buttons
-                                    size={size}
-                                    buttonPrimary={buttonPrimary}
-                                    buttonSecondary={buttonSecondary}
-                                    buttonLink={buttonLink}
-                                />
-                            )}
                         </div>
                     </div>
                 </BaseTouchable>
@@ -1467,6 +1532,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         variant={variant}
                         footerVariant={footerVariant}
                         footerBackgroundColor={footerBackgroundColor}
+                        footerDivider={footerDivider}
                         size={size}
                         footerSlot={footerSlot}
                         buttonPrimary={buttonPrimary}

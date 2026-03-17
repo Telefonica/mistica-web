@@ -25,7 +25,7 @@ const IconMeatballLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M5 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4M19 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4"
+                d="M5 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4m7 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4m7 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4"
             />
         </svg>
     );

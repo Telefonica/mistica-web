@@ -491,6 +491,7 @@ const formSnippets: Array<Snippet> = [
     ['IbanField', '<IbanField name="bankAccount" label="IBAN" />'],
     ['CreditCardFields', '<CreditCardFields/>'],
     ['DateField', '<DateField name="date" label="Date"/>'],
+    ['TimeField', '<TimeField name="time" label="Time"/>'],
     ['DecimalField', '<DecimalField name="decimal" label="Decimal"/>'],
     ['IntegerField', '<IntegerField name="integer" label="Integer"/>'],
     ['PasswordField', '<PasswordField name="password" label="Password"/>'],
@@ -1621,18 +1622,17 @@ const titlesSnippets: Array<Snippet> = [
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
 const tagSnippets: Array<Snippet> = [
-    'promo',
-    'info',
-    'active',
-    'inactive',
-    'success',
-    'warning',
-    'error',
-].map((type) => ({
-    name: `Tag (${type})`,
-    group: 'Tags',
-    code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
-}));
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Small Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" small Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+];
 
 const sliderSnippets: Array<Snippet> = [
     {
@@ -2677,6 +2677,21 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar',
         code: `
           <MainNavigationBar
+            topSlotBackgroundColor={colors.backgroundNegative}
+            topSlot={
+              <ThemeVariant variant="negative">
+                <Box paddingY={8}>
+                  <Align x="center">
+                    <Inline space={24} alignItems="center">
+                      <Text2 medium>BLACK FRIDAY - 60% en tecnología</Text2>
+                      <ButtonSecondary small onPress={() => {}}>
+                        See offers
+                      </ButtonSecondary>
+                    </Inline>
+                  </Align>
+                </Box>
+              </ThemeVariant>
+            }
             sections={[
               {
                 title: "Start",
@@ -3414,6 +3429,7 @@ const alertSnippets = [
       "Lime",
     ].map((fruit, idx) => ({
       id: String(idx),
+      tag: {type: 'promo', text: 'Tag'},
       title: fruit,
       description: "Description",
       asset: (
@@ -4656,5 +4672,38 @@ export default [
     ...tableSnippets,
     ...timelineSnippets,
     ...listItemSnippets,
+    {
+        group: 'Forms',
+        name: 'FileUpload (with drop zone)',
+        code: `
+        <FileUpload
+            name="file"
+            withDropZone
+            asset={<IconExportRegular color="currentColor" />}
+            title="Drag or upload your file"
+            description="File can be up to 50Mb"
+            renderButton={(props) => (
+                <ButtonPrimary {...props}>
+                    Choose file
+                </ButtonPrimary>
+            )}
+        />`,
+    },
+    {
+        group: 'Forms',
+        name: 'FileUpload',
+        code: `
+        <FileUpload
+            name="file"
+            asset={<IconExportRegular color="currentColor" />}
+            title="Upload your file"
+            description="File can be up to 50Mb"
+            renderButton={(props) => (
+                <ButtonPrimary {...props}>
+                    Choose file
+                </ButtonPrimary>
+            )}
+        />`,
+    },
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

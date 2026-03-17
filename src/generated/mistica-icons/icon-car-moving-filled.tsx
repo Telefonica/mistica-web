@@ -40,7 +40,7 @@ const IconCarMovingFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
                 <path
                     fill={fillColor}
-                    d="M5 11.25a.75.75 0 0 1 0 1.5H3.5a.75.75 0 0 1 0-1.5zM5 8.25a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1 0-1.5z"
+                    d="M5 11.25a.75.75 0 0 1 0 1.5H3.5a.75.75 0 0 1 0-1.5zm0-3a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1 0-1.5z"
                 />
             </svg>
         );

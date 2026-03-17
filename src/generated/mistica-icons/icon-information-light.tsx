@@ -25,7 +25,7 @@ const IconInformationLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 1 1 0 2.25zM12 17.125A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
+                d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 1 1 0 2.25zm.01 8A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
             />
             <path
                 fill={fillColor}

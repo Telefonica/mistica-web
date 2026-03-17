@@ -18,7 +18,6 @@ import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Navigation bars/MainNavigationBar',
-    component: MainNavigationBar,
     parameters: {
         fullScreen: true,
     },
@@ -42,6 +41,8 @@ type Args = {
     menu: 'undefined' | 'default' | 'custom';
     desktopLargeMenu: boolean;
     customLogo: boolean;
+    topSlot: boolean;
+    topSlotBackgroundColor: string;
     wide: boolean;
     paddingX: PadSize | 'undefined';
 };
@@ -55,6 +56,8 @@ export const Default: StoryComponent<Args> = ({
     menu,
     desktopLargeMenu,
     customLogo,
+    topSlot,
+    topSlotBackgroundColor,
     wide,
     paddingX,
 }) => {
@@ -69,6 +72,8 @@ export const Default: StoryComponent<Args> = ({
             burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
             desktopLargeMenu={desktopLargeMenu}
             logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
+            topSlot={topSlot ? <Placeholder height={24} /> : undefined}
+            topSlotBackgroundColor={topSlotBackgroundColor || undefined}
             sections={
                 sections
                     ? sectionTitles.map((title, idx) => ({
@@ -140,6 +145,8 @@ Default.args = {
     menu: 'undefined',
     desktopLargeMenu: false,
     customLogo: false,
+    topSlot: false,
+    topSlotBackgroundColor: '',
     wide: false,
     paddingX: 'undefined',
 };
@@ -155,6 +162,10 @@ Default.argTypes = {
         if: {arg: 'sections'},
     },
     desktopLargeMenu: {if: {arg: 'sections'}},
+    topSlotBackgroundColor: {
+        control: {type: 'color'},
+        if: {arg: 'topSlot'},
+    },
     paddingX: {
         options: ['undefined', 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80],
         control: {type: 'select'},

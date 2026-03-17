@@ -47,6 +47,7 @@
     --mistica-telefonica-raw-white: 255, 255, 255;
     --mistica-telefonica-raw-grey6: 88, 97, 122;
     --mistica-telefonica-raw-black: 0, 0, 0;
+    --mistica-telefonica-raw-telefonicaBlue80: 0, 46, 115;
     --mistica-telefonica-raw-darkModeGrey: 0, 24, 47;
     --mistica-telefonica-raw-coral60: 210, 42, 30;
     --mistica-telefonica-raw-telefonicaBlue30: 128, 179, 255;
@@ -77,6 +78,20 @@
     --mistica-color-backgroundAlternative: var(--mistica-telefonica-grey1);
     --mistica-color-backgroundBrandTop: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-backgroundBrandBottom: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
+    --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.08);
+    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue80), 0.2);
+    --mistica-color-backgroundDropZoneBrandDragover: rgba(
+        var(--mistica-telefonica-raw-telefonicaBlue80),
+        0.4
+    );
+    --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-telefonica-raw-white), 0.1);
+    --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-telefonica-raw-white), 0.17);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue80), 0.2);
+    --mistica-color-backgroundDropZoneMediaDragover: rgba(
+        var(--mistica-telefonica-raw-telefonicaBlue80),
+        0.4
+    );
     --mistica-color-skeletonWave: var(--mistica-telefonica-grey2);
     --mistica-color-borderLow: var(--mistica-telefonica-grey1);
     --mistica-color-border: var(--mistica-telefonica-grey2);
@@ -267,6 +282,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
     --mistica-color-textAppBar: var(--mistica-telefonica-grey4);
     --mistica-color-textAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
+    --mistica-color-iosGlassAppBar: var(--mistica-telefonica-grey9);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-customTabsBackground: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid80);
@@ -337,16 +353,16 @@
     --mistica-border-radius-avatar: 50%;
     --mistica-border-radius-bar: 0px;
     --mistica-border-radius-button: 32px;
-    --mistica-border-radius-checkbox: 0px;
-    --mistica-border-radius-container: 0px;
+    --mistica-border-radius-checkbox: 2px;
+    --mistica-border-radius-container: 4px;
     --mistica-border-radius-indicator: 24px;
     --mistica-border-radius-chip: 24px;
     --mistica-border-radius-tag: 24px;
-    --mistica-border-radius-input: 0px;
+    --mistica-border-radius-input: 8px;
     --mistica-border-radius-legacyDisplay: 0px;
-    --mistica-border-radius-popup: 0px;
+    --mistica-border-radius-popup: 4px;
     --mistica-border-radius-sheet: 0px;
-    --mistica-border-radius-mediaSmall: 0px;
+    --mistica-border-radius-mediaSmall: 2px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -378,6 +394,9 @@
     --mistica-font-size-cardTitle: 1.25rem;
     --mistica-line-height-cardTitle: 1.5rem;
     --mistica-font-weight-cardTitle: 400;
+    --mistica-font-size-drawerTitle: 1.25rem;
+    --mistica-line-height-drawerTitle: 1.5rem;
+    --mistica-font-weight-drawerTitle: 400;
     --mistica-font-weight-rowTitle: 400;
     --mistica-font-weight-button: 500;
     --mistica-font-size-tabsLabel: 1rem;
@@ -401,6 +420,22 @@
     --mistica-font-size-chipLabel: 0.875rem;
     --mistica-line-height-chipLabel: 1.25rem;
     --mistica-font-weight-chipLabel: 500;
+    --mistica-font-size-cardPretitleSnap: 0.875rem;
+    --mistica-line-height-cardPretitleSnap: 1.25rem;
+    --mistica-font-size-cardTitleSnap: 0.875rem;
+    --mistica-line-height-cardTitleSnap: 1.25rem;
+    --mistica-font-size-cardSubtitleSnap: 0.875rem;
+    --mistica-line-height-cardSubtitleSnap: 1.25rem;
+    --mistica-font-size-cardDescriptionSnap: 0.875rem;
+    --mistica-line-height-cardDescriptionSnap: 1.25rem;
+    --mistica-font-size-cardPretitleDefault: 0.875rem;
+    --mistica-line-height-cardPretitleDefault: 1.25rem;
+    --mistica-font-size-cardTitleDefault: 1.125rem;
+    --mistica-line-height-cardTitleDefault: 1.5rem;
+    --mistica-font-size-cardSubtitleDefault: 0.875rem;
+    --mistica-line-height-cardSubtitleDefault: 1.25rem;
+    --mistica-font-size-cardDescriptionDefault: 0.875rem;
+    --mistica-line-height-cardDescriptionDefault: 1.25rem;
     --mistica-font-size-inputLabel: 0.75rem;
     --mistica-line-height-inputLabel: 1rem;
     --mistica-font-size-inputValue: 1rem;
@@ -439,6 +474,14 @@
     --mistica-color-backgroundBrandBottom: var(--mistica-telefonica-darkModeBlack);
     --mistica-color-appBarBackground: var(--mistica-telefonica-darkModeGrey);
     --mistica-color-navigationBarBackground: var(--mistica-telefonica-darkModeBlack);
+    --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
+    --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.07);
+    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-telefonica-raw-white), 0.05);
+    --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-telefonica-raw-white), 0.05);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-telefonica-raw-white), 0.05);
     --mistica-color-skeletonWave: var(--mistica-telefonica-grey8);
     --mistica-color-borderLow: var(--mistica-telefonica-darkModeBlack);
     --mistica-color-border: var(--mistica-telefonica-darkModeGrey);
@@ -644,6 +687,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
     --mistica-color-textAppBar: var(--mistica-telefonica-grey2);
     --mistica-color-textAppBarSelected: var(--mistica-telefonica-white);
+    --mistica-color-iosGlassAppBar: var(--mistica-telefonica-white);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-white);
     --mistica-color-customTabsBackground: var(--mistica-telefonica-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid40);
@@ -741,6 +785,17 @@
         --mistica-color-backgroundBrandBottom: var(--mistica-telefonica-darkModeBlack);
         --mistica-color-appBarBackground: var(--mistica-telefonica-darkModeGrey);
         --mistica-color-navigationBarBackground: var(--mistica-telefonica-darkModeBlack);
+        --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
+        --mistica-color-backgroundDropZoneDragover: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue70),
+            0.07
+        );
+        --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-telefonica-raw-white), 0.05);
+        --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-telefonica-raw-white), 0.05);
+        --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-telefonica-raw-white), 0.05);
         --mistica-color-skeletonWave: var(--mistica-telefonica-grey8);
         --mistica-color-borderLow: var(--mistica-telefonica-darkModeBlack);
         --mistica-color-border: var(--mistica-telefonica-darkModeGrey);
@@ -967,6 +1022,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
         --mistica-color-textAppBar: var(--mistica-telefonica-grey2);
         --mistica-color-textAppBarSelected: var(--mistica-telefonica-white);
+        --mistica-color-iosGlassAppBar: var(--mistica-telefonica-white);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-white);
         --mistica-color-customTabsBackground: var(--mistica-telefonica-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid40);
@@ -1066,6 +1122,29 @@
         --mistica-color-backgroundBrandBottom: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-appBarBackground: var(--mistica-telefonica-white);
         --mistica-color-navigationBarBackground: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
+        --mistica-color-backgroundDropZoneDragover: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue70),
+            0.08
+        );
+        --mistica-color-backgroundDropZoneBrandHover: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue80),
+            0.2
+        );
+        --mistica-color-backgroundDropZoneBrandDragover: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue80),
+            0.4
+        );
+        --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-telefonica-raw-white), 0.1);
+        --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-telefonica-raw-white), 0.17);
+        --mistica-color-backgroundDropZoneMediaHover: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue80),
+            0.2
+        );
+        --mistica-color-backgroundDropZoneMediaDragover: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue80),
+            0.4
+        );
         --mistica-color-skeletonWave: var(--mistica-telefonica-grey2);
         --mistica-color-borderLow: var(--mistica-telefonica-grey1);
         --mistica-color-border: var(--mistica-telefonica-grey2);
@@ -1265,6 +1344,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-telefonica-white);
         --mistica-color-textAppBar: var(--mistica-telefonica-grey4);
         --mistica-color-textAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
+        --mistica-color-iosGlassAppBar: var(--mistica-telefonica-grey9);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-customTabsBackground: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-tagTextPromo: var(--mistica-telefonica-orchid80);
@@ -1358,6 +1438,8 @@
         --mistica-line-height-10: 4.5rem;
         --mistica-font-size-cardTitle: 1.5rem;
         --mistica-line-height-cardTitle: 1.75rem;
+        --mistica-font-size-drawerTitle: 1.75rem;
+        --mistica-line-height-drawerTitle: 2rem;
 
         --mistica-font-size-tabsLabel: 1.125rem;
         --mistica-line-height-tabsLabel: 1.5rem;
@@ -1373,6 +1455,22 @@
 
         --mistica-font-size-chipLabel: 1rem;
         --mistica-line-height-chipLabel: 1.5rem;
+        --mistica-font-size-cardPretitleSnap: 1rem;
+        --mistica-line-height-cardPretitleSnap: 1.5rem;
+        --mistica-font-size-cardTitleSnap: 1rem;
+        --mistica-line-height-cardTitleSnap: 1.5rem;
+        --mistica-font-size-cardSubtitleSnap: 1rem;
+        --mistica-line-height-cardSubtitleSnap: 1.5rem;
+        --mistica-font-size-cardDescriptionSnap: 1rem;
+        --mistica-line-height-cardDescriptionSnap: 1.5rem;
+        --mistica-font-size-cardPretitleDefault: 1rem;
+        --mistica-line-height-cardPretitleDefault: 1.5rem;
+        --mistica-font-size-cardTitleDefault: 1.25rem;
+        --mistica-line-height-cardTitleDefault: 1.75rem;
+        --mistica-font-size-cardSubtitleDefault: 1rem;
+        --mistica-line-height-cardSubtitleDefault: 1.5rem;
+        --mistica-font-size-cardDescriptionDefault: 1rem;
+        --mistica-line-height-cardDescriptionDefault: 1.5rem;
         --mistica-font-size-inputLabel: 0.875rem;
         --mistica-line-height-inputLabel: 1.25rem;
         --mistica-font-size-inputValue: 1.125rem;

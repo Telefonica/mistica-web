@@ -1,6 +1,6 @@
 import {createThemeContract} from '@vanilla-extract/css';
 
-import type {BorderRadiiConfig, Colors} from './types';
+import type {BorderRadiiConfig, Colors, SpacingConfig, TextPresetsConfig} from './types';
 
 const colors: Colors = {
     background: '',
@@ -26,8 +26,16 @@ const colors: Colors = {
     backgroundSkeletonBrand: '',
     backgroundBrandTop: '',
     backgroundBrandBottom: '',
+    backgroundDropZoneHover: '',
+    backgroundDropZoneDragover: '',
+    backgroundDropZoneBrandHover: '',
+    backgroundDropZoneBrandDragover: '',
     appBarBackground: '',
     navigationBarBackground: '',
+    backgroundDropZoneNegativeHover: '',
+    backgroundDropZoneNegativeDragover: '',
+    backgroundDropZoneMediaHover: '',
+    backgroundDropZoneMediaDragover: '',
     skeletonWave: '',
     borderLow: '',
     border: '',
@@ -278,6 +286,7 @@ const colors: Colors = {
     cardContentOverlay: '',
     cardFooterOverlay: '',
     iosGlassAppBarSelected: '',
+    iosGlassAppBar: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
@@ -296,7 +305,13 @@ const borderRadii: BorderRadiiConfig = {
     tag: '',
 };
 
-const textPresets = {
+type ToThemeTokens<T> = T extends {mobile: number; desktop: number}
+    ? string
+    : T extends object
+      ? {[K in keyof T]: ToThemeTokens<T[K]>}
+      : string;
+
+const textPresets: ToThemeTokens<TextPresetsConfig> = {
     cardTitle: {weight: ''},
     rowTitle: {weight: ''},
     button: {weight: ''},
@@ -324,6 +339,31 @@ const textPresets = {
     inputValue: {size: '', lineHeight: ''},
     loadingScreenTitle: {size: '', lineHeight: ''},
     stepperStepLabel: {size: '', lineHeight: ''},
+    cardDescriptionDefault: {lineHeight: '', size: ''},
+    cardDescriptionSnap: {lineHeight: '', size: ''},
+    cardPretitleDefault: {lineHeight: '', size: ''},
+    cardPretitleSnap: {lineHeight: '', size: ''},
+    cardSubtitleDefault: {lineHeight: '', size: ''},
+    cardSubtitleSnap: {lineHeight: '', size: ''},
+    cardTitleDefault: {lineHeight: '', size: ''},
+    cardTitleSnap: {lineHeight: '', size: ''},
+    drawerTitle: {
+        lineHeight: '',
+        size: '',
+        weight: '',
+    },
+};
+
+const spacing: ToThemeTokens<SpacingConfig> = {
+    buttonDefaultPadding: {left: '', right: ''},
+    buttonSmallPadding: {left: '', right: ''},
+    cardDefaultPadding: {left: '', right: '', top: '', bottom: ''},
+    inputPadding: {top: '', bottom: ''},
+    tagPadding: {top: '', bottom: ''},
+    feedbackScreenPadding: {top: '', bottom: '', left: '', right: ''},
+    heroPadding: {top: '', bottom: ''},
+    headerPadding: {top: '', bottom: ''},
+    drawerPadding: {top: '', bottom: '', left: '', right: ''},
 };
 
 export const vars = createThemeContract({
@@ -336,4 +376,5 @@ export const vars = createThemeContract({
     rawColors: colors,
     borderRadii,
     textPresets,
+    spacing,
 });

@@ -62,7 +62,7 @@ const IconFaceNeutralLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M15 14.25a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5zM9 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2M15 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M15 14.25a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5zM9 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
                 <path
                     fill={fillColor}

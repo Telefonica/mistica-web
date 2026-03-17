@@ -58,7 +58,7 @@ const IconFaceSlightlySadRegular = ({color, size = 24, ...rest}: IconProps): JSX
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M12 13.45a4.25 4.25 0 0 1 3.036 1.275.75.75 0 0 1-1.072 1.05 2.75 2.75 0 0 0-3.928 0 .75.75 0 0 1-1.072-1.05A4.25 4.25 0 0 1 12 13.449M9 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2M15 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    d="M12 13.45a4.25 4.25 0 0 1 3.036 1.275.75.75 0 0 1-1.072 1.05 2.75 2.75 0 0 0-3.928 0 .75.75 0 0 1-1.072-1.05A4.25 4.25 0 0 1 12 13.449M9 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
                 />
                 <path
                     fill={fillColor}

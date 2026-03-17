@@ -10,7 +10,6 @@ const typeOptions = ['width and height', 'width and aspect ratio', 'full width']
 
 export default {
     title: 'Components/Primitives/Video',
-    component: Video,
     argTypes: {
         type: {
             options: typeOptions,

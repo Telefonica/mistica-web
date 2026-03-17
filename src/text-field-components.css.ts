@@ -2,21 +2,9 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {
-    fieldVerticalPadding,
-    inputLineHeight,
-    labelFontSize,
-    labelLineHeight,
-    shrinkedLabelLineHeight,
-    fieldLeftPadding,
-    fieldRightPadding,
-} from './text-field-base.css';
+import {fieldTopPadding, fieldLeftPadding, fieldRightPadding, fieldVars} from './text-field-base.css';
 
 export const DEFAULT_WIDTH = 328;
-
-// to scale to the correct text-preset when the transition applies
-export const LABEL_SCALE_DESKTOP = 0.78; // Text1/Text3 = 14/18 (desktop)
-export const LABEL_SCALE_MOBILE = 0.75; // Text1/Text3 = 12/16 (mobile)
 
 export const labelContainer = style([
     sprinkles({
@@ -26,16 +14,17 @@ export const labelContainer = style([
     }),
     {
         left: fieldLeftPadding,
-        top: fieldVerticalPadding,
+        top: fieldTopPadding,
         pointerEvents: 'none',
         transformOrigin: '0 0',
-        fontSize: labelFontSize.desktop, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)
-        transform: `translateY(calc((${shrinkedLabelLineHeight.desktop} + ${inputLineHeight} - ${labelLineHeight}) / 2)) scale(1)`,
-        lineHeight: labelLineHeight,
+        fontSize: fieldVars.desktopFontSize,
+        transform: `translateY(calc(${fieldVars.shrinkedLabelDesktopLineHeight} / 2)) scale(1)`,
+        lineHeight: fieldVars.desktopLineHeight,
         '@media': {
             [mq.tabletOrSmaller]: {
-                fontSize: labelFontSize.mobile,
-                transform: `translateY(calc((${shrinkedLabelLineHeight.mobile} + ${inputLineHeight} - ${labelLineHeight}) / 2)) scale(1)`,
+                fontSize: fieldVars.mobileFontSize,
+                lineHeight: fieldVars.mobileLineHeight,
+                transform: `translateY(calc(${fieldVars.shrinkedLabelMobileLineHeight} / 2)) scale(1)`,
             },
         },
         width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px)`,
@@ -58,14 +47,14 @@ export const labelText = style([
 ]);
 
 export const shrinked = style({
-    transform: `translateY(0) scale(${LABEL_SCALE_DESKTOP})`,
-    lineHeight: `calc(${shrinkedLabelLineHeight.desktop} / ${LABEL_SCALE_DESKTOP})`,
-    width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px) / ${LABEL_SCALE_DESKTOP}`,
+    transform: `translateY(0) scale(${fieldVars.labelScaleDesktop})`,
+    lineHeight: `calc(${fieldVars.shrinkedLabelDesktopLineHeight} / ${fieldVars.labelScaleDesktop})`,
+    width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px / ${fieldVars.labelScaleDesktop})`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            transform: `translateY(0) scale(${LABEL_SCALE_MOBILE})`,
-            lineHeight: `calc(${shrinkedLabelLineHeight.mobile} / ${LABEL_SCALE_MOBILE})`,
-            width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px) / ${LABEL_SCALE_MOBILE}`,
+            transform: `translateY(0) scale(${fieldVars.labelScaleMobile})`,
+            lineHeight: `calc(${fieldVars.shrinkedLabelMobileLineHeight} / ${fieldVars.labelScaleMobile})`,
+            width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px / ${fieldVars.labelScaleMobile})`,
         },
     },
 });
