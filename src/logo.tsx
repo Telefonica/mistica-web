@@ -5,8 +5,15 @@ import {useThemeVariant} from './theme-variant-context';
 import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
-import {calcInlineVars} from './logo-common';
-import {applyCssVars} from './utils/css';
+import MovistarLogoShell from './logo-movistar-shell';
+import MovistarNewLogoShell from './logo-movistar-new-shell';
+import VivoLogoShell from './logo-vivo-shell';
+import O2LogoShell from './logo-o2-shell';
+import O2NewLogoShell from './logo-o2-new-shell';
+import TelefonicaLogoShell from './logo-telefonica-shell';
+import BlauLogoShell from './logo-blau-shell';
+import TuLogoShell from './logo-tu-shell';
+import EsimflagLogoShell from './logo-esimflag-shell';
 
 import type {LogoType} from './logo-common';
 import type {TouchableComponentProps} from './touchable';
@@ -100,94 +107,121 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
     switch (skinName) {
         case 'Movistar':
             return (
-                <MovistarLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <MovistarLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <MovistarLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </MovistarLogoShell>
             );
         case 'Movistar-new':
             return (
-                <MovistarNewLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <MovistarNewLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <MovistarNewLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </MovistarNewLogoShell>
             );
         case 'Vivo':
         case 'Vivo-new':
             return (
-                <VivoLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <VivoLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <VivoLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </VivoLogoShell>
             );
         case 'O2':
             return (
-                <O2LogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <O2LogoShell size={size}>
+                    <React.Suspense>
+                        <O2LogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </O2LogoShell>
             );
         case 'O2-new':
             return (
-                <O2NewLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <O2NewLogoShell size={size}>
+                    <React.Suspense>
+                        <O2NewLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </O2NewLogoShell>
             );
         case 'Telefonica':
             return (
-                <TelefonicaLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <TelefonicaLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <TelefonicaLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </TelefonicaLogoShell>
             );
         case 'Blau':
             return (
-                <BlauLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <BlauLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <BlauLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </BlauLogoShell>
             );
         case 'Tu':
             return (
-                <TuLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <TuLogoShell size={size}>
+                    <React.Suspense>
+                        <TuLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </TuLogoShell>
             );
         case 'Esimflag':
             return (
-                <EsimflagLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    themeVariant={themeVariant}
-                    color={color}
-                />
+                <EsimflagLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <EsimflagLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </EsimflagLogoShell>
             );
         default:
             return <></>;
@@ -211,26 +245,13 @@ const MaybeTouchableLogo = (
     const dataAttributes = getPrefixedDataAttributes(props.dataAttributes, 'Logo');
 
     if (props.to || props.href || props.onPress) {
-        return <Touchable {...props} />; // TODO: I think this should also have a suspense wrapper
+        return <Touchable {...props} />;
     }
 
     return (
-        <React.Suspense
-            fallback={
-                <div
-                    className={styles.svg}
-                    style={{
-                        // reserve the vertical space for the logo
-                        ...applyCssVars(calcInlineVars(props.size)),
-                        width: 1,
-                    }}
-                />
-            }
-        >
-            <div className={styles.logoContainer} {...dataAttributes}>
-                {props.children}
-            </div>
-        </React.Suspense>
+        <div className={styles.logoContainer} {...dataAttributes}>
+            {props.children}
+        </div>
     );
 };
 
