@@ -28,6 +28,10 @@ export type Colors = {
     backgroundDropZoneDragover: string;
     backgroundDropZoneBrandHover: string;
     backgroundDropZoneBrandDragover: string;
+    backgroundDropZoneNegativeHover: string;
+    backgroundDropZoneNegativeDragover: string;
+    backgroundDropZoneMediaHover: string;
+    backgroundDropZoneMediaDragover: string;
     skeletonWave: string;
     borderLow: string;
     border: string;
@@ -218,6 +222,7 @@ export type Colors = {
     textNavigationSearchBarText: string;
     textAppBar: string;
     textAppBarSelected: string;
+    iosGlassAppBar: string;
     iosGlassAppBarSelected: string;
     customTabsBackground: string;
     tagTextPromo: string;

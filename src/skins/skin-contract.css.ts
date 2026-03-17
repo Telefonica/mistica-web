@@ -32,6 +32,10 @@ const colors: Colors = {
     backgroundDropZoneBrandDragover: '',
     appBarBackground: '',
     navigationBarBackground: '',
+    backgroundDropZoneNegativeHover: '',
+    backgroundDropZoneNegativeDragover: '',
+    backgroundDropZoneMediaHover: '',
+    backgroundDropZoneMediaDragover: '',
     skeletonWave: '',
     borderLow: '',
     border: '',
@@ -282,6 +286,7 @@ const colors: Colors = {
     cardContentOverlay: '',
     cardFooterOverlay: '',
     iosGlassAppBarSelected: '',
+    iosGlassAppBar: '',
 };
 
 const borderRadii: BorderRadiiConfig = {

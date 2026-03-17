@@ -17,12 +17,12 @@ test('SnapCard', async () => {
     const snapCard = await renderSnapCard({device: 'MOBILE_IOS'});
 
     expect(await snapCard.screenshot()).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'snapcard-screenshot-test-mobile',
+        customSnapshotIdentifier: 'snapcard-screenshot-test-mobile-snap',
     });
 
     setRootFontSize(32);
     expect(await snapCard.screenshot()).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'snapcard-screenshot-test-mobile-big-font',
+        customSnapshotIdentifier: 'snapcard-screenshot-test-mobile-big-font-snap',
     });
 
     const snapCardInverse = await renderSnapCard({
@@ -30,7 +30,7 @@ test('SnapCard', async () => {
         args: {inverse: true, asset: 'icon in circle'},
     });
     expect(await snapCardInverse.screenshot()).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'snapcard-screenshot-test-inverse',
+        customSnapshotIdentifier: 'snapcard-screenshot-test-inverse-snap',
     });
 
     const snapCardWithExtra = await renderSnapCard({
@@ -38,12 +38,12 @@ test('SnapCard', async () => {
         args: {extra: true, asset: 'icon in circle'},
     });
     expect(await snapCardWithExtra.screenshot()).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'snapcard-screenshot-test-with-extra',
+        customSnapshotIdentifier: 'snapcard-screenshot-test-with-extra-snap',
     });
 
     const desktopSnapCard = await renderSnapCard({device: 'DESKTOP'});
     expect(await desktopSnapCard.screenshot()).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'snapcard-screenshot-test-desktop',
+        customSnapshotIdentifier: 'snapcard-screenshot-test-desktop-snap',
     });
 });
 
