@@ -3,7 +3,7 @@ import * as styles from './logo.css';
 import {calcInlineVars} from './logo-common';
 import {applyCssVars} from './utils/css';
 
-import type { LogoType} from './logo-common';
+import type {LogoType} from './logo-common';
 import type {ByBreakpoint} from './utils/types';
 
 type Props = {
