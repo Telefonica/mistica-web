@@ -275,6 +275,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-white);
     --mistica-color-textAppBar: var(--mistica-movistar-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-movistar-movistarBlueHC);
+    --mistica-color-iosGlassAppBar: var(--mistica-movistar-movistarBlueDark);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-movistarBlueHC55);
     --mistica-color-customTabsBackground: var(--mistica-movistar-white);
     --mistica-color-tagTextPromo: var(--mistica-movistar-white);
@@ -664,6 +665,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-darkModeGrey2);
     --mistica-color-textAppBar: var(--mistica-movistar-darkModeGrey4);
     --mistica-color-textAppBarSelected: var(--mistica-movistar-movistarBlue);
+    --mistica-color-iosGlassAppBar: var(--mistica-movistar-white);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-white);
     --mistica-color-customTabsBackground: var(--mistica-movistar-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-movistar-white);
@@ -968,6 +970,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-darkModeGrey2);
         --mistica-color-textAppBar: var(--mistica-movistar-darkModeGrey4);
         --mistica-color-textAppBarSelected: var(--mistica-movistar-movistarBlue);
+        --mistica-color-iosGlassAppBar: var(--mistica-movistar-white);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-white);
         --mistica-color-customTabsBackground: var(--mistica-movistar-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-movistar-white);
@@ -1262,6 +1265,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-white);
         --mistica-color-textAppBar: var(--mistica-movistar-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-movistar-movistarBlueHC);
+        --mistica-color-iosGlassAppBar: var(--mistica-movistar-movistarBlueDark);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-movistarBlueHC55);
         --mistica-color-customTabsBackground: var(--mistica-movistar-white);
         --mistica-color-tagTextPromo: var(--mistica-movistar-white);

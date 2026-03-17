@@ -355,7 +355,7 @@ export const mediaArgTypes = {
 
 export const dataArgTypes = {
     slotAlignment: {
-        options: ['', 'content', 'bottom'],
+        options: ['', 'content', 'bottom', 'space-between'],
         control: {
             type: 'select',
             labels: {'': 'undefined'},
