@@ -13,14 +13,35 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('Icons catalog for %s (%s)', async (skin, type) => {
-    const page = await openStoryPage({
-        id: 'icons-catalog--catalog',
-        device: 'DESKTOP',
-        skin: skin as (typeof SKINS)[number],
-        args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled', size: 32},
-    });
+test.each(getCases())(
+    'Icons catalog for %s (%s)',
+    async (skin, type) => {
+        const page = await openStoryPage({
+            id: 'icons-catalog--catalog',
+            device: 'DESKTOP',
+            skin: skin as (typeof SKINS)[number],
+            args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled', size: 32},
+        });
 
-    const icons = await page.screenshot({fullPage: true});
-    expect(icons).toMatchImageSnapshot();
-});
+        // Scroll to bottom to trigger lazy loading of all icons
+        await page.evaluate(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        // Wait for lazy loading to be triggered and icons to start fetching from CDN
+        await page.waitForTimeout(2000);
+
+        // Scroll back to top for the screenshot
+        await page.evaluate(() => {
+            window.scrollTo(0, 0);
+        });
+
+        // Give generous time for all CDN icon fetches to complete
+        // The first test (cold start) needs the most time
+        await page.waitForTimeout(10000);
+
+        const icons = await page.screenshot({fullPage: true});
+        expect(icons).toMatchImageSnapshot();
+    },
+    180000
+);
