@@ -1,5 +1,9 @@
 import * as React from 'react';
-import {Icon2GRegular, IconButton} from '..';
+import {IconButton, Icon} from '..';
+
+import type {IconPropsWithoutName} from '../icon';
+
+const Icon2GRegular = (props: IconPropsWithoutName) => <Icon {...props} name="2g-regular" />;
 
 <IconButton Icon={Icon2GRegular} aria-label="something" />;
 <IconButton Icon={Icon2GRegular} aria-labelledby="something" />;

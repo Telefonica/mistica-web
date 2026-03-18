@@ -1,7 +1,11 @@
 import * as React from 'react';
-import Icon2GRegular from '../generated/mistica-icons/icon-2-g-regular';
 import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
 import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
+import Icon from '../icon';
+
+import type {IconPropsWithoutName} from '../icon';
+
+const Icon2GRegular = (props: IconPropsWithoutName) => <Icon {...props} name="2g-regular" />;
 
 const v = true as boolean;
 

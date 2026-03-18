@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     Select,
-    IconSettingsRegular,
+    Icon,
     Overlay,
     useTheme,
     useScreenSize,
@@ -390,7 +390,8 @@ export const PreviewTools = ({
                                             size={40}
                                             border
                                         >
-                                            <IconSettingsRegular
+                                            <Icon
+                                                name="settings-regular"
                                                 className={styles.floatingButtonIcon}
                                                 size={24}
                                                 color={skinVars.colors.neutralHigh}

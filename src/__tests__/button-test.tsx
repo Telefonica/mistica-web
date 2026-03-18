@@ -4,7 +4,6 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
-import IconPhotoCameraRegular from '../generated/mistica-icons/icon-photo-camera-regular';
 import {MemoryRouter, useLocation, Link as ReactRouterLink} from 'react-router-dom';
 import {redirect as redirectSpy} from '../utils/browser';
 
@@ -104,6 +103,11 @@ test('buttons can track events', async () => {
 });
 
 test('buttons track default events', async () => {
+    const IconMock = () => (
+        <svg width="24" height="24">
+            <path d="M0 0h24v24H0z" />
+        </svg>
+    );
     const logEventSpy = jest.fn();
 
     render(
@@ -119,7 +123,7 @@ test('buttons track default events', async () => {
                 danger
             </ButtonDanger>
             <ButtonPrimary trackEvent onPress={() => {}}>
-                <IconPhotoCameraRegular color="currentColor" />
+                <IconMock />
                 Take a photo
             </ButtonPrimary>
             <ButtonLink href="#">no track link</ButtonLink>

@@ -7,7 +7,6 @@ import {
     ButtonPrimary,
     Form,
     IconPlayFilled,
-    IconShopRegular,
     IconTrashCanRegular,
     Stack,
     Tag,
@@ -15,6 +14,12 @@ import {
     ThemeContextProvider,
 } from '..';
 import {makeTheme} from './test-utils';
+
+const IconMock = () => (
+    <svg width="24" height="24">
+        <path d="M0 0h24v24H0z" />
+    </svg>
+);
 
 test('RowList has a list role by default', () => {
     render(
@@ -286,7 +291,7 @@ test('Row list with iconButton', async () => {
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <RowList>
                 <Row
-                    asset={<IconShopRegular />}
+                    asset={<IconMock />}
                     title="Title"
                     description="Description"
                     onPress={onPressSpy}
@@ -347,7 +352,7 @@ test('Text content is read by screen readers in the right order in Rows with lin
                     description="Description"
                     detail="Detail"
                     right="right"
-                    asset={<IconShopRegular />}
+                    asset={<IconMock />}
                     extra={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
@@ -377,7 +382,7 @@ test('Text content is read by screen readers in the right order in Rows with but
                     description="Description"
                     detail="Detail"
                     right="right"
-                    asset={<IconShopRegular />}
+                    asset={<IconMock />}
                     extra={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
@@ -413,7 +418,7 @@ test('Text content is read by screen readers in the right order in Rows with che
                     }
                     detail="detail"
                     right="right"
-                    asset={<IconShopRegular />}
+                    asset={<IconMock />}
                     checkbox={{defaultValue: false}}
                 />
             </RowList>
@@ -443,7 +448,7 @@ test('Text content is read by screen readers in the right order in Rows with swi
                     }
                     detail="detail"
                     right="right"
-                    asset={<IconShopRegular />}
+                    asset={<IconMock />}
                     switch={{defaultValue: false}}
                 />
             </RowList>
@@ -474,7 +479,7 @@ test('Text content is read by screen readers in the right order in Rows with rad
                         }
                         detail="detail"
                         right="right"
-                        asset={<IconShopRegular />}
+                        asset={<IconMock />}
                         radioValue="radio1"
                     />
                 </RowList>

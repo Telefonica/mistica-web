@@ -10,7 +10,6 @@ import {
     Hero,
     Image,
     HighlightedCard,
-    IconShopRegular,
     Meter,
     Placeholder,
     SearchField,
@@ -41,6 +40,12 @@ const checkTestIds = (
         internalTestIds.forEach((id) => expect(within(element).getByTestId(id)).toBeInTheDocument());
     });
 };
+
+const IconShopRegular = () => (
+    <svg width="24" height="24">
+        <path d="M0 0h24v24H0z" />
+    </svg>
+);
 
 test('Row test ids', () => {
     checkTestIds(
