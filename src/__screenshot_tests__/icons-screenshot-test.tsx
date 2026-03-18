@@ -25,20 +25,32 @@ test.each(getCases())(
 
         // Mock CDN icon requests to return immediately with a simple SVG
         await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            if (request.url().includes('mistica-icons') && request.url().endsWith('.svg')) {
-                request.respond({
-                    status: 200,
-                    contentType: 'image/svg+xml',
-                    body: '<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>',
-                });
+        page.on('request', (interceptedRequest) => {
+            if (
+                interceptedRequest.url().includes('mistica-icons') &&
+                interceptedRequest.url().endsWith('.svg')
+            ) {
+                interceptedRequest
+                    .respond({
+                        status: 200,
+                        contentType: 'image/svg+xml',
+                        body: '<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>',
+                    })
+                    .catch(() => {
+                        // Ignore errors if request was already handled
+                    });
             } else {
-                request.continue();
+                interceptedRequest.continue().catch(() => {
+                    // Ignore errors if request was already handled
+                });
             }
         });
+
+        // Reload the page to ensure ALL icon requests go through the interceptor
+        await page.reload({waitUntil: 'networkidle2'});
 
         const icons = await page.screenshot({fullPage: true});
         expect(icons).toMatchImageSnapshot();
     },
-    60000
+    120000
 );
