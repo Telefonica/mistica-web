@@ -23,25 +23,22 @@ test.each(getCases())(
             args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled', size: 32},
         });
 
-        // Scroll to bottom to trigger lazy loading of all icons
-        await page.evaluate(() => {
-            window.scrollTo(0, document.body.scrollHeight);
+        // Mock CDN icon requests to return immediately with a simple SVG
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            if (request.url().includes('mistica-icons') && request.url().endsWith('.svg')) {
+                request.respond({
+                    status: 200,
+                    contentType: 'image/svg+xml',
+                    body: '<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>',
+                });
+            } else {
+                request.continue();
+            }
         });
-
-        // Wait for lazy loading to be triggered and icons to start fetching from CDN
-        await page.waitForTimeout(2000);
-
-        // Scroll back to top for the screenshot
-        await page.evaluate(() => {
-            window.scrollTo(0, 0);
-        });
-
-        // Give generous time for all CDN icon fetches to complete
-        // The first test (cold start) needs the most time
-        await page.waitForTimeout(10000);
 
         const icons = await page.screenshot({fullPage: true});
         expect(icons).toMatchImageSnapshot();
     },
-    180000
+    60000
 );
