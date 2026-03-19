@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, Icon} from '../../..';
+import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconLightningRegular} from '../../..';
 
 const CardsTest = (): JSX.Element => (
     <Inline space={16}>
@@ -21,7 +21,7 @@ const CardsTest = (): JSX.Element => (
             title="title"
             subtitle="subtitle"
             description="description"
-            asset={<Icon name="academic-light" />}
+            asset={<IconLightningRegular />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
