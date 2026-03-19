@@ -43,6 +43,7 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
+import {title} from 'process';
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
@@ -109,10 +110,20 @@ type MediaProps = {
 type TextContentProps = {
     type: CardType;
     headline?: string | RendersNullableElement<typeof Tag>;
-    pretitle?: string;
+    pretitle?:
+        | string
+        | {
+              text: string;
+              'aria-label'?: React.AriaAttributes['aria-label'];
+          };
     pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
-    title?: string;
+    title?:
+        | string
+        | {
+              text: string;
+              'aria-label'?: React.AriaAttributes['aria-label'];
+          };
     titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
@@ -163,6 +174,18 @@ type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
     'aria-current'?: React.AriaAttributes['aria-current'];
+    /**
+     * Aria label for the touchable element. Makes the whole card to be announced as a link/button by screen readers.
+     */
+    touchableAriaLabel?: React.AriaAttributes['aria-label'];
+    /**
+     * When true, the touchable content of the card will be segregated for screen readers. Only one of those elements will be announced as link/button,
+     * according to the following logic:
+     * - If there is title or pretitle it will be the one between these two with the higher hierarchy (for example, if titleAs is 'h2' and pretitleAs is 'h3', the title will be the touchable element).
+     * - If those are not present it will be the next hierarchy element: headline, subtitle, ...
+     * This behaviour can be overriden with the touchableAriaLabel prop.
+     */
+    segregatedTouchableContent?: boolean;
 } & ExclusifyUnion<
     | {
           href: string | undefined;
@@ -878,10 +901,10 @@ const TextContent = ({
     size,
     variant,
     headline,
-    title,
+    title: titleProp,
     titleAs = 'h3',
     titleLinesMax,
-    pretitle,
+    pretitle: pretitleProp,
     pretitleAs,
     pretitleLinesMax,
     subtitle,
@@ -892,6 +915,9 @@ const TextContent = ({
 }: TextContentProps & PrivateTextContentProps): JSX.Element => {
     const {textPresets, colorValues} = useTheme();
     const externalVariant = useThemeVariant();
+
+    const title = typeof titleProp === 'string' ? {text: titleProp} : titleProp;
+    const pretitle = typeof pretitleProp === 'string' ? {text: pretitleProp} : pretitleProp;
 
     const commonProps = {
         hyphens: 'auto',
@@ -1034,7 +1060,7 @@ const TextContent = ({
         </div>
     );
 
-    const pretitleElement = pretitle && (
+    const pretitleElement = pretitle?.text && (
         // Read order: 3 or 1. Visual order 2
         <div style={{paddingBottom: 4, order: 2}} data-testid="pretitle">
             <Text
@@ -1044,13 +1070,14 @@ const TextContent = ({
                 truncate={pretitleLinesMax}
                 color={colors.pretitle}
                 textShadow={textShadowStyle}
+                aria-label={pretitle?.['aria-label']}
             >
-                {pretitle}
+                {pretitle.text}
             </Text>
         </div>
     );
 
-    const titleElement = title && (
+    const titleElement = title?.text && (
         // Read order: 1 or 3. Visual order 3
         <div style={{paddingBottom: 4, order: 3}} data-testid="title">
             <Text
@@ -1060,8 +1087,9 @@ const TextContent = ({
                 truncate={titleLinesMax}
                 color={colors.title}
                 textShadow={textShadowStyle}
+                aria-label={title?.['aria-label']}
             >
-                {title}
+                {title.text}
             </Text>
         </div>
     );
@@ -1268,7 +1296,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         ? skinVars.colors.backgroundAlternative
                         : undefined);
 
-        const ariaLabel =
+        const touchableAriaLabel =
             ariaLabelProp ||
             (ariaLabeledByProp
                 ? undefined
@@ -1347,7 +1375,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
                 <BaseTouchable
                     maybe
-                    aria-label={isTouchable ? ariaLabel : undefined}
+                    aria-label={isTouchable ? touchableAriaLabel : undefined}
                     aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
                     aria-description={isTouchable ? ariaDescriptionProp : undefined}
                     aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
