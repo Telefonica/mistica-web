@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NakedCard, Placeholder} from '..';
+import {NakedCard, Placeholder, Tag} from '..';
 import {
     commonArgTypes,
     dataArgTypes,
@@ -31,6 +31,8 @@ type NakedCardArgs = Omit<CommonCardArgs, 'variant' | 'footerVariant'> & {
     slotAlignment: SlotAlignment | '';
     imageSrc: string;
     videoSrc: string;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
     imageAlt: string;
     mediaPosition: MediaPosition;
     mediaAspectRatio?: MediaAspectRatio | string;
@@ -53,6 +55,8 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     buttonLink,
     imageSrc,
     videoSrc,
+    videoLoop,
+    videoAutoPlay,
     slot,
     slotAlignment,
     footerSlot,
@@ -61,7 +65,23 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     ariaLabel,
     ariaDescription,
     imageFit,
-    ...args
+    size,
+    width,
+    height,
+    headlineType,
+    headline,
+    pretitle,
+    pretitleLinesMax,
+    title,
+    titleLinesMax,
+    subtitle,
+    subtitleLinesMax,
+    description,
+    descriptionLinesMax,
+    showFooter,
+    imageAlt,
+    mediaPosition,
+    circledImage,
 }) => {
     return (
         <ThemeVariantWrapper variant={variantOutside}>
@@ -75,7 +95,9 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
-                slot={slot ? <Placeholder height={50} /> : undefined}
+                videoLoop={videoLoop}
+                videoAutoPlay={videoAutoPlay}
+                slot={slot ? [<Placeholder height={30} />, <Placeholder height={30} />] : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
@@ -86,7 +108,22 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
                 imageFit={imageFit || undefined}
-                {...args}
+                size={size}
+                width={width}
+                height={height}
+                headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+                pretitle={pretitle}
+                pretitleLinesMax={pretitleLinesMax}
+                title={title}
+                titleLinesMax={titleLinesMax}
+                subtitle={subtitle}
+                subtitleLinesMax={subtitleLinesMax}
+                description={description}
+                descriptionLinesMax={descriptionLinesMax}
+                showFooter={showFooter}
+                imageAlt={imageAlt}
+                mediaPosition={mediaPosition}
+                circledImage={circledImage}
             />
         </ThemeVariantWrapper>
     );
@@ -102,6 +139,8 @@ Default.args = {
     imageSrc: 'beach',
     imageAlt: 'Image Alt Text',
     videoSrc: 'undefined',
+    videoLoop: false,
+    videoAutoPlay: false,
     mediaPosition: 'top',
     mediaAspectRatio: '16 9',
     mediaWidth: '150px',

@@ -1,4 +1,4 @@
-import {globalStyle, style} from '@vanilla-extract/css';
+import {createVar, globalStyle, style} from '@vanilla-extract/css';
 import {iconContainerSize} from './icon-button.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars, vars} from './skins/skin-contract.css';
@@ -8,7 +8,8 @@ import {pxToRem} from './utils/css';
 const borderSize = 1;
 
 // We need to substract border size from padding because the container has boxSizing: border-box
-export const fieldVerticalPadding = 8 - borderSize;
+export const fieldTopPadding = `calc(${vars.spacing.inputPadding.top} - ${borderSize}px)`;
+export const fieldBottomPadding = `calc(${vars.spacing.inputPadding.bottom} - ${borderSize}px)`;
 export const fieldLeftPadding = 12 - borderSize;
 export const fieldRightPadding = 16 - borderSize;
 
@@ -16,42 +17,61 @@ export const fieldElementsGap = 12;
 export const fieldEndIconGap = 4;
 export const iconButtonSize = iconContainerSize.default;
 
-export const mobileFontSize = pxToRem(16);
-export const desktopFontSize = pxToRem(18);
+const mobileFontSize = createVar();
+const desktopFontSize = createVar();
+const mobileLineHeight = createVar();
+const desktopLineHeight = createVar();
 
-export const labelLineHeight = pxToRem(24);
-export const inputLineHeight = pxToRem(24);
+const shrinkedLabelMobileFontSize = createVar();
+const shrinkedLabelDesktopFontSize = createVar();
+const shrinkedLabelMobileLineHeight = createVar();
+const shrinkedLabelDesktopLineHeight = createVar();
+
+const helperTextMobileFontSize = createVar();
+const helperTextDesktopFontSize = createVar();
+const helperTextMobileLineHeight = createVar();
+const helperTextDesktopLineHeight = createVar();
+
+const labelScaleDesktop = createVar();
+const labelScaleMobile = createVar();
 
 export const suggestionsContainerPadding = 8;
 
-export const shrinkedLabelLineHeight = {
-    mobile: pxToRem(16),
-    desktop: pxToRem(20),
-};
-
-export const labelFontSize = {
-    mobile: pxToRem(16),
-    desktop: pxToRem(18),
+export const fieldVars = {
+    mobileFontSize,
+    desktopFontSize,
+    mobileLineHeight,
+    desktopLineHeight,
+    shrinkedLabelMobileFontSize,
+    shrinkedLabelDesktopFontSize,
+    shrinkedLabelMobileLineHeight,
+    shrinkedLabelDesktopLineHeight,
+    helperTextMobileFontSize,
+    helperTextDesktopFontSize,
+    helperTextMobileLineHeight,
+    helperTextDesktopLineHeight,
+    labelScaleDesktop,
+    labelScaleMobile,
 };
 
 const topSpaceWithLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} + ${fieldTopPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} + ${fieldTopPadding})`,
 };
 
 const topSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldTopPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldTopPadding})`,
 };
 
 const bottomSpaceWithLabel = {
-    desktop: fieldVerticalPadding,
-    mobile: fieldVerticalPadding,
+    desktop: fieldBottomPadding,
+    mobile: fieldBottomPadding,
 };
 
 const bottomSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldBottomPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldBottomPadding})`,
 };
 
 const commonInputStyles = style([
@@ -64,11 +84,12 @@ const commonInputStyles = style([
     {
         background: 'none',
         borderRadius: `calc(${vars.borderRadii.input} - 1px)`,
-        lineHeight: inputLineHeight,
+        lineHeight: desktopLineHeight,
         fontSize: desktopFontSize,
         '@media': {
             [mq.tabletOrSmaller]: {
                 fontSize: mobileFontSize,
+                lineHeight: mobileLineHeight,
             },
         },
         caretColor: vars.colors.controlActivated,
@@ -147,7 +168,12 @@ export const emptyDateValue = style({
      */
     selectors: {
         '&::-webkit-date-and-time-value': {
-            minHeight: inputLineHeight,
+            minHeight: desktopLineHeight,
+            '@media': {
+                [mq.tabletOrSmaller]: {
+                    minHeight: mobileLineHeight,
+                },
+            },
         },
     },
 });
@@ -387,9 +413,4 @@ globalStyle(`${suggestionsContainer} > ul`, {
     listStyleType: 'none',
     padding: 0,
     margin: 0,
-});
-
-export const fieldEndIconContainer = style({
-    // remove extra button space on the right so that icon is not too far from field's container
-    marginRight: -12,
 });

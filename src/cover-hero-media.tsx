@@ -23,7 +23,11 @@ export const CoverHeroMedia = ({
     poster,
     backgroundVideoRef,
 }: ExclusifyUnion<ImageProps | VideoProps>): React.ReactElement => {
-    const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
+    const {video, videoAction} = useVideoWithControls({
+        src: backgroundVideo,
+        poster,
+        ref: backgroundVideoRef,
+    });
     return (
         <div className={styles.mediaLayer}>
             {backgroundImage && <Image width="100%" height="100%" src={backgroundImage} />}

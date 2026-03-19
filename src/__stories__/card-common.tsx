@@ -69,6 +69,7 @@ export type CommonCardArgs = {
     showFooter: boolean;
     footerSlot: boolean;
     footerVariant: 'default' | 'brand' | '';
+    footerDivider?: boolean;
 };
 
 export const getAsset = (asset: CommonCardArgs['asset']): JSX.Element | undefined => {
@@ -219,6 +220,7 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     showFooter: true,
     footerSlot: true,
     footerVariant: '',
+    footerDivider: undefined,
     slot: true,
 };
 
@@ -302,6 +304,10 @@ export const commonArgTypes = {
             },
         },
     },
+    footerDivider: {
+        options: [undefined, true, false],
+        control: {type: 'select'},
+    },
 };
 
 export const imageAndVideoArgTypes = {
@@ -312,6 +318,12 @@ export const imageAndVideoArgTypes = {
     videoSrc: {
         options: Object.keys(videoNameToUrl),
         control: {type: 'select'},
+    },
+    videoLoop: {
+        control: {type: 'boolean'},
+    },
+    videoAutoPlay: {
+        control: {type: 'boolean'},
     },
 };
 
@@ -343,7 +355,7 @@ export const mediaArgTypes = {
 
 export const dataArgTypes = {
     slotAlignment: {
-        options: ['', 'content', 'bottom'],
+        options: ['', 'content', 'bottom', 'space-between'],
         control: {
             type: 'select',
             labels: {'': 'undefined'},

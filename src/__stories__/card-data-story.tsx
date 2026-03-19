@@ -65,7 +65,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 footerVariant={footerVariant || undefined}
                 aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                 topActions={getTopActions(topActions)}
-                slot={slot ? <Placeholder height={50} /> : undefined}
+                slot={slot ? [<Placeholder height={30} />, <Placeholder height={30} />] : undefined}
                 slotAlignment={slotAlignment || undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}

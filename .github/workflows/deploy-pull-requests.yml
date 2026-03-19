@@ -1,13 +1,24 @@
 name: deploy-pull-requests
 on: [pull_request]
+
+permissions:
+    contents: read
+    pull-requests: write
+
 concurrency:
     group: deploy-pull-requests-${{ github.ref }}
     cancel-in-progress: true
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        # Security: only deploy PRs from same repo, not from forks
+        # Prevents malicious code in package.json from accessing VERCEL_TOKEN
+        if: github.event.pull_request.head.repo.full_name == github.repository
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             # we need to run a different buildCommand for PR previews (see package.json scripts)
             - run: sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json

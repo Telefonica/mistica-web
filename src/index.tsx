@@ -174,11 +174,13 @@ export {default as CvvField} from './cvv-field';
 export {default as DateField} from './date-field';
 export {default as MonthField} from './month-field';
 export {default as DateTimeField} from './date-time-field';
+export {default as TimeField} from './time-field';
 export {default as IntegerField} from './integer-field';
 export {default as DecimalField} from './decimal-field';
 export {default as PasswordField} from './password-field';
 export {default as DoubleField} from './double-field';
 export {default as IbanField} from './iban-field';
+export {default as FileUpload, FileItem} from './file-upload';
 export {default as Autocomplete} from './autocomplete';
 export {useForm, useFieldProps} from './form-context';
 export type {FormValues} from './form';
@@ -194,6 +196,7 @@ export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
 export {default as Circle} from './circle';
+export {default as Square} from './square';
 
 export {
     useTheme,

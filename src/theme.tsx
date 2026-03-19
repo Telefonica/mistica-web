@@ -7,6 +7,7 @@ import type {
     Colors,
     Skin,
     SkinName,
+    SpacingConfig,
     TextPresetsConfig,
     ThemeVariantsConfig,
 } from './skins/types';
@@ -172,6 +173,7 @@ export type Theme = {
     colorValues: Colors;
     borderRadii: BorderRadiiConfig;
     textPresets: TextPresetsConfig;
+    spacing: SpacingConfig;
     themeVariants: ThemeVariantsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;

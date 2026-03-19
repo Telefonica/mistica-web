@@ -42,7 +42,11 @@ export type MediaCardProps = {
     imageAlt?: string;
     imageSrc?: string;
     imageSrcSet?: string;
+    circledImage?: boolean;
     videoSrc?: VideoSource;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
+    videoDataAttributes?: DataAttributes;
     /** @deprecated use imageSrc */
     poster?: string;
     variant?: Variant;
@@ -77,6 +81,7 @@ export type MediaCardProps = {
     footerBackgroundColor?: string;
     footerVariant?: 'default' | 'brand' | 'inverse';
     footerSlot?: React.ReactNode;
+    footerDivider?: boolean;
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(

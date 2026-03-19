@@ -168,7 +168,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
                     disabled: !!disabled,
                 })
             ) : (
-                <Inline space={16}>
+                <Inline space={8}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
                     <Text3 regular as="div">
                         <div style={{position: 'relative', top: -2}}>{iconCheckbox}</div>

@@ -6,7 +6,7 @@
 
         // "incremental": true, // Enable incremental compilation
         "target": "es2021", // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. ,
-        "module": "commonjs", // Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. ,
+        "module": "es2020", // Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. ,
         "lib": ["ESNext", "DOM"], // Specify library files to be included in the compilation.
         "allowJs": false, // Allow javascript files to be compiled. ,
         // "checkJs": true, // Report errors in .js files.
@@ -45,7 +45,7 @@
 
         // Module Resolution Options
 
-        // "moduleResolution": "node", // Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6).
+        "moduleResolution": "bundler", // Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6).
         // "baseUrl": "./", // Base directory to resolve non-absolute module names.
         // "paths": {}, // A series of entries which re-map imports to lookup locations relative to the 'baseUrl'.
         // "rootDirs": [], // List of root folders whose combined content represents the structure of the project at runtime.
@@ -74,14 +74,19 @@
         "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
 
         "resolveJsonModule": true,
-        "noEmit": true
+        "noEmit": true,
+        /**
+         * The documented way of importing jest-dom type definitions: https://github.com/testing-library/jest-dom?tab=readme-ov-file#with-typescript
+         * isn't working as expected so we need to add them manually: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
+         */
+        "types": [
+            "vite/client",
+            "@testing-library/jest-dom",
+            "./deprecated-types.d.ts",
+            "@types/jest-image-snapshot",
+            "@types/jest-environment-puppeteer"
+        ]
     },
-
-    /**
-     * The documented way of importing jest-dom type definitions: https://github.com/testing-library/jest-dom?tab=readme-ov-file#with-typescript
-     * isn't working as expected so we need to add them manually: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
-     */
-    "types": ["@testing-library/jest-dom", "deprecated-types.d.ts"],
 
     // this also excludes paths from VSCode auto import feature
     "exclude": ["dist", "dist-ts", "dist-es", "node_modules", "examples"]

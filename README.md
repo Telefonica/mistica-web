@@ -124,7 +124,8 @@ Start prototyping interfaces with Mistica components in the
 - `yarn test-acceptance`: run acceptance tests headless (you need to start storybook first)
 - `yarn test-acceptance --ui`: run acceptance tests with ui (you need to start storybook first)
 - `yarn lint`: check codestyle
-- `yarn ts-check`: check static types
+- `yarn ts-check`: check static types (run `yarn build` first — the type check requires generated declaration
+  files in `dist/`)
 - `yarn build`: build package
 - `yarn storybook`: starts storybook
 - `yarn playroom`: starts playroom

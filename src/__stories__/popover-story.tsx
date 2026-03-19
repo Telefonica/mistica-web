@@ -15,7 +15,6 @@ import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Popover',
-    component: Popover,
     parameters: {fullScreen: true},
 };
 

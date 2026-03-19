@@ -2,6 +2,7 @@ import * as React from 'react';
 import {CoverCard, Placeholder} from '..';
 import {
     commonArgTypes,
+    dataArgTypes,
     defaultCommonCardArgs,
     getAsset,
     getButtonLink,
@@ -32,6 +33,8 @@ type CoverCardArgs = CommonCardArgs & {
     gradientOverlayColor?: string;
     imageSrc: string;
     videoSrc: string;
+    videoLoop?: boolean;
+    videoAutoPlay?: boolean;
 };
 
 export const Default: StoryComponent<CoverCardArgs> = ({
@@ -50,6 +53,8 @@ export const Default: StoryComponent<CoverCardArgs> = ({
     footerVariant,
     imageSrc,
     videoSrc,
+    videoLoop,
+    videoAutoPlay,
     slot,
     footerSlot,
     titleAs,
@@ -72,7 +77,9 @@ export const Default: StoryComponent<CoverCardArgs> = ({
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
                 videoSrc={videoNameToUrl[videoSrc as never]}
-                slot={slot ? <Placeholder height={50} /> : undefined}
+                videoLoop={videoLoop}
+                videoAutoPlay={videoAutoPlay}
+                slot={slot ? [<Placeholder height={30} />, <Placeholder height={30} />] : undefined}
                 footerSlot={footerSlot ? <Placeholder height={50} /> : undefined}
                 buttonPrimary={getButtonPrimary(buttonPrimary)}
                 buttonSecondary={getButtonSecondary(buttonSecondary)}
@@ -96,9 +103,12 @@ Default.args = {
     footerBackgroundColor: '',
     imageSrc: 'beach',
     videoSrc: 'undefined',
+    videoLoop: false,
+    videoAutoPlay: false,
 };
 
 Default.argTypes = {
     ...commonArgTypes,
     ...imageAndVideoArgTypes,
+    ...dataArgTypes,
 };
