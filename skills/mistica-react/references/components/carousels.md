@@ -9,7 +9,7 @@ Carousel presents related content in horizontal pages with optional bullets, arr
 #### Use for
 
 - Browsing related cards or modules when horizontal exploration is the intended interaction
-- Revealing progressive content with clear page feedback (bullets) and optional directional controls
+- Revealing progressive content with clear page feedback (page bullets) and optional directional controls
 - Supporting both manual navigation and optional autoplay for highlight-driven content
 - Adapting visible items by breakpoint so collections stay readable across devices
 
@@ -43,7 +43,8 @@ Carousel presents related content in horizontal pages with optional bullets, arr
 
 ## CenteredCarousel
 
-CenteredCarousel emphasizes one item at a time on mobile while preserving multi-item browsing on larger screens.
+CenteredCarousel emphasizes one item at a time on mobile while preserving multi-item browsing on larger
+screens.
 
 ### Usage
 
@@ -79,14 +80,15 @@ CenteredCarousel emphasizes one item at a time on mobile while preserving multi-
 
 ## Slideshow
 
-Use slideshow for full-width, page-by-page sequences of visual content with optional bullets, controls, and autoplay.
+Use slideshow for full-width, page-by-page sequences of visual content with optional bullets, controls, and
+autoplay.
 
 ### Usage
 
 #### Use for
 
-- Showing a small sequence of prominent slides (for example hero banners or featured stories) one page at a
-  time
+- Showing a small sequence of prominent slides one page at a time
+- Can wrap full-width components like hero or coverHero to use them as slides
 - Letting people move between pages with swipe/scroll gestures plus optional previous/next controls
 - Providing orientation in the sequence with bullets, including inverse bullets on visual backgrounds when
   needed
@@ -144,7 +146,8 @@ PageBullets indicates carousel pagination state, helping users understand positi
 
 ## CarouselAutoplayControl
 
-CarouselAutoplayControl toggles carousel autoplay state, including pause/play and restart behavior when the last page is reached.
+CarouselAutoplayControl toggles carousel autoplay state, including pause/play and restart behavior when the
+last page is reached.
 
 ### Usage
 
@@ -174,7 +177,8 @@ CarouselAutoplayControl toggles carousel autoplay state, including pause/play an
 
 ## CarouselContextConsumer
 
-CarouselContextConsumer reads shared carousel actions and state to render custom controls aligned with active carousel behavior.
+CarouselContextConsumer reads shared carousel actions and state to render custom controls aligned with active
+carousel behavior.
 
 ### Usage
 
@@ -194,7 +198,8 @@ CarouselContextConsumer reads shared carousel actions and state to render custom
 
 ## CarouselContextProvider
 
-CarouselContextProvider shares carousel navigation and state props so custom controls stay synchronized with carousel behavior.
+CarouselContextProvider shares carousel navigation and state props so custom controls stay synchronized with
+carousel behavior.
 
 ### Usage
 
@@ -214,7 +219,8 @@ CarouselContextProvider shares carousel navigation and state props so custom con
 
 ## CarouselPageControls
 
-CarouselPageControls provides previous/next arrow navigation for carousels, with contextual enable/disable behavior and page-aware labeling.
+CarouselPageControls provides previous/next arrow navigation for carousels, with contextual enable/disable
+behavior and page-aware labeling.
 
 ### Usage
 

@@ -110,7 +110,7 @@ showSheet opens a typed sheet flow imperatively and returns a promise with user 
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| props | `{ title?: string \| undefined; subtitle?: string \| undefined; description?: string \| string[] \| undefined; selectedId?: string \| undefined; items: { id: string; title?: string \| undefined; ico...` | Yes | - |  |
+| props | `{ title?: string \| undefined; subtitle?: string \| undefined; description?: string \| string[] \| undefined; selectedId?: string \| undefined; items: { id: string; tag?: { type?: TagType \| undefi...` | Yes | - |  |
 | type | `"RADIO_LIST" \| "ACTIONS_LIST" \| "INFO" \| "ACTIONS"` | Yes | - |  |
 
 ## NativeSheetImplementation
@@ -271,7 +271,7 @@ RadioListSheet presents single-choice options inside a bottom sheet using radio-
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| items | `readonly { id: string; title?: string \| undefined; description?: string \| undefined; asset?: ReactNode; }[]` | Yes | - |  |
+| items | `readonly { id: string; tag?: { type?: TagType \| undefined; text: string; } \| undefined; title?: string \| undefined; description?: string \| undefined; asset?: ReactNode; }[]` | Yes | - |  |
 | button | `{ text: string; }` | No | - |  |
 | dataAttributes | `DataAttributes` | No | - |  |
 | description | `string \| readonly string[]` | No | - |  |

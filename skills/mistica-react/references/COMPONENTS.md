@@ -24,7 +24,7 @@ Component reference for Mística React. Components are grouped by category in `c
 
 - [DataCard](components/cards.md#datacard) — DataCard presents structured informational content with optional media, hierarchy, actions, and supporting slots in a reusable card surface.
 - [MediaCard](components/cards.md#mediacard) — MediaCard combines media and content in one card surface, balancing visual storytelling with clear text hierarchy and actions.
-- [CoverCard](components/cards.md#covercard) — CoverCard is a media-first card pattern that combines image or video backgrounds with layered content, actions, and optional footer content.
+- [CoverCard](components/cards.md#covercard) — CoverCard is a media-first card pattern that combines image or video backgrounds with layered content.
 - [NakedCard](components/cards.md#nakedcard) — NakedCard is a transparent card surface that inherits the surrounding theme context while keeping card content structure and actions.
 - [HighlightedCard](components/cards.md#highlightedcard) — HighlightedCard is a legacy highlighted media-card pattern; use the equivalent MediaCard layout in new designs.
 - [PosterCard](components/cards.md#postercard) — PosterCard is a legacy media-first card kept for backward compatibility; use CoverCard for new designs.
@@ -254,7 +254,7 @@ Component reference for Mística React. Components are grouped by category in `c
 
 ## [Badge](components/badge.md)
 
-- [Badge](components/badge.md#badge)
+- [Badge](components/badge.md#badge) — Badge is a compact, decorative indicator used to signal unread or pending status on top of another UI element.
 
 ## [Tag](components/tag.md)
 
@@ -306,8 +306,11 @@ Component reference for Mística React. Components are grouped by category in `c
 - [Title3](components/text.md#title3) — High-emphasis section heading for prominent content groupings such as commercial or featured blocks.
 - [Title4](components/text.md#title4) — Top title level for primary page or view headings when maximum hierarchy prominence is needed.
 - [TextLink](components/text.md#textlink) — Use text link (or hyperlink) to create inline linkable text.
-- [TextTimer](components/text.md#texttimer) — Use text timer for inline countdowns embedded in sentences or short blocks of copy.
-- [Timer](components/text.md#timer) — Use timer for prominent countdown displays with segmented time units, optionally boxed for stronger visual emphasis.
+
+## [Timer](components/timer.md)
+
+- [TextTimer](components/timer.md#texttimer) — Use text timer for inline countdowns embedded in sentences or short blocks of copy.
+- [Timer](components/timer.md#timer) — Use timer for prominent countdown displays with segmented time units, optionally boxed for stronger visual emphasis.
 
 ## [Timeline](components/timeline.md)
 
@@ -355,12 +358,3 @@ Component reference for Mística React. Components are grouped by category in `c
 - [RowBlock](components/community.md#rowblock) — RowBlock displays a title with either a right-aligned description or a stacking group in a horizontal row layout. Designed to be used as an extra block inside AdvancedDataCard.
 - [SimpleBlock](components/community.md#simpleblock) — SimpleBlock displays an image alongside a description with an optional right-aligned text. Designed to be used as an extra block inside AdvancedDataCard.
 - [ValueBlock](components/community.md#valueblock) — ValueBlock displays a title with a large prominent value and optional description lines. Designed to be used as an extra block inside AdvancedDataCard.
-
-## [Status Icons](components/status-icons.md)
-
-- [IconChevron](components/status-icons.md#iconchevron)
-- [IconError](components/status-icons.md#iconerror)
-- [IconInfo](components/status-icons.md#iconinfo)
-- [IconSuccess](components/status-icons.md#iconsuccess)
-- [IconSuccessVivo](components/status-icons.md#iconsuccessvivo)
-- [IconSuccessVivoNew](components/status-icons.md#iconsuccessvivonew)

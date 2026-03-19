@@ -307,9 +307,11 @@ const categories = {
             'Title3',
             'Title4',
             'TextLink',
-            'TextTimer',
-            'Timer',
         ],
+    },
+    timer: {
+        title: 'Timer',
+        components: ['TextTimer', 'Timer'],
     },
     timeline: {
         title: 'Timeline',
@@ -360,17 +362,6 @@ const categories = {
             'RowBlock',
             'SimpleBlock',
             'ValueBlock',
-        ],
-    },
-    'status-icons': {
-        title: 'Status Icons',
-        components: [
-            'IconChevron',
-            'IconError',
-            'IconInfo',
-            'IconSuccess',
-            'IconSuccessVivo',
-            'IconSuccessVivoNew',
         ],
     },
 };

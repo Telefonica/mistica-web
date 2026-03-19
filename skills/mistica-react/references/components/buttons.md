@@ -69,7 +69,7 @@ ButtonSecondary represents a complementary action with less visual priority than
 
 - Do not use secondary styling for the main conversion or progression action
 - Do not present too many secondary actions in one group, which can dilute clarity
-- Do not style destructive actions as secondary when risk needs explicit emphasis
+- Do not use secondary buttons for destructive actions, use buttonDanger or buttonLinkDanger instead
 
 ### Props
 
@@ -120,7 +120,7 @@ ButtonDanger is reserved for high-risk, destructive actions that require clear v
 
 #### Don't use for
 
-- Do not use danger styling for normal navigation or low-risk actions
+- Do not use buttonDanger for normal navigation or low-risk actions
 - Do not place multiple danger actions together without clear separation and context
 - Do not make destructive actions the default visual choice in routine flows
 
@@ -169,7 +169,7 @@ ButtonLink provides low-emphasis actions and lightweight navigation in button fo
 
 - Presenting tertiary actions that should remain visible with minimal visual weight
 - Offering contextual navigation from inline sections or supporting action groups
-- Using link-style buttons for low-friction actions that do not compete with primary controls
+- Use buttonLinks for low-friction actions that do not compete with primary controls
 
 #### Don't use for
 
@@ -217,7 +217,8 @@ ButtonLink provides low-emphasis actions and lightweight navigation in button fo
 
 ## ButtonLinkDanger
 
-ButtonLinkDanger is a low-emphasis destructive action used when risk exists but should not dominate the interface.
+ButtonLinkDanger is a low-emphasis destructive action used when risk exists but should not dominate the
+interface.
 
 ### Usage
 
@@ -272,7 +273,8 @@ ButtonLinkDanger is a low-emphasis destructive action used when risk exists but 
 
 ## IconButton
 
-IconButton exposes a compact icon-only action with accessible labeling, visual variants, and optional loading feedback for async interactions.
+IconButton exposes a compact icon-only action with accessible labeling, visual variants, and optional loading
+feedback for async interactions.
 
 ### Usage
 
@@ -330,7 +332,8 @@ IconButton exposes a compact icon-only action with accessible labeling, visual v
 
 ## ToggleIconButton
 
-ToggleIconButton switches between checked and unchecked icon states using the same compact visual language as IconButton.
+ToggleIconButton switches between checked and unchecked icon states using the same compact visual language as
+IconButton.
 
 ### Usage
 
@@ -352,8 +355,8 @@ ToggleIconButton switches between checked and unchecked icon states using the sa
 
 ```tsx
 <ToggleIconButton
-  checkedProps={{ Icon: IconStarFilled, 'aria-label': 'Remove from favorites', type: 'brand' }}
-  uncheckedProps={{ Icon: IconStarRegular, 'aria-label': 'Add to favorites' }}
+  checkedProps={{Icon: IconStarFilled, 'aria-label': 'Remove from favorites', type: 'brand'}}
+  uncheckedProps={{Icon: IconStarRegular, 'aria-label': 'Add to favorites'}}
   checked={isFavorite}
   onChange={setIsFavorite}
 />
@@ -380,7 +383,8 @@ ToggleIconButton switches between checked and unchecked icon states using the sa
 
 ## ButtonGroup
 
-ButtonGroup organizes primary, secondary, and optional link actions into a coherent action block with responsive alignment.
+ButtonGroup organizes primary, secondary, and optional link actions into a coherent action block with
+responsive alignment.
 
 ### Usage
 
@@ -388,7 +392,6 @@ ButtonGroup organizes primary, secondary, and optional link actions into a coher
 
 - Grouping related call-to-action buttons so decision hierarchy is clear at a glance
 - Pairing primary and secondary actions with an optional supporting link action
-- Keeping action sets visually consistent across breakpoints using left or centered alignment
 - Building reusable action blocks where button presence can vary by context
 
 #### Don't use for

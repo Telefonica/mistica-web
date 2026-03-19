@@ -1,9 +1,9 @@
-
 # Cards
 
 ## DataCard
 
-DataCard presents structured informational content with optional media, hierarchy, actions, and supporting slots in a reusable card surface.
+DataCard presents structured informational content with optional media, hierarchy, actions, and supporting
+slots in a reusable card surface.
 
 ### Usage
 
@@ -23,7 +23,8 @@ DataCard presents structured informational content with optional media, hierarch
 
 ## MediaCard
 
-MediaCard combines media and content in one card surface, balancing visual storytelling with clear text hierarchy and actions.
+MediaCard combines media and content in one card surface, balancing visual storytelling with clear text
+hierarchy and actions.
 
 ### Usage
 
@@ -43,7 +44,7 @@ MediaCard combines media and content in one card surface, balancing visual story
 
 ## CoverCard
 
-CoverCard is a media-first card pattern that combines image or video backgrounds with layered content, actions, and optional footer content.
+CoverCard is a media-first card pattern that combines image or video backgrounds with layered content.
 
 ### Usage
 
@@ -63,7 +64,8 @@ CoverCard is a media-first card pattern that combines image or video backgrounds
 
 ## NakedCard
 
-NakedCard is a transparent card surface that inherits the surrounding theme context while keeping card content structure and actions.
+NakedCard is a transparent card surface that inherits the surrounding theme context while keeping card content
+structure and actions.
 
 ### Usage
 
@@ -83,7 +85,8 @@ NakedCard is a transparent card surface that inherits the surrounding theme cont
 
 ## HighlightedCard
 
-HighlightedCard is a legacy highlighted media-card pattern; use the equivalent MediaCard layout in new designs.
+HighlightedCard is a legacy highlighted media-card pattern; use the equivalent MediaCard layout in new
+designs.
 
 ### Usage
 
@@ -142,7 +145,8 @@ Deprecated alias of `DataCard` in snap size for compact, actionable data cards.
 
 ## SmallNakedCard
 
-Deprecated alias of `NakedCard` in snap size, for compact transparent cards that inherit the surrounding theme variant.
+Deprecated alias of `NakedCard` in snap size, for compact transparent cards that inherit the surrounding theme
+variant.
 
 ### Usage
 
@@ -161,7 +165,8 @@ Deprecated alias of `NakedCard` in snap size, for compact transparent cards that
 
 ## DisplayDataCard
 
-DisplayDataCard is the display-sized data card pattern for high-prominence information blocks; prefer the equivalent DataCard size variant in new designs.
+DisplayDataCard is the display-sized data card pattern for high-prominence information blocks; prefer the
+equivalent DataCard size variant in new designs.
 
 ### Usage
 
@@ -182,7 +187,8 @@ DisplayDataCard is the display-sized data card pattern for high-prominence infor
 
 ## DisplayMediaCard
 
-DisplayMediaCard is the large-format media card variant for prominent visual modules; prefer equivalent sizing through modern media-card patterns in new designs.
+DisplayMediaCard is the large-format media card variant for prominent visual modules; prefer equivalent sizing
+through modern media-card patterns in new designs.
 
 ### Usage
 
@@ -202,7 +208,8 @@ DisplayMediaCard is the large-format media card variant for prominent visual mod
 
 ## EmptyStateCard
 
-EmptyStateCard communicates absence of content in a boxed surface with supportive messaging and optional recovery actions.
+EmptyStateCard communicates absence of content in a boxed surface with supportive messaging and optional
+recovery actions.
 
 ### Usage
 

@@ -19,7 +19,7 @@ npm install @telefonica/mistica
 Import components and styles:
 
 ```tsx
-import "@telefonica/mistica/css/mistica.css";
+import '@telefonica/mistica/css/mistica.css';
 import {
   ThemeContextProvider,
   Form,
@@ -31,29 +31,23 @@ import {
   ButtonPrimary,
   alert,
   getMovistarSkin,
-} from "@telefonica/mistica";
+} from '@telefonica/mistica';
 
 const App = () => (
   <Form
     onSubmit={(formData) =>
       alert({
-        title: "This is your data",
+        title: 'This is your data',
         message: JSON.stringify(formData, null, 2),
       })
     }
   >
-    {" "}
     <Box padding={16}>
-      {" "}
       <Stack space={16}>
-        {" "}
-        <TextField name="name" label="Name" />{" "}
-        <EmailField name="email" label="Email" />{" "}
-        <ButtonLayout
-          primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>}
-        />{" "}
-      </Stack>{" "}
-    </Box>{" "}
+        <TextField name="name" label="Name" /> <EmailField name="email" label="Email" />
+        <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
+      </Stack>
+    </Box>
   </Form>
 );
 ```
@@ -65,7 +59,7 @@ Wrap your app with `<ThemeContextProvider>;`:
 ```tsx
 const misticaTheme = {
   skin: getMovistarSkin(),
-  i18n: { locale: "es-ES", phoneNumberFormattingRegionCode: "ES" },
+  i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
 };
 
 <ThemeContextProvider theme={misticaTheme}>
@@ -87,12 +81,13 @@ Extract outside component if static; use React.useMemo if dynamic
 
 If using Next.js App Router:
 
-`experimental: { optimizePackageImports: ['@telefonica/mistica'] }`
-Improves tree shaking, reduces bundle size, speeds up builds
+`experimental: { optimizePackageImports: ['@telefonica/mistica'] }` Improves tree shaking, reduces bundle
+size, speeds up builds
 
 ## Slots
 
-Some components allow the use of slots (`slot`, `extra` `sideExtra`...), these slots enable inseting custom content
+Some components allow the use of slots (`slot`, `extra` `sideExtra`...), these slots enable inseting custom
+content
 
 ```tsx
 <DataCard title="Title" description="description" slot={customContent} />

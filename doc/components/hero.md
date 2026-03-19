@@ -1,9 +1,9 @@
-
 # Hero
 
 ## Hero
 
-A hero is a promotional section at the top of the page with clear call-to-action focus; use CoverHero instead when you need media as the background.
+A hero is a promotional section at the top of the page with clear call-to-action focus; use CoverHero instead
+when you need media as the background.
 
 ### Usage
 
@@ -14,6 +14,7 @@ A hero is a promotional section at the top of the page with clear call-to-action
 - Placing one primary action (plus optional supporting actions) near the core value proposition
 - Supporting campaign and discovery surfaces where top-of-page emphasis is intentional
 - Using foreground media composition (not full media background) when content hierarchy must stay clear
+- As a slide in a slideshow for presenting multiple content
 
 #### Don't use for
 
@@ -25,7 +26,8 @@ A hero is a promotional section at the top of the page with clear call-to-action
 
 ## CoverHero
 
-CoverHero is a high-impact hero section that combines strong heading hierarchy, optional media background, and grouped call-to-action buttons; choose it instead of Hero when media needs to be the section background.
+CoverHero is a high-impact hero section that combines strong heading hierarchy, optional media background, and
+grouped call-to-action buttons; choose it instead of Hero when media needs to be the section background.
 
 ### Usage
 

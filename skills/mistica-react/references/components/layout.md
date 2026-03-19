@@ -237,6 +237,7 @@ Box is a low-level spacing primitive used to apply consistent, responsive paddin
 | aria-hidden | `boolean \| "true" \| "false"` | No | - |  |
 | aria-label | `string` | No | - |  |
 | as | `string \| ComponentClass<any, any> \| FunctionComponent<any>` | No | - |  |
+| background | `string` | No | - |  |
 | className | `string` | No | - | @deprecated this component is meant to be used only to add padding. Consider using a div (or similar) instead if you need to add extra styles |
 | dataAttributes | `DataAttributes` | No | - | "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" |
 | id | `string` | No | - |  |

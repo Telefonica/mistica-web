@@ -32,6 +32,8 @@ MainNavigationBar provides primary product navigation with section switching, re
 | sections | `readonly MainNavigationBarSection[]` | No | [] |  |
 | selectedIndex | `number` | No | - |  |
 | topFixed | `boolean` | No | true |  |
+| topSlot | `ReactNode` | No | - |  |
+| topSlotBackgroundColor | `string` | No | - |  |
 | variant | `"default" \| "brand" \| "negative" \| "alternative" \| "media" \| "inverse"` | No | default |  |
 | wide | `boolean \| WideConfig` | No | false |  |
 | withBorder | `boolean` | No | true |  |
