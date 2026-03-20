@@ -1243,12 +1243,9 @@ const CardTouchable = ({
 
     if (isTouchable && segregateTouchableContent) {
         return hasTouchableInContent ? (
-            <div className={classnames(styles.touchable, styles.touchableContainer)}>
-                {content}
-            </div>
+            <div className={classnames(styles.touchable, styles.touchableContainer)}>{content}</div>
         ) : (
             <div style={{position: 'relative'}}>
-                {content}
                 <BaseTouchable
                     aria-label={touchableAriaLabel}
                     maybe
@@ -1261,6 +1258,7 @@ const CardTouchable = ({
                 >
                     <div className={overlayStyle} />
                 </BaseTouchable>
+                {content}
             </div>
         );
     }
@@ -1623,12 +1621,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 borderBottomRightRadius: shouldShowFooter ? 0 : borderRadius,
                             }}
                         >
-                            <div
-                                className={styles.contentContainer}
-                            >
-                                <div
-                                    className={styles.textContent}
-                                >
+                            <div className={styles.contentContainer}>
+                                <div className={styles.textContent}>
                                     <TextContent
                                         type={type}
                                         hasCustomBackground={hasCustomBackground}
