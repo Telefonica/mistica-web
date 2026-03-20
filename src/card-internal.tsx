@@ -1065,7 +1065,7 @@ const TextContent = ({
         if (!children) {
             return null;
         }
-        if (!touchableProps || !isTouchableAccordingToHierarchy || !touchableProps) {
+        if (!touchableProps || !isTouchableAccordingToHierarchy) {
             return <div {...containerProps}>{children}</div>;
         }
 
