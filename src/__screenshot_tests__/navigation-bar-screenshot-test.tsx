@@ -283,6 +283,5 @@ test.each(['large' /* 'small' */])('MainNavigationBar inverse with %s menu in DE
 
     const startButton = await screen.findByRole('button', {name: 'Start'});
     await page.click(startButton);
-    await startButton.hover(); // Make sure menu is expanded
     expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
 });
