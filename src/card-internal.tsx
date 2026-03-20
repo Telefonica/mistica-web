@@ -19,7 +19,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {InternalBoxed} from './boxed';
-import {BaseTouchable, type PressHandler} from './touchable';
+import {BaseTouchable} from './touchable';
 import {AspectRatioContainer, aspectRatioToNumber} from './utils/aspect-ratio-support';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {IconButton, ToggleIconButton} from './icon-button';
@@ -43,7 +43,7 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
-import {title} from 'process';
+import type {PressHandler, TouchableElement} from './touchable';
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
@@ -175,7 +175,7 @@ type TouchableProps = {
     role?: string;
     'aria-current'?: React.AriaAttributes['aria-current'];
     /**
-     * Aria label for the touchable element. Makes the whole card to be announced as a link/button by screen readers.
+     * Aria label for the touchable element. If set the whole card will be announced as a link/button by screen readers.
      */
     touchableAriaLabel?: React.AriaAttributes['aria-label'];
     /**
@@ -185,7 +185,7 @@ type TouchableProps = {
      * - If those are not present it will be the next hierarchy element: headline, subtitle, ...
      * This behaviour can be overriden with the touchableAriaLabel prop.
      */
-    segregatedTouchableContent?: boolean;
+    segregateTouchableContent?: boolean;
 } & ExclusifyUnion<
     | {
           href: string | undefined;
@@ -892,12 +892,16 @@ type PrivateTextContentProps = {
     withTextShadow?: boolean;
     headlineRef?: (element: HTMLHeadingElement | null) => void;
     hasCustomBackground: boolean;
+    touchableRef?: React.RefObject<TouchableElement | null>;
+    touchableProps?: TouchableProps;
 };
 
 const TextContent = ({
     type,
     hasCustomBackground,
     headlineRef,
+    touchableRef,
+    touchableProps,
     size,
     variant,
     headline,
@@ -1053,16 +1057,54 @@ const TextContent = ({
     const textVariant = textVariants[size] || textVariants.default;
     const textShadowStyle = withTextShadow ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
-    const headlineElement = headline && (
+    const renderText = (
+        children: React.ReactNode,
+        containerProps: Record<string, unknown>,
+        isTouchableAccordingToHierarchy: boolean
+    ) => {
+        if (!children) {
+            return null;
+        }
+        if (!touchableProps || !isTouchableAccordingToHierarchy || !touchableProps) {
+            return <div {...containerProps}>{children}</div>;
+        }
+
+        return (
+            <div {...containerProps}>
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    ref={touchableRef}
+                    className={classnames(styles.touchable)}
+                    stopPropagation // Do not propagate click to parent clickable
+                >
+                    {children}
+                </BaseTouchable>
+            </div>
+        );
+    };
+
+    const touchableTarget = (() => {
+        if (title?.text && pretitle?.text) {
+            return isBiggerHeading(titleAs, pretitleAs) ? 'title' : 'pretitle';
+        }
+        if (title?.text) return 'title';
+        if (pretitle?.text) return 'pretitle';
+        if (headline) return 'headline';
+        if (subtitle) return 'subtitle';
+        if (description) return 'description';
+        return null;
+    })();
+
+    const headlineElement = renderText(
+        headline && typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline,
         // Read order 2. Visual order 1
-        <div style={{paddingBottom: 8, order: 1}} data-testid="headline" ref={headlineRef}>
-            {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
-        </div>
+        {style: {order: 1, paddingBottom: 8}, 'data-testid': 'headline', ref: headlineRef},
+        touchableTarget === 'headline'
     );
 
-    const pretitleElement = pretitle?.text && (
-        // Read order: 3 or 1. Visual order 2
-        <div style={{paddingBottom: 4, order: 2}} data-testid="pretitle">
+    const pretitleElement = renderText(
+        pretitle?.text && (
             <Text
                 {...commonProps}
                 {...textVariant.pretitle}
@@ -1074,12 +1116,13 @@ const TextContent = ({
             >
                 {pretitle.text}
             </Text>
-        </div>
+        ),
+        {style: {paddingBottom: 4, order: 2}, 'data-testid': 'pretitle'},
+        touchableTarget === 'pretitle'
     );
 
-    const titleElement = title?.text && (
-        // Read order: 1 or 3. Visual order 3
-        <div style={{paddingBottom: 4, order: 3}} data-testid="title">
+    const titleElement = renderText(
+        title?.text && (
             <Text
                 {...commonProps}
                 {...textVariant.title}
@@ -1091,12 +1134,14 @@ const TextContent = ({
             >
                 {title.text}
             </Text>
-        </div>
+        ),
+        // Read order: 1 or 3. Visual order 3
+        {style: {paddingBottom: 4, order: 3}, 'data-testid': 'title'},
+        touchableTarget === 'title'
     );
 
-    const subtitleElement = subtitle && (
-        // Read order: 4. Visual order 4
-        <div style={{paddingBottom: 0, order: 4}} data-testid="subtitle">
+    const subtitleElement = renderText(
+        subtitle && (
             <Text
                 {...commonProps}
                 {...textVariant.subtitle}
@@ -1107,12 +1152,14 @@ const TextContent = ({
             >
                 {subtitle}
             </Text>
-        </div>
+        ),
+        // Read order: 4. Visual order 4
+        {style: {paddingBottom: 0, order: 4}, 'data-testid': 'subtitle'},
+        touchableTarget === 'subtitle'
     );
 
-    const descriptionElement = description && (
-        // Read order: 5. Visual order 5
-        <div style={{paddingTop: 4, order: 5}} data-testid="description">
+    const descriptionElement = renderText(
+        description && (
             <Text
                 {...commonProps}
                 {...textVariant.description}
@@ -1123,7 +1170,10 @@ const TextContent = ({
             >
                 {description}
             </Text>
-        </div>
+        ),
+        // Read order: 5. Visual order 5
+        {style: {paddingTop: 4, order: 5}, 'data-testid': 'description'},
+        touchableTarget === 'description'
     );
 
     const [title1, title2] =
@@ -1139,6 +1189,86 @@ const TextContent = ({
             {subtitleElement}
             {descriptionElement}
         </div>
+    );
+};
+
+type CardTouchableProps = {
+    children: React.ReactNode;
+    isTouchable: boolean;
+    touchableAriaLabel?: string;
+    ariaLabeledByProp?: string;
+    ariaDescriptionProp?: string;
+    ariaDescribedByProp?: string;
+    touchableProps: TouchableProps;
+    segregateTouchableContent: boolean;
+    touchableContentRef: React.RefObject<TouchableElement | null>;
+    hasTouchableInContent: boolean;
+    overlayStyle: string;
+};
+
+const CardTouchable = ({
+    children,
+    isTouchable,
+    touchableAriaLabel,
+    ariaLabeledByProp,
+    ariaDescriptionProp,
+    ariaDescribedByProp,
+    touchableProps,
+    segregateTouchableContent,
+    touchableContentRef,
+    hasTouchableInContent,
+    overlayStyle,
+}: CardTouchableProps) => {
+    if (isTouchable && segregateTouchableContent) {
+        return hasTouchableInContent ? (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            <div
+                style={{cursor: 'pointer'}}
+                onClick={() => {
+                    touchableContentRef.current?.click();
+                }}
+                className={classnames(styles.touchable, styles.touchableContainer)}
+            >
+                {children}
+            </div>
+        ) : (
+            <div style={{position: 'relative'}}>
+                {children}
+                <BaseTouchable
+                    aria-label={touchableAriaLabel}
+                    maybe
+                    {...touchableProps}
+                    style={{
+                        padding: 0,
+                        border: 'none',
+                        background: 'transparent',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 2,
+                    }}
+                    className={classnames(styles.touchable, styles.touchableContainer)}
+                >
+                    <div className={overlayStyle} />
+                </BaseTouchable>
+            </div>
+        );
+    }
+
+    return (
+        <BaseTouchable
+            maybe
+            aria-label={isTouchable ? touchableAriaLabel : undefined}
+            aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
+            aria-description={isTouchable ? ariaDescriptionProp : undefined}
+            aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
+            className={classnames(styles.touchable, styles.touchableContainer)}
+            {...touchableProps}
+        >
+            {children}
+        </BaseTouchable>
     );
 };
 
@@ -1208,13 +1338,21 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoLoop,
             videoAutoPlay,
             videoDataAttributes,
+            segregateTouchableContent = false,
+            touchableAriaLabel: touchableAriaLabelProp,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
+        const touchableContentRef = React.useRef<TouchableElement>(null);
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const hasTouchableInContent = !!(
+            segregateTouchableContent &&
+            !touchableAriaLabelProp &&
+            (title || pretitle || headline || subtitle || description)
+        );
         const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
         const {colorValues} = useTheme();
 
@@ -1297,6 +1435,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         : undefined);
 
         const touchableAriaLabel =
+            touchableAriaLabelProp ||
             ariaLabelProp ||
             (ariaLabeledByProp
                 ? undefined
@@ -1373,14 +1512,17 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     </div>
                 )}
 
-                <BaseTouchable
-                    maybe
-                    aria-label={isTouchable ? touchableAriaLabel : undefined}
-                    aria-labelledby={isTouchable ? ariaLabeledByProp : undefined}
-                    aria-description={isTouchable ? ariaDescriptionProp : undefined}
-                    aria-describedby={isTouchable ? ariaDescribedByProp : undefined}
-                    className={classnames(styles.touchable, styles.touchableContainer)}
-                    {...touchableProps}
+                <CardTouchable
+                    isTouchable={isTouchable}
+                    touchableAriaLabel={touchableAriaLabel}
+                    ariaLabeledByProp={ariaLabeledByProp}
+                    ariaDescriptionProp={ariaDescriptionProp}
+                    ariaDescribedByProp={ariaDescribedByProp}
+                    touchableProps={touchableProps}
+                    segregateTouchableContent={segregateTouchableContent}
+                    hasTouchableInContent={hasTouchableInContent}
+                    touchableContentRef={touchableContentRef}
+                    overlayStyle={overlayStyle}
                 >
                     {/**
                      * role="text" makes VoiceOver read the whole div as a single text block. This is needed
@@ -1389,7 +1531,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                      * This workaround is only needed for <a> not for <button> (ask safari developers why)
                      */}
                     <div
-                        role={touchableProps.href || touchableProps.to ? 'text' : undefined}
+                        role={
+                            !segregateTouchableContent && (touchableProps.href || touchableProps.to)
+                                ? 'text'
+                                : undefined
+                        }
                         className={styles.touchableContent}
                         style={{
                             flexDirection:
@@ -1440,7 +1586,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             />
                         )}
                         <div
-                            aria-hidden={isTouchable}
+                            aria-hidden={isTouchable && !segregateTouchableContent}
                             data-testid="body"
                             className={classnames(styles.touchable, {
                                 [styles.containerPaddingTopVariants[size]]:
@@ -1509,6 +1655,9 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
                                             withTextShadow={hasBackgroundImageOrVideo}
+                                            {...(hasTouchableInContent
+                                                ? {touchableRef: touchableContentRef, touchableProps}
+                                                : {})}
                                         />
                                     </div>
                                     {shouldAddContentSpacingForTopActions && (
@@ -1553,7 +1702,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             </div>
                         </div>
                     </div>
-                </BaseTouchable>
+                </CardTouchable>
                 {shouldShowFooter && (
                     <Footer
                         type={type}
