@@ -27,7 +27,7 @@ export const controls = style([
         '::-webkit-scrollbar': {
             display: 'none', // Hide in Chrome/Safari
         },
-
+        background: skinVars.colors.background,
         gap: 8,
         zIndex: 2,
         borderBottom: `1px solid ${skinVars.colors.divider}`,
