@@ -51,6 +51,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     pretitleAs,
     ariaLabel,
     ariaDescription,
+    link,
     ...args
 }) => {
     return (

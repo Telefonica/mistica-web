@@ -1203,8 +1203,9 @@ type CardTouchableProps = {
     touchableProps: TouchableProps;
     segregateTouchableContent: boolean;
     hasTouchableInContent: boolean;
-    overlayStyle: string;
+    overlayClassname: string;
     contentStyle: React.CSSProperties;
+    contentRadiusStyle: React.CSSProperties;
 };
 
 const CardTouchable = ({
@@ -1217,8 +1218,9 @@ const CardTouchable = ({
     touchableProps,
     segregateTouchableContent,
     hasTouchableInContent,
-    overlayStyle,
+    overlayClassname,
     contentStyle,
+    contentRadiusStyle,
 }: CardTouchableProps) => {
     const isOverlayInsideContent = isTouchable && (!segregateTouchableContent || hasTouchableInContent);
 
@@ -1234,9 +1236,9 @@ const CardTouchable = ({
                 !segregateTouchableContent && (touchableProps.href || touchableProps.to) ? 'text' : undefined
             }
             className={styles.touchableContent}
-            style={contentStyle}
+            style={{...contentStyle, ...contentRadiusStyle}}
         >
-            {isOverlayInsideContent && <div className={overlayStyle} />}
+            {isOverlayInsideContent && <div className={overlayClassname} />}
             {children}
         </div>
     );
@@ -1256,7 +1258,7 @@ const CardTouchable = ({
                         styles.stretchedTouchable
                     )}
                 >
-                    <div className={overlayStyle} />
+                    <div className={classnames(overlayClassname)} style={contentRadiusStyle} />
                 </BaseTouchable>
                 {content}
             </div>
@@ -1527,7 +1529,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                     touchableProps={touchableProps}
                     segregateTouchableContent={segregateTouchableContent}
                     hasTouchableInContent={hasTouchableInContent}
-                    overlayStyle={overlayStyle}
+                    overlayClassname={overlayStyle}
                     contentStyle={{
                         flexDirection:
                             mediaPosition === 'top'
@@ -1535,6 +1537,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 : mediaPosition === 'left'
                                   ? 'row'
                                   : 'row-reverse',
+                    }}
+                    contentRadiusStyle={{
                         borderTopLeftRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
                         borderTopRightRadius: isNaked && !hasMedia ? 0 : `calc(${borderRadius} - 1px)`,
                         borderBottomLeftRadius:
