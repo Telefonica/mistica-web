@@ -18,6 +18,10 @@ Guiding principles
 
 When to create a custom component
 
+**IMPORTANT**: Before creating a custom component, you MUST explicitly ask the user for confirmation. Explain
+why an existing Mistica component cannot satisfy the requirement and wait for the user's approval before
+proceeding with implementation.
+
 - The UI requirement cannot be satisfied by composition of existing Mistica components without repeated
   boilerplate.
 - The visual or interaction model is product-specific (e.g., a unique promotional carousel with business
