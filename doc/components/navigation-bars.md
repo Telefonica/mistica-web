@@ -1,9 +1,9 @@
-
 # Navigation
 
 ## MainNavigationBar
 
-MainNavigationBar provides primary product navigation with section switching, responsive desktop menus, and mobile burger-menu behavior.
+MainNavigationBar provides primary product navigation with section switching, responsive desktop menus, and
+mobile burger-menu behavior.
 
 ### Usage
 
@@ -23,7 +23,8 @@ MainNavigationBar provides primary product navigation with section switching, re
 
 ## NavigationBar
 
-NavigationBar is the standard top app bar for page-level navigation, supporting back navigation, title, and contextual right-side actions.
+NavigationBar is the standard top app bar for page-level navigation, supporting back navigation, title, and
+contextual right-side actions.
 
 ### Usage
 
@@ -63,7 +64,8 @@ NavigationBarAction is an interactive header control used for concise contextual
 
 ## NavigationBarActionGroup
 
-NavigationBarActionGroup arranges multiple navigation-bar actions into a compact, coherent right-side action cluster.
+NavigationBarActionGroup arranges multiple navigation-bar actions into a compact, coherent right-side action
+cluster.
 
 ### Usage
 
@@ -83,7 +85,8 @@ NavigationBarActionGroup arranges multiple navigation-bar actions into a compact
 
 ## FunnelNavigationBar
 
-FunnelNavigationBar is a simplified top bar for focused transactional flows, keeping only essential branding and contextual actions.
+FunnelNavigationBar is a simplified top bar for focused transactional flows, keeping only essential branding
+and contextual actions.
 
 ### Usage
 
@@ -100,23 +103,6 @@ FunnelNavigationBar is a simplified top bar for focused transactional flows, kee
 - Do not add excessive secondary actions that compete with completion flow
 - Do not use it as a generic app header outside funnel-style task contexts
 - Do not combine it with parallel global menus that break focused journey intent
-
-## NavigationBreadcrumbs
-
-Breadcrumbs are a navigational element to help users to understand where they are in a website as well as content structure and hierarchy.
-
-### Usage
-
-#### Use for
-
-- Applying the documented component pattern in product UI
-- Keeping user experience coherent across screens and flows
-
-#### Don't use for
-
-- Don't use Breadcrumbs to show steps in a process.
-- Do not replace a more suitable semantic component with this one
-- Do not customize behavior in ways that conflict with Mística guidance
 
 ## Tabs
 
@@ -160,7 +146,8 @@ Use stepper to show progress through a linear multi-step flow, highlighting comp
 
 ## SkipLink
 
-A skip link allows keyboard and screen reader users to bypass repeated blocks of content and jump directly to other content of the page.
+A skip link allows keyboard and screen reader users to bypass repeated blocks of content and jump directly to
+other content of the page.
 
 ### Usage
 
@@ -180,7 +167,8 @@ A skip link allows keyboard and screen reader users to bypass repeated blocks of
 
 ## SkipLinkNav
 
-SkipLinkNav groups multiple skip links inside a labeled navigation landmark for accessible quick-jump navigation.
+SkipLinkNav groups multiple skip links inside a labeled navigation landmark for accessible quick-jump
+navigation.
 
 ### Usage
 

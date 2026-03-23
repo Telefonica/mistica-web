@@ -243,7 +243,6 @@ const categories = {
             'NavigationBarAction',
             'NavigationBarActionGroup',
             'FunnelNavigationBar',
-            'NavigationBreadcrumbs',
             'Tabs',
             'Stepper',
             'SkipLink',
@@ -257,6 +256,10 @@ const categories = {
     badge: {
         title: 'Badge',
         components: ['Badge'],
+    },
+    breadcrumbs: {
+        title: 'Breadcrumbs',
+        components: ['Breadcrumbs'],
     },
     tag: {
         title: 'Tag',
