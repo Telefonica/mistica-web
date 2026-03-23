@@ -26,6 +26,7 @@ export const vars = {
 };
 
 export const chevronSize = pxToRem(20);
+export const optionContainerPadding = 8;
 
 export const optionsContainer = style([
     sprinkles({
@@ -40,10 +41,8 @@ export const optionsContainer = style([
         top,
         left,
         minWidth,
-        boxShadow:
-            '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
-        paddingTop: 8,
-        paddingBottom: 8,
+        boxShadow: '0px 2px 4px 0px #00000033',
+        padding: optionContainerPadding,
         transformOrigin,
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         overflowY: 'auto',
@@ -202,8 +201,12 @@ export const menuItem = style([
         alignItems: 'center',
         cursor: 'pointer',
         paddingY: 8,
-        paddingX: 16,
+        paddingX: 8,
     }),
+    {
+        borderRadius: `calc(${skinVars.borderRadii.popup} - ${optionContainerPadding / 2}px)`,
+    },
+
     {
         height: pxToRem(48),
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -211,7 +214,7 @@ export const menuItem = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                    backgroundColor: skinVars.colors.backgroundContainerHover,
                 },
             },
         },
