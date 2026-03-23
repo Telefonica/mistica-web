@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DataCard} from '../card-data';
 import {makeTheme} from './test-utils';
-import {render, screen} from '@testing-library/react';
+import {render, screen, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import Tag from '../tag';
 import Stack from '../stack';
@@ -187,6 +187,260 @@ test('DataCard tab order', async () => {
 
     await userEvent.tab();
     expect(await screen.findByRole('button', {name: 'Close label'})).toHaveFocus();
+
+    await userEvent.tab();
+    expect(document.body).toHaveFocus();
+});
+
+test.each`
+    pretitleAs   | titleAs      | expectedTouchableText
+    ${undefined} | ${undefined} | ${'Title'}
+    ${'h1'}      | ${'h2'}      | ${'Pretitle'}
+    ${'h2'}      | ${'h1'}      | ${'Title'}
+    ${'h3'}      | ${'h3'}      | ${'Title'}
+`(
+    'segregateTouchableContent - touchable target with title and pretitle (pretitleAs=$pretitleAs, titleAs=$titleAs)',
+    async ({pretitleAs, titleAs, expectedTouchableText}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <DataCard
+                    href="https://example.org"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    title="Title"
+                    titleAs={titleAs}
+                    description="Description"
+                    segregateTouchableContent
+                />
+            </ThemeContextProvider>
+        );
+
+        const link = await screen.findByRole('link');
+        expect(link).toHaveTextContent(expectedTouchableText);
+    }
+);
+
+test('segregateTouchableContent - touchable target when only title exists', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                title="Title"
+                description="Description"
+                segregateTouchableContent
+            />
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link');
+    expect(link).toHaveTextContent('Title');
+});
+
+test('segregateTouchableContent - touchable target when only pretitle exists', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                pretitle="Pretitle"
+                description="Description"
+                segregateTouchableContent
+            />
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link');
+    expect(link).toHaveTextContent('Pretitle');
+});
+
+test('segregateTouchableContent - touchable target when only headline exists', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                headline={<Tag type="promo">Headline</Tag>}
+                description="Description"
+                segregateTouchableContent
+            />
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link');
+    expect(link).toHaveTextContent('Headline');
+});
+
+test('segregateTouchableContent - touchable target when only subtitle exists', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard href="https://example.org" subtitle="Subtitle" segregateTouchableContent />
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link');
+    expect(link).toHaveTextContent('Subtitle');
+});
+
+test('segregateTouchableContent - touchable target when only description exists', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard href="https://example.org" description="Description" segregateTouchableContent />
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link');
+    expect(link).toHaveTextContent('Description');
+});
+
+test('segregateTouchableContent - body content is NOT aria-hidden when segregated', async () => {
+    const {container} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                title="Title"
+                description="Description"
+                segregateTouchableContent
+            />
+        </ThemeContextProvider>
+    );
+
+    const body = screen.getByTestId('body');
+    expect(body).not.toHaveAttribute('aria-hidden', 'true');
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const touchableContent = container.querySelector('[role="text"]');
+    expect(touchableContent).not.toBeInTheDocument();
+});
+
+test('segregateTouchableContent - body content IS aria-hidden when NOT segregated', async () => {
+    const {container} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard href="https://example.org" title="Title" description="Description" />
+        </ThemeContextProvider>
+    );
+
+    const body = screen.getByTestId('body');
+    expect(body).toHaveAttribute('aria-hidden', 'true');
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const touchableContent = container.querySelector('[role="text"]');
+    expect(touchableContent).toBeInTheDocument();
+});
+
+test('segregateTouchableContent - only one link is rendered when segregated with text content', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                title="Title"
+                description="Description"
+                segregateTouchableContent
+            />
+        </ThemeContextProvider>
+    );
+
+    const links = screen.getAllByRole('link');
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveTextContent('Title');
+});
+
+test('segregateTouchableContent - only one link is rendered when segregated with touchableAriaLabel and no text', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                segregateTouchableContent
+                touchableAriaLabel="Custom card label"
+            />
+        </ThemeContextProvider>
+    );
+
+    const links = screen.getAllByRole('link');
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAccessibleName('Custom card label');
+});
+
+test('segregateTouchableContent - touchableAriaLabel creates a stretched touchable instead of text touchable', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                title="Title"
+                description="Description"
+                segregateTouchableContent
+                touchableAriaLabel="Custom label"
+            />
+        </ThemeContextProvider>
+    );
+
+    const link = screen.getByRole('link');
+    expect(link).toHaveAccessibleName('Custom label');
+    expect(link).not.toHaveTextContent('Title');
+});
+
+test('segregateTouchableContent - without segregateTouchableContent, the full card content is inside the touchable', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                title="Title"
+                pretitle="Pretitle"
+                description="Description"
+            />
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link');
+    expect(within(link).getByTestId('body')).toBeInTheDocument();
+});
+
+test('segregateTouchableContent - tab order: card link, footer buttons, top actions, close button', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                href="https://example.org"
+                title="Title"
+                description="Description"
+                segregateTouchableContent
+                onClose={() => {}}
+                closeButtonLabel="Close"
+                topActions={[
+                    {
+                        Icon: IconMobileDeviceRegular,
+                        onPress: () => {},
+                        label: 'Device Icon',
+                    },
+                ]}
+                showFooter
+                buttonPrimary={
+                    <ButtonPrimary onPress={() => {}} small>
+                        Button Primary
+                    </ButtonPrimary>
+                }
+                buttonLink={
+                    <ButtonLink onPress={() => {}} small>
+                        Button Link
+                    </ButtonLink>
+                }
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(document.body).toHaveFocus();
+
+    await userEvent.tab();
+    expect(await screen.findByRole('link', {name: 'Title'})).toHaveFocus();
+
+    await userEvent.tab();
+    expect(await screen.findByRole('button', {name: 'Button Primary'})).toHaveFocus();
+
+    await userEvent.tab();
+    expect(await screen.findByRole('button', {name: 'Button Link'})).toHaveFocus();
+
+    await userEvent.tab();
+    expect(await screen.findByRole('button', {name: 'Device Icon'})).toHaveFocus();
+
+    await userEvent.tab();
+    expect(await screen.findByRole('button', {name: 'Close'})).toHaveFocus();
 
     await userEvent.tab();
     expect(document.body).toHaveFocus();
