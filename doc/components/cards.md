@@ -229,4 +229,42 @@ recovery actions.
 
 ## CardActionIconButton
 
+CardActionIconButton is a compact icon-only action for card top-action areas, including both single-action and
+toggle-action behavior.
+
+### Usage
+
+#### Use for
+
+- Adding quick top actions (for example close, favorite, play/pause) in card headers without adding visual noise
+- Keeping card actions consistent with card variants and built-in top-action spacing
+- Using toggle icon actions when the card action represents a clear checked/unchecked state
+- Providing concise, specific labels so icon-only actions remain accessible
+
+#### Don't use for
+
+- Do not use it for primary card call-to-action buttons; use the card button slots for primary actions
+- Do not use ambiguous icons without a clear accessible label describing the action
+- Do not add too many top actions in the same card; keep hierarchy and scanability clear
+- Do not use toggle mode when the interaction is not a real two-state behavior
+
 ## CardActionSpinner
+
+CardActionSpinner is a small inline spinner meant for card action loading states (for example media control
+loading) inside the top-action area.
+
+### Usage
+
+#### Use for
+
+- Showing that a card action is processing while the rest of the card remains visible
+- Replacing a top-action icon temporarily during short async transitions
+- Communicating non-blocking loading at the action level instead of card- or page-level loading
+- Keeping loading feedback compact in dense card layouts
+
+#### Don't use for
+
+- Do not use it as a standalone page or section loading pattern; use broader loading components instead
+- Do not keep it visible after the async action has completed or failed
+- Do not pair spinner-only actions with missing accessibility context in adjacent controls
+- Do not use multiple simultaneous spinners in the same card action cluster when one status is enough
