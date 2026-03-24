@@ -353,6 +353,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 fieldRef={fieldRef}
                 readOnly={rest.readOnly}
                 dataAttributes={dataAttributes}
+                focus={focus}
             >
                 <ThemeVariant variant="default">
                     {startIcon && (
