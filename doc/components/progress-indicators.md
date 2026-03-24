@@ -1,4 +1,3 @@
-
 # Progress Indicators
 
 ## ProgressBar
@@ -24,7 +23,8 @@ ProgressBar provides continuous linear feedback for task completion progress as 
 
 ## ProgressBarStepped
 
-ProgressBarStepped shows progress across discrete milestones, highlighting completed and current steps in multi-step flows.
+ProgressBarStepped shows progress across discrete milestones, highlighting completed and current steps in
+multi-step flows.
 
 ### Usage
 

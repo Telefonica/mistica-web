@@ -19,6 +19,8 @@ const categories = {
             'IconButton',
             'ToggleIconButton',
             'ButtonGroup',
+            'ButtonFixedFooterLayout',
+            'ButtonLayout',
         ],
     },
     cards: {
@@ -191,8 +193,6 @@ const categories = {
             'Boxed',
             'Align',
             'FixedFooterLayout',
-            'ButtonFixedFooterLayout',
-            'ButtonLayout',
             'FixedToTop',
             'MasterDetailLayout',
             'HorizontalScroll',
@@ -243,10 +243,6 @@ const categories = {
             'NavigationBarAction',
             'NavigationBarActionGroup',
             'FunnelNavigationBar',
-            'Tabs',
-            'Stepper',
-            'SkipLink',
-            'SkipLinkNav',
         ],
     },
     avatar: {
@@ -273,6 +269,10 @@ const categories = {
         title: 'StackingGroup',
         components: ['StackingGroup'],
     },
+    stepper: {
+        title: 'Stepper',
+        components: ['Stepper'],
+    },
     primitives: {
         title: 'Primitives',
         components: [
@@ -291,6 +291,14 @@ const categories = {
         title: 'Skeletons',
         components: ['SkeletonCircle', 'SkeletonLine', 'SkeletonRectangle', 'SkeletonRow', 'SkeletonText'],
     },
+    skipLink: {
+        title: 'Skip Link',
+        components: ['SkipLink', 'SkipLinkNav'],
+    },
+    tabs: {
+        title: 'Tabs',
+        components: ['Tabs'],
+    },
     text: {
         title: 'Text',
         components: [
@@ -305,12 +313,11 @@ const categories = {
             'Text8',
             'Text9',
             'Text10',
-            'Title1',
-            'Title2',
-            'Title3',
-            'Title4',
-            'TextLink',
         ],
+    },
+    textLink: {
+        title: 'Text Link',
+        components: ['TextLink'],
     },
     timer: {
         title: 'Timer',
@@ -319,6 +326,10 @@ const categories = {
     timeline: {
         title: 'Timeline',
         components: ['Timeline', 'TimelineItem', 'Table'],
+    },
+    titles: {
+        title: 'Titles',
+        components: ['Title1', 'Title2', 'Title3', 'Title4'],
     },
     logo: {
         title: 'Logo',

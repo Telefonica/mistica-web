@@ -1,4 +1,3 @@
-
 # Callout
 
 A snippet of information that draws attention to important content. Always includes a description.

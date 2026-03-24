@@ -1,7 +1,7 @@
-
 # Popover
 
-Popover presents richer contextual content in a dismissible anchored surface, suitable for guidance that needs more space than a tooltip.
+Popover presents richer contextual content in a dismissible anchored surface, suitable for guidance that needs
+more space than a tooltip.
 
 ## Usage
 

@@ -1,9 +1,9 @@
-
 # Radio Button
 
 ## RadioButton
 
-RadioButton represents a single mutually exclusive option within a RadioGroup, enabling clear one-choice selection.
+RadioButton represents a single mutually exclusive option within a RadioGroup, enabling clear one-choice
+selection.
 
 ### Usage
 
@@ -23,7 +23,8 @@ RadioButton represents a single mutually exclusive option within a RadioGroup, e
 
 ## RadioGroup
 
-RadioGroup manages a set of mutually exclusive options, including selection state and keyboard navigation across radio items.
+RadioGroup manages a set of mutually exclusive options, including selection state and keyboard navigation
+across radio items.
 
 ### Usage
 

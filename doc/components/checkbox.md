@@ -1,4 +1,3 @@
-
 # Checkbox
 
 Checkbox lets users select one, several, or no options, with each option operating independently.

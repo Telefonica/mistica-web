@@ -1,9 +1,9 @@
-
 # Loading
 
 ## LoadingScreen
 
-LoadingScreen communicates blocking progress states with a centered loading indicator and short contextual messaging.
+LoadingScreen communicates blocking progress states with a centered loading indicator and short contextual
+messaging.
 
 ### Usage
 
@@ -23,7 +23,8 @@ LoadingScreen communicates blocking progress states with a centered loading indi
 
 ## BrandLoadingScreen
 
-BrandLoadingScreen adds brand-led loading motion and styling to full-screen waiting states while preserving clear progress messaging.
+BrandLoadingScreen adds brand-led loading motion and styling to full-screen waiting states while preserving
+clear progress messaging.
 
 ### Usage
 
@@ -43,7 +44,8 @@ BrandLoadingScreen adds brand-led loading motion and styling to full-screen wait
 
 ## LoadingBar
 
-LoadingBar shows a global, indeterminate progress indicator for ongoing background activity while the current screen remains usable.
+LoadingBar shows a global, indeterminate progress indicator for ongoing background activity while the current
+screen remains usable.
 
 ### Usage
 

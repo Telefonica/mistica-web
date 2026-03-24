@@ -1,9 +1,9 @@
-
 # Snackbar
 
 ## Snackbar
 
-Use snackbar for brief, non-blocking feedback about a recent action, with optional action and dismiss controls.
+Use snackbar for brief, non-blocking feedback about a recent action, with optional action and dismiss
+controls.
 
 ### Usage
 

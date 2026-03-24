@@ -1,9 +1,9 @@
-
 # Data Visualizations
 
 ## Meter
 
-Meter visualizes values within a bounded range using segmented linear, angular, or circular shapes, with optional extra content for context.
+Meter visualizes values within a bounded range using segmented linear, angular, or circular shapes, with
+optional extra content for context.
 
 ### Usage
 
@@ -23,7 +23,8 @@ Meter visualizes values within a bounded range using segmented linear, angular, 
 
 ## Rating
 
-Rating captures user feedback through an interactive icon scale, supporting quantitative and qualitative evaluation patterns.
+Rating captures user feedback through an interactive icon scale, supporting quantitative and qualitative
+evaluation patterns.
 
 ### Usage
 
@@ -43,7 +44,8 @@ Rating captures user feedback through an interactive icon scale, supporting quan
 
 ## InfoRating
 
-InfoRating displays read-only scores with rating icons, including accessible value narration for assistive technologies.
+InfoRating displays read-only scores with rating icons, including accessible value narration for assistive
+technologies.
 
 ### Usage
 

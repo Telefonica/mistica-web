@@ -1,9 +1,9 @@
-
 # Mosaic
 
 ## HorizontalMosaic
 
-HorizontalMosaic groups content into swipeable mosaic pages with alternating layouts to keep discovery flows visually dynamic.
+HorizontalMosaic groups content into swipeable mosaic pages with alternating layouts to keep discovery flows
+visually dynamic.
 
 ### Usage
 
@@ -23,7 +23,8 @@ HorizontalMosaic groups content into swipeable mosaic pages with alternating lay
 
 ## VerticalMosaic
 
-VerticalMosaic arranges content in static mosaic blocks with list semantics, combining vertical and square slots for scannable editorial layouts.
+VerticalMosaic arranges content in static mosaic blocks with list semantics, combining vertical and square
+slots for scannable editorial layouts.
 
 ### Usage
 

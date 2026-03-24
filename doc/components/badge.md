@@ -1,6 +1,7 @@
 # Badge
 
-Badge is a compact, decorative indicator used to signal unread or pending status on top of another UI element.
+Badge is a compact, informative indicator used to signal unread or pending status on top of another UI
+element.
 
 ## Usage
 

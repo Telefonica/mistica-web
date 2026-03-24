@@ -1,15 +1,16 @@
-
 # Community
 
 ## AdvancedDataCard
 
-AdvancedDataCard is an extended data card that combines structured content (title hierarchy, description) with composable extra blocks, optional footer actions, and touchable behavior in a single card surface.
+AdvancedDataCard is an extended data card that combines structured content (title hierarchy, description) with
+composable extra blocks, optional footer actions, and touchable behavior in a single card surface.
 
 ### Usage
 
 #### Use for
 
-- Displaying data-rich summaries that need composable extra content blocks (value blocks, progress blocks, etc.)
+- Displaying data-rich summaries that need composable extra content blocks (value blocks, progress blocks,
+  etc.)
 - Building modular cards that combine text hierarchy with structured data visualizations
 - Presenting detailed information with optional footer actions (buttons, images, links)
 
@@ -21,7 +22,9 @@ AdvancedDataCard is an extended data card that combines structured content (titl
 
 ## HighlightedValueBlock
 
-HighlightedValueBlock displays prominent numeric or text values with optional headline, pretitle, strikethrough pricing, and supporting descriptions. Designed to be used as an extra block inside AdvancedDataCard.
+HighlightedValueBlock displays prominent numeric or text values with optional headline, pretitle,
+strikethrough pricing, and supporting descriptions. Designed to be used as an extra block inside
+AdvancedDataCard.
 
 ### Usage
 
@@ -38,7 +41,8 @@ HighlightedValueBlock displays prominent numeric or text values with optional he
 
 ## InformationBlock
 
-InformationBlock presents a title and description alongside a right-aligned value with optional secondary strikethrough value. Designed to be used as an extra block inside AdvancedDataCard.
+InformationBlock presents a title and description alongside a right-aligned value with optional secondary
+strikethrough value. Designed to be used as an extra block inside AdvancedDataCard.
 
 ### Usage
 
@@ -54,7 +58,8 @@ InformationBlock presents a title and description alongside a right-aligned valu
 
 ## ProgressBlock
 
-ProgressBlock combines a title, progress bar, heading value, and optional description in a single block. Designed to be used as an extra block inside AdvancedDataCard.
+ProgressBlock combines a title, progress bar, heading value, and optional description in a single block.
+Designed to be used as an extra block inside AdvancedDataCard.
 
 ### Usage
 
@@ -70,7 +75,8 @@ ProgressBlock combines a title, progress bar, heading value, and optional descri
 
 ## RowBlock
 
-RowBlock displays a title with either a right-aligned description or a stacking group in a horizontal row layout. Designed to be used as an extra block inside AdvancedDataCard.
+RowBlock displays a title with either a right-aligned description or a stacking group in a horizontal row
+layout. Designed to be used as an extra block inside AdvancedDataCard.
 
 ### Usage
 
@@ -86,7 +92,8 @@ RowBlock displays a title with either a right-aligned description or a stacking 
 
 ## SimpleBlock
 
-SimpleBlock displays an image alongside a description with an optional right-aligned text. Designed to be used as an extra block inside AdvancedDataCard.
+SimpleBlock displays an image alongside a description with an optional right-aligned text. Designed to be used
+as an extra block inside AdvancedDataCard.
 
 ### Usage
 
@@ -102,7 +109,8 @@ SimpleBlock displays an image alongside a description with an optional right-ali
 
 ## ValueBlock
 
-ValueBlock displays a title with a large prominent value and optional description lines. Designed to be used as an extra block inside AdvancedDataCard.
+ValueBlock displays a title with a large prominent value and optional description lines. Designed to be used
+as an extra block inside AdvancedDataCard.
 
 ### Usage
 

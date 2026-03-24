@@ -1,9 +1,9 @@
-
 # Modals
 
 ## Sheet
 
-Sheet presents temporary, focus-trapped bottom-sheet content for contextual decisions, actions, and lightweight task flows.
+Sheet presents temporary, focus-trapped bottom-sheet content for contextual decisions, actions, and
+lightweight task flows.
 
 ### Usage
 
@@ -24,7 +24,8 @@ Sheet presents temporary, focus-trapped bottom-sheet content for contextual deci
 
 ## SheetBody
 
-SheetBody structures sheet content with sticky title/actions regions, optional descriptive text, and scroll-aware dividers.
+SheetBody structures sheet content with sticky title/actions regions, optional descriptive text, and
+scroll-aware dividers.
 
 ### Usage
 
@@ -100,7 +101,8 @@ NativeSheetImplementation is a Mística component used to build consistent and a
 
 ## ActionsSheet
 
-ActionsSheet presents a short decision block in a bottom sheet using a primary action, optional secondary action, and optional text link.
+ActionsSheet presents a short decision block in a bottom sheet using a primary action, optional secondary
+action, and optional text link.
 
 ### Usage
 
@@ -120,7 +122,8 @@ ActionsSheet presents a short decision block in a bottom sheet using a primary a
 
 ## ActionsListSheet
 
-ActionsListSheet presents a bottom sheet with a clear list of selectable actions, optionally enriched with icons and destructive emphasis.
+ActionsListSheet presents a bottom sheet with a clear list of selectable actions, optionally enriched with
+icons and destructive emphasis.
 
 ### Usage
 
@@ -160,7 +163,8 @@ showSheet({
 
 ## InfoSheet
 
-InfoSheet presents explanatory content in a modal sheet with a titled context, optional supporting copy, and a structured list of informational items.
+InfoSheet presents explanatory content in a modal sheet with a titled context, optional supporting copy, and a
+structured list of informational items.
 
 ### Usage
 
@@ -180,7 +184,8 @@ InfoSheet presents explanatory content in a modal sheet with a titled context, o
 
 ## RadioListSheet
 
-RadioListSheet presents single-choice options inside a bottom sheet using radio-list rows, optimized for responsive selection flows.
+RadioListSheet presents single-choice options inside a bottom sheet using radio-list rows, optimized for
+responsive selection flows.
 
 ### Usage
 
@@ -200,7 +205,8 @@ RadioListSheet presents single-choice options inside a bottom sheet using radio-
 
 ## Drawer
 
-The drawer component is only meant for web implementations. When designing for native we recommend to use a modal view.
+The drawer component is only meant for web implementations. When designing for native we recommend to use a
+modal view.
 
 ### Usage
 

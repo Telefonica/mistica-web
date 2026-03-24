@@ -1,7 +1,7 @@
-
 # Empty States
 
-EmptyState communicates full-page absence scenarios with clear messaging, supportive imagery, and optional recovery actions.
+EmptyState communicates full-page absence scenarios with clear messaging, supportive imagery, and optional
+recovery actions.
 
 ## Usage
 

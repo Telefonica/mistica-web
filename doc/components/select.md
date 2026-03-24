@@ -1,4 +1,3 @@
-
 # Select
 
 Allow users to make a single selection between multiple options.

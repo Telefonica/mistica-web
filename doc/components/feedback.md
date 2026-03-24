@@ -1,9 +1,9 @@
-
 # Feedback
 
 ## FeedbackScreen
 
-FeedbackScreen is the base full-screen feedback pattern for communicating important status moments with message hierarchy and optional actions.
+FeedbackScreen is the base full-screen feedback pattern for communicating important status moments with
+message hierarchy and optional actions.
 
 ### Usage
 
@@ -24,7 +24,8 @@ FeedbackScreen is the base full-screen feedback pattern for communicating import
 
 ## ErrorFeedbackScreen
 
-ErrorFeedbackScreen presents a dedicated full-screen error state with clear explanation and recovery actions when in-flow error handling is not enough.
+ErrorFeedbackScreen presents a dedicated full-screen error state with clear explanation and recovery actions
+when in-flow error handling is not enough.
 
 ### Usage
 
@@ -44,7 +45,8 @@ ErrorFeedbackScreen presents a dedicated full-screen error state with clear expl
 
 ## InfoFeedbackScreen
 
-InfoFeedbackScreen presents neutral, informative full-screen feedback with optional actions to help users decide the next step.
+InfoFeedbackScreen presents neutral, informative full-screen feedback with optional actions to help users
+decide the next step.
 
 ### Usage
 
@@ -64,7 +66,8 @@ InfoFeedbackScreen presents neutral, informative full-screen feedback with optio
 
 ## SuccessFeedbackScreen
 
-SuccessFeedbackScreen communicates completion of an important action with positive visual reinforcement and optional follow-up actions.
+SuccessFeedbackScreen communicates completion of an important action with positive visual reinforcement and
+optional follow-up actions.
 
 ### Usage
 
@@ -84,7 +87,8 @@ SuccessFeedbackScreen communicates completion of an important action with positi
 
 ## SuccessFeedback
 
-Use success feedback for inline or section-level confirmation after a completed action, with optional supporting text, actions, and image.
+Use success feedback for inline or section-level confirmation after a completed action, with optional
+supporting text, actions, and image.
 
 ### Usage
 

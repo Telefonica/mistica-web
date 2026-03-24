@@ -221,48 +221,6 @@ FixedFooterLayout keeps footer content anchored to the bottom when space allows,
 - Do not assume the footer is always fixed on every viewport; layout should still work when it is not
 - Do not ignore background and contrast transitions between content area and footer layer
 
-## ButtonFixedFooterLayout
-
-ButtonFixedFooterLayout keeps primary actions anchored in a fixed footer while content scrolls independently.
-
-### Usage
-
-#### Use for
-
-- Keeping critical call-to-action buttons persistently visible during long or scrollable flows
-- Presenting primary and secondary actions in a stable full-width footer area
-- Building task-completion screens where action access must remain constant across viewport sizes
-- Pairing action persistence with scrollable body content without losing context
-
-#### Don't use for
-
-- Do not use fixed footer actions for lightweight screens where inline buttons are sufficient
-- Do not include too many footer actions; keep hierarchy clear with one main action and optional
-  secondary/link
-- Do not keep an empty footer visible when no actionable buttons are present
-- Do not use this pattern when fixed controls could obstruct essential page content
-
-## ButtonLayout
-
-ButtonLayout arranges primary, secondary, and optional link actions into a structured block with explicit alignment variants.
-
-### Usage
-
-#### Use for
-
-- Composing action areas tied to a specific content block or screen section
-- Defining clear action hierarchy with primary and secondary buttons plus optional supporting link
-- Choosing layout intent by alignment (`full-width`, `left`, `center`, `right`) to match context
-- Keeping action order predictable, including right-aligned layouts where action sequence is intentionally
-  adjusted
-
-#### Don't use for
-
-- Do not mix unrelated actions in one layout block without a shared objective
-- Do not use conflicting alignment patterns within the same action area
-- Do not flatten hierarchy by giving all actions equal visual prominence
-- Do not add excessive actions that reduce decision clarity
-
 ## FixedToTop
 
 FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap between layered sticky regions.

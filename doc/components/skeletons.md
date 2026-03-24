@@ -1,9 +1,9 @@
-
 # Skeletons
 
 ## SkeletonCircle
 
-It is a more atomic type of skeleton to create compositions that do not fit with the rest of the skeleton types.
+It is a more atomic type of skeleton to create compositions that do not fit with the rest of the skeleton
+types.
 
 ### Usage
 
@@ -43,7 +43,8 @@ SkeletonLine displays a single loading placeholder bar for short linear content 
 
 ## SkeletonRectangle
 
-SkeletonRectangle provides a block-shaped loading placeholder for media and container surfaces of varying sizes.
+SkeletonRectangle provides a block-shaped loading placeholder for media and container surfaces of varying
+sizes.
 
 ### Usage
 

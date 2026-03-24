@@ -1,9 +1,9 @@
-
 # Timeline
 
 ## Timeline
 
-The Timeline component is used to represent events in a chronological timeline. It can be used to visually and organizedly display processes,.
+The Timeline component is used to represent events in a chronological timeline. It can be used to visually and
+organizedly display processes,.
 
 ### Usage
 
@@ -36,7 +36,8 @@ TimelineItem is a Mística component used to build consistent and accessible pro
 
 ## Table
 
-Use table for structured row-and-column data, with responsive behavior for mobile scrolling or collapsed row cards.
+Use table for structured row-and-column data, with responsive behavior for mobile scrolling or collapsed row
+cards.
 
 ### Usage
 

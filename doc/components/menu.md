@@ -1,9 +1,9 @@
-
 # Menu
 
 ## Menu
 
-Menu displays contextual actions from a trigger, with adaptive positioning, keyboard navigation, and dismiss behavior through overlay interaction.
+Menu displays contextual actions from a trigger, with adaptive positioning, keyboard navigation, and dismiss
+behavior through overlay interaction.
 
 ### Usage
 
@@ -23,7 +23,8 @@ Menu displays contextual actions from a trigger, with adaptive positioning, keyb
 
 ## MenuItem
 
-MenuItem represents an actionable row inside a menu, with optional icon, destructive emphasis, disabled state, or checkbox control behavior.
+MenuItem represents an actionable row inside a menu, with optional icon, destructive emphasis, disabled state,
+or checkbox control behavior.
 
 ### Usage
 
@@ -43,7 +44,8 @@ MenuItem represents an actionable row inside a menu, with optional icon, destruc
 
 ## MenuSection
 
-MenuSection groups related menu items and automatically renders a divider between sections for clearer scanability.
+MenuSection groups related menu items and automatically renders a divider between sections for clearer
+scanability.
 
 ### Usage
 

@@ -1,9 +1,9 @@
-
 # Primitives
 
 ## Image
 
-Image displays responsive media with controlled aspect ratio, loading skeleton, and graceful error fallback to keep layouts stable while assets load or fail.
+Image displays responsive media with controlled aspect ratio, loading skeleton, and graceful error fallback to
+keep layouts stable while assets load or fail.
 
 ### Usage
 
@@ -24,7 +24,8 @@ Image displays responsive media with controlled aspect ratio, loading skeleton, 
 
 ## Video
 
-Use video for embedded media playback with responsive sizing, poster/error fallbacks, and controllable autoplay/loading behavior.
+Use video for embedded media playback with responsive sizing, poster/error fallbacks, and controllable
+autoplay/loading behavior.
 
 ### Usage
 
@@ -62,7 +63,8 @@ VideoElement is a Mística component used to build consistent and accessible pro
 
 ## Circle
 
-Circle is a circular container used to frame visual content or compact UI elements with optional background and border styling.
+Circle is a circular container used to frame visual content or compact UI elements with optional background
+and border styling.
 
 ### Usage
 
@@ -114,7 +116,8 @@ TouchableElement is a Mística component used to build consistent and accessible
 
 ## Placeholder
 
-Placeholder renders a neutral framed block for temporary visual stand-ins when real media or content is not yet available.
+Placeholder renders a neutral framed block for temporary visual stand-ins when real media or content is not
+yet available.
 
 ### Usage
 
@@ -134,7 +137,8 @@ Placeholder renders a neutral framed block for temporary visual stand-ins when r
 
 ## FadeIn
 
-Emotional branded animations enhance the brand identity by visually connecting with users. They help convey emotions and reinforce the brand’s values, creating.
+Emotional branded animations enhance the brand identity by visually connecting with users. They help convey
+emotions and reinforce the brand’s values, creating.
 
 ### Usage
 
