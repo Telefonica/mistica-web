@@ -35,8 +35,8 @@ Preserve a logical focus flow.
 
 - Users should be able to open the popover, read or interact with content, close it, and continue from a
   predictable place
-- If you control visibility with `open`, always wire `onClose` to the same state update so dismiss actions
-  and external close events keep UI and accessibility state in sync
+- If you control visibility with `open`, always wire `onClose` to the same state update so dismiss actions and
+  external close events keep UI and accessibility state in sync
 
 ### Content scope
 

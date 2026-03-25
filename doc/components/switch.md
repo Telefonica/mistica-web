@@ -26,8 +26,8 @@ Use switch for immediate on/off settings, ensuring each control has a clear visi
 
 Always give each switch a clear, descriptive label that explains the effect of turning it on or off.
 
-- If visible text is missing or ambiguous, use an existing nearby UI label via `aria-labelledby`, or provide
-  a hidden label with `aria-label`
+- If visible text is missing or ambiguous, use an existing nearby UI label via `aria-labelledby`, or provide a
+  hidden label with `aria-label`
 - Keep labels unique when multiple switches appear together
 - For custom-rendered switch content, ensure the visible text remains programmatically associated with the
   switch

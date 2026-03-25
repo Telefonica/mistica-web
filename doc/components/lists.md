@@ -2,7 +2,8 @@
 
 ## Row
 
-Row is a flexible list item pattern for navigation, selection, and status display with optional leading asset and trailing actions.
+Row is a flexible list item pattern for navigation, selection, and status display with optional leading asset
+and trailing actions.
 
 ### Usage
 
@@ -43,7 +44,8 @@ RowList groups multiple Row items into a single accessible list with consistent 
 
 ## BoxedRow
 
-BoxedRow applies the Row interaction model inside a boxed container for stronger visual separation and emphasis.
+BoxedRow applies the Row interaction model inside a boxed container for stronger visual separation and
+emphasis.
 
 ### Usage
 
@@ -61,7 +63,8 @@ BoxedRow applies the Row interaction model inside a boxed container for stronger
 
 ## BoxedRowList
 
-BoxedRowList stacks multiple BoxedRow items with consistent spacing to create separated, card-like list groups.
+BoxedRowList stacks multiple BoxedRow items with consistent spacing to create separated, card-like list
+groups.
 
 ### Usage
 
@@ -79,7 +82,8 @@ BoxedRowList stacks multiple BoxedRow items with consistent spacing to create se
 
 ## OrderedList
 
-OrderedList presents items in an explicit sequence, helping users follow ordered steps, ranked priorities, or procedural flows.
+OrderedList presents items in an explicit sequence, helping users follow ordered steps, ranked priorities, or
+procedural flows.
 
 ### Usage
 
@@ -99,7 +103,8 @@ OrderedList presents items in an explicit sequence, helping users follow ordered
 
 ## UnorderedList
 
-UnorderedList groups related items where sequence is not meaningful, preserving semantic list structure for accessibility and scanning.
+UnorderedList groups related items where sequence is not meaningful, preserving semantic list structure for
+accessibility and scanning.
 
 ### Usage
 
@@ -119,7 +124,8 @@ UnorderedList groups related items where sequence is not meaningful, preserving 
 
 ## ListItem
 
-ListItem is the content unit used inside ordered and unordered lists, supporting default markers, custom icons, or markerless variants.
+ListItem is the content unit used inside ordered and unordered lists, supporting default markers, custom
+icons, or markerless variants.
 
 ### Usage
 

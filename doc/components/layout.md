@@ -1,9 +1,9 @@
-
 # Layout
 
 ## ResponsiveLayout
 
-ResponsiveLayout provides a responsive page container that keeps content within adaptive bounds or expands to full width when needed.
+ResponsiveLayout provides a responsive page container that keeps content within adaptive bounds or expands to
+full width when needed.
 
 ### Usage
 
@@ -23,7 +23,8 @@ ResponsiveLayout provides a responsive page container that keeps content within 
 
 ## Grid
 
-Grid is a responsive layout primitive for arranging content in rows and columns with controlled spacing and alignment.
+Grid is a responsive layout primitive for arranging content in rows and columns with controlled spacing and
+alignment.
 
 ### Usage
 
@@ -43,7 +44,8 @@ Grid is a responsive layout primitive for arranging content in rows and columns 
 
 ## GridItem
 
-GridItem defines how each element occupies and aligns within a Grid, including span, start position, and ordering.
+GridItem defines how each element occupies and aligns within a Grid, including span, start position, and
+ordering.
 
 ### Usage
 
@@ -63,7 +65,8 @@ GridItem defines how each element occupies and aligns within a Grid, including s
 
 ## GridLayout
 
-GridLayout provides predefined responsive column templates to compose balanced page sections with predictable proportions.
+GridLayout provides predefined responsive column templates to compose balanced page sections with predictable
+proportions.
 
 ### Usage
 
@@ -84,7 +87,8 @@ GridLayout provides predefined responsive column templates to compose balanced p
 
 ## Stack
 
-Use stack to arrange content vertically with a predefined spacing scale, including responsive spacing and distribution modes.
+Use stack to arrange content vertically with a predefined spacing scale, including responsive spacing and
+distribution modes.
 
 ### Usage
 
@@ -107,7 +111,8 @@ Use stack to arrange content vertically with a predefined spacing scale, includi
 
 ## Inline
 
-Inline arranges elements in a horizontal row with controlled spacing, optional wrapping, and responsive gap behavior across breakpoints.
+Inline arranges elements in a horizontal row with controlled spacing, optional wrapping, and responsive gap
+behavior across breakpoints.
 
 ### Usage
 
@@ -145,7 +150,8 @@ Box is a low-level spacing primitive used to apply consistent, responsive paddin
 
 ## NegativeBox
 
-NegativeBox offsets horizontal container gutters by applying negative side margins, allowing content to bleed to one or both edges.
+NegativeBox offsets horizontal container gutters by applying negative side margins, allowing content to bleed
+to one or both edges.
 
 ### Usage
 
@@ -186,7 +192,8 @@ Boxed is a themed surface container used to group content inside a bounded, vari
 
 ## Align
 
-Align is a layout primitive that positions children on the horizontal and vertical axes using x/y alignment props, with optional width and height constraints.
+Align is a layout primitive that positions children on the horizontal and vertical axes using x/y alignment
+props, with optional width and height constraints.
 
 ### Usage
 
@@ -203,7 +210,8 @@ Align is a layout primitive that positions children on the horizontal and vertic
 
 ## FixedFooterLayout
 
-FixedFooterLayout keeps footer content anchored to the bottom when space allows, while preserving readable scrollable content above it.
+FixedFooterLayout keeps footer content anchored to the bottom when space allows, while preserving readable
+scrollable content above it.
 
 ### Usage
 
@@ -223,7 +231,8 @@ FixedFooterLayout keeps footer content anchored to the bottom when space allows,
 
 ## FixedToTop
 
-FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap between layered sticky regions.
+FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offset, avoiding overlap between
+layered sticky regions.
 
 ### Usage
 
@@ -243,7 +252,8 @@ FixedToTop coordinates stacked fixed-top elements by sharing cumulative top offs
 
 ## MasterDetailLayout
 
-MasterDetailLayout adapts list-detail experiences across breakpoints, switching from single-pane on smaller screens to split-pane on larger screens.
+MasterDetailLayout adapts list-detail experiences across breakpoints, switching from single-pane on smaller
+screens to split-pane on larger screens.
 
 ### Usage
 
@@ -263,7 +273,8 @@ MasterDetailLayout adapts list-detail experiences across breakpoints, switching 
 
 ## HorizontalScroll
 
-HorizontalScroll creates a horizontal overflow area so content can be explored by sideways scrolling when items do not fit in the available width.
+HorizontalScroll creates a horizontal overflow area so content can be explored by sideways scrolling when
+items do not fit in the available width.
 
 ### Usage
 
@@ -283,7 +294,8 @@ HorizontalScroll creates a horizontal overflow area so content can be explored b
 
 ## Divider
 
-Divider is a subtle visual separator used to split related content areas while preserving rhythm and scanability.
+Divider is a subtle visual separator used to split related content areas while preserving rhythm and
+scanability.
 
 ### Usage
 

@@ -52,8 +52,8 @@ emphasis.
 Add an accessibility label (`aria-label`) to provide countdown context.
 
 - For example: "Offer countdown" or "Verification code expires in"
-- If no label is provided, assistive technology still announces the remaining time, but users may miss
-  context about what the countdown refers to
+- If no label is provided, assistive technology still announces the remaining time, but users may miss context
+  about what the countdown refers to
 
 ### Value announcement
 
