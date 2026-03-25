@@ -18,6 +18,7 @@ message hierarchy and optional actions.
 #### Don't use for
 
 - Do not use a full feedback screen for minor status updates that can be communicated inline
+- Do not use `FeedbackScreen` for inline or section-level confirmation; use `SuccessFeedback` instead
 - Do not overload the screen with long copy and multiple competing actions
 - Do not mix feedback intent (success, info, error) in one message block without a clear dominant outcome
 - Do not remove clear next-step actions when the user must recover or continue

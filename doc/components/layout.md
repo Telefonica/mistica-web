@@ -72,9 +72,9 @@ proportions.
 
 #### Use for
 
-- Building page sections with curated layout ratios such as `6+6`, `8+4`, `4+6`, `5+4`, and `3+9`
+- Building page sections with templates that distribute space across a 12-column area, such as `6+6`, `8+4`,
+  `4+6`, `5+4`, and `3+9`
 - Structuring two-area compositions (main + side content) without manually managing low-level grid math
-- Centering medium or narrow content blocks using templates like `10` and `8`
 - Controlling vertical rhythm and collapse behavior for responsive transitions from desktop to smaller
   breakpoints
 

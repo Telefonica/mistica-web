@@ -121,20 +121,24 @@ yet available.
 
 ## FadeIn
 
-Emotional branded animations enhance the brand identity by visually connecting with users. They help convey
-emotions and reinforce the brand’s values, creating.
+FadeIn is a lightweight wrapper that animates children from transparent to visible using a configurable fade
+transition (`duration` and `delay`).
 
 ### Usage
 
 #### Use for
 
-- Applying the documented component pattern in product UI
-- Keeping user experience coherent across screens and flows
+- Revealing newly mounted content without abrupt appearance changes
+- Delaying visual entrance of secondary content by setting a custom `delay` (for example `1s`)
+- Tuning fade speed with `duration` when adapting motion rhythm to context
+- Wrapping any content block that should fade in while preserving existing layout and semantics
 
 #### Don't use for
 
-- Do not replace a more suitable semantic component with this one
-- Do not customize behavior in ways that conflict with Mística guidance
+- Do not use FadeIn as the only indicator of critical state changes; pair with clear text/structure
+- Do not apply long or stacked delays that make content feel unresponsive
+- Do not use invalid CSS time values for `duration`/`delay`; pass valid values like `0.3s` or `200ms`
+- Do not wrap large full-screen transitions that need dedicated navigation/screen transition patterns
 
 ## ScreenReaderOnly
 
