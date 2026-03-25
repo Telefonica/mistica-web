@@ -20,6 +20,8 @@ selection.
 - Do not use radios for independent multi-select scenarios; use checkboxes instead
 - Do not present too many options in one radio set when scanability degrades
 - Do not use ambiguous labels that make mutually exclusive choices unclear
+- Do not compose standalone radio controls inside row layouts that already support radio selection; use `Row`
+  or `BoxedRow` within a `RadioGroup` instead
 
 ## RadioGroup
 

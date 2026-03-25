@@ -146,7 +146,8 @@ TopDistanceContext provides reusable behavior to keep component logic consistent
 
 ## Overlay
 
-Overlay provides a full-viewport interaction layer behind temporary surfaces, enabling outside-click dismissal and optional body scroll lock.
+Overlay provides a full-viewport interaction layer behind temporary surfaces, enabling outside-click dismissal
+and optional body scroll lock.
 
 ### Usage
 
@@ -166,51 +167,65 @@ Overlay provides a full-viewport interaction layer behind temporary surfaces, en
 
 ## FocusTrap
 
-FocusTrap is a Mística component used to build consistent and accessible product interfaces.
+FocusTrap keeps keyboard focus constrained within a subtree while it is active, helping modal surfaces remain
+accessible and self-contained.
 
 ### Usage
 
 #### Use for
 
-- Applying the documented component pattern in product UI
-- Keeping user experience coherent across screens and flows
+- Trapping tab navigation inside active dialogs, drawers, popovers, or other temporary surfaces
+- Preventing focus from escaping to background content while a modal interaction is open
+- Grouping related focus locks when multiple coordinated trapped regions are needed
+- Temporarily disabling the trap when the same surface transitions between modal and non-modal behavior
 
 #### Don't use for
 
-- Do not replace a more suitable semantic component with this one
-- Do not customize behavior in ways that conflict with Mística guidance
+- Do not use FocusTrap for non-modal inline content where free page navigation is expected
+- Do not leave background content interactive without matching dismissal/focus management strategy
+- Do not nest independent focus traps without intentional coordination, as this can break keyboard flow
+- Do not rely on focus trapping alone for accessibility; pair it with clear labels and predictable dismissal
 
 ## Portal
 
-Portal is a Mística component used to build consistent and accessible product interfaces.
+Portal renders children outside the parent DOM hierarchy (into `document.body`), which is useful for overlays
+and floating layers that need independent stacking and positioning.
 
 ### Usage
 
 #### Use for
 
-- Applying the documented component pattern in product UI
-- Keeping user experience coherent across screens and flows
+- Rendering modals, overlays, tooltips, or menus that must escape ancestor clipping or stacking contexts
+- Isolating floating UI layers from parent layout constraints while preserving React state ownership
+- Mounting temporary surfaces near the document root for reliable fixed/absolute positioning behavior
+- Keeping layered UI predictable across complex containers with transforms or overflow rules
 
 #### Don't use for
 
-- Do not replace a more suitable semantic component with this one
-- Do not customize behavior in ways that conflict with Mística guidance
+- Do not use Portal for regular in-flow content that should participate in local layout
+- Do not assume portal rendering solves focus/keyboard handling by itself; manage accessibility explicitly
+- Do not mount many unrelated portals when one coordinated layer strategy is enough
+- Do not forget cleanup expectations for temporary surfaces and listeners attached to portaled content
 
 ## applyAlpha
 
-applyAlpha is a Mística component used to build consistent and accessible product interfaces.
+applyAlpha returns a color with an updated alpha channel, supporting raw skin RGB CSS variables, hex, rgb, and
+rgba inputs for consistent translucent styling.
 
 ### Usage
 
 #### Use for
 
-- Applying the documented component pattern in product UI
-- Keeping user experience coherent across screens and flows
+- Applying opacity consistently without duplicating manual rgba conversions across components
+- Working directly with `skinVars.rawColors` tokens and preserving theme-driven color behavior
+- Normalizing alpha application across mixed color input formats in reusable styling utilities
 
 #### Don't use for
 
-- Do not replace a more suitable semantic component with this one
-- Do not customize behavior in ways that conflict with Mística guidance
+- Do not pass out-of-range alpha values; keep alpha between `0` and `1`
+- Do not use applyAlpha as a substitute for semantic color-token selection
+- Do not assume the resulting translucent color always meets contrast requirements; validate accessibility
+- Do not rely on color-format fallbacks in critical paths when deterministic color output is required
 
 ## createNestableContext
 

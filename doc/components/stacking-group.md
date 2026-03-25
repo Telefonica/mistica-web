@@ -3,6 +3,10 @@
 Use stacking group to display a compact set of similarly sized items, optionally overlapped, with a `+N`
 overflow indicator.
 
+When the number of children exceeds `maxItems`, StackingGroup automatically replaces the last visible slot
+with the generated `+N` element. That overflow element inherits the configured `moreItemsStyle` shape and
+size, and summarizes the hidden items instead of rendering them individually.
+
 ## Usage
 
 ### Use for

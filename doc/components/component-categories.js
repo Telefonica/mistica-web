@@ -281,7 +281,6 @@ const categories = {
             'VideoElement',
             'Circle',
             'Touchable',
-            'TouchableElement',
             'Placeholder',
             'FadeIn',
             'ScreenReaderOnly',

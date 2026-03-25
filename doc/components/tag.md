@@ -18,5 +18,7 @@ token.
 - Do not use for long text, descriptions, or content that requires wrapping and detailed reading
 - Do not use as a primary action control; tags communicate state/category rather than trigger complex
   interactions
+- Do not use Tag for interactive behaviors (selection, navigation, dismissal); use Chip for those interaction
+  patterns
 - Do not combine too many tags in tight spaces if they reduce scanability
 - Do not rely on color alone to convey meaning; keep label text explicit and understandable

@@ -17,3 +17,5 @@ Checkbox lets users select one, several, or no options, with each option operati
 - Do not group unrelated options under the same checkbox set without clear context
 - Do not rely on visual check state alone; always provide clear labels or accessible naming
 - Do not use checkbox interactions for read-only status indicators
+- Do not compose a standalone checkbox inside row layouts that already support checkboxes; use `Row` or
+  `BoxedRow` with built-in checkbox support instead
