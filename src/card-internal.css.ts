@@ -30,14 +30,9 @@ export const container = style([
 export const containerPaddingXVariants = styleVariants({
     display: [sprinkles({paddingX: 24})],
     default: [
-        sprinkles({paddingX: 16}),
         {
-            '@media': {
-                [mq.desktopOrBigger]: {
-                    paddingLeft: 24,
-                    paddingRight: 24,
-                },
-            },
+            paddingLeft: skinVars.spacing.cardDefaultPadding.left,
+            paddingRight: skinVars.spacing.cardDefaultPadding.right,
         },
     ],
     snap: [
@@ -56,11 +51,8 @@ export const containerPaddingXVariants = styleVariants({
 export const containerPaddingTopVariants = styleVariants({
     display: [sprinkles({paddingTop: 24})],
     default: [
-        sprinkles({paddingTop: 16}),
         {
-            '@media': {
-                [mq.desktopOrBigger]: {paddingTop: 24},
-            },
+            paddingTop: skinVars.spacing.cardDefaultPadding.top,
         },
     ],
     snap: [
@@ -69,6 +61,21 @@ export const containerPaddingTopVariants = styleVariants({
             '@media': {
                 [mq.desktopOrBigger]: {paddingTop: 24},
             },
+        },
+    ],
+});
+
+export const containerPaddingBottomVariants = styleVariants({
+    display: [sprinkles({paddingBottom: 24})],
+    default: [
+        {
+            paddingBottom: skinVars.spacing.cardDefaultPadding.bottom,
+        },
+    ],
+    snap: [
+        sprinkles({paddingBottom: 16}),
+        {
+            '@media': {[mq.desktopOrBigger]: {paddingBottom: 24}},
         },
     ],
 });
@@ -84,22 +91,6 @@ export const actionsContainerVariants = styleVariants({
         },
     ],
     snap: [sprinkles({paddingTop: 16})],
-});
-
-export const containerPaddingBottomVariants = styleVariants({
-    display: [sprinkles({paddingBottom: 32})],
-    default: [
-        sprinkles({paddingBottom: 24}),
-        {
-            '@media': {[mq.desktopOrBigger]: {paddingBottom: 32}},
-        },
-    ],
-    snap: [
-        sprinkles({paddingBottom: 16}),
-        {
-            '@media': {[mq.desktopOrBigger]: {paddingBottom: 24}},
-        },
-    ],
 });
 
 export const boxed = style({
@@ -250,3 +241,10 @@ export const backgroundImageOrVideoContainer = style([
         zIndex: 0,
     },
 ]);
+
+export const slotContainerSpaceBetween = sprinkles({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+});

@@ -179,6 +179,7 @@ type FieldContainerProps = {
     fullWidth?: boolean;
     readOnly?: boolean;
     dataAttributes?: DataAttributes;
+    focus?: boolean;
 };
 
 export const FieldContainer = ({
@@ -191,6 +192,7 @@ export const FieldContainer = ({
     fullWidth,
     readOnly,
     dataAttributes,
+    focus,
 }: FieldContainerProps): JSX.Element => {
     const cssVarStyles = useApplyCssVars();
     return (
@@ -210,7 +212,8 @@ export const FieldContainer = ({
                 className={classnames(
                     styles.field,
                     readOnly ? styles.background.readOnly : styles.background.default,
-                    className
+                    className,
+                    focus && styles.focused
                 )}
                 ref={fieldRef}
             >

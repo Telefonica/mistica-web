@@ -1,3 +1,58 @@
+# [16.56.0](https://github.com/Telefonica/mistica-web/compare/v16.55.0...v16.56.0) (2026-03-20)
+
+
+### Features
+
+* **Select, Search, Autocomplete:** Align menu item styles and fixes ([#1484](https://github.com/Telefonica/mistica-web/issues/1484)) ([f6854db](https://github.com/Telefonica/mistica-web/commit/f6854dbbc7a4e4511227ae8e651e7c04c1bb7a65))
+
+# [16.55.0](https://github.com/Telefonica/mistica-web/compare/v16.54.0...v16.55.0) (2026-03-13)
+
+
+### Features
+
+* **Sheet:** Allow headline tags in RadioListSheet ([#1512](https://github.com/Telefonica/mistica-web/issues/1512)) ([38642d5](https://github.com/Telefonica/mistica-web/commit/38642d5069a4bcf2de98670e34549d122903024b))
+* **Skins:** Update skins tokens ([#1515](https://github.com/Telefonica/mistica-web/issues/1515)) ([3207330](https://github.com/Telefonica/mistica-web/commit/320733021bf40b0c456514e59e783a16d814120f))
+
+# [16.54.0](https://github.com/Telefonica/mistica-web/compare/v16.53.0...v16.54.0) (2026-03-13)
+
+
+### Bug Fixes
+
+* **Hero:** Restore padding in hero mobile layouts ([#1514](https://github.com/Telefonica/mistica-web/issues/1514)) ([0513c35](https://github.com/Telefonica/mistica-web/commit/0513c35ce295be991a7367326853d25977092cef))
+
+
+### Features
+
+* **Card:** Add space-between alignment for card slot ([#1516](https://github.com/Telefonica/mistica-web/issues/1516)) ([0900ebb](https://github.com/Telefonica/mistica-web/commit/0900ebbfd02a1cee68e2e3e48aef0781094498c7))
+* **Layout:** add extraLargeDesktop breakpoint ([#1503](https://github.com/Telefonica/mistica-web/issues/1503)) ([229ace4](https://github.com/Telefonica/mistica-web/commit/229ace49286cb1faf2ce82d0ef7b3ef8afce6699))
+* **MainNavigationBar:** topSlot support ([#1518](https://github.com/Telefonica/mistica-web/issues/1518)) ([818748f](https://github.com/Telefonica/mistica-web/commit/818748f1bf2f8a1d012c5085312ca91fef6eede5))
+
+# [16.53.0](https://github.com/Telefonica/mistica-web/compare/v16.52.0...v16.53.0) (2026-03-06)
+
+
+### Bug Fixes
+
+* **Input:** WEB-2382 Fix some misalignements and make startIcon small ([#1510](https://github.com/Telefonica/mistica-web/issues/1510)) ([686a092](https://github.com/Telefonica/mistica-web/commit/686a0925b80aaae8dc352ed35f95cb7a0ac92932))
+
+
+### Features
+
+* **FileUpload:** new component ([#1489](https://github.com/Telefonica/mistica-web/issues/1489)) ([8b623cf](https://github.com/Telefonica/mistica-web/commit/8b623cf45b14153b5bcb2b6bdd79ff14ca64cd8c))
+* **skin:** WEB-2382 Movistar alignment p2 ([#1499](https://github.com/Telefonica/mistica-web/issues/1499)) ([86213c8](https://github.com/Telefonica/mistica-web/commit/86213c87cb1c87f06edd564214c50e4d6c6fe7fb))
+
+# [16.52.0](https://github.com/Telefonica/mistica-web/compare/v16.51.0...v16.52.0) (2026-02-27)
+
+
+### Bug Fixes
+
+* **Card:** VoiceOver rectangle doesn't cover the whole card when using href/to ([#1501](https://github.com/Telefonica/mistica-web/issues/1501)) ([025d066](https://github.com/Telefonica/mistica-web/commit/025d066bfaeec13a006c273928d69c49f2853f18)), closes [#1489](https://github.com/Telefonica/mistica-web/issues/1489)
+* **IconButton:** change touchable area implementation ([#1504](https://github.com/Telefonica/mistica-web/issues/1504)) ([81777ad](https://github.com/Telefonica/mistica-web/commit/81777ade0ecffa2b5198c2a7cf72eb9f85527db0))
+
+
+### Features
+
+* **Square:** add primitive Square component (WEB-2403) ([#1508](https://github.com/Telefonica/mistica-web/issues/1508)) ([4743a11](https://github.com/Telefonica/mistica-web/commit/4743a11576a4d56df99d21e6aec2e1e2b97fead0))
+
 # [16.51.0](https://github.com/Telefonica/mistica-web/compare/v16.50.0...v16.51.0) (2026-02-23)
 
 

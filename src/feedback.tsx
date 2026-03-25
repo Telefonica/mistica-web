@@ -122,7 +122,7 @@ const renderFeedbackBody = (
 const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
     const hasButtons = checkHasButtons(buttons);
     return (
-        <Stack space={{desktop: 40, mobile: 24}}>
+        <Stack space={{desktop: 32, mobile: 24}}>
             {feedbackBody}
             {hasButtons && <ButtonGroup {...buttons} />}
         </Stack>
@@ -149,11 +149,7 @@ const renderFeedback = ({
         dataAttributes={dataAttributes}
     >
         <div className={styles.desktopContainer}>
-            <div className={styles.desktopContent}>
-                <Box padding={{desktop: 64, mobile: 0}} paddingTop={0}>
-                    {body}
-                </Box>
-            </div>
+            <div className={styles.desktopContent}>{body}</div>
             {imageUrl && (
                 <div
                     className={styles.desktopImage}
@@ -424,10 +420,8 @@ export const SuccessFeedback = ({
         isBrandVariant,
         body: (
             <div className={isBrandVariant ? styles.backgroundBrand : undefined}>
-                <Box paddingX={{mobile: 16, tablet: 24, desktop: 0}}>
-                    <Box paddingBottom={{desktop: 0, mobile: 48}} paddingTop={64}>
-                        {inlineFeedbackBody}
-                    </Box>
+                <Box paddingX={{mobile: 16, tablet: 24, desktop: 0}} paddingBottom={{desktop: 0, mobile: 48}}>
+                    <div className={styles.successFeedbackContainer}>{inlineFeedbackBody}</div>
                 </Box>
             </div>
         ),

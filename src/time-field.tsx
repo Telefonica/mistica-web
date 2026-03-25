@@ -88,7 +88,7 @@ const TimeField = ({
             type="time"
             endIconOverlay={
                 <div className={dateStyles.iconContainer} data-testid="endIcon">
-                    <IconTimeRegular size={iconSize.default} />
+                    <IconTimeRegular size={iconSize.small} />
                 </div>
             }
             dataAttributes={{'component-name': 'TimeField', testid: 'TimeField', ...dataAttributes}}

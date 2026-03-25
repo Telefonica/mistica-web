@@ -36,6 +36,9 @@ const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
     const [isLargeDesktop, setIsLargeDesktop] = React.useState(
         () => !isServerSide && window.matchMedia(mq.largeDesktop).matches
     );
+    const [isExtraLargeDesktop, setIsExtraLargeDesktop] = React.useState(
+        () => !isServerSide && window.matchMedia(mq.extraLargeDesktop).matches
+    );
 
     useIsomorphicLayoutEffect(() => {
         if (!window.matchMedia) {
@@ -48,6 +51,7 @@ const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
             [mq.tabletOrBigger, setIsTabletOrBigger],
             [mq.tabletOrSmaller, setIsTabletOrSmaller],
             [mq.largeDesktop, setIsLargeDesktop],
+            [mq.extraLargeDesktop, setIsExtraLargeDesktop],
         ];
 
         const cleanupFunctions = entries.map(([query, setState]) => {
@@ -73,8 +77,17 @@ const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
             isTabletOrSmaller,
             isDesktopOrBigger: isServerSide ? false : !isTabletOrSmaller,
             isLargeDesktop,
+            isExtraLargeDesktop,
         }),
-        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop, isServerSide]
+        [
+            isMobile,
+            isTablet,
+            isTabletOrBigger,
+            isTabletOrSmaller,
+            isLargeDesktop,
+            isExtraLargeDesktop,
+            isServerSide,
+        ]
     );
 
     return <ScreenSizeContext.Provider value={value}>{children}</ScreenSizeContext.Provider>;

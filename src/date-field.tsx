@@ -103,7 +103,7 @@ const DateField = ({
             type="date"
             endIconOverlay={
                 <div className={styles.iconContainer} data-testid="endIcon">
-                    <IconCalendarRegular size={iconSize.default} />
+                    <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
             dataAttributes={{'component-name': 'DateField', testid: 'DateField', ...dataAttributes}}

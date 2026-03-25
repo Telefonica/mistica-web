@@ -54,7 +54,7 @@ export type MediaPosition = 'top' | 'left' | 'right';
 /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
 export type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
-export type SlotAlignment = 'content' | 'bottom';
+export type SlotAlignment = 'content' | 'bottom' | 'space-between';
 
 export type CardActionButtonPrimary = RendersNullableElement<typeof ButtonPrimary>;
 export type CardActionButtonSecondary = RendersNullableElement<typeof ButtonSecondary>;
@@ -820,10 +820,13 @@ const Footer = ({
                 />
                 <div
                     data-testid="footer"
-                    className={classnames({[styles.containerPaddingXVariants[size]]: !isNaked})}
+                    className={classnames({
+                        [styles.containerPaddingXVariants[size]]: !isNaked,
+                        [styles.containerPaddingBottomVariants[size]]: !isNaked,
+                    })}
                     style={{
                         paddingTop: 16,
-                        paddingBottom: isNaked ? 0 : 16,
+                        paddingBottom: isNaked ? 0 : undefined,
                         paddingRight: isNaked ? 16 : undefined,
                     }}
                 >
@@ -1497,7 +1500,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                                 </div>
                                 {!isAssetConfigA && slotAlignment === 'bottom' && <Filler />}
                                 {slot && (
-                                    <div ref={slotRef} data-testid="slot">
+                                    <div
+                                        ref={slotRef}
+                                        data-testid="slot"
+                                        className={classnames(
+                                            slotAlignment === 'space-between' &&
+                                                styles.slotContainerSpaceBetween
+                                        )}
+                                    >
                                         {slot}
                                     </div>
                                 )}

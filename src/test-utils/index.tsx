@@ -20,6 +20,7 @@ const MOBILE_DEVICE_ANDROID = 'MOBILE_ANDROID';
 const TABLET_DEVICE = 'TABLET';
 const DESKTOP_DEVICE = 'DESKTOP';
 const LARGE_DESKTOP_DEVICE = 'LARGE_DESKTOP';
+const EXTRA_LARGE_DESKTOP_DEVICE = 'EXTRA_LARGE_DESKTOP';
 
 export type Device =
     | typeof MOBILE_DEVICE_IOS_SMALL
@@ -28,7 +29,8 @@ export type Device =
     | typeof MOBILE_DEVICE_ANDROID
     | typeof TABLET_DEVICE
     | typeof DESKTOP_DEVICE
-    | typeof LARGE_DESKTOP_DEVICE;
+    | typeof LARGE_DESKTOP_DEVICE
+    | typeof EXTRA_LARGE_DESKTOP_DEVICE;
 
 type DeviceCollection = Record<
     Device,
@@ -124,6 +126,17 @@ const DEVICES: DeviceCollection = {
     [LARGE_DESKTOP_DEVICE]: {
         platform: undefined,
         viewport: {
+            width: 1600,
+            height: 900,
+            deviceScaleFactor: 1,
+            isMobile: false,
+            hasTouch: false,
+            isLandscape: false,
+        },
+    },
+    [EXTRA_LARGE_DESKTOP_DEVICE]: {
+        platform: undefined,
+        viewport: {
             width: 1920,
             height: 1080,
             deviceScaleFactor: 1,
@@ -203,8 +216,8 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
 const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
     const {testPath, currentTestName} = expect.getState();
     const tmpdir = os.tmpdir();
-    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}`);
-    const baselineImagePath = path.join(tmpdir, `${snapshotId}-snap.png`);
+    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}-snap`);
+    const baselineImagePath = path.join(tmpdir, `${snapshotId}.png`);
     await page.screenshot({path: baselineImagePath});
 
     await hydrateSSRPage(page);
@@ -241,12 +254,14 @@ export const openSSRPage = async ({
     skin = MOVISTAR_NEW_SKIN,
     checkHidrationVisualMismatch = true,
     prefersColorScheme,
+    waitUntil,
 }: {
     name: string;
     device?: Device;
     skin?: string;
     checkHidrationVisualMismatch?: boolean;
     prefersColorScheme?: 'light' | 'dark';
+    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2';
 }): Promise<PageApi> => {
     const globalPage = getGlobalPage();
     const port = (global as any)['__SSR_SERVER__'].address().port;
@@ -270,6 +285,7 @@ export const openSSRPage = async ({
         url: `http://${serverHostName}:${port}/${name}?skin=${skin}`,
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
+        waitUntil,
     });
 
     if (prefersColorScheme) {

@@ -22,8 +22,8 @@ jobs:
             # persist-credentials: false - git remote configured manually in Release step with GH_TOKEN_MISTICA
             - uses: actions/checkout@v6
               with:
-                token: ${{ secrets.GITHUB_TOKEN }}
-                persist-credentials: false
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  persist-credentials: false
 
             - name: Install dependencies
               env:
