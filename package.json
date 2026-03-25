@@ -13,6 +13,7 @@
         "dist/**",
         "dist-es/**",
         "css/**",
+        "doc/**",
         "community.d.ts",
         "community.js"
     ],
