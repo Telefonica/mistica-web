@@ -41,3 +41,29 @@ multi-step flows.
 - Do not define too many tiny steps that make milestone progress hard to perceive
 - Do not use it when step boundaries are unclear or can change unpredictably for users
 - Do not hide the step context from surrounding content; users should understand what each stage means
+
+## Accessibility
+
+### Accessibility label
+
+Provide a clear accessible name with process context whenever possible.
+
+- Prefer labels like "Loading images, 10% complete" or "Order in warehouse, step 2 of 5"
+- Avoid generic labels like "Loading" when the process can be described more precisely
+- `ProgressBar` includes a default loading label and progress value text, but you should still set a
+  contextual `aria-label` or `aria-labelledby`
+- For `ProgressBarStepped`, set `aria-label` or `aria-labelledby` so the step progress belongs to a clearly
+  identified flow
+
+### Hide from screen readers
+
+If the visual progress indicator is redundant with nearby announced information, hide it from assistive
+technologies with `aria-hidden`.
+
+### Status announcements
+
+Progress indicators do not automatically announce status transitions or errors.
+
+- Pair them with explicit status messages in the UI for key events such as completion, failure, or blocked
+  steps
+- Keep updates truthful and meaningful: do not present overly precise values when progress is estimated

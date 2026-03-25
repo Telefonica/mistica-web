@@ -240,3 +240,44 @@ useDialog provides reusable behavior to keep component logic consistent across t
 
 - Do not duplicate equivalent logic when this utility already exists
 - Do not use it without understanding its side effects and scope
+
+## Accessibility
+
+### Title and context
+
+Every modal should explain why it is open and what users can do next.
+
+- Use a clear, task-oriented title
+- Add concise supporting text when users need extra context before acting
+- Keep one decision/task per modal to avoid cognitive overload
+
+### Focus and navigation
+
+Users should be able to complete or dismiss the modal without losing orientation.
+
+- Keep one modal/sheet open at a time
+- Ensure keyboard users can reach all modal actions in a logical order
+- Return users to a predictable place after closing (normally the trigger)
+
+### Dismiss behavior
+
+Dismiss patterns should be clear and consistent with interaction risk.
+
+- For dismissible flows, provide an explicit close action
+- For confirm/critical flows, avoid accidental dismissal patterns
+- Keep close/dismiss labels contextual when `Close` is too generic
+
+### Trigger and action labels
+
+Modal usage should remain understandable before and after opening.
+
+- Use explicit trigger labels (for example, `Open payment options`)
+- Label primary/secondary actions by outcome (for example, `Save changes`, `Discard`)
+- Avoid ambiguous action text like `Continue` when the result is unclear
+
+### Imperative modal flows
+
+When using `showSheet`/`useDialog`, treat outcomes as part of the accessible flow.
+
+- Handle each result explicitly so users get clear feedback after closing
+- Avoid parallel modal systems that can create competing focus/announcement contexts

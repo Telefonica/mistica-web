@@ -42,3 +42,29 @@ emphasis.
 - Do not treat timer styling as decoration without a real time-based behavior
 - Do not rely on the visual countdown alone for critical instructions; pair it with explicit contextual
   messaging
+
+## Accessibility
+
+`TextTimer` and `Timer` share the same accessibility considerations.
+
+### Accessibility label
+
+Add an accessibility label (`aria-label`) to provide countdown context.
+
+- For example: "Offer countdown" or "Verification code expires in"
+- If no label is provided, assistive technology still announces the remaining time, but users may miss
+  context about what the countdown refers to
+
+### Value announcement
+
+Regardless of visual style, screen readers announce the timer in a long countdown format.
+
+- For example: "A label. 0 hours, 0 minutes and 1 second"
+- Choose min and max time units that match user decisions (for example, avoid showing days when users only
+  need minute-level urgency)
+
+### Content scope
+
+For critical deadlines, pair the timer with clear nearby text that explains consequence and next action.
+
+- For example, "Request a new code when this reaches zero"

@@ -21,44 +21,28 @@ optional extra content for context.
 - Do not use decorative colors without clear semantic meaning across segments
 - Do not hide critical quantitative meaning only in color; provide understandable surrounding context
 
-## Rating
+## Accessibility
 
-Rating captures user feedback through an interactive icon scale, supporting quantitative and qualitative
-evaluation patterns.
+### Text alternative for meter information
 
-### Usage
+Ensure the information represented by Meter is also available in nearby text (title, legend, or summary).
 
-#### Use for
+- Do not rely only on shape/color to communicate value meaning
+- Include explicit context such as metric name, current value, and limit/reference
 
-- Capturing user sentiment or score input as an explicit interactive choice
-- Using quantitative ratings (for example, stars) when users evaluate intensity on a numeric scale
-- Using qualitative ratings (for example, emotion icons) when users express satisfaction categories
-- Collecting feedback in moments where immediate, low-friction selection is preferable to text entry
+### Hide from screen readers
 
-#### Don't use for
+Meter can be hidden from assistive technologies with `aria-hidden`. Use this only when equivalent value and
+context are already provided in surrounding accessible text.
 
-- Do not use Rating to display static historical scores; use InfoRating for read-only display
-- Do not use unlabeled or unclear icon sets that make score meaning ambiguous
-- Do not force rating input when feedback is optional and users need a neutral skip path
-- Do not mix qualitative and quantitative semantics in the same user task without a clear rationale
+- If Meter is hidden, ensure adjacent content fully explains the metric
+- Example context: `Data Usage` + `You have used 75% of your 100 GB monthly limit`
 
-## InfoRating
+### Accessibility label
 
-InfoRating displays read-only scores with rating icons, including accessible value narration for assistive
-technologies.
+By default, Meter is announced with percentage-based value semantics (for example, progress-style output with
+current value and segment breakdown).
 
-### Usage
-
-#### Use for
-
-- Displaying existing ratings in product cards, lists, and summaries without enabling user editing
-- Communicating score magnitude quickly with compact iconography, including optional half values
-- Supporting accessible reading of score context when no visible textual score is present
-- Reusing the same rating visual language as input ratings while keeping the state non-interactive
-
-#### Don't use for
-
-- Do not use InfoRating to collect user feedback; use Rating when interaction is required
-- Do not present decorative ratings without meaningful value context for assistive technologies
-- Do not over-precision score displays when the source data does not justify half-step granularity
-- Do not use rating visuals as the only trust signal; pair with enough surrounding product context
+- Use `aria-label` to customize announcement wording when the metric uses units like `GB`, `steps`, or
+  `tasks completed`
+- Use `aria-labelledby` when a visible title/legend should provide the accessible name

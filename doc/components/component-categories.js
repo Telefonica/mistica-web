@@ -61,7 +61,7 @@ const categories = {
     },
     'data-visualizations': {
         title: 'Data Visualizations',
-        components: ['Meter', 'Rating', 'InfoRating'],
+        components: ['Meter'],
     },
     'progress-indicators': {
         title: 'Progress Indicators',
@@ -286,6 +286,10 @@ const categories = {
             'ScreenReaderOnly',
         ],
     },
+    rating: {
+        title: 'Rating',
+        components: ['Rating', 'InfoRating'],
+    },
     skeletons: {
         title: 'Skeletons',
         components: ['SkeletonCircle', 'SkeletonLine', 'SkeletonRectangle', 'SkeletonRow', 'SkeletonText'],
@@ -293,6 +297,10 @@ const categories = {
     skipLink: {
         title: 'Skip Link',
         components: ['SkipLink', 'SkipLinkNav'],
+    },
+    table: {
+        title: 'Table',
+        components: ['Table'],
     },
     tabs: {
         title: 'Tabs',
@@ -324,7 +332,7 @@ const categories = {
     },
     timeline: {
         title: 'Timeline',
-        components: ['Timeline', 'TimelineItem', 'Table'],
+        components: ['Timeline', 'TimelineItem'],
     },
     titles: {
         title: 'Titles',

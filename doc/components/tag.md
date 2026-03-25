@@ -22,3 +22,19 @@ token.
   patterns
 - Do not combine too many tags in tight spaces if they reduce scanability
 - Do not rely on color alone to convey meaning; keep label text explicit and understandable
+
+## Accessibility
+
+### Tag text
+
+Keep tag text short, explicit, and self-explanatory so meaning is understandable without relying on color.
+
+- Avoid ambiguous labels like "Active" without nearby context when multiple entities or states are present
+- Treat icons and badge counts as complementary cues; the text label should still communicate the core status
+  or category
+
+### Density and truncation
+
+If many tags are shown together, prioritize the most relevant ones to reduce cognitive load for all users.
+
+- When truncation can occur in narrow layouts, ensure full meaning is still available in surrounding content

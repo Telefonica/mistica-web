@@ -186,3 +186,37 @@ useCarouselContext provides reusable behavior to keep component logic consistent
 
 - Do not duplicate equivalent logic when this utility already exists
 - Do not use it without understanding its side effects and scope
+
+## Accessibility
+
+### Accessibility label
+
+Carousel exposes a landmark region. Provide `aria-label` or `aria-labelledby` so assistive technologies can
+identify the carousel purpose.
+
+- Use `aria-label` when no visible heading is available
+- Use `aria-labelledby` when a nearby visible heading should name the carousel
+- Keep labels specific to the content set (for example, "Featured plans carousel")
+
+### Slide structure and navigation
+
+Carousel content is exposed as a list with list items, and controls provide explicit previous/next labels.
+
+- Keep each slide understandable when reached independently
+- Ensure previous/next controls remain available when multiple pages exist
+
+### Autoplay behavior
+
+Autoplay is optional and should never be the only way to consume content.
+
+- Always provide pause/play controls when autoplay is enabled
+- Prefer autoplay only for non-critical, passive browsing contexts
+- Autoplay stops on user interaction and when reduced motion preferences are active
+- If autoplay loops are disabled, autoplay pauses automatically on the last page
+
+### Bullet pagination
+
+Bullets communicate current position, but they should not be the only orientation signal in complex carousels.
+
+- Combine bullets with clear content hierarchy and, when needed, page controls
+- Avoid showing pagination affordances when there is only one page

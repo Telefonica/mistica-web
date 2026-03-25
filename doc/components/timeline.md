@@ -34,27 +34,19 @@ TimelineItem is a Mística component used to build consistent and accessible pro
 - Do not replace a more suitable semantic component with this one
 - Do not customize behavior in ways that conflict with Mística guidance
 
-## Table
+## Accessibility
 
-Use table for structured row-and-column data, with responsive behavior for mobile scrolling or collapsed row
-cards.
+### Accessibility label
 
-### Usage
+Give the timeline a clear accessible name (`aria-label` or `aria-labelledby`).
 
-#### Use for
+- Ensure each `TimelineItem` includes meaningful textual content (step title, status, or event description),
+  not only decorative visual assets
+- Use short, explicit labels for states and milestones
 
-- Displaying comparable structured data across multiple rows and columns
-- Data sets that need clear column headers and optional row headers for better scanning and accessibility
-- Tables that require per-row actions while keeping actions aligned and consistent
-- Responsive scenarios where mobile users either scroll horizontally or see rows collapsed into card-like
-  blocks
-- Representing empty states directly inside the table container when no rows are available
+### Role
 
-#### Don't use for
+Keep item order consistent with real chronology so list navigation matches the expected sequence.
 
-- Do not use for unstructured rich content layouts; use cards or list compositions instead
-- Do not hide headers unless users can still understand each cell context (especially in responsive/collapsed
-  views)
-- Do not force dense tables on small screens without choosing an appropriate responsive mode
-- Do not overload rows with too many actions; keep row actions focused and scannable
-- Do not use table when each item requires unique layout or long-form content rather than comparison
+- Mark exactly one current step/event at a time in linear flows
+- Keep current status synchronized with the surrounding page content

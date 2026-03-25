@@ -37,3 +37,27 @@ useSnackbar provides reusable behavior to keep component logic consistent across
 
 - Do not duplicate equivalent logic when this utility already exists
 - Do not use it without understanding its side effects and scope
+
+## Accessibility
+
+### Accessibility label
+
+Keep snackbar messages short, specific, and outcome-oriented.
+
+- Use `buttonAccessibilityLabel` when the visible action text is ambiguous in context
+- Use `closeButtonLabel` when a custom dismiss label improves clarity
+- If dismissal is important for user control, expose a dismiss button (`withDismiss`)
+
+### Dismiss behavior
+
+Choose dismiss behavior based on content priority.
+
+- If the snackbar includes a critical action (other than dismiss), prefer a persistent snackbar
+- If the snackbar has no relevant action, or only a dismiss action, prefer timed auto-dismiss behavior
+
+### Content scope
+
+Treat snackbar as transient feedback only.
+
+- Do not rely on consecutive snackbars for critical information
+- For content that must remain available or requires confirmation, use a more persistent pattern

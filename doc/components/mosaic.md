@@ -41,3 +41,28 @@ slots for scannable editorial layouts.
 - Do not force uniform card ratios if your design requires equal tiles in every slot
 - Do not overload each item with long copy that breaks compact mosaic readability
 - Do not rely on custom manual placement patterns outside the supported 1–4 item structures per block
+
+## Accessibility
+
+### Accessibility label
+
+Give each mosaic a clear accessible name in context.
+
+- For `HorizontalMosaic`, set `aria-label` or `aria-labelledby` so carousel navigation is announced with
+  meaningful context
+- For `VerticalMosaic`, also set `aria-label` or `aria-labelledby` when nearby headings are not enough
+- Keep item labels unique and specific so users can distinguish cards
+
+### Role
+
+Use `VerticalMosaic` when list semantics are important for the flow.
+
+- Keep the default list semantics unless a different structure is intentionally required
+- If you override semantics with custom `role` and `itemRole`, choose a valid parent-child combination
+
+### Slot
+
+When using item render functions (`gridMode`), preserve equivalent content and interactions across modes.
+
+- Ensure interactive elements inside each item have descriptive accessible names
+- Do not let accessibility depend on visual layout

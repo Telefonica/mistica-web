@@ -17,3 +17,17 @@ Allow users to make a single selection between multiple options.
 - Do not use it for very long option catalogs where search/filter interaction is needed
 - Do not hide labels or helper text when option meaning is ambiguous
 - Do not force custom dropdown behavior when native mobile selection is more usable
+
+## Accessibility
+
+### Accessibility label
+
+Always provide a clear, descriptive `label` that explains the decision users are making.
+
+- Keep option text concise and unambiguous so choices are easy to understand when announced one by one
+
+### Helper and error text
+
+Include helper text when users need extra context, and use error text for invalid states.
+
+- Keep validation feedback explicit so users understand what needs to change

@@ -2,7 +2,8 @@
 
 ## Header
 
-Header organizes section-level textual hierarchy with optional headline, pretitle, title, and description in a readable, accessible structure.
+Header organizes section-level textual hierarchy with optional headline, pretitle, title, and description in a
+readable, accessible structure.
 
 ### Usage
 
@@ -23,7 +24,8 @@ Header organizes section-level textual hierarchy with optional headline, pretitl
 
 ## HeaderLayout
 
-HeaderLayout provides the responsive shell for page headers, combining breadcrumbs, header content, and optional extra areas in one coherent top section.
+HeaderLayout provides the responsive shell for page headers, combining breadcrumbs, header content, and
+optional extra areas in one coherent top section.
 
 ### Usage
 
@@ -43,7 +45,8 @@ HeaderLayout provides the responsive shell for page headers, combining breadcrum
 
 ## MainSectionHeader
 
-MainSectionHeader introduces major sections with high-prominence title, optional supporting description, and optional primary action.
+MainSectionHeader introduces major sections with high-prominence title, optional supporting description, and
+optional primary action.
 
 ### Usage
 
@@ -63,7 +66,8 @@ MainSectionHeader introduces major sections with high-prominence title, optional
 
 ## MainSectionHeaderLayout
 
-MainSectionHeaderLayout wraps MainSectionHeader in a responsive, brand-aware top-area layout with consistent spacing and width control.
+MainSectionHeaderLayout wraps MainSectionHeader in a responsive, brand-aware top-area layout with consistent
+spacing and width control.
 
 ### Usage
 
@@ -80,3 +84,41 @@ MainSectionHeaderLayout wraps MainSectionHeader in a responsive, brand-aware top
 - Do not combine inconsistent top spacing systems in adjacent sections
 - Do not force brand-style top treatment in neutral contexts without design rationale
 - Do not treat this as a generic content container for non-header page regions
+
+## Accessibility
+
+### Heading hierarchy
+
+Header heading levels are configurable.
+
+- `Header` title defaults to `h2` (`titleAs`) and supports `h1` to `h6`
+- `MainSectionHeader` title defaults to `h1` (`titleAs`)
+- `Header` pretitle supports `h1` to `h6` (`pretitleAs`) and is non-heading by default
+
+If you change defaults:
+
+- If only one heading exists, that heading is announced first
+- If both pretitle and title are headings, the one with higher hierarchy is read first
+- Do not assign the same heading level to pretitle and title
+
+### Text limitation
+
+Headers support visual text truncation.
+
+- Prefer layouts that expose full text
+- If truncation is required, keep complete meaning available to assistive technologies
+- Do not truncate critical section intent
+
+### Slot
+
+Header compositions can include custom content (headline nodes, breadcrumbs, or `extra` in `HeaderLayout`).
+Because these areas are fully customizable, ensure custom controls, icons, and media preserve accessible names,
+focus order, and semantics.
+
+### Breadcrumbs and page-top composition
+
+In `HeaderLayout`, breadcrumbs and header content are composed at the top of the page.
+
+- Ensure breadcrumbs use a clear navigation label and current-page semantics
+- Keep header text concise so users can quickly understand page context before main content
+- Do not duplicate equivalent top-level headings in adjacent regions

@@ -477,3 +477,49 @@ FileItem displays a single selected file inside a FileUpload, showing file name,
 
 - Do not use FileItem outside of a file upload context
 - Do not use it when files need custom status indicators (progress, errors per file) — build a custom file row instead
+
+## Accessibility
+
+### Accessibility label
+
+Input fields should always have a clear accessible name.
+
+- Keep accessible and visible labels aligned so users get one consistent meaning
+- Use concise labels that explain what the field expects
+- Keep helper text short and actionable so users understand what to do next
+- If a field is disabled, assistive technologies announce it as unavailable
+
+### In case of error
+
+Provide both local and global error guidance in complex forms:
+
+- Field-level: immediate message on the affected input
+- Form-level: one summary when multiple fields fail on submit
+
+By default, the summary starts with:
+
+- "Check the following errors:" (localized in supported languages)
+
+Customize summary wording when default copy is too generic for your product flow.
+
+### Inputs with actions
+
+When fields include icon actions, ensure action labels explain the outcome.
+
+- Password visibility toggle: "Show password" / "Hide password"
+- Search clear action: "Clear search"
+- CVV help action: "Show CVV help" / "Hide CVV help"
+
+### OTP and PIN field
+
+`PinField` (used for OTP/PIN flows) supports explicit group labeling.
+
+- Provide a non-visible label when there is no visible label in context
+- Associate with a visible label when one already exists nearby
+
+### Prefixes
+
+Prefix content can be missed by assistive technologies if treated as decorative.
+
+- If prefix information is meaningful, include it in the field label or helper text so screen reader users receive
+  that context

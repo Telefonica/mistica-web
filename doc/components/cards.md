@@ -236,7 +236,8 @@ toggle-action behavior.
 
 #### Use for
 
-- Adding quick top actions (for example close, favorite, play/pause) in card headers without adding visual noise
+- Adding quick top actions (for example close, favorite, play/pause) in card headers without adding visual
+  noise
 - Keeping card actions consistent with card variants and built-in top-action spacing
 - Using toggle icon actions when the card action represents a clear checked/unchecked state
 - Providing concise, specific labels so icon-only actions remain accessible
@@ -268,3 +269,58 @@ loading) inside the top-action area.
 - Do not keep it visible after the async action has completed or failed
 - Do not pair spinner-only actions with missing accessibility context in adjacent controls
 - Do not use multiple simultaneous spinners in the same card action cluster when one status is enough
+
+## Accessibility
+
+### Role
+
+When a card is interactive, expose semantics that match the interaction outcome so users can anticipate the
+result.
+
+- Use action semantics for in-place actions (`onPress`)
+- Use navigation semantics for destination changes (`href`/`to`) instead of simulating links with action-only
+  handlers
+- Avoid forcing `role="link"` on action cards when `href`/`to` can express navigation natively
+
+### Heading hierarchy
+
+Card heading levels are configurable.
+
+- `titleAs` defaults to `h3`
+- `pretitleAs` defaults to `span`/paragraph semantics (non-heading unless explicitly changed)
+
+If you change defaults:
+
+- If only one heading exists, that heading is announced first
+- If both pretitle and title are headings, the one with higher hierarchy is read first
+- Do not assign the same heading level to pretitle and title
+
+### Accessibility label
+
+The labeling strategy depends on where interaction happens.
+
+- Card without inner actions (full-card interaction): provide `aria-label` or `aria-labelledby` on the
+  interactive card container
+- Card with button/link actions: label each interactive element (main buttons and top actions) with clear,
+  action-specific names
+- For top actions, always provide explicit labels because icon-only controls require accessible naming
+
+### Image
+
+When a card includes an image, provide meaningful `imageAlt` when the image conveys content.
+
+- For decorative/background-only media, keep alt text empty
+- Cover/background media should be treated as decorative unless it carries essential information
+
+### Text limitation
+
+Cards support visual text truncation (`*LinesMax` props).
+
+- Prefer layouts that expose full text
+- If truncation is required, keep complete meaning available to assistive technologies
+- Do not depend on clipped visual text as the only place where critical information appears
+
+### Slot
+
+Slots (`slot`, `footerSlot`, custom top actions) accept arbitrary content. Because these regions are fully
+customizable, ensure custom controls, icons, and media preserve accessible names, focus order, and semantics.

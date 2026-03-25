@@ -214,3 +214,40 @@ alignment variants.
 - Do not use conflicting alignment patterns within the same action area
 - Do not flatten hierarchy by giving all actions equal visual prominence
 - Do not add excessive actions that reduce decision clarity
+
+## Accessibility
+
+### Role
+
+Define button semantics according to the real interaction outcome so users can anticipate what happens after
+activation.
+
+- Use action semantics for in-place actions (`onPress`, submit)
+- Use navigation semantics for destination changes (`to`/`href`) instead of simulating links with click-only
+  handlers
+- Avoid forcing `role="link"` on action buttons when `to`/`href` can express navigation natively
+
+### Contextual menu and dialog triggers
+
+If a button opens a contextual surface, expose that relationship explicitly.
+
+- Use `aria-haspopup="menu"` or `aria-haspopup="dialog"` depending on the target surface
+- Pair with `aria-expanded` to communicate open/closed state when applicable
+- Use `aria-controls` to reference the controlled element when there is a stable target id
+
+### Repeated button labels
+
+Repeated visible labels (for example multiple `"See more"` buttons) can be ambiguous for screen reader users.
+
+- Keep visible labels unique whenever possible
+- When repeated labels are required by design, provide additional context through `aria-label` or
+  `aria-describedby`
+- Include destination or object context in the accessible name (for example `"See more plans"`)
+
+### Buttons without visible labels
+
+Buttons with no visible text (for example IconButton and ToggleIconButton) must include accessible naming.
+
+- Provide `aria-label` or `aria-labelledby` for icon-only controls
+- For ToggleIconButton, ensure checked/unchecked states expose distinct labels that describe each state action
+- Do not rely on icon shape alone to communicate purpose

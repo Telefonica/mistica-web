@@ -22,3 +22,20 @@ size, and summarizes the hidden items instead of rendering them individually.
 - Do not use when each hidden item must remain individually identifiable or directly actionable
 - Do not set `maxItems` so low that the `+N` indicator becomes the dominant content
 - Do not rely on overlap when readability is critical; use non-stacked spacing instead
+
+## Accessibility
+
+### Accessibility label
+
+Use clear nearby context (title or label) so users understand what the group represents.
+
+- Ensure each visible item has its own accessible name when items are meaningful (for example, person avatars)
+- If the group is decorative only, hide it from assistive technologies at container level
+
+### Content scope
+
+Treat StackingGroup as a compact visual summary, not as the only way to access member information.
+
+- When using `maxItems`, provide another accessible path to hidden members (for example, a full list or
+  details view)
+- Prefer non-stacked spacing when overlap reduces recognition of faces, logos, or other critical visual cues

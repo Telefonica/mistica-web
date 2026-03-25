@@ -18,3 +18,26 @@ interacting.
 - Do not use when users must enter an exact value that is easier to type directly
 - Do not use for binary on/off decisions; use a control designed for toggles or single-choice selection
 - Do not rely only on tooltip value feedback; keep a clear label and accessible naming for the control
+
+## Accessibility
+
+### Accessibility label
+
+Provide an accessible name for the slider whenever possible (`aria-label` or `aria-labelledby`).
+
+- If no accessible name is provided, the control may be announced generically as "slider"
+- Keep label wording task-oriented (what the value controls), not only unit-oriented
+
+### Value feedback
+
+Treat tooltip value display as supportive only.
+
+- Do not rely on tooltip visibility as the only way to understand current value
+- For wide ranges (for example, 0 to 100), pair the slider with an `IntegerField` so users can either drag
+  or type an exact value
+
+### Keyboard interaction
+
+Use predictable bounds and increments (`min`, `max`, `step`).
+
+- Keep keyboard and assistive technology interactions understandable and consistent

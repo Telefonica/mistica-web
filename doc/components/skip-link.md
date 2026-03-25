@@ -41,3 +41,22 @@ navigation.
 - Do not include redundant skip entries that point to the same destination
 - Do not omit descriptive navigation labeling when multiple skip groups exist
 - Do not overpopulate skip navigation with low-value destinations
+
+## Accessibility
+
+### Accessibility label
+
+Use clear destination-oriented link text so users understand exactly where focus will move.
+
+- For example, "Skip to main content" or "Skip to filters"
+- You can set an accessibility label for each `SkipLink` using `aria-label`; when not provided, the displayed
+  link text is used as the accessible name
+- For multiple skip links, wrap them in `SkipLinkNav` and set a clear `aria-label`
+- When multiple skip links are present, keep their wording distinct
+
+### Skip targets
+
+Keep skip targets stable and meaningful.
+
+- Each `targetId` should point to a real section users expect to reach
+- Prioritize high-value destinations (main content, search/filter region, key complementary sections)

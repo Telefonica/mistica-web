@@ -79,3 +79,26 @@ visible boxed styling at item level.
 - Do not use BoxedAccordionItem outside a BoxedAccordion/Accordion grouped context
 - Do not omit meaningful item labeling when relying on computed accessibility labels
 - Do not replace built-in toggle and transition behavior with inconsistent custom interaction patterns
+
+## Accessibility
+
+### Accordion group
+
+By default, accordion headers are rendered as interactive button-like controls and the group has no list role.
+When the accordion should be exposed as a grouped list in your context, set roles explicitly on the container
+and items (for example `role="list"` on `Accordion` and `role="listitem"` on each item wrapper).
+
+### Slot
+
+Accordion content areas (`asset`, `right`, and panel `content`) accept custom content. Because these areas are
+fully customizable, ensure custom controls, icons, and media preserve accessible names, focus order, and
+semantics.
+
+### Heading hierarchy
+
+Accordion heading levels are configurable.
+
+- By default, no document heading level is enforced
+- Set `titleAs` (for example `h2`, `h3`) when the accordion title should participate in the page heading
+  outline
+- Keep levels consistent with surrounding content hierarchy

@@ -308,3 +308,43 @@ Divider is a subtle visual separator used to split related content areas while p
 - `Menu`/`MenuSection` already includes section separators
 - `Drawer` and `Sheet` patterns render contextual dividers based on scroll state
 - Prefer these built-in separators before adding extra `Divider` instances manually
+
+## Accessibility
+
+### Preserve semantics over visual layout
+
+Use layout primitives for visual structure, and add semantics in the content they organize.
+
+- Do not rely on spacing/alignment wrappers to communicate meaning
+- Add headings, list semantics, and landmark roles in the content they wrap
+- Use region naming (`aria-label` / `aria-labelledby`) when a section needs a clear accessible name
+
+### Lists and grouped content
+
+When a layout visually behaves like a list, ensure users also get list context.
+
+- Add list semantics when users need to perceive grouped list items
+- Keep list labels specific when multiple grouped regions are present
+
+### Reading order and visual reordering
+
+Keep DOM order aligned with reading order, especially in responsive layouts.
+
+- Avoid visual reordering that breaks reading and focus order
+- Ensure master/detail content remains understandable in both single-pane and split-pane views
+- If content priority changes by breakpoint, verify keyboard and screen reader flow in each breakpoint
+
+### Scrollable and fixed regions
+
+Scrollable and fixed regions need clear purpose cues.
+
+- Provide nearby heading/label context for horizontally scrollable content
+- If scrollbars are hidden, keep alternative affordances that reveal overflow
+- Keep fixed footer actions clearly labeled and easy to reach
+
+### Decorative separators
+
+`Divider` is visual separation, not structure.
+
+- Do not use dividers as the only cue for hierarchy or section meaning
+- Keep semantic grouping in headings, lists, and landmarks, with dividers as complementary decoration

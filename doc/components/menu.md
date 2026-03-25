@@ -62,3 +62,45 @@ scanability.
 - Do not create many single-item sections when grouping does not add semantic value
 - Do not use empty sections as spacing hacks in menu layouts
 - Do not split tightly related actions across different sections without clear rationale
+
+## Accessibility
+
+### Role
+
+Use menu patterns for short contextual actions, not for full-page navigation.
+
+- Keep menu options action-oriented and concise
+- Use checkbox-like menu items only for lightweight toggle decisions
+
+### Trigger relationship
+
+Keep trigger and menu relationship understandable for assistive technologies.
+
+- Expose trigger state so users know a menu opens and whether it is expanded
+- Keep trigger label explicit so users understand what menu is being opened
+
+### Keyboard interaction
+
+Menu supports keyboard navigation and activation.
+
+- Arrow keys move focus across enabled menu items
+- `Enter`/`Space` activates the focused item
+- `Esc` closes the menu
+- Focus returns to the trigger when the menu closes
+
+Avoid overriding these patterns in custom wrappers.
+
+### Accessibility label
+
+Menu item label text is used as the accessible action name.
+
+- Keep labels short, specific, and action-oriented
+- Avoid ambiguous labels like `More` or `Open` without context
+- For destructive actions, keep wording explicit (for example, `Delete account`)
+
+### Sections and separators
+
+`MenuSection` includes built-in visual separators to group related actions.
+
+- Use sections to improve scanability and semantic grouping of related options
+- Do not add redundant manual dividers between sections

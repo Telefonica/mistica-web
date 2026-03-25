@@ -72,3 +72,22 @@ Top title level for primary page or view headings when maximum hierarchy promine
 - Do not use for regular subsection titles inside content modules
 - Do not place multiple Title4 elements in the same visual scope
 - Do not use long multiline copy as a page title when a shorter, clearer heading is possible
+
+## Accessibility
+
+### Heading hierarchy
+
+Title heading levels are configurable.
+
+- Set the `as` prop (`h1` to `h6`) based on real page hierarchy instead of relying on visual size alone
+- Visual style and semantic level are independent: changing the tag updates accessibility structure without
+  requiring visual redesign
+- Use one clear top-level heading per view/surface scope when possible, and nest lower levels consistently
+  below it
+
+### Accessibility label
+
+Keep title text concise and meaningful so headings work well in assistive-technology heading navigation.
+
+- If right-side companion content is used, ensure it supports (rather than replaces) the meaning of the
+  heading

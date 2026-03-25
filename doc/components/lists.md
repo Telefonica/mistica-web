@@ -136,3 +136,40 @@ ListItem is the content unit used inside ordered and unordered lists, supporting
 - Do not mix marker, markerless, and icon styles arbitrarily within the same list without rationale
 - Do not use decorative icons that compete with or obscure item meaning
 - Do not remove markers in dense informational lists where scanability depends on strong item separation
+
+## Accessibility
+
+### Role
+
+Choose list semantics according to the content purpose.
+
+- Keep row groups exposed as lists when they represent related options
+- Use ordered vs unordered lists based on whether order changes meaning
+- Add clear list names when multiple list regions coexist
+
+### Heading hierarchy
+
+Row heading levels are configurable.
+
+- Title defaults to `span` (not a heading)
+- Set `titleAs` when the row title should participate in the page heading outline
+- Keep levels consistent with surrounding content hierarchy
+
+### Accessibility label
+
+Label rows so users can understand each action without guessing.
+
+- Provide explicit labels when row content could be ambiguous
+- In informational rows, prefer one concise summary label when full visual content is noisy for assistive tech
+- In dual-interaction rows, ensure both the main row action and right-side action remain distinguishable
+
+### Badge
+
+If a row includes a badge, ensure its meaning is represented in accessible text.
+
+- Provide badge meaning through row text or an explicit `aria-label` when the badge value alone is ambiguous
+
+### Slot
+
+Slots (`extra`, `right`) accept custom content. Because these areas are fully customizable, ensure custom
+controls, icons, and media preserve accessible names, focus order, and semantics.

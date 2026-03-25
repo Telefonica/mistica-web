@@ -16,3 +16,18 @@ element.
 
 - Do not rely on it as the only accessible message, since the badge itself is decorative for screen readers
 - Do not show a badge for zero state (no pending content)
+
+## Accessibility
+
+### Decorative behavior
+
+Badge is decorative for assistive technologies. Its visual dot/number is not announced directly by screen
+readers.
+
+### Accessible label on the related control
+
+When Badge wraps an interactive element (for example an icon button), include the unread/pending meaning in
+the interactive element label (for example via `aria-label`).
+
+- Example: `"Shopping cart with 2 items"`
+- Do not expose only `"Shopping cart"` if the badge count is important for task completion

@@ -78,3 +78,41 @@ spinner. You can see how to apply spinner in buttons here.
 
 - Don't use a spinner when:
 - If you don’t want the spinner to be read by a screen reader, it can be deactivated.
+
+## Accessibility
+
+### Announce loading state clearly
+
+Use short, specific loading copy so assistive technologies can communicate what is happening.
+
+- Prefer contextual messages (for example, `Loading your plan details`) over generic-only text
+- Keep loading text concise and avoid rapid message churn that causes noisy announcements
+
+### Full-screen loading patterns
+
+`LoadingScreen` and `BrandLoadingScreen` are blocking states and should provide clear status context.
+
+- Keep title/description meaningful so users understand why interaction is paused
+- Preserve heading hierarchy when using titles in long page flows
+- Avoid adding unrelated interactive controls while the blocking loader is active
+
+### Spinner semantics
+
+Use spinner states as progress feedback, not as decoration.
+
+- Add a clear loading label when context is not already obvious
+- Hide spinner from assistive technologies only when equivalent status text is already announced nearby
+
+### LoadingBar behavior
+
+`LoadingBar` is a visual global progress cue and should not be the only accessibility signal.
+
+- Pair it with nearby status text or another announced loading context when users need explicit updates
+- Avoid relying on motion/color alone to communicate background activity
+
+### Live region hygiene
+
+Avoid overlapping loading announcements from multiple components at the same time.
+
+- Keep one primary loading announcement per task
+- Avoid duplicate announcements when combining loading text and loading indicators

@@ -103,3 +103,33 @@ and contextual actions.
 - Do not add excessive secondary actions that compete with completion flow
 - Do not use it as a generic app header outside funnel-style task contexts
 - Do not combine it with parallel global menus that break focused journey intent
+
+## Accessibility
+
+### Heading hierarchy
+
+Provide a clear, descriptive page title in `NavigationBar`.
+
+- Keep heading hierarchy consistent in the screen content below it
+
+### Accessibility label
+
+Add explicit accessible labels to icon-only `NavigationBarAction` controls.
+
+- Ensure purpose is clear without visual context (for example, search, close, help, cart)
+- For back navigation, ensure the destination is predictable (for example, previous screen or parent section)
+- Keep header actions short and high-priority
+
+### Keyboard interaction
+
+When a section opens additional menu content, ensure users can operate the full flow with keyboard only.
+
+- Open, move through items, dismiss, and continue navigation
+- In `MainNavigationBar`, use concise and distinct section titles so menu triggers are easy to differentiate
+
+### Slot
+
+If section content is customized, preserve the same accessibility quality as default menu content.
+
+- Keep clear labels, logical focus order, and reachable interactive elements
+- In `FunnelNavigationBar`, keep only essential actions for task completion

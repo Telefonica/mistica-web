@@ -17,3 +17,18 @@ Use tabs to switch between related sections within the same context, with one ac
 - Do not use when users need to compare multiple sections side by side; tabs hide non-selected content
 - Do not create too many tabs with long labels that cause poor discoverability and scrolling overhead
 - Do not break tab-to-panel semantics when providing custom panel rendering
+
+## Accessibility
+
+### Accessibility label
+
+Give the tab list a clear accessible name with `aria-label` or `aria-labelledby`.
+
+- Keep tab labels short, distinct, and task-oriented
+- If icons are used, do not rely on icon-only meaning; keep clear text labels
+
+### Content scope
+
+Keep panel content focused on one topic per tab.
+
+- Do not place unrelated controls in the tab strip

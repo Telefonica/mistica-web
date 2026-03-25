@@ -43,3 +43,25 @@ across radio items.
 - Do not split one logical decision across multiple disconnected radio groups
 - Do not hide the group context or question prompt users need to make an informed selection
 - Do not use RadioGroup for long, dynamic option catalogs better served by other selector patterns
+
+## Accessibility
+
+### Accessibility label
+
+Always give each `RadioGroup` a clear accessible name with `aria-label` or `aria-labelledby`.
+
+- Keep option labels unique and specific to avoid ambiguity when moving through radios with a screen reader
+- For custom-rendered radios (`render` prop), ensure visible label text is programmatically associated with
+  the radio using `labelId`
+
+### Disabled state
+
+Use `disabled` only when selection is truly unavailable.
+
+- Provide nearby explanation when the reason is not obvious from context
+
+### Controlled state
+
+In controlled mode, keep `value` and `onChange` synchronized.
+
+- Selection state announced to assistive technologies must always match what is visually selected
