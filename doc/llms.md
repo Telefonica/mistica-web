@@ -1,6 +1,21 @@
 # @telefonica/mistica
 
-> React components library for Telefonica Design System (Mistica). Provides a comprehensive set of UI components, layout primitives, form fields, theming, analytics integration, and more for building web applications following Telefonica's design guidelines.
+> React components library for Telefonica Design System (Mistica). Provides UI components, layout primitives,
+> form fields, theming, analytics, and more for building web applications following Telefonica's design
+> guidelines.
+
+## Critical Rules
+
+1. **NEVER hardcode colors.** Always use `skinVars.colors.*` design tokens from `@telefonica/mistica`.
+2. **NEVER use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`, `Align`,
+   `ResponsiveLayout`, `GridLayout`, `Grid`.
+3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`.
+4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or Mistica components that handle it
+   automatically.
+5. **Always wrap your app** with `<ThemeContextProvider>` and import `@telefonica/mistica/css/mistica.css`.
+6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`.
+7. **Add `'use client';`** directive to client components when using Next.js app router.
+8. Use `skinVars.rawColors.*` (not `skinVars.colors.*`) when applying alpha with `applyAlpha`.
 
 ## Install
 
@@ -14,76 +29,55 @@ or
 npm install @telefonica/mistica
 ```
 
-## Quick start
+## Quick Start
 
-Before using any component, wrap your React app root with `<ThemeContextProvider>`. You must also import the library CSS.
+```tsx
+'use client';
 
-```js
 import '@telefonica/mistica/css/mistica.css';
-
 import {
   ThemeContextProvider,
-  Form,
+  getMovistarSkin,
+  ResponsiveLayout,
   Box,
   Stack,
-  TextField,
-  EmailField,
-  ButtonLayout,
+  Title1,
+  Text2,
   ButtonPrimary,
-  alert,
-  getMovistarSkin,
 } from '@telefonica/mistica';
-
-const App = () => (
-  <Form
-    onSubmit={(formData) =>
-      alert({
-        title: 'This is your data',
-        message: JSON.stringify(formData, null, 2),
-      })
-    }
-  >
-    <Box padding={16}>
-      <Stack space={16}>
-        <TextField name="name" label="Name" />
-        <EmailField name="email" label="Email" />
-        <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
-      </Stack>
-    </Box>
-  </Form>
-);
 
 const misticaTheme = {
   skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
 };
 
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(
+const App = () => (
   <ThemeContextProvider theme={misticaTheme}>
-    <App />
+    <ResponsiveLayout>
+      <Box paddingY={24}>
+        <Stack space={16}>
+          <Title1 as="h1">Hello Mistica</Title1>
+          <Text2 regular as="p">
+            Build beautiful UIs with design system components.
+          </Text2>
+          <ButtonPrimary onPress={() => console.log('clicked')}>Get Started</ButtonPrimary>
+        </Stack>
+      </Box>
+    </ResponsiveLayout>
   </ThemeContextProvider>
 );
 ```
 
-## Theme configuration
+## Theme Configuration
 
-The `theme` prop in `ThemeContextProvider` is mandatory. The only two required fields are `skin` and `i18n`:
+The `theme` prop in `ThemeContextProvider` is mandatory. Only `skin` and `i18n` are required:
 
 ```ts
 type ThemeConfig = {
   skin: Skin;
   colorScheme?: 'light' | 'dark' | 'auto'; // default: 'auto'
-  i18n: {
-    locale: Locale;
-    phoneNumberFormattingRegionCode: RegionCode;
-  };
-  platformOverrides?: {
-    platform?: 'ios' | 'android';
-    insideNovumNativeApp?: boolean;
-    userAgent?: string;
-  };
+  i18n: {locale: Locale; phoneNumberFormattingRegionCode: RegionCode};
+  platformOverrides?: {platform?: 'ios' | 'android'; insideNovumNativeApp?: boolean; userAgent?: string};
   texts?: Partial<Dictionary>;
   analytics?: {
     logEvent: (event: TrackingEvent) => Promise<void>;
@@ -95,15 +89,14 @@ type ThemeConfig = {
 };
 ```
 
-Available skins: `getMovistarSkin()`, `getVivoSkin()`, `getO2Skin()`, `getTelefonicaSkin()`, and others via `getSkinByName()`. You can also create a custom skin by implementing the `Skin` type.
+Available skins: `getMovistarSkin()`, `getVivoSkin()`, `getO2Skin()`, `getTelefonicaSkin()`, `getBlauSkin()`,
+`getTuSkin()`, and others via `getSkinByName()`. You can also create a custom skin.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 
-The `theme` object should be constant (declared outside the component) or memoized with `React.useMemo` when dynamic.
+The `theme` object should be constant (outside the component) or memoized with `React.useMemo`.
 
-## Next.js optimization
-
-For Next.js app router, enable this experimental config to improve tree shaking, reduce bundle size and build time:
+### Next.js optimization
 
 ```js
 experimental: {
@@ -111,73 +104,141 @@ experimental: {
 }
 ```
 
-## Layout primitives
+## Standard Page Layout
 
-- `Box` -- padding container (`padding`, `paddingX`, `paddingY`, `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`)
-- `Stack` -- vertical distribution with `space` prop
-- `Inline` -- horizontal distribution with `space` prop (numeric, `'between'`, `'around'`, `'evenly'`)
-- `ResponsiveLayout` -- responsive page content container
-- `HeaderLayout` -- page header (uses ResponsiveLayout internally, do not wrap in one)
-- `GridLayout` -- grid with templates `'6+6'`, `'8+4'`, `'5+4'` (must be inside ResponsiveLayout)
-- `MasterDetailLayout` -- sidebar list + detail view pattern
-- `NegativeBox` -- allows children to overflow container (useful for non-boxed lists)
+```tsx
+<MainNavigationBar sections={[...]} selectedIndex={0} />
+<HeaderLayout header={<Header pretitle="Section" title="Page Title" description="..." />} />
+<ResponsiveLayout>
+  <Box paddingY={24}>
+    <Stack space={32}>
+      {/* Section with 16px element spacing */}
+      <Stack space={16}>
+        <Title1 as="h2">Section</Title1>
+        <Text2 regular as="p">Content</Text2>
+      </Stack>
+      {/* List section */}
+      <Stack space={16}>
+        <Title1 as="h2">List</Title1>
+        <NegativeBox>
+          <RowList>
+            <Row title="Item" onPress={() => {}} />
+          </RowList>
+        </NegativeBox>
+      </Stack>
+    </Stack>
+  </Box>
+</ResponsiveLayout>
+```
 
-Vertical rhythm guidelines: containers have 24px top/bottom padding, sections use 32px spacing, elements use 16px spacing.
+Vertical rhythm: containers 24px padding, sections 32px spacing, elements 16px spacing.
 
-## Forms
+## Component Categories
 
-Use `<Form>` for automatic state handling, validation, loading states, and field disabling during submission.
+### Core Layout Primitives
 
-- Submit buttons must include the `submit` prop
-- Form fields are required by default; use `optional` prop to mark as optional
-- `onSubmit` receives an object of field name/value pairs and must return a promise
-- Fields accept a `validate` prop returning an error string or empty string on success
-- `initialValues` prop pre-fills form fields
+`Box`, `Stack`, `Inline`, `Align`, `Grid`/`GridItem`, `NegativeBox`, `Divider`, `HorizontalScroll`, `Boxed`,
+`Overlay`, `StackingGroup`
 
-Available form fields: `TextField`, `CreditCardFields`, `CreditCardNumberField`, `CreditCardExpirationField`, `CvvField`, `DateField`, `DecimalField`, `IntegerField`, `PasswordField`, `EmailField`, `Select`, `PhoneNumberField`, `IbanField`.
+### Page Layouts
 
-Use `DoubleField` to place two fields in the same row. Use `useForm` hook for advanced form logic.
+`ResponsiveLayout`, `HeaderLayout`, `GridLayout`, `MainSectionHeaderLayout`, `MasterDetailLayout`,
+`FixedFooterLayout`, `ButtonFixedFooterLayout`, `ButtonLayout`, `DoubleField`
 
-## Analytics
+### Buttons
 
-Components like buttons accept a `trackingEvent` prop. Configure tracking via `theme.analytics.logEvent`. Use the `trackEvent` boolean prop for default tracking events. Supports both Universal Analytics and Google Analytics 4 event formats.
+`ButtonPrimary`, `ButtonSecondary`, `ButtonDanger`, `ButtonLink`, `ButtonLinkDanger`, `ButtonGroup`,
+`ButtonLayout`, `IconButton`, `ToggleIconButton`
 
-Use `TrackingConfig` context provider to set `eventFormat` for a specific subtree.
+### Text
 
-## Sheets (bottom sheets)
+`Text1`-`Text10`, `Title1`-`Title4`, `TextLink`
 
-Predefined sheets: `RadioListSheet`, `ActionsListSheet`, `InfoSheet`, `ActionsSheet`.
+### Cards
 
-Setup: wrap your app with `<SheetRoot>`, then call `showSheet()` imperatively from anywhere. For native webview support, pass `nativeImplementation` prop to `SheetRoot`.
+`DataCard`, `MediaCard`, `CoverCard`, `NakedCard` (each with size variants: `'default'`, `'snap'`,
+`'display'`)
 
-Custom sheets: use the `<Sheet>` component directly with any content as children.
+### Forms
 
-## Fonts
+`Form`, `TextField`, `EmailField`, `PhoneNumberField`, `PasswordField`, `Select`, `DateField`, `IntegerField`,
+`DecimalField`, `CreditCardFields`, `IbanField`, `SearchField`, `PinField`, `Switch`, `Checkbox`,
+`RadioGroup`/`RadioButton`, `DoubleField`, `Autocomplete`, `FileUpload`
 
-Components are optimized for system fonts (Roboto / San Francisco). Works with custom fonts like OnAir or Telefonica fonts. For fonts without medium weight, map regular weight to font-weight 500.
+### Lists
 
-Set base font size to 16px for dynamic font size support. Include `-apple-system-body` for iOS Dynamic Type.
+`RowList`/`Row`, `BoxedRowList`/`BoxedRow`, `UnorderedList`, `OrderedList`, `ListItem`
 
-## Customizable texts
+### Navigation
 
-Override default component texts via `theme.texts`. Use `textTokens` and the `t()` function from `useTheme()` to access localized text tokens.
+`MainNavigationBar`, `NavigationBar`, `FunnelNavigationBar`, `NavigationBarAction`,
+`NavigationBarActionGroup`, `Tabs`, `NavigationBreadcrumbs`
 
-## Testing
+### Headers
 
-- Use `NODE_ENV` guards for test-specific code
-- Unit tests usually don't need CSS; use acceptance tests for layout-dependent behavior
-- Use `isRunningAcceptanceTest` with `'acceptance-test'` in user agent for acceptance test mode
+`Header`, `HeaderLayout`, `MainSectionHeader`, `MainSectionHeaderLayout`
 
-## Community components
+### Feedback
 
-Community components live in `src/community/` and are exported via `src/community/index.tsx`. Import from `@telefonica/mistica/community`.
+`SuccessFeedbackScreen`, `ErrorFeedbackScreen`, `InfoFeedbackScreen`, `Snackbar` (via `useSnackbar`),
+`alert`/`confirm`/`dialog` (via `useDialog`)
+
+### Loading
+
+`SkeletonLine`, `SkeletonText`, `SkeletonCircle`, `SkeletonRow`, `SkeletonRectangle`, `LoadingScreen`,
+`BrandLoadingScreen`, `Spinner`, `LoadingBar`
+
+### Data Display
+
+`Tag`, `Badge`, `Chip`, `Avatar`, `Image`, `Video`, `Table`, `Divider`, `Callout`, `ProgressBar`,
+`ProgressBarStepped`, `Stepper`, `Meter`, `Rating`, `InfoRating`, `Timer`, `TextTimer`,
+`Timeline`/`TimelineItem`, `Counter`
+
+### Containers / Surfaces
+
+`Boxed`, `Carousel`, `CenteredCarousel`, `Slideshow`, `Hero`, `CoverHero`, `EmptyState`, `EmptyStateCard`,
+`Accordion`/`AccordionItem`, `BoxedAccordion`/`BoxedAccordionItem`, `Drawer`, `Tooltip`, `Popover`,
+`Menu`/`MenuItem`/`MenuSection`, `Sheet`/`SheetRoot`/`showSheet`
+
+### Media
+
+`Circle`, `Square`, `StackingGroup`, `Logo`
+
+### Icons
+
+~2000 icons following the pattern `Icon{Name}{Variant}` where Variant is `Regular`, `Filled`, or `Light`. All
+accept `size` and `color` props. Use `color="currentColor"` inside buttons/navigation.
+
+### Hooks
+
+`useTheme`, `useScreenSize`, `useDialog`, `useSnackbar`, `useForm`, `useThemeVariant`, `useIsInViewport`,
+`useElementDimensions`, `useWindowSize`, `useTrackingConfig`, `useCarouselContext`
+
+## Design Tokens
+
+All tokens via `skinVars` from `@telefonica/mistica`:
+
+- **Colors**: `skinVars.colors.*` (286 tokens for backgrounds, text, borders, controls, status, tags)
+- **Raw colors**: `skinVars.rawColors.*` (same tokens as RGB values, for use with `applyAlpha`)
+- **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)
+- **Text presets**: Handled by text components, not accessed directly
 
 ## Docs
 
+- [Components reference](./components.md): full component catalog with props and usage examples
+- [Design tokens](./design-tokens.md): skinVars colors, rawColors, applyAlpha, border radii, text presets,
+  theme variants
+- [Patterns and best practices](./patterns.md): page composition, layout dos/don'ts, color rules, responsive
+  patterns, form patterns, card patterns, list patterns, skeleton loading, funnel flows, routing integration,
+  dark mode
 - [Theme configuration](./theme-config.md): full ThemeConfig reference, Link component setup, custom skins
-- [Layout](./layout.md): Box, Stack, Inline, ResponsiveLayout, HeaderLayout, GridLayout, MasterDetailLayout, NegativeBox, vertical rhythm
+- [Layout](./layout.md): Core layout primitives (Box, Stack, Inline, Align, Grid/GridItem, NegativeBox,
+  Divider, HorizontalScroll, Boxed, Overlay, StackingGroup) and page layouts (ResponsiveLayout, HeaderLayout,
+  GridLayout, MasterDetailLayout, FixedFooterLayout, ButtonFixedFooterLayout, ButtonLayout, DoubleField),
+  vertical rhythm
 - [Forms](./forms.md): Form component, all form field types, DoubleField, useForm hook
-- [Analytics](./analytics.md): trackingEvent prop, logEvent setup, default tracking, GA4 support, TrackingConfig
+- [Analytics](./analytics.md): trackingEvent prop, logEvent setup, default tracking, GA4 support,
+  TrackingConfig
 - [Fonts](./fonts.md): font family setup, system fonts, custom fonts, weight mapping, dynamic font sizes
 - [Texts](./texts.md): customizable text tokens, Dictionary type, translate function
 - [Sheets](./sheet.md): predefined sheets, SheetRoot, showSheet API, native webview integration, custom sheets

@@ -2,39 +2,49 @@
 
 <!-- TOC depthFrom:2 -->
 
-- [Box](#box)
-- [Stack](#stack)
-- [Inline](#inline)
-  - [numeric space](#numeric-space)
-  - [between](#between)
-  - [around](#around)
-  - [evenly](#evenly)
-- [ResponsiveLayout](#responsivelayout)
-- [HeaderLayout](#headerlayout)
-- [GridLayout](#gridlayout)
-  - [Basic](#basic)
-  - [Grid template 6+6](#grid-template-66)
-  - [Grid template 8+4](#grid-template-84)
-  - [Grid template 5+4](#grid-template-54)
-- [MasterDetailLayout](#masterdetaillayout)
-- [NegativeBox](#negativebox)
-  - [Without NegativeBox](#without-negativebox)
-  - [With NegativeBox](#with-negativebox)
-- [Vertical ryhthm](#vertical-ryhthm)
+- [Core layout primitives](#core-layout-primitives)
+  - [Box](#box)
+  - [Stack](#stack)
+  - [Inline](#inline)
+    - [numeric space](#numeric-space)
+    - [between](#between)
+    - [around](#around)
+    - [evenly](#evenly)
+  - [Align](#align)
+  - [Grid / GridItem](#grid--griditem)
+  - [NegativeBox](#negativebox)
+    - [Without NegativeBox](#without-negativebox)
+    - [With NegativeBox](#with-negativebox)
+  - [Divider](#divider)
+  - [HorizontalScroll](#horizontalscroll)
+  - [Boxed](#boxed)
+  - [Overlay](#overlay)
+  - [StackingGroup](#stackinggroup)
+- [Page layouts](#page-layouts)
+  - [ResponsiveLayout](#responsivelayout)
+  - [HeaderLayout](#headerlayout)
+  - [GridLayout](#gridlayout)
+  - [MasterDetailLayout](#masterdetaillayout)
+  - [FixedFooterLayout](#fixedfooterlayout)
+  - [ButtonFixedFooterLayout](#buttonfixedfooterlayout)
+  - [ButtonLayout](#buttonlayout)
+  - [DoubleField](#doublefield)
+- [Vertical rhythm](#vertical-rhythm)
 - [Doubts?](#doubts)
 
 <!-- /TOC -->
 
+---
+
+# Core layout primitives
+
+These are the fundamental building blocks for spacing, alignment, and visual structure. Use them to compose
+any UI inside a page.
+
 ## Box
 
 Box provides a set of padding options which can be used to create container elements with **internal**
-spacing.
-
-Accepted props:
-
-- `padding`
-- `paddingX` / `paddingY`
-- `paddingTop` / `paddingRight` / `paddingBottom` / `paddingLeft`
+spacing. All padding props accept a numeric value or a responsive object `{mobile, tablet?, desktop}`.
 
 ```tsx
 <Box paddingX={16} paddingY={32}>
@@ -48,7 +58,7 @@ Accepted props:
 
 ## Stack
 
-Vertically distributes its children using the given `space` separation
+Vertically distributes its children using the given `space` separation.
 
 ```tsx
 <Stack space={24}>
@@ -63,7 +73,7 @@ Vertically distributes its children using the given `space` separation
 ## Inline
 
 Horizontally distributes its children using the given `space` separation. This component can be considered as
-an horizontal `Stack`
+an horizontal `Stack`.
 
 :information_source: Items can be aligned vertically. Check `Inline` component in
 [Storybook](https://mistica-web.vercel.app/?path=/story/layout-inline--default) to learn more about it.
@@ -122,149 +132,57 @@ Distribute items evenly. Items have equal space around them
 
 <img src="./images/layout/inline-evenly.svg" />
 
-## ResponsiveLayout
+## Align
 
-This component creates a responsive container for your page content. The size of this container depends on the
-viewport size.
-
-```tsx
-<ResponsiveLayout>
-  <MyFeature />
-</ResponsiveLayout>
-```
-
-<!-- prettier-ignore -->
-|Mobile|Tablet|Desktop|
-|-|-|-|
-|<img src="./images/layout/responsive-layout-mobile.svg" />|<img src="./images/layout/responsive-layout-tablet.svg" />|<img src="./images/layout/responsive-layout-desktop.svg" />|
-
-## HeaderLayout
-
-The `HeaderLayout` is responsible for render the page header and related components. It uses the
-`ResponsiveLayout` internally so you must not wrap it inside one.
+Positions its children within a container using CSS grid alignment. Useful for centering content or placing it
+at specific positions within a defined area.
 
 ```tsx
-<HeaderLayout header={<Header title="Header" />} />
-<ResponsiveLayout>
-  <MyFeature />
-</ResponsiveLayout>
+<Align x="center" y="center" height="100%">
+  <Text2 regular>Centered content</Text2>
+</Align>
 ```
-
-<!-- prettier-ignore -->
-|Mobile|Tablet|Desktop|
-|-|-|-|
-|<img src="./images/layout/header-layout-mobile.svg" />|<img src="./images/layout/header-layout-tablet.svg" />|<img src="./images/layout/header-layout-desktop.svg" />|
-
-## GridLayout
-
-The `GridLayout` uses defines a grid with a set of columns where you can place your components. Different
-screen sizes will have different number of columns. This component must be used inside a `ResponsiveLayout`
-
-### Basic
 
 ```tsx
-<ResponsiveLayout>
-  <GridLayout>
-    <Component1 />
-    <Component2 />
-    {/* ... */}
-    <ComponentN />
-  </GridLayout>
-</ResponsiveLayout>
+<Align x="end">
+  <ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>
+</Align>
 ```
 
-<!-- prettier-ignore -->
-|Mobile|Tablet|Desktop|
-|-|-|-|
-|1 column|1 column|12 columns|
-|<img src="./images/layout/grid-layout-mobile.svg" />|<img src="./images/layout/grid-layout-tablet.svg" />|<img src="./images/layout/grid-layout-desktop.svg" />|
+## Grid / GridItem
 
-This layout is quite low level and not very useful by its own. When implementing a feature, use one of the
-available grid templates
-
-### Grid template 6+6
-
-<!-- prettier-ignore -->
-```tsx
-<ResponsiveLayout>
-  <GridLayout
-    template="6+6"
-    left={<LeftComponent />}
-    right={<RightComponent />}
-  />
-</ResponsiveLayout>
-```
-
-<!-- prettier-ignore -->
-|Mobile|Tablet|Desktop|
-|-|-|-|
-|<img src="./images/layout/grid-layout-mobile-6-6.svg" />|<img src="./images/layout/grid-layout-tablet-6-6.svg" />|<img src="./images/layout/grid-layout-desktop-6-6.svg" />|
-
-### Grid template 8+4
-
-<!-- prettier-ignore -->
-```tsx
-<ResponsiveLayout>
-  <GridLayout
-    template="8+4"
-    left={<LeftComponent />}
-    right={<RightComponent />}
-  />
-</ResponsiveLayout>
-```
-
-<!-- prettier-ignore -->
-|Mobile|Tablet|Desktop|
-|-|-|-|
-|<img src="./images/layout/grid-layout-mobile-8-4.svg" />|<img src="./images/layout/grid-layout-tablet-8-4.svg" />|<img src="./images/layout/grid-layout-desktop-8-4.svg" />|
-
-### Grid template 5+4
-
-<!-- prettier-ignore -->
-```tsx
-<ResponsiveLayout>
-  <GridLayout
-    template="5+4"
-    left={<LeftComponent />}
-    right={<RightComponent />}
-  />
-</ResponsiveLayout>
-```
-
-<!-- prettier-ignore -->
-|Mobile|Tablet|Desktop|
-|-|-|-|
-|<img src="./images/layout/grid-layout-mobile-5-4.svg" />|<img src="./images/layout/grid-layout-tablet-5-4.svg" />|<img src="./images/layout/grid-layout-desktop-5-4.svg" />|
-
-## MasterDetailLayout
-
-The master detail layout is a common layout pattern in applications where you have a list of items in a left
-sidebar and a detail view inside a main content area in the right. When you select an item from the sidebar,
-the detail of that item is shown in the main content area. In mobile, this translates to a navigation of 2
-levels, a first screen with the list and a second screen with the content.
+A low-level CSS Grid component for creating custom grid layouts. For page-level column layouts, prefer
+`GridLayout` instead. `Grid` is ideal for card grids, image galleries, or any layout needing explicit
+row/column control.
 
 ```tsx
-<MasterDetailLayout isOpen={isOpen} master={listView} detail={detailView} />
+<Grid columns={3} gap={{mobile: 8, desktop: 16}}>
+  <Card1 />
+  <Card2 />
+  <Card3 />
+</Grid>
 ```
-
-The `isOpen` prop controls whether the master (when `false`) or detail (when `true`) view is shown in mobile.
-
-Take into account that the `detail` view is always visible in desktop, so if you want to show an emtpy state
-in desktop when there isn't any selected item from the aside list, you can do something like this:
 
 ```tsx
-<MasterDetailLayout isOpen={isOpen} master={listView} detail={isOpen ? detailView : emptyCase} />
+<Grid columns={4} gap={16}>
+  <GridItem columnSpan={2}>
+    <FeatureCard />
+  </GridItem>
+  <GridItem>
+    <SmallCard1 />
+  </GridItem>
+  <GridItem>
+    <SmallCard2 />
+  </GridItem>
+</Grid>
 ```
-
-<!-- prettier-ignore -->
-|Mobile Master|Mobile Detail|Desktop|
-|-|-|-|
-|<img src="./images/layout/master-detail-layout-mobile-master.svg" />|<img src="./images/layout/master-detail-layout-mobile-detail.svg" />|<img src="./images/layout/master-detail-layout-desktop.svg" />|
 
 ## NegativeBox
 
 Some components, like non boxed Lists, need to be rendered overflowing its container, because the hover effect
-is larger than the container. This can be achieved using a `NegativeBox`
+is larger than the container. This can be achieved using a `NegativeBox`.
+
+By default both sides get negative margins. Use the `left` or `right` props to apply margin on one side only.
 
 ### Without NegativeBox
 
@@ -297,7 +215,234 @@ not aligned with the content container. These problems are solved using `Negativ
 
 Hover effect fills horizontal space and circles are aligned with the container edge.
 
-## Vertical ryhthm
+## Divider
+
+A simple horizontal divider line. Theme-variant-aware (adapts its color to the current `ThemeVariant`
+context). Takes no props.
+
+```tsx
+<Stack space={16}>
+  <Text2 regular>Section A</Text2>
+  <Divider />
+  <Text2 regular>Section B</Text2>
+</Stack>
+```
+
+## HorizontalScroll
+
+A container that enables horizontal scrolling for its children. Useful for scrollable rows of cards, chips,
+tags, or any horizontally overflowing content.
+
+```tsx
+<HorizontalScroll>
+  <Inline space={8}>
+    <Chip value="Option 1">Option 1</Chip>
+    <Chip value="Option 2">Option 2</Chip>
+    <Chip value="Option 3">Option 3</Chip>
+    <Chip value="Option 4">Option 4</Chip>
+  </Inline>
+</HorizontalScroll>
+```
+
+## Boxed
+
+A rounded container with background color and optional border. Theme-variant-aware: the background and border
+automatically adapt based on the current and specified `variant`. Useful for creating visually distinct
+sections or card-like containers without card semantics.
+
+```tsx
+<Boxed>
+  <Box padding={16}>
+    <Text2 regular>Content inside a boxed container</Text2>
+  </Box>
+</Boxed>
+```
+
+## Overlay
+
+A full-screen fixed overlay that covers the viewport. Used internally by dialogs, drawers, and sheets, but
+available for custom overlay use cases.
+
+```tsx
+<Overlay onPress={handleClose} disableScroll>
+  <MyCustomModal />
+</Overlay>
+```
+
+## StackingGroup
+
+Displays a group of items (typically avatars or icons) with optional overlapping. Shows a "+N" indicator when
+items exceed `maxItems`.
+
+```tsx
+<StackingGroup stacked maxItems={3} moreItemsStyle={{type: 'circle', size: 40}}>
+  <Avatar size={40} src={avatar1} />
+  <Avatar size={40} src={avatar2} />
+  <Avatar size={40} src={avatar3} />
+  <Avatar size={40} src={avatar4} />
+  <Avatar size={40} src={avatar5} />
+</StackingGroup>
+```
+
+---
+
+# Page layouts
+
+These components define the overall structure of a page or screen. They handle responsive breakpoints,
+constrain content width, and provide standard page patterns.
+
+## ResponsiveLayout
+
+Creates a responsive container for your page content. The size of this container depends on the viewport size.
+Supports a `variant` prop to set background color and theme variant, and `fullWidth` to remove margin
+constraints.
+
+```tsx
+<ResponsiveLayout>
+  <MyFeature />
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|<img src="./images/layout/responsive-layout-mobile.svg" />|<img src="./images/layout/responsive-layout-tablet.svg" />|<img src="./images/layout/responsive-layout-desktop.svg" />|
+
+## HeaderLayout
+
+The `HeaderLayout` is responsible for render the page header and related components. It uses the
+`ResponsiveLayout` internally so you must not wrap it inside one.
+
+```tsx
+<HeaderLayout header={<Header title="Header" />} />
+<ResponsiveLayout>
+  <MyFeature />
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|<img src="./images/layout/header-layout-mobile.svg" />|<img src="./images/layout/header-layout-tablet.svg" />|<img src="./images/layout/header-layout-desktop.svg" />|
+
+## GridLayout
+
+A 12-column grid with predefined templates for common page layouts. Must be used inside a `ResponsiveLayout`.
+
+Available templates:
+
+- Split layouts (use `left`/`right` props): `'6+6'`, `'8+4'`, `'5+4'`, `'4+6'`, `'3+9'`
+- Centered single-column layouts (use `children`): `'10'`, `'8'`
+- No template (raw 12-column grid, use `children`)
+
+<!-- prettier-ignore -->
+```tsx
+<ResponsiveLayout>
+  <GridLayout
+    template="6+6"
+    left={<LeftComponent />}
+    right={<RightComponent />}
+  />
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|<img src="./images/layout/grid-layout-mobile-6-6.svg" />|<img src="./images/layout/grid-layout-tablet-6-6.svg" />|<img src="./images/layout/grid-layout-desktop-6-6.svg" />|
+
+## MasterDetailLayout
+
+A common layout pattern with a list of items in a left sidebar and a detail view in the main content area. In
+mobile, this translates to a navigation of 2 levels: a first screen with the list and a second screen with the
+content.
+
+```tsx
+<MasterDetailLayout isOpen={isOpen} master={listView} detail={detailView} />
+```
+
+The `isOpen` prop controls whether the master (when `false`) or detail (when `true`) view is shown in mobile.
+
+Take into account that the `detail` view is always visible in desktop, so if you want to show an empty state
+in desktop when there isn't any selected item from the aside list, you can do something like this:
+
+```tsx
+<MasterDetailLayout isOpen={isOpen} master={listView} detail={isOpen ? detailView : emptyCase} />
+```
+
+<!-- prettier-ignore -->
+|Mobile Master|Mobile Detail|Desktop|
+|-|-|-|
+|<img src="./images/layout/master-detail-layout-mobile-master.svg" />|<img src="./images/layout/master-detail-layout-mobile-detail.svg" />|<img src="./images/layout/master-detail-layout-desktop.svg" />|
+
+## FixedFooterLayout
+
+A layout with a footer that sticks to the bottom of the viewport. The footer becomes fixed when there is
+enough available height, and scrolls with the content otherwise. Includes an elevation shadow on mobile when
+content is scrollable.
+
+```tsx
+<FixedFooterLayout
+  footer={
+    <Box paddingX={16} paddingY={8}>
+      <ButtonLayout primaryButton={<ButtonPrimary onPress={handleSubmit}>Confirm</ButtonPrimary>} />
+    </Box>
+  }
+>
+  <ResponsiveLayout>
+    <Box paddingY={24}>
+      <Stack space={16}>{/* page content */}</Stack>
+    </Box>
+  </ResponsiveLayout>
+</FixedFooterLayout>
+```
+
+## ButtonFixedFooterLayout
+
+A convenience wrapper around `FixedFooterLayout` specifically for pages that need a fixed footer with buttons.
+Handles the button layout, responsive padding, and footer visibility automatically.
+
+```tsx
+<ButtonFixedFooterLayout
+  button={<ButtonPrimary onPress={handleConfirm}>Confirm</ButtonPrimary>}
+  secondaryButton={<ButtonSecondary onPress={handleCancel}>Cancel</ButtonSecondary>}
+>
+  <ResponsiveLayout>
+    <Box paddingY={24}>
+      <Stack space={16}>{/* page content */}</Stack>
+    </Box>
+  </ResponsiveLayout>
+</ButtonFixedFooterLayout>
+```
+
+## ButtonLayout
+
+Arranges a primary button, secondary button, and/or link in a standardized layout. Handles responsive stacking
+and alignment.
+
+```tsx
+<ButtonLayout
+  align="full-width"
+  primaryButton={<ButtonPrimary onPress={handlePrimary}>Accept</ButtonPrimary>}
+  secondaryButton={<ButtonSecondary onPress={handleSecondary}>Cancel</ButtonSecondary>}
+/>
+```
+
+## DoubleField
+
+Places two form fields side by side with configurable width ratios (`'50/50'`, `'40/60'`, `'60/40'`). Used
+inside forms to group related fields horizontally.
+
+```tsx
+<DoubleField layout="50/50">
+  <TextField name="firstName" label="First name" />
+  <TextField name="lastName" label="Last name" />
+</DoubleField>
+```
+
+---
+
+## Vertical rhythm
 
 Vertical rhythm is an important concept in web design and development. It makes the page feel consistent and
 visually pleasant. It is important to maintain the rhythm across the site.
