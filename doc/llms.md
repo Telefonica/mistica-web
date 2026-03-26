@@ -27,14 +27,16 @@ repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filena
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`.
 7. **Add `'use client';`** directive to client components when using Next.js app router.
 8. Use `skinVars.rawColors.*` (not `skinVars.colors.*`) when applying alpha with `applyAlpha`.
-9. **Always set `font-family` on `body`.** Mistica does NOT inject a font family — without it browsers fall
-   back to their default serif font (e.g. Times New Roman on desktop). At minimum add this to your global CSS:
-   ```css
-   body {
-     font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
-   }
-   ```
-   See [fonts.md](./fonts.md) for full setup including `@font-face` declarations and dynamic font sizes.
+9. **Always set `font-family` on `body` and use the correct font for the active skin.** Mistica does NOT
+   inject a font — without it browsers render text with their default serif font (Times New Roman on desktop).
+   Each skin has a designated font; see the [fonts reference](./fonts.md) for `@font-face` setup and the
+   per-skin font table.
+10. **Always set `body` background color using `skinVars.colors.background`.** Without it the page background
+    won't match the theme (especially in dark mode). Do this inside a component rendered under
+    `ThemeContextProvider` so `skinVars` resolves to the correct theme values:
+    ```tsx
+    <style>{`body { background-color: ${skinVars.colors.background}; }`}</style>
+    ```
 
 ## Install
 
@@ -50,14 +52,13 @@ npm install @telefonica/mistica
 
 ## Quick Start
 
-**Required global CSS** — add this to your global stylesheet (e.g. `globals.css`). Mistica does not inject a
-font family, so without it browsers render text with their default serif font:
+**Two global CSS concerns that Mistica does NOT handle automatically:**
 
-```css
-body {
-  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
-}
-```
+1. **Font family** — without it, browsers fall back to their default serif font (Times New Roman on desktop).
+   Each skin has its own font; see [fonts.md](./fonts.md) for the per-skin table and `@font-face` setup.
+2. **Body background color** — without it, the page background won't match the active theme (critical in dark
+   mode). Set it from inside a component rendered under `ThemeContextProvider` using
+   `skinVars.colors.background`.
 
 ```tsx
 'use client';
@@ -65,7 +66,8 @@ body {
 import '@telefonica/mistica/css/mistica.css';
 import {
   ThemeContextProvider,
-  getMovistarSkin,
+  getMovistarNewSkin,
+  skinVars,
   ResponsiveLayout,
   Box,
   Stack,
@@ -75,12 +77,23 @@ import {
 } from '@telefonica/mistica';
 
 const misticaTheme = {
-  skin: getMovistarSkin(),
+  skin: getMovistarNewSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
 };
 
+// Rendered under ThemeContextProvider so skinVars resolves correctly
+const GlobalStyles = () => (
+  <style>{`
+    body {
+      font-family: 'Movistar Sans', 'Helvetica', 'Arial', sans-serif; /* font for Movistar New skin */
+      background-color: ${skinVars.colors.background};
+    }
+  `}</style>
+);
+
 const App = () => (
   <ThemeContextProvider theme={misticaTheme}>
+    <GlobalStyles />
     <ResponsiveLayout>
       <Box paddingY={24}>
         <Stack space={16}>
@@ -117,8 +130,10 @@ type ThemeConfig = {
 };
 ```
 
-Available skins: `getMovistarSkin()`, `getVivoSkin()`, `getO2Skin()`, `getTelefonicaSkin()`, `getBlauSkin()`,
-`getTuSkin()`, and others via `getSkinByName()`. You can also create a custom skin.
+Available skins: `getMovistarNewSkin()`, `getVivoNewSkin()`, `getO2NewSkin()`, `getTelefonicaSkin()`,
+`getBlauSkin()`, `getTuSkin()`, and others via `getSkinByName()`. Legacy variants without the `New` suffix
+also exist (`getMovistarSkin()`, `getVivoSkin()`, `getO2Skin()`); prefer the `New` versions for new projects.
+You can also create a custom skin.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 
