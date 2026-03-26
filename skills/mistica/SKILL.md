@@ -108,17 +108,39 @@ These rules MUST be followed in ALL generated code:
 
 10. **Use `small` prop on buttons** inside cards and `EmptyStateCard`.
 
-11. **Do NOT wrap these components in `ResponsiveLayout`** — they already contain one internally:
+11. **Always set `font-family` on `body`.** Mistica does NOT inject a font — without it browsers fall back to
+    their default serif font (Times New Roman on desktop). Add to your global CSS:
+
+    ```css
+    body {
+      font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    }
+    ```
+
+    Read `node_modules/@telefonica/mistica/doc/fonts.md` for full `@font-face` setup.
+
+12. **Do NOT wrap these components in `ResponsiveLayout`** — they already contain one internally:
     `HeaderLayout`, `MainSectionHeaderLayout`, `Hero`, `CoverHero`, `MasterDetailLayout`,
     `ButtonFixedFooterLayout`, `NavigationBar`, `MainNavigationBar`, `FunnelNavigationBar`, `Tabs`,
     `SuccessFeedbackScreen`, `ErrorFeedbackScreen`, `InfoFeedbackScreen`, `LoadingScreen`,
     `BrandLoadingScreen`. Place them at page level, side by side with `ResponsiveLayout` blocks.
 
-12. **Use carousels only for horizontal content.** `Carousel` and `CenteredCarousel` are horizontal-scroll
+13. **Use carousels only for horizontal content.** `Carousel` and `CenteredCarousel` are horizontal-scroll
     components — always place them **inside** `ResponsiveLayout`. `Slideshow` bleeds full-width automatically
     and should be placed **outside** `ResponsiveLayout`.
 
 ## Quick Reference
+
+### Required global CSS
+
+Add to your global stylesheet (e.g. `globals.css`, `index.css`). Without this, browsers render Mistica text
+with their default serif font (Times New Roman on desktop):
+
+```css
+body {
+  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+```
 
 ### Standard page structure
 
