@@ -11,6 +11,8 @@
 5. **Always wrap your app** with `ThemeContextProvider` and import `@telefonica/mistica/css/mistica.css`.
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`, etc.
 7. **Add `'use client';`** directive to client components when using Next.js app router.
+8. **Set `font-family` and `body` background color.** See [llms.md](./llms.md) rules 9–10 and
+   [fonts.md](./fonts.md) for the per-skin font table, `@font-face` setup, and the `GlobalStyles` pattern.
 
 ## Page layout composition
 
@@ -509,7 +511,7 @@ return (
 import Link from 'next/link';
 
 const theme = {
-  skin: getMovistarSkin(),
+  skin: getMovistarNewSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'Next14', Component: Link},
 };
@@ -521,7 +523,7 @@ const theme = {
 import {Link} from 'react-router-dom';
 
 const theme = {
-  skin: getMovistarSkin(),
+  skin: getMovistarNewSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'ReactRouter6', Component: Link},
 };
