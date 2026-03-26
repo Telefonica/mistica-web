@@ -108,57 +108,63 @@ These rules MUST be followed in ALL generated code:
 
 10. **Use `small` prop on buttons** inside cards and `EmptyStateCard`.
 
-11. **Always set `font-family` on `body`.** Mistica does NOT inject a font — without it browsers fall back to
-    their default serif font (Times New Roman on desktop). Add to your global CSS:
+11. **Always set `font-family` on `body` using the correct font for the active skin.** Mistica does NOT inject
+    a font — without it browsers fall back to their default serif font (Times New Roman on desktop). Each skin
+    has a designated font:
 
-    ```css
-    body {
-      font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    }
+    | Skin                         | Font family         |
+    | ---------------------------- | ------------------- |
+    | `movistar-new` _(preferred)_ | `'Movistar Sans'`   |
+    | `movistar` _(legacy)_        | `'On Air'`          |
+    | `o2-new`, `o2`               | `'On Air'`          |
+    | `vivo-new` _(preferred)_     | `'Vivo Type'`       |
+    | `vivo` _(legacy)_            | `'Roboto'`          |
+    | `telefonica`, `tu`           | `'Telefonica Sans'` |
+    | `blau`                       | `'Roboto'`          |
+    | `esimflag`                   | `'On Air'`          |
+
+    Read `node_modules/@telefonica/mistica/doc/fonts.md` for `@font-face` declarations for each font.
+
+12. **Always set `body` background using `skinVars.colors.background`.** Without it the page background won't
+    match the theme, especially in dark mode. Set it inside a component rendered under `ThemeContextProvider`:
+
+    ```tsx
+    const GlobalStyles = () => <style>{`body { background-color: ${skinVars.colors.background}; }`}</style>;
     ```
 
-    Read `node_modules/@telefonica/mistica/doc/fonts.md` for full `@font-face` setup.
-
-12. **Do NOT wrap these components in `ResponsiveLayout`** — they already contain one internally:
+13. **Do NOT wrap these components in `ResponsiveLayout`** — they already contain one internally:
     `HeaderLayout`, `MainSectionHeaderLayout`, `Hero`, `CoverHero`, `MasterDetailLayout`,
     `ButtonFixedFooterLayout`, `NavigationBar`, `MainNavigationBar`, `FunnelNavigationBar`, `Tabs`,
     `SuccessFeedbackScreen`, `ErrorFeedbackScreen`, `InfoFeedbackScreen`, `LoadingScreen`,
     `BrandLoadingScreen`. Place them at page level, side by side with `ResponsiveLayout` blocks.
 
-13. **Use carousels only for horizontal content.** `Carousel` and `CenteredCarousel` are horizontal-scroll
+14. **Use carousels only for horizontal content.** `Carousel` and `CenteredCarousel` are horizontal-scroll
     components — always place them **inside** `ResponsiveLayout`. `Slideshow` bleeds full-width automatically
     and should be placed **outside** `ResponsiveLayout`.
 
 ## Quick Reference
 
-### Required global CSS
-
-Add to your global stylesheet (e.g. `globals.css`, `index.css`). Without this, browsers render Mistica text
-with their default serif font (Times New Roman on desktop):
-
-```css
-body {
-  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
-}
-```
-
 ### Standard page structure
 
 ```tsx
-{/* These components have their own internal ResponsiveLayout — place them at page level */}
-<MainNavigationBar sections={[...]} />
-<HeaderLayout header={<Header title="Page Title" />} />
-{/* Slideshow goes outside ResponsiveLayout — it bleeds full-width automatically */}
-<Slideshow items={[...]} />
-<ResponsiveLayout>
-  <Box paddingY={24}>
-    <Stack space={32}>
-      <Stack space={16}>{/* section elements */}</Stack>
-      {/* Carousel and CenteredCarousel go INSIDE ResponsiveLayout */}
-      <Carousel itemsPerPage={{mobile: 1, tablet: 2, desktop: 3}} items={[...]} />
-    </Stack>
-  </Box>
-</ResponsiveLayout>
+<ThemeContextProvider theme={misticaTheme}>
+  {/* GlobalStyles: set body font (see rule 11) and background (see rule 12) */}
+  <GlobalStyles />
+  {/* These components have their own internal ResponsiveLayout — place them at page level */}
+  <MainNavigationBar sections={[...]} />
+  <HeaderLayout header={<Header title="Page Title" />} />
+  {/* Slideshow goes outside ResponsiveLayout — it bleeds full-width automatically */}
+  <Slideshow items={[...]} />
+  <ResponsiveLayout>
+    <Box paddingY={24}>
+      <Stack space={32}>
+        <Stack space={16}>{/* section elements */}</Stack>
+        {/* Carousel and CenteredCarousel go INSIDE ResponsiveLayout */}
+        <Carousel itemsPerPage={{mobile: 1, tablet: 2, desktop: 3}} items={[...]} />
+      </Stack>
+    </Box>
+  </ResponsiveLayout>
+</ThemeContextProvider>
 ```
 
 ### Vertical rhythm: 24px container padding, 32px between sections, 16px between elements.
