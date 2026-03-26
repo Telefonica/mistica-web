@@ -27,6 +27,14 @@ repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filena
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`.
 7. **Add `'use client';`** directive to client components when using Next.js app router.
 8. Use `skinVars.rawColors.*` (not `skinVars.colors.*`) when applying alpha with `applyAlpha`.
+9. **Always set `font-family` on `body`.** Mistica does NOT inject a font family — without it browsers fall
+   back to their default serif font (e.g. Times New Roman on desktop). At minimum add this to your global CSS:
+   ```css
+   body {
+     font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+   }
+   ```
+   See [fonts.md](./fonts.md) for full setup including `@font-face` declarations and dynamic font sizes.
 
 ## Install
 
@@ -41,6 +49,15 @@ npm install @telefonica/mistica
 ```
 
 ## Quick Start
+
+**Required global CSS** — add this to your global stylesheet (e.g. `globals.css`). Mistica does not inject a
+font family, so without it browsers render text with their default serif font:
+
+```css
+body {
+  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+```
 
 ```tsx
 'use client';
