@@ -4,11 +4,22 @@
 > form fields, theming, analytics, and more for building web applications following Telefonica's design
 > guidelines.
 
+## Documentation location
+
+This file is the main entry point. All docs live at:
+
+- **Installed package**: `node_modules/@telefonica/mistica/doc/`
+- **GitHub fallback** (use when node_modules is not available):
+  `https://github.com/Telefonica/mistica-web/tree/master/doc`
+
+If you cannot find a documentation file in `node_modules`, fetch the equivalent file from the GitHub
+repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filename>`.
+
 ## Critical Rules
 
 1. **NEVER hardcode colors.** Always use `skinVars.colors.*` design tokens from `@telefonica/mistica`.
-2. **NEVER use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`, `Align`,
-   `ResponsiveLayout`, `GridLayout`, `Grid`.
+2. **Try not to use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`,
+   `Align`, `ResponsiveLayout`, `GridLayout`, `Grid`.
 3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`.
 4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or Mistica components that handle it
    automatically.

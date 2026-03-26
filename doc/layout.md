@@ -325,6 +325,40 @@ The `HeaderLayout` is responsible for render the page header and related compone
 |-|-|-|
 |<img src="./images/layout/header-layout-mobile.svg" />|<img src="./images/layout/header-layout-tablet.svg" />|<img src="./images/layout/header-layout-desktop.svg" />|
 
+## Components that include ResponsiveLayout internally
+
+The following components manage their own `ResponsiveLayout` internally. **Do not wrap them inside a
+`ResponsiveLayout`** — that would create a double-nested layout that breaks spacing and alignment.
+
+| Component                 | Reason                                                                                                                                    |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `HeaderLayout`            | Wraps its header content in a responsive container                                                                                        |
+| `MainSectionHeaderLayout` | Contains its own responsive wrapper                                                                                                       |
+| `Hero`                    | Manages internal responsive layout for content and media                                                                                  |
+| `CoverHero`               | Applies responsive layout to its text content column                                                                                      |
+| `MasterDetailLayout`      | Full-width responsive grid managed internally                                                                                             |
+| `ButtonFixedFooterLayout` | Footer buttons aligned via an internal responsive container                                                                               |
+| `NavigationBar`           | All navigation bar variants (including `MainNavigationBar` and `FunnelNavigationBar`) center content using an internal `ResponsiveLayout` |
+| `Tabs`                    | Tab list constrained with `ResponsiveLayout fullWidth`                                                                                    |
+| `SuccessFeedbackScreen`   | All feedback screen variants contain their own page layout                                                                                |
+| `LoadingScreen`           | `BrandLoadingScreen` also uses an internal responsive text layout                                                                         |
+
+These components are placed **directly at the page level**, side by side with `ResponsiveLayout` blocks, not
+inside them:
+
+```tsx
+<MainNavigationBar sections={[...]} selectedIndex={0} />
+<HeaderLayout header={<Header title="Page Title" />} />
+<Tabs selectedIndex={0} onChange={setTab} tabs={[{text: 'Tab 1'}, {text: 'Tab 2'}]} />
+<ResponsiveLayout>
+  <Box paddingY={24}>
+    <Stack space={16}>
+      <Text2 regular>Content</Text2>
+    </Stack>
+  </Box>
+</ResponsiveLayout>
+```
+
 ## GridLayout
 
 A 12-column grid with predefined templates for common page layouts. Must be used inside a `ResponsiveLayout`.

@@ -236,6 +236,66 @@ const [selectedId, setSelectedId] = React.useState(null);
 </ButtonFixedFooterLayout>
 ```
 
+## Carousel patterns
+
+`Carousel`, `CenteredCarousel`, and `Slideshow` are **horizontal-scroll** components. Use them when content
+needs to be navigated left-to-right (e.g. product cards, promotional banners, image galleries).
+
+### Carousel vs CenteredCarousel vs Slideshow
+
+| Component          | Best for                                           | Visible items               |
+| ------------------ | -------------------------------------------------- | --------------------------- |
+| `Carousel`         | Card collections, product grids                    | Configurable per breakpoint |
+| `CenteredCarousel` | Featured/highlighted items with neighbour peek     | 1 on mobile, 3 on desktop   |
+| `Slideshow`        | Full-width hero banners, autoplay image slideshows | 1 at a time                 |
+
+### Placement rules
+
+- **`Carousel` and `CenteredCarousel`**: place inside `ResponsiveLayout` so they respect the page grid.
+- **`Slideshow`**: place **outside** `ResponsiveLayout` — it bleeds full-width on mobile and tablet
+  automatically.
+
+```tsx
+{
+  /* Carousel inside ResponsiveLayout */
+}
+<ResponsiveLayout>
+  <Box paddingY={24}>
+    <Stack space={16}>
+      <Title2 as="h2">Featured products</Title2>
+      <Carousel
+        itemsPerPage={{mobile: 1, tablet: 2, desktop: 3}}
+        withBullets
+        items={products.map((p, i) => (
+          <DataCard
+            key={i}
+            title={p.name}
+            description={p.description}
+            buttonPrimary={
+              <ButtonPrimary small onPress={() => navigate(p.url)}>
+                View
+              </ButtonPrimary>
+            }
+          />
+        ))}
+      />
+    </Stack>
+  </Box>
+</ResponsiveLayout>;
+
+{
+  /* Slideshow at page level (outside ResponsiveLayout) */
+}
+<Slideshow
+  withBullets
+  autoplay={{time: 5000, loop: true}}
+  items={[
+    <CoverCard key="1" imageSrc="/banner1.jpg" title="Offer 1" />,
+    <CoverCard key="2" imageSrc="/banner2.jpg" title="Offer 2" />,
+  ]}
+/>;
+```
+
 ## Card patterns
 
 ### Asset pattern for cards and rows

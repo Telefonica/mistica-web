@@ -49,6 +49,9 @@ node_modules/@telefonica/mistica/doc/llms.md
 This file contains the critical rules, quick start guide, component categories, design token overview, and
 links to all other documentation files.
 
+> **Fallback**: If `node_modules/@telefonica/mistica` is not available, read the equivalent files directly
+> from the GitHub repository: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
+
 ### Step 2: Read specific docs based on the task
 
 Based on what the user needs, read the appropriate documentation files:
@@ -105,17 +108,32 @@ These rules MUST be followed in ALL generated code:
 
 10. **Use `small` prop on buttons** inside cards and `EmptyStateCard`.
 
+11. **Do NOT wrap these components in `ResponsiveLayout`** — they already contain one internally:
+    `HeaderLayout`, `MainSectionHeaderLayout`, `Hero`, `CoverHero`, `MasterDetailLayout`,
+    `ButtonFixedFooterLayout`, `NavigationBar`, `MainNavigationBar`, `FunnelNavigationBar`, `Tabs`,
+    `SuccessFeedbackScreen`, `ErrorFeedbackScreen`, `InfoFeedbackScreen`, `LoadingScreen`,
+    `BrandLoadingScreen`. Place them at page level, side by side with `ResponsiveLayout` blocks.
+
+12. **Use carousels only for horizontal content.** `Carousel` and `CenteredCarousel` are horizontal-scroll
+    components — always place them **inside** `ResponsiveLayout`. `Slideshow` bleeds full-width automatically
+    and should be placed **outside** `ResponsiveLayout`.
+
 ## Quick Reference
 
 ### Standard page structure
 
 ```tsx
+{/* These components have their own internal ResponsiveLayout — place them at page level */}
 <MainNavigationBar sections={[...]} />
 <HeaderLayout header={<Header title="Page Title" />} />
+{/* Slideshow goes outside ResponsiveLayout — it bleeds full-width automatically */}
+<Slideshow items={[...]} />
 <ResponsiveLayout>
   <Box paddingY={24}>
     <Stack space={32}>
       <Stack space={16}>{/* section elements */}</Stack>
+      {/* Carousel and CenteredCarousel go INSIDE ResponsiveLayout */}
+      <Carousel itemsPerPage={{mobile: 1, tablet: 2, desktop: 3}} items={[...]} />
     </Stack>
   </Box>
 </ResponsiveLayout>
