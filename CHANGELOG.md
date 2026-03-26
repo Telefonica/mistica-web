@@ -1,3 +1,10 @@
+# [16.57.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.56.1-beta.1...v16.57.0-beta.1) (2026-03-26)
+
+
+### Features
+
+* **WEB-2413:** Info about fonts and bg colors ([4150d13](https://github.com/Telefonica/mistica-web/commit/4150d13e3672d78d8d239deda29df2c72a3f4787))
+
 ## [16.56.1-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.56.0...v16.56.1-beta.1) (2026-03-26)
 
 
