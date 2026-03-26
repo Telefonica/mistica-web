@@ -144,17 +144,6 @@ These rules MUST be followed in ALL generated code:
 
 ## Quick Reference
 
-### Required global CSS
-
-Add to your global stylesheet (e.g. `globals.css`, `index.css`). Without this, browsers render Mistica text
-with their default serif font (Times New Roman on desktop):
-
-```css
-body {
-  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
-}
-```
-
 ### Standard page structure
 
 ```tsx
