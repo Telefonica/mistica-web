@@ -191,11 +191,11 @@ Vertical rhythm: containers 24px padding, sections 32px spacing, elements 16px s
 ### Buttons
 
 `ButtonPrimary`, `ButtonSecondary`, `ButtonDanger`, `ButtonLink`, `ButtonLinkDanger`, `ButtonGroup`,
-`ButtonLayout`, `IconButton`, `ToggleIconButton`
+`ButtonLayout`, `IconButton`, `ToggleIconButton`, `TextLink`
 
 ### Text
 
-`Text1`-`Text10`, `Title1`-`Title4`, `TextLink`
+`Text1`-`Text10`, `Title1`-`Title4`
 
 ### Cards
 

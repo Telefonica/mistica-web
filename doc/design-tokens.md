@@ -21,12 +21,12 @@ All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS cu
 | Token                   | Usage                                                    |
 | ----------------------- | -------------------------------------------------------- |
 | `brand`                 | Primary brand color                                      |
-| `brandHigh`             | High-emphasis brand color                                |
+| `brandHigh`             | High-contrast brand color                                |
 | `inverse`               | Inverse foreground color                                 |
-| `neutralHigh`           | High-emphasis neutral (e.g. primary text on default)     |
-| `neutralMedium`         | Medium-emphasis neutral (e.g. secondary text on default) |
-| `neutralLow`            | Low-emphasis neutral                                     |
-| `neutralLowAlternative` | Alternative low-emphasis neutral                         |
+| `neutralHigh`           | High-contrast neutral (e.g. primary text on default)     |
+| `neutralMedium`         | Medium-contrast neutral (e.g. secondary text on default) |
+| `neutralLow`            | Low-contrast neutral                                     |
+| `neutralLowAlternative` | Alternative low-contrast neutral                         |
 | `success`               | Success semantic color                                   |
 | `warning`               | Warning semantic color                                   |
 | `error`                 | Error semantic color                                     |
@@ -69,14 +69,14 @@ All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS cu
 
 | Token            | Usage                  |
 | ---------------- | ---------------------- |
-| `borderLow`      | Low-emphasis border    |
+| `borderLow`      | Low-contrast border    |
 | `border`         | Default border         |
-| `borderHigh`     | High-emphasis border   |
+| `borderHigh`     | High-contrast border   |
 | `borderSelected` | Selected/active border |
 
-### Status colors (low/high emphasis)
+### Status colors (low/high contrast)
 
-| Low emphasis | High emphasis | Usage          |
+| Low contrast | High contrast | Usage          |
 | ------------ | ------------- | -------------- |
 | `successLow` | `successHigh` | Success status |
 | `warningLow` | `warningHigh` | Warning status |
@@ -93,13 +93,6 @@ All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS cu
 | `controlError`     | Error state control                       |
 | `loadingBar`       | Loading bar color                         |
 | `divider`          | Divider line color                        |
-
-### Tag colors
-
-Tags have paired `tagText*` and `tagBackground*` tokens for each type: `Promo`, `Active`, `Inactive`, `Info`,
-`Success`, `Warning`, `Error`. Each also has `Inverse`, `Negative`, and `Brand` variants.
-
-Example: `skinVars.colors.tagTextPromo`, `skinVars.colors.tagBackgroundPromo`.
 
 ## Using colors in code
 
@@ -167,10 +160,10 @@ sizes -- use the appropriate text component instead.
 | ---------------- | ------------------------------------ | ---------------------------------- |
 | `Text1`-`Text4`  | `light`, `regular`, `medium`, `bold` | Body text with configurable weight |
 | `Text5`-`Text10` | Fixed per skin                       | Display/headline text              |
-| `Title1`         | Default weight from skin             | Section title                      |
-| `Title2`         | Default weight from skin             | Subsection title                   |
-| `Title3`         | Default weight from skin             | Card/small title                   |
-| `Title4`         | Default weight from skin             | Smallest title                     |
+| `Title4`         | Default weight from skin             | Section title                      |
+| `Title3`         | Default weight from skin             | Subsection title                   |
+| `Title2`         | Default weight from skin             | Card/small title                   |
+| `Title1`         | Default weight from skin             | Smallest title                     |
 
 ## ThemeVariant (variant contexts)
 
@@ -193,7 +186,11 @@ Some sections of a page use different color contexts. Use `variant` prop on `Res
 </ResponsiveLayout>
 ```
 
-Available variants: `'default'`, `'brand'`, `'negative'`, `'alternative'`, `'media'`.
+Also some components can receive a variant prop.
+
+Available variants: `'default'` (white background), `'brand'` (brand color background), `'negative'` (dark
+background where text should be white), `'alternative'` (light neutral background), `'media'` (meant for
+content on top of images or videos).
 
 Components inside a variant section automatically adapt their colors. You do not need to manually set inverse
 colors.
