@@ -97,6 +97,10 @@ export const browserDefaultFocusOutline = [
     '5px auto -webkit-focus-ring-color', // Chrome / Safari
 ];
 
+export const focused = style({
+    outline: browserDefaultFocusOutline,
+});
+
 export const fieldFocusRing = style({
     ':focus-within': {
         outline: browserDefaultFocusOutline,

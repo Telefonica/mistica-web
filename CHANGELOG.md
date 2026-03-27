@@ -1,3 +1,10 @@
+# [16.56.0](https://github.com/Telefonica/mistica-web/compare/v16.55.0...v16.56.0) (2026-03-20)
+
+
+### Features
+
+* **Select, Search, Autocomplete:** Align menu item styles and fixes ([#1484](https://github.com/Telefonica/mistica-web/issues/1484)) ([f6854db](https://github.com/Telefonica/mistica-web/commit/f6854dbbc7a4e4511227ae8e651e7c04c1bb7a65))
+
 # [16.55.0](https://github.com/Telefonica/mistica-web/compare/v16.54.0...v16.55.0) (2026-03-13)
 
 
