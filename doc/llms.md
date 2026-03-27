@@ -17,12 +17,17 @@ repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filena
 
 ## Critical Rules
 
-1. **NEVER hardcode colors.** Always use `skinVars.colors.*` design tokens from `@telefonica/mistica`.
+1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` design tokens from
+   `@telefonica/mistica`. The exception is skin authoring: when creating or extending a `Skin`, you may use
+   built-in palette exports (for example `movistarNewPalette`) or your own custom palette/colors inside the
+   skin definition.
 2. **Try not to use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`,
    `Align`, `ResponsiveLayout`, `GridLayout`, `Grid`.
 3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`.
 4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or Mistica components that handle it
-   automatically.
+   automatically. If you need to change the default visual styling of components (colors, border radius,
+   etc.) and there is no specific prop for it, create or extend a custom skin instead of adding ad hoc style
+   overrides.
 5. **Always wrap your app** with `<ThemeContextProvider>` and import `@telefonica/mistica/css/mistica.css`.
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`.
 7. **Add `'use client';`** directive to client components when using Next.js app router.
@@ -133,7 +138,10 @@ type ThemeConfig = {
 Available skins: `getMovistarNewSkin()`, `getVivoNewSkin()`, `getO2NewSkin()`, `getTelefonicaSkin()`,
 `getBlauSkin()`, `getTuSkin()`, and others via `getSkinByName()`. Legacy variants without the `New` suffix
 also exist (`getMovistarSkin()`, `getVivoSkin()`, `getO2Skin()`); prefer the `New` versions for new projects.
-You can also create a custom skin.
+You can also create a custom skin. If you need to customize default component colors, radii, or other visual
+tokens beyond the props exposed by a component, prefer extending a skin over overriding component styles.
+Built-in palette exports such as `movistarNewPalette`, `o2NewPalette`, `vivoNewPalette`, etc. are available
+for skin authoring, and custom skins may also define their own palette colors from scratch.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 
@@ -263,6 +271,9 @@ All tokens via `skinVars` from `@telefonica/mistica`:
 
 - **Colors**: `skinVars.colors.*` (286 tokens for backgrounds, text, borders, controls, status, tags)
 - **Raw colors**: `skinVars.rawColors.*` (same tokens as RGB values, for use with `applyAlpha`)
+- **Palettes for skin authoring**: built-in palette exports such as `movistarNewPalette`, `o2NewPalette`,
+  `vivoNewPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
+  directly.
 - **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)
 - **Text presets**: Handled by text components, not accessed directly
 
@@ -278,7 +289,7 @@ All tokens via `skinVars` from `@telefonica/mistica`:
 - [Layout](./layout.md): Core layout primitives (Box, Stack, Inline, Align, Grid/GridItem, NegativeBox,
   Divider, HorizontalScroll, Boxed, Overlay, StackingGroup) and page layouts (ResponsiveLayout, HeaderLayout,
   GridLayout, MasterDetailLayout, FixedFooterLayout, ButtonFixedFooterLayout, ButtonLayout, DoubleField),
-  vertical rhythm
+  vertical rhythm, and `Inline` alignment/wrapping capabilities
 - [Forms](./forms.md): Form component, all form field types, DoubleField, useForm hook
 - [Analytics](./analytics.md): trackingEvent prop, logEvent setup, default tracking, GA4 support,
   TrackingConfig

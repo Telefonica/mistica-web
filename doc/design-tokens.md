@@ -6,9 +6,11 @@ exported from `@telefonica/mistica`. Tokens adapt automatically to the active sk
 
 ## Critical rules
 
-- **NEVER hardcode colors.** Always use `skinVars.colors.*` for all color values.
+- **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` for all color values.
 - Use `skinVars.rawColors.*` (not `skinVars.colors.*`) when applying alpha with `applyAlpha`.
 - Use `skinVars.borderRadii.*` for border radius values.
+- For custom skins, palette-based skin authoring, or theme-level visual customization, see
+  [theme-config.md](./theme-config.md).
 - Tokens are CSS custom properties at runtime (e.g. `var(--colorBrand)`), so they work in both inline styles
   and CSS.
 
@@ -48,6 +50,12 @@ const semiTransparentBrand = applyAlpha(skinVars.rawColors.brand, 0.5);
 // Wrong: skinVars.colors contains CSS var() references, not raw RGB values
 // applyAlpha(skinVars.colors.brand, 0.5) // Don't do this
 ```
+
+## Using palettes when authoring a skin
+
+Palette exports are for skin authoring, not for styling components directly. If you need to customize default
+colors, radii, or related visual tokens, create or extend a `Skin` and then consume those values through
+`skinVars.*` in component code. See [theme-config.md](./theme-config.md) for the full custom-skin example.
 
 ## Border radius tokens
 

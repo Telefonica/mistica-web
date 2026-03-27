@@ -95,6 +95,13 @@ If your app doesn't follow the branding of mistica builtin skins (Movistar, Vivo
 can still use mistica with your custom skin. Just import the `Skin` type and create a new skin config that
 implements the `Skin` interface (you need to define all the required color constants):
 
+If you need to customize default component colors, border radii, or similar visual tokens and there is no
+component prop for that, prefer a custom skin over ad hoc CSS/style overrides. You can:
+
+- start from a built-in skin like `getMovistarNewSkin()` and override the tokens you need
+- start from a built-in palette export like `movistarNewPalette`
+- define your own palette/colors from scratch
+
 ```ts
 import type {Skin} from '@telefonica/mistica';
 
@@ -120,5 +127,36 @@ const skin: Skin = {
   <App />
 </ThemeContextProvider>;
 ```
+
+You can also extend an existing skin instead of defining everything from scratch:
+
+```ts
+import {getMovistarNewSkin, movistarNewPalette, type Skin} from '@telefonica/mistica';
+
+const baseSkin = getMovistarNewSkin();
+const palette = {
+  ...movistarNewPalette,
+  brandPrimary: '#0050D8',
+};
+
+const skin: Skin = {
+  ...baseSkin,
+  name: 'Acme',
+  colors: {
+    ...baseSkin.colors,
+    brand: palette.brandPrimary,
+    backgroundBrand: palette.brandPrimary,
+    backgroundBrandTop: palette.brandPrimary,
+    backgroundBrandBottom: palette.blue800,
+    buttonPrimaryBackground: palette.brandPrimary,
+    buttonPrimaryBackgroundHover: palette.blue800,
+    buttonPrimaryBackgroundPressed: palette.blue800,
+    textButtonPrimary: palette.white,
+  },
+};
+```
+
+If you also need different default radii, override `borderRadii` in the custom skin rather than setting
+border radius ad hoc in component styles.
 
 You can see an example in the [examples folder](../examples/custom-skin/).

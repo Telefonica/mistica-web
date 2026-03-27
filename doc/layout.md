@@ -73,15 +73,22 @@ Vertically distributes its children using the given `space` separation.
 ## Inline
 
 Horizontally distributes its children using the given `space` separation. This component can be considered as
-an horizontal `Stack`.
+a horizontal `Stack`, and it covers the most common row-layout use cases you might otherwise solve with
+`display: flex`.
 
-:information_source: Items can be aligned vertically. Check `Inline` component in
+It supports:
+
+- horizontal distribution via `space={number}` or `space="between" | "around" | "evenly"`
+- vertical alignment of children via `alignItems="flex-start" | "flex-end" | "center" | "stretch" | "baseline"`
+- wrapping via `wrap` and row spacing via `verticalSpace`
+
+:information_source: Check `Inline` in
 [Storybook](https://mistica-web.vercel.app/?path=/story/layout-inline--default) to learn more about it.
 
 ### numeric space
 
 ```tsx
-<Inline space={16}>
+<Inline space={16} alignItems="center">
   <Child1 />
   <Child2 />
   <Child3 />
