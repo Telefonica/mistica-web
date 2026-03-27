@@ -105,6 +105,37 @@ Explore the components in [Mistica storybook](https://mistica-web.vercel.app)
 Start prototyping interfaces with Mistica components in the
 [Mística playroom](https://mistica-web.vercel.app/playroom)
 
+## AI / LLM Integration
+
+Mistica ships documentation optimised for AI coding assistants. The package includes a `doc/llms.md` file with
+concise component references, critical rules, and links to detailed documentation — all inside `node_modules`.
+
+### Using the skill
+
+If you use any agent that supports skills, you can install the bundled Mistica skill so the agent
+automatically reads the right documentation before generating UI code:
+
+```terminal
+npx skills add telefonica/mistica-web
+```
+
+Once installed, your agent should load the skill whenever you ask it to build Mistica UIs and will consult the
+documentation automatically.
+
+### For LLMs reading this file
+
+If you are an AI assistant and `node_modules/@telefonica/mistica` is available in the project:
+
+1. Read `node_modules/@telefonica/mistica/doc/llms.md` — start here, it has critical rules and an overview.
+2. Read the specific doc files referenced inside `llms.md` based on the task at hand.
+
+If `node_modules/@telefonica/mistica` is **not** available, fall back to the GitHub repository:
+
+- Main LLM reference: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
+- Components: `https://github.com/Telefonica/mistica-web/blob/master/doc/components.md`
+- Layout: `https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md`
+- Patterns: `https://github.com/Telefonica/mistica-web/blob/master/doc/patterns.md`
+
 ## More docs
 
 - [Examples](https://github.com/Telefonica/mistica-web/tree/master/examples)
