@@ -276,13 +276,14 @@ All tokens via `skinVars` from `@telefonica/mistica`:
   `vivoNewPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
   directly.
 - **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)
+- **Spacing**: `skinVars.spacing.*` (button, card, input, tag, feedback, hero, header, drawer padding tokens)
 - **Text presets**: Handled by text components, not accessed directly
 
 ## Docs
 
 - [Components reference](./components.md): full component catalog with props and usage examples
-- [Design tokens](./design-tokens.md): skinVars colors, rawColors, applyAlpha, border radii, text presets,
-  theme variants
+- [Design tokens](./design-tokens.md): skinVars colors, rawColors, applyAlpha, border radii, spacing tokens,
+  text presets, theme variants
 - [Patterns and best practices](./patterns.md): page composition, layout dos/don'ts, color rules, responsive
   patterns, form patterns, card patterns, list patterns, skeleton loading, funnel flows, routing integration,
   dark mode

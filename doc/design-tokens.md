@@ -16,7 +16,8 @@ exported from `@telefonica/mistica`. Tokens adapt automatically to the active sk
 
 ## Color tokens
 
-All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS custom property. Low/High colors mean low-contrast or high-contrast versions.
+All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS custom property. Low/High colors
+mean low-contrast or high-contrast versions.
 
 ## Using colors in code
 
@@ -56,6 +57,41 @@ const semiTransparentBrand = applyAlpha(skinVars.rawColors.brand, 0.5);
 Palette exports are for skin authoring, not for styling components directly. If you need to customize default
 colors, radii, or related visual tokens, create or extend a `Skin` and then consume those values through
 `skinVars.*` in component code. See [theme-config.md](./theme-config.md) for the full custom-skin example.
+
+## Border radius tokens
+
+Access via `skinVars.borderRadii.*`.
+
+```tsx
+// Use in styles when building custom elements (but STRONGLY prefer Mistica components instead)
+<div style={{borderRadius: skinVars.borderRadii.container}}>...</div>
+```
+
+## Spacing tokens
+
+Spacing tokens are exposed via `skinVars.spacing.*`. They are mainly useful for skin authoring and modifying
+the spacing of mistica layout components like `Box`, `Stack`, `Inline`, `ResponsiveLayout`, and `GridLayout`.
+
+These spacing tokens are responsive and adapt to the active skin.
+
+Some tokens expose `top` / `bottom`, some expose `left` / `right`, and some expose all four sides depending on
+the component they support.
+
+```tsx
+import {skinVars} from '@telefonica/mistica';
+
+// Use in styles when building custom elements (but STRONGLY prefer Mistica components instead)
+<div
+  style={{
+    paddingTop: skinVars.spacing.cardDefaultPadding.top,
+    paddingRight: skinVars.spacing.cardDefaultPadding.right,
+    paddingBottom: skinVars.spacing.cardDefaultPadding.bottom,
+    paddingLeft: skinVars.spacing.cardDefaultPadding.left,
+  }}
+>
+  ...
+</div>;
+```
 
 ## Text presets
 
