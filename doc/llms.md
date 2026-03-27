@@ -23,10 +23,11 @@ repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filena
    skin definition.
 2. **Try not to use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`,
    `Align`, `ResponsiveLayout`, `GridLayout`, `Grid`.
-3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`.
+3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`. If those don't
+   cover your necessities you can set custom sizes with `Text` component.
 4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or Mistica components that handle it
-   automatically. If you need to change the default visual styling of components (colors, border radius,
-   etc.) and there is no specific prop for it, create or extend a custom skin instead of adding ad hoc style
+   automatically. If you need to change the default visual styling of components (colors, border radius, etc.)
+   and there is no specific prop for it, create or extend a custom skin instead of adding ad hoc style
    overrides.
 5. **Always wrap your app** with `<ThemeContextProvider>` and import `@telefonica/mistica/css/mistica.css`.
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`.

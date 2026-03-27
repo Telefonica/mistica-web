@@ -57,30 +57,6 @@ Palette exports are for skin authoring, not for styling components directly. If 
 colors, radii, or related visual tokens, create or extend a `Skin` and then consume those values through
 `skinVars.*` in component code. See [theme-config.md](./theme-config.md) for the full custom-skin example.
 
-## Border radius tokens
-
-Access via `skinVars.borderRadii.*`:
-
-| Token        | Usage                   |
-| ------------ | ----------------------- |
-| `container`  | Cards, boxed containers |
-| `button`     | Buttons                 |
-| `input`      | Form inputs             |
-| `popup`      | Popups, tooltips        |
-| `checkbox`   | Checkboxes              |
-| `indicator`  | Indicators              |
-| `chip`       | Chips                   |
-| `sheet`      | Bottom sheets           |
-| `bar`        | Progress bars           |
-| `avatar`     | Avatars                 |
-| `mediaSmall` | Small media elements    |
-| `tag`        | Tags                    |
-
-```tsx
-// Use in styles when building custom elements (prefer Mistica components instead)
-<div style={{borderRadius: skinVars.borderRadii.container}}>...</div>
-```
-
 ## Text presets
 
 Text sizing is handled by text components (`Text1`-`Text10`, `Title1`-`Title4`). Do not manually set font
