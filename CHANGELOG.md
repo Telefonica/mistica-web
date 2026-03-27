@@ -1,3 +1,10 @@
+# [16.57.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v16.57.0-beta.1...v16.57.0-beta.2) (2026-03-27)
+
+
+### Bug Fixes
+
+* **chore:** WEB-2413: Improvements and fixes ([5117713](https://github.com/Telefonica/mistica-web/commit/5117713e031cc1022bd5b37ca6600677bf7213d0))
+
 # [16.57.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.56.1-beta.1...v16.57.0-beta.1) (2026-03-26)
 
 
