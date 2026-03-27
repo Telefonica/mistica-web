@@ -2,12 +2,13 @@
 
 ## Critical rules
 
-1. **NEVER hardcode colors.** Always use `skinVars.colors.*` from `@telefonica/mistica`.
+1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` from
+   `@telefonica/mistica`. For skins and theme-level customization, see [theme-config.md](./theme-config.md).
 2. **NEVER use raw `<div>` for layout.** Use `Box`, `Stack`, `Inline`, `ResponsiveLayout`, `GridLayout`,
    `Grid`.
 3. **NEVER set font sizes manually.** Use text components (`Text1`-`Text10`, `Title1`-`Title4`).
 4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or components that handle it (`Boxed`,
-   cards, etc.).
+   cards, etc.). For theme-level visual customization without a dedicated component prop, use a custom skin.
 5. **Always wrap your app** with `ThemeContextProvider` and import `@telefonica/mistica/css/mistica.css`.
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`, etc.
 7. **Add `'use client';`** directive to client components when using Next.js app router.
@@ -123,7 +124,7 @@ import {skinVars, applyAlpha} from '@telefonica/mistica';
 const overlay = applyAlpha(skinVars.rawColors.backgroundBrand, 0.8);
 ```
 
-### DON'T: Hardcode colors
+### DON'T: Hardcode colors in component code
 
 ```tsx
 // BAD - hardcoded colors
@@ -135,6 +136,9 @@ const overlay = applyAlpha(skinVars.rawColors.backgroundBrand, 0.8);
 <Text2 regular color={skinVars.colors.textSecondary}>Text</Text2>
 <Boxed><Text2 regular>Content in container</Text2></Boxed>
 ```
+
+If you need brand-specific defaults, put those colors in a custom skin and then consume them through
+`skinVars.colors.*` instead of styling individual components with palette values.
 
 ## Responsive patterns
 
