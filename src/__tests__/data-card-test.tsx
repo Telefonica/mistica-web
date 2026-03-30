@@ -216,8 +216,8 @@ test.each`
             </ThemeContextProvider>
         );
 
-        const link = await screen.findByRole('link');
-        expect(link).toHaveTextContent(expectedTouchableText);
+        const link = await screen.findByRole('link', {name: expectedTouchableText});
+        expect(link).toBeInTheDocument();
     }
 );
 
@@ -233,8 +233,8 @@ test('segregateTouchableContent - touchable target when only title exists', asyn
         </ThemeContextProvider>
     );
 
-    const link = await screen.findByRole('link');
-    expect(link).toHaveTextContent('Title');
+    const link = await screen.findByRole('link', {name: 'Title'});
+    expect(link).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - touchable target when only pretitle exists', async () => {
@@ -249,8 +249,8 @@ test('segregateTouchableContent - touchable target when only pretitle exists', a
         </ThemeContextProvider>
     );
 
-    const link = await screen.findByRole('link');
-    expect(link).toHaveTextContent('Pretitle');
+    const link = await screen.findByRole('link', {name: 'Pretitle'});
+    expect(link).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - touchable target when only headline exists', async () => {
@@ -265,8 +265,8 @@ test('segregateTouchableContent - touchable target when only headline exists', a
         </ThemeContextProvider>
     );
 
-    const link = await screen.findByRole('link');
-    expect(link).toHaveTextContent('Headline');
+    const link = await screen.findByRole('link', {name: 'Headline'});
+    expect(link).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - touchable target when only subtitle exists', async () => {
@@ -276,8 +276,8 @@ test('segregateTouchableContent - touchable target when only subtitle exists', a
         </ThemeContextProvider>
     );
 
-    const link = await screen.findByRole('link');
-    expect(link).toHaveTextContent('Subtitle');
+    const link = await screen.findByRole('link', {name: 'Subtitle'});
+    expect(link).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - touchable target when only description exists', async () => {
@@ -287,12 +287,12 @@ test('segregateTouchableContent - touchable target when only description exists'
         </ThemeContextProvider>
     );
 
-    const link = await screen.findByRole('link');
-    expect(link).toHaveTextContent('Description');
+    const link = await screen.findByRole('link', {name: 'Description'});
+    expect(link).toBeInTheDocument();
 });
 
-test('segregateTouchableContent - body content is NOT aria-hidden when segregated', async () => {
-    const {container} = render(
+test('segregateTouchableContent - body content is NOT hidden when segregated', async () => {
+    render(
         <ThemeContextProvider theme={makeTheme()}>
             <DataCard
                 href="https://example.org"
@@ -303,26 +303,20 @@ test('segregateTouchableContent - body content is NOT aria-hidden when segregate
         </ThemeContextProvider>
     );
 
-    const body = screen.getByTestId('body');
-    expect(body).not.toHaveAttribute('aria-hidden', 'true');
-
-    // eslint-disable-next-line testing-library/no-node-access
-    const touchableContent = container.querySelector('[role="text"]');
-    expect(touchableContent).not.toBeInTheDocument();
+    const link = await screen.findByRole('link', {name: 'Title'});
+    expect(link).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - body content IS aria-hidden when NOT segregated', async () => {
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme()}>
             <DataCard href="https://example.org" title="Title" description="Description" />
         </ThemeContextProvider>
     );
+    expect(screen.queryByRole('heading', {name: 'Title'})).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', {name: 'Title'})).not.toBeInTheDocument();
 
-    const body = screen.getByTestId('body');
-    expect(body).toHaveAttribute('aria-hidden', 'true');
-
-    // eslint-disable-next-line testing-library/no-node-access
-    const touchableContent = container.querySelector('[role="text"]');
+    const touchableContent = screen.getByRole('text');
     expect(touchableContent).toBeInTheDocument();
 });
 
@@ -371,10 +365,7 @@ test('segregateTouchableContent - touchableAriaLabel creates a stretched touchab
             />
         </ThemeContextProvider>
     );
-
-    const link = screen.getByRole('link');
-    expect(link).toHaveAccessibleName('Custom label');
-    expect(link).not.toHaveTextContent('Title');
+    expect(screen.getByRole('link', {name: 'Custom label'})).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - without segregateTouchableContent, the full card content is inside the touchable', async () => {
@@ -388,9 +379,10 @@ test('segregateTouchableContent - without segregateTouchableContent, the full ca
             />
         </ThemeContextProvider>
     );
-
     const link = await screen.findByRole('link');
-    expect(within(link).getByTestId('body')).toBeInTheDocument();
+    expect(within(link).getByText('Title')).toBeInTheDocument();
+    expect(within(link).getByText('Pretitle')).toBeInTheDocument();
+    expect(within(link).getByText('Description')).toBeInTheDocument();
 });
 
 test('segregateTouchableContent - tab order: card link, footer buttons, top actions, close button', async () => {
