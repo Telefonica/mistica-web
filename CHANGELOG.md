@@ -1,3 +1,16 @@
+# [16.57.0](https://github.com/Telefonica/mistica-web/compare/v16.56.0...v16.57.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* **Logo:** Fix layout shifts caused by logos (specially in navbar) ([#1520](https://github.com/Telefonica/mistica-web/issues/1520)) ([0a77668](https://github.com/Telefonica/mistica-web/commit/0a77668da82380ed05e86921f60f24c6502518e5))
+* **Select:** Fix layout shift caused by outline ([#1521](https://github.com/Telefonica/mistica-web/issues/1521)) ([87ecb85](https://github.com/Telefonica/mistica-web/commit/87ecb8531bf1165033982aa5a30c603f3aed54b1))
+
+
+### Features
+
+* **chore:** Create first version of mistica skill and update docs ([#1524](https://github.com/Telefonica/mistica-web/issues/1524)) ([b57e194](https://github.com/Telefonica/mistica-web/commit/b57e194e006208db9fc97efe53d30c3240c4426f))
+
 # [16.56.0](https://github.com/Telefonica/mistica-web/compare/v16.55.0...v16.56.0) (2026-03-20)
 
 
