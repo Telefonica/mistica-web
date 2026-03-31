@@ -112,7 +112,7 @@ concise component references, critical rules, and links to detailed documentatio
 
 ### Using the skill
 
-If you use any agent that supports skills, you can install the bundled Mistica skill so the agent
+If you use any agent that supports skills, you can install the bundled `mistica-react` skill so the agent
 automatically reads the right documentation before generating UI code:
 
 ```terminal
