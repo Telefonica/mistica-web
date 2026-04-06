@@ -1,5 +1,5 @@
 ---
-name: mistica
+name: mistica-react
 description:
   Build websites and web applications using Telefonica's Mistica design system React components. Use this
   skill when writing React UI code with @telefonica/mistica, creating pages, layouts, forms, or any user
@@ -11,7 +11,7 @@ metadata:
   version: '1.0.0'
 ---
 
-# Mistica Web - Telefonica Design System
+# Mistica React - Telefonica Design System
 
 Build web interfaces using `@telefonica/mistica`, the React component library for Telefonica's Design System.
 
@@ -74,6 +74,5 @@ Based on what the user needs, read the appropriate documentation files:
 
 ## Rules
 
-Treat `node_modules/@telefonica/mistica/doc/llms.md` as the canonical source of truth for critical rules,
-page structure, and Mistica best practices. Do not rely on abbreviated rules here when `llms.md` is
-available.
+Treat `node_modules/@telefonica/mistica/doc/llms.md` as the canonical source of truth for critical rules, page
+structure, and Mistica best practices. Do not rely on abbreviated rules here when `llms.md` is available.
