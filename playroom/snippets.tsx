@@ -27,14 +27,14 @@ const menuSnippet = {
       renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
           <MenuSection>
-            <MenuItem label="option 1" onPress={() => {}} />
+            <MenuItem label="option 1" action={{onPress: () => {}}} />
             <MenuItem
               label="option 2"
-              onPress={() => setState("option 2", !getState("option 2", false))}
+              action={{onPress: () => setState("option 2", !getState("option 2", false))}}
               controlType="checkbox"
               checked={getState("option 2", false)}
             />
-            <MenuItem label="option 3" disabled onPress={() => {}} />
+            <MenuItem label="option 3" disabled action={{onPress: () => {}}} />
           </MenuSection>
 
           <MenuSection>
@@ -42,7 +42,7 @@ const menuSnippet = {
               label="option 4"
               destructive
               Icon={IconLightningRegular}
-              onPress={() => {}}
+              action={{onPress: () => {}}}
             />
           </MenuSection>
 
@@ -51,11 +51,11 @@ const menuSnippet = {
               label="option 5"
               disabled
               Icon={IconLightningRegular}
-              onPress={() => {}}
+              action={{onPress: () => {}}}
             />
             <MenuItem
               label="An option with a really long text to verify overflow"
-              onPress={() => {}}
+              action={{onPress: () => {}}}
             />
           </MenuSection>
         </div>

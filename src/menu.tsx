@@ -51,21 +51,24 @@ const getItemIndexInMenu = (menu: HTMLElement | null, item: HTMLElement | null):
     return itemIndex < 0 ? null : itemIndex;
 };
 
+export type MenuItemAction = {onPress: () => void} | {href: string} | {to: string};
+
 interface MenuItemBaseProps {
     label: string;
     Icon?: (props: IconProps) => JSX.Element;
     destructive?: boolean;
     disabled?: boolean;
-    onPress: (item: number) => void;
     dataAttributes?: DataAttributes;
 }
 
 interface MenuItemWithoutControlProps extends MenuItemBaseProps {
+    action: MenuItemAction;
     controlType?: undefined;
     checked?: undefined;
 }
 
 interface MenuItemWithControlProps extends MenuItemBaseProps {
+    action: {onPress: () => void};
     controlType?: 'checkbox';
     checked?: boolean;
 }
@@ -77,7 +80,7 @@ export const MenuItem = ({
     Icon,
     destructive,
     disabled,
-    onPress,
+    action,
     controlType,
     checked,
     dataAttributes,
@@ -100,8 +103,8 @@ export const MenuItem = ({
                 name={label}
                 checked={checked}
                 onChange={() => {
-                    if (isMenuOpen && itemIndex !== null) {
-                        onPress(itemIndex);
+                    if (isMenuOpen) {
+                        action.onPress();
                         closeMenu();
                     }
                 }}
@@ -129,12 +132,18 @@ export const MenuItem = ({
         ) : (
             <Touchable
                 ref={itemRef}
-                onPress={() => {
-                    if (isMenuOpen && itemIndex !== null) {
-                        onPress(itemIndex);
-                        closeMenu();
-                    }
-                }}
+                {...('href' in action
+                    ? {href: action.href, onNavigate: closeMenu}
+                    : 'to' in action
+                      ? {to: action.to, onNavigate: closeMenu}
+                      : {
+                            onPress: () => {
+                                if (isMenuOpen) {
+                                    action.onPress();
+                                    closeMenu();
+                                }
+                            },
+                        })}
                 disabled={disabled}
                 role="menuitem"
                 dataAttributes={menuItemDataAttributes}
