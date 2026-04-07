@@ -23,18 +23,11 @@ repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filena
    skin definition.
 2. **Try not to use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`,
    `Align`, `ResponsiveLayout`, `GridLayout`, `Grid`.
-<<<<<<< HEAD
-3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`.
-4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or Mistica components that handle it
-   automatically. If you need to change the default visual styling of components (colors, border radius,
-   etc.) and there is no specific prop for it, create or extend a custom skin instead of adding ad hoc style
-=======
 3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`. If those don't
    cover your necessities you can set custom sizes with `Text` component.
 4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or Mistica components that handle it
    automatically. If you need to change the default visual styling of components (colors, border radius, etc.)
    and there is no specific prop for it, create or extend a custom skin instead of adding ad hoc style
->>>>>>> WEB-2427
    overrides.
 5. **Always wrap your app** with `<ThemeContextProvider>` and import `@telefonica/mistica/css/mistica.css`.
 6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`.
@@ -283,15 +276,6 @@ All tokens via `skinVars` from `@telefonica/mistica`:
   `vivoNewPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
   directly.
 - **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)
-<<<<<<< HEAD
-- **Text presets**: Handled by text components, not accessed directly
-
-## Docs
-
-- [Components reference](./components.md): full component catalog with props and usage examples
-- [Design tokens](./design-tokens.md): skinVars colors, rawColors, applyAlpha, border radii, text presets,
-  theme variants
-=======
 - **Spacing**: `skinVars.spacing.*` (button, card, input, tag, feedback, hero, header, drawer padding tokens)
 - **Text presets**: Handled by text components, not accessed directly
 
@@ -335,7 +319,6 @@ After reading the minimum set, read any further files that apply to your specifi
 - [Components reference](./components.md): full component catalog with props and usage examples
 - [Design tokens](./design-tokens.md): skinVars colors, rawColors, applyAlpha, border radii, spacing tokens,
   text presets, theme variants
->>>>>>> WEB-2427
 - [Patterns and best practices](./patterns.md): page composition, layout dos/don'ts, color rules, responsive
   patterns, form patterns, card patterns, list patterns, skeleton loading, funnel flows, routing integration,
   dark mode

@@ -16,12 +16,8 @@ exported from `@telefonica/mistica`. Tokens adapt automatically to the active sk
 
 ## Color tokens
 
-<<<<<<< HEAD
-All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS custom property. Low/High colors mean low-contrast or high-contrast versions.
-=======
 All colors are accessed via `skinVars.colors.*`. Each token resolves to a CSS custom property. Low/High colors
 mean low-contrast or high-contrast versions.
->>>>>>> WEB-2427
 
 ## Using colors in code
 
@@ -64,30 +60,6 @@ colors, radii, or related visual tokens, create or extend a `Skin` and then cons
 
 ## Border radius tokens
 
-<<<<<<< HEAD
-Access via `skinVars.borderRadii.*`:
-
-| Token        | Usage                   |
-| ------------ | ----------------------- |
-| `container`  | Cards, boxed containers |
-| `button`     | Buttons                 |
-| `input`      | Form inputs             |
-| `popup`      | Popups, tooltips        |
-| `checkbox`   | Checkboxes              |
-| `indicator`  | Indicators              |
-| `chip`       | Chips                   |
-| `sheet`      | Bottom sheets           |
-| `bar`        | Progress bars           |
-| `avatar`     | Avatars                 |
-| `mediaSmall` | Small media elements    |
-| `tag`        | Tags                    |
-
-```tsx
-// Use in styles when building custom elements (prefer Mistica components instead)
-<div style={{borderRadius: skinVars.borderRadii.container}}>...</div>
-```
-
-=======
 Access via `skinVars.borderRadii.*`.
 
 ```tsx
@@ -121,7 +93,6 @@ import {skinVars} from '@telefonica/mistica';
 </div>;
 ```
 
->>>>>>> WEB-2427
 ## Text presets
 
 Text sizing is handled by text components (`Text1`-`Text10`, `Title1`-`Title4`). Do not manually set font
