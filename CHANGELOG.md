@@ -1,3 +1,17 @@
+# [16.58.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.57.0...v16.58.0-beta.1) (2026-04-07)
+
+
+### Bug Fixes
+
+* **chore:** WEB-2413: Improvements and fixes ([5117713](https://github.com/Telefonica/mistica-web/commit/5117713e031cc1022bd5b37ca6600677bf7213d0))
+
+
+### Features
+
+* **Card:** Card reading order when interactive (segregate touchable content) ([#1523](https://github.com/Telefonica/mistica-web/issues/1523)) ([eee43ec](https://github.com/Telefonica/mistica-web/commit/eee43ec1381a2594219385758a1d031e7968c16e))
+* **chore:** Trigger update docs build ([3157dfa](https://github.com/Telefonica/mistica-web/commit/3157dfa032e434a79e2fa80962755db6aa293b16))
+* **WEB-2413:** Info about fonts and bg colors ([4150d13](https://github.com/Telefonica/mistica-web/commit/4150d13e3672d78d8d239deda29df2c72a3f4787))
+
 # [16.57.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v16.57.0-beta.1...v16.57.0-beta.2) (2026-03-27)
 
 
