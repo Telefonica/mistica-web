@@ -1,3 +1,10 @@
+# [16.58.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v16.58.0-beta.1...v16.58.0-beta.2) (2026-04-07)
+
+
+### Bug Fixes
+
+* **chore:** Fix some merge problems ([d80cc5d](https://github.com/Telefonica/mistica-web/commit/d80cc5d73efea72c569e91a1e01c8cb4e911fd09))
+
 # [16.58.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.57.0...v16.58.0-beta.1) (2026-04-07)
 
 
