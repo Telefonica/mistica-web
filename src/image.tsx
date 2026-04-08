@@ -15,6 +15,7 @@ import {isServerSide} from './utils/environment';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 type VivoLogoProps = {
     style?: React.CSSProperties;
@@ -213,6 +214,9 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             setIsError(false);
             if (imageRef.current) {
                 imageRef.current.style.opacity = '1';
+            }
+            if (isRunningAcceptanceTest()) {
+                setHideLoadingFallback(true);
             }
             setTimeout(() => {
                 setHideLoadingFallback(true);
