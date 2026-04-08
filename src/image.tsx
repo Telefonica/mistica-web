@@ -12,6 +12,7 @@ import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
 import {isServerSide} from './utils/environment';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -213,6 +214,9 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             setIsError(false);
             if (imageRef.current) {
                 imageRef.current.style.opacity = '1';
+            }
+            if (isRunningAcceptanceTest()) {
+                setHideLoadingFallback(true);
             }
             setTimeout(() => {
                 setHideLoadingFallback(true);
