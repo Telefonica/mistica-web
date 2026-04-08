@@ -24,7 +24,7 @@ jobs:
             - run: sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json
               shell: bash
 
-            - uses: amondnet/vercel-action@master
+            - uses: amondnet/vercel-action@v41
               id: vercel-deploy # identifier to reference this step
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
@@ -33,4 +33,3 @@ jobs:
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID}} # required
                   vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   working-directory: ./
-                  vercel-args: ''
