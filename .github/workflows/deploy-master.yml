@@ -19,7 +19,7 @@ jobs:
               with:
                   persist-credentials: false
 
-            - uses: amondnet/vercel-action@master
+            - uses: amondnet/vercel-action@v41.1.4
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
                   vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
