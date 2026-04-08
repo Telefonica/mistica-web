@@ -6,8 +6,8 @@
    `@telefonica/mistica`. For skins and theme-level customization, see [theme-config.md](./theme-config.md).
 2. **NEVER use raw `<div>` for layout.** Use `Box`, `Stack`, `Inline`, `ResponsiveLayout`, `GridLayout`,
    `Grid`.
-3. **NEVER set font sizes manually.** Use text components (`Text1`-`Text10`, `Title1`-`Title4`). If those don't
-   cover your necessities you can set custom sizes with `Text` component.
+3. **NEVER set font sizes manually.** Use text components (`Text1`-`Text10`, `Title1`-`Title4`). If those
+   don't cover your necessities you can set custom sizes with `Text` component.
 4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or components that handle it (`Boxed`,
    cards, etc.). For theme-level visual customization without a dedicated component prop, use a custom skin.
 5. **Always wrap your app** with `ThemeContextProvider` and import `@telefonica/mistica/css/mistica.css`.
@@ -488,24 +488,26 @@ return (
 ## Funnel / step-by-step flow
 
 ```tsx
-<FunnelNavigationBar
-  right={
-    <NavigationBarActionGroup>
-      <NavigationBarAction aria-label="Close" onPress={handleClose}>
-        <IconCloseRegular color="currentColor" />
-      </NavigationBarAction>
-    </NavigationBarActionGroup>
-  }
-/>
-<Stepper currentIndex={currentStep} steps={['Personal', 'Address', 'Payment', 'Confirm']} />
-<ResponsiveLayout>
-  <Box paddingY={24}>
-    {currentStep === 0 && <PersonalInfoForm />}
-    {currentStep === 1 && <AddressForm />}
-    {currentStep === 2 && <PaymentForm />}
-    {currentStep === 3 && <ConfirmationScreen />}
-  </Box>
-</ResponsiveLayout>
+<Stack space={32}>
+  <FunnelNavigationBar
+    right={
+      <NavigationBarActionGroup>
+        <NavigationBarAction aria-label="Close" onPress={handleClose}>
+          <IconCloseRegular color="currentColor" />
+        </NavigationBarAction>
+      </NavigationBarActionGroup>
+    }
+  />
+  <ResponsiveLayout>
+    <Stack space={24}>
+      <Stepper currentIndex={currentStep} steps={['Personal', 'Address', 'Payment', 'Confirm']} />
+        {currentStep === 0 && <PersonalInfoForm />}
+        {currentStep === 1 && <AddressForm />}
+        {currentStep === 2 && <PaymentForm />}
+        {currentStep === 3 && <ConfirmationScreen />}
+    </Stack>
+  </ResponsiveLayout>
+<Stack>
 ```
 
 ## Next.js integration
