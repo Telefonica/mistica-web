@@ -14,7 +14,7 @@ test('TextField uncontrolled', async () => {
         </ThemeContextProvider>
     );
 
-    const field = screen.getByLabelText('Username');
+    const field = screen.getByRole('textbox', {name: 'Username'});
     await userEvent.type(field, 'pepito');
 
     expect(field).toHaveValue('pepito');
@@ -33,10 +33,21 @@ test('TextField controlled', async () => {
         </ThemeContextProvider>
     );
 
-    const field = screen.getByLabelText('Username');
+    const field = screen.getByRole('textbox', {name: 'Username'});
     await userEvent.type(field, 'pepito');
 
     expect(field).toHaveValue('pepito');
+});
+
+test('TextField optional - accessible name includes optional suffix as a single label', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextField label="Email" name="email" optional />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByRole('textbox', {name: 'Email (opcional)'});
+    expect(field).toBeInTheDocument();
 });
 
 test('TextField maxLength', async () => {
@@ -69,7 +80,7 @@ test('TextField maxLength', async () => {
         </ThemeContextProvider>
     );
 
-    const field = screen.getByLabelText('Sort string');
+    const field = screen.getByRole('textbox', {name: 'Sort string'});
     const button = screen.getByRole('button', {name: 'Write long string'});
 
     await userEvent.click(button);

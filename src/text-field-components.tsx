@@ -83,18 +83,23 @@ export const Label = ({
         color = vars.colors.textActivated;
     }
 
+    const optionalText = texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix);
+
     return (
         <label
             className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
             htmlFor={forId}
             style={{color, ...style, transition: transitionStyle}}
             data-testid="label"
+            aria-label={showOptional ? `${children} (${optionalText})` : children}
         >
-            <span className={styles.labelText}>{children}</span>
+            <span aria-hidden className={styles.labelText}>
+                {children}
+            </span>
             {showOptional ? (
-                <span>
+                <span aria-hidden>
                     &nbsp;(
-                    {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
+                    {optionalText})
                 </span>
             ) : null}
         </label>
