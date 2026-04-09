@@ -35,3 +35,4 @@ React component library for Telefonica's Design System.
   full URL).
 - Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
 - Always add the `AI` label to PRs where the code was written by an AI agent.
+- Once you create a PR you can transition the ticket to "Code Review" state.
