@@ -21,3 +21,17 @@ React component library for Telefonica's Design System.
 - If you create a new component always create a snippet for playroom.
 - If you add props to a component always update stories accordingly and add the new props to args and
   argTypes.
+
+---
+
+## JIRA & GitHub conventions
+
+- Use `jira issue view <TICKET-ID>` to read ticket details before implementing anything (full doc here:
+  https://github.com/pchuri/jira-cli#readme)
+- Branch name must match the ticket ID exactly (e.g. `git checkout -b WEB-1234`).
+- PR title follows **conventional commits** format; the scope must be the affected **component name** (e.g.
+  `fix(TextField): ...`).
+- PR description: concise summary of the problem and fix, ending with `Fixes <TICKET-ID>` (ticket ID only, no
+  full URL).
+- Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
+- Always add the `AI` label to PRs where the code was written by an AI agent.
