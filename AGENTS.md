@@ -24,13 +24,6 @@ React component library for Telefonica's Design System.
 
 ---
 
-## JIRA conventions (only if there's an associated jira ticket)
-
-- Use `jira issue view <TICKET-ID>` to read ticket details before implementing anything (full doc here:
-  https://github.com/pchuri/jira-cli#readme)
-- Branch name should match the ticket ID exactly (e.g. `git checkout -b WEB-1234`).
-- Before starting development, transition ticket to "In Progress"
-
 ## GitHub conventions
 
 - PR title follows **conventional commits** format; the scope must be the affected **component name** (e.g.
@@ -39,4 +32,3 @@ React component library for Telefonica's Design System.
   ticket).
 - Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
 - Always add the `AI` label to PRs where the code was written by an AI agent.
-- Once you create a PR you can transition the ticket (if existing) to "Code Review" state.
