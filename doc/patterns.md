@@ -507,7 +507,7 @@ return (
         {currentStep === 3 && <ConfirmationScreen />}
     </Stack>
   </ResponsiveLayout>
-<Stack>
+</Stack>
 ```
 
 ## Next.js integration
