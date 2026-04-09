@@ -14,7 +14,7 @@ test('TextField uncontrolled', async () => {
         </ThemeContextProvider>
     );
 
-    const field = screen.getByRole('textbox', {name: 'Username'});
+    const field = screen.getByLabelText('Username');
     await userEvent.type(field, 'pepito');
 
     expect(field).toHaveValue('pepito');
@@ -33,7 +33,7 @@ test('TextField controlled', async () => {
         </ThemeContextProvider>
     );
 
-    const field = screen.getByRole('textbox', {name: 'Username'});
+    const field = screen.getByLabelText('Username');
     await userEvent.type(field, 'pepito');
 
     expect(field).toHaveValue('pepito');
@@ -80,7 +80,7 @@ test('TextField maxLength', async () => {
         </ThemeContextProvider>
     );
 
-    const field = screen.getByRole('textbox', {name: 'Sort string'});
+    const field = screen.getByLabelText('Sort string');
     const button = screen.getByRole('button', {name: 'Write long string'});
 
     await userEvent.click(button);

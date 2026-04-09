@@ -91,17 +91,17 @@ export const Label = ({
             htmlFor={forId}
             style={{color, ...style, transition: transitionStyle}}
             data-testid="label"
-            aria-label={showOptional ? `${children} (${optionalText})` : children}
         >
-            <span aria-hidden className={styles.labelText}>
-                {children}
+            {/* eslint-disable-next-line jsx-a11y/aria-role -- role="text" makes VoiceOver read the whole div as a single text block. */}
+            <span role="text" className={styles.labelInner}>
+                <span className={styles.labelText}>{children}</span>
+                {showOptional ? (
+                    <span>
+                        &nbsp;(
+                        {optionalText})
+                    </span>
+                ) : null}
             </span>
-            {showOptional ? (
-                <span aria-hidden>
-                    &nbsp;(
-                    {optionalText})
-                </span>
-            ) : null}
         </label>
     );
 };
