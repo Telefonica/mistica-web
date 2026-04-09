@@ -85,17 +85,15 @@ export const Default: StoryComponent<MenuArgs> = ({
                                         <MenuItem
                                             key={optionIndex}
                                             label={`Option ${optionIndex + 1}`}
-                                            action={{
-                                                onPress: () => {
-                                                    if (checkbox) {
-                                                        setValues(optionIndex);
-                                                    } else {
-                                                        alert({
-                                                            title: `Item ${optionIndex + 1}`,
-                                                            message: 'pressed',
-                                                        });
-                                                    }
-                                                },
+                                            onPress={() => {
+                                                if (checkbox) {
+                                                    setValues(optionIndex);
+                                                } else {
+                                                    alert({
+                                                        title: `Item ${optionIndex + 1}`,
+                                                        message: 'pressed',
+                                                    });
+                                                }
                                             }}
                                             {...(checkbox && {
                                                 controlType: 'checkbox' as const,
@@ -109,7 +107,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                     <MenuItem
                                         key="closingOption"
                                         label="Click to close the menu"
-                                        action={{onPress: () => {}}}
+                                        onPress={() => {}}
                                         destructive
                                     />
                                 </MenuSection>
@@ -176,7 +174,7 @@ export const InsideCard: StoryComponent = () => {
                                         <MenuItem
                                             key={optionIndex + 1}
                                             label={`Option ${optionIndex + 1}`}
-                                            action={{onPress: () => {}}}
+                                            onPress={() => {}}
                                         />
                                     ))}
                                 </div>

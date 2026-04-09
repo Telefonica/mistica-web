@@ -35,7 +35,7 @@ test('Menu closes after pressing an option', async () => {
                     <div ref={ref} className={className}>
                         <MenuSection>
                             {options.map((option) => (
-                                <MenuItem key={option} label={option} action={{onPress: onPressSpy}} />
+                                <MenuItem key={option} label={option} onPress={onPressSpy} />
                             ))}
                         </MenuSection>
                     </div>
@@ -78,7 +78,7 @@ test('Menu closes after clicking an href option', async () => {
                 renderMenu={({ref, className}) => (
                     <div ref={ref} className={className}>
                         <MenuSection>
-                            <MenuItem label="External link" action={{href: 'https://example.com'}} />
+                            <MenuItem label="External link" href="https://example.com" />
                         </MenuSection>
                     </div>
                 )}
@@ -123,7 +123,7 @@ test('Menu closes after clicking a "to" option', async () => {
                     renderMenu={({ref, className}) => (
                         <div ref={ref} className={className}>
                             <MenuSection>
-                                <MenuItem label="Internal link" action={{to}} />
+                                <MenuItem label="Internal link" to={to} />
                             </MenuSection>
                         </div>
                     )}

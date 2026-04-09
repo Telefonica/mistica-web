@@ -51,8 +51,6 @@ const getItemIndexInMenu = (menu: HTMLElement | null, item: HTMLElement | null):
     return itemIndex < 0 ? null : itemIndex;
 };
 
-export type MenuItemAction = {onPress: () => void} | {href: string} | {to: string};
-
 interface MenuItemBaseProps {
     label: string;
     Icon?: (props: IconProps) => JSX.Element;
@@ -61,26 +59,50 @@ interface MenuItemBaseProps {
     dataAttributes?: DataAttributes;
 }
 
-interface MenuItemWithoutControlProps extends MenuItemBaseProps {
-    action: MenuItemAction;
+interface MenuItemOnPressProps extends MenuItemBaseProps {
+    onPress: (item: number) => void;
+    controlType?: 'checkbox';
+    checked?: boolean;
+    href?: undefined;
+    to?: undefined;
+}
+
+interface MenuItemHrefProps extends MenuItemBaseProps {
+    href: string;
+    newTab?: boolean;
+    loadOnTop?: boolean;
+    onNavigate?: () => void | Promise<void>;
+    onPress?: undefined;
+    to?: undefined;
     controlType?: undefined;
     checked?: undefined;
 }
 
-interface MenuItemWithControlProps extends MenuItemBaseProps {
-    action: {onPress: () => void};
-    controlType?: 'checkbox';
-    checked?: boolean;
+interface MenuItemToProps extends MenuItemBaseProps {
+    to: string;
+    newTab?: boolean;
+    fullPageOnWebView?: boolean;
+    onNavigate?: () => void | Promise<void>;
+    onPress?: undefined;
+    href?: undefined;
+    controlType?: undefined;
+    checked?: undefined;
 }
 
-type MenuItemProps = ExclusifyUnion<MenuItemWithControlProps | MenuItemWithoutControlProps>;
+type MenuItemProps = ExclusifyUnion<MenuItemOnPressProps | MenuItemHrefProps | MenuItemToProps>;
 
 export const MenuItem = ({
     label,
     Icon,
     destructive,
     disabled,
-    action,
+    onPress,
+    href,
+    to,
+    newTab,
+    loadOnTop,
+    fullPageOnWebView,
+    onNavigate,
     controlType,
     checked,
     dataAttributes,
@@ -104,7 +126,7 @@ export const MenuItem = ({
                 checked={checked}
                 onChange={() => {
                     if (isMenuOpen) {
-                        action.onPress();
+                        onPress?.(itemIndex ?? 0);
                         closeMenu();
                     }
                 }}
@@ -129,21 +151,69 @@ export const MenuItem = ({
                     </Box>
                 )}
             />
+        ) : href ? (
+            <Touchable
+                ref={itemRef}
+                href={href}
+                newTab={newTab}
+                loadOnTop={loadOnTop}
+                onNavigate={() => {
+                    closeMenu();
+                    onNavigate?.();
+                }}
+                disabled={disabled}
+                role="menuitem"
+                dataAttributes={menuItemDataAttributes}
+            >
+                <Box paddingX={8} paddingY={12}>
+                    <div className={styles.itemContent}>
+                        {Icon && (
+                            <div className={styles.iconContainer}>
+                                <Icon size={24} color={contentColor} />
+                            </div>
+                        )}
+                        <Text3 regular color={contentColor}>
+                            {label}
+                        </Text3>
+                    </div>
+                </Box>
+            </Touchable>
+        ) : to ? (
+            <Touchable
+                ref={itemRef}
+                to={to}
+                newTab={newTab}
+                fullPageOnWebView={fullPageOnWebView}
+                onNavigate={() => {
+                    closeMenu();
+                    onNavigate?.();
+                }}
+                disabled={disabled}
+                role="menuitem"
+                dataAttributes={menuItemDataAttributes}
+            >
+                <Box paddingX={8} paddingY={12}>
+                    <div className={styles.itemContent}>
+                        {Icon && (
+                            <div className={styles.iconContainer}>
+                                <Icon size={24} color={contentColor} />
+                            </div>
+                        )}
+                        <Text3 regular color={contentColor}>
+                            {label}
+                        </Text3>
+                    </div>
+                </Box>
+            </Touchable>
         ) : (
             <Touchable
                 ref={itemRef}
-                {...('href' in action
-                    ? {href: action.href, onNavigate: closeMenu}
-                    : 'to' in action
-                      ? {to: action.to, onNavigate: closeMenu}
-                      : {
-                            onPress: () => {
-                                if (isMenuOpen) {
-                                    action.onPress();
-                                    closeMenu();
-                                }
-                            },
-                        })}
+                onPress={() => {
+                    if (isMenuOpen) {
+                        onPress?.(itemIndex ?? 0);
+                        closeMenu();
+                    }
+                }}
                 disabled={disabled}
                 role="menuitem"
                 dataAttributes={menuItemDataAttributes}

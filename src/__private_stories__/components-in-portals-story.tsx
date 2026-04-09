@@ -45,8 +45,8 @@ export const Default: StoryComponent = () => {
                             )}
                             renderMenu={({ref, className}) => (
                                 <div ref={ref} className={className}>
-                                    <MenuItem key="option 1" label="Option 1" action={{onPress: () => {}}} />
-                                    <MenuItem key="option 2" label="Option 2" action={{onPress: () => {}}} />
+                                    <MenuItem key="option 1" label="Option 1" onPress={() => {}} />
+                                    <MenuItem key="option 2" label="Option 2" onPress={() => {}} />
                                 </div>
                             )}
                         />

@@ -99,7 +99,6 @@ export {default as CoverHero} from './cover-hero';
 export {Table} from './table';
 export {default as Divider} from './divider';
 export {Menu, MenuItem, MenuSection} from './menu';
-export type {MenuItemAction} from './menu';
 export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';
