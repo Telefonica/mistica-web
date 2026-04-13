@@ -118,6 +118,19 @@ export const MenuItem = ({
 
     const menuItemDataAttributes = {testid: 'MenuItem', ...dataAttributes};
 
+    const renderItemContent = () => (
+        <div className={styles.itemContent}>
+            {Icon && (
+                <div className={styles.iconContainer}>
+                    <Icon size={24} color={contentColor} />
+                </div>
+            )}
+            <Text3 regular color={contentColor}>
+                {label}
+            </Text3>
+        </div>
+    );
+
     const renderContent = () =>
         controlType === 'checkbox' ? (
             <Checkbox
@@ -125,8 +138,8 @@ export const MenuItem = ({
                 name={label}
                 checked={checked}
                 onChange={() => {
-                    if (isMenuOpen) {
-                        onPress?.(itemIndex ?? 0);
+                    if (isMenuOpen && itemIndex !== null) {
+                        onPress?.(itemIndex);
                         closeMenu();
                     }
                 }}
@@ -136,16 +149,7 @@ export const MenuItem = ({
                 render={({controlElement}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">
-                            <div className={styles.itemContent}>
-                                {Icon && (
-                                    <div className={styles.iconContainer}>
-                                        <Icon size={24} color={contentColor} />
-                                    </div>
-                                )}
-                                <Text3 regular color={contentColor}>
-                                    {label}
-                                </Text3>
-                            </div>
+                            {renderItemContent()}
                             <Box paddingLeft={16}>{controlElement}</Box>
                         </Inline>
                     </Box>
@@ -166,16 +170,7 @@ export const MenuItem = ({
                 dataAttributes={menuItemDataAttributes}
             >
                 <Box paddingX={8} paddingY={12}>
-                    <div className={styles.itemContent}>
-                        {Icon && (
-                            <div className={styles.iconContainer}>
-                                <Icon size={24} color={contentColor} />
-                            </div>
-                        )}
-                        <Text3 regular color={contentColor}>
-                            {label}
-                        </Text3>
-                    </div>
+                    {renderItemContent()}
                 </Box>
             </Touchable>
         ) : to ? (
@@ -193,24 +188,15 @@ export const MenuItem = ({
                 dataAttributes={menuItemDataAttributes}
             >
                 <Box paddingX={8} paddingY={12}>
-                    <div className={styles.itemContent}>
-                        {Icon && (
-                            <div className={styles.iconContainer}>
-                                <Icon size={24} color={contentColor} />
-                            </div>
-                        )}
-                        <Text3 regular color={contentColor}>
-                            {label}
-                        </Text3>
-                    </div>
+                    {renderItemContent()}
                 </Box>
             </Touchable>
         ) : (
             <Touchable
                 ref={itemRef}
                 onPress={() => {
-                    if (isMenuOpen) {
-                        onPress?.(itemIndex ?? 0);
+                    if (isMenuOpen && itemIndex !== null) {
+                        onPress?.(itemIndex);
                         closeMenu();
                     }
                 }}
@@ -219,16 +205,7 @@ export const MenuItem = ({
                 dataAttributes={menuItemDataAttributes}
             >
                 <Box paddingX={8} paddingY={12}>
-                    <div className={styles.itemContent}>
-                        {Icon && (
-                            <div className={styles.iconContainer}>
-                                <Icon size={24} color={contentColor} />
-                            </div>
-                        )}
-                        <Text3 regular color={contentColor}>
-                            {label}
-                        </Text3>
-                    </div>
+                    {renderItemContent()}
                 </Box>
             </Touchable>
         );
