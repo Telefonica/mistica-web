@@ -15,6 +15,30 @@ This file is the main entry point. All docs live at:
 If you cannot find a documentation file in `node_modules`, fetch the equivalent file from the GitHub
 repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filename>`.
 
+## Source code location
+
+The full TypeScript/TSX source of this package is shipped inside the published tarball and is available
+alongside the compiled output and type definitions. Use it as a **complementary** reference whenever the docs
+or `.d.ts` files don't fully answer a question about a component's real behavior, props, or internals.
+
+- **Installed package**: `node_modules/@telefonica/mistica/src/`
+- **GitHub fallback**: `https://github.com/Telefonica/mistica-web/tree/master/src`
+
+What you'll find there:
+
+- `src/**/*.tsx`, `src/**/*.ts` — production component source
+- `src/**/*.css.ts` — vanilla-extract style definitions
+- `src/index.tsx` and `src/community/index.tsx` — public entry points; start here to map an import to a file
+
+Recommended lookup workflow:
+
+1. Resolve the import path the consumer uses (e.g. `import {Button} from '@telefonica/mistica'` or
+   `'@telefonica/mistica/community'`).
+2. Open `node_modules/@telefonica/mistica/src/index.tsx` (or `src/community/index.tsx`) to find which file the
+   symbol is re-exported from.
+3. Read that source file (and its `*.css.ts` sibling, if any) for real props, types, default values, and
+   behavior.
+
 ## Critical Rules
 
 1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` design tokens from
