@@ -1,3 +1,20 @@
+# [16.59.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.58.0...v16.59.0-beta.1) (2026-04-13)
+
+
+### Bug Fixes
+
+* **chore:** Fix some merge problems ([d80cc5d](https://github.com/Telefonica/mistica-web/commit/d80cc5d73efea72c569e91a1e01c8cb4e911fd09))
+* **chore:** WEB-2413: Improvements and fixes ([5117713](https://github.com/Telefonica/mistica-web/commit/5117713e031cc1022bd5b37ca6600677bf7213d0))
+
+
+### Features
+
+* **chore:** Trigger update docs build ([3157dfa](https://github.com/Telefonica/mistica-web/commit/3157dfa032e434a79e2fa80962755db6aa293b16))
+* **Skill:** Improve skill and fix patterns example ([#1526](https://github.com/Telefonica/mistica-web/issues/1526)) ([522c305](https://github.com/Telefonica/mistica-web/commit/522c305389d18a86efb51c404433697549396530))
+* **skill:** Include source code in published bundle ([8b26669](https://github.com/Telefonica/mistica-web/commit/8b26669a95b9c8d08280d85eca81f31680db9a8d))
+* **skill:** Include source code in published bundle (WEB-2431) ([36cbbc2](https://github.com/Telefonica/mistica-web/commit/36cbbc2133f4fd73dee798872f9304894fc6d404))
+* **WEB-2413:** Info about fonts and bg colors ([4150d13](https://github.com/Telefonica/mistica-web/commit/4150d13e3672d78d8d239deda29df2c72a3f4787))
+
 # [16.58.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v16.58.0-beta.1...v16.58.0-beta.2) (2026-04-07)
 
 
