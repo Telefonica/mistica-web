@@ -26,9 +26,5 @@ React component library for Telefonica's Design System.
 
 ## GitHub conventions
 
-- PR title follows **conventional commits** format; the scope must be the affected **component name** (e.g.
-  `fix(TextField): ...`).
-- PR description: concise summary of the problem and fix, ending with `Ref: <TICKET-ID>` (if there's a jira
-  ticket).
-- Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
+- Read [CONTRIBUTING](./CONTRIBUTING.md) before contributing to Mistica repo.
 - Always add the `AI` label to PRs where the code was written by an AI agent.
