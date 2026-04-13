@@ -302,17 +302,17 @@ are the minimum required context for every task.
 
 After reading the minimum set, read any further files that apply to your specific task:
 
-| Task                              | Read this file           |
-| --------------------------------- | ------------------------ |
-| **Forms**                         | `doc/forms.md`           |
-| **Theme configuration**           | `doc/theme-config.md`    |
-| **Sheets / bottom sheets**        | `doc/sheet.md`           |
-| **Analytics tracking**            | `doc/analytics.md`       |
-| **Fonts setup**                   | `doc/fonts.md`           |
-| **Custom text tokens**            | `doc/texts.md`           |
-| **Testing**                       | `doc/testing.md`         |
-| **Migration from older versions** | `doc/migration-guide.md` |
-| **Lottie animations**             | `doc/lottie.md`          |
+| Task                                              | Read this file           |
+| ------------------------------------------------- | ------------------------ |
+| **Forms**                                         | `doc/forms.md`           |
+| **Theme configuration (customize skin)**          | `doc/theme-config.md`    |
+| **Sheets / bottom sheets**                        | `doc/sheet.md`           |
+| **Analytics tracking**                            | `doc/analytics.md`       |
+| **Fonts setup**                                   | `doc/fonts.md`           |
+| **Custom text tokens**                            | `doc/texts.md`           |
+| **Testing (read if you have to implement tests)** | `doc/testing.md`         |
+| **Migrating from older versions**                 | `doc/migration-guide.md` |
+| **Optimizing bundle size with lottie**            | `doc/lottie.md`          |
 
 ## Docs reference
 
