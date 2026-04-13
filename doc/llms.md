@@ -279,7 +279,42 @@ All tokens via `skinVars` from `@telefonica/mistica`:
 - **Spacing**: `skinVars.spacing.*` (button, card, input, tag, feedback, hero, header, drawer padding tokens)
 - **Text presets**: Handled by text components, not accessed directly
 
-## Docs
+## How to use this documentation
+
+Follow these steps before writing any code.
+
+### Step 1: Read the minimum required docs (ALWAYS required)
+
+**You MUST always read these four files before doing anything else**, regardless of the task. They provide the
+foundational knowledge needed to use the library correctly:
+
+| File                               | Why it is required                                                  |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| `doc/patterns.md` (**start here**) | Page composition, layout rules, color rules, and common UI patterns |
+| `doc/components.md`                | Full component catalog with props and usage examples                |
+| `doc/layout.md`                    | All layout primitives and page layout components                    |
+| `doc/design-tokens.md`             | skinVars colors, rawColors, border radii, spacing, text presets     |
+
+Do not skip any of these four files and do not read them partially — **always read each one in full**. They
+are the minimum required context for every task.
+
+### Step 2: Read additional docs based on the task
+
+After reading the minimum set, read any further files that apply to your specific task:
+
+| Task                                              | Read this file           |
+| ------------------------------------------------- | ------------------------ |
+| **Forms**                                         | `doc/forms.md`           |
+| **Theme configuration (customize skin)**          | `doc/theme-config.md`    |
+| **Sheets / bottom sheets**                        | `doc/sheet.md`           |
+| **Analytics tracking**                            | `doc/analytics.md`       |
+| **Fonts setup**                                   | `doc/fonts.md`           |
+| **Custom text tokens**                            | `doc/texts.md`           |
+| **Testing (read if you have to implement tests)** | `doc/testing.md`         |
+| **Migrating from older versions**                 | `doc/migration-guide.md` |
+| **Optimizing bundle size with lottie**            | `doc/lottie.md`          |
+
+## Docs reference
 
 - [Components reference](./components.md): full component catalog with props and usage examples
 - [Design tokens](./design-tokens.md): skinVars colors, rawColors, applyAlpha, border radii, spacing tokens,

@@ -35,44 +35,12 @@ npm install @telefonica/mistica
 
 ## Documentation
 
-All Mistica documentation is available in the installed package. **Before generating any UI code**, read the
-relevant documentation files from `node_modules/@telefonica/mistica/doc/`.
+**Before writing any code**, read `node_modules/@telefonica/mistica/doc/llms.md`. That file is the canonical
+source of truth and contains critical rules, a quick start guide, component categories, design token overview,
+and step-by-step instructions on which documentation files to read and in what order.
 
-### Step 1: Read the main reference
+> **Fallback**: If `node_modules/@telefonica/mistica/doc/llms.md` is not available, fetch the equivalent file from the
+> GitHub repository: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
 
-Always start by reading the main LLM documentation file:
-
-```
-node_modules/@telefonica/mistica/doc/llms.md
-```
-
-This file contains the critical rules, quick start guide, component categories, design token overview, and
-links to all other documentation files.
-
-> **Fallback**: If `node_modules/@telefonica/mistica` is not available, read the equivalent files directly
-> from the GitHub repository: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
-
-### Step 2: Read specific docs based on the task
-
-Based on what the user needs, read the appropriate documentation files:
-
-| Task                              | Read this file                                            |
-| --------------------------------- | --------------------------------------------------------- |
-| **Any UI task** (start here)      | `node_modules/@telefonica/mistica/doc/patterns.md`        |
-| **Using specific components**     | `node_modules/@telefonica/mistica/doc/components.md`      |
-| **Colors, tokens, theming**       | `node_modules/@telefonica/mistica/doc/design-tokens.md`   |
-| **Page layouts**                  | `node_modules/@telefonica/mistica/doc/layout.md`          |
-| **Forms**                         | `node_modules/@telefonica/mistica/doc/forms.md`           |
-| **Theme configuration**           | `node_modules/@telefonica/mistica/doc/theme-config.md`    |
-| **Sheets / bottom sheets**        | `node_modules/@telefonica/mistica/doc/sheet.md`           |
-| **Analytics tracking**            | `node_modules/@telefonica/mistica/doc/analytics.md`       |
-| **Fonts setup**                   | `node_modules/@telefonica/mistica/doc/fonts.md`           |
-| **Custom text tokens**            | `node_modules/@telefonica/mistica/doc/texts.md`           |
-| **Testing**                       | `node_modules/@telefonica/mistica/doc/testing.md`         |
-| **Migration from older versions** | `node_modules/@telefonica/mistica/doc/migration-guide.md` |
-| **Lottie animations**             | `node_modules/@telefonica/mistica/doc/lottie.md`          |
-
-## Rules
-
-Treat `node_modules/@telefonica/mistica/doc/llms.md` as the canonical source of truth for critical rules, page
-structure, and Mistica best practices. Do not rely on abbreviated rules here when `llms.md` is available.
+Follow every instruction in `llms.md` exactly, including reading all minimum required docs before generating
+any code.
