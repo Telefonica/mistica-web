@@ -39,7 +39,7 @@ npm install @telefonica/mistica
 source of truth and contains critical rules, a quick start guide, component categories, design token overview,
 and step-by-step instructions on which documentation files to read and in what order.
 
-> **Fallback**: If `node_modules/@telefonica/mistica` is not available, fetch the equivalent file from the
+> **Fallback**: If `node_modules/@telefonica/mistica/doc/llms.md` is not available, fetch the equivalent file from the
 > GitHub repository: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
 
 Follow every instruction in `llms.md` exactly, including reading all minimum required docs before generating
