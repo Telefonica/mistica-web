@@ -1,3 +1,15 @@
+# [16.58.0](https://github.com/Telefonica/mistica-web/compare/v16.57.0...v16.58.0) (2026-04-10)
+
+
+### Bug Fixes
+
+* **chore:** Fix ssr acceptance image ([#1527](https://github.com/Telefonica/mistica-web/issues/1527)) ([298f052](https://github.com/Telefonica/mistica-web/commit/298f0528babf274d88fd04cc0ea3c71698f41d82))
+
+
+### Features
+
+* **Card:** Card reading order when interactive (segregate touchable content) ([#1523](https://github.com/Telefonica/mistica-web/issues/1523)) ([eee43ec](https://github.com/Telefonica/mistica-web/commit/eee43ec1381a2594219385758a1d031e7968c16e))
+
 # [16.57.0](https://github.com/Telefonica/mistica-web/compare/v16.56.0...v16.57.0) (2026-03-27)
 
 
