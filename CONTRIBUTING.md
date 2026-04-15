@@ -23,7 +23,7 @@ We would love to accept your Pull Requests but please, before starting your deve
 
 - PR title must follow **conventional commits** format; the scope must be the affected **component name**
   (e.g. `fix(TextField): ...`). If no component was affected but the change is internal you can use set
-  "Chore" as the component name.
+  "Chore" as the component name. For allowed types check [lint action](./.github/workflows/lint-pr.yml).
 - PR description: concise summary of the problem and fix, ending with `Ref: <TICKET-ID>` (if there's a jira
   ticket).
 - Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
