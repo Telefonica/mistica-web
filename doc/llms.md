@@ -22,9 +22,9 @@ Source is available at `node_modules/@telefonica/mistica/src/` (fallback:
 
 Read source only when you need to understand internal behavior that docs and types don't cover — for example
 debugging layout/CSS issues (`*.css.ts` files), understanding event handling, or authoring a custom skin (read
-a real skin in `src/skins/` to see canonical token patterns). Do not read source for greenfield UI work — the
-docs already cover that, and reading source tends to pull toward low-level APIs when a documented composite
-component would be simpler.
+a real skin in `src/skins/` to see canonical token patterns). Normally you shouldn't read source for
+greenfield UI work — the docs already cover that, and reading source tends to pull toward low-level APIs when
+a documented composite component would be simpler.
 
 ## Critical Rules
 
