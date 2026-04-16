@@ -82,7 +82,12 @@ const FixedFooterLayout = ({
          * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
          * content's height is too small, so we avoid unnecesary calculations in these cases.
          */
-        if (!footerScrollEffect || !isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || !isFooterFixed) {
+        if (
+            !footerScrollEffect ||
+            !isTabletOrSmaller ||
+            isRunningAcceptanceTest(platformOverrides) ||
+            !isFooterFixed
+        ) {
             setDisplayElevation(false);
             return;
         }
