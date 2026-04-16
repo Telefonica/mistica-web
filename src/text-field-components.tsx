@@ -83,6 +83,8 @@ export const Label = ({
         color = vars.colors.textActivated;
     }
 
+    const optionalText = texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix);
+
     return (
         <label
             className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
@@ -90,13 +92,16 @@ export const Label = ({
             style={{color, ...style, transition: transitionStyle}}
             data-testid="label"
         >
-            <span className={styles.labelText}>{children}</span>
-            {showOptional ? (
-                <span>
-                    &nbsp;(
-                    {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
-                </span>
-            ) : null}
+            {/* eslint-disable-next-line jsx-a11y/aria-role -- role="text" makes VoiceOver read the whole div as a single text block. */}
+            <span role="text" className={styles.labelInner}>
+                <span className={styles.labelText}>{children}</span>
+                {showOptional ? (
+                    <span>
+                        &nbsp;(
+                        {optionalText})
+                    </span>
+                ) : null}
+            </span>
         </label>
     );
 };

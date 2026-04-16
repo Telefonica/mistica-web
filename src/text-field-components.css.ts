@@ -10,7 +10,6 @@ export const labelContainer = style([
     sprinkles({
         position: 'absolute',
         display: 'flex',
-        flexDirection: 'row',
     }),
     {
         left: fieldLeftPadding,
@@ -30,6 +29,13 @@ export const labelContainer = style([
         width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px)`,
     },
 ]);
+
+export const labelInner = sprinkles({
+    display: 'flex',
+    flexDirection: 'row',
+    overflow: 'hidden',
+    width: '100%',
+});
 
 export const labelText = style([
     sprinkles({
