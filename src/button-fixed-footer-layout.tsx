@@ -16,6 +16,7 @@ type Props = {
     containerBgColor?: string;
     children: React.ReactNode;
     onChangeFooterHeight?: (heightInPx: number) => void;
+    footerScrollEffect?: boolean;
 };
 
 const ButtonFixedFooterLayout = ({
@@ -27,6 +28,7 @@ const ButtonFixedFooterLayout = ({
     footerBgColor,
     containerBgColor,
     onChangeFooterHeight,
+    footerScrollEffect,
 }: Props): JSX.Element => {
     const hasButton = !!button || !!secondaryButton;
     return (
@@ -35,6 +37,7 @@ const ButtonFixedFooterLayout = ({
             isFooterVisible={hasButton && isFooterVisible}
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
+            footerScrollEffect={footerScrollEffect}
             footer={
                 <InternalResponsiveLayout shouldExpandWhenNested="desktop">
                     <Box
