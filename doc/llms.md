@@ -15,29 +15,16 @@ This file is the main entry point. All docs live at:
 If you cannot find a documentation file in `node_modules`, fetch the equivalent file from the GitHub
 repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filename>`.
 
-## Source code location
+## Source code
 
-The full TypeScript/TSX source of this package is shipped inside the published tarball and is available
-alongside the compiled output and type definitions. Use it as a **complementary** reference whenever the docs
-or `.d.ts` files don't fully answer a question about a component's real behavior, props, or internals.
+Source is available at `node_modules/@telefonica/mistica/src/` (fallback:
+`https://github.com/Telefonica/mistica-web/tree/master/src`). Use `src/index.tsx` to map imports to files.
 
-- **Installed package**: `node_modules/@telefonica/mistica/src/`
-- **GitHub fallback**: `https://github.com/Telefonica/mistica-web/tree/master/src`
-
-What you'll find there:
-
-- `src/**/*.tsx`, `src/**/*.ts` — production component source
-- `src/**/*.css.ts` — vanilla-extract style definitions
-- `src/index.tsx` and `src/community/index.tsx` — public entry points; start here to map an import to a file
-
-Recommended lookup workflow:
-
-1. Resolve the import path the consumer uses (e.g. `import {Button} from '@telefonica/mistica'` or
-   `'@telefonica/mistica/community'`).
-2. Open `node_modules/@telefonica/mistica/src/index.tsx` (or `src/community/index.tsx`) to find which file the
-   symbol is re-exported from.
-3. Read that source file (and its `*.css.ts` sibling, if any) for real props, types, default values, and
-   behavior.
+Read source only when you need to understand internal behavior that docs and types don't cover — for example
+debugging layout/CSS issues (`*.css.ts` files), understanding event handling, or authoring a custom skin (read
+a real skin in `src/skins/` to see canonical token patterns). Do not read source for greenfield UI work — the
+docs already cover that, and reading source tends to pull toward low-level APIs when a documented composite
+component would be simpler.
 
 ## Critical Rules
 
