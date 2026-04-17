@@ -297,8 +297,18 @@ export const PreviewTools = ({
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
     const editStory = () => {
-        if (window.location.href.includes('/preview')) {
-            window.open(window.location.href.replace('/preview', ''));
+        try {
+            const href =
+                window.parent && window.parent !== window
+                    ? window.parent.location.href
+                    : window.location.href;
+            if (href.includes('/preview')) {
+                window.open(href.replace('/preview', ''), '_blank');
+            }
+        } catch {
+            if (window.location.href.includes('/preview')) {
+                window.open(window.location.href.replace('/preview', ''));
+            }
         }
     };
 

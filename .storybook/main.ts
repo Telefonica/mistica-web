@@ -67,6 +67,7 @@ const config: StorybookConfig = {
     },
 
     core: {
+        allowedHosts: ['host.docker.internal'],
         disableWhatsNewNotifications: true,
         builder: {
             name: '@storybook/builder-vite',
