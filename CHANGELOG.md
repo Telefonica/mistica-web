@@ -1,3 +1,10 @@
+# [16.60.0](https://github.com/Telefonica/mistica-web/compare/v16.59.0...v16.60.0) (2026-04-17)
+
+
+### Features
+
+* **webview-bridge:** update to v5.1.0 ([#1534](https://github.com/Telefonica/mistica-web/issues/1534)) ([4d14d46](https://github.com/Telefonica/mistica-web/commit/4d14d46043b67fe8ffb2ebf609088312f8c1f436)), closes [#257](https://github.com/Telefonica/mistica-web/issues/257) [#258](https://github.com/Telefonica/mistica-web/issues/258) [#262](https://github.com/Telefonica/mistica-web/issues/262) [#260](https://github.com/Telefonica/mistica-web/issues/260)
+
 # [16.59.0](https://github.com/Telefonica/mistica-web/compare/v16.58.0...v16.59.0) (2026-04-17)
 
 
