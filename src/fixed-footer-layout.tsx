@@ -43,7 +43,13 @@ type Props = {
     containerBgColor?: string;
     children: React.ReactNode;
     onChangeFooterHeight?: (heightInPx: number) => void;
+    /**
+     * When the scroll effect is enabled, an elevation will be displayed on the footer when the user scrolls up and there is still more content to scroll. This effect is only applied on mobile devices, as in desktop the footer is not fixed.
+     */
     footerScrollEffect?: boolean;
+    /**
+     * this property determines whether or not the effect is displayed when content passes beneath the fixedFooterLayout
+     */
 };
 
 const MIN_AVAILABLE_HEIGHT_FOR_FIXED = 200;
