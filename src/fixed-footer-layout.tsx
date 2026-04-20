@@ -43,11 +43,11 @@ type Props = {
     containerBgColor?: string;
     children: React.ReactNode;
     onChangeFooterHeight?: (heightInPx: number) => void;
-    footerScrollEffect?: boolean;
     /**
      * @default true
      * When enabled an elevation will be displayed on the footer if it is fixed and there is scrollable content below it. Notice this layout is not fixed on Desktop.
      */
+    footerScrollEffect?: boolean;
 };
 
 const MIN_AVAILABLE_HEIGHT_FOR_FIXED = 200;
