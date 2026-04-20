@@ -1,3 +1,23 @@
+# [16.60.0](https://github.com/Telefonica/mistica-web/compare/v16.59.0...v16.60.0) (2026-04-17)
+
+
+### Features
+
+* **webview-bridge:** update to v5.1.0 ([#1534](https://github.com/Telefonica/mistica-web/issues/1534)) ([4d14d46](https://github.com/Telefonica/mistica-web/commit/4d14d46043b67fe8ffb2ebf609088312f8c1f436)), closes [#257](https://github.com/Telefonica/mistica-web/issues/257) [#258](https://github.com/Telefonica/mistica-web/issues/258) [#262](https://github.com/Telefonica/mistica-web/issues/262) [#260](https://github.com/Telefonica/mistica-web/issues/260)
+
+# [16.59.0](https://github.com/Telefonica/mistica-web/compare/v16.58.0...v16.59.0) (2026-04-17)
+
+
+### Bug Fixes
+
+* **ci:** update vercel-action to main branch ([#1533](https://github.com/Telefonica/mistica-web/issues/1533)) ([97d9115](https://github.com/Telefonica/mistica-web/commit/97d9115ce0e2efd0902093b0d16c6f2851c2f943))
+* **TextField:** fix screen reader reading order for optional input fields ([#1529](https://github.com/Telefonica/mistica-web/issues/1529)) ([61c0345](https://github.com/Telefonica/mistica-web/commit/61c0345465cea1475079dee297ba03e947a94d61))
+
+
+### Features
+
+* **Skill:** Improve skill and fix patterns example ([#1526](https://github.com/Telefonica/mistica-web/issues/1526)) ([522c305](https://github.com/Telefonica/mistica-web/commit/522c305389d18a86efb51c404433697549396530))
+
 # [16.58.0](https://github.com/Telefonica/mistica-web/compare/v16.57.0...v16.58.0) (2026-04-10)
 
 

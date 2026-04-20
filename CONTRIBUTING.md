@@ -21,6 +21,13 @@ Don't hesitate to ask any questions and share your ideas
 We would love to accept your Pull Requests but please, before starting your development,
 [create an issue](https://github.com/Telefonica/mistica-web/issues/new/choose).
 
+- PR title must follow **conventional commits** format; the scope must be the affected **component name**
+  (e.g. `fix(TextField): ...`). If no component was affected but the change is internal you can use set
+  "Chore" as the component name. For allowed types check [lint action](./.github/workflows/lint-pr.yml).
+- PR description: concise summary of the problem and fix, ending with `Ref: <TICKET-ID>` (if there's a jira
+  ticket).
+- Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
+
 ## Bug reports
 
 If something is broken or not working as expected, let us know!
