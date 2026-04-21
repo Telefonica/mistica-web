@@ -1,0 +1,411 @@
+Now I have everything I need. Let me write the complete streaming home page component.
+
+### streaming-home-page.tsx
+
+```tsx
+'use client';
+import * as React from 'react';
+import {
+    ThemeContextProvider,
+    ThemeVariant,
+    getMovistarSkin,
+    Box,
+    Stack,
+    Inline,
+    Text1,
+    Text2,
+    Text3,
+    Text6,
+    Title1,
+    Title2,
+    ButtonPrimary,
+    ButtonSecondary,
+    Tag,
+    Avatar,
+    HorizontalScroll,
+    EmptyState,
+    Touchable,
+    skinVars,
+    IconSearchRegular,
+    IconPlayFilled,
+    IconPlaylistRegular,
+    IconStarFilled,
+} from '@telefonica/mistica';
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type ContentCard = {
+    id: string;
+    title: string;
+    imageUrl: string;
+    tag?: string;
+    tagType?: 'promo' | 'active' | 'warning' | 'error' | 'info';
+};
+
+type ContentRow = {
+    id: string;
+    heading: string;
+    cards: ContentCard[];
+};
+
+// ─── Mock data ────────────────────────────────────────────────────────────────
+
+const FEATURED = {
+    title: 'Stellar Abyss',
+    description:
+        'When the last star in the galaxy goes dark, a rogue crew of time-displaced engineers must reboot the universe — or perish inside a collapsing singularity.',
+    imageUrl: 'https://picsum.photos/seed/hero/1600/700',
+};
+
+const ROWS: ContentRow[] = [
+    {
+        id: 'trending',
+        heading: 'Trending Now',
+        cards: [
+            {id: 't1', title: 'Dark Meridian', imageUrl: 'https://picsum.photos/seed/t1/300/450', tag: 'TOP 10', tagType: 'promo'},
+            {id: 't2', title: 'Neon Pulse', imageUrl: 'https://picsum.photos/seed/t2/300/450', tag: 'NEW', tagType: 'active'},
+            {id: 't3', title: 'Echo Chamber', imageUrl: 'https://picsum.photos/seed/t3/300/450'},
+            {id: 't4', title: 'The Hollow Gate', imageUrl: 'https://picsum.photos/seed/t4/300/450', tag: 'NEW', tagType: 'active'},
+            {id: 't5', title: 'Obsidian Crown', imageUrl: 'https://picsum.photos/seed/t5/300/450'},
+            {id: 't6', title: 'Fracture Line', imageUrl: 'https://picsum.photos/seed/t6/300/450', tag: 'TOP 10', tagType: 'promo'},
+        ],
+    },
+    {
+        id: 'movies',
+        heading: 'Popular Movies',
+        cards: [
+            {id: 'm1', title: 'Velvet Storm', imageUrl: 'https://picsum.photos/seed/m1/300/450'},
+            {id: 'm2', title: 'Iron Lantern', imageUrl: 'https://picsum.photos/seed/m2/300/450', tag: 'NEW', tagType: 'active'},
+            {id: 'm3', title: 'Last Orbit', imageUrl: 'https://picsum.photos/seed/m3/300/450', tag: 'TOP 10', tagType: 'promo'},
+            {id: 'm4', title: 'Phantom Relay', imageUrl: 'https://picsum.photos/seed/m4/300/450'},
+            {id: 'm5', title: 'Broken Signal', imageUrl: 'https://picsum.photos/seed/m5/300/450'},
+            {id: 'm6', title: 'Zero Latitude', imageUrl: 'https://picsum.photos/seed/m6/300/450', tag: 'NEW', tagType: 'active'},
+        ],
+    },
+    {
+        id: 'series',
+        heading: 'Binge-worthy Series',
+        cards: [
+            {id: 's1', title: 'The Reckoning', imageUrl: 'https://picsum.photos/seed/s1/300/450', tag: 'NEW', tagType: 'active'},
+            {id: 's2', title: 'Cascade Effect', imageUrl: 'https://picsum.photos/seed/s2/300/450'},
+            {id: 's3', title: 'Nomad Protocol', imageUrl: 'https://picsum.photos/seed/s3/300/450', tag: 'TOP 10', tagType: 'promo'},
+            {id: 's4', title: 'Ember Rising', imageUrl: 'https://picsum.photos/seed/s4/300/450'},
+            {id: 's5', title: 'Silent Frequency', imageUrl: 'https://picsum.photos/seed/s5/300/450', tag: 'NEW', tagType: 'active'},
+            {id: 's6', title: 'Hollow Earth', imageUrl: 'https://picsum.photos/seed/s6/300/450'},
+        ],
+    },
+];
+
+const NAV_SECTIONS = ['Home', 'Movies', 'Series', 'Kids', 'My List'];
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+type NavBarProps = {
+    activeSection: string;
+    onSectionChange: (section: string) => void;
+};
+
+const NavBar = ({activeSection, onSectionChange}: NavBarProps): JSX.Element => (
+    <ThemeVariant variant="brand">
+        <div
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '0 32px',
+                height: 64,
+                backgroundColor: skinVars.colors.backgroundBrand,
+                position: 'sticky',
+                top: 0,
+                zIndex: 100,
+            }}
+        >
+            {/* Logo */}
+            <div style={{display: 'flex', alignItems: 'center', gap: 32}}>
+                <div
+                    style={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: '50%',
+                        backgroundColor: skinVars.colors.textPrimaryInverse,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <IconPlayFilled color={skinVars.colors.backgroundBrand} size={20} />
+                </div>
+                {/* Section links */}
+                <nav>
+                    <div style={{display: 'flex', gap: 24}}>
+                        {NAV_SECTIONS.map((section) => (
+                            <Touchable key={section} onPress={() => onSectionChange(section)}>
+                                <Text2
+                                    regular={section !== activeSection}
+                                    medium={section === activeSection}
+                                    color={
+                                        section === activeSection
+                                            ? skinVars.colors.textPrimaryInverse
+                                            : skinVars.colors.textSecondaryInverse
+                                    }
+                                >
+                                    {section}
+                                </Text2>
+                            </Touchable>
+                        ))}
+                    </div>
+                </nav>
+            </div>
+            {/* Right controls */}
+            <Inline space={16} alignItems="center">
+                <Touchable onPress={() => {}}>
+                    <IconSearchRegular color={skinVars.colors.textPrimaryInverse} />
+                </Touchable>
+                <Avatar size={32} initials="EG" />
+            </Inline>
+        </div>
+    </ThemeVariant>
+);
+
+type HeroSectionProps = {
+    featured: typeof FEATURED;
+};
+
+const HeroSection = ({featured}: HeroSectionProps): JSX.Element => (
+    <ThemeVariant variant="media">
+        <div
+            style={{
+                position: 'relative',
+                height: 520,
+                overflow: 'hidden',
+            }}
+        >
+            <img
+                src={featured.imageUrl}
+                alt={featured.title}
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                }}
+            />
+            {/* Gradient overlay */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to right, rgba(0,0,0,0.85) 40%, transparent 100%)',
+                }}
+            />
+            {/* Content */}
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    padding: '0 48px',
+                    maxWidth: 560,
+                }}
+            >
+                <Stack space={16}>
+                    <Tag type="promo">FEATURED</Tag>
+                    <Title1
+                        as="h1"
+                        color={skinVars.colors.textPrimaryInverse}
+                    >
+                        {featured.title}
+                    </Title1>
+                    <Text2 regular color={skinVars.colors.textSecondaryInverse}>
+                        {featured.description}
+                    </Text2>
+                    <Box paddingTop={8}>
+                        <Inline space={12} alignItems="center">
+                            <ButtonPrimary
+                                onPress={() => {}}
+                                startIcon={<IconPlayFilled color={skinVars.colors.textPrimaryInverse} size={20} />}
+                            >
+                                Watch Now
+                            </ButtonPrimary>
+                            <ButtonSecondary onPress={() => {}}>More Info</ButtonSecondary>
+                        </Inline>
+                    </Box>
+                </Stack>
+            </div>
+        </div>
+    </ThemeVariant>
+);
+
+type ContentCardItemProps = {
+    card: ContentCard;
+};
+
+const ContentCardItem = ({card}: ContentCardItemProps): JSX.Element => (
+    <Touchable onPress={() => {}}>
+        <div
+            style={{
+                width: 160,
+                flexShrink: 0,
+                borderRadius: 8,
+                overflow: 'hidden',
+                backgroundColor: skinVars.colors.backgroundContainer,
+                cursor: 'pointer',
+            }}
+        >
+            <div style={{position: 'relative'}}>
+                <img
+                    src={card.imageUrl}
+                    alt={card.title}
+                    style={{width: '100%', aspectRatio: '2/3', objectFit: 'cover', display: 'block'}}
+                />
+                {card.tag && (
+                    <div style={{position: 'absolute', top: 8, left: 8}}>
+                        <Tag type={card.tagType ?? 'promo'} small>
+                            {card.tag}
+                        </Tag>
+                    </div>
+                )}
+            </div>
+            <Box paddingX={8} paddingY={8}>
+                <Text2 regular truncate>
+                    {card.title}
+                </Text2>
+            </Box>
+        </div>
+    </Touchable>
+);
+
+type ContentRowSectionProps = {
+    row: ContentRow;
+    variant?: 'default' | 'alternative';
+};
+
+const ContentRowSection = ({row, variant = 'default'}: ContentRowSectionProps): JSX.Element => (
+    <ThemeVariant variant={variant}>
+        <div style={{backgroundColor: variant === 'alternative' ? skinVars.colors.backgroundAlternative : skinVars.colors.background}}>
+            <Box paddingY={24}>
+                <Box paddingX={32} paddingBottom={12}>
+                    <Title2 as="h2">{row.heading}</Title2>
+                </Box>
+                <Box paddingLeft={32}>
+                    <HorizontalScroll noScrollbar>
+                        <div style={{display: 'flex', gap: 12, paddingRight: 32}}>
+                            {row.cards.map((card) => (
+                                <ContentCardItem key={card.id} card={card} />
+                            ))}
+                        </div>
+                    </HorizontalScroll>
+                </Box>
+            </Box>
+        </div>
+    </ThemeVariant>
+);
+
+type MyListSectionProps = {
+    hasContent: boolean;
+};
+
+const MyListSection = ({hasContent}: MyListSectionProps): JSX.Element => {
+    if (hasContent) {
+        return (
+            <ContentRowSection
+                row={{
+                    id: 'mylist',
+                    heading: 'My List',
+                    cards: ROWS[0].cards.slice(0, 3),
+                }}
+            />
+        );
+    }
+
+    return (
+        <ThemeVariant variant="alternative">
+            <div style={{backgroundColor: skinVars.colors.backgroundAlternative}}>
+                <Box paddingX={32} paddingY={32}>
+                    <Title2 as="h2">My List</Title2>
+                    <Box paddingTop={24}>
+                        <EmptyState
+                            title="Your list is empty"
+                            description="Save movies and shows to watch later. They will appear here."
+                            asset={<IconPlaylistRegular size={64} color={skinVars.colors.neutralMedium} />}
+                            button={<ButtonSecondary onPress={() => {}}>Browse content</ButtonSecondary>}
+                        />
+                    </Box>
+                </Box>
+            </div>
+        </ThemeVariant>
+    );
+};
+
+// ─── Main page ────────────────────────────────────────────────────────────────
+
+const StreamingHomePage = (): JSX.Element => {
+    const [activeSection, setActiveSection] = React.useState('Home');
+    const isMyList = activeSection === 'My List';
+
+    return (
+        <ThemeContextProvider theme={{skin: getMovistarSkin(), colorScheme: 'light'}}>
+            <div style={{minHeight: '100vh', backgroundColor: skinVars.colors.background}}>
+                <NavBar activeSection={activeSection} onSectionChange={setActiveSection} />
+
+                {!isMyList && <HeroSection featured={FEATURED} />}
+
+                {isMyList ? (
+                    <MyListSection hasContent={false} />
+                ) : (
+                    <>
+                        {/* Row 1 – default background */}
+                        <ContentRowSection row={ROWS[0]} variant="default" />
+
+                        {/* Row 2 – alternative background to showcase theme variant */}
+                        <ContentRowSection row={ROWS[1]} variant="alternative" />
+
+                        {/* Row 3 – back to default */}
+                        <ContentRowSection row={ROWS[2]} variant="default" />
+                    </>
+                )}
+
+                {/* Footer */}
+                <ThemeVariant variant="brand">
+                    <div
+                        style={{
+                            backgroundColor: skinVars.colors.backgroundBrand,
+                            padding: '32px 32px',
+                            marginTop: 40,
+                        }}
+                    >
+                        <Stack space={8}>
+                            <Inline space={8} alignItems="center">
+                                <IconPlayFilled color={skinVars.colors.textPrimaryInverse} size={20} />
+                                <Text3 regular color={skinVars.colors.textPrimaryInverse}>
+                                    StreamFlow
+                                </Text3>
+                            </Inline>
+                            <Text1 regular color={skinVars.colors.textSecondaryInverse}>
+                                © 2026 StreamFlow. All rights reserved.
+                            </Text1>
+                        </Stack>
+                    </div>
+                </ThemeVariant>
+            </div>
+        </ThemeContextProvider>
+    );
+};
+
+export default StreamingHomePage;
+```
+
+---
+
+**Key design decisions:**
+
+- **`ThemeVariant variant="brand"`** wraps the nav bar and footer, giving them the brand background color from the skin token (`skinVars.colors.backgroundBrand`) without hardcoding hex.
+- **`ThemeVariant variant="media"`** wraps the hero so mistica components inside (Tag, buttons) render on a dark/media context.
+- **`ThemeVariant variant="alternative"`** alternates content rows (rows 1 & 3 are `default`, row 2 is `alternative`) to showcase light/dark section contrast driven by tokens.
+- **`HorizontalScroll noScrollbar`** + a flex container with `gap` handles each card row's scroll behavior.
+- **`EmptyState`** with an icon asset renders the "My List" empty state; clicking the "My List" nav link toggles to it.
+- All colors use `skinVars.colors.*` — zero hardcoded hex values.
+- `ThemeContextProvider` at the root bootstraps the Movistar skin so the file is fully self-contained.

@@ -1,0 +1,457 @@
+Now I have all the context I need. Here are the complete updated files:
+
+---
+
+### src/tag.css.ts
+
+```ts
+import {style} from '@vanilla-extract/css';
+import {vars} from './skins/skin-contract.css';
+import {sprinkles} from './sprinkles.css';
+
+const tagCommon = style([
+    sprinkles({
+        display: 'inline-flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }),
+    {
+        verticalAlign: 'middle',
+        borderRadius: vars.borderRadii.tag,
+    },
+]);
+
+export const tag = style([
+    tagCommon,
+    sprinkles({
+        minWidth: 56,
+        paddingY: 4,
+    }),
+]);
+
+export const smallTag = style([
+    tagCommon,
+    sprinkles({
+        minWidth: 40,
+    }),
+    {
+        minHeight: 22,
+    },
+]);
+
+export const outlined = style({
+    background: 'transparent',
+    borderWidth: 1,
+    borderStyle: 'solid',
+});
+
+export const icon = sprinkles({display: 'block'});
+
+export const badge = sprinkles({display: 'inline-flex', paddingLeft: 4});
+```
+
+---
+
+### src/tag.tsx
+
+```tsx
+'use client';
+
+import * as React from 'react';
+import Box from './box';
+import {Text} from './text';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {pxToRem} from './utils/css';
+import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './tag.css';
+import {vars} from './skins/skin-contract.css';
+import classNames from 'classnames';
+import {useTheme} from './hooks';
+import Badge from './badge';
+
+import type {DataAttributes, IconProps} from './utils/types';
+
+export type TagType = 'promo' | 'info' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+
+export type TagProps = {
+    // not using "TagType" and repeating the union to make these props playroom autocomplete friendly
+    type?: 'promo' | 'info' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+    children: string;
+    Icon?: (props: IconProps) => JSX.Element;
+    dataAttributes?: DataAttributes;
+    badge?: boolean | number;
+    backgroundColor?: string;
+    textColor?: string;
+    small?: boolean;
+    outlined?: boolean;
+};
+
+const {colors} = vars;
+
+const Tag = ({
+    Icon,
+    children,
+    dataAttributes,
+    type = 'promo',
+    badge,
+    backgroundColor: customBackgroundColor,
+    textColor: customTextColor,
+    small = false,
+    outlined = false,
+}: TagProps): JSX.Element | null => {
+    const {textPresets} = useTheme();
+    const themeVariant = useThemeVariant();
+    const isOverBrand = themeVariant === 'brand' || themeVariant === 'media';
+    const badgeValue = badge === true ? undefined : badge || 0;
+
+    if (!children) {
+        return null;
+    }
+
+    const tagTypeToColors = {
+        // [textColor, inverseTextColor, backgroundColor, backgroundColorInverse]
+        promo: [
+            colors.tagTextPromo,
+            colors.tagTextPromoBrand,
+            colors.tagBackgroundPromo,
+            colors.tagBackgroundPromoBrand,
+        ],
+        info: [
+            colors.tagTextInfo,
+            colors.tagTextInfoBrand,
+            colors.tagBackgroundInfo,
+            colors.tagBackgroundInfoBrand,
+        ],
+        active: [
+            colors.tagTextActive,
+            colors.tagTextActiveBrand,
+            colors.tagBackgroundActive,
+            colors.tagBackgroundActiveBrand,
+        ],
+        inactive: [
+            colors.tagTextInactive,
+            colors.tagTextInactiveBrand,
+            // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
+            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
+            colors.tagBackgroundInactiveBrand,
+        ],
+        success: [
+            colors.tagTextSuccess,
+            colors.tagTextSuccessBrand,
+            colors.tagBackgroundSuccess,
+            colors.tagBackgroundSuccessBrand,
+        ],
+        warning: [
+            colors.tagTextWarning,
+            colors.tagTextWarningBrand,
+            colors.tagBackgroundWarning,
+            colors.tagBackgroundWarningBrand,
+        ],
+        error: [
+            colors.tagTextError,
+            colors.tagTextErrorBrand,
+            colors.tagBackgroundError,
+            colors.tagBackgroundErrorBrand,
+        ],
+    } as const;
+
+    const [defaultTextColor, inverseTextColor, defaultBackgroundColor, backgroundColorInverse] =
+        tagTypeToColors[type];
+
+    const textColor = customTextColor || (isOverBrand ? inverseTextColor : defaultTextColor);
+    const backgroundColor =
+        customBackgroundColor || (isOverBrand ? backgroundColorInverse : defaultBackgroundColor);
+
+    const hasNumericBadge = typeof badge === 'number' && badge !== 0;
+    const hasNonNumericBadge = badge === true;
+    const hasBadge = hasNumericBadge || hasNonNumericBadge;
+
+    const calcPaddings = () => {
+        if (small) {
+            return {
+                paddingLeft: Icon ? 4 : 8,
+                paddingRight: hasNumericBadge ? 2 : hasNonNumericBadge ? 4 : 8,
+            };
+        } else {
+            return {
+                paddingLeft: Icon ? 8 : 12,
+                paddingRight: hasBadge ? 8 : 12,
+            };
+        }
+    };
+
+    const {paddingLeft, paddingRight} = calcPaddings();
+
+    return (
+        <span
+            {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
+            className={classNames(small ? styles.smallTag : styles.tag, outlined && styles.outlined)}
+            style={{
+                paddingLeft,
+                paddingRight,
+                background: outlined ? 'transparent' : backgroundColor,
+                borderColor: outlined ? textColor : undefined,
+            }}
+        >
+            {Icon && (
+                <Box paddingRight={4}>
+                    <Icon color={textColor} size={pxToRem(16)} className={styles.icon} />
+                </Box>
+            )}
+            <ThemeVariant isInverse={false}>
+                <Text
+                    color={textColor}
+                    size={small ? 12 : 14}
+                    lineHeight={small ? 16 : 20}
+                    weight={textPresets.indicator.weight}
+                    truncate
+                >
+                    {children}
+                </Text>
+                {badgeValue !== 0 && (
+                    <div className={styles.badge}>
+                        <Badge value={badgeValue} />
+                    </div>
+                )}
+            </ThemeVariant>
+        </span>
+    );
+};
+
+export default Tag;
+```
+
+---
+
+### src/__stories__/tag-story.tsx
+
+```tsx
+import * as React from 'react';
+import {
+    Stack,
+    Tag,
+    IconStarFilled,
+    IconTimeFilled,
+    IconOfferPercentFilled,
+    IconCheckRegular,
+    IconCloseRegular,
+    IconAlertRegular,
+    ResponsiveLayout,
+    Box,
+    skinVars,
+} from '..';
+
+import type {Variant} from '../theme-variant-context';
+
+const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
+
+type Args = {
+    label: string;
+    icon: boolean;
+    small: boolean;
+    outlined: boolean;
+    variantOutside: Variant;
+    badge: string;
+    colorConfig: 'default' | 'color from skin' | 'custom color';
+    textColorFromSkin: string;
+    textColorCustom: string;
+    backgroundColorFromSkin: string;
+    backgroundColorCustom: string;
+};
+
+export default {
+    title: 'Components/Tag',
+    parameters: {fullScreen: true},
+    argTypes: {
+        badge: {
+            options: badgeOptions,
+            control: {type: 'select'},
+        },
+    },
+};
+
+export const Default: StoryComponent<Args> = ({
+    label: labelFromArgs,
+    icon,
+    small,
+    outlined,
+    variantOutside,
+    badge,
+    textColorFromSkin,
+    textColorCustom,
+    backgroundColorFromSkin,
+    backgroundColorCustom,
+}) => {
+    const getLabel = (fallback: string) => labelFromArgs || fallback;
+    // eslint-disable-next-line no-eval
+    const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
+    const textColor = textColorFromSkin || textColorCustom;
+    const backgroundColor = backgroundColorFromSkin || backgroundColorCustom;
+
+    return (
+        <ResponsiveLayout fullWidth variant={variantOutside}>
+            <Box padding={16} width="fit-content" dataAttributes={{testid: 'tags'}}>
+                <Stack space={16}>
+                    <Tag
+                        Icon={icon ? IconOfferPercentFilled : undefined}
+                        type="promo"
+                        dataAttributes={{qsysid: 'promo'}}
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Promo')}
+                    </Tag>
+                    <Tag
+                        Icon={icon ? IconCloseRegular : undefined}
+                        type="info"
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Info')}
+                    </Tag>
+                    <Tag
+                        Icon={icon ? IconStarFilled : undefined}
+                        type="active"
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Active')}
+                    </Tag>
+                    <Tag
+                        Icon={icon ? IconTimeFilled : undefined}
+                        type="inactive"
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Inactive')}
+                    </Tag>
+                    <Tag
+                        Icon={icon ? IconCheckRegular : undefined}
+                        type="success"
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Success')}
+                    </Tag>
+                    <Tag
+                        Icon={icon ? IconAlertRegular : undefined}
+                        type="warning"
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Warning')}
+                    </Tag>
+                    <Tag
+                        Icon={icon ? IconCloseRegular : undefined}
+                        type="error"
+                        badge={badgeValue}
+                        backgroundColor={backgroundColor}
+                        textColor={textColor}
+                        small={small}
+                        outlined={outlined}
+                    >
+                        {getLabel('Error')}
+                    </Tag>
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Default.storyName = 'Tag';
+Default.args = {
+    label: '',
+    icon: true,
+    small: false,
+    outlined: false,
+    variantOutside: 'default',
+    badge: '0',
+    colorConfig: 'default',
+    textColorFromSkin: skinVars.colors.textPrimaryBrand,
+    backgroundColorFromSkin: skinVars.colors.neutralHigh,
+    textColorCustom: '#fff',
+    backgroundColorCustom: 'red',
+};
+
+Default.argTypes = {
+    outlined: {control: {type: 'boolean'}},
+    colorConfig: {
+        options: ['default', 'color from skin', 'custom color'],
+        control: {type: 'select'},
+    },
+    textColorFromSkin: {
+        control: {type: 'select'},
+        options: {'none (determined by variant)': '', ...skinVars.colors},
+        if: {arg: 'colorConfig', eq: 'color from skin'},
+    },
+    backgroundColorFromSkin: {
+        control: {type: 'select'},
+        options: {'none (determined by variant)': '', ...skinVars.colors},
+        if: {arg: 'colorConfig', eq: 'color from skin'},
+    },
+    textColorCustom: {
+        control: {type: 'color'},
+        if: {arg: 'colorConfig', eq: 'custom color', presetColors: ['red', 'green', '#000']},
+    },
+    backgroundColorCustom: {
+        control: {type: 'color'},
+        if: {arg: 'colorConfig', eq: 'custom color'},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
+};
+```
+
+---
+
+### playroom/snippets.tsx (Tag section only — replace `tagSnippets`)
+
+```tsx
+const tagSnippets: Array<Snippet> = [
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Small Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" small Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Outlined Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" outlined Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+];
+```
+
+---
+
+**Summary of changes:**
+
+- **`tag.css.ts`**: Added `outlined` style that sets `background: transparent`, `borderWidth: 1`, `borderStyle: solid`. The `borderColor` is applied inline in the component so it tracks the resolved `textColor`.
+- **`tag.tsx`**: Added `outlined?: boolean` to `TagProps` and the destructured params. When `outlined` is true, `background` is forced to `'transparent'` and `borderColor` is set to `textColor` via inline style; the `styles.outlined` class is conditionally applied.
+- **`tag-story.tsx`**: Added `outlined: boolean` to `Args`, destructured it, threaded it through all seven `<Tag>` instances, added it to `Default.args` (`false`) and `Default.argTypes` with a boolean control.
+- **`snippets.tsx`**: Added a third mapped array producing `Outlined Tag (type)` snippets for all seven types.

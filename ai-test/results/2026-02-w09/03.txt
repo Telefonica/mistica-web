@@ -1,0 +1,136 @@
+### notifications-page.tsx
+
+```tsx
+'use client';
+import * as React from 'react';
+import {
+  NavigationBar,
+  NavigationBarAction,
+  MainSectionHeader,
+  RowList,
+  Row,
+  Badge,
+  EmptyStateCard,
+  ButtonPrimary,
+  IconChevronLeftRegular,
+  Stack,
+  Box,
+  ResponsiveLayout,
+} from '@telefonica/mistica';
+
+type Notification = {
+  id: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  unreadCount: number;
+};
+
+const INITIAL_NOTIFICATIONS: Array<Notification> = [
+  {
+    id: '1',
+    title: 'New message from support',
+    description: 'Your ticket #4821 has been updated with a new reply.',
+    timestamp: '2 min ago',
+    unreadCount: 3,
+  },
+  {
+    id: '2',
+    title: 'Invoice ready',
+    description: 'Your monthly invoice for April is now available.',
+    timestamp: '1 hour ago',
+    unreadCount: 1,
+  },
+  {
+    id: '3',
+    title: 'Scheduled maintenance',
+    description: 'Network maintenance is planned for tonight between 2–4 AM.',
+    timestamp: '3 hours ago',
+    unreadCount: 1,
+  },
+  {
+    id: '4',
+    title: 'Data usage alert',
+    description: "You've used 80% of your monthly data allowance.",
+    timestamp: 'Yesterday',
+    unreadCount: 2,
+  },
+  {
+    id: '5',
+    title: 'New offer available',
+    description: 'Upgrade your plan and get 3 months free. Limited time offer.',
+    timestamp: '2 days ago',
+    unreadCount: 1,
+  },
+];
+
+const NotificationsPage = (): JSX.Element => {
+  const [notifications, setNotifications] = React.useState<Array<Notification>>(INITIAL_NOTIFICATIONS);
+
+  const handleClearAll = () => {
+    setNotifications([]);
+  };
+
+  const handleBack = () => {
+    // Navigate back — in a real app this would call router.back() or equivalent
+    if (typeof window !== 'undefined') {
+      window.history.back();
+    }
+  };
+
+  return (
+    <>
+      <NavigationBar
+        title="Notifications"
+        leftAction={
+          <NavigationBarAction onPress={handleBack} aria-label="Back">
+            <IconChevronLeftRegular />
+          </NavigationBarAction>
+        }
+      />
+      <ResponsiveLayout>
+        <Box paddingY={16}>
+          {notifications.length === 0 ? (
+            <EmptyStateCard
+              title="No notifications"
+              description="You're all caught up. Check back later for updates."
+              actions={
+                <ButtonPrimary
+                  onPress={() => setNotifications(INITIAL_NOTIFICATIONS)}
+                >
+                  Restore notifications
+                </ButtonPrimary>
+              }
+            />
+          ) : (
+            <Stack space={0}>
+              <MainSectionHeader title="Recent" />
+              <RowList>
+                {notifications.map((notification) => (
+                  <Row
+                    key={notification.id}
+                    title={notification.title}
+                    description={notification.description}
+                    detail={notification.timestamp}
+                    badge={<Badge value={notification.unreadCount} />}
+                    onPress={() => {
+                      setNotifications((prev) =>
+                        prev.filter((n) => n.id !== notification.id)
+                      );
+                    }}
+                  />
+                ))}
+              </RowList>
+              <Box paddingTop={24} paddingX={16}>
+                <ButtonPrimary onPress={handleClearAll}>Clear all</ButtonPrimary>
+              </Box>
+            </Stack>
+          )}
+        </Box>
+      </ResponsiveLayout>
+    </>
+  );
+};
+
+export default NotificationsPage;
+```

@@ -21,6 +21,13 @@ const CHROMIUM = path.join(
 
 const VARIANTS = [
     {
+        name: '2026-02-w09',
+        label: '2026-02-27 week 9 (minimal AGENTS.md, no llms.md, no skills)',
+        componentFile: 'streaming-home-page-2026-02-w09.tsx',
+        outputFile: '2026-02-w09-netflix.png',
+        wrapWithTheme: false,
+    },
+    {
         name: '2026-03-w12',
         label: '2026-03-20 week 12 (thin AGENTS.md, no skills)',
         componentFile: 'streaming-home-page-month-ago.tsx',
@@ -43,9 +50,10 @@ function sleep(ms) {
 
 function startVite(componentFile, wrapWithTheme) {
     // Write main.tsx pointing to the specific component
+    // Always inject the CSS import so styles work even if the generated component forgot it
+    const cssImport = `import '@telefonica/mistica/css/mistica.css';`;
     const wrapperImport = wrapWithTheme
         ? `import {ThemeContextProvider, getMovistarNewSkin} from '@telefonica/mistica';
-import '@telefonica/mistica/css/mistica.css';
 const theme = {skin: getMovistarNewSkin(), i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}};`
         : '';
     const wrapperOpen = wrapWithTheme
@@ -54,6 +62,7 @@ const theme = {skin: getMovistarNewSkin(), i18n: {locale: 'es-ES', phoneNumberFo
 
     const mainContent = `import * as React from 'react';
 import {createRoot} from 'react-dom/client';
+${cssImport}
 import Component from './${componentFile.replace('.tsx', '')}';
 ${wrapperImport}
 
@@ -103,7 +112,7 @@ async function screenshot(variant) {
         viteProc = await startVite(variant.componentFile, variant.wrapWithTheme);
         console.log('  Vite ready. Launching browser...');
 
-        await sleep(1000);
+        await sleep(2000);
 
         const browser = await puppeteer.launch({
             executablePath: CHROMIUM,
@@ -115,7 +124,7 @@ async function screenshot(variant) {
         await page.setViewport({width: 1440, height: 900});
 
         console.log('  Loading page...');
-        await page.goto('http://localhost:5199', {waitUntil: 'networkidle0', timeout: 20000});
+        await page.goto('http://localhost:5199', {waitUntil: 'networkidle0', timeout: 40000});
 
         // Wait for React to hydrate
         await sleep(2000);
