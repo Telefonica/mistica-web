@@ -1,0 +1,162 @@
+### src/ribbon.tsx
+```tsx
+'use client';
+import * as React from 'react';
+import * as classes from './ribbon.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
+
+type Props = {
+    children: string;
+    variant: 'promo' | 'discount';
+    dataAttributes?: DataAttributes;
+};
+
+const Ribbon = ({children, variant, dataAttributes}: Props): JSX.Element => {
+    return (
+        <div
+            className={classes.variantStyles[variant]}
+            {...getPrefixedDataAttributes(dataAttributes, 'Ribbon')}
+        >
+            {children}
+        </div>
+    );
+};
+
+export default Ribbon;
+export type {Props as RibbonProps};
+```
+
+### src/ribbon.css.ts
+```ts
+import {styleVariants} from '@vanilla-extract/css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
+import {pxToRem} from './utils/css';
+
+export const variantStyles = styleVariants({
+    promo: [
+        sprinkles({display: 'inline-flex', alignItems: 'center'}),
+        {
+            background: vars.colors.brand,
+            color: vars.colors.textPrimaryNegative,
+            borderRadius: vars.borderRadii.tag,
+            padding: `${pxToRem(4)} ${pxToRem(8)}`,
+            fontSize: pxToRem(12),
+            fontWeight: 700,
+            lineHeight: pxToRem(16),
+        },
+    ],
+    discount: [
+        sprinkles({display: 'inline-flex', alignItems: 'center'}),
+        {
+            background: vars.colors.error,
+            color: vars.colors.textPrimaryNegative,
+            borderRadius: vars.borderRadii.tag,
+            padding: `${pxToRem(4)} ${pxToRem(8)}`,
+            fontSize: pxToRem(12),
+            fontWeight: 700,
+            lineHeight: pxToRem(16),
+        },
+    ],
+});
+```
+
+### src/__stories__/ribbon-story.tsx
+```tsx
+import * as React from 'react';
+import {Ribbon, ResponsiveLayout, Box} from '..';
+
+export default {
+    title: 'Components/Ribbon',
+    argTypes: {
+        variant: {
+            options: ['promo', 'discount'],
+            control: {type: 'select'},
+        },
+        children: {control: {type: 'text'}},
+    },
+    parameters: {fullScreen: true},
+};
+
+type Args = {
+    variant: 'promo' | 'discount';
+    children: string;
+};
+
+export const Default: StoryComponent<Args> = ({variant, children}) => {
+    return (
+        <ResponsiveLayout>
+            <Box padding={16}>
+                <Ribbon variant={variant}>{children}</Ribbon>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Default.storyName = 'Ribbon';
+Default.args = {
+    variant: 'promo',
+    children: 'NEW',
+};
+```
+
+### src/__tests__/ribbon-test.tsx
+```tsx
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import Ribbon from '../ribbon';
+
+test('renders ribbon label text', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Ribbon variant="promo">NEW</Ribbon>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('NEW')).toBeInTheDocument();
+});
+
+test('renders discount variant', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Ribbon variant="discount">OFFER</Ribbon>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('OFFER')).toBeInTheDocument();
+});
+
+test('renders with data attributes', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Ribbon variant="promo" dataAttributes={{'testid': 'my-ribbon'}}>NEW</Ribbon>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('my-ribbon')).toBeInTheDocument();
+});
+```
+
+### Snippet to add to `playroom/snippets.tsx`
+```tsx
+const ribbonSnippet = {
+    name: 'Ribbon',
+    group: 'Ribbon',
+    code: `
+<Ribbon variant="promo">
+  NEW
+</Ribbon>`,
+};
+```
+
+Then add `ribbonSnippet` to the `snippets` array at the bottom of the file.
+
+### Export line to add to `src/index.tsx`
+```tsx
+export {default as Ribbon} from './ribbon';
+export type {RibbonProps} from './ribbon';
+```

@@ -1,0 +1,125 @@
+Now I have enough context. Here's the complete file:
+
+### notifications-page.tsx
+```tsx
+'use client';
+import * as React from 'react';
+import {
+    NavigationBar,
+    RowList,
+    Row,
+    Badge,
+    EmptyState,
+    ButtonSecondary,
+    Stack,
+    Box,
+    ResponsiveLayout,
+    IconBellRegular,
+} from '@telefonica/mistica';
+
+type Notification = {
+    id: number;
+    title: string;
+    description: string;
+    timestamp: string;
+    unreadCount: number;
+};
+
+const INITIAL_NOTIFICATIONS: Array<Notification> = [
+    {
+        id: 1,
+        title: 'New invoice available',
+        description: 'Your October invoice is ready to download.',
+        timestamp: '2 min ago',
+        unreadCount: 3,
+    },
+    {
+        id: 2,
+        title: 'Data usage alert',
+        description: "You've used 90% of your monthly data plan.",
+        timestamp: '1 hour ago',
+        unreadCount: 1,
+    },
+    {
+        id: 3,
+        title: 'Payment confirmed',
+        description: 'Your payment of €29.99 was processed successfully.',
+        timestamp: '3 hours ago',
+        unreadCount: 2,
+    },
+    {
+        id: 4,
+        title: 'New offer for you',
+        description: 'Upgrade your plan and get 3 months free.',
+        timestamp: 'Yesterday',
+        unreadCount: 1,
+    },
+    {
+        id: 5,
+        title: 'Scheduled maintenance',
+        description: 'Service maintenance is planned for Sunday 2–4 AM.',
+        timestamp: '2 days ago',
+        unreadCount: 4,
+    },
+];
+
+const NotificationsPage = (): JSX.Element => {
+    const [notifications, setNotifications] = React.useState<Array<Notification>>(INITIAL_NOTIFICATIONS);
+
+    const clearAll = () => setNotifications([]);
+
+    return (
+        <Stack space={0}>
+            <NavigationBar
+                title="Notifications"
+                onBack={() => history.back()}
+                withBorder
+            />
+            <ResponsiveLayout>
+                <Box paddingY={16}>
+                    {notifications.length === 0 ? (
+                        <EmptyState
+                            title="No notifications"
+                            description="You're all caught up. Check back later for updates."
+                            asset={<IconBellRegular size={64} />}
+                            button={
+                                <ButtonSecondary onPress={() => setNotifications(INITIAL_NOTIFICATIONS)}>
+                                    Restore notifications
+                                </ButtonSecondary>
+                            }
+                        />
+                    ) : (
+                        <>
+                            <Box paddingBottom={8} paddingX={16}>
+                                <ButtonSecondary onPress={clearAll} small>
+                                    Clear all
+                                </ButtonSecondary>
+                            </Box>
+                            <RowList>
+                                {notifications.map((notification) => (
+                                    <Row
+                                        key={notification.id}
+                                        title={notification.title}
+                                        description={notification.description}
+                                        detail={notification.timestamp}
+                                        badge={<Badge value={notification.unreadCount} />}
+                                        onPress={() => {}}
+                                    />
+                                ))}
+                            </RowList>
+                        </>
+                    )}
+                </Box>
+            </ResponsiveLayout>
+        </Stack>
+    );
+};
+
+export default NotificationsPage;
+```
+
+Key design decisions:
+- `NavigationBar` with `onBack` wired to `history.back()` — swap for your router's navigate function
+- `RowList` + `Row` for the notification list, using `badge`, `detail`, and `description` props
+- Empty state uses `IconBellRegular` as the asset and a "Restore" button to simulate re-populating for demo purposes
+- "Clear all" button sits above the list and drives the empty state transition

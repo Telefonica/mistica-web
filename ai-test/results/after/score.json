@@ -1,0 +1,186 @@
+{
+    "score": "28/30",
+    "percent": 93,
+    "rules": [
+        {
+            "id": "R01",
+            "prompt": "01",
+            "label": "'use client' directive in tsx",
+            "pass": true
+        },
+        {
+            "id": "R02",
+            "prompt": "01",
+            "label": "React hooks namespaced (no bare useState/useEffect/useRef)",
+            "pass": true
+        },
+        {
+            "id": "R03",
+            "prompt": "01",
+            "label": "No '@vanilla-extract/css' in tsx block",
+            "pass": true
+        },
+        {
+            "id": "R04",
+            "prompt": "01",
+            "label": "No sprinkles.css import in tsx block",
+            "pass": true
+        },
+        {
+            "id": "R05",
+            "prompt": "01",
+            "label": "No hardcoded colors in tsx/css blocks",
+            "pass": true
+        },
+        {
+            "id": "R06",
+            "prompt": "01",
+            "label": "Story uses StoryComponent<Args>",
+            "pass": true
+        },
+        {
+            "id": "R07",
+            "prompt": "01",
+            "label": "Story sets .storyName",
+            "pass": true
+        },
+        {
+            "id": "R08",
+            "prompt": "01",
+            "label": "Story sets .args",
+            "pass": true
+        },
+        {
+            "id": "R09",
+            "prompt": "01",
+            "label": "Test uses ThemeContextProvider + makeTheme",
+            "pass": true
+        },
+        {
+            "id": "R10",
+            "prompt": "01",
+            "label": "Test uses semantic queries (getByRole/getByLabelText)",
+            "pass": false
+        },
+        {
+            "id": "R11",
+            "prompt": "01",
+            "label": "Component exported from src/index.tsx",
+            "pass": true
+        },
+        {
+            "id": "R12",
+            "prompt": "01",
+            "label": "All 4 file types produced (tsx + css.ts + story + test)",
+            "pass": true
+        },
+        {
+            "id": "R13",
+            "prompt": "02",
+            "label": "Story argTypes updated with outlined prop",
+            "pass": true
+        },
+        {
+            "id": "R14",
+            "prompt": "02",
+            "label": "Story args updated with outlined prop",
+            "pass": true
+        },
+        {
+            "id": "R15",
+            "prompt": "02",
+            "label": "Playroom snippet updated with outlined",
+            "pass": true
+        },
+        {
+            "id": "R16",
+            "prompt": "03",
+            "label": "No hardcoded color values",
+            "pass": false
+        },
+        {
+            "id": "R17",
+            "prompt": "03",
+            "label": "Uses skinVars for token access",
+            "pass": true
+        },
+        {
+            "id": "R18",
+            "prompt": "03",
+            "label": "Layout via Mistica primitives (Stack/Box/Inline/ResponsiveLayout)",
+            "pass": true
+        },
+        {
+            "id": "R19",
+            "prompt": "03",
+            "label": "Text via Mistica text components (Text1-10/Title1-4)",
+            "pass": true
+        },
+        {
+            "id": "R20",
+            "prompt": "03",
+            "label": "ThemeContextProvider present",
+            "pass": true
+        },
+        {
+            "id": "R21",
+            "prompt": "04",
+            "label": "'use client' directive present",
+            "pass": true
+        },
+        {
+            "id": "R22",
+            "prompt": "04",
+            "label": "React hooks namespaced (no bare useState/useEffect/useRef)",
+            "pass": true
+        },
+        {
+            "id": "R23",
+            "prompt": "04",
+            "label": "Uses MainNavigationBar for top navigation",
+            "pass": true
+        },
+        {
+            "id": "R24",
+            "prompt": "04",
+            "label": "Uses CoverHero, Hero, or Slideshow for featured banner",
+            "pass": true
+        },
+        {
+            "id": "R25",
+            "prompt": "04",
+            "label": "Uses Carousel for horizontal content rows",
+            "pass": true
+        },
+        {
+            "id": "R26",
+            "prompt": "04",
+            "label": "Uses CoverCard or MediaCard for content tiles",
+            "pass": true
+        },
+        {
+            "id": "R27",
+            "prompt": "04",
+            "label": "No hardcoded colors (no hex, no rgb)",
+            "pass": true
+        },
+        {
+            "id": "R28",
+            "prompt": "04",
+            "label": "Uses skinVars for color tokens",
+            "pass": true
+        },
+        {
+            "id": "R29",
+            "prompt": "04",
+            "label": "Uses Mistica text components (Text1-10 / Title1-4)",
+            "pass": true
+        },
+        {
+            "id": "R30",
+            "prompt": "04",
+            "label": "ThemeContextProvider wraps the component",
+            "pass": true
+        }
+    ]
+}

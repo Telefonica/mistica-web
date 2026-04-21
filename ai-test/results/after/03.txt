@@ -1,0 +1,169 @@
+Now I have all the necessary context. Here's the complete component:
+
+### notifications-page.tsx
+```tsx
+'use client';
+import '@telefonica/mistica/css/mistica.css';
+import * as React from 'react';
+import {
+    ThemeContextProvider,
+    getMovistarNewSkin,
+    skinVars,
+    NavigationBar,
+    ResponsiveLayout,
+    Box,
+    Stack,
+    NegativeBox,
+    RowList,
+    Row,
+    EmptyState,
+    ButtonPrimary,
+    ButtonLayout,
+    Text1,
+    Circle,
+    IconBellRegular,
+} from '@telefonica/mistica';
+
+const misticaTheme = {
+    skin: getMovistarNewSkin(),
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+};
+
+type Notification = {
+    id: number;
+    title: string;
+    description: string;
+    timestamp: string;
+    count: number;
+};
+
+const MOCK_NOTIFICATIONS: Notification[] = [
+    {
+        id: 1,
+        title: 'New message from Ana',
+        description: 'Hey, are you coming to the meeting tomorrow?',
+        timestamp: '2 min ago',
+        count: 3,
+    },
+    {
+        id: 2,
+        title: 'Invoice #1042 paid',
+        description: 'Your invoice has been successfully processed.',
+        timestamp: '1 h ago',
+        count: 1,
+    },
+    {
+        id: 3,
+        title: 'System update available',
+        description: 'Version 5.2.0 is ready to install.',
+        timestamp: '3 h ago',
+        count: 2,
+    },
+    {
+        id: 4,
+        title: 'New follower',
+        description: 'Carlos González started following you.',
+        timestamp: 'Yesterday',
+        count: 1,
+    },
+    {
+        id: 5,
+        title: 'Exclusive promotion',
+        description: 'Get 20% off your next monthly bill.',
+        timestamp: '2 days ago',
+        count: 4,
+    },
+];
+
+const GlobalStyles = () => (
+    <style>{`
+        body {
+            font-family: 'Movistar Sans', 'Helvetica', 'Arial', sans-serif;
+            background-color: ${skinVars.colors.background};
+        }
+    `}</style>
+);
+
+const NotificationsContent = () => {
+    const [notifications, setNotifications] = React.useState<Notification[]>(MOCK_NOTIFICATIONS);
+
+    const clearAll = () => setNotifications([]);
+
+    if (notifications.length === 0) {
+        return (
+            <Stack space={0}>
+                <GlobalStyles />
+                <NavigationBar title="Notifications" onBack={() => {}} />
+                <ResponsiveLayout>
+                    <Box paddingY={24}>
+                        <EmptyState
+                            title="No notifications"
+                            description="You're all caught up! There's nothing new to see right now."
+                            button={
+                                <ButtonPrimary onPress={() => setNotifications(MOCK_NOTIFICATIONS)}>
+                                    Simulate new notifications
+                                </ButtonPrimary>
+                            }
+                        />
+                    </Box>
+                </ResponsiveLayout>
+            </Stack>
+        );
+    }
+
+    return (
+        <Stack space={0}>
+            <GlobalStyles />
+            <NavigationBar title="Notifications" onBack={() => {}} />
+            <ResponsiveLayout>
+                <Box paddingY={24}>
+                    <Stack space={32}>
+                        <NegativeBox>
+                            <RowList>
+                                {notifications.map((notification) => (
+                                    <Row
+                                        key={notification.id}
+                                        asset={
+                                            <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+                                                <IconBellRegular color={skinVars.colors.brand} />
+                                            </Circle>
+                                        }
+                                        title={notification.title}
+                                        description={notification.description}
+                                        badge={notification.count}
+                                        right={
+                                            <Text1 regular color={skinVars.colors.textSecondary}>
+                                                {notification.timestamp}
+                                            </Text1>
+                                        }
+                                    />
+                                ))}
+                            </RowList>
+                        </NegativeBox>
+                        <ButtonLayout
+                            primaryButton={
+                                <ButtonPrimary onPress={clearAll}>Clear all</ButtonPrimary>
+                            }
+                        />
+                    </Stack>
+                </Box>
+            </ResponsiveLayout>
+        </Stack>
+    );
+};
+
+export const NotificationsPage = () => (
+    <ThemeContextProvider theme={misticaTheme}>
+        <NotificationsContent />
+    </ThemeContextProvider>
+);
+```
+
+Key design decisions:
+- `misticaTheme` is defined outside the component (stable reference, avoids re-renders)
+- `GlobalStyles` is rendered inside `ThemeContextProvider` so `skinVars` resolves correctly
+- `NotificationsContent` is split from the export so `skinVars` is available at render time
+- `NegativeBox` wraps `RowList` inside `ResponsiveLayout` for correct hover/alignment per the list patterns doc
+- `badge` prop on `Row` shows the unread count; `right` shows the timestamp as `Text1`
+- `EmptyState` includes a restore button so the empty state is reachable interactively
+- No hardcoded colors, font sizes, or border radii anywhere

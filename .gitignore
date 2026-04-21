@@ -32,3 +32,7 @@ community.d.ts
 .scannerwork
 *storybook.log
 .env*.local
+
+# Editor / AI tooling internals
+.claude/worktrees/
+.cursor/
