@@ -160,6 +160,9 @@ If `node_modules/@telefonica/mistica` is **not** available, fall back to the Git
 - `yarn build`: build package
 - `yarn storybook`: starts storybook
 - `yarn playroom`: starts playroom
+- `yarn eval:dev` / `yarn eval`: [Evalite](https://v1.evalite.dev/guides/quickstart/) for task/LLM evals in
+  `evals/*.eval.ts` (use `evalite/scorers/deterministic` for scorers like `exactMatch` unless you add the `ai`
+  package for LLM-judge scorers from `evalite/scorers`)
 
 ## More about Mística
 
