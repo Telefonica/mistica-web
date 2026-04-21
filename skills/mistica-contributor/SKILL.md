@@ -1,12 +1,11 @@
 ---
 name: mistica-contributor
-description:
-  Create, modify, and validate components inside the mistica-web repository — Telefonica's React
-  component library. Use this skill when working ON the library itself: creating new components,
-  adding props to existing ones, writing stories, tests, or playroom snippets. Triggers when the
-  task involves editing files in src/, __stories__/, __tests__/, or playroom/ of the mistica-web
-  repository. Do NOT use for building apps that consume @telefonica/mistica — use mistica-react
-  skill for that.
+description: >-
+  Create, modify, and validate components inside the mistica-web repository — Telefonica's React component
+  library. Use this skill when working ON the library itself: creating new components, adding props to
+  existing ones, writing stories, tests, or playroom snippets. Triggers when the task involves editing files
+  in src/, __stories__/, __tests__/, or playroom/ of the mistica-web repository. Do NOT use for building apps
+  that consume @telefonica/mistica — use mistica-react skill for that.
 license: MIT
 metadata:
   author: telefonica
