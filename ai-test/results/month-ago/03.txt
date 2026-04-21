@@ -1,0 +1,164 @@
+I have enough context. Here's the complete page:
+
+### notifications-page.tsx
+
+```tsx
+'use client';
+import * as React from 'react';
+import {
+  ThemeContextProvider,
+  getMovistarSkin,
+  NavigationBar,
+  Box,
+  Stack,
+  Inline,
+  ResponsiveLayout,
+  Text2,
+  Text3,
+  Text4,
+  EmptyState,
+  IconBellRegular,
+  Badge,
+  skinVars,
+} from '@telefonica/mistica';
+
+type Notification = {
+  id: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  unread: boolean;
+};
+
+const NOTIFICATIONS: Array<Notification> = [
+  {
+    id: '1',
+    title: 'Your invoice is ready',
+    description: 'Your monthly invoice for April 2026 is now available to download.',
+    timestamp: 'Just now',
+    unread: true,
+  },
+  {
+    id: '2',
+    title: 'Data limit reached',
+    description: 'You have used 100% of your monthly data allowance.',
+    timestamp: '2 hours ago',
+    unread: true,
+  },
+  {
+    id: '3',
+    title: 'New offer available',
+    description: 'Upgrade your plan and get 3 months free on Movistar+.',
+    timestamp: 'Yesterday',
+    unread: false,
+  },
+  {
+    id: '4',
+    title: 'Maintenance scheduled',
+    description: 'Planned maintenance on 25 Apr from 02:00 to 04:00. Service may be affected.',
+    timestamp: '3 days ago',
+    unread: false,
+  },
+  {
+    id: '5',
+    title: 'Payment confirmed',
+    description: 'Your payment of €29.99 was processed successfully.',
+    timestamp: '1 week ago',
+    unread: false,
+  },
+];
+
+type NotificationItemProps = {
+  notification: Notification;
+};
+
+const NotificationItem = ({notification}: NotificationItemProps): JSX.Element => (
+  <Box
+    paddingX={16}
+    paddingY={16}
+    style={{
+      borderBottom: `1px solid ${skinVars.colors.divider}`,
+      backgroundColor: notification.unread
+        ? skinVars.colors.backgroundContainerAlternative
+        : skinVars.colors.background,
+    }}
+  >
+    <Inline space="between" alignItems="flex-start">
+      <Box style={{flex: 1}}>
+        <Stack space={4}>
+          <Text3 medium color={skinVars.colors.textPrimary}>
+            {notification.title}
+          </Text3>
+          <Text2 regular color={skinVars.colors.textSecondary}>
+            {notification.description}
+          </Text2>
+          <Text2 regular color={skinVars.colors.textSecondary}>
+            {notification.timestamp}
+          </Text2>
+        </Stack>
+      </Box>
+      {notification.unread && (
+        <Box paddingLeft={8} paddingTop={4}>
+          <Badge value={0} />
+        </Box>
+      )}
+    </Inline>
+  </Box>
+);
+
+const NotificationsContent = (): JSX.Element => {
+  const [notifications, setNotifications] = React.useState<Array<Notification>>(NOTIFICATIONS);
+
+  return (
+    <Box style={{minHeight: '100vh', backgroundColor: skinVars.colors.background}}>
+      <NavigationBar
+        onBack={() => {}}
+        title="Notifications"
+        withBorder
+      />
+      <ResponsiveLayout>
+        <Box paddingY={24}>
+          {notifications.length === 0 ? (
+            <EmptyState
+              asset={<IconBellRegular size="100%" color={skinVars.colors.brand} />}
+              title="No notifications"
+              description="You are all caught up. New notifications will appear here."
+            />
+          ) : (
+            <Stack space={0}>
+              <Box paddingBottom={8}>
+                <Text4 regular color={skinVars.colors.textSecondary}>
+                  {notifications.filter((n) => n.unread).length} unread
+                </Text4>
+              </Box>
+              {notifications.map((notification) => (
+                <NotificationItem key={notification.id} notification={notification} />
+              ))}
+            </Stack>
+          )}
+        </Box>
+      </ResponsiveLayout>
+    </Box>
+  );
+};
+
+const NotificationsPage = (): JSX.Element => (
+  <ThemeContextProvider
+    theme={{
+      skin: getMovistarSkin(),
+      i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode: 'GB'},
+    }}
+  >
+    <NotificationsContent />
+  </ThemeContextProvider>
+);
+
+export default NotificationsPage;
+```
+
+Key decisions:
+- `NavigationBar` with `onBack` + `title="Notifications"` for the back button pattern
+- `Badge value={0}` renders a dot-style unread indicator (no count)
+- `EmptyState` with `asset` + `title` + `description` shown when `notifications.length === 0`
+- All colors via `skinVars.colors.*`, no hardcoded hex
+- `React.useState` (namespaced), `'use client'` first line, `ThemeContextProvider` wrapping

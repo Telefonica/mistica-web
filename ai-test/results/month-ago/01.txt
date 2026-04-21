@@ -1,0 +1,165 @@
+Here are all 6 files:
+
+---
+
+**1. `src/ribbon.tsx`**
+
+```tsx
+'use client';
+import * as React from 'react';
+import * as classes from './ribbon.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
+
+type Props = {
+    children: string;
+    variant: 'promo' | 'discount';
+    dataAttributes?: DataAttributes;
+};
+
+const Ribbon = ({children, variant, dataAttributes}: Props): JSX.Element => {
+    return (
+        <div
+            className={classes.variantStyles[variant]}
+            {...getPrefixedDataAttributes(dataAttributes, 'Ribbon')}
+        >
+            {children}
+        </div>
+    );
+};
+
+export default Ribbon;
+```
+
+---
+
+**2. `src/ribbon.css.ts`**
+
+```ts
+import {styleVariants} from '@vanilla-extract/css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
+import {pxToRem} from './utils/css';
+
+const base = [
+    sprinkles({
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }),
+    {
+        color: vars.colors.textPrimaryNegative,
+        borderRadius: vars.borderRadii.tag,
+        padding: `${pxToRem(2)} ${pxToRem(8)}`,
+        fontSize: pxToRem(12),
+        fontWeight: 500,
+        lineHeight: pxToRem(16),
+    },
+];
+
+export const variantStyles = styleVariants({
+    promo: [base, {background: vars.colors.brand}],
+    discount: [base, {background: vars.colors.error}],
+});
+```
+
+---
+
+**3. `src/__stories__/ribbon-story.tsx`**
+
+```tsx
+import * as React from 'react';
+import {Ribbon, ResponsiveLayout, Box} from '..';
+
+export default {
+    title: 'Components/Ribbon',
+    argTypes: {
+        variant: {
+            options: ['promo', 'discount'],
+            control: {type: 'select'},
+        },
+        children: {control: {type: 'text'}},
+    },
+    parameters: {fullScreen: true},
+};
+
+type Args = {
+    variant: 'promo' | 'discount';
+    children: string;
+};
+
+export const Default: StoryComponent<Args> = ({variant, children}) => {
+    return (
+        <ResponsiveLayout>
+            <Box padding={16}>
+                <Ribbon variant={variant}>{children}</Ribbon>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Default.storyName = 'Ribbon';
+Default.args = {
+    variant: 'promo',
+    children: 'Promo',
+};
+```
+
+---
+
+**4. `src/__tests__/ribbon-test.tsx`**
+
+```tsx
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import Ribbon from '../ribbon';
+
+test('renders promo variant', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Ribbon variant="promo">Promo</Ribbon>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Promo')).toBeInTheDocument();
+});
+
+test('renders discount variant', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Ribbon variant="discount">Discount</Ribbon>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Discount')).toBeInTheDocument();
+});
+```
+
+---
+
+**5. Snippet for `playroom/snippets.tsx`**
+
+```tsx
+const ribbonSnippet = {
+    name: 'Ribbon',
+    group: 'Ribbon',
+    code: `
+<Ribbon variant="promo">
+  Promo
+</Ribbon>`,
+};
+```
+
+Then add `ribbonSnippet` to the `snippets` array at the bottom of the file.
+
+---
+
+**6. Export line for `src/index.tsx`**
+
+```tsx
+export {default as Ribbon} from './ribbon';
+export type {Props as RibbonProps} from './ribbon';
+```
