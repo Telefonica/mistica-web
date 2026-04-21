@@ -21,10 +21,10 @@ const CHROMIUM = path.join(
 
 const VARIANTS = [
     {
-        name: 'month-ago',
-        label: 'One month ago (thin AGENTS.md, no skills)',
+        name: '2026-03-w12',
+        label: '2026-03-20 week 12 (thin AGENTS.md, no skills)',
         componentFile: 'streaming-home-page-month-ago.tsx',
-        outputFile: 'month-ago-netflix.png',
+        outputFile: '2026-03-w12-netflix.png',
         // Generated code is missing ThemeContextProvider — add it for rendering
         wrapWithTheme: true,
     },
