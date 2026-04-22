@@ -1,0 +1,7 @@
+{
+    "name": "EmailField",
+    "import": "import {EmailField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<EmailField name=\"email\" label=\"e-mail\"/>"
+}

@@ -1,0 +1,48 @@
+{
+    "name": "RadioGroup",
+    "import": "import {RadioGroup} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "name",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "value",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "defaultValue",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "onChange",
+            "type": "((value: string) => void)",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "</RadioGroup>"
+}

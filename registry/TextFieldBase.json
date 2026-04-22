@@ -1,0 +1,227 @@
+{
+    "name": "TextFieldBase",
+    "import": "import {TextFieldBase} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "type",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "autoComplete",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "autoFocus",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "error",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "pattern",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "required",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "showOptionalLabel",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "fullWidth",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "helperText",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "placeholder",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "defaultValue",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "maxLength",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "prefix",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "startIcon",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "endIcon",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "endIconOverlay",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "value",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "inputRef",
+            "type": "Ref<HTMLInputElement | HTMLSelectElement>",
+            "required": false
+        },
+        {
+            "name": "getSuggestions",
+            "type": "((value: string) => readonly string[])",
+            "required": false
+        },
+        {
+            "name": "withSuggestionsEmptyCase",
+            "type": "string | boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "shouldShowSuggestions",
+            "type": "number | \"focus\"",
+            "required": false,
+            "default": "focus"
+        },
+        {
+            "name": "onClick",
+            "type": "((event: MouseEvent<Element, MouseEvent>) => void)",
+            "required": false
+        },
+        {
+            "name": "onChange",
+            "type": "((event: ChangeEvent<HTMLInputElement>) => void)",
+            "required": false
+        },
+        {
+            "name": "onBlur",
+            "type": "FocusEventHandler<Element>",
+            "required": false
+        },
+        {
+            "name": "onFocus",
+            "type": "FocusEventHandler<Element>",
+            "required": false
+        },
+        {
+            "name": "onKeyDown",
+            "type": "((event: KeyboardEvent<Element>) => void)",
+            "required": false
+        },
+        {
+            "name": "inputProps",
+            "type": "{ [name: string]: string | number; }",
+            "required": false
+        },
+        {
+            "name": "inputComponent",
+            "type": "ComponentType<any>",
+            "required": false
+        },
+        {
+            "name": "shrinkLabel",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "focus",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "fieldRef",
+            "type": "RefObject<HTMLDivElement | null>",
+            "required": false
+        },
+        {
+            "name": "onInput",
+            "type": "((event: FormEvent<HTMLInputElement>) => void)",
+            "required": false
+        },
+        {
+            "name": "multiline",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "inputMode",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "readOnly",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "preventCopy",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "min",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "max",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<TextField name=\"name\" label=\"Name\"/>"
+}

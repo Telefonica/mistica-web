@@ -1,0 +1,7 @@
+{
+    "name": "Tabs",
+    "import": "import {Tabs} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Tabs\n            selectedIndex={getState('selectedTab', 0)}\n            onChange={setState('selectedTab')}\n            tabs={[\n                {text: 'Tab 1'},\n                {text: 'Tab 2'},\n                {text: 'Tab 3'},\n            ]}\n            renderPanel={({selectedIndex, panelProps}) => (\n                <div {...panelProps}>\n                    <Text3 regular>Panel {selectedIndex + 1}</Text3>\n                </div>\n            )}\n        />"
+}

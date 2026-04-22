@@ -1,0 +1,7 @@
+{
+    "name": "CommunityProgressBlock",
+    "import": "import {CommunityProgressBlock} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

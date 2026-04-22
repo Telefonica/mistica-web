@@ -1,0 +1,7 @@
+{
+    "name": "NavigationBarActionGroup",
+    "import": "import {NavigationBarActionGroup} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<NavigationBar\n  onBack={() => {}}\n  title=\"Settings\"\n  right={\n    <NavigationBarActionGroup>\n      <NavigationBarAction aria-label=\"search\" onPress={() => {}}>\n        <IconSearchRegular color=\"currentColor\" />\n        {isDesktopOrBigger && \"Search\"}\n      </NavigationBarAction>\n    </NavigationBarActionGroup>\n  }\n/>"
+}

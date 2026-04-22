@@ -1,0 +1,43 @@
+{
+    "name": "Timer",
+    "import": "import {Timer} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "boxed",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "endTimestamp",
+            "type": "number | Date",
+            "required": true
+        },
+        {
+            "name": "minTimeUnit",
+            "type": "enum",
+            "required": true
+        },
+        {
+            "name": "maxTimeUnit",
+            "type": "enum",
+            "required": true
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "onProgress",
+            "type": "((value: RemainingTime) => void)",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

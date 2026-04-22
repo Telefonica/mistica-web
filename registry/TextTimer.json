@@ -1,0 +1,44 @@
+{
+    "name": "TextTimer",
+    "import": "import {TextTimer} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "labelType",
+            "type": "enum",
+            "required": false,
+            "default": "none"
+        },
+        {
+            "name": "endTimestamp",
+            "type": "number | Date",
+            "required": true
+        },
+        {
+            "name": "minTimeUnit",
+            "type": "enum",
+            "required": true
+        },
+        {
+            "name": "maxTimeUnit",
+            "type": "enum",
+            "required": true
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "onProgress",
+            "type": "((value: RemainingTime) => void)",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<Text>some text</Text>"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "CreditCardExpirationField",
+    "import": "import {CreditCardExpirationField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<CreditCardExpirationField name=\"expiration-date\" label=\"Expiration date\"/>"
+}

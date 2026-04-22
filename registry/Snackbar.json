@@ -1,0 +1,7 @@
+{
+    "name": "Snackbar",
+    "import": "import {Snackbar} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Snackbar message=\"Some message here\" />"
+}

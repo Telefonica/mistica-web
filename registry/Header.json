@@ -1,0 +1,50 @@
+{
+    "name": "Header",
+    "import": "import {Header} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "headline",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "pretitle",
+            "type": "RichText",
+            "required": false
+        },
+        {
+            "name": "pretitleAs",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "titleAs",
+            "type": "enum",
+            "required": false,
+            "default": "h1"
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "small",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<HeaderLayout\n            breadcrumbs={\n                <NavigationBreadcrumbs\n                    breadcrumbs={[{ title: \"Cuenta\", url: \"/dashboard\" }]}\n                    title=\"Invoices\"\n                />\n            }\n            header={\n                <Header\n                    title=\"The last invoice is available\"\n                />\n            }\n            extra={<Placeholder />}\n        />"
+}

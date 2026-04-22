@@ -1,0 +1,7 @@
+{
+    "name": "DoubleField",
+    "import": "import {DoubleField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

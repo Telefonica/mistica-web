@@ -1,0 +1,104 @@
+{
+    "name": "Table",
+    "import": "import {Table} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "heading",
+            "type": "ReactNode[]",
+            "required": false,
+            "default": "[]"
+        },
+        {
+            "name": "content",
+            "type": "(ReactNode[] | { cells: ReactNode[]; actions: readonly (ReactElement<unknown, string | JSXElementConstructor<any>> | CardAction)[]; })[]",
+            "required": false,
+            "default": "[]"
+        },
+        {
+            "name": "boxed",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "emptyCase",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "responsive",
+            "type": "enum",
+            "required": false,
+            "description": "In mobile, the table will be scrollable horizontally by default. Alternatively, you can set it to 'collapse-rows', which will\nrender every row as a card"
+        },
+        {
+            "name": "columnTextAlign",
+            "type": "TextAlign | TextAlign[]",
+            "required": false,
+            "default": "left"
+        },
+        {
+            "name": "rowVerticalAlign",
+            "type": "enum",
+            "required": false,
+            "default": "middle"
+        },
+        {
+            "name": "columnWidth",
+            "type": "(string | number)[]",
+            "required": false
+        },
+        {
+            "name": "fullWidth",
+            "type": "boolean",
+            "required": false,
+            "default": "true",
+            "description": "By default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.\nIt's ignored in mobile"
+        },
+        {
+            "name": "maxHeight",
+            "type": "string | number",
+            "required": false,
+            "description": "Limits the height of the table and the content will have vertical scroll.\nIt's ignored in mobile when responsive move is 'collapse-rows'"
+        },
+        {
+            "name": "scrollOverResponsiveLayout",
+            "type": "boolean",
+            "required": false,
+            "description": "When rendering the table inside a responsive layout, you can enable this prop to make the table scrollable over the layout paddings"
+        },
+        {
+            "name": "hideHeaders",
+            "type": "boolean | \"desktop\" | \"mobile\"",
+            "required": false,
+            "description": "Used to hide headers from UI. Screen readers will still recognize them when reading an element from the table."
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false,
+            "description": "\"data-\" prefix is automatically added. For example, use \"testid\" instead of \"data-testid\""
+        },
+        {
+            "name": "rowHeaderIndex",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-describedby",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

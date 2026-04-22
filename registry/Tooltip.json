@@ -1,0 +1,7 @@
+{
+    "name": "Tooltip",
+    "import": "import {Tooltip} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Tooltip\n          target={<Text3>some target, this can be any component</Text3>}\n          description=\"Settings\"\n        />"
+}

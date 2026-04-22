@@ -1,0 +1,40 @@
+{
+    "name": "BrandLoadingScreen",
+    "import": "import {BrandLoadingScreen} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isLoading",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "onClose",
+            "type": "(() => void)",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "texts",
+            "type": "readonly { title?: string; description?: string; duration?: number | undefined; }[] | undefined",
+            "required": false,
+            "default": "[{title, description}]"
+        }
+    ],
+    "playroomSnippet": "<BrandLoadingScreen\n            title=\"Some title\"\n            description=\"Some description text\"\n        />"
+}

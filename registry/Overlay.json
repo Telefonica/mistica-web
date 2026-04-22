@@ -1,0 +1,7 @@
+{
+    "name": "Overlay",
+    "import": "import {Overlay} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

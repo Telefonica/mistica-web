@@ -1,0 +1,78 @@
+{
+    "name": "ToggleIconButton",
+    "import": "import {ToggleIconButton} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "trackingEvent",
+            "type": "TrackingEvent | readonly TrackingEvent[]",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "showSpinner",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "small",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "bleedLeft",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "bleedRight",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "bleedY",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "checkedProps",
+            "type": "ToggleStateProps",
+            "required": true
+        },
+        {
+            "name": "uncheckedProps",
+            "type": "ToggleStateProps",
+            "required": true
+        },
+        {
+            "name": "onChange",
+            "type": "((checked: boolean) => void | Promise<void>)",
+            "required": false
+        },
+        {
+            "name": "checked",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "defaultChecked",
+            "type": "boolean",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<ToggleIconButton\n          checkedProps={{\n            Icon: IconPauseFilled,\n            type: \"danger\",\n            backgroundType: \"soft\",\n            \"aria-label\": \"checked icon button\",\n          }}\n          uncheckedProps={{\n            Icon: IconPlayFilled,\n            type: \"neutral\",\n            backgroundType: \"transparent\",\n            \"aria-label\": \"checked icon button\",\n          }}\n          onChange={(checked) => console.log(\"checked:\", checked)}\n        />"
+}

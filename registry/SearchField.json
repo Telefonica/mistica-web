@@ -1,0 +1,7 @@
+{
+    "name": "SearchField",
+    "import": "import {SearchField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<SearchField name=\"search\" label=\"Search\"/>"
+}

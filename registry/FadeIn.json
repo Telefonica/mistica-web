@@ -1,0 +1,7 @@
+{
+    "name": "FadeIn",
+    "import": "import {FadeIn} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

@@ -1,0 +1,7 @@
+{
+    "name": "IbanField",
+    "import": "import {IbanField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<IbanField name=\"bankAccount\" label=\"IBAN\" />"
+}

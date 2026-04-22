@@ -1,0 +1,7 @@
+{
+    "name": "Circle",
+    "import": "import {Circle} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

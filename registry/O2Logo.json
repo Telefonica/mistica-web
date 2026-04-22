@@ -1,0 +1,107 @@
+{
+    "name": "O2Logo",
+    "import": "import {O2Logo} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "size",
+            "type": "ByBreakpoint<number>",
+            "required": false,
+            "default": "48"
+        },
+        {
+            "name": "type",
+            "type": "enum",
+            "required": false,
+            "default": "isotype"
+        },
+        {
+            "name": "color",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false,
+            "description": "\"data-\" prefix is automatically added. For example, use \"testid\" instead of \"data-testid\""
+        },
+        {
+            "name": "onPress",
+            "type": "PressHandler",
+            "required": false
+        },
+        {
+            "name": "href",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "newTab",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "loadOnTop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "onNavigate",
+            "type": "(() => void | Promise<void>) | (() => void | Promise<void>)",
+            "required": false
+        },
+        {
+            "name": "to",
+            "type": "string | Location",
+            "required": false
+        },
+        {
+            "name": "fullPageOnWebView",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "replace",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "trackingEvent",
+            "type": "TrackingEvent | readonly TrackingEvent[]",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false,
+            "description": "IMPORTANT: try to avoid using role=\"link\" with onPress and first consider other alternatives like to/href + onNavigate"
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-describedby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-current",
+            "type": "boolean | \"false\" | \"true\" | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

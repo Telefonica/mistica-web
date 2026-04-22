@@ -1,0 +1,18 @@
+{
+    "name": "PageBullets",
+    "import": "import {PageBullets} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "currentIndex",
+            "type": "number",
+            "required": true
+        },
+        {
+            "name": "numPages",
+            "type": "ByBreakpoint<number>",
+            "required": true
+        }
+    ],
+    "playroomSnippet": null
+}

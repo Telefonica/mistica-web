@@ -1,0 +1,15 @@
+{
+    "hooks": {
+        "PostToolUse": [
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "bash -c 'echo \"Mistica checklist: did you update src/index.tsx, the story, the test, and playroom/snippets.tsx?\"'"
+                    }
+                ]
+            }
+        ]
+    }
+}

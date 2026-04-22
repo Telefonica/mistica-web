@@ -1,0 +1,7 @@
+{
+    "name": "SkipLink",
+    "import": "import {SkipLink} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

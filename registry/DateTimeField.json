@@ -1,0 +1,7 @@
+{
+    "name": "DateTimeField",
+    "import": "import {DateTimeField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

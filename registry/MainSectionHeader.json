@@ -1,0 +1,34 @@
+{
+    "name": "MainSectionHeader",
+    "import": "import {MainSectionHeader} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "titleAs",
+            "type": "enum",
+            "required": false,
+            "default": "h1"
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "button",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

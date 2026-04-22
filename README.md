@@ -136,6 +136,9 @@ If `node_modules/@telefonica/mistica` is **not** available, fall back to the Git
 - Layout: `https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md`
 - Patterns: `https://github.com/Telefonica/mistica-web/blob/master/doc/patterns.md`
 
+Read the [full AI integration history](./doc/ai-integration.md) for what was built, why, and how scores
+improved over time.
+
 ## More docs
 
 - [Examples](https://github.com/Telefonica/mistica-web/tree/master/examples)

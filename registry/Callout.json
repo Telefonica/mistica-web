@@ -1,0 +1,7 @@
+{
+    "name": "Callout",
+    "import": "import {Callout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Callout\n                asset={<IconBoxRegular />}\n                onClose={() => {}}\n                title=\"Some title\"\n                description=\"This is a description for the callout\"\n                button={\n                <ButtonPrimary small onPress={() => {}}>\n                    Action\n                </ButtonPrimary>\n                }\n                buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}\n            />"
+}

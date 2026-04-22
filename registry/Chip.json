@@ -1,0 +1,7 @@
+{
+    "name": "Chip",
+    "import": "import {Chip} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Chip>Chip</Chip>"
+}

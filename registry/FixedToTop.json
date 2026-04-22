@@ -1,0 +1,7 @@
+{
+    "name": "FixedToTop",
+    "import": "import {FixedToTop} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

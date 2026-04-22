@@ -1,0 +1,45 @@
+{
+    "name": "RowList",
+    "import": "import {RowList} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "ariaLabelledby",
+            "type": "string",
+            "required": false,
+            "description": "@deprecated Use 'aria-labelledby' instead. This will be removed in a future release."
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false,
+            "default": "list"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "aria-live",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "aria-atomic",
+            "type": "boolean",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "Row"
+}

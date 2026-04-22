@@ -1,0 +1,7 @@
+{
+    "name": "Stack",
+    "import": "import {Stack} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Stack space={16}><Placeholder /><Placeholder /><Placeholder /></Stack>"
+}

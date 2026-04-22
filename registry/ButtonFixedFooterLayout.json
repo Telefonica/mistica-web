@@ -1,0 +1,7 @@
+{
+    "name": "ButtonFixedFooterLayout",
+    "import": "import {ButtonFixedFooterLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>} secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}>\n            Some content here\n        </ButtonFixedFooterLayout>"
+}

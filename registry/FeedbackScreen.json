@@ -1,0 +1,92 @@
+{
+    "name": "FeedbackScreen",
+    "import": "import {FeedbackScreen} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "hapticFeedback",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "asset",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "animateText",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "isInverse",
+            "type": "boolean",
+            "required": false,
+            "default": "false",
+            "description": "@deprecated use variant=\"brand\" instead"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "imageUrl",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "imageFit",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "description",
+            "type": "string | readonly string[]",
+            "required": false
+        },
+        {
+            "name": "extra",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "unstable_inlineInDesktop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "primaryButton",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "secondaryButton",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "link",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<(ButtonLinkProps & { withChevron?: boolean; }) & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "align",
+            "type": "ByBreakpoint<\"center\" | \"left\">",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

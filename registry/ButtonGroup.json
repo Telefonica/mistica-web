@@ -1,0 +1,7 @@
+{
+    "name": "ButtonGroup",
+    "import": "import {ButtonGroup} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ButtonGroup\n          primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}\n          secondaryButton={<ButtonSecondary onPress={() => {}}>Secondary Action</ButtonSecondary>}\n          link={<ButtonLink onPress={() => {}}>Link</ButtonLink>}/>"
+}

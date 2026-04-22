@@ -1,0 +1,7 @@
+{
+    "name": "Box",
+    "import": "import {Box} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Box padding={16}><Placeholder /></Box>"
+}

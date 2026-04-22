@@ -1,0 +1,7 @@
+{
+    "name": "ScreenReaderOnly",
+    "import": "import {ScreenReaderOnly} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

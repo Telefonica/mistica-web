@@ -1,0 +1,7 @@
+{
+    "name": "LoadingBar",
+    "import": "import {LoadingBar} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<LoadingBar visible />"
+}

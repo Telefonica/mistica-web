@@ -1,0 +1,19 @@
+{
+    "name": "ThemeVariant",
+    "import": "import {ThemeVariant} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isInverse",
+            "type": "boolean",
+            "required": false,
+            "description": "@deprecated Use variant = 'brand' instead"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

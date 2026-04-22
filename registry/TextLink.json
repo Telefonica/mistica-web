@@ -1,0 +1,7 @@
+{
+    "name": "TextLink",
+    "import": "import {TextLink} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Text3>This is a <TextLink href=\"https://example.org\" newTab>text link</TextLink> in the middle of a text</Text3>"
+}

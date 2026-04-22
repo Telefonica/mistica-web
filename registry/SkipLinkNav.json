@@ -1,0 +1,18 @@
+{
+    "name": "SkipLinkNav",
+    "import": "import {SkipLinkNav} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

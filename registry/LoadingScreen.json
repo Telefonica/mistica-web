@@ -1,0 +1,51 @@
+{
+    "name": "LoadingScreen",
+    "import": "import {LoadingScreen} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isInverse",
+            "type": "boolean",
+            "required": false,
+            "description": "@deprecated use variant=\"brand\" instead"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "isLoading",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "onClose",
+            "type": "(() => void)",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "texts",
+            "type": "readonly { title?: string; description?: string; duration?: number | undefined; }[] | undefined",
+            "required": false,
+            "default": "[{title, description}]"
+        }
+    ],
+    "playroomSnippet": "<LoadingScreen\n            title=\"Some title\"\n            description=\"Some description text\"\n        />"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "CoverHero",
+    "import": "import {CoverHero} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<CoverHero\n          backgroundImage=\"https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80\"\n          headline={<Tag type=\"active\">Novedad</Tag>}\n          pretitle=\"Conecta Max\"\n          title=\"Vuela con la Fibra 1Gb\"\n          description=\"Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados.\"\n          button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}\n          extra={<Placeholder />}\n          sideExtra={<Placeholder />}\n        />"
+}

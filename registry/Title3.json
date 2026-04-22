@@ -1,0 +1,25 @@
+{
+    "name": "Title3",
+    "import": "import {Title3} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "right",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "as",
+            "type": "enum",
+            "required": false,
+            "default": "h3"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false,
+            "description": "\"data-\" prefix is automatically added. For example, use \"testid\" instead of \"data-testid\""
+        }
+    ],
+    "playroomSnippet": "<Title3>Some title</Title3>"
+}

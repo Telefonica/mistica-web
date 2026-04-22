@@ -1,0 +1,7 @@
+{
+    "name": "PinField",
+    "import": "import {PinField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<PinField name=\"otp\" aria-label=\"OTP\" />"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "ActionsListSheet",
+    "import": "import {ActionsListSheet} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ButtonPrimary\n  aria-expanded={getState(\"isSheetOpen\", false)}\n  aria-haspopup=\"dialog\"\n  disabled={getState(\"isSheetOpen\")}\n  onPress={() => {\n    setState(\"isSheetOpen\", true);\n  }}\n>\n  Open\n</ButtonPrimary>\n\n{getState(\"isSheetOpen\") && (\n  <ActionsListSheet\n    onClose={() => {\n      setState(\"isSheetOpen\", false);\n    }}\n    onSelect={(selected) => console.log(selected)}\n    title=\"Title\"\n    subtitle=\"Subtitle\"\n    description=\"Description\"\n    items={[\n      {\n        id: \"1\",\n        title: \"Action with icon\",\n        icon: {\n          Icon: IconLightningRegular,\n        },\n      },\n      {\n        id: \"2\",\n        title: \"Action without icon\",\n      },\n      {\n        id: \"3\",\n        title: \"Destructive action\",\n        style: \"destructive\",\n        icon: {\n          Icon: IconTrashCanRegular,\n        },\n      },\n    ]}\n  />\n)}"
+}

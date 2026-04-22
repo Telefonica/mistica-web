@@ -1,0 +1,7 @@
+{
+    "name": "TextField",
+    "import": "import {TextField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<TextField name=\"name\" label=\"Name\"/>"
+}

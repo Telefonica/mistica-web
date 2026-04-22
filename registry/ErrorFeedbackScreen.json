@@ -1,0 +1,58 @@
+{
+    "name": "ErrorFeedbackScreen",
+    "import": "import {ErrorFeedbackScreen} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "errorReference",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "description",
+            "type": "string | readonly string[]",
+            "required": false
+        },
+        {
+            "name": "extra",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "unstable_inlineInDesktop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "primaryButton",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "secondaryButton",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "link",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<(ButtonLinkProps & { withChevron?: boolean; }) & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "align",
+            "type": "ByBreakpoint<\"center\" | \"left\">",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

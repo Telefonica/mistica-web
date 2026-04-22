@@ -1,0 +1,7 @@
+{
+    "name": "Timeline",
+    "import": "import {Timeline} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Timeline>\n  <TimelineItem state=\"completed\">\n    <Placeholder />\n  </TimelineItem>\n  <TimelineItem state=\"active\">\n    <Placeholder />\n  </TimelineItem>\n  <TimelineItem state=\"inactive\">\n    <Placeholder />\n  </TimelineItem>\n</Timeline>"
+}

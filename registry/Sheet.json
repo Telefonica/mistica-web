@@ -1,0 +1,7 @@
+{
+    "name": "Sheet",
+    "import": "import {Sheet} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ButtonPrimary\n  aria-expanded={getState(\"isSheetOpen\", false)}\n  aria-haspopup=\"dialog\"\n  disabled={getState(\"isSheetOpen\")}\n  onPress={() => {\n    setState(\"isSheetOpen\", true);\n  }}\n>\n  Open\n</ButtonPrimary>\n\n{getState(\"isSheetOpen\") && (\n  <Sheet\n    onClose={() => {\n      setState(\"isSheetOpen\", false);\n    }}\n  >\n    {({ modalTitleId }) => (\n      <SheetBody modalTitleId={modalTitleId}>\n        <Box paddingBottom={{ mobile: 16, desktop: 0 }}>\n          <Placeholder />\n        </Box>\n      </SheetBody>\n    )}\n  </Sheet>\n)}"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Inline",
+    "import": "import {Inline} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Inline space={16}><Placeholder /><Placeholder /><Placeholder /></Inline>"
+}

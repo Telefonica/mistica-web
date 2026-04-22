@@ -1,0 +1,7 @@
+{
+    "name": "CommunityHighlightedValueBlock",
+    "import": "import {CommunityHighlightedValueBlock} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

@@ -1,0 +1,7 @@
+{
+    "name": "CommunityInformationBlock",
+    "import": "import {CommunityInformationBlock} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

@@ -1,0 +1,7 @@
+{
+    "name": "CreditCardFields",
+    "import": "import {CreditCardFields} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<CreditCardFields/>"
+}

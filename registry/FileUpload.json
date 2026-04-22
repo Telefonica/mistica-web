@@ -1,0 +1,7 @@
+{
+    "name": "FileUpload",
+    "import": "import {FileUpload} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<FileUpload\n            name=\"file\"\n            asset={<IconExportRegular color=\"currentColor\" />}\n            title=\"Upload your file\"\n            description=\"File can be up to 50Mb\"\n            renderButton={(props) => (\n                <ButtonPrimary {...props}>\n                    Choose file\n                </ButtonPrimary>\n            )}\n        />"
+}

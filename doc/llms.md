@@ -314,6 +314,37 @@ After reading the minimum set, read any further files that apply to your specifi
 | **Migrating from older versions**                 | `doc/migration-guide.md` |
 | **Optimizing bundle size with lottie**            | `doc/lottie.md`          |
 
+### Step 3: Use a recipe for common screen patterns
+
+Instead of assembling components from scratch, start from a recipe if one matches your screen type. Each
+recipe is a complete, compilable JSX example using real Mistica components.
+
+| Screen type                                  | Recipe file                        |
+| -------------------------------------------- | ---------------------------------- |
+| Login / sign-in                              | `doc/recipes/login.md`             |
+| Multi-step onboarding funnel                 | `doc/recipes/onboarding.md`        |
+| Settings page with toggles and rows          | `doc/recipes/settings.md`          |
+| Tariff / plan comparison                     | `doc/recipes/tariff-comparison.md` |
+| Product details with hero + related carousel | `doc/recipes/product-details.md`   |
+| Dashboard / home screen                      | `doc/recipes/dashboard.md`         |
+| Checkout / payment flow                      | `doc/recipes/checkout.md`          |
+| Paywall / upgrade screen                     | `doc/recipes/paywall.md`           |
+| Multi-step form wizard                       | `doc/recipes/form-wizard.md`       |
+| Error / empty state                          | `doc/recipes/error-state.md`       |
+| Master-detail (list + detail)                | `doc/recipes/master-detail.md`     |
+| Skeleton loading states                      | `doc/recipes/skeleton-loading.md`  |
+| Streaming / media content feed               | `doc/recipes/content-feed.md`      |
+
+### Step 4: Check the skin doc if targeting a specific brand
+
+| Brand         | Skin doc                    |
+| ------------- | --------------------------- |
+| Movistar (ES) | `doc/skins/movistar-new.md` |
+| O2 (UK/DE)    | `doc/skins/o2-new.md`       |
+| Vivo (BR)     | `doc/skins/vivo-new.md`     |
+| Telefonica    | `doc/skins/telefonica.md`   |
+| Blau (DE)     | `doc/skins/blau.md`         |
+
 ## Docs reference
 
 - [Components reference](./components.md): full component catalog with props and usage examples

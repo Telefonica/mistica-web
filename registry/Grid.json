@@ -1,0 +1,86 @@
+{
+    "name": "Grid",
+    "import": "import {Grid} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "rows",
+            "type": "RowsColumns | AutoFillConfig",
+            "required": false
+        },
+        {
+            "name": "columns",
+            "type": "RowsColumns | AutoFillConfig",
+            "required": false
+        },
+        {
+            "name": "gap",
+            "type": "ByBreakpoint<Gap> | [ByBreakpoint<Gap>, ByBreakpoint<Gap>]",
+            "required": false,
+            "default": "0"
+        },
+        {
+            "name": "flow",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "justifyItems",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "alignItems",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "justifyContent",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "alignContent",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "height",
+            "type": "string | number",
+            "required": false
+        },
+        {
+            "name": "minHeight",
+            "type": "string | number",
+            "required": false
+        },
+        {
+            "name": "as",
+            "type": "string | ComponentType<any>",
+            "required": false,
+            "default": "div"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false,
+            "description": "\"data-\" prefix is automatically added. For example, use \"testid\" instead of \"data-testid\""
+        }
+    ],
+    "playroomSnippet": "<ResponsiveLayout><GridLayout><Placeholder /></GridLayout></ResponsiveLayout>"
+}

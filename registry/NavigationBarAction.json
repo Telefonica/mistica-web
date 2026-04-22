@@ -1,0 +1,165 @@
+{
+    "name": "NavigationBarAction",
+    "import": "import {NavigationBarAction} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "onPress",
+            "type": "PressHandler",
+            "required": false
+        },
+        {
+            "name": "href",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "to",
+            "type": "string | Location",
+            "required": false
+        },
+        {
+            "name": "newTab",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "loadOnTop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "onNavigate",
+            "type": "(() => void | Promise<void>) | (() => void | Promise<void>)",
+            "required": false
+        },
+        {
+            "name": "fullPageOnWebView",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "replace",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "maybe",
+            "type": "true",
+            "required": false
+        },
+        {
+            "name": "type",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "formId",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "trackingEvent",
+            "type": "TrackingEvent | readonly TrackingEvent[]",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false,
+            "description": "\"data-\" prefix is automatically added. For example, use \"testid\" instead of \"data-testid\""
+        },
+        {
+            "name": "aria-checked",
+            "type": "boolean | \"true\" | \"false\"",
+            "required": false
+        },
+        {
+            "name": "aria-controls",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "aria-expanded",
+            "type": "boolean | \"true\" | \"false\"",
+            "required": false
+        },
+        {
+            "name": "aria-haspopup",
+            "type": "boolean | \"true\" | \"false\" | \"menu\" | \"dialog\"",
+            "required": false
+        },
+        {
+            "name": "aria-hidden",
+            "type": "boolean | \"true\" | \"false\"",
+            "required": false
+        },
+        {
+            "name": "aria-selected",
+            "type": "boolean | \"true\" | \"false\"",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-live",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "aria-current",
+            "type": "boolean | \"true\" | \"false\" | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+            "required": false
+        },
+        {
+            "name": "aria-description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-describedby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false,
+            "description": "IMPORTANT: try to avoid using role=\"link\" with onPress and first consider other alternatives like to/href + onNavigate"
+        },
+        {
+            "name": "tabIndex",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "as",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "stopPropagation",
+            "type": "boolean",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<NavigationBar\n  onBack={() => {}}\n  title=\"Settings\"\n  right={\n    <NavigationBarActionGroup>\n      <NavigationBarAction aria-label=\"search\" onPress={() => {}}>\n        <IconSearchRegular color=\"currentColor\" />\n        {isDesktopOrBigger && \"Search\"}\n      </NavigationBarAction>\n    </NavigationBarActionGroup>\n  }\n/>"
+}

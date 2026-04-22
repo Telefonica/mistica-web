@@ -1,0 +1,7 @@
+{
+    "name": "FixedFooterLayout",
+    "import": "import {FixedFooterLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<FixedFooterLayout footer={<Box padding={16}><Placeholder /></Box>}>Some content here</FixedFooterLayout>"
+}

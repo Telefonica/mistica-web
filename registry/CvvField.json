@@ -1,0 +1,7 @@
+{
+    "name": "CvvField",
+    "import": "import {CvvField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<CvvField name=\"cvv\" label=\"CVV\"/>"
+}

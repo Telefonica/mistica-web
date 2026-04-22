@@ -1,0 +1,7 @@
+{
+    "name": "StackingGroup",
+    "import": "import {StackingGroup} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Stack space={16}><Placeholder /><Placeholder /><Placeholder /></Stack>"
+}

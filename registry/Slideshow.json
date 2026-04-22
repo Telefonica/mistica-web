@@ -1,0 +1,51 @@
+{
+    "name": "Slideshow",
+    "import": "import {Slideshow} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "items",
+            "type": "readonly ReactNode[]",
+            "required": true
+        },
+        {
+            "name": "withBullets",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "autoplay",
+            "type": "boolean | { time: number; loop?: boolean; }",
+            "required": false
+        },
+        {
+            "name": "initialPageIndex",
+            "type": "number",
+            "required": false,
+            "default": "0"
+        },
+        {
+            "name": "withControls",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "onPageChange",
+            "type": "((newPageIndex: number) => void)",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "inverseBullets",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        }
+    ],
+    "playroomSnippet": "<Slideshow\n  withBullets\n  items={[\n    <Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />,\n    <Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />,\n  ]}\n/>"
+}

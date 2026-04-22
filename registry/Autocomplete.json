@@ -1,0 +1,7 @@
+{
+    "name": "Autocomplete",
+    "import": "import {Autocomplete} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Autocomplete\n          label=\"Search fruits\"\n          getSuggestions={(value) => {\n            const fruits = ['apple', 'banana', 'coconut']\n            return fruits.filter(fruit => fruit.startsWith(value));\n          }}\n          value={getState('autocomplete') ?? ''}\n          onChangeValue={setState('autocomplete')}\n        />"
+}

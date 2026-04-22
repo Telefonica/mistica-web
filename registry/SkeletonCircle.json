@@ -1,0 +1,24 @@
+{
+    "name": "SkeletonCircle",
+    "import": "import {SkeletonCircle} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "ariaLabel",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "size",
+            "type": "string | number",
+            "required": false,
+            "default": "40"
+        }
+    ],
+    "playroomSnippet": null
+}

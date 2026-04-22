@@ -1,0 +1,7 @@
+{
+    "name": "Popover",
+    "import": "import {Popover} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Popover\n          target={<Text3>some target, this can be any component</Text3>}\n          title=\"Informative popover\"\n          description=\"You can use this popover to give more information to the user\"\n        />"
+}

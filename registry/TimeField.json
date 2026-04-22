@@ -1,0 +1,7 @@
+{
+    "name": "TimeField",
+    "import": "import {TimeField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<TimeField name=\"time\" label=\"Time\"/>"
+}

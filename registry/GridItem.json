@@ -1,0 +1,65 @@
+{
+    "name": "GridItem",
+    "import": "import {GridItem} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "columnStart",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "rowStart",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "span",
+            "type": "Span | [Span, Span]",
+            "required": false
+        },
+        {
+            "name": "columnSpan",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "rowSpan",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "justifySelf",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "alignSelf",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "as",
+            "type": "string | ComponentType<any>",
+            "required": false,
+            "default": "div"
+        },
+        {
+            "name": "order",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false,
+            "description": "\"data-\" prefix is automatically added. For example, use \"testid\" instead of \"data-testid\""
+        }
+    ],
+    "playroomSnippet": null
+}

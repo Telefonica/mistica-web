@@ -1,0 +1,7 @@
+{
+    "name": "NegativeBox",
+    "import": "import {NegativeBox} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

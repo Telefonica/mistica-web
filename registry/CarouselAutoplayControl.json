@@ -1,0 +1,35 @@
+{
+    "name": "CarouselAutoplayControl",
+    "import": "import {CarouselAutoplayControl} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isAutoplayEnabled",
+            "type": "boolean",
+            "required": true
+        },
+        {
+            "name": "isAtLastPage",
+            "type": "boolean",
+            "required": true
+        },
+        {
+            "name": "onAutoplayChanged",
+            "type": "(autoplay: boolean) => void",
+            "required": true
+        },
+        {
+            "name": "bleedLeft",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "bleedRight",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        }
+    ],
+    "playroomSnippet": "<Carousel\n  withBullets\n  items={Array.from({ length: 6 }, (_, idx) => (\n    <MediaCard\n      headline={<Tag type=\"promo\">Headline</Tag>}\n      title={'Card ' + idx}\n      description=\"Description\"\n      media={<Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />}\n      button={\n        <ButtonPrimary small onPress={() => {}}>\n          Action\n        </ButtonPrimary>\n      }\n      buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}\n    />\n  ))}\n/>"
+}

@@ -1,0 +1,41 @@
+{
+    "name": "TimelineItem",
+    "import": "import {TimelineItem} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "role",
+            "type": "string",
+            "required": false,
+            "default": "list"
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "Record<string, string>",
+            "required": false
+        },
+        {
+            "name": "state",
+            "type": "enum",
+            "required": false,
+            "default": "inactive"
+        },
+        {
+            "name": "asset",
+            "type": "ReactNode | { kind: \"dot\"; } | { kind: \"number\"; number: number; } | { kind: \"icon\"; Icon: (props: IconProps) => Element; } | { kind: \"circled-icon\"; Icon: (props: IconProps) => Element; } | { ...; } | { ...; } | { ...; } | { ...; }",
+            "required": false,
+            "default": "{kind: 'dot'}"
+        }
+    ],
+    "playroomSnippet": "<Timeline>\n  <TimelineItem state=\"completed\">\n    <Placeholder />\n  </TimelineItem>\n  <TimelineItem state=\"active\">\n    <Placeholder />\n  </TimelineItem>\n  <TimelineItem state=\"inactive\">\n    <Placeholder />\n  </TimelineItem>\n</Timeline>"
+}

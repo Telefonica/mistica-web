@@ -1,0 +1,7 @@
+{
+    "name": "ButtonLayout",
+    "import": "import {ButtonLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ButtonLayout\n            primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}\n            secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}\n        />"
+}

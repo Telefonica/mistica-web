@@ -1,0 +1,59 @@
+{
+    "name": "NavigationBar",
+    "import": "import {NavigationBar} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "topFixed",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "paddingX",
+            "type": "number",
+            "required": false,
+            "default": "0",
+            "description": "@deprecated use wide"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "onBack",
+            "type": "(() => void)",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "titleAs",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "right",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "withBorder",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "wide",
+            "type": "boolean | WideConfig",
+            "required": false,
+            "default": "false"
+        }
+    ],
+    "playroomSnippet": "<NavigationBar\n  onBack={() => {}}\n  title=\"Settings\"\n  right={\n    <NavigationBarActionGroup>\n      <NavigationBarAction aria-label=\"search\" onPress={() => {}}>\n        <IconSearchRegular color=\"currentColor\" />\n        {isDesktopOrBigger && \"Search\"}\n      </NavigationBarAction>\n    </NavigationBarActionGroup>\n  }\n/>"
+}

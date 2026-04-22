@@ -1,0 +1,78 @@
+{
+    "name": "Rating",
+    "import": "import {Rating} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "type",
+            "type": "enum",
+            "required": false,
+            "default": "quantitative"
+        },
+        {
+            "name": "icons",
+            "type": "RatingIconProps[]",
+            "required": false,
+            "default": "[\n    {\n        ActiveIcon: IconFaceSadFilled,\n        InactiveIcon: IconFaceSadRegular,\n        color: vars.colors.errorHigh,\n    },\n    {\n        ActiveIcon: IconFaceSlightlySadFilled,\n        InactiveIcon: IconFaceSlightlySadRegular,\n        color: vars.colors.error,\n    },\n    {\n        ActiveIcon: IconFaceNeutralFilled,\n        InactiveIcon: IconFaceNeutralRegular,\n        color: vars.colors.warning,\n    },\n    {\n        ActiveIcon: IconFaceHappyFilled,\n        InactiveIcon: IconFaceHappyRegular,\n        color: vars.colors.success,\n    },\n    {\n        ActiveIcon: IconFaceSuperHappyFilled,\n        InactiveIcon: IconFaceSuperHappyRegular,\n        color: vars.colors.successHigh,\n    },\n]"
+        },
+        {
+            "name": "size",
+            "type": "number",
+            "required": false,
+            "default": "32"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "valueLabels",
+            "type": "string[]",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "icon",
+            "type": "RatingIconProps",
+            "required": false,
+            "default": "{\n    ActiveIcon: IconStarFilled,\n    InactiveIcon: IconStarRegular,\n    color: vars.colors.controlActivated,\n}"
+        },
+        {
+            "name": "count",
+            "type": "number",
+            "required": false,
+            "default": "5"
+        },
+        {
+            "name": "value",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "defaultValue",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "onChangeValue",
+            "type": "((value: number) => void)",
+            "required": false
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<Rating\n            aria-label=\"quantitative rating\"\n            type=\"quantitative\"\n            size={32}\n            defaultValue={3}\n            count={5}\n            icon={{\n              ActiveIcon: IconStarFilled,\n              InactiveIcon: IconStarRegular,\n              color: colors.controlActivated,\n            }}\n          />"
+}

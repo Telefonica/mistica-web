@@ -1,0 +1,7 @@
+{
+    "name": "Divider",
+    "import": "import {Divider} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Divider />"
+}

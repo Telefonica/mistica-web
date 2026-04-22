@@ -1,0 +1,26 @@
+{
+    "name": "MainSectionHeaderLayout",
+    "import": "import {MainSectionHeaderLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isInverse",
+            "type": "boolean",
+            "required": false,
+            "default": "false",
+            "description": "@deprecated use variant=\"brand\" instead"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

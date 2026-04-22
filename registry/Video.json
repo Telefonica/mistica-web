@@ -1,0 +1,7 @@
+{
+    "name": "Video",
+    "import": "import {Video} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Video src=\"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4\" aspectRatio=\"16:9\" />"
+}

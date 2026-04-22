@@ -1,0 +1,80 @@
+{
+    "name": "MainNavigationBar",
+    "import": "import {MainNavigationBar} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "sections",
+            "type": "readonly MainNavigationBarSection[]",
+            "required": false,
+            "default": "[]"
+        },
+        {
+            "name": "selectedIndex",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "right",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "topSlot",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "topSlotBackgroundColor",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "logo",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "topFixed",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "withBorder",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "burgerMenuExtra",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "large",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "desktopLargeMenu",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "wide",
+            "type": "boolean | WideConfig",
+            "required": false,
+            "default": "false"
+        }
+    ],
+    "playroomSnippet": "<MainNavigationBar\n            topSlotBackgroundColor={colors.backgroundNegative}\n            topSlot={\n              <ThemeVariant variant=\"negative\">\n                <Box paddingY={8}>\n                  <Align x=\"center\">\n                    <Inline space={24} alignItems=\"center\">\n                      <Text2 medium>BLACK FRIDAY - 60% en tecnología</Text2>\n                      <ButtonSecondary small onPress={() => {}}>\n                        See offers\n                      </ButtonSecondary>\n                    </Inline>\n                  </Align>\n                </Box>\n              </ThemeVariant>\n            }\n            sections={[\n              {\n                title: \"Start\",\n                onPress: () => setState(\"index\", 0),\n              },\n              {\n                title: \"Account\",\n                onPress: () => setState(\"index\", 1),\n              },\n              {\n                title: \"Explore\",\n                onPress: () => setState(\"index\", 2),\n              },\n              {\n                title: \"Support\",\n                onPress: () => setState(\"index\", 3),\n              },\n            ]}\n            selectedIndex={getState(\"index\", 0)}\n            right={\n              <NavigationBarActionGroup>\n                <NavigationBarAction\n                  onPress={() => {}}\n                  aria-label=\"shopping cart with 2 items\"\n                >\n                  <Badge value={2}>\n                    <IconShoppingCartRegular color=\"currentColor\" />\n                  </Badge>\n                </NavigationBarAction>\n                <NavigationBarAction onPress={() => {}} aria-label=\"Open profile\">\n                  <Avatar\n                    size={isDesktopOrBigger ? 32 : 24}\n                    initials=\"ML\"\n                    src=\"${imagePlaceholder}\"\n                  />\n                  {isDesktopOrBigger && \"María López Serrano\"}\n                </NavigationBarAction>\n              </NavigationBarActionGroup>\n            }\n          />"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "GridLayout",
+    "import": "import {GridLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ResponsiveLayout><GridLayout><Placeholder /></GridLayout></ResponsiveLayout>"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "CarouselContextProvider",
+    "import": "import {CarouselContextProvider} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Carousel\n  withBullets\n  items={Array.from({ length: 6 }, (_, idx) => (\n    <MediaCard\n      headline={<Tag type=\"promo\">Headline</Tag>}\n      title={'Card ' + idx}\n      description=\"Description\"\n      media={<Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />}\n      button={\n        <ButtonPrimary small onPress={() => {}}>\n          Action\n        </ButtonPrimary>\n      }\n      buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}\n    />\n  ))}\n/>"
+}

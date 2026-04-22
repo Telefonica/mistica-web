@@ -1,0 +1,204 @@
+{
+    "name": "Row",
+    "import": "import {Row} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "atomicReading",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "headline",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "titleAs",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "titleLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "subtitle",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "subtitleLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "description",
+            "type": "string | null",
+            "required": false
+        },
+        {
+            "name": "descriptionLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "detail",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "asset",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "badge",
+            "type": "number | boolean",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false,
+            "default": "list"
+        },
+        {
+            "name": "touchableRole",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "extra",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "withChevron",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "right",
+            "type": "Right",
+            "required": false
+        },
+        {
+            "name": "danger",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "tabIndex",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "onPress",
+            "type": "(() => void) | (() => void) | (() => void) | (() => void) | (() => void)",
+            "required": false
+        },
+        {
+            "name": "trackingEvent",
+            "type": "TrackingEvent | readonly TrackingEvent[]",
+            "required": false
+        },
+        {
+            "name": "switch",
+            "type": "ControlProps",
+            "required": false
+        },
+        {
+            "name": "radioValue",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "iconButton",
+            "type": "ExclusifyUnion<IconButtonProps | ToggleIconButtonProps>",
+            "required": false
+        },
+        {
+            "name": "checkbox",
+            "type": "ControlProps",
+            "required": false
+        },
+        {
+            "name": "href",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "newTab",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "loadOnTop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "onNavigate",
+            "type": "(() => void | Promise<void>) | (() => void | Promise<void>)",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-describedby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-current",
+            "type": "boolean | \"false\" | \"true\" | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+            "required": false
+        },
+        {
+            "name": "to",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "fullPageOnWebView",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "replace",
+            "type": "boolean",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "Row"
+}

@@ -1,0 +1,40 @@
+{
+    "name": "VerticalMosaic",
+    "import": "import {VerticalMosaic} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "items",
+            "type": "readonly MosaicItem[]",
+            "required": true
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false,
+            "default": "list"
+        },
+        {
+            "name": "itemRole",
+            "type": "string",
+            "required": false,
+            "default": "listitem"
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<VerticalMosaic\n          items={Array.from({ length: 6 }, (_, index) => (\n            <Image\n              src=\"${imagePlaceholder}\"\n              width=\"100%\"\n              height=\"100%\"\n              key={index}\n            />\n          ))}\n        />"
+}

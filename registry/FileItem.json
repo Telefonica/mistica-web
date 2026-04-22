@@ -1,0 +1,23 @@
+{
+    "name": "FileItem",
+    "import": "import {FileItem} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "file",
+            "type": "File",
+            "required": true
+        },
+        {
+            "name": "onRemove",
+            "type": "(file: File) => void",
+            "required": true
+        },
+        {
+            "name": "removeLabel",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Switch",
+    "import": "import {Switch} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Switch name=\"switch\"/>"
+}

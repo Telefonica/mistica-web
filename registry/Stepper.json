@@ -1,0 +1,7 @@
+{
+    "name": "Stepper",
+    "import": "import {Stepper} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Stepper currentIndex={2} steps={[\"Basic Details\", \"Company Details\", \"Subscription Plan\"]} />"
+}

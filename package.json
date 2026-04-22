@@ -14,6 +14,7 @@
         "dist-es/**",
         "css/**",
         "doc/**",
+        "registry/**",
         "community.d.ts",
         "community.js"
     ],
@@ -42,7 +43,12 @@
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
         "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install",
-        "edit-playroom-patch": "playroom/patch-playroom.sh"
+        "edit-playroom-patch": "playroom/patch-playroom.sh",
+        "build:registry": "node scripts/generate-registry.js",
+        "ai:test": "./scripts/test-ai-quality.sh after",
+        "ai:score": "node scripts/score-ai-output.js ai-test/results/after",
+        "ai:screenshot": "node scripts/screenshot-ai-output.js",
+        "ai:compare": "./scripts/test-ai-quality.sh compare"
     },
     "browserslist": [
         "Chrome >= 100",

@@ -1,0 +1,92 @@
+{
+    "name": "Text7",
+    "import": "import {Text7} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "color",
+            "type": "string",
+            "required": false,
+            "default": "vars.colors.textPrimary"
+        },
+        {
+            "name": "decoration",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "transform",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "truncate",
+            "type": "number | boolean",
+            "required": false
+        },
+        {
+            "name": "wordBreak",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "hyphens",
+            "type": "enum",
+            "required": false,
+            "default": "auto"
+        },
+        {
+            "name": "textAlign",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "as",
+            "type": "string | ComponentType<any>",
+            "required": false,
+            "default": "span"
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-level",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-hidden",
+            "type": "Booleanish",
+            "required": false
+        },
+        {
+            "name": "aria-live",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "forceMobileSizes",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "textShadow",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<Text>some text</Text>"
+}

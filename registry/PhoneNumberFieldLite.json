@@ -1,0 +1,7 @@
+{
+    "name": "PhoneNumberFieldLite",
+    "import": "import {PhoneNumberFieldLite} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<PhoneNumberField name=\"phone\" label=\"Phone\"/>"
+}

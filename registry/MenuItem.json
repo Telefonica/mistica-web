@@ -1,0 +1,48 @@
+{
+    "name": "MenuItem",
+    "import": "import {MenuItem} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "controlType",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "checked",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "label",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "Icon",
+            "type": "((props: IconProps) => Element)",
+            "required": false
+        },
+        {
+            "name": "destructive",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "onPress",
+            "type": "(item: number) => void",
+            "required": true
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<Menu\n      renderTarget={({ ref, onPress, isMenuOpen }) => (\n        <Box padding={16}>\n          <Touchable\n            ref={ref}\n            onPress={onPress}\n            style={{ maxWidth: \"fit-content\" }}\n          >\n            <Inline space={16}>\n              <IconKebabMenuLight />\n              <Text3 regular>{isMenuOpen ? \"Close\" : \"Open\"}</Text3>\n            </Inline>\n          </Touchable>\n        </Box>\n      )}\n      renderMenu={({ ref, className }) => (\n        <div ref={ref} className={className}>\n          <MenuSection>\n            <MenuItem label=\"option 1\" onPress={() => {}} />\n            <MenuItem\n              label=\"option 2\"\n              onPress={() => setState(\"option 2\", !getState(\"option 2\", false))}\n              controlType=\"checkbox\"\n              checked={getState(\"option 2\", false)}\n            />\n            <MenuItem label=\"option 3\" disabled onPress={() => {}} />\n          </MenuSection>\n\n          <MenuSection>\n            <MenuItem\n              label=\"option 4\"\n              destructive\n              Icon={IconLightningRegular}\n              onPress={() => {}}\n            />\n          </MenuSection>\n\n          <MenuSection>\n            <MenuItem\n              label=\"option 5\"\n              disabled\n              Icon={IconLightningRegular}\n              onPress={() => {}}\n            />\n            <MenuItem\n              label=\"An option with a really long text to verify overflow\"\n              onPress={() => {}}\n            />\n          </MenuSection>\n        </div>\n      )}\n    />"
+}

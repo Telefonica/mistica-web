@@ -1,0 +1,24 @@
+{
+    "name": "ListItem",
+    "import": "import {ListItem} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "Icon",
+            "type": "((props: IconProps) => Element)",
+            "required": false
+        },
+        {
+            "name": "icon",
+            "type": "Element",
+            "required": false
+        },
+        {
+            "name": "withMarker",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        }
+    ],
+    "playroomSnippet": "<ListItem>List item</ListItem>"
+}

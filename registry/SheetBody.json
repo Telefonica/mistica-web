@@ -1,0 +1,43 @@
+{
+    "name": "SheetBody",
+    "import": "import {SheetBody} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "title",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "subtitle",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "description",
+            "type": "string | readonly string[]",
+            "required": false
+        },
+        {
+            "name": "button",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "secondaryButton",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<ButtonProps & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "link",
+            "type": "RendersNullableElement<ForwardRefExoticComponent<(ButtonLinkProps & { withChevron?: boolean; }) & RefAttributes<TouchableElement>>>",
+            "required": false
+        },
+        {
+            "name": "modalTitleId",
+            "type": "string",
+            "required": true
+        }
+    ],
+    "playroomSnippet": "<ButtonPrimary\n  aria-expanded={getState(\"isSheetOpen\", false)}\n  aria-haspopup=\"dialog\"\n  disabled={getState(\"isSheetOpen\")}\n  onPress={() => {\n    setState(\"isSheetOpen\", true);\n  }}\n>\n  Open\n</ButtonPrimary>\n\n{getState(\"isSheetOpen\") && (\n  <Sheet\n    onClose={() => {\n      setState(\"isSheetOpen\", false);\n    }}\n  >\n    {({ modalTitleId }) => (\n      <SheetBody modalTitleId={modalTitleId}>\n        <Box paddingBottom={{ mobile: 16, desktop: 0 }}>\n          <Placeholder />\n        </Box>\n      </SheetBody>\n    )}\n  </Sheet>\n)}"
+}

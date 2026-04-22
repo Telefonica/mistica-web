@@ -1,0 +1,24 @@
+{
+    "name": "SkeletonRow",
+    "import": "import {SkeletonRow} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "width",
+            "type": "string | number",
+            "required": false,
+            "default": "100%"
+        },
+        {
+            "name": "ariaLabel",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        }
+    ],
+    "playroomSnippet": null
+}

@@ -1,0 +1,65 @@
+{
+    "name": "CenteredCarousel",
+    "import": "import {CenteredCarousel} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "items",
+            "type": "readonly ReactNode[]",
+            "required": true
+        },
+        {
+            "name": "itemStyle",
+            "type": "CSSProperties",
+            "required": false
+        },
+        {
+            "name": "itemClassName",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "withBullets",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "withControls",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "renderBullets",
+            "type": "((bulletsProps: PageBulletsProps) => ReactNode)",
+            "required": false,
+            "description": "@deprecated use CarouselContextProvider and CarouselContextConsumer to provide bullets props to custom bullets component.\nSee an example here: https://mistica-web.vercel.app/?path=/story/components-carousels-carousel--with-carousel-context"
+        },
+        {
+            "name": "initialActiveItem",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "onPageChange",
+            "type": "((newPageInfo: { pageIndex: number; shownItemIndexes: number[]; }) => void)",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<CenteredCarousel\n  withBullets\n  items={Array.from({length: 6}, (_, idx) => (\n      <div\n          style={{\n              border: \\"
+}

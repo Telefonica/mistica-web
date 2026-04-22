@@ -1,0 +1,7 @@
+{
+    "name": "Hero",
+    "import": "import {Hero} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

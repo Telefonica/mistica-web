@@ -1,0 +1,7 @@
+{
+    "name": "MonthField",
+    "import": "import {MonthField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

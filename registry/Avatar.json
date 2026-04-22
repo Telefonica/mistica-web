@@ -1,0 +1,7 @@
+{
+    "name": "Avatar",
+    "import": "import {Avatar} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Avatar size={64} src=\"${imagePlaceholder}\" badge />"
+}

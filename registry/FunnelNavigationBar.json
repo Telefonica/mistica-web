@@ -1,0 +1,42 @@
+{
+    "name": "FunnelNavigationBar",
+    "import": "import {FunnelNavigationBar} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "logo",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "right",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "topFixed",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "withBorder",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "wide",
+            "type": "boolean | WideConfig",
+            "required": false,
+            "default": "false"
+        }
+    ],
+    "playroomSnippet": "<FunnelNavigationBar\n  right={\n    <NavigationBarActionGroup>\n      <NavigationBarAction aria-label=\"need help?\" href=\"/help\">\n        <IconQuestionRegular color=\"currentColor\" />\n        {isDesktopOrBigger && (\n          <Text2 regular color={colors.textLink}>\n            Need help?\n          </Text2>\n        )}\n      </NavigationBarAction>\n      <NavigationBarAction aria-label=\"exit\" onPress={() => {}}>\n        {isDesktopOrBigger && \"Exit\"}\n        <IconCloseRegular color=\"currentColor\" />\n      </NavigationBarAction>\n    </NavigationBarActionGroup>\n  }\n/>"
+}

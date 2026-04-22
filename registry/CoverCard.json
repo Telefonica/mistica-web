@@ -1,0 +1,296 @@
+{
+    "name": "CoverCard",
+    "import": "import {CoverCard} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-describedby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "size",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "backgroundColor",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "gradientOverlayColor",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aspectRatio",
+            "type": "CardAspectRatio",
+            "required": false
+        },
+        {
+            "name": "width",
+            "type": "string | number",
+            "required": false
+        },
+        {
+            "name": "height",
+            "type": "string | number",
+            "required": false
+        },
+        {
+            "name": "asset",
+            "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+            "required": false
+        },
+        {
+            "name": "imageSrc",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "imageSrcSet",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "videoSrc",
+            "type": "VideoSource",
+            "required": false
+        },
+        {
+            "name": "videoRef",
+            "type": "RefObject<VideoElement>",
+            "required": false
+        },
+        {
+            "name": "videoLoop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "videoAutoPlay",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "videoDataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "topActions",
+            "type": "readonly (ReactElement<unknown, string | JSXElementConstructor<any>> | CardAction)[]",
+            "required": false
+        },
+        {
+            "name": "buttonPrimary",
+            "type": "CardActionButtonPrimary",
+            "required": false
+        },
+        {
+            "name": "buttonSecondary",
+            "type": "CardActionButtonSecondary",
+            "required": false
+        },
+        {
+            "name": "buttonLink",
+            "type": "CardActionButtonLink",
+            "required": false
+        },
+        {
+            "name": "onClose",
+            "type": "(() => unknown)",
+            "required": false
+        },
+        {
+            "name": "closeButtonLabel",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "headline",
+            "type": "string | RendersNullableElement<({ Icon, children, dataAttributes, type, badge, backgroundColor: customBackgroundColor, textColor: customTextColor, small, }: TagProps) => Element | null>",
+            "required": false
+        },
+        {
+            "name": "pretitle",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "pretitleAs",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "pretitleLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "titleAs",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "titleLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "subtitle",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "subtitleLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "descriptionLinesMax",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "slotAlignment",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "slot",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "showFooter",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "footerBackgroundColor",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "footerVariant",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "footerSlot",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "footerDivider",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "href",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "newTab",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "loadOnTop",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "onNavigate",
+            "type": "(() => void | Promise<void>) | (() => void | Promise<void>)",
+            "required": false
+        },
+        {
+            "name": "to",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "fullPageOnWebView",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "replace",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "onPress",
+            "type": "PressHandler",
+            "required": false
+        },
+        {
+            "name": "trackingEvent",
+            "type": "TrackingEvent | readonly TrackingEvent[]",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-current",
+            "type": "boolean | \"false\" | \"true\" | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+            "required": false
+        },
+        {
+            "name": "touchableAriaLabel",
+            "type": "string",
+            "required": false,
+            "description": "Aria label for the touchable element. If set the whole card will be announced as a link/button by screen readers."
+        },
+        {
+            "name": "segregateTouchableContent",
+            "type": "boolean",
+            "required": false,
+            "description": "When true, the touchable content of the card will be segregated for screen readers. Only one of those elements will be announced as link/button,\naccording to the following logic:\n- If there is title or pretitle it will be the one between these two with the higher hierarchy (for example, if titleAs is 'h2' and pretitleAs is 'h3', the title will be the touchable element).\n- If those are not present it will be the next hierarchy element: headline, subtitle, ...\nThis behaviour can be overriden with the touchableAriaLabel prop."
+        }
+    ],
+    "playroomSnippet": "<CoverCard\n          size=\"display\"\n          headline={<Tag type=\"promo\">Headline</Tag>}\n          pretitle=\"Pretitle\"\n          title=\"Title\"\n          description=\"Description\"\n          imageSrc=\"${imagePlaceholder}\"\n          buttonPrimary={\n            <ButtonPrimary small href=\"https://google.com\">\n              Action\n            </ButtonPrimary>\n          }\n          onClose={() => {}}\n          topActions={[\n            {\n              Icon: IconLightningRegular,\n              onPress: () => {},\n              label: \"Lightning\",\n            },\n            {\n              checkedProps: {\n                  Icon: IconStarFilled,\n                  label: 'checked',\n              },\n              uncheckedProps: {\n                  Icon: IconStarRegular,\n                  label: 'unchecked',\n              },\n              defaultChecked: false,\n              onChange: () => {},\n          },\n          ]}\n        />"
+}

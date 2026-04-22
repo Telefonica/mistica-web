@@ -1,0 +1,7 @@
+{
+    "name": "Drawer",
+    "import": "import {Drawer} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<ButtonPrimary onPress={() => setState(\"openDrawer\", true)}>\n        Open Drawer\n      </ButtonPrimary>\n      {getState(\"openDrawer\", false) && (\n        <Drawer\n          title=\"Title\"\n          subtitle=\"Subtitle\"\n          description=\"Description\"\n          onClose={() => setState(\"openDrawer\", false)}\n          button={{ text: \"Primary\", onPress: () => {} }}\n          secondaryButton={{ text: \"Secondary\", onPress: () => {} }}\n          buttonLink={{ text: \"Link\", onPress: () => {} }}\n          onDismiss={() => {}}\n        >\n          <Stack space={16}>\n            <Placeholder height={300} />\n            <Placeholder height={300} />\n            <Placeholder height={300} />\n            <Placeholder height={300} />\n          </Stack>\n        </Drawer>\n      )}"
+}

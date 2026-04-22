@@ -1,0 +1,7 @@
+{
+    "name": "IntegerField",
+    "import": "import {IntegerField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<IntegerField name=\"integer\" label=\"Integer\"/>"
+}

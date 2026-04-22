@@ -1,0 +1,7 @@
+{
+    "name": "Counter",
+    "import": "import {Counter} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Counter\n          min={0}\n          max={5}\n          onRemove={() => window.alert(\"removed\")}\n          defaultValue={2}\n        />"
+}

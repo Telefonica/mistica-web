@@ -1,0 +1,51 @@
+{
+    "name": "InfoRating",
+    "import": "import {InfoRating} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "size",
+            "type": "number",
+            "required": false,
+            "default": "32"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "icon",
+            "type": "RatingIconProps",
+            "required": false,
+            "default": "{\n    ActiveIcon: IconStarFilled,\n    InactiveIcon: IconStarRegular,\n    color: vars.colors.controlActivated,\n}"
+        },
+        {
+            "name": "count",
+            "type": "number",
+            "required": false,
+            "default": "5"
+        },
+        {
+            "name": "value",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "withHalfValue",
+            "type": "boolean",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<InfoRating\n            aria-label=\"info rating\"\n            size={24}\n            value={3}\n            count={6}\n            icon={{\n              ActiveIcon: IconStarFilled,\n              InactiveIcon: IconStarRegular,\n              color: colors.warning,\n            }}\n          />"
+}

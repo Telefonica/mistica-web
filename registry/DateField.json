@@ -1,0 +1,7 @@
+{
+    "name": "DateField",
+    "import": "import {DateField} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<DateField name=\"date\" label=\"Date\"/>"
+}

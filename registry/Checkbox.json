@@ -1,0 +1,7 @@
+{
+    "name": "Checkbox",
+    "import": "import {Checkbox} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Checkbox name=\"checkbox\">Checkbox</Checkbox>"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "CommunityRowBlock",
+    "import": "import {CommunityRowBlock} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

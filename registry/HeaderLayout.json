@@ -1,0 +1,60 @@
+{
+    "name": "HeaderLayout",
+    "import": "import {HeaderLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isInverse",
+            "type": "boolean",
+            "required": false,
+            "default": "false",
+            "description": "@deprecated use variant=\"brand\" instead"
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false,
+            "default": "default"
+        },
+        {
+            "name": "breadcrumbs",
+            "type": "RendersNullableElement<({ title, breadcrumbs, dataAttributes, \"aria-label\": ariaLabel, }: NavigationBreadcrumbsProps) => Element>",
+            "required": false
+        },
+        {
+            "name": "header",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Intentionally not forced to RendersElement<typeof Header> to allow skeletons for example\nThe header is optional in order to allow webviews to delegate the header visualization to the surrounding native app."
+        },
+        {
+            "name": "extra",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "sideBySideExtraOnDesktop",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "bleed",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        },
+        {
+            "name": "noPaddingY",
+            "type": "boolean",
+            "required": false,
+            "default": "false"
+        }
+    ],
+    "playroomSnippet": null
+}

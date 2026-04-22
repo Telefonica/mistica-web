@@ -1,0 +1,7 @@
+{
+    "name": "Image",
+    "import": "import {Image} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />"
+}

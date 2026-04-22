@@ -1,0 +1,7 @@
+{
+    "name": "Align",
+    "import": "import {Align} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Align x=\"center\" y=\"center\"><IconLightningRegular/></Align>"
+}

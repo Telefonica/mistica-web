@@ -1,0 +1,92 @@
+{
+    "name": "Carousel",
+    "import": "import {Carousel} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "items",
+            "type": "readonly ReactNode[]",
+            "required": true
+        },
+        {
+            "name": "itemStyle",
+            "type": "CSSProperties",
+            "required": false
+        },
+        {
+            "name": "itemClassName",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "withBullets",
+            "type": "boolean",
+            "required": false
+        },
+        {
+            "name": "renderBullets",
+            "type": "((bulletsProps: PageBulletsProps) => ReactNode)",
+            "required": false,
+            "description": "@deprecated use CarouselContextProvider and CarouselContextConsumer to provide bullets props to custom bullets component.\nSee an example here: https://mistica-web.vercel.app/?path=/story/components-carousels-carousel--with-carousel-context"
+        },
+        {
+            "name": "initialActiveItem",
+            "type": "number",
+            "required": false
+        },
+        {
+            "name": "itemsPerPage",
+            "type": "ItemsPerPageProp",
+            "required": false
+        },
+        {
+            "name": "itemsToScroll",
+            "type": "number",
+            "required": false,
+            "description": "scrolls one page by default"
+        },
+        {
+            "name": "mobilePageOffset",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "free",
+            "type": "boolean",
+            "required": false,
+            "description": "If true, scroll snap doesn't apply and the user has a free scroll"
+        },
+        {
+            "name": "autoplay",
+            "type": "boolean | { time: number; loop?: boolean; }",
+            "required": false
+        },
+        {
+            "name": "withControls",
+            "type": "boolean",
+            "required": false,
+            "default": "true"
+        },
+        {
+            "name": "onPageChange",
+            "type": "((newPageInfo: { pageIndex: number; shownItemIndexes: number[]; }) => void)",
+            "required": false
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<Carousel\n  withBullets\n  items={Array.from({ length: 6 }, (_, idx) => (\n    <MediaCard\n      headline={<Tag type=\"promo\">Headline</Tag>}\n      title={'Card ' + idx}\n      description=\"Description\"\n      media={<Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />}\n      button={\n        <ButtonPrimary small onPress={() => {}}>\n          Action\n        </ButtonPrimary>\n      }\n      buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}\n    />\n  ))}\n/>"
+}

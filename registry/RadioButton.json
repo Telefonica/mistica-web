@@ -1,0 +1,7 @@
+{
+    "name": "RadioButton",
+    "import": "import {RadioButton} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

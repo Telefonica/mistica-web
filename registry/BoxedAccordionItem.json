@@ -1,0 +1,79 @@
+{
+    "name": "BoxedAccordionItem",
+    "import": "import {BoxedAccordionItem} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "isInverse",
+            "type": "boolean",
+            "required": false,
+            "description": "@deprecated Use `variant=\"brand\"` instead."
+        },
+        {
+            "name": "variant",
+            "type": "enum",
+            "required": false
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "required": true
+        },
+        {
+            "name": "titleAs",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "subtitle",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "asset",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "content",
+            "type": "ReactNode",
+            "required": true
+        },
+        {
+            "name": "dataAttributes",
+            "type": "DataAttributes",
+            "required": false
+        },
+        {
+            "name": "trackingEvent",
+            "type": "TrackingEvent | readonly TrackingEvent[]",
+            "required": false
+        },
+        {
+            "name": "role",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "detail",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "right",
+            "type": "ReactNode",
+            "required": false
+        },
+        {
+            "name": "aria-label",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "aria-labelledby",
+            "type": "string",
+            "required": false
+        }
+    ],
+    "playroomSnippet": "<BoxedAccordion>\n          <BoxedAccordionItem\n            asset={<IconInvoicePlanFileRegular />}\n            title=\"What is Movistar Money\"\n            content={\n              <Text3 color={colors.textSecondary}>\n                It's a loan available to anyone, whether or not you're a Movistar\n                customer. It offers from €2,000 to €15,000 with a simple and fast\n                application process, and you receive the money in less than 48 hours.\n              </Text3>\n            }\n          />\n          <BoxedAccordionItem\n            asset={<IconLocationMapRegular />}\n            title=\"To whom is it aimed?\"\n            content={\n              <Text3 color={colors.textSecondary}>\n                The Movistar Money loan service is aimed at anyone, whether you are a{\" \"}\n                <TextLink href=\"https://example.org\" newTab>Movistar</TextLink> customer or not.\n              </Text3>\n            }\n          />\n          <BoxedAccordionItem\n            asset={<IconLockEyeClosedRegular />}\n            title=\"Who offers Movistar Money?\"\n            content={\n              <Text3 color={colors.textSecondary}>\n                <p>\n                  At Telefónica, we have our own financial institution, Telefonica\n                  Consumer Finance, and agreements with other institutions to assist\n                  you in obtaining your loan.\n                </p>\n                <br />\n                <Image src=\"${imagePlaceholder}\" aspectRatio=\"16:9\" />\n                <br />\n                <p>\n                  Depending on the characteristics of the information you provide us,\n                  your application will be sent to one of the institutions{\" \"}\n                  <TextLink href=\"https://example.org\" newTab>with which Movistar has agreements</TextLink>.\n                </p>\n              </Text3>\n            }\n          />\n          <BoxedAccordionItem\n            asset={<IconIdCardRegular />}\n            title=\"How can I hire it?\"\n            content={\n              <Text3 color={colors.textSecondary}>\n                It's a very agile process that you can access through the\n                money.movistar.es website. You can find more detailed information\n                about the process on our \"How It Works\" page.\n              </Text3>\n            }\n          />\n          <BoxedAccordionItem\n            asset={<IconLifeguardFloatRegular />}\n            title=\"What should I do if I don't receive the SMS with the contracting code?\"\n            content={\n              <Text3 color={colors.textSecondary}>\n                It may take a few minutes until you receive the SMS with the code. If\n                you still haven't received the code, you can request a new one by\n                clicking on \"resend SMS.\"\n              </Text3>\n            }\n          />\n        </BoxedAccordion>"
+}

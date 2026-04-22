@@ -1,0 +1,7 @@
+{
+    "name": "Badge",
+    "import": "import {Badge} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Badge value=\"5\" />"
+}

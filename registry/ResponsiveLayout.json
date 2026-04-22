@@ -1,0 +1,7 @@
+{
+    "name": "ResponsiveLayout",
+    "import": "import {ResponsiveLayout} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

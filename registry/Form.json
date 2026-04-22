@@ -1,0 +1,7 @@
+{
+    "name": "Form",
+    "import": "import {Form} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Form\n            onSubmit={formData =>\n                alert({title: \"This is your data\", message: JSON.stringify(formData, null, 2)})\n            }\n        >\n            <Box padding={16}>\n                <Stack space={16}>\n                    <TextField name=\"name\" label=\"Name\" />\n                    <EmailField\n                        name=\"email\"\n                        label=\"e-mail\"\n                    />\n                    <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />\n                </Stack>\n            </Box>\n        </Form>"
+}

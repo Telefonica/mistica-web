@@ -1,0 +1,13 @@
+{
+    "name": "TrackingConfig",
+    "import": "import {TrackingConfig} from '@telefonica/mistica'",
+    "description": "",
+    "props": [
+        {
+            "name": "eventFormat",
+            "type": "enum",
+            "required": true
+        }
+    ],
+    "playroomSnippet": null
+}

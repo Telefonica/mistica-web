@@ -1,0 +1,7 @@
+{
+    "name": "HorizontalScroll",
+    "import": "import {HorizontalScroll} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

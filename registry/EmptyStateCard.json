@@ -1,0 +1,7 @@
+{
+    "name": "EmptyStateCard",
+    "import": "import {EmptyStateCard} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<EmptyStateCard\n            imageUrl=\"https://i.imgur.com/o5qympI.png\"\n            title=\"Your cart is empty\"\n            description=\"Check our marketplaces and find something for you\"\n            button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}\n            buttonLink={<ButtonLink small onPress={() => {}}>More info</ButtonLink>}\n        />"
+}

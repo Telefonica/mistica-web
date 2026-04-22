@@ -1,0 +1,7 @@
+{
+    "name": "NavigationBreadcrumbs",
+    "import": "import {NavigationBreadcrumbs} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<NavigationBreadcrumbs title=\"Facturas\" breadcrumbs={[{title: \"Cuenta\", url: \"/consumptions\"}]} />"
+}

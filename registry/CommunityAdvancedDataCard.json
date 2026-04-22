@@ -1,0 +1,7 @@
+{
+    "name": "CommunityAdvancedDataCard",
+    "import": "import {CommunityAdvancedDataCard} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": null
+}

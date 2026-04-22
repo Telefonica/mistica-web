@@ -1,0 +1,7 @@
+{
+    "name": "Meter",
+    "import": "import {Meter} from '@telefonica/mistica'",
+    "description": "",
+    "props": [],
+    "playroomSnippet": "<Meter width={200} type=\"linear\" values={[33, 33, 0]} />"
+}
