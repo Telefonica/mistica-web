@@ -281,7 +281,14 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     <script
                         // eslint-disable-next-line react/no-danger
                         dangerouslySetInnerHTML={{
-                            __html: `document.getElementById("${imageId}").addEventListener('load', (e) => e.target.style.opacity = "1")`,
+                            __html: `(function () {
+    var img = document.getElementById("${imageId}");
+    if (img.complete) {
+        img.style.opacity = "1";
+    } else {
+        img.addEventListener('load', function (e) { e.target.style.opacity = "1"; });
+    }
+})();`,
                         }}
                     />
                 )}
