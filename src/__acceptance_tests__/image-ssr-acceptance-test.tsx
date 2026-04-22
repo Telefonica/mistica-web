@@ -1,4 +1,4 @@
-import {openSSRPage} from '../test-utils';
+import {openSSRPage, ssimScreenshotConfig} from '../test-utils';
 
 test('ssr image', async () => {
     // The Image component renders a skeleton overlay during SSR that is cleared on hydration,
@@ -10,5 +10,7 @@ test('ssr image', async () => {
         checkHidrationVisualMismatch: false,
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    // Use SSIM comparison to tolerate sub-perceptual rendering variance (JPEG decoding,
+    // font anti-aliasing) that otherwise produces flaky pixel-level diffs in CI.
+    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
 });
