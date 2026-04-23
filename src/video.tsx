@@ -116,6 +116,8 @@ export type VideoProps = {
     children?: void;
     /** defaults to none */
     preload?: 'none' | 'metadata' | 'auto';
+    /** defaults to "anonymous" when tracks are provided */
+    crossOrigin?: 'anonymous' | 'use-credentials';
     dataAttributes?: DataAttributes;
 };
 
@@ -144,6 +146,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             onPause,
             onPlay,
             aspectRatio = 0,
+            crossOrigin,
             dataAttributes,
             ...props
         },
@@ -221,6 +224,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 disableRemotePlayback
                 muted={muted}
                 loop={loop}
+                crossOrigin={crossOrigin ?? (tracks ? 'anonymous' : undefined)}
                 className={classNames(styles.video, mediaStyles.defaultBorderRadius)}
                 preload={preload}
                 onError={handleError}
