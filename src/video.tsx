@@ -72,6 +72,14 @@ type VideoSourceWithType = {
     type?: string; // video/webm, video/mp4...
 };
 
+export type VideoTrack = {
+    src: string;
+    kind?: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata';
+    srcLang?: string;
+    label?: string;
+    default?: boolean;
+};
+
 export type VideoSource =
     | string
     | ReadonlyArray<string>
@@ -103,6 +111,8 @@ export type VideoProps = {
     onPause?: () => void;
     onLoad?: () => void;
     poster?: string;
+    /** track elements for subtitles, captions, etc. */
+    tracks?: ReadonlyArray<VideoTrack>;
     children?: void;
     /** defaults to none */
     preload?: 'none' | 'metadata' | 'auto';
@@ -123,6 +133,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         {
             src,
             poster,
+            tracks,
             autoPlay = 'when-loaded',
             muted = true,
             loop = true,
@@ -241,6 +252,16 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             >
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
+                ))}
+                {tracks?.map(({src, kind, srcLang, label, default: isDefault}, index) => (
+                    <track
+                        key={index}
+                        src={src}
+                        kind={kind}
+                        srcLang={srcLang}
+                        label={label}
+                        default={isDefault}
+                    />
                 ))}
             </video>
         );
