@@ -127,7 +127,7 @@ export {
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
-export type {VideoElement} from './video';
+export type {VideoElement, VideoTrack} from './video';
 export {
     Carousel,
     CenteredCarousel,
