@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {ResponsiveLayout, Placeholder, Timeline, TimelineItem, IconShopRegular} from '..';
+import {ResponsiveLayout, Placeholder, Timeline, TimelineItem, Icon} from '..';
 
 import type {Variant} from '../theme-variant-context';
+import type {IconPropsWithoutName} from '../icon';
 
 export default {
     title: 'Components/Timeline',
@@ -15,6 +16,8 @@ type Args = {
     orientation: 'horizontal' | 'vertical';
     asset: 'icon' | 'circled-icon' | 'number' | 'dot';
 };
+
+const IconShopRegular = (props: IconPropsWithoutName) => <Icon {...props} name="shop-regular" />;
 
 export const TimelineStory: StoryComponent<Args> = ({
     variantOutside,

@@ -9,7 +9,6 @@ import {
     skinVars,
     Placeholder,
     Tag,
-    IconThumbUpFilled,
     IconMobileDeviceRegular,
     Image,
     Inline,
@@ -24,6 +23,7 @@ import {
     UnorderedList,
     ListItem,
     IconLightningFilled,
+    Icon,
     Box,
     Text1,
     Text2,
@@ -270,7 +270,7 @@ const Template: StoryComponent<
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<IconThumbUpFilled size={24} color="currentColor" />}
+                asset={<Icon name="thumb-up-filled" size={24} color="currentColor" />}
                 headline={headline && <Tag type="promo">{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}

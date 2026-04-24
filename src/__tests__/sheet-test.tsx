@@ -9,6 +9,14 @@ import ActionsListSheet from '../sheet-actions-list';
 import InfoSheet from '../sheet-info';
 import ActionsSheet from '../sheet-actions';
 
+// Ensure all promises and timers complete between tests
+// This prevents the isSheetOpen flag in sheet-root.tsx from remaining true
+afterEach(async () => {
+    await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+});
+
 test('Sheet', async () => {
     const TestComponent = () => {
         const [showModal, setShowModal] = React.useState(false);

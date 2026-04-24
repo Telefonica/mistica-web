@@ -2,7 +2,7 @@ import * as React from 'react';
 import {InfoFeedbackScreen} from '../feedback';
 import {ButtonPrimary} from '../button';
 import {Placeholder} from '../placeholder';
-import IconShoppingBagRegular from '../generated/mistica-icons/icon-shopping-bag-regular';
+import Icon from '../icon';
 
 export default {
     title: 'Patterns/Feedback/InfoFeedbackScreen',
@@ -30,7 +30,7 @@ export const Info: StoryComponent<Args> = ({asset, title, description, multipleP
         title={title}
         description={multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description}
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
-        Icon={asset === 'custom' ? IconShoppingBagRegular : undefined}
+        Icon={asset === 'custom' ? () => <Icon name="shopping-bag-regular" /> : undefined}
         extra={extra ? <Placeholder /> : undefined}
     />
 );

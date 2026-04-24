@@ -1,31 +1,15 @@
 import * as React from 'react';
-import {Box, ResponsiveLayout, Text} from '../..';
-import {kebabCase, camelCase, upperFirst, sortBy} from 'lodash';
+import {Box, Icon, ResponsiveLayout, Text} from '../..';
+import {kebabCase, upperFirst, sortBy} from 'lodash';
 import {iconKeywords, iconCategories} from '../../generated/mistica-icons/icons-keywords';
 
 import type {Variant} from '../../theme-variant-context';
 
-/**
- * './path/icon-name-filled.tsx' => 'IconNameFilled'
- */
-const fileNameToComponentName = (fileName: string) => {
-    const lastSlashIdx = fileName.lastIndexOf('/');
-    return upperFirst(camelCase(fileName.slice(lastSlashIdx + 1).replace('.tsx', '')));
-};
-
-const iconModules = import.meta.glob(
-    ['../../generated/mistica-icons/**/*.tsx', '!../../generated/mistica-icons/icons-keywords.tsx'],
-    {eager: true}
-);
-
-// require all icons
-const misticaIcons = Object.entries(iconModules).map(([id, module]) => {
-    const component = (module as any).default;
-    component.componentName = fileNameToComponentName(id);
-    return component;
-});
-
 const availableCategories = ['All', ...new Set(sortBy(Object.values(iconCategories).flat()))];
+const misticaIcons = Object.keys(iconKeywords).reduce<Array<string>>((acc, icon) => {
+    acc.push(`${icon}-regular`, `${icon}-light`, `${icon}-filled`);
+    return acc;
+}, []);
 
 export default {
     title: 'Icons/Catalog',
@@ -70,61 +54,68 @@ export const Catalog: StoryComponent<Args> = ({
     names,
     background,
 }) => {
-    const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
-    const getTypeSortValue = (name: string) => {
-        if (name.endsWith('Regular')) {
-            return 0;
-        }
-        if (name.endsWith('Light')) {
-            return 1;
-        }
-        return 2;
-    };
+    const getRealName = (name: string) => name.replace(/-(regular|light|filled)$/i, '');
 
-    const filterIcon = (name: string): boolean => {
-        if (!filled && name.endsWith('Filled')) {
-            return false;
-        }
-        if (!light && name.endsWith('Light')) {
-            return false;
-        }
-        if (!regular && name.endsWith('Regular')) {
-            return false;
-        }
+    const getVariant = React.useCallback((name: string): 'regular' | 'light' | 'filled' | null => {
+        if (name.endsWith('-regular')) return 'regular';
+        if (name.endsWith('-light')) return 'light';
+        if (name.endsWith('-filled')) return 'filled';
+        return null;
+    }, []);
 
-        const realName = getRealName(name);
-        const iconKeywordsData = iconKeywords[kebabCase(realName)];
-        const iconCategoriesData = iconCategories[kebabCase(realName)];
+    const getTypeSortValue = React.useCallback(
+        (name: string) => {
+            const variant = getVariant(name);
+            if (variant === 'regular') return 0;
+            if (variant === 'light') return 1;
+            return 2;
+        },
+        [getVariant]
+    );
 
-        if (category && category !== 'All') {
-            const categories = iconCategoriesData || [];
+    const filterIcon = React.useCallback(
+        (name: string): boolean => {
+            const variant = getVariant(name);
 
-            if (!categories.includes(category)) {
-                return false;
+            if (!filled && variant === 'filled') return false;
+            if (!light && variant === 'light') return false;
+            if (!regular && variant === 'regular') return false;
+
+            const realName = getRealName(name);
+            const iconKeywordsData = iconKeywords[kebabCase(realName)];
+            const iconCategoriesData = iconCategories[kebabCase(realName)];
+
+            if (category && category !== 'All') {
+                const categories = iconCategoriesData || [];
+                if (!categories.includes(category)) return false;
             }
-        }
 
-        if (filter) {
-            const keywords = iconKeywordsData || [];
-            const categories = iconCategoriesData || [];
-            const allSearchableTerms = [...keywords, ...categories, realName.toLowerCase()];
-            return allSearchableTerms.some((key) => key.toLowerCase().includes(filter.toLowerCase()));
-        }
+            if (filter) {
+                const keywords = iconKeywordsData || [];
+                const categories = iconCategoriesData || [];
+                const allSearchableTerms = [...keywords, ...categories, realName.toLowerCase()];
+                return allSearchableTerms.some((key) => key.toLowerCase().includes(filter.toLowerCase()));
+            }
 
-        return true;
-    };
+            return true;
+        },
+        [category, filled, filter, light, regular, getVariant]
+    );
 
-    const compareNames = (a: string, b: string): number => {
-        const realA = getRealName(a);
-        const realB = getRealName(b);
-        if (realA < realB) {
-            return -1;
-        }
-        if (realA > realB) {
-            return 1;
-        }
-        return getTypeSortValue(a) < getTypeSortValue(b) ? -1 : 1;
-    };
+    const compareNames = React.useCallback(
+        (a: string, b: string): number => {
+            const realA = getRealName(a);
+            const realB = getRealName(b);
+            if (realA < realB) {
+                return -1;
+            }
+            if (realA > realB) {
+                return 1;
+            }
+            return getTypeSortValue(a) < getTypeSortValue(b) ? -1 : 1;
+        },
+        [getTypeSortValue]
+    );
 
     const breakName = (name: string) =>
         kebabCase(name)
@@ -137,44 +128,43 @@ export const Catalog: StoryComponent<Args> = ({
                 </span>
             ));
 
+    const filteredAndSortedIcons = React.useMemo(
+        () => misticaIcons.filter((name) => filterIcon(name)).sort((a, b) => compareNames(a, b)),
+        [compareNames, filterIcon]
+    );
+
     const iconBackgroundColor = background ? '#aaa' : 'none';
 
     return (
         <ResponsiveLayout fullWidth variant={variantOutside}>
-            {misticaIcons
-                .filter(({componentName}) => filterIcon(componentName))
-                .sort((a, b) => compareNames(a.componentName, b.componentName))
-                .map((Icon, index) => (
+            {filteredAndSortedIcons.map((name) => (
+                <div key={name} style={{display: 'inline-block', verticalAlign: 'top', textAlign: 'center'}}>
                     <div
-                        key={index}
-                        style={{display: 'inline-block', verticalAlign: 'top', textAlign: 'center'}}
+                        style={{
+                            textAlign: 'center',
+                            padding: 16,
+                            width: size,
+                            minWidth: names ? 100 : 0,
+                        }}
                     >
                         <div
                             style={{
-                                textAlign: 'center',
-                                padding: 16,
                                 width: size,
-                                minWidth: names ? 100 : 0,
+                                margin: 'auto',
+                                background: iconBackgroundColor,
+                                fontSize: 0,
                             }}
                         >
-                            <div
-                                style={{
-                                    width: size,
-                                    margin: 'auto',
-                                    background: iconBackgroundColor,
-                                    fontSize: 0,
-                                }}
-                            >
-                                <Icon size={size} />
-                            </div>
-                            {names && (
-                                <Box paddingTop={8}>
-                                    <Text size={13}>{breakName(Icon.componentName)}</Text>
-                                </Box>
-                            )}
+                            <Icon name={name} size={size} />
                         </div>
+                        {names && (
+                            <Box paddingTop={8}>
+                                <Text size={13}>{breakName(name)}</Text>
+                            </Box>
+                        )}
                     </div>
-                ))}
+                </div>
+            ))}
         </ResponsiveLayout>
     );
 };

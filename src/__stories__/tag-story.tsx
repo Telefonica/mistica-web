@@ -1,19 +1,8 @@
 import * as React from 'react';
-import {
-    Stack,
-    Tag,
-    IconStarFilled,
-    IconTimeFilled,
-    IconOfferPercentFilled,
-    IconCheckRegular,
-    IconCloseRegular,
-    IconAlertRegular,
-    ResponsiveLayout,
-    Box,
-    skinVars,
-} from '..';
+import {Stack, Tag, Icon, IconStarFilled, IconCloseRegular, ResponsiveLayout, Box, skinVars} from '..';
 
 import type {Variant} from '../theme-variant-context';
+import type {IconPropsWithoutName} from '../icon';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -40,6 +29,13 @@ export default {
         },
     },
 };
+
+const IconOfferPercentFilled = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="offer-percent-filled" />
+);
+const IconTimeFilled = (props: IconPropsWithoutName) => <Icon {...props} name="time-filled" />;
+const IconCheckRegular = (props: IconPropsWithoutName) => <Icon {...props} name="check-regular" />;
+const IconAlertRegular = (props: IconPropsWithoutName) => <Icon {...props} name="alert-regular" />;
 
 export const Default: StoryComponent<Args> = ({
     label: labelFromArgs,

@@ -1,5 +1,9 @@
 import * as React from 'react';
-import {IconShopRegular, Placeholder, TimelineItem} from '..';
+import {Icon, Placeholder, TimelineItem} from '..';
+
+import type {IconPropsWithoutName} from '../icon';
+
+const IconShopRegular = (props: IconPropsWithoutName) => <Icon {...props} name="shop-regular" />;
 
 <TimelineItem state="active">
     <Placeholder />

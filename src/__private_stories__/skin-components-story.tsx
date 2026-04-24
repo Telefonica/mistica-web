@@ -11,12 +11,10 @@ import {
     Avatar,
     NavigationBreadcrumbs,
     ButtonPrimary,
-    IconPhotoCameraRegular,
     ButtonSecondary,
     ButtonDanger,
     ButtonLink,
     Callout,
-    IconBoxLight,
     DataCard,
     IconLightningRegular,
     ButtonLinkDanger,
@@ -53,13 +51,14 @@ import {
     Meter,
     Timeline,
     TimelineItem,
-    IconShopRegular,
     CoverCard,
-    IconExportRegular,
     FileUpload,
+    Icon,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
+
+import type {IconPropsWithoutName} from '../icon';
 
 export default {
     title: 'Private/Components in different skins',
@@ -85,6 +84,12 @@ const ComponentsGroup = ({children}: {children: React.ReactNode}): JSX.Element =
         </Stack>
     );
 };
+
+const IconPhotoCameraRegular = (props: IconPropsWithoutName) => (
+    <Icon {...props} name="photo-camera-regular" />
+);
+const IconBoxLight = (props: IconPropsWithoutName) => <Icon {...props} name="box-light" />;
+const IconShopRegular = (props: IconPropsWithoutName) => <Icon {...props} name="shop-regular" />;
 
 export const Default: StoryComponent<Args> = ({variantOutside}) => {
     // Only show inverse header when the rest of the screen is default
@@ -356,7 +361,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                         <FileUpload
                             name="file"
                             withDropZone
-                            asset={<IconExportRegular color="currentColor" />}
+                            asset={<Icon name="export-regular" color="currentColor" />}
                             title="Drag or upload your file"
                             description="File can be up to 50Mb"
                             renderButton={(props) => <ButtonPrimary {...props}>Choose file</ButtonPrimary>}

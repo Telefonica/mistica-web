@@ -1,22 +1,15 @@
 import * as React from 'react';
-import {
-    Stack,
-    Text3,
-    Tooltip,
-    Placeholder,
-    IconShopRegular,
-    Title3,
-    Grid,
-    GridItem,
-    SnapCard,
-    Circle,
-    IconAcademicRegular,
-} from '..';
+import {Stack, Text3, Tooltip, Placeholder, Title3, Grid, GridItem, SnapCard, Circle, Icon} from '..';
 import {vars} from '../skins/skin-contract.css';
+
+import type {IconPropsWithoutName} from '../icon';
 
 export default {
     title: 'Private/Tooltip',
 };
+
+const IconShopRegular = (props: IconPropsWithoutName) => <Icon {...props} name="shop-regular" />;
+const IconAcademicRegular = (props: IconPropsWithoutName) => <Icon {...props} name="academic-regular" />;
 
 export const InsideFixedContainer: StoryComponent = () => {
     return (

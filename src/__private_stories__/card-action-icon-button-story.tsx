@@ -7,17 +7,21 @@ import {
     skinVars,
     Circle,
     Tag,
-    IconShopRegular,
     CardActionIconButton,
     Text2,
     Stack,
     IconStarFilled,
     IconStarRegular,
+    Icon,
 } from '..';
+
+import type {IconPropsWithoutName} from '../icon';
 
 export default {
     title: 'Private/Deprecated Card Stories/Utils/CardActionIconButton',
 };
+
+const IconShopRegular = (props: IconPropsWithoutName) => <Icon {...props} name="shop-regular" />;
 
 const MyCustomCardActionComponent = () => {
     const [pressCount, setPressCount] = React.useState(0);

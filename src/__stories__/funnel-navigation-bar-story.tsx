@@ -4,7 +4,7 @@ import {
     NavigationBarAction,
     NavigationBarActionGroup,
     useScreenSize,
-    IconQuestionRegular,
+    Icon,
     IconCloseRegular,
     Text2,
     Placeholder,
@@ -41,7 +41,7 @@ export const Default: StoryComponent<Args> = ({variant, border, customLogo, wide
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="need help?" href="/help">
-                        <IconQuestionRegular color="currentColor" />
+                        <Icon name="question-regular" color="currentColor" />
                         {isDesktopOrBigger && (
                             <Text2 regular color={vars.colors.textLink}>
                                 Need help?

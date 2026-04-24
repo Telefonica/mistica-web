@@ -8,7 +8,7 @@ import {
     TextField,
     Stack,
     Text2,
-    IconPhotoCameraRegular,
+    Icon,
     ResponsiveLayout,
     ButtonLinkDanger,
 } from '..';
@@ -90,6 +90,8 @@ const ButtonBackgroundContainer = ({variant, children}: Props) => (
         </ResponsiveLayout>
     </div>
 );
+
+const IconPhotoCameraRegular = () => <Icon name="photo-camera-regular" />;
 
 export const primaryButton: StoryComponent<Args> = ({
     variantOutside,

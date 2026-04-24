@@ -9,10 +9,7 @@ import {
     Title1,
     ButtonPrimary,
     IconCreditCardVisaRegular,
-    IconInformationUserRegular,
-    IconLockClosedRegular,
-    IconBellProgramRegular,
-    IconSupportAgentRegular,
+    Icon,
     IconUserAccountRegular,
     Text4,
     Text2,
@@ -33,16 +30,16 @@ export const Default: StoryComponent = () => {
             categoryName: 'Personal information',
             settings: [
                 {title: 'Personal details', icon: <IconUserAccountRegular />},
-                {title: 'Security', icon: <IconLockClosedRegular />},
+                {title: 'Security', icon: <Icon name="lock-closed-regular" />},
                 {title: 'Payment methods', icon: <IconCreditCardVisaRegular />},
             ],
         },
         {
             categoryName: 'Configuration',
             settings: [
-                {title: 'Notifications', icon: <IconBellProgramRegular />},
-                {title: 'FAQs', icon: <IconSupportAgentRegular />},
-                {title: 'About', icon: <IconInformationUserRegular />},
+                {title: 'Notifications', icon: <Icon name="bell-program-regular" />},
+                {title: 'FAQs', icon: <Icon name="support-agent-regular" />},
+                {title: 'About', icon: <Icon name="information-user-regular" />},
             ],
         },
     ];

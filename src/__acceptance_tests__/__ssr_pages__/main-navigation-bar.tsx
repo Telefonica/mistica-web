@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
     Avatar,
     Badge,
-    IconShoppingCartRegular,
+    IconUserAccountRegular,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
@@ -19,7 +19,7 @@ const NavigationBarTest = (): JSX.Element => (
             <NavigationBarActionGroup>
                 <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
                     <Badge value={2}>
-                        <IconShoppingCartRegular color="currentColor" />
+                        <IconUserAccountRegular />
                     </Badge>
                 </NavigationBarAction>
                 <NavigationBarAction onPress={() => {}} aria-label="Open profile">

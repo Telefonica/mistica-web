@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular, Touchable} from '..';
+import {Tooltip, Placeholder, ResponsiveLayout, Touchable, Icon} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -103,7 +103,7 @@ export const Default: StoryComponent<Args> = ({
                                 dataAttributes={{testid: 'target'}}
                                 aria-label="Tooltip target"
                             >
-                                <IconShopRegular style={{display: 'block'}} />
+                                <Icon name="shop-regular" style={{display: 'block'}} />
                             </Touchable>
                         </div>
                     }

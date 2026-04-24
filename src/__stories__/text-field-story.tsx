@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {TextField, Box, Text1, Stack, ResponsiveLayout} from '..';
 import {inspect} from './utils';
-import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
+import Icon from '../icon';
 import {countriesList} from './helpers';
 import {iconSize} from '../icon-button.css';
 
@@ -87,7 +87,7 @@ export const Controlled: StoryComponent<TextFieldControlledArgs> = ({
                         autoComplete="off"
                         dataAttributes={{testid: 'text-field'}}
                         maxLength={maxLength ? 200 : undefined}
-                        endIcon={icon ? <IconMusicRegular size={iconSize.small} /> : undefined}
+                        endIcon={icon ? <Icon name="music-regular" size={iconSize.small} /> : undefined}
                         getSuggestions={suggestions ? getCountrySuggestions : undefined}
                         {...rest}
                     />
@@ -143,7 +143,7 @@ export const Uncontrolled: StoryComponent<TextFieldUncontrolledArgs> = ({
                         autoComplete="off"
                         dataAttributes={{testid: 'text-field'}}
                         maxLength={maxLength ? 200 : undefined}
-                        endIcon={icon ? <IconMusicRegular size={iconSize.small} /> : undefined}
+                        endIcon={icon ? <Icon name="music-regular" size={iconSize.small} /> : undefined}
                         {...rest}
                     />
                     <Stack space={8}>

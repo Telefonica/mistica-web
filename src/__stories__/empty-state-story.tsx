@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {EmptyState, ButtonPrimary, IconBoxLight, skinVars, ButtonLink, Image} from '..';
+import {EmptyState, ButtonPrimary, skinVars, ButtonLink, Image, Icon} from '..';
 import avatars4Img from './images/avatars4.png';
 import emptyStateImg from './images/empty-state.png';
 
@@ -50,7 +50,7 @@ export const WithIcon: StoryComponent<WithIconArgs> = ({actions, asset}) => {
     let assetProps;
     if (asset === 'Icon') {
         assetProps = {
-            asset: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
+            asset: <Icon name="box-light" size="100%" color={skinVars.colors.brand} />,
         };
     } else if (asset === 'Image') {
         assetProps = {

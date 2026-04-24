@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Badge, IconBellFilled, ResponsiveLayout, Box, Touchable} from '..';
+import {Badge, ResponsiveLayout, Box, Touchable, Icon} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -33,7 +33,7 @@ export const Default: StoryComponent<Args> = ({variantOutside, value}) => {
                         onPress={() => {}}
                         aria-label="Read notifications"
                     >
-                        <IconBellFilled />
+                        <Icon name="bell-filled" />
                     </Touchable>
                 </Badge>
             </Box>

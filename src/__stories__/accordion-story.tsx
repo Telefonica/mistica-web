@@ -7,8 +7,8 @@ import {
     BoxedAccordion,
     BoxedAccordionItem,
     Circle,
-    IconThumbUpFilled,
     IconMobileDeviceRegular,
+    Icon,
     Image,
     Placeholder,
     ResponsiveLayout,
@@ -88,7 +88,7 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
                     />
                     <ItemComponent
                         {...getAccordionItemContentProps()}
-                        asset={<IconThumbUpFilled size={24} />}
+                        asset={<Icon name="thumb-up-filled" size={24} />}
                         dataAttributes={{testid: 'accordion-item-2'}}
                     />
                     <ItemComponent

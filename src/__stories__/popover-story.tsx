@@ -3,7 +3,7 @@ import {
     Popover,
     skinVars,
     IconMobileDeviceRegular,
-    IconShopRegular,
+    Icon,
     Circle,
     Placeholder,
     ResponsiveLayout,
@@ -107,7 +107,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
                                 dataAttributes={{testid: 'target'}}
                                 aria-label="Popover target"
                             >
-                                <IconShopRegular style={{display: 'block'}} />
+                                <Icon name="shop-regular" style={{display: 'block'}} />
                             </Touchable>
                         </div>
                     }

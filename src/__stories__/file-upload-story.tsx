@@ -3,7 +3,6 @@ import {
     FileUpload,
     ButtonPrimary,
     ButtonSecondary,
-    IconExportRegular,
     ResponsiveLayout,
     Box,
     Placeholder,
@@ -13,6 +12,7 @@ import {
     Text3,
     Grid,
     Image,
+    Icon,
     IconButton,
     IconCloseRegular,
 } from '..';
@@ -72,7 +72,7 @@ export const Default: StoryComponent<Args> = ({
                         allowAppend={allowAppend}
                         withDropZone={withDropZone}
                         disabled={disabled}
-                        asset={withAsset ? <IconExportRegular color="currentColor" /> : undefined}
+                        asset={withAsset ? <Icon name="export-regular" color="currentColor" /> : undefined}
                         title={title}
                         description={description}
                         slot={withSlot ? <Placeholder /> : undefined}
@@ -87,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
                                     return (
                                         <IconButton
                                             {...buttonProps}
-                                            Icon={IconExportRegular}
+                                            Icon={() => <Icon name="export-regular" />}
                                             backgroundType="solid"
                                             aria-label="Choose file"
                                         />

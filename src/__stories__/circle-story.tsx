@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Circle, skinVars, IconShopRegular} from '..';
+import {Circle, skinVars, Icon} from '..';
 import avatarImg from './images/avatar.jpg';
 
 export default {
@@ -31,7 +31,7 @@ export const Default: StoryComponent<Args> = ({size, border, background, childre
                 background="linear-gradient(yellow, red)"
                 border={border}
             >
-                {!!children && <IconShopRegular color={skinVars.colors.inverse} />}
+                {!!children && <Icon name="shop-regular" color={skinVars.colors.inverse} />}
             </Circle>
         );
     }
@@ -44,7 +44,7 @@ export const Default: StoryComponent<Args> = ({size, border, background, childre
             backgroundImage={background === 'image' ? avatarImg : undefined}
             border={border}
         >
-            {!!children && <IconShopRegular color={skinVars.colors.inverse} />}
+            {!!children && <Icon name="shop-regular" color={skinVars.colors.inverse} />}
         </Circle>
     );
 };

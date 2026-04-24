@@ -3,8 +3,6 @@ import {
     Box,
     ButtonPrimary,
     Circle,
-    IconCheckRegular,
-    IconCocktailRegular,
     IconLightningRegular,
     IconMobileDeviceRegular,
     IconTrashCanRegular,
@@ -12,6 +10,7 @@ import {
     skinVars,
     Stack,
     Text3,
+    Icon,
 } from '..';
 import RadioListSheet from '../sheet-radio-list';
 import InfoSheet from '../sheet-info';
@@ -265,8 +264,8 @@ export const Info: StoryComponent<InfoSheetArgs> = ({
                                 : {
                                       type: iconType,
                                       Icon: {
-                                          regular: IconCocktailRegular,
-                                          small: IconCheckRegular,
+                                          regular: () => <Icon name="cocktail-regular" />,
+                                          small: () => <Icon name="check-regular" />,
                                       }[iconType],
                                   },
                     }))}
