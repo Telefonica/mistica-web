@@ -54,7 +54,9 @@
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
         "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install",
-        "edit-playroom-patch": "playroom/patch-playroom.sh"
+        "edit-playroom-patch": "playroom/patch-playroom.sh",
+        "eval:dev": "evalite watch",
+        "eval": "evalite"
     },
     "browserslist": [
         "Chrome >= 100",
@@ -117,6 +119,7 @@
         "eslint": "^8.57.0",
         "eslint-plugin-mistica-local-rules": "workspace:*",
         "eslint-plugin-storybook": "^10.2.8",
+        "evalite": "beta",
         "glob": "^7.2.0",
         "gzip-size": "^6.0.0",
         "husky": "^7.0.4",
@@ -149,7 +152,8 @@
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
         "vite-plugin-entry-shaking": "^0.5.1",
-        "vite-plugin-no-bundle": "^4.0.0"
+        "vite-plugin-no-bundle": "^4.0.0",
+        "vitest": "^4.1.5"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
