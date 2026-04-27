@@ -194,7 +194,11 @@ experimental: {
 </ResponsiveLayout>
 ```
 
-Vertical rhythm: containers 24px padding, sections 32px spacing, elements 16px spacing.
+Vertical rhythm uses 4 levels and is responsive. Default rhythm (mobile / desktop):
+level 1 = 24 / 48, level 2 = 40 / 80, level 3 = 16 / 32, level 4 = 16 / 32.
+Vivo rhythm overrides these to: level 1 = 80 / 112, level 2 = 80 / 112, level 3 = 24 / 48, level 4 = 8 / 16.
+Always apply rhythm via `Stack space={{mobile, desktop}}` and `Box paddingY={{mobile, desktop}}`.
+See [patterns.md](./patterns.md#vertical-rhythm) for the full table, usage examples, and rules of thumb.
 
 ## Component Categories
 

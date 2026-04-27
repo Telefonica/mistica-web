@@ -56,11 +56,84 @@ A standard Mistica page follows this structure:
 
 ### Vertical rhythm
 
-Follow the 24/32/16 rule:
+Vertical rhythm is organized into **4 levels** of spacing. The exact pixel values depend on viewport
+(mobile vs desktop) and on the active brand/skin. Levels go from coarser (`level 1`, between main page
+blocks) to finer (`level 4`, between tightly-related elements).
 
-- **Containers**: 24px top and bottom padding (`<Box paddingY={24}>`)
-- **Sections**: 32px space between them (`<Stack space={32}>`)
-- **Elements**: 16px space between them (`<Stack space={16}>`)
+**Default rhythm** (Movistar, O2, Telefonica, Blau, and any non-overridden skin):
+
+| Level   | Mobile | Desktop | Typical usage                                                      |
+| ------- | ------ | ------- | ------------------------------------------------------------------ |
+| Level 1 | 24px   | 48px    | Top/bottom page padding, space between top-level page blocks       |
+| Level 2 | 40px   | 80px    | Space between major sections within a page or container            |
+| Level 3 | 16px   | 32px    | Space between subsections / grouped blocks inside a section        |
+| Level 4 | 16px   | 32px    | Space between closely-related elements (titles + body, list items) |
+
+**Vivo rhythm** (Vivo and Vivo New skins override the defaults):
+
+| Level   | Mobile | Desktop | Typical usage                                      |
+| ------- | ------ | ------- | -------------------------------------------------- |
+| Level 1 | 80px   | 112px   | Top-level page blocks, hero-to-content separation  |
+| Level 2 | 80px   | 112px   | Major sections                                     |
+| Level 3 | 24px   | 48px    | Subsections / grouped blocks                       |
+| Level 4 | 8px    | 16px    | Closely-related elements                           |
+
+#### Applying rhythm in code
+
+Use responsive values with `Stack space={{mobile, desktop}}` and `Box paddingY={{mobile, desktop}}` so
+spacing adapts automatically. Example, default rhythm:
+
+```tsx
+<ResponsiveLayout>
+  {/* Level 1: page padding */}
+  <Box paddingY={{mobile: 24, desktop: 48}}>
+    {/* Level 2: between major sections */}
+    <Stack space={{mobile: 40, desktop: 80}}>
+      <section>
+        {/* Level 3: between subsections inside a section */}
+        <Stack space={{mobile: 16, desktop: 32}}>
+          <Title1 as="h2">Section title</Title1>
+          {/* Level 4: between tightly-related elements */}
+          <Stack space={{mobile: 16, desktop: 32}}>
+            <Text2 regular>First paragraph</Text2>
+            <Text2 regular>Second paragraph</Text2>
+          </Stack>
+        </Stack>
+      </section>
+
+      <section>
+        <Stack space={{mobile: 16, desktop: 32}}>
+          <Title1 as="h2">Another section</Title1>
+          <Text2 regular>...</Text2>
+        </Stack>
+      </section>
+    </Stack>
+  </Box>
+</ResponsiveLayout>
+```
+
+Example with Vivo rhythm (level 1/2 = 80/112, level 3 = 24/48, level 4 = 8/16):
+
+```tsx
+<Box paddingY={{mobile: 80, desktop: 112}}>
+  <Stack space={{mobile: 80, desktop: 112}}>
+    <section>
+      <Stack space={{mobile: 24, desktop: 48}}>
+        <Title1 as="h2">Section title</Title1>
+        <Stack space={{mobile: 8, desktop: 16}}>
+          <Text2 regular>First paragraph</Text2>
+          <Text2 regular>Second paragraph</Text2>
+        </Stack>
+      </Stack>
+    </section>
+  </Stack>
+</Box>
+```
+
+> **Rule of thumb**: if you are unsure which level to use, start at level 3 for intra-section spacing
+> and level 2 for inter-section spacing. Only drop to level 4 when two elements are semantically part
+> of the same unit (e.g. a heading and its lead paragraph, or rows in a list). Never mix Vivo and
+> default rhythm values inside the same page — pick the one that matches the active skin.
 
 ## Layout dos and don'ts
 
