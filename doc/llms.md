@@ -15,6 +15,17 @@ This file is the main entry point. All docs live at:
 If you cannot find a documentation file in `node_modules`, fetch the equivalent file from the GitHub
 repository at `https://github.com/Telefonica/mistica-web/blob/master/doc/<filename>`.
 
+## Source code
+
+Source is available at `node_modules/@telefonica/mistica/src/` (fallback:
+`https://github.com/Telefonica/mistica-web/tree/master/src`). Use `src/index.tsx` to map imports to files.
+
+Read source only when you need to understand internal behavior that docs and types don't cover — for example
+debugging layout/CSS issues (`*.css.ts` files), understanding event handling, or authoring a custom skin (read
+a real skin in `src/skins/` to see canonical token patterns). Normally you shouldn't read source for
+greenfield UI work — the docs already cover that, and reading source tends to pull toward low-level APIs when
+a documented composite component would be simpler.
+
 ## Critical Rules
 
 1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` design tokens from

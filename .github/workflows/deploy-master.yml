@@ -19,7 +19,7 @@ jobs:
               with:
                   persist-credentials: false
 
-            - uses: amondnet/vercel-action@v41.1.4 # Pinned because v42 fails with "Error: Provided path ./ is not absolute"
+            - uses: amondnet/vercel-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
                   vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
@@ -27,4 +27,4 @@ jobs:
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID}} #Required
                   vercel-project-name: mistica-web # Not requried by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   vercel-args: '--prod'
-                  working-directory: ./
+                  working-directory: ${{ github.workspace }}
