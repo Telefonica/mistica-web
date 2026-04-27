@@ -21,6 +21,7 @@ import {
     ESIMFLAG_SKIN,
     VIVO_SKIN,
     BLAU_SKIN,
+    UNBRANDED_SKIN,
 } from '../src';
 import {Movistar_New as defaultThemeConfig} from './themes';
 
@@ -90,7 +91,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         body {background: ${skinVars.colors.background}}
 
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
-        ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
+        ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN || skinName === UNBRANDED_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${
             skinName === MOVISTAR_SKIN ||
             skinName === O2_SKIN ||
