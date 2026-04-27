@@ -54,6 +54,11 @@ a documented composite component would be simpler.
     ```tsx
     <style>{`body { background-color: ${skinVars.colors.background}; }`}</style>
     ```
+11. **Re-apply these rules during debugging, reviewing, and fixing — not just while writing new code.**
+    TypeScript errors, visual mismatches, and "I just need this to work" pressure are not exceptions. If you
+    are about to add `style={{...}}` to a `<div>`, a hex literal, a manual `font-size`, a `margin: auto` /
+    `justify-content: center` workaround, or any other escape hatch inside Mistica code, stop and find the
+    primitive first — the rule you need is already above.
 
 ## Install
 
@@ -324,6 +329,7 @@ After reading the minimum set, read any further files that apply to your specifi
 | **Testing (read if you have to implement tests)** | `doc/testing.md`         |
 | **Migrating from older versions**                 | `doc/migration-guide.md` |
 | **Optimizing bundle size with lottie**            | `doc/lottie.md`          |
+| **Implementing a Figma design via Figma MCP**     | `doc/figma-mcp.md`       |
 
 ## Docs reference
 
@@ -347,3 +353,5 @@ After reading the minimum set, read any further files that apply to your specifi
 - [Testing](./testing.md): NODE_ENV, unit tests, acceptance tests, isRunningAcceptanceTest
 - [Lottie](./lottie.md): optimizing bundle size with lottie-web light build
 - [Migration guide](./migration-guide.md): cards ecosystem migration (v16), v12 to v13 migration
+- [Figma MCP](./figma-mcp.md): mandatory translation rules when implementing from Figma MCP output — read the
+  DOM verbatim, map flex to Mistica primitives literally, don't snap to Mistica's rhythm
