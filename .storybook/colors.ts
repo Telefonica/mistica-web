@@ -8,6 +8,7 @@ export const AVAILABLE_SKINS = [
     'Telefonica',
     'Blau',
     'Esimflag',
+    'Unbranded',
 ] as const;
 
 export type Skin = (typeof AVAILABLE_SKINS)[number];
@@ -72,6 +73,13 @@ export const getColors = (skin: Skin): SkinTheme => {
                 textPrimary: '#001740',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#666B73',
+            };
+        case 'Unbranded':
+            return {
+                primary: '#000000',
+                textPrimary: '#000000',
+                textPrimaryInverse: '#FFFFFF',
+                textSecondary: '#666666',
             };
         default:
             throw Error('Unexpected skin: ' + skin);

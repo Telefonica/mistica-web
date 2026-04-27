@@ -20,6 +20,7 @@ import {
     skinVars,
     OverscrollColorProvider,
     ESIMFLAG_SKIN,
+    UNBRANDED_SKIN,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {getPlatform} from '../src/utils/platform';
@@ -43,6 +44,7 @@ const getSkin = (searchParams: URLSearchParams) => {
         BLAU_SKIN,
         TU_SKIN,
         ESIMFLAG_SKIN,
+        UNBRANDED_SKIN,
     ].find((skin) => skin === qsSkin);
 };
 

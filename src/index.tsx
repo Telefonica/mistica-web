@@ -237,6 +237,7 @@ export {
     BLAU_SKIN,
     TU_SKIN,
     ESIMFLAG_SKIN,
+    UNBRANDED_SKIN,
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
@@ -249,6 +250,7 @@ export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {getTuSkin} from './skins/tu';
 export {getEsimflagSkin} from './skins/esimflag';
+export {getUnbrandedSkin} from './skins/unbranded';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as vivoNewPalette} from './skins/vivo-new';
 export {palette as movistarPalette} from './skins/movistar';
@@ -259,6 +261,7 @@ export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
 export {palette as esimFlagPalette} from './skins/esimflag';
+export {palette as unbrandedPalette} from './skins/unbranded';
 
 export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
 export type {RegionCode} from './utils/region-code';

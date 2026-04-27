@@ -39,7 +39,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu'>;
+type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu' | 'Unbranded'>;
 
 const BrandIcon = ({Logo}: {Logo: React.ComponentType<{size: number; color?: string}>}) => {
     const {isDarkMode} = useTheme();
