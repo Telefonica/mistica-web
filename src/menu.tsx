@@ -56,21 +56,40 @@ interface MenuItemBaseProps {
     Icon?: (props: IconProps) => JSX.Element;
     destructive?: boolean;
     disabled?: boolean;
-    onPress: (item: number) => void;
     dataAttributes?: DataAttributes;
 }
 
-interface MenuItemWithoutControlProps extends MenuItemBaseProps {
+interface MenuItemOnPressProps extends MenuItemBaseProps {
+    onPress: (item: number) => void;
+    controlType?: 'checkbox';
+    checked?: boolean;
+    href?: undefined;
+    to?: undefined;
+}
+
+interface MenuItemHrefProps extends MenuItemBaseProps {
+    href: string;
+    newTab?: boolean;
+    loadOnTop?: boolean;
+    onNavigate?: () => void | Promise<void>;
+    onPress?: undefined;
+    to?: undefined;
     controlType?: undefined;
     checked?: undefined;
 }
 
-interface MenuItemWithControlProps extends MenuItemBaseProps {
-    controlType?: 'checkbox';
-    checked?: boolean;
+interface MenuItemToProps extends MenuItemBaseProps {
+    to: string;
+    newTab?: boolean;
+    fullPageOnWebView?: boolean;
+    onNavigate?: () => void | Promise<void>;
+    onPress?: undefined;
+    href?: undefined;
+    controlType?: undefined;
+    checked?: undefined;
 }
 
-type MenuItemProps = ExclusifyUnion<MenuItemWithControlProps | MenuItemWithoutControlProps>;
+type MenuItemProps = ExclusifyUnion<MenuItemOnPressProps | MenuItemHrefProps | MenuItemToProps>;
 
 export const MenuItem = ({
     label,
@@ -78,6 +97,12 @@ export const MenuItem = ({
     destructive,
     disabled,
     onPress,
+    href,
+    to,
+    newTab,
+    loadOnTop,
+    fullPageOnWebView,
+    onNavigate,
     controlType,
     checked,
     dataAttributes,
@@ -93,6 +118,19 @@ export const MenuItem = ({
 
     const menuItemDataAttributes = {testid: 'MenuItem', ...dataAttributes};
 
+    const renderItemContent = () => (
+        <div className={styles.itemContent}>
+            {Icon && (
+                <div className={styles.iconContainer}>
+                    <Icon size={24} color={contentColor} />
+                </div>
+            )}
+            <Text3 regular color={contentColor}>
+                {label}
+            </Text3>
+        </div>
+    );
+
     const renderContent = () =>
         controlType === 'checkbox' ? (
             <Checkbox
@@ -101,7 +139,7 @@ export const MenuItem = ({
                 checked={checked}
                 onChange={() => {
                     if (isMenuOpen && itemIndex !== null) {
-                        onPress(itemIndex);
+                        onPress?.(itemIndex);
                         closeMenu();
                     }
                 }}
@@ -111,27 +149,54 @@ export const MenuItem = ({
                 render={({controlElement}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">
-                            <div className={styles.itemContent}>
-                                {Icon && (
-                                    <div className={styles.iconContainer}>
-                                        <Icon size={24} color={contentColor} />
-                                    </div>
-                                )}
-                                <Text3 regular color={contentColor}>
-                                    {label}
-                                </Text3>
-                            </div>
+                            {renderItemContent()}
                             <Box paddingLeft={16}>{controlElement}</Box>
                         </Inline>
                     </Box>
                 )}
             />
+        ) : href ? (
+            <Touchable
+                ref={itemRef}
+                href={href}
+                newTab={newTab}
+                loadOnTop={loadOnTop}
+                onNavigate={() => {
+                    closeMenu();
+                    onNavigate?.();
+                }}
+                disabled={disabled}
+                role="menuitem"
+                dataAttributes={menuItemDataAttributes}
+            >
+                <Box paddingX={8} paddingY={12}>
+                    {renderItemContent()}
+                </Box>
+            </Touchable>
+        ) : to ? (
+            <Touchable
+                ref={itemRef}
+                to={to}
+                newTab={newTab}
+                fullPageOnWebView={fullPageOnWebView}
+                onNavigate={() => {
+                    closeMenu();
+                    onNavigate?.();
+                }}
+                disabled={disabled}
+                role="menuitem"
+                dataAttributes={menuItemDataAttributes}
+            >
+                <Box paddingX={8} paddingY={12}>
+                    {renderItemContent()}
+                </Box>
+            </Touchable>
         ) : (
             <Touchable
                 ref={itemRef}
                 onPress={() => {
                     if (isMenuOpen && itemIndex !== null) {
-                        onPress(itemIndex);
+                        onPress?.(itemIndex);
                         closeMenu();
                     }
                 }}
@@ -140,16 +205,7 @@ export const MenuItem = ({
                 dataAttributes={menuItemDataAttributes}
             >
                 <Box paddingX={8} paddingY={12}>
-                    <div className={styles.itemContent}>
-                        {Icon && (
-                            <div className={styles.iconContainer}>
-                                <Icon size={24} color={contentColor} />
-                            </div>
-                        )}
-                        <Text3 regular color={contentColor}>
-                            {label}
-                        </Text3>
-                    </div>
+                    {renderItemContent()}
                 </Box>
             </Touchable>
         );

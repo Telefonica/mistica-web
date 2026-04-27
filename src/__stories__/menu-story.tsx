@@ -85,11 +85,14 @@ export const Default: StoryComponent<MenuArgs> = ({
                                         <MenuItem
                                             key={optionIndex}
                                             label={`Option ${optionIndex + 1}`}
-                                            onPress={(item) => {
+                                            onPress={() => {
                                                 if (checkbox) {
-                                                    setValues(item);
+                                                    setValues(optionIndex);
                                                 } else {
-                                                    alert({title: `Item ${item + 1}`, message: 'pressed'});
+                                                    alert({
+                                                        title: `Item ${optionIndex + 1}`,
+                                                        message: 'pressed',
+                                                    });
                                                 }
                                             }}
                                             {...(checkbox && {
@@ -171,7 +174,7 @@ export const InsideCard: StoryComponent = () => {
                                         <MenuItem
                                             key={optionIndex + 1}
                                             label={`Option ${optionIndex + 1}`}
-                                            onPress={() => null}
+                                            onPress={() => {}}
                                         />
                                     ))}
                                 </div>
