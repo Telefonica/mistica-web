@@ -218,6 +218,6 @@
         "packages/eslint-plugin-mistica-local-rules"
     ],
     "engines": {
-        "node": "24.x"
+        "node": ">=24.0.0"
     }
 }
