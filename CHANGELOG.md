@@ -1,3 +1,10 @@
+# [16.62.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.61.0...v16.62.0-beta.1) (2026-04-28)
+
+
+### Features
+
+* **Chore:** figma-mcp-skill-updates: Instructions v2 ([b5695f4](https://github.com/Telefonica/mistica-web/commit/b5695f498de5506b4686a256da324a9ce0b53b12))
+
 # [16.61.0](https://github.com/Telefonica/mistica-web/compare/v16.60.0...v16.61.0) (2026-04-24)
 
 
