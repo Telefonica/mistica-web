@@ -10,6 +10,7 @@ import {
     VIVO_NEW_SKIN,
     TU_SKIN,
     ESIMFLAG_SKIN,
+    UNBRANDED_SKIN,
 } from './constants';
 import {getBlauSkin} from './blau';
 import {getTelefonicaSkin} from './telefonica';
@@ -21,6 +22,7 @@ import {getMovistarSkin} from './movistar';
 import {getMovistarNewSkin} from './movistar-new';
 import {getTuSkin} from './tu';
 import {getEsimflagSkin} from './esimflag';
+import {getUnbrandedSkin} from './unbranded';
 
 import type {SkinVariant, KnownSkin, KnownSkinName} from './types';
 
@@ -46,6 +48,8 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
             return getTuSkin(variant);
         case ESIMFLAG_SKIN:
             return getEsimflagSkin(variant);
+        case UNBRANDED_SKIN:
+            return getUnbrandedSkin(variant);
         default: {
             const n: never = name;
             throw Error('Unknown skin name: ' + n);

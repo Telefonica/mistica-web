@@ -20,6 +20,7 @@ import {
     skinVars,
     OverscrollColorProvider,
     ESIMFLAG_SKIN,
+    UNBRANDED_SKIN,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {getPlatform} from '../src/utils/platform';
@@ -132,7 +133,7 @@ const MisticaThemeProvider = ({
                 <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
                     <OverscrollColorProvider>
                         {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
-                        {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
+                        {(skin === TELEFONICA_SKIN || skin === TU_SKIN || skin === UNBRANDED_SKIN) && (
                             <style>{`body {font-family: "Telefonica Sans"}`}</style>
                         )}
                         {(skin === MOVISTAR_SKIN ||

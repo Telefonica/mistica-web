@@ -8,3 +8,4 @@ export const TELEFONICA_SKIN = 'Telefonica';
 export const BLAU_SKIN = 'Blau';
 export const TU_SKIN = 'Tu';
 export const ESIMFLAG_SKIN = 'Esimflag';
+export const UNBRANDED_SKIN = 'Unbranded';
