@@ -12,6 +12,7 @@ import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
 import {isServerSide} from './utils/environment';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -214,6 +215,9 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             if (imageRef.current) {
                 imageRef.current.style.opacity = '1';
             }
+            if (isRunningAcceptanceTest()) {
+                setHideLoadingFallback(true);
+            }
             setTimeout(() => {
                 setHideLoadingFallback(true);
             }, styles.FADE_IN_DURATION_MS);
@@ -277,7 +281,14 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     <script
                         // eslint-disable-next-line react/no-danger
                         dangerouslySetInnerHTML={{
-                            __html: `document.getElementById("${imageId}").addEventListener('load', (e) => e.target.style.opacity = "1")`,
+                            __html: `(function () {
+    var img = document.getElementById("${imageId}");
+    if (img.complete) {
+        img.style.opacity = "1";
+    } else {
+        img.addEventListener('load', function (e) { e.target.style.opacity = "1"; });
+    }
+})();`,
                         }}
                     />
                 )}

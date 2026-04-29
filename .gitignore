@@ -31,3 +31,4 @@ community.d.ts
 # SonarQube scan
 .scannerwork
 *storybook.log
+.env*.local

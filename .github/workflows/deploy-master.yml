@@ -27,4 +27,4 @@ jobs:
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID}} #Required
                   vercel-project-name: mistica-web # Not requried by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   vercel-args: '--prod'
-                  working-directory: ./
+                  working-directory: ${{ github.workspace }}

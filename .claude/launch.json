@@ -1,0 +1,17 @@
+{
+    "version": "0.0.1",
+    "configurations": [
+        {
+            "name": "Storybook",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["storybook"],
+            "port": 6006
+        },
+        {
+            "name": "Playroom",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["playroom"],
+            "port": 9000
+        }
+    ]
+}

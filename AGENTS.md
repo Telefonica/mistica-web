@@ -21,3 +21,10 @@ React component library for Telefonica's Design System.
 - If you create a new component always create a snippet for playroom.
 - If you add props to a component always update stories accordingly and add the new props to args and
   argTypes.
+
+---
+
+## GitHub conventions
+
+- Read [CONTRIBUTING](./CONTRIBUTING.md) before contributing to Mistica repo.
+- Always add the `AI` label to PRs where the code was written by an AI agent.

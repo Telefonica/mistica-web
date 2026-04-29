@@ -1,3 +1,62 @@
+# [16.61.0](https://github.com/Telefonica/mistica-web/compare/v16.60.0...v16.61.0) (2026-04-24)
+
+
+### Bug Fixes
+
+* **Image:** handle SSR image already complete before inline script runs ([#1536](https://github.com/Telefonica/mistica-web/issues/1536)) ([ec1e35c](https://github.com/Telefonica/mistica-web/commit/ec1e35c80a1a0e2c49ff6891e29966cc6c986134))
+
+
+### Features
+
+* **chore:** Minimal github conventions ([#1530](https://github.com/Telefonica/mistica-web/issues/1530)) ([f7ca38a](https://github.com/Telefonica/mistica-web/commit/f7ca38abb9f27a9299cd466e607718f89d2033d9))
+* **fixedFooterLayout:** include footerScrollEffect prop ([#1532](https://github.com/Telefonica/mistica-web/issues/1532)) ([bd56fb2](https://github.com/Telefonica/mistica-web/commit/bd56fb22d579efa281be85660c76e0f3fcfc0123))
+* **llms:** Include source code in mistica package ([#1531](https://github.com/Telefonica/mistica-web/issues/1531)) ([bf6280b](https://github.com/Telefonica/mistica-web/commit/bf6280b4e8664fb2d4a0c5c1c4ebd75ce5ba7619))
+
+# [16.60.0](https://github.com/Telefonica/mistica-web/compare/v16.59.0...v16.60.0) (2026-04-17)
+
+
+### Features
+
+* **webview-bridge:** update to v5.1.0 ([#1534](https://github.com/Telefonica/mistica-web/issues/1534)) ([4d14d46](https://github.com/Telefonica/mistica-web/commit/4d14d46043b67fe8ffb2ebf609088312f8c1f436)), closes [#257](https://github.com/Telefonica/mistica-web/issues/257) [#258](https://github.com/Telefonica/mistica-web/issues/258) [#262](https://github.com/Telefonica/mistica-web/issues/262) [#260](https://github.com/Telefonica/mistica-web/issues/260)
+
+# [16.59.0](https://github.com/Telefonica/mistica-web/compare/v16.58.0...v16.59.0) (2026-04-17)
+
+
+### Bug Fixes
+
+* **ci:** update vercel-action to main branch ([#1533](https://github.com/Telefonica/mistica-web/issues/1533)) ([97d9115](https://github.com/Telefonica/mistica-web/commit/97d9115ce0e2efd0902093b0d16c6f2851c2f943))
+* **TextField:** fix screen reader reading order for optional input fields ([#1529](https://github.com/Telefonica/mistica-web/issues/1529)) ([61c0345](https://github.com/Telefonica/mistica-web/commit/61c0345465cea1475079dee297ba03e947a94d61))
+
+
+### Features
+
+* **Skill:** Improve skill and fix patterns example ([#1526](https://github.com/Telefonica/mistica-web/issues/1526)) ([522c305](https://github.com/Telefonica/mistica-web/commit/522c305389d18a86efb51c404433697549396530))
+
+# [16.58.0](https://github.com/Telefonica/mistica-web/compare/v16.57.0...v16.58.0) (2026-04-10)
+
+
+### Bug Fixes
+
+* **chore:** Fix ssr acceptance image ([#1527](https://github.com/Telefonica/mistica-web/issues/1527)) ([298f052](https://github.com/Telefonica/mistica-web/commit/298f0528babf274d88fd04cc0ea3c71698f41d82))
+
+
+### Features
+
+* **Card:** Card reading order when interactive (segregate touchable content) ([#1523](https://github.com/Telefonica/mistica-web/issues/1523)) ([eee43ec](https://github.com/Telefonica/mistica-web/commit/eee43ec1381a2594219385758a1d031e7968c16e))
+
+# [16.57.0](https://github.com/Telefonica/mistica-web/compare/v16.56.0...v16.57.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* **Logo:** Fix layout shifts caused by logos (specially in navbar) ([#1520](https://github.com/Telefonica/mistica-web/issues/1520)) ([0a77668](https://github.com/Telefonica/mistica-web/commit/0a77668da82380ed05e86921f60f24c6502518e5))
+* **Select:** Fix layout shift caused by outline ([#1521](https://github.com/Telefonica/mistica-web/issues/1521)) ([87ecb85](https://github.com/Telefonica/mistica-web/commit/87ecb8531bf1165033982aa5a30c603f3aed54b1))
+
+
+### Features
+
+* **chore:** Create first version of mistica skill and update docs ([#1524](https://github.com/Telefonica/mistica-web/issues/1524)) ([b57e194](https://github.com/Telefonica/mistica-web/commit/b57e194e006208db9fc97efe53d30c3240c4426f))
+
 # [16.56.0](https://github.com/Telefonica/mistica-web/compare/v16.55.0...v16.56.0) (2026-03-20)
 
 

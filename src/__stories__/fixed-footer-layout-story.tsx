@@ -33,17 +33,20 @@ const useTextLines = (): [Array<string>, () => void, () => void] => {
 
 export const FooterWithButtonsOnly: StoryComponent = () => {
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
+    const [footerScrollEffect, footerScrollEffectCheckbox] = useCheckbox('footerScrollEffect', true);
     const [textLines, loadMoreText, loadLessText] = useTextLines();
     return (
         <ButtonFixedFooterLayout
             button={<ButtonPrimary onPress={loadMoreText}>Load more text</ButtonPrimary>}
             secondaryButton={<ButtonSecondary onPress={loadLessText}>Load less text</ButtonSecondary>}
             isFooterVisible={isFooterVisible}
+            footerScrollEffect={footerScrollEffect}
         >
             <ResponsiveLayout>
                 <Box paddingY={16}>
                     <Stack space={16}>
                         {isFooterVisibleCheckbox}
+                        {footerScrollEffectCheckbox}
                         {textLines.map((line, idx) => (
                             <Text2 regular key={idx}>
                                 {line}
@@ -62,6 +65,7 @@ FooterWithButtonsOnly.parameters = {fullScreen: true};
 export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
+    const [footerScrollEffect, footerScrollEffectCheckbox] = useCheckbox('footerScrollEffect', true);
     return (
         <FixedFooterLayout
             footer={
@@ -77,10 +81,12 @@ export const MoreComplexFooter: StoryComponent = () => {
                 </ResponsiveLayout>
             }
             isFooterVisible={isFooterVisible}
+            footerScrollEffect={footerScrollEffect}
         >
             <ResponsiveLayout>
                 <Stack space={16}>
                     {isFooterVisibleCheckbox}
+                    {footerScrollEffectCheckbox}
                     <Text2 regular as="p">
                         When you need a more elaborated thing for your footer (not just buttons), you can use
                         FixedFooterLayout instead of ButtonFixedFooterLayout
