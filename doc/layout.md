@@ -79,7 +79,8 @@ a horizontal `Stack`, and it covers the most common row-layout use cases you mig
 It supports:
 
 - horizontal distribution via `space={number}` or `space="between" | "around" | "evenly"`
-- vertical alignment of children via `alignItems="flex-start" | "flex-end" | "center" | "stretch" | "baseline"`
+- vertical alignment of children via
+  `alignItems="flex-start" | "flex-end" | "center" | "stretch" | "baseline"`
 - wrapping via `wrap` and row spacing via `verticalSpace`
 
 :information_source: Check `Inline` in
@@ -138,6 +139,24 @@ Distribute items evenly. Items have equal space around them
 ```
 
 <img src="./images/layout/inline-evenly.svg" />
+
+### nesting
+
+Nest `Inline` components to compose richer rows. A common pattern groups a leading icon and label on the left
+with a value on the right via `space="between"`:
+
+```tsx
+<Inline space="between" alignItems="center">
+  <Inline space={8} alignItems="center">
+    <IconTruckRegular size={24} color={skinVars.colors.neutralHigh} />
+    <Text2 regular>Envío:</Text2>
+  </Inline>
+  <Text2 regular>Mañana, gratis</Text2>
+</Inline>
+```
+
+The outer `Inline` distributes the two groups to opposite ends; the inner `Inline` keeps the icon tightly
+grouped with its label at a fixed gap.
 
 ## Align
 
