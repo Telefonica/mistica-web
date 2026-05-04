@@ -1584,6 +1584,16 @@ const cardSnippets: Array<Snippet> = [
             description="Description"
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'AiCard',
+        code: `
+        <AiCard
+            text="Lorem ipsum dolor sit amet, "
+            words={['consectetur', 'praesent', 'tempor', 'aliquam']}
+            onPress={() => {}}
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [
