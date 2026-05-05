@@ -110,7 +110,7 @@ export const MenuItem = ({
                 disabled={disabled}
                 role="menuitemcheckbox"
                 dataAttributes={menuItemDataAttributes}
-                render={({controlElement}) => (
+                render={({controlElement, labelId}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">
                             <div className={styles.itemContent}>
@@ -119,7 +119,7 @@ export const MenuItem = ({
                                         <Icon size={24} color={contentColor} />
                                     </div>
                                 )}
-                                <div className={styles.itemTextContent}>
+                                <div id={labelId} className={styles.itemTextContent}>
                                     <Text3 regular color={contentColor}>
                                         {label}
                                     </Text3>
