@@ -124,7 +124,7 @@ export const MenuItem = ({
                                         {label}
                                     </Text3>
                                     {description && (
-                                        <Text3 light color={vars.colors.textSecondary}>
+                                        <Text3 regular color={vars.colors.textSecondary}>
                                             {description}
                                         </Text3>
                                     )}
@@ -160,7 +160,7 @@ export const MenuItem = ({
                                 {label}
                             </Text3>
                             {description && (
-                                <Text3 light color={vars.colors.textSecondary}>
+                                <Text3 regular color={vars.colors.textSecondary}>
                                     {description}
                                 </Text3>
                             )}
