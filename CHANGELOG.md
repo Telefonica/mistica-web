@@ -1,3 +1,17 @@
+# [16.61.0](https://github.com/Telefonica/mistica-web/compare/v16.60.0...v16.61.0) (2026-04-24)
+
+
+### Bug Fixes
+
+* **Image:** handle SSR image already complete before inline script runs ([#1536](https://github.com/Telefonica/mistica-web/issues/1536)) ([ec1e35c](https://github.com/Telefonica/mistica-web/commit/ec1e35c80a1a0e2c49ff6891e29966cc6c986134))
+
+
+### Features
+
+* **chore:** Minimal github conventions ([#1530](https://github.com/Telefonica/mistica-web/issues/1530)) ([f7ca38a](https://github.com/Telefonica/mistica-web/commit/f7ca38abb9f27a9299cd466e607718f89d2033d9))
+* **fixedFooterLayout:** include footerScrollEffect prop ([#1532](https://github.com/Telefonica/mistica-web/issues/1532)) ([bd56fb2](https://github.com/Telefonica/mistica-web/commit/bd56fb22d579efa281be85660c76e0f3fcfc0123))
+* **llms:** Include source code in mistica package ([#1531](https://github.com/Telefonica/mistica-web/issues/1531)) ([bf6280b](https://github.com/Telefonica/mistica-web/commit/bf6280b4e8664fb2d4a0c5c1c4ebd75ce5ba7619))
+
 # [16.60.0](https://github.com/Telefonica/mistica-web/compare/v16.59.0...v16.60.0) (2026-04-17)
 
 
