@@ -95,6 +95,19 @@ export const MenuItem = ({
 
     const menuItemDataAttributes = {testid: 'MenuItem', ...dataAttributes};
 
+    const renderTextContent = (id?: string) => (
+        <div id={id} className={styles.itemTextContent}>
+            <Text3 regular color={contentColor}>
+                {label}
+            </Text3>
+            {description && (
+                <Text3 regular color={vars.colors.textSecondary}>
+                    {description}
+                </Text3>
+            )}
+        </div>
+    );
+
     const renderContent = () =>
         controlType === 'checkbox' ? (
             <Checkbox
@@ -119,16 +132,7 @@ export const MenuItem = ({
                                         <Icon size={24} color={contentColor} />
                                     </div>
                                 )}
-                                <div id={labelId} className={styles.itemTextContent}>
-                                    <Text3 regular color={contentColor}>
-                                        {label}
-                                    </Text3>
-                                    {description && (
-                                        <Text3 regular color={vars.colors.textSecondary}>
-                                            {description}
-                                        </Text3>
-                                    )}
-                                </div>
+                                {renderTextContent(labelId)}
                             </div>
                             <Box paddingLeft={16}>{controlElement}</Box>
                         </Inline>
@@ -155,16 +159,7 @@ export const MenuItem = ({
                                 <Icon size={24} color={contentColor} />
                             </div>
                         )}
-                        <div className={styles.itemTextContent}>
-                            <Text3 regular color={contentColor}>
-                                {label}
-                            </Text3>
-                            {description && (
-                                <Text3 regular color={vars.colors.textSecondary}>
-                                    {description}
-                                </Text3>
-                            )}
-                        </div>
+                        {renderTextContent()}
                     </div>
                 </Box>
             </Touchable>
