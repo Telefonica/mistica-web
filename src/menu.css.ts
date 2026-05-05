@@ -129,6 +129,7 @@ export const itemContent = style({
 export const itemTextContent = style({
     display: 'flex',
     flexDirection: 'column',
+    gap: 2,
 });
 
 export const iconContainer = style({
