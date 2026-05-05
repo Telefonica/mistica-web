@@ -53,6 +53,7 @@ const getItemIndexInMenu = (menu: HTMLElement | null, item: HTMLElement | null):
 
 interface MenuItemBaseProps {
     label: string;
+    description?: string;
     Icon?: (props: IconProps) => JSX.Element;
     destructive?: boolean;
     disabled?: boolean;
@@ -80,6 +81,7 @@ export const MenuItem = ({
     onPress,
     controlType,
     checked,
+    description,
     dataAttributes,
 }: MenuItemProps): JSX.Element => {
     const {focusedItem, setFocusedItem, closeMenu, isMenuOpen} = useMenuContext();
@@ -117,9 +119,16 @@ export const MenuItem = ({
                                         <Icon size={24} color={contentColor} />
                                     </div>
                                 )}
-                                <Text3 regular color={contentColor}>
-                                    {label}
-                                </Text3>
+                                <div className={styles.itemTextContent}>
+                                    <Text3 regular color={contentColor}>
+                                        {label}
+                                    </Text3>
+                                    {description && (
+                                        <Text3 light color={vars.colors.textSecondary}>
+                                            {description}
+                                        </Text3>
+                                    )}
+                                </div>
                             </div>
                             <Box paddingLeft={16}>{controlElement}</Box>
                         </Inline>
@@ -146,9 +155,16 @@ export const MenuItem = ({
                                 <Icon size={24} color={contentColor} />
                             </div>
                         )}
-                        <Text3 regular color={contentColor}>
-                            {label}
-                        </Text3>
+                        <div className={styles.itemTextContent}>
+                            <Text3 regular color={contentColor}>
+                                {label}
+                            </Text3>
+                            {description && (
+                                <Text3 light color={vars.colors.textSecondary}>
+                                    {description}
+                                </Text3>
+                            )}
+                        </div>
                     </div>
                 </Box>
             </Touchable>
