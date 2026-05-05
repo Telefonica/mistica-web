@@ -1,8 +1,10 @@
 import * as React from 'react';
-import {AiCard, Box, ResponsiveLayout} from '..';
+import AiCard from '../ai-card';
+import Box from '../../box';
+import ResponsiveLayout from '../../responsive-layout';
 
 export default {
-    title: 'Components/AiCard',
+    title: 'Community/AiCard',
     parameters: {fullScreen: true},
 };
 

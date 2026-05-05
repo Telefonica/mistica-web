@@ -1,15 +1,15 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {BaseTouchable} from './touchable';
-import {Text3} from './text';
-import {vars} from './skins/skin-contract.css';
-import IconArtificialIntelligenceFilled from './generated/mistica-icons/icon-artificial-intelligence-filled';
-import {useIsInViewport} from './hooks';
-import {isClientSide} from './utils/environment';
+import {BaseTouchable} from '../touchable';
+import {Text3} from '../text';
+import {vars} from '../skins/skin-contract.css';
+import IconArtificialIntelligenceFilled from '../generated/mistica-icons/icon-artificial-intelligence-filled';
+import {useIsInViewport} from '../hooks';
+import {isClientSide} from '../utils/environment';
 import * as styles from './ai-card.css';
 
-import type {TouchableComponentProps} from './touchable';
+import type {TouchableComponentProps} from '../touchable';
 
 interface CommonProps {
     text?: string;

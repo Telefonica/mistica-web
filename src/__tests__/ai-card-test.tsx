@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {AiCard, ThemeContextProvider} from '..';
+import {AiCard} from '../community';
+import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
 beforeAll(() => {
