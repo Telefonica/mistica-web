@@ -10,7 +10,7 @@ import {Portal} from './portal';
 import Box from './box';
 import Inline from './inline';
 import Touchable from './touchable';
-import {Text3} from './text';
+import {Text2, Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import Divider from './divider';
 import Checkbox from './checkbox';
@@ -101,9 +101,9 @@ export const MenuItem = ({
                 {label}
             </Text3>
             {description && (
-                <Text3 regular color={vars.colors.textSecondary}>
+                <Text2 regular color={vars.colors.textSecondary}>
                     {description}
-                </Text3>
+                </Text2>
             )}
         </div>
     );
