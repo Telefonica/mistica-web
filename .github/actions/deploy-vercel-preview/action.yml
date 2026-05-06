@@ -1,46 +1,46 @@
 name: Deploy Vercel preview
+
 description: Build and deploy a preview to Vercel
+
 inputs:
-    ref:
-        description: Git ref to checkout before deploy
-        required: true
-    github-token:
-        description: GitHub token used by Vercel action to comment on PRs
-        required: true
-    vercel-token:
-        description: Vercel token
-        required: true
-    vercel-org-id:
-        description: Vercel organization id
-        required: true
-    vercel-project-id:
-        description: Vercel project id
-        required: true
-    vercel-project-name:
-        description: Vercel project name
-        required: true
-    working-directory:
-        description: Working directory for deployment
-        required: false
-        default: ${{ github.workspace }}
+  ref:
+    description: Git ref (caller should checkout; optional)
+    required: false
+  github-token:
+    description: GitHub token used by Vercel action to comment on PRs
+    required: true
+  vercel-token:
+    description: Vercel token
+    required: true
+  vercel-org-id:
+    description: Vercel organization id
+    required: true
+  vercel-project-id:
+    description: Vercel project id
+    required: true
+  vercel-project-name:
+    description: Vercel project name
+    required: true
+  working-directory:
+    description: Working directory for deployment
+    required: false
+    default: ${{ github.workspace }}
+
 runs:
-    using: composite
-    steps:
-        - uses: actions/checkout@v6
-          with:
-              ref: ${{ inputs.ref }}
-              persist-credentials: false
+  using: composite
+  steps:
+    - name: Prepare build command for preview
+      run: |
+        sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json
+      shell: bash
 
-        # we need to run a different buildCommand for PR previews (see package.json scripts)
-        - run: sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json
-          shell: bash
-
-        - uses: amondnet/vercel-action@master
-          id: vercel-deploy
-          with:
-              github-token: ${{ inputs.github-token }}
-              vercel-token: ${{ inputs.vercel-token }}
-              vercel-org-id: ${{ inputs.vercel-org-id }}
-              vercel-project-id: ${{ inputs.vercel-project-id }}
-              vercel-project-name: ${{ inputs.vercel-project-name }}
-              working-directory: ${{ inputs.working-directory }}
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@master
+      id: vercel-deploy
+      with:
+        github-token: ${{ inputs.github-token }}
+        vercel-token: ${{ inputs.vercel-token }}
+        vercel-org-id: ${{ inputs.vercel-org-id }}
+        vercel-project-id: ${{ inputs.vercel-project-id }}
+        vercel-project-name: ${{ inputs.vercel-project-name }}
+        working-directory: ${{ inputs.working-directory }}

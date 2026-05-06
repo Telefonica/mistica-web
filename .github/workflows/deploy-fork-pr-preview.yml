@@ -50,6 +50,9 @@ jobs:
 
                       core.setOutput('merge_ref', `refs/pull/${prNumber}/merge`);
                       core.setOutput('pr_number', String(prNumber));
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
             - uses: ./.github/actions/deploy-vercel-preview
               with:
