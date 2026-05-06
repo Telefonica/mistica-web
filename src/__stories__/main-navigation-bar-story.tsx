@@ -3,10 +3,13 @@ import {
     Avatar,
     Badge,
     IconShoppingCartRegular,
+    Inline,
+    InlineItem,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
     Placeholder,
+    SearchField,
     Stack,
     Text3,
     useScreenSize,
@@ -45,6 +48,7 @@ type Args = {
     topSlotBackgroundColor: string;
     wide: boolean;
     paddingX: PadSize | 'undefined';
+    expandedRightSlot: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -60,9 +64,35 @@ export const Default: StoryComponent<Args> = ({
     topSlotBackgroundColor,
     wide,
     paddingX,
+    expandedRightSlot,
 }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
+
+    const right = expandedRightSlot ? (
+        <Inline fullWidth space={16} alignItems="center">
+            <InlineItem grow>
+                <SearchField fullWidth name="search" label="Search" />
+            </InlineItem>
+
+            <NavigationBarAction onPress={() => {}} aria-label="Entrar">
+                <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
+                {isDesktopOrBigger && 'Entrar'}
+            </NavigationBarAction>
+        </Inline>
+    ) : (
+        <NavigationBarActionGroup>
+            <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
+                <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                </Badge>
+            </NavigationBarAction>
+            <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
+                {isDesktopOrBigger && 'María López Serrano'}
+            </NavigationBarAction>
+        </NavigationBarActionGroup>
+    );
 
     return (
         <MainNavigationBar
@@ -116,19 +146,7 @@ export const Default: StoryComponent<Args> = ({
                     : undefined
             }
             selectedIndex={selectedIndex}
-            right={
-                <NavigationBarActionGroup>
-                    <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
-                        <Badge value={2}>
-                            <IconShoppingCartRegular color="currentColor" />
-                        </Badge>
-                    </NavigationBarAction>
-                    <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                        <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
-                        {isDesktopOrBigger && 'María López Serrano'}
-                    </NavigationBarAction>
-                </NavigationBarActionGroup>
-            }
+            right={right}
             wide={wide ? (paddingX === 'undefined' ? true : {paddingX}) : false}
         />
     );
@@ -149,6 +167,7 @@ Default.args = {
     topSlotBackgroundColor: '',
     wide: false,
     paddingX: 'undefined',
+    expandedRightSlot: false,
 };
 
 Default.argTypes = {
