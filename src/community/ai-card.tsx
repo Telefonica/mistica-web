@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import {BaseTouchable} from '../touchable';
 import {Text3} from '../text';
 import {vars} from '../skins/skin-contract.css';
-import IconArtificialIntelligenceFilled from '../generated/mistica-icons/icon-artificial-intelligence-filled';
 import {useIsInViewport} from '../hooks';
 import {isClientSide} from '../utils/environment';
+import {applyCssVars} from '../utils/css';
 import * as styles from './ai-card.css';
 
 import type {TouchableComponentProps} from '../touchable';
@@ -14,12 +14,16 @@ import type {TouchableComponentProps} from '../touchable';
 interface CommonProps {
     /** Static text shown before the animated words. */
     text: string;
-    /** Words to animate in sequence. typed, held, then erased one by one. Maximum of 4 words */
+    /** Words to animate in sequence. typed, held, then erased one by one. Maximum of 4 words. */
     words?: ReadonlyArray<string>;
-    /** Number of characters to skip during the deletion animation. Omit to erase fully. Used when words have the same initial chars*/
+    /** Number of characters to keep at the start of each word during deletion. Omit to erase fully. */
     deleteChars?: number;
     /** Wraps the text line after this many characters. */
     lineBreakAtChars?: number;
+    /** Border color. Accepts any CSS color or gradient string. Defaults to the skin border token. */
+    borderColor?: string;
+    /** Icon or element rendered on the left side of the card. */
+    asset: React.ReactElement;
 }
 
 export type AiCardProps = TouchableComponentProps<CommonProps>;
@@ -126,7 +130,7 @@ const useAiCardAnimation = ({
     return {
         dynamicText: state.text,
         isDone: state.stage === 'done',
-        shouldBlinkCaret: !prefersReducedMotion && !!wordCount && state.stage === 'holding',
+        shouldBlinkCaret: !prefersReducedMotion && !!wordCount && state.stage === 'holding' && isInViewport,
     };
 };
 
@@ -135,11 +139,12 @@ const AiCard = ({
     words = [],
     deleteChars,
     lineBreakAtChars,
+    borderColor,
+    asset,
     dataAttributes,
     'aria-label': ariaLabel,
     ...touchableProps
 }: AiCardProps): JSX.Element => {
-    const gradientId = React.useId();
     const textLineRef = React.useRef<HTMLDivElement>(null);
     const prefersReducedMotion = getPrefersReducedMotion();
     const isInViewport = useIsInViewport(textLineRef, false);
@@ -177,28 +182,21 @@ const AiCard = ({
     return (
         <BaseTouchable
             className={classnames(styles.container, {[styles.containerInteractive]: isInteractive})}
+            style={
+                borderColor
+                    ? applyCssVars({
+                          [styles.vars.borderColorVar]: /gradient/.test(borderColor)
+                              ? borderColor
+                              : `linear-gradient(${borderColor}, ${borderColor})`,
+                      })
+                    : undefined
+            }
             dataAttributes={{'component-name': 'AiCard', testid: 'AiCard', ...dataAttributes}}
             {...(touchableProps as any)}
             aria-label={autoAriaLabel ?? ariaLabel}
         >
-            <svg aria-hidden="true" style={{position: 'absolute', width: 0, height: 0, overflow: 'hidden'}}>
-                <defs>
-                    <linearGradient
-                        id={gradientId}
-                        x1="1"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                        gradientUnits="objectBoundingBox"
-                    >
-                        <stop offset="17.51%" style={{stopColor: '#AE42E4'}} />
-                        <stop offset="38.3%" style={{stopColor: '#BD4AFF'}} />
-                        <stop offset="82.5%" style={{stopColor: '#EF7E9C'}} />
-                    </linearGradient>
-                </defs>
-            </svg>
             <span className={styles.slot} aria-hidden="true">
-                <IconArtificialIntelligenceFilled color={`url(#${gradientId})`} />
+                {asset}
             </span>
             <div ref={textLineRef} className={styles.textLine} aria-hidden="true" style={textLineStyle}>
                 <Text3 regular color={vars.colors.textPrimary} as="span">

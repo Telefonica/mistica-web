@@ -40,10 +40,12 @@ const mockPrefersReducedMotion = () => {
     }));
 };
 
+const asset = <span />;
+
 test('renders static text', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello world" />
+            <AiCard text="Hello world" asset={asset} />
         </ThemeContextProvider>
     );
 
@@ -53,7 +55,7 @@ test('renders static text', () => {
 test('is non-interactive when no onPress is provided', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" />
+            <AiCard text="Hello" asset={asset} />
         </ThemeContextProvider>
     );
 
@@ -63,7 +65,7 @@ test('is non-interactive when no onPress is provided', () => {
 test('renders as an accessible button when onPress is provided', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" onPress={() => {}} />
+            <AiCard text="Hello" asset={asset} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -73,7 +75,7 @@ test('renders as an accessible button when onPress is provided', () => {
 test('renders as an accessible link when href is provided', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello " words={['world']} href="https://example.com" />
+            <AiCard text="Hello " words={['world']} asset={asset} href="https://example.com" />
         </ThemeContextProvider>
     );
 
@@ -84,7 +86,7 @@ test('calls onPress when clicked', async () => {
     const handlePress = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" onPress={handlePress} />
+            <AiCard text="Hello" asset={asset} onPress={handlePress} />
         </ThemeContextProvider>
     );
 
@@ -98,11 +100,11 @@ test('shows the last word immediately when user prefers reduced motion', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="" words={['weather', 'news']} onPress={() => {}} />
+            <AiCard text="Check the " words={['weather', 'news']} asset={asset} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
-    expect(screen.getByRole('button', {name: 'news'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Check the news'})).toBeInTheDocument();
 });
 
 test('animates words: typed word appears in the card', () => {
@@ -110,7 +112,7 @@ test('animates words: typed word appears in the card', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="" words={['hi']} onPress={() => {}} />
+            <AiCard text="" words={['hi']} asset={asset} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -119,10 +121,34 @@ test('animates words: typed word appears in the card', () => {
     expect(screen.getByTestId('AiCard').textContent).toContain('hi');
 });
 
+test('animates at most 4 words', () => {
+    mockPrefersReducedMotion();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Find " words={['a', 'b', 'c', 'd', 'e']} asset={asset} onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Find d'})).toBeInTheDocument();
+});
+
+test('ignores empty and whitespace-only entries in words', () => {
+    mockPrefersReducedMotion();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="" words={['', '  ', 'valid']} asset={asset} onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'valid'})).toBeInTheDocument();
+});
+
 test('passes dataAttributes to the container element', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" dataAttributes={{testid: 'my-ai-card'}} />
+            <AiCard text="Hello" asset={asset} dataAttributes={{testid: 'my-ai-card'}} />
         </ThemeContextProvider>
     );
 
