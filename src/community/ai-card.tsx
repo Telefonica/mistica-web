@@ -12,9 +12,13 @@ import * as styles from './ai-card.css';
 import type {TouchableComponentProps} from '../touchable';
 
 interface CommonProps {
-    text?: string;
+    /** Static text shown before the animated words. */
+    text: string;
+    /** Words to animate in sequence. typed, held, then erased one by one. Maximum of 4 words */
     words?: ReadonlyArray<string>;
-    deleteUntil?: number;
+    /** Number of characters to skip during the deletion animation. Omit to erase fully. Used when words have the same initial chars*/
+    deleteChars?: number;
+    /** Wraps the text line after this many characters. */
     lineBreakAtChars?: number;
 }
 
@@ -32,9 +36,9 @@ const getRandomTypingSpeed = (previousSpeed?: number) => {
     return candidates[Math.floor(Math.random() * candidates.length)];
 };
 
-const getDeleteFloor = (currentWord: string, nextWord: string, deleteUntil?: number) => {
+const getDeleteFloor = (currentWord: string, nextWord: string, deleteChars?: number) => {
     const sharedStartFloor = currentWord[0]?.toLowerCase() === nextWord[0]?.toLowerCase() ? 1 : 0;
-    const configuredDeleteFloor = typeof deleteUntil === 'number' ? Math.max(0, Math.floor(deleteUntil)) : 0;
+    const configuredDeleteFloor = typeof deleteChars === 'number' ? Math.max(0, Math.floor(deleteChars)) : 0;
     return Math.max(sharedStartFloor, configuredDeleteFloor);
 };
 
@@ -45,11 +49,11 @@ type AnimationState = {index: number; text: string; stage: AnimationStage};
 
 const INITIAL_STATE: AnimationState = {index: 0, text: '', stage: 'typing'};
 
-const tick = (state: AnimationState, words: ReadonlyArray<string>, deleteUntil?: number): AnimationState => {
+const tick = (state: AnimationState, words: ReadonlyArray<string>, deleteChars?: number): AnimationState => {
     const {index, text, stage} = state;
     const currentWord = words[index] || '';
     const nextWord = words[index + 1] || '';
-    const deleteFloor = getDeleteFloor(currentWord, nextWord, deleteUntil);
+    const deleteFloor = getDeleteFloor(currentWord, nextWord, deleteChars);
 
     if (stage === 'typing') {
         if (text.length < currentWord.length) return {...state, text: currentWord.slice(0, text.length + 1)};
@@ -62,7 +66,17 @@ const tick = (state: AnimationState, words: ReadonlyArray<string>, deleteUntil?:
             : {index: index + 1, text, stage: 'typing'};
     }
     if (stage === 'deleting') {
-        if (text.length <= deleteFloor) return {index: index + 1, text, stage: 'typing'};
+        if (text.length <= deleteFloor) {
+            let commonLen = 0;
+            while (
+                commonLen < text.length &&
+                commonLen < nextWord.length &&
+                text[commonLen] === nextWord[commonLen]
+            ) {
+                commonLen++;
+            }
+            return {index: index + 1, text: text.slice(0, commonLen), stage: 'typing'};
+        }
         return {...state, text: text.slice(0, -1)};
     }
     return state;
@@ -70,12 +84,12 @@ const tick = (state: AnimationState, words: ReadonlyArray<string>, deleteUntil?:
 
 const useAiCardAnimation = ({
     words,
-    deleteUntil,
+    deleteChars,
     prefersReducedMotion,
     isInViewport,
 }: {
     words: ReadonlyArray<string>;
-    deleteUntil?: number;
+    deleteChars?: number;
     prefersReducedMotion: boolean;
     isInViewport: boolean;
 }) => {
@@ -102,21 +116,12 @@ const useAiCardAnimation = ({
             prevSpeedRef.current = speed;
         } else if (state.stage === 'holding') {
             speed = HOLD_DURATION;
-        } else if (typeof deleteUntil === 'number') {
-            const currentWord = wordsRef.current[state.index] || '';
-            const nextWord = wordsRef.current[state.index + 1] || '';
-            const floor = getDeleteFloor(currentWord, nextWord, deleteUntil);
-            const charsToDelete = currentWord.length - floor;
-            speed =
-                charsToDelete > 0
-                    ? Math.round((currentWord.length * DELETE_SPEED) / charsToDelete)
-                    : DELETE_SPEED;
         } else {
             speed = DELETE_SPEED;
         }
-        const id = window.setTimeout(() => setState((s) => tick(s, wordsRef.current, deleteUntil)), speed);
+        const id = window.setTimeout(() => setState((s) => tick(s, wordsRef.current, deleteChars)), speed);
         return () => window.clearTimeout(id);
-    }, [state, isInViewport, prefersReducedMotion, wordCount, deleteUntil]);
+    }, [state, isInViewport, prefersReducedMotion, wordCount, deleteChars]);
 
     return {
         dynamicText: state.text,
@@ -126,9 +131,9 @@ const useAiCardAnimation = ({
 };
 
 const AiCard = ({
-    text = '',
+    text,
     words = [],
-    deleteUntil,
+    deleteChars,
     lineBreakAtChars,
     dataAttributes,
     'aria-label': ariaLabel,
@@ -156,7 +161,7 @@ const AiCard = ({
 
     const {dynamicText, isDone, shouldBlinkCaret} = useAiCardAnimation({
         words: safeWords,
-        deleteUntil,
+        deleteChars,
         prefersReducedMotion,
         isInViewport,
     });
@@ -186,9 +191,9 @@ const AiCard = ({
                         y2="1"
                         gradientUnits="objectBoundingBox"
                     >
-                        <stop offset="17.51%" style={{stopColor: 'var(--vivoPurple600, #AE42E4)'}} />
-                        <stop offset="38.3%" style={{stopColor: 'var(--vivoPurple500, #BD4AFF)'}} />
-                        <stop offset="82.5%" style={{stopColor: 'var(--vivoPink400, #EF7E9C)'}} />
+                        <stop offset="17.51%" style={{stopColor: '#AE42E4'}} />
+                        <stop offset="38.3%" style={{stopColor: '#BD4AFF'}} />
+                        <stop offset="82.5%" style={{stopColor: '#EF7E9C'}} />
                     </linearGradient>
                 </defs>
             </svg>

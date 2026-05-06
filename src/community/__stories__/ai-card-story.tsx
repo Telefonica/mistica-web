@@ -11,7 +11,7 @@ export default {
 type Args = {
     text: string;
     words: string;
-    deleteUntil: number;
+    deleteChars: number;
     lineBreakAtChars: number;
 };
 
@@ -21,13 +21,13 @@ const parseWords = (raw: string): Array<string> =>
         .map((word) => word.trim())
         .filter(Boolean);
 
-export const Default: StoryComponent<Args> = ({text, words, deleteUntil, lineBreakAtChars}) => (
+export const Default: StoryComponent<Args> = ({text, words, deleteChars, lineBreakAtChars}) => (
     <ResponsiveLayout>
         <Box paddingY={24}>
             <AiCard
                 text={text}
                 words={parseWords(words)}
-                deleteUntil={deleteUntil > 0 ? deleteUntil : undefined}
+                deleteChars={deleteChars > 0 ? deleteChars : undefined}
                 lineBreakAtChars={lineBreakAtChars > 0 ? lineBreakAtChars : undefined}
                 onPress={() => {}}
                 dataAttributes={{testid: 'ai-card'}}
@@ -40,10 +40,10 @@ Default.storyName = 'AiCard';
 Default.args = {
     text: 'Lorem ipsum dolor sit amet, ',
     words: 'consectetur, praesent, tempor, aliquam',
-    deleteUntil: 0,
+    deleteChars: 0,
     lineBreakAtChars: 0,
 };
 Default.argTypes = {
-    deleteUntil: {control: {type: 'number', min: 0, step: 1}},
+    deleteChars: {control: {type: 'number', min: 0, step: 1}},
     lineBreakAtChars: {control: {type: 'number', min: 0, step: 1}},
 };

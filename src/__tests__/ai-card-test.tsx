@@ -98,7 +98,7 @@ test('shows the last word immediately when user prefers reduced motion', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard words={['weather', 'news']} onPress={() => {}} />
+            <AiCard text="" words={['weather', 'news']} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -110,7 +110,7 @@ test('animates words: typed word appears in the card', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard words={['hi']} onPress={() => {}} />
+            <AiCard text="" words={['hi']} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
