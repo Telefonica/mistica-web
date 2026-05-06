@@ -115,6 +115,8 @@ type NavigationBarContentContainerProps = {
 
 const NavigationBarContentContainer = React.forwardRef<HTMLDivElement, NavigationBarContentContainerProps>(
     ({right, children, desktopOnly, expandRightContent}, ref) => {
+        const shouldWrapRightContent =
+            expandRightContent && React.isValidElement<{fullWidth?: boolean}>(right) && right.props.fullWidth;
         return (
             <div
                 ref={ref}
@@ -129,7 +131,11 @@ const NavigationBarContentContainer = React.forwardRef<HTMLDivElement, Navigatio
                                 : styles.navigationBarContentRight
                         }
                     >
-                        {right}
+                        {shouldWrapRightContent ? (
+                            <div className={styles.navigationBarContentRightExpandedContent}>{right}</div>
+                        ) : (
+                            right
+                        )}
                     </div>
                 )}
             </div>
