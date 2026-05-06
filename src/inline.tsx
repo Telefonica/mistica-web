@@ -81,6 +81,18 @@ type Props = {
     wrap?: boolean;
 };
 
+type InlineItemProps = {
+    children: React.ReactNode;
+    grow?: boolean;
+    className?: string;
+    dataAttributes?: DataAttributes;
+};
+
+export const InlineItem = ({children}: InlineItemProps): JSX.Element => <>{children}</>;
+
+const isInlineItem = (child: React.ReactNode): child is React.ReactElement<InlineItemProps> =>
+    React.isValidElement(child) && child.type === InlineItem;
+
 const Inline = ({
     space,
     verticalSpace,
@@ -96,6 +108,9 @@ const Inline = ({
 }: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
+    const childrenArray = React.Children.toArray(children).filter((child) => !!child || child === 0);
+
+    const hasGrowItem = childrenArray.some((child) => isInlineItem(child) && child.props.grow);
 
     return (
         <div
@@ -103,6 +118,7 @@ const Inline = ({
                 className,
                 styles.inline,
                 wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
+                hasGrowItem && styles.flexLayout,
                 isStringSpace ? (wrap ? styles.stringSpaceWithWrap : styles.stringSpace) : styles.marginInline
             )}
             style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
@@ -111,10 +127,18 @@ const Inline = ({
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
-            {React.Children.map(children, (child) =>
-                !!child || child === 0 ? (
+            {childrenArray.map((child, index) => {
+                const inlineItem = isInlineItem(child);
+                const inlineItemProps = inlineItem ? child.props : undefined;
+
+                return (
                     <div
+                        key={index}
                         role={role === 'list' ? 'listitem' : undefined}
+                        className={classnames(
+                            inlineItemProps?.className,
+                            inlineItemProps?.grow && styles.growItem
+                        )}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683
                             // In iOS the inline component sometimes cuts the last line of the content
@@ -123,11 +147,14 @@ const Inline = ({
                                     ? 1
                                     : undefined,
                         }}
+                        {...(inlineItemProps?.dataAttributes
+                            ? getPrefixedDataAttributes(inlineItemProps.dataAttributes, 'InlineItem')
+                            : undefined)}
                     >
-                        {child}
+                        {inlineItem ? inlineItemProps?.children : child}
                     </div>
-                ) : null
-            )}
+                );
+            })}
         </div>
     );
 };
