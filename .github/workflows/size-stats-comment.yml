@@ -16,9 +16,10 @@ jobs:
         if: github.event.workflow_run.conclusion == 'success'
         steps:
             - name: Download size stats artifact
-              uses: dawidd6/action-download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
-                  run_id: ${{ github.event.workflow_run.id }}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  run-id: ${{ github.event.workflow_run.id }}
                   name: size-stats-results
                   path: size-stats-results
 
@@ -30,12 +31,13 @@ jobs:
 
                       const marker = '<!-- size-stats-comment -->';
                       const title = '**Size stats**';
-                      const prNumber = Number(fs.readFileSync('size-stats-results/pr_number.txt', 'utf8').trim());
+                      const workflowRunPrs = context.payload.workflow_run?.pull_requests || [];
+                      const prNumber = workflowRunPrs.length === 1 ? workflowRunPrs[0].number : NaN;
                       const message = fs.readFileSync('size-stats-results/message.md', 'utf8').trim();
                       const body = `${marker}\n${title}\n\n${message}`;
 
                       if (!Number.isInteger(prNumber) || prNumber <= 0) {
-                        core.setFailed('Invalid PR number in artifact payload');
+                        core.setFailed('Could not determine a unique PR number from workflow_run payload');
                         return;
                       }
 

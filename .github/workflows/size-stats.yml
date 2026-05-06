@@ -64,6 +64,8 @@ jobs:
               with:
                   persist-credentials: false
 
+            - run: yarn install --immutable --immutable-cache
+
             - name: Form size stats message
               id: message
               uses: './.github/actions/size-stats-message'
@@ -80,7 +82,6 @@ jobs:
             - name: Prepare artifact payload
               run: |
                   mkdir -p size-stats-results
-                  echo "${{ github.event.pull_request.number }}" > size-stats-results/pr_number.txt
                   cat > size-stats-results/message.md <<'EOF'
                   ${{ steps.message.outputs.message }}
                   EOF

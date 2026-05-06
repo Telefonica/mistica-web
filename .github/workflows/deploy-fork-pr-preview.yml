@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       prNumber:
-        description: 'Pull request number to deploy preview for (optional when auto-triggered by label)'
-        required: false
+        description: 'Pull request number to deploy preview for'
+        required: true
 
 permissions:
     contents: read
-    pull-requests: read
+    pull-requests: write
 
 jobs:
     deploy:
