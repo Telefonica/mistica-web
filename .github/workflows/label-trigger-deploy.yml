@@ -19,13 +19,13 @@ jobs:
         with:
           script: |
             const TARGET_LABEL = 'safe-to-deploy';
-            const label = github.event.label && github.event.label.name;
+            const label = context.payload.label && context.payload.label.name;
             if (label !== TARGET_LABEL) {
               core.info(`Label '${label}' is not '${TARGET_LABEL}', skipping dispatch.`);
               return;
             }
 
-            const prNumber = github.event.pull_request && github.event.pull_request.number;
+            const prNumber = context.payload.pull_request && context.payload.pull_request.number;
             if (!prNumber) {
               core.setFailed('Could not find pull request number in event payload.');
               return;

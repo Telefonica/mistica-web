@@ -52,6 +52,7 @@ jobs:
                       core.setOutput('pr_number', String(prNumber));
             - uses: actions/checkout@v6
               with:
+                  ref: ${{ steps.pr.outputs.merge_ref }}
                   persist-credentials: false
 
             - uses: ./.github/actions/deploy-vercel-preview
@@ -61,5 +62,4 @@ jobs:
                   vercel-org-id: ${{ secrets.MISTICA_WEB_VERCEL_ORG_ID }}
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID }}
                   vercel-project-name: mistica-web
-                  ref: ${{ steps.pr.outputs.merge_ref }}
                   working-directory: ${{ github.workspace }}

@@ -3,9 +3,6 @@ name: Deploy Vercel preview
 description: Build and deploy a preview to Vercel
 
 inputs:
-  ref:
-    description: Git ref (caller should checkout; optional)
-    required: false
   github-token:
     description: GitHub token used by Vercel action to comment on PRs
     required: true
@@ -30,6 +27,7 @@ runs:
   using: composite
   steps:
     - name: Prepare build command for preview
+      working-directory: ${{ inputs.working-directory }}
       run: |
         sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json
       shell: bash
