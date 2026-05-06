@@ -90,6 +90,14 @@ type InlineItemProps = {
 
 export const InlineItem = ({children}: InlineItemProps): JSX.Element => <>{children}</>;
 
+const getChildKey = (child: React.ReactNode, index: number): React.Key => {
+    if (!React.isValidElement(child)) {
+        return index;
+    }
+
+    return child.key !== null && child.key !== undefined ? child.key : index;
+};
+
 const isInlineItem = (child: React.ReactNode): child is React.ReactElement<InlineItemProps> =>
     React.isValidElement(child) && child.type === InlineItem;
 
@@ -133,7 +141,7 @@ const Inline = ({
 
                 return (
                     <div
-                        key={index}
+                        key={getChildKey(child, index)}
                         role={role === 'list' ? 'listitem' : undefined}
                         className={classnames(
                             inlineItemProps?.className,
