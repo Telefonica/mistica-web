@@ -1,0 +1,54 @@
+name: Auto-dispatch deploy on label
+
+on:
+  pull_request_target:
+    types: [labeled]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch deploy workflow when `safe-to-deploy` label is added
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const TARGET_LABEL = 'safe-to-deploy';
+            const label = github.event.label && github.event.label.name;
+            if (label !== TARGET_LABEL) {
+              core.info(`Label '${label}' is not '${TARGET_LABEL}', skipping dispatch.`);
+              return;
+            }
+
+            const prNumber = github.event.pull_request && github.event.pull_request.number;
+            if (!prNumber) {
+              core.setFailed('Could not find pull request number in event payload.');
+              return;
+            }
+
+            const { owner, repo } = context.repo;
+            const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+
+            // Only dispatch the fork-preview workflow for PRs coming from forks
+            if (!pr.head || !pr.head.repo || !pr.head.repo.fork) {
+              core.info('PR is not from a fork; skipping fork preview dispatch.');
+              return;
+            }
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner,
+              repo,
+              workflow_id: 'deploy-fork-pr-preview.yml',
+              ref: 'master',
+              inputs: { prNumber: String(prNumber) },
+            });
+
+            core.info(`Dispatched deploy-fork-pr-preview for PR #${prNumber}`);
+
+            // post an audit comment on the PR
+            const commentBody = `Label '${TARGET_LABEL}' added — dispatching fork preview workflow. Awaiting environment approval to expose deploy secrets.`;
+            await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: commentBody });
