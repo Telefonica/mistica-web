@@ -79,16 +79,8 @@ type Props = {
     fullWidth?: boolean;
     dataAttributes?: DataAttributes;
     wrap?: boolean;
+    growItems?: number | ReadonlyArray<number>;
 };
-
-type InlineItemProps = {
-    children: React.ReactNode;
-    grow?: boolean;
-    className?: string;
-    dataAttributes?: DataAttributes;
-};
-
-export const InlineItem = ({children}: InlineItemProps): JSX.Element => <>{children}</>;
 
 const getChildKey = (child: React.ReactNode, index: number): React.Key => {
     if (!React.isValidElement(child)) {
@@ -98,8 +90,13 @@ const getChildKey = (child: React.ReactNode, index: number): React.Key => {
     return child.key !== null && child.key !== undefined ? child.key : index;
 };
 
-const isInlineItem = (child: React.ReactNode): child is React.ReactElement<InlineItemProps> =>
-    React.isValidElement(child) && child.type === InlineItem;
+const shouldGrowItem = (growItems: Props['growItems'], index: number): boolean => {
+    if (growItems === undefined) {
+        return false;
+    }
+
+    return Array.isArray(growItems) ? growItems.includes(index) : growItems === index;
+};
 
 const Inline = ({
     space,
@@ -113,12 +110,13 @@ const Inline = ({
     fullWidth,
     wrap,
     dataAttributes,
+    growItems,
 }: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
     const childrenArray = React.Children.toArray(children).filter((child) => !!child || child === 0);
 
-    const hasGrowItem = childrenArray.some((child) => isInlineItem(child) && child.props.grow);
+    const hasGrowItem = fullWidth && childrenArray.some((_, index) => shouldGrowItem(growItems, index));
 
     return (
         <div
@@ -136,17 +134,11 @@ const Inline = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
             {childrenArray.map((child, index) => {
-                const inlineItem = isInlineItem(child);
-                const inlineItemProps = inlineItem ? child.props : undefined;
-
                 return (
                     <div
                         key={getChildKey(child, index)}
                         role={role === 'list' ? 'listitem' : undefined}
-                        className={classnames(
-                            inlineItemProps?.className,
-                            inlineItemProps?.grow && styles.growItem
-                        )}
+                        className={classnames(shouldGrowItem(growItems, index) && styles.growItem)}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683
                             // In iOS the inline component sometimes cuts the last line of the content
@@ -155,11 +147,8 @@ const Inline = ({
                                     ? 1
                                     : undefined,
                         }}
-                        {...(inlineItemProps?.dataAttributes
-                            ? getPrefixedDataAttributes(inlineItemProps.dataAttributes, 'InlineItem')
-                            : undefined)}
                     >
-                        {inlineItem ? inlineItemProps?.children : child}
+                        {child}
                     </div>
                 );
             })}

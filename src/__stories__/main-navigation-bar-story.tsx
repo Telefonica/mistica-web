@@ -4,7 +4,6 @@ import {
     Badge,
     IconShoppingCartRegular,
     Inline,
-    InlineItem,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
@@ -70,10 +69,8 @@ export const Default: StoryComponent<Args> = ({
     const {isDesktopOrBigger} = useScreenSize();
 
     const right = expandedRightSlot ? (
-        <Inline fullWidth space={16} alignItems="center">
-            <InlineItem grow>
-                <SearchField fullWidth name="search" label="Search" />
-            </InlineItem>
+        <Inline fullWidth space={16} alignItems="center" growItems={0}>
+            <SearchField fullWidth name="search" label="Search" />
 
             <NavigationBarAction onPress={() => {}} aria-label="Entrar">
                 <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
@@ -189,5 +186,8 @@ Default.argTypes = {
         options: ['undefined', 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80],
         control: {type: 'select'},
         if: {arg: 'wide'},
+    },
+    expandedRightSlot: {
+        control: {type: 'boolean'},
     },
 };

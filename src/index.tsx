@@ -59,7 +59,7 @@ export {default as Checkbox} from './checkbox';
 export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
-export {default as Inline, InlineItem} from './inline';
+export {default as Inline} from './inline';
 export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
