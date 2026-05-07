@@ -23,7 +23,7 @@ interface CommonProps {
     /** Border color. Accepts any CSS color or gradient string. Defaults to the skin border token. */
     borderColor?: string;
     /** Icon or element rendered on the left side of the card. */
-    asset: React.ReactElement;
+    asset?: React.ReactElement;
 }
 
 export type AiCardProps = TouchableComponentProps<CommonProps>;
@@ -195,9 +195,11 @@ const AiCard = ({
             {...(touchableProps as any)}
             aria-label={autoAriaLabel ?? ariaLabel}
         >
-            <span className={styles.slot} aria-hidden="true">
-                {asset}
-            </span>
+            {asset && (
+                <span className={styles.slot} aria-hidden="true">
+                    {asset}
+                </span>
+            )}
             <div ref={textLineRef} className={styles.textLine} aria-hidden="true" style={textLineStyle}>
                 <Text3 regular color={vars.colors.textPrimary} as="span">
                     <span className={styles.textWrapper}>

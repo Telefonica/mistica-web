@@ -40,12 +40,10 @@ const mockPrefersReducedMotion = () => {
     }));
 };
 
-const asset = <span />;
-
 test('renders static text', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello world" asset={asset} />
+            <AiCard text="Hello world" />
         </ThemeContextProvider>
     );
 
@@ -55,7 +53,7 @@ test('renders static text', () => {
 test('is non-interactive when no onPress is provided', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" asset={asset} />
+            <AiCard text="Hello" />
         </ThemeContextProvider>
     );
 
@@ -65,7 +63,7 @@ test('is non-interactive when no onPress is provided', () => {
 test('renders as an accessible button when onPress is provided', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" asset={asset} onPress={() => {}} />
+            <AiCard text="Hello" onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -75,7 +73,7 @@ test('renders as an accessible button when onPress is provided', () => {
 test('renders as an accessible link when href is provided', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello " words={['world']} asset={asset} href="https://example.com" />
+            <AiCard text="Hello " words={['world']} href="https://example.com" />
         </ThemeContextProvider>
     );
 
@@ -86,7 +84,7 @@ test('calls onPress when clicked', async () => {
     const handlePress = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" asset={asset} onPress={handlePress} />
+            <AiCard text="Hello" onPress={handlePress} />
         </ThemeContextProvider>
     );
 
@@ -100,7 +98,7 @@ test('shows the last word immediately when user prefers reduced motion', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Check the " words={['weather', 'news']} asset={asset} onPress={() => {}} />
+            <AiCard text="Check the " words={['weather', 'news']} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -112,7 +110,7 @@ test('animates words: typed word appears in the card', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="" words={['hi']} asset={asset} onPress={() => {}} />
+            <AiCard text="" words={['hi']} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -126,7 +124,7 @@ test('animates at most 4 words', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Find " words={['a', 'b', 'c', 'd', 'e']} asset={asset} onPress={() => {}} />
+            <AiCard text="Find " words={['a', 'b', 'c', 'd', 'e']} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -138,7 +136,7 @@ test('ignores empty and whitespace-only entries in words', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="" words={['', '  ', 'valid']} asset={asset} onPress={() => {}} />
+            <AiCard text="" words={['', '  ', 'valid']} onPress={() => {}} />
         </ThemeContextProvider>
     );
 
@@ -148,7 +146,7 @@ test('ignores empty and whitespace-only entries in words', () => {
 test('passes dataAttributes to the container element', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Hello" asset={asset} dataAttributes={{testid: 'my-ai-card'}} />
+            <AiCard text="Hello" dataAttributes={{testid: 'my-ai-card'}} />
         </ThemeContextProvider>
     );
 
