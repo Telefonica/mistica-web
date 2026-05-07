@@ -152,3 +152,13 @@ test('passes dataAttributes to the container element', () => {
 
     expect(screen.getByTestId('my-ai-card')).toBeInTheDocument();
 });
+
+test('aria-label prop overrides the auto-generated label', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello" words={['world']} aria-label="Custom label" onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Custom label'})).toBeInTheDocument();
+});

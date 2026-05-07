@@ -11,7 +11,7 @@ import * as styles from './ai-card.css';
 
 import type {TouchableComponentProps} from '../touchable';
 
-interface CommonProps {
+type CommonProps = {
     /** Static text shown before the animated words. */
     text: string;
     /** Words to animate in sequence. typed, held, then erased one by one. Maximum of 4 words. */
@@ -24,7 +24,7 @@ interface CommonProps {
     borderColor?: string;
     /** Icon or element rendered on the left side of the card. */
     asset?: React.ReactElement;
-}
+};
 
 export type AiCardProps = TouchableComponentProps<CommonProps>;
 
@@ -193,7 +193,7 @@ const AiCard = ({
             }
             dataAttributes={{'component-name': 'AiCard', testid: 'AiCard', ...dataAttributes}}
             {...(touchableProps as any)}
-            aria-label={autoAriaLabel ?? ariaLabel}
+            aria-label={ariaLabel ?? autoAriaLabel}
         >
             {asset && (
                 <span className={styles.slot} aria-hidden="true">
