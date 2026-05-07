@@ -126,6 +126,12 @@ export const itemContent = style({
     alignItems: 'center',
 });
 
+export const itemTextContent = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+});
+
 export const iconContainer = style({
     display: 'flex',
     paddingRight: 8,
