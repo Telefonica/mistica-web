@@ -1,0 +1,44 @@
+name: Deploy Vercel preview
+
+description: Build and deploy a preview to Vercel
+
+inputs:
+  github-token:
+    description: GitHub token used by Vercel action to comment on PRs
+    required: true
+  vercel-token:
+    description: Vercel token
+    required: true
+  vercel-org-id:
+    description: Vercel organization id
+    required: true
+  vercel-project-id:
+    description: Vercel project id
+    required: true
+  vercel-project-name:
+    description: Vercel project name
+    required: true
+  working-directory:
+    description: Working directory for deployment
+    required: false
+    default: ${{ github.workspace }}
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare build command for preview
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json
+      shell: bash
+
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v42.3.0
+      id: vercel-deploy
+      with:
+        github-token: ${{ inputs.github-token }}
+        vercel-token: ${{ inputs.vercel-token }}
+        vercel-org-id: ${{ inputs.vercel-org-id }}
+        vercel-project-id: ${{ inputs.vercel-project-id }}
+        vercel-project-name: ${{ inputs.vercel-project-name }}
+        working-directory: ${{ inputs.working-directory }}

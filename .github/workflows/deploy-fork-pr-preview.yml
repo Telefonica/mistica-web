@@ -1,0 +1,65 @@
+name: deploy-fork-pr-preview
+on:
+  workflow_dispatch:
+    inputs:
+      prNumber:
+        description: 'Pull request number to deploy preview for'
+        required: true
+
+permissions:
+    contents: read
+    pull-requests: write
+
+jobs:
+    deploy:
+        name: Deploy fork PR preview
+        runs-on: ubuntu-latest
+        # Manual approval gate before exposing deployment secrets to reviewed PR code
+        environment: production
+        steps:
+            - name: Validate PR and extract refs
+              id: pr
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const REQUIRED_LABEL = 'safe-to-deploy';
+                      const prNumber = Number('${{ github.event.inputs.prNumber }}');
+                      if (!Number.isInteger(prNumber) || prNumber <= 0) {
+                        core.setFailed('Invalid prNumber input');
+                        return;
+                      }
+
+                      const {owner, repo} = context.repo;
+                      const {data: pr} = await github.rest.pulls.get({owner, repo, pull_number: prNumber});
+
+                      if (pr.state !== 'open') {
+                        core.setFailed(`PR #${prNumber} is not open`);
+                        return;
+                      }
+
+                      if (!pr.head.repo.fork) {
+                        core.setFailed(`PR #${prNumber} is not from a fork. Use deploy-pull-requests workflow for internal PRs.`);
+                        return;
+                      }
+
+                      const labels = (pr.labels || []).map((label) => label.name);
+                      if (!labels.includes(REQUIRED_LABEL)) {
+                        core.setFailed(`PR #${prNumber} is missing required label: ${REQUIRED_LABEL}`);
+                        return;
+                      }
+
+                      core.setOutput('merge_ref', `refs/pull/${prNumber}/merge`);
+                      core.setOutput('pr_number', String(prNumber));
+            - uses: actions/checkout@v6
+              with:
+                  ref: ${{ steps.pr.outputs.merge_ref }}
+                  persist-credentials: false
+
+            - uses: ./.github/actions/deploy-vercel-preview
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }}
+                  vercel-org-id: ${{ secrets.MISTICA_WEB_VERCEL_ORG_ID }}
+                  vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID }}
+                  vercel-project-name: mistica-web
+                  working-directory: ${{ github.workspace }}
