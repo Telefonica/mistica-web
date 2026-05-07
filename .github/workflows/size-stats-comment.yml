@@ -1,0 +1,70 @@
+name: Size stats comment
+
+on:
+    workflow_run:
+        workflows: ['Size stats']
+        types: [completed]
+
+permissions:
+    actions: read
+    contents: read
+    pull-requests: write
+
+jobs:
+    comment:
+        runs-on: ubuntu-latest
+        if: github.event.workflow_run.conclusion == 'success'
+        steps:
+            - name: Download size stats artifact
+              uses: actions/download-artifact@v4
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  run-id: ${{ github.event.workflow_run.id }}
+                  name: size-stats-results
+                  path: size-stats-results
+
+            - name: Upsert PR comment
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const fs = require('fs');
+
+                      const marker = '<!-- size-stats-comment -->';
+                      const title = '**Size stats**';
+                      const workflowRunPrs = context.payload.workflow_run?.pull_requests || [];
+                      const prNumber = workflowRunPrs.length === 1 ? workflowRunPrs[0].number : NaN;
+                      const message = fs.readFileSync('size-stats-results/message.md', 'utf8').trim();
+                      const body = `${marker}\n${title}\n\n${message}`;
+
+                      if (!Number.isInteger(prNumber) || prNumber <= 0) {
+                        core.setFailed('Could not determine a unique PR number from workflow_run payload');
+                        return;
+                      }
+
+                      const {owner, repo} = context.repo;
+                      const {data: comments} = await github.rest.issues.listComments({
+                        owner,
+                        repo,
+                        issue_number: prNumber,
+                        per_page: 100,
+                      });
+
+                      const previous = comments.find((comment) =>
+                        comment.user?.type === 'Bot' && comment.body?.includes(marker),
+                      );
+
+                      if (previous) {
+                        await github.rest.issues.updateComment({
+                          owner,
+                          repo,
+                          comment_id: previous.id,
+                          body,
+                        });
+                      } else {
+                        await github.rest.issues.createComment({
+                          owner,
+                          repo,
+                          issue_number: prNumber,
+                          body,
+                        });
+                      }

@@ -27,9 +27,10 @@ const menuSnippet = {
       renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
           <MenuSection>
-            <MenuItem label="option 1" onPress={() => {}} />
+            <MenuItem label="option 1" description="Description for option 1" onPress={() => {}} />
             <MenuItem
               label="option 2"
+              description="Description for option 2"
               onPress={() => setState("option 2", !getState("option 2", false))}
               controlType="checkbox"
               checked={getState("option 2", false)}
