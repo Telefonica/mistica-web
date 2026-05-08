@@ -10,7 +10,7 @@ import {Portal} from './portal';
 import Box from './box';
 import Inline from './inline';
 import Touchable from './touchable';
-import {Text3} from './text';
+import {Text2, Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import Divider from './divider';
 import Checkbox from './checkbox';
@@ -53,6 +53,7 @@ const getItemIndexInMenu = (menu: HTMLElement | null, item: HTMLElement | null):
 
 interface MenuItemBaseProps {
     label: string;
+    description?: string;
     Icon?: (props: IconProps) => JSX.Element;
     destructive?: boolean;
     disabled?: boolean;
@@ -105,6 +106,7 @@ export const MenuItem = ({
     onNavigate,
     controlType,
     checked,
+    description,
     dataAttributes,
 }: MenuItemProps): JSX.Element => {
     const {focusedItem, setFocusedItem, closeMenu, isMenuOpen} = useMenuContext();
@@ -118,16 +120,27 @@ export const MenuItem = ({
 
     const menuItemDataAttributes = {testid: 'MenuItem', ...dataAttributes};
 
-    const renderItemContent = () => (
+    const renderTextContent = (id?: string) => (
+        <div id={id} className={styles.itemTextContent}>
+            <Text3 regular color={contentColor}>
+                {label}
+            </Text3>
+            {description && (
+                <Text2 regular color={vars.colors.textSecondary}>
+                    {description}
+                </Text2>
+            )}
+        </div>
+    );
+
+    const renderItemContent = (labelId?: string) => (
         <div className={styles.itemContent}>
             {Icon && (
                 <div className={styles.iconContainer}>
                     <Icon size={24} color={contentColor} />
                 </div>
             )}
-            <Text3 regular color={contentColor}>
-                {label}
-            </Text3>
+            {renderTextContent(labelId)}
         </div>
     );
 
@@ -146,10 +159,10 @@ export const MenuItem = ({
                 disabled={disabled}
                 role="menuitemcheckbox"
                 dataAttributes={menuItemDataAttributes}
-                render={({controlElement}) => (
+                render={({controlElement, labelId}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">
-                            {renderItemContent()}
+                            {renderItemContent(labelId)}
                             <Box paddingLeft={16}>{controlElement}</Box>
                         </Inline>
                     </Box>

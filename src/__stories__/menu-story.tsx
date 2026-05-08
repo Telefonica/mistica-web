@@ -25,6 +25,7 @@ type MenuArgs = {
     verticalPosition: 'top' | 'bottom';
     icon: boolean;
     checkbox: boolean;
+    description: boolean;
 };
 
 export const Default: StoryComponent<MenuArgs> = ({
@@ -33,6 +34,7 @@ export const Default: StoryComponent<MenuArgs> = ({
     verticalPosition,
     icon,
     checkbox,
+    description,
 }) => {
     const {alert} = useDialog();
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<number>>([]);
@@ -85,6 +87,11 @@ export const Default: StoryComponent<MenuArgs> = ({
                                         <MenuItem
                                             key={optionIndex}
                                             label={`Option ${optionIndex + 1}`}
+                                            description={
+                                                description
+                                                    ? `Description for option ${optionIndex + 1}`
+                                                    : undefined
+                                            }
                                             onPress={() => {
                                                 if (checkbox) {
                                                     setValues(optionIndex);
@@ -127,6 +134,7 @@ Default.args = {
     verticalPosition: 'top',
     icon: false,
     checkbox: true,
+    description: false,
 };
 Default.argTypes = {
     horizontalPosition: {

@@ -274,6 +274,7 @@ export type {TextToken, Dictionary} from './text-tokens';
  * the community.js export has issues because it exports an ES module and next12 interterprets it as a CommonJS module
  * importing from /dist/ is not an option because those modules don't get the context from the theme provider
  */
+export {default as CommunityAiCard} from './community/ai-card';
 export {default as CommunityExampleComponent} from './community/example-component';
 export {default as CommunityAdvancedDataCard} from './community/advanced-data-card';
 export {
