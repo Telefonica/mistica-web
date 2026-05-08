@@ -124,8 +124,12 @@ const Inline = ({
                 className,
                 styles.inline,
                 wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
-                hasGrowItem && styles.flexLayout,
-                isStringSpace ? (wrap ? styles.stringSpaceWithWrap : styles.stringSpace) : styles.marginInline
+                isStringSpace
+                    ? wrap
+                        ? styles.stringSpaceWithWrap
+                        : styles.stringSpace
+                    : styles.marginInline,
+                hasGrowItem && styles.flexLayout
             )}
             style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
             role={role}
