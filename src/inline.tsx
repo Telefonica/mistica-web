@@ -79,6 +79,10 @@ type Props = {
     fullWidth?: boolean;
     dataAttributes?: DataAttributes;
     wrap?: boolean;
+    /**
+     * Index or indexes of the children that should grow to fill the available space.
+     * Only applies when `fullWidth` is true.
+     */
     growItems?: number | ReadonlyArray<number>;
 };
 
@@ -142,7 +146,9 @@ const Inline = ({
                     <div
                         key={getChildKey(child, index)}
                         role={role === 'list' ? 'listitem' : undefined}
-                        className={classnames(shouldGrowItem(growItems, index) && styles.growItem)}
+                        className={classnames(
+                            hasGrowItem && shouldGrowItem(growItems, index) && styles.growItem
+                        )}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683
                             // In iOS the inline component sometimes cuts the last line of the content
