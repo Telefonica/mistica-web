@@ -83,10 +83,10 @@ Positions a primary and optional secondary button:
 
 ## Text and Titles
 
-> 💡 **Centering text uses two complementary props:** > [`<Align x="center">`](./layout.md#align) positions
-> the `Text*` / `Title*` element within its parent; `textAlign="center"` (on `Text*`) aligns the content
-> _within_ the element. For a short single-line label, `Align` alone is enough. For multi-line text that
-> should also have each wrapped line centered, use both. `Title*` does not accept `textAlign`.
+> 💡 **Centering text uses two complementary props:** [`<Align x="center">`](./layout.md#align) positions the
+> `Text*` / `Title*` element within its parent; `textAlign="center"` (on `Text*`) aligns the content _within_
+> the element. For a short single-line label, `Align` alone is enough. For multi-line text that should also
+> have each wrapped line centered, use both. `Title*` does not accept `textAlign`.
 >
 > ```tsx
 > // Single-line label — Align alone

@@ -10,6 +10,7 @@
     - [between](#between)
     - [around](#around)
     - [evenly](#evenly)
+    - [nesting](#nesting)
   - [Align](#align)
   - [Grid / GridItem](#grid--griditem)
   - [NegativeBox](#negativebox)
