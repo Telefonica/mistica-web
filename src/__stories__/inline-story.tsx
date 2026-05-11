@@ -12,10 +12,12 @@ const Row = ({
     children,
     padding = 0,
     align,
+    fullWidth,
 }: {
     children?: React.ReactNode;
     padding?: number;
     align?: string;
+    fullWidth?: boolean;
 }) => {
     return children ? (
         <div
@@ -26,6 +28,7 @@ const Row = ({
                 height: align === 'stretch' ? '100%' : 'auto',
                 display: 'flex',
                 alignItems: 'center',
+                width: fullWidth ? '100%' : undefined,
             }}
         >
             <Text2 regular>{children}</Text2>
@@ -157,3 +160,19 @@ export const NegativeSpace: StoryComponent = () => {
 };
 
 NegativeSpace.storyName = 'Inline with negative space';
+
+export const GrowItems: StoryComponent = () => {
+    return (
+        <div data-testid="story" style={{width: 600}}>
+            <Inline fullWidth space={16} alignItems="center" growItems={0}>
+                <Row padding={16} fullWidth>
+                    Grow item
+                </Row>
+                <Row padding={16}>Fixed item</Row>
+                <Row padding={16}>Fixed item</Row>
+            </Inline>
+        </div>
+    );
+};
+
+GrowItems.storyName = 'Inline with growItems';
