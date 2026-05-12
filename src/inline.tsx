@@ -80,8 +80,9 @@ type Props = {
     dataAttributes?: DataAttributes;
     wrap?: boolean;
     /**
-     * Index or indexes of the children that should grow to fill the available space.
-     * When set, Inline expands to the full available width.
+     * Index or indexes of the rendered children that should grow to fill the available space.
+     * Indexes refer to the filtered children list, so falsy children (`null`, `false`,
+     * and `undefined`) are ignored.
      */
     expand?: number | ReadonlyArray<number>;
 };
@@ -121,20 +122,19 @@ const Inline = ({
     const childrenArray = React.Children.toArray(children).filter((child) => !!child || child === 0);
 
     const hasExpandItem = childrenArray.some((_, index) => shouldExpandItem(expand, index));
-    const shouldExpand = expand !== undefined;
 
     return (
         <div
             className={classnames(
                 className,
                 styles.inline,
-                wrap ? styles.wrap : fullWidth || shouldExpand ? styles.fullWidth : styles.noFullWidth,
+                wrap ? styles.wrap : fullWidth || hasExpandItem ? styles.fullWidth : styles.noFullWidth,
                 isStringSpace
                     ? wrap
                         ? styles.stringSpaceWithWrap
                         : styles.stringSpace
                     : styles.marginInline,
-                shouldExpand && styles.expand
+                hasExpandItem && styles.expand
             )}
             style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
             role={role}
