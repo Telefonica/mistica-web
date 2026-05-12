@@ -98,11 +98,12 @@ export const stringSpaceWithWrap = style({
     justifyContent: space,
 });
 
-export const flexLayout = style({
+export const expand = style({
+    width: '100%',
     display: 'flex',
 });
 
-export const growItem = style({
+export const expandItem = style({
     flex: 1,
     minWidth: 0,
 });

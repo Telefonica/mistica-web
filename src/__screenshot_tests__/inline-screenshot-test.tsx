@@ -48,9 +48,9 @@ test.skip('Inline negative space', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Inline with growItems', async () => {
+test('Inline with expand', async () => {
     await openStoryPage({
-        id: 'layout-inline--grow-items',
+        id: 'layout-inline--expand',
         device: 'DESKTOP',
     });
 

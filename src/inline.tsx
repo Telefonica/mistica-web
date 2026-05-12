@@ -81,9 +81,9 @@ type Props = {
     wrap?: boolean;
     /**
      * Index or indexes of the children that should grow to fill the available space.
-     * Only applies when `fullWidth` is true.
+     * When set, Inline expands to the full available width.
      */
-    growItems?: number | ReadonlyArray<number>;
+    expand?: number | ReadonlyArray<number>;
 };
 
 const getChildKey = (child: React.ReactNode, index: number): React.Key => {
@@ -94,12 +94,12 @@ const getChildKey = (child: React.ReactNode, index: number): React.Key => {
     return child.key !== null && child.key !== undefined ? child.key : index;
 };
 
-const shouldGrowItem = (growItems: Props['growItems'], index: number): boolean => {
-    if (growItems === undefined) {
+const shouldExpandItem = (expand: Props['expand'], index: number): boolean => {
+    if (expand === undefined) {
         return false;
     }
 
-    return Array.isArray(growItems) ? growItems.includes(index) : growItems === index;
+    return Array.isArray(expand) ? expand.includes(index) : expand === index;
 };
 
 const Inline = ({
@@ -114,26 +114,27 @@ const Inline = ({
     fullWidth,
     wrap,
     dataAttributes,
-    growItems,
+    expand,
 }: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
     const childrenArray = React.Children.toArray(children).filter((child) => !!child || child === 0);
 
-    const hasGrowItem = fullWidth && childrenArray.some((_, index) => shouldGrowItem(growItems, index));
+    const hasExpandItem = childrenArray.some((_, index) => shouldExpandItem(expand, index));
+    const shouldExpand = expand !== undefined;
 
     return (
         <div
             className={classnames(
                 className,
                 styles.inline,
-                wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
+                wrap ? styles.wrap : fullWidth || shouldExpand ? styles.fullWidth : styles.noFullWidth,
                 isStringSpace
                     ? wrap
                         ? styles.stringSpaceWithWrap
                         : styles.stringSpace
                     : styles.marginInline,
-                hasGrowItem && styles.flexLayout
+                shouldExpand && styles.expand
             )}
             style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
             role={role}
@@ -147,7 +148,7 @@ const Inline = ({
                         key={getChildKey(child, index)}
                         role={role === 'list' ? 'listitem' : undefined}
                         className={classnames(
-                            hasGrowItem && shouldGrowItem(growItems, index) && styles.growItem
+                            hasExpandItem && shouldExpandItem(expand, index) && styles.expandItem
                         )}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683

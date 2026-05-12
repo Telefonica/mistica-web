@@ -161,10 +161,10 @@ export const NegativeSpace: StoryComponent = () => {
 
 NegativeSpace.storyName = 'Inline with negative space';
 
-export const GrowItems: StoryComponent = () => {
+export const Expand: StoryComponent = () => {
     return (
         <div data-testid="story" style={{width: 600}}>
-            <Inline fullWidth space={16} alignItems="center" growItems={0}>
+            <Inline fullWidth space={16} alignItems="center" expand={0}>
                 <Row padding={16} fullWidth>
                     Grow item
                 </Row>
@@ -175,4 +175,4 @@ export const GrowItems: StoryComponent = () => {
     );
 };
 
-GrowItems.storyName = 'Inline with growItems';
+Expand.storyName = 'Inline with expand';

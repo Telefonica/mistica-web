@@ -313,15 +313,8 @@ export const navigationBarContentRightExpanded = style([
     }),
     {
         paddingLeft: 136,
-        minWidth: 0,
-        width: 0,
     },
 ]);
-
-export const navigationBarContentRightExpandedContent = style({
-    width: '100%',
-    minWidth: 0,
-});
 
 const spacerMobile = style({
     '@media': {

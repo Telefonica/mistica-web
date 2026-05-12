@@ -69,7 +69,7 @@ export const Default: StoryComponent<Args> = ({
     const {isDesktopOrBigger} = useScreenSize();
 
     const right = expandedRightSlot ? (
-        <Inline fullWidth space={16} alignItems="center" growItems={0}>
+        <Inline fullWidth space={16} alignItems="center" expand={0}>
             <SearchField fullWidth name="search" label="Search" />
 
             <NavigationBarAction onPress={() => {}} aria-label="Entrar">
