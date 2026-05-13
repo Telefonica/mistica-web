@@ -113,7 +113,7 @@ const Inline = ({
 }: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
-    const childrenArray = React.Children.toArray(children);
+    const childrenArray = React.Children.toArray(children).filter((child) => child !== '');
 
     const hasExpandItem = childrenArray.some((_, index) => shouldExpandItem(expand, index));
 
