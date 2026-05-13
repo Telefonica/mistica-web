@@ -105,7 +105,6 @@ export const expand = style({
 
 export const expandItem = style({
     flex: 1,
-    minWidth: 0,
 });
 
 globalStyle(`${marginInline} > div`, {
