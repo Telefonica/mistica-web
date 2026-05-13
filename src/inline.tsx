@@ -80,9 +80,11 @@ type Props = {
     dataAttributes?: DataAttributes;
     wrap?: boolean;
     /**
-     * Index or indexes of the rendered children that should grow to fill the available space.
-     * Indexes refer to the list returned by React.Children.toArray, so empty nodes
-     * (`null`, `undefined` and booleans) are ignored.
+     * Index or indexes of the children that should grow to fill the available space.
+     * Indexes refer to entries in `React.Children.toArray(children)`, so empty nodes
+     * (`null`, `undefined` and booleans) are ignored, but React elements still count
+     * even if they ultimately render no content. Expanded children must render content
+     * to produce a visible expanded item.
      */
     expand?: number | ReadonlyArray<number>;
 };
