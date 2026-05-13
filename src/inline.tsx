@@ -128,7 +128,7 @@ const Inline = ({
                         ? styles.stringSpaceWithWrap
                         : styles.stringSpace
                     : styles.marginInline,
-                hasExpandItem && styles.expand
+                hasExpandItem && !wrap && styles.expand
             )}
             style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
             role={role}
