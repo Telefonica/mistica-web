@@ -81,18 +81,10 @@ type Props = {
     wrap?: boolean;
     /**
      * Index or indexes of the rendered children that should grow to fill the available space.
-     * Indexes refer to the filtered children list, so falsy children (`null`, `false`,
-     * and `undefined`) are ignored.
+     * Indexes refer to the list returned by React.Children.toArray, so empty nodes
+     * (`null`, `undefined` and booleans) are ignored.
      */
     expand?: number | ReadonlyArray<number>;
-};
-
-const getChildKey = (child: React.ReactNode, index: number): React.Key => {
-    if (!React.isValidElement(child)) {
-        return index;
-    }
-
-    return child.key !== null && child.key !== undefined ? child.key : index;
 };
 
 const shouldExpandItem = (expand: Props['expand'], index: number): boolean => {
@@ -119,7 +111,7 @@ const Inline = ({
 }: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
-    const childrenArray = React.Children.toArray(children).filter((child) => !!child || child === 0);
+    const childrenArray = React.Children.toArray(children);
 
     const hasExpandItem = childrenArray.some((_, index) => shouldExpandItem(expand, index));
 
@@ -142,10 +134,9 @@ const Inline = ({
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
-            {childrenArray.map((child, index) => {
+            {React.Children.map(childrenArray, (child, index) => {
                 return (
                     <div
-                        key={getChildKey(child, index)}
                         role={role === 'list' ? 'listitem' : undefined}
                         className={classnames(
                             hasExpandItem && shouldExpandItem(expand, index) && styles.expandItem
