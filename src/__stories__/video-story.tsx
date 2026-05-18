@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Stack, ButtonPrimary, Inline, Video, Text3, Title3} from '..';
 import beachVideo from './videos/beach.mp4';
+import subtitlesExample from './videos/test-subtitles.vtt';
 import beachImg from './images/beach.jpg';
 
 import type {AspectRatio} from '../video';
@@ -40,6 +41,7 @@ export default {
 
 const VIDEO_SRC = beachVideo;
 const POSTER_SRC = beachImg;
+const SUBTITLES_SRC = subtitlesExample;
 
 type Args = {
     type: 'width and height' | 'width and aspect ratio' | 'full width';
@@ -76,7 +78,22 @@ export const Default: StoryComponent<Args> = ({
         dataAttributes: {testid: 'video'},
     };
 
-    const video = <Video src={!emptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
+    const video = (
+        <Video
+            src={!emptySource ? VIDEO_SRC : ''}
+            {...props}
+            ref={videoRef}
+            tracks={[
+                {
+                    src: SUBTITLES_SRC,
+                    kind: 'subtitles',
+                    srcLang: 'en',
+                    label: 'English',
+                    default: true,
+                },
+            ]}
+        />
+    );
 
     return (
         <Stack space={32}>
