@@ -164,7 +164,7 @@ Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `React
 
 The `theme` object should be constant (outside the component) or memoized with `React.useMemo`.
 
-### Next.js optimization
+### Next.js optimization.
 
 ```js
 experimental: {
