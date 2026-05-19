@@ -74,7 +74,7 @@ type VideoSourceWithType = {
 
 export type VideoTrack = {
     src: string;
-    kind?: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata';
+    /** https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag */
     srcLang?: string;
     label?: string;
     default?: boolean;
@@ -254,11 +254,11 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
                 ))}
-                {tracks?.map(({src, kind, srcLang, label, default: isDefault}, index) => (
+                {tracks?.map(({src, srcLang, label, default: isDefault}, index) => (
                     <track
                         key={index}
                         src={src}
-                        kind={kind}
+                        kind="subtitles"
                         srcLang={srcLang}
                         label={label}
                         default={isDefault}
