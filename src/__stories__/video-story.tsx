@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {Stack, ButtonPrimary, Inline, Video, Text3, Title3} from '..';
 import beachVideo from './videos/beach.mp4';
-import subtitlesExample from './videos/test-subtitles.vtt';
+import subtitlesExampleEn from './videos/test-subtitles-en.vtt';
+import subtitlesExampleEs from './videos/test-subtitles-es.vtt';
 import beachImg from './images/beach.jpg';
 
 import type {AspectRatio} from '../video';
@@ -41,7 +42,8 @@ export default {
 
 const VIDEO_SRC = beachVideo;
 const POSTER_SRC = beachImg;
-const SUBTITLES_SRC = subtitlesExample;
+const SUBTITLES_SRC_EN = subtitlesExampleEn;
+const SUBTITLES_SRC_ES = subtitlesExampleEs;
 
 type Args = {
     type: 'width and height' | 'width and aspect ratio' | 'full width';
@@ -62,7 +64,19 @@ export const Default: StoryComponent<Args> = ({
     poster,
     emptySource,
 }) => {
+    const [enSubtitlesVisible, setEnSubtitlesVisible] = React.useState(true);
+    const [esSubtitlesVisible, setEsSubtitlesVisible] = React.useState(false);
     const videoRef = React.useRef<VideoElement>(null);
+
+    const toggleSubtitles = (index: number) => {
+        const next = index === 0 ? !enSubtitlesVisible : !esSubtitlesVisible;
+        videoRef.current?.setTrackMode(index, next ? 'showing' : 'disabled');
+        if (index === 0) {
+            setEnSubtitlesVisible(next);
+        } else {
+            setEsSubtitlesVisible(next);
+        }
+    };
 
     const props = {
         width: type !== 'full width' ? width : undefined,
@@ -85,10 +99,15 @@ export const Default: StoryComponent<Args> = ({
             ref={videoRef}
             tracks={[
                 {
-                    src: SUBTITLES_SRC,
+                    src: SUBTITLES_SRC_EN,
                     srcLang: 'en',
                     label: 'English',
                     default: true,
+                },
+                {
+                    src: SUBTITLES_SRC_ES,
+                    srcLang: 'es',
+                    label: 'Spanish',
                 },
             ]}
         />
@@ -138,6 +157,12 @@ export const Default: StoryComponent<Args> = ({
                         }}
                     >
                         Stop
+                    </ButtonPrimary>
+                    <ButtonPrimary small onPress={() => toggleSubtitles(0)}>
+                        {enSubtitlesVisible ? 'Hide EN subtitles' : 'Show EN subtitles'}
+                    </ButtonPrimary>
+                    <ButtonPrimary small onPress={() => toggleSubtitles(1)}>
+                        {esSubtitlesVisible ? 'Hide ES subtitles' : 'Show ES subtitles'}
                     </ButtonPrimary>
                 </Inline>
 

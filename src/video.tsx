@@ -126,6 +126,12 @@ export interface VideoElement extends HTMLDivElement {
     /** Stops the video and shows the poster image (if available) */
     stop: () => void;
     setCurrentTime: (time: number) => void;
+    /**
+     * Sets the display mode of a track by its index.
+     * - 'showing': track is visible
+     * - 'disabled': track is inactive
+     */
+    setTrackMode: (index: number, mode: 'showing' | 'disabled') => void;
 }
 
 const Video = React.forwardRef<VideoElement, VideoProps>(
@@ -346,6 +352,12 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                                     videoRef.current.pause();
                                     videoRef.current.currentTime = 0;
                                     dispatch('stop');
+                                }
+                            };
+                            containerElement.setTrackMode = (index: number, mode: 'showing' | 'disabled') => {
+                                const track = videoRef.current?.textTracks[index];
+                                if (track) {
+                                    track.mode = mode;
                                 }
                             };
                         }
