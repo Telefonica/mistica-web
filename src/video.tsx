@@ -227,7 +227,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 disableRemotePlayback
                 muted={muted}
                 loop={loop}
-                crossOrigin={tracks ? 'anonymous' : undefined}
+                crossOrigin={tracks?.length ? 'anonymous' : undefined}
                 className={classNames(styles.video, mediaStyles.defaultBorderRadius)}
                 preload={preload}
                 onError={handleError}
