@@ -247,6 +247,14 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                              * the content in order to be able to drag the sheet
                              */}
                             <div className={styles.sheetTopDraggingArea} />
+                            <div className={styles.dismissButton}>
+                                <IconButton
+                                    small={isTabletOrSmaller}
+                                    onPress={closeModal}
+                                    aria-label={texts.modalClose || t(tokens.modalClose)}
+                                    Icon={IconCloseRegular}
+                                />
+                            </div>
 
                             <section
                                 role="dialog"
@@ -263,14 +271,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                     : children}
                                 <div className={styles.handleContainer}>
                                     <div className={styles.handleBar} />
-                                </div>
-                                <div className={styles.dismissButton}>
-                                    <IconButton
-                                        small={isTabletOrSmaller}
-                                        onPress={closeModal}
-                                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                                        Icon={IconCloseRegular}
-                                    />
                                 </div>
                             </section>
                         </div>
