@@ -187,7 +187,4 @@ Default.argTypes = {
         control: {type: 'select'},
         if: {arg: 'wide'},
     },
-    expandedRightSlot: {
-        control: {type: 'boolean'},
-    },
 };
