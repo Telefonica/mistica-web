@@ -141,9 +141,7 @@ const Inline = ({
                 return (
                     <div
                         role={role === 'list' ? 'listitem' : undefined}
-                        className={classnames(
-                            shouldExpandItem(expand, index) && styles.expandItem
-                        )}
+                        className={classnames(shouldExpandItem(expand, index) && styles.expandItem)}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683
                             // In iOS the inline component sometimes cuts the last line of the content
