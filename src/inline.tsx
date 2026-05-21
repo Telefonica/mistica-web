@@ -142,7 +142,7 @@ const Inline = ({
                     <div
                         role={role === 'list' ? 'listitem' : undefined}
                         className={classnames(
-                            shouldExpand && shouldExpandItem(expand, index) && styles.expandItem
+                            shouldExpandItem(expand, index) && styles.expandItem
                         )}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683
