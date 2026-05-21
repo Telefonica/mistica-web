@@ -2,19 +2,8 @@
 
 ## Critical rules
 
-1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` from
-   `@telefonica/mistica`. For skins and theme-level customization, see [theme-config.md](./theme-config.md).
-2. **NEVER use raw `<div>` for layout.** Use `Box`, `Stack`, `Inline`, `ResponsiveLayout`, `GridLayout`,
-   `Grid`.
-3. **NEVER set font sizes manually.** Use text components (`Text1`-`Text10`, `Title1`-`Title4`). If those
-   don't cover your necessities you can set custom sizes with `Text` component.
-4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or components that handle it (`Boxed`,
-   cards, etc.). For theme-level visual customization without a dedicated component prop, use a custom skin.
-5. **Always wrap your app** with `ThemeContextProvider` and import `@telefonica/mistica/css/mistica.css`.
-6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`, etc.
-7. **Add `'use client';`** directive to client components when using Next.js app router.
-8. **Set `font-family` and `body` background color.** See [llms.md](./llms.md) rules 9–10 and
-   [fonts.md](./fonts.md) for the per-skin font table, `@font-face` setup, and the `GlobalStyles` pattern.
+See [Critical Rules in `llms.md`](./llms.md#critical-rules) — the single source of truth. These rules apply
+throughout this document.
 
 ## Page layout composition
 
@@ -501,10 +490,10 @@ return (
   <ResponsiveLayout>
     <Stack space={24}>
       <Stepper currentIndex={currentStep} steps={['Personal', 'Address', 'Payment', 'Confirm']} />
-        {currentStep === 0 && <PersonalInfoForm />}
-        {currentStep === 1 && <AddressForm />}
-        {currentStep === 2 && <PaymentForm />}
-        {currentStep === 3 && <ConfirmationScreen />}
+      {currentStep === 0 && <PersonalInfoForm />}
+      {currentStep === 1 && <AddressForm />}
+      {currentStep === 2 && <PaymentForm />}
+      {currentStep === 3 && <ConfirmationScreen />}
     </Stack>
   </ResponsiveLayout>
 </Stack>

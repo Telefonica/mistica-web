@@ -1,3 +1,11 @@
+# [16.63.0](https://github.com/Telefonica/mistica-web/compare/v16.62.0...v16.63.0) (2026-05-14)
+
+
+### Features
+
+* **Chore:** Figma MCP improvements ([#1542](https://github.com/Telefonica/mistica-web/issues/1542)) ([05e2b67](https://github.com/Telefonica/mistica-web/commit/05e2b6762e33db6cbbeca5712a6f826d68133222))
+* **menu:** add MenuItem action support for onPress, href, and to ([#1528](https://github.com/Telefonica/mistica-web/issues/1528)) ([060f926](https://github.com/Telefonica/mistica-web/commit/060f926489471105a6567ff6d5e3ab0d75294be8))
+
 # [16.62.0](https://github.com/Telefonica/mistica-web/compare/v16.61.0...v16.62.0) (2026-05-08)
 
 
