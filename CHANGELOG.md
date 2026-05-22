@@ -1,3 +1,17 @@
+# [16.64.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.63.0...v16.64.0-beta.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* **Inline:** allow children to expand ([#1546](https://github.com/Telefonica/mistica-web/issues/1546)) ([36a8e9b](https://github.com/Telefonica/mistica-web/commit/36a8e9bad83d1434737e23d750798687971be0cd))
+* **Sheet:** make close button clickable on iOS ([e587dd7](https://github.com/Telefonica/mistica-web/commit/e587dd710f47ea2ceda60583e4f07cc5dce85a27))
+* **Sheet:** make close button clickable on iOS ([#1549](https://github.com/Telefonica/mistica-web/issues/1549)) ([85be767](https://github.com/Telefonica/mistica-web/commit/85be76726503c60723e4d8b88daca3ae9de47dd2))
+
+
+### Features
+
+* **Chore:** figma-mcp-skill-updates: Instructions v2 ([b5695f4](https://github.com/Telefonica/mistica-web/commit/b5695f498de5506b4686a256da324a9ce0b53b12))
+
 # [16.63.0](https://github.com/Telefonica/mistica-web/compare/v16.62.0...v16.63.0) (2026-05-14)
 
 
