@@ -1,9 +1,20 @@
-# [16.62.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v16.61.0...v16.62.0-beta.1) (2026-04-28)
+# [16.63.0](https://github.com/Telefonica/mistica-web/compare/v16.62.0...v16.63.0) (2026-05-14)
 
 
 ### Features
 
-* **Chore:** figma-mcp-skill-updates: Instructions v2 ([b5695f4](https://github.com/Telefonica/mistica-web/commit/b5695f498de5506b4686a256da324a9ce0b53b12))
+* **Chore:** Figma MCP improvements ([#1542](https://github.com/Telefonica/mistica-web/issues/1542)) ([05e2b67](https://github.com/Telefonica/mistica-web/commit/05e2b6762e33db6cbbeca5712a6f826d68133222))
+* **menu:** add MenuItem action support for onPress, href, and to ([#1528](https://github.com/Telefonica/mistica-web/issues/1528)) ([060f926](https://github.com/Telefonica/mistica-web/commit/060f926489471105a6567ff6d5e3ab0d75294be8))
+
+# [16.62.0](https://github.com/Telefonica/mistica-web/compare/v16.61.0...v16.62.0) (2026-05-08)
+
+
+### Features
+
+* **AiCard:** add new component aicard ([#1544](https://github.com/Telefonica/mistica-web/issues/1544)) ([96959e9](https://github.com/Telefonica/mistica-web/commit/96959e9a27533a1dbd19a2c827f89d9e23a7c907))
+* allow PR workflows from forks ([#1547](https://github.com/Telefonica/mistica-web/issues/1547)) ([2270adc](https://github.com/Telefonica/mistica-web/commit/2270adc92e355bca3cc037ac1137464fe2cb6605)), closes [/github.com/Telefonica/tf-github-cdo-repos/blob/main/novum/repositories/mistica-web/terraform.tfvars#L23-L32](https://github.com//github.com/Telefonica/tf-github-cdo-repos/blob/main/novum/repositories/mistica-web/terraform.tfvars/issues/L23-L32)
+* **Icons:** update artificial intelligence icons in vivo ([#1545](https://github.com/Telefonica/mistica-web/issues/1545)) ([f732114](https://github.com/Telefonica/mistica-web/commit/f732114a5fa5b60ad86fdd68ae8ab2bff391ae1b))
+* **MenuItem:** Added description to MenuItem ([#1543](https://github.com/Telefonica/mistica-web/issues/1543)) ([a1f2e7d](https://github.com/Telefonica/mistica-web/commit/a1f2e7dfbee0ed7c1a2f805a2c5ea4389d965393))
 
 # [16.61.0](https://github.com/Telefonica/mistica-web/compare/v16.60.0...v16.61.0) (2026-04-24)
 

@@ -285,3 +285,18 @@ test.each(['large' /* 'small' */])('MainNavigationBar inverse with %s menu in DE
     await page.click(startButton);
     expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
 });
+
+test('MainNavigationBar large with expanded right slot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {
+            large: true,
+            expandedRightSlot: true,
+        },
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
