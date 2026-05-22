@@ -4,6 +4,23 @@ Mandatory reading whenever you are implementing UI from Figma through the Figma 
 a `figma.com/...` URL. This file only covers the translation layer — the rest of the Mistica docs
 (`patterns.md`, `components.md`, `layout.md`, `design-tokens.md`) still apply.
 
+## Step 0: ask the user whether to run the verifier
+
+Before fetching any Figma node or writing any code, ask the user this question exactly once (use a
+structured-question tool if your harness has one):
+
+- **Question**:
+  `Run the verifier loop after implementing? It compares the rendered app against Figma both visually (Playwright screenshot) and structurally (DOM + rule audit), then iterates fixes.`
+- **Options**:
+  - **Yes, run the verifier** — recommended when fidelity matters. Catches drift the implementer can't see. It
+    will take more time and cost more tokens.
+  - **No, skip the verifier** — faster path. The agent still self-checks and reviews its work, but no
+    independent comparison runs.
+
+Remember the answer for the rest of this task. **One answer covers the whole implementation — do not re-ask
+per section.** If the user opted in, run the (verifier loop)[#verifier-loop-run-before-declaring-done]. If
+they opted out, do not spawn the verifier; the self-checks are the only gate.
+
 ## Prime directive: read the DOM verbatim
 
 The Figma MCP response gives you two things:
@@ -134,3 +151,21 @@ Before closing out a section always:
 
 If you can't check an item off against the DOM, re-read the DOM (with `disableCodeConnect: true` if the node
 is CodeConnect-mapped) before committing the value.
+
+## Verifier loop (run before declaring done)
+
+Skip if the user opted out in [Step 0](#step-0-ask-the-user-whether-to-run-the-verifier).
+
+Spawn a **new** subagent (via your harness's subagent mechanism — e.g. Claude's `Agent` tool with
+`subagent_type: general-purpose`, Codex's equivalent) pointed at
+[agents/figma-verifier.md](./agents/figma-verifier.md). Never reuse a subagent across iterations. Pass in the
+prompt:
+
+- Figma `fileKey` and entry `nodeId`
+- Implementation file paths you wrote or edited
+- Local assets directory
+- Dev-server command and URL (check `package.json`)
+
+If the verifier reports clean, done. Otherwise fix the cited issues — each fix justified by Figma DOM or
+screenshot — and re-run with a fresh subagent. Stop after clean, 3 iterations, or out-of-scope issues (missing
+tokens/assets, designer clarification — surface these instead of fudging).
