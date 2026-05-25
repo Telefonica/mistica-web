@@ -112,7 +112,7 @@ export type VideoProps = {
     onPause?: () => void;
     onLoad?: () => void;
     poster?: string;
-    /** track elements for subtitles */
+    /** text track elements for subtitles and captions */
     tracks?: ReadonlyArray<VideoTrack>;
     children?: void;
     /** defaults to none */
