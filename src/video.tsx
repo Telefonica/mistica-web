@@ -74,8 +74,9 @@ type VideoSourceWithType = {
 
 export type VideoTrack = {
     src: string;
+    kind: 'subtitles' | 'captions';
     /** https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag */
-    srcLang?: string;
+    srcLang: string;
     label?: string;
     default?: boolean;
 };
@@ -260,11 +261,11 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
                 ))}
-                {tracks?.map(({src, srcLang, label, default: isDefault}, index) => (
+                {tracks?.map(({src, kind, srcLang, label, default: isDefault}, index) => (
                     <track
                         key={index}
                         src={src}
-                        kind="subtitles"
+                        kind={kind}
                         srcLang={srcLang}
                         label={label}
                         default={isDefault}
@@ -355,9 +356,10 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                                 }
                             };
                             containerElement.setTrackMode = (index: number, mode: 'showing' | 'disabled') => {
-                                const track = videoRef.current?.textTracks[index];
-                                if (track) {
-                                    track.mode = mode;
+                                const trackElements = videoRef.current?.querySelectorAll('track');
+                                const trackElement = trackElements?.[index] as HTMLTrackElement | undefined;
+                                if (trackElement?.track) {
+                                    trackElement.track.mode = mode;
                                 }
                             };
                         }

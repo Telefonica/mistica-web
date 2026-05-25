@@ -100,12 +100,14 @@ export const Default: StoryComponent<Args> = ({
             tracks={[
                 {
                     src: SUBTITLES_SRC_EN,
+                    kind: 'subtitles',
                     srcLang: 'en',
                     label: 'English',
                     default: true,
                 },
                 {
                     src: SUBTITLES_SRC_ES,
+                    kind: 'subtitles',
                     srcLang: 'es',
                     label: 'Spanish',
                 },
