@@ -97,6 +97,29 @@ Follow the 24/32/16 rule:
 </Stack>
 ```
 
+### DO: Fill remaining horizontal space with `Inline` `expand`
+
+To make a row child grow into the leftover width next to a fixed-width sibling , use `Inline`'s `expand` prop
+with the index/indexes of the children that should grow. Indexes follow `React.Children.toArray` order.
+
+```tsx
+// ProgressBar fills remaining space
+<Inline space={24} expand={1} alignItems="center">
+  <Icon2GFilled />
+  <ProgressBar progressPercent={30} />
+</Inline>
+```
+
+### DON'T: grow children with raw flex or `style` on `Box`
+
+```tsx
+// ❌ raw flexbox div — breaks; Inline already wraps each child in a div
+<div style={{display: 'flex'}}>
+  <div style={{flex: 1}}>...</div>
+  <div style={{flex: '0 0 394px'}}>...</div>
+</div>
+```
+
 ## Color dos and don'ts
 
 ### DO: Use design tokens
