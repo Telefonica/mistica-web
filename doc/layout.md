@@ -11,6 +11,7 @@
     - [around](#around)
     - [evenly](#evenly)
     - [nesting](#nesting)
+    - [Grow](#grow)
   - [Align](#align)
   - [Grid / GridItem](#grid--griditem)
   - [NegativeBox](#negativebox)
