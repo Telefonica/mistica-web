@@ -1,3 +1,11 @@
+# [16.64.0](https://github.com/Telefonica/mistica-web/compare/v16.63.1...v16.64.0) (2026-05-29)
+
+
+### Features
+
+* **Chore:** MisticaAI update doc to improve code generation ([#1552](https://github.com/Telefonica/mistica-web/issues/1552)) ([410bf33](https://github.com/Telefonica/mistica-web/commit/410bf3317acecb6b966467ac0bfdb5e476056b58))
+* **community:** add cyber folder and allow community skins ([#1553](https://github.com/Telefonica/mistica-web/issues/1553)) ([28bffa3](https://github.com/Telefonica/mistica-web/commit/28bffa3246802be9ba810be580b80b4e9f545614))
+
 ## [16.63.1](https://github.com/Telefonica/mistica-web/compare/v16.63.0...v16.63.1) (2026-05-22)
 
 
