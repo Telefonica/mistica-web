@@ -99,7 +99,7 @@ Follow the 24/32/16 rule:
 
 ### DO: Fill remaining horizontal space with `Inline` `expand`
 
-To make a row child grow into the leftover width next to a fixed-width sibling , use `Inline`'s `expand` prop
+To make a row child grow into the leftover width next to a fixed-width sibling, use `Inline`'s `expand` prop
 with the index/indexes of the children that should grow. Indexes follow `React.Children.toArray` order.
 
 ```tsx
