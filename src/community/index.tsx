@@ -9,3 +9,5 @@ export {
     ValueBlock,
     ProgressBlock,
 } from './blocks';
+
+export {ExampleComponent as CyberExampleComponent} from './cyber';

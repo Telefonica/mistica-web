@@ -10,6 +10,7 @@ import {
     getTuSkin,
     getEsimflagSkin,
 } from '../src';
+import {getCyberSkin} from '../src/community/skins';
 
 export const Movistar = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
@@ -61,6 +62,11 @@ export const Esimflag = {
     skin: getEsimflagSkin(),
 } as const;
 
+export const Cyber = {
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    skin: getCyberSkin(),
+} as const;
+
 export const AVAILABLE_THEMES = [
     Movistar,
     Movistar_New,
@@ -72,4 +78,5 @@ export const AVAILABLE_THEMES = [
     Blau,
     Tu,
     Esimflag,
+    Cyber,
 ];
