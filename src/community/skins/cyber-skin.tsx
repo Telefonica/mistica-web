@@ -4,7 +4,7 @@ import type {Skin} from '../../skins/types';
 
 export const CYBER_SKIN = 'Cyber';
 
-// TODO: Replace palette with real one when ready
+// TODO: Replace skin with real one when ready
 
 export const palette = {
     primary: '#00B6F1',
