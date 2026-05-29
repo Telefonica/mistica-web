@@ -21,7 +21,7 @@ import {
     OverscrollColorProvider,
     ESIMFLAG_SKIN,
 } from '../src';
-import {CYBER_SKIN} from '../src/community/skins';
+import {CYBER_SKIN} from '../src/community/skins/cyber-skin';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {getPlatform} from '../src/utils/platform';
 

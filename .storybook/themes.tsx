@@ -10,7 +10,7 @@ import {
     getTuSkin,
     getEsimflagSkin,
 } from '../src';
-import {getCyberSkin} from '../src/community/skins';
+import {getCyberSkin} from '../src/community/skins/cyber-skin';
 
 export const Movistar = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
