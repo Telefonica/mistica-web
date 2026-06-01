@@ -134,12 +134,7 @@ const PaginationLabel = ({
     const {textPresets} = useTheme();
 
     return (
-        <Text3
-            as="span"
-            weight={weight ?? textPresets.button.weight}
-            color="currentColor"
-            wordBreak={false}
-        >
+        <Text3 as="span" weight={weight ?? textPresets.button.weight} color="currentColor" wordBreak={false}>
             {children}
         </Text3>
     );
@@ -223,10 +218,8 @@ export const Pagination = ({
     const {texts, t} = useTheme();
 
     const resolvedAriaLabel = ariaLabel || texts.paginationLabel || t(tokens.paginationLabel);
-    const resolvedPrevLabel =
-        navLeftLabel || texts.paginationPrevPage || t(tokens.paginationPrevPage);
-    const resolvedNextLabel =
-        navRightLabel || texts.paginationNextPage || t(tokens.paginationNextPage);
+    const resolvedPrevLabel = navLeftLabel || texts.paginationPrevPage || t(tokens.paginationPrevPage);
+    const resolvedNextLabel = navRightLabel || texts.paginationNextPage || t(tokens.paginationNextPage);
 
     if (totalPages <= 1) {
         return null;
