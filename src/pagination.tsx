@@ -8,6 +8,7 @@ import {useTheme} from './hooks';
 import IconChevronLeftFilled from './generated/mistica-icons/icon-chevron-left-filled';
 import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -152,6 +153,10 @@ type PageListProps = {
 };
 
 const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
+    const {texts, t} = useTheme();
+    const goToPageLabel = (page: number) =>
+        t(texts.paginationGoToPage || tokens.paginationGoToPage, String(page));
+
     return (
         <ul className={classnames(styles.pageList, className)}>
             {items.map((item, index) => {
@@ -183,7 +188,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                             type="button"
                             className={styles.pageButton}
                             disabled={disabled}
-                            aria-label={`Page ${item.page}`}
+                            aria-label={goToPageLabel(item.page)}
                             onClick={() => onPageClick(item.page)}
                         >
                             <span className={styles.pageContent}>
@@ -206,15 +211,22 @@ export const Pagination = ({
     hidePageList = false,
     showEllipsis = true,
     dynamicCount = 3,
-    navLeftLabel = 'Previous',
-    navRightLabel = 'Next',
+    navLeftLabel,
+    navRightLabel,
     mode = 'default',
     disabled = false,
     dataAttributes,
-    'aria-label': ariaLabel = 'Pagination',
+    'aria-label': ariaLabel,
 }: PaginationProps): JSX.Element | null => {
     const isControlled = currentPage !== undefined;
     const [internalPage, setInternalPage] = React.useState(defaultPage);
+    const {texts, t} = useTheme();
+
+    const resolvedAriaLabel = ariaLabel || texts.paginationLabel || t(tokens.paginationLabel);
+    const resolvedPrevLabel =
+        navLeftLabel || texts.paginationPrevPage || t(tokens.paginationPrevPage);
+    const resolvedNextLabel =
+        navRightLabel || texts.paginationNextPage || t(tokens.paginationNextPage);
 
     if (totalPages <= 1) {
         return null;
@@ -248,7 +260,7 @@ export const Pagination = ({
 
     return (
         <nav
-            aria-label={ariaLabel}
+            aria-label={resolvedAriaLabel}
             className={styles.container}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
@@ -259,13 +271,13 @@ export const Pagination = ({
                         [styles.navigationButtonIconOnly]: mode === 'iconOnly',
                     })}
                     disabled={disabled}
-                    aria-label={navLeftLabel}
+                    aria-label={resolvedPrevLabel}
                     onClick={() => goToPage(activePage - 1)}
                 >
                     <IconChevronLeftFilled size={16} color="currentColor" />
                     {mode === 'default' && (
                         <span className={styles.navigationLabel}>
-                            <PaginationLabel>{navLeftLabel}</PaginationLabel>
+                            <PaginationLabel>{resolvedPrevLabel}</PaginationLabel>
                         </span>
                     )}
                 </button>
@@ -279,12 +291,12 @@ export const Pagination = ({
                         [styles.navigationButtonIconOnly]: mode === 'iconOnly',
                     })}
                     disabled={disabled}
-                    aria-label={navRightLabel}
+                    aria-label={resolvedNextLabel}
                     onClick={() => goToPage(activePage + 1)}
                 >
                     {mode === 'default' && (
                         <span className={styles.navigationLabel}>
-                            <PaginationLabel>{navRightLabel}</PaginationLabel>
+                            <PaginationLabel>{resolvedNextLabel}</PaginationLabel>
                         </span>
                     )}
                     <IconChevronRightFilled size={16} color="currentColor" />

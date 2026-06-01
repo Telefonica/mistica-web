@@ -48,6 +48,11 @@ export const pageListItem = style({
     justifyContent: 'center',
 });
 
+/*
+ * Accessibility: per Figma spec, each Page Item must expose a minimum 48x48px
+ * interactive area on mobile (the visible 32px circle is centered within it).
+ * Desktop reduces back to 32x32. Width grows via @media on mobile-first base.
+ */
 const interactiveArea = style([
     sprinkles({
         display: 'flex',
@@ -56,8 +61,8 @@ const interactiveArea = style([
     }),
     {
         position: 'relative',
-        width: 32,
-        minWidth: 32,
+        width: 48,
+        minWidth: 48,
         height: 48,
         padding: 0,
         border: 0,
@@ -70,6 +75,8 @@ const interactiveArea = style([
 
         '@media': {
             [mq.desktopOrBigger]: {
+                width: 32,
+                minWidth: 32,
                 height: 32,
             },
         },
@@ -175,6 +182,11 @@ export const ellipsis = style([
     },
 ]);
 
+/*
+ * Accessibility: on mobile the chevron-only nav button must keep the 48x48
+ * minimum tap area (the label is hidden under tablet breakpoint). On desktop
+ * the label brings its own width so we relax min-width to 32px.
+ */
 export const navigationButton = style([
     sprinkles({
         display: 'flex',
@@ -183,14 +195,14 @@ export const navigationButton = style([
     }),
     {
         gap: 4,
-        width: 32,
-        minWidth: 32,
+        width: 48,
+        minWidth: 48,
         height: 48,
         padding: 0,
         border: 0,
         font: 'inherit',
         background: 'transparent',
-        color: skinVars.colors.textLink,
+        color: skinVars.colors.textBrand,
         borderRadius: skinVars.borderRadii.button,
         cursor: 'pointer',
         WebkitTapHighlightColor: 'transparent',
@@ -214,7 +226,7 @@ export const navigationButton = style([
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover': {
-                        color: skinVars.colors.textLink,
+                        color: skinVars.colors.textBrand,
                     },
                 },
             },

@@ -12,7 +12,7 @@ test('renders pagination navigation landmark', () => {
         </ThemeContextProvider>
     );
 
-    expect(screen.getByRole('navigation', {name: 'Pagination'})).toBeInTheDocument();
+    expect(screen.getByRole('navigation', {name: 'Paginación'})).toBeInTheDocument();
 });
 
 test('does not render when there is a single page', () => {
@@ -33,7 +33,7 @@ test('calls onChange when a page button is clicked (uncontrolled)', async () => 
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Page 3'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 3'}));
 
     expect(onChange).toHaveBeenCalledWith(3);
 });
@@ -46,7 +46,7 @@ test('calls onChange when Next is clicked', async () => {
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Next'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Página siguiente'}));
 
     expect(onChange).toHaveBeenCalledWith(3);
 });
@@ -59,7 +59,7 @@ test('does not change page when disabled', async () => {
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Page 3'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 3'}));
 
     expect(onChange).not.toHaveBeenCalled();
 });

@@ -47,6 +47,10 @@ export type Dictionary = {
     carouselPrevButton: string;
     carouselFirstButton: string;
     carouselPageNumber: string;
+    paginationLabel: string;
+    paginationPrevPage: string;
+    paginationNextPage: string;
+    paginationGoToPage: string;
     playIconButtonLabel: string;
     pauseIconButtonLabel: string;
     sheetConfirmButton: string;
@@ -410,6 +414,34 @@ export const carouselPageNumber: TextToken = {
     en: '1$s of 2$s',
     de: '1$s von 2$s',
     pt: '1$s de 2$s',
+};
+
+export const paginationLabel: TextToken = {
+    es: 'Paginación',
+    en: 'Pagination',
+    de: 'Paginierung',
+    pt: 'Paginação',
+};
+
+export const paginationPrevPage: TextToken = {
+    es: 'Página anterior',
+    en: 'Previous page',
+    de: 'Vorherige Seite',
+    pt: 'Página anterior',
+};
+
+export const paginationNextPage: TextToken = {
+    es: 'Página siguiente',
+    en: 'Next page',
+    de: 'Nächste Seite',
+    pt: 'Próxima página',
+};
+
+export const paginationGoToPage: TextToken = {
+    es: 'Ir a la página 1$s',
+    en: 'Go to page 1$s',
+    de: 'Gehe zu Seite 1$s',
+    pt: 'Ir para a página 1$s',
 };
 
 export const playIconButtonLabel: TextToken = {
