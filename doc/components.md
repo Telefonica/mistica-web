@@ -1,6 +1,6 @@
 # Components Reference
 
-All components are imported from `@telefonica/mistica`.
+All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
 
 ```tsx
 import {ButtonPrimary, Stack, Text2, ...} from '@telefonica/mistica';
