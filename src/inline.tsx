@@ -79,6 +79,23 @@ type Props = {
     fullWidth?: boolean;
     dataAttributes?: DataAttributes;
     wrap?: boolean;
+    /**
+     * Index or indexes of the children that should grow to fill the available space.
+     * Indexes refer to entries in `React.Children.toArray(children)`, so empty nodes
+     * (`null`, `undefined` and booleans) are ignored, but React elements still count
+     * even if they ultimately render no content.
+     *
+     * This prop has no effect when `wrap` is enabled.
+     */
+    expand?: number | ReadonlyArray<number>;
+};
+
+const shouldExpandItem = (expand: Props['expand'], index: number): boolean => {
+    if (expand === undefined) {
+        return false;
+    }
+
+    return Array.isArray(expand) ? expand.includes(index) : expand === index;
 };
 
 const Inline = ({
@@ -93,17 +110,26 @@ const Inline = ({
     fullWidth,
     wrap,
     dataAttributes,
+    expand,
 }: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
+    const childrenArray = React.Children.toArray(children).filter(Boolean);
 
+    const hasExpandItem = childrenArray.some((_, index) => shouldExpandItem(expand, index));
+    const shouldExpand = hasExpandItem && !wrap;
     return (
         <div
             className={classnames(
                 className,
                 styles.inline,
-                wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
-                isStringSpace ? (wrap ? styles.stringSpaceWithWrap : styles.stringSpace) : styles.marginInline
+                wrap ? styles.wrap : fullWidth || shouldExpand ? styles.fullWidth : styles.noFullWidth,
+                isStringSpace
+                    ? wrap
+                        ? styles.stringSpaceWithWrap
+                        : styles.stringSpace
+                    : styles.marginInline,
+                shouldExpand && styles.expand
             )}
             style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
             role={role}
@@ -111,10 +137,11 @@ const Inline = ({
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
-            {React.Children.map(children, (child) =>
-                !!child || child === 0 ? (
+            {React.Children.map(childrenArray, (child, index) => {
+                return (
                     <div
                         role={role === 'list' ? 'listitem' : undefined}
+                        className={classnames(shouldExpandItem(expand, index) && styles.expandItem)}
                         style={{
                             // Hack to fix https://jira.tid.es/browse/WEB-1683
                             // In iOS the inline component sometimes cuts the last line of the content
@@ -126,8 +153,8 @@ const Inline = ({
                     >
                         {child}
                     </div>
-                ) : null
-            )}
+                );
+            })}
         </div>
     );
 };

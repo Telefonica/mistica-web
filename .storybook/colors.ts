@@ -1,3 +1,5 @@
+import {palette as cyberPalette} from '../src/community/skins/cyber-skin';
+
 export const AVAILABLE_SKINS = [
     'Movistar-new',
     'Movistar',
@@ -10,7 +12,11 @@ export const AVAILABLE_SKINS = [
     'Esimflag',
 ] as const;
 
-export type Skin = (typeof AVAILABLE_SKINS)[number];
+export const COMMUNITY_SKINS = ['Cyber'] as const;
+
+export const ALL_SKINS = [...AVAILABLE_SKINS, ...COMMUNITY_SKINS] as const;
+
+export type Skin = (typeof ALL_SKINS)[number];
 
 type SkinTheme = {primary: string; textPrimary: string; textPrimaryInverse: string; textSecondary: string};
 
@@ -72,6 +78,13 @@ export const getColors = (skin: Skin): SkinTheme => {
                 textPrimary: '#001740',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#666B73',
+            };
+        case 'Cyber':
+            return {
+                primary: cyberPalette.primary,
+                textPrimary: '#000000',
+                textPrimaryInverse: '#FFFFFF',
+                textSecondary: '#666666',
             };
         default:
             throw Error('Unexpected skin: ' + skin);

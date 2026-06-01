@@ -9,3 +9,6 @@ export {
     ValueBlock,
     ProgressBlock,
 } from './blocks';
+
+export {ExampleComponent as CyberExampleComponent} from './cyber';
+export {getCyberSkin, CYBER_SKIN} from './skins/cyber-skin';

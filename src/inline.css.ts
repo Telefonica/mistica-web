@@ -98,6 +98,15 @@ export const stringSpaceWithWrap = style({
     justifyContent: space,
 });
 
+export const expand = style({
+    width: '100%',
+    display: 'flex',
+});
+
+export const expandItem = style({
+    flex: 1,
+});
+
 globalStyle(`${marginInline} > div`, {
     marginLeft: space,
     marginTop: fallbackVar(verticalSpace, space),
