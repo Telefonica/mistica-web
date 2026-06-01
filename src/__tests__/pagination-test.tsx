@@ -71,7 +71,11 @@ test('honors controlled currentPage', () => {
         </ThemeContextProvider>
     );
 
-    expect(screen.getByText('3').closest('[aria-current="page"]')).toBeInTheDocument();
+    // The current page is rendered as a non-interactive span (no button role)
+    // while every other page exposes a button with its localised aria-label.
+    expect(screen.queryByRole('button', {name: 'Ir a la página 3'})).not.toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument();
 });
 
 describe('getPaginationItems', () => {
