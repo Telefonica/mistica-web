@@ -18,7 +18,7 @@ structured-question tool if your harness has one):
     independent comparison runs.
 
 Remember the answer for the rest of this task. **One answer covers the whole implementation — do not re-ask
-per section.** If the user opted in, run the (verifier loop)[#verifier-loop-run-before-declaring-done]. If
+per section.** If the user opted in, run the [verifier loop](#verifier-loop-run-before-declaring-done). If
 they opted out, do not spawn the verifier; the self-checks are the only gate.
 
 ## Prime directive: read the DOM verbatim
