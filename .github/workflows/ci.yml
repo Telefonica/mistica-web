@@ -104,4 +104,43 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
                   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
+
+    validate-pr-title:
+        # Validates the PR title against the conventional commit format. Needed for
+        # semantic-release to generate release notes. Only runs on pull requests; it
+        # is skipped (not failed) on push and merge_group runs, so the aggregate job
+        # below still passes in those contexts.
+        name: Validate PR title
+        runs-on: ubuntu-latest
+        if: github.event_name == 'pull_request'
+        steps:
+            - uses: amannn/action-semantic-pull-request@v5
+              with:
+                  types: |
+                      fix
+                      feat
+                      chore
+                      revert
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Aggregate job that summarizes the result of all the required CI jobs.
+    # This is the only job that needs to be configured as a required status check
+    # in branch protection (tf-github-cdo-repos), instead of requiring each job
+    # (and each `build-acceptance` matrix shard) individually.
+    # See: https://github.com/orgs/community/discussions/8031
+    ci-required-checks:
+        name: CI required checks passed
+        runs-on: ubuntu-latest
+        needs: [build, build-acceptance, validate-pr-title]
+        # Always run so the check resolves even when a needed job fails or is cancelled.
+        if: always()
+        steps:
+            - name: Check that all required jobs succeeded
+              if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              run: |
+                  echo "One or more required CI jobs failed or were cancelled."
+                  exit 1
+            - name: All required jobs succeeded
+              run: echo "All required CI jobs passed."
 ###
