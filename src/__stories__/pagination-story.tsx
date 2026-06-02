@@ -73,11 +73,6 @@ CompactView.storyName = 'CompactView';
  * capítulo"). Matches the chapter-reader scenario from the Figma examples.
  */
 export const NextChapterLink: StoryComponent = () => (
-    <Pagination
-        totalPages={10}
-        defaultPage={1}
-        hidePageList
-        navRightLabel="Siguiente capítulo"
-    />
+    <Pagination totalPages={10} defaultPage={1} hidePageList navRightLabel="Siguiente capítulo" />
 );
 NextChapterLink.storyName = 'NextChapterLink';

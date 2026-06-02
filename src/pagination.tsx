@@ -45,10 +45,7 @@ const clamp = (value: number, min: number, max: number): number => Math.min(Math
  */
 const COMPACT_BREAKPOINT_PX = 375;
 
-const getCompactPaginationItems = (
-    totalPages: number,
-    currentPage: number
-): Array<PaginationItem> => {
+const getCompactPaginationItems = (totalPages: number, currentPage: number): Array<PaginationItem> => {
     if (totalPages <= 1) {
         return [];
     }
