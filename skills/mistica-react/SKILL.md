@@ -5,6 +5,10 @@ description: >
   skill when writing React UI code with @telefonica/mistica, creating pages, layouts, forms, or any user
   interface that should follow Telefonica's design guidelines. Triggers on tasks involving Mistica components,
   Telefonica branding, or when the user mentions Mistica.
+license: MIT
+metadata:
+  author: telefonica
+  version: '1.0.0'
 ---
 
 # Mistica React - Telefonica Design System
