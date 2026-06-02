@@ -22,6 +22,7 @@ import {
     VIVO_SKIN,
     BLAU_SKIN,
 } from '../src';
+import {CYBER_SKIN} from '../src/community/skins/cyber-skin';
 import {Movistar_New as defaultThemeConfig} from './themes';
 
 import type {ThemeConfig} from '../src';
@@ -62,6 +63,7 @@ const skinToLang: Record<string, string> = {
     [O2_SKIN]: 'en-GB',
     [O2_NEW_SKIN]: 'en-GB',
     [ESIMFLAG_SKIN]: 'es-ES',
+    [CYBER_SKIN]: 'es-ES',
 };
 
 const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
