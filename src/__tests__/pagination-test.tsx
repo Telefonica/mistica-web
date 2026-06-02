@@ -46,7 +46,7 @@ test('calls onChange when Next is clicked', async () => {
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Página siguiente'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Siguiente'}));
 
     expect(onChange).toHaveBeenCalledWith(3);
 });

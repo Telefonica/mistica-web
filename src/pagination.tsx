@@ -4,7 +4,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './pagination.css';
 import {Text3} from './text';
-import {useTheme} from './hooks';
+import {useTheme, useWindowWidth} from './hooks';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -37,6 +37,30 @@ export type PaginationProps = {
 type PaginationItem = {type: 'page'; page: number; current: boolean} | {type: 'ellipsis'};
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
+
+/**
+ * Viewport width (in CSS pixels) under which Pagination collapses into the
+ * compact view: vertical layout with current ± 1 pages and no anchors.
+ * Matches the "viewport < 375" rule from the Figma "Compact View" spec.
+ */
+const COMPACT_BREAKPOINT_PX = 375;
+
+const getCompactPaginationItems = (
+    totalPages: number,
+    currentPage: number
+): Array<PaginationItem> => {
+    if (totalPages <= 1) {
+        return [];
+    }
+    const activePage = clamp(currentPage, 1, totalPages);
+    const start = Math.max(1, activePage - 1);
+    const end = Math.min(totalPages, activePage + 1);
+    const items: Array<PaginationItem> = [];
+    for (let page = start; page <= end; page++) {
+        items.push({type: 'page', page, current: page === activePage});
+    }
+    return items;
+};
 
 export const getPaginationItems = ({
     totalPages,
@@ -216,6 +240,8 @@ export const Pagination = ({
     const isControlled = currentPage !== undefined;
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
+    const windowWidth = useWindowWidth();
+    const isCompact = windowWidth > 0 && windowWidth < COMPACT_BREAKPOINT_PX;
 
     const resolvedAriaLabel = ariaLabel || texts.paginationLabel || t(tokens.paginationLabel);
     const resolvedPrevLabel = navLeftLabel || texts.paginationPrevPage || t(tokens.paginationPrevPage);
@@ -241,12 +267,14 @@ export const Pagination = ({
         onChange?.(nextPage);
     };
 
-    const items = getPaginationItems({
-        totalPages,
-        currentPage: activePage,
-        dynamicCount,
-        showEllipsis,
-    });
+    const items = isCompact
+        ? getCompactPaginationItems(totalPages, activePage)
+        : getPaginationItems({
+              totalPages,
+              currentPage: activePage,
+              dynamicCount,
+              showEllipsis,
+          });
 
     const showPrevious = activePage > 1;
     const showNext = activePage < totalPages;
@@ -254,7 +282,9 @@ export const Pagination = ({
     return (
         <nav
             aria-label={resolvedAriaLabel}
-            className={styles.container}
+            className={classnames(isCompact ? styles.containerCompact : styles.container, {
+                [styles.containerNavOnly]: hidePageList && !isCompact,
+            })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
             {!hideNavigationControls && showPrevious && (

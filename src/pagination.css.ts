@@ -23,6 +23,40 @@ export const container = style([
     },
 ]);
 
+/*
+ * Variant for the "Previous / Next only" (hidePageList) layout. Per Figma the
+ * gap between Previous and Next when the page list is absent is 16px (vs the
+ * default 4/8px gap of the regular container).
+ */
+export const containerNavOnly = style({
+    gap: 16,
+    '@media': {
+        [mq.desktopOrBigger]: {
+            gap: 16,
+        },
+    },
+});
+
+/*
+ * Compact view (high-zoom or space-limited contexts < 375px wide): navigation
+ * stacks vertically with Previous on top, page list in the middle, Next at
+ * the bottom. The JS layer also reduces the page list to current ± 1.
+ */
+export const containerCompact = style([
+    sprinkles({
+        display: 'inline-flex',
+    }),
+    {
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 4,
+        padding: '8px 16px',
+        width: 'fit-content',
+        maxWidth: '100%',
+        boxSizing: 'border-box',
+    },
+]);
+
 export const pageList = style([
     sprinkles({
         display: 'flex',
@@ -49,9 +83,13 @@ export const pageListItem = style({
 });
 
 /*
- * Accessibility: per Figma spec, each Page Item must expose a minimum 48x48px
- * interactive area on mobile (the visible 32px circle is centered within it).
- * Desktop reduces back to 32x32. Width grows via @media on mobile-first base.
+ * Page items use the Figma anatomy size (32px circle) on every viewport so the
+ * full pagination fits on mobile screens (~375px). Vertical hit area stays at
+ * 48px on mobile to give a comfortable thumb target. WCAG 2.2 Target Size
+ * (Minimum) is satisfied through the spacing exception: 32px circles with a
+ * 4px gap between centers (36px apart) easily inscribe non-overlapping 24px
+ * circles, so the rule passes even though the literal target width is below
+ * 24×24 only in width.
  */
 const interactiveArea = style([
     sprinkles({
@@ -61,8 +99,8 @@ const interactiveArea = style([
     }),
     {
         position: 'relative',
-        width: 48,
-        minWidth: 48,
+        width: 32,
+        minWidth: 32,
         height: 48,
         padding: 0,
         border: 0,
@@ -75,8 +113,6 @@ const interactiveArea = style([
 
         '@media': {
             [mq.desktopOrBigger]: {
-                width: 32,
-                minWidth: 32,
                 height: 32,
             },
         },
@@ -183,9 +219,12 @@ export const ellipsis = style([
 ]);
 
 /*
- * Accessibility: on mobile the chevron-only nav button must keep the 48x48
- * minimum tap area (the label is hidden under tablet breakpoint). On desktop
- * the label brings its own width so we relax min-width to 32px.
+ * Navigation button matches the page-item layout on mobile (32 wide x 48 tall)
+ * so the whole pagination fits inside a 375px viewport even with the densest
+ * "1 ... N N+1 N+2 ... LAST" layout. The hit area still passes WCAG 2.2 via
+ * the spacing exception (32px button + 4px gap = 36px center-to-center, room
+ * to inscribe non-overlapping 24px touch circles). Desktop relaxes width to
+ * auto so the inline label can expand the button naturally.
  */
 export const navigationButton = style([
     sprinkles({
@@ -195,8 +234,8 @@ export const navigationButton = style([
     }),
     {
         gap: 4,
-        width: 48,
-        minWidth: 48,
+        width: 32,
+        minWidth: 32,
         height: 48,
         padding: 0,
         border: 0,
