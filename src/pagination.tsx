@@ -5,8 +5,8 @@ import classnames from 'classnames';
 import * as styles from './pagination.css';
 import {Text3} from './text';
 import {useTheme} from './hooks';
-import IconChevronLeftFilled from './generated/mistica-icons/icon-chevron-left-filled';
-import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
+import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
+import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
@@ -267,7 +267,7 @@ export const Pagination = ({
                     aria-label={resolvedPrevLabel}
                     onClick={() => goToPage(activePage - 1)}
                 >
-                    <IconChevronLeftFilled size={16} color="currentColor" />
+                    <IconChevronLeftRegular size={20} color="currentColor" />
                     {mode === 'default' && (
                         <span className={styles.navigationLabel}>
                             <PaginationLabel>{resolvedPrevLabel}</PaginationLabel>
@@ -292,7 +292,7 @@ export const Pagination = ({
                             <PaginationLabel>{resolvedNextLabel}</PaginationLabel>
                         </span>
                     )}
-                    <IconChevronRightFilled size={16} color="currentColor" />
+                    <IconChevronRightRegular size={20} color="currentColor" />
                 </button>
             )}
         </nav>

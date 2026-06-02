@@ -116,7 +116,7 @@ export const pageButton = style([
             '&:active:before': {
                 opacity: 1,
                 transform: 'translate(-50%, -50%) scale(1)',
-                backgroundColor: skinVars.colors.backgroundContainerPressed,
+                backgroundColor: skinVars.colors.brandLow,
             },
             '&:disabled': {
                 cursor: 'default',
@@ -130,12 +130,12 @@ export const pageButton = style([
                     '&:hover:before': {
                         opacity: 1,
                         transform: 'translate(-50%, -50%) scale(1.06)',
-                        backgroundColor: skinVars.colors.backgroundContainerHover,
+                        backgroundColor: skinVars.colors.neutralLow,
                     },
                     '&:active:before': {
                         opacity: 1,
                         transform: 'translate(-50%, -50%) scale(1)',
-                        backgroundColor: skinVars.colors.backgroundContainerPressed,
+                        backgroundColor: skinVars.colors.brandLow,
                     },
                 },
             },
