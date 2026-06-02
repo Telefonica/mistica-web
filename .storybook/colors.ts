@@ -81,7 +81,7 @@ export const getColors = (skin: Skin): SkinTheme => {
             };
         case 'Cyber':
             return {
-                primary: cyberPalette.primary,
+                primary: cyberPalette.brand,
                 textPrimary: '#000000',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#666666',
