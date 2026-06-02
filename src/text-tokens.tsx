@@ -424,17 +424,17 @@ export const paginationLabel: TextToken = {
 };
 
 export const paginationPrevPage: TextToken = {
-    es: 'Página anterior',
-    en: 'Previous page',
-    de: 'Vorherige Seite',
-    pt: 'Página anterior',
+    es: 'Anterior',
+    en: 'Previous',
+    de: 'Zurück',
+    pt: 'Anterior',
 };
 
 export const paginationNextPage: TextToken = {
-    es: 'Página siguiente',
-    en: 'Next page',
-    de: 'Nächste Seite',
-    pt: 'Próxima página',
+    es: 'Siguiente',
+    en: 'Next',
+    de: 'Weiter',
+    pt: 'Próximo',
 };
 
 export const paginationGoToPage: TextToken = {

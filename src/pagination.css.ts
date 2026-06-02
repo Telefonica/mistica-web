@@ -202,7 +202,7 @@ export const navigationButton = style([
         border: 0,
         font: 'inherit',
         background: 'transparent',
-        color: skinVars.colors.textBrand,
+        color: skinVars.colors.textLink,
         borderRadius: skinVars.borderRadii.button,
         cursor: 'pointer',
         WebkitTapHighlightColor: 'transparent',
@@ -226,7 +226,7 @@ export const navigationButton = style([
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover': {
-                        color: skinVars.colors.textBrand,
+                        color: skinVars.colors.textLink,
                     },
                 },
             },
