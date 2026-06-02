@@ -26,5 +26,5 @@ React component library for Telefonica's Design System.
 
 ## GitHub conventions
 
-- Read [CONTRIBUTING](./CONTRIBUTING.md) before contributing to Mistica repo.
+- Read [CONTRIBUTING](./CONTRIBUTING.md) before creating a PR or contributing to Mistica repo.
 - Always add the `AI` label to PRs where the code was written by an AI agent.
