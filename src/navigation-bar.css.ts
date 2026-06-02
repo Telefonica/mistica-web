@@ -312,7 +312,7 @@ export const navigationBarContentRightExpanded = style([
         flex: 1,
     }),
     {
-        paddingLeft: 136,
+        paddingLeft: 56,
     },
 ]);
 

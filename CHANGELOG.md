@@ -1,3 +1,22 @@
+# [16.66.0](https://github.com/Telefonica/mistica-web/compare/v16.65.0...v16.66.0) (2026-06-02)
+
+
+### Features
+
+* **community:** update cyber skin to final one ([#1558](https://github.com/Telefonica/mistica-web/issues/1558)) ([599e6a6](https://github.com/Telefonica/mistica-web/commit/599e6a695e3dbaf0a2290f7127d05046ab0c2695))
+
+# [16.65.0](https://github.com/Telefonica/mistica-web/compare/v16.64.0...v16.65.0) (2026-06-01)
+
+
+### Bug Fixes
+
+* **NavigationBar:** modified paddingLeft from navigationBarContentRightExpanded ([#1554](https://github.com/Telefonica/mistica-web/issues/1554)) ([c3fce65](https://github.com/Telefonica/mistica-web/commit/c3fce65521701e6780d69192615282b2df61a382)), closes [6760745#comment-6760745](https://github.com/6760745/issues/comment-6760745)
+
+
+### Features
+
+* **Video:** add support for tracks in Video component. ([#1556](https://github.com/Telefonica/mistica-web/issues/1556)) ([ff11a70](https://github.com/Telefonica/mistica-web/commit/ff11a70db3fbedf05b4981d0b371492e6cde2e14)), closes [/#diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R75-R83](https://github.com///issues/diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R75-R83) [/#diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R115-R116](https://github.com///issues/diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R115-R116) [/#diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R264-R273](https://github.com///issues/diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R264-R273) [/#diff-0b5adbfe7b36e4ae2f479291e20152e33e940f7f265162d77f40f6bdb5da7405L130-R130](https://github.com///issues/diff-0b5adbfe7b36e4ae2f479291e20152e33e940f7f265162d77f40f6bdb5da7405L130-R130) [/#diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R130-R143](https://github.com///issues/diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R130-R143) [/#diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R358-R364](https://github.com///issues/diff-47ff16a195dc2d8aa694f97f484b1c3d09291bcea913c42af7ac5e738ac17e76R358-R364) [/#diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R4-R5](https://github.com///issues/diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R4-R5) [/#diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R45-R46](https://github.com///issues/diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R45-R46) [/#diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R67-R80](https://github.com///issues/diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R67-R80) [/#diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47L79-R116](https://github.com///issues/diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47L79-R116) [/#diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R163-R168](https://github.com///issues/diff-f2736b0c089ee1c3f000fc963aff57858090f96824e514ec58c30359b30c7a47R163-R168) [/#diff-e98a057e97ad31324ffa5b59202a09419ba93661c52c9ddd69da23c8844d9446R1-R13](https://github.com///issues/diff-e98a057e97ad31324ffa5b59202a09419ba93661c52c9ddd69da23c8844d9446R1-R13) [/#diff-fce3b6d5f59c431a53840524d5fd1edae3d194fbad5c570c6826e10ad3a28f57R1-R13](https://github.com///issues/diff-fce3b6d5f59c431a53840524d5fd1edae3d194fbad5c570c6826e10ad3a28f57R1-R13)
+
 # [16.64.0](https://github.com/Telefonica/mistica-web/compare/v16.63.1...v16.64.0) (2026-05-29)
 
 
