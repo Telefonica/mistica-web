@@ -26,7 +26,7 @@ rules before starting.
      Use the Figma frame's dimensions. For responsive designs, repeat per breakpoint.
 
 3. **Compare visually**: open `/tmp/verifier-actual.png` and compare against the Figma screenshot. Catalog
-   drift in: layout, spacing, typography (weight/size/line- height — compare letter forms), colors, assets
+   drift in: layout, spacing, typography (weight/size/line-height — compare letter forms), colors, assets
    (missing / wrong), and component primitive choice.
 
 4. **Structural / rule check**:
