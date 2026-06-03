@@ -173,7 +173,7 @@ const renderButtonContent = ({
     });
 
     return (
-        <>
+        <div className={styles.contentWrapper}>
             {/* text content */}
             <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
                 {StartIcon && (
@@ -265,7 +265,7 @@ const renderButtonContent = ({
                     </Box>
                 ) : null}
             </div>
-        </>
+        </div>
     );
 };
 

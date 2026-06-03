@@ -22,6 +22,13 @@ export const linkMinWidth = {
     small: '24px',
 };
 
+/**
+ * Minimum touchable area (48px) enforced ONLY on touchable devices. It's painted as a
+ * transparent `::after` overlay so it does NOT affect the layout nor the visible button size
+ * (same pattern as chip/switch-component). See DSNCORE-2286 / spec #2548 and WCAG 2.5.5.
+ */
+const MIN_TOUCHABLE_AREA = 48;
+
 export const borderSize = '1.5px';
 export const iconMargin = '8px';
 export const chevronMarginLeft = '2px';
@@ -61,7 +68,6 @@ const button = style([
         position: 'relative',
         width: 'auto',
         borderRadius: vars.borderRadii.button,
-        overflow: 'hidden',
         padding: 0,
     }),
     {
@@ -75,6 +81,20 @@ const button = style([
         '@media': {
             [mq.touchableOnly]: {
                 transition: 'none',
+                /**
+                 * Force a minimum 48px touchable area on touchable devices without affecting the
+                 * layout (transparent overlay that overflows the button when it's smaller than 48px).
+                 * min() is not supported in old browsers (https://caniuse.com/css-math-functions);
+                 * in that case we fall back to 0 and don't enforce the area.
+                 */
+                '::after': {
+                    content: '',
+                    position: 'absolute',
+                    top: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                    bottom: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                    left: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                    right: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                },
             },
         },
     },
@@ -82,6 +102,22 @@ const button = style([
 
 export const small = style({});
 export const smallLink = style({});
+
+/**
+ * Wraps the button content and keeps the `overflow: hidden` that used to be on the button itself.
+ * It's needed because the button can no longer clip its overflow (that would also clip the
+ * `::after` touchable-area overlay), but we still want to clip the loading content animation.
+ */
+export const contentWrapper = style([
+    sprinkles({
+        display: 'block',
+        position: 'relative',
+        overflow: 'hidden',
+    }),
+    {
+        borderRadius: 'inherit',
+    },
+]);
 
 export const loadingFiller = style([
     sprinkles({
