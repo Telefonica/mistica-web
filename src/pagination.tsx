@@ -279,7 +279,7 @@ export const Pagination = ({
     const resolvedNextAriaLabel =
         navRightLabel || texts.paginationNextPageAriaLabel || t(tokens.paginationNextPageAriaLabel);
 
-    if (totalPages <= 1) {
+    if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
     }
 
