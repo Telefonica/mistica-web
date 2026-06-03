@@ -47,7 +47,6 @@ export type Dictionary = {
     carouselPrevButton: string;
     carouselFirstButton: string;
     carouselPageNumber: string;
-    paginationLabel: string;
     paginationSection: string;
     paginationPrevPage: string;
     paginationNextPage: string;
@@ -418,13 +417,6 @@ export const carouselPageNumber: TextToken = {
     en: '1$s of 2$s',
     de: '1$s von 2$s',
     pt: '1$s de 2$s',
-};
-
-export const paginationLabel: TextToken = {
-    es: 'Paginación',
-    en: 'Pagination',
-    de: 'Paginierung',
-    pt: 'Paginação',
 };
 
 export const paginationSection: TextToken = {
