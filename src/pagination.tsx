@@ -184,11 +184,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                     // entirely excluded from the accessibility tree (the list
                     // count VO announces becomes "position of N" without it).
                     return (
-                        <li
-                            key={`ellipsis-${index}`}
-                            className={styles.pageListItem}
-                            aria-hidden="true"
-                        >
+                        <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
                             <span className={styles.ellipsis}>
                                 <PaginationLabel weight="medium">...</PaginationLabel>
                             </span>

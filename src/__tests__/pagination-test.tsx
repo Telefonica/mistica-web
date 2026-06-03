@@ -12,9 +12,7 @@ test('renders pagination navigation landmark', () => {
         </ThemeContextProvider>
     );
 
-    expect(
-        screen.getByRole('navigation', {name: 'Paginación - Página 1 de 5'})
-    ).toBeInTheDocument();
+    expect(screen.getByRole('navigation', {name: 'Paginación - Página 1 de 5'})).toBeInTheDocument();
 });
 
 test('does not render when there is a single page', () => {
@@ -77,9 +75,7 @@ test('honors controlled currentPage', () => {
     // still land on it and announce "Página 3, página actual" — but the
     // "Ir a la página 3" navigation button is absent (it's not navigable).
     expect(screen.queryByRole('button', {name: 'Ir a la página 3'})).not.toBeInTheDocument();
-    expect(
-        screen.getByRole('button', {name: 'Página 3, página actual'})
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Página 3, página actual'})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
 });
 
