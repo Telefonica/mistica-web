@@ -75,12 +75,31 @@ const button = style([
         '@media': {
             [mq.touchableOnly]: {
                 transition: 'none',
+                /**
+                 * [Option 3 POC] Force a 48px touchable box on touchable devices so the Android
+                 * Accessibility Scanner measures the element as >=48dp. boxSizing border-box keeps
+                 * the box exactly 48px (border included).
+                 */
+                boxSizing: 'border-box',
+                minHeight: '48px',
             },
         },
     },
 ]);
 
-export const small = style({});
+export const small = style({
+    '@media': {
+        [mq.touchableOnly]: {
+            /**
+             * [Option 3 POC] Compensate the 32px -> 48px growth with negative block margins so the
+             * 48px touchable box does NOT push the surrounding layout (it overlaps the neighbours,
+             * like the design "interaction area"). 8px = (48 - 32) / 2.
+             */
+            marginTop: '-8px',
+            marginBottom: '-8px',
+        },
+    },
+});
 export const smallLink = style({});
 
 export const loadingFiller = style([
