@@ -1,0 +1,28 @@
+# Yarn zero-install cache — large binary zip files, not useful for code understanding
+.yarn/cache/
+
+# Auto-generated icon components — repetitive generated code
+src/generated/mistica-icons/
+
+# Lock file — binary-like, no semantic value for Claude
+yarn.lock
+
+# Images and binary assets
+img/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# Build artifacts (should be gitignored but just in case)
+dist/
+dist-es/
+dist-ts/
+coverage/
+storybook-static/
