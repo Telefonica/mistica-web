@@ -127,6 +127,8 @@ export interface VideoElement extends HTMLDivElement {
     /** Stops the video and shows the poster image (if available) */
     stop: () => void;
     setCurrentTime: (time: number) => void;
+    getCurrentTime: () => number;
+    getDuration: () => number;
     /**
      * Sets the display mode of a track by its index.
      * - 'showing': track is visible
@@ -348,6 +350,8 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                                     videoRef.current.currentTime = time;
                                 }
                             };
+                            containerElement.getCurrentTime = () => videoRef.current?.currentTime ?? 0;
+                            containerElement.getDuration = () => videoRef.current?.duration ?? NaN;
                             containerElement.stop = () => {
                                 if (videoRef.current) {
                                     videoRef.current.pause();
