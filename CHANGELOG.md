@@ -1,3 +1,12 @@
+# [16.67.0](https://github.com/Telefonica/mistica-web/compare/v16.66.0...v16.67.0) (2026-06-08)
+
+
+### Features
+
+* **Chore:** Investigate spawning verifier agent to improve figma implementations ([#1551](https://github.com/Telefonica/mistica-web/issues/1551)) ([f40984a](https://github.com/Telefonica/mistica-web/commit/f40984accda6b0a8a0134561aa819bb5d9a728ae))
+* **Chore:** package mistica-web as a Claude Code plugin ([#1557](https://github.com/Telefonica/mistica-web/issues/1557)) ([744debe](https://github.com/Telefonica/mistica-web/commit/744debe9e36b9b5ec2596cec67dc6eac5cc3961f))
+* **Video:** Expose duration and currentTime in video component Ref: … ([#1566](https://github.com/Telefonica/mistica-web/issues/1566)) ([9d55237](https://github.com/Telefonica/mistica-web/commit/9d552379734855c288f330eba4833e95edcdcf57))
+
 # [16.66.0](https://github.com/Telefonica/mistica-web/compare/v16.65.0...v16.66.0) (2026-06-02)
 
 
