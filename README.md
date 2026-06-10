@@ -122,6 +122,20 @@ npx skills add telefonica/mistica-web
 Once installed, your agent should load the skill whenever you ask it to build Mistica UIs and will consult the
 documentation automatically.
 
+Some example prompts that will trigger the skill:
+
+- "Implement a Netflix-like landing page using Mistica"
+- "Implement this design https://www.figma.com/design/ct7WJR90qZTxLnmJdR5C4B/Ai-SDLC-Metrics?node-id=1-2&m=dev
+  using Mistica" (requires an agent with access to Figma, for example via the Figma MCP server)
+- "Create a checkout form with Mistica components"
+- "Build a settings page for a Telefonica app using Mistica"
+
+You can also invoke the skill explicitly if your agent supports slash commands:
+
+```
+/mistica-react implement a Netflix-like landing page
+```
+
 ### For LLMs reading this file
 
 If you are an AI assistant and `node_modules/@telefonica/mistica` is available in the project:
