@@ -89,13 +89,24 @@ test('honors controlled currentPage', () => {
             <Pagination totalPages={5} currentPage={3} />
         </ThemeContextProvider>
     );
-
-    // The current page is rendered as an aria-disabled button so VoiceOver can
-    // still land on it and announce "Página 3, página actual" — but the
-    // "Ir a la página 3" navigation button is absent (it's not navigable).
     expect(screen.queryByRole('button', {name: 'Ir a la página 3'})).not.toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Página 3, página actual'})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
+});
+
+test('marks non-adjacent items with the compact-hide class', () => {
+    const {container} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination totalPages={50} currentPage={24} />
+        </ThemeContextProvider>
+    );
+
+    const lis = Array.from(container.querySelectorAll('li'));
+    const visibleInCompact = lis.filter((li) => !li.className.includes('fullOnlyItem'));
+    expect(visibleInCompact).toHaveLength(3);
+    expect(visibleInCompact[0].textContent).toContain('23');
+    expect(visibleInCompact[1].textContent).toContain('24');
+    expect(visibleInCompact[2].textContent).toContain('25');
 });
 
 describe('getPaginationItems', () => {

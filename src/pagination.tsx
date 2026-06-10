@@ -4,7 +4,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './pagination.css';
 import {Text3} from './text';
-import {useTheme, useWindowWidth} from './hooks';
+import {useTheme} from './hooks';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -37,22 +37,6 @@ export type PaginationProps = {
 type PaginationItem = {type: 'page'; page: number; current: boolean} | {type: 'ellipsis'};
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
-
-const COMPACT_BREAKPOINT_PX = 375;
-
-const getCompactPaginationItems = (totalPages: number, currentPage: number): Array<PaginationItem> => {
-    if (totalPages <= 1) {
-        return [];
-    }
-    const activePage = clamp(currentPage, 1, totalPages);
-    const start = Math.max(1, activePage - 1);
-    const end = Math.min(totalPages, activePage + 1);
-    const items: Array<PaginationItem> = [];
-    for (let page = start; page <= end; page++) {
-        items.push({type: 'page', page, current: page === activePage});
-    }
-    return items;
-};
 
 export const getPaginationItems = ({
     totalPages,
@@ -108,34 +92,27 @@ export const getPaginationItems = ({
     }
 
     const orderedPages = Array.from(pages).sort((a, b) => a - b);
-    const items: Array<PaginationItem> = [];
 
-    orderedPages.forEach((page, index) => {
+    return orderedPages.flatMap<PaginationItem>((page, index) => {
         const previousPage = orderedPages[index - 1];
+        const filler: Array<PaginationItem> = [];
 
         if (previousPage !== undefined) {
             const gap = page - previousPage;
-
             if (gap === 2) {
                 const missingPage = previousPage + 1;
-                items.push({
+                filler.push({
                     type: 'page',
                     page: missingPage,
                     current: missingPage === activePage,
                 });
             } else if (gap > 2) {
-                items.push({type: 'ellipsis'});
+                filler.push({type: 'ellipsis'});
             }
         }
 
-        items.push({
-            type: 'page',
-            page,
-            current: page === activePage,
-        });
+        return [...filler, {type: 'page', page, current: page === activePage}];
     });
-
-    return items;
 };
 
 type PaginationLabelWeight = 'regular' | 'medium';
@@ -169,13 +146,19 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
         t(texts.paginationGoToPage || tokens.paginationGoToPage, String(page));
     const currentPageLabel = (page: number) =>
         t(texts.paginationCurrentPage || tokens.paginationCurrentPage, String(page));
+    const currentIndex = items.findIndex((i) => i.type === 'page' && i.current);
+    const isFullOnly = (index: number) => currentIndex !== -1 && Math.abs(index - currentIndex) > 1;
 
     return (
         <ol className={classnames(styles.pageList, className)}>
             {items.map((item, index) => {
+                const liClassName = classnames(styles.pageListItem, {
+                    [styles.fullOnlyItem]: isFullOnly(index),
+                });
+
                 if (item.type === 'ellipsis') {
                     return (
-                        <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
+                        <li key={`ellipsis-${index}`} className={liClassName} aria-hidden="true">
                             <span className={styles.ellipsis}>
                                 <PaginationLabel weight="medium">...</PaginationLabel>
                             </span>
@@ -185,7 +168,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
 
                 if (item.current) {
                     return (
-                        <li key={item.page} className={styles.pageListItem}>
+                        <li key={item.page} className={liClassName}>
                             <button
                                 type="button"
                                 className={styles.currentPage}
@@ -202,7 +185,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 }
 
                 return (
-                    <li key={item.page} className={styles.pageListItem}>
+                    <li key={item.page} className={liClassName}>
                         <button
                             type="button"
                             className={styles.pageButton}
@@ -240,8 +223,6 @@ export const Pagination = ({
     const isControlled = currentPage !== undefined;
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
-    const windowWidth = useWindowWidth();
-    const isCompact = windowWidth > 0 && windowWidth < COMPACT_BREAKPOINT_PX;
 
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
@@ -276,14 +257,12 @@ export const Pagination = ({
         onChange?.(nextPage);
     };
 
-    const items = isCompact
-        ? getCompactPaginationItems(totalPages, activePage)
-        : getPaginationItems({
-              totalPages,
-              currentPage: activePage,
-              dynamicCount,
-              showEllipsis,
-          });
+    const items = getPaginationItems({
+        totalPages,
+        currentPage: activePage,
+        dynamicCount,
+        showEllipsis,
+    });
 
     const isPrevDisabled = activePage <= 1;
     const isNextDisabled = activePage >= totalPages;
@@ -291,8 +270,8 @@ export const Pagination = ({
     return (
         <nav
             aria-label={resolvedAriaLabel}
-            className={classnames(isCompact ? styles.containerCompact : styles.container, {
-                [styles.containerNavOnly]: hidePageList && !isCompact,
+            className={classnames(styles.container, {
+                [styles.containerNavOnly]: hidePageList,
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >

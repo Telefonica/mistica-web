@@ -3,6 +3,8 @@ import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
+const COMPACT_MQ = '(max-width: 374px)';
+
 export const container = style([
     sprinkles({
         display: 'inline-flex',
@@ -19,6 +21,9 @@ export const container = style([
             [mq.desktopOrBigger]: {
                 gap: 8,
             },
+            [COMPACT_MQ]: {
+                flexDirection: 'column',
+            },
         },
     },
 ]);
@@ -31,21 +36,6 @@ export const containerNavOnly = style({
         },
     },
 });
-
-export const containerCompact = style([
-    sprinkles({
-        display: 'inline-flex',
-    }),
-    {
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 4,
-        padding: '8px 16px',
-        width: 'fit-content',
-        maxWidth: '100%',
-        boxSizing: 'border-box',
-    },
-]);
 
 export const pageList = style([
     sprinkles({
@@ -70,6 +60,12 @@ export const pageListItem = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+});
+
+export const fullOnlyItem = style({
+    '@media': {
+        [COMPACT_MQ]: {display: 'none'},
+    },
 });
 
 const interactiveArea = style([
