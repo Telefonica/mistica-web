@@ -23,11 +23,6 @@ export const container = style([
     },
 ]);
 
-/*
- * Variant for the "Previous / Next only" (hidePageList) layout. Per Figma the
- * gap between Previous and Next when the page list is absent is 16px (vs the
- * default 4/8px gap of the regular container).
- */
 export const containerNavOnly = style({
     gap: 16,
     '@media': {
@@ -37,11 +32,6 @@ export const containerNavOnly = style({
     },
 });
 
-/*
- * Compact view (high-zoom or space-limited contexts < 375px wide): navigation
- * stacks vertically with Previous on top, page list in the middle, Next at
- * the bottom. The JS layer also reduces the page list to current ± 1.
- */
 export const containerCompact = style([
     sprinkles({
         display: 'inline-flex',
@@ -82,15 +72,6 @@ export const pageListItem = style({
     justifyContent: 'center',
 });
 
-/*
- * Page items use the Figma anatomy size (32px circle) on every viewport so the
- * full pagination fits on mobile screens (~375px). Vertical hit area stays at
- * 48px on mobile to give a comfortable thumb target. WCAG 2.2 Target Size
- * (Minimum) is satisfied through the spacing exception: 32px circles with a
- * 4px gap between centers (36px apart) easily inscribe non-overlapping 24px
- * circles, so the rule passes even though the literal target width is below
- * 24×24 only in width.
- */
 const interactiveArea = style([
     sprinkles({
         display: 'flex',
@@ -218,14 +199,6 @@ export const ellipsis = style([
     },
 ]);
 
-/*
- * Navigation button matches the page-item layout on mobile (32 wide x 48 tall)
- * so the whole pagination fits inside a 375px viewport even with the densest
- * "1 ... N N+1 N+2 ... LAST" layout. The hit area still passes WCAG 2.2 via
- * the spacing exception (32px button + 4px gap = 36px center-to-center, room
- * to inscribe non-overlapping 24px touch circles). Desktop relaxes width to
- * auto so the inline label can expand the button naturally.
- */
 export const navigationButton = style([
     sprinkles({
         display: 'flex',
@@ -247,10 +220,10 @@ export const navigationButton = style([
         WebkitTapHighlightColor: 'transparent',
 
         selectors: {
-            '&:active': {
+            '&:active:not([aria-disabled="true"])': {
                 backgroundColor: skinVars.colors.buttonLinkBackgroundPressed,
             },
-            '&:disabled': {
+            '&:disabled, &[aria-disabled="true"]': {
                 cursor: 'default',
                 opacity: 0.5,
             },
@@ -264,7 +237,7 @@ export const navigationButton = style([
             },
             [mq.supportsHover]: {
                 selectors: {
-                    '&:hover': {
+                    '&:hover:not([aria-disabled="true"])': {
                         color: skinVars.colors.textLink,
                     },
                 },

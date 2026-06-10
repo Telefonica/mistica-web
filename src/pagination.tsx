@@ -38,11 +38,6 @@ type PaginationItem = {type: 'page'; page: number; current: boolean} | {type: 'e
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
-/**
- * Viewport width (in CSS pixels) under which Pagination collapses into the
- * compact view: vertical layout with current ± 1 pages and no anchors.
- * Matches the "viewport < 375" rule from the Figma "Compact View" spec.
- */
 const COMPACT_BREAKPOINT_PX = 375;
 
 const getCompactPaginationItems = (totalPages: number, currentPage: number): Array<PaginationItem> => {
@@ -176,13 +171,9 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
         t(texts.paginationCurrentPage || tokens.paginationCurrentPage, String(page));
 
     return (
-        // <ol> conveys an ordered list to AT (per Figma "ordered list" requirement).
         <ol className={classnames(styles.pageList, className)}>
             {items.map((item, index) => {
                 if (item.type === 'ellipsis') {
-                    // aria-hidden lives on the <li> itself so the ellipsis is
-                    // entirely excluded from the accessibility tree (the list
-                    // count VO announces becomes "position of N" without it).
                     return (
                         <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
                             <span className={styles.ellipsis}>
@@ -193,9 +184,6 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 }
 
                 if (item.current) {
-                    // Rendered as a focuseable button with aria-disabled so VO
-                    // can land on it and read "Página N, página actual" — the
-                    // span variant was skipped by the screen reader on iOS.
                     return (
                         <li key={item.page} className={styles.pageListItem}>
                             <button
@@ -255,25 +243,14 @@ export const Pagination = ({
     const windowWidth = useWindowWidth();
     const isCompact = windowWidth > 0 && windowWidth < COMPACT_BREAKPOINT_PX;
 
-    /*
-     * The <nav> aria-label always carries the section template (e.g.
-     * "Paginación - Página 3 de 10") so VoiceOver announces the position
-     * the user is at on enter. A user-supplied `aria-label` prop is treated
-     * as an additional descriptor and appended after the section template.
-     */
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
         String(clamp(isControlled ? currentPage : internalPage, 1, totalPages)),
         String(totalPages)
     );
     const resolvedAriaLabel = ariaLabel ? `${sectionLabel}, ${ariaLabel}` : sectionLabel;
-    // Visible button label (short, e.g. "Anterior"). The user can fully replace
-    // it via the navLeftLabel / navRightLabel props.
     const resolvedPrevLabel = navLeftLabel || texts.paginationPrevPage || t(tokens.paginationPrevPage);
     const resolvedNextLabel = navRightLabel || texts.paginationNextPage || t(tokens.paginationNextPage);
-    // Aria-label for the same buttons (long, e.g. "Página anterior") matching
-    // the Figma A11y spec. If the user provided a navLeftLabel prop they take
-    // ownership of both visible text and a11y label, so we honour their value.
     const resolvedPrevAriaLabel =
         navLeftLabel || texts.paginationPrevPageAriaLabel || t(tokens.paginationPrevPageAriaLabel);
     const resolvedNextAriaLabel =
@@ -308,8 +285,8 @@ export const Pagination = ({
               showEllipsis,
           });
 
-    const showPrevious = activePage > 1;
-    const showNext = activePage < totalPages;
+    const isPrevDisabled = activePage <= 1;
+    const isNextDisabled = activePage >= totalPages;
 
     return (
         <nav
@@ -319,15 +296,16 @@ export const Pagination = ({
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
-            {!hideNavigationControls && showPrevious && (
+            {!hideNavigationControls && (
                 <button
                     type="button"
                     className={classnames(styles.navigationButton, {
                         [styles.navigationButtonIconOnly]: mode === 'iconOnly',
                     })}
                     disabled={disabled}
+                    aria-disabled={isPrevDisabled || undefined}
                     aria-label={resolvedPrevAriaLabel}
-                    onClick={() => goToPage(activePage - 1)}
+                    onClick={isPrevDisabled ? undefined : () => goToPage(activePage - 1)}
                 >
                     <IconChevronLeftRegular size={20} color="currentColor" />
                     {mode === 'default' && (
@@ -339,15 +317,16 @@ export const Pagination = ({
             )}
 
             {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
-            {!hideNavigationControls && showNext && (
+            {!hideNavigationControls && (
                 <button
                     type="button"
                     className={classnames(styles.navigationButton, {
                         [styles.navigationButtonIconOnly]: mode === 'iconOnly',
                     })}
                     disabled={disabled}
+                    aria-disabled={isNextDisabled || undefined}
                     aria-label={resolvedNextAriaLabel}
-                    onClick={() => goToPage(activePage + 1)}
+                    onClick={isNextDisabled ? undefined : () => goToPage(activePage + 1)}
                 >
                     {mode === 'default' && (
                         <span className={styles.navigationLabel}>

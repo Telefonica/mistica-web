@@ -64,6 +64,25 @@ test('does not change page when disabled', async () => {
     expect(onChange).not.toHaveBeenCalled();
 });
 
+test('keeps Previous and Next visible at page boundaries (aria-disabled)', async () => {
+    const onChange = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination totalPages={5} defaultPage={1} onChange={onChange} />
+        </ThemeContextProvider>
+    );
+
+    // At the first page, Previous is rendered but marked aria-disabled and
+    // clicking it should not change pages. Next stays interactive.
+    const prev = screen.getByRole('button', {name: 'Página anterior'});
+    const next = screen.getByRole('button', {name: 'Página siguiente'});
+    expect(prev).toHaveAttribute('aria-disabled', 'true');
+    expect(next).not.toHaveAttribute('aria-disabled');
+
+    await userEvent.click(prev);
+    expect(onChange).not.toHaveBeenCalled();
+});
+
 test('honors controlled currentPage', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
