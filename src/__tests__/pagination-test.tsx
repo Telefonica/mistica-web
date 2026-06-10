@@ -95,13 +95,13 @@ test('honors controlled currentPage', () => {
 });
 
 test('marks non-adjacent items with the compact-hide class', () => {
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme()}>
             <Pagination totalPages={50} currentPage={24} />
         </ThemeContextProvider>
     );
 
-    const lis = Array.from(container.querySelectorAll('li'));
+    const lis = screen.getAllByRole('listitem', {hidden: true});
     const visibleInCompact = lis.filter((li) => !li.className.includes('fullOnlyItem'));
     expect(visibleInCompact).toHaveLength(3);
     expect(visibleInCompact[0].textContent).toContain('23');
