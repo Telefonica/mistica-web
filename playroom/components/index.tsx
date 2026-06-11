@@ -447,8 +447,6 @@ const PreviewToolsComponent = ({
 
 export const PreviewTools = (props: PreviewToolsProps): JSX.Element | null => {
     const {skinName} = useTheme();
-    // PreviewTools doesn't support skins not listed in themesMap (community skins like Cyber):
-    // render nothing for them
     if (!(skinName in themesMap)) {
         return null;
     }
