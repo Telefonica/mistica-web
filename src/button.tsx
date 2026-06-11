@@ -404,22 +404,24 @@ const BaseButton = React.forwardRef<
             ? 'linkDangerDark'
             : props.buttonType;
 
+    // The visual (background, border, colors) lives in an inner element, while the focusable
+    // touchable is a transparent wrapper that carries the real minimum interactive area (48px in
+    // touchable devices). See button.css.ts for details.
+    const visualClassName =
+        variant === 'media'
+            ? styles.overMediaButtonVariants[finalType]
+            : variant === 'brand'
+              ? styles.overBrandButtonVariants[finalType]
+              : variant === 'negative'
+                ? styles.overNegativeButtonVariants[finalType]
+                : styles.buttonVariants[finalType];
+
     const commonProps = {
         ref,
-        className: classnames(
-            variant === 'media'
-                ? styles.overMediaButtonVariants[finalType]
-                : variant === 'brand'
-                  ? styles.overBrandButtonVariants[finalType]
-                  : variant === 'negative'
-                    ? styles.overNegativeButtonVariants[finalType]
-                    : styles.buttonVariants[finalType],
-            props.className,
-            {
-                [styles.small]: props.small,
-                [styles.isLoading]: showSpinner,
-            }
-        ),
+        className: classnames(styles.touchableArea, props.className, {
+            [styles.small]: props.small,
+            [styles.isLoading]: showSpinner,
+        }),
         style: {
             ...applyCssVars({
                 [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
@@ -460,18 +462,22 @@ const BaseButton = React.forwardRef<
         'aria-description': props['aria-description'],
         'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
-        children: renderButtonContent({
-            showSpinner,
-            shouldRenderSpinner,
-            setShouldRenderSpinner,
-            children: props.children,
-            loadingText,
-            small: props.small,
-            StartIcon: props.StartIcon,
-            EndIcon: props.EndIcon,
-            withChevron: showChevron,
-            platformOverrides,
-        }),
+        children: (
+            <div className={visualClassName}>
+                {renderButtonContent({
+                    showSpinner,
+                    shouldRenderSpinner,
+                    setShouldRenderSpinner,
+                    children: props.children,
+                    loadingText,
+                    small: props.small,
+                    StartIcon: props.StartIcon,
+                    EndIcon: props.EndIcon,
+                    withChevron: showChevron,
+                    platformOverrides,
+                })}
+            </div>
+        ),
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
     };
