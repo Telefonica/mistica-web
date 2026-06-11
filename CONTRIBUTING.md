@@ -26,7 +26,8 @@ We would love to accept your Pull Requests but please, before starting your deve
   "Chore" as the component name. For allowed types check [lint action](./.github/workflows/ci.yml#L108).
 - PR description: concise summary of the problem and fix, ending with `Ref: <TICKET-ID>` (if there's a jira
   ticket).
-- Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
+- Always add reviewers `aweell`, `atabel`, `yceballost`, `Marcosld`, `AlexandraGallipoliRodrigues` and
+  `brtbrt` to every PR.
 
 ## Bug reports
 
