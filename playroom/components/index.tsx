@@ -244,7 +244,7 @@ type PreviewToolsProps = {
 
 const FLOATING_CONTROLS_ENTER_DURATION = 300;
 
-export const PreviewTools = ({
+const PreviewToolsComponent = ({
     children,
     floating,
     position = 'top-right',
@@ -443,4 +443,14 @@ export const PreviewTools = ({
             </>
         );
     }
+};
+
+export const PreviewTools = (props: PreviewToolsProps): JSX.Element | null => {
+    const {skinName} = useTheme();
+    // PreviewTools doesn't support skins not listed in themesMap (community skins like Cyber):
+    // render nothing for them
+    if (!(skinName in themesMap)) {
+        return null;
+    }
+    return <PreviewToolsComponent {...props} />;
 };
