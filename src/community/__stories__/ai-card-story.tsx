@@ -6,7 +6,7 @@ import IconArtificialIntelligenceFilled from '../../generated/mistica-icons/icon
 import {vars} from '../../skins/skin-contract.css';
 
 export default {
-    title: 'Community/AiCard',
+    title: 'Community/Vivo/AiCard',
     parameters: {fullScreen: true},
 };
 
