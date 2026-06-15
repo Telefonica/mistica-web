@@ -404,9 +404,6 @@ const BaseButton = React.forwardRef<
             ? 'linkDangerDark'
             : props.buttonType;
 
-    // The visual (background, border, colors) lives in an inner element, while the focusable
-    // touchable is a transparent wrapper that carries the real minimum interactive area (48px in
-    // touchable devices). See button.css.ts for details.
     const visualClassName =
         variant === 'media'
             ? styles.overMediaButtonVariants[finalType]
@@ -416,40 +413,44 @@ const BaseButton = React.forwardRef<
                 ? styles.overNegativeButtonVariants[finalType]
                 : styles.buttonVariants[finalType];
 
+    const containerClassName = classnames(styles.buttonContainer, props.className);
+    const containerStyle: React.CSSProperties = {
+        ...applyCssVars({
+            [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
+        }),
+        ...(props.bleedLeft
+            ? {
+                  marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default}))`,
+              }
+            : undefined),
+        ...(props.bleedRight
+            ? {
+                  marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default}))`,
+              }
+            : undefined),
+        ...(props.bleedY
+            ? {
+                  marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+                  marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+              }
+            : undefined),
+        ...props.style,
+    };
+
+    const wrapInContainer = (touchable: React.ReactNode) => (
+        <div className={containerClassName} style={containerStyle}>
+            {touchable}
+        </div>
+    );
+
     const commonProps = {
         ref,
-        className: classnames(styles.touchableArea, props.className, {
+        className: classnames(styles.touchableArea, {
             [styles.small]: props.small,
             [styles.isLoading]: showSpinner,
         }),
         style: {
-            ...applyCssVars({
-                [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
-            }),
-
-            /**
-             * Setting bleed classes with style to override the margin:0 set by the Touchable component.
-             * If we set it using className, it may not work depending on the order in which the styles are applied.
-             */
-            ...(props.bleedLeft
-                ? {
-                      marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default}))`,
-                  }
-                : undefined),
-            ...(props.bleedRight
-                ? {
-                      marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default}))`,
-                  }
-                : undefined),
-            ...(props.bleedY
-                ? {
-                      marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
-                      marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
-                  }
-                : undefined),
-
             cursor: props.fake ? 'pointer' : undefined,
-            ...props.style,
         },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
@@ -489,16 +490,18 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return <BaseTouchable maybe {...commonProps} />;
+        return wrapInContainer(<BaseTouchable maybe {...commonProps} />);
     }
 
     if (props.submit) {
         // using empty onPress handler so it gets rendered as a button
-        return <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
+        return wrapInContainer(
+            <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />
+        );
     }
 
     if (props.onPress) {
-        return (
+        return wrapInContainer(
             <BaseTouchable
                 {...commonProps}
                 onPress={(e) => {
@@ -513,7 +516,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.to || props.to === '') {
-        return (
+        return wrapInContainer(
             <BaseTouchable
                 {...commonProps}
                 to={props.to}
@@ -525,7 +528,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.href || props.href === '') {
-        return (
+        return wrapInContainer(
             <BaseTouchable
                 {...commonProps}
                 href={props.href}

@@ -51,7 +51,12 @@ test('"to" uses a Link Component', () => {
 
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
-          (Link Component)
+          <div
+            class="button_buttonContainer__rrbrpn3"
+            style="--minWidth__rrbrpn0: 104px;"
+          >
+            (Link Component)
+          </div>
         </DocumentFragment>
     `);
 });

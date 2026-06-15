@@ -55,13 +55,6 @@ const disabledStyle = {opacity: 0.5};
 
 export const isLoading = style({});
 
-/**
- * In touchable devices the interactive area has a minimum height of 48px (WCAG "Target Size"),
- * even though the small button keeps its 32px visual height. To achieve this without a fake
- * `::after` overlay (which doesn't change the real element box/accessibility tree), the visible
- * button lives in a separate `visual` element while the focusable touchable is a transparent
- * wrapper that carries the real 48px box.
- */
 const minButtonArea = {
     touchable: '48px',
 };
@@ -73,10 +66,15 @@ export const touchableArea = style({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
     padding: 0,
     border: 'none',
     background: 'transparent',
     overflow: 'visible',
+});
+
+export const buttonContainer = style({
+    display: 'inline-flex',
 });
 
 const visual = style([
@@ -106,18 +104,10 @@ const visual = style([
 
 export const small = style({
     selectors: {
-        /**
-         * In touchable devices the small button gets a real 48px interactive area (WCAG "Target
-         * Size") while keeping its 32px visual height. The 48px box is applied to the focusable
-         * touchable, and the extra height is centered over the visual with negative margins so it
-         * doesn't affect layout. min() guards against font scaling that makes the visual ≥48px.
-         *
-         * The compound `&${touchableArea}` selector raises specificity above the touchable's
-         * marginReset (margin: 0), which would otherwise override these margins.
-         */
         [`&${touchableArea}`]: {
             '@media': {
                 [mq.touchableOnly]: {
+                    minWidth: minButtonArea.touchable,
                     minHeight: minButtonArea.touchable,
                     marginTop: `min(0px, calc((${smallButtonHeight} - ${minButtonArea.touchable}) / 2))`,
                     marginBottom: `min(0px, calc((${smallButtonHeight} - ${minButtonArea.touchable}) / 2))`,
