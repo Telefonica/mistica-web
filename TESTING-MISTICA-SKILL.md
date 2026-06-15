@@ -42,7 +42,7 @@ Everything that is not the variable under test is held constant. A label convent
 
 - An **example project** with the Mistica skill installed, pinned to the version under test — a minimal app
   that depends on a fixed `@telefonica/mistica` version and mounts the skill under
-  `.claude/skills/mistica-react`. This prevents llm loosing context because the task is too big.
+  `.claude/skills/mistica-react`. This prevents the LLM from losing context by keeping the task small.
 - The **Claude Code CLI** (`claude`) available headless.
 
 ---
@@ -133,13 +133,13 @@ This is how "Mistica primitive usage" is quantified objectively rather than impr
 ### 7.3 Cross-checks
 
 Compute arm aggregates as mean and min–max for the chosen n, and verify internal consistency before trusting
-any headline number — see the pitfalls below.
+any headline number (for example if there are outlier values).
 
 ---
 
 ## 8. Comparison dimensions
 
-A complete comparison reports four dimensions, with cost and latency cited alongside:
+A complete comparison reports five dimensions, with cost and latency cited alongside:
 
 1. **Token usage.** Decompose into input-side (input + cache read + cache creation) and output. In practice
    the input side is the overwhelming majority of volume and is dominated by cache reads, so any "fewer
@@ -155,7 +155,7 @@ A complete comparison reports four dimensions, with cost and latency cited along
 
 ---
 
-## 10. Reporting
+## 9. Reporting
 
 Summarise the result as:
 
