@@ -5,7 +5,7 @@ import {Carousel} from '../../carousel';
 import Tag from '../../tag';
 
 export default {
-    title: 'Community/AdvancedDataCards in Carousel',
+    title: 'Community/Vivo/AdvancedDataCards in Carousel',
 };
 
 type Args = {href: boolean};
