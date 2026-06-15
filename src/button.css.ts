@@ -74,7 +74,7 @@ export const touchableArea = style({
 });
 
 export const buttonContainer = style({
-    display: 'inline-flex',
+    display: 'inline-block',
 });
 
 const visual = style([
