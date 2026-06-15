@@ -12,7 +12,7 @@ test.each`
     ${'button and link'} | ${true}
 `('Advanced Data Card actions: $actions - footerImage: $footerImage', async ({actions, footerImage}) => {
     await openStoryPage({
-        id: 'community-advanceddatacard--default',
+        id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
         args: {actions, footerImage},
     });
@@ -30,7 +30,7 @@ test.each`
     ${3}
 `('Advanced Data Card extras: $extra', async ({extra}) => {
     await openStoryPage({
-        id: 'community-advanceddatacard--default',
+        id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
         args: {extra},
     });
@@ -43,7 +43,7 @@ test.each`
 
 test('Advanced Data Card extras: 3 no divider', async () => {
     await openStoryPage({
-        id: 'community-advanceddatacard--default',
+        id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
         args: {extra: 3, noExtraDivider: true},
     });
@@ -56,7 +56,7 @@ test('Advanced Data Card extras: 3 no divider', async () => {
 
 test('Advanced Data Card inside Carousel', async () => {
     await openStoryPage({
-        id: 'community-advanceddatacards-in-carousel--default',
+        id: 'community-vivo-advanceddatacards-in-carousel--default',
         device: 'DESKTOP',
     });
 
@@ -68,7 +68,7 @@ test('Advanced Data Card inside Carousel', async () => {
 
 test('Advanced Data Card without stackingGroup, with top actions and too long title', async () => {
     const page = await openStoryPage({
-        id: 'community-advanceddatacard--default',
+        id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
         args: {
             stackingGroup: false,
