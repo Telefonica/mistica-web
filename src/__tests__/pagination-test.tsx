@@ -79,7 +79,10 @@ test('keeps Previous and Next visible at page boundaries (aria-disabled)', async
     expect(prev).toHaveAttribute('aria-disabled', 'true');
     expect(next).not.toHaveAttribute('aria-disabled');
 
-    await userEvent.click(prev);
+    // Touchable's aria-disabled applies pointer-events: none, so user-event
+    // refuses the click unless we bypass that safety net; bypass to assert
+    // that the boundary state still produces no onChange call.
+    await userEvent.click(prev, {pointerEventsCheck: 0});
     expect(onChange).not.toHaveBeenCalled();
 });
 

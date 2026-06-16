@@ -60,7 +60,27 @@ export const pageListItem = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    width: 32,
+    minWidth: 32,
+    height: 48,
+    '@media': {
+        [mq.desktopOrBigger]: {
+            height: 32,
+        },
+    },
 });
+
+export const pageListItemEllipsis = style([
+    pageListItem,
+    {
+        '@media': {
+            [mq.desktopOrBigger]: {
+                width: 16,
+                minWidth: 16,
+            },
+        },
+    },
+]);
 
 export const fullOnlyItem = style({
     '@media': {
@@ -76,9 +96,8 @@ const interactiveArea = style([
     }),
     {
         position: 'relative',
-        width: 32,
-        minWidth: 32,
-        height: 48,
+        width: '100%',
+        height: '100%',
         padding: 0,
         border: 0,
         font: 'inherit',
@@ -87,12 +106,6 @@ const interactiveArea = style([
         borderRadius: skinVars.borderRadii.button,
         WebkitTapHighlightColor: 'transparent',
         boxSizing: 'border-box',
-
-        '@media': {
-            [mq.desktopOrBigger]: {
-                height: 32,
-            },
-        },
     },
 ]);
 
@@ -185,13 +198,6 @@ export const ellipsis = style([
     {
         color: skinVars.colors.textPrimary,
         cursor: 'default',
-
-        '@media': {
-            [mq.desktopOrBigger]: {
-                width: 16,
-                minWidth: 16,
-            },
-        },
     },
 ]);
 
@@ -214,6 +220,7 @@ export const navigationButton = style([
         borderRadius: skinVars.borderRadii.button,
         cursor: 'pointer',
         WebkitTapHighlightColor: 'transparent',
+        transition: 'background-color 0.15s ease-in-out',
 
         selectors: {
             '&:active:not([aria-disabled="true"])': {
@@ -230,11 +237,12 @@ export const navigationButton = style([
                 width: 'auto',
                 minWidth: 32,
                 height: 32,
+                padding: '0 8px',
             },
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([aria-disabled="true"])': {
-                        color: skinVars.colors.textLink,
+                        backgroundColor: skinVars.colors.buttonLinkBackgroundPressed,
                     },
                 },
             },

@@ -10,7 +10,7 @@ export default {
         },
         totalPages: {control: {type: 'number'}},
         currentPage: {control: {type: 'number'}},
-        dynamicCount: {control: {type: 'number'}},
+        maxPages: {control: {type: 'number'}},
         showEllipsis: {control: {type: 'boolean'}},
         hideNavigationControls: {control: {type: 'boolean'}},
         hidePageList: {control: {type: 'boolean'}},
@@ -23,7 +23,7 @@ export default {
 type Args = {
     totalPages: number;
     currentPage: number;
-    dynamicCount: number;
+    maxPages: number;
     showEllipsis: boolean;
     hideNavigationControls: boolean;
     hidePageList: boolean;
@@ -36,7 +36,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({
     totalPages,
     currentPage,
-    dynamicCount,
+    maxPages,
     showEllipsis,
     hideNavigationControls,
     hidePageList,
@@ -48,7 +48,7 @@ export const Default: StoryComponent<Args> = ({
     <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
-        dynamicCount={dynamicCount}
+        maxPages={maxPages}
         showEllipsis={showEllipsis}
         hideNavigationControls={hideNavigationControls}
         hidePageList={hidePageList}
@@ -63,7 +63,7 @@ Default.storyName = 'Pagination';
 Default.args = {
     totalPages: 9,
     currentPage: 3,
-    dynamicCount: 3,
+    maxPages: 3,
     showEllipsis: true,
     hideNavigationControls: false,
     hidePageList: false,

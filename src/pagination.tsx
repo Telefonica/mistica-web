@@ -4,7 +4,9 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './pagination.css';
 import {Text3} from './text';
-import {useTheme} from './hooks';
+import Touchable from './touchable';
+import {ButtonLink} from './button';
+import {useScreenSize, useTheme} from './hooks';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -22,7 +24,7 @@ export type PaginationProps = {
     hidePageList?: boolean;
     showEllipsis?: boolean;
 
-    dynamicCount?: number;
+    maxPages?: number;
 
     navLeftLabel?: string;
     navRightLabel?: string;
@@ -41,12 +43,12 @@ const clamp = (value: number, min: number, max: number): number => Math.min(Math
 export const getPaginationItems = ({
     totalPages,
     currentPage,
-    dynamicCount = 3,
+    maxPages = 3,
     showEllipsis = true,
 }: {
     totalPages: number;
     currentPage: number;
-    dynamicCount?: number;
+    maxPages?: number;
     showEllipsis?: boolean;
 }): Array<PaginationItem> => {
     if (totalPages <= 1) {
@@ -54,7 +56,7 @@ export const getPaginationItems = ({
     }
 
     const activePage = clamp(currentPage, 1, totalPages);
-    const visibleCount = Math.max(1, Math.floor(dynamicCount));
+    const visibleCount = Math.max(1, Math.floor(maxPages));
 
     if (!showEllipsis || totalPages <= visibleCount + 2) {
         return Array.from({length: totalPages}, (_, index) => {
@@ -140,6 +142,14 @@ type PageListProps = {
     onPageClick: (page: number) => void;
 };
 
+const TILE_STYLE: React.CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+};
+
 const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
     const {texts, t} = useTheme();
     const goToPageLabel = (page: number) =>
@@ -155,10 +165,17 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 const liClassName = classnames(styles.pageListItem, {
                     [styles.fullOnlyItem]: isFullOnly(index),
                 });
+                const ellipsisLiClassName = classnames(styles.pageListItemEllipsis, {
+                    [styles.fullOnlyItem]: isFullOnly(index),
+                });
 
                 if (item.type === 'ellipsis') {
                     return (
-                        <li key={`ellipsis-${index}`} className={liClassName} aria-hidden="true">
+                        <li
+                            key={`ellipsis-${index}`}
+                            className={ellipsisLiClassName}
+                            aria-hidden="true"
+                        >
                             <span className={styles.ellipsis}>
                                 <PaginationLabel weight="medium">...</PaginationLabel>
                             </span>
@@ -169,34 +186,35 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 if (item.current) {
                     return (
                         <li key={item.page} className={liClassName}>
-                            <button
-                                type="button"
+                            <Touchable
                                 className={styles.currentPage}
+                                style={TILE_STYLE}
+                                onPress={() => {}}
                                 aria-current="page"
-                                aria-disabled="true"
+                                aria-disabled
                                 aria-label={currentPageLabel(item.page)}
                             >
                                 <span className={styles.pageContent}>
                                     <PaginationLabel weight="medium">{item.page}</PaginationLabel>
                                 </span>
-                            </button>
+                            </Touchable>
                         </li>
                     );
                 }
 
                 return (
                     <li key={item.page} className={liClassName}>
-                        <button
-                            type="button"
+                        <Touchable
                             className={styles.pageButton}
+                            style={TILE_STYLE}
                             disabled={disabled}
                             aria-label={goToPageLabel(item.page)}
-                            onClick={() => onPageClick(item.page)}
+                            onPress={() => onPageClick(item.page)}
                         >
                             <span className={styles.pageContent}>
                                 <PaginationLabel weight="medium">{item.page}</PaginationLabel>
                             </span>
-                        </button>
+                        </Touchable>
                     </li>
                 );
             })}
@@ -212,7 +230,7 @@ export const Pagination = ({
     hideNavigationControls = false,
     hidePageList = false,
     showEllipsis = true,
-    dynamicCount = 3,
+    maxPages = 3,
     navLeftLabel,
     navRightLabel,
     mode = 'default',
@@ -223,6 +241,8 @@ export const Pagination = ({
     const isControlled = currentPage !== undefined;
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
+    const {isTabletOrSmaller} = useScreenSize();
+    const showNavLabel = mode === 'default' && !isTabletOrSmaller;
 
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
@@ -260,7 +280,7 @@ export const Pagination = ({
     const items = getPaginationItems({
         totalPages,
         currentPage: activePage,
-        dynamicCount,
+        maxPages,
         showEllipsis,
     });
 
@@ -276,44 +296,28 @@ export const Pagination = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
             {!hideNavigationControls && (
-                <button
-                    type="button"
-                    className={classnames(styles.navigationButton, {
-                        [styles.navigationButtonIconOnly]: mode === 'iconOnly',
-                    })}
-                    disabled={disabled}
-                    aria-disabled={isPrevDisabled || undefined}
+                <ButtonLink
+                    small
+                    disabled={disabled || isPrevDisabled}
                     aria-label={resolvedPrevAriaLabel}
-                    onClick={isPrevDisabled ? undefined : () => goToPage(activePage - 1)}
+                    onPress={() => goToPage(activePage - 1)}
+                    StartIcon={IconChevronLeftRegular}
                 >
-                    <IconChevronLeftRegular size={20} color="currentColor" />
-                    {mode === 'default' && (
-                        <span className={styles.navigationLabel}>
-                            <PaginationLabel>{resolvedPrevLabel}</PaginationLabel>
-                        </span>
-                    )}
-                </button>
+                    {showNavLabel ? resolvedPrevLabel : ''}
+                </ButtonLink>
             )}
 
             {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls && (
-                <button
-                    type="button"
-                    className={classnames(styles.navigationButton, {
-                        [styles.navigationButtonIconOnly]: mode === 'iconOnly',
-                    })}
-                    disabled={disabled}
-                    aria-disabled={isNextDisabled || undefined}
+                <ButtonLink
+                    small
+                    disabled={disabled || isNextDisabled}
                     aria-label={resolvedNextAriaLabel}
-                    onClick={isNextDisabled ? undefined : () => goToPage(activePage + 1)}
+                    onPress={() => goToPage(activePage + 1)}
+                    EndIcon={IconChevronRightRegular}
                 >
-                    {mode === 'default' && (
-                        <span className={styles.navigationLabel}>
-                            <PaginationLabel>{resolvedNextLabel}</PaginationLabel>
-                        </span>
-                    )}
-                    <IconChevronRightRegular size={20} color="currentColor" />
-                </button>
+                    {showNavLabel ? resolvedNextLabel : ''}
+                </ButtonLink>
             )}
         </nav>
     );
