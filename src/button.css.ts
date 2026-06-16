@@ -59,8 +59,9 @@ const minButtonArea = {
     touchable: '48px',
 };
 
-// Visual height of the small button: line-height (20) + vertical paddings + borders.
-const smallButtonHeight = `calc(${pxToRem(20)} + 12px)`;
+// Visual height of the small button (= 32px): text line-height (20px) + vertical paddings + borders.
+// Derived from the constants so it stays in sync if the padding/border ever change.
+const smallButtonHeight = `calc(${pxToRem(20)} + ${buttonPaddingY.small} + ${buttonPaddingY.small} + ${borderSize} + ${borderSize})`;
 
 export const touchableArea = style({
     display: 'inline-flex',
@@ -69,12 +70,16 @@ export const touchableArea = style({
     width: '100%',
     padding: 0,
     border: 'none',
+    // Keep the focus outline / hit-area corners rounded like the visible button, even though the
+    // visual styling now lives in the inner element.
+    borderRadius: vars.borderRadii.button,
     background: 'transparent',
     overflow: 'visible',
 });
 
 export const buttonContainer = style({
     display: 'inline-block',
+    verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block (same as BaseTouchable)
 });
 
 const visual = style([
