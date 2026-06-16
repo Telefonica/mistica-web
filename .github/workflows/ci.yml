@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: [self-hosted, cdorunner-life-novum, Linux]
         container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
 
         steps:
