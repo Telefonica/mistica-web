@@ -9,7 +9,7 @@ package the skill references, or an accompanying agent definition.
 There are two ways to put it to work:
 
 1. **Have Claude run the test.** Point Claude Code at this file — for example, "Read
-   `plugin/skills/mistica-react/TESTING.md` and run an A/B test of _<the
+   `TESTING-MISTICA-SKILL.md` and run an A/B test of _<the
    change>_." Claude sets up the workspaces, executes the runs, computes the metrics, and writes the report,
    following the principles below. The exact scripts are improvised per run; only the methodology is fixed.
 2. **Have Claude prepare a run prompt.** Ask Claude to read this file and draft the single task prompt plus
