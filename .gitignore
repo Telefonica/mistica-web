@@ -13,6 +13,17 @@ yarn-debug.log*
 yarn-error.log*
 __diff_output__
 storybook-static/
+
+# design-sync (claude.ai/design) — transient/generated; durable state (config.json,
+# NOTES.md, conventions.md, previews/, overrides/, gen-entry.mjs, etc.) IS committed
+.ds-sync/
+ds-bundle/
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/ds-styles.css
+.design-sync/node_modules
+.design-sync/*.log
 /public
 .vercel
 src/generated/mistica-icons/index.tsx.txt
