@@ -2,7 +2,7 @@
 name: mistica-figma
 description: >
   Teaches the agent how to build Figma screens with Mistica — Telefonica's design system. Captures Mistica's
-  library layout, component keys, text-preset scale, color tokens and icons. Use this skill alongside the
+  library layout, component keys, text-preset scale, colour tokens and icons. Use this skill alongside the
   generic Figma build skills.
 license: MIT
 metadata:
