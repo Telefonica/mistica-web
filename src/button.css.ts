@@ -111,8 +111,10 @@ export const small = style({
     selectors: {
         [`&${touchableArea}`]: {
             '@media': {
+                // Only the vertical hit area is enforced (48px tall). The width keeps following the
+                // content/minWidth as before: forcing a 48px minWidth would center-shift narrow
+                // elements like a small ButtonLink (minWidth 24px) and break ButtonGroup alignment.
                 [mq.touchableOnly]: {
-                    minWidth: minButtonArea.touchable,
                     minHeight: minButtonArea.touchable,
                     marginTop: `min(0px, calc((${smallButtonHeight} - ${minButtonArea.touchable}) / 2))`,
                     marginBottom: `min(0px, calc((${smallButtonHeight} - ${minButtonArea.touchable}) / 2))`,
