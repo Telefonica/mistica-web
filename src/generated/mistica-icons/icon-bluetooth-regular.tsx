@@ -8,27 +8,42 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconBluetoothRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.675 3.324a.75.75 0 0 1 .793.09l5 4a.75.75 0 0 1 0 1.172L13.201 12l4.267 3.414a.75.75 0 0 1 0 1.172l-5 4A.751.751 0 0 1 11.25 20v-6.44l-3.782 3.026a.75.75 0 0 1-.937-1.172L10.799 12 6.53 8.586a.751.751 0 0 1 .937-1.172l3.782 3.024V4a.75.75 0 0 1 .425-.676M12.75 18.44 15.799 16l-3.05-2.44zm0-8L15.799 8l-3.05-2.44z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.675 3.324a.75.75 0 0 1 .793.09l5 4a.75.75 0 0 1 0 1.172L13.201 12l4.267 3.414a.75.75 0 0 1 0 1.172l-5 4A.751.751 0 0 1 11.25 20v-6.44l-3.782 3.026a.75.75 0 0 1-.937-1.172L10.799 12 6.53 8.586a.751.751 0 0 1 .937-1.172l3.782 3.024V4a.75.75 0 0 1 .425-.676M12.75 18.44 15.799 16l-3.05-2.44zm0-8L15.799 8l-3.05-2.44z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconBluetoothRegular;

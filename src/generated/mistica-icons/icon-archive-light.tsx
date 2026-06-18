@@ -8,28 +8,43 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconArchiveLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path fill={fillColor} d="M14 11.25a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5z" />
-            <path
-                fill={fillColor}
-                d="M19 3.25a2.75 2.75 0 0 1 .75 5.393V18A2.75 2.75 0 0 1 17 20.75H7A2.75 2.75 0 0 1 4.25 18V8.643a2.75 2.75 0 0 1-1.194-.699A2.75 2.75 0 0 1 5 3.25zM5.75 18l.006.124A1.25 1.25 0 0 0 7 19.25h10A1.25 1.25 0 0 0 18.25 18V8.75H5.75zM5 4.75A1.25 1.25 0 0 0 3.75 6l.006.124A1.25 1.25 0 0 0 5 7.25h14l.124-.006a1.25 1.25 0 0 0 0-2.488L19 4.75z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M14 11.25a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5z" />
+                <path
+                    fill={fillColor}
+                    d="M19 3.25a2.75 2.75 0 0 1 .75 5.393V18A2.75 2.75 0 0 1 17 20.75H7A2.75 2.75 0 0 1 4.25 18V8.643a2.75 2.75 0 0 1-1.194-.699A2.75 2.75 0 0 1 5 3.25zM5.75 18l.006.124A1.25 1.25 0 0 0 7 19.25h10A1.25 1.25 0 0 0 18.25 18V8.75H5.75zM5 4.75A1.25 1.25 0 0 0 3.75 6l.006.124A1.25 1.25 0 0 0 5 7.25h14l.124-.006a1.25 1.25 0 0 0 0-2.488L19 4.75z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconArchiveLight;

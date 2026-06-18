@@ -9,38 +9,55 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconArtificialIntelligenceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M5.72 14.898c.276 0 .507.19.568.446a3.27 3.27 0 0 0 2.469 2.52c.284.067.491.284.491.572 0 .29-.207.506-.491.573a3.27 3.27 0 0 0-2.47 2.52.583.583 0 0 1-1.134 0 3.27 3.27 0 0 0-2.47-2.52c-.284-.067-.49-.284-.49-.573s.207-.505.491-.572a3.27 3.27 0 0 0 2.47-2.52.58.58 0 0 1 .567-.446m7.853-12.873A1.36 1.36 0 0 1 14.9 3.066c.596 2.925 2.857 5.198 5.762 5.88.664.156 1.146.661 1.146 1.335 0 .675-.482 1.18-1.146 1.335-2.905.683-5.166 2.956-5.763 5.88a1.36 1.36 0 0 1-1.324 1.042 1.36 1.36 0 0 1-1.321-1.041c-.597-2.925-2.859-5.198-5.764-5.88-.664-.157-1.145-.661-1.145-1.336 0-.674.482-1.179 1.146-1.335 2.905-.682 5.166-2.955 5.763-5.88.14-.596.679-1.04 1.321-1.041"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M7.911 7.944a1 1 0 0 1 1.813 0l1.378 2.956 2.955 1.378a1 1 0 0 1 0 1.813l-2.955 1.379-1.378 2.955a1 1 0 0 1-1.813 0L6.532 15.47l-2.955-1.38a1 1 0 0 1 0-1.812L6.532 10.9zm9.443-3.634a.5.5 0 0 1 .925 0l.624 1.516a.5.5 0 0 0 .273.273l1.516.624a.5.5 0 0 1 0 .925l-1.516.623a.5.5 0 0 0-.273.272l-.624 1.517a.5.5 0 0 1-.925 0l-.623-1.517a.5.5 0 0 0-.272-.272l-1.517-.623a.5.5 0 0 1 0-.925l1.517-.624a.5.5 0 0 0 .272-.273z"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M5.72 14.898c.276 0 .507.19.568.446a3.27 3.27 0 0 0 2.469 2.52c.284.067.491.284.491.572 0 .29-.207.506-.491.573a3.27 3.27 0 0 0-2.47 2.52.583.583 0 0 1-1.134 0 3.27 3.27 0 0 0-2.47-2.52c-.284-.067-.49-.284-.49-.573s.207-.505.491-.572a3.27 3.27 0 0 0 2.47-2.52.58.58 0 0 1 .567-.446m7.853-12.873A1.36 1.36 0 0 1 14.9 3.066c.596 2.925 2.857 5.198 5.762 5.88.664.156 1.146.661 1.146 1.335 0 .675-.482 1.18-1.146 1.335-2.905.683-5.166 2.956-5.763 5.88a1.36 1.36 0 0 1-1.324 1.042 1.36 1.36 0 0 1-1.321-1.041c-.597-2.925-2.859-5.198-5.764-5.88-.664-.157-1.145-.661-1.145-1.336 0-.674.482-1.179 1.146-1.335 2.905-.682 5.166-2.955 5.763-5.88.14-.596.679-1.04 1.321-1.041"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.911 7.944a1 1 0 0 1 1.813 0l1.378 2.956 2.955 1.378a1 1 0 0 1 0 1.813l-2.955 1.379-1.378 2.955a1 1 0 0 1-1.813 0L6.532 15.47l-2.955-1.38a1 1 0 0 1 0-1.812L6.532 10.9zm9.443-3.634a.5.5 0 0 1 .925 0l.624 1.516a.5.5 0 0 0 .273.273l1.516.624a.5.5 0 0 1 0 .925l-1.516.623a.5.5 0 0 0-.273.272l-.624 1.517a.5.5 0 0 1-.925 0l-.623-1.517a.5.5 0 0 0-.272-.272l-1.517-.623a.5.5 0 0 1 0-.925l1.517-.624a.5.5 0 0 0 .272-.273z"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconArtificialIntelligenceFilled;

@@ -8,27 +8,42 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconSkipForwardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M18 5a1 1 0 0 1 1 1v12a1 1 0 1 1-2 0v-5.133L6.504 18.864a1 1 0 0 1-1.415-.449.5.5 0 0 1-.089-.284V5.87c0-.109.034-.206.089-.285a1 1 0 0 1 1.415-.448L17 11.134V6a1 1 0 0 1 1-1"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 5a1 1 0 0 1 1 1v12a1 1 0 1 1-2 0v-5.133L6.504 18.864a1 1 0 0 1-1.415-.449.5.5 0 0 1-.089-.284V5.87c0-.109.034-.206.089-.285a1 1 0 0 1 1.415-.448L17 11.134V6a1 1 0 0 1 1-1"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconSkipForwardFilled;
