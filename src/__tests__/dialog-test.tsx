@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {render, waitFor, screen, act} from '@testing-library/react';
-import {ThemeContextProvider, useDialog} from '..';
+import {ThemeContextProvider, useDialog, Switch} from '..';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 import userEvent from '@testing-library/user-event';
@@ -290,6 +290,45 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
             acceptText: 'Yay!',
             cancelText: 'Nope!',
         });
+    });
+});
+
+const SwitchDialogTrigger = () => {
+    const {dialog} = useDialog();
+    return (
+        <Switch
+            name="notifications"
+            aria-label="notifications"
+            onChange={() => {
+                dialog({message: 'Message'});
+            }}
+        />
+    );
+};
+
+test('returns focus to the trigger switch when the dialog is closed via keyboard', async () => {
+    jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SwitchDialogTrigger />
+        </ThemeContextProvider>
+    );
+
+    const switchEl = await screen.findByRole('switch', {name: 'notifications'});
+    switchEl.focus();
+    expect(switchEl).toHaveFocus();
+
+    await userEvent.keyboard(' ');
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+        expect(switchEl).toHaveFocus();
     });
 });
 
