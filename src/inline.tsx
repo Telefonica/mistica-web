@@ -131,7 +131,13 @@ const Inline = ({
                     : styles.marginInline,
                 shouldExpand && styles.expand
             )}
-            style={{...applyCssVars(calcInlineVars(space, verticalSpace)), alignItems}}
+            style={{
+                ...applyCssVars({
+                    ...calcInlineVars(space, verticalSpace),
+                    ...(alignItems !== 'stretch' ? {[styles.vars.childAlignItems]: alignItems} : {}),
+                }),
+                alignItems,
+            }}
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}

@@ -11,6 +11,8 @@ const verticalSpaceMobile = createVar();
 const verticalSpaceTablet = createVar();
 const verticalSpaceDesktop = createVar();
 
+const childAlignItems = createVar();
+
 export const vars = {
     space,
     spaceMobile,
@@ -20,6 +22,7 @@ export const vars = {
     verticalSpaceMobile,
     verticalSpaceTablet,
     verticalSpaceDesktop,
+    childAlignItems,
 };
 
 export const marginInline = style({
@@ -122,6 +125,10 @@ globalStyle(`${inline} > div`, {
             padding: 0, // restore
             // negative gap is not supported in flexbox, so we use negative margins instead
             margin: `0 0 0 calc(min(${space}, 0px))`,
+            // Propagate alignItems to wrapper divs so icon SVGs (inline elements) are
+            // correctly centered within each wrapper, not just the wrappers themselves.
+            display: 'flex',
+            alignItems: fallbackVar(childAlignItems, 'normal'),
         },
     },
 });
