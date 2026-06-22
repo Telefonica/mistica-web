@@ -403,23 +403,36 @@ const BaseButton = React.forwardRef<
         props.buttonType === 'linkDanger' && isDarkMode && variant === 'brand'
             ? 'linkDangerDark'
             : props.buttonType;
+    const buttonVariantClassName =
+        variant === 'media'
+            ? styles.overMediaButtonVariants[finalType]
+            : variant === 'brand'
+              ? styles.overBrandButtonVariants[finalType]
+              : variant === 'negative'
+                ? styles.overNegativeButtonVariants[finalType]
+                : styles.buttonVariants[finalType];
+    const stateClassNames = {
+        [styles.small]: props.small,
+        [styles.isLoading]: showSpinner,
+    };
+    const content = renderButtonContent({
+        showSpinner,
+        shouldRenderSpinner,
+        setShouldRenderSpinner,
+        children: props.children,
+        loadingText,
+        small: props.small,
+        StartIcon: props.StartIcon,
+        EndIcon: props.EndIcon,
+        withChevron: showChevron,
+        platformOverrides,
+    });
 
     const commonProps = {
         ref,
-        className: classnames(
-            variant === 'media'
-                ? styles.overMediaButtonVariants[finalType]
-                : variant === 'brand'
-                  ? styles.overBrandButtonVariants[finalType]
-                  : variant === 'negative'
-                    ? styles.overNegativeButtonVariants[finalType]
-                    : styles.buttonVariants[finalType],
-            props.className,
-            {
-                [styles.small]: props.small,
-                [styles.isLoading]: showSpinner,
-            }
-        ),
+        className: props.small
+            ? classnames(styles.smallTouchableArea, props.className, stateClassNames)
+            : classnames(buttonVariantClassName, props.className, stateClassNames),
         style: {
             ...applyCssVars({
                 [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
@@ -460,18 +473,11 @@ const BaseButton = React.forwardRef<
         'aria-description': props['aria-description'],
         'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
-        children: renderButtonContent({
-            showSpinner,
-            shouldRenderSpinner,
-            setShouldRenderSpinner,
-            children: props.children,
-            loadingText,
-            small: props.small,
-            StartIcon: props.StartIcon,
-            EndIcon: props.EndIcon,
-            withChevron: showChevron,
-            platformOverrides,
-        }),
+        children: props.small ? (
+            <div className={classnames(buttonVariantClassName, styles.smallTouchableVisual)}>{content}</div>
+        ) : (
+            content
+        ),
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
     };
