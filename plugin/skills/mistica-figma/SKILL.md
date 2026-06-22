@@ -48,10 +48,15 @@ name.
 
 All colour, surface, and radius values come from Skins variables — bind them (`setBoundVariableForPaint` for
 colour, `setBoundVariable` for radii), never hardcode hex/px. Discover them live per run. Common ones:
-`textPrimary`, `textSecondary` (text); `borderLow`, `divider` (lines); `controlActivated` (accent /
-selection); and `backgroundContainer` for the fill of cards and any boxed container — use it instead of a
-white fill. Radii are exported by Skins too; bind the relevant radius token rather than a literal corner
-value.
+`textPrimary`, `textSecondary` (text); `border`, `divider` (lines); `controlActivated` (accent / selection);
+and `backgroundContainer` for the fill of cards and any boxed container — use it instead of a white fill.
+Radii are exported by Skins too; bind the relevant radius token rather than a literal corner value.
+
+Screen-level frames (the outermost frame representing a full screen or page) must always have an explicit
+background fill bound to a Skins background variable — never transparent or unfilled. When a screen contains
+sections with different background colours, keep the base fill on the screen frame (typically `background`)
+and layer each distinct section as a child frame with its own background fill on top. Do not rely solely on
+section fills to cover the screen.
 
 ### Theme context
 
@@ -66,7 +71,8 @@ keys live (scoped to the Mistica library keys from `get_libraries`); don't hardc
 the Mistica Icons library (find by name search) — don't redraw or use `createNodeFromSvg` for brand icons.
 
 Avoid deprecated components — Mistica flags them in the component description (e.g. `Carousel arrows`). Also
-avoid `Community/…` blocks, which are not core to the design system, unless the user explicitly requests one.
+avoid `Community/…` components, which are not core to the design system, unless the user explicitly requests
+one.
 
 ## Slots — extend components instead of hand-composing
 
@@ -80,9 +86,8 @@ rebuilding the container by hand. Treat this as the default path for anything be
 2. **Put the rest in the slot.** When content doesn't fit a built-in layer, enable the slot and swap your
    custom node into the `🔄 Replace Slot` INSTANCE_SWAP (build the custom content as a frame/component first,
    then point the swap at it).
-3. **Build custom cards on a base, not from scratch.** Prefer a card component (e.g. `Data Card`, or a
-   boxed/primitive card) as the container and fill it via its layers + slot, rather than hand-composing a card
-   frame with raw fills and strokes.
+3. **Build custom cards on a base, not from scratch.** Prefer a card component as the container and fill it
+   via its layers + slot, rather than hand-composing a card frame with raw fills and strokes.
 
 Before deciding to hand-compose anything, probe the candidate component's `componentProperties` for a `Slot` /
 `Replace Slot` pair — slots exist across cards, tables, nav bars, and more. Only hand-compose when no
@@ -103,9 +108,9 @@ Load alongside the Figma build skills before any `use_figma` call.
 
 ## Multi-brand skins
 
-Brand (Movistar / O2 / Vivo / Blau / Telefonica) is driven by Figma variable modes in Skins. Inherit whatever
-skin/mode the file is set to — do not switch brands or set an explicit mode. Because text and colour are bound
-to variables, the same build renders correctly under any brand the file selects.
+Brand is driven by Figma variable modes in Skins. Inherit whatever skin/mode the file is set to — do not
+switch brands or set an explicit mode. Because text and colour are bound to variables, the same build renders
+correctly under any brand the file selects.
 
 ## Conventions
 
