@@ -51,13 +51,24 @@ export const buttonPaddingY = {
     small: `calc(6px - ${borderSize})`,
 };
 
+const smallButtonHeight = `calc(${pxToRem(20)} + ${buttonPaddingY.small} + ${buttonPaddingY.small} + ${borderSize} + ${borderSize})`;
+
 const disabledStyle = {opacity: 0.5};
 
 export const isLoading = style({});
 
+export const smallTouchableContainer = style({
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: smallButtonHeight,
+    overflow: 'visible',
+    verticalAlign: 'bottom',
+});
+
 export const smallTouchableArea = style([
     sprinkles({
-        display: 'inline-flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         border: 'none',
@@ -67,9 +78,10 @@ export const smallTouchableArea = style([
     {
         borderRadius: vars.borderRadii.button,
         overflow: 'visible',
+        width: '100%',
         '@media': {
             [mq.touchableOnly]: {
-                transform: 'scaleY(1.5)',
+                minHeight: 48,
             },
         },
     },
@@ -77,11 +89,6 @@ export const smallTouchableArea = style([
 
 export const smallTouchableVisual = style({
     width: '100%',
-    '@media': {
-        [mq.touchableOnly]: {
-            transform: 'scaleY(0.6666666667)',
-        },
-    },
 });
 
 const button = style([

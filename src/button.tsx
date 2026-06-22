@@ -427,41 +427,42 @@ const BaseButton = React.forwardRef<
         withChevron: showChevron,
         platformOverrides,
     });
+    const buttonStyle: React.CSSProperties = {
+        ...applyCssVars({
+            [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
+        }),
+
+        /**
+         * Setting bleed classes with style to override the margin:0 set by the Touchable component.
+         * If we set it using className, it may not work depending on the order in which the styles are applied.
+         */
+        ...(props.bleedLeft
+            ? {
+                  marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default}))`,
+              }
+            : undefined),
+        ...(props.bleedRight
+            ? {
+                  marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default}))`,
+              }
+            : undefined),
+        ...(props.bleedY
+            ? {
+                  marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+                  marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+              }
+            : undefined),
+
+        cursor: props.fake ? 'pointer' : undefined,
+        ...props.style,
+    };
 
     const commonProps = {
         ref,
         className: props.small
-            ? classnames(styles.smallTouchableArea, props.className, stateClassNames)
+            ? classnames(styles.smallTouchableArea, stateClassNames)
             : classnames(buttonVariantClassName, props.className, stateClassNames),
-        style: {
-            ...applyCssVars({
-                [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
-            }),
-
-            /**
-             * Setting bleed classes with style to override the margin:0 set by the Touchable component.
-             * If we set it using className, it may not work depending on the order in which the styles are applied.
-             */
-            ...(props.bleedLeft
-                ? {
-                      marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default}))`,
-                  }
-                : undefined),
-            ...(props.bleedRight
-                ? {
-                      marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default}))`,
-                  }
-                : undefined),
-            ...(props.bleedY
-                ? {
-                      marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
-                      marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
-                  }
-                : undefined),
-
-            cursor: props.fake ? 'pointer' : undefined,
-            ...props.style,
-        },
+        style: props.small ? {cursor: props.fake ? 'pointer' : undefined} : buttonStyle,
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
@@ -481,6 +482,14 @@ const BaseButton = React.forwardRef<
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
     };
+    const maybeWrapSmallTouchable = (touchable: React.ReactNode) =>
+        props.small ? (
+            <div className={classnames(styles.smallTouchableContainer, props.className)} style={buttonStyle}>
+                {touchable}
+            </div>
+        ) : (
+            touchable
+        );
 
     if (process.env.NODE_ENV !== 'production') {
         if (props.to === '' || props.href === '') {
@@ -489,16 +498,18 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return <BaseTouchable maybe {...commonProps} />;
+        return maybeWrapSmallTouchable(<BaseTouchable maybe {...commonProps} />);
     }
 
     if (props.submit) {
         // using empty onPress handler so it gets rendered as a button
-        return <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
+        return maybeWrapSmallTouchable(
+            <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />
+        );
     }
 
     if (props.onPress) {
-        return (
+        return maybeWrapSmallTouchable(
             <BaseTouchable
                 {...commonProps}
                 onPress={(e) => {
@@ -513,7 +524,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.to || props.to === '') {
-        return (
+        return maybeWrapSmallTouchable(
             <BaseTouchable
                 {...commonProps}
                 to={props.to}
@@ -525,7 +536,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.href || props.href === '') {
-        return (
+        return maybeWrapSmallTouchable(
             <BaseTouchable
                 {...commonProps}
                 href={props.href}
