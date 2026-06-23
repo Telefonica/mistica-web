@@ -51,53 +51,63 @@ export const buttonPaddingY = {
     small: `calc(6px - ${borderSize})`,
 };
 
-const minButtonArea = {
-    touchable: '48px',
-};
-
-// Visual height of the small button (= 32px): text line-height (20px) + vertical paddings + borders.
-// Derived from the constants so it stays in sync if the padding/border ever change.
 const smallButtonHeight = `calc(${pxToRem(20)} + ${buttonPaddingY.small} + ${buttonPaddingY.small} + ${borderSize} + ${borderSize})`;
 
 const disabledStyle = {opacity: 0.5};
 
 export const isLoading = style({});
 
-export const touchableArea = style({
+export const smallTouchableContainer = style({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    padding: 0,
-    border: 'none',
-    // Keep the focus outline / hit-area corners rounded like the visible button, even though the
-    // visual styling now lives in the inner element.
-    borderRadius: vars.borderRadii.button,
-    background: 'transparent',
+    height: smallButtonHeight,
     overflow: 'visible',
+    verticalAlign: 'bottom',
 });
 
-export const buttonContainer = style({
-    display: 'inline-block',
-    verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block (same as BaseTouchable)
+export const smallTouchableArea = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: 'none',
+        background: 'transparent',
+        padding: 0,
+    }),
+    {
+        borderRadius: vars.borderRadii.button,
+        overflow: 'visible',
+        width: '100%',
+        '@media': {
+            [mq.touchableOnly]: {
+                minHeight: 48,
+            },
+        },
+    },
+]);
+
+export const smallTouchableVisual = style({
+    width: '100%',
 });
 
 const button = style([
     sprinkles({
         display: 'inline-block',
         position: 'relative',
+        width: 'auto',
         borderRadius: vars.borderRadii.button,
         overflow: 'hidden',
         padding: 0,
     }),
     {
-        width: '100%',
         minWidth: buttonVars.minWidth,
         border: `${borderSize} solid transparent`,
         transition: `background-color ${colorTransitionTiming}, color ${colorTransitionTiming}, border-color ${colorTransitionTiming}`,
 
         selectors: {
-            [`${touchableArea}[disabled]:not(${isLoading}) &`]: disabledStyle,
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            [`${smallTouchableArea}[disabled]:not(${isLoading}) &`]: disabledStyle,
         },
         '@media': {
             [mq.touchableOnly]: {
@@ -107,22 +117,7 @@ const button = style([
     },
 ]);
 
-export const small = style({
-    selectors: {
-        [`&${touchableArea}`]: {
-            '@media': {
-                // Only the vertical hit area is enforced (48px tall). The width keeps following the
-                // content/minWidth as before: forcing a 48px minWidth would center-shift narrow
-                // elements like a small ButtonLink (minWidth 24px) and break ButtonGroup alignment.
-                [mq.touchableOnly]: {
-                    minHeight: minButtonArea.touchable,
-                    marginTop: `min(0px, calc((${smallButtonHeight} - ${minButtonArea.touchable}) / 2))`,
-                    marginBottom: `min(0px, calc((${smallButtonHeight} - ${minButtonArea.touchable}) / 2))`,
-                },
-            },
-        },
-    },
-});
+export const small = style({});
 export const smallLink = style({});
 
 export const loadingFiller = style([
@@ -194,14 +189,17 @@ globalStyle(`${textContent} svg`, {
 
 const interactiveStyles = ({active, hover = active}: {active: StyleRule; hover?: StyleRule}): StyleRule => ({
     selectors: {
-        [`${touchableArea}:not([disabled]):active &`]: active,
+        '&:not([disabled]):active': active,
+        [`${smallTouchableArea}:not([disabled]):active &`]: active,
     },
 
     '@media': {
         [mq.supportsHover]: {
             selectors: {
-                [`${touchableArea}:hover:not([disabled]) &`]: hover,
-                [`${touchableArea}:not([disabled]):active &`]: active,
+                '&:hover:not([disabled])': hover,
+                [`${smallTouchableArea}:hover:not([disabled]) &`]: hover,
+                '&:not([disabled]):active': active,
+                [`${smallTouchableArea}:not([disabled]):active &`]: active,
             },
         },
     },

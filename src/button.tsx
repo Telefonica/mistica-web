@@ -453,23 +453,16 @@ const BaseButton = React.forwardRef<
               }
             : undefined),
 
+        cursor: props.fake ? 'pointer' : undefined,
         ...props.style,
     };
 
-    const containerClassName = classnames(styles.buttonContainer, props.className);
-
-    const wrapInContainer = (touchable: React.ReactNode) => (
-        <div className={containerClassName} style={buttonStyle}>
-            {touchable}
-        </div>
-    );
-
     const commonProps = {
         ref,
-        className: classnames(styles.touchableArea, stateClassNames),
-        style: {
-            cursor: props.fake ? 'pointer' : undefined,
-        },
+        className: props.small
+            ? classnames(styles.smallTouchableArea, stateClassNames)
+            : classnames(buttonVariantClassName, props.className, stateClassNames),
+        style: props.small ? {cursor: props.fake ? 'pointer' : undefined} : buttonStyle,
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
@@ -481,10 +474,23 @@ const BaseButton = React.forwardRef<
         'aria-description': props['aria-description'],
         'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
-        children: <div className={buttonVariantClassName}>{content}</div>,
+        children: props.small ? (
+            <div className={classnames(buttonVariantClassName, styles.smallTouchableVisual)}>{content}</div>
+        ) : (
+            content
+        ),
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
     };
+    const maybeWrapSmallTouchable = (touchable: React.ReactNode) =>
+        props.small ? (
+            <div className={classnames(styles.smallTouchableContainer, props.className)} style={buttonStyle}>
+                {touchable}
+            </div>
+        ) : (
+            touchable
+        );
+
     if (process.env.NODE_ENV !== 'production') {
         if (props.to === '' || props.href === '') {
             throw Error('to or href props are empty strings');
@@ -492,18 +498,18 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return wrapInContainer(<BaseTouchable maybe {...commonProps} />);
+        return maybeWrapSmallTouchable(<BaseTouchable maybe {...commonProps} />);
     }
 
     if (props.submit) {
         // using empty onPress handler so it gets rendered as a button
-        return wrapInContainer(
+        return maybeWrapSmallTouchable(
             <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />
         );
     }
 
     if (props.onPress) {
-        return wrapInContainer(
+        return maybeWrapSmallTouchable(
             <BaseTouchable
                 {...commonProps}
                 onPress={(e) => {
@@ -518,7 +524,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.to || props.to === '') {
-        return wrapInContainer(
+        return maybeWrapSmallTouchable(
             <BaseTouchable
                 {...commonProps}
                 to={props.to}
@@ -530,7 +536,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.href || props.href === '') {
-        return wrapInContainer(
+        return maybeWrapSmallTouchable(
             <BaseTouchable
                 {...commonProps}
                 href={props.href}
