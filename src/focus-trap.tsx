@@ -6,10 +6,17 @@ type Props = {
     className?: string;
     disabled?: boolean;
     group?: string;
+    returnFocusOnDeactivate?: boolean;
 };
 
-const FocusTrap = ({children, disabled, className, group}: Props): JSX.Element => (
-    <ReactFocusLock noFocusGuards disabled={disabled} className={className} group={group}>
+const FocusTrap = ({children, disabled, className, group, returnFocusOnDeactivate}: Props): JSX.Element => (
+    <ReactFocusLock
+        noFocusGuards
+        disabled={disabled}
+        className={className}
+        group={group}
+        returnFocus={returnFocusOnDeactivate}
+    >
         {children}
     </ReactFocusLock>
 );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {render, waitFor, screen, act} from '@testing-library/react';
-import {ThemeContextProvider, useDialog} from '..';
+import {ThemeContextProvider, useDialog, RowList, Row} from '..';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 import userEvent from '@testing-library/user-event';
@@ -304,4 +304,139 @@ test('dialog close button is accessible', async () => {
     await userEvent.click(dialogButton);
 
     await screen.findByRole('button', {name: 'custom close label'});
+});
+
+describe('focus return after dialog close', () => {
+    test('returns focus to the trigger button after alert closes', async () => {
+        const TriggerComponent = () => {
+            const {alert} = useDialog();
+            return <button onClick={() => alert({message: 'Alert!', acceptText: 'OK'})}>Trigger</button>;
+        };
+
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <TriggerComponent />
+            </ThemeContextProvider>
+        );
+
+        const triggerButton = screen.getByRole('button', {name: 'Trigger'});
+        triggerButton.focus();
+        expect(triggerButton).toHaveFocus();
+
+        await userEvent.click(triggerButton);
+        await screen.findByRole('dialog');
+
+        const acceptButton = screen.getByRole('button', {name: 'OK'});
+        await userEvent.click(acceptButton);
+
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+            expect(triggerButton).toHaveFocus();
+        });
+    });
+
+    test('returns focus to the switch inside a row after confirm closes', async () => {
+        // Disable animations so dialogs close immediately
+        jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
+
+        const SwitchInRowComponent = () => {
+            const {confirm} = useDialog();
+            const [checked, setChecked] = React.useState(false);
+
+            const handleChange = (value: boolean) => {
+                setChecked(value);
+                if (value) {
+                    confirm({
+                        message: 'Are you sure?',
+                        acceptText: 'Yes',
+                        cancelText: 'No',
+                        onAccept: () => {},
+                        onCancel: () => setChecked(false),
+                    });
+                }
+            };
+
+            return (
+                <RowList>
+                    <Row
+                        title="Enable feature"
+                        switch={{name: 'feature', value: checked, onChange: handleChange}}
+                    />
+                </RowList>
+            );
+        };
+
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SwitchInRowComponent />
+            </ThemeContextProvider>
+        );
+
+        const switchEl = screen.getByRole('switch', {name: 'Enable feature'});
+        switchEl.focus();
+        expect(switchEl).toHaveFocus();
+
+        await userEvent.click(switchEl);
+        await screen.findByRole('dialog');
+
+        const cancelButton = screen.getByRole('button', {name: 'No'});
+        await userEvent.click(cancelButton);
+
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+            expect(switchEl).toHaveFocus();
+        });
+    });
+
+    test('returns focus to the switch after alert closes (keyboard activation)', async () => {
+        const SwitchWithAlertComponent = () => {
+            const {alert} = useDialog();
+            const [checked, setChecked] = React.useState(false);
+
+            const handleChange = (value: boolean) => {
+                setChecked(value);
+                if (value) {
+                    alert({message: 'Feature enabled!', acceptText: 'OK'});
+                }
+            };
+
+            return (
+                <RowList>
+                    <Row title="Toggle" switch={{name: 'toggle', value: checked, onChange: handleChange}} />
+                </RowList>
+            );
+        };
+
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SwitchWithAlertComponent />
+            </ThemeContextProvider>
+        );
+
+        const switchEl = screen.getByRole('switch', {name: 'Toggle'});
+        switchEl.focus();
+        expect(switchEl).toHaveFocus();
+
+        // Activate switch via Space key
+        await userEvent.keyboard(' ');
+
+        await screen.findByRole('dialog');
+
+        const acceptButton = screen.getByRole('button', {name: 'OK'});
+        await userEvent.click(acceptButton);
+
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+            expect(switchEl).toHaveFocus();
+        });
+    });
 });

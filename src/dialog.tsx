@@ -355,7 +355,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
 
     return (
         <Portal className={styles.wrapper}>
-            <FocusTrap>
+            <FocusTrap returnFocusOnDeactivate={false} disabled={isClosing}>
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <div
                     onClick={handleOverlayPress}

@@ -149,6 +149,10 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             onClick={(e) => {
                 e.stopPropagation();
                 if (!disabled) {
+                    // Ensure the switch has focus before calling onChange, so that
+                    // document.activeElement is the switch when a dialog is opened
+                    // synchronously from the onChange callback (e.g. alert/confirm/dialog).
+                    e.currentTarget.focus();
                     handleChange();
                 }
             }}
