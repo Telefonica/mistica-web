@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid, IconWarningRegular} from '..';
+import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid, IconWarningRegular, Text2} from '..';
 
 export default {
     title: 'Private/Inline cases',
@@ -66,7 +66,7 @@ export const Default: StoryComponent = () => {
                             <ButtonPrimary fake>{shortText}</ButtonPrimary>
                             <ButtonPrimary fake>{shortText}</ButtonPrimary>
                         </Inline>{' '}
-                        Inline text
+                        <Text2 regular>Inline text</Text2>
                     </>
                 </Stack>
 
