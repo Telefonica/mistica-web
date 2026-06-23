@@ -4,7 +4,7 @@ import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
-import type {ComplexStyleRule} from '@vanilla-extract/css';
+import type {ComplexStyleRule, StyleRule} from '@vanilla-extract/css';
 
 const minWidth = createVar();
 export const buttonVars = {minWidth};
@@ -51,10 +51,6 @@ export const buttonPaddingY = {
     small: `calc(6px - ${borderSize})`,
 };
 
-const disabledStyle = {opacity: 0.5};
-
-export const isLoading = style({});
-
 const minButtonArea = {
     touchable: '48px',
 };
@@ -62,6 +58,10 @@ const minButtonArea = {
 // Visual height of the small button (= 32px): text line-height (20px) + vertical paddings + borders.
 // Derived from the constants so it stays in sync if the padding/border ever change.
 const smallButtonHeight = `calc(${pxToRem(20)} + ${buttonPaddingY.small} + ${buttonPaddingY.small} + ${borderSize} + ${borderSize})`;
+
+const disabledStyle = {opacity: 0.5};
+
+export const isLoading = style({});
 
 export const touchableArea = style({
     display: 'inline-flex',
@@ -82,7 +82,7 @@ export const buttonContainer = style({
     verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block (same as BaseTouchable)
 });
 
-const visual = style([
+const button = style([
     sprinkles({
         display: 'inline-block',
         position: 'relative',
@@ -192,575 +192,267 @@ globalStyle(`${textContent} svg`, {
     display: 'block',
 });
 
+const interactiveStyles = ({active, hover = active}: {active: StyleRule; hover?: StyleRule}): StyleRule => ({
+    selectors: {
+        [`${touchableArea}:not([disabled]):active &`]: active,
+    },
+
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                [`${touchableArea}:hover:not([disabled]) &`]: hover,
+                [`${touchableArea}:not([disabled]):active &`]: active,
+            },
+        },
+    },
+});
+
 const lightPrimary: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonPrimary,
         background: vars.colors.buttonPrimaryBackground,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({
+        active: {backgroundColor: vars.colors.buttonPrimaryBackgroundPressed},
+        hover: {backgroundColor: vars.colors.buttonPrimaryBackgroundHover},
+    }),
 ];
 
 const lightPrimaryOverBrand: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonPrimaryBrand,
         background: vars.colors.buttonPrimaryBackgroundBrand,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundBrandPressed,
-                color: vars.colors.textButtonPrimaryBrandPressed,
-            },
+    interactiveStyles({
+        active: {
+            backgroundColor: vars.colors.buttonPrimaryBackgroundBrandPressed,
+            color: vars.colors.textButtonPrimaryBrandPressed,
         },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        color: vars.colors.textButtonPrimaryBrandPressed,
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundBrandPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundBrandPressed,
-                        color: vars.colors.textButtonPrimaryBrandPressed,
-                    },
-                },
-            },
-        },
-    },
+    }),
 ];
 
 const lightPrimaryOverNegative: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonPrimaryNegative,
         background: vars.colors.buttonPrimaryBackgroundNegative,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
-                color: vars.colors.textButtonPrimaryNegativePressed,
-            },
+    interactiveStyles({
+        active: {
+            backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
+            color: vars.colors.textButtonPrimaryNegativePressed,
         },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        color: vars.colors.textButtonPrimaryNegativePressed,
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundNegativePressed,
-                        color: vars.colors.textButtonPrimaryNegativePressed,
-                    },
-                },
-            },
-        },
-    },
+    }),
 ];
 
 const lightPrimaryMedia: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonPrimaryMedia,
         background: vars.colors.buttonPrimaryBackgroundMedia,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
-                color: vars.colors.textButtonPrimaryMediaPressed,
-            },
+    interactiveStyles({
+        active: {
+            backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
+            color: vars.colors.textButtonPrimaryMediaPressed,
         },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        color: vars.colors.textButtonPrimaryMediaPressed,
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundMediaPressed,
-                        color: vars.colors.textButtonPrimaryMediaPressed,
-                    },
-                },
-            },
-        },
-    },
+    }),
 ];
 
 const lightSecondary: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonSecondary,
         background: vars.colors.buttonSecondaryBackgroundBrand,
     }),
     {
         borderColor: vars.colors.buttonSecondaryBorder,
-
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                color: vars.colors.textButtonSecondaryPressed,
-                borderColor: vars.colors.buttonSecondaryBorderPressed,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        color: vars.colors.textButtonSecondaryPressed,
-                        borderColor: vars.colors.buttonSecondaryBorderPressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundHover,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        color: vars.colors.textButtonSecondaryPressed,
-                        borderColor: vars.colors.buttonSecondaryBorderPressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundPressed,
-                    },
-                },
-            },
-        },
     },
+    interactiveStyles({
+        active: {
+            color: vars.colors.textButtonSecondaryPressed,
+            borderColor: vars.colors.buttonSecondaryBorderPressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundPressed,
+        },
+        hover: {
+            color: vars.colors.textButtonSecondaryPressed,
+            borderColor: vars.colors.buttonSecondaryBorderPressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundHover,
+        },
+    }),
 ];
 
 const lightSecondaryOverBrand: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonSecondaryBrand,
         background: vars.colors.buttonSecondaryBackgroundBrand,
     }),
     {
         borderColor: vars.colors.buttonSecondaryBorderBrand,
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                borderColor: vars.colors.buttonSecondaryBorderBrandPressed,
-                color: vars.colors.textButtonSecondaryBrandPressed,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundBrandPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        borderColor: vars.colors.buttonSecondaryBorderBrandPressed,
-                        color: vars.colors.textButtonSecondaryBrandPressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundBrandHover,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        borderColor: vars.colors.buttonSecondaryBorderBrandPressed,
-                        color: vars.colors.textButtonSecondaryBrandPressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundBrandPressed,
-                    },
-                },
-            },
-        },
     },
+    interactiveStyles({
+        active: {
+            borderColor: vars.colors.buttonSecondaryBorderBrandPressed,
+            color: vars.colors.textButtonSecondaryBrandPressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundBrandPressed,
+        },
+        hover: {
+            borderColor: vars.colors.buttonSecondaryBorderBrandPressed,
+            color: vars.colors.textButtonSecondaryBrandPressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundBrandHover,
+        },
+    }),
 ];
 
 const lightSecondaryOverNegative: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonSecondaryNegative,
         background: 'transparent',
     }),
     {
         borderColor: vars.colors.buttonSecondaryBorderNegative,
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
-                color: vars.colors.textButtonSecondaryNegativePressed,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundNegativePressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
-                        color: vars.colors.textButtonSecondaryNegativePressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundNegativeHover,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
-                        color: vars.colors.textButtonSecondaryNegativePressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundNegativePressed,
-                    },
-                },
-            },
-        },
     },
+    interactiveStyles({
+        active: {
+            borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
+            color: vars.colors.textButtonSecondaryNegativePressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundNegativePressed,
+        },
+        hover: {
+            borderColor: vars.colors.buttonSecondaryBorderNegativePressed,
+            color: vars.colors.textButtonSecondaryNegativePressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundNegativeHover,
+        },
+    }),
 ];
 
 const lightSecondaryMedia: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonSecondaryMedia,
         background: vars.colors.buttonSecondaryBackgroundBrand,
     }),
     {
         borderColor: vars.colors.buttonSecondaryBorderMedia,
-
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
-                color: vars.colors.textButtonSecondaryMediaPressed,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundMediaPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
-                        color: vars.colors.textButtonSecondaryMediaPressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundMediaHover,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
-                        color: vars.colors.textButtonSecondaryMediaPressed,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundMediaPressed,
-                    },
-                },
-            },
-        },
     },
+    interactiveStyles({
+        active: {
+            borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
+            color: vars.colors.textButtonSecondaryMediaPressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundMediaPressed,
+        },
+        hover: {
+            borderColor: vars.colors.buttonSecondaryBorderMediaPressed,
+            color: vars.colors.textButtonSecondaryMediaPressed,
+            backgroundColor: vars.colors.buttonSecondaryBackgroundMediaHover,
+        },
+    }),
 ];
 
 const danger: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textButtonPrimary,
         background: vars.colors.buttonDangerBackground,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonDangerBackgroundPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonDangerBackgroundHover,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonDangerBackgroundPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({
+        active: {backgroundColor: vars.colors.buttonDangerBackgroundPressed},
+        hover: {backgroundColor: vars.colors.buttonDangerBackgroundHover},
+    }),
 ];
 
 export const defaultLink: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLink,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkBackgroundPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkBackgroundPressed}}),
 ];
 
 export const defaultLinkOverBrand: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkBrand,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkBackgroundBrandPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundBrandPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundBrandPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkBackgroundBrandPressed}}),
 ];
 
 export const defaultLinkOverNegative: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkNegative,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkBackgroundNegativePressed}}),
 ];
 
 export const defaultLinkMedia: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkMedia,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkBackgroundMediaPressed}}),
 ];
 
 const dangerLink: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed}}),
 ];
 
 const dangerLinkOverBrand: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: vars.colors.buttonLinkDangerBackgroundBrand,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed}}),
 ];
 
 const dangerLinkOverNegative: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: vars.colors.buttonLinkDangerBackgroundNegative,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed}}),
 ];
 
 const dangerLinkMedia: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkDangerMedia,
         background: vars.colors.buttonLinkDangerBackgroundMedia,
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundMediaPressed}}),
 ];
 
 const dangerLinkOverBrandDark: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundBrandPressed}}),
 ];
 
 const dangerLinkOverNegativeDark: ComplexStyleRule = [
-    visual,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
     }),
-    {
-        selectors: {
-            [`${touchableArea}:not([disabled]):active &`]: {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    [`${touchableArea}:hover:not([disabled]) &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
-                    },
-                    [`${touchableArea}:not([disabled]):active &`]: {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed,
-                    },
-                },
-            },
-        },
-    },
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed}}),
 ];
 
 export const buttonVariants = styleVariants({

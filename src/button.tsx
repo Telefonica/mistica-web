@@ -403,8 +403,7 @@ const BaseButton = React.forwardRef<
         props.buttonType === 'linkDanger' && isDarkMode && variant === 'brand'
             ? 'linkDangerDark'
             : props.buttonType;
-
-    const visualClassName =
+    const buttonVariantClassName =
         variant === 'media'
             ? styles.overMediaButtonVariants[finalType]
             : variant === 'brand'
@@ -412,12 +411,31 @@ const BaseButton = React.forwardRef<
               : variant === 'negative'
                 ? styles.overNegativeButtonVariants[finalType]
                 : styles.buttonVariants[finalType];
-
-    const containerClassName = classnames(styles.buttonContainer, props.className);
-    const containerStyle: React.CSSProperties = {
+    const stateClassNames = {
+        [styles.small]: props.small,
+        [styles.isLoading]: showSpinner,
+    };
+    const content = renderButtonContent({
+        showSpinner,
+        shouldRenderSpinner,
+        setShouldRenderSpinner,
+        children: props.children,
+        loadingText,
+        small: props.small,
+        StartIcon: props.StartIcon,
+        EndIcon: props.EndIcon,
+        withChevron: showChevron,
+        platformOverrides,
+    });
+    const buttonStyle: React.CSSProperties = {
         ...applyCssVars({
             [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
         }),
+
+        /**
+         * Setting bleed classes with style to override the margin:0 set by the Touchable component.
+         * If we set it using className, it may not work depending on the order in which the styles are applied.
+         */
         ...(props.bleedLeft
             ? {
                   marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default}))`,
@@ -434,21 +452,21 @@ const BaseButton = React.forwardRef<
                   marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
               }
             : undefined),
+
         ...props.style,
     };
 
+    const containerClassName = classnames(styles.buttonContainer, props.className);
+
     const wrapInContainer = (touchable: React.ReactNode) => (
-        <div className={containerClassName} style={containerStyle}>
+        <div className={containerClassName} style={buttonStyle}>
             {touchable}
         </div>
     );
 
     const commonProps = {
         ref,
-        className: classnames(styles.touchableArea, {
-            [styles.small]: props.small,
-            [styles.isLoading]: showSpinner,
-        }),
+        className: classnames(styles.touchableArea, stateClassNames),
         style: {
             cursor: props.fake ? 'pointer' : undefined,
         },
@@ -463,26 +481,10 @@ const BaseButton = React.forwardRef<
         'aria-description': props['aria-description'],
         'aria-describedby': props['aria-describedby'],
         tabIndex: props.tabIndex,
-        children: (
-            <div className={visualClassName}>
-                {renderButtonContent({
-                    showSpinner,
-                    shouldRenderSpinner,
-                    setShouldRenderSpinner,
-                    children: props.children,
-                    loadingText,
-                    small: props.small,
-                    StartIcon: props.StartIcon,
-                    EndIcon: props.EndIcon,
-                    withChevron: showChevron,
-                    platformOverrides,
-                })}
-            </div>
-        ),
+        children: <div className={buttonVariantClassName}>{content}</div>,
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
     };
-
     if (process.env.NODE_ENV !== 'production') {
         if (props.to === '' || props.href === '') {
             throw Error('to or href props are empty strings');
