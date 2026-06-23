@@ -140,6 +140,7 @@ const makeRawColors = (colors: Colors): Colors =>
     ) as Colors;
 
 const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
+    const instanceId = React.useId();
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -332,7 +333,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                                                 <SnackbarRoot>
                                                     {as ? (
                                                         <>
-                                                            {renderStyles(`.${styles.themeVars}`)}
+                                                            {renderStyles(
+                                                                `[data-mistica-theme="${instanceId}"]`
+                                                            )}
                                                             {React.createElement(
                                                                 as,
                                                                 {
@@ -342,6 +345,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                                                                     className: withoutStyles
                                                                         ? undefined
                                                                         : styles.themeVars,
+                                                                    'data-mistica-theme': withoutStyles
+                                                                        ? undefined
+                                                                        : instanceId,
                                                                 },
                                                                 children
                                                             )}
