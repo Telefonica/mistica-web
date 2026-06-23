@@ -482,9 +482,12 @@ const BaseButton = React.forwardRef<
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
     };
-    const maybeWrapSmallTouchable = (touchable: React.ReactNode) =>
+
+    const containerClassName = classnames(styles.smallTouchableContainer, props.className);
+
+    const wrapInContainer = (touchable: React.ReactNode) =>
         props.small ? (
-            <div className={classnames(styles.smallTouchableContainer, props.className)} style={buttonStyle}>
+            <div className={containerClassName} style={buttonStyle}>
                 {touchable}
             </div>
         ) : (
@@ -498,18 +501,18 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.fake) {
-        return maybeWrapSmallTouchable(<BaseTouchable maybe {...commonProps} />);
+        return wrapInContainer(<BaseTouchable maybe {...commonProps} />);
     }
 
     if (props.submit) {
         // using empty onPress handler so it gets rendered as a button
-        return maybeWrapSmallTouchable(
+        return wrapInContainer(
             <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />
         );
     }
 
     if (props.onPress) {
-        return maybeWrapSmallTouchable(
+        return wrapInContainer(
             <BaseTouchable
                 {...commonProps}
                 onPress={(e) => {
@@ -524,7 +527,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.to || props.to === '') {
-        return maybeWrapSmallTouchable(
+        return wrapInContainer(
             <BaseTouchable
                 {...commonProps}
                 to={props.to}
@@ -536,7 +539,7 @@ const BaseButton = React.forwardRef<
     }
 
     if (props.href || props.href === '') {
-        return maybeWrapSmallTouchable(
+        return wrapInContainer(
             <BaseTouchable
                 {...commonProps}
                 href={props.href}
