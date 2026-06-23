@@ -118,6 +118,7 @@ export const container = style([
     containerBase,
     {
         cursor: 'pointer',
+        display: 'flex',
     },
 ]);
 export const containerDisabled = style([
