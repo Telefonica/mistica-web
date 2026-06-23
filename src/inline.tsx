@@ -22,7 +22,8 @@ const calcSpaceValue = (space: NumericSpace | FlexSpace) => {
 
 const calcInlineVars = (
     space: FlexSpace | ByBreakpoint<NumericSpace>,
-    verticalSpace?: ByBreakpoint<NumericSpace>
+    verticalSpace?: ByBreakpoint<NumericSpace>,
+    alignItems?: Props['alignItems']
 ) => {
     const calcSpaceVars = (
         space: FlexSpace | ByBreakpoint<NumericSpace>,
@@ -50,21 +51,27 @@ const calcInlineVars = (
         desktop: styles.vars.spaceDesktop,
     });
 
-    if (verticalSpace) {
-        const verticalSpaceVars = calcSpaceVars(verticalSpace, {
-            default: styles.vars.verticalSpace,
-            mobile: styles.vars.verticalSpaceMobile,
-            tablet: styles.vars.verticalSpaceTablet,
-            desktop: styles.vars.verticalSpaceDesktop,
-        });
+    const verticalSpaceVars = verticalSpace
+        ? calcSpaceVars(verticalSpace, {
+              default: styles.vars.verticalSpace,
+              mobile: styles.vars.verticalSpaceMobile,
+              tablet: styles.vars.verticalSpaceTablet,
+              desktop: styles.vars.verticalSpaceDesktop,
+          })
+        : {};
 
-        return {
-            ...spaceVars,
-            ...verticalSpaceVars,
-        };
-    }
+    const alignItemsVars = alignItems !== undefined
+        ? {
+              [styles.vars.childDisplay]: 'flex',
+              [styles.vars.childAlignItems]: alignItems,
+          }
+        : {};
 
-    return spaceVars;
+    return {
+        ...spaceVars,
+        ...verticalSpaceVars,
+        ...alignItemsVars,
+    };
 };
 
 type Props = {
@@ -132,15 +139,7 @@ const Inline = ({
                 shouldExpand && styles.expand
             )}
             style={{
-                ...applyCssVars({
-                    ...calcInlineVars(space, verticalSpace),
-                    ...(alignItems !== 'stretch'
-                        ? {
-                              [styles.vars.childDisplay]: 'flex',
-                              [styles.vars.childAlignItems]: alignItems,
-                          }
-                        : {}),
-                }),
+                ...applyCssVars(calcInlineVars(space, verticalSpace, alignItems)),
                 alignItems,
             }}
             role={role}
