@@ -12,6 +12,7 @@ const verticalSpaceTablet = createVar();
 const verticalSpaceDesktop = createVar();
 
 const childAlignItems = createVar();
+const childDisplay = createVar();
 
 export const vars = {
     space,
@@ -23,6 +24,7 @@ export const vars = {
     verticalSpaceTablet,
     verticalSpaceDesktop,
     childAlignItems,
+    childDisplay,
 };
 
 export const marginInline = style({
@@ -127,7 +129,8 @@ globalStyle(`${inline} > div`, {
             margin: `0 0 0 calc(min(${space}, 0px))`,
             // Propagate alignItems to wrapper divs so icon SVGs (inline elements) are
             // correctly centered within each wrapper, not just the wrappers themselves.
-            display: 'flex',
+            // Only activates when childDisplay is set (i.e. alignItems !== 'stretch').
+            display: fallbackVar(childDisplay, 'block'),
             alignItems: fallbackVar(childAlignItems, 'normal'),
         },
     },

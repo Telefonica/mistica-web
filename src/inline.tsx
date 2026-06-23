@@ -134,7 +134,12 @@ const Inline = ({
             style={{
                 ...applyCssVars({
                     ...calcInlineVars(space, verticalSpace),
-                    ...(alignItems !== 'stretch' ? {[styles.vars.childAlignItems]: alignItems} : {}),
+                    ...(alignItems !== 'stretch'
+                        ? {
+                              [styles.vars.childDisplay]: 'flex',
+                              [styles.vars.childAlignItems]: alignItems,
+                          }
+                        : {}),
                 }),
                 alignItems,
             }}
