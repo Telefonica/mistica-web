@@ -12,15 +12,9 @@ export type ParsedGradient = {
     }>;
 };
 
-export const angleToCoords = (angle: number) => {
-    const radians = ((angle - 90) * Math.PI) / 180;
-
-    return {
-        x1: '0%',
-        y1: '0%',
-        x2: `${50 + 50 * Math.cos(radians)}%`,
-        y2: `${50 + 50 * Math.sin(radians)}%`,
-    };
+type ExtractedGradientContent = {
+    type: 'linear' | 'radial';
+    content: string;
 };
 
 export const directionToAngle = (direction: string): number => {
@@ -146,11 +140,16 @@ export const parseLinearGradient = (content: string): ParsedGradient | null => {
     };
 };
 
-export const extractGradientContent = (gradient: string, type: 'linear' | 'radial'): string | null => {
-    const prefix = `${type}-gradient`;
+export const extractGradientContent = (gradient: string): ExtractedGradientContent | null => {
     const trimmed = gradient.trim();
 
-    if (!trimmed.toLowerCase().startsWith(prefix)) {
+    const type = trimmed.toLowerCase().startsWith('linear-gradient')
+        ? 'linear'
+        : trimmed.toLowerCase().startsWith('radial-gradient')
+          ? 'radial'
+          : null;
+
+    if (!type) {
         return null;
     }
 
@@ -182,7 +181,10 @@ export const extractGradientContent = (gradient: string, type: 'linear' | 'radia
         return null;
     }
 
-    return trimmed.substring(startIdx + 1, endIdx).trim();
+    return {
+        type,
+        content: trimmed.substring(startIdx + 1, endIdx).trim(),
+    };
 };
 
 export const parseRadialGradient = (content: string): ParsedGradient | null => {
@@ -241,19 +243,15 @@ export const parseRadialGradient = (content: string): ParsedGradient | null => {
 };
 
 export const parseCSSGradient = (cssGradient: string): ParsedGradient | null => {
-    const trimmedGradient = cssGradient.trim();
+    const gradient = extractGradientContent(cssGradient);
 
-    const linearContent = extractGradientContent(trimmedGradient, 'linear');
-
-    if (linearContent) {
-        return parseLinearGradient(linearContent);
+    if (!gradient) {
+        return null;
     }
 
-    const radialContent = extractGradientContent(trimmedGradient, 'radial');
-
-    if (radialContent) {
-        return parseRadialGradient(radialContent);
+    if (gradient.type === 'linear') {
+        return parseLinearGradient(gradient.content);
     }
 
-    return null;
+    return parseRadialGradient(gradient.content);
 };

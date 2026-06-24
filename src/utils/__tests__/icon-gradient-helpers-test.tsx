@@ -1,5 +1,4 @@
 import {
-    angleToCoords,
     directionToAngle,
     splitGradientParts,
     parseColorStop,
@@ -8,15 +7,6 @@ import {
     parseCSSGradient,
     extractGradientContent,
 } from '../icon-gradient-helpers';
-
-test('angleToCoords converts angle to svg coordinates', () => {
-    expect(angleToCoords(90)).toEqual({
-        x1: '0%',
-        y1: '0%',
-        x2: '100%',
-        y2: '50%',
-    });
-});
 
 test('directionToAngle converts css directions to angles', () => {
     expect(directionToAngle('to right')).toBe(90);
@@ -86,7 +76,15 @@ test('parseCSSGradient returns null for invalid input', () => {
 });
 
 test('extractGradientContent handles valid and invalid inputs', () => {
-    expect(extractGradientContent('linear-gradient(red, blue)', 'linear')).toBe('red, blue');
-    expect(extractGradientContent('linear-gradient', 'linear')).toBeNull();
-    expect(extractGradientContent('linear-gradient(red, blue', 'linear')).toBeNull();
+    expect(extractGradientContent('linear-gradient(red, blue)')).toEqual({
+        type: 'linear',
+        content: 'red, blue',
+    });
+    expect(extractGradientContent('radial-gradient(red, blue)')).toEqual({
+        type: 'radial',
+        content: 'red, blue',
+    });
+    expect(extractGradientContent('linear-gradient')).toBeNull();
+    expect(extractGradientContent('linear-gradient(red, blue')).toBeNull();
+    expect(extractGradientContent('red')).toBeNull();
 });

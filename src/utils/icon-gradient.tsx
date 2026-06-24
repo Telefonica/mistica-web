@@ -1,15 +1,20 @@
 'use client';
-
 import * as React from 'react';
+import {parseCSSGradient} from './icon-gradient-helpers';
 
-import {angleToCoords, parseCSSGradient} from './icon-gradient-helpers';
+const angleToCoords = (angle: number) => {
+    const radians = ((angle - 90) * Math.PI) / 180;
 
-let gradientIdCounter = 0;
-
-const getGradientId = (): string => `icon-gradient-${gradientIdCounter++}`;
+    return {
+        x1: '0%',
+        y1: '0%',
+        x2: `${50 + 50 * Math.cos(radians)}%`,
+        y2: `${50 + 50 * Math.sin(radians)}%`,
+    };
+};
 
 export const useIconGradient = (color?: string) => {
-    const gradientId = React.useRef('');
+    const generatedId = React.useId();
 
     const gradientConfig = React.useMemo(() => {
         if (!color || typeof color !== 'string') {
@@ -23,11 +28,9 @@ export const useIconGradient = (color?: string) => {
         return parseCSSGradient(color);
     }, [color]);
 
-    if (!gradientId.current && gradientConfig) {
-        gradientId.current = getGradientId();
-    }
+    const gradientId = React.useMemo(() => `icon-gradient-${generatedId}`, [generatedId]);
 
-    const fillValue = gradientConfig ? `url(#${gradientId.current})` : color;
+    const fillValue = gradientConfig ? `url(#${gradientId})` : color;
 
     const gradientDef = React.useMemo(() => {
         if (!gradientConfig) {
@@ -37,7 +40,7 @@ export const useIconGradient = (color?: string) => {
         if (gradientConfig.type === 'radial') {
             return (
                 <radialGradient
-                    id={gradientId.current}
+                    id={gradientId}
                     cx={gradientConfig.center?.x ?? '50%'}
                     cy={gradientConfig.center?.y ?? '50%'}
                     r={gradientConfig.radius ?? '50%'}
@@ -53,13 +56,13 @@ export const useIconGradient = (color?: string) => {
         const coords = angleToCoords(angle);
 
         return (
-            <linearGradient id={gradientId.current} {...coords}>
+            <linearGradient id={gradientId} {...coords}>
                 {gradientConfig.stops.map((stop, idx) => (
                     <stop key={idx} offset={stop.offset} stopColor={stop.color} />
                 ))}
             </linearGradient>
         );
-    }, [gradientConfig]);
+    }, [gradientConfig, gradientId]);
 
     return {
         fillValue,
