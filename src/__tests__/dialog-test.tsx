@@ -307,8 +307,6 @@ const SwitchDialogTrigger = () => {
 };
 
 test('returns focus to the trigger switch when the dialog is closed via keyboard', async () => {
-    jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
-
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SwitchDialogTrigger />
