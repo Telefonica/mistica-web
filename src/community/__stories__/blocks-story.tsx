@@ -14,7 +14,7 @@ import {vars} from '../../skins/skin-contract.css';
 import type {TagType} from '../..';
 
 export default {
-    title: 'Community/Blocks',
+    title: 'Community/Vivo/Blocks',
     parameters: {
         fullScreen: true,
     },
