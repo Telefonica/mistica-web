@@ -64,7 +64,7 @@ test('does not change page when disabled', async () => {
     expect(onChange).not.toHaveBeenCalled();
 });
 
-test('keeps Previous and Next visible at page boundaries (aria-disabled)', async () => {
+test('keeps Previous and Next visible at page boundaries (disabled)', async () => {
     const onChange = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -72,17 +72,12 @@ test('keeps Previous and Next visible at page boundaries (aria-disabled)', async
         </ThemeContextProvider>
     );
 
-    // At the first page, Previous is rendered but marked aria-disabled and
-    // clicking it should not change pages. Next stays interactive.
     const prev = screen.getByRole('button', {name: 'Página anterior'});
     const next = screen.getByRole('button', {name: 'Página siguiente'});
-    expect(prev).toHaveAttribute('aria-disabled', 'true');
-    expect(next).not.toHaveAttribute('aria-disabled');
+    expect(prev).toBeDisabled();
+    expect(next).not.toBeDisabled();
 
-    // Touchable's aria-disabled applies pointer-events: none, so user-event
-    // refuses the click unless we bypass that safety net; bypass to assert
-    // that the boundary state still produces no onChange call.
-    await userEvent.click(prev, {pointerEventsCheck: 0});
+    await userEvent.click(prev);
     expect(onChange).not.toHaveBeenCalled();
 });
 
@@ -95,21 +90,6 @@ test('honors controlled currentPage', () => {
     expect(screen.queryByRole('button', {name: 'Ir a la página 3'})).not.toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Página 3, página actual'})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
-});
-
-test('marks non-adjacent items with the compact-hide class', () => {
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <Pagination totalPages={50} currentPage={24} />
-        </ThemeContextProvider>
-    );
-
-    const lis = screen.getAllByRole('listitem', {hidden: true});
-    const visibleInCompact = lis.filter((li) => !li.className.includes('fullOnlyItem'));
-    expect(visibleInCompact).toHaveLength(3);
-    expect(visibleInCompact[0].textContent).toContain('23');
-    expect(visibleInCompact[1].textContent).toContain('24');
-    expect(visibleInCompact[2].textContent).toContain('25');
 });
 
 describe('getPaginationItems', () => {
@@ -128,5 +108,41 @@ describe('getPaginationItems', () => {
         expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
         expect(items[0]).toMatchObject({type: 'page', page: 1});
         expect(items[items.length - 1]).toMatchObject({type: 'page', page: 20});
+    });
+
+    test('shows five dynamic pages and boundaries by default on desktop', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 3})).toEqual([
+            {type: 'page', page: 1, current: false},
+            {type: 'page', page: 2, current: false},
+            {type: 'page', page: 3, current: true},
+            {type: 'page', page: 4, current: false},
+            {type: 'page', page: 5, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 40, current: false},
+        ]);
+    });
+
+    test('keeps five centered dynamic pages on desktop', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 31})).toEqual([
+            {type: 'page', page: 1, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 29, current: false},
+            {type: 'page', page: 30, current: false},
+            {type: 'page', page: 31, current: true},
+            {type: 'page', page: 32, current: false},
+            {type: 'page', page: 33, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 40, current: false},
+        ]);
+    });
+
+    test('hides boundary pages when configured for mobile', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 33, includeBoundaryPages: false})).toEqual([
+            {type: 'ellipsis'},
+            {type: 'page', page: 32, current: false},
+            {type: 'page', page: 33, current: true},
+            {type: 'page', page: 34, current: false},
+            {type: 'ellipsis'},
+        ]);
     });
 });

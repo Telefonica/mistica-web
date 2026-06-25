@@ -49,7 +49,7 @@ test('Pagination CompactView - MOBILE_IOS_SMALL', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS_SMALL',
-        args: {totalPages: 50, currentPage: 24},
+        args: {totalPages: 50, currentPage: 24, hidePageList: true},
     });
 
     const pagination = await screen.findByTestId('Pagination');

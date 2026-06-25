@@ -3,8 +3,6 @@ import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
-const COMPACT_MQ = '(max-width: 374px)';
-
 export const container = style([
     sprinkles({
         display: 'inline-flex',
@@ -20,9 +18,6 @@ export const container = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 gap: 8,
-            },
-            [COMPACT_MQ]: {
-                flexDirection: 'column',
             },
         },
     },
@@ -81,12 +76,6 @@ export const pageListItemEllipsis = style([
         },
     },
 ]);
-
-export const fullOnlyItem = style({
-    '@media': {
-        [COMPACT_MQ]: {display: 'none'},
-    },
-});
 
 const interactiveArea = style([
     sprinkles({
@@ -201,70 +190,10 @@ export const ellipsis = style([
     },
 ]);
 
-export const navigationButton = style([
-    sprinkles({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }),
-    {
-        gap: 4,
-        width: 32,
-        minWidth: 32,
-        height: 48,
-        padding: 0,
-        border: 0,
-        font: 'inherit',
-        background: 'transparent',
-        color: skinVars.colors.textLink,
-        borderRadius: skinVars.borderRadii.button,
-        cursor: 'pointer',
-        WebkitTapHighlightColor: 'transparent',
-        transition: 'background-color 0.15s ease-in-out',
-
-        selectors: {
-            '&:active:not([aria-disabled="true"])': {
-                backgroundColor: skinVars.colors.buttonLinkBackgroundPressed,
-            },
-            '&:disabled, &[aria-disabled="true"]': {
-                cursor: 'default',
-                opacity: 0.5,
-            },
-        },
-
-        '@media': {
-            [mq.desktopOrBigger]: {
-                width: 'auto',
-                minWidth: 32,
-                height: 32,
-                padding: '0 8px',
-            },
-            [mq.supportsHover]: {
-                selectors: {
-                    '&:hover:not([aria-disabled="true"])': {
-                        backgroundColor: skinVars.colors.buttonLinkBackgroundPressed,
-                    },
-                },
-            },
-        },
-    },
-]);
-
-export const navigationButtonIconOnly = style({
-    '@media': {
-        [mq.desktopOrBigger]: {
-            width: 32,
-            minWidth: 32,
-        },
-    },
-});
-
-export const navigationLabel = style({
-    display: 'inline-flex',
-
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            display: 'none',
+export const navigationButtonLink = style({
+    selectors: {
+        '&&:hover:not([disabled]), &&:active:not([disabled])': {
+            backgroundColor: 'transparent',
         },
     },
 });

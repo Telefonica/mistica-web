@@ -23,7 +23,7 @@ export default {
 type Args = {
     totalPages: number;
     currentPage: number;
-    maxPages: number;
+    maxPages?: number;
     showEllipsis: boolean;
     hideNavigationControls: boolean;
     hidePageList: boolean;
@@ -63,7 +63,6 @@ Default.storyName = 'Pagination';
 Default.args = {
     totalPages: 9,
     currentPage: 3,
-    maxPages: 3,
     showEllipsis: true,
     hideNavigationControls: false,
     hidePageList: false,
