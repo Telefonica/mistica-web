@@ -37,8 +37,22 @@ const DEVICES: ReadonlyArray<Device> = ['DESKTOP', 'MOBILE_IOS'];
 
 const TABLE = CASES.flatMap((c) => DEVICES.map((device) => ({...c, device})));
 
+const VARIANT_CASES: ReadonlyArray<{name: string; args: StoryArgs}> = [
+    {name: 'BrandContext', args: {totalPages: 20, currentPage: 10, variantOutside: 'brand'}},
+    {name: 'NegativeContext', args: {totalPages: 20, currentPage: 10, variantOutside: 'negative'}},
+    {name: 'AlternativeContext', args: {totalPages: 20, currentPage: 10, variantOutside: 'alternative'}},
+];
+
 test.each(TABLE)('Pagination $name - $device', async ({args, device}) => {
     await openStoryPage({id: STORY_ID, device, args});
+
+    const pagination = await screen.findByTestId('Pagination');
+    const image = await pagination.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(VARIANT_CASES)('Pagination $name - DESKTOP', async ({args}) => {
+    await openStoryPage({id: STORY_ID, device: 'DESKTOP', args});
 
     const pagination = await screen.findByTestId('Pagination');
     const image = await pagination.screenshot();

@@ -1,4 +1,4 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -163,6 +163,64 @@ export const pageButton = style([
     },
 ]);
 
+export const pageButtonVariants = styleVariants({
+    default: {},
+    brand: {
+        color: skinVars.colors.textButtonSecondaryBrand,
+        selectors: {
+            '&:active': {
+                color: skinVars.colors.textBrand,
+            },
+            '&:active:before': {
+                backgroundColor: skinVars.colors.brandLow,
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:before': {
+                        backgroundColor: skinVars.colors.backgroundContainerBrandHover,
+                    },
+                    '&:active': {
+                        color: skinVars.colors.textBrand,
+                    },
+                    '&:active:before': {
+                        backgroundColor: skinVars.colors.brandLow,
+                    },
+                },
+            },
+        },
+    },
+    negative: {
+        color: skinVars.colors.textButtonSecondaryNegative,
+        selectors: {
+            '&:active': {
+                color: skinVars.colors.textButtonPrimaryNegative,
+            },
+            '&:active:before': {
+                backgroundColor: skinVars.colors.buttonPrimaryBackgroundNegative,
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:before': {
+                        backgroundColor: skinVars.colors.backgroundContainerBrandHover,
+                    },
+                    '&:active': {
+                        color: skinVars.colors.textButtonPrimaryNegative,
+                    },
+                    '&:active:before': {
+                        backgroundColor: skinVars.colors.buttonPrimaryBackgroundNegative,
+                    },
+                },
+            },
+        },
+    },
+    alternative: {},
+    media: {},
+});
+
 export const currentPage = style([
     pageElement,
     {
@@ -177,6 +235,24 @@ export const currentPage = style([
     },
 ]);
 
+export const currentPageVariants = styleVariants({
+    default: {},
+    brand: {
+        color: skinVars.colors.textBrand,
+        ':before': {
+            backgroundColor: skinVars.colors.brandLow,
+        },
+    },
+    negative: {
+        color: skinVars.colors.textButtonPrimaryNegative,
+        ':before': {
+            backgroundColor: skinVars.colors.buttonPrimaryBackgroundNegative,
+        },
+    },
+    alternative: {},
+    media: {},
+});
+
 export const pageContent = style({
     position: 'relative',
     zIndex: 1,
@@ -190,10 +266,42 @@ export const ellipsis = style([
     },
 ]);
 
+export const ellipsisVariants = styleVariants({
+    default: {},
+    brand: {
+        color: skinVars.colors.textButtonSecondaryBrand,
+    },
+    negative: {
+        color: skinVars.colors.textButtonSecondaryNegative,
+    },
+    alternative: {},
+    media: {},
+});
+
 export const navigationButtonLink = style({
     selectors: {
         '&&:hover:not([disabled]), &&:active:not([disabled])': {
             backgroundColor: 'transparent',
         },
     },
+});
+
+export const navigationButtonLinkVariants = styleVariants({
+    default: {},
+    brand: {
+        selectors: {
+            '&&': {
+                color: skinVars.colors.textButtonSecondaryBrand,
+            },
+        },
+    },
+    negative: {
+        selectors: {
+            '&&': {
+                color: skinVars.colors.textButtonSecondaryNegative,
+            },
+        },
+    },
+    alternative: {},
+    media: {},
 });

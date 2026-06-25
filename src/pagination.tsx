@@ -7,6 +7,7 @@ import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
 import {useScreenSize, useTheme} from './hooks';
+import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -180,6 +181,7 @@ const TILE_STYLE: React.CSSProperties = {
 
 const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
     const {texts, t} = useTheme();
+    const variant = useThemeVariant();
     const goToPageLabel = (page: number) =>
         t(texts.paginationGoToPage || tokens.paginationGoToPage, String(page));
     const currentPageLabel = (page: number) =>
@@ -190,8 +192,12 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
             {items.map((item, index) => {
                 if (item.type === 'ellipsis') {
                     return (
-                        <li key={`ellipsis-${index}`} className={styles.pageListItemEllipsis} aria-hidden="true">
-                            <span className={styles.ellipsis}>
+                        <li
+                            key={`ellipsis-${index}`}
+                            className={classnames(styles.pageListItemEllipsis, styles.ellipsisVariants[variant])}
+                            aria-hidden="true"
+                        >
+                            <span className={classnames(styles.ellipsis, styles.ellipsisVariants[variant])}>
                                 <PaginationLabel weight="medium">...</PaginationLabel>
                             </span>
                         </li>
@@ -202,7 +208,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                     return (
                         <li key={item.page} className={styles.pageListItem}>
                             <Touchable
-                                className={styles.currentPage}
+                                className={classnames(styles.currentPage, styles.currentPageVariants[variant])}
                                 style={TILE_STYLE}
                                 onPress={() => {}}
                                 aria-current="page"
@@ -220,7 +226,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 return (
                     <li key={item.page} className={styles.pageListItem}>
                         <Touchable
-                            className={styles.pageButton}
+                            className={classnames(styles.pageButton, styles.pageButtonVariants[variant])}
                             style={TILE_STYLE}
                             disabled={disabled}
                             aria-label={goToPageLabel(item.page)}
@@ -256,6 +262,7 @@ export const Pagination = ({
     const isControlled = currentPage !== undefined;
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
+    const variant = useThemeVariant();
     const {isTabletOrSmaller} = useScreenSize();
     const showNavLabel = mode === 'default' && !isTabletOrSmaller;
 
@@ -314,7 +321,10 @@ export const Pagination = ({
             {!hideNavigationControls && (
                 <ButtonLink
                     small
-                    className={styles.navigationButtonLink}
+                    className={classnames(
+                        styles.navigationButtonLink,
+                        styles.navigationButtonLinkVariants[variant]
+                    )}
                     disabled={disabled || isPrevDisabled}
                     aria-label={resolvedPrevAriaLabel}
                     onPress={() => goToPage(activePage - 1)}
@@ -328,7 +338,10 @@ export const Pagination = ({
             {!hideNavigationControls && (
                 <ButtonLink
                     small
-                    className={styles.navigationButtonLink}
+                    className={classnames(
+                        styles.navigationButtonLink,
+                        styles.navigationButtonLinkVariants[variant]
+                    )}
                     disabled={disabled || isNextDisabled}
                     aria-label={resolvedNextAriaLabel}
                     onPress={() => goToPage(activePage + 1)}
