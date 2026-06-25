@@ -6,7 +6,7 @@ type Props = {
     className?: string;
     disabled?: boolean;
     group?: string;
-    returnFocus?: boolean | FocusOptions | ((returnTo: Element) => boolean | FocusOptions);
+    returnFocus?: React.ComponentProps<typeof ReactFocusLock>['returnFocus'];
 };
 
 const FocusTrap = ({children, disabled, className, group, returnFocus = true}: Props): JSX.Element => (
