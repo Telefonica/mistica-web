@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {render, waitFor, screen, act} from '@testing-library/react';
-import {ThemeContextProvider, useDialog, Switch} from '..';
+import {ThemeContextProvider, useDialog, Switch, Checkbox, RadioButton, RadioGroup} from '..';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 import userEvent from '@testing-library/user-event';
@@ -293,42 +293,64 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
     });
 });
 
-const SwitchDialogTrigger = () => {
+const DialogTrigger = ({renderTrigger}: {renderTrigger: (openDialog: () => void) => React.ReactNode}) => {
     const {dialog} = useDialog();
-    return (
-        <Switch
-            name="notifications"
-            aria-label="notifications"
-            onChange={() => {
-                dialog({message: 'Message'});
-            }}
-        />
-    );
+    return <>{renderTrigger(() => dialog({message: 'Message'}))}</>;
 };
 
-test('returns focus to the trigger switch when the dialog is closed via keyboard', async () => {
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <SwitchDialogTrigger />
-        </ThemeContextProvider>
-    );
+test.each([
+    {
+        type: 'switch',
+        role: 'switch',
+        accessibleName: 'notifications',
+        renderTrigger: (openDialog: () => void) => (
+            <Switch name="notifications" aria-label="notifications" onChange={openDialog} />
+        ),
+    },
+    {
+        type: 'checkbox',
+        role: 'checkbox',
+        accessibleName: 'terms',
+        renderTrigger: (openDialog: () => void) => (
+            <Checkbox name="terms" aria-label="terms" onChange={openDialog} />
+        ),
+    },
+    {
+        type: 'radio button',
+        role: 'radio',
+        accessibleName: 'option',
+        renderTrigger: (openDialog: () => void) => (
+            <RadioGroup name="options" aria-label="options" onChange={openDialog}>
+                <RadioButton value="option" aria-label="option" />
+            </RadioGroup>
+        ),
+    },
+] as const)(
+    'returns focus to the trigger $type when the dialog is closed via keyboard',
+    async ({role, accessibleName, renderTrigger}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <DialogTrigger renderTrigger={renderTrigger} />
+            </ThemeContextProvider>
+        );
 
-    const switchEl = await screen.findByRole('switch', {name: 'notifications'});
-    switchEl.focus();
-    expect(switchEl).toHaveFocus();
+        const triggerEl = await screen.findByRole(role, {name: accessibleName});
+        triggerEl.focus();
+        expect(triggerEl).toHaveFocus();
 
-    await userEvent.keyboard(' ');
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+        await userEvent.keyboard(' ');
+        expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
-    await userEvent.keyboard('{Escape}');
-    await waitFor(() => {
-        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
-    });
+        await userEvent.keyboard('{Escape}');
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+        });
 
-    await waitFor(() => {
-        expect(switchEl).toHaveFocus();
-    });
-});
+        await waitFor(() => {
+            expect(triggerEl).toHaveFocus();
+        });
+    }
+);
 
 test('dialog close button is accessible', async () => {
     render(
