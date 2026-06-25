@@ -46,11 +46,18 @@ name.
 
 ## Colour, surface & radii tokens
 
-All colour, surface, and radius values come from Skins variables — bind them (`setBoundVariableForPaint` for
-colour, `setBoundVariable` for radii), never hardcode hex/px. Discover them live per run. Common ones:
-`textPrimary`, `textSecondary` (text); `border`, `divider` (lines); `controlActivated` (accent / selection);
-and `backgroundContainer` for the fill of cards and any boxed container — use it instead of a white fill.
-Radii are exported by Skins too; bind the relevant radius token rather than a literal corner value.
+Mística Skins exports colour tokens in two forms: **variables** and **paint styles**. Never hardcode hex/px.
+Discover both live per run via `search_design_system` scoped to the Mística Skins library key with both
+`includeVariables: true` and `includeStyles: true`. Apply each form correctly:
+
+- **Variable** → `setBoundVariableForPaint` (fills/strokes) or `setBoundVariable` (radii).
+- **Paint style** → `node.fillStyleId = style.id` (or `strokeStyleId`).
+
+When resolving a token by name, check variables first, then styles — use whichever form Skins publishes it in.
+Some tokens (for example backgrounds that carry gradients) are styles, not variables; using `setBoundVariableForPaint`
+on a style-only token will silently fail.
+
+Radii are exported as variables; always bind them rather than using a literal corner value.
 
 Screen-level frames (the outermost frame representing a full screen or page) must always have an explicit
 background fill bound to a Skins background variable — never transparent or unfilled. When a screen contains
@@ -317,8 +324,9 @@ Load alongside the Figma build skills before any `use_figma` call.
 
 1. `get_libraries({ fileKey })` → confirm which Mistica libraries are subscribed; capture their keys.
 2. Resolve assets scoped to the Mistica library keys via
-   `search_design_system({ includeLibraryKeys: [...] })`: components, text styles (`includeStyles`), colour
-   variables (`includeVariables`). Cross-check the catalog; update it when keys differ.
+   `search_design_system({ includeLibraryKeys: [...] })`: components, text styles, colour variables, and colour
+   styles — always pass both `includeVariables: true` and `includeStyles: true` so tokens published in either
+   form are discovered. Cross-check the catalog; update it when keys differ.
 3. Probe a component's `componentProperties` once before populating (text props live on TEXT layers like
    `Title`, `Action`, `Text`; toggles are BOOLEAN variant props). See `design-brief-to-figma` Step 3.
 4. Build per `figma-use` rules: import by key, instance, set text props, bind tokens, apply text styles. Load
