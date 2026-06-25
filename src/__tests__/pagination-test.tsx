@@ -25,6 +25,34 @@ test('does not render when there is a single page', () => {
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
 });
 
+test('throws when totalPages is not positive', () => {
+    expect(() =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Pagination totalPages={-1} />
+            </ThemeContextProvider>
+        )
+    ).toThrow('Pagination: totalPages must be greater than or equal to 1');
+});
+
+test('renders when optional props are explicitly undefined', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination
+                totalPages={5}
+                currentPage={undefined}
+                defaultPage={undefined}
+                maxPages={undefined}
+                navLeftLabel={undefined}
+                navRightLabel={undefined}
+                onChange={undefined}
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('navigation', {name: 'Paginación - Página 1 de 5'})).toBeInTheDocument();
+});
+
 test('calls onChange when a page button is clicked (uncontrolled)', async () => {
     const onChange = jest.fn();
     render(

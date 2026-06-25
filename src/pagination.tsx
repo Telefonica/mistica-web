@@ -41,6 +41,12 @@ type PaginationItem = {type: 'page'; page: number; current: boolean} | {type: 'e
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
+const validatePositivePageNumber = (name: string, value: number | undefined) => {
+    if (process.env.NODE_ENV !== 'production' && value !== undefined && value < 1) {
+        throw Error(`Pagination: ${name} must be greater than or equal to 1`);
+    }
+};
+
 export const getPaginationItems = ({
     totalPages,
     currentPage,
@@ -54,6 +60,10 @@ export const getPaginationItems = ({
     showEllipsis?: boolean;
     includeBoundaryPages?: boolean;
 }): Array<PaginationItem> => {
+    validatePositivePageNumber('totalPages', totalPages);
+    validatePositivePageNumber('currentPage', currentPage);
+    validatePositivePageNumber('maxPages', maxPages);
+
     if (totalPages <= 1) {
         return [];
     }
@@ -194,7 +204,10 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                     return (
                         <li
                             key={`ellipsis-${index}`}
-                            className={classnames(styles.pageListItemEllipsis, styles.ellipsisVariants[variant])}
+                            className={classnames(
+                                styles.pageListItemEllipsis,
+                                styles.ellipsisVariants[variant]
+                            )}
                             aria-hidden="true"
                         >
                             <span className={classnames(styles.ellipsis, styles.ellipsisVariants[variant])}>
@@ -208,7 +221,10 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                     return (
                         <li key={item.page} className={styles.pageListItem}>
                             <Touchable
-                                className={classnames(styles.currentPage, styles.currentPageVariants[variant])}
+                                className={classnames(
+                                    styles.currentPage,
+                                    styles.currentPageVariants[variant]
+                                )}
                                 style={TILE_STYLE}
                                 onPress={() => {}}
                                 aria-current="page"
@@ -266,6 +282,11 @@ export const Pagination = ({
     const {isTabletOrSmaller} = useScreenSize();
     const showNavLabel = mode === 'default' && !isTabletOrSmaller;
 
+    validatePositivePageNumber('totalPages', totalPages);
+    validatePositivePageNumber('currentPage', currentPage);
+    validatePositivePageNumber('defaultPage', defaultPage);
+    validatePositivePageNumber('maxPages', maxPages);
+
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
         String(clamp(isControlled ? currentPage : internalPage, 1, totalPages)),
@@ -320,7 +341,6 @@ export const Pagination = ({
         >
             {!hideNavigationControls && (
                 <ButtonLink
-                    small
                     className={classnames(
                         styles.navigationButtonLink,
                         styles.navigationButtonLinkVariants[variant]
@@ -337,7 +357,6 @@ export const Pagination = ({
             {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls && (
                 <ButtonLink
-                    small
                     className={classnames(
                         styles.navigationButtonLink,
                         styles.navigationButtonLinkVariants[variant]

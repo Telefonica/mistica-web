@@ -4,25 +4,48 @@ import type {Device, StoryArgs} from '../test-utils';
 
 const STORY_ID = 'components-pagination--default';
 
-const CASES: ReadonlyArray<{name: string; args: StoryArgs}> = [
-    {name: 'Default', args: {totalPages: 9, currentPage: 3}},
-    {name: 'FirstPage', args: {totalPages: 10, currentPage: 1}},
-    {name: 'LastPage', args: {totalPages: 10, currentPage: 10}},
-    {name: 'WithEllipsis', args: {totalPages: 20, currentPage: 10}},
+const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
+    {name: 'Default', device: 'DESKTOP', args: {totalPages: 9, currentPage: 3}},
+    {name: 'Default', device: 'MOBILE_IOS', args: {totalPages: 9, currentPage: 3}},
+    {name: 'FirstPage', device: 'DESKTOP', args: {totalPages: 10, currentPage: 1}},
+    {name: 'FirstPage', device: 'MOBILE_IOS', args: {totalPages: 10, currentPage: 1}},
+    {name: 'LastPage', device: 'DESKTOP', args: {totalPages: 10, currentPage: 10}},
+    {name: 'LastPage', device: 'MOBILE_IOS', args: {totalPages: 10, currentPage: 10}},
+    {name: 'WithEllipsis', device: 'DESKTOP', args: {totalPages: 20, currentPage: 10}},
+    {name: 'WithEllipsis', device: 'MOBILE_IOS', args: {totalPages: 20, currentPage: 10}},
     {
         name: 'NavOnlyResponsive',
+        device: 'DESKTOP',
+        args: {totalPages: 10, currentPage: 5, hidePageList: true},
+    },
+    {
+        name: 'NavOnlyResponsive',
+        device: 'MOBILE_IOS',
         args: {totalPages: 10, currentPage: 5, hidePageList: true},
     },
     {
         name: 'PagesOnly',
+        device: 'DESKTOP',
+        args: {totalPages: 5, currentPage: 3, hideNavigationControls: true},
+    },
+    {
+        name: 'PagesOnly',
+        device: 'MOBILE_IOS',
         args: {totalPages: 5, currentPage: 3, hideNavigationControls: true},
     },
     {
         name: 'IconOnlyControls',
+        device: 'DESKTOP',
+        args: {totalPages: 10, currentPage: 5, mode: 'iconOnly', hidePageList: true},
+    },
+    {
+        name: 'IconOnlyControls',
+        device: 'MOBILE_IOS',
         args: {totalPages: 10, currentPage: 5, mode: 'iconOnly', hidePageList: true},
     },
     {
         name: 'NextChapterLink',
+        device: 'DESKTOP',
         args: {
             totalPages: 10,
             currentPage: 1,
@@ -31,28 +54,36 @@ const CASES: ReadonlyArray<{name: string; args: StoryArgs}> = [
             navRightLabel: 'Siguiente capítulo',
         },
     },
+    {
+        name: 'NextChapterLink',
+        device: 'MOBILE_IOS',
+        args: {
+            totalPages: 10,
+            currentPage: 1,
+            hidePageList: true,
+            navLeftLabel: 'Anterior capítulo',
+            navRightLabel: 'Siguiente capítulo',
+        },
+    },
+    {
+        name: 'BrandContext',
+        device: 'DESKTOP',
+        args: {totalPages: 20, currentPage: 10, variantOutside: 'brand'},
+    },
+    {
+        name: 'NegativeContext',
+        device: 'DESKTOP',
+        args: {totalPages: 20, currentPage: 10, variantOutside: 'negative'},
+    },
+    {
+        name: 'AlternativeContext',
+        device: 'DESKTOP',
+        args: {totalPages: 20, currentPage: 10, variantOutside: 'alternative'},
+    },
 ];
 
-const DEVICES: ReadonlyArray<Device> = ['DESKTOP', 'MOBILE_IOS'];
-
-const TABLE = CASES.flatMap((c) => DEVICES.map((device) => ({...c, device})));
-
-const VARIANT_CASES: ReadonlyArray<{name: string; args: StoryArgs}> = [
-    {name: 'BrandContext', args: {totalPages: 20, currentPage: 10, variantOutside: 'brand'}},
-    {name: 'NegativeContext', args: {totalPages: 20, currentPage: 10, variantOutside: 'negative'}},
-    {name: 'AlternativeContext', args: {totalPages: 20, currentPage: 10, variantOutside: 'alternative'}},
-];
-
-test.each(TABLE)('Pagination $name - $device', async ({args, device}) => {
+test.each(CASES)('Pagination $name - $device', async ({args, device}) => {
     await openStoryPage({id: STORY_ID, device, args});
-
-    const pagination = await screen.findByTestId('Pagination');
-    const image = await pagination.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(VARIANT_CASES)('Pagination $name - DESKTOP', async ({args}) => {
-    await openStoryPage({id: STORY_ID, device: 'DESKTOP', args});
 
     const pagination = await screen.findByTestId('Pagination');
     const image = await pagination.screenshot();
