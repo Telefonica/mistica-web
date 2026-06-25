@@ -120,26 +120,6 @@ Every prop value you write — text, enum, aspect ratio, boolean — should be s
 the real (non-CodeConnect) DOM, not something you copied from the snippet. If you can't say which node in the
 drilled-in DOM justifies the value, gather more before committing it.
 
-## Assets: always download, store, and serve locally
-
-Figma MCP asset URLs (`https://www.figma.com/api/mcp/asset/<uuid>`) are valid for only ~7 days. Do **not**
-inline them anywhere. Download the asset first, save it into the project (e.g. `public/images/...` or
-`src/assets/...`), and reference the local path.
-
-Do **not** substitute unrelated stock photos (Unsplash, Picsum, Lorem Picsum, etc.) for the designer's assets.
-The real images are part of the design.
-
-The right workflow for every image in a Figma design:
-
-1. Drill into the node (per the composite section above) to get the real asset URL — initial CodeConnect stubs
-   often use `example.com/image.jpg` placeholders that hide the actual URL.
-2. Download the file (`curl -o public/images/<name>.<ext> <mcp-asset-url>`). Use names that describe the
-   content (`hero-fibra.png`, `partner-eurosport.svg`), not the Figma UUID.
-3. Reference it from code via the local path (e.g. `/images/hero-fibra.png` in Vite projects, `/images/...` or
-   `import heroFibra from './assets/hero-fibra.png'` in bundler-aware setups).
-4. If you cannot resolve an asset — the URL 404s, the node has no fill, the design legitimately has no image
-   there — say so explicitly and ask, rather than inventing a stock replacement.
-
 ## Verification checklist
 
 Before closing out a section always:
@@ -163,9 +143,8 @@ prompt:
 
 - Figma `fileKey` and entry `nodeId`
 - Implementation file paths you wrote or edited
-- Local assets directory
 - Dev-server command and URL (check `package.json`)
 
 If the verifier reports clean, done. Otherwise fix the cited issues — each fix justified by Figma DOM or
 screenshot — and re-run with a fresh subagent. Stop after clean, 3 iterations, or out-of-scope issues (missing
-tokens/assets, designer clarification — surface these instead of fudging).
+tokens, designer clarification — surface these instead of fudging).
