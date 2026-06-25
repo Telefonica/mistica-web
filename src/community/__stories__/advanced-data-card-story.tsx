@@ -11,7 +11,7 @@ import type {HeadingType} from '../../utils/types';
 import type {TagType} from '../../tag';
 
 export default {
-    title: 'Community/AdvancedDataCard',
+    title: 'Community/Vivo/AdvancedDataCard',
 };
 
 type Args = {

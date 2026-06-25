@@ -24,7 +24,4 @@ export const O2_New_iOS: ThemeConfig = {...O2_New, platformOverrides: {platform:
 export const Telefonica_iOS: ThemeConfig = {...Telefonica, platformOverrides: {platform: 'ios'}};
 export const Blau_iOS: ThemeConfig = {...Blau, platformOverrides: {platform: 'ios'}};
 export const Esimflag_iOS: ThemeConfig = {...Esimflag, platformOverrides: {platform: 'ios'}};
-export const Community_Cyber_iOS: ThemeConfig = {
-    ...Community_Cyber,
-    platformOverrides: {platform: 'ios'},
-};
+export const Community_Cyber_iOS: ThemeConfig = {...Community_Cyber, platformOverrides: {platform: 'ios'}};
