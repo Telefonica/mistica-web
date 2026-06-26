@@ -83,7 +83,8 @@ test('Sheet restores focus to the trigger when closed', async () => {
     );
 
     const openButton = screen.getByRole('button', {name: 'Open'});
-    await userEvent.click(openButton);
+    openButton.focus();
+    await userEvent.keyboard('{Enter}');
     const sheet = await screen.findByRole('dialog', {name: 'Sheet title'});
 
     const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
