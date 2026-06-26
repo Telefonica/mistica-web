@@ -28,6 +28,9 @@ We would love to accept your Pull Requests but please, before starting your deve
   ticket).
 - Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every PR.
 
+For the full commit and pull-request conventions, the supported type subset, and how they drive release
+versioning, see [Commits and Pull Requests](./doc/commits-and-prs.md).
+
 ## Bug reports
 
 If something is broken or not working as expected, let us know!

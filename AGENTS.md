@@ -35,8 +35,10 @@ React component library for Telefonica's Design System.
 - When working on a task, use this map to find and read only the docs relevant to your task:
 
 ```
+CONTRIBUTING.md               # contribution flow, PR rules, issue templates
 doc
 ├── analytics.md              # event tracking and analytics props
+├── commits-and-prs.md        # commit/PR conventions, release versioning
 ├── components.md             # component catalog and usage (read .d.ts for props)
 ├── design-tokens.md          # skinVars tokens, colors, skin/color-scheme rules
 ├── fonts.md                  # font setup and loading
@@ -47,7 +49,6 @@ doc
 ├── llms
 │   ├── agents
 │   │   └── figma-verifier.md # Figma verifier agent instructions
-│   ├── commits               # commit message guidance
 │   ├── figma-mcp.md          # Figma MCP workflow
 │   └── llms.md               # main entry point, critical rules, doc index
 ├── lottie.md                 # optimizing bundle size with Lottie animations
