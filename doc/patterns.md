@@ -2,8 +2,8 @@
 
 ## Critical rules
 
-See [Critical Rules in `llms.md`](./llms.md#critical-rules) — the single source of truth. These rules apply
-throughout this document.
+See [Critical Rules in `llms.md`](./llms/llms.md#critical-rules) — the single source of truth. These rules
+apply throughout this document.
 
 ## Page layout composition
 
