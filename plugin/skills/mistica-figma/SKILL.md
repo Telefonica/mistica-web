@@ -50,13 +50,13 @@ name.
 A preset bundles size and line height; the brand variable supplies the family. So beyond size you must pick
 one axis: **weight**. Body presets (1–4) ship in light / regular / medium / bold — same size, different
 weight. Selecting by size alone inherits an arbitrary weight (for example a Medium nav label landing on
-`preset-1/bold` and looking too heavy). Choose weight deliberately — from the source when reconstructing, or
+`desktop/text-preset-1/bold` and looking too heavy). Choose weight deliberately — from the source when reconstructing, or
 from role when designing fresh (headings bold, body regular, labels/nav medium) — and import that specific
 variant (`desktop/text-preset-N/medium`, etc.) before binding.
 
 ### Preload brand font families before writing characters
 
-Mística text presets bind the font **family to a variable** that resolves per the active skin, so the
+Mistica text presets bind the font **family to a variable** that resolves per the active skin, so the
 effective font is not necessarily the one reported by `node.fontName` or `getStyledTextSegments`. For example,
 under the Cyber skin a preset resolves to `Telefonica Sans` even when the node reports `Movistar Sans`. The
 canonical "load `node.fontName` before setting `characters`" recipe is therefore insufficient and throws
@@ -185,11 +185,7 @@ Set `itemSpacing` to 0; child sections define their own vertical spacing.
 
 ### Never use empty spacer frames
 
-Drive all vertical rhythm from auto-layout `itemSpacing`. Never insert empty fixed-height frames as vertical
-spacers —
-they do not reflow, break on content change, and litter the layer tree. For variable gaps between sections,
-group the sections into nested auto-layout frames, each with its own `itemSpacing`, rather than padding the
-gaps with empty frames.
+Drive all vertical rhythm from auto-layout `itemSpacing`. Never insert empty fixed-height frames as vertical spacers — they do not reflow, break on content change, and litter the layer tree. For variable gaps between sections, group the sections into nested auto-layout frames, each with its own `itemSpacing`, rather than padding the gaps with empty frames.
 
 ### Grid layout frame
 
