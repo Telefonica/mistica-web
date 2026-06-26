@@ -2,6 +2,11 @@
 import * as React from 'react';
 import {parseCSSGradient} from './icon-gradient-helpers';
 
+type IconGradientResult = {
+    fillValue: string | undefined;
+    gradientDef: React.ReactElement | null;
+};
+
 const angleToCoords = (angle: number) => {
     const radians = ((angle - 90) * Math.PI) / 180;
 
@@ -13,7 +18,7 @@ const angleToCoords = (angle: number) => {
     };
 };
 
-export const useIconGradient = (color?: string) => {
+export const useIconGradient = (color?: string): IconGradientResult => {
     const generatedId = React.useId();
 
     const gradientConfig = React.useMemo(() => {

@@ -1,3 +1,8 @@
+type GradientStop = {
+    color: string;
+    offset: string;
+};
+
 export type ParsedGradient = {
     type: 'linear' | 'radial';
     angle?: number;
@@ -6,16 +11,15 @@ export type ParsedGradient = {
         y: string;
     };
     radius?: string;
-    stops: Array<{
-        color: string;
-        offset: string;
-    }>;
+    stops: Array<GradientStop>;
 };
 
 type ExtractedGradientContent = {
     type: 'linear' | 'radial';
     content: string;
 };
+
+const isGradientStop = (stop: GradientStop | null): stop is GradientStop => stop !== null;
 
 export const directionToAngle = (direction: string): number => {
     const angleMap: Record<string, number> = {
@@ -32,8 +36,8 @@ export const directionToAngle = (direction: string): number => {
     return angleMap[direction.toLowerCase()] ?? 180;
 };
 
-export const splitGradientParts = (content: string): string[] => {
-    const parts: string[] = [];
+export const splitGradientParts = (content: string): Array<string> => {
+    const parts: Array<string> = [];
     let current = '';
     let depth = 0;
 
@@ -64,7 +68,7 @@ export const splitGradientParts = (content: string): string[] => {
     return parts;
 };
 
-export const parseColorStop = (part: string, index: number, total: number) => {
+export const parseColorStop = (part: string, index: number, total: number): GradientStop | null => {
     const trimmed = part.trim();
 
     const match = trimmed.match(/^(.+?)(?:\s+([\d.]+%))?$/);
@@ -113,6 +117,9 @@ export const parseLinearGradient = (content: string): ParsedGradient | null => {
             case 'turn':
                 angle = value * 360;
                 break;
+
+            default:
+                break;
         }
 
         colorStartIndex = 1;
@@ -124,10 +131,7 @@ export const parseLinearGradient = (content: string): ParsedGradient | null => {
     const stops = parts
         .slice(colorStartIndex)
         .map((part, index, array) => parseColorStop(part, index, array.length))
-        .filter(Boolean) as Array<{
-        color: string;
-        offset: string;
-    }>;
+        .filter(isGradientStop);
 
     if (stops.length === 0) {
         return null;
@@ -225,10 +229,7 @@ export const parseRadialGradient = (content: string): ParsedGradient | null => {
     const stops = parts
         .slice(colorStartIndex)
         .map((part, index, array) => parseColorStop(part, index, array.length))
-        .filter(Boolean) as Array<{
-        color: string;
-        offset: string;
-    }>;
+        .filter(isGradientStop);
 
     if (stops.length === 0) {
         return null;
