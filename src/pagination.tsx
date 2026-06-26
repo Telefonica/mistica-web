@@ -350,7 +350,7 @@ export const Pagination = ({
                     onPress={() => goToPage(activePage - 1)}
                     StartIcon={IconChevronLeftRegular}
                 >
-                    {showNavLabel && mode !== 'iconOnly' ? resolvedPrevLabel : ''}
+                    {showNavLabel ? resolvedPrevLabel : ''}
                 </ButtonLink>
             )}
 
@@ -366,7 +366,7 @@ export const Pagination = ({
                     onPress={() => goToPage(activePage + 1)}
                     EndIcon={IconChevronRightRegular}
                 >
-                    {showNavLabel && mode !== 'iconOnly' ? resolvedNextLabel : ''}
+                    {showNavLabel ? resolvedNextLabel : ''}
                 </ButtonLink>
             )}
         </nav>
