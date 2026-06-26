@@ -50,9 +50,9 @@ name.
 A preset bundles size and line height; the brand variable supplies the family. So beyond size you must pick
 one axis: **weight**. Body presets (1–4) ship in light / regular / medium / bold — same size, different
 weight. Selecting by size alone inherits an arbitrary weight (for example a Medium nav label landing on
-`desktop/text-preset-1/bold` and looking too heavy). Choose weight deliberately — from the source when reconstructing, or
-from role when designing fresh (headings bold, body regular, labels/nav medium) — and import that specific
-variant (`desktop/text-preset-N/medium`, etc.) before binding.
+`desktop/text-preset-1/bold` and looking too heavy). Choose weight deliberately — from the source when
+reconstructing, or from role when designing fresh (headings bold, body regular, labels/nav medium) — and
+import that specific variant (`desktop/text-preset-N/medium`, etc.) before binding.
 
 ### Preload brand font families before writing characters
 
@@ -185,7 +185,10 @@ Set `itemSpacing` to 0; child sections define their own vertical spacing.
 
 ### Never use empty spacer frames
 
-Drive all vertical rhythm from auto-layout `itemSpacing`. Never insert empty fixed-height frames as vertical spacers — they do not reflow, break on content change, and litter the layer tree. For variable gaps between sections, group the sections into nested auto-layout frames, each with its own `itemSpacing`, rather than padding the gaps with empty frames.
+Drive all vertical rhythm from auto-layout `itemSpacing`. Never insert empty fixed-height frames as vertical
+spacers — they do not reflow, break on content change, and litter the layer tree. For variable gaps between
+sections, group the sections into nested auto-layout frames, each with its own `itemSpacing`, rather than
+padding the gaps with empty frames.
 
 ### Grid layout frame
 
@@ -370,13 +373,10 @@ component + slot can carry the content.
 
 ### Slot composition recipe
 
-To place composite content (for example a value plus a `Badge [D]`, or a status dot plus text) into a host,
-use its slot — not an absolute overlay:
+To place composite content into a host, use its slot — not an absolute overlay:
 
 1. Build the slot content as a **local master `COMPONENT`**
 2. Enable the host slot and point the swap at that component
-
-This keeps the badge/indicator inside the component with its padding and theming intact.
 
 **Reset the swapped text after swapping.** Figma carries the placeholder instance's text **override** onto the
 matching text node in the swapped-in component, so the wrong text can render silently even when the master
@@ -394,9 +394,9 @@ Load alongside the Figma build skills before any `use_figma` call.
    either form are discovered. Cross-check the catalog; update it when keys differ.
 3. Probe a component's `componentProperties` once before populating (text props live on TEXT layers like
    `Title`, `Action`, `Text`; toggles are BOOLEAN variant props). See `design-brief-to-figma` Step 3.
-4. Build per `figma-use` rules: import by key, instance, set text props, bind tokens, apply text styles. Before
-   any `characters` edit, preload the brand font families (or load the variable-resolved family) per the
-   Typography section — do not rely on the node's reported `fontName`.
+4. Build per `figma-use` rules: import by key, instance, set text props, bind tokens, apply text styles.
+   Before any `characters` edit, preload the brand font families (or load the variable-resolved family) per
+   the Typography section — do not rely on the node's reported `fontName`.
 
 ## Multi-brand skins
 
