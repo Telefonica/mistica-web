@@ -63,6 +63,24 @@ test.each(['esc', 'overlay', 'x'])('Drawer dismiss: %s', async (dismissMethod: s
     });
 });
 
+test('Drawer restores focus to the trigger when closed', async () => {
+    render(<DrawerTest onDismiss={() => {}} />);
+
+    const openButton = screen.getByRole('button', {name: 'open'});
+    await userEvent.click(openButton);
+
+    const drawer = await screen.findByRole('dialog');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+        expect(drawer).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+        expect(openButton).toHaveFocus();
+    });
+});
+
 test.each(['primary', 'secondary', 'link'])('Drawer close: %s', async (closeMethod: string) => {
     const onButtonPrimaryPress = jest.fn();
     const onButtonSecondaryPress = jest.fn();

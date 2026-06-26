@@ -52,6 +52,50 @@ test('Sheet', async () => {
     await waitFor(() => expect(sheet).not.toBeInTheDocument());
 });
 
+test('Sheet restores focus to the trigger when closed', async () => {
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <Sheet
+                        onClose={() => {
+                            setShowModal(false);
+                        }}
+                    >
+                        {({closeModal, modalTitleId}) => (
+                            <>
+                                <Title1 id={modalTitleId}>Sheet title</Title1>
+                                <ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>
+                            </>
+                        )}
+                    </Sheet>
+                )}
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const openButton = screen.getByRole('button', {name: 'Open'});
+    await userEvent.click(openButton);
+    const sheet = await screen.findByRole('dialog', {name: 'Sheet title'});
+
+    const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
+    await userEvent.click(closeButton);
+
+    await waitFor(() => expect(sheet).not.toBeInTheDocument());
+
+    await waitFor(() => {
+        expect(openButton).toHaveFocus();
+    });
+});
+
 test('RadioListSheet', async () => {
     const selectSpy = jest.fn();
 
