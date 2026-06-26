@@ -57,26 +57,26 @@ test('calls onChange when a page button is clicked (uncontrolled)', async () => 
     const onChange = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Pagination totalPages={5} defaultPage={1} onChange={onChange} />
+            <Pagination totalPages={7} defaultPage={2} onChange={onChange} />
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 3'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 6'}));
 
-    expect(onChange).toHaveBeenCalledWith(3);
+    expect(onChange).toHaveBeenCalledWith(6);
 });
 
 test('calls onChange when Next is clicked', async () => {
     const onChange = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Pagination totalPages={5} defaultPage={2} onChange={onChange} />
+            <Pagination totalPages={8} defaultPage={4} onChange={onChange} />
         </ThemeContextProvider>
     );
 
     await userEvent.click(screen.getByRole('button', {name: 'Página siguiente'}));
 
-    expect(onChange).toHaveBeenCalledWith(3);
+    expect(onChange).toHaveBeenCalledWith(5);
 });
 
 test('does not change page when disabled', async () => {
