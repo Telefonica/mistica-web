@@ -153,7 +153,6 @@ export const MenuItem = ({
                 onChange={() => {
                     if (isMenuOpen && itemIndex !== null) {
                         onPress?.(itemIndex);
-                        closeMenu();
                     }
                 }}
                 disabled={disabled}

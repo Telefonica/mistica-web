@@ -6,10 +6,18 @@ type Props = {
     className?: string;
     disabled?: boolean;
     group?: string;
+    returnFocus?: React.ComponentProps<typeof ReactFocusLock>['returnFocus'];
 };
 
-const FocusTrap = ({children, disabled, className, group}: Props): JSX.Element => (
-    <ReactFocusLock noFocusGuards disabled={disabled} className={className} group={group}>
+// TODO https://github.com/Telefonica/mistica-web/issues/1589 unify focus-restoration logic with consumers that restore focus manually (e.g. Drawer's useRestoreFocus)
+const FocusTrap = ({children, disabled, className, group, returnFocus = true}: Props): JSX.Element => (
+    <ReactFocusLock
+        noFocusGuards
+        disabled={disabled}
+        className={className}
+        group={group}
+        returnFocus={returnFocus}
+    >
         {children}
     </ReactFocusLock>
 );
