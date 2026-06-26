@@ -329,7 +329,7 @@ After reading the minimum set, read any further files that apply to your specifi
 | **Testing (read if you have to implement tests)** | `doc/testing.md`         |
 | **Migrating from older versions**                 | `doc/migration-guide.md` |
 | **Optimizing bundle size with lottie**            | `doc/lottie.md`          |
-| **Implementing a Figma design via Figma MCP**     | `doc/figma-mcp.md`       |
+| **Implementing a Figma design via Figma MCP**     | `doc/llms/figma-mcp.md`  |
 
 ## Docs reference
 

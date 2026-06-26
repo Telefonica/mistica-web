@@ -35,12 +35,12 @@ npm install @telefonica/mistica
 
 ## Documentation
 
-**Before writing any code**, read `node_modules/@telefonica/mistica/doc/llms.md`. That file is the canonical
-source of truth and contains critical rules, a quick start guide, component categories, design token overview,
-and step-by-step instructions on which documentation files to read and in what order.
+**Before writing any code**, read `node_modules/@telefonica/mistica/doc/llms/llms.md`. That file is the
+canonical source of truth and contains critical rules, a quick start guide, component categories, design token
+overview, and step-by-step instructions on which documentation files to read and in what order.
 
-> **Fallback**: If `node_modules/@telefonica/mistica/doc/llms.md` is not available, fetch the equivalent file
-> from the GitHub repository: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
+> **Fallback**: If `node_modules/@telefonica/mistica/doc/llms/llms.md` is not available, fetch the equivalent
+> file from the GitHub repository: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms/llms.md`
 
-Follow every instruction in `llms.md` exactly, including reading all minimum required docs before generating
-any code.
+Follow every instruction in `llms/llms.md` exactly, including reading all minimum required docs before
+generating any code.

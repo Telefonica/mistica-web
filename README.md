@@ -107,8 +107,9 @@ Start prototyping interfaces with Mistica components in the
 
 ## AI / LLM Integration
 
-Mistica ships documentation optimised for AI coding assistants. The package includes a `doc/llms.md` file with
-concise component references, critical rules, and links to detailed documentation — all inside `node_modules`.
+Mistica ships documentation optimised for AI coding assistants. The package includes a `doc/llms/llms.md` file
+with concise component references, critical rules, and links to detailed documentation — all inside
+`node_modules`.
 
 ### Using the skill
 
@@ -140,12 +141,13 @@ You can also invoke the skill explicitly if your agent supports slash commands:
 
 If you are an AI assistant and `node_modules/@telefonica/mistica` is available in the project:
 
-1. Read `node_modules/@telefonica/mistica/doc/llms.md` — start here, it has critical rules and an overview.
-2. Read the specific doc files referenced inside `llms.md` based on the task at hand.
+1. Read `node_modules/@telefonica/mistica/doc/llms/llms.md` — start here, it has critical rules and an
+   overview.
+2. Read the specific doc files referenced inside `llms/llms.md` based on the task at hand.
 
 If `node_modules/@telefonica/mistica` is **not** available, fall back to the GitHub repository:
 
-- Main LLM reference: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms.md`
+- Main LLM reference: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms/llms.md`
 - Components: `https://github.com/Telefonica/mistica-web/blob/master/doc/components.md`
 - Layout: `https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md`
 - Patterns: `https://github.com/Telefonica/mistica-web/blob/master/doc/patterns.md`
