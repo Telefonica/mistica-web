@@ -81,7 +81,7 @@ export const Default: StoryComponent<Args> = ({
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <div style={{display: 'flex', height: '100vh'}}>
                 <div style={{flexGrow: 1}}>
-                    <Box padding={16}>
+                    <Box paddingY={16} paddingX={{mobile: 0, tablet: 16, desktop: 16}}>
                         <Pagination
                             totalPages={totalPages}
                             currentPage={selectedPage}

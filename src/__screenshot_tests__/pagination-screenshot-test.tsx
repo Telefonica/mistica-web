@@ -90,6 +90,71 @@ test.each(CASES)('Pagination $name - $device', async ({args, device}) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Pagination interactive items have 48px targets on mobile', async () => {
+    await openStoryPage({
+        id: STORY_ID,
+        device: 'MOBILE_IOS',
+        args: {totalPages: 9, currentPage: 3},
+    });
+
+    const previous = await screen.findByRole('button', {name: 'Página anterior'});
+    const page = await screen.findByRole('button', {name: 'Ir a la página 2'});
+    const currentPage = await screen.findByRole('button', {name: 'Página 3, página actual'});
+    const next = await screen.findByRole('button', {name: 'Página siguiente'});
+    const targets = [previous, page, currentPage, next];
+
+    for (const target of targets) {
+        expect(await target.boundingBox()).toMatchObject({width: 48, height: 48});
+    }
+});
+
+test('Pagination ellipses are non-interactive and keep the mobile layout size', async () => {
+    await openStoryPage({
+        id: STORY_ID,
+        device: 'MOBILE_IOS',
+        args: {totalPages: 9, currentPage: 3},
+    });
+
+    const pagination = await screen.findByTestId('Pagination');
+    const ellipses = await pagination.$$('li[aria-hidden="true"]');
+
+    expect(ellipses).toHaveLength(2);
+
+    for (const ellipsis of ellipses) {
+        const content = await ellipsis.$('span');
+
+        expect(await ellipsis.boundingBox()).toMatchObject({width: 48, height: 48});
+        expect(await content?.boundingBox()).toMatchObject({width: 32, height: 32});
+        expect(await ellipsis.evaluate((element) => element.tabIndex)).toBe(-1);
+    }
+});
+
+test('Pagination compact view fits at 360px', async () => {
+    await openStoryPage({
+        id: STORY_ID,
+        device: 'MOBILE_IOS',
+        viewport: {
+            width: 360,
+            height: 667,
+            deviceScaleFactor: 2,
+            isMobile: true,
+            hasTouch: true,
+            isLandscape: false,
+        },
+        args: {totalPages: 9, currentPage: 3, hidePageList: true},
+    });
+
+    const pagination = await screen.findByTestId('Pagination');
+    const previous = await screen.findByRole('button', {name: 'Página anterior'});
+    const next = await screen.findByRole('button', {name: 'Página siguiente'});
+
+    expect(await previous.boundingBox()).toMatchObject({width: 48, height: 48});
+    expect(await next.boundingBox()).toMatchObject({width: 48, height: 48});
+
+    const paginationBox = await pagination.boundingBox();
+    expect(paginationBox?.x + paginationBox?.width).toBeLessThanOrEqual(360);
+});
+
 test('Pagination CompactView - MOBILE_IOS_SMALL', async () => {
     await openStoryPage({
         id: STORY_ID,

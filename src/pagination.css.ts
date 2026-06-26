@@ -1,7 +1,8 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
+import * as buttonStyles from './button.css';
 
 export const container = style([
     sprinkles({
@@ -55,11 +56,13 @@ export const pageListItem = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 32,
-    minWidth: 32,
+    width: 48,
+    minWidth: 48,
     height: 48,
     '@media': {
         [mq.desktopOrBigger]: {
+            width: 32,
+            minWidth: 32,
             height: 32,
         },
     },
@@ -67,14 +70,6 @@ export const pageListItem = style({
 
 export const pageListItemEllipsis = style([
     pageListItem,
-    {
-        '@media': {
-            [mq.desktopOrBigger]: {
-                width: 16,
-                minWidth: 16,
-            },
-        },
-    },
 ]);
 
 const interactiveArea = style([
@@ -261,6 +256,8 @@ export const pageContent = style({
 export const ellipsis = style([
     interactiveArea,
     {
+        width: 32,
+        height: 32,
         color: skinVars.colors.textPrimary,
         cursor: 'default',
     },
@@ -282,6 +279,48 @@ export const navigationButtonLink = style({
     selectors: {
         '&&:hover:not([disabled]), &&:active:not([disabled])': {
             backgroundColor: 'transparent',
+        },
+    },
+    '@media': {
+        [mq.mobile]: {
+            selectors: {
+                '&&': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 48,
+                    minWidth: 48,
+                    height: 48,
+                    boxSizing: 'border-box',
+                },
+            },
+        },
+    },
+});
+
+globalStyle(`${navigationButtonLink} ${buttonStyles.textContent}`, {
+    '@media': {
+        [mq.mobile]: {
+            width: '100%',
+            height: '100%',
+            padding: 0,
+            justifyContent: 'center',
+        },
+    },
+});
+
+globalStyle(`${navigationButtonLink} [data-testid='startIcon']`, {
+    '@media': {
+        [mq.mobile]: {
+            marginRight: 0,
+        },
+    },
+});
+
+globalStyle(`${navigationButtonLink} [data-testid='endIcon']`, {
+    '@media': {
+        [mq.mobile]: {
+            marginLeft: 0,
         },
     },
 });
