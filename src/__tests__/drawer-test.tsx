@@ -67,7 +67,8 @@ test('Drawer restores focus to the trigger when closed', async () => {
     render(<DrawerTest onDismiss={() => {}} />);
 
     const openButton = screen.getByRole('button', {name: 'open'});
-    await userEvent.click(openButton);
+    openButton.focus();
+    await userEvent.keyboard('{Enter}');
 
     const drawer = await screen.findByRole('dialog');
 
