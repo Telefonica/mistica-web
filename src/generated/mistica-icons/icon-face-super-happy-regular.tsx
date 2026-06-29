@@ -9,64 +9,81 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconFaceSuperHappyRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12.001 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.482 2 12.001 2m0 1.334c-4.783 0-8.666 3.882-8.666 8.666S7.218 20.666 12 20.666s8.666-3.882 8.666-8.666S16.783 3.334 12 3.334m4.006 5.204a1.335 1.335 0 1 1-.001 2.67 1.335 1.335 0 0 1 0-2.67m-8.011 0a1.336 1.336 0 1 1-.003 2.672 1.336 1.336 0 0 1 .003-2.672m9.565 4.572s-.14 5.399-5.6 5.428c-5.476.029-5.52-5.44-5.52-5.44a.666.666 0 0 1 .667-.673h9.787a.67.67 0 0 1 .666.685m-1.425.651H7.85c.21 1.17 1.019 3.46 4.103 3.443 3.082-.017 3.944-2.275 4.183-3.443"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12.001 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.482 2 12.001 2m0 1.334c-4.783 0-8.666 3.882-8.666 8.666S7.218 20.666 12 20.666s8.666-3.882 8.666-8.666S16.783 3.334 12 3.334m4.006 5.204a1.335 1.335 0 1 1-.001 2.67 1.335 1.335 0 0 1 0-2.67m-8.011 0a1.336 1.336 0 1 1-.003 2.672 1.336 1.336 0 0 1 .003-2.672m9.565 4.572s-.14 5.399-5.6 5.428c-5.476.029-5.52-5.44-5.52-5.44a.666.666 0 0 1 .667-.673h9.787a.67.67 0 0 1 .666.685m-1.425.651H7.85c.21 1.17 1.019 3.46 4.103 3.443 3.082-.017 3.944-2.275 4.183-3.443"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10m0-18.75c-4.825 0-8.75 3.925-8.75 8.75s3.925 8.75 8.75 8.75 8.75-3.925 8.75-8.75S16.825 3.25 12 3.25m-3.393 5a.982.982 0 1 0-.001 1.963.982.982 0 0 0 .001-1.963m6.697 0a.982.982 0 1 0-.002 1.963.982.982 0 0 0 .002-1.963"
-                />
-                <path
-                    fill={fillColor}
-                    d="M17.56 13.111a.67.67 0 0 0-.667-.686H7.107a.67.67 0 0 0-.666.674s.043 5.468 5.519 5.439c5.46-.03 5.6-5.427 5.6-5.427m-5.607 4.227c-1.159.006-1.951-.276-2.507-.64-.563-.37-.955-.874-1.23-1.414a5.5 5.5 0 0 1-.521-1.659h8.598l-.018.1c-.083.429-.24.984-.528 1.526a3.8 3.8 0 0 1-1.265 1.422c-.569.372-1.371.659-2.529.665"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M16 12.25a.75.75 0 0 1 .75.75 4.75 4.75 0 0 1-9.5 0 .75.75 0 0 1 .75-.75zm-7.161 1.5a3.249 3.249 0 0 0 6.322 0zM9 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
-                />
-                <path
-                    fill={fillColor}
-                    d="M12 2.25a9.75 9.75 0 1 1 0 19.502A9.75 9.75 0 0 1 12 2.25m0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.001 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.482 2 12.001 2m0 1.334c-4.783 0-8.666 3.882-8.666 8.666S7.218 20.666 12 20.666s8.666-3.882 8.666-8.666S16.783 3.334 12 3.334m4.006 5.204a1.335 1.335 0 1 1-.001 2.67 1.335 1.335 0 0 1 0-2.67m-8.011 0a1.336 1.336 0 1 1-.003 2.672 1.336 1.336 0 0 1 .003-2.672m9.565 4.572s-.14 5.399-5.6 5.428c-5.476.029-5.52-5.44-5.52-5.44a.666.666 0 0 1 .667-.673h9.787a.67.67 0 0 1 .666.685m-1.425.651H7.85c.21 1.17 1.019 3.46 4.103 3.443 3.082-.017 3.944-2.275 4.183-3.443"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.001 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.482 2 12.001 2m0 1.334c-4.783 0-8.666 3.882-8.666 8.666S7.218 20.666 12 20.666s8.666-3.882 8.666-8.666S16.783 3.334 12 3.334m4.006 5.204a1.335 1.335 0 1 1-.001 2.67 1.335 1.335 0 0 1 0-2.67m-8.011 0a1.336 1.336 0 1 1-.003 2.672 1.336 1.336 0 0 1 .003-2.672m9.565 4.572s-.14 5.399-5.6 5.428c-5.476.029-5.52-5.44-5.52-5.44a.666.666 0 0 1 .667-.673h9.787a.67.67 0 0 1 .666.685m-1.425.651H7.85c.21 1.17 1.019 3.46 4.103 3.443 3.082-.017 3.944-2.275 4.183-3.443"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10m0-18.75c-4.825 0-8.75 3.925-8.75 8.75s3.925 8.75 8.75 8.75 8.75-3.925 8.75-8.75S16.825 3.25 12 3.25m-3.393 5a.982.982 0 1 0-.001 1.963.982.982 0 0 0 .001-1.963m6.697 0a.982.982 0 1 0-.002 1.963.982.982 0 0 0 .002-1.963"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M17.56 13.111a.67.67 0 0 0-.667-.686H7.107a.67.67 0 0 0-.666.674s.043 5.468 5.519 5.439c5.46-.03 5.6-5.427 5.6-5.427m-5.607 4.227c-1.159.006-1.951-.276-2.507-.64-.563-.37-.955-.874-1.23-1.414a5.5 5.5 0 0 1-.521-1.659h8.598l-.018.1c-.083.429-.24.984-.528 1.526a3.8 3.8 0 0 1-1.265 1.422c-.569.372-1.371.659-2.529.665"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M16 12.25a.75.75 0 0 1 .75.75 4.75 4.75 0 0 1-9.5 0 .75.75 0 0 1 .75-.75zm-7.161 1.5a3.249 3.249 0 0 0 6.322 0zM9 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 2.25a9.75 9.75 0 1 1 0 19.502A9.75 9.75 0 0 1 12 2.25m0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconFaceSuperHappyRegular;

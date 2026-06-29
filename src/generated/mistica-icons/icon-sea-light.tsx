@@ -8,27 +8,42 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconSeaLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M7.5 14.75c1.676 0 3.318.56 4.916 1.626 1.402.935 2.76 1.374 4.084 1.374s2.682-.44 4.084-1.374a.75.75 0 0 1 .832 1.248c-1.598 1.065-3.24 1.626-4.916 1.626s-3.318-.56-4.916-1.626c-1.402-.935-2.76-1.374-4.084-1.374s-2.682.44-4.084 1.374a.75.75 0 0 1-.832-1.248c1.598-1.065 3.24-1.626 4.916-1.626m0-5c1.676 0 3.318.56 4.916 1.626 1.402.935 2.76 1.374 4.084 1.374s2.682-.44 4.084-1.374a.75.75 0 0 1 .832 1.248c-1.598 1.065-3.24 1.626-4.916 1.626s-3.318-.56-4.916-1.626c-1.402-.935-2.76-1.374-4.084-1.374s-2.682.44-4.084 1.374a.75.75 0 0 1-.832-1.248C4.182 10.311 5.824 9.75 7.5 9.75m0-5c1.676 0 3.318.56 4.916 1.626 1.402.935 2.76 1.374 4.084 1.374s2.682-.44 4.084-1.374a.75.75 0 0 1 .832 1.248C19.818 8.689 18.176 9.25 16.5 9.25s-3.318-.56-4.916-1.626C10.182 6.689 8.824 6.25 7.5 6.25s-2.682.44-4.084 1.374a.75.75 0 0 1-.832-1.248C4.182 5.311 5.824 4.75 7.5 4.75"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.5 14.75c1.676 0 3.318.56 4.916 1.626 1.402.935 2.76 1.374 4.084 1.374s2.682-.44 4.084-1.374a.75.75 0 0 1 .832 1.248c-1.598 1.065-3.24 1.626-4.916 1.626s-3.318-.56-4.916-1.626c-1.402-.935-2.76-1.374-4.084-1.374s-2.682.44-4.084 1.374a.75.75 0 0 1-.832-1.248c1.598-1.065 3.24-1.626 4.916-1.626m0-5c1.676 0 3.318.56 4.916 1.626 1.402.935 2.76 1.374 4.084 1.374s2.682-.44 4.084-1.374a.75.75 0 0 1 .832 1.248c-1.598 1.065-3.24 1.626-4.916 1.626s-3.318-.56-4.916-1.626c-1.402-.935-2.76-1.374-4.084-1.374s-2.682.44-4.084 1.374a.75.75 0 0 1-.832-1.248C4.182 10.311 5.824 9.75 7.5 9.75m0-5c1.676 0 3.318.56 4.916 1.626 1.402.935 2.76 1.374 4.084 1.374s2.682-.44 4.084-1.374a.75.75 0 0 1 .832 1.248C19.818 8.689 18.176 9.25 16.5 9.25s-3.318-.56-4.916-1.626C10.182 6.689 8.824 6.25 7.5 6.25s-2.682.44-4.084 1.374a.75.75 0 0 1-.832-1.248C4.182 5.311 5.824 4.75 7.5 4.75"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconSeaLight;

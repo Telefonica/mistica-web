@@ -8,28 +8,43 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconElectricScooterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16 4.25A2.75 2.75 0 0 1 18.75 7v5a.75.75 0 0 1-.634.741 5.25 5.25 0 0 0-4.375 4.375.75.75 0 0 1-.741.634H8.382a2.496 2.496 0 0 1-4.87-.503L3.5 17a2.5 2.5 0 0 1 4.883-.75h4.008a6.75 6.75 0 0 1 4.859-4.86V7a1.25 1.25 0 0 0-1.126-1.244L16 5.75h-1a.75.75 0 0 1 0-1.5z"
-            />
-            <path fill={fillColor} d="M18 14.5a2.5 2.5 0 1 1-2.487 2.747L15.5 17a2.5 2.5 0 0 1 2.5-2.5" />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 4.25A2.75 2.75 0 0 1 18.75 7v5a.75.75 0 0 1-.634.741 5.25 5.25 0 0 0-4.375 4.375.75.75 0 0 1-.741.634H8.382a2.496 2.496 0 0 1-4.87-.503L3.5 17a2.5 2.5 0 0 1 4.883-.75h4.008a6.75 6.75 0 0 1 4.859-4.86V7a1.25 1.25 0 0 0-1.126-1.244L16 5.75h-1a.75.75 0 0 1 0-1.5z"
+                />
+                <path fill={fillColor} d="M18 14.5a2.5 2.5 0 1 1-2.487 2.747L15.5 17a2.5 2.5 0 0 1 2.5-2.5" />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconElectricScooterFilled;

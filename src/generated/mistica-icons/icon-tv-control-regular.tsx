@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconTvControlRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M10 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-4-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-2-6.75a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
-            />
-            <path
-                fill={fillColor}
-                d="M15 2.25A2.75 2.75 0 0 1 17.75 5v14A2.75 2.75 0 0 1 15 21.75H9A2.75 2.75 0 0 1 6.25 19V5A2.75 2.75 0 0 1 9 2.25zm-6 1.5A1.25 1.25 0 0 0 7.75 5v14A1.25 1.25 0 0 0 9 20.25h6A1.25 1.25 0 0 0 16.25 19V5A1.25 1.25 0 0 0 15 3.75h-2.25V5a.75.75 0 0 1-1.5 0V3.75z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-4-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-2-6.75a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M15 2.25A2.75 2.75 0 0 1 17.75 5v14A2.75 2.75 0 0 1 15 21.75H9A2.75 2.75 0 0 1 6.25 19V5A2.75 2.75 0 0 1 9 2.25zm-6 1.5A1.25 1.25 0 0 0 7.75 5v14A1.25 1.25 0 0 0 9 20.25h6A1.25 1.25 0 0 0 16.25 19V5A1.25 1.25 0 0 0 15 3.75h-2.25V5a.75.75 0 0 1-1.5 0V3.75z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconTvControlRegular;
