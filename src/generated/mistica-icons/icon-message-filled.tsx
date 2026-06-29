@@ -8,27 +8,42 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconMessageFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M18 3.5A3.5 3.5 0 0 1 21.5 7v8a3.5 3.5 0 0 1-3.5 3.5h-4.862l-4.881 2.929A.5.5 0 0 1 7.5 21v-2.5H6A3.5 3.5 0 0 1 2.5 15V7A3.5 3.5 0 0 1 6 3.5zM8 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 3.5A3.5 3.5 0 0 1 21.5 7v8a3.5 3.5 0 0 1-3.5 3.5h-4.862l-4.881 2.929A.5.5 0 0 1 7.5 21v-2.5H6A3.5 3.5 0 0 1 2.5 15V7A3.5 3.5 0 0 1 6 3.5zM8 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconMessageFilled;

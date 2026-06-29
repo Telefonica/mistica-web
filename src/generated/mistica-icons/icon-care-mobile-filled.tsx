@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconCareMobileFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.94 16a2 2 0 0 1 1.368.548l.194.188.196-.188a1.98 1.98 0 0 1 1.37-.543 1.98 1.98 0 0 1 1.367.548 1.806 1.806 0 0 1-.004 2.632l-2.375 2.282a.8.8 0 0 1-1.11 0l-2.38-2.292a1.8 1.8 0 0 1-.416-2.031 1.8 1.8 0 0 1 .42-.602A1.98 1.98 0 0 1 16.94 16"
-            />
-            <path
-                fill={fillColor}
-                d="M16 2.5A2.5 2.5 0 0 1 18.5 5v9.465c0 .185-.197.307-.372.244a3.5 3.5 0 0 0-3.59.746 3.31 3.31 0 0 0-.01 4.8h-.003l.846.815a.25.25 0 0 1-.173.43H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.94 16a2 2 0 0 1 1.368.548l.194.188.196-.188a1.98 1.98 0 0 1 1.37-.543 1.98 1.98 0 0 1 1.367.548 1.806 1.806 0 0 1-.004 2.632l-2.375 2.282a.8.8 0 0 1-1.11 0l-2.38-2.292a1.8 1.8 0 0 1-.416-2.031 1.8 1.8 0 0 1 .42-.602A1.98 1.98 0 0 1 16.94 16"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 2.5A2.5 2.5 0 0 1 18.5 5v9.465c0 .185-.197.307-.372.244a3.5 3.5 0 0 0-3.59.746 3.31 3.31 0 0 0-.01 4.8h-.003l.846.815a.25.25 0 0 1-.173.43H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconCareMobileFilled;
