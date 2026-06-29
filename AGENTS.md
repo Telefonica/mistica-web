@@ -49,7 +49,18 @@ the consumer surface and do not apply when editing this source. The develop-the-
 # Documentation
 
 - **Do NOT read all docs upfront**
-- When working on a task, use this map to find and read only the docs relevant to your task:
+- When working on a task, use this map to find and read only the docs relevant to your task.
+
+For library development (authoring this source), the internal docs are the primary reference:
+
+```
+doc-internal
+├── architecture.md           # source layout, styling model, authoring conventions
+├── release-process.md        # release flow and what ships in the tarball
+└── testing-internals.md      # test suites, Jest configuration, run commands
+```
+
+The `doc/` tree is the consumer surface (how a downstream app uses the published package):
 
 ```
 doc
@@ -64,7 +75,6 @@ doc
 ├── llms
 │   ├── agents
 │   │   └── figma-verifier.md # Figma verifier agent instructions
-│   ├── commits               # commit message guidance
 │   ├── figma-mcp.md          # Figma MCP workflow
 │   └── llms.md               # main entry point, critical rules, doc index
 ├── lottie.md                 # optimizing bundle size with Lottie animations
