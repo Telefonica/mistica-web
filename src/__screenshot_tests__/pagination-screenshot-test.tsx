@@ -130,11 +130,11 @@ test('Pagination ellipses are non-interactive and keep the mobile layout size', 
 });
 
 test.each`
-    variantOutside    | color
-    ${'default'}      | ${'rgb(96, 94, 92)'}
-    ${'brand'}        | ${'rgb(255, 255, 255)'}
-    ${'negative'}     | ${'rgb(255, 255, 255)'}
-    ${'alternative'}  | ${'rgb(96, 94, 92)'}
+    variantOutside   | color
+    ${'default'}     | ${'rgb(96, 94, 92)'}
+    ${'brand'}       | ${'rgb(255, 255, 255)'}
+    ${'negative'}    | ${'rgb(255, 255, 255)'}
+    ${'alternative'} | ${'rgb(96, 94, 92)'}
 `('Pagination ellipsis color in $variantOutside context', async ({variantOutside, color}) => {
     await openStoryPage({
         id: STORY_ID,

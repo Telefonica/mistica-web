@@ -67,9 +67,7 @@ export const pageListItem = style({
     },
 });
 
-export const pageListItemEllipsis = style([
-    pageListItem,
-]);
+export const pageListItemEllipsis = style([pageListItem]);
 
 const interactiveArea = style([
     sprinkles({

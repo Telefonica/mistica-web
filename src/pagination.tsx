@@ -92,10 +92,7 @@ export const getPaginationItems = ({
     const createPageRange = (start: number, end: number): Array<PaginationItem> =>
         Array.from({length: Math.max(0, end - start + 1)}, (_, index) => createPageItem(start + index));
     const startPages = createPageRange(1, Math.min(boundaryCount, totalPages));
-    const endPages = createPageRange(
-        Math.max(totalPages - boundaryCount + 1, boundaryCount + 1),
-        totalPages
-    );
+    const endPages = createPageRange(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
     const siblingsStart = Math.max(
         Math.min(activePage - leftCount, totalPages - boundaryCount - visibleCount),
         boundaryCount + 2
@@ -310,8 +307,8 @@ export const Pagination = ({
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
-            {!hideNavigationControls && (
-                mode === 'iconOnly' ? (
+            {!hideNavigationControls &&
+                (mode === 'iconOnly' ? (
                     <IconButton
                         Icon={IconChevronLeftRegular}
                         type="brand"
@@ -333,12 +330,11 @@ export const Pagination = ({
                     >
                         {resolvedPrevLabel}
                     </ButtonLink>
-                )
-            )}
+                ))}
 
             {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
-            {!hideNavigationControls && (
-                mode === 'iconOnly' ? (
+            {!hideNavigationControls &&
+                (mode === 'iconOnly' ? (
                     <IconButton
                         Icon={IconChevronRightRegular}
                         type="brand"
@@ -360,8 +356,7 @@ export const Pagination = ({
                     >
                         {resolvedNextLabel}
                     </ButtonLink>
-                )
-            )}
+                ))}
         </nav>
     );
 };

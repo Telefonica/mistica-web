@@ -8,27 +8,42 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconArchiveFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M19.25 9a.25.25 0 0 1 .25.25V18a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 18V9.25A.25.25 0 0 1 4.75 9zM10 11.25a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zm9-7.75a2.5 2.5 0 0 1 2.255 3.574c-.136.283-.444.426-.758.426H3.503c-.314 0-.622-.143-.758-.426A2.5 2.5 0 0 1 5 3.5z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.25 9a.25.25 0 0 1 .25.25V18a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 18V9.25A.25.25 0 0 1 4.75 9zM10 11.25a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5zm9-7.75a2.5 2.5 0 0 1 2.255 3.574c-.136.283-.444.426-.758.426H3.503c-.314 0-.622-.143-.758-.426A2.5 2.5 0 0 1 5 3.5z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconArchiveFilled;

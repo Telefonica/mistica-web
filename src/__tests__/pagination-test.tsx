@@ -135,7 +135,11 @@ test('hides the page list by default below 375px', () => {
         expect(screen.getByRole('button', {name: 'Página siguiente'})).toBeInTheDocument();
         expect(screen.queryByRole('button', {name: 'Ir a la página 2'})).not.toBeInTheDocument();
     } finally {
-        Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: originalWidth});
+        Object.defineProperty(window, 'innerWidth', {
+            configurable: true,
+            writable: true,
+            value: originalWidth,
+        });
     }
 });
 
@@ -152,7 +156,11 @@ test('keeps the page list below 375px when hidePageList is explicitly false', ()
 
         expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
     } finally {
-        Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: originalWidth});
+        Object.defineProperty(window, 'innerWidth', {
+            configurable: true,
+            writable: true,
+            value: originalWidth,
+        });
     }
 });
 
