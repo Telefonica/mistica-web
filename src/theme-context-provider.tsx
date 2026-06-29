@@ -26,7 +26,6 @@ import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
 import * as mq from './media-queries.css';
-import * as styles from './theme-context.css';
 import {localeToLanguage} from './utils/locale';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
