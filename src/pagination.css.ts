@@ -1,8 +1,7 @@
-import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
-import * as buttonStyles from './button.css';
 
 export const container = style([
     sprinkles({
@@ -123,7 +122,7 @@ export const pageButton = style([
         cursor: 'pointer',
 
         selectors: {
-            '&:active:before': {
+            '&:active:not(:disabled):before': {
                 opacity: 1,
                 transform: 'translate(-50%, -50%) scale(1)',
                 backgroundColor: skinVars.colors.brandLow,
@@ -137,12 +136,12 @@ export const pageButton = style([
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
-                    '&:hover:before': {
+                    '&:hover:not(:disabled):before': {
                         opacity: 1,
                         transform: 'translate(-50%, -50%) scale(1.06)',
                         backgroundColor: skinVars.colors.neutralLow,
                     },
-                    '&:active:before': {
+                    '&:active:not(:disabled):before': {
                         opacity: 1,
                         transform: 'translate(-50%, -50%) scale(1)',
                         backgroundColor: skinVars.colors.brandLow,
@@ -163,23 +162,23 @@ export const pageButtonVariants = styleVariants({
     brand: {
         color: skinVars.colors.textButtonSecondaryBrand,
         selectors: {
-            '&:active': {
+            '&:active:not(:disabled)': {
                 color: skinVars.colors.textBrand,
             },
-            '&:active:before': {
+            '&:active:not(:disabled):before': {
                 backgroundColor: skinVars.colors.brandLow,
             },
         },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
-                    '&:hover:before': {
+                    '&:hover:not(:disabled):before': {
                         backgroundColor: skinVars.colors.backgroundContainerBrandHover,
                     },
-                    '&:active': {
+                    '&:active:not(:disabled)': {
                         color: skinVars.colors.textBrand,
                     },
-                    '&:active:before': {
+                    '&:active:not(:disabled):before': {
                         backgroundColor: skinVars.colors.brandLow,
                     },
                 },
@@ -189,23 +188,23 @@ export const pageButtonVariants = styleVariants({
     negative: {
         color: skinVars.colors.textButtonSecondaryNegative,
         selectors: {
-            '&:active': {
+            '&:active:not(:disabled)': {
                 color: skinVars.colors.textButtonPrimaryNegative,
             },
-            '&:active:before': {
+            '&:active:not(:disabled):before': {
                 backgroundColor: skinVars.colors.buttonPrimaryBackgroundNegative,
             },
         },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
-                    '&:hover:before': {
+                    '&:hover:not(:disabled):before': {
                         backgroundColor: skinVars.colors.backgroundContainerBrandHover,
                     },
-                    '&:active': {
+                    '&:active:not(:disabled)': {
                         color: skinVars.colors.textButtonPrimaryNegative,
                     },
-                    '&:active:before': {
+                    '&:active:not(:disabled):before': {
                         backgroundColor: skinVars.colors.buttonPrimaryBackgroundNegative,
                     },
                 },
@@ -258,69 +257,32 @@ export const ellipsis = style([
     {
         width: 32,
         height: 32,
-        color: skinVars.colors.textPrimary,
+        color: skinVars.colors.textSecondary,
         cursor: 'default',
     },
 ]);
 
 export const ellipsisVariants = styleVariants({
-    default: {},
+    default: {
+        color: skinVars.colors.textSecondary,
+    },
     brand: {
         color: skinVars.colors.textButtonSecondaryBrand,
     },
     negative: {
         color: skinVars.colors.textButtonSecondaryNegative,
     },
-    alternative: {},
+    alternative: {
+        color: skinVars.colors.textSecondary,
+    },
     media: {},
 });
 
 export const navigationButtonLink = style({
+    flexShrink: 0,
     selectors: {
         '&&:hover:not([disabled]), &&:active:not([disabled])': {
             backgroundColor: 'transparent',
-        },
-    },
-    '@media': {
-        [mq.mobile]: {
-            selectors: {
-                '&&': {
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 48,
-                    minWidth: 48,
-                    height: 48,
-                    boxSizing: 'border-box',
-                },
-            },
-        },
-    },
-});
-
-globalStyle(`${navigationButtonLink} ${buttonStyles.textContent}`, {
-    '@media': {
-        [mq.mobile]: {
-            width: '100%',
-            height: '100%',
-            padding: 0,
-            justifyContent: 'center',
-        },
-    },
-});
-
-globalStyle(`${navigationButtonLink} [data-testid='startIcon']`, {
-    '@media': {
-        [mq.mobile]: {
-            marginRight: 0,
-        },
-    },
-});
-
-globalStyle(`${navigationButtonLink} [data-testid='endIcon']`, {
-    '@media': {
-        [mq.mobile]: {
-            marginLeft: 0,
         },
     },
 });

@@ -39,7 +39,7 @@ type Args = {
     maxPages?: number;
     showEllipsis: boolean;
     hideNavigationControls: boolean;
-    hidePageList: boolean;
+    hidePageList?: boolean;
     disabled: boolean;
     mode: 'default' | 'iconOnly';
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
@@ -109,7 +109,6 @@ Default.args = {
     maxPages: 3,
     showEllipsis: true,
     hideNavigationControls: false,
-    hidePageList: false,
     disabled: false,
     mode: 'default',
     variantOutside: 'default',

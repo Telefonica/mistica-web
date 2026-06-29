@@ -120,6 +120,42 @@ test('honors controlled currentPage', () => {
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
 });
 
+test('hides the page list by default below 375px', () => {
+    const originalWidth = window.innerWidth;
+    Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: 360});
+
+    try {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Pagination totalPages={9} defaultPage={3} />
+            </ThemeContextProvider>
+        );
+
+        expect(screen.getByRole('button', {name: 'Página anterior'})).toBeInTheDocument();
+        expect(screen.getByRole('button', {name: 'Página siguiente'})).toBeInTheDocument();
+        expect(screen.queryByRole('button', {name: 'Ir a la página 2'})).not.toBeInTheDocument();
+    } finally {
+        Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: originalWidth});
+    }
+});
+
+test('keeps the page list below 375px when hidePageList is explicitly false', () => {
+    const originalWidth = window.innerWidth;
+    Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: 360});
+
+    try {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Pagination totalPages={9} defaultPage={3} hidePageList={false} />
+            </ThemeContextProvider>
+        );
+
+        expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
+    } finally {
+        Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: originalWidth});
+    }
+});
+
 describe('getPaginationItems', () => {
     test('returns an empty array for a single page', () => {
         expect(getPaginationItems({totalPages: 1, currentPage: 1})).toEqual([]);
@@ -138,13 +174,15 @@ describe('getPaginationItems', () => {
         expect(items[items.length - 1]).toMatchObject({type: 'page', page: 20});
     });
 
-    test('shows five dynamic pages and boundaries by default on desktop', () => {
+    test('fills the leading slots with pages on desktop', () => {
         expect(getPaginationItems({totalPages: 40, currentPage: 3})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: true},
             {type: 'page', page: 4, current: false},
             {type: 'page', page: 5, current: false},
+            {type: 'page', page: 6, current: false},
+            {type: 'page', page: 7, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 40, current: false},
         ]);
@@ -164,6 +202,14 @@ describe('getPaginationItems', () => {
         ]);
     });
 
+    test('keeps the number of desktop items stable while changing pages', () => {
+        const itemCounts = [1, 3, 20, 38, 40].map(
+            (currentPage) => getPaginationItems({totalPages: 40, currentPage}).length
+        );
+
+        expect(itemCounts).toEqual([9, 9, 9, 9, 9]);
+    });
+
     test('hides boundary pages when configured for mobile', () => {
         expect(getPaginationItems({totalPages: 40, currentPage: 33, includeBoundaryPages: false})).toEqual([
             {type: 'ellipsis'},
@@ -172,5 +218,14 @@ describe('getPaginationItems', () => {
             {type: 'page', page: 34, current: false},
             {type: 'ellipsis'},
         ]);
+    });
+
+    test('keeps the number of mobile items stable while changing pages', () => {
+        const itemCounts = [1, 3, 20, 38, 40].map(
+            (currentPage) =>
+                getPaginationItems({totalPages: 40, currentPage, includeBoundaryPages: false}).length
+        );
+
+        expect(itemCounts).toEqual([5, 5, 5, 5, 5]);
     });
 });

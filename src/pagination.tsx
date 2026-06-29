@@ -6,7 +6,8 @@ import * as styles from './pagination.css';
 import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
-import {useScreenSize, useTheme} from './hooks';
+import {IconButton} from './icon-button';
+import {useScreenSize, useTheme, useWindowWidth} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
@@ -73,34 +74,6 @@ export const getPaginationItems = ({
     const minVisibleCount = includeBoundaryPages ? 1 : 3;
     const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages ?? defaultMaxPages));
 
-    if (!includeBoundaryPages) {
-        if (!showEllipsis || totalPages <= visibleCount) {
-            return Array.from({length: totalPages}, (_, index) => {
-                const page = index + 1;
-                return {type: 'page', page, current: page === activePage};
-            });
-        }
-
-        const leftCount = Math.floor((visibleCount - 1) / 2);
-        const start = clamp(activePage - leftCount, 1, totalPages - visibleCount + 1);
-        const end = start + visibleCount - 1;
-        const items: Array<PaginationItem> = [];
-
-        if (start > 1) {
-            items.push({type: 'ellipsis'});
-        }
-
-        for (let page = start; page <= end; page++) {
-            items.push({type: 'page', page, current: page === activePage});
-        }
-
-        if (end < totalPages) {
-            items.push({type: 'ellipsis'});
-        }
-
-        return items;
-    }
-
     if (!showEllipsis || totalPages <= visibleCount) {
         return Array.from({length: totalPages}, (_, index) => {
             const page = index + 1;
@@ -108,50 +81,47 @@ export const getPaginationItems = ({
         });
     }
 
+    const boundaryCount = includeBoundaryPages ? 1 : 0;
     const leftCount = Math.floor((visibleCount - 1) / 2);
     const rightCount = visibleCount - 1 - leftCount;
+    const createPageItem = (page: number): PaginationItem => ({
+        type: 'page',
+        page,
+        current: page === activePage,
+    });
+    const createPageRange = (start: number, end: number): Array<PaginationItem> =>
+        Array.from({length: Math.max(0, end - start + 1)}, (_, index) => createPageItem(start + index));
+    const startPages = createPageRange(1, Math.min(boundaryCount, totalPages));
+    const endPages = createPageRange(
+        Math.max(totalPages - boundaryCount + 1, boundaryCount + 1),
+        totalPages
+    );
+    const siblingsStart = Math.max(
+        Math.min(activePage - leftCount, totalPages - boundaryCount - visibleCount),
+        boundaryCount + 2
+    );
+    const siblingsEnd = Math.min(
+        Math.max(activePage + rightCount, boundaryCount + visibleCount + 1),
+        totalPages - boundaryCount - 1
+    );
 
-    let start = activePage - leftCount;
-    let end = activePage + rightCount;
+    const items: Array<PaginationItem> = [...startPages];
 
-    if (start < 1) {
-        end += 1 - start;
-        start = 1;
+    if (siblingsStart > boundaryCount + 2) {
+        items.push({type: 'ellipsis'});
+    } else if (boundaryCount + 1 < totalPages - boundaryCount) {
+        items.push(createPageItem(boundaryCount + 1));
     }
 
-    if (end > totalPages) {
-        start -= end - totalPages;
-        end = totalPages;
+    items.push(...createPageRange(siblingsStart, siblingsEnd));
+
+    if (siblingsEnd < totalPages - boundaryCount - 1) {
+        items.push({type: 'ellipsis'});
+    } else if (totalPages - boundaryCount > boundaryCount) {
+        items.push(createPageItem(totalPages - boundaryCount));
     }
 
-    start = Math.max(1, start);
-    end = Math.min(totalPages, end);
-
-    const items: Array<PaginationItem> = [];
-
-    if (start > 1) {
-        items.push({type: 'page', page: 1, current: activePage === 1});
-
-        if (start === 3) {
-            items.push({type: 'page', page: 2, current: activePage === 2});
-        } else if (start > 3) {
-            items.push({type: 'ellipsis'});
-        }
-    }
-
-    for (let page = start; page <= end; page++) {
-        items.push({type: 'page', page, current: page === activePage});
-    }
-
-    if (end < totalPages) {
-        if (end === totalPages - 2) {
-            items.push({type: 'page', page: totalPages - 1, current: activePage === totalPages - 1});
-        } else if (end < totalPages - 2) {
-            items.push({type: 'ellipsis'});
-        }
-
-        items.push({type: 'page', page: totalPages, current: activePage === totalPages});
-    }
+    items.push(...endPages);
 
     return items;
 };
@@ -265,7 +235,7 @@ export const Pagination = ({
     defaultPage = 1,
     onChange,
     hideNavigationControls = false,
-    hidePageList = false,
+    hidePageList: hidePageListProp,
     showEllipsis = true,
     maxPages,
     navLeftLabel,
@@ -280,7 +250,8 @@ export const Pagination = ({
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
     const {isTabletOrSmaller} = useScreenSize();
-    const showNavLabel = mode === 'default' && !isTabletOrSmaller;
+    const windowWidth = useWindowWidth();
+    const hidePageList = hidePageListProp ?? windowWidth < 375;
 
     validatePositivePageNumber('totalPages', totalPages);
     validatePositivePageNumber('currentPage', currentPage);
@@ -340,34 +311,56 @@ export const Pagination = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
             {!hideNavigationControls && (
-                <ButtonLink
-                    className={classnames(
-                        styles.navigationButtonLink,
-                        styles.navigationButtonLinkVariants[variant]
-                    )}
-                    disabled={disabled || isPrevDisabled}
-                    aria-label={resolvedPrevAriaLabel}
-                    onPress={() => goToPage(activePage - 1)}
-                    StartIcon={IconChevronLeftRegular}
-                >
-                    {showNavLabel ? resolvedPrevLabel : ''}
-                </ButtonLink>
+                mode === 'iconOnly' ? (
+                    <IconButton
+                        Icon={IconChevronLeftRegular}
+                        type="brand"
+                        backgroundType="transparent"
+                        disabled={disabled || isPrevDisabled}
+                        aria-label={resolvedPrevAriaLabel}
+                        onPress={() => goToPage(activePage - 1)}
+                    />
+                ) : (
+                    <ButtonLink
+                        className={classnames(
+                            styles.navigationButtonLink,
+                            styles.navigationButtonLinkVariants[variant]
+                        )}
+                        disabled={disabled || isPrevDisabled}
+                        aria-label={resolvedPrevAriaLabel}
+                        onPress={() => goToPage(activePage - 1)}
+                        StartIcon={IconChevronLeftRegular}
+                    >
+                        {resolvedPrevLabel}
+                    </ButtonLink>
+                )
             )}
 
             {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls && (
-                <ButtonLink
-                    className={classnames(
-                        styles.navigationButtonLink,
-                        styles.navigationButtonLinkVariants[variant]
-                    )}
-                    disabled={disabled || isNextDisabled}
-                    aria-label={resolvedNextAriaLabel}
-                    onPress={() => goToPage(activePage + 1)}
-                    EndIcon={IconChevronRightRegular}
-                >
-                    {showNavLabel ? resolvedNextLabel : ''}
-                </ButtonLink>
+                mode === 'iconOnly' ? (
+                    <IconButton
+                        Icon={IconChevronRightRegular}
+                        type="brand"
+                        backgroundType="transparent"
+                        disabled={disabled || isNextDisabled}
+                        aria-label={resolvedNextAriaLabel}
+                        onPress={() => goToPage(activePage + 1)}
+                    />
+                ) : (
+                    <ButtonLink
+                        className={classnames(
+                            styles.navigationButtonLink,
+                            styles.navigationButtonLinkVariants[variant]
+                        )}
+                        disabled={disabled || isNextDisabled}
+                        aria-label={resolvedNextAriaLabel}
+                        onPress={() => goToPage(activePage + 1)}
+                        EndIcon={IconChevronRightRegular}
+                    >
+                        {resolvedNextLabel}
+                    </ButtonLink>
+                )
             )}
         </nav>
     );
