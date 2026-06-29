@@ -140,7 +140,7 @@ const makeRawColors = (colors: Colors): Colors =>
     ) as Colors;
 
 const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
-    const instanceId = React.useId();
+    const themeScopeId = React.useId();
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -334,7 +334,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                                                     {as ? (
                                                         <>
                                                             {renderStyles(
-                                                                `[data-mistica-theme="${instanceId}"]`
+                                                                `[data-mistica-theme="${themeScopeId}"]`
                                                             )}
                                                             {React.createElement(
                                                                 as,
@@ -342,12 +342,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                                                                     style: {
                                                                         isolation: 'isolate',
                                                                     },
-                                                                    className: withoutStyles
-                                                                        ? undefined
-                                                                        : styles.themeVars,
                                                                     'data-mistica-theme': withoutStyles
                                                                         ? undefined
-                                                                        : instanceId,
+                                                                        : themeScopeId,
                                                                 },
                                                                 children
                                                             )}

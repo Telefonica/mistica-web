@@ -88,9 +88,10 @@ test('Multiple ThemeContextProvider with as="div" get unique data-mistica-theme 
             >
                 <div data-testid="dark-content" />
             </ThemeContextProvider>
-        </ThemeContextProvider>,
+        </ThemeContextProvider>
     );
-
+    // data-mistica-theme is a non-semantic attribute with no Testing Library query
+    // eslint-disable-next-line testing-library/no-node-access
     const themedDivs = container.querySelectorAll('[data-mistica-theme]');
     expect(themedDivs).toHaveLength(2);
 
@@ -118,9 +119,10 @@ test('ThemeContextProvider with as="div" and withoutStyles does not add data-mis
             >
                 <div data-testid="content" />
             </ThemeContextProvider>
-        </ThemeContextProvider>,
+        </ThemeContextProvider>
     );
-
+    // data-mistica-theme is a non-semantic attribute with no Testing Library query
+    // eslint-disable-next-line testing-library/no-node-access
     const themedDivs = container.querySelectorAll('[data-mistica-theme]');
     expect(themedDivs).toHaveLength(0);
 });
