@@ -26,7 +26,6 @@ import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
 import * as mq from './media-queries.css';
-import * as styles from './theme-context.css';
 import {localeToLanguage} from './utils/locale';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
@@ -140,6 +139,7 @@ const makeRawColors = (colors: Colors): Colors =>
     ) as Colors;
 
 const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
+    const themeScopeId = React.useId();
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -332,16 +332,18 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                                                 <SnackbarRoot>
                                                     {as ? (
                                                         <>
-                                                            {renderStyles(`.${styles.themeVars}`)}
+                                                            {renderStyles(
+                                                                `[data-mistica-theme="${themeScopeId}"]`
+                                                            )}
                                                             {React.createElement(
                                                                 as,
                                                                 {
                                                                     style: {
                                                                         isolation: 'isolate',
                                                                     },
-                                                                    className: withoutStyles
+                                                                    'data-mistica-theme': withoutStyles
                                                                         ? undefined
-                                                                        : styles.themeVars,
+                                                                        : themeScopeId,
                                                                 },
                                                                 children
                                                             )}
