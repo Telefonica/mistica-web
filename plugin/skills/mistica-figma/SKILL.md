@@ -129,6 +129,11 @@ below the minimum):
 | Tablet      | 834 px  | 1194 px    |
 | Desktop     | 1440 px | 1024 px    |
 
+### Full-viewport-width constraint
+
+`ResponsiveLayout` and `GridLayout` frames must be **direct children of the screen frame**. Nesting them
+inside a narrower custom parent breaks padding and column math.
+
 ### Full-screen sections — background and padding rule
 
 Both responsive layout frames and grid layout frames represent **full-screen-width sections**. They must
@@ -147,6 +152,14 @@ Screen frame (e.g. 1440 px, background = `background`)
 
 If a section has the same background as the screen, bind it to the same variable explicitly — do not leave it
 unfilled or transparent.
+
+### Components with built-in responsive layout
+
+These components include their own full-width layout and must be placed as **direct children of the screen
+frame** — never inside a `Layout/<FormFactor>` wrapper:
+
+Header, Hero, CoverHero, NavigationBar, MainNavigationBar, FunnelNavigationBar, FeedbackScreen, LoadingScreen,
+BrandLoadingScreen, Carousel, ButtonFixedFooterLayout.
 
 ### Responsive layout frame
 
