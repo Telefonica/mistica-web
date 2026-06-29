@@ -21,15 +21,31 @@ Don't hesitate to ask any questions and share your ideas
 We would love to accept your Pull Requests but please, before starting your development,
 [create an issue](https://github.com/Telefonica/mistica-web/issues/new/choose).
 
-- PR title must follow **conventional commits** format; the scope must be the affected **component name**
-  (e.g. `fix(TextField): ...`). If no component was affected but the change is internal you can use set
-  "Chore" as the component name. For allowed types check [lint action](./.github/workflows/ci.yml#L108).
-- PR description: concise summary of the problem and fix, ending with `Ref: <TICKET-ID>` (if there's a jira
-  ticket).
-- Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every PR.
+### PR Title - Conventional commit standard
 
-For the full commit and pull-request conventions, the supported type subset, and how they drive release
-versioning, see [Commits and Pull Requests](./doc/commits-and-prs.md).
+PR title must follow the [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+```
+<type>(<scope>): <subject>
+```
+
+- **type**: the kind of change (see the allowed subset below).
+- **scope**: the affected **component name** (for example `TextField`, `Dialog`). For internal
+  changes that do not touch a component, use `Chore` as the scope.
+- **subject**: a concise, imperative description of the change.
+- Add the `AI` label when the code was written by an AI agent.
+
+#### Allowed types (the supported subset)
+
+Conventional Commits defines many types, but this repository intentionally supports only a subset.
+The allowlist is enforced by the `validate-pr-title` job in
+[`.github/workflows/ci.yml`](../.github/workflows/ci.yml#116):
+
+### PR Description
+Concise summary of the problem and fix, ending with `Ref: <ISSUE-ID>`;
+
+### Reviewers
+Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every PR.
 
 ## Bug reports
 
