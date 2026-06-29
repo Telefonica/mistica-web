@@ -91,8 +91,6 @@ const audit = async (browser, url, disabledRules = []) => {
         .disableRules([
             // ignored because some stories don't include an H1 header
             'page-has-heading-one',
-            // ignored because isolated component stories have no <main> landmark
-            'landmark-one-main',
             ...disabledRules,
         ])
         .analyze();
