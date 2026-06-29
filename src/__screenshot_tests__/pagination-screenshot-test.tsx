@@ -125,7 +125,7 @@ test('Pagination ellipses are non-interactive and keep the mobile layout size', 
 
         expect(await ellipsis.boundingBox()).toMatchObject({width: 48, height: 48});
         expect(await content?.boundingBox()).toMatchObject({width: 32, height: 32});
-        expect(await ellipsis.evaluate((element) => element.tabIndex)).toBe(-1);
+        expect(await ellipsis.evaluate((element) => (element as HTMLElement).tabIndex)).toBe(-1);
     }
 });
 
@@ -173,12 +173,16 @@ test('Pagination compact view fits at 360px', async () => {
     const nextBox = await next.boundingBox();
     const paginationBox = await pagination.boundingBox();
 
-    expect(previousBox?.width).toBeGreaterThanOrEqual(48);
-    expect(previousBox?.height).toBe(48);
-    expect(nextBox?.width).toBeGreaterThanOrEqual(48);
-    expect(nextBox?.height).toBe(48);
-    expect(previousBox?.y).toBe(nextBox?.y);
-    expect(paginationBox?.x + paginationBox?.width).toBeLessThanOrEqual(360);
+    if (!previousBox || !nextBox || !paginationBox) {
+        throw Error('Pagination bounding boxes should be available');
+    }
+
+    expect(previousBox.width).toBeGreaterThanOrEqual(48);
+    expect(previousBox.height).toBe(48);
+    expect(nextBox.width).toBeGreaterThanOrEqual(48);
+    expect(nextBox.height).toBe(48);
+    expect(previousBox.y).toBe(nextBox.y);
+    expect(paginationBox.x + paginationBox.width).toBeLessThanOrEqual(360);
 });
 
 test('Pagination CompactView - MOBILE_IOS_SMALL', async () => {
