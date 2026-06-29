@@ -2,6 +2,23 @@
 
 React component library for Telefonica's Design System.
 
+## You are developing the library, not consuming it
+
+This repository is the **source** of the `@telefonica/mistica` package. When you work here you are authoring
+the library itself. Read the contributor documentation under `doc-internal/`:
+
+- [`doc-internal/architecture.md`](./doc-internal/architecture.md) — source layout, styling model, authoring
+  conventions.
+- [`doc-internal/testing-internals.md`](./doc-internal/testing-internals.md) — test suites, Jest
+  configuration, run commands.
+- [`doc-internal/release-process.md`](./doc-internal/release-process.md) — release flow and what ships in the
+  tarball.
+
+Do **NOT** follow the consumer guide `doc/llms/llms.md` for authoring tasks. The `doc/` tree and the
+`published-skills/mistica-react` skill describe how a downstream app _uses_ the published package; they are
+the consumer surface and do not apply when editing this source. The develop-the-library skills live under
+`.agents/skills/` and load automatically in this workspace.
+
 **Package manager**: `yarn`
 
 **Tooling**: yarn storybook (components live doc), yarn playroom (prototyping tool)

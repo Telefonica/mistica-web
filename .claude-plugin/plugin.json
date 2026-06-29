@@ -10,5 +10,6 @@
     "repository": "https://github.com/Telefonica/mistica-web",
     "license": "MIT",
     "keywords": ["react", "design-system", "telefonica", "mistica", "ui", "components"],
+    "skills": ["published-skills/mistica-react", "published-skills/mistica-figma"],
     "dependencies": [{"name": "figma", "marketplace": "claude-plugins-official"}]
 }

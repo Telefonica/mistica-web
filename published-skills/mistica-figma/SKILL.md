@@ -1,9 +1,10 @@
 ---
 name: mistica-figma
 description: >
-  Teaches the agent how to build Figma screens with Mistica — Telefonica's design system. Captures Mistica's
-  library layout, component keys, text-preset scale, colour tokens and icons. Use this skill alongside the
-  generic Figma build skills.
+  Build Figma screens that USE Mistica — Telefonica's design system — as the chosen design library. Captures
+  Mistica's library layout, component keys, text-preset scale, colour tokens and icons. Use this skill
+  alongside the generic Figma build skills. This is a design-time consumer skill; do NOT use it when
+  developing the mistica-web library source (components, stories, or tests).
 license: MIT
 metadata:
   author: telefonica
@@ -54,8 +55,8 @@ Discover both live per run via `search_design_system` scoped to the Mística Ski
 - **Paint style** → `node.fillStyleId = style.id` (or `strokeStyleId`).
 
 When resolving a token by name, check variables first, then styles — use whichever form Skins publishes it in.
-Some tokens (for example backgrounds that carry gradients) are styles, not variables; using `setBoundVariableForPaint`
-on a style-only token will silently fail.
+Some tokens (for example backgrounds that carry gradients) are styles, not variables; using
+`setBoundVariableForPaint` on a style-only token will silently fail.
 
 Radii are exported as variables; always bind them rather than using a literal corner value.
 
@@ -324,9 +325,9 @@ Load alongside the Figma build skills before any `use_figma` call.
 
 1. `get_libraries({ fileKey })` → confirm which Mistica libraries are subscribed; capture their keys.
 2. Resolve assets scoped to the Mistica library keys via
-   `search_design_system({ includeLibraryKeys: [...] })`: components, text styles, colour variables, and colour
-   styles — always pass both `includeVariables: true` and `includeStyles: true` so tokens published in either
-   form are discovered. Cross-check the catalog; update it when keys differ.
+   `search_design_system({ includeLibraryKeys: [...] })`: components, text styles, colour variables, and
+   colour styles — always pass both `includeVariables: true` and `includeStyles: true` so tokens published in
+   either form are discovered. Cross-check the catalog; update it when keys differ.
 3. Probe a component's `componentProperties` once before populating (text props live on TEXT layers like
    `Title`, `Action`, `Text`; toggles are BOOLEAN variant props). See `design-brief-to-figma` Step 3.
 4. Build per `figma-use` rules: import by key, instance, set text props, bind tokens, apply text styles. Load
