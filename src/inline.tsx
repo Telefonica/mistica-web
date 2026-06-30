@@ -60,7 +60,7 @@ const calcInlineVars = (
           })
         : {};
 
-    const alignItemsVars = alignItems !== undefined
+    const alignItemsVars = alignItems !== undefined && alignItems !== 'stretch'
         ? {
               [styles.vars.childDisplay]: 'flex',
               [styles.vars.childAlignItems]: alignItems,

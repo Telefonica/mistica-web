@@ -20,7 +20,7 @@ export const vars = {
 };
 
 const checkboxBase = sprinkles({
-    display: 'inline-block',
+    display: 'inline-flex',
     cursor: 'pointer',
 });
 
@@ -119,6 +119,7 @@ export const container = style([
     {
         cursor: 'pointer',
         display: 'flex',
+        flexDirection: 'column',
     },
 ]);
 export const containerDisabled = style([
