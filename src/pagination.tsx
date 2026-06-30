@@ -44,10 +44,12 @@ type PageItem = {type: 'page'; page: number; current: boolean};
 type EllipsisItem = {type: 'ellipsis'};
 type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
 
+const DEFAULT_DYNAMIC_PAGE_COUNT = 3;
+
 export const getPaginationItems = ({
     totalPages,
     currentPage,
-    maxPages,
+    maxPages = DEFAULT_DYNAMIC_PAGE_COUNT,
     showEllipsis = true,
     includeBoundaryPages = true,
 }: {
@@ -62,9 +64,8 @@ export const getPaginationItems = ({
     }
 
     const activePage = Math.min(Math.max(currentPage, 1), totalPages);
-    const defaultMaxPages = includeBoundaryPages ? 5 : 3;
     const minVisibleCount = includeBoundaryPages ? 1 : 3;
-    const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages ?? defaultMaxPages));
+    const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages));
 
     if (!showEllipsis || totalPages <= visibleCount) {
         return Array.from({length: totalPages}, (_, index) => {
@@ -83,6 +84,29 @@ export const getPaginationItems = ({
     });
     const createPageRange = (start: number, end: number): Array<PaginationItem> =>
         Array.from({length: Math.max(0, end - start + 1)}, (_, index) => createPageItem(start + index));
+
+    if (!includeBoundaryPages) {
+        const rangeStart = Math.max(Math.min(activePage - leftCount, totalPages - visibleCount), 2);
+        const rangeEnd = Math.min(rangeStart + visibleCount - 1, totalPages);
+        const items: Array<PaginationItem> = [];
+
+        if (rangeStart > 2) {
+            items.push({type: 'ellipsis'});
+        } else {
+            items.push(...createPageRange(1, rangeStart - 1));
+        }
+
+        items.push(...createPageRange(rangeStart, rangeEnd));
+
+        if (rangeEnd < totalPages - 1) {
+            items.push({type: 'ellipsis'});
+        } else {
+            items.push(...createPageRange(rangeEnd + 1, totalPages));
+        }
+
+        return items;
+    }
+
     const startPages = createPageRange(1, Math.min(boundaryCount, totalPages));
     const endPages = createPageRange(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
     const siblingsStart = Math.max(
@@ -227,7 +251,7 @@ export const Pagination = ({
     hidePageList: hidePageListProp,
     withCompactView = false,
     showEllipsis = true,
-    maxPages,
+    maxPages = DEFAULT_DYNAMIC_PAGE_COUNT,
     navLeftLabel,
     navRightLabel,
     mode,
@@ -239,7 +263,7 @@ export const Pagination = ({
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const {isTabletOrSmaller} = useScreenSize();
+    const {isMobile, isTabletOrSmaller} = useScreenSize();
     const hidePageList = hidePageListProp === true;
     const compactView = withCompactView && !hideNavigationControls;
     const resolvedMode = mode ?? (isTabletOrSmaller ? 'iconOnly' : 'default');
@@ -282,7 +306,7 @@ export const Pagination = ({
         currentPage: activePage,
         maxPages,
         showEllipsis,
-        includeBoundaryPages: !isTabletOrSmaller,
+        includeBoundaryPages: !isMobile,
     });
 
     const isPrevDisabled = activePage <= 1;

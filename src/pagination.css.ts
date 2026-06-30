@@ -12,7 +12,7 @@ export const container = style([
     }),
     {
         gap: 4,
-        padding: '8px 16px',
+        padding: '8px 0',
         width: 'fit-content',
         maxWidth: '100%',
         boxSizing: 'border-box',
@@ -20,6 +20,7 @@ export const container = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 gap: 8,
+                padding: '8px 16px',
             },
         },
     },

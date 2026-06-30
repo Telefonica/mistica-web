@@ -156,15 +156,25 @@ describe('getPaginationItems', () => {
             {type: 'page', page: 3, current: true},
             {type: 'page', page: 4, current: false},
             {type: 'page', page: 5, current: false},
-            {type: 'page', page: 6, current: false},
-            {type: 'page', page: 7, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 40, current: false},
         ]);
     });
 
-    test('keeps five centered dynamic pages on desktop', () => {
+    test('keeps three centered dynamic pages on desktop by default', () => {
         expect(getPaginationItems({totalPages: 40, currentPage: 31})).toEqual([
+            {type: 'page', page: 1, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 30, current: false},
+            {type: 'page', page: 31, current: true},
+            {type: 'page', page: 32, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 40, current: false},
+        ]);
+    });
+
+    test('allows configuring more dynamic pages on desktop', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 31, maxPages: 5})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 29, current: false},
@@ -182,10 +192,20 @@ describe('getPaginationItems', () => {
             (currentPage) => getPaginationItems({totalPages: 40, currentPage}).length
         );
 
-        expect(itemCounts).toEqual([9, 9, 9, 9, 9]);
+        expect(itemCounts).toEqual([7, 7, 7, 7, 7]);
     });
 
     test('hides boundary pages when configured for mobile', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 3, includeBoundaryPages: false})).toEqual([
+            {type: 'page', page: 1, current: false},
+            {type: 'page', page: 2, current: false},
+            {type: 'page', page: 3, current: true},
+            {type: 'page', page: 4, current: false},
+            {type: 'ellipsis'},
+        ]);
+    });
+
+    test('keeps mobile item slots stable without fixed boundary pages', () => {
         expect(getPaginationItems({totalPages: 40, currentPage: 33, includeBoundaryPages: false})).toEqual([
             {type: 'ellipsis'},
             {type: 'page', page: 32, current: false},
@@ -193,14 +213,20 @@ describe('getPaginationItems', () => {
             {type: 'page', page: 34, current: false},
             {type: 'ellipsis'},
         ]);
-    });
 
-    test('keeps the number of mobile items stable while changing pages', () => {
-        const itemCounts = [1, 3, 20, 38, 40].map(
-            (currentPage) =>
-                getPaginationItems({totalPages: 40, currentPage, includeBoundaryPages: false}).length
-        );
+        expect(getPaginationItems({totalPages: 40, currentPage: 1, includeBoundaryPages: false})).toEqual([
+            {type: 'page', page: 1, current: true},
+            {type: 'page', page: 2, current: false},
+            {type: 'page', page: 3, current: false},
+            {type: 'page', page: 4, current: false},
+            {type: 'ellipsis'},
+        ]);
 
-        expect(itemCounts).toEqual([5, 5, 5, 5, 5]);
+        expect(
+            [1, 3, 20, 38, 40].map(
+                (currentPage) =>
+                    getPaginationItems({totalPages: 40, currentPage, includeBoundaryPages: false}).length
+            )
+        ).toEqual([5, 5, 5, 5, 5]);
     });
 });

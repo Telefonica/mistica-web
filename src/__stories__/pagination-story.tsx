@@ -70,13 +70,16 @@ export const Default: StoryComponent<Args> = ({
     onChange,
 }) => {
     const [selectedPage, setSelectedPage] = React.useState(currentPage ?? defaultPage ?? 1);
+    const page = currentPage ?? selectedPage;
 
     React.useEffect(() => {
         setSelectedPage(currentPage ?? defaultPage ?? 1);
     }, [currentPage, defaultPage]);
 
     const handleChange = (page: number) => {
-        setSelectedPage(page);
+        if (currentPage === undefined) {
+            setSelectedPage(page);
+        }
         getOnChange(onChange)?.(page);
     };
 
@@ -87,7 +90,7 @@ export const Default: StoryComponent<Args> = ({
                     <Box paddingY={16} paddingX={{mobile: 0, tablet: 16, desktop: 16}}>
                         <Pagination
                             totalPages={totalPages}
-                            currentPage={selectedPage}
+                            currentPage={page}
                             maxPages={maxPages}
                             showEllipsis={showEllipsis}
                             hideNavigationControls={hideNavigationControls}
@@ -117,7 +120,7 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Pagination';
 Default.args = {
     totalPages: 9,
-    currentPage: 1,
+    defaultPage: 1,
     maxPages: 3,
     showEllipsis: true,
     hideNavigationControls: false,
