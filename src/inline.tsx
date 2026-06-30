@@ -60,12 +60,13 @@ const calcInlineVars = (
           })
         : {};
 
-    const alignItemsVars = alignItems !== undefined && alignItems !== 'stretch'
-        ? {
-              [styles.vars.childDisplay]: 'flex',
-              [styles.vars.childAlignItems]: alignItems,
-          }
-        : {};
+    const alignItemsVars =
+        alignItems !== undefined && alignItems !== 'stretch'
+            ? {
+                  [styles.vars.childDisplay]: 'flex',
+                  [styles.vars.childAlignItems]: alignItems,
+              }
+            : {};
 
     return {
         ...spaceVars,
