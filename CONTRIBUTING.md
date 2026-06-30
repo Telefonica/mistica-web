@@ -37,10 +37,13 @@ PR title must follow the [Conventional Commits](https://www.conventionalcommits.
 
 #### Allowed types (the supported subset)
 
-Conventional Commits defines many types, but this repository intentionally supports only a subset.
-The allowlist is enforced by the `validate-pr-title` job in
-[`.github/workflows/ci.yml`](../.github/workflows/ci.yml#116):
+Conventional Commits defines many types, but this repository intentionally supports only a subset. The allowlist is enforced by the `validate-pr-title` job in
+[`.github/workflows/ci.yml`](./.github/workflows/ci.yml#L108):
 
+- fix
+- feat
+- chore
+- revert
 ### PR Description
 Concise summary of the problem and fix, ending with `Ref: <ISSUE-ID>`;
 
