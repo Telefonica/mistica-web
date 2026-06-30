@@ -8,7 +8,6 @@ const SKINS: Array<KnownSkinName> = [
     'O2',
     'O2-new',
     'Vivo',
-    'Vivo-new',
     'Telefonica',
     'Blau',
     'Esimflag',
@@ -20,12 +19,10 @@ const DARK_MODE_VALUES = [false, true];
 const getBrandLogoCases = () => {
     const cases = [];
     for (const skin of SKINS) {
-        if (skin !== 'Vivo-new') {
-            for (const type of LOGO_TYPES) {
-                for (const isInverse of INVERSE_VALUES) {
-                    for (const isDarkMode of DARK_MODE_VALUES) {
-                        cases.push([skin, type, isInverse, isDarkMode]);
-                    }
+        for (const type of LOGO_TYPES) {
+            for (const isInverse of INVERSE_VALUES) {
+                for (const isDarkMode of DARK_MODE_VALUES) {
+                    cases.push([skin, type, isInverse, isDarkMode]);
                 }
             }
         }

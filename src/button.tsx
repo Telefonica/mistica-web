@@ -5,7 +5,7 @@ import Box from './box';
 import * as styles from './button.css';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN} from './skins/constants';
 import {flattenChildren} from './skins/utils';
 import Spinner from './spinner';
 import {Text, Text3} from './text';
@@ -112,8 +112,8 @@ const renderButtonElement = ({
 const ButtonLinkChevron = () => {
     const {skinName} = useTheme();
 
-    // vivo new skin has a different chevron
-    if (skinName === VIVO_NEW_SKIN) {
+    // vivo skin has a different chevron
+    if (skinName === VIVO_SKIN) {
         return (
             <svg width="0.5em" height="0.5em" viewBox="0 0 8 8" fill="none">
                 <path

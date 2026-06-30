@@ -7,7 +7,7 @@ type Props = {
     size?: number | string;
 };
 
-const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
+const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const gradientId = React.useId();
 
@@ -48,4 +48,4 @@ const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
     );
 };
 
-export default IconSuccessVivoNew;
+export default IconSuccessVivo;

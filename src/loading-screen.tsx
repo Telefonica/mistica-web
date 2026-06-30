@@ -12,7 +12,7 @@ import classnames from 'classnames';
 import {Logo} from './logo';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN} from './skins/constants';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
@@ -305,7 +305,7 @@ const VivinhoLoadingAnimation = React.lazy(() => import('./vivinho-loading-anima
 const BrandLoadingAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadingAnimationProps) => {
     const {skinName} = useTheme();
 
-    if (skinName === VIVO_NEW_SKIN) {
+    if (skinName === VIVO_SKIN) {
         return (
             <React.Suspense fallback={null}>
                 <VivinhoLoadingAnimation

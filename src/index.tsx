@@ -191,7 +191,6 @@ export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
-export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
@@ -228,7 +227,6 @@ export {
 export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {
     VIVO_SKIN,
-    VIVO_NEW_SKIN,
     O2_SKIN,
     O2_NEW_SKIN,
     MOVISTAR_SKIN,
@@ -240,7 +238,6 @@ export {
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
-export {getVivoNewSkin} from './skins/vivo-new';
 export {getMovistarSkin} from './skins/movistar';
 export {getMovistarNewSkin} from './skins/movistar-new';
 export {getO2Skin} from './skins/o2';
@@ -250,7 +247,6 @@ export {getBlauSkin} from './skins/blau';
 export {getTuSkin} from './skins/tu';
 export {getEsimflagSkin} from './skins/esimflag';
 export {palette as vivoPalette} from './skins/vivo';
-export {palette as vivoNewPalette} from './skins/vivo-new';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as movistarNewPalette} from './skins/movistar-new';
 export {palette as o2Palette} from './skins/o2';

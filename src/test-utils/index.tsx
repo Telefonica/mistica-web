@@ -185,17 +185,7 @@ export const openStoryPage = ({
     id: string;
     device?: Device;
     viewport?: TestViewport;
-    skin?:
-        | 'Movistar'
-        | 'Movistar-new'
-        | 'Vivo'
-        | 'Vivo-new'
-        | 'O2'
-        | 'O2-new'
-        | 'Telefonica'
-        | 'Blau'
-        | 'Tu'
-        | 'Esimflag';
+    skin?: 'Movistar' | 'Movistar-new' | 'Vivo' | 'O2' | 'O2-new' | 'Telefonica' | 'Blau' | 'Tu' | 'Esimflag';
     args?: StoryArgs;
     isDarkMode?: boolean;
 }): Promise<PageApi> =>

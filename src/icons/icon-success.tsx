@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {O2_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
+import {O2_SKIN, O2_NEW_SKIN, VIVO_SKIN} from '../skins/constants';
 import {
     getAnimateDrawLineProps,
     getAnimateFadeInProps,
@@ -201,7 +201,7 @@ const IconSuccess = ({size, color, skipAnimation}: Props): JSX.Element => {
             return <IconSuccessO2 size={size} color={color} skipAnimation={skipAnimation} />;
         case O2_NEW_SKIN:
             return <IconSuccessO2New size={size} color={color} skipAnimation={skipAnimation} />;
-        case VIVO_NEW_SKIN:
+        case VIVO_SKIN:
             return <IconSuccessVivo size={size} color={color} skipAnimation={skipAnimation} />;
         default:
             return <IconSuccessDefault size={size} color={color} skipAnimation={skipAnimation} />;

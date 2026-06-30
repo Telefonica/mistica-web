@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
+import {O2_SKIN, O2_NEW_SKIN, VIVO_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 
 type Props = {
@@ -76,7 +76,7 @@ const IconInfo = (props: Props): JSX.Element => {
             return <IconInfoO2 {...props} />;
         case O2_NEW_SKIN:
             return <IconInfoO2New {...props} />;
-        case VIVO_NEW_SKIN:
+        case VIVO_SKIN:
             return <IconInfoVivo {...props} />;
         default:
             return <IconInfoDefault {...props} />;

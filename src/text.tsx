@@ -7,7 +7,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './text.css';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN} from './skins/constants';
 import ScreenReaderOnly from './screen-reader-only';
 
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -202,7 +202,7 @@ export const Text = ({
           })
         : {};
 
-    if (skinName === VIVO_NEW_SKIN) {
+    if (skinName === VIVO_SKIN) {
         ({ariaLabel, children} = makeVivinhoCharReadableForScreenReaders({children, ariaLabel, as}));
     }
 

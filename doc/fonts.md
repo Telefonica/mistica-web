@@ -14,8 +14,7 @@ Each skin has a designated font family. Use the correct one for the skin your ap
 | `movistar` _(legacy)_        | `getMovistarSkin()`    | `'On Air'`          |
 | `o2-new` _(preferred)_       | `getO2NewSkin()`       | `'On Air'`          |
 | `o2` _(legacy)_              | `getO2Skin()`          | `'On Air'`          |
-| `vivo-new` _(preferred)_     | `getVivoNewSkin()`     | `'Vivo Type'`       |
-| `vivo` _(legacy)_            | `getVivoSkin()`        | `'Roboto'`          |
+| `vivo`                       | `getVivoSkin()`        | `'Vivo Type'`       |
 | `telefonica`                 | `getTelefonicaSkin()`  | `'Telefonica Sans'` |
 | `blau`                       | `getBlauSkin()`        | `'Roboto'`          |
 | `tu`                         | `getTuSkin()`          | `'Telefonica Sans'` |
@@ -112,7 +111,7 @@ body {
 }
 ```
 
-### Vivo Type (Vivo New)
+### Vivo Type (Vivo)
 
 ```css
 @font-face {
@@ -178,7 +177,7 @@ body {
 }
 ```
 
-### Roboto (Vivo, Blau)
+### Roboto (Blau)
 
 Roboto is available via [Google Fonts](https://fonts.google.com/specimen/Roboto) or
 [Bunny Fonts](https://fonts.bunny.net/family/roboto) (GDPR-friendly alternative). The weights needed are 300,

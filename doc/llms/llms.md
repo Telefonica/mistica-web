@@ -152,13 +152,13 @@ type ThemeConfig = {
 };
 ```
 
-Available skins: `getMovistarNewSkin()`, `getVivoNewSkin()`, `getO2NewSkin()`, `getTelefonicaSkin()`,
+Available skins: `getMovistarNewSkin()`, `getVivoSkin()`, `getO2NewSkin()`, `getTelefonicaSkin()`,
 `getBlauSkin()`, `getTuSkin()`, and others via `getSkinByName()`. Legacy variants without the `New` suffix
-also exist (`getMovistarSkin()`, `getVivoSkin()`, `getO2Skin()`); prefer the `New` versions for new projects.
-You can also create a custom skin. If you need to customize default component colors, radii, or other visual
-tokens beyond the props exposed by a component, prefer extending a skin over overriding component styles.
-Built-in palette exports such as `movistarNewPalette`, `o2NewPalette`, `vivoNewPalette`, etc. are available
-for skin authoring, and custom skins may also define their own palette colors from scratch.
+also exist (`getMovistarSkin()`, `getO2Skin()`); prefer the `New` versions for new projects. You can also
+create a custom skin. If you need to customize default component colors, radii, or other visual tokens beyond
+the props exposed by a component, prefer extending a skin over overriding component styles. Built-in palette
+exports such as `movistarNewPalette`, `o2NewPalette`, `vivoPalette`, etc. are available for skin authoring,
+and custom skins may also define their own palette colors from scratch.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 
@@ -289,7 +289,7 @@ All tokens via `skinVars` from `@telefonica/mistica`:
 - **Colors**: `skinVars.colors.*` (286 tokens for backgrounds, text, borders, controls, status, tags)
 - **Raw colors**: `skinVars.rawColors.*` (same tokens as RGB values, for use with `applyAlpha`)
 - **Palettes for skin authoring**: built-in palette exports such as `movistarNewPalette`, `o2NewPalette`,
-  `vivoNewPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
+  `vivoPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
   directly.
 - **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)
 - **Spacing**: `skinVars.spacing.*` (button, card, input, tag, feedback, hero, header, drawer padding tokens)

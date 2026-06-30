@@ -1,4 +1,4 @@
-import {VIVO_NEW_SKIN} from './constants';
+import {VIVO_SKIN} from './constants';
 import {applyAlpha} from '../utils/color';
 
 import type {GetKnownSkin, KnownSkin} from './types';
@@ -42,9 +42,9 @@ export const palette = {
     darkModeGrey6: '#313235',
 };
 
-export const getVivoNewSkin: GetKnownSkin = () => {
+export const getVivoSkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
-        name: VIVO_NEW_SKIN,
+        name: VIVO_SKIN,
         colors: {
             background: palette.white,
             backgroundAlternative: palette.grey1,

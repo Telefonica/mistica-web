@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import {VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import {VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
 import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
@@ -22,7 +22,6 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
-import IconSuccessVivoNew from './icons/icon-success-vivo-new';
 
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -304,15 +303,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
                     : 'default'
             }
             hapticFeedback="success"
-            asset={
-                skinName === VIVO_SKIN ? (
-                    <IconSuccessVivo size="100%" />
-                ) : skinName === VIVO_NEW_SKIN ? (
-                    <IconSuccessVivoNew size="100%" />
-                ) : (
-                    <IconSuccess size="100%" />
-                )
-            }
+            asset={skinName === VIVO_SKIN ? <IconSuccessVivo size="100%" /> : <IconSuccess size="100%" />}
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
@@ -395,14 +386,7 @@ export const SuccessFeedback = ({
     useHapticFeedback('success');
     const {skinName, platformOverrides, themeVariants} = useTheme();
 
-    const asset =
-        skinName === VIVO_SKIN ? (
-            <IconSuccessVivo size="100%" />
-        ) : skinName === VIVO_NEW_SKIN ? (
-            <IconSuccessVivoNew size="100%" />
-        ) : (
-            <IconSuccess size="100%" />
-        );
+    const asset = skinName === VIVO_SKIN ? <IconSuccessVivo size="100%" /> : <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
         {asset, title, description, extra},
         areAnimationsSupported(platformOverrides)

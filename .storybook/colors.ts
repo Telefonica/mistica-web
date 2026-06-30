@@ -5,7 +5,6 @@ export const AVAILABLE_SKINS = [
     'Movistar',
     'O2-new',
     'O2',
-    'Vivo-new',
     'Vivo',
     'Telefonica',
     'Blau',
@@ -37,7 +36,6 @@ export const getColors = (skin: Skin): SkinTheme => {
                 textSecondary: '#605e5c',
             };
         case 'Vivo':
-        case 'Vivo-new':
             return {
                 primary: '#660099',
                 textPrimary: '#000000',

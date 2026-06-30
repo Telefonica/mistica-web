@@ -161,7 +161,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
         let result = '';
         for (let i = 0; i < availableIcons.length; i++) {
             const [skin, filename] = availableIcons[i];
-            // using a match because we want "vivo" to match with "Vivo" and "Vivo-new"
+            // using a match because we want "vivo" to match with "Vivo"
             const ifStr = i < availableIcons.length - 1 ? `if (skinName.match(/^${skin}/i))` : '';
             const elseStr = i > 0 ? 'else' : '';
             result += `${elseStr} ${ifStr} {return ${getIconJsx(filename)}}`;
