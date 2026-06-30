@@ -189,7 +189,7 @@ export const openStoryPage = ({
         | 'Movistar'
         | 'Movistar-new'
         | 'Vivo'
-        | 'Vivo-new'
+        | 'Vivo-evolution'
         | 'O2'
         | 'O2-new'
         | 'Telefonica'

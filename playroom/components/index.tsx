@@ -21,7 +21,7 @@ import {
     O2NewLogo,
     EsimflagLogo,
 } from '../../src';
-import {Movistar_New, Telefonica, Blau, Vivo_New, O2_New, Esimflag} from '../themes';
+import {Movistar_New, Telefonica, Blau, Vivo, Vivo_Evolution, O2_New, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -39,7 +39,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu'>;
+type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Movistar' | 'Tu'>;
 
 const BrandIcon = ({Logo}: {Logo: React.ComponentType<{size: number; color?: string}>}) => {
     const {isDarkMode} = useTheme();
@@ -58,9 +58,14 @@ const themesMap: {
         themeConfig: Movistar_New,
         Icon: () => <BrandIcon Logo={MovistarNewLogo} />,
     },
-    'Vivo-new': {
+    Vivo: {
         text: 'Vivo',
-        themeConfig: Vivo_New,
+        themeConfig: Vivo,
+        Icon: () => <BrandIcon Logo={VivoLogo} />,
+    },
+    'Vivo-evolution': {
+        text: 'Vivo Evolution',
+        themeConfig: Vivo_Evolution,
         Icon: () => <BrandIcon Logo={VivoLogo} />,
     },
     'O2-new': {

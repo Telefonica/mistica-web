@@ -4,7 +4,7 @@ import {
     getO2Skin,
     getO2NewSkin,
     getVivoSkin,
-    getVivoNewSkin,
+    getVivoEvolutionSkin,
     getTelefonicaSkin,
     getBlauSkin,
     getTuSkin,
@@ -37,9 +37,9 @@ export const Vivo = {
     skin: getVivoSkin(),
 } as const;
 
-export const Vivo_New = {
+export const Vivo_Evolution = {
     i18n: {locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR'},
-    skin: getVivoNewSkin(),
+    skin: getVivoEvolutionSkin(),
 } as const;
 
 export const Telefonica = {
@@ -73,7 +73,7 @@ export const AVAILABLE_THEMES = [
     O2,
     O2_New,
     Vivo,
-    Vivo_New,
+    Vivo_Evolution,
     Telefonica,
     Blau,
     Tu,

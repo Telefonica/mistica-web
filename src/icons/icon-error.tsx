@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
+import {O2_SKIN, O2_NEW_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
@@ -197,7 +197,8 @@ const IconError = (props: Props): JSX.Element => {
             return <IconErrorO2 {...props} />;
         case O2_NEW_SKIN:
             return <IconErrorO2New {...props} />;
-        case VIVO_NEW_SKIN:
+        case VIVO_SKIN:
+        case VIVO_EVOLUTION_SKIN:
             return <IconErrorVivo {...props} />;
         default:
             return <IconErrorDefault {...props} />;
