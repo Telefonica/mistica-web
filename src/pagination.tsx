@@ -6,7 +6,7 @@ import * as styles from './pagination.css';
 import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
-import {IconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import {useScreenSize, useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
@@ -299,10 +299,11 @@ export const Pagination = ({
         >
             {!hideNavigationControls &&
                 (resolvedMode === 'iconOnly' ? (
-                    <IconButton
+                    <InternalIconButton
                         Icon={IconChevronLeftRegular}
                         type="brand"
                         backgroundType="transparent"
+                        hasOverlay={false}
                         disabled={disabled || isPrevDisabled}
                         aria-label={resolvedPrevAriaLabel}
                         onPress={() => goToPage(activePage - 1)}
@@ -332,10 +333,11 @@ export const Pagination = ({
             )}
             {!hideNavigationControls &&
                 (resolvedMode === 'iconOnly' ? (
-                    <IconButton
+                    <InternalIconButton
                         Icon={IconChevronRightRegular}
                         type="brand"
                         backgroundType="transparent"
+                        hasOverlay={false}
                         disabled={disabled || isNextDisabled}
                         aria-label={resolvedNextAriaLabel}
                         onPress={() => goToPage(activePage + 1)}
