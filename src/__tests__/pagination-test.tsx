@@ -25,14 +25,25 @@ test('does not render when there is a single page', () => {
     expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
 });
 
-test('throws when totalPages is not positive', () => {
-    expect(() =>
-        render(
-            <ThemeContextProvider theme={makeTheme()}>
-                <Pagination totalPages={-1} />
-            </ThemeContextProvider>
-        )
-    ).toThrow('Pagination: totalPages must be greater than or equal to 1');
+test('does not render when totalPages is not positive', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination totalPages={-1} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+});
+
+test('keeps the selected page in range when page props are out of range', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination totalPages={5} defaultPage={-1} maxPages={-1} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('navigation', {name: 'Paginación - Página 1 de 5'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Página 1, página actual'})).toBeInTheDocument();
 });
 
 test('renders when optional props are explicitly undefined', () => {

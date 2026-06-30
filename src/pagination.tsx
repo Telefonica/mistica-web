@@ -14,6 +14,7 @@ import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-righ
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
 export type PaginationProps = {
@@ -38,15 +39,14 @@ export type PaginationProps = {
     'aria-label'?: string;
 };
 
-type PaginationItem = {type: 'page'; page: number; current: boolean} | {type: 'ellipsis'};
+type PageItem = {type: 'page'; page: number; current: boolean};
+type EllipsisItem = {type: 'ellipsis'};
+type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
 
-const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
+const COMPACT_VIEW_BREAKPOINT = 375;
 
-const validatePositivePageNumber = (name: string, value: number | undefined) => {
-    if (process.env.NODE_ENV !== 'production' && value !== undefined && value < 1) {
-        throw Error(`Pagination: ${name} must be greater than or equal to 1`);
-    }
-};
+const getPageInRange = (page: number, totalPages: number): number =>
+    Math.min(Math.max(page, 1), totalPages);
 
 export const getPaginationItems = ({
     totalPages,
@@ -61,15 +61,11 @@ export const getPaginationItems = ({
     showEllipsis?: boolean;
     includeBoundaryPages?: boolean;
 }): Array<PaginationItem> => {
-    validatePositivePageNumber('totalPages', totalPages);
-    validatePositivePageNumber('currentPage', currentPage);
-    validatePositivePageNumber('maxPages', maxPages);
-
     if (totalPages <= 1) {
         return [];
     }
 
-    const activePage = clamp(currentPage, 1, totalPages);
+    const activePage = getPageInRange(currentPage, totalPages);
     const defaultMaxPages = includeBoundaryPages ? 5 : 3;
     const minVisibleCount = includeBoundaryPages ? 1 : 3;
     const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages ?? defaultMaxPages));
@@ -148,13 +144,13 @@ type PageListProps = {
     onPageClick: (page: number) => void;
 };
 
-const TILE_STYLE: React.CSSProperties = {
+const TILE_STYLE = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-};
+} as const;
 
 const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
     const {texts, t} = useTheme();
@@ -248,16 +244,17 @@ export const Pagination = ({
     const variant = useThemeVariant();
     const {isTabletOrSmaller} = useScreenSize();
     const windowWidth = useWindowWidth();
-    const hidePageList = hidePageListProp ?? windowWidth < 375;
+    const hidePageList = hidePageListProp ?? windowWidth < COMPACT_VIEW_BREAKPOINT;
 
-    validatePositivePageNumber('totalPages', totalPages);
-    validatePositivePageNumber('currentPage', currentPage);
-    validatePositivePageNumber('defaultPage', defaultPage);
-    validatePositivePageNumber('maxPages', maxPages);
+    if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
+        return null;
+    }
+
+    const activePage = getPageInRange(isControlled ? currentPage : internalPage, totalPages);
 
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
-        String(clamp(isControlled ? currentPage : internalPage, 1, totalPages)),
+        String(activePage),
         String(totalPages)
     );
     const resolvedAriaLabel = ariaLabel ? `${sectionLabel}, ${ariaLabel}` : sectionLabel;
@@ -268,14 +265,8 @@ export const Pagination = ({
     const resolvedNextAriaLabel =
         navRightLabel || texts.paginationNextPageAriaLabel || t(tokens.paginationNextPageAriaLabel);
 
-    if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
-        return null;
-    }
-
-    const activePage = clamp(isControlled ? currentPage : internalPage, 1, totalPages);
-
     const goToPage = (page: number) => {
-        const nextPage = clamp(page, 1, totalPages);
+        const nextPage = getPageInRange(page, totalPages);
 
         if (disabled || nextPage === activePage) {
             return;
