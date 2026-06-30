@@ -126,7 +126,11 @@ test('Pagination compact view fits below the compact breakpoint', async () => {
     const next = await screen.findByRole('button', {name: 'Página siguiente'});
     const pageList = await pagination.$('ol');
 
-    expect(pageList).toBeNull();
+    if (!pageList) {
+        throw Error('Page list should be available');
+    }
+
+    expect(await pageList.evaluate((element) => getComputedStyle(element).display)).toBe('none');
 
     const previousBox = await expectBoundingBox(previous, {
         minWidth: MOBILE_TARGET_SIZE,
@@ -137,4 +141,29 @@ test('Pagination compact view fits below the compact breakpoint', async () => {
 
     expect(previousBox.y).toBe(nextBox.y);
     expect(paginationBox.x + paginationBox.width).toBeLessThanOrEqual(COMPACT_VIEWPORT_WIDTH);
+});
+
+test('Pagination keeps the page list below the compact breakpoint when hidePageList is false', async () => {
+    await openStoryPage({
+        id: STORY_ID,
+        device: 'MOBILE_IOS',
+        viewport: {
+            width: COMPACT_VIEWPORT_WIDTH,
+            height: COMPACT_VIEWPORT_HEIGHT,
+            deviceScaleFactor: 2,
+            isMobile: true,
+            hasTouch: true,
+            isLandscape: false,
+        },
+        args: {totalPages: 9, currentPage: 3, hidePageList: false},
+    });
+
+    const pagination = await screen.findByRole('navigation');
+    const pageList = await pagination.$('ol');
+
+    if (!pageList) {
+        throw Error('Page list should be available');
+    }
+
+    expect(await pageList.evaluate((element) => getComputedStyle(element).display)).not.toBe('none');
 });

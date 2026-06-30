@@ -39,7 +39,7 @@ type Args = {
     maxPages?: number;
     showEllipsis: boolean;
     hideNavigationControls: boolean;
-    hidePageList?: boolean;
+    hidePageList?: boolean | 'true' | 'false';
     disabled: boolean;
     mode: 'default' | 'iconOnly';
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
@@ -88,7 +88,11 @@ export const Default: StoryComponent<Args> = ({
                             maxPages={maxPages}
                             showEllipsis={showEllipsis}
                             hideNavigationControls={hideNavigationControls}
-                            hidePageList={hidePageList}
+                            hidePageList={
+                                hidePageList === 'true' || hidePageList === 'false'
+                                    ? hidePageList === 'true'
+                                    : hidePageList
+                            }
                             disabled={disabled}
                             mode={mode}
                             navLeftLabel={navLeftLabel || undefined}

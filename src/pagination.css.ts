@@ -3,6 +3,8 @@ import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
+const compactView = 'screen and (max-width: 374px)';
+
 export const container = style([
     sprinkles({
         display: 'inline-flex',
@@ -32,6 +34,14 @@ export const containerNavOnly = style({
     },
 });
 
+export const containerAutoCompact = style({
+    '@media': {
+        [compactView]: {
+            gap: 16,
+        },
+    },
+});
+
 export const pageList = style([
     sprinkles({
         display: 'flex',
@@ -50,6 +60,14 @@ export const pageList = style([
         },
     },
 ]);
+
+export const pageListAutoCompact = style({
+    '@media': {
+        [compactView]: {
+            display: 'none',
+        },
+    },
+});
 
 export const pageListItem = style({
     display: 'flex',

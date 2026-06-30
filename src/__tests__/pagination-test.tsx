@@ -131,50 +131,6 @@ test('honors controlled currentPage', () => {
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
 });
 
-test('hides the page list by default below 375px', () => {
-    const originalWidth = window.innerWidth;
-    Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: 360});
-
-    try {
-        render(
-            <ThemeContextProvider theme={makeTheme()}>
-                <Pagination totalPages={9} defaultPage={3} />
-            </ThemeContextProvider>
-        );
-
-        expect(screen.getByRole('button', {name: 'Página anterior'})).toBeInTheDocument();
-        expect(screen.getByRole('button', {name: 'Página siguiente'})).toBeInTheDocument();
-        expect(screen.queryByRole('button', {name: 'Ir a la página 2'})).not.toBeInTheDocument();
-    } finally {
-        Object.defineProperty(window, 'innerWidth', {
-            configurable: true,
-            writable: true,
-            value: originalWidth,
-        });
-    }
-});
-
-test('keeps the page list below 375px when hidePageList is explicitly false', () => {
-    const originalWidth = window.innerWidth;
-    Object.defineProperty(window, 'innerWidth', {configurable: true, writable: true, value: 360});
-
-    try {
-        render(
-            <ThemeContextProvider theme={makeTheme()}>
-                <Pagination totalPages={9} defaultPage={3} hidePageList={false} />
-            </ThemeContextProvider>
-        );
-
-        expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
-    } finally {
-        Object.defineProperty(window, 'innerWidth', {
-            configurable: true,
-            writable: true,
-            value: originalWidth,
-        });
-    }
-});
-
 describe('getPaginationItems', () => {
     test('returns an empty array for a single page', () => {
         expect(getPaginationItems({totalPages: 1, currentPage: 1})).toEqual([]);

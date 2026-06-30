@@ -7,7 +7,7 @@ import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
 import {IconButton} from './icon-button';
-import {useScreenSize, useTheme, useWindowWidth} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
@@ -43,11 +43,6 @@ type PageItem = {type: 'page'; page: number; current: boolean};
 type EllipsisItem = {type: 'ellipsis'};
 type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
 
-const COMPACT_VIEW_BREAKPOINT = 375;
-
-const getPageInRange = (page: number, totalPages: number): number =>
-    Math.min(Math.max(page, 1), totalPages);
-
 export const getPaginationItems = ({
     totalPages,
     currentPage,
@@ -65,7 +60,7 @@ export const getPaginationItems = ({
         return [];
     }
 
-    const activePage = getPageInRange(currentPage, totalPages);
+    const activePage = Math.min(Math.max(currentPage, 1), totalPages);
     const defaultMaxPages = includeBoundaryPages ? 5 : 3;
     const minVisibleCount = includeBoundaryPages ? 1 : 3;
     const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages ?? defaultMaxPages));
@@ -243,14 +238,14 @@ export const Pagination = ({
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
     const {isTabletOrSmaller} = useScreenSize();
-    const windowWidth = useWindowWidth();
-    const hidePageList = hidePageListProp ?? windowWidth < COMPACT_VIEW_BREAKPOINT;
+    const hidePageList = hidePageListProp === true;
+    const autoCompact = hidePageListProp === undefined && !hideNavigationControls;
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
     }
 
-    const activePage = getPageInRange(isControlled ? currentPage : internalPage, totalPages);
+    const activePage = Math.min(Math.max(isControlled ? currentPage : internalPage, 1), totalPages);
 
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
@@ -266,7 +261,7 @@ export const Pagination = ({
         navRightLabel || texts.paginationNextPageAriaLabel || t(tokens.paginationNextPageAriaLabel);
 
     const goToPage = (page: number) => {
-        const nextPage = getPageInRange(page, totalPages);
+        const nextPage = Math.min(Math.max(page, 1), totalPages);
 
         if (disabled || nextPage === activePage) {
             return;
@@ -295,6 +290,7 @@ export const Pagination = ({
             aria-label={resolvedAriaLabel}
             className={classnames(styles.container, {
                 [styles.containerNavOnly]: hidePageList,
+                [styles.containerAutoCompact]: autoCompact,
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
@@ -323,7 +319,14 @@ export const Pagination = ({
                     </ButtonLink>
                 ))}
 
-            {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
+            {!hidePageList && (
+                <PageList
+                    items={items}
+                    disabled={disabled}
+                    className={classnames({[styles.pageListAutoCompact]: autoCompact})}
+                    onPageClick={goToPage}
+                />
+            )}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
                     <IconButton
