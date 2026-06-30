@@ -70,7 +70,7 @@ order, and match the sequence to a `GridLayout` template:
 | ---------------------------- | ---------------------------------------------- |
 | 6, 6                         | `template="6+6"` (`left` / `right`)            |
 | 8, 4                         | `template="8+4"` (`left` / `right`)            |
-| 4, 8                         | `template="4+6"` (`left` / `right`)            |
+| 4, 6                         | `template="4+6"` (`left` / `right`)            |
 | 3, 9                         | `template="3+9"` (`left` / `right`)            |
 | 5, 4                         | `template="5+4"` (`left` / `right`)            |
 | single span 10               | `template="10"` (`children`)                   |
@@ -84,7 +84,7 @@ Rules:
   `px-[32px]` / `px-[16px]` is the `ResponsiveLayout` margin — do not re-apply it as `Box` padding. The
   section's `py-[Npx]` is real vertical padding → `Box paddingY={N}` inside.
 - **Match the template; never hand-build the grid.** Do not emit a raw `<div style={{display:'grid'}}>`, a
-  fixed-width flex row, or manual spacer columns. The spacer-span templates (`5+4`, `10`, `8`) render their
+  fixed-width flex row, or manual spacer columns. The spacer-span templates (`4+6`, `5+4`, `10`, `8`) render their
   own spacer columns internally — select the named `template` and ignore any empty spacer `div`s the MCP DOM
   shows around the content.
 - **Background variant comes from the section fill**, not the grid: `bg-[var(--backgroundalternative,…)]` →
