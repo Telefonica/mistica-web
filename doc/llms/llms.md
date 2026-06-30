@@ -153,12 +153,12 @@ type ThemeConfig = {
 ```
 
 Available skins: `getMovistarNewSkin()`, `getVivoSkin()`, `getVivoEvolutionSkin()`, `getO2NewSkin()`,
-`getTelefonicaSkin()`, `getBlauSkin()`, `getTuSkin()`, and others via `getSkinByName()`. Legacy variants
-without the `New` suffix also exist (`getMovistarSkin()`, `getO2Skin()`); prefer the `New` versions for new
-projects. You can also create a custom skin. If you need to customize default component colors, radii, or
-other visual tokens beyond the props exposed by a component, prefer extending a skin over overriding component
-styles. Built-in palette exports such as `movistarNewPalette`, `o2NewPalette`, `vivoPalette`, etc. are
-available for skin authoring, and custom skins may also define their own palette colors from scratch.
+`getTelefonicaSkin()`, `getBlauSkin()`, and others via `getSkinByName()`. Legacy variants without the `New`
+suffix also exist (`getMovistarSkin()`, `getO2Skin()`); prefer the `New` versions for new projects. You can
+also create a custom skin. If you need to customize default component colors, radii, or other visual tokens
+beyond the props exposed by a component, prefer extending a skin over overriding component styles. Built-in
+palette exports such as `movistarNewPalette`, `o2NewPalette`, `vivoPalette`, etc. are available for skin
+authoring, and custom skins may also define their own palette colors from scratch.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 

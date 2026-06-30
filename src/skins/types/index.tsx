@@ -14,7 +14,6 @@ export type KnownSkinName =
     | 'Vivo-evolution'
     | 'Telefonica'
     | 'Blau'
-    | 'Tu'
     | 'Esimflag';
 export type SkinName = KnownSkinName | string;
 

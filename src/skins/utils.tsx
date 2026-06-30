@@ -8,7 +8,6 @@ import {
     MOVISTAR_SKIN,
     MOVISTAR_NEW_SKIN,
     VIVO_EVOLUTION_SKIN,
-    TU_SKIN,
     ESIMFLAG_SKIN,
 } from './constants';
 import {getBlauSkin} from './blau';
@@ -19,7 +18,6 @@ import {getO2Skin} from './o2';
 import {getO2NewSkin} from './o2-new';
 import {getMovistarSkin} from './movistar';
 import {getMovistarNewSkin} from './movistar-new';
-import {getTuSkin} from './tu';
 import {getEsimflagSkin} from './esimflag';
 
 import type {SkinVariant, KnownSkin, KnownSkinName} from './types';
@@ -42,8 +40,6 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
             return getMovistarSkin(variant);
         case MOVISTAR_NEW_SKIN:
             return getMovistarNewSkin(variant);
-        case TU_SKIN:
-            return getTuSkin(variant);
         case ESIMFLAG_SKIN:
             return getEsimflagSkin(variant);
         default: {

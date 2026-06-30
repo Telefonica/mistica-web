@@ -12,7 +12,6 @@ import O2LogoShell from './logo-o2-shell';
 import O2NewLogoShell from './logo-o2-new-shell';
 import TelefonicaLogoShell from './logo-telefonica-shell';
 import BlauLogoShell from './logo-blau-shell';
-import TuLogoShell from './logo-tu-shell';
 import EsimflagLogoShell from './logo-esimflag-shell';
 
 import type {LogoType} from './logo-common';
@@ -75,14 +74,6 @@ const BlauLogoImage = React.lazy(
         import(
             /* webpackChunkName: "logo-blau" */
             './logo-blau'
-        )
-);
-
-const TuLogoImage = React.lazy(
-    () =>
-        import(
-            /* webpackChunkName: "logo-tu" */
-            './logo-tu'
         )
 );
 
@@ -197,19 +188,6 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     </React.Suspense>
                 </BlauLogoShell>
             );
-        case 'Tu':
-            return (
-                <TuLogoShell size={size}>
-                    <React.Suspense>
-                        <TuLogoImage
-                            type={type}
-                            isDarkMode={isDarkMode}
-                            themeVariant={themeVariant}
-                            color={color}
-                        />
-                    </React.Suspense>
-                </TuLogoShell>
-            );
         case 'Esimflag':
             return (
                 <EsimflagLogoShell size={size} type={type}>
@@ -302,10 +280,6 @@ export const TelefonicaLogo = ({size, type, color, ...props}: LogoProps): JSX.El
 
 export const BlauLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
     <LogoInternal size={size} type={type} color={color} skinName="Blau" {...props} />
-);
-
-export const TuLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
-    <LogoInternal size={size} type={type} color={color} skinName="Tu" {...props} />
 );
 
 export const EsimflagLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
