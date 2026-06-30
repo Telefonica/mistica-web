@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconStopCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M15 7.25A1.75 1.75 0 0 1 16.75 9v6A1.75 1.75 0 0 1 15 16.75H9A1.75 1.75 0 0 1 7.25 15V9A1.75 1.75 0 0 1 9 7.25zm-6 1.5a.25.25 0 0 0-.25.25v6a.25.25 0 0 0 .25.25h6a.25.25 0 0 0 .25-.25V9a.25.25 0 0 0-.25-.25z"
-            />
-            <path
-                fill={fillColor}
-                d="M12 2.25a9.75 9.75 0 1 1 0 19.5 9.75 9.75 0 0 1 0-19.5m0 1.5a8.25 8.25 0 1 0-.001 16.5A8.25 8.25 0 0 0 12 3.75"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 7.25A1.75 1.75 0 0 1 16.75 9v6A1.75 1.75 0 0 1 15 16.75H9A1.75 1.75 0 0 1 7.25 15V9A1.75 1.75 0 0 1 9 7.25zm-6 1.5a.25.25 0 0 0-.25.25v6a.25.25 0 0 0 .25.25h6a.25.25 0 0 0 .25-.25V9a.25.25 0 0 0-.25-.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25a9.75 9.75 0 1 1 0 19.5 9.75 9.75 0 0 1 0-19.5m0 1.5a8.25 8.25 0 1 0-.001 16.5A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconStopCircleLight;

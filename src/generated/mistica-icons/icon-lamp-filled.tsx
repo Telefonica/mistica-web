@@ -8,27 +8,42 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconLampFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M15.07 3.505a.5.5 0 0 1 .377.271l4 8A.5.5 0 0 1 19 12.5h-6.25v6.75H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5h2.25V12.5H5a.5.5 0 0 1-.447-.724l4-8 .036-.06a.5.5 0 0 1 .41-.216h6z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.07 3.505a.5.5 0 0 1 .377.271l4 8A.5.5 0 0 1 19 12.5h-6.25v6.75H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5h2.25V12.5H5a.5.5 0 0 1-.447-.724l4-8 .036-.06a.5.5 0 0 1 .41-.216h6z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconLampFilled;

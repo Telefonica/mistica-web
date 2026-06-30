@@ -1,3 +1,32 @@
+# [16.69.0](https://github.com/Telefonica/mistica-web/compare/v16.68.0...v16.69.0) (2026-06-29)
+
+
+### Bug Fixes
+
+* **ThemeContextProvider:** add unique data-mistica-theme attributes f… ([#1585](https://github.com/Telefonica/mistica-web/issues/1585)) ([a801bf1](https://github.com/Telefonica/mistica-web/commit/a801bf1649f8fa79708a0603fca703929c29ce35))
+
+
+### Features
+
+* **Icons:** add gradient support to icons ([#1580](https://github.com/Telefonica/mistica-web/issues/1580)) ([512589d](https://github.com/Telefonica/mistica-web/commit/512589d163c26674098fcd24231d91ea972baef1))
+
+# [16.68.0](https://github.com/Telefonica/mistica-web/compare/v16.67.0...v16.68.0) (2026-06-26)
+
+
+### Bug Fixes
+
+* **Button:** increase small button interactive area to 48px ([#1570](https://github.com/Telefonica/mistica-web/issues/1570)) ([1faac0c](https://github.com/Telefonica/mistica-web/commit/1faac0cd8b36b302925da24c11f4274819a04ab8)), closes [#1504](https://github.com/Telefonica/mistica-web/issues/1504)
+* **community:** apply cyber skin review feedback from [#1558](https://github.com/Telefonica/mistica-web/issues/1558) ([#1567](https://github.com/Telefonica/mistica-web/issues/1567)) ([e4ce047](https://github.com/Telefonica/mistica-web/commit/e4ce0478af2023ce182e47293e7bf941606e9753))
+* **Dialog:** restore focus to the trigger element on close ([#1578](https://github.com/Telefonica/mistica-web/issues/1578)) ([3bca9de](https://github.com/Telefonica/mistica-web/commit/3bca9de7ea70dc2f263aa66fd358176c30a94ef5))
+* **Menu:** Change menu interaction with checkbox items ([#1572](https://github.com/Telefonica/mistica-web/issues/1572)) ([38828b6](https://github.com/Telefonica/mistica-web/commit/38828b65ef19a9b4374e37dad37464d39f683a51))
+
+
+### Features
+
+* **Chore:** Add examples on how to use Mistica skill ([2b52c7b](https://github.com/Telefonica/mistica-web/commit/2b52c7bd3f3e492a2df04fe5b05bf8c3ca51f474))
+* **Chore:** Add mistica-figma skill for Figma design system builds ([#1577](https://github.com/Telefonica/mistica-web/issues/1577)) ([b05851d](https://github.com/Telefonica/mistica-web/commit/b05851d284b0c82fca64b32e0134d5006cb26934))
+* **Chore:** support Cyber community skin in Playroom ([#1569](https://github.com/Telefonica/mistica-web/issues/1569)) ([95353da](https://github.com/Telefonica/mistica-web/commit/95353da7a9f904074d38f3139ca91a8d39e5206f))
+
 # [16.67.0](https://github.com/Telefonica/mistica-web/compare/v16.66.0...v16.67.0) (2026-06-08)
 
 

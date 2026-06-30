@@ -8,25 +8,43 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconTextSizeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path fill={fillColor} d="M11 10a1 1 0 1 1 0 2H8.5v7a1 1 0 1 1-2 0v-7H4a1 1 0 1 1 0-2z" />
-            <path fill={fillColor} d="M21 5.5a1 1 0 1 1 0 2h-4.5V19a1 1 0 1 1-2 0V7.5H10a1 1 0 0 1 0-2z" />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M11 10a1 1 0 1 1 0 2H8.5v7a1 1 0 1 1-2 0v-7H4a1 1 0 1 1 0-2z" />
+                <path
+                    fill={fillColor}
+                    d="M21 5.5a1 1 0 1 1 0 2h-4.5V19a1 1 0 1 1-2 0V7.5H10a1 1 0 0 1 0-2z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconTextSizeFilled;

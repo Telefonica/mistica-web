@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconLightSwitchLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M13 7.25c.966 0 1.75.784 1.75 1.75v6A1.75 1.75 0 0 1 13 16.75h-2A1.75 1.75 0 0 1 9.25 15V9c0-.966.784-1.75 1.75-1.75zm-2.25 5.5V15c0 .138.112.25.25.25h2a.25.25 0 0 0 .25-.25v-2.25zm.25-4a.25.25 0 0 0-.25.25v2.25h2.5V9a.25.25 0 0 0-.25-.25z"
-            />
-            <path
-                fill={fillColor}
-                d="M17 2.25A2.75 2.75 0 0 1 19.75 5v14A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V5A2.75 2.75 0 0 1 7 2.25zM7 3.75c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h10c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13 7.25c.966 0 1.75.784 1.75 1.75v6A1.75 1.75 0 0 1 13 16.75h-2A1.75 1.75 0 0 1 9.25 15V9c0-.966.784-1.75 1.75-1.75zm-2.25 5.5V15c0 .138.112.25.25.25h2a.25.25 0 0 0 .25-.25v-2.25zm.25-4a.25.25 0 0 0-.25.25v2.25h2.5V9a.25.25 0 0 0-.25-.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17 2.25A2.75 2.75 0 0 1 19.75 5v14A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V5A2.75 2.75 0 0 1 7 2.25zM7 3.75c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h10c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconLightSwitchLight;

@@ -58,3 +58,71 @@ test('ThemeContextProvider override some texts', () => {
     expect(screen.getByLabelText('Any expiration label')).toBeInTheDocument();
     expect(screen.getByLabelText('CVV')).toBeInTheDocument();
 });
+
+test('Multiple ThemeContextProvider with as="div" get unique data-mistica-theme attributes', () => {
+    const {container} = render(
+        <ThemeContextProvider
+            theme={{
+                skin: getMovistarSkin(),
+                i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+            }}
+        >
+            <ThemeContextProvider
+                as="div"
+                theme={{
+                    skin: getMovistarSkin(),
+                    colorScheme: 'light',
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                }}
+            >
+                <div data-testid="light-content" />
+            </ThemeContextProvider>
+
+            <ThemeContextProvider
+                as="div"
+                theme={{
+                    skin: getMovistarSkin(),
+                    colorScheme: 'dark',
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                }}
+            >
+                <div data-testid="dark-content" />
+            </ThemeContextProvider>
+        </ThemeContextProvider>
+    );
+    // data-mistica-theme is a non-semantic attribute with no Testing Library query
+    // eslint-disable-next-line testing-library/no-node-access
+    const themedDivs = container.querySelectorAll('[data-mistica-theme]');
+    expect(themedDivs).toHaveLength(2);
+
+    const ids = Array.from(themedDivs).map((el) => el.getAttribute('data-mistica-theme'));
+    // Each instance should have a unique identifier
+    expect(ids[0]).not.toBe(ids[1]);
+});
+
+test('ThemeContextProvider with as="div" and withoutStyles does not add data-mistica-theme', () => {
+    const {container} = render(
+        <ThemeContextProvider
+            theme={{
+                skin: getMovistarSkin(),
+                i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+            }}
+        >
+            <ThemeContextProvider
+                as="div"
+                withoutStyles
+                theme={{
+                    skin: getMovistarSkin(),
+                    colorScheme: 'dark',
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                }}
+            >
+                <div data-testid="content" />
+            </ThemeContextProvider>
+        </ThemeContextProvider>
+    );
+    // data-mistica-theme is a non-semantic attribute with no Testing Library query
+    // eslint-disable-next-line testing-library/no-node-access
+    const themedDivs = container.querySelectorAll('[data-mistica-theme]');
+    expect(themedDivs).toHaveLength(0);
+});
