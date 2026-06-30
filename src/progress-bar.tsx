@@ -137,7 +137,7 @@ export const ProgressBarStepped = ({
             {...a11yProps}
             className={styles.progressBarSteppedContainer}
         >
-            <Inline space={8} fullWidth alignItems="stretch">
+            <Inline space={8} fullWidth>
                 {Array.from({length: steps}, (_, index) => {
                     const isCurrent = index === step;
                     const isCompleted = index < step;

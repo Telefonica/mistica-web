@@ -129,8 +129,8 @@ globalStyle(`${inline} > div`, {
             margin: `0 0 0 calc(min(${space}, 0px))`,
             // Propagate alignItems to wrapper divs so icon SVGs (inline elements) are
             // correctly centered within each wrapper, not just the wrappers themselves.
-            display: childDisplay,
-            alignItems: childAlignItems,
+            display: fallbackVar(childDisplay, 'block'),
+            alignItems: fallbackVar(childAlignItems, 'normal'),
         },
     },
 });
