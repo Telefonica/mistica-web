@@ -9,56 +9,73 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconChevronUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 7.01c-.39 0-.76.16-1.02.44l-6.6 7.01c-.53.56-.5 1.45.06 1.98s1.45.5 1.98-.06L12 10.45l5.58 5.93c.53.56 1.42.59 1.98.06s.59-1.42.06-1.98l-6.6-7.01A1.4 1.4 0 0 0 12 7.01"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="m12 7.678-7.6 7.13c-.51.48-.53 1.28-.06 1.79.48.51 1.28.53 1.79.06l5.87-5.51 5.87 5.51a1.265 1.265 0 1 0 1.73-1.85z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 7.148c-.31 0-.62.11-.86.34l-6.74 6.32c-.51.48-.53 1.28-.06 1.79.48.51 1.28.53 1.79.06l5.87-5.51 5.87 5.51a1.265 1.265 0 1 0 1.73-1.85l-6.74-6.32c-.24-.23-.55-.34-.86-.34"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M11.204 7.204a1.126 1.126 0 0 1 1.592 0l7 7a1.126 1.126 0 0 1-1.592 1.592L12 9.59l-6.204 6.205a1.126 1.126 0 0 1-1.592-1.592z"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 7.01c-.39 0-.76.16-1.02.44l-6.6 7.01c-.53.56-.5 1.45.06 1.98s1.45.5 1.98-.06L12 10.45l5.58 5.93c.53.56 1.42.59 1.98.06s.59-1.42.06-1.98l-6.6-7.01A1.4 1.4 0 0 0 12 7.01"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m12 7.678-7.6 7.13c-.51.48-.53 1.28-.06 1.79.48.51 1.28.53 1.79.06l5.87-5.51 5.87 5.51a1.265 1.265 0 1 0 1.73-1.85z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 7.148c-.31 0-.62.11-.86.34l-6.74 6.32c-.51.48-.53 1.28-.06 1.79.48.51 1.28.53 1.79.06l5.87-5.51 5.87 5.51a1.265 1.265 0 1 0 1.73-1.85l-6.74-6.32c-.24-.23-.55-.34-.86-.34"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.204 7.204a1.126 1.126 0 0 1 1.592 0l7 7a1.126 1.126 0 0 1-1.592 1.592L12 9.59l-6.204 6.205a1.126 1.126 0 0 1-1.592-1.592z"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconChevronUpFilled;

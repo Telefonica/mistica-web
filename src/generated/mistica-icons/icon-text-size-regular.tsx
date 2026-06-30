@@ -9,42 +9,59 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconTextSizeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M11 10.25a.75.75 0 0 1 0 1.5H8.25V19a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5z"
-                />
-                <path
-                    fill={fillColor}
-                    d="M21 5.75a.75.75 0 0 1 0 1.5h-4.75V19a.75.75 0 0 1-1.5 0V7.25H10a.75.75 0 0 1 0-1.5z"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M16 4.25a.75.75 0 0 1 0 1.5h-5.25V19a.75.75 0 0 1-1.5 0V5.75H4a.75.75 0 0 1 0-1.5zm5 7a.75.75 0 0 1 0 1.5h-2.25V19a.75.75 0 0 1-1.5 0v-6.25H15a.75.75 0 0 1 0-1.5z"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11 10.25a.75.75 0 0 1 0 1.5H8.25V19a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M21 5.75a.75.75 0 0 1 0 1.5h-4.75V19a.75.75 0 0 1-1.5 0V7.25H10a.75.75 0 0 1 0-1.5z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M16 4.25a.75.75 0 0 1 0 1.5h-5.25V19a.75.75 0 0 1-1.5 0V5.75H4a.75.75 0 0 1 0-1.5zm5 7a.75.75 0 0 1 0 1.5h-2.25V19a.75.75 0 0 1-1.5 0v-6.25H15a.75.75 0 0 1 0-1.5z"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconTextSizeRegular;

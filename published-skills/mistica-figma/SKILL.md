@@ -37,13 +37,37 @@ Mistica publishes several libraries; discover keys with `get_libraries({ fileKey
 ## Typography
 
 Mistica text styles live in Skins as `desktop/text-preset-N` (and `mobile/…`). The one ordering fact to
-remember: higher N = larger (the opposite of most ramps). Discover the presets live and pick by size.
+remember: higher N = larger (the opposite of most ramps). Discover the presets live and pick by size, then
+weight (see below).
 
 All text must use Mistica typography — never a hardcoded font. Either apply a published text style
 (`node.textStyleId = style.id`) or bind the Mistica font-family variable. Both are wired to the active brand
 via Figma variables, so switching skin changes the font automatically. You still must `loadFontAsync` whatever
 font the style/variable currently resolves to before setting `characters` — just never hardcode the family
 name.
+
+### Match size and weight
+
+A preset bundles size and line height; the brand variable supplies the family. So beyond size you must pick
+one axis: **weight**. Body presets (1–4) ship in light / regular / medium / bold — same size, different
+weight. Selecting by size alone inherits an arbitrary weight (for example a Medium nav label landing on
+`desktop/text-preset-1/bold` and looking too heavy). Choose weight deliberately — from the source when
+reconstructing, or from role when designing fresh (headings bold, body regular, labels/nav medium) — and
+import that specific variant (`desktop/text-preset-N/medium`, etc.) before binding.
+
+### Preload brand font families before writing characters
+
+Mistica text presets bind the font **family to a variable** that resolves per the active skin, so the
+effective font is not necessarily the one reported by `node.fontName` or `getStyledTextSegments`. For example,
+under the Cyber skin a preset resolves to `Telefonica Sans` even when the node reports `Movistar Sans`. The
+canonical "load `node.fontName` before setting `characters`" recipe is therefore insufficient and throws
+`Cannot write to node with unloaded font …`.
+
+Before writing `characters` on any preset- or variable-styled text, either:
+
+- preload the brand font families in the common weights (for example `Telefonica Sans` and `Movistar Sans` ×
+  Light / Regular / Medium / Bold), or
+- resolve the bound font-family variable for the active mode and `loadFontAsync` exactly that family.
 
 ## Colour, surface & radii tokens
 
@@ -60,11 +84,34 @@ Some tokens (for example backgrounds that carry gradients) are styles, not varia
 
 Radii are exported as variables; always bind them rather than using a literal corner value.
 
+### Variable collections
+
+Mistica Skins publishes two variable collections: **brand** and **mode**. Only use variables from the
+**brand** collection. Never bind variables from the **mode** collection — those are internal to the design
+system and are not intended for direct consumption. When `search_design_system` returns variables, filter to
+those whose `variableCollectionName` (or equivalent field) is `brand` before selecting a variable to bind.
+
 Screen-level frames (the outermost frame representing a full screen or page) must always have an explicit
 background fill bound to a Skins background variable — never transparent or unfilled. When a screen contains
 sections with different background colours, keep the base fill on the screen frame (typically `background`)
 and layer each distinct section as a child frame with its own background fill on top. Do not rely solely on
 section fills to cover the screen.
+
+### Never ship a default white fill
+
+`figma.createFrame()` returns a frame with a default **opaque white fill**. This also applies to frames you later
+turn into auto-layout by setting `layoutMode`. That fill is unbound `#FFFFFF`: it blends into a white page in
+light mode but stays white when the skin switches to dark mode, producing white blocks. This survives most
+often on intermediate **arrangement / container** frames (page headers, KPI rows, section headers), not just
+screen frames.
+
+The rule: every frame you create — screen, section, or arrangement — must immediately either be set to
+`fills = []` (transparent, letting the screen background show through) or have its fill bound to a Skins
+background variable (`background` / `backgroundContainer`). Never leave the `createFrame`
+default white fill in place (including on frames you later set to auto-layout).
+
+**Validation step.** After building, scan the new tree for SOLID near-white fills with no bound variable
+(`!node.boundVariables?.fills`) and rebind or clear each hit before finishing.
 
 ### Theme context
 
@@ -84,6 +131,11 @@ below the minimum):
 | Tablet      | 834 px  | 1194 px    |
 | Desktop     | 1440 px | 1024 px    |
 
+### Full-viewport-width constraint
+
+`ResponsiveLayout` and `GridLayout` frames must be **direct children of the screen frame**. Nesting them
+inside a narrower custom parent breaks padding and column math.
+
 ### Full-screen sections — background and padding rule
 
 Both responsive layout frames and grid layout frames represent **full-screen-width sections**. They must
@@ -102,6 +154,14 @@ Screen frame (e.g. 1440 px, background = `background`)
 
 If a section has the same background as the screen, bind it to the same variable explicitly — do not leave it
 unfilled or transparent.
+
+### Components with built-in responsive layout
+
+These components include their own full-width layout and must be placed as **direct children of the screen
+frame** — never inside a `Layout/<FormFactor>` wrapper:
+
+Header, Hero, CoverHero, NavigationBar, MainNavigationBar, FunnelNavigationBar, FeedbackScreen, LoadingScreen,
+BrandLoadingScreen, Carousel, ButtonFixedFooterLayout.
 
 ### Responsive layout frame
 
@@ -137,6 +197,13 @@ another skill.
 | Desktop     | 1440 px | 48 px              |
 
 Set `itemSpacing` to 0; child sections define their own vertical spacing.
+
+### Never use empty spacer frames
+
+Drive all vertical rhythm from auto-layout `itemSpacing`. Never insert empty fixed-height frames as vertical
+spacers — they do not reflow, break on content change, and litter the layer tree. For variable gaps between
+sections, group the sections into nested auto-layout frames, each with its own `itemSpacing`, rather than
+padding the gaps with empty frames.
 
 ### Grid layout frame
 
@@ -319,6 +386,18 @@ Before deciding to hand-compose anything, probe the candidate component's `compo
 `Replace Slot` pair — slots exist across cards, tables, nav bars, and more. Only hand-compose when no
 component + slot can carry the content.
 
+### Slot composition recipe
+
+To place composite content into a host, use its slot — not an absolute overlay:
+
+1. Build the slot content as a **local master `COMPONENT`**
+2. Enable the host slot and point the swap at that component
+
+**Reset the swapped text after swapping.** Figma carries the placeholder instance's text **override** onto the
+matching text node in the swapped-in component, so the wrong text can render silently even when the master
+component's own text is correct. After `swapComponent` into a slot, explicitly set the swapped instance's text
+node `characters` — do not rely on the master's text.
+
 ## Procedure
 
 Load alongside the Figma build skills before any `use_figma` call.
@@ -330,8 +409,9 @@ Load alongside the Figma build skills before any `use_figma` call.
    either form are discovered. Cross-check the catalog; update it when keys differ.
 3. Probe a component's `componentProperties` once before populating (text props live on TEXT layers like
    `Title`, `Action`, `Text`; toggles are BOOLEAN variant props). See `design-brief-to-figma` Step 3.
-4. Build per `figma-use` rules: import by key, instance, set text props, bind tokens, apply text styles. Load
-   the brand font (from the style's `fontName`) before any `characters` edit.
+4. Build per `figma-use` rules: import by key, instance, set text props, bind tokens, apply text styles.
+   Before any `characters` edit, preload the brand font families (or load the variable-resolved family) per
+   the Typography section — do not rely on the node's reported `fontName`.
 
 ## Multi-brand skins
 
