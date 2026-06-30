@@ -6,13 +6,13 @@ const STORY_ID = 'components-pagination--default';
 
 const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
     {name: 'Default', device: 'DESKTOP', args: {totalPages: 9, currentPage: 3}},
-    {name: 'Default', device: 'MOBILE_IOS', args: {totalPages: 9, currentPage: 3, mode: 'iconOnly'}},
+    {name: 'Default', device: 'MOBILE_IOS', args: {totalPages: 9, currentPage: 3}},
     {name: 'FirstPage', device: 'DESKTOP', args: {totalPages: 10, currentPage: 1}},
-    {name: 'FirstPage', device: 'MOBILE_IOS', args: {totalPages: 10, currentPage: 1, mode: 'iconOnly'}},
+    {name: 'FirstPage', device: 'MOBILE_IOS', args: {totalPages: 10, currentPage: 1}},
     {name: 'LastPage', device: 'DESKTOP', args: {totalPages: 10, currentPage: 10}},
-    {name: 'LastPage', device: 'MOBILE_IOS', args: {totalPages: 10, currentPage: 10, mode: 'iconOnly'}},
+    {name: 'LastPage', device: 'MOBILE_IOS', args: {totalPages: 10, currentPage: 10}},
     {name: 'WithEllipsis', device: 'DESKTOP', args: {totalPages: 20, currentPage: 10}},
-    {name: 'WithEllipsis', device: 'MOBILE_IOS', args: {totalPages: 20, currentPage: 10, mode: 'iconOnly'}},
+    {name: 'WithEllipsis', device: 'MOBILE_IOS', args: {totalPages: 20, currentPage: 10}},
     {
         name: 'NavOnlyResponsive',
         device: 'DESKTOP',
@@ -21,7 +21,7 @@ const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
     {
         name: 'NavOnlyResponsive',
         device: 'MOBILE_IOS',
-        args: {totalPages: 10, currentPage: 5, hidePageList: true},
+        args: {totalPages: 10, currentPage: 5, hidePageList: true, mode: 'default'},
     },
     {
         name: 'PagesOnly',
@@ -61,6 +61,7 @@ const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
             totalPages: 10,
             currentPage: 1,
             hidePageList: true,
+            mode: 'default',
             navLeftLabel: 'Anterior capítulo',
             navRightLabel: 'Siguiente capítulo',
         },
@@ -94,7 +95,7 @@ test('Pagination CompactView - MOBILE_IOS_SMALL', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS_SMALL',
-        args: {totalPages: 50, currentPage: 24},
+        args: {totalPages: 50, currentPage: 24, withCompactView: true, mode: 'default'},
     });
 
     const pagination = await screen.findByTestId('Pagination');

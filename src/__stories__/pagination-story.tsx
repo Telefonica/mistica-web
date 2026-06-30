@@ -20,6 +20,7 @@ export default {
         showEllipsis: {control: {type: 'boolean'}},
         hideNavigationControls: {control: {type: 'boolean'}},
         hidePageList: {control: {type: 'boolean'}},
+        withCompactView: {control: {type: 'boolean'}},
         disabled: {control: {type: 'boolean'}},
         navLeftLabel: {control: {type: 'text'}},
         navRightLabel: {control: {type: 'text'}},
@@ -40,8 +41,9 @@ type Args = {
     showEllipsis: boolean;
     hideNavigationControls: boolean;
     hidePageList?: boolean | 'true' | 'false';
+    withCompactView: boolean | 'true' | 'false';
     disabled: boolean;
-    mode: 'default' | 'iconOnly';
+    mode?: 'default' | 'iconOnly';
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
     navLeftLabel?: string;
     navRightLabel?: string;
@@ -59,6 +61,7 @@ export const Default: StoryComponent<Args> = ({
     showEllipsis,
     hideNavigationControls,
     hidePageList,
+    withCompactView,
     disabled,
     mode,
     variantOutside,
@@ -93,6 +96,11 @@ export const Default: StoryComponent<Args> = ({
                                     ? hidePageList === 'true'
                                     : hidePageList
                             }
+                            withCompactView={
+                                withCompactView === 'true' || withCompactView === 'false'
+                                    ? withCompactView === 'true'
+                                    : withCompactView
+                            }
                             disabled={disabled}
                             mode={mode}
                             navLeftLabel={navLeftLabel || undefined}
@@ -113,8 +121,8 @@ Default.args = {
     maxPages: 3,
     showEllipsis: true,
     hideNavigationControls: false,
+    withCompactView: false,
     disabled: false,
-    mode: 'default',
     variantOutside: 'default',
     onChange: 'none',
 };

@@ -25,6 +25,7 @@ export type PaginationProps = {
 
     hideNavigationControls?: boolean;
     hidePageList?: boolean;
+    withCompactView?: boolean;
     showEllipsis?: boolean;
 
     maxPages?: number;
@@ -224,11 +225,12 @@ export const Pagination = ({
     onChange,
     hideNavigationControls = false,
     hidePageList: hidePageListProp,
+    withCompactView = false,
     showEllipsis = true,
     maxPages,
     navLeftLabel,
     navRightLabel,
-    mode = 'default',
+    mode,
     disabled = false,
     dataAttributes,
     'aria-label': ariaLabel,
@@ -239,7 +241,8 @@ export const Pagination = ({
     const variant = useThemeVariant();
     const {isTabletOrSmaller} = useScreenSize();
     const hidePageList = hidePageListProp === true;
-    const autoCompact = hidePageListProp === undefined && !hideNavigationControls;
+    const compactView = withCompactView && !hideNavigationControls;
+    const resolvedMode = mode ?? (isTabletOrSmaller ? 'iconOnly' : 'default');
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
@@ -290,12 +293,12 @@ export const Pagination = ({
             aria-label={resolvedAriaLabel}
             className={classnames(styles.container, {
                 [styles.containerNavOnly]: hidePageList,
-                [styles.containerAutoCompact]: autoCompact,
+                [styles.containerCompact]: compactView,
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
             {!hideNavigationControls &&
-                (mode === 'iconOnly' ? (
+                (resolvedMode === 'iconOnly' ? (
                     <IconButton
                         Icon={IconChevronLeftRegular}
                         type="brand"
@@ -323,12 +326,12 @@ export const Pagination = ({
                 <PageList
                     items={items}
                     disabled={disabled}
-                    className={classnames({[styles.pageListAutoCompact]: autoCompact})}
+                    className={classnames({[styles.pageListCompact]: compactView})}
                     onPageClick={goToPage}
                 />
             )}
             {!hideNavigationControls &&
-                (mode === 'iconOnly' ? (
+                (resolvedMode === 'iconOnly' ? (
                     <IconButton
                         Icon={IconChevronRightRegular}
                         type="brand"

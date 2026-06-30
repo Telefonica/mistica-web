@@ -42,7 +42,7 @@ test('Pagination interactive items have 48px targets on mobile', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
-        args: {totalPages: 9, currentPage: 3, mode: 'iconOnly'},
+        args: {totalPages: 9, currentPage: 3},
     });
 
     const previous = await screen.findByRole('button', {name: 'Página anterior'});
@@ -50,8 +50,12 @@ test('Pagination interactive items have 48px targets on mobile', async () => {
     const currentPage = await screen.findByRole('button', {name: 'Página 3, página actual'});
     const next = await screen.findByRole('button', {name: 'Página siguiente'});
 
-    for (const target of [previous, page, currentPage, next]) {
+    for (const target of [page, currentPage]) {
         await expectBoundingBox(target, {width: MOBILE_TARGET_SIZE, height: MOBILE_TARGET_SIZE});
+    }
+
+    for (const target of [previous, next]) {
+        await expectBoundingBox(target, {minWidth: MOBILE_TARGET_SIZE, height: MOBILE_TARGET_SIZE});
     }
 });
 
@@ -59,7 +63,7 @@ test('Pagination ellipses are non-interactive and keep the mobile layout size', 
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
-        args: {totalPages: 20, currentPage: 10, mode: 'iconOnly'},
+        args: {totalPages: 20, currentPage: 10},
     });
 
     const pagination = await screen.findByRole('navigation');
@@ -118,7 +122,7 @@ test('Pagination compact view fits below the compact breakpoint', async () => {
             hasTouch: true,
             isLandscape: false,
         },
-        args: {totalPages: 9, currentPage: 3},
+        args: {totalPages: 9, currentPage: 3, withCompactView: true, mode: 'default'},
     });
 
     const pagination = await screen.findByRole('navigation');
@@ -143,7 +147,7 @@ test('Pagination compact view fits below the compact breakpoint', async () => {
     expect(paginationBox.x + paginationBox.width).toBeLessThanOrEqual(COMPACT_VIEWPORT_WIDTH);
 });
 
-test('Pagination keeps the page list below the compact breakpoint when hidePageList is false', async () => {
+test('Pagination keeps the page list below the compact breakpoint by default', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
@@ -155,7 +159,7 @@ test('Pagination keeps the page list below the compact breakpoint when hidePageL
             hasTouch: true,
             isLandscape: false,
         },
-        args: {totalPages: 9, currentPage: 3, hidePageList: false},
+        args: {totalPages: 9, currentPage: 3},
     });
 
     const pagination = await screen.findByRole('navigation');

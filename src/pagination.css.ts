@@ -34,7 +34,7 @@ export const containerNavOnly = style({
     },
 });
 
-export const containerAutoCompact = style({
+export const containerCompact = style({
     '@media': {
         [compactView]: {
             gap: 16,
@@ -61,7 +61,7 @@ export const pageList = style([
     },
 ]);
 
-export const pageListAutoCompact = style({
+export const pageListCompact = style({
     '@media': {
         [compactView]: {
             display: 'none',
