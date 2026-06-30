@@ -19,6 +19,7 @@ import {
     MOVISTAR_NEW_SKIN,
     ESIMFLAG_SKIN,
     VIVO_SKIN,
+    VIVO_EVOLUTION_SKIN,
     BLAU_SKIN,
 } from '../src';
 import {Movistar_New as defaultThemeConfig} from './themes';
@@ -53,6 +54,7 @@ export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverr
  */
 const skinToLang: Record<string, string> = {
     [VIVO_SKIN]: 'pt-BR',
+    [VIVO_EVOLUTION_SKIN]: 'pt-BR',
     [BLAU_SKIN]: 'de-DE',
     [TELEFONICA_SKIN]: 'es-ES',
     [MOVISTAR_SKIN]: 'es-ES',
@@ -89,7 +91,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
     const styles = `
         body {background: ${skinVars.colors.background}}
 
-        ${skinName === VIVO_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
+        ${skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${
             skinName === MOVISTAR_SKIN ||

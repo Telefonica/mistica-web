@@ -1,0 +1,1544 @@
+[data-mistica-skin='vivo-evolution'] {
+    /* Palette colors */
+    --mistica-vivo-evolution-white: #ffffff;
+    --mistica-vivo-evolution-grey1: #f6f6f6;
+    --mistica-vivo-evolution-vivoPurple: #660099;
+    --mistica-vivo-evolution-vivoPurpleDark: #461e5f;
+    --mistica-vivo-evolution-pepperLight10: #fce4ef;
+    --mistica-vivo-evolution-grey2: #eeeeee;
+    --mistica-vivo-evolution-grey3: #dddddd;
+    --mistica-vivo-evolution-grey5: #666666;
+    --mistica-vivo-evolution-pepper: #cc1f59;
+    --mistica-vivo-evolution-pepperDark: #b71d63;
+    --mistica-vivo-evolution-vivoPurpleLight10: #efe5f4;
+    --mistica-vivo-evolution-vivoPurpleLight50: #b280cc;
+    --mistica-vivo-evolution-pink: #eb3d7d;
+    --mistica-vivo-evolution-pepperLight30: #f7b1cb;
+    --mistica-vivo-evolution-vivoPurpleLight20: #e0cceb;
+    --mistica-vivo-evolution-grey6: #000000;
+    --mistica-vivo-evolution-vivoGreen: #99cc33;
+    --mistica-vivo-evolution-orange: #ff9900;
+    --mistica-vivo-evolution-vivoGreenLight10: #edf8e8;
+    --mistica-vivo-evolution-orangeLight10: #ffefe1;
+    --mistica-vivo-evolution-vivoGreenDark: #225c3d;
+    --mistica-vivo-evolution-orangeDark: #972a1d;
+    --mistica-vivo-evolution-pepperDark80: #8f2052;
+    --mistica-vivo-evolution-grey4: #999999;
+    --mistica-vivo-evolution-darkModeBlack: #191919;
+    --mistica-vivo-evolution-darkModeGrey: #242424;
+    --mistica-vivo-evolution-darkModeGrey6: #313235;
+    --mistica-vivo-evolution-vivoPurpleLight80: #8433ad;
+    --mistica-vivo-evolution-vivoGreenLight30: #91ae9e;
+    --mistica-vivo-evolution-orangeLight40: #ffb84c;
+    --mistica-vivo-evolution-pepperLight40: #db628b;
+
+    /* Raw palette colors, for use with rgba() */
+    --mistica-vivo-evolution-raw-darkModeBlack: 25, 25, 25;
+    --mistica-vivo-evolution-raw-grey6: 0, 0, 0;
+    --mistica-vivo-evolution-raw-vivoPurpleDark: 70, 30, 95;
+    --mistica-vivo-evolution-raw-white: 255, 255, 255;
+    --mistica-vivo-evolution-raw-darkModeGrey: 36, 36, 36;
+
+    /* Colors */
+    --mistica-color-background: var(--mistica-vivo-evolution-white);
+    --mistica-color-backgroundAlternative: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-backgroundBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-backgroundNegative: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-backgroundContainer: var(--mistica-vivo-evolution-white);
+    --mistica-color-backgroundContainerError: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.08);
+    --mistica-color-backgroundContainerBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.2);
+    --mistica-color-backgroundContainerBrandPressed: rgba(
+        var(--mistica-vivo-evolution-raw-darkModeBlack),
+        0.4
+    );
+    --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-backgroundContainerNegative: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.4);
+    --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.6);
+    --mistica-color-backgroundSkeleton: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-backgroundSkeletonInverse: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.2);
+    --mistica-color-backgroundSkeletonBrand: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-backgroundBrandTop: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-backgroundBrandBottom: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-appBarBackground: var(--mistica-vivo-evolution-white);
+    --mistica-color-navigationBarBackground: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-vivo-evolution-raw-vivoPurpleDark), 0.07);
+    --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-vivo-evolution-raw-vivoPurpleDark), 0.12);
+    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-vivo-evolution-raw-vivoPurpleDark), 0.2);
+    --mistica-color-backgroundDropZoneBrandDragover: rgba(
+        var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+        0.4
+    );
+    --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+    --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.17);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-vivo-evolution-raw-vivoPurpleDark), 0.2);
+    --mistica-color-backgroundDropZoneMediaDragover: rgba(
+        var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+        0.4
+    );
+    --mistica-color-skeletonWave: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-borderLow: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-border: var(--mistica-vivo-evolution-grey3);
+    --mistica-color-borderHigh: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-borderSelected: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-coverBackgroundHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.25);
+    --mistica-color-coverBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.35);
+    --mistica-color-buttonDangerBackground: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-buttonDangerBackgroundPressed: var(--mistica-vivo-evolution-pepperDark);
+    --mistica-color-buttonDangerBackgroundHover: var(--mistica-vivo-evolution-pepperDark);
+    --mistica-color-buttonLinkDangerBackgroundInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonLinkDangerBackgroundNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonLinkDangerBackgroundBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonLinkDangerBackgroundPressed: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-buttonLinkDangerBackgroundInversePressed: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-buttonLinkDangerBackgroundNegativePressed: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-buttonLinkDangerBackgroundBrandPressed: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-buttonLinkBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-buttonLinkBackgroundInversePressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+    --mistica-color-buttonLinkBackgroundNegativePressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+    --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+    --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+    --mistica-color-buttonPrimaryBackground: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonPrimaryBackgroundNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonPrimaryBackgroundBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundNegativeHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundBrandHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundNegativePressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonSecondaryBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+    --mistica-color-buttonSecondaryBorder: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-buttonSecondaryBorderInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderNegativePressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderBrandPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBackgroundHover: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundNegativeHover: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundBrandHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundNegativePressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundBrandPressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-textButtonPrimary: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonPrimaryInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryInversePressed: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryNegativePressed: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryBrandPressed: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonSecondary: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonSecondaryInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-textButtonSecondaryInversePressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryNegativePressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryBrandPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLink: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textLinkInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLinkNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLinkBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLinkMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLinkDanger: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textLinkDangerMedia: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textLinkSnackbar: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textActivated: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-inputBorder: var(--mistica-vivo-evolution-grey3);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-inputBorderNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-inputBorderBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-completedStep: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-completedStepInverse: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-completedStepNegative: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-completedStepBrand: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-control: var(--mistica-vivo-evolution-grey3);
+    --mistica-color-controlActivated: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-controlInverse: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-controlNegative: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-controlBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-controlActivatedInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-controlActivatedNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-controlActivatedBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-controlError: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-chevronIndicator: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-barTrack: var(--mistica-vivo-evolution-grey3);
+    --mistica-color-barTrackInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0.5);
+    --mistica-color-barTrackNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0.5);
+    --mistica-color-barTrackBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0.5);
+    --mistica-color-loadingBar: var(--mistica-vivo-evolution-pink);
+    --mistica-color-loadingBarBackground: var(--mistica-vivo-evolution-pepperLight30);
+    --mistica-color-toggleAndroidInactive: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-toggleAndroidBackgroundActive: var(--mistica-vivo-evolution-vivoPurpleLight20);
+    --mistica-color-toggleAndroidActiveBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-toggleAndroidInactiveBrand: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-toggleAndroidBackgroundActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight20);
+    --mistica-color-toggleAndroidBackgroundInactiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-iosControlKnob: var(--mistica-vivo-evolution-white);
+    --mistica-color-controlKnobInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-controlKnobNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-controlKnobBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-divider: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-dividerInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0.2);
+    --mistica-color-dividerNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0.2);
+    --mistica-color-dividerBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0.2);
+    --mistica-color-navigationBarDivider: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-badge: var(--mistica-vivo-evolution-pepperDark);
+    --mistica-color-feedbackErrorBackground: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-feedbackInfoBackground: var(--mistica-vivo-evolution-grey6);
+    --mistica-color-brand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-brandHigh: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-inverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-negative: var(--mistica-vivo-evolution-white);
+    --mistica-color-neutralHigh: var(--mistica-vivo-evolution-grey6);
+    --mistica-color-neutralHighNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-neutralHighBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-neutralMedium: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralMediumInverse: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralMediumNegative: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralMediumBrand: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralLow: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-neutralLowAlternative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textPrimary: var(--mistica-vivo-evolution-grey6);
+    --mistica-color-textPrimaryInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-textPrimaryNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-textPrimaryBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-textPrimaryMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-textSecondary: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-textSecondaryInverse: var(--mistica-vivo-evolution-vivoPurpleLight20);
+    --mistica-color-textSecondaryNegative: var(--mistica-vivo-evolution-vivoPurpleLight20);
+    --mistica-color-textSecondaryBrand: var(--mistica-vivo-evolution-vivoPurpleLight20);
+    --mistica-color-textSecondaryMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-success: var(--mistica-vivo-evolution-vivoGreen);
+    --mistica-color-warning: var(--mistica-vivo-evolution-orange);
+    --mistica-color-error: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textError: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textErrorInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-textErrorNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-textErrorBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-promo: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-highlight: var(--mistica-vivo-evolution-pink);
+    --mistica-color-successLow: var(--mistica-vivo-evolution-vivoGreenLight10);
+    --mistica-color-warningLow: var(--mistica-vivo-evolution-orangeLight10);
+    --mistica-color-errorLow: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-promoLow: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-brandLow: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-successHigh: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-warningHigh: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-errorHigh: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-promoHigh: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-successHighInverse: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-successHighNegative: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-successHighBrand: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-warningHighInverse: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-warningHighNegative: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-warningHighBrand: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-errorHighInverse: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-errorHighNegative: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-errorHighBrand: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-promoHighInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-promoHighNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-promoHighBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textNavigationBarPrimary: var(--mistica-vivo-evolution-white);
+    --mistica-color-textNavigationBarSecondary: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textNavigationSearchBarHint: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-evolution-white);
+    --mistica-color-textAppBar: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textAppBarSelected: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-iosGlassAppBar: var(--mistica-vivo-evolution-grey6);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-customTabsBackground: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextPromo: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextActive: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextInactive: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInfo: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextSuccess: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-tagTextWarning: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-tagTextError: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-tagBackgroundPromo: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundActive: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundInactive: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-tagBackgroundInfo: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-evolution-vivoGreenLight10);
+    --mistica-color-tagBackgroundWarning: var(--mistica-vivo-evolution-orangeLight10);
+    --mistica-color-tagBackgroundError: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-tagTextPromoInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextPromoNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextPromoBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextActiveInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextActiveNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextActiveBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInactiveNegative: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInactiveBrand: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInfoInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextInfoNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextInfoBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-tagTextSuccessNegative: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-tagTextSuccessBrand: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-tagTextWarningInverse: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-tagTextWarningNegative: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-tagTextWarningBrand: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-tagTextErrorInverse: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-tagTextErrorNegative: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-tagTextErrorBrand: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundPromoNegative: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundPromoBrand: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundActiveNegative: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-tagBackgroundInactiveNegative: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-tagBackgroundInactiveBrand: var(--mistica-vivo-evolution-grey1);
+    --mistica-color-tagBackgroundInfoInverse: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundInfoNegative: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundInfoBrand: var(--mistica-vivo-evolution-vivoPurpleLight10);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-evolution-vivoGreenLight10);
+    --mistica-color-tagBackgroundSuccessNegative: var(--mistica-vivo-evolution-vivoGreenLight10);
+    --mistica-color-tagBackgroundSuccessBrand: var(--mistica-vivo-evolution-vivoGreenLight10);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-evolution-orangeLight10);
+    --mistica-color-tagBackgroundWarningNegative: var(--mistica-vivo-evolution-orangeLight10);
+    --mistica-color-tagBackgroundWarningBrand: var(--mistica-vivo-evolution-orangeLight10);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-tagBackgroundErrorNegative: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-tagBackgroundErrorBrand: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-cardContentOverlay: linear-gradient(
+        180deg,
+        rgba(var(--mistica-vivo-evolution-raw-grey6), 0) 0%,
+        rgba(var(--mistica-vivo-evolution-raw-grey6), 0.4) 30%,
+        rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7) 100%
+    );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7);
+
+    /* Border radius */
+    --mistica-border-radius-avatar: 50%;
+    --mistica-border-radius-bar: 999px;
+    --mistica-border-radius-button: 4px;
+    --mistica-border-radius-checkbox: 2px;
+    --mistica-border-radius-container: 8px;
+    --mistica-border-radius-indicator: 24px;
+    --mistica-border-radius-chip: 24px;
+    --mistica-border-radius-tag: 24px;
+    --mistica-border-radius-input: 8px;
+    --mistica-border-radius-legacyDisplay: 16px;
+    --mistica-border-radius-popup: 8px;
+    --mistica-border-radius-sheet: 8px;
+    --mistica-border-radius-mediaSmall: 8px;
+
+    /* Text */
+    --mistica-font-size-1: 0.75rem;
+    --mistica-line-height-1: 1rem;
+    --mistica-font-size-2: 0.875rem;
+    --mistica-line-height-2: 1.25rem;
+    --mistica-font-size-3: 1rem;
+    --mistica-line-height-3: 1.5rem;
+    --mistica-font-size-4: 1.125rem;
+    --mistica-line-height-4: 1.5rem;
+    --mistica-font-size-5: 1.25rem;
+    --mistica-line-height-5: 1.5rem;
+    --mistica-font-weight-5: 300;
+    --mistica-font-size-6: 1.5rem;
+    --mistica-line-height-6: 2rem;
+    --mistica-font-weight-6: 300;
+    --mistica-font-size-7: 1.75rem;
+    --mistica-line-height-7: 2rem;
+    --mistica-font-weight-7: 300;
+    --mistica-font-size-8: 2rem;
+    --mistica-line-height-8: 2.5rem;
+    --mistica-font-weight-8: 300;
+    --mistica-font-size-9: 2.5rem;
+    --mistica-line-height-9: 3rem;
+    --mistica-font-weight-9: 300;
+    --mistica-font-size-10: 3rem;
+    --mistica-line-height-10: 3.5rem;
+    --mistica-font-weight-10: 300;
+    --mistica-font-size-cardTitle: 1.25rem;
+    --mistica-line-height-cardTitle: 1.5rem;
+    --mistica-font-weight-cardTitle: 400;
+    --mistica-font-size-drawerTitle: 1.25rem;
+    --mistica-line-height-drawerTitle: 1.5rem;
+    --mistica-font-weight-drawerTitle: 300;
+    --mistica-font-weight-rowTitle: 400;
+    --mistica-font-weight-button: 500;
+    --mistica-font-size-tabsLabel: 1rem;
+    --mistica-line-height-tabsLabel: 1.5rem;
+    --mistica-font-weight-tabsLabel: 500;
+    --mistica-font-weight-link: 500;
+    --mistica-font-size-title1: 0.75rem;
+    --mistica-line-height-title1: 1rem;
+    --mistica-font-weight-title1: 500;
+    --mistica-font-size-title2: 1rem;
+    --mistica-line-height-title2: 1.5rem;
+    --mistica-font-weight-title2: 300;
+    --mistica-font-size-title3: 1.25rem;
+    --mistica-line-height-title3: 1.5rem;
+    --mistica-font-weight-title3: 300;
+    --mistica-font-size-title4: 1.5rem;
+    --mistica-line-height-title4: 2rem;
+    --mistica-font-weight-title4: 300;
+    --mistica-font-weight-indicator: 500;
+    --mistica-font-weight-navigationBar: 500;
+    --mistica-font-size-chipLabel: 0.875rem;
+    --mistica-line-height-chipLabel: 1.25rem;
+    --mistica-font-weight-chipLabel: 500;
+    --mistica-font-size-cardPretitleSnap: 0.875rem;
+    --mistica-line-height-cardPretitleSnap: 1.25rem;
+    --mistica-font-size-cardTitleSnap: 0.875rem;
+    --mistica-line-height-cardTitleSnap: 1.25rem;
+    --mistica-font-size-cardSubtitleSnap: 0.875rem;
+    --mistica-line-height-cardSubtitleSnap: 1.25rem;
+    --mistica-font-size-cardDescriptionSnap: 0.875rem;
+    --mistica-line-height-cardDescriptionSnap: 1.25rem;
+    --mistica-font-size-cardPretitleDefault: 0.875rem;
+    --mistica-line-height-cardPretitleDefault: 1.25rem;
+    --mistica-font-size-cardTitleDefault: 1.125rem;
+    --mistica-line-height-cardTitleDefault: 1.5rem;
+    --mistica-font-size-cardSubtitleDefault: 0.875rem;
+    --mistica-line-height-cardSubtitleDefault: 1.25rem;
+    --mistica-font-size-cardDescriptionDefault: 0.875rem;
+    --mistica-line-height-cardDescriptionDefault: 1.25rem;
+    --mistica-font-size-inputLabel: 0.75rem;
+    --mistica-line-height-inputLabel: 1rem;
+    --mistica-font-size-inputValue: 1rem;
+    --mistica-line-height-inputValue: 1.5rem;
+    --mistica-font-size-inputHelperText: 0.75rem;
+    --mistica-line-height-inputHelperText: 1rem;
+    --mistica-font-size-stepperStepLabel: 0.875rem;
+    --mistica-line-height-stepperStepLabel: 1.25rem;
+    --mistica-font-size-loadingScreenTitle: 1.125rem;
+    --mistica-line-height-loadingScreenTitle: 1.5rem;
+}
+
+[data-mistica-skin='vivo-evolution'][data-mistica-color-scheme='dark'] {
+    --mistica-color-background: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundAlternative: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundBrand: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundNegative: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundContainer: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundContainerError: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-backgroundContainerBrand: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+    --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundContainerNegative: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-evolution-raw-darkModeGrey), 0.8);
+    --mistica-color-backgroundSkeleton: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-backgroundSkeletonInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-backgroundSkeletonNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-backgroundSkeletonBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-backgroundBrandTop: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundBrandBottom: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-appBarBackground: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-navigationBarBackground: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneNegativeDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+    --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-skeletonWave: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-borderLow: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-border: var(--mistica-vivo-evolution-darkModeGrey);
+    --mistica-color-borderHigh: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-borderSelected: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-coverBackgroundHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.25);
+    --mistica-color-coverBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.35);
+    --mistica-color-buttonDangerBackground: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-buttonDangerBackgroundPressed: var(--mistica-vivo-evolution-pepperDark);
+    --mistica-color-buttonDangerBackgroundHover: var(--mistica-vivo-evolution-pepperDark);
+    --mistica-color-buttonLinkDangerBackgroundInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+    --mistica-color-buttonLinkDangerBackgroundNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+    --mistica-color-buttonLinkDangerBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+    --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonLinkDangerBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-buttonLinkDangerBackgroundInversePressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.08
+    );
+    --mistica-color-buttonLinkDangerBackgroundNegativePressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.08
+    );
+    --mistica-color-buttonLinkDangerBackgroundBrandPressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.08
+    );
+    --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-vivo-evolution-pepperLight10);
+    --mistica-color-buttonLinkBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-buttonLinkBackgroundInversePressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-buttonLinkBackgroundNegativePressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+    --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+    --mistica-color-buttonPrimaryBackground: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-buttonPrimaryBackgroundNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-buttonPrimaryBackgroundBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundNegativeHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundBrandHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundNegativePressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+    --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-buttonSecondaryBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+    --mistica-color-buttonSecondaryBorder: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderInverse: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderNegative: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderBrand: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderNegativePressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderBrandPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-buttonSecondaryBackgroundHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundNegativeHover: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundBrandHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+    --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundNegativePressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundBrandPressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(
+        var(--mistica-vivo-evolution-raw-white),
+        0.15
+    );
+    --mistica-color-textButtonPrimary: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryInverse: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryNegative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryBrand: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryMedia: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonPrimaryInversePressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryNegativePressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryBrandPressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textButtonSecondary: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryInverse: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryNegative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryBrand: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-textButtonSecondaryPressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryInversePressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryNegativePressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryBrandPressed: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLink: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textLinkInverse: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textLinkNegative: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textLinkBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textLinkMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-textLinkDanger: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textLinkDangerMedia: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textLinkSnackbar: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-textActivated: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-textBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-inputBorder: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-inputBorderInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-inputBorderNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-inputBorderBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-completedStep: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-completedStepInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-completedStepNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-completedStepBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-control: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-controlActivated: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-controlInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-controlNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-controlBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-controlActivatedInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-controlActivatedNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-controlActivatedBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-controlError: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-chevronIndicator: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-barTrack: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-barTrackInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-barTrackNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-barTrackBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-loadingBar: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-loadingBarBackground: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-toggleAndroidInactive: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-toggleAndroidBackgroundActive: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-toggleAndroidActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-toggleAndroidInactiveBrand: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-toggleAndroidBackgroundActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-toggleAndroidBackgroundInactiveBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-iosControlKnob: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-controlKnobInverse: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-controlKnobNegative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-controlKnobBrand: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-divider: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-dividerInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-dividerNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-dividerBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-navigationBarDivider: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-badge: var(--mistica-vivo-evolution-pepperDark);
+    --mistica-color-feedbackErrorBackground: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-feedbackInfoBackground: var(--mistica-vivo-evolution-grey6);
+    --mistica-color-brand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-brandHigh: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+    --mistica-color-inverse: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-negative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-neutralHigh: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-neutralHighBrand: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-neutralHighNegative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-neutralMedium: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralMediumInverse: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralMediumNegative: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralMediumBrand: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-neutralLow: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-neutralLowAlternative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-textPrimary: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textPrimaryInverse: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textPrimaryNegative: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textPrimaryBrand: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textPrimaryMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-textSecondary: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textSecondaryInverse: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textSecondaryNegative: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textSecondaryBrand: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textSecondaryMedia: var(--mistica-vivo-evolution-white);
+    --mistica-color-success: var(--mistica-vivo-evolution-vivoGreen);
+    --mistica-color-warning: var(--mistica-vivo-evolution-orange);
+    --mistica-color-error: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textError: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textErrorInverse: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textErrorNegative: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-textErrorBrand: var(--mistica-vivo-evolution-pepper);
+    --mistica-color-promo: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-highlight: var(--mistica-vivo-evolution-pink);
+    --mistica-color-successLow: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-warningLow: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-errorLow: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-promoLow: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-brandLow: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-successHigh: var(--mistica-vivo-evolution-vivoGreenLight30);
+    --mistica-color-warningHigh: var(--mistica-vivo-evolution-orangeLight40);
+    --mistica-color-errorHigh: var(--mistica-vivo-evolution-pepperLight40);
+    --mistica-color-promoHigh: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-successHighInverse: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-successHighNegative: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-successHighBrand: var(--mistica-vivo-evolution-vivoGreenDark);
+    --mistica-color-warningHighInverse: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-warningHighNegative: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-warningHighBrand: var(--mistica-vivo-evolution-orangeDark);
+    --mistica-color-errorHighInverse: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-errorHighNegative: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-errorHighBrand: var(--mistica-vivo-evolution-pepperDark80);
+    --mistica-color-promoHighInverse: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-promoHighNegative: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-promoHighBrand: var(--mistica-vivo-evolution-vivoPurple);
+    --mistica-color-textNavigationBarPrimary: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textNavigationBarSecondary: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textNavigationSearchBarHint: var(--mistica-vivo-evolution-grey4);
+    --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-textAppBar: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-textAppBarSelected: var(--mistica-vivo-evolution-grey2);
+    --mistica-color-iosGlassAppBar: var(--mistica-vivo-evolution-white);
+    --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-evolution-vivoPurpleLight20);
+    --mistica-color-customTabsBackground: var(--mistica-vivo-evolution-darkModeBlack);
+    --mistica-color-tagTextPromo: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-tagTextActive: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextInactive: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInfo: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextSuccess: var(--mistica-vivo-evolution-vivoGreenLight30);
+    --mistica-color-tagTextWarning: var(--mistica-vivo-evolution-orangeLight40);
+    --mistica-color-tagTextError: var(--mistica-vivo-evolution-pepperLight40);
+    --mistica-color-tagBackgroundPromo: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundActive: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInactive: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInfo: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundWarning: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundError: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagTextPromoInverse: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-tagTextPromoNegative: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-tagTextPromoBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+    --mistica-color-tagTextActiveInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextActiveNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInactiveNegative: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInactiveBrand: var(--mistica-vivo-evolution-grey5);
+    --mistica-color-tagTextInfoInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextInfoNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextInfoBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-evolution-vivoGreenLight30);
+    --mistica-color-tagTextSuccessNegative: var(--mistica-vivo-evolution-vivoGreenLight30);
+    --mistica-color-tagTextSuccessBrand: var(--mistica-vivo-evolution-vivoGreenLight30);
+    --mistica-color-tagTextWarningInverse: var(--mistica-vivo-evolution-orangeLight40);
+    --mistica-color-tagTextWarningNegative: var(--mistica-vivo-evolution-orangeLight40);
+    --mistica-color-tagTextWarningBrand: var(--mistica-vivo-evolution-orangeLight40);
+    --mistica-color-tagTextErrorInverse: var(--mistica-vivo-evolution-pepperLight40);
+    --mistica-color-tagTextErrorNegative: var(--mistica-vivo-evolution-pepperLight40);
+    --mistica-color-tagTextErrorBrand: var(--mistica-vivo-evolution-pepperLight40);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundPromoNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundPromoBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundActiveNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundActiveBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInactiveNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInactiveBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInfoInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInfoNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundInfoBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccessNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccessBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundWarningNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundWarningBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundErrorNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-tagBackgroundErrorBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+    --mistica-color-cardContentOverlay: linear-gradient(
+        180deg,
+        rgba(var(--mistica-vivo-evolution-raw-grey6), 0) 0%,
+        rgba(var(--mistica-vivo-evolution-raw-grey6), 0.4) 30%,
+        rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7) 100%
+    );
+    --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-mistica-skin='vivo-evolution'] {
+        --mistica-color-background: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundAlternative: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundBrand: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundNegative: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundContainer: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundContainerError: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+        --mistica-color-backgroundContainerBrand: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+        --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundContainerNegative: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-evolution-raw-darkModeGrey), 0.8);
+        --mistica-color-backgroundSkeleton: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-backgroundSkeletonInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-backgroundSkeletonNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-backgroundSkeletonBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-backgroundBrandTop: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundBrandBottom: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-appBarBackground: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-navigationBarBackground: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-backgroundDropZoneDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+        --mistica-color-backgroundDropZoneBrandHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneBrandDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneNegativeDragover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.05
+        );
+        --mistica-color-backgroundDropZoneMediaHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.03);
+        --mistica-color-backgroundDropZoneMediaDragover: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-skeletonWave: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-borderLow: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-border: var(--mistica-vivo-evolution-darkModeGrey);
+        --mistica-color-borderHigh: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-borderSelected: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-coverBackgroundHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.25);
+        --mistica-color-coverBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.35);
+        --mistica-color-buttonDangerBackground: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-buttonDangerBackgroundPressed: var(--mistica-vivo-evolution-pepperDark);
+        --mistica-color-buttonDangerBackgroundHover: var(--mistica-vivo-evolution-pepperDark);
+        --mistica-color-buttonLinkDangerBackgroundInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+        --mistica-color-buttonLinkDangerBackgroundNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+        --mistica-color-buttonLinkDangerBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+        --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonLinkDangerBackgroundPressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.08
+        );
+        --mistica-color-buttonLinkDangerBackgroundInversePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.08
+        );
+        --mistica-color-buttonLinkDangerBackgroundNegativePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.08
+        );
+        --mistica-color-buttonLinkDangerBackgroundBrandPressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.08
+        );
+        --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-buttonLinkBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+        --mistica-color-buttonLinkBackgroundInversePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.08
+        );
+        --mistica-color-buttonLinkBackgroundNegativePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.08
+        );
+        --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.08);
+        --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+        --mistica-color-buttonPrimaryBackground: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-buttonPrimaryBackgroundNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-buttonPrimaryBackgroundBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundNegativeHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundBrandHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundInversePressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundNegativePressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonSecondaryBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+        --mistica-color-buttonSecondaryBorder: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderNegativePressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderBrandPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBackgroundHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundNegativeHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundBrandHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.15);
+        --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundNegativePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundBrandPressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-textButtonPrimary: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryInverse: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryNegative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryBrand: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryInversePressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryNegativePressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryBrandPressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonSecondary: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryInverse: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryNegative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryBrand: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryPressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryInversePressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryNegativePressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryBrandPressed: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLink: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textLinkInverse: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textLinkNegative: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textLinkBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textLinkMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLinkDanger: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textLinkDangerMedia: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textLinkSnackbar: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textActivated: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-textBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-inputBorder: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-inputBorderNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-inputBorderBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-completedStep: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-completedStepInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-completedStepNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-completedStepBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-control: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-controlActivated: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-controlInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-controlNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-controlBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-controlActivatedInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-controlActivatedNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-controlActivatedBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-controlError: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-chevronIndicator: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-barTrack: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-barTrackInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-barTrackNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-barTrackBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-loadingBar: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-loadingBarBackground: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-toggleAndroidInactive: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-toggleAndroidBackgroundActive: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-toggleAndroidActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-toggleAndroidInactiveBrand: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-toggleAndroidBackgroundActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-toggleAndroidBackgroundInactiveBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-iosControlKnob: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-controlKnobInverse: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-controlKnobNegative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-controlKnobBrand: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-divider: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-dividerInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-dividerNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-dividerBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-navigationBarDivider: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-badge: var(--mistica-vivo-evolution-pepperDark);
+        --mistica-color-feedbackErrorBackground: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-feedbackInfoBackground: var(--mistica-vivo-evolution-grey6);
+        --mistica-color-brand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-brandHigh: rgba(var(--mistica-vivo-evolution-raw-white), 0.05);
+        --mistica-color-inverse: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-negative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-neutralHigh: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-neutralHighBrand: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-neutralHighNegative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-neutralMedium: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralMediumInverse: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralMediumNegative: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralMediumBrand: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralLow: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-neutralLowAlternative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-textPrimary: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textPrimaryInverse: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textPrimaryNegative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textPrimaryBrand: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textPrimaryMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-textSecondary: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textSecondaryInverse: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textSecondaryNegative: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textSecondaryBrand: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textSecondaryMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-success: var(--mistica-vivo-evolution-vivoGreen);
+        --mistica-color-warning: var(--mistica-vivo-evolution-orange);
+        --mistica-color-error: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textError: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textErrorInverse: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textErrorNegative: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textErrorBrand: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-promo: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-highlight: var(--mistica-vivo-evolution-pink);
+        --mistica-color-successLow: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-warningLow: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-errorLow: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-promoLow: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-brandLow: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-successHigh: var(--mistica-vivo-evolution-vivoGreenLight30);
+        --mistica-color-warningHigh: var(--mistica-vivo-evolution-orangeLight40);
+        --mistica-color-errorHigh: var(--mistica-vivo-evolution-pepperLight40);
+        --mistica-color-promoHigh: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-successHighInverse: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-successHighNegative: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-successHighBrand: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-warningHighInverse: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-warningHighNegative: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-warningHighBrand: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-errorHighInverse: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-errorHighNegative: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-errorHighBrand: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-promoHighInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-promoHighNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-promoHighBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textNavigationBarPrimary: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textNavigationBarSecondary: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textNavigationSearchBarHint: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textAppBar: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-textAppBarSelected: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-iosGlassAppBar: var(--mistica-vivo-evolution-white);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-evolution-vivoPurpleLight20);
+        --mistica-color-customTabsBackground: var(--mistica-vivo-evolution-darkModeBlack);
+        --mistica-color-tagTextPromo: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-tagTextActive: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextInactive: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInfo: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextSuccess: var(--mistica-vivo-evolution-vivoGreenLight30);
+        --mistica-color-tagTextWarning: var(--mistica-vivo-evolution-orangeLight40);
+        --mistica-color-tagTextError: var(--mistica-vivo-evolution-pepperLight40);
+        --mistica-color-tagBackgroundPromo: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundActive: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInactive: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInfo: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundWarning: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundError: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagTextPromoInverse: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-tagTextPromoNegative: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-tagTextPromoBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-tagTextActiveInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextActiveNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInactiveNegative: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInactiveBrand: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInfoInverse: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextInfoNegative: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextInfoBrand: var(--mistica-vivo-evolution-vivoPurpleLight80);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-evolution-vivoGreenLight30);
+        --mistica-color-tagTextSuccessNegative: var(--mistica-vivo-evolution-vivoGreenLight30);
+        --mistica-color-tagTextSuccessBrand: var(--mistica-vivo-evolution-vivoGreenLight30);
+        --mistica-color-tagTextWarningInverse: var(--mistica-vivo-evolution-orangeLight40);
+        --mistica-color-tagTextWarningNegative: var(--mistica-vivo-evolution-orangeLight40);
+        --mistica-color-tagTextWarningBrand: var(--mistica-vivo-evolution-orangeLight40);
+        --mistica-color-tagTextErrorInverse: var(--mistica-vivo-evolution-pepperLight40);
+        --mistica-color-tagTextErrorNegative: var(--mistica-vivo-evolution-pepperLight40);
+        --mistica-color-tagTextErrorBrand: var(--mistica-vivo-evolution-pepperLight40);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundPromoNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundPromoBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundActiveNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundActiveBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInactiveNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInactiveBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInfoInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInfoNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundInfoBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccessNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccessBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundWarningNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundWarningBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundErrorNegative: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-tagBackgroundErrorBrand: var(--mistica-vivo-evolution-darkModeGrey6);
+        --mistica-color-cardContentOverlay: linear-gradient(
+            180deg,
+            rgba(var(--mistica-vivo-evolution-raw-grey6), 0) 0%,
+            rgba(var(--mistica-vivo-evolution-raw-grey6), 0.4) 30%,
+            rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7) 100%
+        );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7);
+    }
+
+    [data-mistica-skin='vivo-evolution'][data-mistica-color-scheme='light'] {
+        --mistica-color-background: var(--mistica-vivo-evolution-white);
+        --mistica-color-backgroundAlternative: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-backgroundBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-backgroundNegative: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-backgroundContainer: var(--mistica-vivo-evolution-white);
+        --mistica-color-backgroundContainerError: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(
+            var(--mistica-vivo-evolution-raw-darkModeBlack),
+            0.08
+        );
+        --mistica-color-backgroundContainerBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-backgroundContainerBrandHover: rgba(
+            var(--mistica-vivo-evolution-raw-darkModeBlack),
+            0.2
+        );
+        --mistica-color-backgroundContainerBrandPressed: rgba(
+            var(--mistica-vivo-evolution-raw-darkModeBlack),
+            0.4
+        );
+        --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-backgroundContainerNegative: rgba(
+            var(--mistica-vivo-evolution-raw-darkModeBlack),
+            0.4
+        );
+        --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.6);
+        --mistica-color-backgroundSkeleton: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-backgroundSkeletonInverse: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-backgroundSkeletonNegative: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.2);
+        --mistica-color-backgroundSkeletonBrand: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-backgroundBrandTop: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-backgroundBrandBottom: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-appBarBackground: var(--mistica-vivo-evolution-white);
+        --mistica-color-navigationBarBackground: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-backgroundDropZoneHover: rgba(var(--mistica-vivo-evolution-raw-vivoPurpleDark), 0.07);
+        --mistica-color-backgroundDropZoneDragover: rgba(
+            var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+            0.12
+        );
+        --mistica-color-backgroundDropZoneBrandHover: rgba(
+            var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+            0.2
+        );
+        --mistica-color-backgroundDropZoneBrandDragover: rgba(
+            var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+            0.4
+        );
+        --mistica-color-backgroundDropZoneNegativeHover: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+        --mistica-color-backgroundDropZoneNegativeDragover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.17
+        );
+        --mistica-color-backgroundDropZoneMediaHover: rgba(
+            var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+            0.2
+        );
+        --mistica-color-backgroundDropZoneMediaDragover: rgba(
+            var(--mistica-vivo-evolution-raw-vivoPurpleDark),
+            0.4
+        );
+        --mistica-color-skeletonWave: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-borderLow: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-border: var(--mistica-vivo-evolution-grey3);
+        --mistica-color-borderHigh: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-borderSelected: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-coverBackgroundHover: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.25);
+        --mistica-color-coverBackgroundPressed: rgba(var(--mistica-vivo-evolution-raw-darkModeBlack), 0.35);
+        --mistica-color-buttonDangerBackground: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-buttonDangerBackgroundPressed: var(--mistica-vivo-evolution-pepperDark);
+        --mistica-color-buttonDangerBackgroundHover: var(--mistica-vivo-evolution-pepperDark);
+        --mistica-color-buttonLinkDangerBackgroundInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonLinkDangerBackgroundNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonLinkDangerBackgroundBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonLinkDangerBackgroundMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonLinkDangerBackgroundPressed: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-buttonLinkDangerBackgroundInversePressed: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-buttonLinkDangerBackgroundNegativePressed: var(
+            --mistica-vivo-evolution-pepperLight10
+        );
+        --mistica-color-buttonLinkDangerBackgroundBrandPressed: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-buttonLinkDangerBackgroundMediaPressed: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-buttonLinkBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-buttonLinkBackgroundInversePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.1
+        );
+        --mistica-color-buttonLinkBackgroundNegativePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.1
+        );
+        --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+        --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-vivo-evolution-raw-white), 0.1);
+        --mistica-color-buttonPrimaryBackground: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonPrimaryBackgroundNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonPrimaryBackgroundBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonPrimaryBackgroundMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonPrimaryBackgroundHover: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundInverseHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonPrimaryBackgroundNegativeHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonPrimaryBackgroundBrandHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonPrimaryBackgroundMediaHover: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonPrimaryBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonPrimaryBackgroundInversePressed: var(
+            --mistica-vivo-evolution-vivoPurpleLight50
+        );
+        --mistica-color-buttonPrimaryBackgroundNegativePressed: var(
+            --mistica-vivo-evolution-vivoPurpleLight50
+        );
+        --mistica-color-buttonPrimaryBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonPrimaryBackgroundMediaPressed: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-buttonSecondaryBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0);
+        --mistica-color-buttonSecondaryBorder: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-buttonSecondaryBorderInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-buttonSecondaryBorderInversePressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderNegativePressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderBrandPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBorderMediaPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-buttonSecondaryBackgroundHover: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-buttonSecondaryBackgroundInverseHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundNegativeHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundBrandHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundMediaHover: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundPressed: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-buttonSecondaryBackgroundInversePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundNegativePressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundBrandPressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-buttonSecondaryBackgroundMediaPressed: rgba(
+            var(--mistica-vivo-evolution-raw-white),
+            0.15
+        );
+        --mistica-color-textButtonPrimary: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonPrimaryInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryMedia: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryInversePressed: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryNegativePressed: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryBrandPressed: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonPrimaryMediaPressed: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonSecondary: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textButtonSecondaryInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryPressed: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-textButtonSecondaryInversePressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryNegativePressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryBrandPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-textButtonSecondaryMediaPressed: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLink: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textLinkInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLinkNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLinkBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLinkMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-textLinkDanger: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textLinkDangerMedia: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textLinkSnackbar: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textActivated: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-inputBorder: var(--mistica-vivo-evolution-grey3);
+        --mistica-color-inputBorderInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-inputBorderNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-inputBorderBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-completedStep: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-completedStepInverse: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-completedStepNegative: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-completedStepBrand: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-control: var(--mistica-vivo-evolution-grey3);
+        --mistica-color-controlActivated: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-controlInverse: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-controlNegative: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-controlBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-controlActivatedInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-controlActivatedNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-controlActivatedBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-controlError: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-chevronIndicator: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-barTrack: var(--mistica-vivo-evolution-grey3);
+        --mistica-color-barTrackInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0.5);
+        --mistica-color-barTrackNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0.5);
+        --mistica-color-barTrackBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0.5);
+        --mistica-color-loadingBar: var(--mistica-vivo-evolution-pink);
+        --mistica-color-loadingBarBackground: var(--mistica-vivo-evolution-pepperLight30);
+        --mistica-color-toggleAndroidInactive: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-toggleAndroidBackgroundActive: var(--mistica-vivo-evolution-vivoPurpleLight20);
+        --mistica-color-toggleAndroidActiveBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-toggleAndroidInactiveBrand: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-toggleAndroidBackgroundActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight20);
+        --mistica-color-toggleAndroidBackgroundInactiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-iosControlKnob: var(--mistica-vivo-evolution-white);
+        --mistica-color-controlKnobInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-controlKnobNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-controlKnobBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-divider: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-dividerInverse: rgba(var(--mistica-vivo-evolution-raw-white), 0.2);
+        --mistica-color-dividerNegative: rgba(var(--mistica-vivo-evolution-raw-white), 0.2);
+        --mistica-color-dividerBrand: rgba(var(--mistica-vivo-evolution-raw-white), 0.2);
+        --mistica-color-navigationBarDivider: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-badge: var(--mistica-vivo-evolution-pepperDark);
+        --mistica-color-feedbackErrorBackground: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-feedbackInfoBackground: var(--mistica-vivo-evolution-grey6);
+        --mistica-color-brand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-brandHigh: var(--mistica-vivo-evolution-vivoPurpleDark);
+        --mistica-color-inverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-negative: var(--mistica-vivo-evolution-white);
+        --mistica-color-neutralHigh: var(--mistica-vivo-evolution-grey6);
+        --mistica-color-neutralHighBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-neutralHighNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-neutralMedium: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralMediumInverse: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralMediumNegative: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralMediumBrand: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-neutralLow: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-neutralLowAlternative: var(--mistica-vivo-evolution-grey2);
+        --mistica-color-textPrimary: var(--mistica-vivo-evolution-grey6);
+        --mistica-color-textPrimaryInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-textPrimaryNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-textPrimaryBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-textPrimaryMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-textSecondary: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-textSecondaryInverse: var(--mistica-vivo-evolution-vivoPurpleLight20);
+        --mistica-color-textSecondaryNegative: var(--mistica-vivo-evolution-vivoPurpleLight20);
+        --mistica-color-textSecondaryBrand: var(--mistica-vivo-evolution-vivoPurpleLight20);
+        --mistica-color-textSecondaryMedia: var(--mistica-vivo-evolution-white);
+        --mistica-color-success: var(--mistica-vivo-evolution-vivoGreen);
+        --mistica-color-warning: var(--mistica-vivo-evolution-orange);
+        --mistica-color-error: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textError: var(--mistica-vivo-evolution-pepper);
+        --mistica-color-textErrorInverse: var(--mistica-vivo-evolution-white);
+        --mistica-color-textErrorNegative: var(--mistica-vivo-evolution-white);
+        --mistica-color-textErrorBrand: var(--mistica-vivo-evolution-white);
+        --mistica-color-promo: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-highlight: var(--mistica-vivo-evolution-pink);
+        --mistica-color-successLow: var(--mistica-vivo-evolution-vivoGreenLight10);
+        --mistica-color-warningLow: var(--mistica-vivo-evolution-orangeLight10);
+        --mistica-color-errorLow: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-promoLow: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-brandLow: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-successHigh: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-warningHigh: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-errorHigh: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-promoHigh: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-successHighInverse: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-successHighNegative: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-successHighBrand: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-warningHighInverse: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-warningHighNegative: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-warningHighBrand: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-errorHighInverse: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-errorHighNegative: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-errorHighBrand: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-promoHighInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-promoHighNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-promoHighBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-textNavigationBarPrimary: var(--mistica-vivo-evolution-white);
+        --mistica-color-textNavigationBarSecondary: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textNavigationSearchBarHint: var(--mistica-vivo-evolution-vivoPurpleLight50);
+        --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-evolution-white);
+        --mistica-color-textAppBar: var(--mistica-vivo-evolution-grey4);
+        --mistica-color-textAppBarSelected: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-iosGlassAppBar: var(--mistica-vivo-evolution-grey6);
+        --mistica-color-iosGlassAppBarSelected: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-customTabsBackground: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextPromo: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextActive: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextInactive: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInfo: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextSuccess: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-tagTextWarning: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-tagTextError: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-tagBackgroundPromo: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundActive: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundInactive: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-tagBackgroundInfo: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-evolution-vivoGreenLight10);
+        --mistica-color-tagBackgroundWarning: var(--mistica-vivo-evolution-orangeLight10);
+        --mistica-color-tagBackgroundError: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-tagTextPromoInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextPromoNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextPromoBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextActiveInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextActiveNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextActiveBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInactiveNegative: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInactiveBrand: var(--mistica-vivo-evolution-grey5);
+        --mistica-color-tagTextInfoInverse: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextInfoNegative: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextInfoBrand: var(--mistica-vivo-evolution-vivoPurple);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-tagTextSuccessNegative: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-tagTextSuccessBrand: var(--mistica-vivo-evolution-vivoGreenDark);
+        --mistica-color-tagTextWarningInverse: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-tagTextWarningNegative: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-tagTextWarningBrand: var(--mistica-vivo-evolution-orangeDark);
+        --mistica-color-tagTextErrorInverse: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-tagTextErrorNegative: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-tagTextErrorBrand: var(--mistica-vivo-evolution-pepperDark80);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundPromoNegative: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundPromoBrand: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundActiveNegative: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundActiveBrand: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-tagBackgroundInactiveNegative: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-tagBackgroundInactiveBrand: var(--mistica-vivo-evolution-grey1);
+        --mistica-color-tagBackgroundInfoInverse: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundInfoNegative: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundInfoBrand: var(--mistica-vivo-evolution-vivoPurpleLight10);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-evolution-vivoGreenLight10);
+        --mistica-color-tagBackgroundSuccessNegative: var(--mistica-vivo-evolution-vivoGreenLight10);
+        --mistica-color-tagBackgroundSuccessBrand: var(--mistica-vivo-evolution-vivoGreenLight10);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-evolution-orangeLight10);
+        --mistica-color-tagBackgroundWarningNegative: var(--mistica-vivo-evolution-orangeLight10);
+        --mistica-color-tagBackgroundWarningBrand: var(--mistica-vivo-evolution-orangeLight10);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-tagBackgroundErrorNegative: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-tagBackgroundErrorBrand: var(--mistica-vivo-evolution-pepperLight10);
+        --mistica-color-cardContentOverlay: linear-gradient(
+            180deg,
+            rgba(var(--mistica-vivo-evolution-raw-grey6), 0) 0%,
+            rgba(var(--mistica-vivo-evolution-raw-grey6), 0.4) 30%,
+            rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7) 100%
+        );
+        --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-grey6), 0.7);
+    }
+}
+
+@media (min-width: 1024px) {
+    [data-mistica-skin='vivo-evolution'] {
+        /* Text */
+        --mistica-font-size-1: 0.875rem;
+        --mistica-line-height-1: 1.25rem;
+        --mistica-font-size-2: 1rem;
+        --mistica-line-height-2: 1.5rem;
+        --mistica-font-size-3: 1.125rem;
+        --mistica-line-height-3: 1.5rem;
+        --mistica-font-size-4: 1.25rem;
+        --mistica-line-height-4: 1.75rem;
+        --mistica-font-size-5: 1.75rem;
+        --mistica-line-height-5: 2rem;
+        --mistica-font-size-6: 2rem;
+        --mistica-line-height-6: 2.5rem;
+        --mistica-font-size-7: 2.5rem;
+        --mistica-line-height-7: 3rem;
+        --mistica-font-size-8: 3rem;
+        --mistica-line-height-8: 3.5rem;
+        --mistica-font-size-9: 3.5rem;
+        --mistica-line-height-9: 4rem;
+        --mistica-font-size-10: 4rem;
+        --mistica-line-height-10: 4.5rem;
+        --mistica-font-size-cardTitle: 1.5rem;
+        --mistica-line-height-cardTitle: 1.75rem;
+        --mistica-font-size-drawerTitle: 1.75rem;
+        --mistica-line-height-drawerTitle: 2rem;
+
+        --mistica-font-size-tabsLabel: 1.125rem;
+        --mistica-line-height-tabsLabel: 1.5rem;
+
+        --mistica-font-size-title1: 0.875rem;
+        --mistica-line-height-title1: 1.25rem;
+        --mistica-font-size-title2: 1.125rem;
+        --mistica-line-height-title2: 1.5rem;
+        --mistica-font-size-title3: 1.75rem;
+        --mistica-line-height-title3: 2rem;
+        --mistica-font-size-title4: 2rem;
+        --mistica-line-height-title4: 2.5rem;
+
+        --mistica-font-size-chipLabel: 1rem;
+        --mistica-line-height-chipLabel: 1.5rem;
+        --mistica-font-size-cardPretitleSnap: 1rem;
+        --mistica-line-height-cardPretitleSnap: 1.5rem;
+        --mistica-font-size-cardTitleSnap: 1rem;
+        --mistica-line-height-cardTitleSnap: 1.5rem;
+        --mistica-font-size-cardSubtitleSnap: 1rem;
+        --mistica-line-height-cardSubtitleSnap: 1.5rem;
+        --mistica-font-size-cardDescriptionSnap: 1rem;
+        --mistica-line-height-cardDescriptionSnap: 1.5rem;
+        --mistica-font-size-cardPretitleDefault: 1rem;
+        --mistica-line-height-cardPretitleDefault: 1.5rem;
+        --mistica-font-size-cardTitleDefault: 1.25rem;
+        --mistica-line-height-cardTitleDefault: 1.75rem;
+        --mistica-font-size-cardSubtitleDefault: 1rem;
+        --mistica-line-height-cardSubtitleDefault: 1.5rem;
+        --mistica-font-size-cardDescriptionDefault: 1rem;
+        --mistica-line-height-cardDescriptionDefault: 1.5rem;
+        --mistica-font-size-inputLabel: 0.875rem;
+        --mistica-line-height-inputLabel: 1.25rem;
+        --mistica-font-size-inputValue: 1.125rem;
+        --mistica-line-height-inputValue: 1.5rem;
+        --mistica-font-size-inputHelperText: 0.875rem;
+        --mistica-line-height-inputHelperText: 1.25rem;
+        --mistica-font-size-stepperStepLabel: 1rem;
+        --mistica-line-height-stepperStepLabel: 1.5rem;
+        --mistica-font-size-loadingScreenTitle: 1.25rem;
+        --mistica-line-height-loadingScreenTitle: 1.75rem;
+    }
+}

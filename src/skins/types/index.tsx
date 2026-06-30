@@ -11,6 +11,7 @@ export type KnownSkinName =
     | 'O2'
     | 'O2-new'
     | 'Vivo'
+    | 'Vivo-evolution'
     | 'Telefonica'
     | 'Blau'
     | 'Tu'

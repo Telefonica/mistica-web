@@ -132,6 +132,7 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                 </MovistarNewLogoShell>
             );
         case 'Vivo':
+        case 'Vivo-evolution':
             return (
                 <VivoLogoShell size={size} type={type}>
                     <React.Suspense>

@@ -3,6 +3,7 @@ import {
     BLAU_SKIN,
     TELEFONICA_SKIN,
     VIVO_SKIN,
+    VIVO_EVOLUTION_SKIN,
     O2_SKIN,
     O2_NEW_SKIN,
     MOVISTAR_SKIN,
@@ -13,6 +14,7 @@ import {
 import {getBlauSkin} from './blau';
 import {getTelefonicaSkin} from './telefonica';
 import {getVivoSkin} from './vivo';
+import {getVivoEvolutionSkin} from './vivo-evolution';
 import {getO2Skin} from './o2';
 import {getO2NewSkin} from './o2-new';
 import {getMovistarSkin} from './movistar';
@@ -30,6 +32,8 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
             return getTelefonicaSkin(variant);
         case VIVO_SKIN:
             return getVivoSkin(variant);
+        case VIVO_EVOLUTION_SKIN:
+            return getVivoEvolutionSkin(variant);
         case O2_SKIN:
             return getO2Skin(variant);
         case O2_NEW_SKIN:

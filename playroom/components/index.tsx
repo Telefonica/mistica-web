@@ -21,7 +21,7 @@ import {
     O2NewLogo,
     EsimflagLogo,
 } from '../../src';
-import {Movistar_New, Telefonica, Blau, Vivo, O2_New, Esimflag} from '../themes';
+import {Movistar_New, Telefonica, Blau, Vivo, Vivo_Evolution, O2_New, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -61,6 +61,11 @@ const themesMap: {
     Vivo: {
         text: 'Vivo',
         themeConfig: Vivo,
+        Icon: () => <BrandIcon Logo={VivoLogo} />,
+    },
+    'Vivo-evolution': {
+        text: 'Vivo Evolution',
+        themeConfig: Vivo_Evolution,
         Icon: () => <BrandIcon Logo={VivoLogo} />,
     },
     'O2-new': {
