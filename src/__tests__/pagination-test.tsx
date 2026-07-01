@@ -142,15 +142,21 @@ describe('getPaginationItems', () => {
         expect(items).toHaveLength(5);
     });
 
-    test('inserts ellipsis when middle pages are skipped', () => {
+    test('returns all pages by default when ellipsis are not enabled', () => {
         const items = getPaginationItems({totalPages: 20, currentPage: 10});
+        expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
+        expect(items).toHaveLength(20);
+    });
+
+    test('inserts ellipsis when middle pages are skipped', () => {
+        const items = getPaginationItems({totalPages: 20, currentPage: 10, showEllipsis: true});
         expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
         expect(items[0]).toMatchObject({type: 'page', page: 1});
         expect(items[items.length - 1]).toMatchObject({type: 'page', page: 20});
     });
 
     test('fills the leading slots with pages on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 3})).toEqual([
+        expect(getPaginationItems({totalPages: 40, currentPage: 3, showEllipsis: true})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: true},
@@ -162,7 +168,7 @@ describe('getPaginationItems', () => {
     });
 
     test('keeps three centered dynamic pages on desktop by default', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 31})).toEqual([
+        expect(getPaginationItems({totalPages: 40, currentPage: 31, showEllipsis: true})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 30, current: false},
@@ -174,7 +180,9 @@ describe('getPaginationItems', () => {
     });
 
     test('allows configuring more dynamic pages on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 31, maxPages: 5})).toEqual([
+        expect(
+            getPaginationItems({totalPages: 40, currentPage: 31, maxPages: 5, showEllipsis: true})
+        ).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 29, current: false},
@@ -189,14 +197,21 @@ describe('getPaginationItems', () => {
 
     test('keeps the number of desktop items stable while changing pages', () => {
         const itemCounts = [1, 3, 20, 38, 40].map(
-            (currentPage) => getPaginationItems({totalPages: 40, currentPage}).length
+            (currentPage) => getPaginationItems({totalPages: 40, currentPage, showEllipsis: true}).length
         );
 
         expect(itemCounts).toEqual([7, 7, 7, 7, 7]);
     });
 
     test('hides boundary pages when configured for mobile', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 3, includeBoundaryPages: false})).toEqual([
+        expect(
+            getPaginationItems({
+                totalPages: 40,
+                currentPage: 3,
+                includeBoundaryPages: false,
+                showEllipsis: true,
+            })
+        ).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: true},
@@ -206,7 +221,14 @@ describe('getPaginationItems', () => {
     });
 
     test('keeps mobile item slots stable without fixed boundary pages', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 33, includeBoundaryPages: false})).toEqual([
+        expect(
+            getPaginationItems({
+                totalPages: 40,
+                currentPage: 33,
+                includeBoundaryPages: false,
+                showEllipsis: true,
+            })
+        ).toEqual([
             {type: 'ellipsis'},
             {type: 'page', page: 32, current: false},
             {type: 'page', page: 33, current: true},
@@ -214,7 +236,14 @@ describe('getPaginationItems', () => {
             {type: 'ellipsis'},
         ]);
 
-        expect(getPaginationItems({totalPages: 40, currentPage: 1, includeBoundaryPages: false})).toEqual([
+        expect(
+            getPaginationItems({
+                totalPages: 40,
+                currentPage: 1,
+                includeBoundaryPages: false,
+                showEllipsis: true,
+            })
+        ).toEqual([
             {type: 'page', page: 1, current: true},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: false},
@@ -225,7 +254,12 @@ describe('getPaginationItems', () => {
         expect(
             [1, 3, 20, 38, 40].map(
                 (currentPage) =>
-                    getPaginationItems({totalPages: 40, currentPage, includeBoundaryPages: false}).length
+                    getPaginationItems({
+                        totalPages: 40,
+                        currentPage,
+                        includeBoundaryPages: false,
+                        showEllipsis: true,
+                    }).length
             )
         ).toEqual([5, 5, 5, 5, 5]);
     });

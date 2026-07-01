@@ -4588,20 +4588,11 @@ export default [
         name: 'Pagination',
         code: `
             <Pagination
+                mode="iconOnly"
+                showEllipsis={true}
                 totalPages={10}
                 currentPage={getState("paginationPage", 3)}
                 onChange={(page) => setState("paginationPage", page)}
-            />`,
-    },
-    {
-        group: 'Pagination',
-        name: 'Pagination iconOnly',
-        code: `
-            <Pagination
-                totalPages={10}
-                mode="iconOnly"
-                currentPage={getState("paginationIconPage", 3)}
-                onChange={(page) => setState("paginationIconPage", page)}
             />`,
     },
     ...titlesSnippets,

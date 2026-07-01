@@ -5,8 +5,8 @@ export default {
     title: 'Components/Pagination',
     parameters: {fullScreen: true},
     argTypes: {
-        mode: {
-            options: ['default', 'iconOnly'],
+        navigationControls: {
+            options: ['buttonLink', 'iconButton'],
             control: {type: 'select'},
         },
         variantOutside: {
@@ -32,6 +32,7 @@ export default {
 };
 
 type OnChangeAction = 'none' | 'alert';
+type NavigationControls = 'buttonLink' | 'iconButton';
 
 type Args = {
     totalPages: number;
@@ -43,7 +44,7 @@ type Args = {
     hidePageList?: boolean | 'true' | 'false';
     withCompactView: boolean | 'true' | 'false';
     disabled: boolean;
-    mode?: 'default' | 'iconOnly';
+    navigationControls: NavigationControls;
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
     navLeftLabel?: string;
     navRightLabel?: string;
@@ -63,7 +64,7 @@ export const Default: StoryComponent<Args> = ({
     hidePageList,
     withCompactView,
     disabled,
-    mode,
+    navigationControls,
     variantOutside,
     navLeftLabel,
     navRightLabel,
@@ -82,6 +83,13 @@ export const Default: StoryComponent<Args> = ({
         }
         getOnChange(onChange)?.(page);
     };
+    const paginationMode = navigationControls === 'iconButton' ? 'iconOnly' : 'default';
+    const hidePageListValue =
+        hidePageList === 'true' || hidePageList === 'false' ? hidePageList === 'true' : hidePageList;
+    const withCompactViewValue =
+        withCompactView === 'true' || withCompactView === 'false'
+            ? withCompactView === 'true'
+            : withCompactView;
 
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
@@ -94,18 +102,10 @@ export const Default: StoryComponent<Args> = ({
                             maxPages={maxPages}
                             showEllipsis={showEllipsis}
                             hideNavigationControls={hideNavigationControls}
-                            hidePageList={
-                                hidePageList === 'true' || hidePageList === 'false'
-                                    ? hidePageList === 'true'
-                                    : hidePageList
-                            }
-                            withCompactView={
-                                withCompactView === 'true' || withCompactView === 'false'
-                                    ? withCompactView === 'true'
-                                    : withCompactView
-                            }
+                            hidePageList={hidePageListValue}
+                            withCompactView={withCompactViewValue}
                             disabled={disabled}
-                            mode={mode}
+                            mode={paginationMode}
                             navLeftLabel={navLeftLabel || undefined}
                             navRightLabel={navRightLabel || undefined}
                             onChange={handleChange}
@@ -126,6 +126,7 @@ Default.args = {
     hideNavigationControls: false,
     withCompactView: false,
     disabled: false,
+    navigationControls: 'buttonLink',
     variantOutside: 'default',
     onChange: 'none',
 };

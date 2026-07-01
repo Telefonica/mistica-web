@@ -84,38 +84,6 @@ test('Pagination ellipses are non-interactive and keep the mobile layout size', 
     }
 });
 
-test('Pagination icon-only navigation controls keep a transparent background on hover', async () => {
-    await openStoryPage({
-        id: STORY_ID,
-        device: 'DESKTOP',
-        args: {totalPages: 10, currentPage: 5, hidePageList: true, mode: 'iconOnly'},
-    });
-
-    const next = await screen.findByRole('button', {name: 'Página siguiente'});
-
-    await next.hover();
-
-    expect(
-        await next.evaluate((element) => {
-            const iconContainer = Array.from(element.querySelectorAll('div')).find((node) => {
-                const style = getComputedStyle(node);
-
-                return (
-                    style.position === 'relative' &&
-                    style.borderRadius === '50%' &&
-                    style.width === style.height
-                );
-            });
-
-            if (!iconContainer) {
-                throw Error('Icon button container should be available');
-            }
-
-            return getComputedStyle(iconContainer).backgroundColor;
-        })
-    ).toBe('rgba(0, 0, 0, 0)');
-});
-
 const cyberColors = getCyberSkin().colors;
 const ELLIPSIS_COLOR_CASES: ReadonlyArray<{variantOutside: StoryArgs['variantOutside']; color: string}> = [
     {variantOutside: 'default', color: getRgbColor(cyberColors.textSecondary)},
@@ -142,7 +110,24 @@ test.each(ELLIPSIS_COLOR_CASES)('Pagination ellipsis color in $variantOutside co
     expect(await ellipsis.evaluate((element) => getComputedStyle(element).color)).toBe(testCase.color);
 });
 
-test('Pagination compact view fits below the compact breakpoint', async () => {
+test('Pagination compact view hides the page list when enabled', async () => {
+    await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {totalPages: 9, currentPage: 3, withCompactView: true, navigationControls: 'buttonLink'},
+    });
+
+    const pagination = await screen.findByRole('navigation');
+    const pageList = await pagination.$('ol');
+
+    if (!pageList) {
+        throw Error('Page list should be available');
+    }
+
+    expect(await pageList.evaluate((element) => getComputedStyle(element).display)).toBe('none');
+});
+
+test('Pagination compact view fits in a small viewport', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
@@ -154,7 +139,7 @@ test('Pagination compact view fits below the compact breakpoint', async () => {
             hasTouch: true,
             isLandscape: false,
         },
-        args: {totalPages: 9, currentPage: 3, withCompactView: true, mode: 'default'},
+        args: {totalPages: 9, currentPage: 3, withCompactView: true, navigationControls: 'buttonLink'},
     });
 
     const pagination = await screen.findByRole('navigation');

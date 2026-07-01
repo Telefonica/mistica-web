@@ -6,7 +6,7 @@ import * as styles from './pagination.css';
 import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
-import {InternalIconButton} from './icon-button';
+import {IconButton} from './icon-button';
 import {useScreenSize, useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
@@ -50,7 +50,7 @@ export const getPaginationItems = ({
     totalPages,
     currentPage,
     maxPages = DEFAULT_DYNAMIC_PAGE_COUNT,
-    showEllipsis = true,
+    showEllipsis = false,
     includeBoundaryPages = true,
 }: {
     totalPages: number;
@@ -250,11 +250,11 @@ export const Pagination = ({
     hideNavigationControls = false,
     hidePageList: hidePageListProp,
     withCompactView = false,
-    showEllipsis = true,
+    showEllipsis = false,
     maxPages = DEFAULT_DYNAMIC_PAGE_COUNT,
     navLeftLabel,
     navRightLabel,
-    mode,
+    mode = 'default',
     disabled = false,
     dataAttributes,
     'aria-label': ariaLabel,
@@ -263,10 +263,9 @@ export const Pagination = ({
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const {isMobile, isTabletOrSmaller} = useScreenSize();
+    const {isMobile} = useScreenSize();
     const hidePageList = hidePageListProp === true;
     const compactView = withCompactView && !hideNavigationControls;
-    const resolvedMode = mode ?? (isTabletOrSmaller ? 'iconOnly' : 'default');
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
@@ -322,12 +321,11 @@ export const Pagination = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
             {!hideNavigationControls &&
-                (resolvedMode === 'iconOnly' ? (
-                    <InternalIconButton
+                (mode === 'iconOnly' ? (
+                    <IconButton
                         Icon={IconChevronLeftRegular}
                         type="brand"
                         backgroundType="transparent"
-                        hasOverlay={false}
                         disabled={disabled || isPrevDisabled}
                         aria-label={resolvedPrevAriaLabel}
                         onPress={() => goToPage(activePage - 1)}
@@ -356,12 +354,11 @@ export const Pagination = ({
                 />
             )}
             {!hideNavigationControls &&
-                (resolvedMode === 'iconOnly' ? (
-                    <InternalIconButton
+                (mode === 'iconOnly' ? (
+                    <IconButton
                         Icon={IconChevronRightRegular}
                         type="brand"
                         backgroundType="transparent"
-                        hasOverlay={false}
                         disabled={disabled || isNextDisabled}
                         aria-label={resolvedNextAriaLabel}
                         onPress={() => goToPage(activePage + 1)}

@@ -42,6 +42,7 @@ import {
     Title3,
     Title4,
     IconButton,
+    Pagination,
     Hero,
     Table,
     Timer,
@@ -285,6 +286,9 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
 
                         {/** Carousel page bullets */}
                         <PageBullets currentIndex={2} numPages={10} />
+
+                        {/** Pagination */}
+                        <Pagination totalPages={40} defaultPage={32} showEllipsis />
 
                         {/** Checkbox */}
                         <Inline space={16} wrap>
