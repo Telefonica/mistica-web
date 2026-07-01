@@ -8,7 +8,7 @@ export type DataAttributes = {
 };
 
 export type IconProps = {
-    /** Color values and CSS linear/radial gradients are supported */
+    /** Color values and CSS linear/radial/conic gradients are supported */
     color?: string;
     size?: string | number;
     className?: string;

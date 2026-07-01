@@ -1,10 +1,12 @@
 'use client';
 import * as React from 'react';
-import {parseCSSGradient} from './icon-gradient-helpers';
+import { parseCSSGradient } from './icon-gradient-helpers';
 
 type IconGradientResult = {
     fillValue: string | undefined;
     gradientDef: React.ReactElement | null;
+    useClipPath: boolean;
+    clipPathId?: string;
 };
 
 const angleToCoords = (angle: number) => {
@@ -18,27 +20,24 @@ const angleToCoords = (angle: number) => {
     };
 };
 
+const renderStops = (stops: Array<{ color: string; offset: string }>) =>
+    stops.map((stop, idx) => <stop key={idx} offset={stop.offset} stopColor={stop.color} />);
+
 export const useIconGradient = (color?: string): IconGradientResult => {
     const generatedId = React.useId();
 
     const gradientConfig = React.useMemo(() => {
-        if (!color || typeof color !== 'string') {
-            return null;
-        }
-
-        if (!color.includes('gradient(')) {
+        if (!color || typeof color !== 'string' || !color.includes('gradient(')) {
             return null;
         }
 
         return parseCSSGradient(color);
     }, [color]);
 
-    const gradientId = React.useMemo(() => `icon-gradient-${generatedId}`, [generatedId]);
-
-    const fillValue = gradientConfig ? `url(#${gradientId})` : color;
+    const gradientId = `icon-gradient-${generatedId}`;
 
     const gradientDef = React.useMemo(() => {
-        if (!gradientConfig) {
+        if (!gradientConfig || gradientConfig.type === 'conic') {
             return null;
         }
 
@@ -50,27 +49,30 @@ export const useIconGradient = (color?: string): IconGradientResult => {
                     cy={gradientConfig.center?.y ?? '50%'}
                     r={gradientConfig.radius ?? '50%'}
                 >
-                    {gradientConfig.stops.map((stop, idx) => (
-                        <stop key={idx} offset={stop.offset} stopColor={stop.color} />
-                    ))}
+                    {renderStops(gradientConfig.stops)}
                 </radialGradient>
             );
         }
 
-        const angle = gradientConfig.angle ?? 180;
-        const coords = angleToCoords(angle);
-
         return (
-            <linearGradient id={gradientId} {...coords}>
-                {gradientConfig.stops.map((stop, idx) => (
-                    <stop key={idx} offset={stop.offset} stopColor={stop.color} />
-                ))}
+            <linearGradient id={gradientId} {...angleToCoords(gradientConfig.angle ?? 180)}>
+                {renderStops(gradientConfig.stops)}
             </linearGradient>
         );
     }, [gradientConfig, gradientId]);
 
+    if (gradientConfig?.type === 'conic') {
+        return {
+            fillValue: color,
+            gradientDef: null,
+            useClipPath: true,
+            clipPathId: gradientId,
+        };
+    }
+
     return {
-        fillValue,
+        fillValue: gradientConfig ? `url(#${gradientId})` : color,
         gradientDef,
+        useClipPath: false,
     };
 };
