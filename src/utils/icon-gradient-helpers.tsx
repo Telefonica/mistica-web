@@ -39,12 +39,6 @@ const angleToDegrees = (value: number, unit: string): number => {
     }
 };
 
-const parseStops = (parts: Array<string>, colorStartIndex = 0): Array<GradientStop> =>
-    parts
-        .slice(colorStartIndex)
-        .map((part, index, array) => parseColorStop(part, index, array.length))
-        .filter(isGradientStop);
-
 export const directionToAngle = (direction: string): number => {
     const angleMap: Record<string, number> = {
         'to top': 0,
@@ -111,6 +105,12 @@ export const parseColorStop = (part: string, index: number, total: number): Grad
         offset,
     };
 };
+
+const parseStops = (parts: Array<string>, colorStartIndex = 0): Array<GradientStop> =>
+    parts
+        .slice(colorStartIndex)
+        .map((part, index, array) => parseColorStop(part, index, array.length))
+        .filter(isGradientStop);
 
 export const parseLinearGradient = (content: string): ParsedGradient | null => {
     const parts = splitGradientParts(content);
