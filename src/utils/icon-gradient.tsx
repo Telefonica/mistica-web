@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { parseCSSGradient } from './icon-gradient-helpers';
+import {parseCSSGradient} from './icon-gradient-helpers';
 
 type IconGradientResult = {
     fillValue: string | undefined;
@@ -20,7 +20,7 @@ const angleToCoords = (angle: number) => {
     };
 };
 
-const renderStops = (stops: Array<{ color: string; offset: string }>) =>
+const renderStops = (stops: Array<{color: string; offset: string}>) =>
     stops.map((stop, idx) => <stop key={idx} offset={stop.offset} stopColor={stop.color} />);
 
 export const useIconGradient = (color?: string): IconGradientResult => {

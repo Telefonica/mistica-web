@@ -3,12 +3,13 @@ import {render, screen} from '@testing-library/react';
 import {useIconGradient} from '../icon-gradient';
 
 const TestComponent = ({color}: {color?: string}) => {
-    const {fillValue, gradientDef} = useIconGradient(color);
+    const {fillValue, gradientDef, useClipPath} = useIconGradient(color);
 
     return (
         <>
             <div data-testid="fill-value">{fillValue}</div>
             <div data-testid="gradient-type">{gradientDef ? String(gradientDef.type) : 'null'}</div>
+            <div data-testid="use-clip-path">{String(useClipPath ?? false)}</div>
         </>
     );
 };
@@ -67,4 +68,13 @@ test('useIconGradient applies explicit radius for radial gradients', () => {
 
     expect(screen.getByTestId('fill-value')).toHaveTextContent('url(#');
     expect(screen.getByTestId('gradient-type')).toHaveTextContent('radialGradient');
+});
+
+test('useIconGradient handles conic gradient with clip path', () => {
+    const color = 'conic-gradient(red, blue)';
+    render(<TestComponent color={color} />);
+
+    expect(screen.getByTestId('fill-value')).toHaveTextContent(color);
+    expect(screen.getByTestId('gradient-type')).toHaveTextContent('null');
+    expect(screen.getByTestId('use-clip-path')).toHaveTextContent('true');
 });

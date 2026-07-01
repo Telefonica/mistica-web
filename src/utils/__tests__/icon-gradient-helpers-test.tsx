@@ -4,6 +4,7 @@ import {
     parseColorStop,
     parseLinearGradient,
     parseRadialGradient,
+    parseConicGradient,
     parseCSSGradient,
     extractGradientContent,
 } from '../icon-gradient-helpers';
@@ -71,8 +72,38 @@ test('parseRadialGradient returns null if invalid or no color stops are found', 
     expect(parseRadialGradient('ellipse')).toBeNull();
 });
 
+test('parseConicGradient parses angle, center and stops', () => {
+    expect(parseConicGradient('red, blue')).toEqual({
+        type: 'conic',
+        angle: 0,
+        stops: [
+            {color: 'red', offset: '0%'},
+            {color: 'blue', offset: '100%'},
+        ],
+    });
+    expect(parseConicGradient('from 90deg, red, blue')?.angle).toBe(90);
+    expect(parseConicGradient('at 25% 75%, red, blue')?.center).toEqual({x: '25%', y: '75%'});
+    expect(parseConicGradient('from 45deg at 50% 50%, red, blue')).toEqual({
+        type: 'conic',
+        angle: 45,
+        center: {x: '50%', y: '50%'},
+        stops: [
+            {color: 'red', offset: '0%'},
+            {color: 'blue', offset: '100%'},
+        ],
+    });
+});
+
+test('parseConicGradient returns null if no color stops are found', () => {
+    expect(parseConicGradient('from 45deg')).toBeNull();
+});
+
 test('parseCSSGradient returns null for invalid input', () => {
     expect(parseCSSGradient('red')).toBeNull();
+});
+
+test('parseCSSGradient routes conic-gradient correctly', () => {
+    expect(parseCSSGradient('conic-gradient(red, blue)')?.type).toBe('conic');
 });
 
 test('extractGradientContent handles valid and invalid inputs', () => {
@@ -82,6 +113,10 @@ test('extractGradientContent handles valid and invalid inputs', () => {
     });
     expect(extractGradientContent('radial-gradient(red, blue)')).toEqual({
         type: 'radial',
+        content: 'red, blue',
+    });
+    expect(extractGradientContent('conic-gradient(red, blue)')).toEqual({
+        type: 'conic',
         content: 'red, blue',
     });
     expect(extractGradientContent('linear-gradient')).toBeNull();
