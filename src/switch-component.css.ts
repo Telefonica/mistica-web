@@ -20,7 +20,7 @@ export const vars = {
 };
 
 const checkboxBase = sprinkles({
-    display: 'inline-flex',
+    display: 'inline-block',
     cursor: 'pointer',
 });
 
