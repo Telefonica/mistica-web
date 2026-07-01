@@ -10,7 +10,7 @@ const common: Partial<ThemeConfig> = {
     },
 } as const;
 
-export const Movistar_New: ThemeConfig = {...themes.Movistar_New, ...common};
+export const Movistar: ThemeConfig = {...themes.Movistar, ...common};
 export const Vivo: ThemeConfig = {...themes.Vivo, ...common};
 export const Vivo_Evolution: ThemeConfig = {...themes.Vivo_Evolution, ...common};
 export const O2: ThemeConfig = {...themes.O2, ...common};
@@ -19,7 +19,7 @@ export const Blau: ThemeConfig = {...themes.Blau, ...common};
 export const Esimflag: ThemeConfig = {...themes.Esimflag, ...common};
 export const Community_Cyber: ThemeConfig = {...themes.Cyber, ...common};
 
-export const Movistar_New_iOS: ThemeConfig = {...Movistar_New, platformOverrides: {platform: 'ios'}};
+export const Movistar_iOS: ThemeConfig = {...Movistar, platformOverrides: {platform: 'ios'}};
 export const Vivo_iOS: ThemeConfig = {...Vivo, platformOverrides: {platform: 'ios'}};
 export const Vivo_Evolution_iOS: ThemeConfig = {...Vivo_Evolution, platformOverrides: {platform: 'ios'}};
 export const O2_iOS: ThemeConfig = {...O2, platformOverrides: {platform: 'ios'}};

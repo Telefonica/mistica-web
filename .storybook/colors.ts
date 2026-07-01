@@ -1,7 +1,6 @@
 import {palette as cyberPalette} from '../src/community/skins/cyber-skin';
 
 export const AVAILABLE_SKINS = [
-    'Movistar-new',
     'Movistar',
     'O2',
     'Vivo',
@@ -22,13 +21,6 @@ type SkinTheme = {primary: string; textPrimary: string; textPrimaryInverse: stri
 export const getColors = (skin: Skin): SkinTheme => {
     switch (skin) {
         case 'Movistar':
-            return {
-                primary: '#019DF4',
-                textPrimary: '#0B2739',
-                textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#6B6C6F',
-            };
-        case 'Movistar-new':
             return {
                 primary: '#0066FF',
                 textPrimary: '#262423',

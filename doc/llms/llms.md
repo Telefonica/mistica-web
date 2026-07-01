@@ -30,8 +30,8 @@ a documented composite component would be simpler.
 
 1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` design tokens from
    `@telefonica/mistica`. The exception is skin authoring: when creating or extending a `Skin`, you may use
-   built-in palette exports (for example `movistarNewPalette`) or your own custom palette/colors inside the
-   skin definition.
+   built-in palette exports (for example `movistarPalette`) or your own custom palette/colors inside the skin
+   definition.
 2. **Try not to use raw `<div>` for layout.** Use Mistica layout components: `Box`, `Stack`, `Inline`,
    `Align`, `ResponsiveLayout`, `GridLayout`, `Grid`.
 3. **NEVER set font sizes manually.** Use text components: `Text1`-`Text10`, `Title1`-`Title4`. If those don't
@@ -88,7 +88,7 @@ npm install @telefonica/mistica
 import '@telefonica/mistica/css/mistica.css';
 import {
   ThemeContextProvider,
-  getMovistarNewSkin,
+  getMovistarSkin,
   skinVars,
   ResponsiveLayout,
   Box,
@@ -99,7 +99,7 @@ import {
 } from '@telefonica/mistica';
 
 const misticaTheme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
 };
 
@@ -107,7 +107,7 @@ const misticaTheme = {
 const GlobalStyles = () => (
   <style>{`
     body {
-      font-family: 'Movistar Sans', 'Helvetica', 'Arial', sans-serif; /* font for Movistar New skin */
+      font-family: 'Movistar Sans', 'Helvetica', 'Arial', sans-serif; /* font for Movistar skin */
       background-color: ${skinVars.colors.background};
     }
   `}</style>
@@ -152,13 +152,12 @@ type ThemeConfig = {
 };
 ```
 
-Available skins: `getMovistarNewSkin()`, `getVivoSkin()`, `getVivoEvolutionSkin()`, `getO2Skin()`,
-`getTelefonicaSkin()`, `getBlauSkin()`, and others via `getSkinByName()`. The legacy Movistar variant without
-the `New` suffix also exists (`getMovistarSkin()`); prefer the `New` version for new projects. You can also
-create a custom skin. If you need to customize default component colors, radii, or other visual tokens beyond
-the props exposed by a component, prefer extending a skin over overriding component styles. Built-in palette
-exports such as `movistarNewPalette`, `o2Palette`, `vivoPalette`, etc. are available for skin authoring, and
-custom skins may also define their own palette colors from scratch.
+Available skins: `getMovistarSkin()`, `getVivoSkin()`, `getVivoEvolutionSkin()`, `getO2Skin()`,
+`getTelefonicaSkin()`, `getBlauSkin()`, and others via `getSkinByName()`. You can also create a custom skin.
+If you need to customize default component colors, radii, or other visual tokens beyond the props exposed by a
+component, prefer extending a skin over overriding component styles. Built-in palette exports such as
+`movistarPalette`, `o2Palette`, `vivoPalette`, etc. are available for skin authoring, and custom skins may
+also define their own palette colors from scratch.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 
@@ -288,7 +287,7 @@ All tokens via `skinVars` from `@telefonica/mistica`:
 
 - **Colors**: `skinVars.colors.*` (286 tokens for backgrounds, text, borders, controls, status, tags)
 - **Raw colors**: `skinVars.rawColors.*` (same tokens as RGB values, for use with `applyAlpha`)
-- **Palettes for skin authoring**: built-in palette exports such as `movistarNewPalette`, `o2Palette`,
+- **Palettes for skin authoring**: built-in palette exports such as `movistarPalette`, `o2Palette`,
   `vivoPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
   directly.
 - **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)

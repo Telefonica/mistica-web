@@ -38,7 +38,7 @@ test('Tooltip - appears properly on mobile', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
-        skin: 'Movistar', // TODO: investigate why the test is instable with Movistar-new skin
+        skin: 'Movistar',
     });
 
     await page.click(await screen.findByTestId('target'));
@@ -51,7 +51,7 @@ test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
-        skin: 'Movistar', // TODO: investigate why the test is instable with Movistar-new skin
+        skin: 'Movistar',
         args: {variantOutside: 'brand'},
     });
 

@@ -246,7 +246,7 @@ const main = async () => {
     }
 
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
-    const skins = ['Movistar-new', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'];
+    const skins = ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'];
 
     /**
      * @type Array<[story: string, skin: string]>
