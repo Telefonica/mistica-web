@@ -21,7 +21,12 @@ const IconAmplifierFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
               ? vars.colors.neutralHighNegative
               : vars.colors.neutralHigh;
 
-    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+    const {
+        fillValue: fillColor,
+        gradientDef,
+        useClipPath,
+        clipPathId,
+    } = useIconGradient(color ?? defaultColor);
 
     const getSvgContent = () => {
         return (
@@ -43,6 +48,34 @@ const IconAmplifierFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     };
 
     const svgContent = getSvgContent();
+
+    if (useClipPath && clipPathId) {
+        const viewBoxSize = svgContent.props.viewBox?.match(/0 0 (\d+)/)?.[1] ?? '24';
+
+        const clipChildren = React.Children.map(svgContent.props.children, (child) => {
+            if (!React.isValidElement(child)) return child;
+            const svgChild = child as React.ReactElement<React.SVGProps<SVGElement>>;
+            const {fill: _fill, ...props} = svgChild.props;
+            return React.cloneElement(svgChild, props);
+        });
+
+        return (
+            <svg
+                width={size}
+                height={size}
+                viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+                role="presentation"
+                {...rest}
+            >
+                <defs>
+                    <clipPath id={clipPathId}>{clipChildren}</clipPath>
+                </defs>
+                <foreignObject width={viewBoxSize} height={viewBoxSize} clipPath={`url(#${clipPathId})`}>
+                    <div style={{width: '100%', height: '100%', background: fillColor}} />
+                </foreignObject>
+            </svg>
+        );
+    }
 
     if (gradientDef) {
         return React.cloneElement(svgContent, {}, [
