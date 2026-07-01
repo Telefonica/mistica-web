@@ -86,10 +86,12 @@ export const fullWidth = style({
 export const wrap = style({
     display: 'inline-flex',
     flexWrap: 'wrap',
+    verticalAlign: 'bottom',
 });
 
 export const noFullWidth = style({
     display: ['inline-flex', 'inline-grid'],
+    verticalAlign: 'bottom',
 });
 
 export const stringSpace = style({
@@ -130,7 +132,7 @@ globalStyle(`${inline} > div`, {
             // Propagate alignItems to wrapper divs so icon SVGs (inline elements) are
             // correctly centered within each wrapper, not just the wrappers themselves.
             display: fallbackVar(childDisplay, 'block'),
-            alignItems: fallbackVar(childAlignItems, 'normal'),
+            alignItems: fallbackVar(childAlignItems, 'stretch'),
         },
     },
 });
