@@ -27,7 +27,7 @@ export const useIconGradient = (color?: string): IconGradientResult => {
     const generatedId = React.useId();
 
     const gradientConfig = React.useMemo(() => {
-        if (!color || typeof color !== 'string' || !color.includes('gradient(')) {
+        if (!color || !color.includes('gradient(')) {
             return null;
         }
 

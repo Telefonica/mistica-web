@@ -39,6 +39,12 @@ const angleToDegrees = (value: number, unit: string): number => {
     }
 };
 
+const parseStops = (parts: Array<string>, colorStartIndex = 0): Array<GradientStop> =>
+    parts
+        .slice(colorStartIndex)
+        .map((part, index, array) => parseColorStop(part, index, array.length))
+        .filter(isGradientStop);
+
 export const directionToAngle = (direction: string): number => {
     const angleMap: Record<string, number> = {
         'to top': 0,
@@ -126,10 +132,7 @@ export const parseLinearGradient = (content: string): ParsedGradient | null => {
         colorStartIndex = 1;
     }
 
-    const stops = parts
-        .slice(colorStartIndex)
-        .map((part, index, array) => parseColorStop(part, index, array.length))
-        .filter(isGradientStop);
+    const stops = parseStops(parts, colorStartIndex);
 
     if (stops.length === 0) {
         return null;
@@ -177,10 +180,7 @@ export const parseRadialGradient = (content: string): ParsedGradient | null => {
         colorStartIndex = 1;
     }
 
-    const stops = parts
-        .slice(colorStartIndex)
-        .map((part, index, array) => parseColorStop(part, index, array.length))
-        .filter(isGradientStop);
+    const stops = parseStops(parts, colorStartIndex);
 
     if (stops.length === 0) {
         return null;
@@ -222,10 +222,7 @@ export const parseConicGradient = (content: string): ParsedGradient | null => {
         colorStartIndex = 1;
     }
 
-    const stops = parts
-        .slice(colorStartIndex)
-        .map((part, index, array) => parseColorStop(part, index, array.length))
-        .filter(isGradientStop);
+    const stops = parseStops(parts, colorStartIndex);
 
     if (stops.length === 0) {
         return null;
@@ -242,14 +239,15 @@ export const parseConicGradient = (content: string): ParsedGradient | null => {
 export const extractGradientContent = (gradient: string): ExtractedGradientContent | null => {
     const trimmed = gradient.trim();
     const normalized = trimmed.toLowerCase();
+    let type: GradientType | null = null;
 
-    const type = normalized.startsWith('linear-gradient')
-        ? 'linear'
-        : normalized.startsWith('radial-gradient')
-          ? 'radial'
-          : normalized.startsWith('conic-gradient')
-            ? 'conic'
-            : null;
+    if (normalized.startsWith('linear-gradient')) {
+        type = 'linear';
+    } else if (normalized.startsWith('radial-gradient')) {
+        type = 'radial';
+    } else if (normalized.startsWith('conic-gradient')) {
+        type = 'conic';
+    }
 
     if (!type) {
         return null;
@@ -292,20 +290,14 @@ export const extractGradientContent = (gradient: string): ExtractedGradientConte
 
 export const parseCSSGradient = (cssGradient: string): ParsedGradient | null => {
     const gradient = extractGradientContent(cssGradient);
-
     if (!gradient) {
         return null;
     }
-
-    switch (gradient.type) {
-        case 'linear':
-            return parseLinearGradient(gradient.content);
-        case 'radial':
-            return parseRadialGradient(gradient.content);
-        case 'conic':
-            return parseConicGradient(gradient.content);
-        /* istanbul ignore next */
-        default:
-            return null;
+    if (gradient.type === 'conic') {
+        return parseConicGradient(gradient.content);
     }
+    if (gradient.type === 'radial') {
+        return parseRadialGradient(gradient.content);
+    }
+    return parseLinearGradient(gradient.content);
 };
