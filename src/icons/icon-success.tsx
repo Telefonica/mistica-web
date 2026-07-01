@@ -1,12 +1,7 @@
 'use client';
 import * as React from 'react';
 import {O2_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
-import {
-    getAnimateDrawLineProps,
-    getAnimateFadeInProps,
-    getAnimateHopInProps,
-    mergeProperties,
-} from '../utils/animation';
+import {getAnimateDrawLineProps, getAnimateHopInProps, mergeProperties} from '../utils/animation';
 import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
 import {useThemeVariant} from '../theme-variant-context';
