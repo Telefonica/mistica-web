@@ -5,8 +5,7 @@ import {
     O2_NEW_SKIN,
     O2_SKIN,
     TELEFONICA_SKIN,
-    TU_SKIN,
-    VIVO_NEW_SKIN,
+    VIVO_EVOLUTION_SKIN,
     VIVO_SKIN,
 } from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
@@ -323,10 +322,9 @@ test.each`
     ${O2_SKIN}
     ${O2_NEW_SKIN}
     ${VIVO_SKIN}
-    ${VIVO_NEW_SKIN}
+    ${VIVO_EVOLUTION_SKIN}
     ${TELEFONICA_SKIN}
     ${BLAU_SKIN}
-    ${TU_SKIN}
     ${ESIMFLAG_SKIN}
 `('Card cover footer with image background - $skin', async ({skin}) => {
     await openStoryPage({

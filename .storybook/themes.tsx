@@ -4,10 +4,9 @@ import {
     getO2Skin,
     getO2NewSkin,
     getVivoSkin,
-    getVivoNewSkin,
+    getVivoEvolutionSkin,
     getTelefonicaSkin,
     getBlauSkin,
-    getTuSkin,
     getEsimflagSkin,
 } from '../src';
 import {getCyberSkin} from '../src/community/skins/cyber-skin';
@@ -37,9 +36,9 @@ export const Vivo = {
     skin: getVivoSkin(),
 } as const;
 
-export const Vivo_New = {
+export const Vivo_Evolution = {
     i18n: {locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR'},
-    skin: getVivoNewSkin(),
+    skin: getVivoEvolutionSkin(),
 } as const;
 
 export const Telefonica = {
@@ -50,11 +49,6 @@ export const Telefonica = {
 export const Blau = {
     i18n: {locale: 'de-DE', phoneNumberFormattingRegionCode: 'DE'},
     skin: getBlauSkin(),
-} as const;
-
-export const Tu = {
-    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-    skin: getTuSkin(),
 } as const;
 
 export const Esimflag = {
@@ -73,10 +67,9 @@ export const AVAILABLE_THEMES = [
     O2,
     O2_New,
     Vivo,
-    Vivo_New,
+    Vivo_Evolution,
     Telefonica,
     Blau,
-    Tu,
     Esimflag,
     Cyber,
 ];
