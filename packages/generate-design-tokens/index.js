@@ -33,7 +33,6 @@ const KNOWN_SKINS = [
     'telefonica',
     'vivo',
     'vivo-evolution',
-    'tu',
     'esimflag',
 ];
 
