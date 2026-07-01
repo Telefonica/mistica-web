@@ -12,8 +12,7 @@ Each skin has a designated font family. Use the correct one for the skin your ap
 | ---------------------------- | ------------------------ | ------------------- |
 | `movistar-new` _(preferred)_ | `getMovistarNewSkin()`   | `'Movistar Sans'`   |
 | `movistar` _(legacy)_        | `getMovistarSkin()`      | `'On Air'`          |
-| `o2-new` _(preferred)_       | `getO2NewSkin()`         | `'On Air'`          |
-| `o2` _(legacy)_              | `getO2Skin()`            | `'On Air'`          |
+| `o2`                         | `getO2Skin()`            | `'On Air'`          |
 | `vivo`                       | `getVivoSkin()`          | `'Vivo Type'`       |
 | `vivo-evolution`             | `getVivoEvolutionSkin()` | `'Vivo Type'`       |
 | `telefonica`                 | `getTelefonicaSkin()`    | `'Telefonica Sans'` |

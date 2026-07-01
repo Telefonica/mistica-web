@@ -30,7 +30,6 @@ const KNOWN_SKINS = [
     'movistar',
     'movistar-new',
     'o2',
-    'o2-new',
     'telefonica',
     'vivo',
     'vivo-evolution',

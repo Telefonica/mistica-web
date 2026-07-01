@@ -124,8 +124,7 @@ const SKIN_PRIORITY = {
     telefonica: 1,
     vivo: 2,
     o2: 3,
-    'o2-new': 4, // o2-new is checked before o2 because O2-new skin name would match with o2 regexp
-    blau: 5,
+    blau: 4,
 };
 
 /**
