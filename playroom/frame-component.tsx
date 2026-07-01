@@ -22,8 +22,8 @@ import {
     VIVO_SKIN,
     BLAU_SKIN,
 } from '../src';
-import {CYBER_SKIN} from '../src/community';
 import {Movistar_New as defaultThemeConfig} from './themes';
+import {CYBER_SKIN} from '../src/community';
 
 import type {ThemeConfig} from '../src';
 
