@@ -148,6 +148,23 @@ describe('getPaginationItems', () => {
         expect(items).toHaveLength(20);
     });
 
+    test('uses maxPages to enable ellipsis when the total does not fit', () => {
+        const items = getPaginationItems({totalPages: 20, currentPage: 10, maxPages: 3});
+        expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
+        expect(items).toHaveLength(7);
+    });
+
+    test('does not insert ellipsis when explicitly disabled', () => {
+        const items = getPaginationItems({
+            totalPages: 20,
+            currentPage: 10,
+            maxPages: 3,
+            showEllipsis: false,
+        });
+        expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
+        expect(items).toHaveLength(20);
+    });
+
     test('inserts ellipsis when middle pages are skipped', () => {
         const items = getPaginationItems({totalPages: 20, currentPage: 10, showEllipsis: true});
         expect(items.some((i) => i.type === 'ellipsis')).toBe(true);

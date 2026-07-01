@@ -49,8 +49,8 @@ const DEFAULT_DYNAMIC_PAGE_COUNT = 3;
 export const getPaginationItems = ({
     totalPages,
     currentPage,
-    maxPages = DEFAULT_DYNAMIC_PAGE_COUNT,
-    showEllipsis = false,
+    maxPages,
+    showEllipsis,
     includeBoundaryPages = true,
 }: {
     totalPages: number;
@@ -65,9 +65,10 @@ export const getPaginationItems = ({
 
     const activePage = Math.min(Math.max(currentPage, 1), totalPages);
     const minVisibleCount = includeBoundaryPages ? 1 : 3;
-    const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages));
+    const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages ?? DEFAULT_DYNAMIC_PAGE_COUNT));
+    const shouldShowEllipsis = showEllipsis ?? maxPages !== undefined;
 
-    if (!showEllipsis || totalPages <= visibleCount) {
+    if (!shouldShowEllipsis || totalPages <= visibleCount) {
         return Array.from({length: totalPages}, (_, index) => {
             const page = index + 1;
             return {type: 'page', page, current: page === activePage};
@@ -250,8 +251,8 @@ export const Pagination = ({
     hideNavigationControls = false,
     hidePageList: hidePageListProp,
     withCompactView = false,
-    showEllipsis = false,
-    maxPages = DEFAULT_DYNAMIC_PAGE_COUNT,
+    showEllipsis,
+    maxPages,
     navLeftLabel,
     navRightLabel,
     mode = 'default',
