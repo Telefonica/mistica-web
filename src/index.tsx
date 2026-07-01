@@ -118,7 +118,6 @@ export {
     MovistarNewLogo,
     VivoLogo,
     O2Logo,
-    O2NewLogo,
     TelefonicaLogo,
     BlauLogo,
     EsimflagLogo,
@@ -229,7 +228,6 @@ export {
     VIVO_SKIN,
     VIVO_EVOLUTION_SKIN,
     O2_SKIN,
-    O2_NEW_SKIN,
     MOVISTAR_SKIN,
     MOVISTAR_NEW_SKIN,
     TELEFONICA_SKIN,
@@ -242,7 +240,6 @@ export {getVivoEvolutionSkin} from './skins/vivo-evolution';
 export {getMovistarSkin} from './skins/movistar';
 export {getMovistarNewSkin} from './skins/movistar-new';
 export {getO2Skin} from './skins/o2';
-export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {getEsimflagSkin} from './skins/esimflag';
@@ -251,7 +248,6 @@ export {palette as vivoEvolutionPalette} from './skins/vivo-evolution';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as movistarNewPalette} from './skins/movistar-new';
 export {palette as o2Palette} from './skins/o2';
-export {palette as o2NewPalette} from './skins/o2-new';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as esimFlagPalette} from './skins/esimflag';

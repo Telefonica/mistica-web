@@ -36,15 +36,6 @@ const IconClipboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M15.591 4.861h-.284v-.005h-6.89V2h7.174zm1.08-1.787h1.074c1.185 0 2.154.964 2.154 2.144V22H4.11V5.218c0-1.18.97-2.144 2.155-2.144h1.074v2.857h9.333zm-.542 14.996c.29 0 .542-.252.542-.535a.55.55 0 0 0-.538-.535H7.88a.55.55 0 0 0-.537.535c0 .283.253.535.537.535zM7.88 15.213h8.249c.29 0 .542-.251.542-.535a.55.55 0 0 0-.538-.535H7.88a.55.55 0 0 0-.537.535c0 .284.253.535.537.535m8.249-2.856c.29 0 .542-.252.542-.535a.55.55 0 0 0-.538-.535H7.88a.55.55 0 0 0-.537.535c0 .283.253.535.537.535zM7.88 9.5h8.249c.29 0 .542-.251.542-.535a.55.55 0 0 0-.538-.534H7.88a.55.55 0 0 0-.537.534c0 .284.253.535.537.535"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

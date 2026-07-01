@@ -27,7 +27,7 @@ const IconOfficeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2-new/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -37,15 +37,6 @@ const IconOfficeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     <path
                         fill={fillColor}
                         d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.105zm-5.762-5.558H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zm8.43 2.668h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.105z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.8 21.994a.456.456 0 0 0 .446-.464c0-.256-.2-.465-.445-.465h-8.919V14.09H5.527v6.977H4.19V2.928h15.164v13.023c0 .256.2.465.446.465a.456.456 0 0 0 .445-.465V2.464c0-.256-.2-.464-.445-.464H3.745a.456.456 0 0 0-.445.464V22h3.123v-6.976h3.569v6.97zm-.89-3.256c0-.512.4-.928.89-.928.497 0 .891.416.891.928s-.4.929-.89.929c-.491 0-.891-.417-.891-.929m-6.246-4.649h5.355v3.72h-5.355zm4.459 2.792v-1.857h-3.569v1.857zM5.527 8.976v-3.72h5.355v3.72zm4.459-.928V6.19H6.417v1.857zm8.033.928h-5.355v-3.72h5.355zM13.56 6.185v1.857h3.569V6.185z"
                     />
                 </svg>
             );

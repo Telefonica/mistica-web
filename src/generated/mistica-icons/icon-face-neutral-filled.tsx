@@ -45,15 +45,6 @@ const IconFaceNeutralFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M22.001 12c0-5.52-4.482-10-10-10C6.48 2 2 6.48 2 12s4.48 10 10 10 10.001-4.48 10.001-10M7.625 9.481a.982.982 0 1 1 1.963-.001.982.982 0 0 1-1.963.001m6.696 0a.982.982 0 1 1 1.964 0 .982.982 0 0 1-1.964 0M8 13.5h8a.5.5 0 0 1 0 1H8a.5.5 0 0 1 0-1"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

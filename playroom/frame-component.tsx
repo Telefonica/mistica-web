@@ -14,7 +14,6 @@ import {
     VIVO_EVOLUTION_SKIN,
     TELEFONICA_SKIN,
     O2_SKIN,
-    O2_NEW_SKIN,
     MOVISTAR_SKIN,
     MOVISTAR_NEW_SKIN,
     ESIMFLAG_SKIN,
@@ -59,7 +58,6 @@ const skinToLang: Record<string, string> = {
     [MOVISTAR_SKIN]: 'es-ES',
     [MOVISTAR_NEW_SKIN]: 'es-ES',
     [O2_SKIN]: 'en-GB',
-    [O2_NEW_SKIN]: 'en-GB',
     [ESIMFLAG_SKIN]: 'es-ES',
     [CYBER_SKIN]: 'es-ES',
 };
@@ -92,10 +90,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         ${skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${
-            skinName === MOVISTAR_SKIN ||
-            skinName === O2_SKIN ||
-            skinName === O2_NEW_SKIN ||
-            skinName === ESIMFLAG_SKIN
+            skinName === MOVISTAR_SKIN || skinName === O2_SKIN || skinName === ESIMFLAG_SKIN
                 ? 'body {font-family: "On Air"}'
                 : ''
         }

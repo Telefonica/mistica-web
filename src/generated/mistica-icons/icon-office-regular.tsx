@@ -27,7 +27,7 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2-new/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -37,19 +37,6 @@ const IconOfficeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     <path
                         fill={fillColor}
                         d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.106zm-5.762-5.558H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zm8.43 2.668h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.106z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M3.796 2H20.2a.89.89 0 0 1 .89.887V22H10.007v-6.667H7.343v6.661H2.91V2.887c0-.489.397-.887.886-.887m7.98 11.553v6.666h7.54V3.776H4.68V20.22h.886v-6.667z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M18.43 17.552h-5.768v-3.999h5.768zm-1.334-2.662H13.99v1.33h3.105zm-5.762-5.558H5.567V5.333h5.767zM10 6.664H6.895v1.331H10zm8.43 2.668h-5.768V5.333h5.768zm-1.334-2.668H13.99v1.331h3.105z"
                     />
                 </svg>
             );

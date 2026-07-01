@@ -18,10 +18,10 @@ import {
     IconButton,
     ToggleIconButton,
     Portal,
-    O2NewLogo,
+    O2Logo,
     EsimflagLogo,
 } from '../../src';
-import {Movistar_New, Telefonica, Blau, Vivo, Vivo_Evolution, O2_New, Esimflag} from '../themes';
+import {Movistar_New, Telefonica, Blau, Vivo, Vivo_Evolution, O2, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -39,7 +39,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Movistar'>;
+type ValidSkinName = Exclude<KnownSkinName, 'Movistar'>;
 
 const BrandIcon = ({Logo}: {Logo: React.ComponentType<{size: number; color?: string}>}) => {
     const {isDarkMode} = useTheme();
@@ -68,10 +68,10 @@ const themesMap: {
         themeConfig: Vivo_Evolution,
         Icon: () => <BrandIcon Logo={VivoLogo} />,
     },
-    'O2-new': {
+    O2: {
         text: 'O2',
-        themeConfig: O2_New,
-        Icon: () => <BrandIcon Logo={O2NewLogo} />,
+        themeConfig: O2,
+        Icon: () => <BrandIcon Logo={O2Logo} />,
     },
     Telefonica: {
         text: 'Telefónica',

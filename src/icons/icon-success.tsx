@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {O2_SKIN, O2_NEW_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
+import {O2_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
 import {
     getAnimateDrawLineProps,
     getAnimateFadeInProps,
@@ -18,55 +18,6 @@ type Props = {
 };
 
 const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const {platformOverrides} = useTheme();
-
-    const themeVariant = useThemeVariant();
-    const defaultColor =
-        themeVariant === 'brand' || themeVariant === 'media'
-            ? vars.colors.neutralHighBrand
-            : themeVariant === 'negative'
-              ? vars.colors.neutralHighNegative
-              : vars.colors.brand;
-
-    return (
-        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
-            <g
-                stroke={color ? undefined : defaultColor}
-                fill={color ? undefined : defaultColor}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            >
-                <path
-                    fill="none"
-                    strokeWidth="2"
-                    stroke={color ? color : undefined}
-                    d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
-                    {...(!skipAnimation && getAnimateDrawLineProps('202', '0.3s', platformOverrides))}
-                />
-                <polyline
-                    fill="none"
-                    strokeWidth="2"
-                    stroke={color ? color : undefined}
-                    points="16.92,30.08 28.68,43.12 50.26,20.22"
-                    {...(!skipAnimation &&
-                        mergeProperties(
-                            getAnimateDrawLineProps('50', '0.6s', platformOverrides),
-                            getAnimateHopInProps('0.6', platformOverrides)
-                        ))}
-                />
-                <circle
-                    stroke={color ? color : undefined}
-                    cx="53.64"
-                    cy="53.54"
-                    r="1.06"
-                    {...(!skipAnimation && getAnimateFadeInProps('0.2s', platformOverrides))}
-                />
-            </g>
-        </svg>
-    );
-};
-
-const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     const themeVariant = useThemeVariant();
@@ -199,8 +150,6 @@ const IconSuccess = ({size, color, skipAnimation}: Props): JSX.Element => {
     switch (skinName) {
         case O2_SKIN:
             return <IconSuccessO2 size={size} color={color} skipAnimation={skipAnimation} />;
-        case O2_NEW_SKIN:
-            return <IconSuccessO2New size={size} color={color} skipAnimation={skipAnimation} />;
         case VIVO_SKIN:
         case VIVO_EVOLUTION_SKIN:
             return <IconSuccessVivo size={size} color={color} skipAnimation={skipAnimation} />;

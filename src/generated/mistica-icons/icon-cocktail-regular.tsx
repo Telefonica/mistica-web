@@ -36,15 +36,6 @@ const IconCocktailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21.421 2.56a.96.96 0 0 1-.16 1.012l-8.329 9.38v7.169h1.388c.51 0 .926.421.926.94a.935.935 0 0 1-.926.939H9.687a.934.934 0 0 1-.925-.94c0-.518.415-.94.925-.94h1.388v-7.168L2.74 3.572a.95.95 0 0 1-.16-1.012.92.92 0 0 1 .85-.56h17.144c.368 0 .7.223.848.56m-9.42 8.627 6.49-7.301H5.51z"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

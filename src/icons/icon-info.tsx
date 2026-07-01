@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_NEW_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
+import {O2_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 
 type Props = {
@@ -9,28 +9,6 @@ type Props = {
 };
 
 const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
-    return (
-        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
-            <g
-                stroke={vars.colors.brand}
-                fill={vars.colors.brand}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            >
-                <path
-                    fill="none"
-                    strokeWidth="2"
-                    d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
-                />
-                <line fill="none" strokeWidth="2" x1="32" y1="47.96" x2="32" y2="23.74" />
-                <circle cx="53.64" cy="53.54" r="1.06" />
-                <circle strokeWidth="0" cx="32" cy="16.58" r="1.72" />
-            </g>
-        </svg>
-    );
-};
-
-const IconInfoO2New = ({size = 48}: Props): JSX.Element => {
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 48 48">
             <g fill={vars.colors.brand}>
@@ -74,8 +52,6 @@ const IconInfo = (props: Props): JSX.Element => {
     switch (skinName) {
         case O2_SKIN:
             return <IconInfoO2 {...props} />;
-        case O2_NEW_SKIN:
-            return <IconInfoO2New {...props} />;
         case VIVO_SKIN:
         case VIVO_EVOLUTION_SKIN:
             return <IconInfoVivo {...props} />;

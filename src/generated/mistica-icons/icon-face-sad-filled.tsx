@@ -45,15 +45,6 @@ const IconFaceSadFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2M7.624 9.482a.982.982 0 1 0 1.963.001.982.982 0 0 0-1.963 0m6.696 0a.982.982 0 1 0 1.964.001.982.982 0 0 0-1.964 0m-7.007 6.482a.5.5 0 0 0 .65-.278v.002c.177-.407.485-.773.81-1.068.602-.547 1.609-1.12 3.226-1.12s2.624.573 3.226 1.12c.326.296.633.66.81 1.068v-.001a.5.5 0 0 0 .928-.373 3 3 0 0 0-.252-.472 4.7 4.7 0 0 0-.813-.962c-.773-.703-2.016-1.38-3.899-1.38s-3.126.677-3.899 1.38c-.718.653-1.01 1.302-1.059 1.418a.51.51 0 0 0 .272.666"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

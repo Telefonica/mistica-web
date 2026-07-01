@@ -2,7 +2,6 @@ import {
     BLAU_SKIN,
     ESIMFLAG_SKIN,
     MOVISTAR_SKIN,
-    O2_NEW_SKIN,
     O2_SKIN,
     TELEFONICA_SKIN,
     VIVO_EVOLUTION_SKIN,
@@ -320,7 +319,6 @@ test.each`
     skin
     ${MOVISTAR_SKIN}
     ${O2_SKIN}
-    ${O2_NEW_SKIN}
     ${VIVO_SKIN}
     ${VIVO_EVOLUTION_SKIN}
     ${TELEFONICA_SKIN}
