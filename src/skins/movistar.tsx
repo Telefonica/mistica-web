@@ -641,7 +641,6 @@ export const getMovistarSkin: GetKnownSkin = () => {
             chip: '24px',
             tag: '0px',
             input: '12px',
-            legacyDisplay: '16px',
             popup: '8px',
             sheet: '16px',
             mediaSmall: '8px',
