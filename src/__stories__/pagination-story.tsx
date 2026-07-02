@@ -16,11 +16,9 @@ export default {
         totalPages: {control: {type: 'number', min: 1, step: 1}},
         currentPage: {control: {type: 'number', min: 1, step: 1}},
         defaultPage: {control: {type: 'number', min: 1, step: 1}},
-        maxPages: {control: {type: 'number', min: 1, step: 1}},
-        showEllipsis: {control: {type: 'boolean'}},
+        surroundingPageCount: {control: {type: 'number', min: 0, step: 1}},
         hideNavigationControls: {control: {type: 'boolean'}},
         hidePageList: {control: {type: 'boolean'}},
-        withCompactView: {control: {type: 'boolean'}},
         disabled: {control: {type: 'boolean'}},
         navLeftLabel: {control: {type: 'text'}},
         navRightLabel: {control: {type: 'text'}},
@@ -38,11 +36,9 @@ type Args = {
     totalPages: number;
     currentPage?: number;
     defaultPage?: number;
-    maxPages?: number;
-    showEllipsis: boolean;
+    surroundingPageCount?: number;
     hideNavigationControls: boolean;
     hidePageList?: boolean | 'true' | 'false';
-    withCompactView: boolean | 'true' | 'false';
     disabled: boolean;
     navigationControls: NavigationControls;
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
@@ -58,11 +54,9 @@ export const Default: StoryComponent<Args> = ({
     totalPages,
     currentPage,
     defaultPage,
-    maxPages,
-    showEllipsis,
+    surroundingPageCount,
     hideNavigationControls,
     hidePageList,
-    withCompactView,
     disabled,
     navigationControls,
     variantOutside,
@@ -86,10 +80,6 @@ export const Default: StoryComponent<Args> = ({
     const paginationMode = navigationControls === 'iconButton' ? 'iconOnly' : 'default';
     const hidePageListValue =
         hidePageList === 'true' || hidePageList === 'false' ? hidePageList === 'true' : hidePageList;
-    const withCompactViewValue =
-        withCompactView === 'true' || withCompactView === 'false'
-            ? withCompactView === 'true'
-            : withCompactView;
 
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
@@ -99,11 +89,9 @@ export const Default: StoryComponent<Args> = ({
                         <Pagination
                             totalPages={totalPages}
                             currentPage={page}
-                            maxPages={maxPages}
-                            showEllipsis={showEllipsis}
+                            surroundingPageCount={surroundingPageCount}
                             hideNavigationControls={hideNavigationControls}
                             hidePageList={hidePageListValue}
-                            withCompactView={withCompactViewValue}
                             disabled={disabled}
                             mode={paginationMode}
                             navLeftLabel={navLeftLabel || undefined}
@@ -121,10 +109,7 @@ Default.storyName = 'Pagination';
 Default.args = {
     totalPages: 9,
     defaultPage: 1,
-    maxPages: 3,
-    showEllipsis: true,
     hideNavigationControls: false,
-    withCompactView: false,
     disabled: false,
     navigationControls: 'buttonLink',
     variantOutside: 'default',

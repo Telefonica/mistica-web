@@ -38,7 +38,7 @@ test('does not render when totalPages is not positive', () => {
 test('keeps the selected page in range when page props are out of range', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Pagination totalPages={5} defaultPage={-1} maxPages={-1} />
+            <Pagination totalPages={5} defaultPage={-1} surroundingPageCount={-1} />
         </ThemeContextProvider>
     );
 
@@ -53,7 +53,7 @@ test('renders when optional props are explicitly undefined', () => {
                 totalPages={5}
                 currentPage={undefined}
                 defaultPage={undefined}
-                maxPages={undefined}
+                surroundingPageCount={undefined}
                 navLeftLabel={undefined}
                 navRightLabel={undefined}
                 onChange={undefined}
@@ -142,38 +142,21 @@ describe('getPaginationItems', () => {
         expect(items).toHaveLength(5);
     });
 
-    test('returns all pages by default when ellipsis are not enabled', () => {
+    test('returns all pages by default', () => {
         const items = getPaginationItems({totalPages: 20, currentPage: 10});
         expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
         expect(items).toHaveLength(20);
     });
 
-    test('uses maxPages to enable ellipsis when the total does not fit', () => {
-        const items = getPaginationItems({totalPages: 20, currentPage: 10, maxPages: 3});
-        expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
-        expect(items).toHaveLength(7);
-    });
-
-    test('does not insert ellipsis when explicitly disabled', () => {
-        const items = getPaginationItems({
-            totalPages: 20,
-            currentPage: 10,
-            maxPages: 3,
-            showEllipsis: false,
-        });
-        expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
-        expect(items).toHaveLength(20);
-    });
-
-    test('inserts ellipsis when middle pages are skipped', () => {
-        const items = getPaginationItems({totalPages: 20, currentPage: 10, showEllipsis: true});
+    test('uses surroundingPageCount to insert ellipsis when middle pages are skipped', () => {
+        const items = getPaginationItems({totalPages: 20, currentPage: 10, surroundingPageCount: 1});
         expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
         expect(items[0]).toMatchObject({type: 'page', page: 1});
         expect(items[items.length - 1]).toMatchObject({type: 'page', page: 20});
     });
 
     test('fills the leading slots with pages on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 3, showEllipsis: true})).toEqual([
+        expect(getPaginationItems({totalPages: 40, currentPage: 3, surroundingPageCount: 1})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: true},
@@ -184,8 +167,8 @@ describe('getPaginationItems', () => {
         ]);
     });
 
-    test('keeps three centered dynamic pages on desktop by default', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 31, showEllipsis: true})).toEqual([
+    test('keeps configured surrounding pages centered on desktop', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 31, surroundingPageCount: 1})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 30, current: false},
@@ -196,10 +179,8 @@ describe('getPaginationItems', () => {
         ]);
     });
 
-    test('allows configuring more dynamic pages on desktop', () => {
-        expect(
-            getPaginationItems({totalPages: 40, currentPage: 31, maxPages: 5, showEllipsis: true})
-        ).toEqual([
+    test('allows configuring more surrounding pages on desktop', () => {
+        expect(getPaginationItems({totalPages: 40, currentPage: 31, surroundingPageCount: 2})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 29, current: false},
@@ -214,7 +195,7 @@ describe('getPaginationItems', () => {
 
     test('keeps the number of desktop items stable while changing pages', () => {
         const itemCounts = [1, 3, 20, 38, 40].map(
-            (currentPage) => getPaginationItems({totalPages: 40, currentPage, showEllipsis: true}).length
+            (currentPage) => getPaginationItems({totalPages: 40, currentPage, surroundingPageCount: 1}).length
         );
 
         expect(itemCounts).toEqual([7, 7, 7, 7, 7]);
@@ -226,7 +207,7 @@ describe('getPaginationItems', () => {
                 totalPages: 40,
                 currentPage: 3,
                 includeBoundaryPages: false,
-                showEllipsis: true,
+                surroundingPageCount: 1,
             })
         ).toEqual([
             {type: 'page', page: 1, current: false},
@@ -243,7 +224,7 @@ describe('getPaginationItems', () => {
                 totalPages: 40,
                 currentPage: 33,
                 includeBoundaryPages: false,
-                showEllipsis: true,
+                surroundingPageCount: 1,
             })
         ).toEqual([
             {type: 'ellipsis'},
@@ -258,7 +239,7 @@ describe('getPaginationItems', () => {
                 totalPages: 40,
                 currentPage: 1,
                 includeBoundaryPages: false,
-                showEllipsis: true,
+                surroundingPageCount: 1,
             })
         ).toEqual([
             {type: 'page', page: 1, current: true},
@@ -275,7 +256,7 @@ describe('getPaginationItems', () => {
                         totalPages: 40,
                         currentPage,
                         includeBoundaryPages: false,
-                        showEllipsis: true,
+                        surroundingPageCount: 1,
                     }).length
             )
         ).toEqual([5, 5, 5, 5, 5]);

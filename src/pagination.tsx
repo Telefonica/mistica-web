@@ -7,11 +7,11 @@ import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
 import {IconButton} from './icon-button';
-import {useScreenSize, useTheme} from './hooks';
+import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -25,10 +25,8 @@ export type PaginationProps = {
 
     hideNavigationControls?: boolean;
     hidePageList?: boolean;
-    withCompactView?: boolean;
-    showEllipsis?: boolean;
 
-    maxPages?: number;
+    surroundingPageCount?: number;
 
     navLeftLabel?: string;
     navRightLabel?: string;
@@ -44,19 +42,64 @@ type PageItem = {type: 'page'; page: number; current: boolean};
 type EllipsisItem = {type: 'ellipsis'};
 type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
 
-const DEFAULT_DYNAMIC_PAGE_COUNT = 3;
+const MOBILE_PAGE_ITEM_SIZE = 48;
+const DESKTOP_PAGE_ITEM_SIZE = 32;
+const MOBILE_PAGE_LIST_GAP = 4;
+const DESKTOP_PAGE_LIST_GAP = 8;
+const MOBILE_CONTAINER_GAP = 4;
+const DESKTOP_CONTAINER_GAP = 8;
+
+const getPageListWidth = (items: number, itemSize: number, gap: number): number =>
+    items <= 0 ? 0 : items * itemSize + (items - 1) * gap;
+
+const getTruncatedItemsCount = ({
+    surroundingPageCount,
+    includeBoundaryPages,
+}: {
+    surroundingPageCount: number;
+    includeBoundaryPages: boolean;
+}): number => 2 * surroundingPageCount + (includeBoundaryPages ? 5 : 3);
+
+const getAutoSurroundingPageCount = ({
+    totalPages,
+    availableWidth,
+    itemSize,
+    gap,
+    includeBoundaryPages,
+}: {
+    totalPages: number;
+    availableWidth: number;
+    itemSize: number;
+    gap: number;
+    includeBoundaryPages: boolean;
+}): number | undefined => {
+    if (availableWidth <= 0 || getPageListWidth(totalPages, itemSize, gap) <= availableWidth) {
+        return undefined;
+    }
+
+    for (let count = totalPages; count >= 0; count--) {
+        const items = Math.min(
+            totalPages,
+            getTruncatedItemsCount({surroundingPageCount: count, includeBoundaryPages})
+        );
+
+        if (getPageListWidth(items, itemSize, gap) <= availableWidth) {
+            return count;
+        }
+    }
+
+    return 0;
+};
 
 export const getPaginationItems = ({
     totalPages,
     currentPage,
-    maxPages,
-    showEllipsis,
+    surroundingPageCount,
     includeBoundaryPages = true,
 }: {
     totalPages: number;
     currentPage: number;
-    maxPages?: number;
-    showEllipsis?: boolean;
+    surroundingPageCount?: number;
     includeBoundaryPages?: boolean;
 }): Array<PaginationItem> => {
     if (totalPages <= 1) {
@@ -64,11 +107,10 @@ export const getPaginationItems = ({
     }
 
     const activePage = Math.min(Math.max(currentPage, 1), totalPages);
-    const minVisibleCount = includeBoundaryPages ? 1 : 3;
-    const visibleCount = Math.max(minVisibleCount, Math.floor(maxPages ?? DEFAULT_DYNAMIC_PAGE_COUNT));
-    const shouldShowEllipsis = showEllipsis ?? maxPages !== undefined;
+    const surroundingCount = Math.max(0, Math.floor(surroundingPageCount ?? totalPages));
+    const visibleCount = 2 * surroundingCount + 1;
 
-    if (!shouldShowEllipsis || totalPages <= visibleCount) {
+    if (surroundingPageCount === undefined || totalPages <= visibleCount) {
         return Array.from({length: totalPages}, (_, index) => {
             const page = index + 1;
             return {type: 'page', page, current: page === activePage};
@@ -250,9 +292,7 @@ export const Pagination = ({
     onChange,
     hideNavigationControls = false,
     hidePageList: hidePageListProp,
-    withCompactView = false,
-    showEllipsis,
-    maxPages,
+    surroundingPageCount,
     navLeftLabel,
     navRightLabel,
     mode = 'default',
@@ -264,9 +304,27 @@ export const Pagination = ({
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const {isMobile} = useScreenSize();
+    const {isMobile, isDesktopOrBigger} = useScreenSize();
     const hidePageList = hidePageListProp === true;
-    const compactView = withCompactView && !hideNavigationControls;
+    const [containerElement, setContainerElement] = React.useState<HTMLElement | null>(null);
+    const [availableWidth, setAvailableWidth] = React.useState(0);
+    const {width: prevControlWidth, ref: prevControlRef} = useElementDimensions();
+    const {width: nextControlWidth, ref: nextControlRef} = useElementDimensions();
+
+    useIsomorphicLayoutEffect(() => {
+        const parentElement = containerElement?.parentElement;
+
+        if (!parentElement) {
+            setAvailableWidth(0);
+            return;
+        }
+
+        setAvailableWidth(parentElement.clientWidth);
+
+        return listenResize(parentElement, ([entry]) => {
+            setAvailableWidth(entry.contentRect.width);
+        });
+    }, [containerElement]);
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
@@ -301,29 +359,45 @@ export const Pagination = ({
         onChange?.(nextPage);
     };
 
+    const isPrevDisabled = activePage <= 1;
+    const isNextDisabled = activePage >= totalPages;
+    const includeBoundaryPages = !isMobile;
+    const itemSize = isDesktopOrBigger ? DESKTOP_PAGE_ITEM_SIZE : MOBILE_PAGE_ITEM_SIZE;
+    const pageListGap = isDesktopOrBigger ? DESKTOP_PAGE_LIST_GAP : MOBILE_PAGE_LIST_GAP;
+    const containerGap = isDesktopOrBigger ? DESKTOP_CONTAINER_GAP : MOBILE_CONTAINER_GAP;
+    const pageListAvailableWidth =
+        hideNavigationControls || hidePageList
+            ? availableWidth
+            : availableWidth - prevControlWidth - nextControlWidth - 2 * containerGap;
+    const resolvedSurroundingPageCount =
+        surroundingPageCount ??
+        getAutoSurroundingPageCount({
+            totalPages,
+            availableWidth: pageListAvailableWidth,
+            itemSize,
+            gap: pageListGap,
+            includeBoundaryPages,
+        });
     const items = getPaginationItems({
         totalPages,
         currentPage: activePage,
-        maxPages,
-        showEllipsis,
-        includeBoundaryPages: !isMobile,
+        surroundingPageCount: resolvedSurroundingPageCount,
+        includeBoundaryPages,
     });
-
-    const isPrevDisabled = activePage <= 1;
-    const isNextDisabled = activePage >= totalPages;
 
     return (
         <nav
+            ref={setContainerElement}
             aria-label={resolvedAriaLabel}
             className={classnames(styles.container, {
                 [styles.containerNavOnly]: hidePageList,
-                [styles.containerCompact]: compactView,
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
         >
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
                     <IconButton
+                        ref={prevControlRef}
                         Icon={IconChevronLeftRegular}
                         type="brand"
                         backgroundType="transparent"
@@ -333,6 +407,7 @@ export const Pagination = ({
                     />
                 ) : (
                     <ButtonLink
+                        ref={prevControlRef}
                         className={classnames(
                             styles.navigationButtonLink,
                             styles.navigationButtonLinkVariants[variant]
@@ -340,23 +415,18 @@ export const Pagination = ({
                         disabled={disabled || isPrevDisabled}
                         aria-label={resolvedPrevAriaLabel}
                         onPress={() => goToPage(activePage - 1)}
+                        bleedLeft
                         StartIcon={IconChevronLeftRegular}
                     >
                         {resolvedPrevLabel}
                     </ButtonLink>
                 ))}
 
-            {!hidePageList && (
-                <PageList
-                    items={items}
-                    disabled={disabled}
-                    className={classnames({[styles.pageListCompact]: compactView})}
-                    onPageClick={goToPage}
-                />
-            )}
+            {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
                     <IconButton
+                        ref={nextControlRef}
                         Icon={IconChevronRightRegular}
                         type="brand"
                         backgroundType="transparent"
@@ -366,6 +436,7 @@ export const Pagination = ({
                     />
                 ) : (
                     <ButtonLink
+                        ref={nextControlRef}
                         className={classnames(
                             styles.navigationButtonLink,
                             styles.navigationButtonLinkVariants[variant]
@@ -373,6 +444,7 @@ export const Pagination = ({
                         disabled={disabled || isNextDisabled}
                         aria-label={resolvedNextAriaLabel}
                         onPress={() => goToPage(activePage + 1)}
+                        bleedRight
                         EndIcon={IconChevronRightRegular}
                     >
                         {resolvedNextLabel}

@@ -26,15 +26,6 @@ export const container = style([
 
 export const containerNavOnly = style({
     gap: 16,
-    '@media': {
-        [mq.desktopOrBigger]: {
-            gap: 16,
-        },
-    },
-});
-
-export const containerCompact = style({
-    gap: 16,
 });
 
 export const pageList = style([
@@ -55,10 +46,6 @@ export const pageList = style([
         },
     },
 ]);
-
-export const pageListCompact = style({
-    display: 'none',
-});
 
 export const pageListItem = style({
     display: 'flex',

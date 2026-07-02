@@ -4589,8 +4589,8 @@ export default [
         code: `
             <Pagination
                 mode="iconOnly"
-                showEllipsis={true}
                 totalPages={10}
+                surroundingPageCount={1}
                 currentPage={getState("paginationPage", 3)}
                 onChange={(page) => setState("paginationPage", page)}
             />`,

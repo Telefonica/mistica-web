@@ -24,11 +24,20 @@ const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
         device: 'MOBILE_IOS',
         args: {totalPages: 10, currentPage: 10, navigationControls: ICON_BUTTON_NAVIGATION},
     },
-    {name: 'WithEllipsis', device: 'DESKTOP', args: {totalPages: 20, currentPage: 10}},
+    {
+        name: 'WithEllipsis',
+        device: 'DESKTOP',
+        args: {totalPages: 20, currentPage: 10, surroundingPageCount: 1},
+    },
     {
         name: 'WithEllipsis',
         device: 'MOBILE_IOS',
-        args: {totalPages: 20, currentPage: 10, navigationControls: ICON_BUTTON_NAVIGATION},
+        args: {
+            totalPages: 20,
+            currentPage: 10,
+            surroundingPageCount: 1,
+            navigationControls: ICON_BUTTON_NAVIGATION,
+        },
     },
     {
         name: 'NavOnlyResponsive',
@@ -96,17 +105,17 @@ const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
     {
         name: 'BrandContext',
         device: 'DESKTOP',
-        args: {totalPages: 20, currentPage: 10, variantOutside: 'brand'},
+        args: {totalPages: 20, currentPage: 10, surroundingPageCount: 1, variantOutside: 'brand'},
     },
     {
         name: 'NegativeContext',
         device: 'DESKTOP',
-        args: {totalPages: 20, currentPage: 10, variantOutside: 'negative'},
+        args: {totalPages: 20, currentPage: 10, surroundingPageCount: 1, variantOutside: 'negative'},
     },
     {
         name: 'AlternativeContext',
         device: 'DESKTOP',
-        args: {totalPages: 20, currentPage: 10, variantOutside: 'alternative'},
+        args: {totalPages: 20, currentPage: 10, surroundingPageCount: 1, variantOutside: 'alternative'},
     },
 ];
 
@@ -118,14 +127,14 @@ test.each(CASES)('Pagination $name - $device', async ({args, device}) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Pagination CompactView - MOBILE_IOS_SMALL', async () => {
+test('Pagination NavOnlySmall - MOBILE_IOS_SMALL', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS_SMALL',
         args: {
             totalPages: 50,
             currentPage: 24,
-            withCompactView: true,
+            hidePageList: true,
             navigationControls: 'buttonLink',
         },
     });

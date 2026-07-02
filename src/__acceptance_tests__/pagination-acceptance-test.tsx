@@ -6,9 +6,6 @@ import type {ElementHandle, StoryArgs} from '../test-utils';
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_SIZE = 48;
 const ELLIPSIS_CONTENT_SIZE = 32;
-const COMPACT_VIEWPORT_WIDTH = 360;
-const COMPACT_VIEWPORT_HEIGHT = 667;
-
 const getRgbColor = (hexColor: string): string => {
     const color = hexColor.replace('#', '');
     const channels = [0, 2, 4].map((start) => parseInt(color.slice(start, start + 2), 16));
@@ -63,7 +60,7 @@ test('Pagination ellipses are non-interactive and keep the mobile layout size', 
     await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
-        args: {totalPages: 20, currentPage: 10},
+        args: {totalPages: 20, currentPage: 10, surroundingPageCount: 1},
     });
 
     const pagination = await screen.findByRole('navigation');
@@ -97,7 +94,12 @@ test.each(ELLIPSIS_COLOR_CASES)('Pagination ellipsis color in $variantOutside co
         id: STORY_ID,
         device: 'DESKTOP',
         skin: CYBER_SKIN,
-        args: {totalPages: 20, currentPage: 10, variantOutside: testCase.variantOutside},
+        args: {
+            totalPages: 20,
+            currentPage: 10,
+            surroundingPageCount: 1,
+            variantOutside: testCase.variantOutside,
+        },
     });
 
     const pagination = await screen.findByRole('navigation');
@@ -110,81 +112,15 @@ test.each(ELLIPSIS_COLOR_CASES)('Pagination ellipsis color in $variantOutside co
     expect(await ellipsis.evaluate((element) => getComputedStyle(element).color)).toBe(testCase.color);
 });
 
-test('Pagination compact view hides the page list when enabled', async () => {
+test('Pagination hides the page list when configured', async () => {
     await openStoryPage({
         id: STORY_ID,
         device: 'DESKTOP',
-        args: {totalPages: 9, currentPage: 3, withCompactView: true, navigationControls: 'buttonLink'},
+        args: {totalPages: 9, currentPage: 3, hidePageList: true, navigationControls: 'buttonLink'},
     });
 
     const pagination = await screen.findByRole('navigation');
     const pageList = await pagination.$('ol');
 
-    if (!pageList) {
-        throw Error('Page list should be available');
-    }
-
-    expect(await pageList.evaluate((element) => getComputedStyle(element).display)).toBe('none');
-});
-
-test('Pagination compact view fits in a small viewport', async () => {
-    await openStoryPage({
-        id: STORY_ID,
-        device: 'MOBILE_IOS',
-        viewport: {
-            width: COMPACT_VIEWPORT_WIDTH,
-            height: COMPACT_VIEWPORT_HEIGHT,
-            deviceScaleFactor: 2,
-            isMobile: true,
-            hasTouch: true,
-            isLandscape: false,
-        },
-        args: {totalPages: 9, currentPage: 3, withCompactView: true, navigationControls: 'buttonLink'},
-    });
-
-    const pagination = await screen.findByRole('navigation');
-    const previous = await screen.findByRole('button', {name: 'Página anterior'});
-    const next = await screen.findByRole('button', {name: 'Página siguiente'});
-    const pageList = await pagination.$('ol');
-
-    if (!pageList) {
-        throw Error('Page list should be available');
-    }
-
-    expect(await pageList.evaluate((element) => getComputedStyle(element).display)).toBe('none');
-
-    const previousBox = await expectBoundingBox(previous, {
-        minWidth: MOBILE_TARGET_SIZE,
-        height: MOBILE_TARGET_SIZE,
-    });
-    const nextBox = await expectBoundingBox(next, {minWidth: MOBILE_TARGET_SIZE, height: MOBILE_TARGET_SIZE});
-    const paginationBox = await expectBoundingBox(pagination, {});
-
-    expect(previousBox.y).toBe(nextBox.y);
-    expect(paginationBox.x + paginationBox.width).toBeLessThanOrEqual(COMPACT_VIEWPORT_WIDTH);
-});
-
-test('Pagination keeps the page list below the compact breakpoint by default', async () => {
-    await openStoryPage({
-        id: STORY_ID,
-        device: 'MOBILE_IOS',
-        viewport: {
-            width: COMPACT_VIEWPORT_WIDTH,
-            height: COMPACT_VIEWPORT_HEIGHT,
-            deviceScaleFactor: 2,
-            isMobile: true,
-            hasTouch: true,
-            isLandscape: false,
-        },
-        args: {totalPages: 9, currentPage: 3},
-    });
-
-    const pagination = await screen.findByRole('navigation');
-    const pageList = await pagination.$('ol');
-
-    if (!pageList) {
-        throw Error('Page list should be available');
-    }
-
-    expect(await pageList.evaluate((element) => getComputedStyle(element).display)).not.toBe('none');
+    expect(pageList).toBeNull();
 });

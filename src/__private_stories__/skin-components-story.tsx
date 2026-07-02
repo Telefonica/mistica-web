@@ -288,7 +288,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                         <PageBullets currentIndex={2} numPages={10} />
 
                         {/** Pagination */}
-                        <Pagination totalPages={40} defaultPage={32} showEllipsis />
+                        <Pagination totalPages={40} defaultPage={32} surroundingPageCount={1} />
 
                         {/** Checkbox */}
                         <Inline space={16} wrap>
