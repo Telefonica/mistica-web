@@ -1067,7 +1067,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Basic header layout (inverse)',
         code: `
         <HeaderLayout
-            isInverse={true}
+            variant="brand"
             header={
                 <Header
                     title="The last invoice is available"
@@ -1102,7 +1102,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Header layout (with breadcrumbs)(no inverse)',
         code: `
         <HeaderLayout
-            isInverse={false}
+            variant="default"
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
@@ -1136,7 +1136,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Main section header layout (no inverse)',
         code: `
         <MainSectionHeaderLayout
-            isInverse={false}>
+            variant="default">
             <MainSectionHeader
                 title="Title"
                 description="Some text here"
@@ -2173,7 +2173,7 @@ const exampleScreens: Array<Snippet> = [
   }
 />
 
-<MainSectionHeaderLayout isInverse={false}>
+<MainSectionHeaderLayout variant="default">
   <MainSectionHeader title="Hola, Alex" />
 </MainSectionHeaderLayout>
 
@@ -2183,7 +2183,7 @@ const exampleScreens: Array<Snippet> = [
       <Carousel
         itemsPerPage={2}
         items={Array.from({ length: 3 }, (_, idx) => (
-          <SnapCard
+          <DataCard size="snap"
             asset={
               [
                 <Circle size={40} backgroundColor={colors.brandLow}>
@@ -2204,9 +2204,9 @@ const exampleScreens: Array<Snippet> = [
       <Carousel
         itemsPerPage={1}
         items={Array.from({ length: 3 }, (_, idx) => (
-          <DisplayMediaCard
+          <CoverCard size="display"
             aspectRatio="7:10"
-            backgroundImage={
+            imageSrc={
               [
                 "https://www.ediiie.com/blog/assets/admin/uploads/apple-vision-pro-features.jpg",
                 "https://images.unsplash.com/photo-1549298620-833e1e37670b?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -2229,18 +2229,13 @@ const exampleScreens: Array<Snippet> = [
           mobilePageOffset="large"
           items={Array.from({ length: 3 }, (_, idx) => (
             <MediaCard
-              media={
+              imageSrc={
                 [
-                  <Image
-                    src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MME73?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1632861342000"
-                    aspectRatio="1:1"
-                  />,
-                  <Image
-                    src="https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-xr/iphone-xr-blue.jpg"
-                    aspectRatio="1:1"
-                  />,
+                  "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MME73?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1632861342000",
+                  "https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-xr/iphone-xr-blue.jpg",
                 ][idx % 2]
               }
+              mediaAspectRatio="1:1"
               headline={<Tag type="active">New</Tag>}
               title={["AirPods Pro", "Mobiles", "Tablets"][idx % 2]}
               description={["2nd generation", "Mobiles", "Tablets"][idx % 2]}
@@ -2272,7 +2267,7 @@ const exampleScreens: Array<Snippet> = [
         asset={<IconMobileDeviceRegular size={40} color={colors.brand} />}
         title="Looking for a smartphone?"
         description="These are some of the products you can you can buy with cryptocurrencies."
-        button={
+        buttonPrimary={
           <ButtonPrimary small onPress={() => {}}>
             Explore
           </ButtonPrimary>
@@ -2285,21 +2280,14 @@ const exampleScreens: Array<Snippet> = [
           itemsPerPage={1}
           mobilePageOffset="large"
           items={Array.from({ length: 3 }, (_, idx) => (
-            <SmallNakedCard
-              media={
+            <NakedCard size="snap"
+              imageSrc={
                 [
-                  <Image
-                    circular
-                    src="https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940"
-                    aspectRatio="1:1"
-                  />,
-                  <Image
-                    circular
-                    src="https://i.scdn.co/image/ab6761610000e5ebc698d53b77db34027b00f853"
-                    aspectRatio="1:1"
-                  />,
+                  "https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940",
+                  "https://i.scdn.co/image/ab6761610000e5ebc698d53b77db34027b00f853",
                 ][idx % 2]
               }
+              circledImage
               title={["Netflix", "Disney", "Tablets"][idx % 2]}
               description="The best series and films"
             />
@@ -2962,12 +2950,12 @@ const navigationBarSnippets = [
                       ))}
 
                       <GridItem columnSpan={5} columnStart={8}>
-                        <DisplayMediaCard
+                        <CoverCard size="display"
                           headline={<Tag type="promo">Oferta</Tag>}
                           title="Movistar Plus+"
                           onPress={() => {}}
                           description="Contrata solo TV por 9,99 €"
-                          backgroundImage="${imagePlaceholder}"
+                          imageSrc="${imagePlaceholder}"
                         />
                       </GridItem>
                     </Grid>
@@ -2987,13 +2975,13 @@ const navigationBarSnippets = [
                         </Stack>
                       ))}
 
-                      <DisplayMediaCard
+                      <CoverCard size="display"
                         headline={<Tag type="promo">Oferta</Tag>}
                         title="Movistar Plus+"
                         aspectRatio="1:1"
                         onPress={() => {}}
                         description="Contrata solo TV por 9,99 €"
-                        backgroundImage="${imagePlaceholder}"
+                        imageSrc="${imagePlaceholder}"
                       />
                     </Stack>
                   ),
@@ -3071,8 +3059,9 @@ const carouselSnippets = [
       headline={<Tag type="promo">Headline</Tag>}
       title={'Card ' + idx}
       description="Description"
-      media={<Image src="${imagePlaceholder}" aspectRatio="16:9" />}
-      button={
+      imageSrc="${imagePlaceholder}"
+      mediaAspectRatio="16:9"
+      buttonPrimary={
         <ButtonPrimary small onPress={() => {}}>
           Action
         </ButtonPrimary>
@@ -3111,7 +3100,7 @@ const carouselSnippets = [
       >
           <div style={{flexShrink: 0}}>
               <Circle backgroundColor={colors.brand} size={160}>
-                  <ThemeVariant isInverse>
+                  <ThemeVariant variant="brand">
                       <Text10>{idx}</Text10>
                   </ThemeVariant>
               </Circle>
@@ -3379,182 +3368,6 @@ const alertSnippets = [
       </SheetBody>
     )}
   </Sheet>
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'InfoSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen",false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <InfoSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    items={[
-      {
-        id: "1",
-        title: "Item 1",
-        description: "Description",
-        icon: { type: "bullet" },
-      },
-      {
-        id: "2",
-        title: "Item 2",
-        description: "Description",
-        icon: { type: "regular", Icon: IconCocktailRegular },
-      },
-      {
-        id: "3",
-        title: "Item 3",
-        description: "Description",
-        icon: { type: "small", Icon: IconCheckRegular },
-      },
-    ]}
-  />
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'RadioListSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen", false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <RadioListSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    onSelect={(selected) => console.log(selected)}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    items={[
-      "Apple",
-      "Banana",
-      "Pineapple",
-      "Mango",
-      "Peach",
-      "Pear",
-      "Strawberry",
-      "Watermelon",
-      "Kiwi",
-      "Cherry",
-      "Grape",
-      "Lemon",
-      "Lime",
-    ].map((fruit, idx) => ({
-      id: String(idx),
-      tag: {type: 'promo', text: 'Tag'},
-      title: fruit,
-      description: "Description",
-      asset: (
-        <Circle backgroundColor={colors.brandLow} size={40}>
-          <IconMobileDeviceRegular color={colors.brand} />
-        </Circle>
-      ),
-    }))}
-  />
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'ActionsListSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen", false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <ActionsListSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    onSelect={(selected) => console.log(selected)}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    items={[
-      {
-        id: "1",
-        title: "Action with icon",
-        icon: {
-          Icon: IconLightningRegular,
-        },
-      },
-      {
-        id: "2",
-        title: "Action without icon",
-      },
-      {
-        id: "3",
-        title: "Destructive action",
-        style: "destructive",
-        icon: {
-          Icon: IconTrashCanRegular,
-        },
-      },
-    ]}
-  />
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'ActionsSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen", false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <ActionsSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    onPressButton={(selected) => console.log(selected)}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    button={{ text: "Primary" }}
-    secondaryButton={{ text: "Secondary" }}
-    buttonLink={{ text: "Link", withChevron: true }}
-  />
 )}`,
     },
 ];
@@ -3895,7 +3708,7 @@ const gridSnippets = [
         code: `
 <Grid columns={2} rows={3} gap={8}>
   <GridItem>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3906,7 +3719,7 @@ const gridSnippets = [
     />
   </GridItem>
   <GridItem rowSpan={2}>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3917,7 +3730,7 @@ const gridSnippets = [
     />
   </GridItem>
   <GridItem>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3928,7 +3741,7 @@ const gridSnippets = [
     />
   </GridItem>
   <GridItem columnSpan={2}>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3947,7 +3760,7 @@ const gridSnippets = [
         code: `
 <Grid columns={{ minSize: 100 }} gap={8}>
   {Array.from({ length: 10 }, (_, idx) => (
-    <SnapCard
+    <DataCard size="snap"
       key={idx}
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
@@ -4619,7 +4432,7 @@ export default [
     {
         group: 'Chip',
         name: 'Chip navigation inverse',
-        code: ` <ResponsiveLayout isInverse={true} fullWidth>
+        code: ` <ResponsiveLayout variant="brand" fullWidth>
                   <Box padding={16} width="fit-content" >
                     <div style={{lineHeight: 0}}>
                       <Chip href="https://example.com">Chip</Chip>

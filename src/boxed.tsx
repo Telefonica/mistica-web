@@ -12,8 +12,6 @@ import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
     children: React.ReactNode;
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: Variant;
     className?: string;
     role?: string;
@@ -76,7 +74,6 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
     (
         {
             children,
-            isInverse = false,
             className,
             role,
             dataAttributes,
@@ -97,7 +94,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         ref
     ) => {
         const externalVariant = normalizeVariant(useThemeVariant());
-        const internalVariant = normalizeVariant(variant ?? (isInverse ? 'brand' : 'default'));
+        const internalVariant = normalizeVariant(variant ?? 'default');
 
         return (
             <div

@@ -194,10 +194,6 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
     asset?: React.ReactNode;
     animateText?: boolean;
-    /**
-     * @deprecated use variant="brand" instead
-     */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
 }
 
@@ -211,7 +207,6 @@ export const FeedbackScreen = ({
     hapticFeedback,
     asset,
     animateText = false,
-    isInverse = false,
     variant = 'default',
     unstable_inlineInDesktop,
     imageUrl,
@@ -237,7 +232,7 @@ export const FeedbackScreen = ({
         });
     }
 
-    const isBrandVariant = variant === 'brand' || isInverse;
+    const isBrandVariant = variant === 'brand';
 
     return (
         <div style={{position: 'relative'}}>

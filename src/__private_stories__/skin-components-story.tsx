@@ -206,8 +206,8 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             pretitle="Pretitle"
                             description="Description"
                             onClose={() => {}}
-                            actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
-                            button={
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
                                 <ButtonPrimary
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}

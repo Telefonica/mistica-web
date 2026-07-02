@@ -114,7 +114,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             aspectRatio={aspectRatioValue as CardAspectRatio}
             dataAttributes={{testid: 'data-card'}}
             aria-label={ariaLabel}
-            actions={
+            topActions={
                 topAction
                     ? [
                           {

@@ -69,30 +69,10 @@ export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {Timer, TextTimer} from './timer';
 // @TODO move to card-utils?
 export {CardActionSpinner, CardActionIconButton} from './card-internal';
-export {
-    CoverCard,
-    /** @deprecated use <CoverCard /> */
-    PosterCard,
-    /** @deprecated use <CoverCard size="display" /> */
-    DisplayMediaCard,
-} from './card-cover';
-export {
-    NakedCard,
-    /** @deprecated use <NakedCard size="snap" /> */
-    SmallNakedCard,
-} from './card-naked';
-export {
-    DataCard,
-    /** @deprecated use <DataCard size="snap" /> */
-    SnapCard,
-    /** @deprecated use <DataCard size="display" /> */
-    DisplayDataCard,
-} from './card-data';
-export {
-    MediaCard,
-    /** @deprecated use <MediaCard size="default" mediaPosition="right" /> */
-    HighlightedCard,
-} from './card-media';
+export {CoverCard} from './card-cover';
+export {NakedCard} from './card-naked';
+export {DataCard} from './card-data';
+export {MediaCard} from './card-media';
 export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';
@@ -137,14 +117,6 @@ export {default as SkipLink, SkipLinkNav} from './skip-link';
 export {default as SheetRoot, showSheet} from './sheet-root';
 export type {NativeSheetImplementation} from './sheet-types';
 export {default as Sheet, SheetBody} from './sheet-common';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as ActionsSheet} from './sheet-actions';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as InfoSheet} from './sheet-info';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as ActionsListSheet} from './sheet-actions-list';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as RadioListSheet} from './sheet-radio-list';
 
 // Forms
 export {default as Form} from './form';
@@ -207,12 +179,7 @@ export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
 
-export {
-    ThemeVariant,
-    useIsInverseVariant,
-    useIsInverseOrMediaVariant,
-    useThemeVariant,
-} from './theme-variant-context';
+export {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
 export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {

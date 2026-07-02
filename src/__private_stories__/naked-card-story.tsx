@@ -3,8 +3,6 @@ import {
     NakedCard,
     ButtonPrimary,
     ButtonLink,
-    Video,
-    Image,
     Tag,
     IconMobileDeviceRegular,
     ResponsiveLayout,
@@ -20,7 +18,6 @@ import {
 import {Placeholder} from '../placeholder';
 import tennisImg from '../__stories__/images/tennis.jpg';
 import beachVideo from '../__stories__/videos/beach.mp4';
-import {SmallNakedCard} from '../card-naked';
 import avatarImg from '../__stories__/images/avatar.jpg';
 
 import type {HeadingType} from '../utils/types';
@@ -83,7 +80,7 @@ export const Default: StoryComponent<Args> = ({
     }
 
     const interactiveActions = {
-        button: actions.includes('button') ? (
+        buttonPrimary: actions.includes('button') ? (
             <ButtonPrimary small fake>
                 Action
             </ButtonPrimary>
@@ -98,11 +95,20 @@ export const Default: StoryComponent<Args> = ({
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
     } as
-        | {button?: JSX.Element; buttonLink?: JSX.Element; secondaryButton?: JSX.Element}
+        | {buttonPrimary?: JSX.Element; buttonLink?: JSX.Element}
         | {onPress: () => void}
         | {to: string}
         | {href: string}
         | {[key: string]: never};
+
+    const mediaProps =
+        media === 'none'
+            ? {}
+            : media === 'video'
+              ? ({videoSrc: emptySource ? '' : VIDEO_SRC, mediaAspectRatio: '16:9'} as const)
+              : media === 'image'
+                ? ({imageSrc: emptySource ? '' : IMAGE_SRC, mediaAspectRatio: '16:9'} as const)
+                : ({imageSrc: emptySource ? '' : IMAGE_SRC, circledImage: true} as const);
 
     return (
         <ResponsiveLayout>
@@ -116,20 +122,12 @@ export const Default: StoryComponent<Args> = ({
                     titleAs={titleAs}
                     subtitle={subtitle}
                     description={description}
-                    media={
-                        media === 'none' ? undefined : media === 'video' ? (
-                            <Video src={emptySource ? '' : VIDEO_SRC} aspectRatio="16:9" />
-                        ) : media === 'image' ? (
-                            <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
-                        ) : (
-                            <Image circular src={emptySource ? '' : IMAGE_SRC} />
-                        )
-                    }
+                    {...mediaProps}
                     asset={assetElement}
                     {...interactiveActions}
                     extra={extra ? <Placeholder /> : undefined}
                     onClose={closable ? () => {} : undefined}
-                    actions={
+                    topActions={
                         topAction
                             ? [
                                   {
@@ -224,18 +222,20 @@ export const Small: StoryComponent<SmallArgs> = ({
     touchable,
     emptySource,
 }) => {
+    const mediaProps =
+        media === 'none'
+            ? {}
+            : media === 'image'
+              ? ({imageSrc: emptySource ? '' : IMAGE_SRC, mediaAspectRatio: '16:9'} as const)
+              : ({imageSrc: emptySource ? '' : IMAGE_SRC, circledImage: true} as const);
+
     return (
         <ResponsiveLayout>
             <Box paddingY={24}>
-                <SmallNakedCard
+                <NakedCard
+                    size="snap"
                     dataAttributes={{testid: 'small-naked-card'}}
-                    media={
-                        media === 'none' ? undefined : media === 'image' ? (
-                            <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
-                        ) : (
-                            <Image circular src={emptySource ? '' : IMAGE_SRC} />
-                        )
-                    }
+                    {...mediaProps}
                     title={title}
                     subtitle={subtitle}
                     description={description}
@@ -281,8 +281,9 @@ export const Group: StoryComponent = () => {
                                 title="Title"
                                 subtitle="Subtitle"
                                 description="Description"
-                                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                                button={
+                                imageSrc={IMAGE_SRC}
+                                mediaAspectRatio="16:9"
+                                buttonPrimary={
                                     <ButtonPrimary small href="https://google.com">
                                         Action
                                     </ButtonPrimary>
@@ -296,8 +297,9 @@ export const Group: StoryComponent = () => {
                             <NakedCard
                                 title="Title"
                                 description="Description"
-                                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                                button={
+                                imageSrc={IMAGE_SRC}
+                                mediaAspectRatio="16:9"
+                                buttonPrimary={
                                     <ButtonPrimary small href="https://google.com">
                                         Action
                                     </ButtonPrimary>

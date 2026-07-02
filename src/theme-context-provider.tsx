@@ -7,7 +7,6 @@ import {dimensions, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
-import TabFocus from './tab-focus';
 import ModalContextProvider from './modal-context-provider';
 import TooltipContextProvider from './tooltip-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
@@ -320,50 +319,48 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
 
     return (
         <>
-            <TabFocus disabled={!theme.enableTabFocus}>
-                <ModalContextProvider>
-                    <TooltipContextProvider>
-                        <ThemeContext.Provider value={contextTheme}>
-                            <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                                <AspectRatioSupportProvider>
-                                    <DocumentVisibilityProvider>
-                                        <ScreenSizeContextProvider>
-                                            <DialogRoot>
-                                                <SnackbarRoot>
-                                                    {as ? (
-                                                        <>
-                                                            {renderStyles(
-                                                                `[data-mistica-theme="${themeScopeId}"]`
-                                                            )}
-                                                            {React.createElement(
-                                                                as,
-                                                                {
-                                                                    style: {
-                                                                        isolation: 'isolate',
-                                                                    },
-                                                                    'data-mistica-theme': withoutStyles
-                                                                        ? undefined
-                                                                        : themeScopeId,
+            <ModalContextProvider>
+                <TooltipContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                            <AspectRatioSupportProvider>
+                                <DocumentVisibilityProvider>
+                                    <ScreenSizeContextProvider>
+                                        <DialogRoot>
+                                            <SnackbarRoot>
+                                                {as ? (
+                                                    <>
+                                                        {renderStyles(
+                                                            `[data-mistica-theme="${themeScopeId}"]`
+                                                        )}
+                                                        {React.createElement(
+                                                            as,
+                                                            {
+                                                                style: {
+                                                                    isolation: 'isolate',
                                                                 },
-                                                                children
-                                                            )}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            {renderStyles(':root')}
-                                                            {children}
-                                                        </>
-                                                    )}
-                                                </SnackbarRoot>
-                                            </DialogRoot>
-                                        </ScreenSizeContextProvider>
-                                    </DocumentVisibilityProvider>
-                                </AspectRatioSupportProvider>
-                            </TrackingConfig>
-                        </ThemeContext.Provider>
-                    </TooltipContextProvider>
-                </ModalContextProvider>
-            </TabFocus>
+                                                                'data-mistica-theme': withoutStyles
+                                                                    ? undefined
+                                                                    : themeScopeId,
+                                                            },
+                                                            children
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {renderStyles(':root')}
+                                                        {children}
+                                                    </>
+                                                )}
+                                            </SnackbarRoot>
+                                        </DialogRoot>
+                                    </ScreenSizeContextProvider>
+                                </DocumentVisibilityProvider>
+                            </AspectRatioSupportProvider>
+                        </TrackingConfig>
+                    </ThemeContext.Provider>
+                </TooltipContextProvider>
+            </ModalContextProvider>
             {!as && <SetupStackingContext />}
         </>
     );
