@@ -53,7 +53,7 @@ const MenuSectionArrow = ({size = 24, color = vars.colors.neutralHigh, style, cl
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
-        <div className={styles.burgerIconContainer} role="presentation" data-component-name="BurgerMenuIcon">
+        <div className={styles.burgerIconContainer} role="presentation" data-testid="BurgerMenuIcon">
             <div className={isOpen ? styles.iconCloseOpen : styles.iconCloseHidden}>
                 <IconCloseRegular />
             </div>
@@ -1599,7 +1599,7 @@ type NavigationBarActionGroupProps = {
 
 export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupProps): JSX.Element => {
     return (
-        <div className={styles.lineHeightFix} data-component-name="NavigationBarActionGroup">
+        <div className={styles.lineHeightFix} data-testid="NavigationBarActionGroup">
             <Inline space={24} alignItems="center">
                 {children}
             </Inline>

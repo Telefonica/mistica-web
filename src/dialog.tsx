@@ -366,7 +366,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                     aria-hidden={isClosing || !isReady}
                 >
                     {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                    <div role="dialog" onClick={(e) => e.stopPropagation()} data-component-name="Dialog">
+                    <div role="dialog" onClick={(e) => e.stopPropagation()} data-testid="Dialog">
                         <div
                             ref={dialogContentRef}
                             onAnimationEnd={(e) => {
