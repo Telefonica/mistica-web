@@ -2,7 +2,7 @@
     "name": "mistica-web",
     "displayName": "Mistica Web",
     "description": "Telefonica's Mistica Design System — React component library skill for building web UIs with @telefonica/mistica.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": {
         "name": "Telefonica",
         "email": "cto-apps@telefonica.com"
