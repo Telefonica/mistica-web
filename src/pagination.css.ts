@@ -275,10 +275,15 @@ export const pageContent = style({
 export const ellipsis = style([
     interactiveArea,
     {
-        width: 32,
-        height: 32,
         color: skinVars.colors.textSecondary,
         cursor: 'default',
+
+        selectors: {
+            '&&': {
+                width: 32,
+                height: 32,
+            },
+        },
     },
 ]);
 
