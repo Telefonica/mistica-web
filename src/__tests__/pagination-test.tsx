@@ -72,9 +72,9 @@ test('calls onChange when a page button is clicked (uncontrolled)', async () => 
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 6'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 4'}));
 
-    expect(onChange).toHaveBeenCalledWith(6);
+    expect(onChange).toHaveBeenCalledWith(4);
 });
 
 test('calls onChange when Next is clicked', async () => {
@@ -142,10 +142,26 @@ describe('getPaginationItems', () => {
         expect(items).toHaveLength(5);
     });
 
-    test('returns all pages by default', () => {
+    test('includes the hidden page instead of rendering an unnecessary mobile ellipsis', () => {
+        expect(getPaginationItems({totalPages: 4, currentPage: 3, includeBoundaryPages: false})).toEqual([
+            {type: 'page', page: 1, current: false},
+            {type: 'page', page: 2, current: false},
+            {type: 'page', page: 3, current: true},
+            {type: 'page', page: 4, current: false},
+        ]);
+    });
+
+    test('uses one surrounding page by default', () => {
         const items = getPaginationItems({totalPages: 20, currentPage: 10});
-        expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
-        expect(items).toHaveLength(20);
+        expect(items).toEqual([
+            {type: 'page', page: 1, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 9, current: false},
+            {type: 'page', page: 10, current: true},
+            {type: 'page', page: 11, current: false},
+            {type: 'ellipsis'},
+            {type: 'page', page: 20, current: false},
+        ]);
     });
 
     test('uses surroundingPageCount to insert ellipsis when middle pages are skipped', () => {

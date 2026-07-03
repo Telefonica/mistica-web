@@ -7,11 +7,11 @@ import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
 import {IconButton} from './icon-button';
-import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {getPrefixedDataAttributes, listenResize} from './utils/dom';
+import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -42,59 +42,13 @@ type PageItem = {type: 'page'; page: number; current: boolean};
 type EllipsisItem = {type: 'ellipsis'};
 type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
 
-const MOBILE_PAGE_ITEM_SIZE = 48;
-const DESKTOP_PAGE_ITEM_SIZE = 32;
-const MOBILE_PAGE_LIST_GAP = 4;
-const DESKTOP_PAGE_LIST_GAP = 8;
-const MOBILE_CONTAINER_GAP = 4;
-const DESKTOP_CONTAINER_GAP = 8;
-
-const getPageListWidth = (items: number, itemSize: number, gap: number): number =>
-    items <= 0 ? 0 : items * itemSize + (items - 1) * gap;
-
-const getTruncatedItemsCount = ({
-    surroundingPageCount,
-    includeBoundaryPages,
-}: {
-    surroundingPageCount: number;
-    includeBoundaryPages: boolean;
-}): number => 2 * surroundingPageCount + (includeBoundaryPages ? 5 : 3);
-
-const getAutoSurroundingPageCount = ({
-    totalPages,
-    availableWidth,
-    itemSize,
-    gap,
-    includeBoundaryPages,
-}: {
-    totalPages: number;
-    availableWidth: number;
-    itemSize: number;
-    gap: number;
-    includeBoundaryPages: boolean;
-}): number | undefined => {
-    if (availableWidth <= 0 || getPageListWidth(totalPages, itemSize, gap) <= availableWidth) {
-        return undefined;
-    }
-
-    for (let count = totalPages; count >= 0; count--) {
-        const items = Math.min(
-            totalPages,
-            getTruncatedItemsCount({surroundingPageCount: count, includeBoundaryPages})
-        );
-
-        if (getPageListWidth(items, itemSize, gap) <= availableWidth) {
-            return count;
-        }
-    }
-
-    return 0;
-};
+const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
+const FIRST_PAGE = 1;
 
 export const getPaginationItems = ({
     totalPages,
     currentPage,
-    surroundingPageCount,
+    surroundingPageCount = DEFAULT_SURROUNDING_PAGE_COUNT,
     includeBoundaryPages = true,
 }: {
     totalPages: number;
@@ -106,20 +60,18 @@ export const getPaginationItems = ({
         return [];
     }
 
-    const activePage = Math.min(Math.max(currentPage, 1), totalPages);
-    const surroundingCount = Math.max(0, Math.floor(surroundingPageCount ?? totalPages));
-    const visibleCount = 2 * surroundingCount + 1;
+    const activePage = Math.min(Math.max(currentPage, FIRST_PAGE), totalPages);
+    const surroundingCount = Math.max(0, Math.floor(surroundingPageCount));
+    const dynamicPageCount = 2 * surroundingCount + 1;
 
-    if (surroundingPageCount === undefined || totalPages <= visibleCount) {
+    if (totalPages <= dynamicPageCount) {
         return Array.from({length: totalPages}, (_, index) => {
-            const page = index + 1;
+            const page = index + FIRST_PAGE;
             return {type: 'page', page, current: page === activePage};
         });
     }
 
-    const boundaryCount = includeBoundaryPages ? 1 : 0;
-    const leftCount = Math.floor((visibleCount - 1) / 2);
-    const rightCount = visibleCount - 1 - leftCount;
+    const lastPage = totalPages;
     const createPageItem = (page: number): PaginationItem => ({
         type: 'page',
         page,
@@ -129,72 +81,65 @@ export const getPaginationItems = ({
         Array.from({length: Math.max(0, end - start + 1)}, (_, index) => createPageItem(start + index));
 
     if (!includeBoundaryPages) {
-        const rangeStart = Math.max(Math.min(activePage - leftCount, totalPages - visibleCount), 2);
-        const rangeEnd = Math.min(rangeStart + visibleCount - 1, totalPages);
+        const rangeStart = Math.max(
+            Math.min(activePage - surroundingCount, lastPage - dynamicPageCount),
+            FIRST_PAGE + 1
+        );
+        const rangeEnd = rangeStart + dynamicPageCount - 1;
         const items: Array<PaginationItem> = [];
 
-        if (rangeStart > 2) {
+        if (rangeStart > FIRST_PAGE + 1) {
             items.push({type: 'ellipsis'});
         } else {
-            items.push(...createPageRange(1, rangeStart - 1));
+            items.push(createPageItem(FIRST_PAGE));
         }
 
         items.push(...createPageRange(rangeStart, rangeEnd));
 
-        if (rangeEnd < totalPages - 1) {
+        if (rangeEnd < lastPage - 1) {
             items.push({type: 'ellipsis'});
-        } else {
-            items.push(...createPageRange(rangeEnd + 1, totalPages));
+        } else if (rangeEnd < lastPage) {
+            items.push(createPageItem(lastPage));
         }
 
         return items;
     }
 
-    const startPages = createPageRange(1, Math.min(boundaryCount, totalPages));
-    const endPages = createPageRange(Math.max(totalPages - boundaryCount + 1, boundaryCount + 1), totalPages);
-    const siblingsStart = Math.max(
-        Math.min(activePage - leftCount, totalPages - boundaryCount - visibleCount),
-        boundaryCount + 2
+    const rangeStart = Math.max(
+        Math.min(activePage - surroundingCount, lastPage - dynamicPageCount - 1),
+        FIRST_PAGE + 2
     );
-    const siblingsEnd = Math.min(
-        Math.max(activePage + rightCount, boundaryCount + visibleCount + 1),
-        totalPages - boundaryCount - 1
+    const rangeEnd = Math.min(
+        Math.max(activePage + surroundingCount, FIRST_PAGE + dynamicPageCount + 1),
+        lastPage - 2
     );
 
-    const items: Array<PaginationItem> = [...startPages];
+    const items: Array<PaginationItem> = [createPageItem(FIRST_PAGE)];
 
-    if (siblingsStart > boundaryCount + 2) {
+    if (rangeStart > FIRST_PAGE + 2) {
         items.push({type: 'ellipsis'});
-    } else if (boundaryCount + 1 < totalPages - boundaryCount) {
-        items.push(createPageItem(boundaryCount + 1));
+    } else {
+        items.push(createPageItem(FIRST_PAGE + 1));
     }
 
-    items.push(...createPageRange(siblingsStart, siblingsEnd));
+    items.push(...createPageRange(rangeStart, rangeEnd));
 
-    if (siblingsEnd < totalPages - boundaryCount - 1) {
+    if (rangeEnd < lastPage - 2) {
         items.push({type: 'ellipsis'});
-    } else if (totalPages - boundaryCount > boundaryCount) {
-        items.push(createPageItem(totalPages - boundaryCount));
+    } else {
+        items.push(createPageItem(lastPage - 1));
     }
 
-    items.push(...endPages);
+    items.push(createPageItem(lastPage));
 
     return items;
 };
 
-type PaginationLabelWeight = 'regular' | 'medium';
-
-const PaginationLabel = ({
-    children,
-    weight,
-}: {
-    children: React.ReactNode;
-    weight?: PaginationLabelWeight;
-}): JSX.Element => {
+const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element => {
     const {textPresets} = useTheme();
 
     return (
-        <Text3 as="span" weight={weight ?? textPresets.button.weight} color="currentColor" wordBreak={false}>
+        <Text3 as="span" weight={textPresets.button.weight} color="currentColor" wordBreak={false}>
             {children}
         </Text3>
     );
@@ -206,14 +151,6 @@ type PageListProps = {
     className?: string;
     onPageClick: (page: number) => void;
 };
-
-const TILE_STYLE = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-} as const;
 
 const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
     const {texts, t} = useTheme();
@@ -237,7 +174,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                             aria-hidden="true"
                         >
                             <span className={classnames(styles.ellipsis, styles.ellipsisVariants[variant])}>
-                                <PaginationLabel weight="medium">...</PaginationLabel>
+                                <PaginationLabel>...</PaginationLabel>
                             </span>
                         </li>
                     );
@@ -251,14 +188,13 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                                     styles.currentPage,
                                     styles.currentPageVariants[variant]
                                 )}
-                                style={TILE_STYLE}
                                 onPress={() => {}}
                                 aria-current="page"
                                 aria-disabled
                                 aria-label={currentPageLabel(item.page)}
                             >
                                 <span className={styles.pageContent}>
-                                    <PaginationLabel weight="medium">{item.page}</PaginationLabel>
+                                    <PaginationLabel>{item.page}</PaginationLabel>
                                 </span>
                             </Touchable>
                         </li>
@@ -269,13 +205,12 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                     <li key={item.page} className={styles.pageListItem}>
                         <Touchable
                             className={classnames(styles.pageButton, styles.pageButtonVariants[variant])}
-                            style={TILE_STYLE}
                             disabled={disabled}
                             aria-label={goToPageLabel(item.page)}
                             onPress={() => onPageClick(item.page)}
                         >
                             <span className={styles.pageContent}>
-                                <PaginationLabel weight="medium">{item.page}</PaginationLabel>
+                                <PaginationLabel>{item.page}</PaginationLabel>
                             </span>
                         </Touchable>
                     </li>
@@ -304,27 +239,8 @@ export const Pagination = ({
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const {isMobile, isDesktopOrBigger} = useScreenSize();
+    const {isMobile} = useScreenSize();
     const hidePageList = hidePageListProp === true;
-    const [containerElement, setContainerElement] = React.useState<HTMLElement | null>(null);
-    const [availableWidth, setAvailableWidth] = React.useState(0);
-    const {width: prevControlWidth, ref: prevControlRef} = useElementDimensions();
-    const {width: nextControlWidth, ref: nextControlRef} = useElementDimensions();
-
-    useIsomorphicLayoutEffect(() => {
-        const parentElement = containerElement?.parentElement;
-
-        if (!parentElement) {
-            setAvailableWidth(0);
-            return;
-        }
-
-        setAvailableWidth(parentElement.clientWidth);
-
-        return listenResize(parentElement, ([entry]) => {
-            setAvailableWidth(entry.contentRect.width);
-        });
-    }, [containerElement]);
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
@@ -362,32 +278,15 @@ export const Pagination = ({
     const isPrevDisabled = activePage <= 1;
     const isNextDisabled = activePage >= totalPages;
     const includeBoundaryPages = !isMobile;
-    const itemSize = isDesktopOrBigger ? DESKTOP_PAGE_ITEM_SIZE : MOBILE_PAGE_ITEM_SIZE;
-    const pageListGap = isDesktopOrBigger ? DESKTOP_PAGE_LIST_GAP : MOBILE_PAGE_LIST_GAP;
-    const containerGap = isDesktopOrBigger ? DESKTOP_CONTAINER_GAP : MOBILE_CONTAINER_GAP;
-    const pageListAvailableWidth =
-        hideNavigationControls || hidePageList
-            ? availableWidth
-            : availableWidth - prevControlWidth - nextControlWidth - 2 * containerGap;
-    const resolvedSurroundingPageCount =
-        surroundingPageCount ??
-        getAutoSurroundingPageCount({
-            totalPages,
-            availableWidth: pageListAvailableWidth,
-            itemSize,
-            gap: pageListGap,
-            includeBoundaryPages,
-        });
     const items = getPaginationItems({
         totalPages,
         currentPage: activePage,
-        surroundingPageCount: resolvedSurroundingPageCount,
+        surroundingPageCount,
         includeBoundaryPages,
     });
 
     return (
         <nav
-            ref={setContainerElement}
             aria-label={resolvedAriaLabel}
             className={classnames(styles.container, {
                 [styles.containerNavOnly]: hidePageList,
@@ -396,18 +295,20 @@ export const Pagination = ({
         >
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
-                    <IconButton
-                        ref={prevControlRef}
-                        Icon={IconChevronLeftRegular}
-                        type="brand"
-                        backgroundType="transparent"
-                        disabled={disabled || isPrevDisabled}
-                        aria-label={resolvedPrevAriaLabel}
-                        onPress={() => goToPage(activePage - 1)}
-                    />
+                    <span className={styles.navigationIconButton}>
+                        <IconButton
+                            small
+                            Icon={IconChevronLeftRegular}
+                            type="brand"
+                            backgroundType="transparent"
+                            disabled={disabled || isPrevDisabled}
+                            aria-label={resolvedPrevAriaLabel}
+                            onPress={() => goToPage(activePage - 1)}
+                        />
+                    </span>
                 ) : (
                     <ButtonLink
-                        ref={prevControlRef}
+                        small
                         className={classnames(
                             styles.navigationButtonLink,
                             styles.navigationButtonLinkVariants[variant]
@@ -425,18 +326,20 @@ export const Pagination = ({
             {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
-                    <IconButton
-                        ref={nextControlRef}
-                        Icon={IconChevronRightRegular}
-                        type="brand"
-                        backgroundType="transparent"
-                        disabled={disabled || isNextDisabled}
-                        aria-label={resolvedNextAriaLabel}
-                        onPress={() => goToPage(activePage + 1)}
-                    />
+                    <span className={styles.navigationIconButton}>
+                        <IconButton
+                            small
+                            Icon={IconChevronRightRegular}
+                            type="brand"
+                            backgroundType="transparent"
+                            disabled={disabled || isNextDisabled}
+                            aria-label={resolvedNextAriaLabel}
+                            onPress={() => goToPage(activePage + 1)}
+                        />
+                    </span>
                 ) : (
                     <ButtonLink
-                        ref={nextControlRef}
+                        small
                         className={classnames(
                             styles.navigationButtonLink,
                             styles.navigationButtonLinkVariants[variant]

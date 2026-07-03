@@ -64,19 +64,6 @@ export const Default: StoryComponent<Args> = ({
     navRightLabel,
     onChange,
 }) => {
-    const [selectedPage, setSelectedPage] = React.useState(currentPage ?? defaultPage ?? 1);
-    const page = currentPage ?? selectedPage;
-
-    React.useEffect(() => {
-        setSelectedPage(currentPage ?? defaultPage ?? 1);
-    }, [currentPage, defaultPage]);
-
-    const handleChange = (page: number) => {
-        if (currentPage === undefined) {
-            setSelectedPage(page);
-        }
-        getOnChange(onChange)?.(page);
-    };
     const paginationMode = navigationControls === 'iconButton' ? 'iconOnly' : 'default';
     const hidePageListValue =
         hidePageList === 'true' || hidePageList === 'false' ? hidePageList === 'true' : hidePageList;
@@ -88,7 +75,8 @@ export const Default: StoryComponent<Args> = ({
                     <Box paddingY={16} paddingX={{mobile: 0, tablet: 16, desktop: 16}}>
                         <Pagination
                             totalPages={totalPages}
-                            currentPage={page}
+                            currentPage={currentPage}
+                            defaultPage={defaultPage}
                             surroundingPageCount={surroundingPageCount}
                             hideNavigationControls={hideNavigationControls}
                             hidePageList={hidePageListValue}
@@ -96,7 +84,7 @@ export const Default: StoryComponent<Args> = ({
                             mode={paginationMode}
                             navLeftLabel={navLeftLabel || undefined}
                             navRightLabel={navRightLabel || undefined}
-                            onChange={handleChange}
+                            onChange={getOnChange(onChange)}
                         />
                     </Box>
                 </div>
@@ -109,6 +97,7 @@ Default.storyName = 'Pagination';
 Default.args = {
     totalPages: 9,
     defaultPage: 1,
+    surroundingPageCount: 1,
     hideNavigationControls: false,
     disabled: false,
     navigationControls: 'buttonLink',

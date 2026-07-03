@@ -1,7 +1,8 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
+import * as buttonStyles from './button.css';
 
 export const container = style([
     sprinkles({
@@ -51,12 +52,10 @@ export const pageListItem = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 48,
     minWidth: 48,
     height: 48,
     '@media': {
         [mq.desktopOrBigger]: {
-            width: 32,
             minWidth: 32,
             height: 32,
         },
@@ -66,15 +65,8 @@ export const pageListItem = style({
 export const pageListItemEllipsis = style([pageListItem]);
 
 const interactiveArea = style([
-    sprinkles({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }),
     {
         position: 'relative',
-        width: '100%',
-        height: '100%',
         padding: 0,
         border: 0,
         font: 'inherit',
@@ -83,20 +75,42 @@ const interactiveArea = style([
         borderRadius: skinVars.borderRadii.button,
         WebkitTapHighlightColor: 'transparent',
         boxSizing: 'border-box',
+
+        selectors: {
+            '&&': {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+            },
+        },
     },
 ]);
 
 const pageElement = style([
     interactiveArea,
     {
+        width: 'auto',
+        minWidth: 48,
+        padding: '0 12px',
+
+        selectors: {
+            '&&': {
+                width: 'auto',
+                minWidth: 48,
+                padding: '0 12px',
+            },
+        },
+
         ':before': {
             content: '""',
             position: 'absolute',
             top: '50%',
             left: '50%',
-            width: 32,
+            width: 'max(32px, calc(100% - 16px))',
             height: 32,
-            borderRadius: '50%',
+            borderRadius: 16,
             transform: 'translate(-50%, -50%) scale(0.8)',
             opacity: 0,
             transition: 'transform 0.2s ease-in-out, opacity 0.2s ease-in-out',
@@ -105,6 +119,18 @@ const pageElement = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 minWidth: 32,
+                padding: '0 4px',
+
+                selectors: {
+                    '&&': {
+                        minWidth: 32,
+                        padding: '0 4px',
+                    },
+                },
+
+                ':before': {
+                    width: '100%',
+                },
             },
         },
     },
@@ -274,12 +300,33 @@ export const ellipsisVariants = styleVariants({
 
 export const navigationButtonLink = style({
     flexShrink: 0,
-    selectors: {
-        '&&:hover:not([disabled]), &&:active:not([disabled])': {
-            backgroundColor: 'transparent',
-        },
-    },
 });
+
+export const navigationIconButton = style({
+    flexShrink: 0,
+});
+
+globalStyle(`${navigationButtonLink}:hover ${buttonStyles.smallTouchableVisual}`, {
+    backgroundColor: 'transparent',
+});
+
+globalStyle(`${navigationButtonLink}:active ${buttonStyles.smallTouchableVisual}`, {
+    backgroundColor: 'transparent',
+});
+
+globalStyle(
+    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}:hover:not([disabled]) ${buttonStyles.smallTouchableVisual}`,
+    {
+        backgroundColor: 'transparent',
+    }
+);
+
+globalStyle(
+    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}:active:not([disabled]) ${buttonStyles.smallTouchableVisual}`,
+    {
+        backgroundColor: 'transparent',
+    }
+);
 
 export const navigationButtonLinkVariants = styleVariants({
     default: {},
