@@ -1,12 +1,7 @@
 {
     "codeConnect": {
-        "include": [
-            "src/*.{tsx,jsx}",
-            "src/community/*.{tsx,jsx}",
-            "src/generated/mistica-icons/*.{tsx,jsx}",
-            "src/__figma__/**/*.{tsx,jsx}"
-        ],
-        "exclude": ["src/__figma__/icons/*.{tsx,jsx}"],
+        "include": ["src/__figma__/**/*.figma.ts"],
+        "exclude": ["src/__figma__/icons/**/*"],
         "label": "React",
         "language": "typescript",
         "importPaths": {
