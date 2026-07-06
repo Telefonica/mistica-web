@@ -1,27 +1,26 @@
-import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
-import * as buttonStyles from './button.css';
 
 export const container = style([
     sprinkles({
         display: 'inline-flex',
         alignItems: 'center',
+        columnGap: {
+            mobile: 4,
+            desktop: 8,
+        },
+        paddingY: 8,
+        paddingX: {
+            mobile: 0,
+            desktop: 16,
+        },
+        maxWidth: '100%',
     }),
     {
-        gap: 4,
-        padding: '8px 0',
         width: 'fit-content',
-        maxWidth: '100%',
         boxSizing: 'border-box',
-
-        '@media': {
-            [mq.desktopOrBigger]: {
-                gap: 8,
-                padding: '8px 16px',
-            },
-        },
     },
 ]);
 
@@ -33,36 +32,54 @@ export const pageList = style([
     sprinkles({
         display: 'flex',
         alignItems: 'center',
+        columnGap: {
+            mobile: 4,
+            desktop: 8,
+        },
     }),
     {
-        gap: 4,
         margin: 0,
         padding: 0,
         listStyle: 'none',
-
-        '@media': {
-            [mq.desktopOrBigger]: {
-                gap: 8,
-            },
-        },
     },
 ]);
 
-export const pageListItem = style({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 48,
-    height: 48,
+export const pageListDesktop = style({
+    display: 'none',
+
     '@media': {
         [mq.desktopOrBigger]: {
-            minWidth: 32,
-            height: 32,
+            display: 'flex',
         },
     },
 });
 
-export const pageListItemEllipsis = style([pageListItem]);
+export const pageListMobile = style({
+    '@media': {
+        [mq.desktopOrBigger]: {
+            display: 'none',
+        },
+    },
+});
+
+export const pageListItem = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }),
+    {
+        minWidth: 48,
+        height: 48,
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                minWidth: 32,
+                height: 32,
+            },
+        },
+    },
+]);
 
 const interactiveArea = style([
     {
@@ -91,10 +108,6 @@ const interactiveArea = style([
 const pageElement = style([
     interactiveArea,
     {
-        width: 'auto',
-        minWidth: 48,
-        padding: '0 12px',
-
         selectors: {
             '&&': {
                 width: 'auto',
@@ -118,9 +131,6 @@ const pageElement = style([
 
         '@media': {
             [mq.desktopOrBigger]: {
-                minWidth: 32,
-                padding: '0 4px',
-
                 selectors: {
                     '&&': {
                         minWidth: 32,
@@ -302,29 +312,6 @@ export const ellipsisVariants = styleVariants({
     },
     media: {},
 });
-
-export const navigationButtonLink = style({
-    flexShrink: 0,
-});
-
-export const navigationIconButton = style({
-    flexShrink: 0,
-});
-
-// TODO: remove workaround when ButtonLink does not show hover when disabled issue: #1629
-globalStyle(
-    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}[disabled]:hover ${buttonStyles.smallTouchableVisual}`,
-    {
-        backgroundColor: 'transparent',
-    }
-);
-
-globalStyle(
-    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}[disabled]:active ${buttonStyles.smallTouchableVisual}`,
-    {
-        backgroundColor: 'transparent',
-    }
-);
 
 export const navigationButtonLinkVariants = styleVariants({
     default: {},

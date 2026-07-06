@@ -155,6 +155,26 @@ If you need brand-specific defaults, put those colors in a custom skin and then 
 
 ## Responsive patterns
 
+### Pagination in lists
+
+Use `Pagination` near paged content such as search results, tables, or long lists. Keep the component
+controlled when the page value drives data fetching, routing, or analytics.
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Stack space={16}>
+  <RowList>{items.map((item) => <Row key={item.id} title={item.title} />)}</RowList>
+  <Pagination totalPages={20} currentPage={page} onChange={setPage} />
+</Stack>
+```
+
+For constrained containers, products can hide the page list and keep only previous/next controls.
+
+```tsx
+<Pagination totalPages={20} currentPage={page} onChange={setPage} hidePageList />
+```
+
 ### Conditional rendering by screen size
 
 ```tsx

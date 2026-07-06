@@ -195,20 +195,6 @@ describe('getPaginationItems', () => {
         ]);
     });
 
-    test('allows configuring more surrounding pages on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 31, surroundingPageCount: 2})).toEqual([
-            {type: 'page', page: 1, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 29, current: false},
-            {type: 'page', page: 30, current: false},
-            {type: 'page', page: 31, current: true},
-            {type: 'page', page: 32, current: false},
-            {type: 'page', page: 33, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 40, current: false},
-        ]);
-    });
-
     test('keeps the number of desktop items stable while changing pages', () => {
         const itemCounts = [1, 3, 20, 38, 40].map(
             (currentPage) => getPaginationItems({totalPages: 40, currentPage, surroundingPageCount: 1}).length

@@ -96,11 +96,15 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Pagination';
 Default.args = {
     totalPages: 9,
+    currentPage: undefined,
     defaultPage: 1,
     surroundingPageCount: 1,
     hideNavigationControls: false,
+    hidePageList: false,
     disabled: false,
     navigationControls: 'buttonLink',
     variantOutside: 'default',
+    navLeftLabel: '',
+    navRightLabel: '',
     onChange: 'none',
 };

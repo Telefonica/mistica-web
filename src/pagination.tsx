@@ -7,7 +7,7 @@ import {Text3} from './text';
 import Touchable from './touchable';
 import {ButtonLink} from './button';
 import {IconButton} from './icon-button';
-import {useScreenSize, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
@@ -45,6 +45,8 @@ type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
 const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
 const FIRST_PAGE = 1;
 
+const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
+
 export const getPaginationItems = ({
     totalPages,
     currentPage,
@@ -60,8 +62,8 @@ export const getPaginationItems = ({
         return [];
     }
 
-    const activePage = Math.min(Math.max(currentPage, FIRST_PAGE), totalPages);
-    const surroundingCount = Math.max(0, Math.floor(surroundingPageCount));
+    const activePage = clamp(currentPage, FIRST_PAGE, totalPages);
+    const surroundingCount = clamp(Math.floor(surroundingPageCount), 0, totalPages);
     const dynamicPageCount = 2 * surroundingCount + 1;
 
     if (totalPages <= dynamicPageCount) {
@@ -136,10 +138,8 @@ export const getPaginationItems = ({
 };
 
 const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element => {
-    const {textPresets} = useTheme();
-
     return (
-        <Text3 as="span" weight={textPresets.button.weight} color="currentColor" wordBreak={false}>
+        <Text3 as="span" medium color="currentColor" wordBreak={false}>
             {children}
         </Text3>
     );
@@ -165,14 +165,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
             {items.map((item, index) => {
                 if (item.type === 'ellipsis') {
                     return (
-                        <li
-                            key={`ellipsis-${index}`}
-                            className={classnames(
-                                styles.pageListItemEllipsis,
-                                styles.ellipsisVariants[variant]
-                            )}
-                            aria-hidden="true"
-                        >
+                        <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
                             <span className={classnames(styles.ellipsis, styles.ellipsisVariants[variant])}>
                                 <PaginationLabel>...</PaginationLabel>
                             </span>
@@ -239,14 +232,13 @@ export const Pagination = ({
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const {isMobile} = useScreenSize();
     const hidePageList = hidePageListProp === true;
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
     }
 
-    const activePage = Math.min(Math.max(isControlled ? currentPage : internalPage, 1), totalPages);
+    const activePage = clamp(isControlled ? currentPage : internalPage, FIRST_PAGE, totalPages);
 
     const sectionLabel = t(
         texts.paginationSection || tokens.paginationSection,
@@ -262,7 +254,7 @@ export const Pagination = ({
         navRightLabel || texts.paginationNextPageAriaLabel || t(tokens.paginationNextPageAriaLabel);
 
     const goToPage = (page: number) => {
-        const nextPage = Math.min(Math.max(page, 1), totalPages);
+        const nextPage = clamp(page, FIRST_PAGE, totalPages);
 
         if (disabled || nextPage === activePage) {
             return;
@@ -277,12 +269,17 @@ export const Pagination = ({
 
     const isPrevDisabled = activePage <= 1;
     const isNextDisabled = activePage >= totalPages;
-    const includeBoundaryPages = !isMobile;
-    const items = getPaginationItems({
+    const desktopItems = getPaginationItems({
         totalPages,
         currentPage: activePage,
         surroundingPageCount,
-        includeBoundaryPages,
+        includeBoundaryPages: true,
+    });
+    const mobileItems = getPaginationItems({
+        totalPages,
+        currentPage: activePage,
+        surroundingPageCount,
+        includeBoundaryPages: false,
     });
 
     return (
@@ -295,25 +292,20 @@ export const Pagination = ({
         >
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
-                    <span className={styles.navigationIconButton}>
-                        <IconButton
-                            small
-                            Icon={IconChevronLeftRegular}
-                            type="brand"
-                            backgroundType="transparent"
-                            disabled={disabled || isPrevDisabled}
-                            aria-label={resolvedPrevAriaLabel}
-                            onPress={() => goToPage(activePage - 1)}
-                            bleedLeft
-                        />
-                    </span>
+                    <IconButton
+                        small
+                        Icon={IconChevronLeftRegular}
+                        type="brand"
+                        backgroundType="transparent"
+                        disabled={disabled || isPrevDisabled}
+                        aria-label={resolvedPrevAriaLabel}
+                        onPress={() => goToPage(activePage - 1)}
+                        bleedLeft
+                    />
                 ) : (
                     <ButtonLink
                         small
-                        className={classnames(
-                            styles.navigationButtonLink,
-                            styles.navigationButtonLinkVariants[variant]
-                        )}
+                        className={styles.navigationButtonLinkVariants[variant]}
                         disabled={disabled || isPrevDisabled}
                         aria-label={resolvedPrevAriaLabel}
                         onPress={() => goToPage(activePage - 1)}
@@ -324,28 +316,38 @@ export const Pagination = ({
                     </ButtonLink>
                 ))}
 
-            {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
+            {!hidePageList && (
+                <>
+                    <PageList
+                        items={desktopItems}
+                        disabled={disabled}
+                        className={styles.pageListDesktop}
+                        onPageClick={goToPage}
+                    />
+                    <PageList
+                        items={mobileItems}
+                        disabled={disabled}
+                        className={styles.pageListMobile}
+                        onPageClick={goToPage}
+                    />
+                </>
+            )}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
-                    <span className={styles.navigationIconButton}>
-                        <IconButton
-                            small
-                            Icon={IconChevronRightRegular}
-                            type="brand"
-                            backgroundType="transparent"
-                            disabled={disabled || isNextDisabled}
-                            aria-label={resolvedNextAriaLabel}
-                            onPress={() => goToPage(activePage + 1)}
-                            bleedRight
-                        />
-                    </span>
+                    <IconButton
+                        small
+                        Icon={IconChevronRightRegular}
+                        type="brand"
+                        backgroundType="transparent"
+                        disabled={disabled || isNextDisabled}
+                        aria-label={resolvedNextAriaLabel}
+                        onPress={() => goToPage(activePage + 1)}
+                        bleedRight
+                    />
                 ) : (
                     <ButtonLink
                         small
-                        className={classnames(
-                            styles.navigationButtonLink,
-                            styles.navigationButtonLinkVariants[variant]
-                        )}
+                        className={styles.navigationButtonLinkVariants[variant]}
                         disabled={disabled || isNextDisabled}
                         aria-label={resolvedNextAriaLabel}
                         onPress={() => goToPage(activePage + 1)}
