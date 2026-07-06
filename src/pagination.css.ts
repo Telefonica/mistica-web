@@ -1,8 +1,7 @@
-import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
-import * as buttonStyles from './button.css';
 
 export const container = style([
     sprinkles({
@@ -310,28 +309,6 @@ export const navigationButtonLink = style({
 export const navigationIconButton = style({
     flexShrink: 0,
 });
-
-globalStyle(`${navigationButtonLink}:hover ${buttonStyles.smallTouchableVisual}`, {
-    backgroundColor: 'transparent',
-});
-
-globalStyle(`${navigationButtonLink}:active ${buttonStyles.smallTouchableVisual}`, {
-    backgroundColor: 'transparent',
-});
-
-globalStyle(
-    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}:hover:not([disabled]) ${buttonStyles.smallTouchableVisual}`,
-    {
-        backgroundColor: 'transparent',
-    }
-);
-
-globalStyle(
-    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}:active:not([disabled]) ${buttonStyles.smallTouchableVisual}`,
-    {
-        backgroundColor: 'transparent',
-    }
-);
 
 export const navigationButtonLinkVariants = styleVariants({
     default: {},

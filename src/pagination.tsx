@@ -304,6 +304,7 @@ export const Pagination = ({
                             disabled={disabled || isPrevDisabled}
                             aria-label={resolvedPrevAriaLabel}
                             onPress={() => goToPage(activePage - 1)}
+                            bleedLeft
                         />
                     </span>
                 ) : (
@@ -335,6 +336,7 @@ export const Pagination = ({
                             disabled={disabled || isNextDisabled}
                             aria-label={resolvedNextAriaLabel}
                             onPress={() => goToPage(activePage + 1)}
+                            bleedRight
                         />
                     </span>
                 ) : (
