@@ -15,7 +15,8 @@ export type KnownSkinName =
     | 'Telefonica'
     | 'Blau'
     | 'Tu'
-    | 'Esimflag';
+    | 'Esimflag'
+    | 'Unbranded';
 export type SkinName = KnownSkinName | string;
 
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;

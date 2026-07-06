@@ -9,6 +9,7 @@ import {
     getBlauSkin,
     getTuSkin,
     getEsimflagSkin,
+    getUnbrandedSkin,
 } from '../src';
 import {getCyberSkin} from '../src/community/skins/cyber-skin';
 
@@ -62,6 +63,11 @@ export const Esimflag = {
     skin: getEsimflagSkin(),
 } as const;
 
+export const Unbranded = {
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    skin: getUnbrandedSkin(),
+} as const;
+
 export const Cyber = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
     skin: getCyberSkin(),
@@ -78,5 +84,6 @@ export const AVAILABLE_THEMES = [
     Blau,
     Tu,
     Esimflag,
+    Unbranded,
     Cyber,
 ];
