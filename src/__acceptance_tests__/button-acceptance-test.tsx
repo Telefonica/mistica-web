@@ -1,8 +1,8 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, waitFor} from '../test-utils';
 
 import type {ElementHandle} from '../test-utils';
 
-const HOVER_TRANSITION_SETTLE_MS = 150;
+const DISABLED_HOVER_SETTLE_MS = 150;
 
 const getButtonLinkBackgroundColor = async (button: ElementHandle): Promise<string> =>
     button.evaluate((element) => {
@@ -22,13 +22,12 @@ test('Small disabled ButtonLink does not apply hover styles', async () => {
         args: {small: true, disabled: true, action: 'onPress'},
     });
     await page.waitForSelector('button[disabled]');
-    await page.waitForTimeout(HOVER_TRANSITION_SETTLE_MS);
 
     const button = await screen.findByRole('button', {name: 'Example'});
     const backgroundColor = await getButtonLinkBackgroundColor(button);
 
     await button.hover();
-    await page.waitForTimeout(HOVER_TRANSITION_SETTLE_MS);
+    await page.waitForTimeout(DISABLED_HOVER_SETTLE_MS);
 
     expect(await getButtonLinkBackgroundColor(button)).toBe(backgroundColor);
 });
@@ -40,13 +39,13 @@ test('Small ButtonLink keeps hover styles when enabled', async () => {
         args: {small: true, action: 'onPress'},
     });
     await page.waitForSelector('button');
-    await page.waitForTimeout(HOVER_TRANSITION_SETTLE_MS);
 
     const button = await screen.findByRole('button', {name: 'Example'});
     const backgroundColor = await getButtonLinkBackgroundColor(button);
 
     await button.hover();
-    await page.waitForTimeout(HOVER_TRANSITION_SETTLE_MS);
 
-    expect(await getButtonLinkBackgroundColor(button)).not.toBe(backgroundColor);
+    await waitFor(async () => {
+        expect(await getButtonLinkBackgroundColor(button)).not.toBe(backgroundColor);
+    });
 });
