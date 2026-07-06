@@ -79,6 +79,22 @@ test.each(BUTTONS)('Buttons - %s - small', async (button) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Buttons - Link button - small disabled on hover', async () => {
+    await openStoryPage({
+        id: 'components-buttons--link-button',
+        device: 'DESKTOP',
+        args: {small: true, disabled: true, action: 'onPress'},
+    });
+
+    const button = await screen.findByRole('button', {name: 'Example'});
+    await button.hover();
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each(getCases())('Buttons - %s - spinner (%s)', async (button, device) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
