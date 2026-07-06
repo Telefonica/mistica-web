@@ -219,7 +219,7 @@ export const Pagination = ({
     defaultPage = 1,
     onChange,
     hideNavigationControls = false,
-    hidePageList: hidePageListProp,
+    hidePageList = false,
     surroundingPageCount,
     navLeftLabel,
     navRightLabel,
@@ -232,7 +232,6 @@ export const Pagination = ({
     const [internalPage, setInternalPage] = React.useState(defaultPage);
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
-    const hidePageList = hidePageListProp === true;
 
     if (totalPages <= 1 || (hideNavigationControls && hidePageList)) {
         return null;
