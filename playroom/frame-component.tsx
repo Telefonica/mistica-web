@@ -64,7 +64,7 @@ const skinToLang: Record<string, string> = {
     [O2_SKIN]: 'en-GB',
     [O2_NEW_SKIN]: 'en-GB',
     [ESIMFLAG_SKIN]: 'es-ES',
-    [UNBRANDED_SKIN]: 'es-ES',
+    [UNBRANDED_SKIN]: 'en-GB',
     [CYBER_SKIN]: 'es-ES',
 };
 

@@ -64,7 +64,7 @@ export const Esimflag = {
 } as const;
 
 export const Unbranded = {
-    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode: 'GB'},
     skin: getUnbrandedSkin(),
 } as const;
 
