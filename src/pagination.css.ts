@@ -311,7 +311,7 @@ export const navigationIconButton = style({
     flexShrink: 0,
 });
 
-// TODO: remove workaround when ButtonLink does not show hover when disabled
+// TODO: remove workaround when ButtonLink does not show hover when disabled issue: #1629
 globalStyle(
     `${navigationButtonLink} ${buttonStyles.smallTouchableArea}[disabled]:hover ${buttonStyles.smallTouchableVisual}`,
     {
