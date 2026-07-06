@@ -14,6 +14,7 @@ import TelefonicaLogoShell from './logo-telefonica-shell';
 import BlauLogoShell from './logo-blau-shell';
 import TuLogoShell from './logo-tu-shell';
 import EsimflagLogoShell from './logo-esimflag-shell';
+import UnbrandedLogoShell from './logo-unbranded-shell';
 
 import type {LogoType} from './logo-common';
 import type {TouchableComponentProps} from './touchable';
@@ -91,6 +92,14 @@ const EsimflagLogoImage = React.lazy(
         import(
             /* webpackChunkName: "logo-esimflag" */
             './logo-esimflag'
+        )
+);
+
+const UnbrandedLogoImage = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "logo-unbranded" */
+            './logo-unbranded'
         )
 );
 
@@ -223,6 +232,19 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                     </React.Suspense>
                 </EsimflagLogoShell>
             );
+        case 'Unbranded':
+            return (
+                <UnbrandedLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <UnbrandedLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </UnbrandedLogoShell>
+            );
         default:
             return <></>;
     }
@@ -310,4 +332,8 @@ export const TuLogo = ({size, type, color, ...props}: LogoProps): JSX.Element =>
 
 export const EsimflagLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
     <LogoInternal size={size} type={type} color={color} skinName="Esimflag" {...props} />
+);
+
+export const UnbrandedLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Unbranded" {...props} />
 );

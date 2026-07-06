@@ -20,8 +20,9 @@ import {
     Portal,
     O2NewLogo,
     EsimflagLogo,
+    UnbrandedLogo,
 } from '../../src';
-import {Movistar_New, Telefonica, Blau, Vivo_New, O2_New, Esimflag} from '../themes';
+import {Movistar_New, Telefonica, Blau, Vivo_New, O2_New, Esimflag, Unbranded} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -82,6 +83,11 @@ const themesMap: {
         text: 'Esimflag',
         themeConfig: Esimflag,
         Icon: () => <BrandIcon Logo={EsimflagLogo} />,
+    },
+    Unbranded: {
+        text: 'Unbranded',
+        themeConfig: Unbranded,
+        Icon: () => <BrandIcon Logo={UnbrandedLogo} />,
     },
 };
 

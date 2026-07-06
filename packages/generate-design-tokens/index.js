@@ -36,6 +36,7 @@ const KNOWN_SKINS = [
     'vivo-new',
     'tu',
     'esimflag',
+    'unbranded',
 ];
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
