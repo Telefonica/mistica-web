@@ -89,6 +89,7 @@ export const smallTouchableArea = style([
 
 export const smallTouchableVisual = style({
     width: '100%',
+    pointerEvents: 'none',
 });
 
 const button = style([
