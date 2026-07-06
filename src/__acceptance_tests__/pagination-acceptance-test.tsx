@@ -5,16 +5,18 @@ import type {ElementHandle} from '../test-utils';
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_EDGE_OFFSET = {x: 47, y: 24};
 
-const getVisibleElements = async (elements: ReadonlyArray<ElementHandle>): Promise<Array<ElementHandle>> => {
-    const visibleElements = [];
+const getCenterBetweenElements = async (leftElement: ElementHandle, rightElement: ElementHandle) => {
+    const leftBox = await leftElement.boundingBox();
+    const rightBox = await rightElement.boundingBox();
 
-    for (const element of elements) {
-        if (await element.boundingBox()) {
-            visibleElements.push(element);
-        }
+    if (!leftBox || !rightBox) {
+        throw Error('Elements should be visible');
     }
 
-    return visibleElements;
+    return {
+        x: (leftBox.x + leftBox.width + rightBox.x) / 2,
+        y: leftBox.y + leftBox.height / 2,
+    };
 };
 
 test('Pagination page items are clickable across their mobile target area', async () => {
@@ -24,11 +26,7 @@ test('Pagination page items are clickable across their mobile target area', asyn
         args: {totalPages: 9, defaultPage: 3, navigationControls: 'iconButton'},
     });
 
-    const [page] = await getVisibleElements(await screen.findAllByRole('button', {name: 'Ir a la página 2'}));
-
-    if (!page) {
-        throw Error('Page 2 button should be visible');
-    }
+    const page = await screen.findByRole('button', {name: 'Ir a la página 2'});
 
     await page.click({offset: MOBILE_TARGET_EDGE_OFFSET});
 
@@ -36,7 +34,7 @@ test('Pagination page items are clickable across their mobile target area', asyn
 });
 
 test('Pagination ellipses are non-interactive', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
         args: {
@@ -47,12 +45,14 @@ test('Pagination ellipses are non-interactive', async () => {
         },
     });
 
-    const pagination = await screen.findByRole('navigation');
-    const ellipses = await getVisibleElements(await pagination.$$('li[aria-hidden="true"]'));
+    const previousPage = await screen.findByRole('button', {name: 'Ir a la página 9'});
+    const currentPage = await screen.findByRole('button', {name: 'Página 10, página actual'});
+    const ellipsisPoint = await getCenterBetweenElements(
+        await screen.findByRole('button', {name: 'Página anterior'}),
+        previousPage
+    );
 
-    expect(ellipses).toHaveLength(2);
+    await page.mouse.click(ellipsisPoint.x, ellipsisPoint.y);
 
-    await ellipses[0].click();
-
-    await screen.findByRole('button', {name: 'Página 10, página actual'});
+    expect(await currentPage.evaluate((element) => element.getAttribute('aria-current'))).toBe('page');
 });

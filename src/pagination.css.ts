@@ -282,37 +282,6 @@ export const pageContent = style({
     zIndex: 1,
 });
 
-export const ellipsis = style([
-    interactiveArea,
-    {
-        color: skinVars.colors.textSecondary,
-        cursor: 'default',
-
-        selectors: {
-            '&&': {
-                width: 32,
-                height: 32,
-            },
-        },
-    },
-]);
-
-export const ellipsisVariants = styleVariants({
-    default: {
-        color: skinVars.colors.textSecondary,
-    },
-    brand: {
-        color: skinVars.colors.textButtonSecondaryBrand,
-    },
-    negative: {
-        color: skinVars.colors.textButtonSecondaryNegative,
-    },
-    alternative: {
-        color: skinVars.colors.textSecondary,
-    },
-    media: {},
-});
-
 export const navigationButtonLinkVariants = styleVariants({
     default: {},
     brand: {

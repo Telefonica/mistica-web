@@ -12,10 +12,12 @@ import {useThemeVariant} from './theme-variant-context';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {vars as skinVars} from './skins/skin-contract.css';
 import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
+import type {NonDeprecatedVariant} from './theme-variant-context';
 
 export type PaginationProps = {
     totalPages: number;
@@ -145,6 +147,17 @@ const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element =
     );
 };
 
+const getEllipsisColor = (variant: NonDeprecatedVariant): string => {
+    switch (variant) {
+        case 'brand':
+            return skinVars.colors.textButtonSecondaryBrand;
+        case 'negative':
+            return skinVars.colors.textButtonSecondaryNegative;
+        default:
+            return skinVars.colors.textSecondary;
+    }
+};
+
 type PageListProps = {
     items: Array<PaginationItem>;
     disabled?: boolean;
@@ -166,9 +179,9 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 if (item.type === 'ellipsis') {
                     return (
                         <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
-                            <span className={classnames(styles.ellipsis, styles.ellipsisVariants[variant])}>
-                                <PaginationLabel>...</PaginationLabel>
-                            </span>
+                            <Text3 as="span" medium color={getEllipsisColor(variant)} wordBreak={false}>
+                                ...
+                            </Text3>
                         </li>
                     );
                 }
