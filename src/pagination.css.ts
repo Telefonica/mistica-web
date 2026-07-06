@@ -1,7 +1,8 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
+import * as buttonStyles from './button.css';
 
 export const container = style([
     sprinkles({
@@ -309,6 +310,21 @@ export const navigationButtonLink = style({
 export const navigationIconButton = style({
     flexShrink: 0,
 });
+
+// TODO: remove workaround when ButtonLink does not show hover when disabled
+globalStyle(
+    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}[disabled]:hover ${buttonStyles.smallTouchableVisual}`,
+    {
+        backgroundColor: 'transparent',
+    }
+);
+
+globalStyle(
+    `${navigationButtonLink} ${buttonStyles.smallTouchableArea}[disabled]:active ${buttonStyles.smallTouchableVisual}`,
+    {
+        backgroundColor: 'transparent',
+    }
+);
 
 export const navigationButtonLinkVariants = styleVariants({
     default: {},
