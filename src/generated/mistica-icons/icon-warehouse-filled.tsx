@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconWarehouseFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.77 3.286a.75.75 0 0 1 .535.028l9 4c.27.12.445.39.445.686v13a.75.75 0 0 1-1.5 0V8.487L12 4.82 3.75 8.487V21a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 .445-.686l9-4z"
-            />
-            <path
-                fill={fillColor}
-                d="M12.75 14.25a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-.75.75H7a.75.75 0 0 1-.75-.75v-6a.75.75 0 0 1 .75-.75zm4.327-1.996a.75.75 0 0 1 .673.746v8a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-8a.75.75 0 0 1 .75-.75H17zM12 10.5a1.5 1.5 0 0 1 1.5 1.5v.25a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V12a1.5 1.5 0 0 1 1.5-1.5z"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.77 3.286a.75.75 0 0 1 .535.028l9 4c.27.12.445.39.445.686v13a.75.75 0 0 1-1.5 0V8.487L12 4.82 3.75 8.487V21a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 .445-.686l9-4z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.75 14.25a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-.75.75H7a.75.75 0 0 1-.75-.75v-6a.75.75 0 0 1 .75-.75zm4.327-1.996a.75.75 0 0 1 .673.746v8a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-8a.75.75 0 0 1 .75-.75H17zM12 10.5a1.5 1.5 0 0 1 1.5 1.5v.25a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V12a1.5 1.5 0 0 1 1.5-1.5z"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconWarehouseFilled;

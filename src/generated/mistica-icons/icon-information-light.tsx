@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconInformationLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 1 1 0 2.25zm.01 8A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
-            />
-            <path
-                fill={fillColor}
-                d="M12 22.125a10.125 10.125 0 0 1-.498-20.237L12 1.875A10.126 10.126 0 0 1 22.125 12 10.125 10.125 0 0 1 12 22.125m0-2.25a7.875 7.875 0 0 0 0-15.75l-.388.01A7.875 7.875 0 0 0 12 19.875"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 1 1 0 2.25zm.01 8A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 22.125a10.125 10.125 0 0 1-.498-20.237L12 1.875A10.126 10.126 0 0 1 22.125 12 10.125 10.125 0 0 1 12 22.125m0-2.25a7.875 7.875 0 0 0 0-15.75l-.388.01A7.875 7.875 0 0 0 12 19.875"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconInformationLight;

@@ -225,11 +225,12 @@ const Select = ({
             input: inputRef.current,
             focusableElement: focusableRef.current,
             label,
+            required: !optional,
         });
         return () => {
             register(name, {input: null, focusableElement: null, label: ''});
         };
-    }, [name, register, focusableRef, inputRef, focusableElement, inputElement, label]);
+    }, [name, register, focusableRef, inputRef, focusableElement, inputElement, label, optional]);
 
     React.useEffect(() => {
         const updateTentativeValueState = (e: KeyboardEvent) => {
