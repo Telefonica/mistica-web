@@ -9,7 +9,7 @@ const UnbrandedLogoImage = ({isDarkMode, color: colorProp}: LogoImageProps): JSX
 
     return (
         <g fill={color}>
-            <rect x="12" y="12" width="48" height="48" rx="8" />
+            <circle cx="12" cy="12" r="12" />
         </g>
     );
 };
