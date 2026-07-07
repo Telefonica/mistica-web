@@ -348,7 +348,7 @@ test('Text content is read by screen readers in the right order in Rows with lin
                     detail="Detail"
                     right="right"
                     asset={<IconShopRegular />}
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -378,7 +378,7 @@ test('Text content is read by screen readers in the right order in Rows with but
                     detail="Detail"
                     right="right"
                     asset={<IconShopRegular />}
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -405,7 +405,7 @@ test('Text content is read by screen readers in the right order in Rows with che
                     title="Title"
                     subtitle="Subtitle"
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -435,7 +435,7 @@ test('Text content is read by screen readers in the right order in Rows with swi
                     title="Title"
                     subtitle="Subtitle"
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -466,7 +466,7 @@ test('Text content is read by screen readers in the right order in Rows with rad
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"
-                        extra={
+                        slot={
                             <Stack space={4}>
                                 <Text2 regular>Extra line 1</Text2>
                                 <Text2 regular>Extra line 2</Text2>

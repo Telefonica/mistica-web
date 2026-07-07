@@ -14,7 +14,7 @@ type Args = {
     title: string;
     description: string;
     multipleParagraphs: boolean;
-    extra: boolean;
+    slot: boolean;
     errorReference: string;
 };
 
@@ -22,7 +22,7 @@ export const Error: StoryComponent<Args> = ({
     title,
     description,
     multipleParagraphs,
-    extra,
+    slot,
     errorReference,
 }) => (
     <ErrorFeedbackScreen
@@ -31,7 +31,7 @@ export const Error: StoryComponent<Args> = ({
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
         link={<ButtonLink onPress={() => {}}>Action2</ButtonLink>}
         errorReference={errorReference}
-        extra={extra ? <Placeholder /> : undefined}
+        slot={slot ? <Placeholder /> : undefined}
     />
 );
 
@@ -40,6 +40,6 @@ Error.args = {
     title: "I'm the title",
     description: "I'm the description",
     multipleParagraphs: false,
-    extra: false,
+    slot: false,
     errorReference: 'Error reference: #95001',
 };

@@ -1,6 +1,7 @@
 # Components Reference
 
-All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
+All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read
+the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
 
 ```tsx
 import {ButtonPrimary, Stack, Text2, ...} from '@telefonica/mistica';
@@ -385,8 +386,8 @@ const [selectedIndex, setSelectedIndex] = React.useState(0);
       description="Page description text"
     />
   }
-  extra={<Placeholder />}
-  sideBySideExtraOnDesktop
+  slot={<Placeholder />}
+  sideBySideSlotOnDesktop
 />
 ```
 
@@ -444,7 +445,7 @@ dialog({
   title: 'Title',
   subtitle: 'Subtitle',
   message: 'Message',
-  extra: <Placeholder />,
+  slot: <Placeholder />,
   acceptText: 'Accept',
   cancelText: 'Cancel',
 });

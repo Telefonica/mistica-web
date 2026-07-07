@@ -34,7 +34,7 @@ test.each`
                     title="Title"
                     titleAs={titleAs}
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -67,7 +67,7 @@ test.each`
                     title="Title"
                     titleAs={titleAs}
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -100,7 +100,7 @@ test.each`
                     title="Title"
                     titleAs={titleAs}
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>

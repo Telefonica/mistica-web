@@ -25,13 +25,13 @@ type Props = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     open?: boolean;
     children?: React.ReactNode;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     dataAttributes?: DataAttributes;
 };
 
 const Popover = ({
     open,
-    extra,
+    slot,
     children,
     onClose = () => {},
     closeButtonLabel,
@@ -66,7 +66,7 @@ const Popover = ({
                         </div>
                     )}
 
-                    {extra ?? children}
+                    {slot ?? children}
                 </div>
             }
             centerContent={false}

@@ -57,8 +57,6 @@ export type MediaCardProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    /** @deprecated use slot */
-    extra?: React.ReactNode;
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     topActions?: TopActionsArray;
@@ -76,7 +74,7 @@ export type MediaCardProps = {
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
-    ({size = 'default', slot, extra, topActions, buttonPrimary, dataAttributes, ...rest}, ref) => {
+    ({size = 'default', slot, topActions, buttonPrimary, dataAttributes, ...rest}, ref) => {
         return (
             <InternalCard
                 type="media"
@@ -87,7 +85,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                     testid: 'MediaCard',
                     ...dataAttributes,
                 }}
-                slot={slot || extra}
+                slot={slot}
                 topActions={topActions}
                 buttonPrimary={buttonPrimary}
                 ref={ref}

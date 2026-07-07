@@ -1021,7 +1021,7 @@ const popoverSnippets = [
           }
           title="Amanda Harvey"
           description="Product designer"
-          extra={
+          slot={
             <Box paddingTop={16}>
               <Stack space={16}>
                 <Divider />
@@ -1058,7 +1058,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1073,7 +1073,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1093,7 +1093,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1114,7 +1114,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -2239,7 +2239,7 @@ const exampleScreens: Array<Snippet> = [
               headline={<Tag type="active">New</Tag>}
               title={["AirPods Pro", "Mobiles", "Tablets"][idx % 2]}
               description={["2nd generation", "Mobiles", "Tablets"][idx % 2]}
-              extra={
+              slot={
                 <Box paddingTop={16}>
                   <Stack space={4}>
                     <Text2
@@ -3203,7 +3203,7 @@ const alertSnippets = [
             title: 'Title',
             message: 'Message',
             acceptText: 'Accept terms and conditions',
-            extra: <Text1 regular>This is the extra zone</Text1>,
+            slot: <Text1 regular>This is the slot zone</Text1>,
             forceWeb: true,
             showCancel: true,
             link: <ButtonLink href="https://google.com">Link</ButtonLink>,
@@ -3517,7 +3517,7 @@ const heroSnippets = [
                 pretitle="Pretitle"
                 title={["Title", "Title2"][idx]}
                 description="This is a long description with a long text to see how this works"
-                extra={<Placeholder />}
+                slot={<Placeholder />}
                 button={<ButtonPrimary fake>Action</ButtonPrimary>}
                 buttonLink={<ButtonLink href="#">Link</ButtonLink>}
                 dataAttributes={{ testid: "hero" }}
@@ -3538,8 +3538,8 @@ const heroSnippets = [
           title="Vuela con la Fibra 1Gb"
           description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
           button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
-          extra={<Placeholder />}
-          sideExtra={<Placeholder />}
+          slot={<Placeholder />}
+          sideSlot={<Placeholder />}
         />
       `,
     },
@@ -3554,8 +3554,8 @@ const heroSnippets = [
           title="Vuela con la Fibra 1Gb"
           description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
           button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
-          extra={<Placeholder />}
-          sideExtra={<Placeholder />}
+          slot={<Placeholder />}
+          sideSlot={<Placeholder />}
         />
       `,
     },
@@ -3578,8 +3578,8 @@ const heroSnippets = [
                   "",
                 ][idx]
               }
-              extra={<Placeholder />}
-              sideExtra={<Placeholder />}
+              slot={<Placeholder />}
+              sideSlot={<Placeholder />}
               button={<ButtonPrimary fake>Action</ButtonPrimary>}
               buttonLink={<ButtonLink href="#">Link</ButtonLink>}
             />
@@ -3804,7 +3804,7 @@ const advancedDataCardSnippets = [
           pretitle="pretitle"
           pretitleAs="h4"
           description="description"
-          extra={[
+          slot={[
             <RowBlock title="RowBlock" description="description" />,
             <SimpleBlock
               image={

@@ -24,15 +24,15 @@ test.each`
 });
 
 test.each`
-    extra
+    slot
     ${0}
     ${1}
     ${3}
-`('Advanced Data Card extras: $extra', async ({extra}) => {
+`('Advanced Data Card extras: $slot', async ({slot}) => {
     await openStoryPage({
         id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
-        args: {extra},
+        args: {slot},
     });
 
     const element = await screen.findByTestId('advanced-data-card');
@@ -45,7 +45,7 @@ test('Advanced Data Card extras: 3 no divider', async () => {
     await openStoryPage({
         id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
-        args: {extra: 3, noExtraDivider: true},
+        args: {slot: 3, noSlotDivider: true},
     });
 
     const element = await screen.findByTestId('advanced-data-card');

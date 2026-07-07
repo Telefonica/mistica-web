@@ -200,8 +200,8 @@ type HeaderLayoutProps = {
      * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
      */
     header?: React.ReactNode;
-    extra?: React.ReactNode;
-    sideBySideExtraOnDesktop?: boolean;
+    slot?: React.ReactNode;
+    sideBySideSlotOnDesktop?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
     bleed?: boolean;
@@ -212,14 +212,14 @@ export const HeaderLayout = ({
     variant = 'default',
     breadcrumbs,
     header,
-    extra,
-    sideBySideExtraOnDesktop = false,
+    slot,
+    sideBySideSlotOnDesktop = false,
     dataAttributes,
     bleed = false,
     noPaddingY = false,
 }: HeaderLayoutProps): JSX.Element => {
     const isBrandVariant = variant === 'brand';
-    const isBleedActivated = bleed && isBrandVariant && extra;
+    const isBleedActivated = bleed && isBrandVariant && slot;
 
     const mainContent = (
         <div>
@@ -244,33 +244,33 @@ export const HeaderLayout = ({
                     }
                     paddingBottom={{
                         mobile: noPaddingY && !isBleedActivated ? 0 : 24,
-                        desktop: isBleedActivated && !sideBySideExtraOnDesktop ? 32 : noPaddingY ? 0 : 48,
+                        desktop: isBleedActivated && !sideBySideSlotOnDesktop ? 32 : noPaddingY ? 0 : 48,
                     }}
                 >
-                    {sideBySideExtraOnDesktop ? (
+                    {sideBySideSlotOnDesktop ? (
                         <GridLayout
                             template="6+6"
                             left={mainContent}
                             right={
                                 <div className={isBleedActivated ? styles.hideOnTabletOrSmaller : ''}>
-                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{extra}</Box>
+                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{slot}</Box>
                                 </div>
                             }
                         />
                     ) : (
                         <Stack space={header ? {mobile: 24, desktop: 32} : 0}>
                             {mainContent}
-                            {!isBleedActivated && extra}
+                            {!isBleedActivated && slot}
                         </Stack>
                     )}
                 </Box>
             </ResponsiveLayout>
             {isBleedActivated && (
                 <ResponsiveLayout
-                    className={sideBySideExtraOnDesktop ? styles.hideOnDesktop : ''}
+                    className={sideBySideSlotOnDesktop ? styles.hideOnDesktop : ''}
                     backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrandBottom} 40px, ${vars.colors.background} 0%)`}
                 >
-                    {extra}
+                    {slot}
                 </ResponsiveLayout>
             )}
         </div>

@@ -128,7 +128,7 @@ type MeterProps = {
     colors?: Array<string>;
     reverse?: boolean;
     dataAttributes?: DataAttributes;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     'aria-hidden'?: boolean | 'true' | 'false';
     'aria-label'?: string;
     'aria-labelledby'?: string;
@@ -144,7 +144,7 @@ const MeterComponent = ({
     'aria-hidden': ariaHidden = false,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
-    extra,
+    slot,
 }: MeterProps): JSX.Element => {
     const {borderRadii, t} = useTheme();
     const {ref: containerRef, width: containerWidth} = useElementDimensions();
@@ -285,7 +285,7 @@ const MeterComponent = ({
         ' ' +
         values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join('. ');
 
-    const extraStyle = React.useMemo(() => {
+    const slotStyle = React.useMemo(() => {
         if (type === TYPE_LINEAR) {
             return {display: 'flex'};
         }
@@ -501,7 +501,7 @@ const MeterComponent = ({
                         );
                     })}
             </svg>
-            {extra && <div style={extraStyle}>{extra}</div>}
+            {slot && <div style={slotStyle}>{slot}</div>}
         </div>
     );
 };

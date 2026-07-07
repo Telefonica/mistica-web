@@ -39,9 +39,6 @@ type DataCardProps = {
     description?: string;
     descriptionLinesMax?: number;
     dataAttributes?: DataAttributes;
-    extraAlignment?: SlotAlignment;
-    /** @deprecated use slot */
-    extra?: React.ReactNode;
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     aspectRatio?: CardAspectRatio;
@@ -59,7 +56,7 @@ type DataCardProps = {
 };
 
 export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
-    ({dataAttributes, size = 'default', buttonPrimary, extra, slot, topActions, variant, ...rest}, ref) => {
+    ({dataAttributes, size = 'default', buttonPrimary, slot, topActions, variant, ...rest}, ref) => {
         return (
             <InternalCard
                 type="data"
@@ -72,7 +69,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 ref={ref}
                 buttonPrimary={buttonPrimary}
                 topActions={topActions}
-                slot={slot || extra}
+                slot={slot}
                 variant={variant || 'default'}
                 {...rest}
             />

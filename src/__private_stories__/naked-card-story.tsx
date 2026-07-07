@@ -44,7 +44,7 @@ type Args = {
     titleAs: HeadingType;
     subtitle: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     topAction: boolean;
@@ -61,7 +61,7 @@ export const Default: StoryComponent<Args> = ({
     subtitle,
     description,
     actions = 'button',
-    extra,
+    slot,
     closable,
     topAction,
     media,
@@ -125,7 +125,7 @@ export const Default: StoryComponent<Args> = ({
                     {...mediaProps}
                     asset={assetElement}
                     {...interactiveActions}
-                    extra={extra ? <Placeholder /> : undefined}
+                    slot={slot ? <Placeholder /> : undefined}
                     onClose={closable ? () => {} : undefined}
                     topActions={
                         topAction
@@ -170,7 +170,7 @@ Default.args = {
     titleAs: 'h3',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    extra: false,
+    slot: false,
     actions: 'button',
     closable: false,
     topAction: false,
@@ -208,7 +208,7 @@ type SmallArgs = {
     title: string;
     subtitle: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     touchable: boolean;
     emptySource: boolean;
 };
@@ -218,7 +218,7 @@ export const Small: StoryComponent<SmallArgs> = ({
     title,
     subtitle,
     description,
-    extra,
+    slot,
     touchable,
     emptySource,
 }) => {
@@ -240,7 +240,7 @@ export const Small: StoryComponent<SmallArgs> = ({
                     subtitle={subtitle}
                     description={description}
                     onPress={touchable ? () => {} : undefined}
-                    extra={extra ? <Placeholder /> : undefined}
+                    slot={slot ? <Placeholder /> : undefined}
                 />
             </Box>
         </ResponsiveLayout>
@@ -253,7 +253,7 @@ Small.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    extra: false,
+    slot: false,
     touchable: true,
     emptySource: false,
 };

@@ -51,7 +51,7 @@ interface CommonProps {
     badge?: boolean | number;
     role?: string;
     touchableRole?: string;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     withChevron?: boolean;
@@ -100,13 +100,13 @@ export const Content = ({
     badge,
     right,
     rightRef,
-    extra,
+    slot,
     labelId,
     disabled,
     control,
 }: ContentProps): JSX.Element => {
     const outsideVariant = useThemeVariant();
-    const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
+    const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
 
@@ -204,9 +204,9 @@ export const Content = ({
                         </Text2>
                     </Box>
                 )}
-                {extra && (
+                {slot && (
                     <Box ref={extraRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
-                        {extra}
+                        {slot}
                     </Box>
                 )}
             </div>
@@ -416,7 +416,7 @@ const getAssetText = (asset: React.ReactNode): string => {
 const getNodeText = (node: HTMLElement | null): string => {
     const raw = node?.innerText || node?.textContent || '';
     /* In the real browser, innerText preserves line breaks between elements, but jsdom does not. 
-    As a result, when rows contain multiline content (e.g. `extra` with several Text components), jsdom returns the text concatenated without spaces. 
+    As a result, when rows contain multiline content (e.g. `slot` with several Text components), jsdom returns the text concatenated without spaces. 
     This causes the computed aria-label to differ from the real behaviour. 
     To make tests reflect what VoiceOver would read in the browser, we normalise whitespace and insert missing spaces in test mode. */
     if (process.env.NODE_ENV === 'test') {
@@ -453,7 +453,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         badge,
         role,
         touchableRole,
-        extra,
+        slot,
         withChevron,
         dataAttributes,
         right,
@@ -463,7 +463,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
-    const [extraText, setExtraText] = React.useState<string>('');
+    const [slotText, setSlotText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
     const assetText = getAssetText(asset);
 
@@ -474,7 +474,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         headlineText,
         subtitle,
         description,
-        extraText,
+        slotText,
         detail,
         rightText,
     ]
@@ -540,10 +540,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             }}
             control={contentProps?.control}
             role={contentProps?.role}
-            extra={extra}
+            slot={slot}
             extraRef={(node) => {
                 if (node) {
-                    setExtraText(getNodeText(node));
+                    setSlotText(getNodeText(node));
                 }
             }}
             labelId={contentProps?.labelId}

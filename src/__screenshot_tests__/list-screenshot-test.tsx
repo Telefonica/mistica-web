@@ -25,25 +25,25 @@ const getCases = () => {
     const cases = [];
     for (const device of devices) {
         for (const control of controls) {
-            const extra = false;
+            const slot = false;
             const badge = true;
-            cases.push([device, control, extra, badge]);
+            cases.push([device, control, slot, badge]);
         }
-        for (const extra of [true, false]) {
+        for (const slot of [true, false]) {
             const badge = false;
-            cases.push([device, 'none', extra, badge]);
+            cases.push([device, 'none', slot, badge]);
         }
     }
     return cases;
 };
 
-test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+test.each(getCases())('Row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
     await openStoryPage({
         id: 'components-lists--row-list-story',
         device: device as Device,
         args: {
             control,
-            extra,
+            slot,
             badge,
             headline: 'Headline',
             detail: 'Detail',
@@ -56,13 +56,13 @@ test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, contr
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(getCases())('Boxed row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+test.each(getCases())('Boxed row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
     await openStoryPage({
         id: 'components-lists--boxed-row-list-story',
         device: device as Device,
         args: {
             control,
-            extra,
+            slot,
             badge,
             headline: 'Headline',
             detail: 'Detail',

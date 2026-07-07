@@ -313,7 +313,7 @@ type MainNavigationBarProps = {
     children?: undefined;
     topFixed?: boolean;
     withBorder?: boolean;
-    burgerMenuExtra?: React.ReactNode;
+    burgerMenuSlot?: React.ReactNode;
     large?: boolean;
     desktopLargeMenu?: boolean;
     wide?: boolean | WideConfig;
@@ -435,7 +435,7 @@ const MainNavigationBarBurgerSection = ({
 
 const MainNavigationBarBurgerMenu = ({
     sections,
-    extra,
+    slot,
     closeMenu,
     open,
     topSlotHeight,
@@ -444,7 +444,7 @@ const MainNavigationBarBurgerMenu = ({
     setDisableFocusTrap,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
-    extra: React.ReactNode;
+    slot: React.ReactNode;
     closeMenu: () => void;
     open: boolean;
     topSlotHeight: number;
@@ -546,7 +546,7 @@ const MainNavigationBarBurgerMenu = ({
                                                 ))}
                                             </RowList>
                                         </ResetResponsiveLayout>
-                                        {extra && <Box paddingY={16}>{extra}</Box>}
+                                        {slot && <Box paddingY={16}>{slot}</Box>}
                                     </ResponsiveLayout>
                                 )}
                             </div>
@@ -1408,7 +1408,7 @@ export const MainNavigationBar = ({
     variant = 'default',
     topFixed = true,
     withBorder = true,
-    burgerMenuExtra,
+    burgerMenuSlot,
     logo,
     large = false,
     desktopLargeMenu = false,
@@ -1530,7 +1530,7 @@ export const MainNavigationBar = ({
                         open={isBurgerMenuOpen}
                         id={menuId}
                         sections={sections}
-                        extra={burgerMenuExtra}
+                        slot={burgerMenuSlot}
                         closeMenu={closeMenu}
                         topSlotHeight={topSlotHeight}
                         disableFocusTrap={disableFocusTrap}

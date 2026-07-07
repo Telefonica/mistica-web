@@ -40,7 +40,7 @@ type Args = {
     titleAs: HeadingType;
     subtitle: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     topAction: boolean;
@@ -57,7 +57,7 @@ export const Default: StoryComponent<Args> = ({
     subtitle,
     description,
     actions = 'button',
-    extra,
+    slot,
     closable,
     topAction,
     media,
@@ -119,7 +119,7 @@ export const Default: StoryComponent<Args> = ({
             asset={assetElement}
             {...mediaProps}
             {...interactiveActions}
-            extra={extra ? <Placeholder /> : undefined}
+            slot={slot ? <Placeholder /> : undefined}
             onClose={closable ? () => {} : undefined}
             topActions={
                 topAction
@@ -162,7 +162,7 @@ Default.args = {
     titleAs: 'h3',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    extra: false,
+    slot: false,
     actions: 'button',
     closable: false,
     topAction: false,

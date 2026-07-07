@@ -48,12 +48,12 @@ test.each(getCases())(
 );
 
 test.each(getExtraContentCases())(
-    'Feedback %s screen with extra content appears properly on %s',
+    'Feedback %s screen with slot content appears properly on %s',
     async (feedbackType, device) => {
         const page = await openStoryPage({
             id: `patterns-feedback-${feedbackType}`,
             device,
-            args: {extra: true},
+            args: {slot: true},
         });
 
         const image = await page.screenshot();

@@ -61,7 +61,7 @@ type HeroContentProps = {
     titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -75,7 +75,7 @@ const HeroContent = ({
     pretitleAs,
     description,
     descriptionLinesMax,
-    extra,
+    slot,
     button,
     secondaryButton,
     buttonLink,
@@ -140,7 +140,7 @@ const HeroContent = ({
                         </Text3>
                     )}
                 </Stack>
-                {extra && <div data-testid="slot">{extra}</div>}
+                {slot && <div data-testid="slot">{slot}</div>}
             </div>
             {(button || buttonLink) && (
                 <div className={styles.actions}>
@@ -163,7 +163,7 @@ type HeroProps = {
     titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
