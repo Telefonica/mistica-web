@@ -1,23 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
-import type {ElementHandle} from '../test-utils';
-
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_EDGE_OFFSET = {x: 47, y: 24};
-
-const getCenterBetweenElements = async (leftElement: ElementHandle, rightElement: ElementHandle) => {
-    const leftBox = await leftElement.boundingBox();
-    const rightBox = await rightElement.boundingBox();
-
-    if (!leftBox || !rightBox) {
-        throw Error('Elements should be visible');
-    }
-
-    return {
-        x: (leftBox.x + leftBox.width + rightBox.x) / 2,
-        y: leftBox.y + leftBox.height / 2,
-    };
-};
 
 test('Pagination page items are clickable across their mobile target area', async () => {
     await openStoryPage({
@@ -34,7 +18,7 @@ test('Pagination page items are clickable across their mobile target area', asyn
 });
 
 test('Pagination ellipses are non-interactive', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: STORY_ID,
         device: 'MOBILE_IOS',
         args: {
@@ -45,14 +29,22 @@ test('Pagination ellipses are non-interactive', async () => {
         },
     });
 
-    const previousPage = await screen.findByRole('button', {name: 'Ir a la página 9'});
-    const currentPage = await screen.findByRole('button', {name: 'Página 10, página actual'});
-    const ellipsisPoint = await getCenterBetweenElements(
-        await screen.findByRole('button', {name: 'Página anterior'}),
-        previousPage
-    );
+    await screen.findByRole('button', {
+        name: 'Página 10, página actual',
+        current: 'page',
+    });
+    const ellipses = await screen.findAllByText('...');
+    let ellipsisClicked = false;
 
-    await page.mouse.click(ellipsisPoint.x, ellipsisPoint.y);
+    for (const ellipsis of ellipses) {
+        if (await ellipsis.isIntersectingViewport()) {
+            await ellipsis.click();
+            ellipsisClicked = true;
+            break;
+        }
+    }
 
-    expect(await currentPage.evaluate((element) => element.getAttribute('aria-current'))).toBe('page');
+    expect(ellipsisClicked).toBe(true);
+
+    await screen.findByRole('button', {name: 'Página 10, página actual', current: 'page'});
 });
