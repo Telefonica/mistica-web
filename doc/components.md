@@ -81,6 +81,33 @@ Positions a primary and optional secondary button:
 />
 ```
 
+## Pagination
+
+Use `Pagination` to navigate through a finite number of pages. It can be uncontrolled with `defaultPage`
+or controlled with `currentPage` and `onChange`.
+
+```tsx
+<Pagination totalPages={20} defaultPage={1} />
+```
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Pagination
+  totalPages={20}
+  currentPage={page}
+  onChange={setPage}
+/>
+```
+
+Common props:
+
+- `surroundingPageCount` -- number of pages shown around the current page. Defaults to `1`.
+- `hidePageList` -- hides page numbers and keeps only previous/next controls.
+- `hideNavigationControls` -- hides previous/next controls and keeps only page numbers.
+- `mode="iconOnly"` -- renders previous/next as icon buttons.
+- `navLeftLabel` / `navRightLabel` -- custom labels for previous/next controls.
+
 ## Text and Titles
 
 > 💡 **Centering text uses two complementary props:** [`<Align x="center">`](./layout.md#align) positions the
