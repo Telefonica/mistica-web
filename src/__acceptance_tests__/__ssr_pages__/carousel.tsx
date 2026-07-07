@@ -12,9 +12,6 @@ const CarouselTest = (): JSX.Element => (
                     headline={<Tag type="promo">Headline</Tag>}
                     title={'Card ' + idx}
                     description="Description"
-                    imageSrc="tennis.jpg"
-                    mediaAspectRatio="16:9"
-                    imageLoadingFallback={false}
                     buttonPrimary={
                         <ButtonPrimary small onPress={() => {}}>
                             Action

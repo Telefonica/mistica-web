@@ -39,7 +39,6 @@ export type MediaCardProps = {
     imageAlt?: string;
     imageSrc?: string;
     imageSrcSet?: string;
-    imageLoadingFallback?: boolean;
     circledImage?: boolean;
     videoSrc?: VideoSource;
     videoLoop?: boolean;

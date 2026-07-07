@@ -90,7 +90,6 @@ type MediaProps = {
     imageSrc?: string;
     imageSrcSet?: string;
     imageAlt?: string;
-    imageLoadingFallback?: boolean;
     imageFit?: 'fit' | 'fill' | 'fill-center';
     videoSrc?: VideoSource;
     videoRef?: React.RefObject<VideoElement>;
@@ -670,7 +669,6 @@ type MediaComponentProps = {
     imageSrc?: string;
     imageSrcSet?: string;
     imageAlt?: string;
-    imageLoadingFallback?: boolean;
     imageFit: 'fit' | 'fill' | 'fill-center';
     video?: React.ReactNode;
     mediaAspectRatio: MediaAspectRatio;
@@ -688,7 +686,6 @@ const Media = ({
     imageSrcSet,
     imageFit,
     imageAlt = '',
-    imageLoadingFallback,
     video,
     mediaAspectRatio,
     mediaPosition,
@@ -722,7 +719,6 @@ const Media = ({
                     src={imageSrc || ''}
                     srcSet={imageSrcSet}
                     {...imageProps}
-                    loadingFallback={imageLoadingFallback}
                     dataAttributes={{testid: 'image'}}
                     alt={imageAlt}
                     {...(isLeftOrRight ? imageFitProps[imageFit] : {})}
@@ -1298,7 +1294,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             imageSrc,
             imageSrcSet,
             imageAlt = '',
-            imageLoadingFallback,
             imageFit = 'fill-center',
             videoSrc,
             videoRef,
@@ -1555,7 +1550,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             imageSrc={imageSrc}
                             imageSrcSet={imageSrcSet}
                             imageAlt={imageAlt}
-                            imageLoadingFallback={imageLoadingFallback}
                             mediaWidth={mediaWidth}
                             circledImage={circledImage}
                         />
