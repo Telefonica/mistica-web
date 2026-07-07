@@ -142,7 +142,7 @@ const renderFeedback = ({
     dataAttributes?: DataAttributes;
 }) => (
     <InternalBoxed
-        borderRadius={vars.borderRadii.legacyDisplay}
+        borderRadius={vars.borderRadii.container}
         desktopOnly
         variant={isBrandVariant ? 'brand' : 'default'}
         dataAttributes={dataAttributes}
