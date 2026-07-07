@@ -57,7 +57,7 @@ export const minHeight = style({
     },
 });
 
-// give some slot space for the slideshow bullets
+// give some extra space for the slideshow bullets
 globalStyle(`${slideshowWithBullets} ${coverHero}:after`, {
     '@media': {
         [mq.mobile]: {

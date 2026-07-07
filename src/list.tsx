@@ -76,7 +76,7 @@ const renderRight = (right: Right, centerY: boolean) => {
 interface ContentProps extends CommonProps {
     headlineRef?: React.Ref<HTMLDivElement>;
     rightRef?: React.Ref<HTMLDivElement>;
-    extraRef?: React.Ref<HTMLDivElement>;
+    slotRef?: React.Ref<HTMLDivElement>;
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
@@ -86,7 +86,7 @@ export const Content = ({
     withChevron,
     headline,
     headlineRef,
-    extraRef,
+    slotRef,
     title,
     titleAs,
     titleLinesMax,
@@ -205,7 +205,7 @@ export const Content = ({
                     </Box>
                 )}
                 {slot && (
-                    <Box ref={extraRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
+                    <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
                         {slot}
                     </Box>
                 )}
@@ -541,7 +541,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             control={contentProps?.control}
             role={contentProps?.role}
             slot={slot}
-            extraRef={(node) => {
+            slotRef={(node) => {
                 if (node) {
                     setSlotText(getNodeText(node));
                 }

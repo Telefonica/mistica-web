@@ -28,7 +28,7 @@ test.each`
     ${0}
     ${1}
     ${3}
-`('Advanced Data Card extras: $slot', async ({slot}) => {
+`('Advanced Data Card slots: $slot', async ({slot}) => {
     await openStoryPage({
         id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
@@ -41,7 +41,7 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test('Advanced Data Card extras: 3 no divider', async () => {
+test('Advanced Data Card slots: 3 no divider', async () => {
     await openStoryPage({
         id: 'community-vivo-advanceddatacard--default',
         device: 'MOBILE_IOS',
