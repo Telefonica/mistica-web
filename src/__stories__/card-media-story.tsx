@@ -34,6 +34,7 @@ type MediaCardArgs = CommonCardArgs & {
     footerBackgroundColor: string;
     imageSrc: string;
     imageAlt: string;
+    imageLoadingFallback?: boolean;
     videoSrc: string;
     videoLoop?: boolean;
     videoAutoPlay?: boolean;
@@ -60,6 +61,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     buttonLink,
     footerVariant,
     imageSrc,
+    imageLoadingFallback,
     videoSrc,
     videoLoop,
     videoAutoPlay,
@@ -102,6 +104,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 mediaAspectRatio={(normalizeAspectRatio(mediaAspectRatio) as MediaAspectRatio) || undefined}
                 topActions={getTopActions(topActions)}
                 imageSrc={imageNameToUrl[imageSrc as never]}
+                imageLoadingFallback={imageLoadingFallback}
                 videoSrc={videoNameToUrl[videoSrc as never]}
                 videoLoop={videoLoop}
                 videoAutoPlay={videoAutoPlay}
@@ -146,6 +149,7 @@ Default.args = {
     footerBackgroundColor: '',
     imageSrc: 'beach',
     imageAlt: 'Image Alt Text',
+    imageLoadingFallback: true,
     videoSrc: 'undefined',
     videoLoop: false,
     videoAutoPlay: false,
@@ -160,4 +164,5 @@ Default.argTypes = {
     ...dataArgTypes,
     ...imageAndVideoArgTypes,
     ...mediaArgTypes,
+    imageLoadingFallback: {control: {type: 'boolean'}},
 };
