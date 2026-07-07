@@ -193,6 +193,7 @@ const generateSkinFiles = async () => {
             return;
         }
 
+        // todo https://github.com/Telefonica/mistica-web/issues/1633 add @generated banner to generated skin files so they are not mistakenly edited by hand
         const skinSrc = await formatTs(generateSkinSrc(skinName));
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
 
