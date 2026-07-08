@@ -245,6 +245,17 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
 
     const spacingDesktopVars = React.useMemo(() => {
         const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
+            if ('largeDesktop' in values) {
+                const m = values as {mobile: number; tablet: number; desktop: number; largeDesktop: number};
+                return {
+                    [token]: {
+                        mobile: `${m.mobile}px`,
+                        tablet: `${m.tablet}px`,
+                        desktop: `${m.desktop}px`,
+                        largeDesktop: `${m.largeDesktop}px`,
+                    },
+                };
+            }
             return {
                 [token]: {
                     ...('top' in values && {top: `${values.top.desktop}px`}),
@@ -259,6 +270,17 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
 
     const spacingMobileVars = React.useMemo(() => {
         const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
+            if ('largeDesktop' in values) {
+                const m = values as {mobile: number; tablet: number; desktop: number; largeDesktop: number};
+                return {
+                    [token]: {
+                        mobile: `${m.mobile}px`,
+                        tablet: `${m.tablet}px`,
+                        desktop: `${m.desktop}px`,
+                        largeDesktop: `${m.largeDesktop}px`,
+                    },
+                };
+            }
             return {
                 [token]: {
                     ...('top' in values && {top: `${values.top.mobile}px`}),

@@ -729,6 +729,7 @@ export const getMovistarNewSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 24},
                 right: {mobile: 16, desktop: 24},
             },
+            responsiveLayoutMargin: {mobile: 16, tablet: 32, desktop: 48, largeDesktop: 64},
         },
     };
     return skin;
