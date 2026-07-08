@@ -106,13 +106,18 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
                 ref={combineRefs(inputRef, ref)}
                 startIcon={withStartIcon ? <IconSearchRegular size={iconSize.small} /> : undefined}
                 endIcon={
-                    controlledValue ? (
+                    // Always render to reserve space and prevent layout shift in nav bars;
+                    // hide visually and from assistive tech when the field is empty.
+                    <span
+                        style={controlledValue ? undefined : {visibility: 'hidden'}}
+                        aria-hidden={!controlledValue ? true : undefined}
+                    >
                         <FieldEndIcon
                             Icon={IconCloseRegular}
                             aria-label={texts.formSearchClear || t(tokens.formSearchClear)}
                             onPress={clearInput}
                         />
-                    ) : undefined
+                    </span>
                 }
                 {...rest}
                 {...fieldProps}
