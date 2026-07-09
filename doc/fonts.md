@@ -18,7 +18,6 @@ Each skin has a designated font family. Use the correct one for the skin your ap
 | `vivo-evolution`             | `getVivoEvolutionSkin()` | `'Vivo Type'`       |
 | `telefonica`                 | `getTelefonicaSkin()`    | `'Telefonica Sans'` |
 | `blau`                       | `getBlauSkin()`          | `'Roboto'`          |
-| `tu`                         | `getTuSkin()`            | `'Telefonica Sans'` |
 | `esimflag`                   | `getEsimflagSkin()`      | `'On Air'`          |
 
 ## Setting font-family
@@ -145,7 +144,7 @@ body {
 }
 ```
 
-### Telefonica Sans (Telefonica, Tu)
+### Telefonica Sans (Telefonica)
 
 ```css
 @font-face {

@@ -122,7 +122,6 @@ export {
     O2NewLogo,
     TelefonicaLogo,
     BlauLogo,
-    TuLogo,
     EsimflagLogo,
 } from './logo';
 export {default as Image} from './image';
@@ -236,7 +235,6 @@ export {
     MOVISTAR_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
-    TU_SKIN,
     ESIMFLAG_SKIN,
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
@@ -248,7 +246,6 @@ export {getO2Skin} from './skins/o2';
 export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
-export {getTuSkin} from './skins/tu';
 export {getEsimflagSkin} from './skins/esimflag';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as vivoEvolutionPalette} from './skins/vivo-evolution';
@@ -258,7 +255,6 @@ export {palette as o2Palette} from './skins/o2';
 export {palette as o2NewPalette} from './skins/o2-new';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
-export {palette as tuPalette} from './skins/tu';
 export {palette as esimFlagPalette} from './skins/esimflag';
 
 export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';

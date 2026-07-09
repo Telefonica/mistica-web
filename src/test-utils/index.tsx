@@ -194,7 +194,6 @@ export const openStoryPage = ({
         | 'O2-new'
         | 'Telefonica'
         | 'Blau'
-        | 'Tu'
         | 'Esimflag'
         | 'Cyber';
     args?: StoryArgs;

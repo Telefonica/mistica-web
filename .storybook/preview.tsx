@@ -16,7 +16,6 @@ import {
     O2_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
-    TU_SKIN,
     skinVars,
     OverscrollColorProvider,
     ESIMFLAG_SKIN,
@@ -42,7 +41,6 @@ const getSkin = (searchParams: URLSearchParams) => {
         VIVO_EVOLUTION_SKIN,
         TELEFONICA_SKIN,
         BLAU_SKIN,
-        TU_SKIN,
         ESIMFLAG_SKIN,
         CYBER_SKIN,
     ].find((skin) => skin === qsSkin);
@@ -136,9 +134,7 @@ const MisticaThemeProvider = ({
                         {(skin === VIVO_SKIN || skin === VIVO_EVOLUTION_SKIN) && (
                             <style>{`body {font-family: "Vivo Type"}`}</style>
                         )}
-                        {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
-                            <style>{`body {font-family: "Telefonica Sans"}`}</style>
-                        )}
+                        {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
                         {(skin === MOVISTAR_SKIN ||
                             skin === O2_SKIN ||
                             skin === O2_NEW_SKIN ||

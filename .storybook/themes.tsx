@@ -7,7 +7,6 @@ import {
     getVivoEvolutionSkin,
     getTelefonicaSkin,
     getBlauSkin,
-    getTuSkin,
     getEsimflagSkin,
 } from '../src';
 import {getCyberSkin} from '../src/community/skins/cyber-skin';
@@ -52,11 +51,6 @@ export const Blau = {
     skin: getBlauSkin(),
 } as const;
 
-export const Tu = {
-    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-    skin: getTuSkin(),
-} as const;
-
 export const Esimflag = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
     skin: getEsimflagSkin(),
@@ -76,7 +70,6 @@ export const AVAILABLE_THEMES = [
     Vivo_Evolution,
     Telefonica,
     Blau,
-    Tu,
     Esimflag,
     Cyber,
 ];
