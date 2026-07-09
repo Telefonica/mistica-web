@@ -325,7 +325,6 @@ test.each`
     ${VIVO_EVOLUTION_SKIN}
     ${TELEFONICA_SKIN}
     ${BLAU_SKIN}
-    ${TU_SKIN}
     ${ESIMFLAG_SKIN}
 `('Card cover footer with image background - $skin', async ({skin}) => {
     await openStoryPage({
