@@ -1,6 +1,7 @@
 # Components Reference
 
-All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
+All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read
+the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
 
 ```tsx
 import {ButtonPrimary, Stack, Text2, ...} from '@telefonica/mistica';
@@ -80,6 +81,29 @@ Positions a primary and optional secondary button:
   onChange={setIsFavorite}
 />
 ```
+
+## Pagination
+
+Use `Pagination` to navigate through a finite number of pages. It can be uncontrolled with `defaultPage` or
+controlled with `currentPage` and `onChange`.
+
+```tsx
+<Pagination totalPages={20} defaultPage={1} />
+```
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Pagination totalPages={20} currentPage={page} onChange={setPage} />;
+```
+
+Common props:
+
+- `surroundingPageCount` -- number of pages shown around the current page. Defaults to `1`.
+- `hidePageList` -- hides page numbers and keeps only previous/next controls.
+- `hideNavigationControls` -- hides previous/next controls and keeps only page numbers.
+- `mode="iconOnly"` -- renders previous/next as icon buttons.
+- `navLeftLabel` / `navRightLabel` -- custom labels for previous/next controls.
 
 ## Text and Titles
 
