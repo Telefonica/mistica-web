@@ -36,6 +36,13 @@ type PaddingXValues = {
 
 type PaddingValues = PaddingYValues & PaddingXValues;
 
+export type ResponsiveMarginValues = {
+    mobile: number;
+    tablet: number;
+    desktop: number;
+    largeDesktop: number;
+};
+
 type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size?: never;
@@ -125,6 +132,7 @@ export type SpacingConfig = {
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
+    responsiveLayoutMargin: ResponsiveMarginValues;
 };
 
 export type ThemeVariantsConfig = {
