@@ -152,13 +152,13 @@ type ThemeConfig = {
 };
 ```
 
-Available skins: `getMovistarNewSkin()`, `getVivoSkin()`, `getVivoEvolutionSkin()`, `getO2Skin()`,
-`getTelefonicaSkin()`, `getBlauSkin()`, and others via `getSkinByName()`. The legacy Movistar variant without
-the `New` suffix also exists (`getMovistarSkin()`); prefer the `New` version for new projects. You can also
-create a custom skin. If you need to customize default component colors, radii, or other visual tokens beyond
-the props exposed by a component, prefer extending a skin over overriding component styles. Built-in palette
-exports such as `movistarNewPalette`, `o2Palette`, `vivoPalette`, etc. are available for skin authoring, and
-custom skins may also define their own palette colors from scratch.
+Available skins: `getMovistarNewSkin()`, `getVivoSkin()`, `getVivoEvolutionSkin()`, `getO2NewSkin()`,
+`getTelefonicaSkin()`, `getBlauSkin()`, `getTuSkin()`, and others via `getSkinByName()`. Legacy variants
+without the `New` suffix also exist (`getMovistarSkin()`); prefer the `New` versions for new projects. You can
+also create a custom skin. If you need to customize default component colors, radii, or other visual tokens
+beyond the props exposed by a component, prefer extending a skin over overriding component styles. Built-in
+palette exports such as `movistarNewPalette`, `o2Palette`, `vivoPalette`, etc. are available for skin
+authoring, and custom skins may also define theolors from scratch.
 
 Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
 
@@ -288,9 +288,8 @@ All tokens via `skinVars` from `@telefonica/mistica`:
 
 - **Colors**: `skinVars.colors.*` (286 tokens for backgrounds, text, borders, controls, status, tags)
 - **Raw colors**: `skinVars.rawColors.*` (same tokens as RGB values, for use with `applyAlpha`)
-- **Palettes for skin authoring**: built-in palette exports such as `movistarNewPalette`, `o2Palette`,
-  `vivoPalette`, etc. Use these only when creating/extending a `Skin`, not for styling app components
-  directly.
+- **Palettes for skin authoring**: built-in palette exports such as `movistarNewPalette`, `vivoPalette`, etc.
+  Use these only when creating/extending a `Skin`, not for styling app components directly.
 - **Border radii**: `skinVars.borderRadii.*` (container, button, input, popup, chip, sheet, avatar, tag, etc.)
 - **Spacing**: `skinVars.spacing.*` (button, card, input, tag, feedback, hero, header, drawer padding tokens)
 - **Text presets**: Handled by text components, not accessed directly
