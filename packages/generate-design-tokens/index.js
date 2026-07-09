@@ -161,7 +161,15 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 .join(',')},
         },
         spacing: ${JSON.stringify(
-            Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
+            Object.fromEntries(
+                Object.entries(designTokens.spacing).map(([name, {value}]) => {
+                    if (name === 'responsiveLayoutMargin') {
+                        const {extraLargeDesktop: _ignored, ...rest} = value;
+                        return [name, rest];
+                    }
+                    return [name, value];
+                })
+            )
         )},
     };
     return skin;
