@@ -12,7 +12,6 @@ import {
     OverscrollColorProvider,
     skinVars,
     VIVO_EVOLUTION_SKIN,
-    VIVO_EVOLUTION_SKIN,
     TELEFONICA_SKIN,
     O2_SKIN,
     MOVISTAR_SKIN,
@@ -53,7 +52,6 @@ export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverr
  */
 const skinToLang: Record<string, string> = {
     [VIVO_SKIN]: 'pt-BR',
-    [VIVO_EVOLUTION_SKIN]: 'pt-BR',
     [VIVO_EVOLUTION_SKIN]: 'pt-BR',
     [BLAU_SKIN]: 'de-DE',
     [TELEFONICA_SKIN]: 'es-ES',
