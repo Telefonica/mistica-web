@@ -164,9 +164,13 @@ controlled when the page value drives data fetching, routing, or analytics.
 const [page, setPage] = React.useState(1);
 
 <Stack space={16}>
-  <RowList>{items.map((item) => <Row key={item.id} title={item.title} />)}</RowList>
+  <RowList>
+    {items.map((item) => (
+      <Row key={item.id} title={item.title} />
+    ))}
+  </RowList>
   <Pagination totalPages={20} currentPage={page} onChange={setPage} />
-</Stack>
+</Stack>;
 ```
 
 For constrained containers, products can hide the page list and keep only previous/next controls.

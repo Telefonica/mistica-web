@@ -167,7 +167,7 @@ test('Buttons - Link button - with chevron in Vivo', async () => {
     await openStoryPage({
         id: 'components-buttons--link-button',
         device: 'MOBILE_IOS',
-        skin: 'Vivo-new',
+        skin: 'Vivo',
         args: {
             chevron: true,
         },
@@ -200,7 +200,7 @@ test('Buttons - Link button with chevron and big font size in Vivo', async () =>
     await openStoryPage({
         id: 'components-buttons--link-button',
         device: 'MOBILE_IOS',
-        skin: 'Vivo-new',
+        skin: 'Vivo',
         args: {
             chevron: true,
         },

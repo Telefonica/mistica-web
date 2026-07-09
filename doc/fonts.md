@@ -8,18 +8,18 @@ default serif font (Times New Roman on desktop). You must declare `@font-face` r
 
 Each skin has a designated font family. Use the correct one for the skin your app is using:
 
-| Skin                         | Getter function        | Font family         |
-| ---------------------------- | ---------------------- | ------------------- |
-| `movistar-new` _(preferred)_ | `getMovistarNewSkin()` | `'Movistar Sans'`   |
-| `movistar` _(legacy)_        | `getMovistarSkin()`    | `'On Air'`          |
-| `o2-new` _(preferred)_       | `getO2NewSkin()`       | `'On Air'`          |
-| `o2` _(legacy)_              | `getO2Skin()`          | `'On Air'`          |
-| `vivo-new` _(preferred)_     | `getVivoNewSkin()`     | `'Vivo Type'`       |
-| `vivo` _(legacy)_            | `getVivoSkin()`        | `'Roboto'`          |
-| `telefonica`                 | `getTelefonicaSkin()`  | `'Telefonica Sans'` |
-| `blau`                       | `getBlauSkin()`        | `'Roboto'`          |
-| `tu`                         | `getTuSkin()`          | `'Telefonica Sans'` |
-| `esimflag`                   | `getEsimflagSkin()`    | `'On Air'`          |
+| Skin                         | Getter function          | Font family         |
+| ---------------------------- | ------------------------ | ------------------- |
+| `movistar-new` _(preferred)_ | `getMovistarNewSkin()`   | `'Movistar Sans'`   |
+| `movistar` _(legacy)_        | `getMovistarSkin()`      | `'On Air'`          |
+| `o2-new` _(preferred)_       | `getO2NewSkin()`         | `'On Air'`          |
+| `o2` _(legacy)_              | `getO2Skin()`            | `'On Air'`          |
+| `vivo`                       | `getVivoSkin()`          | `'Vivo Type'`       |
+| `vivo-evolution`             | `getVivoEvolutionSkin()` | `'Vivo Type'`       |
+| `telefonica`                 | `getTelefonicaSkin()`    | `'Telefonica Sans'` |
+| `blau`                       | `getBlauSkin()`          | `'Roboto'`          |
+| `tu`                         | `getTuSkin()`            | `'Telefonica Sans'` |
+| `esimflag`                   | `getEsimflagSkin()`      | `'On Air'`          |
 
 ## Setting font-family
 

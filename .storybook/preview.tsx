@@ -11,7 +11,7 @@ import {
     MOVISTAR_SKIN,
     MOVISTAR_NEW_SKIN,
     VIVO_SKIN,
-    VIVO_NEW_SKIN,
+    VIVO_EVOLUTION_SKIN,
     O2_SKIN,
     O2_NEW_SKIN,
     TELEFONICA_SKIN,
@@ -39,7 +39,7 @@ const getSkin = (searchParams: URLSearchParams) => {
         O2_SKIN,
         O2_NEW_SKIN,
         VIVO_SKIN,
-        VIVO_NEW_SKIN,
+        VIVO_EVOLUTION_SKIN,
         TELEFONICA_SKIN,
         BLAU_SKIN,
         TU_SKIN,
@@ -133,7 +133,9 @@ const MisticaThemeProvider = ({
             {((skin && colorScheme && platform) || isStoryOnNewTab) && (
                 <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
                     <OverscrollColorProvider>
-                        {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
+                        {(skin === VIVO_SKIN || skin === VIVO_EVOLUTION_SKIN) && (
+                            <style>{`body {font-family: "Vivo Type"}`}</style>
+                        )}
                         {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
                             <style>{`body {font-family: "Telefonica Sans"}`}</style>
                         )}

@@ -1,6 +1,7 @@
 # Components Reference
 
-All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
+All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read
+the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
 
 ```tsx
 import {ButtonPrimary, Stack, Text2, ...} from '@telefonica/mistica';
@@ -83,8 +84,8 @@ Positions a primary and optional secondary button:
 
 ## Pagination
 
-Use `Pagination` to navigate through a finite number of pages. It can be uncontrolled with `defaultPage`
-or controlled with `currentPage` and `onChange`.
+Use `Pagination` to navigate through a finite number of pages. It can be uncontrolled with `defaultPage` or
+controlled with `currentPage` and `onChange`.
 
 ```tsx
 <Pagination totalPages={20} defaultPage={1} />
@@ -93,11 +94,7 @@ or controlled with `currentPage` and `onChange`.
 ```tsx
 const [page, setPage] = React.useState(1);
 
-<Pagination
-  totalPages={20}
-  currentPage={page}
-  onChange={setPage}
-/>
+<Pagination totalPages={20} currentPage={page} onChange={setPage} />;
 ```
 
 Common props:

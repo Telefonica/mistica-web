@@ -11,7 +11,7 @@ import {
     useModalState,
     OverscrollColorProvider,
     skinVars,
-    VIVO_NEW_SKIN,
+    VIVO_EVOLUTION_SKIN,
     TELEFONICA_SKIN,
     O2_SKIN,
     O2_NEW_SKIN,
@@ -53,8 +53,8 @@ export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverr
  * The only OB that has shown interest in having their own lang is Vivo,
  */
 const skinToLang: Record<string, string> = {
-    [VIVO_NEW_SKIN]: 'pt-BR',
     [VIVO_SKIN]: 'pt-BR',
+    [VIVO_EVOLUTION_SKIN]: 'pt-BR',
     [BLAU_SKIN]: 'de-DE',
     [TELEFONICA_SKIN]: 'es-ES',
     [MOVISTAR_SKIN]: 'es-ES',
@@ -91,7 +91,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
     const styles = `
         body {background: ${skinVars.colors.background}}
 
-        ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
+        ${skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${
             skinName === MOVISTAR_SKIN ||
