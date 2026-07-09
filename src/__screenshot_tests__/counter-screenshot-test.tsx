@@ -1,5 +1,6 @@
 import {openStoryPage, screen} from '../test-utils';
 
+// todo https://github.com/Telefonica/mistica-web/issues/1647 review and improve test strategy
 const SKINS = ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Telefonica', 'Blau'] as const;
 
 test.each(SKINS)('Counter default. skin={%s}', async (skin) => {
