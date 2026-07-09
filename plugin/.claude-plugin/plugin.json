@@ -2,13 +2,12 @@
     "name": "mistica-web",
     "displayName": "Mistica Web",
     "description": "Telefonica's Mistica Design System — React component library skill for building web UIs with @telefonica/mistica.",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "author": {
         "name": "Telefonica",
         "email": "cto-apps@telefonica.com"
     },
     "repository": "https://github.com/Telefonica/mistica-web",
     "license": "MIT",
-    "keywords": ["react", "design-system", "telefonica", "mistica", "ui", "components"],
-    "dependencies": [{"name": "figma", "marketplace": "claude-plugins-official"}]
+    "keywords": ["react", "design-system", "telefonica", "mistica", "ui", "components"]
 }

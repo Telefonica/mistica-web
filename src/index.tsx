@@ -63,6 +63,7 @@ export {default as Inline} from './inline';
 export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
+export {default as Pagination} from './pagination';
 export {default as Meter} from './meter';
 export {Rating, InfoRating} from './rating';
 export {VerticalMosaic, HorizontalMosaic} from './mosaic';

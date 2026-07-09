@@ -194,7 +194,8 @@ export const openStoryPage = ({
         | 'O2-new'
         | 'Telefonica'
         | 'Blau'
-        | 'Esimflag';
+        | 'Esimflag'
+        | 'Cyber';
     args?: StoryArgs;
     isDarkMode?: boolean;
 }): Promise<PageApi> =>
