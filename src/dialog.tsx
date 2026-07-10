@@ -34,6 +34,7 @@ interface BaseDialogProps {
     onAccept?: () => void;
     destructive?: boolean;
     closeButtonLabel?: string;
+    focusWhiteList?: (activeElement: HTMLElement) => boolean;
 }
 
 export type AlertProps = BaseDialogProps;
@@ -246,7 +247,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const shouldDismissOnPressOverlay = props.type === 'dialog';
     const shouldAcceptOnDismiss = props.type === 'alert';
 
-    const {onAccept, onCancel, onDestroy, ...dialogProps} = props;
+    const {onAccept, onCancel, onDestroy, focusWhiteList, ...dialogProps} = props;
 
     React.useEffect(() => {
         const timeout = setTimeout(() => {
@@ -355,7 +356,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
 
     return (
         <Portal className={styles.wrapper}>
-            <FocusTrap>
+            <FocusTrap focusWhiteList={focusWhiteList}>
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <div
                     onClick={handleOverlayPress}

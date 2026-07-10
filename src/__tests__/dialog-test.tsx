@@ -352,6 +352,60 @@ test.each([
     }
 );
 
+test('focusWhiteList is forwarded to FocusTrap — whitelisted external element can receive focus', async () => {
+    const externalRef = React.createRef<HTMLInputElement>();
+    const focusWhiteListSpy = jest.fn((el: HTMLElement) => el === externalRef.current);
+
+    const TestWithWhiteList = () => {
+        const {alert} = useDialog();
+        return (
+            <>
+                <input ref={externalRef} data-testid="external-input" />
+                <button
+                    onClick={() =>
+                        alert({
+                            title: 'Test',
+                            message: 'Message',
+                            focusWhiteList: focusWhiteListSpy,
+                        })
+                    }
+                >
+                    Open Alert
+                </button>
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestWithWhiteList />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Open Alert'}));
+    await screen.findByRole('dialog');
+
+    // Simulate focus moving to the external input — the whiteList predicate must be called
+    externalRef.current?.focus();
+    await waitFor(() => {
+        expect(focusWhiteListSpy).toHaveBeenCalledWith(externalRef.current);
+    });
+});
+
+test('focusWhiteList is optional — omitting it does not break existing behavior', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const alertButton = await screen.findByRole('button', {name: 'Alert'});
+    await userEvent.click(alertButton);
+
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
+    expect(await screen.findByRole('button', {name: 'Yay!'})).toBeInTheDocument();
+});
+
 test('dialog close button is accessible', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>

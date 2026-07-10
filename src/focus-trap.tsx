@@ -7,15 +7,24 @@ type Props = {
     disabled?: boolean;
     group?: string;
     returnFocus?: React.ComponentProps<typeof ReactFocusLock>['returnFocus'];
+    focusWhiteList?: (activeElement: HTMLElement) => boolean;
 };
 
-const FocusTrap = ({children, disabled, className, group, returnFocus = true}: Props): JSX.Element => (
+const FocusTrap = ({
+    children,
+    disabled,
+    className,
+    group,
+    returnFocus = true,
+    focusWhiteList,
+}: Props): JSX.Element => (
     <ReactFocusLock
         noFocusGuards
         disabled={disabled}
         className={className}
         group={group}
         returnFocus={returnFocus}
+        whiteList={focusWhiteList}
     >
         {children}
     </ReactFocusLock>
