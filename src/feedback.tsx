@@ -2,10 +2,9 @@
 import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import {VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import {VIVO_EVOLUTION_SKIN, VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
 import IconSuccess from './icons/icon-success';
-import IconSuccessVivo from './icons/icon-success-vivo';
 import IconError from './icons/icon-error';
 import IconInfo from './icons/icon-info';
 import {
@@ -305,9 +304,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
             }
             hapticFeedback="success"
             asset={
-                skinName === VIVO_SKIN ? (
-                    <IconSuccessVivo size="100%" />
-                ) : skinName === VIVO_NEW_SKIN ? (
+                skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
                     <IconSuccessVivoNew size="100%" />
                 ) : (
                     <IconSuccess size="100%" />
@@ -396,9 +393,7 @@ export const SuccessFeedback = ({
     const {skinName, platformOverrides, themeVariants} = useTheme();
 
     const asset =
-        skinName === VIVO_SKIN ? (
-            <IconSuccessVivo size="100%" />
-        ) : skinName === VIVO_NEW_SKIN ? (
+        skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
             <IconSuccessVivoNew size="100%" />
         ) : (
             <IconSuccess size="100%" />
