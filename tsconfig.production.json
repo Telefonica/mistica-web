@@ -82,6 +82,7 @@
         "playroom",
         "src/test-utils/**",
         "setup-test-env.tsx",
-        "examples"
+        "examples",
+        "evals"
     ]
 }
