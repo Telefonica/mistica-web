@@ -147,3 +147,45 @@ Dialog.args = {
     asset: true,
     extra: true,
 };
+
+export const FocusWhiteList: StoryComponent<{allowExternalFocus: boolean}> = ({allowExternalFocus}) => {
+    const {alert} = useDialog();
+    return (
+        <Stack space={16}>
+            <input
+                data-external="true"
+                placeholder="External input (outside dialog)"
+                style={{padding: '8px', width: '100%'}}
+            />
+            <ButtonLayout
+                primaryButton={
+                    <ButtonPrimary
+                        aria-haspopup="dialog"
+                        onPress={() =>
+                            alert({
+                                title: 'Focus lock demo',
+                                message: allowExternalFocus
+                                    ? 'focusWhiteList is active — you can focus the input above while this dialog is open.'
+                                    : 'Standard lock — focus is confined to this dialog.',
+                                acceptText: 'Ok',
+                                focusWhiteList: allowExternalFocus
+                                    ? (el) => el.dataset.external === 'true'
+                                    : undefined,
+                            })
+                        }
+                    >
+                        Open alert
+                    </ButtonPrimary>
+                }
+            />
+        </Stack>
+    );
+};
+
+FocusWhiteList.args = {
+    allowExternalFocus: true,
+};
+
+FocusWhiteList.argTypes = {
+    allowExternalFocus: {control: 'boolean'},
+};
