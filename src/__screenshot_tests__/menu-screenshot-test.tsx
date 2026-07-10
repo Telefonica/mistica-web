@@ -92,3 +92,17 @@ test('Menu is rendered inside a datacard', async () => {
     await (await screen.findByRole('button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
+
+test('Menu with item description', async () => {
+    const page = await openStoryPage({
+        id: 'components-menu--default',
+        device: 'MOBILE_IOS',
+        viewport,
+        args: {
+            description: true,
+        },
+    });
+
+    await (await screen.findByRole('button')).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

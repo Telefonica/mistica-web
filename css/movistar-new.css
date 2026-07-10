@@ -27,7 +27,7 @@
     --mistica-movistar-new-green700: #407f0f;
     --mistica-movistar-new-yellowHigh: #5e4a09;
     --mistica-movistar-new-emeraldHigh: #036d30;
-    --mistica-movistar-new-yellowLight: #ffe99c;
+    --mistica-movistar-new-yellowLight: #fff0c0;
     --mistica-movistar-new-salmon200: #fde5d7;
     --mistica-movistar-new-darkModeBlack: #070706;
     --mistica-movistar-new-darkModeGrey: #151414;
@@ -277,6 +277,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-new-white);
     --mistica-color-textAppBar: var(--mistica-movistar-new-grey600);
     --mistica-color-textAppBarSelected: var(--mistica-movistar-new-blue800);
+    --mistica-color-iosGlassAppBar: var(--mistica-movistar-new-movistarBlack);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-new-blue800);
     --mistica-color-customTabsBackground: var(--mistica-movistar-new-white);
     --mistica-color-tagTextPromo: var(--mistica-movistar-new-white);
@@ -678,6 +679,7 @@
     --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-new-grey200);
     --mistica-color-textAppBar: var(--mistica-movistar-new-grey400);
     --mistica-color-textAppBarSelected: var(--mistica-movistar-new-movistarBlue);
+    --mistica-color-iosGlassAppBar: var(--mistica-movistar-new-white);
     --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-new-blue200);
     --mistica-color-customTabsBackground: var(--mistica-movistar-new-darkModeBlack);
     --mistica-color-tagTextPromo: var(--mistica-movistar-new-movistarWhite);
@@ -1003,6 +1005,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-new-grey200);
         --mistica-color-textAppBar: var(--mistica-movistar-new-grey400);
         --mistica-color-textAppBarSelected: var(--mistica-movistar-new-movistarBlue);
+        --mistica-color-iosGlassAppBar: var(--mistica-movistar-new-white);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-new-blue200);
         --mistica-color-customTabsBackground: var(--mistica-movistar-new-darkModeBlack);
         --mistica-color-tagTextPromo: var(--mistica-movistar-new-movistarWhite);
@@ -1330,6 +1333,7 @@
         --mistica-color-textNavigationSearchBarText: var(--mistica-movistar-new-white);
         --mistica-color-textAppBar: var(--mistica-movistar-new-grey600);
         --mistica-color-textAppBarSelected: var(--mistica-movistar-new-blue800);
+        --mistica-color-iosGlassAppBar: var(--mistica-movistar-new-movistarBlack);
         --mistica-color-iosGlassAppBarSelected: var(--mistica-movistar-new-blue800);
         --mistica-color-customTabsBackground: var(--mistica-movistar-new-white);
         --mistica-color-tagTextPromo: var(--mistica-movistar-new-white);

@@ -1,32 +1,201 @@
 # Fonts
 
-<!-- TOC -->
+Mistica does **not** inject a font family automatically. Without explicit setup, browsers fall back to their
+default serif font (Times New Roman on desktop). You must declare `@font-face` rules and set `font-family` on
+`body`.
 
-- [Fonts](#fonts)
-  - [Font family](#font-family)
-    - [System Fonts (Roboto / San Francisco)](#system-fonts-roboto--san-francisco)
-    - [OnAir or Telefonica fonts](#onair-or-telefonica-fonts)
-    - [Override brower fonts for some specific html elements](#override-brower-fonts-for-some-specific-html-elements)
-  - [Dynamic font sizes](#dynamic-font-sizes)
+## Font per skin
 
-<!-- /TOC -->
+Each skin has a designated font family. Use the correct one for the skin your app is using:
 
-## Font family
+| Skin                         | Getter function        | Font family         |
+| ---------------------------- | ---------------------- | ------------------- |
+| `movistar-new` _(preferred)_ | `getMovistarNewSkin()` | `'Movistar Sans'`   |
+| `movistar` _(legacy)_        | `getMovistarSkin()`    | `'On Air'`          |
+| `o2-new` _(preferred)_       | `getO2NewSkin()`       | `'On Air'`          |
+| `o2` _(legacy)_              | `getO2Skin()`          | `'On Air'`          |
+| `vivo-new` _(preferred)_     | `getVivoNewSkin()`     | `'Vivo Type'`       |
+| `vivo` _(legacy)_            | `getVivoSkin()`        | `'Roboto'`          |
+| `telefonica`                 | `getTelefonicaSkin()`  | `'Telefonica Sans'` |
+| `blau`                       | `getBlauSkin()`        | `'Roboto'`          |
+| `tu`                         | `getTuSkin()`          | `'Telefonica Sans'` |
+| `esimflag`                   | `getEsimflagSkin()`    | `'On Air'`          |
 
-Mistica components are optimized to work with iOS/Android system fonts (Roboto and San Francisco), but it can
-also work fine with other font families.
+## Setting font-family
 
-### System Fonts (Roboto / San Francisco)
+Set the font from inside a component rendered under `ThemeContextProvider`. This keeps font and background
+color in sync with the active theme, including in dark mode:
 
-If you use system fonts in your web application we recommend you to setup it as follows:
+```tsx
+import {skinVars} from '@telefonica/mistica';
+
+const GlobalStyles = () => (
+  <style>{`
+    body {
+      font-family: 'Movistar Sans', 'Helvetica', 'Arial', sans-serif;
+      background-color: ${skinVars.colors.background};
+    }
+  `}</style>
+);
+```
+
+Render `<GlobalStyles />` as a direct child of `ThemeContextProvider`, before the rest of the app.
+
+## @font-face setup
+
+Declare the font weights your app needs. Mistica uses **300 (light), 400 (regular), 500 (medium) and 700
+(bold)**. Serve the `.woff2` files from your own static hosting.
+
+### On Air (Movistar, O2, O2 New, Esimflag)
 
 ```css
+@font-face {
+  font-family: 'On Air';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/OnAir-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'On Air';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/OnAir-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'On Air';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/OnAir-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'On Air';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/OnAir-Bold.woff2') format('woff2');
+}
+
 body {
-  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'On Air', 'Helvetica', 'Arial', sans-serif;
 }
 ```
 
-And additionaly declare a Roboto font family for desktop browsers. For example:
+### Movistar Sans (Movistar New)
+
+```css
+@font-face {
+  font-family: 'Movistar Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/MovistarSans-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Movistar Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/MovistarSans-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Movistar Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/MovistarSans-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Movistar Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/MovistarSans-Bold.woff2') format('woff2');
+}
+
+body {
+  font-family: 'Movistar Sans', 'Helvetica', 'Arial', sans-serif;
+}
+```
+
+### Vivo Type (Vivo New)
+
+```css
+@font-face {
+  font-family: 'Vivo Type';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/vivo-type-light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Vivo Type';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/vivo-type-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Vivo Type';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/vivo-type-medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Vivo Type';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/vivo-type-bold.woff2') format('woff2');
+}
+
+body {
+  font-family: 'Vivo Type', 'Helvetica', 'Arial', sans-serif;
+}
+```
+
+### Telefonica Sans (Telefonica, Tu)
+
+```css
+@font-face {
+  font-family: 'Telefonica Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/Telefonica_Sans_Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Telefonica Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Telefonica_Sans_Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Telefonica Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/Telefonica_Sans_Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Telefonica Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/Telefonica_Sans_Bold.woff2') format('woff2');
+}
+
+body {
+  font-family: 'Telefonica Sans', 'Helvetica', 'Arial', sans-serif;
+}
+```
+
+### Roboto (Vivo, Blau)
+
+Roboto is available via [Google Fonts](https://fonts.google.com/specimen/Roboto) or
+[Bunny Fonts](https://fonts.bunny.net/family/roboto) (GDPR-friendly alternative). The weights needed are 300,
+400, 500, and 700.
+
+Google Fonts import:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Or self-hosted `@font-face`:
 
 ```css
 @font-face {
@@ -36,7 +205,7 @@ And additionaly declare a Roboto font family for desktop browsers. For example:
   src:
     local('Roboto Light'),
     local('Roboto-Light'),
-    url('/static/fonts/roboto-v18-latin_latin-ext-300.woff2') format('woff2');
+    url('/fonts/roboto-300.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Roboto';
@@ -45,7 +214,7 @@ And additionaly declare a Roboto font family for desktop browsers. For example:
   src:
     local('Roboto'),
     local('Roboto-Regular'),
-    url('/static/fonts/roboto-v18-latin_latin-ext-regular.woff2') format('woff2');
+    url('/fonts/roboto-400.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Roboto';
@@ -54,7 +223,7 @@ And additionaly declare a Roboto font family for desktop browsers. For example:
   src:
     local('Roboto Medium'),
     local('Roboto-Medium'),
-    url('/static/fonts/roboto-v18-latin_latin-ext-500.woff2') format('woff2');
+    url('/fonts/roboto-500.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Roboto';
@@ -63,65 +232,29 @@ And additionaly declare a Roboto font family for desktop browsers. For example:
   src:
     local('Roboto Bold'),
     local('Roboto-Bold'),
-    url('/static/fonts/roboto-v18-latin_latin-ext-700.woff2') format('woff2');
-}
-```
-
-This is just an example, you'll need to change the `url()` declarations to point to the fonts served by your
-web server. The important part here is to serve different font weights for 300 (light), 400 (regular), 500
-(medium) and 700 (bold).
-
-### OnAir or Telefonica fonts
-
-Mistica works fine too with other fonts like OnAir or Telefonica fonts, but these fonts don't have a medium
-weight (only light, regular and bold). In these cases, we recomend to use the regular font weight for the 500
-`font-weight`. Something like this:
-
-```css
-@font-face {
-  font-family: 'OnAir';
-  font-style: normal;
-  font-weight: 300;
-  src: url('/static/fonts/OnAir-Light.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'OnAir';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/OnAir-Regular.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'OnAir';
-  font-style: normal;
-  font-weight: 500;
-  /* Note we are using OnAir Regular for medium (500) font-weight too: */
-  src: url('/static/fonts/OnAir-Regular.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'OnAir';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/OnAir-Bold.woff2') format('woff2');
+    url('/fonts/roboto-700.woff2') format('woff2');
 }
 
-body {
-  font-family: 'OnAir', 'Helvetica', 'Arial', sans-serif;
-}
-```
-
-### Override brower fonts for some specific html elements
-
-All the html elements in your page will inherit the body font by default, except if a style sheet sets a
-different font family for the element, and most browsers use to set specific font families for some elements
-like `input`, `textarea`, `pre`, etc. If you want to avoid that browser behavior, you have different options:
-
-1. Explicitly set the your font family for those elements:
-
-```css
 body {
   font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
+```
 
+## Body background color
+
+Always set `body` background from inside a component under `ThemeContextProvider` using the
+`skinVars.colors.background` token. This ensures the background matches the active theme in both light and
+dark mode:
+
+```tsx
+const GlobalStyles = () => <style>{`body { background-color: ${skinVars.colors.background}; }`}</style>;
+```
+
+## Override browser fonts for form elements
+
+Some browsers apply a different `font-family` to form inputs, textareas, and code elements. Override with:
+
+```css
 input,
 textarea,
 pre,
@@ -130,23 +263,12 @@ code {
 }
 ```
 
-2. Apply the font-family with a wildcard selector:
-
-```css
-* {
-  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
-}
-```
-
-3. Use a [reset.css](https://meyerweb.com/eric/tools/css/reset/) that does this for you.
-
-We use to recomend option 3.
+Or use a CSS reset that handles this, such as
+[modern-normalize](https://github.com/sindresorhus/modern-normalize).
 
 ## Dynamic font sizes
 
-Mistica components support scalling font sizes automatically based on OS or browser accesibility settings. If
-you want your web to properly work with dynamic font sizes, we recommend to setup a base font size of 16px or
-100% (which is the same as 16px in most browsers):
+To support OS/browser accessibility font size settings, set the base size on `html`:
 
 ```css
 html {
@@ -154,13 +276,9 @@ html {
 }
 ```
 
-Also, to make dynamic font sizes work properly in iOS devices you need to include this:
+To support Dynamic Type on iOS:
 
 ```css
-/**
- * To enable Dynamic Type in apple devices:
- * See: https://dev.to/colingourlay/how-to-support-apple-s-dynamic-text-in-your-web-content-with-css-40c0
- */
 @supports (font: -apple-system-body) {
   html {
     font: -apple-system-body !important;

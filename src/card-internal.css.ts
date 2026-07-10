@@ -196,7 +196,6 @@ export const touchableCardOverlayInverse = style([
 
 export const contentContainer = style([
     sprinkles({
-        position: 'relative',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -206,9 +205,17 @@ export const contentContainer = style([
     },
 ]);
 
+export const stretchedTouchable = style({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 2,
+});
+
 export const textContent = style([
     sprinkles({
-        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -241,3 +248,24 @@ export const backgroundImageOrVideoContainer = style([
         zIndex: 0,
     },
 ]);
+
+export const slotContainerSpaceBetween = sprinkles({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+});
+
+export const stretchedLink = style({
+    position: 'static',
+    '::after': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 1,
+        cursor: 'pointer',
+    },
+});

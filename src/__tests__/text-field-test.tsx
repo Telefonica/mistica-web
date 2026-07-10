@@ -39,6 +39,17 @@ test('TextField controlled', async () => {
     expect(field).toHaveValue('pepito');
 });
 
+test('TextField optional - accessible name includes optional suffix as a single label', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextField label="Email" name="email" optional />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByRole('textbox', {name: 'Email (opcional)'});
+    expect(field).toBeInTheDocument();
+});
+
 test('TextField maxLength', async () => {
     const onsubmitSpy = jest.fn();
     const Component = () => {

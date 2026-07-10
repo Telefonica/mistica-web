@@ -104,4 +104,34 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
                   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
+
+    validate-pr-title:
+        # This job validates the PR title against the conventional commit format. Needed for semantic-release to generate release notes.
+        name: Validate PR title
+        runs-on: ubuntu-latest
+        if: github.event_name == 'pull_request'
+        steps:
+            - uses: amannn/action-semantic-pull-request@v5
+              with:
+                  types: |
+                      fix
+                      feat
+                      chore
+                      revert
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    ci-required-checks:
+        name: CI required checks passed
+        runs-on: ubuntu-latest
+        needs: [build, build-acceptance, validate-pr-title]
+        if: always()
+        steps:
+            - name: Check that all required jobs succeeded
+              if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              run: |
+                  echo "One or more required CI jobs failed or were cancelled."
+                  exit 1
+            - name: All required jobs succeeded
+              run: echo "All required CI jobs passed."
 ###

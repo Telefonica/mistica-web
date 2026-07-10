@@ -384,3 +384,23 @@ test('NakedCard over inverse', async () => {
     const image = await card.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('DataCard with segregateTouchableContent', async () => {
+    await openStoryPage({
+        id: STORY_IDS.data,
+        device: 'MOBILE_IOS',
+        args: {
+            ...argsReset,
+            onPress: true,
+            segregateTouchableContent: true,
+            description: 'Description',
+            pretitle: 'Pretitle',
+            title: '',
+        },
+    });
+
+    (await screen.findByRole('button', {name: 'Pretitle'})).focus();
+
+    const card = await screen.findByTestId(TEST_IDS.data);
+    expect(await card.screenshot()).toMatchImageSnapshot();
+});

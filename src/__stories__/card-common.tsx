@@ -57,8 +57,12 @@ export type CommonCardArgs = {
 
     // topActions
     onClose: boolean;
-    onPress: boolean;
     topActions: boolean;
+
+    // touchable content
+    onPress: boolean;
+    segregateTouchableContent: boolean;
+    touchableAriaLabel: string;
 
     // buttons
     buttonPrimary: boolean;
@@ -222,6 +226,8 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     footerVariant: '',
     footerDivider: undefined,
     slot: true,
+    segregateTouchableContent: false,
+    touchableAriaLabel: '',
 };
 
 export const commonArgTypes = {
@@ -355,7 +361,7 @@ export const mediaArgTypes = {
 
 export const dataArgTypes = {
     slotAlignment: {
-        options: ['', 'content', 'bottom'],
+        options: ['', 'content', 'bottom', 'space-between'],
         control: {
             type: 'select',
             labels: {'': 'undefined'},

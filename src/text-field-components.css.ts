@@ -10,7 +10,6 @@ export const labelContainer = style([
     sprinkles({
         position: 'absolute',
         display: 'flex',
-        flexDirection: 'row',
     }),
     {
         left: fieldLeftPadding,
@@ -30,6 +29,13 @@ export const labelContainer = style([
         width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px)`,
     },
 ]);
+
+export const labelInner = sprinkles({
+    display: 'flex',
+    flexDirection: 'row',
+    overflow: 'hidden',
+    width: '100%',
+});
 
 export const labelText = style([
     sprinkles({
@@ -96,6 +102,10 @@ export const browserDefaultFocusOutline = [
     '5px auto Highlight', // Firefox
     '5px auto -webkit-focus-ring-color', // Chrome / Safari
 ];
+
+export const focused = style({
+    outline: browserDefaultFocusOutline,
+});
 
 export const fieldFocusRing = style({
     ':focus-within': {

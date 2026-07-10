@@ -83,6 +83,8 @@ export const Label = ({
         color = vars.colors.textActivated;
     }
 
+    const optionalText = texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix);
+
     return (
         <label
             className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
@@ -90,13 +92,16 @@ export const Label = ({
             style={{color, ...style, transition: transitionStyle}}
             data-testid="label"
         >
-            <span className={styles.labelText}>{children}</span>
-            {showOptional ? (
-                <span>
-                    &nbsp;(
-                    {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
-                </span>
-            ) : null}
+            {/* eslint-disable-next-line jsx-a11y/aria-role -- role="text" makes VoiceOver read the whole div as a single text block. */}
+            <span role="text" className={styles.labelInner}>
+                <span className={styles.labelText}>{children}</span>
+                {showOptional ? (
+                    <span>
+                        &nbsp;(
+                        {optionalText})
+                    </span>
+                ) : null}
+            </span>
         </label>
     );
 };
@@ -179,6 +184,7 @@ type FieldContainerProps = {
     fullWidth?: boolean;
     readOnly?: boolean;
     dataAttributes?: DataAttributes;
+    focus?: boolean;
 };
 
 export const FieldContainer = ({
@@ -191,6 +197,7 @@ export const FieldContainer = ({
     fullWidth,
     readOnly,
     dataAttributes,
+    focus,
 }: FieldContainerProps): JSX.Element => {
     const cssVarStyles = useApplyCssVars();
     return (
@@ -210,7 +217,8 @@ export const FieldContainer = ({
                 className={classnames(
                     styles.field,
                     readOnly ? styles.background.readOnly : styles.background.default,
-                    className
+                    className,
+                    focus && styles.focused
                 )}
                 ref={fieldRef}
             >

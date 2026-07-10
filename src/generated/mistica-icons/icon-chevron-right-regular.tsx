@@ -9,65 +9,82 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconChevronRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M18.455 12c0 .28-.11.54-.32.73l-7.437 6.996c-.4.38-1.04.36-1.421-.04a1.01 1.01 0 0 1 .04-1.421l6.656-6.266-6.656-6.265a1 1 0 0 1-.04-1.422c.38-.4 1.02-.42 1.421-.04l7.437 6.996c.2.19.32.46.32.731"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="m18 12.001-7.2-7.68a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M17.572 12.001c0-.25-.09-.49-.27-.69l-6.56-6.99a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05l6.56-6.99c.18-.19.27-.44.27-.69"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M9.2 18.734a.79.79 0 0 0 0 1.049.64.64 0 0 0 .962 0l6.639-7.238A.78.78 0 0 0 17 12a.78.78 0 0 0-.2-.545l-6.638-7.238a.64.64 0 0 0-.963 0 .79.79 0 0 0 0 1.05L15.376 12z"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M9.47 3.97a.75.75 0 0 1 1.06 0l7 7a.75.75 0 0 1 0 1.06l-7 7a.75.75 0 1 1-1.06-1.06l6.47-6.47-6.47-6.47a.75.75 0 0 1 0-1.06"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.455 12c0 .28-.11.54-.32.73l-7.437 6.996c-.4.38-1.04.36-1.421-.04a1.01 1.01 0 0 1 .04-1.421l6.656-6.266-6.656-6.265a1 1 0 0 1-.04-1.422c.38-.4 1.02-.42 1.421-.04l7.437 6.996c.2.19.32.46.32.731"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m18 12.001-7.2-7.68a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.572 12.001c0-.25-.09-.49-.27-.69l-6.56-6.99a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05l6.56-6.99c.18-.19.27-.44.27-.69"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.2 18.734a.79.79 0 0 0 0 1.049.64.64 0 0 0 .962 0l6.639-7.238A.78.78 0 0 0 17 12a.78.78 0 0 0-.2-.545l-6.638-7.238a.64.64 0 0 0-.963 0 .79.79 0 0 0 0 1.05L15.376 12z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.47 3.97a.75.75 0 0 1 1.06 0l7 7a.75.75 0 0 1 0 1.06l-7 7a.75.75 0 1 1-1.06-1.06l6.47-6.47-6.47-6.47a.75.75 0 0 1 0-1.06"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconChevronRightRegular;

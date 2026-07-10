@@ -184,20 +184,37 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     }
     import {useThemeVariant} from '../../theme-variant-context';
     import {vars} from '../../skins/skin-contract.css';
+    import {useIconGradient} from '../../utils/icon-gradient';
 
     import type {IconProps} from '../../utils/types';
 
     const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
         const themeVariant = useThemeVariant();
-        const fillColor =
-            color ??
-            (themeVariant === 'brand' || themeVariant === 'media'
+        const defaultColor =
+            themeVariant === 'brand' || themeVariant === 'media'
                 ? vars.colors.neutralHighBrand
                 : themeVariant === 'negative'
                     ? vars.colors.neutralHighNegative
-                    : vars.colors.neutralHigh);
+                    : vars.colors.neutralHigh;
+
+        const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
         ${hasVariants ? 'const {skinName} = useTheme();' : ''}
-        ${getVariants()}
+
+        const getSvgContent = () => {
+            ${getVariants()}
+        };
+
+        const svgContent = getSvgContent();
+        
+        if (gradientDef) {
+            return React.cloneElement(svgContent, {}, [
+                <defs key="gradient-defs">{gradientDef}</defs>,
+                ...React.Children.toArray(svgContent.props.children),
+            ]);
+        }
+
+        return svgContent;
     };
 
     export default ${componentName};

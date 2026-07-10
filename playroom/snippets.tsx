@@ -27,9 +27,10 @@ const menuSnippet = {
       renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
           <MenuSection>
-            <MenuItem label="option 1" onPress={() => {}} />
+            <MenuItem label="option 1" description="Description for option 1" onPress={() => {}} />
             <MenuItem
               label="option 2"
+              description="Description for option 2"
               onPress={() => setState("option 2", !getState("option 2", false))}
               controlType="checkbox"
               checked={getState("option 2", false)}
@@ -1584,6 +1585,43 @@ const cardSnippets: Array<Snippet> = [
             description="Description"
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'AiCard',
+        code: `
+        <AiCard
+            text="Lorem ipsum dolor sit amet, "
+            words={['consectetur', 'praesent', 'tempor', 'aliquam']}
+            onPress={() => {}}
+            borderColor={"linear-gradient(200deg, #AE42E459 17.51%, #BD4AFF59 38.3%, #EB3C7D59 82.5%)"}
+            asset={<svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.53957 16.0123C6.71957 15.6223 7.26973 15.6223 7.44973 16.0123L8.23977 17.7623L9.99953 18.5523C10.3894 18.7324 10.3895 19.2825 9.99953 19.4625L8.24953 20.2525L7.45949 22.0123C7.27949 22.4022 6.71964 22.4021 6.53957 22.0123L5.74953 20.2623L3.99953 19.4722C3.60953 19.2922 3.60953 18.7421 3.99953 18.5621L5.74953 17.772L6.53957 16.0123ZM15.0073 5.99861C15.3574 5.21869 16.4767 5.21864 16.8267 5.99861L18.4165 9.49861L21.9165 11.0885C22.6965 11.4485 22.6965 12.5588 21.9165 12.9088L18.4165 14.4986L16.8267 17.9986C16.4666 18.7783 15.3575 18.7783 15.0073 17.9986L13.4165 14.4986L9.91652 12.9088C9.13679 12.5487 9.13685 11.4386 9.91652 11.0885L13.4165 9.49861L15.0073 5.99861ZM4.33254 1.97322C4.5126 1.58347 5.06166 1.58347 5.24172 1.97322L6.03176 3.72322L7.7925 4.51326C8.18211 4.69337 8.18215 5.24334 7.7925 5.42342L6.0425 6.21345L5.25246 7.97322C5.07248 8.36318 4.5126 8.3631 4.33254 7.97322L3.5425 6.22322L1.7925 5.43318C1.4025 5.25318 1.4025 4.70302 1.7925 4.52302L3.5425 3.73299L4.33254 1.97322Z"
+                  fill="url(#paint0_linear_13522_368)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_13522_368"
+                    x1="18.84"
+                    y1="5.30652"
+                    x2="5.4224"
+                    y2="18.9388"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#AE42E4" />
+                    <stop offset="0.32" stop-color="#BD4AFF" />
+                    <stop offset="1" stop-color="#EF7E9C" />
+                  </linearGradient>
+                </defs>
+              </svg>}
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [
@@ -2677,6 +2715,21 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar',
         code: `
           <MainNavigationBar
+            topSlotBackgroundColor={colors.backgroundNegative}
+            topSlot={
+              <ThemeVariant variant="negative">
+                <Box paddingY={8}>
+                  <Align x="center">
+                    <Inline space={24} alignItems="center">
+                      <Text2 medium>BLACK FRIDAY - 60% en tecnología</Text2>
+                      <ButtonSecondary small onPress={() => {}}>
+                        See offers
+                      </ButtonSecondary>
+                    </Inline>
+                  </Align>
+                </Box>
+              </ThemeVariant>
+            }
             sections={[
               {
                 title: "Start",
@@ -3414,6 +3467,7 @@ const alertSnippets = [
       "Lime",
     ].map((fruit, idx) => ({
       id: String(idx),
+      tag: {type: 'promo', text: 'Tag'},
       title: fruit,
       description: "Description",
       asset: (
@@ -4528,6 +4582,18 @@ export default [
         group: 'NavigationBreadcrumbs',
         name: 'NavigationBreadcrumbs',
         code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
+    },
+    {
+        group: 'Pagination',
+        name: 'Pagination',
+        code: `
+            <Pagination
+                mode="iconOnly"
+                totalPages={10}
+                surroundingPageCount={1}
+                currentPage={getState("paginationPage", 3)}
+                onChange={(page) => setState("paginationPage", page)}
+            />`,
     },
     ...titlesSnippets,
     ...emptyStatesGroup,
