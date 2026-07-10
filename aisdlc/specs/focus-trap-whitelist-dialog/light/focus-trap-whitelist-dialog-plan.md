@@ -20,7 +20,7 @@ Decisions made: scope is dialog-only (`alert`, `confirm`, `dialog` via `useDialo
 
 ## Tasks
 
-1. [ ] Thread `focusWhiteList` from `FocusTrap` through `BaseDialogProps` to `ModalDialog`
+1. [x] Thread `focusWhiteList` from `FocusTrap` through `BaseDialogProps` to `ModalDialog`
 
    **Behaviors**
 
@@ -57,7 +57,7 @@ Decisions made: scope is dialog-only (`alert`, `confirm`, `dialog` via `useDialo
       `BaseDialogProps`. Destructure it inside `ModalDialog` from `props` and forward it to
       `<FocusTrap focusWhiteList={focusWhiteList}>`.
 
-2. [ ] Add Storybook story demonstrating `focusWhiteList`
+2. [x] Add Storybook story demonstrating `focusWhiteList`
 
    **Behaviors**
 
