@@ -1,7 +1,6 @@
 export const MOVISTAR_SKIN = 'Movistar';
 export const MOVISTAR_NEW_SKIN = 'Movistar-new';
 export const O2_SKIN = 'O2';
-export const O2_NEW_SKIN = 'O2-new';
 export const VIVO_SKIN = 'Vivo';
 export const VIVO_EVOLUTION_SKIN = 'Vivo-evolution';
 export const TELEFONICA_SKIN = 'Telefonica';

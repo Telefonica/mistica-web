@@ -191,7 +191,6 @@ export const openStoryPage = ({
         | 'Vivo'
         | 'Vivo-evolution'
         | 'O2'
-        | 'O2-new'
         | 'Telefonica'
         | 'Blau'
         | 'Esimflag'

@@ -36,7 +36,7 @@ const IconTimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,19 +46,6 @@ const IconTimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     <path
                         fill={fillColor}
                         d="M12 22C6.484 22 2 17.516 2 12S6.484 2 12 2s10 4.484 10 10-4.484 10-10 10m0-18.576c-4.728 0-8.576 3.848-8.576 8.576S7.272 20.576 12 20.576s8.576-3.848 8.576-8.576S16.728 3.424 12 3.424"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 22C6.484 22 2 17.516 2 12S6.484 2 12 2s10 4.484 10 10a10 10 0 0 1-1.54 5.328.35.35 0 0 1-.492.112.35.35 0 0 1-.112-.492A9.2 9.2 0 0 0 21.288 12c0-5.116-4.16-9.288-9.288-9.288-5.116 0-9.288 4.172-9.288 9.288s4.16 9.288 9.288 9.288a9.2 9.2 0 0 0 4.948-1.432.356.356 0 1 1 .38.604A10 10 0 0 1 12 22"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 12.504 6.744 7.256a.36.36 0 0 1 0-.504.36.36 0 0 1 .504 0l4.744 4.744L14.6 8.888a.36.36 0 0 1 .504 0 .36.36 0 0 1 0 .504zm6.784 6.992a.712.712 0 1 0 0-1.424.712.712 0 0 0 0 1.424"
                     />
                 </svg>
             );

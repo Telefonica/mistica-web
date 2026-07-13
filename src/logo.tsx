@@ -9,7 +9,6 @@ import MovistarLogoShell from './logo-movistar-shell';
 import MovistarNewLogoShell from './logo-movistar-new-shell';
 import VivoLogoShell from './logo-vivo-shell';
 import O2LogoShell from './logo-o2-shell';
-import O2NewLogoShell from './logo-o2-new-shell';
 import TelefonicaLogoShell from './logo-telefonica-shell';
 import BlauLogoShell from './logo-blau-shell';
 import EsimflagLogoShell from './logo-esimflag-shell';
@@ -50,14 +49,6 @@ const O2LogoImage = React.lazy(
         import(
             /* webpackChunkName: "logo-o2" */
             './logo-o2'
-        )
-);
-
-const O2NewLogoImage = React.lazy(
-    () =>
-        import(
-            /* webpackChunkName: "logo-o2-new" */
-            './logo-o2-new'
         )
 );
 
@@ -148,19 +139,6 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                         />
                     </React.Suspense>
                 </O2LogoShell>
-            );
-        case 'O2-new':
-            return (
-                <O2NewLogoShell size={size}>
-                    <React.Suspense>
-                        <O2NewLogoImage
-                            type={type}
-                            isDarkMode={isDarkMode}
-                            themeVariant={themeVariant}
-                            color={color}
-                        />
-                    </React.Suspense>
-                </O2NewLogoShell>
             );
         case 'Telefonica':
             return (
@@ -268,10 +246,6 @@ export const VivoLogo = ({size, type, color, ...props}: LogoProps): JSX.Element 
 
 export const O2Logo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
     <LogoInternal size={size} type={type} color={color} skinName="O2" {...props} />
-);
-
-export const O2NewLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
-    <LogoInternal size={size} type={type} color={color} skinName="O2-new" {...props} />
 );
 
 export const TelefonicaLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (

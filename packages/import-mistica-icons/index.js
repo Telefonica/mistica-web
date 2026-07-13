@@ -19,6 +19,9 @@ const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
 const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 
+/**
+ * @type {string | string[]}
+ */
 const SKIN_BLACKLIST = [];
 
 const checkoutMisticaIconsRepo = () => {
@@ -83,6 +86,9 @@ const getSvgIconsInfo = () => {
  * @param {svgIconsInfo} svgIconsInfo
  */
 const getAllIconNames = (svgIconsInfo) => {
+    /**
+     * @type {string[]}
+     */
     const allIconNames = [];
     Object.entries(svgIconsInfo).forEach(([, icons]) => {
         for (const [name] of icons) {
@@ -92,7 +98,7 @@ const getAllIconNames = (svgIconsInfo) => {
     return uniq(allIconNames).sort();
 };
 
-const format = async (src) =>
+const format = async (/** @type {string} */ src) =>
     prettier.format(src, {...(await prettier.resolveConfig('.')), parser: 'babel-ts'});
 
 /**
@@ -119,13 +125,17 @@ const getIconJsx = (svgFilename) => {
         .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
 
-/** Defines the skin check order, higher number means it's checked before */
-const SKIN_PRIORITY = {
+/** Higher specificity = checked first in the if/else chain;
+ * The skin with the LOWEST SPECIFICITY among those
+ * carrying the icon becomes the else FALLBACK for ALL OTHER SKINS.
+ * @type {{[skin: string]: number}}
+ */
+const SKIN_SPECIFICITY = {
+    // this is currently the default skin
     telefonica: 1,
     vivo: 2,
     o2: 3,
-    'o2-new': 4, // o2-new is checked before o2 because O2-new skin name would match with o2 regexp
-    blau: 5,
+    blau: 4,
 };
 
 /**
@@ -136,7 +146,7 @@ const SKIN_PRIORITY = {
 const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     // sort skins by priority, lower priority (more specific) first
     const skins = Object.keys(svgIconsInfo).sort(
-        (a, b) => (SKIN_PRIORITY[b] ?? 100) - (SKIN_PRIORITY[a] ?? 100)
+        (a, b) => (SKIN_SPECIFICITY[b] ?? 100) - (SKIN_SPECIFICITY[a] ?? 100)
     );
 
     const availableIcons = [];

@@ -45,21 +45,12 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.002 16.571c-.25 0-.49-.09-.69-.27l-6.99-6.56a1 1 0 0 1-.05-1.42c.38-.4 1.02-.43 1.42-.05l6.31 5.91 6.31-5.91a1 1 0 0 1 1.42.05 1 1 0 0 1-.05 1.42l-6.99 6.56c-.19.18-.44.27-.69.27"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
-                        d="M5.266 8.2a.79.79 0 0 0-1.049 0 .64.64 0 0 0 0 .962l7.238 6.639c.15.137.348.204.545.199a.78.78 0 0 0 .545-.2l7.238-6.638a.642.642 0 0 0 0-.963.79.79 0 0 0-1.05 0L12 14.376z"
+                        d="M12.002 16.571c-.25 0-.49-.09-.69-.27l-6.99-6.56a1 1 0 0 1-.05-1.42c.38-.4 1.02-.43 1.42-.05l6.31 5.91 6.31-5.91a1 1 0 0 1 1.42.05 1 1 0 0 1-.05 1.42l-6.99 6.56c-.19.18-.44.27-.69.27"
                     />
                 </svg>
             );

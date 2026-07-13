@@ -36,15 +36,6 @@ const IconPauseFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M9.72 6.13c0-.891-.714-1.63-1.61-1.63S6.5 5.239 6.5 6.13v11.74c0 .891.713 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622zm7.78 0a1.62 1.62 0 0 0-1.61-1.63c-.896 0-1.61.739-1.61 1.63v11.74c0 .891.714 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622z"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

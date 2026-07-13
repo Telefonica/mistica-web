@@ -36,15 +36,6 @@ const IconTvContentFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M22 4.5v12.596h-7.961v1.294h2.409c.308 0 .554.247.554.555a.553.553 0 0 1-.554.555h-8.89a.553.553 0 0 1-.556-.555c0-.308.247-.555.555-.555h2.409v-1.294H2V4.5zM11.07 18.39h1.855v-1.294H11.07z"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
