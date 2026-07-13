@@ -1,0 +1,10 @@
+{
+    "codeConnect": {
+        "include": ["src/__figma__/**/*.figma.ts"],
+        "label": "React",
+        "language": "typescript",
+        "importPaths": {
+            "src/*": "@telefonica/mistica"
+        }
+    }
+}

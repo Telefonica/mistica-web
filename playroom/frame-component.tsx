@@ -88,7 +88,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         ${skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${skinName === O2_SKIN || skinName === ESIMFLAG_SKIN ? 'body {font-family: "On Air"}' : ''}
-        ${skinName === MOVISTAR_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
+        ${skinName === MOVISTAR_NEW_SKIN ? 'body {font-family: "Movistar Sans"}' : ''}
     `;
 
     return (
