@@ -156,7 +156,7 @@ const skin: Skin = {
 };
 ```
 
-If you also need different default radii, override `borderRadii` in the custom skin rather than setting
-border radius ad hoc in component styles.
+If you also need different default radii, override `borderRadii` in the custom skin rather than setting border
+radius ad hoc in component styles.
 
 You can see an example in the [examples folder](../examples/custom-skin/).
