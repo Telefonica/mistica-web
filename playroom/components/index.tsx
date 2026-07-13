@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
     Select,
     IconSettingsRegular,
@@ -125,7 +125,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
             return (
                 <div className={styles.controls} ref={ref}>
                     <Select
-                        label="Select skin"
+                        label="select skin"
                         name="theme"
                         options={Object.entries(themesMap).map(([skinName, {text}]) => ({
                             value: skinName,
