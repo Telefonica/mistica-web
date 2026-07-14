@@ -83,7 +83,7 @@ export const HorizontalMosaic = ({
         <Carousel
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            dataAttributes={{...dataAttributes, testid: 'HorizontalMosaic'}}
+            dataAttributes={{...dataAttributes, testid: 'horizontal-mosaic'}}
             items={pages.map((items, index) => (
                 <Grid>
                     <HorizontalMosaicPage items={items} isEven={index % 2 === 0} key={index} />
@@ -195,7 +195,7 @@ export const VerticalMosaic = ({
             gap={GRID_GAP}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            dataAttributes={{testid: 'VerticalMosaic', ...dataAttributes}}
+            dataAttributes={{testid: 'vertical-mosaic', ...dataAttributes}}
         >
             {pages.map((items, index) => (
                 <VerticalMosaicPage items={items} itemRole={itemRole} key={index} />
