@@ -297,7 +297,7 @@ export const Accordion = ({
         <AccordionContext.Provider value={{index: indexList, toggle}}>
             <div
                 role={role}
-                {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
+                {...getPrefixedDataAttributes({testid: 'Accordion', ...dataAttributes, accordion: true})}
             >
                 {childrenContent.map((child, index) => (
                     <React.Fragment key={index}>

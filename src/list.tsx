@@ -796,7 +796,7 @@ export const RowList = ({
             aria-label={ariaLabel}
             aria-live={ariaLive}
             aria-atomic={ariaAtomic}
-            {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
+            {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
         >
             {childrenContent.map((child, index) => (
                 <React.Fragment key={index}>

@@ -388,7 +388,7 @@ export const Table = React.forwardRef(
         return (
             <div
                 ref={ref}
-                {...getPrefixedDataAttributes(dataAttributes, 'Table')}
+                {...getPrefixedDataAttributes({testid: 'Table', ...dataAttributes})}
                 {...getScrollContainerStyles(scrollOverResponsiveLayout)}
             >
                 {table}

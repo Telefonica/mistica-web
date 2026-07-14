@@ -46,7 +46,7 @@ const Overlay = ({
     return (
         <div
             data-overlay="true"
-            {...getPrefixedDataAttributes(dataAttributes, 'Overlay')}
+            {...getPrefixedDataAttributes({testid: 'Overlay', ...dataAttributes})}
             style={{...defaultStyle, ...style}}
             className={className}
             onPointerDown={(e) => {

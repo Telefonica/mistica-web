@@ -22,14 +22,14 @@ test('getCssVarValue of element', () => {
     expect(getCssVarValue('var(--color-primary)', div)).toBe('#ABACAD');
 });
 
-test('getPrefixedDataAttributes with componentName', () => {
-    const result = getPrefixedDataAttributes(undefined, 'TestComponent');
+test('getPrefixedDataAttributes with testid', () => {
+    const result = getPrefixedDataAttributes({testid: 'TestComponent'});
     expect(result).toEqual({'data-testid': 'TestComponent'});
 });
 
-test('getPrefixedDataAttributes with testid in attrs', () => {
-    const result = getPrefixedDataAttributes({testid: 'MyTest'});
-    expect(result).toEqual({'data-testid': 'MyTest'});
+test('getPrefixedDataAttributes with empty attrs', () => {
+    const result = getPrefixedDataAttributes();
+    expect(result).toEqual({});
 });
 
 test('getPrefixedDataAttributes with custom attributes', () => {
@@ -47,10 +47,10 @@ test('getPrefixedDataAttributes with custom attributes', () => {
     });
 });
 
-test('getPrefixedDataAttributes with both componentName and attrs', () => {
-    const result = getPrefixedDataAttributes({testid: 'AttrTest', foo: 'baz'}, 'ComponentTest');
+test('getPrefixedDataAttributes with testid and other attrs', () => {
+    const result = getPrefixedDataAttributes({testid: 'AttrTest', foo: 'baz'});
     expect(result).toEqual({
-        'data-testid': 'ComponentTest',
+        'data-testid': 'AttrTest',
         'data-foo': 'baz',
     });
 });

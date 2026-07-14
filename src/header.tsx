@@ -234,7 +234,7 @@ export const HeaderLayout = ({
     useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
 
     return (
-        <div {...getPrefixedDataAttributes(dataAttributes, 'HeaderLayout')}>
+        <div {...getPrefixedDataAttributes({testid: 'HeaderLayout', ...dataAttributes})}>
             <ResponsiveLayout variant={isBrandVariant ? 'brand' : undefined}>
                 <Box
                     paddingTop={

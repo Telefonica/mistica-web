@@ -125,7 +125,7 @@ const Tag = ({
 
     return (
         <span
-            {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
+            {...getPrefixedDataAttributes({testid: 'Tag', ...dataAttributes})}
             className={classNames(small ? styles.smallTag : styles.tag)}
             style={{
                 paddingLeft,

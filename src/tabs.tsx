@@ -147,7 +147,7 @@ const Tabs = ({
                         }[externalVariant],
                     }),
                 }}
-                {...getPrefixedDataAttributes(dataAttributes, 'Tabs')}
+                {...getPrefixedDataAttributes({testid: 'Tabs', ...dataAttributes})}
                 aria-label={otherProps['aria-label']}
                 aria-labelledby={otherProps['aria-labelledby']}
                 aria-description={otherProps['aria-description']}

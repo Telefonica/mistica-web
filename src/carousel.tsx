@@ -1229,7 +1229,7 @@ export const Slideshow = ({
                     className={classNames(styles.slideshowContainer, {
                         [styles.slideshowWithBullets]: !!withBullets,
                     })}
-                    {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+                    {...getPrefixedDataAttributes({testid: 'SlideShow', ...dataAttributes})}
                 >
                     {items.length > 1 &&
                         (withControls ? (

@@ -350,7 +350,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         return (
             <section
                 className={styles.container}
-                {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
+                {...getPrefixedDataAttributes({testid: 'AdvancedDataCard', ...dataAttributes})}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabel}
             >
