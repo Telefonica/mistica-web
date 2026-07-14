@@ -7,7 +7,6 @@ export type SkinVariant = 'prominent';
 
 export type KnownSkinName =
     | 'Movistar'
-    | 'Movistar-new'
     | 'O2'
     | 'Vivo'
     | 'Vivo-evolution'

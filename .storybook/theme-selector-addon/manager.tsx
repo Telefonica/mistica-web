@@ -23,7 +23,7 @@ const renderPrimaryColorDot = (skinName: Skin) => (
 
 const ThemeSelectorAddon = ({api}: {api: API}) => {
     const [currentSkin, setCurrentSkin] = React.useState<Skin>(
-        () => (api.getQueryParam('skin') as Skin) || 'Movistar-new'
+        () => (api.getQueryParam('skin') as Skin) || 'Movistar'
     );
 
     React.useEffect(() => {

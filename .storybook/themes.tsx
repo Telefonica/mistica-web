@@ -1,6 +1,5 @@
 import {
     getMovistarSkin,
-    getMovistarNewSkin,
     getO2Skin,
     getVivoSkin,
     getVivoEvolutionSkin,
@@ -13,11 +12,6 @@ import {getCyberSkin} from '../src/community/skins/cyber-skin';
 export const Movistar = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
     skin: getMovistarSkin(),
-} as const;
-
-export const Movistar_New = {
-    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-    skin: getMovistarNewSkin(),
 } as const;
 
 export const O2 = {
@@ -55,14 +49,4 @@ export const Cyber = {
     skin: getCyberSkin(),
 } as const;
 
-export const AVAILABLE_THEMES = [
-    Movistar,
-    Movistar_New,
-    O2,
-    Vivo,
-    Vivo_Evolution,
-    Telefonica,
-    Blau,
-    Esimflag,
-    Cyber,
-];
+export const AVAILABLE_THEMES = [Movistar, O2, Vivo, Vivo_Evolution, Telefonica, Blau, Esimflag, Cyber];

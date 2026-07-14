@@ -4,7 +4,6 @@ import type {KnownSkinName} from '../skins/types';
 
 const SKINS: Array<KnownSkinName> = [
     'Movistar',
-    'Movistar-new',
     'O2',
     'Vivo',
     'Vivo-evolution',

@@ -38,7 +38,8 @@ test('Tooltip - appears properly on mobile', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
-        skin: 'Movistar', // TODO: investigate why the test is instable with Movistar-new skin
+        // todo https://github.com/Telefonica/mistica-web/issues/1621 Tooltip unstable on Movistar skin
+        skin: 'O2',
     });
 
     await page.click(await screen.findByTestId('target'));
@@ -51,7 +52,8 @@ test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
-        skin: 'Movistar', // TODO: investigate why the test is instable with Movistar-new skin
+        // todo https://github.com/Telefonica/mistica-web/issues/1621 Tooltip unstable on Movistar skin
+        skin: 'O2',
         args: {variantOutside: 'brand'},
     });
 

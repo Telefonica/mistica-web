@@ -554,7 +554,7 @@ return (
 import Link from 'next/link';
 
 const theme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'Next14', Component: Link},
 };
@@ -566,7 +566,7 @@ const theme = {
 import {Link} from 'react-router-dom';
 
 const theme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'ReactRouter6', Component: Link},
 };

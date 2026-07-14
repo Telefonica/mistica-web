@@ -98,8 +98,8 @@ implements the `Skin` interface (you need to define all the required color const
 If you need to customize default component colors, border radii, or similar visual tokens and there is no
 component prop for that, prefer a custom skin over ad hoc CSS/style overrides. You can:
 
-- start from a built-in skin like `getMovistarNewSkin()` and override the tokens you need
-- start from a built-in palette export like `movistarNewPalette`
+- start from a built-in skin like `getMovistarSkin()` and override the tokens you need
+- start from a built-in palette export like `movistarPalette`
 - define your own palette/colors from scratch
 
 ```ts
@@ -131,11 +131,11 @@ const skin: Skin = {
 You can also extend an existing skin instead of defining everything from scratch:
 
 ```ts
-import {getMovistarNewSkin, movistarNewPalette, type Skin} from '@telefonica/mistica';
+import {getMovistarSkin, movistarPalette, type Skin} from '@telefonica/mistica';
 
-const baseSkin = getMovistarNewSkin();
+const baseSkin = getMovistarSkin();
 const palette = {
-  ...movistarNewPalette,
+  ...movistarPalette,
   brandPrimary: '#0050D8',
 };
 

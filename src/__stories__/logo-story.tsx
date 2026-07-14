@@ -1,14 +1,5 @@
 import * as React from 'react';
-import {
-    BlauLogo,
-    Logo,
-    MovistarLogo,
-    MovistarNewLogo,
-    O2Logo,
-    TelefonicaLogo,
-    VivoLogo,
-    EsimflagLogo,
-} from '../logo';
+import {BlauLogo, Logo, MovistarLogo, O2Logo, TelefonicaLogo, VivoLogo, EsimflagLogo} from '../logo';
 import {Box, ResponsiveLayout, useTheme} from '../index';
 
 import type {Variant} from '../theme-variant-context';
@@ -35,7 +26,7 @@ type Args = {
     variantOutside: Variant;
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
-    brand: 'Movistar' | 'Movistar-new' | 'O2' | 'Vivo' | 'Telefonica' | 'Blau' | 'Esimflag';
+    brand: 'Movistar' | 'O2' | 'Vivo' | 'Telefonica' | 'Blau' | 'Esimflag';
     color: (typeof COLOR_OPTIONS)[number];
 };
 
@@ -82,7 +73,6 @@ export const Default: StoryComponent<Args> = ({
     const CurrentLogo = {
         default: Logo,
         Movistar: MovistarLogo,
-        'Movistar-new': MovistarNewLogo,
         Vivo: VivoLogo,
         O2: O2Logo,
         Telefonica: TelefonicaLogo,
@@ -113,7 +103,7 @@ Default.args = {
 
 Default.argTypes = {
     brand: {
-        options: ['Movistar', 'Movistar-new', 'O2', 'Vivo', 'Telefonica', 'Blau', 'Esimflag'],
+        options: ['Movistar', 'O2', 'Vivo', 'Telefonica', 'Blau', 'Esimflag'],
         control: {type: 'select'},
         if: {arg: 'forceBrandLogo'},
     },

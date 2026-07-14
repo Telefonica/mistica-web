@@ -6,7 +6,6 @@ import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
 import MovistarLogoShell from './logo-movistar-shell';
-import MovistarNewLogoShell from './logo-movistar-new-shell';
 import VivoLogoShell from './logo-vivo-shell';
 import O2LogoShell from './logo-o2-shell';
 import TelefonicaLogoShell from './logo-telefonica-shell';
@@ -25,14 +24,6 @@ const MovistarLogoImage = React.lazy(
         import(
             /* webpackChunkName: "logo-movistar" */
             './logo-movistar'
-        )
-);
-
-const MovistarNewLogoImage = React.lazy(
-    () =>
-        import(
-            /* webpackChunkName: "logo-movistar-new" */
-            './logo-movistar-new'
         )
 );
 
@@ -99,19 +90,6 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
                         />
                     </React.Suspense>
                 </MovistarLogoShell>
-            );
-        case 'Movistar-new':
-            return (
-                <MovistarNewLogoShell size={size} type={type}>
-                    <React.Suspense>
-                        <MovistarNewLogoImage
-                            type={type}
-                            isDarkMode={isDarkMode}
-                            themeVariant={themeVariant}
-                            color={color}
-                        />
-                    </React.Suspense>
-                </MovistarNewLogoShell>
             );
         case 'Vivo':
         case 'Vivo-evolution':
@@ -234,10 +212,6 @@ export const Logo = ({size, type, color, ...props}: LogoProps): JSX.Element => {
 
 export const MovistarLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
     <LogoInternal size={size} type={type} color={color} skinName="Movistar" {...props} />
-);
-
-export const MovistarNewLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
-    <LogoInternal size={size} type={type} color={color} skinName="Movistar-new" {...props} />
 );
 
 export const VivoLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
