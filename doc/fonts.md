@@ -1,4 +1,4 @@
-\*\*\*\*# Fonts
+# Fonts
 
 Mistica does **not** inject a font family automatically. Without explicit setup, browsers fall back to their
 default serif font (Times New Roman on desktop). You must declare `@font-face` rules and set `font-family` on

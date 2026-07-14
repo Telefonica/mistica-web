@@ -125,7 +125,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
             return (
                 <div className={styles.controls} ref={ref}>
                     <Select
-                        label="select skin"
+                        label="Select skin"
                         name="theme"
                         options={Object.entries(themesMap).map(([skinName, {text}]) => ({
                             value: skinName,

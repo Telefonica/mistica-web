@@ -153,8 +153,7 @@ type ThemeConfig = {
 ```
 
 Available skins: `getMovistarSkin()`, `getVivoSkin()`, `getVivoEvolutionSkin()`, `getO2Skin()`,
-`getTelefonicaSkin()`, `getBlauSkin()`, and others via `getSkinByName()`. The legacy Movistar variant without
-the `New` suffix also exists (`getMovistarSkin()`). You can also create a custom skin.
+`getTelefonicaSkin()`, `getBlauSkin()`, and others via `getSkinByName()`. You can also create a custom skin.
 
 If you need to customize default component colors, radii, or other visual tokens beyond the props exposed by a
 component, prefer extending a skin over overriding component styles. Built-in palette exports such as
