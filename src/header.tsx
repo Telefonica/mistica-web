@@ -300,7 +300,6 @@ export const MainSectionHeaderLayout = ({
         <ResponsiveLayout
             variant={isBrandVariant ? 'brand' : undefined}
             dataAttributes={{
-                'component-name': 'MainSectionHeaderLayout',
                 testid: 'MainSectionHeaderLayout',
                 ...dataAttributes,
             }}

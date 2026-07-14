@@ -263,7 +263,7 @@ export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps
             ref={ref}
             {...props}
             variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
-            dataAttributes={{'component-name': 'LoadingScreen', ...props.dataAttributes}}
+            dataAttributes={{testid: 'LoadingScreen', ...props.dataAttributes}}
             animateBackground
         />
     );
@@ -360,7 +360,7 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
                     handleCloseEnd();
                 }}
                 animateText
-                dataAttributes={{'component-name': 'BrandLoadingScreen', ...dataAttributes}}
+                dataAttributes={{testid: 'BrandLoadingScreen', ...dataAttributes}}
             >
                 <BrandLoadingAnimation
                     isLoading={isLoading}

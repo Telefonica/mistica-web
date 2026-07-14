@@ -245,7 +245,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         );
 
         return (
-            <Box paddingY={8} dataAttributes={{'component-name': 'Slider', ...dataAttributes}}>
+            <Box paddingY={8} dataAttributes={{testid: 'Slider', ...dataAttributes}}>
                 <div
                     className={classNames(styles.container, {[styles.disabled]: disabled})}
                     style={{height: touchableArea}}

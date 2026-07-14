@@ -369,7 +369,7 @@ export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetP
                 forceMobileSizes,
                 textPreset: textPresets.text10,
             })}
-            dataAttributes={{'component-name': 'Text10', testid: 'Text10', ...dataAttributes}}
+            dataAttributes={{testid: 'Text10', ...dataAttributes}}
             {...props}
         />
     );
@@ -383,7 +383,7 @@ export const Text9 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
                 forceMobileSizes,
                 textPreset: textPresets.text9,
             })}
-            dataAttributes={{'component-name': 'Text9', testid: 'Text9', ...dataAttributes}}
+            dataAttributes={{testid: 'Text9', ...dataAttributes}}
             {...props}
         />
     );
@@ -397,7 +397,7 @@ export const Text8 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
                 forceMobileSizes,
                 textPreset: textPresets.text8,
             })}
-            dataAttributes={{'component-name': 'Text8', testid: 'Text8', ...dataAttributes}}
+            dataAttributes={{testid: 'Text8', ...dataAttributes}}
             {...props}
         />
     );
@@ -411,7 +411,7 @@ export const Text7 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
                 forceMobileSizes,
                 textPreset: textPresets.text7,
             })}
-            dataAttributes={{'component-name': 'Text7', testid: 'Text7', ...dataAttributes}}
+            dataAttributes={{testid: 'Text7', ...dataAttributes}}
             {...props}
         />
     );
@@ -425,7 +425,7 @@ export const Text6 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
                 forceMobileSizes,
                 textPreset: textPresets.text6,
             })}
-            dataAttributes={{'component-name': 'Text6', testid: 'Text6', ...dataAttributes}}
+            dataAttributes={{testid: 'Text6', ...dataAttributes}}
             {...props}
         />
     );
@@ -439,7 +439,7 @@ export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetPr
                 forceMobileSizes,
                 textPreset: textPresets.text5,
             })}
-            dataAttributes={{'component-name': 'Text5', testid: 'Text5', ...dataAttributes}}
+            dataAttributes={{testid: 'Text5', ...dataAttributes}}
             {...props}
         />
     );
@@ -458,7 +458,7 @@ export const Text4 = ({
                 textPreset: textPresets.text4,
             })}
             weight={getWeight(props)}
-            dataAttributes={{'component-name': 'Text4', testid: 'Text4', ...dataAttributes}}
+            dataAttributes={{testid: 'Text4', ...dataAttributes}}
             {...props}
         />
     );
@@ -477,7 +477,7 @@ export const Text3 = ({
                 textPreset: textPresets.text3,
             })}
             weight={getWeight(props)}
-            dataAttributes={{'component-name': 'Text3', testid: 'Text3', ...dataAttributes}}
+            dataAttributes={{testid: 'Text3', ...dataAttributes}}
             {...props}
         />
     );
@@ -492,7 +492,7 @@ export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
                 textPreset: textPresets.text2,
             })}
             weight={getWeight(props)}
-            dataAttributes={{'component-name': 'Text2', testid: 'Text2', ...dataAttributes}}
+            dataAttributes={{testid: 'Text2', ...dataAttributes}}
             {...props}
         />
     );
@@ -507,7 +507,7 @@ export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediu
                 textPreset: textPresets.text1,
             })}
             weight={getWeight(props)}
-            dataAttributes={{'component-name': 'Text1', testid: 'Text1', ...dataAttributes}}
+            dataAttributes={{testid: 'Text1', ...dataAttributes}}
             {...props}
         />
     );

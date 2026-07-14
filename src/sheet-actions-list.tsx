@@ -46,7 +46,7 @@ const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{'component-name': 'ActionsListSheet', ...dataAttributes}}
+                dataAttributes={{testid: 'ActionsListSheet', ...dataAttributes}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody

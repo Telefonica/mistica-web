@@ -160,7 +160,6 @@ const PhoneNumberField = ({
             inputProps={{prefix: rest.prefix}}
             inputComponent={PhoneInput}
             dataAttributes={{
-                'component-name': 'PhoneNumberField',
                 testid: 'PhoneNumberField',
                 ...dataAttributes,
             }}

@@ -254,7 +254,7 @@ export const NavigationBar = ({
                 topFixed={topFixed}
                 withBorder={withBorder}
                 variant={normalizedVariant}
-                dataAttributes={{'component-name': 'NavigationBar'}}
+                dataAttributes={{testid: 'NavigationBar'}}
             >
                 {topFixed ? (
                     <NavigationBarSideMargins wide={wide}>{content}</NavigationBarSideMargins>
@@ -1469,7 +1469,7 @@ export const MainNavigationBar = ({
                 withBorder={withBorder}
                 isBurgerMenuOpen={isBurgerMenuOpen}
                 variant={normalizedVariant}
-                dataAttributes={{'component-name': 'MainNavigationBar'}}
+                dataAttributes={{testid: 'MainNavigationBar'}}
             >
                 {desktopLargeMenu && (
                     <MainNavigationBarDesktopMenuBackground
@@ -1578,7 +1578,7 @@ export const FunnelNavigationBar = ({
                 topFixed={topFixed}
                 withBorder={withBorder}
                 variant={normalizedVariant}
-                dataAttributes={{'component-name': 'FunnelNavigationBar'}}
+                dataAttributes={{testid: 'FunnelNavigationBar'}}
             >
                 <NavigationBarSideMargins wide={wide}>
                     <GridLayout template="10">
@@ -1619,7 +1619,7 @@ export const NavigationBarAction = ({children, ...touchableProps}: NavigationBar
                 styles.lineHeightFix,
                 styles.textWrapperVariants[themeVariant]
             )}
-            dataAttributes={{'component-name': 'NavigationBarAction'}}
+            dataAttributes={{testid: 'NavigationBarAction'}}
         >
             <Inline space={16} alignItems="center">
                 {React.Children.map(children, (child) =>

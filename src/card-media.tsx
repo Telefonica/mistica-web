@@ -95,7 +95,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                 variant="default"
                 size={size}
                 dataAttributes={{
-                    'component-name': 'MediaCard',
                     testid: 'MediaCard',
                     ...dataAttributes,
                 }}
@@ -142,7 +141,6 @@ export const HighlightedCard = React.forwardRef<
                 mediaPosition="right"
                 mediaWidth={mediaWidth || 100}
                 dataAttributes={{
-                    'component-name': 'HighlightedCard',
                     testid: 'HighlightedCard',
                     ...dataAttributes,
                 }}
