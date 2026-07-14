@@ -34,7 +34,7 @@ that your implementation matches the designer's intent.
 **If you cannot point at a line in the DOM to justify a value, do not write that value.** Do not pick "nearby
 nicer" numbers.
 
-## Mapping Figma flex to Mistica layout primitives
+## Mapping Figma layout to Mistica layout primitives
 
 | Figma                                                   | Mistica                                                                                          |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -63,8 +63,8 @@ component sized to fill its `Inline` / `GridLayout` slot, not to a fixed width.
 
 A full-width section laid out as a 12-column grid is a `GridLayout`. The MCP output makes this explicit — the
 section `div` carries `grid grid-cols-[repeat(12,minmax(0,1fr))]` (plus `gap-x-[24px]` on desktop / `16px` on
-tablet), and each direct child carries a `col-[start/span_N]` class. Read the `span_N` of each child, in
-order, and match the sequence to a `GridLayout` template:
+tablet), and each direct child carries a `col-[start/span_N]` class. Read the `span_N` of each non-empty child
+(ignore empty spacer `div`s), in order, and match the sequence to a `GridLayout` template:
 
 | Child column spans, in order | `GridLayout`                                   |
 | ---------------------------- | ---------------------------------------------- |
