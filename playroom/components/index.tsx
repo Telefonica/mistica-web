@@ -321,7 +321,7 @@ const PreviewToolsComponent = ({
         return {
             ...themesMap[skinName].themeConfig,
             platformOverrides: {platform: os},
-            // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
+            // Don't override media queries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
             enableTabFocus: false,
             colorScheme,
             dimensions: {

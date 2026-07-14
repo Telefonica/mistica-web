@@ -1,3 +1,17 @@
+# [16.71.0](https://github.com/Telefonica/mistica-web/compare/v16.70.0...v16.71.0) (2026-07-09)
+
+
+### Bug Fixes
+
+* **ButtonLink:** disabled small buttonlink hover ([#1630](https://github.com/Telefonica/mistica-web/issues/1630)) ([3e5b817](https://github.com/Telefonica/mistica-web/commit/3e5b8176e84e98884bcfce250e4ff9c0c946b3a2))
+
+
+### Features
+
+* **chore:** Update plugin.json ([#1624](https://github.com/Telefonica/mistica-web/issues/1624)) ([e13997a](https://github.com/Telefonica/mistica-web/commit/e13997a8962a9ce6086d1e4c3d0837b5d0d6a3f1))
+* **Chore:** update plugin.json to reflect new mistica figma skill ([#1623](https://github.com/Telefonica/mistica-web/issues/1623)) ([a564f44](https://github.com/Telefonica/mistica-web/commit/a564f44dc97551675f1fd3c656424e76eac9b933))
+* **Pagination:** add Pagination component aligned with Cyber skin ([#1555](https://github.com/Telefonica/mistica-web/issues/1555)) ([f018117](https://github.com/Telefonica/mistica-web/commit/f018117fd1fd69c5cb2977029da8579bd1a1d2c6))
+
 # [16.70.0](https://github.com/Telefonica/mistica-web/compare/v16.69.0...v16.70.0) (2026-07-01)
 
 

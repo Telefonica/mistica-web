@@ -4583,6 +4583,18 @@ export default [
         name: 'NavigationBreadcrumbs',
         code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
+    {
+        group: 'Pagination',
+        name: 'Pagination',
+        code: `
+            <Pagination
+                mode="iconOnly"
+                totalPages={10}
+                surroundingPageCount={1}
+                currentPage={getState("paginationPage", 3)}
+                onChange={(page) => setState("paginationPage", page)}
+            />`,
+    },
     ...titlesSnippets,
     ...emptyStatesGroup,
     {
