@@ -10,9 +10,8 @@ const validAttrs: DataAttributes = {
 };
 
 // component-name is not allowed
-// @ts-expect-error - component-name cannot be used, type is never
-// eslint-disable-next-line object-shorthand
 const invalidAttrs: DataAttributes = {
+    // @ts-expect-error - component-name cannot be used, type is never
     'component-name': 'NotAllowed',
     testid: 'MyComponent',
 };
