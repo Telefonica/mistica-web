@@ -62,26 +62,26 @@ been deprecated. To ensure your code remains compatible with future major update
 implementation to replace the deprecated components and props as outlined below. This will prepare your
 codebase for the eventual removal of these deprecated features.
 
-### Card Components (Removed)
+### Card Components
 
-- The `PosterCard` component has been removed. Use `<CoverCard size="default" />`.
-- The `DisplayMediaCard` component has been removed. Use `<CoverCard size="display" />`.
-- The `SmallNakedCard` component has been removed. Use `<NakedCard size="snap" />`.
-- The `SnapCard` component has been removed. Use `<DataCard size="snap" />`.
-- The `DisplayDataCard` component has been removed. Use `<DataCard size="display" />`.
-- The `HighlightCard` component has been removed. Use `<MediaCard mediaPosition="right" />`.
+- The `PosterCard` component has been deprecated. Use `<CoverCard size="default" />`.
+- The `DisplayMediaCard` component has been deprecated. Use `<CoverCard size="display" />`.
+- The `SmallNakedCard` component has been deprecated. Use `<NakedCard size="snap" />`.
+- The `SnapCard` component has been deprecated. Use `<DataCard size="snap" />`.
+- The `DisplayDataCard` component has been deprecated. Use `<DataCard size="display" />`.
+- The `HighlightCard` component has been deprecated. Use `<MediaCard mediaPosition="right" />`.
 
-### Card Props (Removed)
+### Card Props
 
-- The `poster` prop has been removed. Use `imageSrc`. The `imageSrc` will be used as the poster when a video
-  is provided.
-- The `media` prop has been removed. Use `imageSrc`, `imageSrcSet`, or `videoSrc` and related props like
+- The `poster` prop has been deprecated. Use `imageSrc`. The `imageSrc` will be used as the poster when a
+  video is provided.
+- The `media` prop has been deprecated. Use `imageSrc`, `imageSrcSet`, or `videoSrc` and related props like
   `mediaAspectRatio`.
-- The `extra` prop has been removed. Use `slot`.
-- The `actions` prop has been removed. Use `topActions`.
-- The `button` prop has been removed. Use `buttonPrimary`.
-- The `secondaryButton` prop has been removed. Use `buttonSecondary`.
-- The `isInverse` prop has been removed. Use `variant`.
+- The `extra` prop has been deprecated. Use `slot`.
+- The `actions` prop has been deprecated. Use `topActions`.
+- The `button` prop has been deprecated. Use `buttonPrimary`.
+- The `secondaryButton` prop has been deprecated. Use `buttonSecondary`.
+- The `isInverse` prop has been deprecated. Use `variant`.
 
 ### Behavior changes
 
@@ -89,6 +89,8 @@ codebase for the eventual removal of these deprecated features.
   via props.
 - Cards now accept 3 kind of buttons: `buttonPrimary`, `buttonSecondary`, and `buttonLink`. You must use at
   most 2 buttons at the same time.
+- Deprecated cards have a default `slotAlignment` of `bottom`. New cards have a default `slotAlignment` of
+  `content`. If you want to keep the previous behavior, you must set `slotAlignment="bottom"` explicitly.
 
 ## Migration Guide from mistica 12.x to mistica 13.x
 
