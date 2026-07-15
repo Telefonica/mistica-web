@@ -16,6 +16,45 @@ Mistica 17 is a major release. Among other breaking changes, the `extra` prop fa
 - `AdvancedDataCard`: `extraDividerPadding` has been renamed to `slotDividerPadding`, and `noExtraDivider` has
   been renamed to `noSlotDivider`.
 
+### Removed deprecated props and hooks
+
+- `isInverse` prop across all components (`Boxed`, `DataCard`, `CoverCard`, `MediaCard`, `BoxedRow`,
+  `ResponsiveLayout`, `LoadingScreen`, `BoxedAccordionItem`, `FeedbackScreen`, `HeaderLayout`,
+  `MainSectionHeaderLayout`, and `ThemeVariant`). Use `variant="brand"` instead.
+- `Spinner.rolePresentation` prop. Use `aria-hidden` instead.
+- `Theme.enableTabFocus` prop. Rely on native `:focus-visible` behavior; the internal TabFocus mechanism has
+  been removed.
+- `NavigationBar.paddingX` prop. Use `wide` instead.
+- `RowList.ariaLabelledby` and `BoxedRowList.ariaLabelledby` props. Use `aria-labelledby` instead.
+- `Sheet.Icon` prop. Use `url` instead.
+- Card prop aliases: `button`, `actions`, `media`, `poster`, `imageUrl`, `backgroundImage`, `backgroundVideo`,
+  `backgroundVideoRef`, and `secondaryButton`. Use the new card API with `buttonPrimary`, `buttonSecondary`,
+  `imageSrc`, `imageSrcSet`, `videoSrc`, and related props.
+- `useIsInverseVariant` hook has been removed.
+- `useIsInverseOrMediaVariant` hook has been removed.
+- Sheet public exports have been removed: `ActionsSheet`, `InfoSheet`, `ActionsListSheet`, and
+  `RadioListSheet`. Use `showSheet()` instead.
+
+### Test attributes
+
+- The `data-component-name` attribute has been removed from all components. Use `data-testid` instead for
+  testing.
+
+### Design tokens
+
+- The `legacyDisplay` border radius token has been removed from the skin contract. Components previously using
+  it now use the `container` token instead. This may cause visual changes to `EmptyState` and feedback screens
+  depending on your skin.
+
+### Skin changes
+
+- The `vivo-new` skin has been merged into `vivo`, replacing the old vivo skin. If you were using `vivo-new`,
+  migrate to `vivo`.
+- A new `vivo-evolution` skin has been introduced as an evolution path from the previous vivo-new design.
+- The `O2-new` skin has replaced the old O2 skin. The old O2 design is no longer available.
+- The `movistar-new` skin has replaced the old Movistar skin. The old Movistar design is no longer available.
+- The `Tu` skin has been removed entirely. No replacement is available.
+
 ## Migration Guide for the New Cards Ecosystem (Starting from Mistica 16.xx.xx)
 
 The changes introduced in this version are backwards compatible; however, several components and props have
@@ -23,26 +62,26 @@ been deprecated. To ensure your code remains compatible with future major update
 implementation to replace the deprecated components and props as outlined below. This will prepare your
 codebase for the eventual removal of these deprecated features.
 
-### Card Components
+### Card Components (Removed)
 
-- The `PosterCard` component has been deprecated. Use `<CoverCard size="default" />`.
-- The `DisplayMediaCard` component has been deprecated. Use `<CoverCard size="display" />`.
-- The `SmallNakedCard` component has been deprecated. Use `<NakedCard size="snap" />`.
-- The `SnapCard` component has been deprecated. Use `<DataCard size="snap" />`.
-- The `DisplayDataCard` component has been deprecated. Use `<DataCard size="display" />`.
-- The `HighlightCard` component has been deprecated. Use `<MediaCard mediaPosition="right" />`.
+- The `PosterCard` component has been removed. Use `<CoverCard size="default" />`.
+- The `DisplayMediaCard` component has been removed. Use `<CoverCard size="display" />`.
+- The `SmallNakedCard` component has been removed. Use `<NakedCard size="snap" />`.
+- The `SnapCard` component has been removed. Use `<DataCard size="snap" />`.
+- The `DisplayDataCard` component has been removed. Use `<DataCard size="display" />`.
+- The `HighlightCard` component has been removed. Use `<MediaCard mediaPosition="right" />`.
 
-### Card Props
+### Card Props (Removed)
 
-- The `poster` prop has been deprecated. Use `imageSrc`. The `imageSrc` will be used as the poster when a
-  video is provided.
-- The `media` prop has been deprecated. Use `imageSrc`, `imageSrcSet`, or `videoSrc` and related props like
+- The `poster` prop has been removed. Use `imageSrc`. The `imageSrc` will be used as the poster when a video
+  is provided.
+- The `media` prop has been removed. Use `imageSrc`, `imageSrcSet`, or `videoSrc` and related props like
   `mediaAspectRatio`.
-- The `extra` prop has been deprecated. Use `slot`.
-- The `actions` prop has been deprecated. Use `topActions`.
-- The `button` prop has been deprecated. Use `buttonPrimary`.
-- The `secondaryButton` prop has been deprecated. Use `buttonSecondary`.
-- The `isInverse` prop has been deprecated. Use `variant`.
+- The `extra` prop has been removed. Use `slot`.
+- The `actions` prop has been removed. Use `topActions`.
+- The `button` prop has been removed. Use `buttonPrimary`.
+- The `secondaryButton` prop has been removed. Use `buttonSecondary`.
+- The `isInverse` prop has been removed. Use `variant`.
 
 ### Behavior changes
 
@@ -50,8 +89,6 @@ codebase for the eventual removal of these deprecated features.
   via props.
 - Cards now accept 3 kind of buttons: `buttonPrimary`, `buttonSecondary`, and `buttonLink`. You must use at
   most 2 buttons at the same time.
-- Deprecated cards have a default `slotAlignment` of `bottom`. New cards have a default `slotAlignment` of
-  `content`. If you want to keep the previous behavior, you must set `slotAlignment="bottom"` explicitly.
 
 ## Migration Guide from mistica 12.x to mistica 13.x
 
