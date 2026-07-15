@@ -1,4 +1,4 @@
-name: Deprecate npm package version
+name: Deprecate mistica npm package
 
 on:
     workflow_dispatch:
