@@ -98,7 +98,7 @@ const Avatar = ({
                     boxSizing: 'border-box',
                     border,
                 }}
-                {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
+                {...getPrefixedDataAttributes({testid: 'Avatar', ...dataAttributes})}
             >
                 {shouldRenderImage ? (
                     <img

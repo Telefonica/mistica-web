@@ -71,7 +71,6 @@ export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Cov
             <InternalCard
                 ref={ref}
                 dataAttributes={{
-                    'component-name': 'CoverCard',
                     testid: 'CoverCard',
                     ...dataAttributes,
                 }}

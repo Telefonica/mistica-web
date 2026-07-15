@@ -176,7 +176,7 @@ const MaybeTouchableLogo = (
         dataAttributes?: DataAttributes;
     }> & {size: ByBreakpoint<number>}
 ): JSX.Element => {
-    const dataAttributes = getPrefixedDataAttributes(props.dataAttributes, 'Logo');
+    const dataAttributes = getPrefixedDataAttributes({testid: 'Logo', ...props.dataAttributes});
 
     if (props.to || props.href || props.onPress) {
         return <Touchable {...props} />;

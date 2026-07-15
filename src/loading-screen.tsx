@@ -358,7 +358,7 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
                     handleCloseEnd();
                 }}
                 animateText
-                dataAttributes={{'component-name': 'BrandLoadingScreen', ...dataAttributes}}
+                dataAttributes={{testid: 'BrandLoadingScreen', ...dataAttributes}}
             >
                 <BrandLoadingAnimation
                     isLoading={isLoading}

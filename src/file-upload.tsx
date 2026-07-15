@@ -465,7 +465,6 @@ const FileUpload = (props: Props): JSX.Element => {
         return (
             <div
                 {...getPrefixedDataAttributes({
-                    'component-name': 'FileUpload',
                     testid: 'FileUpload',
                     ...dataAttributes,
                 })}
@@ -502,10 +501,7 @@ const FileUpload = (props: Props): JSX.Element => {
     const assetClassName = withDropZone && isDragActive ? styles.assetScaleActive : '';
 
     return (
-        <Stack
-            space={16}
-            dataAttributes={{'component-name': 'FileUpload', testid: 'FileUpload', ...dataAttributes}}
-        >
+        <Stack space={16} dataAttributes={{testid: 'FileUpload', ...dataAttributes}}>
             <Stack space={4}>
                 <div {...dropZoneHandlers} className={contentClassName}>
                     {withDropZone && !disabled && (

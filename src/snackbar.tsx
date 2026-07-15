@@ -111,7 +111,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                             type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
                             {[styles.wrapperOpen]: isOpen}
                         )}
-                        {...getPrefixedDataAttributes(dataAttributes, 'SnackBar')}
+                        {...getPrefixedDataAttributes({testid: 'SnackBar', ...dataAttributes})}
                     >
                         <div
                             className={classNames(

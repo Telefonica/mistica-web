@@ -300,7 +300,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 aspectRatio={ratio}
                 width={props.width}
                 height={props.height}
-                dataAttributes={getPrefixedDataAttributes(dataAttributes, 'Video')}
+                dataAttributes={getPrefixedDataAttributes({testid: 'Video', ...dataAttributes})}
             >
                 <div
                     style={{

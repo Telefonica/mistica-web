@@ -106,7 +106,7 @@ const DateField = ({
                     <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'DateField', testid: 'DateField', ...dataAttributes}}
+            dataAttributes={{testid: 'DateField', ...dataAttributes}}
         />
     );
 
@@ -121,7 +121,7 @@ const DateField = ({
                 {...fieldProps}
                 optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalDateString(currentDate.toDate()))}
-                dataAttributes={{'component-name': 'DateField', testid: 'DateField', ...dataAttributes}}
+                dataAttributes={{testid: 'DateField', ...dataAttributes}}
             />
         </React.Suspense>
     );

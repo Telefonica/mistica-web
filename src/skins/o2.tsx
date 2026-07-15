@@ -637,6 +637,7 @@ export const getO2Skin: GetKnownSkin = () => {
             chip: '24px',
             tag: '24px',
             input: '12px',
+            legacyDisplay: '16px',
             popup: '8px',
             sheet: '16px',
             mediaSmall: '8px',

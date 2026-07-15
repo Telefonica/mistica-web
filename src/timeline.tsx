@@ -204,7 +204,7 @@ export const TimelineItem = ({
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
             aria-current={state === 'active' ? 'step' : undefined}
-            {...getPrefixedDataAttributes(dataAttributes, 'TimelineItem')}
+            {...getPrefixedDataAttributes({testid: 'TimelineItem', ...dataAttributes})}
         >
             <div className={styles.lineContainer}>
                 <div className={styles.asset} aria-hidden>
@@ -240,7 +240,7 @@ const Timeline = ({
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            {...getPrefixedDataAttributes(dataAttributes, 'Timeline')}
+            {...getPrefixedDataAttributes({testid: 'Timeline', ...dataAttributes})}
         >
             {children}
         </div>

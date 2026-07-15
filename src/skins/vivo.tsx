@@ -627,6 +627,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             chip: '24px',
             tag: '10px',
             input: '16px',
+            legacyDisplay: '24px',
             popup: '16px',
             sheet: '24px',
             mediaSmall: '12px',

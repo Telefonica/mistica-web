@@ -1,10 +1,10 @@
 name: deploy-fork-pr-preview
 on:
-  workflow_dispatch:
-    inputs:
-      prNumber:
-        description: 'Pull request number to deploy preview for'
-        required: true
+    workflow_dispatch:
+        inputs:
+            prNumber:
+                description: 'Pull request number to deploy preview for'
+                required: true
 
 permissions:
     contents: read

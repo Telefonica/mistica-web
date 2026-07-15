@@ -315,7 +315,7 @@ const MeterComponent = ({
             aria-live="polite"
             aria-valuetext={valueText}
             aria-hidden={ariaHidden}
-            {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
+            {...getPrefixedDataAttributes({testid: 'Meter', ...dataAttributes})}
         >
             <svg
                 viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
