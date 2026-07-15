@@ -26,7 +26,7 @@ Mistica 17 is a major release. Among other breaking changes, the `extra` prop fa
   been removed.
 - `NavigationBar.paddingX` prop. Use `wide` instead.
 - `RowList.ariaLabelledby` and `BoxedRowList.ariaLabelledby` props. Use `aria-labelledby` instead.
-- `Sheet.Icon` prop. Use `url` instead.
+- Sheet items no longer accept Icon components. Define icons using `url` and `urlDark` properties instead.
 - Card prop aliases: `button`, `actions`, `media`, `poster`, `imageUrl`, `backgroundImage`, `backgroundVideo`,
   `backgroundVideoRef`, and `secondaryButton`. Use the new card API with `buttonPrimary`, `buttonSecondary`,
   `imageSrc`, `imageSrcSet`, `videoSrc`, and related props.
