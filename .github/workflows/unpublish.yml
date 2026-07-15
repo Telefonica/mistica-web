@@ -1,4 +1,4 @@
-name: Unpublish
+name: Deprecate mistica npm version
 on:
     workflow_dispatch:
         inputs:
