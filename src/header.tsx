@@ -193,8 +193,6 @@ export const MainSectionHeader = ({
 };
 
 type HeaderLayoutProps = {
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
     breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
     /**
@@ -211,7 +209,6 @@ type HeaderLayoutProps = {
 };
 
 export const HeaderLayout = ({
-    isInverse = false,
     variant = 'default',
     breadcrumbs,
     header,
@@ -221,7 +218,7 @@ export const HeaderLayout = ({
     bleed = false,
     noPaddingY = false,
 }: HeaderLayoutProps): JSX.Element => {
-    const isBrandVariant = isInverse || variant === 'brand';
+    const isBrandVariant = variant === 'brand';
     const isBleedActivated = bleed && isBrandVariant && extra;
 
     const mainContent = (
@@ -281,20 +278,17 @@ export const HeaderLayout = ({
 };
 
 type MainSectionHeaderLayoutProps = {
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
     children: RendersElement<typeof MainSectionHeader>;
     dataAttributes?: DataAttributes;
 };
 
 export const MainSectionHeaderLayout = ({
-    isInverse = false,
     variant = 'default',
     children,
     dataAttributes,
 }: MainSectionHeaderLayoutProps): JSX.Element => {
-    const isBrandVariant = isInverse || variant === 'brand';
+    const isBrandVariant = variant === 'brand';
     useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout

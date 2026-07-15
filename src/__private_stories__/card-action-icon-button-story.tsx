@@ -54,7 +54,7 @@ export const Default: StoryComponent = () => {
                 You can use CardActionIconButton component to add top actions to most mistica cards:
             </Text2>
             <DataCard
-                actions={[
+                topActions={[
                     <CardActionIconButton
                         key="1"
                         Icon={IconMobileDeviceRegular}
@@ -75,7 +75,7 @@ export const Default: StoryComponent = () => {
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                button={
+                buttonPrimary={
                     <ButtonPrimary small onPress={() => {}}>
                         Action
                     </ButtonPrimary>

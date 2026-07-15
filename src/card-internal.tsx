@@ -34,7 +34,6 @@ import type {
     DataAttributes,
     HeadingType,
     IconProps,
-    RendersElement,
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
@@ -51,9 +50,6 @@ export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | nu
 export type CardType = 'data' | 'media' | 'cover' | 'naked';
 export type CardSize = 'snap' | 'default' | 'display';
 export type MediaPosition = 'top' | 'left' | 'right';
-
-/** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
-export type DeprecatedMediaProp = RendersElement<typeof Image> | RendersElement<typeof Video>;
 
 export type SlotAlignment = 'content' | 'bottom' | 'space-between';
 
@@ -90,8 +86,6 @@ type ButtonsProps = {
 };
 
 type MediaProps = {
-    /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
-    media?: DeprecatedMediaProp;
     backgroundColor?: string;
     imageSrc?: string;
     imageSrcSet?: string;
@@ -1303,7 +1297,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             imageFit = 'fill-center',
             videoSrc,
             videoRef,
-            media,
             mediaAspectRatio: mediaAspectRatioProp = 'auto',
             mediaPosition: mediaPositionProp = 'top',
             mediaWidth = 150,
@@ -1368,9 +1361,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const typeAllowsMedia = type === 'media' || type === 'naked';
         const hasMediaImage = typeAllowsMedia && (imageSrc !== undefined || imageSrcSet !== undefined);
         const hasMediaVideo = typeAllowsMedia && videoSrc !== undefined;
-        const hasMediaSources = hasMediaImage || hasMediaVideo;
-        const hasDeprecatedMedia = typeAllowsMedia && !!media && !hasMediaSources;
-        const hasMedia = hasMediaSources || hasDeprecatedMedia;
+        const hasMedia = hasMediaImage || hasMediaVideo;
         const isNaked = type === 'naked';
 
         // If no media is provided, we use the "top" media position to simplify logic
@@ -1547,22 +1538,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                             shouldShowFooter || isNaked ? 0 : `calc(${borderRadius} - 1px)`,
                     }}
                 >
-                    {hasDeprecatedMedia && (
-                        <div
-                            style={{
-                                // for some reason, this width is required to pass headless screenshot tests
-                                // otherwise, it gets 0px width and the media is not visible
-                                width: '100%',
-                                ...(type === 'naked'
-                                    ? undefined
-                                    : applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})),
-                            }}
-                        >
-                            {media}
-                        </div>
-                    )}
-                    {hasDeprecatedMedia && <Asset absolute size={size} asset={asset} type={type} />}
-
                     {hasMedia && (
                         <Media
                             type={type}

@@ -193,13 +193,10 @@ interface NavigationBarCommonProps {
 
 interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
     topFixed?: true;
-    paddingX?: undefined;
 }
 
 interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
     topFixed: false;
-    /** @deprecated use wide */
-    paddingX?: number;
 }
 
 type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
@@ -211,7 +208,6 @@ export const NavigationBar = ({
     right,
     variant = 'default',
     topFixed = true,
-    paddingX = 0,
     withBorder = true,
     wide = false,
 }: NavigationBarProps): JSX.Element => {
@@ -236,14 +232,10 @@ export const NavigationBar = ({
     );
 
     const calcPaddingXWhenNotTopFixed = (): BoxProps['paddingX'] => {
-        if (wide !== undefined) {
-            if (typeof wide !== 'object') {
-                return 0;
-            }
-            return wide.paddingX ?? 0;
+        if (typeof wide !== 'object') {
+            return 0;
         }
-
-        return paddingX as BoxProps['paddingX'];
+        return wide.paddingX ?? 0;
     };
 
     const normalizedVariant = normalizeVariant(variant);

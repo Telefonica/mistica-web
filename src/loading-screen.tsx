@@ -248,8 +248,6 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 );
 
 type LoadingScreenProps = {
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
     isLoading?: boolean;
     onClose?: () => void;
@@ -262,8 +260,8 @@ export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps
         <BaseLoadingScreen
             ref={ref}
             {...props}
-            variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
-            dataAttributes={{testid: 'LoadingScreen', ...props.dataAttributes}}
+            variant={props.variant ?? 'default'}
+            dataAttributes={{'component-name': 'LoadingScreen', ...props.dataAttributes}}
             animateBackground
         />
     );

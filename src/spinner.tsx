@@ -12,8 +12,6 @@ type Props = {
     color?: string;
     delay?: string;
     size?: number | string;
-    /** @deprecated Use aria-hidden instead */
-    rolePresentation?: boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
     'aria-label'?: string;
     'aria-live'?: 'off' | 'polite' | 'assertive';
@@ -26,7 +24,6 @@ const Spinner = ({
     delay = '500ms',
     size = 24,
     style,
-    rolePresentation,
     'aria-hidden': ariaHidden,
     'aria-label': ariaLabel,
     'aria-live': ariaLive = 'polite',
@@ -52,7 +49,7 @@ const Spinner = ({
                 role="progressbar"
                 aria-live={ariaLive}
                 aria-label={label}
-                aria-hidden={ariaHidden || rolePresentation}
+                aria-hidden={ariaHidden}
                 viewBox="0 0 30 30"
                 width={size}
             >
@@ -100,7 +97,7 @@ const Spinner = ({
                 </g>
             </svg>
         ) : (
-            <div aria-hidden={ariaHidden || rolePresentation} aria-live={ariaLive}>
+            <div aria-hidden={ariaHidden} aria-live={ariaLive}>
                 <svg
                     role="progressbar"
                     aria-label={label}

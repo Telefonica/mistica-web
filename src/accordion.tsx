@@ -315,19 +315,15 @@ export const Accordion = ({
 };
 
 interface BoxedAccordionItemProps extends AccordionItemContentProps {
-    /**
-     * @deprecated Use `variant="brand"` instead.
-     */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
 }
 
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
-    ({dataAttributes, isInverse, variant, ...props}, ref) => (
+    ({dataAttributes, variant, ...props}, ref) => (
         <InternalBoxed
             overflow="visible"
             className={styles.boxed}
-            variant={variant ?? (isInverse ? 'brand' : 'default')}
+            variant={variant ?? 'default'}
             ref={ref}
             dataAttributes={{testid: 'BoxedAccordionItem', ...dataAttributes}}
         >

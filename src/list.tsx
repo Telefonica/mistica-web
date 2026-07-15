@@ -768,20 +768,15 @@ type RowListProps = {
     children: React.ReactNode;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    /**
-     * @deprecated Use 'aria-labelledby' instead. This will be removed in a future release.
-     */
-    ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 } & CommonAccessibilityProps;
 
 export const RowList = ({
     children,
-    ariaLabelledby,
     role = 'list',
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy = ariaLabelledby,
+    'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
@@ -812,29 +807,17 @@ export const RowList = ({
     );
 };
 
-// danger + isInverse is not allowed
+// danger + variant="brand" is not allowed
 type CommonBoxedRowProps =
     | {
-          /**
-           * @deprecated Use variant instead
-           */
-          isInverse?: false;
           variant?: 'default';
           danger: true;
       }
     | {
-          /**
-           * @deprecated Use variant instead
-           */
-          isInverse?: boolean;
           variant?: 'brand' | 'default';
           danger?: false;
       }
     | {
-          /**
-           * @deprecated Use variant instead
-           */
-          isInverse?: false;
           variant?: 'default';
           danger: boolean;
       };
@@ -855,7 +838,7 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
     <InternalBoxed
         overflow="visible"
         className={styles.boxed}
-        variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
+        variant={props.variant ?? 'default'}
         ref={ref}
         dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
     >
@@ -867,21 +850,16 @@ type BoxedRowListProps = {
     children: React.ReactNode;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    /**
-     * @deprecated Use 'aria-labelledby' instead. This will be removed in a future release.
-     */
-    ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 } & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
     children,
-    ariaLabelledby,
     role = 'list',
     dataAttributes,
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy = ariaLabelledby,
+    'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
 }: BoxedRowListProps): JSX.Element => (

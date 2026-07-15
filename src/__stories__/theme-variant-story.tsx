@@ -7,7 +7,7 @@ import {
     Box,
     Callout,
     Inline,
-    HighlightedCard,
+    MediaCard,
     Tag,
     Chip,
     ButtonPrimary,
@@ -97,27 +97,32 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({vari
                                 }
                             />
                             <Inline space={16}>
-                                <HighlightedCard
-                                    isInverse={false}
+                                <MediaCard
+                                    size="default"
+                                    mediaPosition="right"
+                                    mediaWidth={100}
                                     title="Card title"
                                     description="Card description"
-                                    imageUrl={personPortraitImg}
+                                    imageSrc={personPortraitImg}
                                     imageFit="fill"
                                     onClose={() => {}}
-                                    button={
+                                    buttonPrimary={
                                         <ButtonPrimary href="#" small>
                                             Action
                                         </ButtonPrimary>
                                     }
                                 />
-                                <HighlightedCard
-                                    isInverse
+                                <MediaCard
+                                    size="default"
+                                    mediaPosition="right"
+                                    mediaWidth={100}
+                                    variant="brand"
                                     title="Inverse card title"
                                     description="Card description"
-                                    imageUrl={personPortraitImg}
+                                    imageSrc={personPortraitImg}
                                     imageFit="fill"
                                     onClose={() => {}}
-                                    button={
+                                    buttonPrimary={
                                         <ButtonPrimary href="#" small>
                                             Action
                                         </ButtonPrimary>
