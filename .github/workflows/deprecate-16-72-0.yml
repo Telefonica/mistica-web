@@ -1,0 +1,19 @@
+name: Deprecate 16.72.0 release
+
+on:
+    workflow_dispatch:
+
+jobs:
+    deprecate:
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '18'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Deprecate 16.72.0
+              run: npm deprecate -f @telefonica/mistica@16.72.0 "This version was released by mistake. Use 16.71.0 or wait for 17.0.0"
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
