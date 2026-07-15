@@ -186,6 +186,7 @@
         "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json,html}": "prettier --write"
     },
     "release": {
+        "preset": "angular",
         "plugins": [
             "@semantic-release/commit-analyzer",
             "@semantic-release/release-notes-generator",
