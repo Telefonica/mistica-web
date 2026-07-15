@@ -63,7 +63,7 @@ type Args = {
     oneLineTitle: boolean;
     oneLineSubtitle: boolean;
     oneLineDescription: boolean;
-    extra: boolean;
+    slot: boolean;
     disabled: boolean;
     danger: boolean;
     variantOutside: Variant;
@@ -88,7 +88,7 @@ const Template: StoryComponent<
     oneLineTitle,
     oneLineSubtitle,
     oneLineDescription,
-    extra,
+    slot,
     disabled,
     variant,
     variantOutside,
@@ -96,7 +96,7 @@ const Template: StoryComponent<
     'aria-live': ariaLive,
     'aria-atomic': ariaAtomic,
 }) => {
-    const extraContent = extra ? <Placeholder height={56} /> : undefined;
+    const extraContent = slot ? <Placeholder height={56} /> : undefined;
 
     const getControlProps = (index: number) => {
         let controlProps: any = {};
@@ -263,7 +263,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -280,7 +280,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -301,7 +301,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -318,7 +318,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -335,7 +335,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -352,7 +352,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -369,7 +369,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -386,7 +386,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -403,7 +403,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -438,7 +438,7 @@ const defaultArgs = {
     oneLineTitle: false,
     oneLineSubtitle: false,
     oneLineDescription: false,
-    extra: false,
+    slot: false,
     disabled: false,
     danger: false,
     variantOutside: 'default',

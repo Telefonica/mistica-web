@@ -24,7 +24,7 @@ test.each(getCases())(
         const page = await openStoryPage({
             id: 'components-tooltip--default',
             device: 'DESKTOP',
-            args: {position, targetHorizontalPosition, targetVerticalPosition, extra: true},
+            args: {position, targetHorizontalPosition, targetVerticalPosition, slot: true},
         });
 
         await page.click(await screen.findByTestId('target'));

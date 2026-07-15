@@ -159,7 +159,7 @@ export const InsideCard: StoryComponent = () => {
             </Text2>
             <DataCard
                 title="Data card"
-                extra={
+                slot={
                     <div style={{display: 'flex', justifyContent: 'right'}}>
                         <Menu
                             position="right"

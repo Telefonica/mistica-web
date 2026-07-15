@@ -46,7 +46,7 @@ export interface ConfirmProps extends BaseDialogProps {
 export interface ExtendedDialogProps extends BaseDialogProps {
     asset?: React.ReactElement;
     subtitle?: string;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     cancelText?: string;
     onCancel?: () => void;
     link?: RendersNullableElement<typeof ButtonLink>;
@@ -66,7 +66,7 @@ const InternalDialog = (props: InternalDialogProps) => {
         title,
         message,
         asset,
-        extra,
+        slot,
         showCancelButton,
         showAcceptButton,
         cancelText = texts.dialogCancelButton || t(tokens.dialogCancelButton),
@@ -111,7 +111,7 @@ const InternalDialog = (props: InternalDialogProps) => {
                     <Text3 color={vars.colors.textSecondary} regular>
                         {message}
                     </Text3>
-                    {extra}
+                    {slot}
                 </Stack>
             </div>
 

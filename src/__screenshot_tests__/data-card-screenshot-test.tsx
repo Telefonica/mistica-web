@@ -43,11 +43,11 @@ test('DataCard group', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('DataCard with extra content', async () => {
+test('DataCard with slot content', async () => {
     const page = await openStoryPage({
         id: 'private-deprecated-card-stories-datacard--default',
         device: 'MOBILE_IOS',
-        args: {extra: true},
+        args: {slot: true},
     });
 
     const image = await page.screenshot({fullPage: true});

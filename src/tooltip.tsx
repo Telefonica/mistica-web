@@ -139,7 +139,7 @@ const getFinalPosition = (
 
 type Props = {
     children?: React.ReactNode;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     description?: string;
     target: React.ReactNode;
     targetStyle?: React.CSSProperties;
@@ -619,7 +619,7 @@ export const BaseTooltip = ({
 
 const Tooltip = ({
     centerContent,
-    extra,
+    slot,
     children,
     dataAttributes,
     title,
@@ -636,7 +636,7 @@ const Tooltip = ({
                             {description && <Text2 regular>{description}</Text2>}
                         </Stack>
                     )}
-                    {extra ?? children}
+                    {slot ?? children}
                 </div>
             }
             centerContent={centerContent}

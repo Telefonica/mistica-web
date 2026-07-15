@@ -6,7 +6,7 @@ test.each(POPOVER_POSITIONS)('Popover - position = %s', async (position) => {
     const page = await openStoryPage({
         id: 'components-popover--default',
         device: 'DESKTOP',
-        args: {position, extra: true},
+        args: {position, slot: true},
     });
 
     await page.click(await screen.findByTestId('target'));

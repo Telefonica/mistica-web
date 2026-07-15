@@ -54,7 +54,7 @@ export const InsideFixedContainer: StoryComponent = () => {
                     }
                     title="Title"
                     description="Description"
-                    extra={<Placeholder />}
+                    slot={<Placeholder />}
                 />
             </div>
         </Stack>

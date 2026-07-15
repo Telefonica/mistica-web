@@ -23,7 +23,7 @@ type SuccessArgs = {
     title: string;
     description: string;
     multipleParagraphs: boolean;
-    extra: boolean;
+    slot: boolean;
 };
 
 export const Success: StoryComponent<SuccessArgs> = ({
@@ -32,7 +32,7 @@ export const Success: StoryComponent<SuccessArgs> = ({
     title,
     description,
     multipleParagraphs,
-    extra,
+    slot,
 }) => (
     <SuccessFeedbackScreen
         title={title}
@@ -41,7 +41,7 @@ export const Success: StoryComponent<SuccessArgs> = ({
         secondaryButton={<ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>}
         imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
-        extra={extra ? <Placeholder /> : undefined}
+        slot={slot ? <Placeholder /> : undefined}
     />
 );
 Success.storyName = 'SuccessFeedbackScreen';
@@ -51,5 +51,5 @@ Success.args = {
     title: "I'm the title",
     description: "I'm the description",
     multipleParagraphs: false,
-    extra: false,
+    slot: false,
 };
