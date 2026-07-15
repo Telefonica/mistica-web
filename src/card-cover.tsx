@@ -72,7 +72,6 @@ export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Cov
             <InternalCard
                 ref={ref}
                 dataAttributes={{
-                    'component-name': 'CoverCard',
                     testid: 'CoverCard',
                     ...dataAttributes,
                 }}
@@ -191,7 +190,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Po
                 size={size}
                 variant={variant || (isInverse ? 'inverse' : undefined)}
                 dataAttributes={{
-                    'component-name': 'PosterCard',
                     testid: 'PosterCard',
                     ...dataAttributes,
                 }}
@@ -231,7 +229,6 @@ export const DisplayMediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableC
                 size="display"
                 buttonSecondary={buttonSecondary || secondaryButton}
                 dataAttributes={{
-                    'component-name': 'DisplayMediaCard',
                     testid: 'DisplayMediaCard',
                     ...dataAttributes,
                 }}

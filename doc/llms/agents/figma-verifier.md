@@ -37,10 +37,10 @@ rules before starting.
      `font-family`, composite props that don't match the non-CodeConnect DOM, spacing values absent from the
      DOM, mismatched semantic structure (`Stack` vs `Inline`, flat vs nested), native HTML where a Mistica
      primitive exists, wrong/missing skin/font/body-background for the file's brand.
-   - **Layout primitives.** When the DOM shows `grid grid-cols-[repeat(12,…)]` with `col-[…/span_N]`
-     children, flag any implementation that used a raw `<div style={{display:'grid'}}>`, a fixed-width flex
-     row, `Grid`, or manual spacer columns instead of a `GridLayout` whose `template` matches the child
-     spans. Flag a `GridLayout` that is not wrapped in a `ResponsiveLayout`, and a full-width padded section
+   - **Layout primitives.** When the DOM shows `grid grid-cols-[repeat(12,…)]` with `col-[…/span_N]` children,
+     flag any implementation that used a raw `<div style={{display:'grid'}}>`, a fixed-width flex row, `Grid`,
+     or manual spacer columns instead of a `GridLayout` whose `template` matches the child spans. Flag a
+     `GridLayout` that is not wrapped in a `ResponsiveLayout`, and a full-width padded section
      (`px-[48/32/16px]`) implemented without a `ResponsiveLayout`. Conversely, flag double-wrapping a
      component that embeds its own `ResponsiveLayout` (`MainNavigationBar`, `NavigationBar`, `Tabs`).
 

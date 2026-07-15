@@ -56,7 +56,7 @@ export const ProgressBar = ({
 
     return (
         <div
-            {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
+            {...getPrefixedDataAttributes({testid: 'ProgressBar', ...dataAttributes})}
             className={styles.barBackground[themeVariant]}
             {...a11yProps}
         >
@@ -132,7 +132,7 @@ export const ProgressBarStepped = ({
 
     return (
         <div
-            {...getPrefixedDataAttributes(dataAttributes, 'ProgressBarStepped')}
+            {...getPrefixedDataAttributes({testid: 'ProgressBarStepped', ...dataAttributes})}
             role="progressbar"
             {...a11yProps}
             className={styles.progressBarSteppedContainer}

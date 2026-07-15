@@ -248,7 +248,7 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
             <AccordionItemContent
                 {...props}
                 ref={ref}
-                dataAttributes={{'component-name': 'AccordionItem', ...dataAttributes}}
+                dataAttributes={{testid: 'AccordionItem', ...dataAttributes}}
             />
         </div>
     )
@@ -297,7 +297,7 @@ export const Accordion = ({
         <AccordionContext.Provider value={{index: indexList, toggle}}>
             <div
                 role={role}
-                {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
+                {...getPrefixedDataAttributes({testid: 'Accordion', ...dataAttributes, accordion: true})}
             >
                 {childrenContent.map((child, index) => (
                     <React.Fragment key={index}>
@@ -329,7 +329,7 @@ export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordio
             className={styles.boxed}
             variant={variant ?? (isInverse ? 'brand' : 'default')}
             ref={ref}
-            dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
+            dataAttributes={{testid: 'BoxedAccordionItem', ...dataAttributes}}
         >
             <AccordionItemContent {...props} />
         </InternalBoxed>
@@ -357,7 +357,7 @@ export const BoxedAccordion = ({
             <Stack
                 space={16}
                 role={role}
-                dataAttributes={{'component-name': 'BoxedAccordion', accordion: true, ...dataAttributes}}
+                dataAttributes={{testid: 'BoxedAccordion', accordion: true, ...dataAttributes}}
             >
                 {children}
             </Stack>

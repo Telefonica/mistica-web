@@ -640,7 +640,7 @@ const Tooltip = ({
                 </div>
             }
             centerContent={centerContent}
-            dataAttributes={{'component-name': 'Tooltip', ...dataAttributes}}
+            dataAttributes={{testid: 'Tooltip', ...dataAttributes}}
             {...props}
         />
     );

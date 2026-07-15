@@ -159,7 +159,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-disabled={disabled}
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : labelId}
-            {...getPrefixedDataAttributes(props.dataAttributes, 'Switch')}
+            {...getPrefixedDataAttributes({testid: 'Switch', ...props.dataAttributes})}
         >
             {props.render ? (
                 <>

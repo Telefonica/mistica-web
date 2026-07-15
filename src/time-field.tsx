@@ -91,7 +91,7 @@ const TimeField = ({
                     <IconTimeRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'TimeField', testid: 'TimeField', ...dataAttributes}}
+            dataAttributes={{testid: 'TimeField', ...dataAttributes}}
         />
     );
 };

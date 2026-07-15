@@ -127,7 +127,7 @@ const Spinner = ({
         return content;
     }
     return (
-        <FadeIn delay={delay} dataAttributes={{'component-name': 'Spinner'}}>
+        <FadeIn delay={delay} dataAttributes={{testid: 'Spinner'}}>
             {content}
         </FadeIn>
     );

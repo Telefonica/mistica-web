@@ -135,7 +135,7 @@ const Inline = ({
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
-            {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
+            {...getPrefixedDataAttributes({testid: 'Inline', ...dataAttributes})}
         >
             {React.Children.map(childrenArray, (child, index) => {
                 return (

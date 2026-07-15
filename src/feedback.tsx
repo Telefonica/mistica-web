@@ -314,7 +314,6 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
             dataAttributes={{
-                'component-name': 'SuccessFeedbackScreen',
                 testid: 'SuccessFeedbackScreen',
                 ...dataAttributes,
             }}
@@ -338,7 +337,6 @@ export const ErrorFeedbackScreen = ({
             asset={<IconError size="100%" />}
             animateText
             dataAttributes={{
-                'component-name': 'ErrorFeedbackScreen',
                 testid: 'ErrorFeedbackScreen',
                 ...dataAttributes,
             }}
@@ -368,7 +366,6 @@ export const InfoFeedbackScreen = ({
     return (
         <FeedbackScreen
             dataAttributes={{
-                'component-name': 'InfoFeedbackScreen',
                 testid: 'InfoFeedbackScreen',
                 ...dataAttributes,
             }}
@@ -422,6 +419,6 @@ export const SuccessFeedback = ({
         ),
         imageFit,
         imageUrl,
-        dataAttributes: {'component-name': 'SuccessFeedback', testid: 'SuccessFeedback', ...dataAttributes},
+        dataAttributes: {testid: 'SuccessFeedback', ...dataAttributes},
     });
 };

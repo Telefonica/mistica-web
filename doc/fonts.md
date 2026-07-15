@@ -8,15 +8,15 @@ default serif font (Times New Roman on desktop). You must declare `@font-face` r
 
 Each skin has a designated font family. Use the correct one for the skin your app is using:
 
-| Skin                  | Getter function          | Font family         |
-| --------------------- | ------------------------ | ------------------- |
-| `movistar` _(legacy)_ | `getMovistarSkin()`      | `'On Air'`          |
-| `o2`                  | `getO2Skin()`            | `'On Air'`          |
-| `vivo`                | `getVivoSkin()`          | `'Vivo Type'`       |
-| `vivo-evolution`      | `getVivoEvolutionSkin()` | `'Vivo Type'`       |
-| `telefonica`          | `getTelefonicaSkin()`    | `'Telefonica Sans'` |
-| `blau`                | `getBlauSkin()`          | `'Roboto'`          |
-| `esimflag`            | `getEsimflagSkin()`      | `'On Air'`          |
+| Skin             | Getter function          | Font family         |
+| ---------------- | ------------------------ | ------------------- |
+| `movistar`       | `getMovistarSkin()`      | `'Movistar Sans'`   |
+| `o2`             | `getO2Skin()`            | `'On Air'`          |
+| `vivo`           | `getVivoSkin()`          | `'Vivo Type'`       |
+| `vivo-evolution` | `getVivoEvolutionSkin()` | `'Vivo Type'`       |
+| `telefonica`     | `getTelefonicaSkin()`    | `'Telefonica Sans'` |
+| `blau`           | `getBlauSkin()`          | `'Roboto'`          |
+| `esimflag`       | `getEsimflagSkin()`      | `'On Air'`          |
 
 ## Setting font-family
 

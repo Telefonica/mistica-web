@@ -86,7 +86,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 type="data"
                 size={size}
                 dataAttributes={{
-                    'component-name': 'DataCard',
                     testid: 'DataCard',
                     ...dataAttributes,
                 }}
@@ -112,7 +111,6 @@ export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Fixe
             <DataCard
                 size="snap"
                 dataAttributes={{
-                    'component-name': 'SnapCard',
                     testid: 'SnapCard',
                     ...dataAttributes,
                 }}
@@ -138,7 +136,6 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCa
             <DataCard
                 size="display"
                 dataAttributes={{
-                    'component-name': 'DisplayDataCard',
                     testid: 'DisplayDataCard',
                     ...dataAttributes,
                 }}

@@ -300,7 +300,7 @@ export const Pagination = ({
             className={classnames(styles.container, {
                 [styles.containerNavOnly]: hidePageList,
             })}
-            {...getPrefixedDataAttributes(dataAttributes, 'Pagination')}
+            {...getPrefixedDataAttributes({testid: 'Pagination', ...dataAttributes})}
         >
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (

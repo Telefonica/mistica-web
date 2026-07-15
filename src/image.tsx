@@ -322,7 +322,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
             aspectRatio={ratio}
             width={props.width}
             height={props.height}
-            dataAttributes={getPrefixedDataAttributes(props.dataAttributes, 'Image')}
+            dataAttributes={getPrefixedDataAttributes({testid: 'Image', ...props.dataAttributes})}
             // @ts-expect-error forceNonCssAspectRatio is intentionally not included in the props type and should only be used for testing purposes
             forceNonCssAspectRatio={(props as any).forceNonCssAspectRatio}
         >

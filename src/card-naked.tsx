@@ -22,7 +22,6 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Nak
         return (
             <InternalCard
                 dataAttributes={{
-                    'component-name': 'NakedCard',
                     testid: 'NakedCard',
                     ...dataAttributes,
                 }}
@@ -49,7 +48,6 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCar
         return (
             <NakedCard
                 dataAttributes={{
-                    'component-name': 'SmallNakedCard',
                     testid: 'SmallNakedCard',
                     ...dataAttributes,
                 }}

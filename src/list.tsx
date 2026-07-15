@@ -754,11 +754,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
         <div role={role} className={styles.row}>
-            <RowContent
-                {...props}
-                ref={ref}
-                dataAttributes={{'component-name': 'Row', testid: 'Row', ...dataAttributes}}
-            />
+            <RowContent {...props} ref={ref} dataAttributes={{testid: 'Row', ...dataAttributes}} />
         </div>
     )
 );
@@ -800,7 +796,7 @@ export const RowList = ({
             aria-label={ariaLabel}
             aria-live={ariaLive}
             aria-atomic={ariaAtomic}
-            {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
+            {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
         >
             {childrenContent.map((child, index) => (
                 <React.Fragment key={index}>
@@ -861,7 +857,7 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
         className={styles.boxed}
         variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
         ref={ref}
-        dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
+        dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
     </InternalBoxed>
@@ -896,7 +892,7 @@ export const BoxedRowList = ({
         aria-labelledby={ariaLabelledBy}
         aria-live={ariaLive}
         aria-atomic={ariaAtomic}
-        dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
+        dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
     >
         {children}
     </Stack>
