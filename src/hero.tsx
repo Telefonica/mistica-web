@@ -204,7 +204,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                 <ResetResponsiveLayout>
                     <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                         <div
-                            {...getPrefixedDataAttributes(dataAttributes, 'Hero')}
+                            {...getPrefixedDataAttributes({testid: 'Hero', ...dataAttributes})}
                             ref={ref}
                             style={{
                                 ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
@@ -263,7 +263,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         return (
             <div
-                {...getPrefixedDataAttributes(dataAttributes, 'Hero')}
+                {...getPrefixedDataAttributes({testid: 'Hero', ...dataAttributes})}
                 ref={ref}
                 style={{
                     ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh

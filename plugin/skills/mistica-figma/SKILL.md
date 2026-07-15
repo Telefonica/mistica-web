@@ -98,16 +98,16 @@ section fills to cover the screen.
 
 ### Never ship a default white fill
 
-`figma.createFrame()` returns a frame with a default **opaque white fill**. This also applies to frames you later
-turn into auto-layout by setting `layoutMode`. That fill is unbound `#FFFFFF`: it blends into a white page in
-light mode but stays white when the skin switches to dark mode, producing white blocks. This survives most
-often on intermediate **arrangement / container** frames (page headers, KPI rows, section headers), not just
-screen frames.
+`figma.createFrame()` returns a frame with a default **opaque white fill**. This also applies to frames you
+later turn into auto-layout by setting `layoutMode`. That fill is unbound `#FFFFFF`: it blends into a white
+page in light mode but stays white when the skin switches to dark mode, producing white blocks. This survives
+most often on intermediate **arrangement / container** frames (page headers, KPI rows, section headers), not
+just screen frames.
 
 The rule: every frame you create — screen, section, or arrangement — must immediately either be set to
 `fills = []` (transparent, letting the screen background show through) or have its fill bound to a Skins
-background variable (`background` / `backgroundContainer`). Never leave the `createFrame`
-default white fill in place (including on frames you later set to auto-layout).
+background variable (`background` / `backgroundContainer`). Never leave the `createFrame` default white fill
+in place (including on frames you later set to auto-layout).
 
 **Validation step.** After building, scan the new tree for SOLID near-white fills with no bound variable
 (`!node.boundVariables?.fills`) and rebind or clear each hit before finishing.

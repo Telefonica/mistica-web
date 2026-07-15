@@ -112,7 +112,7 @@ const FormDateField = ({
                     <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'DateTimeField', testid: 'DateTimeField', ...dataAttributes}}
+            dataAttributes={{testid: 'DateTimeField', ...dataAttributes}}
         />
     );
 
@@ -129,7 +129,6 @@ const FormDateField = ({
                 withTime
                 isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
                 dataAttributes={{
-                    'component-name': 'DateTimeField',
                     testid: 'DateTimeField',
                     ...dataAttributes,
                 }}

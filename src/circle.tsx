@@ -42,7 +42,7 @@ const Circle = ({
                     : `center / cover no-repeat ${imageStyle} ${backgroundColor || ''}`,
                 border: borderProp,
             }}
-            {...getPrefixedDataAttributes(dataAttributes, 'Circle')}
+            {...getPrefixedDataAttributes({testid: 'Circle', ...dataAttributes})}
         >
             {children}
         </div>

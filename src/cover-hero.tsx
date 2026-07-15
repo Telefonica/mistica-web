@@ -199,7 +199,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
 
         return (
             <section
-                {...getPrefixedDataAttributes(dataAttributes, 'CoverHero')}
+                {...getPrefixedDataAttributes({testid: 'CoverHero', ...dataAttributes})}
                 aria-label={ariaLabel}
                 ref={ref}
                 className={classnames(styles.coverHeroContainer, {

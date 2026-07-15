@@ -240,7 +240,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 aria-description={ariaDescription}
                 aria-describedby={ariaDescribedby}
                 className={classnames(styles.container)}
-                {...getPrefixedDataAttributes(dataAttributes, 'InternalCard')}
+                {...getPrefixedDataAttributes({testid: 'InternalCard', ...dataAttributes})}
                 style={{
                     width: width || '100%',
                     height: height || '100%',

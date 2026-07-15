@@ -232,7 +232,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
 
     return (
         <div
-            {...getPrefixedDataAttributes({'component-name': 'PageBullets', testid: 'PageBullets'})}
+            {...getPrefixedDataAttributes({testid: 'PageBullets'})}
             className={classNames(styles.bulletsScrollableContainerBase, {
                 [styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS,
             })}
@@ -810,7 +810,6 @@ const BaseCarousel = ({
     return (
         <div
             {...getPrefixedDataAttributes({
-                'component-name': 'Carousel',
                 testid: 'Carousel',
                 ...dataAttributes,
             })}
@@ -1230,7 +1229,7 @@ export const Slideshow = ({
                     className={classNames(styles.slideshowContainer, {
                         [styles.slideshowWithBullets]: !!withBullets,
                     })}
-                    {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+                    {...getPrefixedDataAttributes({testid: 'SlideShow', ...dataAttributes})}
                 >
                     {items.length > 1 &&
                         (withControls ? (

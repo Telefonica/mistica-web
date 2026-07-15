@@ -76,7 +76,7 @@ const Popover = ({
             onClose={onClose}
             closeButtonLabel={closeButtonLabel}
             trackingEvent={trackingEvent}
-            dataAttributes={{'component-name': 'Popover', ...dataAttributes}}
+            dataAttributes={{testid: 'Popover', ...dataAttributes}}
             {...props}
         />
     );

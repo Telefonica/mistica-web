@@ -81,7 +81,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                 variant="default"
                 size={size}
                 dataAttributes={{
-                    'component-name': 'MediaCard',
                     testid: 'MediaCard',
                     ...dataAttributes,
                 }}

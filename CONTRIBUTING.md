@@ -30,24 +30,28 @@ PR title must follow the [Conventional Commits](https://www.conventionalcommits.
 ```
 
 - **type**: the kind of change (see the allowed subset below).
-- **scope**: the affected **component name** (for example `TextField`, `Dialog`). For internal
-  changes that do not touch a component, use `Chore` as the scope.
+- **scope**: the affected **component name** (for example `TextField`, `Dialog`). For internal changes that do
+  not touch a component, use `Chore` as the scope.
 - **subject**: a concise, imperative description of the change.
 - Add the `AI` label when the code was written by an AI agent.
 
 #### Allowed types (the supported subset)
 
-Conventional Commits defines many types, but this repository intentionally supports only a subset. The allowlist is enforced by the `validate-pr-title` job in
+Conventional Commits defines many types, but this repository intentionally supports only a subset. The
+allowlist is enforced by the `validate-pr-title` job in
 [`.github/workflows/ci.yml`](./.github/workflows/ci.yml#L108):
 
 - fix
 - feat
 - chore
 - revert
+
 ### PR Description
+
 Concise summary of the problem and fix, ending with `Ref: <ISSUE-ID>`;
 
 ### Reviewers
+
 Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every PR.
 
 ## Bug reports
