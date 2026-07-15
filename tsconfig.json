@@ -84,7 +84,8 @@
             "@testing-library/jest-dom",
             "./deprecated-types.d.ts",
             "@types/jest-image-snapshot",
-            "@types/jest-environment-puppeteer"
+            "@types/jest-environment-puppeteer",
+            "@figma/code-connect/figma-types"
         ]
     },
 

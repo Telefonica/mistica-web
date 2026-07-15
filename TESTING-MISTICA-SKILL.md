@@ -15,8 +15,8 @@ There are two ways to put it to work:
 2. **Have Claude prepare a run prompt.** Ask Claude to read this file and draft the single task prompt plus
    the per-arm setup, so a human can launch the runs.
 
-Either way, the principles in this document are the contract, and you must verify that Claude does what you expect it
-to do.
+Either way, the principles in this document are the contract, and you must verify that Claude does what you
+expect it to do.
 
 ---
 

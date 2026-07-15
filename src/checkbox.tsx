@@ -158,7 +158,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
-            {...getPrefixedDataAttributes(props.dataAttributes, 'Checkbox')}
+            {...getPrefixedDataAttributes({testid: 'Checkbox', ...props.dataAttributes})}
         >
             {props.render ? (
                 props.render({

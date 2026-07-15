@@ -320,7 +320,7 @@ const PinField = ({
             role="group"
             aria-labelledby={ariaLabelledBy ?? otpLabelId}
             className={classNames(styles.fieldContainer, {[styles.disabled]: disabled})}
-            {...getPrefixedDataAttributes(dataAttributes, 'PinField')}
+            {...getPrefixedDataAttributes({testid: 'PinField', ...dataAttributes})}
         >
             {ariaLabel && !ariaLabelledBy && (
                 <ScreenReaderOnly>

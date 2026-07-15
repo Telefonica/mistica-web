@@ -65,7 +65,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Data
                 type="data"
                 size={size}
                 dataAttributes={{
-                    'component-name': 'DataCard',
                     testid: 'DataCard',
                     ...dataAttributes,
                 }}

@@ -191,7 +191,7 @@ const AiCard = ({
                       })
                     : undefined
             }
-            dataAttributes={{'component-name': 'AiCard', testid: 'AiCard', ...dataAttributes}}
+            dataAttributes={{testid: 'AiCard', ...dataAttributes}}
             {...(touchableProps as any)}
             aria-label={ariaLabel ?? autoAriaLabel}
         >

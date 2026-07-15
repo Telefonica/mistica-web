@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ScreenReaderOnly = ({children, className, dataAttributes}: Props): JSX.Element => {
-    const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes, 'ScreenReaderOnly');
+    const prefixedDataAttributes = getPrefixedDataAttributes({testid: 'ScreenReaderOnly', ...dataAttributes});
 
     if (React.Children.count(children) === 1) {
         const element = React.Children.only(children);

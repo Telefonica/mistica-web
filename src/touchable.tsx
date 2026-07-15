@@ -142,7 +142,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         'aria-disabled': props['aria-disabled'],
         'aria-hidden': props['aria-hidden'],
         'aria-live': props['aria-live'],
-        ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
+        ...getPrefixedDataAttributes({testid: 'Touchable', ...props.dataAttributes}),
     };
 
     // aria props that we want to apply to both <a> and <button> elements, not applicable to <div>

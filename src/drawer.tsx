@@ -188,7 +188,7 @@ const Drawer = ({
                 aria-modal="true"
                 className={styles.drawer}
                 ref={setScrollableParentElement}
-                {...getPrefixedDataAttributes(dataAttributes, 'Drawer')}
+                {...getPrefixedDataAttributes({testid: 'Drawer', ...dataAttributes})}
             >
                 {onDismiss && (
                     <div className={styles.closeButtonContainer}>

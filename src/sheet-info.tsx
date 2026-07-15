@@ -44,11 +44,7 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
     ({title, subtitle, description, items, onClose, button, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
         return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'InfoSheet', ...dataAttributes}}
-            >
+            <Sheet onClose={onClose} ref={ref} dataAttributes={{testid: 'InfoSheet', ...dataAttributes}}>
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}

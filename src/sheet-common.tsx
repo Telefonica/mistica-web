@@ -237,7 +237,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                     onTransitionEnd={handleTransitionEnd}
                     onAnimationEnd={handleTransitionEnd}
                     {...dragableSheetProps}
-                    {...getPrefixedDataAttributes(dataAttributes, 'Sheet')}
+                    {...getPrefixedDataAttributes({testid: 'Sheet', ...dataAttributes})}
                     ref={ref}
                 >
                     <div className={styles.Sheet}>

@@ -85,7 +85,7 @@ const IntegerField = ({
             {...rest}
             {...fieldProps}
             inputComponent={IntegerInput}
-            dataAttributes={{'component-name': 'IntegerField', testid: 'IntegerField', ...dataAttributes}}
+            dataAttributes={{testid: 'IntegerField', ...dataAttributes}}
         />
     );
 };
