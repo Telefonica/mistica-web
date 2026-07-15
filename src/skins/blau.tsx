@@ -630,7 +630,6 @@ export const getBlauSkin: GetKnownSkin = () => {
             chip: '24px',
             tag: '24px',
             input: '8px',
-            legacyDisplay: '16px',
             popup: '8px',
             sheet: '8px',
             mediaSmall: '8px',
