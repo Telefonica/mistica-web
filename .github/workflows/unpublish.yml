@@ -45,7 +45,9 @@ jobs:
                   SAFE_VERSION=$(printf "%q" "$VERSION_INPUT")
                   echo "safe_version=$SAFE_VERSION" >> $GITHUB_OUTPUT
 
-            - name: Unpublish npm package version
+            - name: Deprecate npm package version
               env:
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-              run: npm unpublish "@telefonica/mistica@${{ steps.validate.outputs.safe_version }}"
+              run:
+                  npm deprecate -f "@telefonica/mistica@${{ steps.validate.outputs.safe_version }}" "This version was released by mistake. Use 16.71.0
+                  or wait for 17.0.0"
