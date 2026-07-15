@@ -9,9 +9,8 @@ const validAttrs: DataAttributes = {
     undefined: undefined,
 };
 
-// component-name is not allowed
-const invalidAttrs: DataAttributes = {
-    // @ts-expect-error - component-name cannot be used, type is never
-    'component-name': 'NotAllowed',
+// component-name is allowed
+const validAttrsWithComponentName: DataAttributes = {
+    'component-name': 'MyComponent',
     testid: 'MyComponent',
 };

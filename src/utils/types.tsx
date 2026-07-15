@@ -5,7 +5,6 @@ export type {TrackingEvent} from '@tef-novum/webview-bridge';
 export type DataAttributes = {
     [name: string]: string | number | boolean | undefined;
     testid?: string;
-    'component-name'?: never;
 };
 
 export type IconProps = {
