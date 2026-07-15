@@ -33,8 +33,8 @@ type Args = {
     description: string;
     small: boolean;
     variant: 'default' | 'brand';
-    extra: boolean;
-    sideBySideExtraOnDesktop: boolean;
+    slot: boolean;
+    sideBySideSlotOnDesktop: boolean;
     breadcrumbs: boolean;
     bleed: boolean;
     noPaddingY: boolean;
@@ -44,7 +44,7 @@ export const Default: StoryComponent<Args> = ({
     header,
     variant,
     bleed,
-    sideBySideExtraOnDesktop,
+    sideBySideSlotOnDesktop,
     breadcrumbs,
     headlineType,
     headline,
@@ -55,7 +55,7 @@ export const Default: StoryComponent<Args> = ({
     titleAs,
     description,
     small,
-    extra,
+    slot,
     noPaddingY,
 }) => {
     return (
@@ -64,7 +64,7 @@ export const Default: StoryComponent<Args> = ({
                 dataAttributes={{testid: 'header-layout'}}
                 variant={variant}
                 bleed={bleed}
-                sideBySideExtraOnDesktop={sideBySideExtraOnDesktop}
+                sideBySideSlotOnDesktop={sideBySideSlotOnDesktop}
                 noPaddingY={noPaddingY}
                 breadcrumbs={
                     breadcrumbs ? (
@@ -87,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
                         />
                     ) : undefined
                 }
-                extra={extra ? <Placeholder /> : undefined}
+                slot={slot ? <Placeholder /> : undefined}
             />
             <ResponsiveLayout>
                 <Callout
@@ -117,8 +117,8 @@ Default.args = {
     variant: 'default',
     breadcrumbs: true,
     noPaddingY: false,
-    extra: true,
-    sideBySideExtraOnDesktop: true,
+    slot: true,
+    sideBySideSlotOnDesktop: true,
     bleed: false,
 };
 
@@ -143,8 +143,8 @@ Default.argTypes = {
     },
     description: {if: {arg: 'header'}},
     small: {if: {arg: 'header'}},
-    sideBySideExtraOnDesktop: {if: {arg: 'extra'}},
-    bleed: {if: {arg: 'extra'}},
+    sideBySideSlotOnDesktop: {if: {arg: 'slot'}},
+    bleed: {if: {arg: 'slot'}},
     variant: {
         options: ['default', 'brand'],
         control: {type: 'select'},

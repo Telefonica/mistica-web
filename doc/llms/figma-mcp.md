@@ -150,8 +150,8 @@ props from the combined picture.
 ### How to gather
 
 For any CodeConnect-wrapped **composite component** — one with multiple content slots (`headline`, `pretitle`,
-`title`, `subtitle`, `description`, `extra`, `slot`, `buttonPrimary`, `buttonSecondary`, `buttonLink`,
-`asset`, etc.) — re-fetch the node with Code Connect disabled before mapping props:
+`title`, `subtitle`, `description`, `slot`, `buttonPrimary`, `buttonSecondary`, `buttonLink`, `asset`, etc.) —
+re-fetch the node with Code Connect disabled before mapping props:
 
 ```
 get_design_context({
@@ -164,7 +164,7 @@ get_design_context({
 
 That returns the real child tree: the actual text nodes, their font-size tokens, the actual image aspect
 ratio, Tag instances with their `type` (e.g. the `--tagbackgroundinfo` CSS variable tells you `type="info"`),
-child slots that correspond to `extra` / `slot` / `headline`, sibling buttons, etc.
+child slots that correspond to `slot` / `headline`, sibling buttons, etc.
 
 Use `get_metadata` on the same node when you also need to understand which children are component instances
 vs. raw nodes.

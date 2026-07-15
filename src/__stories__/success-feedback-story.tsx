@@ -25,7 +25,7 @@ type SuccessArgs = {
     imageFit: 'fit' | 'fill';
     multipleParagraphs: boolean;
     buttons: boolean;
-    extra?: boolean;
+    slot?: boolean;
 };
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
@@ -40,7 +40,7 @@ export const Success: StoryComponent<SuccessArgs> = ({
     imageFit,
     multipleParagraphs,
     buttons,
-    extra,
+    slot,
 }) => (
     <SuccessFeedback
         title={defaultTitle}
@@ -51,7 +51,7 @@ export const Success: StoryComponent<SuccessArgs> = ({
         secondaryButton={buttons ? secondaryButton : undefined}
         imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
-        extra={extra ? <Placeholder /> : undefined}
+        slot={slot ? <Placeholder /> : undefined}
     />
 );
 Success.storyName = 'SuccessFeedback';
@@ -60,7 +60,7 @@ Success.args = {
     imageFit: 'fit',
     multipleParagraphs: false,
     buttons: true,
-    extra: false,
+    slot: false,
 };
 
 export const SuccessAsHeader: StoryComponent<SuccessArgs> = ({
@@ -68,7 +68,7 @@ export const SuccessAsHeader: StoryComponent<SuccessArgs> = ({
     imageFit,
     multipleParagraphs,
     buttons,
-    extra,
+    slot,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
     const successFeedback = (
@@ -81,7 +81,7 @@ export const SuccessAsHeader: StoryComponent<SuccessArgs> = ({
             secondaryButton={buttons ? secondaryButton : undefined}
             imageUrl={imageUrl ?? undefined}
             imageFit={imageFit}
-            extra={extra ? <Placeholder /> : undefined}
+            slot={slot ? <Placeholder /> : undefined}
         />
     );
     return (
@@ -102,5 +102,5 @@ SuccessAsHeader.args = {
     imageFit: 'fit',
     multipleParagraphs: false,
     buttons: true,
-    extra: false,
+    slot: false,
 };

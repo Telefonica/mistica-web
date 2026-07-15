@@ -1,3 +1,21 @@
+## Migration Guide from mistica 16.x to mistica 17.x
+
+Mistica 17 is a major release. Among other breaking changes, the `extra` prop family has been renamed to
+`slot` across all components.
+
+### Renamed props: `*Extra` → `*Slot`
+
+- The `extra` prop has been renamed to `slot` in `CoverHero`, `Hero`, `Popover`, `Tooltip`, `Meter`, `Dialog`,
+  `HeaderLayout`, `Row`/`RowList`, `FeedbackScreen`, and `AdvancedDataCard`.
+- In `DataCard`, `MediaCard`, and `NakedCard` the previously deprecated `extra` prop has been removed. Use
+  `slot` instead (already available in mistica 16).
+- `CoverHero`: `sideExtra` has been renamed to `sideSlot`.
+- `MainNavigationBar`: `burgerMenuExtra` has been renamed to `burgerMenuSlot`.
+- `HeaderLayout`: `sideBySideExtraOnDesktop` has been renamed to `sideBySideSlotOnDesktop`.
+- `DataCard`: the previously deprecated `extraAlignment` prop has been removed. Use `slotAlignment` instead.
+- `AdvancedDataCard`: `extraDividerPadding` has been renamed to `slotDividerPadding`, and `noExtraDivider` has
+  been renamed to `noSlotDivider`.
+
 ## Migration Guide for the New Cards Ecosystem (Starting from Mistica 16.xx.xx)
 
 The changes introduced in this version are backwards compatible; however, several components and props have

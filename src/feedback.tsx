@@ -59,12 +59,7 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 };
 
 const renderFeedbackBody = (
-    {
-        asset,
-        title,
-        description,
-        extra,
-    }: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'extra'>,
+    {asset, title, description, slot}: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'slot'>,
     animateText: boolean
 ) => {
     const normalizedDescription =
@@ -100,7 +95,7 @@ const renderFeedbackBody = (
                     </div>
                 )}
 
-                {extra && (
+                {slot && (
                     <div
                         className={classnames(
                             animateText &&
@@ -110,7 +105,7 @@ const renderFeedbackBody = (
                         )}
                         data-testid="slot"
                     >
-                        {extra}
+                        {slot}
                     </div>
                 )}
             </Stack>
@@ -180,7 +175,7 @@ type FeedbackButtonsProps = ButtonGroupProps;
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
     description?: string | ReadonlyArray<string>;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
     dataAttributes?: DataAttributes;
 }
@@ -200,7 +195,7 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
 export const FeedbackScreen = ({
     title,
     description,
-    extra,
+    slot,
     primaryButton,
     secondaryButton,
     link,
@@ -220,7 +215,7 @@ export const FeedbackScreen = ({
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
-        {asset, title, description, extra},
+        {asset, title, description, slot},
         animateText && areAnimationsSupported(platformOverrides)
     );
 
@@ -335,9 +330,9 @@ export const ErrorFeedbackScreen = ({
                 testid: 'ErrorFeedbackScreen',
                 ...dataAttributes,
             }}
-            extra={
+            slot={
                 <Stack space={16}>
-                    {otherProps.extra}
+                    {otherProps.slot}
                     {errorReference && (
                         <Text2 color={vars.colors.textSecondary} regular>
                             {errorReference}
@@ -373,7 +368,7 @@ export const InfoFeedbackScreen = ({
 export const SuccessFeedback = ({
     title,
     description,
-    extra,
+    slot,
     primaryButton,
     secondaryButton,
     link,
@@ -391,7 +386,7 @@ export const SuccessFeedback = ({
             <IconSuccess size="100%" />
         );
     const feedbackBody = renderFeedbackBody(
-        {asset, title, description, extra},
+        {asset, title, description, slot},
         areAnimationsSupported(platformOverrides)
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {

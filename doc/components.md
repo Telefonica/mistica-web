@@ -409,8 +409,8 @@ const [selectedIndex, setSelectedIndex] = React.useState(0);
       description="Page description text"
     />
   }
-  extra={<Placeholder />}
-  sideBySideExtraOnDesktop
+  slot={<Placeholder />}
+  sideBySideSlotOnDesktop
 />
 ```
 
@@ -468,7 +468,7 @@ dialog({
   title: 'Title',
   subtitle: 'Subtitle',
   message: 'Message',
-  extra: <Placeholder />,
+  slot: <Placeholder />,
   acceptText: 'Accept',
   cancelText: 'Cancel',
 });

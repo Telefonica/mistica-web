@@ -105,7 +105,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                                     description="This story is created to verify how some of the components look like when using different skins"
                                 />
                             }
-                            extra={<Placeholder />}
+                            slot={<Placeholder />}
                             noPaddingY={!brandHeader}
                         />
 

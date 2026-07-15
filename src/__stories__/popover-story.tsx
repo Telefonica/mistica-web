@@ -23,7 +23,7 @@ type PopoverArgs = {
     position: 'top' | 'bottom' | 'left' | 'right';
     title: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     targetHorizontalPosition: 'left' | 'center' | 'right';
     targetVerticalPosition: 'top' | 'center' | 'bottom';
     variantOutside: Variant;
@@ -34,7 +34,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
     position,
     title,
     description,
-    extra,
+    slot,
     targetHorizontalPosition,
     targetVerticalPosition,
     variantOutside,
@@ -113,7 +113,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
                     }
                     title={title}
                     description={description}
-                    extra={extra ? <Placeholder /> : undefined}
+                    slot={slot ? <Placeholder /> : undefined}
                 />
             </div>
         </ResponsiveLayout>
@@ -126,7 +126,7 @@ Default.args = {
     position: 'top',
     title: 'Title',
     description: 'A description',
-    extra: false,
+    slot: false,
     variantOutside: 'default',
     asset: 'icon',
 } as const;
