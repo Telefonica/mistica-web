@@ -1,21 +1,18 @@
-name: Unpublish npm package
+name: Deprecate npm package version
 
 on:
     workflow_dispatch:
         inputs:
             version:
-                description: 'Package version to unpublish (e.g., 16.72.0)'
+                description: 'Package version to deprecate (e.g., 16.72.0)'
                 required: true
-            action:
-                description: 'Action to perform'
-                required: true
-                type: choice
-                options:
-                    - unpublish
-                    - deprecate
+            message:
+                description: 'Deprecation message'
+                required: false
+                default: 'This version was released by mistake. Use 16.71.0 or wait for 17.0.0'
 
 jobs:
-    unpublish:
+    deprecate:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/setup-node@v4
@@ -23,12 +20,7 @@ jobs:
                   node-version: '18'
                   registry-url: 'https://registry.npmjs.org'
 
-            - name: Unpublish or deprecate version
-              run: |
-                  if [ "${{ github.event.inputs.action }}" == "unpublish" ]; then
-                    npm unpublish @telefonica/mistica@${{ github.event.inputs.version }}
-                  else
-                    npm deprecate @telefonica/mistica@${{ github.event.inputs.version }} "This version was released by mistake. Use 16.71.0 or wait for 17.0.0"
-                  fi
+            - name: Deprecate version
+              run: npm deprecate -f @telefonica/mistica@${{ github.event.inputs.version }} "${{ github.event.inputs.message }}"
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
