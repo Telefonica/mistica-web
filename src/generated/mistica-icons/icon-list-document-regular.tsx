@@ -36,19 +36,6 @@ const IconListDocumentRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="m7.424 7.527 2.178 2.19 4.022-4.043a.744.744 0 0 0 0-1.048.734.734 0 0 0-1.042 0l-2.98 2.996L8.466 6.48a.734.734 0 0 0-1.042 0 .744.744 0 0 0 0 1.047m2.178 7.301-2.178-2.19a.744.744 0 0 1 0-1.048.734.734 0 0 1 1.042 0l1.136 1.142 2.98-2.996a.734.734 0 0 1 1.042 0 .744.744 0 0 1 0 1.048zm-2.178 3.067 2.178 2.19 4.022-4.044a.744.744 0 0 0 0-1.047.734.734 0 0 0-1.042 0l-2.98 2.996-1.136-1.143a.734.734 0 0 0-1.042 0 .744.744 0 0 0 0 1.048"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M5 22V4.223C5 3.02 6.014 2 7.212 2h9.577C17.986 2 19 3.02 19 4.223V22zm1.471-1.479h11.053V4.223c0-.374-.363-.74-.736-.74h-9.58c-.373 0-.736.366-.736.74z"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

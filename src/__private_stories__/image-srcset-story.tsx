@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DisplayMediaCard, Image, PosterCard, Stack, Text3} from '..';
+import {CoverCard, Image, Stack, Text3} from '..';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
 import beachImg from '../__stories__/images/beach.jpg';
 import laptopImg from '../__stories__/images/laptop.jpg';
@@ -16,25 +16,28 @@ export const Default: StoryComponent = () => {
         <Stack space={16}>
             <Text3 medium>
                 When using srcSet prop, Image src should be responsive. this attribute can also be used for
-                the backgroundImage in DisplayMediaCard and PosterCard components
+                the imageSrc and imageSrcSet props in the CoverCard component
             </Text3>
 
             <div style={{width: 300}}>
                 <Stack space={16} dataAttributes={{testid: 'content'}}>
                     <Image aspectRatio="16:9" width={300} src={src} srcSet={srcSet} />
 
-                    <PosterCard
+                    <CoverCard
                         aspectRatio="16:9"
                         width={300}
-                        title="Poster Card"
-                        backgroundImage={{src, srcSet}}
+                        title="Cover Card"
+                        imageSrc={src}
+                        imageSrcSet={srcSet}
                     />
 
-                    <DisplayMediaCard
+                    <CoverCard
+                        size="display"
                         aspectRatio="16:9"
                         width={300}
-                        title="Display Media Card"
-                        backgroundImage={{src, srcSet}}
+                        title="Display Cover Card"
+                        imageSrc={src}
+                        imageSrcSet={srcSet}
                     />
                 </Stack>
             </div>

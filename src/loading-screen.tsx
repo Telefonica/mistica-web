@@ -12,7 +12,7 @@ import classnames from 'classnames';
 import {Logo} from './logo';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
@@ -248,8 +248,6 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 );
 
 type LoadingScreenProps = {
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
     isLoading?: boolean;
     onClose?: () => void;
@@ -262,7 +260,7 @@ export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps
         <BaseLoadingScreen
             ref={ref}
             {...props}
-            variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
+            variant={props.variant ?? 'default'}
             dataAttributes={{'component-name': 'LoadingScreen', ...props.dataAttributes}}
             animateBackground
         />
@@ -305,7 +303,7 @@ const VivinhoLoadingAnimation = React.lazy(() => import('./vivinho-loading-anima
 const BrandLoadingAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadingAnimationProps) => {
     const {skinName} = useTheme();
 
-    if (skinName === VIVO_NEW_SKIN) {
+    if (skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN) {
         return (
             <React.Suspense fallback={null}>
                 <VivinhoLoadingAnimation
@@ -360,7 +358,7 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
                     handleCloseEnd();
                 }}
                 animateText
-                dataAttributes={{'component-name': 'BrandLoadingScreen', ...dataAttributes}}
+                dataAttributes={{testid: 'BrandLoadingScreen', ...dataAttributes}}
             >
                 <BrandLoadingAnimation
                     isLoading={isLoading}

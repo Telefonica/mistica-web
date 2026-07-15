@@ -53,7 +53,7 @@ const MenuSectionArrow = ({size = 24, color = vars.colors.neutralHigh, style, cl
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
-        <div className={styles.burgerIconContainer} role="presentation" data-component-name="BurgerMenuIcon">
+        <div className={styles.burgerIconContainer} role="presentation" data-testid="BurgerMenuIcon">
             <div className={isOpen ? styles.iconCloseOpen : styles.iconCloseHidden}>
                 <IconCloseRegular />
             </div>
@@ -193,13 +193,10 @@ interface NavigationBarCommonProps {
 
 interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
     topFixed?: true;
-    paddingX?: undefined;
 }
 
 interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
     topFixed: false;
-    /** @deprecated use wide */
-    paddingX?: number;
 }
 
 type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
@@ -211,7 +208,6 @@ export const NavigationBar = ({
     right,
     variant = 'default',
     topFixed = true,
-    paddingX = 0,
     withBorder = true,
     wide = false,
 }: NavigationBarProps): JSX.Element => {
@@ -236,14 +232,10 @@ export const NavigationBar = ({
     );
 
     const calcPaddingXWhenNotTopFixed = (): BoxProps['paddingX'] => {
-        if (wide !== undefined) {
-            if (typeof wide !== 'object') {
-                return 0;
-            }
-            return wide.paddingX ?? 0;
+        if (typeof wide !== 'object') {
+            return 0;
         }
-
-        return paddingX as BoxProps['paddingX'];
+        return wide.paddingX ?? 0;
     };
 
     const normalizedVariant = normalizeVariant(variant);
@@ -254,7 +246,7 @@ export const NavigationBar = ({
                 topFixed={topFixed}
                 withBorder={withBorder}
                 variant={normalizedVariant}
-                dataAttributes={{'component-name': 'NavigationBar'}}
+                dataAttributes={{testid: 'NavigationBar'}}
             >
                 {topFixed ? (
                     <NavigationBarSideMargins wide={wide}>{content}</NavigationBarSideMargins>
@@ -1469,7 +1461,7 @@ export const MainNavigationBar = ({
                 withBorder={withBorder}
                 isBurgerMenuOpen={isBurgerMenuOpen}
                 variant={normalizedVariant}
-                dataAttributes={{'component-name': 'MainNavigationBar'}}
+                dataAttributes={{testid: 'MainNavigationBar'}}
             >
                 {desktopLargeMenu && (
                     <MainNavigationBarDesktopMenuBackground
@@ -1578,7 +1570,7 @@ export const FunnelNavigationBar = ({
                 topFixed={topFixed}
                 withBorder={withBorder}
                 variant={normalizedVariant}
-                dataAttributes={{'component-name': 'FunnelNavigationBar'}}
+                dataAttributes={{testid: 'FunnelNavigationBar'}}
             >
                 <NavigationBarSideMargins wide={wide}>
                     <GridLayout template="10">
@@ -1599,7 +1591,7 @@ type NavigationBarActionGroupProps = {
 
 export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupProps): JSX.Element => {
     return (
-        <div className={styles.lineHeightFix} data-component-name="NavigationBarActionGroup">
+        <div className={styles.lineHeightFix} data-testid="NavigationBarActionGroup">
             <Inline space={24} alignItems="center">
                 {children}
             </Inline>
@@ -1619,7 +1611,7 @@ export const NavigationBarAction = ({children, ...touchableProps}: NavigationBar
                 styles.lineHeightFix,
                 styles.textWrapperVariants[themeVariant]
             )}
-            dataAttributes={{'component-name': 'NavigationBarAction'}}
+            dataAttributes={{testid: 'NavigationBarAction'}}
         >
             <Inline space={16} alignItems="center">
                 {React.Children.map(children, (child) =>

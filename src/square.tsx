@@ -45,7 +45,7 @@ const Square = ({
                 border: borderProp,
                 borderRadius,
             }}
-            {...getPrefixedDataAttributes(dataAttributes, 'Square')}
+            {...getPrefixedDataAttributes({testid: 'Square', ...dataAttributes})}
         >
             {children}
         </div>

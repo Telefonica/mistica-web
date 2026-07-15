@@ -754,11 +754,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
         <div role={role} className={styles.row}>
-            <RowContent
-                {...props}
-                ref={ref}
-                dataAttributes={{'component-name': 'Row', testid: 'Row', ...dataAttributes}}
-            />
+            <RowContent {...props} ref={ref} dataAttributes={{testid: 'Row', ...dataAttributes}} />
         </div>
     )
 );
@@ -772,20 +768,15 @@ type RowListProps = {
     children: React.ReactNode;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    /**
-     * @deprecated Use 'aria-labelledby' instead. This will be removed in a future release.
-     */
-    ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 } & CommonAccessibilityProps;
 
 export const RowList = ({
     children,
-    ariaLabelledby,
     role = 'list',
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy = ariaLabelledby,
+    'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
@@ -800,7 +791,7 @@ export const RowList = ({
             aria-label={ariaLabel}
             aria-live={ariaLive}
             aria-atomic={ariaAtomic}
-            {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
+            {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
         >
             {childrenContent.map((child, index) => (
                 <React.Fragment key={index}>
@@ -816,29 +807,17 @@ export const RowList = ({
     );
 };
 
-// danger + isInverse is not allowed
+// danger + variant="brand" is not allowed
 type CommonBoxedRowProps =
     | {
-          /**
-           * @deprecated Use variant instead
-           */
-          isInverse?: false;
           variant?: 'default';
           danger: true;
       }
     | {
-          /**
-           * @deprecated Use variant instead
-           */
-          isInverse?: boolean;
           variant?: 'brand' | 'default';
           danger?: false;
       }
     | {
-          /**
-           * @deprecated Use variant instead
-           */
-          isInverse?: false;
           variant?: 'default';
           danger: boolean;
       };
@@ -859,9 +838,9 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
     <InternalBoxed
         overflow="visible"
         className={styles.boxed}
-        variant={props.variant ?? (props.isInverse ? 'brand' : 'default')}
+        variant={props.variant ?? 'default'}
         ref={ref}
-        dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
+        dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
     </InternalBoxed>
@@ -871,21 +850,16 @@ type BoxedRowListProps = {
     children: React.ReactNode;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    /**
-     * @deprecated Use 'aria-labelledby' instead. This will be removed in a future release.
-     */
-    ariaLabelledby?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 } & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
     children,
-    ariaLabelledby,
     role = 'list',
     dataAttributes,
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy = ariaLabelledby,
+    'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
 }: BoxedRowListProps): JSX.Element => (
@@ -896,7 +870,7 @@ export const BoxedRowList = ({
         aria-labelledby={ariaLabelledBy}
         aria-live={ariaLive}
         aria-atomic={ariaAtomic}
-        dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
+        dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
     >
         {children}
     </Stack>

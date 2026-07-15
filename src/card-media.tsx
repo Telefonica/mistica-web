@@ -10,7 +10,6 @@ import type {
     CardActionButtonSecondary,
     CardAspectRatio,
     CardSize,
-    DeprecatedMediaProp,
     MaybeTouchableCard,
     MediaAspectRatio,
     SlotAlignment,
@@ -27,8 +26,6 @@ export type MediaCardProps = {
     'aria-description'?: string;
     'aria-describedby'?: string;
     size?: CardSize;
-    /** @deprecated use imageSrc, imageSrcSet, videoSrc and related props */
-    media?: DeprecatedMediaProp;
     mediaPosition?: 'top' | 'left' | 'right';
     mediaWidth?: number | string;
     /** Ignored when mediaPosition is 'left' or 'right' */
@@ -47,8 +44,6 @@ export type MediaCardProps = {
     videoLoop?: boolean;
     videoAutoPlay?: boolean;
     videoDataAttributes?: DataAttributes;
-    /** @deprecated use imageSrc */
-    poster?: string;
     variant?: Variant;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -66,11 +61,7 @@ export type MediaCardProps = {
     extra?: React.ReactNode;
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
-    /** @deprecated use topActions */
-    actions?: TopActionsArray;
     topActions?: TopActionsArray;
-    /** @deprecated use buttonPrimary */
-    button?: CardActionButtonPrimary;
     buttonLink?: CardActionButtonLink;
     buttonPrimary?: CardActionButtonPrimary;
     buttonSecondary?: CardActionButtonSecondary;
@@ -85,70 +76,19 @@ export type MediaCardProps = {
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
-    (
-        {size = 'default', slot, extra, topActions, actions, button, buttonPrimary, dataAttributes, ...rest},
-        ref
-    ) => {
+    ({size = 'default', slot, extra, topActions, buttonPrimary, dataAttributes, ...rest}, ref) => {
         return (
             <InternalCard
                 type="media"
                 variant="default"
                 size={size}
                 dataAttributes={{
-                    'component-name': 'MediaCard',
                     testid: 'MediaCard',
                     ...dataAttributes,
                 }}
                 slot={slot || extra}
-                topActions={topActions || actions}
-                buttonPrimary={buttonPrimary || button}
-                ref={ref}
-                {...rest}
-            />
-        );
-    }
-);
-
-type DeprecatedHighlightedCardProps = Omit<MediaCardProps, 'size' | 'mediaPosition'> & {
-    /** @deprecated use imageSrc */
-    imageUrl?: string;
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
-};
-
-/**
- * @deprecated use <MediaCard size="default" mediaPosition="right" />
- */
-export const HighlightedCard = React.forwardRef<
-    HTMLDivElement,
-    MaybeTouchableCard<DeprecatedHighlightedCardProps>
->(
-    (
-        {
-            dataAttributes,
-            isInverse,
-            variant,
-            imageUrl,
-            imageSrc,
-            mediaWidth,
-            slotAlignment = 'bottom',
-            ...rest
-        },
-        ref
-    ) => {
-        return (
-            <MediaCard
-                size="default"
-                mediaPosition="right"
-                mediaWidth={mediaWidth || 100}
-                dataAttributes={{
-                    'component-name': 'HighlightedCard',
-                    testid: 'HighlightedCard',
-                    ...dataAttributes,
-                }}
-                slotAlignment={slotAlignment}
-                imageSrc={imageSrc || imageUrl}
-                variant={variant || (isInverse ? 'inverse' : 'default')}
+                topActions={topActions}
+                buttonPrimary={buttonPrimary}
                 ref={ref}
                 {...rest}
             />

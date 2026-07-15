@@ -5,7 +5,7 @@ import Box from './box';
 import * as styles from './button.css';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {flattenChildren} from './skins/utils';
 import Spinner from './spinner';
 import {Text, Text3} from './text';
@@ -112,8 +112,8 @@ const renderButtonElement = ({
 const ButtonLinkChevron = () => {
     const {skinName} = useTheme();
 
-    // vivo new skin has a different chevron
-    if (skinName === VIVO_NEW_SKIN) {
+    // vivo skin has a different chevron
+    if (skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN) {
         return (
             <svg width="0.5em" height="0.5em" viewBox="0 0 8 8" fill="none">
                 <path
@@ -566,7 +566,7 @@ export const ButtonLink = React.forwardRef<
 >(({dataAttributes, className, ...props}, ref) => {
     return (
         <BaseButton
-            dataAttributes={{'component-name': 'ButtonLink', testid: 'ButtonLink', ...dataAttributes}}
+            dataAttributes={{testid: 'ButtonLink', ...dataAttributes}}
             className={classnames(className, {[styles.smallLink]: props.small})}
             {...props}
             ref={ref}
@@ -580,7 +580,6 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
         return (
             <BaseButton
                 dataAttributes={{
-                    'component-name': 'ButtonLinkDanger',
                     testid: 'ButtonLinkDanger',
                     ...dataAttributes,
                 }}
@@ -599,7 +598,6 @@ export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
         return (
             <BaseButton
                 dataAttributes={{
-                    'component-name': 'ButtonPrimary',
                     testid: 'ButtonPrimary',
                     ...dataAttributes,
                 }}
@@ -616,7 +614,6 @@ export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>(
         return (
             <BaseButton
                 dataAttributes={{
-                    'component-name': 'ButtonSecondary',
                     testid: 'ButtonSecondary',
                     ...dataAttributes,
                 }}
@@ -632,7 +629,7 @@ export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
             <BaseButton
-                dataAttributes={{'component-name': 'ButtonDanger', testid: 'ButtonDanger', ...dataAttributes}}
+                dataAttributes={{testid: 'ButtonDanger', ...dataAttributes}}
                 {...props}
                 ref={ref}
                 buttonType="danger"

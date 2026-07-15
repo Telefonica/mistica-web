@@ -9,7 +9,6 @@ import {
     DateField,
     Hero,
     Image,
-    HighlightedCard,
     IconShopRegular,
     Meter,
     Placeholder,
@@ -192,15 +191,6 @@ test('NakedCard test ids', () => {
             },
         ]
     );
-});
-
-test('HighlightedCard test ids', () => {
-    checkTestIds(<HighlightedCard title="Title" description="Description" imageUrl="https://anyurl.com" />, [
-        {
-            componentName: 'HighlightedCard',
-            internalTestIds: ['title', 'description', 'image'],
-        },
-    ]);
 });
 
 test('FeedbackScreen test ids', () => {

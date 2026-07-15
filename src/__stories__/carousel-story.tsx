@@ -8,7 +8,6 @@ import {
     Stack,
     Title1,
     Text2,
-    Image,
     CarouselContextProvider,
     FixedFooterLayout,
     CarouselContextConsumer,
@@ -82,7 +81,8 @@ export const Default: StoryComponent<Args> = ({
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
-                                media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                                imageSrc={tennisUrl}
+                                mediaAspectRatio="16:9"
                                 buttonLink={
                                     <ButtonLink small href="https://google.com">
                                         Link {idx}
@@ -166,7 +166,8 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                                     key={idx}
                                     title={`Title ${idx}`}
                                     description="Some description"
-                                    media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                                    imageSrc={tennisUrl}
+                                    mediaAspectRatio="16:9"
                                     buttonLink={
                                         <ButtonLink small href="https://google.com">
                                             Link {idx}
@@ -202,7 +203,8 @@ export const WithCarouselContextAndOutsideControls: StoryComponent<WithCarouselC
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
-                                media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                                imageSrc={tennisUrl}
+                                mediaAspectRatio="16:9"
                                 buttonLink={
                                     <ButtonLink small href="https://google.com">
                                         Link {idx}

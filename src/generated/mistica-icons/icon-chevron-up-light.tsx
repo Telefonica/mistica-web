@@ -36,21 +36,12 @@ const IconChevronUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M11.999 7.6c-.21 0-.42.08-.58.23l-7.15 6.7c-.34.32-.36.86-.04 1.2s.86.36 1.2.04l6.57-6.16 6.57 6.16c.34.32.88.3 1.2-.04s.3-.88-.04-1.2l-7.15-6.7a.85.85 0 0 0-.58-.23"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
-                        d="M4.117 15.889a.37.37 0 0 1 0-.538l7.585-7.24a.41.41 0 0 1 .46-.071.4.4 0 0 1 .14.088l6.296 6.008a.377.377 0 0 1 0 .55.42.42 0 0 1-.577 0l-6.04-5.765-7.3 6.968a.41.41 0 0 1-.564 0m15.293-1.023a.577.577 0 0 0-.59.563c0 .312.264.564.59.564s.59-.252.59-.564a.577.577 0 0 0-.59-.563"
+                        d="M11.999 7.6c-.21 0-.42.08-.58.23l-7.15 6.7c-.34.32-.36.86-.04 1.2s.86.36 1.2.04l6.57-6.16 6.57 6.16c.34.32.88.3 1.2-.04s.3-.88-.04-1.2l-7.15-6.7a.85.85 0 0 0-.58-.23"
                     />
                 </svg>
             );

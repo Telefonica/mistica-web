@@ -59,7 +59,6 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     button: '4px',
     input: '8px',
     container: '8px',
-    legacyDisplay: '16px',
     popup: '8px',
     checkbox: '2px',
     indicator: '999px',

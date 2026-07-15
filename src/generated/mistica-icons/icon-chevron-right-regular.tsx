@@ -45,21 +45,12 @@ const IconChevronRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17.572 12.001c0-.25-.09-.49-.27-.69l-6.56-6.99a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05l6.56-6.99c.18-.19.27-.44.27-.69"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
-                        d="M9.2 18.734a.79.79 0 0 0 0 1.049.64.64 0 0 0 .962 0l6.639-7.238A.78.78 0 0 0 17 12a.78.78 0 0 0-.2-.545l-6.638-7.238a.64.64 0 0 0-.963 0 .79.79 0 0 0 0 1.05L15.376 12z"
+                        d="M17.572 12.001c0-.25-.09-.49-.27-.69l-6.56-6.99a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05l6.56-6.99c.18-.19.27-.44.27-.69"
                     />
                 </svg>
             );

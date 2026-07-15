@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import os from 'os';
 import {openPage, serverHostName, screen, getGlobalPage, PageApi} from '@telefonica/acceptance-testing';
-import {MOVISTAR_NEW_SKIN} from '../skins/constants';
+import {MOVISTAR_SKIN} from '../skins/constants';
 import {kebabCase} from 'lodash';
 
 import type {TestViewport} from '@telefonica/acceptance-testing';
@@ -178,24 +178,14 @@ export const openStoryPage = ({
     id,
     device = TABLET_DEVICE,
     viewport,
-    skin = 'Movistar-new',
+    skin = 'Movistar',
     args,
     isDarkMode,
 }: {
     id: string;
     device?: Device;
     viewport?: TestViewport;
-    skin?:
-        | 'Movistar'
-        | 'Movistar-new'
-        | 'Vivo'
-        | 'Vivo-new'
-        | 'O2'
-        | 'O2-new'
-        | 'Telefonica'
-        | 'Blau'
-        | 'Tu'
-        | 'Esimflag';
+    skin?: 'Movistar' | 'Vivo' | 'Vivo-evolution' | 'O2' | 'Telefonica' | 'Blau' | 'Esimflag' | 'Cyber';
     args?: StoryArgs;
     isDarkMode?: boolean;
 }): Promise<PageApi> =>
@@ -251,7 +241,7 @@ const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
 export const openSSRPage = async ({
     name,
     device = TABLET_DEVICE,
-    skin = MOVISTAR_NEW_SKIN,
+    skin = MOVISTAR_SKIN,
     checkHidrationVisualMismatch = true,
     prefersColorScheme,
     waitUntil,

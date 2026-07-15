@@ -8,7 +8,7 @@ import {
     Tabs,
     ThemeContextProvider,
     skinVars,
-    MovistarNewLogo,
+    MovistarLogo,
     VivoLogo,
     TelefonicaLogo,
     BlauLogo,
@@ -18,10 +18,10 @@ import {
     IconButton,
     ToggleIconButton,
     Portal,
-    O2NewLogo,
+    O2Logo,
     EsimflagLogo,
 } from '../../src';
-import {Movistar_New, Telefonica, Blau, Vivo_New, O2_New, Esimflag} from '../themes';
+import {Movistar, Telefonica, Blau, Vivo, Vivo_Evolution, O2, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -39,7 +39,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Movistar' | 'Tu'>;
+type ValidSkinName = KnownSkinName;
 
 const BrandIcon = ({Logo}: {Logo: React.ComponentType<{size: number; color?: string}>}) => {
     const {isDarkMode} = useTheme();
@@ -53,20 +53,25 @@ const themesMap: {
         Icon: (props: IconProps) => JSX.Element;
     };
 } = {
-    'Movistar-new': {
+    Movistar: {
         text: 'Movistar',
-        themeConfig: Movistar_New,
-        Icon: () => <BrandIcon Logo={MovistarNewLogo} />,
+        themeConfig: Movistar,
+        Icon: () => <BrandIcon Logo={MovistarLogo} />,
     },
-    'Vivo-new': {
+    Vivo: {
         text: 'Vivo',
-        themeConfig: Vivo_New,
+        themeConfig: Vivo,
         Icon: () => <BrandIcon Logo={VivoLogo} />,
     },
-    'O2-new': {
+    'Vivo-evolution': {
+        text: 'Vivo Evolution',
+        themeConfig: Vivo_Evolution,
+        Icon: () => <BrandIcon Logo={VivoLogo} />,
+    },
+    O2: {
         text: 'O2',
-        themeConfig: O2_New,
-        Icon: () => <BrandIcon Logo={O2NewLogo} />,
+        themeConfig: O2,
+        Icon: () => <BrandIcon Logo={O2Logo} />,
     },
     Telefonica: {
         text: 'Telefónica',
@@ -316,7 +321,7 @@ const PreviewToolsComponent = ({
         return {
             ...themesMap[skinName].themeConfig,
             platformOverrides: {platform: os},
-            // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
+            // Don't override media queries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
             enableTabFocus: false,
             colorScheme,
             dimensions: {

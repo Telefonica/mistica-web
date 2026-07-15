@@ -146,8 +146,6 @@ export type ThemeConfig = Readonly<{
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;
-    /** @deprecated Better use default browser behavior for :focus-visible */
-    enableTabFocus?: boolean;
     preventCopyInFormFields?: boolean;
 }>;
 

@@ -638,7 +638,6 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             chip: '24px',
             tag: '24px',
             input: '8px',
-            legacyDisplay: '0px',
             popup: '4px',
             sheet: '0px',
             mediaSmall: '2px',

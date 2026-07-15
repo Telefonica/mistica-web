@@ -333,11 +333,7 @@ const InternalRating = ({
 };
 
 export const Rating = ({dataAttributes, ...props}: RatingProps): JSX.Element => (
-    <InternalRating
-        role="radiogroup"
-        dataAttributes={{'component-name': 'Rating', ...dataAttributes}}
-        {...props}
-    />
+    <InternalRating role="radiogroup" dataAttributes={{testid: 'Rating', ...dataAttributes}} {...props} />
 );
 
 export const InfoRating = ({dataAttributes, icon, size, ...props}: InfoRatingProps): JSX.Element => (
@@ -345,7 +341,7 @@ export const InfoRating = ({dataAttributes, icon, size, ...props}: InfoRatingPro
         size={size ?? DEFAULT_INFO_RATING_SIZE}
         icon={icon ?? DEFAULT_INFO_RATING_ICON}
         role="img"
-        dataAttributes={{'component-name': 'InfoRating', ...dataAttributes}}
+        dataAttributes={{testid: 'InfoRating', ...dataAttributes}}
         {...props}
     />
 );

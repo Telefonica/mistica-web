@@ -45,15 +45,6 @@ const IconFaceHappyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2M8.607 8.25a.982.982 0 1 1 .001 1.963.982.982 0 0 1 0-1.963m7.31 6.54c-.942 1.16-2.388 1.824-3.96 1.824-1.568 0-3.01-.66-3.953-1.818a.444.444 0 0 1 .064-.628.444.444 0 0 1 .628.064c.761.932 1.983 1.49 3.265 1.49 1.285 0 2.507-.561 3.268-1.497a.444.444 0 0 1 .628-.064c.19.157.218.435.06.628m-.613-4.576a.982.982 0 1 1-.002-1.963.982.982 0 0 1 .002 1.963"
-                    />
-                </svg>
-            );
         } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

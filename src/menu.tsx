@@ -465,7 +465,7 @@ export const Menu = ({
     }, [target, isMenuOpen]);
 
     return (
-        <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
+        <div {...getPrefixedDataAttributes({testid: 'Menu', ...dataAttributes})}>
             {renderTarget({...targetProps, isMenuOpen})}
 
             <Portal>

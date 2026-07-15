@@ -209,7 +209,6 @@ const FixedFooterLayout = ({
                     <div
                         role={footerRole}
                         ref={ref}
-                        data-component-name="FixedFooter"
                         data-testid="FixedFooter"
                         style={{
                             height: footerHeight,
