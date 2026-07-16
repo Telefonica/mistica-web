@@ -118,6 +118,8 @@ export const container = style([
     containerBase,
     {
         cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
     },
 ]);
 export const containerDisabled = style([
