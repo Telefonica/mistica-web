@@ -108,11 +108,13 @@ jobs:
     validate-pr-title:
         # This job validates the PR title against the conventional commit format. Needed for semantic-release to generate release notes.
         # Note: Breaking changes must use the BREAKING CHANGE: footer in commit body, not the ! notation in the title.
+        # TODO https://github.com/Telefonica/mistica-web/issues/1660 re-enable ! notation once upstream semantic-release issues are fixed
         name: Validate PR title
         runs-on: ubuntu-latest
         if: github.event_name == 'pull_request'
         steps:
             - name: Reject ! notation in PR title
+              # TODO https://github.com/Telefonica/mistica-web/issues/1660 remove this step once semantic-release supports ! notation
               run: |
                   if [[ "${{ github.event.pull_request.title }}" =~ \! ]]; then
                     echo "Error: PR title contains '!' notation which is not supported."

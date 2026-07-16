@@ -40,6 +40,7 @@ jobs:
                   fi
 
                   # Build allowlist from semantic-release help
+                  # TODO https://github.com/Telefonica/mistica-web/issues/1660 add ! notation to breaking change detection once upstream issues are fixed
                   ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
 
                   # Validate tokens: flags must be in allowlist, values must follow flags
