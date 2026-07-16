@@ -16,6 +16,8 @@ jobs:
     validate:
         name: Validate release
         runs-on: ubuntu-latest
+        # Requires manual approval to run - protects GH_TOKEN_MISTICA and NPM_PUBLISH_TOKEN secrets
+        environment: production
         outputs:
             safe_args: ${{ steps.validate-args.outputs.safe_args }}
         steps:
