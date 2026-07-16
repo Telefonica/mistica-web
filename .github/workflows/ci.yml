@@ -107,6 +107,7 @@ jobs:
 
     validate-pr-title:
         # This job validates the PR title against the conventional commit format. Needed for semantic-release to generate release notes.
+        # Note: Breaking changes must use the BREAKING CHANGE: footer in commit body, not the ! notation in the title.
         name: Validate PR title
         runs-on: ubuntu-latest
         if: github.event_name == 'pull_request'
@@ -118,6 +119,7 @@ jobs:
                       feat
                       chore
                       revert
+                  requireScope: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
