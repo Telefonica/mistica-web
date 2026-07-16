@@ -187,11 +187,6 @@
         "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json,html}": "prettier --write"
     },
     "release": {
-        "branches": [
-            "master",
-            "beta",
-            "mbertamini/1657-major-semantic-fix"
-        ],
         "plugins": [
             [
                 "@semantic-release/commit-analyzer",
