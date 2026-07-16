@@ -231,6 +231,7 @@
         "@types/react": "19.2.7",
         "@types/react-dom": "19.2.3",
         "@testing-library/dom": "^8.19.1",
+        "@semantic-release/commit-analyzer": "13.0.1",
         "lottie-react@^2.4.0": "patch:lottie-react@npm%3A2.4.0#./.yarn/patches/lottie-react-npm-2.4.0-d4d95c55aa.patch",
         "playroom@^1.2.1": "patch:playroom@npm%3A1.2.1#./.yarn/patches/playroom-npm-1.2.1-6d189aed91.patch"
     },
