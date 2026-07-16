@@ -13,8 +13,30 @@ permissions:
     pull-requests: write
 
 jobs:
+    validate:
+        name: Validate release
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  persist-credentials: false
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - name: Dry-run semantic-release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
+              run: |
+                  npx semantic-release --dry-run 2>&1 | tee dry-run.log
+                  echo "✅ Validation passed - check the logs above to see the version that will be released" >> $GITHUB_STEP_SUMMARY
+
     release:
         name: Release
+        needs: validate
         runs-on: ubuntu-latest
         # Requires manual approval to run - protects NPM_PUBLISH_TOKEN secret
         environment: production
