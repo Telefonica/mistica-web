@@ -16,6 +16,8 @@ jobs:
     validate:
         name: Validate release
         runs-on: ubuntu-latest
+        outputs:
+            safe_args: ${{ steps.validate-args.outputs.safe_args }}
         steps:
             - uses: actions/checkout@v6
               with:
@@ -27,42 +29,8 @@ jobs:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
-            - name: Dry-run semantic-release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
-              run: |
-                  npx semantic-release --dry-run 2>&1 | tee dry-run.log
-                  echo "✅ Validation passed - check the logs above to see the version that will be released" >> $GITHUB_STEP_SUMMARY
-
-    release:
-        name: Release
-        needs: validate
-        runs-on: ubuntu-latest
-        # Requires manual approval to run - protects NPM_PUBLISH_TOKEN secret
-        environment: production
-        steps:
-            # persist-credentials: false - git remote configured manually in Release step with GH_TOKEN_MISTICA
-            - uses: actions/checkout@v6
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  persist-credentials: false
-
-            - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-              run: yarn install --immutable --immutable-cache
-
-            - name: Husky install
-              if: steps.yarn-cache.outputs.cache-hit == 'true'
-              run: yarn husky install
-
-            - name: 'Set npm token'
-              uses: './.github/actions/set-npm-token'
-              with:
-                  npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
-
-            - name: Validate cli args
-              id: validate
+            - name: Validate CLI args
+              id: validate-args
               env:
                   CLI_ARGS_INPUT: ${{ github.event.inputs.cliArgs }}
               run: |
@@ -96,6 +64,40 @@ jobs:
                   SAFE_ARGS=$(printf "%q" "$CLI_ARGS_INPUT")
                   echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
 
+            - name: Dry-run semantic-release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
+              run: |
+                  npx semantic-release --dry-run ${{ steps.validate-args.outputs.safe_args }} 2>&1 | tee dry-run.log
+                  echo "✅ Validation passed - check the logs above to see the version that will be released" >> $GITHUB_STEP_SUMMARY
+
+    release:
+        name: Release
+        needs: validate
+        runs-on: ubuntu-latest
+        # Requires manual approval to run - protects NPM_PUBLISH_TOKEN secret
+        environment: production
+        steps:
+            # persist-credentials: false - git remote configured manually in Release step with GH_TOKEN_MISTICA
+            - uses: actions/checkout@v6
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  persist-credentials: false
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - name: Husky install
+              if: steps.yarn-cache.outputs.cache-hit == 'true'
+              run: yarn husky install
+
+            - name: 'Set npm token'
+              uses: './.github/actions/set-npm-token'
+              with:
+                  npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
             - name: Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
@@ -103,4 +105,4 @@ jobs:
               run: |
                   # Configure git remote with token for push
                   git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-                  npx semantic-release ${{ steps.validate.outputs.safe_args }}
+                  npx semantic-release ${{ needs.validate.outputs.safe_args }}
