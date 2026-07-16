@@ -40,7 +40,6 @@ jobs:
                   fi
 
                   # Build allowlist from semantic-release help
-                  # TODO https://github.com/Telefonica/mistica-web/issues/1660 add ! notation to breaking change detection once upstream issues are fixed
                   ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
 
                   # Validate tokens: flags must be in allowlist, values must follow flags
@@ -68,6 +67,7 @@ jobs:
             - name: Dry-run semantic-release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
+                  NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
               run: |
                   npx semantic-release --dry-run ${{ steps.validate-args.outputs.safe_args }} 2>&1 | tee dry-run.log
                   echo "✅ Validation passed - check the logs above to see the version that will be released" >> $GITHUB_STEP_SUMMARY
