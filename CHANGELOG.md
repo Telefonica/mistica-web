@@ -1,4 +1,9 @@
-# [16.72.0](https://github.com/Telefonica/mistica-web/compare/v16.71.0...v16.72.0) (2026-07-15)
+# [17.0.0](https://github.com/Telefonica/mistica-web/compare/v16.71.0...v17.0.0) (2026-07-15)
+
+
+### chore
+
+* **guide:** update migration guide ([#1652](https://github.com/Telefonica/mistica-web/issues/1652)) ([ac8e28d](https://github.com/Telefonica/mistica-web/commit/ac8e28dd94a2be9240513519b4c935b0012e3bfa))
 
 
 ### Features
@@ -7,6 +12,11 @@
 * **skin:** remove legacyDisplay border radius token ([#1626](https://github.com/Telefonica/mistica-web/issues/1626)) ([2282d4d](https://github.com/Telefonica/mistica-web/commit/2282d4d6e78da95eeb874ea712b40386ac47ae0a)), closes [#1600](https://github.com/Telefonica/mistica-web/issues/1600) [#626](https://github.com/Telefonica/mistica-web/issues/626) [#1599](https://github.com/Telefonica/mistica-web/issues/1599) [#1599](https://github.com/Telefonica/mistica-web/issues/1599) [#626](https://github.com/Telefonica/mistica-web/issues/626)
 * **skin:** remove Tu skin ([#1609](https://github.com/Telefonica/mistica-web/issues/1609)) ([3dde4bf](https://github.com/Telefonica/mistica-web/commit/3dde4bf9e9461e44e65c34506f12335005554652)), closes [#1596](https://github.com/Telefonica/mistica-web/issues/1596) [#626](https://github.com/Telefonica/mistica-web/issues/626) [#1608](https://github.com/Telefonica/mistica-web/issues/1608) [#1608](https://github.com/Telefonica/mistica-web/issues/1608) [#1608](https://github.com/Telefonica/mistica-web/issues/1608) [#626](https://github.com/Telefonica/mistica-web/issues/626)
 * **skin:** replace vivo-new  with vivo, and add vivo-evolution ([#1608](https://github.com/Telefonica/mistica-web/issues/1608)) ([cd459b5](https://github.com/Telefonica/mistica-web/commit/cd459b5d69a697ada534c77d93ba27f03eab65ac)), closes [#1595](https://github.com/Telefonica/mistica-web/issues/1595) [#626](https://github.com/Telefonica/mistica-web/issues/626) [#1609](https://github.com/Telefonica/mistica-web/issues/1609) [#626](https://github.com/Telefonica/mistica-web/issues/626)
+
+
+### BREAKING CHANGES
+
+* **guide:** list all the migration changes to ease migration
 
 # [16.71.0](https://github.com/Telefonica/mistica-web/compare/v16.70.0...v16.71.0) (2026-07-09)
 
