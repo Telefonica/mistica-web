@@ -192,36 +192,10 @@
                 "@semantic-release/commit-analyzer",
                 {
                     "preset": "angular",
+                    "_comment": "TODO #1660: Remove breakingHeaderPattern once semantic-release angular preset supports ! notation natively",
                     "parserOpts": {
                         "breakingHeaderPattern": "^(\\w*)(?:\\((.*)\\))?!: (.*)$"
-                    },
-                    "_comment": "TODO #1660: Remove breakingHeaderPattern once semantic-release angular preset supports ! notation natively",
-                    "releaseRules": [
-                        {
-                            "breaking": true,
-                            "release": "major"
-                        },
-                        {
-                            "revert": true,
-                            "release": "patch"
-                        },
-                        {
-                            "type": "feat",
-                            "release": "minor"
-                        },
-                        {
-                            "type": "fix",
-                            "release": "patch"
-                        },
-                        {
-                            "type": "perf",
-                            "release": "patch"
-                        },
-                        {
-                            "scope": "no-release",
-                            "release": false
-                        }
-                    ]
+                    }
                 }
             ],
             [
