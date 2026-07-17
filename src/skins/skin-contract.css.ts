@@ -325,9 +325,9 @@ const borderRadii: BorderRadiiConfig = {
     tag: '',
 };
 
-type ToThemeTokens<T> = T extends {mobile: number} & {tablet: any}
+type ToThemeTokens<T> = T extends {mobile: number; tablet: number; desktop: number; largeDesktop: number}
     ? {[K in keyof T]: ToThemeTokens<T[K]>}
-    : T extends {mobile: number}
+    : T extends {mobile: number; desktop: number}
       ? string
       : T extends object
         ? {[K in keyof T]: ToThemeTokens<T[K]>}
