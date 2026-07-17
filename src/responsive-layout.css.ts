@@ -3,14 +3,11 @@ import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
-export const MOBILE_SIDE_MARGIN = 16;
-export const TABLET_SIDE_MARGIN = 32;
-export const SMALL_DESKTOP_SIDE_MARGIN = 48;
-export const LARGE_DESKTOP_SIDE_MARGIN = 64;
-export const EXTRA_LARGE_DESKTOP_MAX_WIDTH = 1704;
+export const DEFAULT_MOBILE_SIDE_MARGIN = 16;
+export const DEFAULT_TABLET_SIDE_MARGIN = 32;
 
 const marginValue = {
-    extraLargeDesktop: skinVars.spacing.responsiveLayoutMargin.largeDesktop,
+    extraLargeDesktop: skinVars.spacing.responsiveLayoutMargin.extraLargeDesktop,
     largeDesktop: skinVars.spacing.responsiveLayoutMargin.largeDesktop,
     desktop: skinVars.spacing.responsiveLayoutMargin.desktop,
     tablet: skinVars.spacing.responsiveLayoutMargin.tablet,

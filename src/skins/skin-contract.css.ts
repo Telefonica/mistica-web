@@ -325,13 +325,13 @@ const borderRadii: BorderRadiiConfig = {
     tag: '',
 };
 
-type ToThemeTokens<T> = T extends {mobile: number; tablet: number; desktop: number; largeDesktop: number}
-    ? {[K in keyof T]: ToThemeTokens<T[K]>}
-    : T extends {mobile: number; desktop: number}
-      ? string
-      : T extends object
-        ? {[K in keyof T]: ToThemeTokens<T[K]>}
-        : string;
+type ToThemeTokens<T> = T extends {mobile: unknown; desktop: unknown}
+    ? Exclude<keyof T, 'mobile' | 'desktop'> extends never
+        ? string
+        : {[K in keyof T]: ToThemeTokens<T[K]>}
+    : T extends object
+      ? {[K in keyof T]: ToThemeTokens<T[K]>}
+      : string;
 
 const textPresets: ToThemeTokens<TextPresetsConfig> = {
     cardTitle: {weight: ''},
@@ -386,7 +386,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     heroPadding: {top: '', bottom: ''},
     headerPadding: {top: '', bottom: ''},
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
-    responsiveLayoutMargin: {mobile: '', tablet: '', desktop: '', largeDesktop: ''},
+    responsiveLayoutMargin: {mobile: '', tablet: '', desktop: '', largeDesktop: '', extraLargeDesktop: ''},
 };
 
 export const vars = createThemeContract({
