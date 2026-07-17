@@ -11,13 +11,12 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet-common.css';
 import FocusTrap from './focus-trap';
-import {MOBILE_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import {useDisableBodyScroll, useIsInViewport, useIsWithinIFrame, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
 import Stack from './stack';
-import Box from './box';
+import Box, {type PadSize} from './box';
 import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
@@ -280,12 +279,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     );
 });
 
-const paddingX = {
-    mobile: MOBILE_SIDE_MARGIN,
-    tablet: TABLET_SIDE_MARGIN,
-    desktop: 40, // to keep consistency with the rest of the dialogs components
-} as const;
-
 type SheetBodyProps = {
     title?: string;
     subtitle?: string;
@@ -307,6 +300,13 @@ export const SheetBody = ({
     link,
     children,
 }: SheetBodyProps): JSX.Element => {
+    const {spacing} = useTheme();
+    const paddingX = {
+        mobile: spacing.responsiveLayoutMargin.mobile as PadSize,
+        tablet: spacing.responsiveLayoutMargin.tablet as PadSize,
+        desktop: 40,
+    } as const;
+
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
