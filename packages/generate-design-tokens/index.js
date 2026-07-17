@@ -168,11 +168,11 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                         return [
                             name,
                             {
-                                mobile: `${responsive.mobile ?? defaults.mobile}px`,
-                                tablet: `${responsive.tablet ?? defaults.tablet}px`,
-                                desktop: `${responsive.desktop ?? defaults.desktop}px`,
-                                largeDesktop: `${responsive.largeDesktop ?? defaults.largeDesktop}px`,
-                                extraLargeDesktop: `${responsive.extraLargeDesktop ?? defaults.extraLargeDesktop}px`,
+                                mobile: responsive.mobile ?? defaults.mobile,
+                                tablet: responsive.tablet ?? defaults.tablet,
+                                desktop: responsive.desktop ?? defaults.desktop,
+                                largeDesktop: responsive.largeDesktop ?? defaults.largeDesktop,
+                                extraLargeDesktop: responsive.extraLargeDesktop ?? defaults.extraLargeDesktop,
                             },
                         ];
                     }

@@ -825,11 +825,11 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 40},
             },
             responsiveLayoutMargin: {
-                mobile: '8px',
-                tablet: '32px',
-                desktop: '48px',
-                largeDesktop: '64px',
-                extraLargeDesktop: '80px',
+                mobile: 8,
+                tablet: 32,
+                desktop: 48,
+                largeDesktop: 64,
+                extraLargeDesktop: 80,
             },
         },
     };

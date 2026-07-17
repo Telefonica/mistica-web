@@ -118,7 +118,7 @@ export type SpacingConfig = {
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
-    responsiveLayoutMargin: FullyResponsiveValue<string>;
+    responsiveLayoutMargin: FullyResponsiveValue<number>;
 };
 
 export type ThemeVariantsConfig = {
