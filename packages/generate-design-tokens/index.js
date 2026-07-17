@@ -158,13 +158,14 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 Object.entries(designTokens.spacing).map(([name, spacingValue]) => {
                     if (name === 'responsiveLayoutMargin') {
                         const responsive = spacingValue.value || {};
+                        const defaults = {mobile: 16, tablet: 32, desktop: 48, largeDesktop: 64};
                         return [
                             name,
                             {
-                                mobile: responsive.mobile,
-                                tablet: responsive.tablet,
-                                desktop: responsive.desktop,
-                                largeDesktop: responsive.largeDesktop,
+                                mobile: responsive.mobile ?? defaults.mobile,
+                                tablet: responsive.tablet ?? defaults.tablet,
+                                desktop: responsive.desktop ?? defaults.desktop,
+                                largeDesktop: responsive.largeDesktop ?? defaults.largeDesktop,
                             },
                         ];
                     }

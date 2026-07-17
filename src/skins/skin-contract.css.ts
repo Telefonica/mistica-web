@@ -5,6 +5,15 @@ import type {BorderRadiiConfig, Colors, SpacingConfig, TextPresetsConfig} from '
 const colors: Colors = {
     background: '',
     backgroundAlternative: '',
+    backgroundSelected: '',
+    backgroundSelectedHover: '',
+    backgroundSelectedPressed: '',
+    backgroundSelectedBrand: '',
+    backgroundSelectedBrandHover: '',
+    backgroundSelectedBrandPressed: '',
+    backgroundSelectedNegative: '',
+    backgroundSelectedNegativeHover: '',
+    backgroundSelectedNegativePressed: '',
     backgroundBrand: '',
     backgroundNegative: '',
     backgroundBrandSecondary: '',
@@ -60,6 +69,13 @@ const colors: Colors = {
     buttonLinkBackgroundNegativePressed: '',
     buttonLinkBackgroundBrandPressed: '',
     buttonLinkBackgroundMediaPressed: '',
+    buttonLinkNeutralBackgroundPressed: '',
+    buttonLinkNeutralBackgroundBrand: '',
+    buttonLinkNeutralBackgroundBrandPressed: '',
+    buttonLinkNeutralBackgroundNegative: '',
+    buttonLinkNeutralBackgroundNegativePressed: '',
+    buttonLinkNeutralBackgroundMedia: '',
+    buttonLinkNeutralBackgroundMediaPressed: '',
     buttonPrimaryBackground: '',
     buttonPrimaryBackgroundInverse: '',
     buttonPrimaryBackgroundNegative: '',
@@ -123,6 +139,11 @@ const colors: Colors = {
     textLinkDanger: '',
     textLinkDangerMedia: '',
     textLinkSnackbar: '',
+    textLinkNeutral: '',
+    textLinkNeutralBrand: '',
+    textLinkNeutralNegative: '',
+    textLinkNeutralAlternative: '',
+    textLinkNeutralMedia: '',
     textActivated: '',
     textBrand: '',
     inputBorder: '',
@@ -142,6 +163,7 @@ const colors: Colors = {
     controlActivatedNegative: '',
     controlActivatedBrand: '',
     controlError: '',
+    chevronIndicator: '',
     barTrack: '',
     barTrackInverse: '',
     barTrackNegative: '',
@@ -179,7 +201,6 @@ const colors: Colors = {
     neutralMediumBrand: '',
     neutralLow: '',
     neutralLowAlternative: '',
-    chevronIndicator: '',
     textPrimary: '',
     textPrimaryInverse: '',
     textPrimaryNegative: '',
@@ -226,6 +247,8 @@ const colors: Colors = {
     textNavigationSearchBarText: '',
     textAppBar: '',
     textAppBarSelected: '',
+    iosGlassAppBar: '',
+    iosGlassAppBarSelected: '',
     customTabsBackground: '',
     tagTextPromo: '',
     tagTextActive: '',
@@ -285,8 +308,6 @@ const colors: Colors = {
     tagBackgroundErrorBrand: '',
     cardContentOverlay: '',
     cardFooterOverlay: '',
-    iosGlassAppBarSelected: '',
-    iosGlassAppBar: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
@@ -304,11 +325,13 @@ const borderRadii: BorderRadiiConfig = {
     tag: '',
 };
 
-type ToThemeTokens<T> = T extends {mobile: number; desktop: number}
-    ? string
-    : T extends object
-      ? {[K in keyof T]: ToThemeTokens<T[K]>}
-      : string;
+type ToThemeTokens<T> = T extends {mobile: number} & {tablet: any}
+    ? {[K in keyof T]: ToThemeTokens<T[K]>}
+    : T extends {mobile: number}
+      ? string
+      : T extends object
+        ? {[K in keyof T]: ToThemeTokens<T[K]>}
+        : string;
 
 const textPresets: ToThemeTokens<TextPresetsConfig> = {
     cardTitle: {weight: ''},
