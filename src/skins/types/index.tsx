@@ -21,6 +21,8 @@ export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
 type ResponsiveValue<T> = {mobile: T; desktop: T};
 
+type MultiBreakpointValue<T> = {mobile: T; tablet: T; desktop: T; largeDesktop: T};
+
 type PaddingYValues = {
     top: ResponsiveValue<number>;
     bottom: ResponsiveValue<number>;
@@ -117,6 +119,7 @@ export type SpacingConfig = {
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
+    responsiveLayoutMargin?: MultiBreakpointValue<string>;
 };
 
 export type ThemeVariantsConfig = {

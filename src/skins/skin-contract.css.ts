@@ -363,6 +363,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     heroPadding: {top: '', bottom: ''},
     headerPadding: {top: '', bottom: ''},
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
+    responsiveLayoutMargin: {mobile: '', tablet: '', desktop: '', largeDesktop: ''},
 };
 
 export const vars = createThemeContract({

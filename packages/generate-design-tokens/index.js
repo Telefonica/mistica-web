@@ -150,7 +150,22 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 .join(',')},
         },
         spacing: ${JSON.stringify(
-            Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
+            Object.fromEntries(
+                Object.entries(designTokens.spacing).map(([name, spacingValue]) => {
+                    if (name === 'responsiveLayoutMargin') {
+                        return [
+                            name,
+                            {
+                                mobile: spacingValue.mobile.value,
+                                tablet: spacingValue.tablet.value,
+                                desktop: spacingValue.desktop.value,
+                                largeDesktop: spacingValue.largeDesktop.value,
+                            },
+                        ];
+                    }
+                    return [name, spacingValue.value];
+                })
+            )
         )},
     };
     return skin;

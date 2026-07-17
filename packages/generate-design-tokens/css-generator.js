@@ -306,6 +306,12 @@ export const generateCommonCssSrc = (DESIGN_TOKENS_FOLDER) => {
         )
         .join('\n');
 
+    const responsiveLayoutMargin = designTokens.spacing?.responsiveLayoutMargin || {};
+    const mobileMargin = responsiveLayoutMargin.mobile?.value || '16px';
+    const tabletMargin = responsiveLayoutMargin.tablet?.value || '24px';
+    const desktopMargin = responsiveLayoutMargin.desktop?.value || '40px';
+    const largeDesktopMargin = responsiveLayoutMargin.largeDesktop?.value || 'calc((100vw - 1416px) / 2)';
+
     return `
 /* Default text color */
 [data-${prefix}skin] {
@@ -328,24 +334,24 @@ ${textClasses}
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     margin: 0 var(--${prefix}responsive-layout-margin);
-    --${prefix}responsive-layout-margin: 16px;
+    --${prefix}responsive-layout-margin: ${mobileMargin};
 }
 
 ${tabletMediaQuery} {
     .${prefix}responsive-layout {
-        --${prefix}responsive-layout-margin: 24px;
+        --${prefix}responsive-layout-margin: ${tabletMargin};
     }
 }
 
 ${desktopMediaQuery} {
     .${prefix}responsive-layout {
-        --${prefix}responsive-layout-margin: 40px;
+        --${prefix}responsive-layout-margin: ${desktopMargin};
     }
 }
 
 ${largeDesktopMediaQuery} {
     .${prefix}responsive-layout {
-        --${prefix}responsive-layout-margin: calc((100vw - 1416px) / 2);
+        --${prefix}responsive-layout-margin: ${largeDesktopMargin};
     }
 }
     `;

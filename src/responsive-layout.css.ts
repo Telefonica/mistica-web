@@ -10,11 +10,11 @@ export const LARGE_DESKTOP_SIDE_MARGIN = 64;
 export const EXTRA_LARGE_DESKTOP_MAX_WIDTH = 1704;
 
 const marginValue = {
-    extraLargeDesktop: `calc((100vw - ${EXTRA_LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
-    largeDesktop: `${LARGE_DESKTOP_SIDE_MARGIN}px`,
-    desktop: `${SMALL_DESKTOP_SIDE_MARGIN}px`,
-    tablet: `${TABLET_SIDE_MARGIN}px`,
-    mobile: `${MOBILE_SIDE_MARGIN}px`,
+    extraLargeDesktop: skinVars.spacing.responsiveLayoutMargin.largeDesktop,
+    largeDesktop: skinVars.spacing.responsiveLayoutMargin.largeDesktop,
+    desktop: skinVars.spacing.responsiveLayoutMargin.desktop,
+    tablet: skinVars.spacing.responsiveLayoutMargin.tablet,
+    mobile: skinVars.spacing.responsiveLayoutMargin.mobile,
 };
 
 const currentMargin = createVar();
