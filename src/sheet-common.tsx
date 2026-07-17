@@ -25,7 +25,7 @@ import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
 import * as tokens from './text-tokens';
-import {skinVars} from './index';
+import {vars as skinVars} from './skins/skin-contract.css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
