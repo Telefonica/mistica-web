@@ -24,7 +24,6 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
-import {DEFAULT_MOBILE_SIDE_MARGIN, DEFAULT_TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
@@ -280,11 +279,11 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     );
 });
 
-const paddingX = {
-    mobile: DEFAULT_MOBILE_SIDE_MARGIN,
-    tablet: DEFAULT_TABLET_SIDE_MARGIN,
+const getPaddingX = (marginVars: typeof skinVars.spacing.responsiveLayoutMargin) => ({
+    mobile: marginVars.mobile,
+    tablet: marginVars.tablet,
     desktop: 40, // to keep consistency with the rest of the dialogs components
-} as const;
+});
 
 type SheetBodyProps = {
     title?: string;
@@ -310,6 +309,7 @@ export const SheetBody = ({
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
+    const paddingX = React.useMemo(() => getPaddingX(skinVars.spacing.responsiveLayoutMargin), []);
 
     React.useEffect(() => {
         if (bottomScrollSignalRef.current) {
