@@ -3,6 +3,9 @@ import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
+export const MOBILE_SIDE_MARGIN = 16;
+export const TABLET_SIDE_MARGIN = 32;
+
 const marginValue = {
     extraLargeDesktop: `calc(${skinVars.spacing.responsiveLayoutMargin.extraLargeDesktop} * 1px)`,
     largeDesktop: `calc(${skinVars.spacing.responsiveLayoutMargin.largeDesktop} * 1px)`,
