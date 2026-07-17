@@ -119,7 +119,7 @@ export type SpacingConfig = {
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
-    responsiveLayoutMargin?: MultiBreakpointValue<string>;
+    responsiveLayoutMargin: MultiBreakpointValue<string>;
 };
 
 export type ThemeVariantsConfig = {

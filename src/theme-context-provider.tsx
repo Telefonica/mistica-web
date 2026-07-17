@@ -243,31 +243,37 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
     }, [contextTheme]);
 
     const spacingDesktopVars = React.useMemo(() => {
-        const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
-            return {
-                [token]: {
-                    ...('top' in values && {top: `${values.top.desktop}px`}),
-                    ...('right' in values && {right: `${values.right.desktop}px`}),
-                    ...('bottom' in values && {bottom: `${values.bottom.desktop}px`}),
-                    ...('left' in values && {left: `${values.left.desktop}px`}),
-                },
-            };
+        const result: Record<string, any> = {};
+        Object.entries(contextTheme.spacing).forEach(([token, values]) => {
+            if (token === 'responsiveLayoutMargin') {
+                result[token] = values;
+            } else {
+                result[token] = {
+                    ...('top' in values ? {top: `${(values as any).top.desktop}px`} : {}),
+                    ...('right' in values ? {right: `${(values as any).right.desktop}px`} : {}),
+                    ...('bottom' in values ? {bottom: `${(values as any).bottom.desktop}px`} : {}),
+                    ...('left' in values ? {left: `${(values as any).left.desktop}px`} : {}),
+                };
+            }
         });
-        return Object.assign({}, ...tokenValues) as typeof vars.spacing;
+        return result as typeof vars.spacing;
     }, [contextTheme]);
 
     const spacingMobileVars = React.useMemo(() => {
-        const tokenValues = Object.entries(contextTheme.spacing).map(([token, values]) => {
-            return {
-                [token]: {
-                    ...('top' in values && {top: `${values.top.mobile}px`}),
-                    ...('right' in values && {right: `${values.right.mobile}px`}),
-                    ...('bottom' in values && {bottom: `${values.bottom.mobile}px`}),
-                    ...('left' in values && {left: `${values.left.mobile}px`}),
-                },
-            };
+        const result: Record<string, any> = {};
+        Object.entries(contextTheme.spacing).forEach(([token, values]) => {
+            if (token === 'responsiveLayoutMargin') {
+                result[token] = values;
+            } else {
+                result[token] = {
+                    ...('top' in values ? {top: `${(values as any).top.mobile}px`} : {}),
+                    ...('right' in values ? {right: `${(values as any).right.mobile}px`} : {}),
+                    ...('bottom' in values ? {bottom: `${(values as any).bottom.mobile}px`} : {}),
+                    ...('left' in values ? {left: `${(values as any).left.mobile}px`} : {}),
+                };
+            }
         });
-        return Object.assign({}, ...tokenValues) as typeof vars.spacing;
+        return result as typeof vars.spacing;
     }, [contextTheme]);
 
     const renderStyles = (selector: string) => {

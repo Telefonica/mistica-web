@@ -1112,6 +1112,7 @@ export const getCyberSkin = (): Skin => {
                     desktop: 40,
                 },
             },
+            responsiveLayoutMargin: {mobile: '16px', tablet: '32px', desktop: '48px', largeDesktop: '64px'},
         },
     };
     return skin;

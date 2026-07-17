@@ -4,21 +4,25 @@ import path from 'path';
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
 import prettier from 'prettier';
 
-/*
-By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
+/**
+ * Generates skin files and CSS from design tokens in mistica-design.
+ *
+ * By default, reads tokens from .github/mistica-design/tokens.
+ * To use a custom tokens folder:
+ *
+ *   node index.js /path/to/mistica-design/tokens
+ *   # or via yarn: yarn workspace generate-design-tokens generate /path/to/mistica-design/tokens
+ *
+ * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.js
+ *
+ * @see https://github.com/Telefonica/mistica-design
+ */
 
-To run this script locally using a custom path for the tokens, you can do the following:
-
-1. Clone this repo:
-    https://github.com/Telefonica/mistica-design
-
-2. Run:
-    DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
-*/
-
-const DESIGN_TOKENS_FOLDER =
-    process.env.DESIGN_TOKENS_FOLDER ||
-    path.join(import.meta.dirname, '../../.github/mistica-design/tokens/');
+const DESIGN_TOKENS_FOLDER = path.resolve(
+    process.argv[2] ||
+        process.env.DESIGN_TOKENS_FOLDER ||
+        path.join(import.meta.dirname, '../../.github/mistica-design/tokens/')
+);
 
 console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 
@@ -153,13 +157,14 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
             Object.fromEntries(
                 Object.entries(designTokens.spacing).map(([name, spacingValue]) => {
                     if (name === 'responsiveLayoutMargin') {
+                        const responsive = spacingValue.value || {};
                         return [
                             name,
                             {
-                                mobile: spacingValue.mobile.value,
-                                tablet: spacingValue.tablet.value,
-                                desktop: spacingValue.desktop.value,
-                                largeDesktop: spacingValue.largeDesktop.value,
+                                mobile: responsive.mobile,
+                                tablet: responsive.tablet,
+                                desktop: responsive.desktop,
+                                largeDesktop: responsive.largeDesktop,
                             },
                         ];
                     }
@@ -205,6 +210,7 @@ const generateSkinFiles = async () => {
 
         if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
             console.error(`Missing ${skinName}.json file`);
+            console.error(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`));
             return;
         }
 
