@@ -1,8 +1,16 @@
 # generate-design-tokens
 
-Script to generate mistica skins (in src/skins folder) from design tokens imported from mistica-design repo.
+Script to generate mistica skins from design tokens imported from the mistica-design repo.
 
-Run:
+## Generated Files
+
+- **Main skins** → `src/skins/` and `css/`
+- **Community skins** → `src/community/skins/` and `css/community/`
+
+The script discovers community skin tokens in the `tokens/community/` folder of the mistica-design repository
+and generates corresponding TypeScript and CSS files.
+
+## Run
 
 ```bash
 node index.js
