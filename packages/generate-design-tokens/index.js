@@ -24,6 +24,8 @@ console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 
 const SKINS_FOLDER = path.join(import.meta.dirname, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(import.meta.dirname, '..', '..', 'css');
+const COMMUNITY_SKINS_FOLDER = path.join(import.meta.dirname, '..', '..', 'src', 'community', 'skins');
+const COMMUNITY_CSS_FOLDER = path.join(import.meta.dirname, '..', '..', 'css', 'community');
 
 const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo', 'vivo-evolution', 'esimflag'];
 
@@ -91,11 +93,13 @@ const buildColor = (colorDescription) => {
     throw new Error(`Unknown color format: ${colorDescription.value}`);
 };
 
-const generateSkinSrc = (skinName) => {
+const generateSkinSrc = (skinName, isCommunitySkin = false) => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens = JSON.parse(designTokensFile);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
+    const importPrefix = isCommunitySkin ? '../..' : '..';
+    const typeImportPath = isCommunitySkin ? '../../skins/types' : './types';
 
     const textTokens = {};
     Object.entries(designTokens.text).forEach(([textAttribute, textAttributeConfig]) => {
@@ -107,20 +111,31 @@ const generateSkinSrc = (skinName) => {
         });
     });
 
+    const constantsImport = isCommunitySkin ? '' : `import {${skinConstantName}} from './constants';\n`;
+    const skinTypeImport = isCommunitySkin
+        ? `import type {Skin} from '${typeImportPath}';`
+        : `import type {GetKnownSkin, KnownSkin} from './types';`;
+    const skinName_const = isCommunitySkin
+        ? `export const ${skinConstantName} = '${toPascalCase(skinName)}';\n\n`
+        : '';
+    const skinType = isCommunitySkin ? 'Skin' : 'KnownSkin';
+    const functionSignature = isCommunitySkin
+        ? `export const get${toPascalCase(skinName)}Skin = (): ${skinType} => {`
+        : `export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {`;
+    const applyAlphaImportPath = isCommunitySkin ? '../../utils/color' : '../utils/color';
+
     return `
-import {${skinConstantName}} from './constants';
-${needsApplyAlphaImport ? `import {applyAlpha} from '../utils/color';` : ''}
+${constantsImport}${needsApplyAlphaImport ? `import {applyAlpha} from '${applyAlphaImportPath}';\n` : ''}
+${skinTypeImport}
 
-import type {GetKnownSkin, KnownSkin} from './types';
-
-export const palette = {
+${skinName_const}export const palette = {
     ${Object.entries(designTokens.global.palette)
         .map(([colorName, colorDescription]) => `'${colorName}':'${colorDescription.value}'`)
         .join(',')}
 };
 
-export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
-    const skin: KnownSkin = {
+${functionSignature}
+    const skin: ${skinType} = {
         name: ${skinConstantName},
         colors: {
             ${Object.entries(designTokens.light)
@@ -182,6 +197,41 @@ const formatTs = async (source) =>
         parser: 'typescript',
     });
 
+const generateCommunitySkins = async () => {
+    const communityTokensFolder = path.join(DESIGN_TOKENS_FOLDER, 'community');
+
+    if (!fs.existsSync(communityTokensFolder)) {
+        console.log('No community skins folder found in design tokens');
+        return;
+    }
+
+    const communitySkinFiles = fs.readdirSync(communityTokensFolder).filter((file) => file.endsWith('.json'));
+
+    if (communitySkinFiles.length === 0) {
+        console.log('No community skin token files found');
+        return;
+    }
+
+    if (!fs.existsSync(COMMUNITY_SKINS_FOLDER)) {
+        fs.mkdirSync(COMMUNITY_SKINS_FOLDER, {recursive: true});
+    }
+
+    if (!fs.existsSync(COMMUNITY_CSS_FOLDER)) {
+        fs.mkdirSync(COMMUNITY_CSS_FOLDER, {recursive: true});
+    }
+
+    for (const file of communitySkinFiles) {
+        const skinName = file.replace('.json', '');
+        console.log('Generating community skin tokens for', skinName);
+
+        const skinSrc = await formatTs(generateSkinSrc(skinName, true));
+        fs.writeFileSync(path.join(COMMUNITY_SKINS_FOLDER, `${skinName}-skin.tsx`), skinSrc);
+
+        const skinCssSrc = await formatCss(generateSkinCssSrc(skinName, communityTokensFolder));
+        fs.writeFileSync(path.join(COMMUNITY_CSS_FOLDER, `${skinName}.css`), skinCssSrc);
+    }
+};
+
 const generateSkinFiles = async () => {
     let anyGeneratedSkin;
 
@@ -210,6 +260,8 @@ const generateSkinFiles = async () => {
         const commonCssSrc = await formatCss(generateCommonCssSrc(DESIGN_TOKENS_FOLDER));
         fs.writeFileSync(path.join(CSS_FOLDER, `mistica-common.css`), commonCssSrc);
     }
+
+    await generateCommunitySkins();
 };
 
 generateSkinFiles();
