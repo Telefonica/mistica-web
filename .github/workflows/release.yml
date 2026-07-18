@@ -6,6 +6,11 @@ on:
                 description: 'CLI args'
                 required: false
                 default: ''
+            skipValidation:
+                description: 'Skip dry-run validation and release directly'
+                required: false
+                type: boolean
+                default: false
 
 permissions:
     contents: write
@@ -67,12 +72,18 @@ jobs:
                   echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
 
             - name: Dry-run semantic-release
+              if: inputs.skipValidation == false
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
               run: |
                   npx semantic-release --dry-run ${{ steps.validate-args.outputs.safe_args }} 2>&1 | tee dry-run.log
                   echo "✅ Validation passed - check the logs above to see the version that will be released" >> $GITHUB_STEP_SUMMARY
+
+            - name: Skip validation notice
+              if: inputs.skipValidation == true
+              run: |
+                  echo "⏭️ Skipping dry-run validation - proceeding directly to release" >> $GITHUB_STEP_SUMMARY
 
     release:
         name: Release
