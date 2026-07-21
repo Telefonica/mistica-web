@@ -95,6 +95,20 @@ export const menuItemHovered = style({
     },
 });
 
+export const menuItemHoveredDestructive = style({
+    transition: 'background-color 0.1s ease-in-out',
+    backgroundColor: skinVars.colors.buttonLinkDangerBackgroundPressed,
+    ':active': {
+        backgroundColor: skinVars.colors.buttonLinkDangerBackgroundPressed,
+    },
+    '@media': {
+        [mq.touchableOnly]: {
+            backgroundColor: 'transparent',
+            transition: 'none',
+        },
+    },
+});
+
 export const menuItemEnabled = style({
     '@media': {
         [mq.touchableOnly]: {

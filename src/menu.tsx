@@ -227,7 +227,10 @@ export const MenuItem = ({
             className={classnames(styles.menuItem, {
                 [styles.menuItemEnabled]: !disabled,
                 [styles.menuItemDisabled]: disabled,
-                [styles.menuItemHovered]: !disabled && itemIndex !== null && focusedItem === itemIndex,
+                [styles.menuItemHovered]:
+                    !disabled && !destructive && itemIndex !== null && focusedItem === itemIndex,
+                [styles.menuItemHoveredDestructive]:
+                    !disabled && destructive && itemIndex !== null && focusedItem === itemIndex,
             })}
             onMouseMove={() => setFocusedItem(disabled ? null : itemIndex)}
             onMouseLeave={() => setFocusedItem(null)}
