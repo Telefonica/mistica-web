@@ -246,8 +246,8 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         () =>
             Object.fromEntries(
                 Object.entries(contextTheme.spacing).map(([token, values]) => {
-                    if (token === 'responsiveLayoutMargin') {
-                        return [token, `${(values as any).desktop}`];
+                    if ('desktop' in values) {
+                        return [token, `${(values as any).desktop}px`];
                     }
 
                     return [
@@ -268,8 +268,8 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         () =>
             Object.fromEntries(
                 Object.entries(contextTheme.spacing).map(([token, values]) => {
-                    if (token === 'responsiveLayoutMargin') {
-                        return [token, `${(values as any).mobile}`];
+                    if ('mobile' in values) {
+                        return [token, `${(values as any).mobile}px`];
                     }
 
                     return [
