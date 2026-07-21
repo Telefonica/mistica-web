@@ -27,16 +27,7 @@ const IconImportRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="m5.74 10.956 5.72 5.728a.853.853 0 0 0 1.196 0l5.647-5.655.01-.008.013-.014a.845.845 0 0 0-1.216-1.171l-4.207 4.213V2.999a.844.844 0 0 0-1.69 0v11.05l-4.28-4.286a.844.844 0 0 0-1.193 1.193m16.101 5.955a.844.844 0 0 0-.843-.843.84.84 0 0 0-.84.843v3.244H3.844v-3.244a.845.845 0 0 0-1.689 0v4.087c0 .465.378.843.843.843h18a.844.844 0 0 0 .843-.843z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,6 +37,15 @@ const IconImportRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     <path
                         fill={fillColor}
                         d="M4.143 22h15.702c1.18 0 2.143-.964 2.155-2.144V12a.715.715 0 1 0-1.431 0v7.856a.72.72 0 0 1-.716.716H4.147a.72.72 0 0 1-.716-.716V12A.715.715 0 1 0 2 12v7.856C2 21.036 2.963 22 4.143 22"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m5.74 10.956 5.72 5.728a.853.853 0 0 0 1.196 0l5.647-5.655.01-.008.013-.014a.845.845 0 0 0-1.216-1.171l-4.207 4.213V2.999a.844.844 0 0 0-1.69 0v11.05l-4.28-4.286a.844.844 0 0 0-1.193 1.193m16.101 5.955a.844.844 0 0 0-.843-.843.84.84 0 0 0-.84.843v3.244H3.844v-3.244a.845.845 0 0 0-1.689 0v4.087c0 .465.378.843.843.843h18a.844.844 0 0 0 .843-.843z"
                     />
                 </svg>
             );
