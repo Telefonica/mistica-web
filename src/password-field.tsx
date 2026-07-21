@@ -118,7 +118,7 @@ const PasswordField = ({
             }}
             autoComplete={autoComplete}
             endIcon={<PasswordAdornment focus={focus} isVisible={isVisible} setVisibility={setIsVisible} />}
-            dataAttributes={{'component-name': 'PasswordField', testid: 'PasswordField', ...dataAttributes}}
+            dataAttributes={{testid: 'PasswordField', ...dataAttributes}}
         />
     );
 };

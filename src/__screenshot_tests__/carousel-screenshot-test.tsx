@@ -1,5 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
-import {VIVO_NEW_SKIN} from '../skins/constants';
+import {VIVO_SKIN} from '../skins/constants';
 
 import type {ElementHandle} from 'puppeteer';
 
@@ -75,11 +75,11 @@ test('Carousel mobile with controls and autoplay', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-test('Carousel mobile in Vivo new', async () => {
+test('Carousel mobile in Vivo', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
-        skin: VIVO_NEW_SKIN,
+        skin: VIVO_SKIN,
     });
 
     expect(await page.screenshot()).toMatchImageSnapshot();

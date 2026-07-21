@@ -79,7 +79,7 @@ const Callout = ({
             })}
             aria-label={ariaLabel}
             role={role}
-            {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
+            {...getPrefixedDataAttributes({testid: 'Callout', ...dataAttributes})}
         >
             <ThemeVariant variant={variant}>
                 {asset && (

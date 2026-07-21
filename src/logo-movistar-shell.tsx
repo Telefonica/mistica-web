@@ -13,7 +13,7 @@ type Props = {
 };
 
 const MovistarLogoShell = ({size, type, children}: Props): JSX.Element => {
-    const viewBox = type === 'imagotype' ? '0 0 195 72' : '0 0 72 72';
+    const viewBox = type === 'imagotype' ? '0 0 203 72' : '0 0 72 72';
 
     return (
         <svg

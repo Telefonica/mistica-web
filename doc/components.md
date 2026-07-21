@@ -1,6 +1,7 @@
 # Components Reference
 
-All components are imported from `@telefonica/mistica`.
+All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read
+the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
 
 ```tsx
 import {ButtonPrimary, Stack, Text2, ...} from '@telefonica/mistica';
@@ -81,7 +82,49 @@ Positions a primary and optional secondary button:
 />
 ```
 
+## Pagination
+
+Use `Pagination` to navigate through a finite number of pages. It can be uncontrolled with `defaultPage` or
+controlled with `currentPage` and `onChange`.
+
+```tsx
+<Pagination totalPages={20} defaultPage={1} />
+```
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Pagination totalPages={20} currentPage={page} onChange={setPage} />;
+```
+
+Common props:
+
+- `surroundingPageCount` -- number of pages shown around the current page. Defaults to `1`.
+- `hidePageList` -- hides page numbers and keeps only previous/next controls.
+- `hideNavigationControls` -- hides previous/next controls and keeps only page numbers.
+- `mode="iconOnly"` -- renders previous/next as icon buttons.
+- `navLeftLabel` / `navRightLabel` -- custom labels for previous/next controls.
+
 ## Text and Titles
+
+> 💡 **Centering text uses two complementary props:** [`<Align x="center">`](./layout.md#align) positions the
+> `Text*` / `Title*` element within its parent; `textAlign="center"` (on `Text*`) aligns the content _within_
+> the element. For a short single-line label, `Align` alone is enough. For multi-line text that should also
+> have each wrapped line centered, use both. `Title*` does not accept `textAlign`.
+>
+> ```tsx
+> // Single-line label — Align alone
+> <Align x="center">
+>   <Text4>Sonido</Text4>
+> </Align>
+>
+> // Multi-line description — Align positions the element, textAlign centers the lines
+> <Align x="center">
+>   <Text2 regular textAlign="center">
+>     Movistar te garantiza la mejor calidad de conexión de banda ancha del mercado.
+>   </Text2>
+> </Align>
+> ```
 
 ### Text components
 
@@ -366,8 +409,8 @@ const [selectedIndex, setSelectedIndex] = React.useState(0);
       description="Page description text"
     />
   }
-  extra={<Placeholder />}
-  sideBySideExtraOnDesktop
+  slot={<Placeholder />}
+  sideBySideSlotOnDesktop
 />
 ```
 
@@ -425,7 +468,7 @@ dialog({
   title: 'Title',
   subtitle: 'Subtitle',
   message: 'Message',
-  extra: <Placeholder />,
+  slot: <Placeholder />,
   acceptText: 'Accept',
   cancelText: 'Cancel',
 });

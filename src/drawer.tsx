@@ -26,19 +26,6 @@ import type {DataAttributes, HeadingType, TrackingEvent} from './utils/types';
 const MaybeDivider = ({show}: {show: boolean}) =>
     show ? <Divider /> : <div style={{borderBottom: '1px solid transparent'}} />;
 
-/**
- * Restores the focus to the element that was focused before the Drawer was opened
- */
-const useRestoreFocus = () => {
-    const activeElementRef = React.useRef<HTMLElement | null>(document.activeElement as HTMLElement);
-    React.useEffect(() => {
-        const elementToFocus = activeElementRef.current;
-        return () => {
-            elementToFocus?.focus?.();
-        };
-    }, []);
-};
-
 type DrawerLayoutProps = {
     width?: number;
     children: React.ReactNode;
@@ -54,7 +41,6 @@ type DrawerPropsRef = {
 const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
     ({width, children, onClose, onDismiss}, ref) => {
         useSetModalStateEffect();
-        useRestoreFocus();
         const {isMobile} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
         const widthStyle = isMobile ? 'auto' : width;
@@ -202,7 +188,7 @@ const Drawer = ({
                 aria-modal="true"
                 className={styles.drawer}
                 ref={setScrollableParentElement}
-                {...getPrefixedDataAttributes(dataAttributes, 'Drawer')}
+                {...getPrefixedDataAttributes({testid: 'Drawer', ...dataAttributes})}
             >
                 {onDismiss && (
                     <div className={styles.closeButtonContainer}>

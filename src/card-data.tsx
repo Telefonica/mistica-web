@@ -26,8 +26,6 @@ type DataCardProps = {
     height?: number | string;
     backgroundColor?: string;
     variant?: Variant;
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -41,21 +39,14 @@ type DataCardProps = {
     description?: string;
     descriptionLinesMax?: number;
     dataAttributes?: DataAttributes;
-    extraAlignment?: SlotAlignment;
-    /** @deprecated use slot */
-    extra?: React.ReactNode;
     slot?: React.ReactNode;
     slotAlignment?: SlotAlignment;
     aspectRatio?: CardAspectRatio;
-    /** @deprecated use buttonPrimary or buttonSecondary */
-    button?: CardActionButtonPrimary;
     buttonPrimary?: CardActionButtonPrimary;
     buttonSecondary?: CardActionButtonSecondary;
     buttonLink?: CardActionButtonLink;
     onClose?: () => unknown;
     closeButtonLabel?: string;
-    /** @deprecated use topActions */
-    actions?: TopActionsArray;
     topActions?: TopActionsArray;
     showFooter?: boolean;
     footerBackgroundColor?: string;
@@ -65,86 +56,20 @@ type DataCardProps = {
 };
 
 export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
-    (
-        {
-            dataAttributes,
-            size = 'default',
-            button,
-            buttonPrimary,
-            extra,
-            slot,
-            actions,
-            topActions,
-            isInverse,
-            variant,
-            ...rest
-        },
-        ref
-    ) => {
+    ({dataAttributes, size = 'default', buttonPrimary, slot, topActions, variant, ...rest}, ref) => {
         return (
             <InternalCard
                 type="data"
                 size={size}
                 dataAttributes={{
-                    'component-name': 'DataCard',
                     testid: 'DataCard',
                     ...dataAttributes,
                 }}
                 ref={ref}
-                buttonPrimary={buttonPrimary || button}
-                topActions={topActions || actions}
-                slot={slot || extra}
-                variant={variant || (isInverse ? 'inverse' : 'default') || 'default'}
-                {...rest}
-            />
-        );
-    }
-);
-
-type FixedSizeDataCardProps = Omit<DataCardProps, 'size'>;
-
-/**
- * @deprecated use <Datacard size="snap" /> instead
- */
-export const SnapCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<FixedSizeDataCardProps>>(
-    ({dataAttributes, slotAlignment = 'bottom', ...rest}, ref) => {
-        return (
-            <DataCard
-                size="snap"
-                dataAttributes={{
-                    'component-name': 'SnapCard',
-                    testid: 'SnapCard',
-                    ...dataAttributes,
-                }}
-                ref={ref}
-                slotAlignment={slotAlignment}
-                {...rest}
-            />
-        );
-    }
-);
-
-type DisplayDataCardProps = FixedSizeDataCardProps & {
-    /** @deprecated use buttonSecondary */
-    secondaryButton?: CardActionButtonPrimary;
-};
-
-/**
- * @deprecated use <Datacard size="display" /> instead
- */
-export const DisplayDataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DisplayDataCardProps>>(
-    ({dataAttributes, buttonSecondary, slotAlignment = 'bottom', secondaryButton, ...rest}, ref) => {
-        return (
-            <DataCard
-                size="display"
-                dataAttributes={{
-                    'component-name': 'DisplayDataCard',
-                    testid: 'DisplayDataCard',
-                    ...dataAttributes,
-                }}
-                buttonSecondary={buttonSecondary || secondaryButton}
-                slotAlignment={slotAlignment}
-                ref={ref}
+                buttonPrimary={buttonPrimary}
+                topActions={topActions}
+                slot={slot}
+                variant={variant || 'default'}
                 {...rest}
             />
         );

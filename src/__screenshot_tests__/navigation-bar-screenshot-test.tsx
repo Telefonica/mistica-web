@@ -49,11 +49,11 @@ test.each`
     expect(menuOpenImage).toMatchImageSnapshot();
 });
 
-test('MainNavigationBar mobile with burger menu extra', async () => {
+test('MainNavigationBar mobile with burger menu slot', async () => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {burgerMenuExtra: true},
+        args: {burgerMenuSlot: true},
     });
 
     await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
@@ -284,4 +284,19 @@ test.each(['large' /* 'small' */])('MainNavigationBar inverse with %s menu in DE
     const startButton = await screen.findByRole('button', {name: 'Start'});
     await page.click(startButton);
     expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
+});
+
+test('MainNavigationBar large with expanded right slot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {
+            large: true,
+            expandedRightSlot: true,
+        },
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
 });

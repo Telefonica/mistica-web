@@ -41,6 +41,9 @@ export default {
             options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
         },
+        gradient: {
+            control: {type: 'boolean'},
+        },
     },
     parameters: {
         fullScreen: true,
@@ -57,6 +60,7 @@ type Args = {
     variantOutside: Variant;
     names: boolean;
     background: boolean;
+    gradient: boolean;
 };
 
 export const Catalog: StoryComponent<Args> = ({
@@ -69,6 +73,7 @@ export const Catalog: StoryComponent<Args> = ({
     variantOutside,
     names,
     background,
+    gradient,
 }) => {
     const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
     const getTypeSortValue = (name: string) => {
@@ -138,6 +143,7 @@ export const Catalog: StoryComponent<Args> = ({
             ));
 
     const iconBackgroundColor = background ? '#aaa' : 'none';
+    const gradientColor = 'linear-gradient(225deg, #AE42E4 17.51%, #BD4AFF 38.3%, #EF7E9C 82.5%)';
 
     return (
         <ResponsiveLayout fullWidth variant={variantOutside}>
@@ -165,7 +171,7 @@ export const Catalog: StoryComponent<Args> = ({
                                     fontSize: 0,
                                 }}
                             >
-                                <Icon size={size} />
+                                <Icon size={size} color={gradient ? gradientColor : undefined} />
                             </div>
                             {names && (
                                 <Box paddingTop={8}>
@@ -189,4 +195,5 @@ Catalog.args = {
     variantOutside: 'default',
     names: true,
     background: false,
+    gradient: false,
 };

@@ -2,19 +2,8 @@
 
 ## Critical rules
 
-1. **NEVER hardcode colors in app/component UI code.** Always use `skinVars.colors.*` from
-   `@telefonica/mistica`. For skins and theme-level customization, see [theme-config.md](./theme-config.md).
-2. **NEVER use raw `<div>` for layout.** Use `Box`, `Stack`, `Inline`, `ResponsiveLayout`, `GridLayout`,
-   `Grid`.
-3. **NEVER set font sizes manually.** Use text components (`Text1`-`Text10`, `Title1`-`Title4`). If those
-   don't cover your necessities you can set custom sizes with `Text` component.
-4. **NEVER set border radius manually.** Use `skinVars.borderRadii.*` or components that handle it (`Boxed`,
-   cards, etc.). For theme-level visual customization without a dedicated component prop, use a custom skin.
-5. **Always wrap your app** with `ThemeContextProvider` and import `@telefonica/mistica/css/mistica.css`.
-6. **Always namespace React hooks**: `React.useState`, `React.useEffect`, `React.useRef`, etc.
-7. **Add `'use client';`** directive to client components when using Next.js app router.
-8. **Set `font-family` and `body` background color.** See [llms.md](./llms.md) rules 9–10 and
-   [fonts.md](./fonts.md) for the per-skin font table, `@font-face` setup, and the `GlobalStyles` pattern.
+See [Critical Rules in `llms.md`](./llms/llms.md#critical-rules) — the single source of truth. These rules
+apply throughout this document.
 
 ## Page layout composition
 
@@ -108,6 +97,29 @@ Follow the 24/32/16 rule:
 </Stack>
 ```
 
+### DO: Fill remaining horizontal space with `Inline` `expand`
+
+To make a row child grow into the leftover width next to a fixed-width sibling, use `Inline`'s `expand` prop
+with the index/indexes of the children that should grow. Indexes follow `React.Children.toArray` order.
+
+```tsx
+// ProgressBar fills remaining space
+<Inline space={24} expand={1} alignItems="center">
+  <Icon2GFilled />
+  <ProgressBar progressPercent={30} />
+</Inline>
+```
+
+### DON'T: grow children with raw flex or `style` on `Box`
+
+```tsx
+// ❌ raw flexbox div — breaks; Inline already wraps each child in a div
+<div style={{display: 'flex'}}>
+  <div style={{flex: 1}}>...</div>
+  <div style={{flex: '0 0 394px'}}>...</div>
+</div>
+```
+
 ## Color dos and don'ts
 
 ### DO: Use design tokens
@@ -142,6 +154,30 @@ If you need brand-specific defaults, put those colors in a custom skin and then 
 `skinVars.colors.*` instead of styling individual components with palette values.
 
 ## Responsive patterns
+
+### Pagination in lists
+
+Use `Pagination` near paged content such as search results, tables, or long lists. Keep the component
+controlled when the page value drives data fetching, routing, or analytics.
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Stack space={16}>
+  <RowList>
+    {items.map((item) => (
+      <Row key={item.id} title={item.title} />
+    ))}
+  </RowList>
+  <Pagination totalPages={20} currentPage={page} onChange={setPage} />
+</Stack>;
+```
+
+For constrained containers, products can hide the page list and keep only previous/next controls.
+
+```tsx
+<Pagination totalPages={20} currentPage={page} onChange={setPage} hidePageList />
+```
 
 ### Conditional rendering by screen size
 
@@ -501,10 +537,10 @@ return (
   <ResponsiveLayout>
     <Stack space={24}>
       <Stepper currentIndex={currentStep} steps={['Personal', 'Address', 'Payment', 'Confirm']} />
-        {currentStep === 0 && <PersonalInfoForm />}
-        {currentStep === 1 && <AddressForm />}
-        {currentStep === 2 && <PaymentForm />}
-        {currentStep === 3 && <ConfirmationScreen />}
+      {currentStep === 0 && <PersonalInfoForm />}
+      {currentStep === 1 && <AddressForm />}
+      {currentStep === 2 && <PaymentForm />}
+      {currentStep === 3 && <ConfirmationScreen />}
     </Stack>
   </ResponsiveLayout>
 </Stack>
@@ -518,7 +554,7 @@ return (
 import Link from 'next/link';
 
 const theme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'Next14', Component: Link},
 };
@@ -530,7 +566,7 @@ const theme = {
 import {Link} from 'react-router-dom';
 
 const theme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'ReactRouter6', Component: Link},
 };

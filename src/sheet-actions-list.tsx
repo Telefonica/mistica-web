@@ -10,8 +10,7 @@ import Image from './image';
 import NegativeBox from './negative-box';
 import Touchable from './touchable';
 
-import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps} from './utils/types';
+import type {DataAttributes} from './utils/types';
 
 type ActionsListSheetProps = {
     title?: string;
@@ -22,16 +21,10 @@ type ActionsListSheetProps = {
         title: string;
         /** "normal" by default */
         style?: 'normal' | 'destructive';
-        icon?: ExclusifyUnion<
-            | {
-                  /** @deprecated - use url instead */
-                  Icon: React.ComponentType<IconProps>;
-              }
-            | {
-                  url: string;
-                  urlDark?: string;
-              }
-        >;
+        icon?: {
+            url: string;
+            urlDark?: string;
+        };
     }>;
     onClose?: () => void;
     onSelect?: (id: string) => void;
@@ -46,7 +39,7 @@ const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{'component-name': 'ActionsListSheet', ...dataAttributes}}
+                dataAttributes={{testid: 'ActionsListSheet', ...dataAttributes}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -67,26 +60,11 @@ const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>
                                     <div className={styles.sheetActionRow}>
                                         {icon && (
                                             <Box paddingRight={16}>
-                                                {icon.Icon ? (
-                                                    <icon.Icon
-                                                        size={24}
-                                                        color={
-                                                            style === 'destructive'
-                                                                ? skinVars.colors.textLinkDanger
-                                                                : skinVars.colors.neutralHigh
-                                                        }
-                                                    />
-                                                ) : (
-                                                    <Image
-                                                        circular
-                                                        src={
-                                                            isDarkMode && icon.urlDark
-                                                                ? icon.urlDark
-                                                                : icon.url
-                                                        }
-                                                        width={40}
-                                                    />
-                                                )}
+                                                <Image
+                                                    circular
+                                                    src={isDarkMode && icon.urlDark ? icon.urlDark : icon.url}
+                                                    width={40}
+                                                />
                                             </Box>
                                         )}
                                         <Text3

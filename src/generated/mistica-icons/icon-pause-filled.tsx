@@ -9,56 +9,64 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconPauseFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M6.75 3C5.784 3 5 3.806 5 4.8v14.4c0 .994.784 1.8 1.75 1.8s1.75-.806 1.75-1.8V4.8c0-.994-.784-1.8-1.75-1.8m10.5 0c-.966 0-1.75.806-1.75 1.8v14.4c0 .994.784 1.8 1.75 1.8S19 20.194 19 19.2V4.8c0-.994-.784-1.8-1.75-1.8"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M9.72 6.13c0-.891-.714-1.63-1.61-1.63S6.5 5.239 6.5 6.13v11.74c0 .891.713 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622zm7.78 0a1.62 1.62 0 0 0-1.61-1.63c-.896 0-1.61.739-1.61 1.63v11.74c0 .891.714 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M9.72 6.13c0-.891-.714-1.63-1.61-1.63S6.5 5.239 6.5 6.13v11.74c0 .891.713 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622zm7.78 0a1.62 1.62 0 0 0-1.61-1.63c-.896 0-1.61.739-1.61 1.63v11.74c0 .891.714 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622z"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M9 5a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm8 0a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M6.75 3C5.784 3 5 3.806 5 4.8v14.4c0 .994.784 1.8 1.75 1.8s1.75-.806 1.75-1.8V4.8c0-.994-.784-1.8-1.75-1.8m10.5 0c-.966 0-1.75.806-1.75 1.8v14.4c0 .994.784 1.8 1.75 1.8S19 20.194 19 19.2V4.8c0-.994-.784-1.8-1.75-1.8"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.72 6.13c0-.891-.714-1.63-1.61-1.63S6.5 5.239 6.5 6.13v11.74c0 .891.713 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622zm7.78 0a1.62 1.62 0 0 0-1.61-1.63c-.896 0-1.61.739-1.61 1.63v11.74c0 .891.714 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9 5a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm8 0a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconPauseFilled;

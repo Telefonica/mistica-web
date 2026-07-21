@@ -47,6 +47,13 @@ export type Dictionary = {
     carouselPrevButton: string;
     carouselFirstButton: string;
     carouselPageNumber: string;
+    paginationSection: string;
+    paginationPrevPage: string;
+    paginationNextPage: string;
+    paginationPrevPageAriaLabel: string;
+    paginationNextPageAriaLabel: string;
+    paginationGoToPage: string;
+    paginationCurrentPage: string;
     playIconButtonLabel: string;
     pauseIconButtonLabel: string;
     sheetConfirmButton: string;
@@ -410,6 +417,55 @@ export const carouselPageNumber: TextToken = {
     en: '1$s of 2$s',
     de: '1$s von 2$s',
     pt: '1$s de 2$s',
+};
+
+export const paginationSection: TextToken = {
+    es: 'Paginación - Página 1$s de 2$s',
+    en: 'Pagination - Page 1$s of 2$s',
+    de: 'Paginierung - Seite 1$s von 2$s',
+    pt: 'Paginação - Página 1$s de 2$s',
+};
+
+export const paginationCurrentPage: TextToken = {
+    es: 'Página 1$s, página actual',
+    en: 'Page 1$s, current page',
+    de: 'Seite 1$s, aktuelle Seite',
+    pt: 'Página 1$s, página atual',
+};
+
+export const paginationPrevPage: TextToken = {
+    es: 'Anterior',
+    en: 'Previous',
+    de: 'Zurück',
+    pt: 'Anterior',
+};
+
+export const paginationNextPage: TextToken = {
+    es: 'Siguiente',
+    en: 'Next',
+    de: 'Weiter',
+    pt: 'Próximo',
+};
+
+export const paginationPrevPageAriaLabel: TextToken = {
+    es: 'Página anterior',
+    en: 'Previous page',
+    de: 'Vorherige Seite',
+    pt: 'Página anterior',
+};
+
+export const paginationNextPageAriaLabel: TextToken = {
+    es: 'Página siguiente',
+    en: 'Next page',
+    de: 'Nächste Seite',
+    pt: 'Página seguinte',
+};
+
+export const paginationGoToPage: TextToken = {
+    es: 'Ir a la página 1$s',
+    en: 'Go to page 1$s',
+    de: 'Gehe zu Seite 1$s',
+    pt: 'Ir para a página 1$s',
 };
 
 export const playIconButtonLabel: TextToken = {

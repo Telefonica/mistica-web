@@ -9,65 +9,73 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconFaceSadFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2m4.006 6.18a1.336 1.336 0 1 0 0 2.672 1.336 1.336 0 0 0 0-2.671m-8.013 0a1.336 1.336 0 1 0 .001 2.672 1.336 1.336 0 0 0 0-2.671m.36 7.447s.745-1.858 3.662-1.858c2.922 0 3.627 1.846 3.627 1.846a.666.666 0 1 0 1.263-.43s-.86-2.75-4.89-2.75c-3.998 0-4.917 2.737-4.917 2.737a.668.668 0 0 0 1.254.455"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2m4.006 6.18a1.336 1.336 0 1 0 0 2.672 1.336 1.336 0 0 0 0-2.671m-8.013 0a1.336 1.336 0 1 0 .001 2.672 1.336 1.336 0 0 0 0-2.671m.36 7.447s.745-1.858 3.662-1.858c2.922 0 3.627 1.846 3.627 1.846a.666.666 0 1 0 1.263-.43s-.86-2.75-4.89-2.75c-3.998 0-4.917 2.737-4.917 2.737a.668.668 0 0 0 1.254.455"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2M7.624 9.482a.982.982 0 1 0 1.963.001.982.982 0 0 0-1.963 0m6.696 0a.982.982 0 1 0 1.964.001.982.982 0 0 0-1.964 0m-7.007 6.482a.5.5 0 0 0 .65-.278v.002c.177-.407.485-.773.81-1.068.602-.547 1.609-1.12 3.226-1.12s2.624.573 3.226 1.12c.326.296.633.66.81 1.068v-.001a.5.5 0 0 0 .928-.373 3 3 0 0 0-.252-.472 4.7 4.7 0 0 0-.813-.962c-.773-.703-2.016-1.38-3.899-1.38s-3.126.677-3.899 1.38c-.718.653-1.01 1.302-1.059 1.418a.51.51 0 0 0 .272.666"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2M7.624 9.482a.982.982 0 1 0 1.963.001.982.982 0 0 0-1.963 0m6.696 0a.982.982 0 1 0 1.964.001.982.982 0 0 0-1.964 0m-7.007 6.482a.5.5 0 0 0 .65-.278v.002c.177-.407.485-.773.81-1.068.602-.547 1.609-1.12 3.226-1.12s2.624.573 3.226 1.12c.326.296.633.66.81 1.068v-.001a.5.5 0 0 0 .928-.373 3 3 0 0 0-.252-.472 4.7 4.7 0 0 0-.813-.962c-.773-.703-2.016-1.38-3.899-1.38s-3.126.677-3.899 1.38c-.718.653-1.01 1.302-1.059 1.418a.51.51 0 0 0 .272.666"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m0 11.75a4.25 4.25 0 0 0-3.036 1.275.75.75 0 0 0 1.072 1.05 2.75 2.75 0 0 1 3.928 0 .75.75 0 0 0 1.072-1.05A4.25 4.25 0 0 0 12 14.25m-1.665-4.67a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006m7 0a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo-new/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2m4.006 6.18a1.336 1.336 0 1 0 0 2.672 1.336 1.336 0 0 0 0-2.671m-8.013 0a1.336 1.336 0 1 0 .001 2.672 1.336 1.336 0 0 0 0-2.671m.36 7.447s.745-1.858 3.662-1.858c2.922 0 3.627 1.846 3.627 1.846a.666.666 0 1 0 1.263-.43s-.86-2.75-4.89-2.75c-3.998 0-4.917 2.737-4.917 2.737a.668.668 0 0 0 1.254.455"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2m4.006 6.18a1.336 1.336 0 1 0 0 2.672 1.336 1.336 0 0 0 0-2.671m-8.013 0a1.336 1.336 0 1 0 .001 2.672 1.336 1.336 0 0 0 0-2.671m.36 7.447s.745-1.858 3.662-1.858c2.922 0 3.627 1.846 3.627 1.846a.666.666 0 1 0 1.263-.43s-.86-2.75-4.89-2.75c-3.998 0-4.917 2.737-4.917 2.737a.668.668 0 0 0 1.254.455"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2c5.519 0 9.999 4.48 9.999 10s-4.48 10-10 10S2 17.519 2 12 6.48 2 12 2M7.624 9.482a.982.982 0 1 0 1.963.001.982.982 0 0 0-1.963 0m6.696 0a.982.982 0 1 0 1.964.001.982.982 0 0 0-1.964 0m-7.007 6.482a.5.5 0 0 0 .65-.278v.002c.177-.407.485-.773.81-1.068.602-.547 1.609-1.12 3.226-1.12s2.624.573 3.226 1.12c.326.296.633.66.81 1.068v-.001a.5.5 0 0 0 .928-.373 3 3 0 0 0-.252-.472 4.7 4.7 0 0 0-.813-.962c-.773-.703-2.016-1.38-3.899-1.38s-3.126.677-3.899 1.38c-.718.653-1.01 1.302-1.059 1.418a.51.51 0 0 0 .272.666"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m0 11.75a4.25 4.25 0 0 0-3.036 1.275.75.75 0 0 0 1.072 1.05 2.75 2.75 0 0 1 3.928 0 .75.75 0 0 0 1.072-1.05A4.25 4.25 0 0 0 12 14.25m-1.665-4.67a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006m7 0a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconFaceSadFilled;

@@ -25,18 +25,7 @@ console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 const SKINS_FOLDER = path.join(import.meta.dirname, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(import.meta.dirname, '..', '..', 'css');
 
-const KNOWN_SKINS = [
-    'blau',
-    'movistar',
-    'movistar-new',
-    'o2',
-    'o2-new',
-    'telefonica',
-    'vivo',
-    'vivo-new',
-    'tu',
-    'esimflag',
-];
+const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo', 'vivo-evolution', 'esimflag'];
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
@@ -204,6 +193,7 @@ const generateSkinFiles = async () => {
             return;
         }
 
+        // todo https://github.com/Telefonica/mistica-web/issues/1633 add @generated banner to generated skin files so they are not mistakenly edited by hand
         const skinSrc = await formatTs(generateSkinSrc(skinName));
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
 

@@ -634,7 +634,6 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             chip: '8px',
             tag: '8px',
             input: '16px',
-            legacyDisplay: '20px',
             popup: '16px',
             sheet: '16px',
             mediaSmall: '8px',

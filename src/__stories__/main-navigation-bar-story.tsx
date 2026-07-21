@@ -3,10 +3,12 @@ import {
     Avatar,
     Badge,
     IconShoppingCartRegular,
+    Inline,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
     Placeholder,
+    SearchField,
     Stack,
     Text3,
     useScreenSize,
@@ -35,7 +37,7 @@ const sectionDefaultMenuItemsCount = {
 type Args = {
     variant: Variant;
     border: boolean;
-    burgerMenuExtra: boolean;
+    burgerMenuSlot: boolean;
     large: boolean;
     sections: boolean;
     menu: 'undefined' | 'default' | 'custom';
@@ -45,12 +47,13 @@ type Args = {
     topSlotBackgroundColor: string;
     wide: boolean;
     paddingX: PadSize | 'undefined';
+    expandedRightSlot: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
     variant,
     border,
-    burgerMenuExtra,
+    burgerMenuSlot,
     large,
     sections,
     menu,
@@ -60,16 +63,40 @@ export const Default: StoryComponent<Args> = ({
     topSlotBackgroundColor,
     wide,
     paddingX,
+    expandedRightSlot,
 }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
+
+    const right = expandedRightSlot ? (
+        <Inline space={16} alignItems="center" expand={0}>
+            <SearchField fullWidth name="search" label="Search" />
+
+            <NavigationBarAction onPress={() => {}} aria-label="Entrar">
+                <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
+                {isDesktopOrBigger && 'Entrar'}
+            </NavigationBarAction>
+        </Inline>
+    ) : (
+        <NavigationBarActionGroup>
+            <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
+                <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                </Badge>
+            </NavigationBarAction>
+            <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
+                {isDesktopOrBigger && 'María López Serrano'}
+            </NavigationBarAction>
+        </NavigationBarActionGroup>
+    );
 
     return (
         <MainNavigationBar
             variant={variant}
             large={large}
             withBorder={border}
-            burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
+            burgerMenuSlot={burgerMenuSlot ? <Placeholder /> : undefined}
             desktopLargeMenu={desktopLargeMenu}
             logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
             topSlot={topSlot ? <Placeholder height={24} /> : undefined}
@@ -116,19 +143,7 @@ export const Default: StoryComponent<Args> = ({
                     : undefined
             }
             selectedIndex={selectedIndex}
-            right={
-                <NavigationBarActionGroup>
-                    <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
-                        <Badge value={2}>
-                            <IconShoppingCartRegular color="currentColor" />
-                        </Badge>
-                    </NavigationBarAction>
-                    <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                        <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
-                        {isDesktopOrBigger && 'María López Serrano'}
-                    </NavigationBarAction>
-                </NavigationBarActionGroup>
-            }
+            right={right}
             wide={wide ? (paddingX === 'undefined' ? true : {paddingX}) : false}
         />
     );
@@ -139,7 +154,7 @@ Default.storyName = 'MainNavigationBar';
 Default.args = {
     variant: 'default',
     border: true,
-    burgerMenuExtra: false,
+    burgerMenuSlot: false,
     large: false,
     sections: true,
     menu: 'undefined',
@@ -149,6 +164,7 @@ Default.args = {
     topSlotBackgroundColor: '',
     wide: false,
     paddingX: 'undefined',
+    expandedRightSlot: false,
 };
 
 Default.argTypes = {

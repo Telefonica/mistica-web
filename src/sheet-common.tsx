@@ -237,7 +237,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                     onTransitionEnd={handleTransitionEnd}
                     onAnimationEnd={handleTransitionEnd}
                     {...dragableSheetProps}
-                    {...getPrefixedDataAttributes(dataAttributes, 'Sheet')}
+                    {...getPrefixedDataAttributes({testid: 'Sheet', ...dataAttributes})}
                     ref={ref}
                 >
                     <div className={styles.Sheet}>
@@ -247,7 +247,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                              * the content in order to be able to drag the sheet
                              */}
                             <div className={styles.sheetTopDraggingArea} />
-
                             <section
                                 role="dialog"
                                 aria-modal="true"
@@ -264,15 +263,15 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 <div className={styles.handleContainer}>
                                     <div className={styles.handleBar} />
                                 </div>
-                                <div className={styles.dismissButton}>
-                                    <IconButton
-                                        small={isTabletOrSmaller}
-                                        onPress={closeModal}
-                                        aria-label={texts.modalClose || t(tokens.modalClose)}
-                                        Icon={IconCloseRegular}
-                                    />
-                                </div>
                             </section>
+                            <div className={styles.dismissButton}>
+                                <IconButton
+                                    small={isTabletOrSmaller}
+                                    onPress={closeModal}
+                                    aria-label={texts.modalClose || t(tokens.modalClose)}
+                                    Icon={IconCloseRegular}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

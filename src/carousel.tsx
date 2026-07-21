@@ -12,7 +12,7 @@ import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import * as mediaStyles from './image.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
 import {InternalIconButton, ToggleIconButton} from './icon-button';
@@ -232,7 +232,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
 
     return (
         <div
-            {...getPrefixedDataAttributes({'component-name': 'PageBullets', testid: 'PageBullets'})}
+            {...getPrefixedDataAttributes({testid: 'PageBullets'})}
             className={classNames(styles.bulletsScrollableContainerBase, {
                 [styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS,
             })}
@@ -789,7 +789,7 @@ const BaseCarousel = ({
     }
 
     const largePageOffset = '64px';
-    const vivoNewMobilePageOffset = '36px';
+    const vivoMobilePageOffset = '36px';
 
     const bulletsContainer = (
         <div
@@ -810,7 +810,6 @@ const BaseCarousel = ({
     return (
         <div
             {...getPrefixedDataAttributes({
-                'component-name': 'Carousel',
                 testid: 'Carousel',
                 ...dataAttributes,
             })}
@@ -883,8 +882,8 @@ const BaseCarousel = ({
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
                             ...(mobilePageOffset === 'large'
                                 ? {[styles.vars.mobilePageOffset]: largePageOffset}
-                                : skinName === VIVO_NEW_SKIN
-                                  ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
+                                : skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN
+                                  ? {[styles.vars.mobilePageOffset]: vivoMobilePageOffset}
                                   : {}),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
@@ -1230,7 +1229,7 @@ export const Slideshow = ({
                     className={classNames(styles.slideshowContainer, {
                         [styles.slideshowWithBullets]: !!withBullets,
                     })}
-                    {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+                    {...getPrefixedDataAttributes({testid: 'SlideShow', ...dataAttributes})}
                 >
                     {items.length > 1 &&
                         (withControls ? (

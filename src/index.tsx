@@ -63,36 +63,17 @@ export {default as Inline} from './inline';
 export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
+export {default as Pagination} from './pagination';
 export {default as Meter} from './meter';
 export {Rating, InfoRating} from './rating';
 export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {Timer, TextTimer} from './timer';
 // @TODO move to card-utils?
 export {CardActionSpinner, CardActionIconButton} from './card-internal';
-export {
-    CoverCard,
-    /** @deprecated use <CoverCard /> */
-    PosterCard,
-    /** @deprecated use <CoverCard size="display" /> */
-    DisplayMediaCard,
-} from './card-cover';
-export {
-    NakedCard,
-    /** @deprecated use <NakedCard size="snap" /> */
-    SmallNakedCard,
-} from './card-naked';
-export {
-    DataCard,
-    /** @deprecated use <DataCard size="snap" /> */
-    SnapCard,
-    /** @deprecated use <DataCard size="display" /> */
-    DisplayDataCard,
-} from './card-data';
-export {
-    MediaCard,
-    /** @deprecated use <MediaCard size="default" mediaPosition="right" /> */
-    HighlightedCard,
-} from './card-media';
+export {CoverCard} from './card-cover';
+export {NakedCard} from './card-naked';
+export {DataCard} from './card-data';
+export {MediaCard} from './card-media';
 export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';
@@ -112,22 +93,11 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {
-    Logo,
-    MovistarLogo,
-    MovistarNewLogo,
-    VivoLogo,
-    O2Logo,
-    O2NewLogo,
-    TelefonicaLogo,
-    BlauLogo,
-    TuLogo,
-    EsimflagLogo,
-} from './logo';
+export {Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo, EsimflagLogo} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
-export type {VideoElement} from './video';
+export type {VideoElement, VideoTrack} from './video';
 export {
     Carousel,
     CenteredCarousel,
@@ -148,14 +118,6 @@ export {default as SkipLink, SkipLinkNav} from './skip-link';
 export {default as SheetRoot, showSheet} from './sheet-root';
 export type {NativeSheetImplementation} from './sheet-types';
 export {default as Sheet, SheetBody} from './sheet-common';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as ActionsSheet} from './sheet-actions';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as InfoSheet} from './sheet-info';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as ActionsListSheet} from './sheet-actions-list';
-/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as RadioListSheet} from './sheet-radio-list';
 
 // Forms
 export {default as Form} from './form';
@@ -218,46 +180,32 @@ export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
 
-export {
-    ThemeVariant,
-    useIsInverseVariant,
-    useIsInverseOrMediaVariant,
-    useThemeVariant,
-} from './theme-variant-context';
+export {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
 export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {
     VIVO_SKIN,
-    VIVO_NEW_SKIN,
+    VIVO_EVOLUTION_SKIN,
     O2_SKIN,
-    O2_NEW_SKIN,
     MOVISTAR_SKIN,
-    MOVISTAR_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
-    TU_SKIN,
     ESIMFLAG_SKIN,
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
-export {getVivoNewSkin} from './skins/vivo-new';
+export {getVivoEvolutionSkin} from './skins/vivo-evolution';
 export {getMovistarSkin} from './skins/movistar';
-export {getMovistarNewSkin} from './skins/movistar-new';
 export {getO2Skin} from './skins/o2';
-export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
-export {getTuSkin} from './skins/tu';
 export {getEsimflagSkin} from './skins/esimflag';
 export {palette as vivoPalette} from './skins/vivo';
-export {palette as vivoNewPalette} from './skins/vivo-new';
+export {palette as vivoEvolutionPalette} from './skins/vivo-evolution';
 export {palette as movistarPalette} from './skins/movistar';
-export {palette as movistarNewPalette} from './skins/movistar-new';
 export {palette as o2Palette} from './skins/o2';
-export {palette as o2NewPalette} from './skins/o2-new';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
-export {palette as tuPalette} from './skins/tu';
 export {palette as esimFlagPalette} from './skins/esimflag';
 
 export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
@@ -274,6 +222,7 @@ export type {TextToken, Dictionary} from './text-tokens';
  * the community.js export has issues because it exports an ES module and next12 interterprets it as a CommonJS module
  * importing from /dist/ is not an option because those modules don't get the context from the theme provider
  */
+export {default as CommunityAiCard} from './community/ai-card';
 export {default as CommunityExampleComponent} from './community/example-component';
 export {default as CommunityAdvancedDataCard} from './community/advanced-data-card';
 export {
@@ -1073,6 +1022,9 @@ export {default as IconEmergencyCrossRegular} from './generated/mistica-icons/ic
 export {default as IconEmergencyCrossWithCircleFilled} from './generated/mistica-icons/icon-emergency-cross-with-circle-filled';
 export {default as IconEmergencyCrossWithCircleLight} from './generated/mistica-icons/icon-emergency-cross-with-circle-light';
 export {default as IconEmergencyCrossWithCircleRegular} from './generated/mistica-icons/icon-emergency-cross-with-circle-regular';
+export {default as IconEqualFilled} from './generated/mistica-icons/icon-equal-filled';
+export {default as IconEqualLight} from './generated/mistica-icons/icon-equal-light';
+export {default as IconEqualRegular} from './generated/mistica-icons/icon-equal-regular';
 export {default as IconErrorFilled} from './generated/mistica-icons/icon-error-filled';
 export {default as IconErrorLight} from './generated/mistica-icons/icon-error-light';
 export {default as IconErrorRegular} from './generated/mistica-icons/icon-error-regular';
@@ -1892,6 +1844,15 @@ export {default as IconQueueRegular} from './generated/mistica-icons/icon-queue-
 export {default as IconRainFilled} from './generated/mistica-icons/icon-rain-filled';
 export {default as IconRainLight} from './generated/mistica-icons/icon-rain-light';
 export {default as IconRainRegular} from './generated/mistica-icons/icon-rain-regular';
+export {default as IconRankHighestFilled} from './generated/mistica-icons/icon-rank-highest-filled';
+export {default as IconRankHighestLight} from './generated/mistica-icons/icon-rank-highest-light';
+export {default as IconRankHighestRegular} from './generated/mistica-icons/icon-rank-highest-regular';
+export {default as IconRankHighFilled} from './generated/mistica-icons/icon-rank-high-filled';
+export {default as IconRankHighLight} from './generated/mistica-icons/icon-rank-high-light';
+export {default as IconRankHighRegular} from './generated/mistica-icons/icon-rank-high-regular';
+export {default as IconRankLowFilled} from './generated/mistica-icons/icon-rank-low-filled';
+export {default as IconRankLowLight} from './generated/mistica-icons/icon-rank-low-light';
+export {default as IconRankLowRegular} from './generated/mistica-icons/icon-rank-low-regular';
 export {default as IconRatingFilled} from './generated/mistica-icons/icon-rating-filled';
 export {default as IconRatingLight} from './generated/mistica-icons/icon-rating-light';
 export {default as IconRatingRegular} from './generated/mistica-icons/icon-rating-regular';
@@ -1938,6 +1899,9 @@ export {default as IconRewindCircleRegular} from './generated/mistica-icons/icon
 export {default as IconRewindFilled} from './generated/mistica-icons/icon-rewind-filled';
 export {default as IconRewindLight} from './generated/mistica-icons/icon-rewind-light';
 export {default as IconRewindRegular} from './generated/mistica-icons/icon-rewind-regular';
+export {default as IconRingFilled} from './generated/mistica-icons/icon-ring-filled';
+export {default as IconRingLight} from './generated/mistica-icons/icon-ring-light';
+export {default as IconRingRegular} from './generated/mistica-icons/icon-ring-regular';
 export {default as IconRoadSignFilled} from './generated/mistica-icons/icon-road-sign-filled';
 export {default as IconRoadSignLight} from './generated/mistica-icons/icon-road-sign-light';
 export {default as IconRoadSignRegular} from './generated/mistica-icons/icon-road-sign-regular';

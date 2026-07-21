@@ -187,19 +187,19 @@ const v = true as boolean;
 
     <BoxedRow title="danger" danger />
 
-    <BoxedRow title="inverse" isInverse />
+    <BoxedRow title="brand" variant="brand" />
 
-    {/* @ts-expect-error - danger+inverse is forbbiden */}
-    <BoxedRow title="danger inverse is forbbiden" danger isInverse />
+    {/* @ts-expect-error - danger + variant="brand" is forbidden */}
+    <BoxedRow title="danger brand is forbidden" danger variant="brand" />
 
-    {/* @ts-expect-error - danger+inverse is forbbiden and v can be true here */}
-    <BoxedRow title="maybe inverse danger" isInverse={v} danger />
-    {/* @ts-expect-error - danger+inverse is forbbiden and v can be true here */}
-    <BoxedRow title="inverse and maybe danger" isInverse danger={v} />
-    {/* @ts-expect-error - danger+inverse is forbbiden and v can be true here */}
-    <BoxedRow title="maybe inverse and maybe danger" isInverse={v} danger={v} />
+    {/* @ts-expect-error - danger + variant="brand" is forbidden and v can be true here */}
+    <BoxedRow title="maybe brand danger" variant={v ? 'brand' : 'default'} danger />
+    {/* @ts-expect-error - danger + variant="brand" is forbidden and v can be true here */}
+    <BoxedRow title="brand and maybe danger" variant="brand" danger={v} />
+    {/* @ts-expect-error - danger + variant="brand" is forbidden and v can be true here */}
+    <BoxedRow title="maybe brand and maybe danger" variant={v ? 'brand' : 'default'} danger={v} />
 
-    <BoxedRow title="maybe inverse no danger" isInverse={v} />
+    <BoxedRow title="maybe brand no danger" variant={v ? 'brand' : 'default'} />
     <BoxedRow title="maybe danger no inverse" danger={v} />
 
     {/* OK - controls with right content */}

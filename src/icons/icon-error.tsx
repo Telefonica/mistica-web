@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
+import {O2_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
@@ -11,54 +11,6 @@ type Props = {
 };
 
 const IconErrorO2 = ({size = 48}: Props): JSX.Element => {
-    const {platformOverrides} = useTheme();
-
-    return (
-        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
-            <g
-                stroke={vars.colors.error}
-                fill={vars.colors.error}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            >
-                <g className={styles.outerAnimation}>
-                    <path
-                        strokeWidth="2"
-                        fill="none"
-                        d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
-                        {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
-                    />
-                    <circle
-                        cx="53.64"
-                        cy="53.54"
-                        r="1.06"
-                        {...getAnimateFadeInProps('0.2s', platformOverrides)}
-                    />
-                </g>
-                <g className={styles.innerAnimation}>
-                    <line
-                        strokeWidth="2"
-                        fill="none"
-                        x1="32"
-                        y1="14.86"
-                        x2="32"
-                        y2="39.08"
-                        {...getAnimateDrawLineProps('110', '0.6s', platformOverrides)}
-                    />
-                    <circle
-                        strokeWidth="0"
-                        cx="32"
-                        cy="46.25"
-                        r="1.72"
-                        {...getAnimateFadeInProps('0.8s', platformOverrides)}
-                    />
-                </g>
-            </g>
-        </svg>
-    );
-};
-
-const IconErrorO2New = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
@@ -195,9 +147,8 @@ const IconError = (props: Props): JSX.Element => {
     switch (skinName) {
         case O2_SKIN:
             return <IconErrorO2 {...props} />;
-        case O2_NEW_SKIN:
-            return <IconErrorO2New {...props} />;
-        case VIVO_NEW_SKIN:
+        case VIVO_SKIN:
+        case VIVO_EVOLUTION_SKIN:
             return <IconErrorVivo {...props} />;
         default:
             return <IconErrorDefault {...props} />;

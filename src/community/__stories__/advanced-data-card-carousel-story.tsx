@@ -5,7 +5,7 @@ import {Carousel} from '../../carousel';
 import Tag from '../../tag';
 
 export default {
-    title: 'Community/AdvancedDataCards in Carousel',
+    title: 'Community/Vivo/AdvancedDataCards in Carousel',
 };
 
 type Args = {href: boolean};
@@ -28,7 +28,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                 <AdvancedDataCard
                     title="Title 2"
                     headline={<Tag>Headline 2</Tag>}
-                    extra={[<Placeholder height={48} />]}
+                    slot={[<Placeholder height={48} />]}
                     footerText="Footer 2"
                     onClose={() => {}}
                     href={hasHref}
@@ -37,7 +37,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                 <AdvancedDataCard
                     title="Title 3"
                     description="Description 3"
-                    extra={[<Placeholder height={48} />, <Placeholder height={48} />]}
+                    slot={[<Placeholder height={48} />, <Placeholder height={48} />]}
                     footerText="Footer 3"
                     onClose={() => {}}
                     href={hasHref}
@@ -45,7 +45,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                 />,
                 <AdvancedDataCard
                     title="Title 4"
-                    extra={[
+                    slot={[
                         <Placeholder height={48} />,
                         <Placeholder height={48} />,
                         <Placeholder height={48} />,

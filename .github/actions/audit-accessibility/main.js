@@ -73,7 +73,20 @@ const audit = async (browser, url, disabledRules = []) => {
     const page = await browser.newPage();
     const ua = await browser.userAgent();
     await page.setUserAgent(`${ua} acceptance-test`);
-    await page.goto(url);
+    await page.goto(url, {waitUntil: 'networkidle0'});
+    // Wait until the story has actually mounted, otherwise axe may scan the Storybook
+    // loading shell instead of the rendered story, producing flaky page-level results.
+    await page
+        .waitForFunction(
+            () => {
+                const root = document.querySelector('#storybook-root');
+                return Boolean(root && root.children.length > 0);
+            },
+            {timeout: 5000}
+        )
+        .catch(() => {
+            // Some stories may legitimately render no content; continue with the audit.
+        });
     const result = await new AxePuppeteer(page)
         .disableRules([
             // ignored because some stories don't include an H1 header
@@ -200,6 +213,10 @@ const disabledRulesByStoryAndSkin = {
         all: ['color-contrast'],
     },
 
+    'utilities-animations-fadein--default': {
+        all: ['color-contrast'],
+    },
+
     'patterns-feedback-feedbackscreen--feedback-screen-story': {
         Blau: ['color-contrast'],
     },
@@ -233,7 +250,7 @@ const main = async () => {
     }
 
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
-    const skins = ['Movistar-new', 'O2-new', 'Vivo-new', 'Blau'];
+    const skins = ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'];
 
     /**
      * @type Array<[story: string, skin: string]>

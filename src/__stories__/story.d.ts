@@ -9,3 +9,4 @@ declare type StoryComponent<T = {children?: ReactNode}> = {(props: T): JSX.Eleme
 declare module '*.jpg';
 declare module '*.png';
 declare module '*.mp4';
+declare module '*.vtt';

@@ -42,6 +42,7 @@ import {
     Title3,
     Title4,
     IconButton,
+    Pagination,
     Hero,
     Table,
     Timer,
@@ -104,7 +105,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                                     description="This story is created to verify how some of the components look like when using different skins"
                                 />
                             }
-                            extra={<Placeholder />}
+                            slot={<Placeholder />}
                             noPaddingY={!brandHeader}
                         />
 
@@ -206,8 +207,8 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             pretitle="Pretitle"
                             description="Description"
                             onClose={() => {}}
-                            actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
-                            button={
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
                                 <ButtonPrimary
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
@@ -285,6 +286,9 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
 
                         {/** Carousel page bullets */}
                         <PageBullets currentIndex={2} numPages={10} />
+
+                        {/** Pagination */}
+                        <Pagination totalPages={40} defaultPage={32} surroundingPageCount={1} />
 
                         {/** Checkbox */}
                         <Inline space={16} wrap>

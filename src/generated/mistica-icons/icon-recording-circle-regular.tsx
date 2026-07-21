@@ -8,31 +8,46 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconRecordingCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.75 12a4.75 4.75 0 1 1-9.5 0 4.75 4.75 0 0 1 9.5 0m-1.5 0a3.25 3.25 0 1 0-6.5-.002 3.25 3.25 0 0 0 6.5.002"
-            />
-            <path
-                fill={fillColor}
-                d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.5-.001 8.25 8.25 0 0 0 16.5.001"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.75 12a4.75 4.75 0 1 1-9.5 0 4.75 4.75 0 0 1 9.5 0m-1.5 0a3.25 3.25 0 1 0-6.5-.002 3.25 3.25 0 0 0 6.5.002"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.5-.001 8.25 8.25 0 0 0 16.5.001"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconRecordingCircleRegular;

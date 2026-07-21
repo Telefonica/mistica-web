@@ -32,7 +32,7 @@ type Args = {
     position: 'top' | 'bottom' | 'left' | 'right';
     title: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     delay: boolean;
     variantOutside: Variant;
 };
@@ -43,7 +43,7 @@ export const Default: StoryComponent<Args> = ({
     position,
     title,
     description,
-    extra,
+    slot,
     delay,
     variantOutside,
 }) => {
@@ -110,7 +110,7 @@ export const Default: StoryComponent<Args> = ({
                     title={title}
                     delay={delay}
                     description={description}
-                    extra={extra ? <Placeholder /> : undefined}
+                    slot={slot ? <Placeholder /> : undefined}
                 />
             </div>
         </ResponsiveLayout>
@@ -125,7 +125,7 @@ Default.args = {
     position: 'top',
     title: 'Title',
     description: 'A description',
-    extra: false,
+    slot: false,
     delay: false,
     variantOutside: 'default',
 };

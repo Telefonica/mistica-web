@@ -8,28 +8,43 @@
 import * as React from 'react';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconHomeSecurityFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path fill={fillColor} d="M12 9.5a1.5 1.5 0 0 1 1.5 1.5v1.5h-3V11A1.5 1.5 0 0 1 12 9.5" />
-            <path
-                fill={fillColor}
-                d="M10.262 3.987a2.5 2.5 0 0 1 3.476 0l6 5.806a2.5 2.5 0 0 1 .762 1.797V19a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 19v-7.41a2.5 2.5 0 0 1 .762-1.797zM12 8.499A2.5 2.5 0 0 0 9.5 11v1.526a1.24 1.24 0 0 0-.646.367 1.33 1.33 0 0 0-.354.907v2.4c0 .335.124.662.354.908.232.247.554.392.896.392h4.5c.342 0 .664-.145.896-.392a1.33 1.33 0 0 0 .354-.907v-2.4a1.33 1.33 0 0 0-.354-.908 1.24 1.24 0 0 0-.646-.367V11A2.5 2.5 0 0 0 12 8.5"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 9.5a1.5 1.5 0 0 1 1.5 1.5v1.5h-3V11A1.5 1.5 0 0 1 12 9.5" />
+                <path
+                    fill={fillColor}
+                    d="M10.262 3.987a2.5 2.5 0 0 1 3.476 0l6 5.806a2.5 2.5 0 0 1 .762 1.797V19a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 19v-7.41a2.5 2.5 0 0 1 .762-1.797zM12 8.499A2.5 2.5 0 0 0 9.5 11v1.526a1.24 1.24 0 0 0-.646.367 1.33 1.33 0 0 0-.354.907v2.4c0 .335.124.662.354.908.232.247.554.392.896.392h4.5c.342 0 .664-.145.896-.392a1.33 1.33 0 0 0 .354-.907v-2.4a1.33 1.33 0 0 0-.354-.908 1.24 1.24 0 0 0-.646-.367V11A2.5 2.5 0 0 0 12 8.5"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconHomeSecurityFilled;

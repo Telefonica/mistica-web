@@ -36,7 +36,7 @@ type DataCardArgs = {
     subtitle: string;
     description: string;
     ariaLabel: string;
-    extra: boolean;
+    slot: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     topAction: boolean;
@@ -56,7 +56,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     subtitle,
     description,
     ariaLabel,
-    extra,
+    slot,
     actions = 'button',
     closable,
     topAction,
@@ -109,12 +109,12 @@ export const Default: StoryComponent<DataCardArgs> = ({
             titleAs={titleAs}
             subtitle={subtitle}
             description={description}
-            extra={extra ? <Placeholder /> : undefined}
+            slot={slot ? <Placeholder /> : undefined}
             {...interactiveActions}
             aspectRatio={aspectRatioValue as CardAspectRatio}
             dataAttributes={{testid: 'data-card'}}
             aria-label={ariaLabel}
-            actions={
+            topActions={
                 topAction
                     ? [
                           {
@@ -154,7 +154,7 @@ Default.args = {
     titleAs: 'h3',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    extra: false,
+    slot: false,
     actions: 'button',
     ariaLabel: '',
     closable: false,

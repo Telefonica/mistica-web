@@ -10,6 +10,8 @@
     - [between](#between)
     - [around](#around)
     - [evenly](#evenly)
+    - [nesting](#nesting)
+    - [Grow](#grow)
   - [Align](#align)
   - [Grid / GridItem](#grid--griditem)
   - [NegativeBox](#negativebox)
@@ -48,13 +50,21 @@ spacing. All padding props accept a numeric value or a responsive object `{mobil
 
 ```tsx
 <Box paddingX={16} paddingY={32}>
-  <Child />
+  <Text2>Example</Text2>
 </Box>
 ```
 
 <img src="./images/layout/box.svg" />
 
 :warning: Do not use `Box` to add external spacings or distribute items, instead use `Stack` or `Inline`.
+
+You can also use Box as a fixed width container:
+
+```tsx
+<Box width={80}>
+  <Text2>Example</Text2>
+</Box>
+```
 
 ## Stack
 
@@ -79,7 +89,8 @@ a horizontal `Stack`, and it covers the most common row-layout use cases you mig
 It supports:
 
 - horizontal distribution via `space={number}` or `space="between" | "around" | "evenly"`
-- vertical alignment of children via `alignItems="flex-start" | "flex-end" | "center" | "stretch" | "baseline"`
+- vertical alignment of children via
+  `alignItems="flex-start" | "flex-end" | "center" | "stretch" | "baseline"`
 - wrapping via `wrap` and row spacing via `verticalSpace`
 
 :information_source: Check `Inline` in
@@ -138,6 +149,59 @@ Distribute items evenly. Items have equal space around them
 ```
 
 <img src="./images/layout/inline-evenly.svg" />
+
+### nesting
+
+Nest `Inline` components to compose richer rows. A common pattern groups a leading icon and label on the left
+with a value on the right via `space="between"`:
+
+```tsx
+<Inline space="between" alignItems="center">
+  <Inline space={8} alignItems="center">
+    <IconTruckRegular size={24} color={skinVars.colors.neutralHigh} />
+    <Text2 regular>Envío:</Text2>
+  </Inline>
+  <Text2 regular>Mañana, gratis</Text2>
+</Inline>
+```
+
+The outer `Inline` distributes the two groups to opposite ends; the inner `Inline` keeps the icon tightly
+grouped with its label at a fixed gap.
+
+### Grow
+
+Use the `expand` prop to make one or more children of an `Inline` grow to fill the remaining horizontal space.
+It takes the index (or an array of indexes) of the children that should grow. Indexes follow
+`React.Children.toArray` order, so empty nodes (`null`, `false`) are skipped but rendered elements always
+count. You don't wrap the growing child in anything — `Inline` already wraps every child in its own element:
+
+```tsx
+<Inline space={56} alignItems="center" expand={1}>
+  <Text7>4,6</Text7>
+  <InfoRating
+    value={4}
+    icon={{
+      ActiveIcon: IconStarFilled,
+      InactiveIcon: IconStarLight,
+      color: skinVars.colors.textPrimary,
+    }}
+  />
+  <Text3 regular>150 valoraciones</Text3>
+</Inline>
+```
+
+```tsx
+<Inline space={16} alignItems="center" expand={[1, 2]}>
+  <IconTruckRegular size={24} color={skinVars.colors.neutralHigh} />
+  <TextField name="firstName" label="First name" fullWidth />
+  <TextField name="lastName" label="Last name" fullWidth />
+</Inline>
+```
+
+**Common mistakes.** `Inline` wraps each child in its own element, so growing a child by wrapping it in a
+`<div style={{flex: 1}}>` (or `flex-grow`) does nothing useful. Neither does `<Box style={{...}}>` — `Box` has
+no `style` prop, so a flex or width passed that way is silently dropped and the row collapses or overflows its
+container. Reach for `expand` (and `<Box width={N}>` for any fixed sibling) instead.
 
 ## Align
 

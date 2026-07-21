@@ -152,7 +152,7 @@ const DecimalField = ({
             {...fieldProps}
             inputComponent={DecimalInput}
             inputProps={{maxDecimals}}
-            dataAttributes={{'component-name': 'DecimalField', testid: 'DecimalField', ...dataAttributes}}
+            dataAttributes={{testid: 'DecimalField', ...dataAttributes}}
         />
     );
 };

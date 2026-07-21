@@ -71,7 +71,7 @@ const ButtonLayout = ({
             className={classnames(styles.container, styles.alignVariant[align], {
                 [styles.containerWithTwoButtons]: numberOfButtons > 1,
             })}
-            {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
+            {...getPrefixedDataAttributes({testid: 'ButtonLayout', ...dataAttributes})}
         >
             {align !== 'right' || numberOfButtons > 1 ? (
                 <>

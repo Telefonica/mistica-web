@@ -13,7 +13,7 @@ const HeaderTest = (): JSX.Element => (
     <Stack space={8}>
         <HeaderLayout
             header={<Header title="La última factura de diciembre ya esta disponible" />}
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         <MainSectionHeaderLayout>
             <MainSectionHeader

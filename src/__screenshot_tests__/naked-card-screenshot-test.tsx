@@ -40,12 +40,12 @@ test('NakedCard group', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('NakedCard with extra ', async () => {
+test('NakedCard with slot ', async () => {
     await openStoryPage({
         id: 'private-deprecated-card-stories-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
         },
     });
@@ -159,12 +159,12 @@ test.each(TESTABLE_DEVICES)('SmallNakedCard with large fontSize in %s', async (d
     expect(image).toMatchImageSnapshot();
 });
 
-test('SmallNakedCard with extra ', async () => {
+test('SmallNakedCard with slot ', async () => {
     await openStoryPage({
         id: 'private-deprecated-card-stories-nakedcard--small',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
         },
     });

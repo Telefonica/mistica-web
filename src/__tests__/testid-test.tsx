@@ -9,7 +9,6 @@ import {
     DateField,
     Hero,
     Image,
-    HighlightedCard,
     IconShopRegular,
     Meter,
     Placeholder,
@@ -52,7 +51,7 @@ test('Row test ids', () => {
                 description="Description"
                 detail="Detail"
                 asset={<IconShopRegular />}
-                extra={<Placeholder />}
+                slot={<Placeholder />}
                 right="right"
                 href="#"
             />
@@ -194,21 +193,12 @@ test('NakedCard test ids', () => {
     );
 });
 
-test('HighlightedCard test ids', () => {
-    checkTestIds(<HighlightedCard title="Title" description="Description" imageUrl="https://anyurl.com" />, [
-        {
-            componentName: 'HighlightedCard',
-            internalTestIds: ['title', 'description', 'image'],
-        },
-    ]);
-});
-
 test('FeedbackScreen test ids', () => {
     checkTestIds(
         <SuccessFeedbackScreen
             title="Title"
             description="Description"
-            extra={<Placeholder />}
+            slot={<Placeholder />}
             primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
             imageUrl="https://picsum.photos/1200/1200"
         />,
@@ -300,7 +290,7 @@ test('Hero test ids', () => {
             description="description"
             button={<ButtonPrimary fake>button</ButtonPrimary>}
             desktopMediaPosition="right"
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />,
         [
             {
@@ -320,8 +310,8 @@ test('CoverHero test ids', () => {
             title="title"
             description="description"
             button={<ButtonPrimary fake>button</ButtonPrimary>}
-            extra={<Placeholder />}
-            sideExtra={<Placeholder />}
+            slot={<Placeholder />}
+            sideSlot={<Placeholder />}
         />,
         [
             {

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {NakedCard, SmallNakedCard} from '../card-naked';
+import {NakedCard} from '../card-naked';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import Tag from '../tag';
 import Stack from '../stack';
-import Image from '../image';
 import {Text2} from '../text';
 import userEvent from '@testing-library/user-event';
 
@@ -24,14 +23,14 @@ test.each`
             <ThemeContextProvider theme={makeTheme()}>
                 <NakedCard
                     href="https://example.org"
-                    media={<Image src="https://source.unsplash.com/900x900/" />}
+                    imageSrc="https://source.unsplash.com/900x900/"
                     headline={<Tag type="promo">Headline</Tag>}
                     pretitle="Pretitle"
                     pretitleAs={pretitleAs}
                     title="Title"
                     titleAs={titleAs}
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -57,14 +56,14 @@ test.each`
             <ThemeContextProvider theme={makeTheme()}>
                 <NakedCard
                     to="/foo/bar"
-                    media={<Image src="https://source.unsplash.com/900x900/" />}
+                    imageSrc="https://source.unsplash.com/900x900/"
                     headline={<Tag type="promo">Headline</Tag>}
                     pretitle="Pretitle"
                     pretitleAs={pretitleAs}
                     title="Title"
                     titleAs={titleAs}
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -90,14 +89,14 @@ test.each`
             <ThemeContextProvider theme={makeTheme()}>
                 <NakedCard
                     onPress={() => {}}
-                    media={<Image src="https://source.unsplash.com/900x900/" />}
+                    imageSrc="https://source.unsplash.com/900x900/"
                     headline={<Tag type="promo">Headline</Tag>}
                     pretitle="Pretitle"
                     pretitleAs={pretitleAs}
                     title="Title"
                     titleAs={titleAs}
                     description="Description"
-                    extra={
+                    slot={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
                             <Text2 regular>Extra line 2</Text2>
@@ -121,7 +120,7 @@ test('NakedCard onClose custom label', async () => {
                 closeButtonLabel="custom close label"
                 title="Title"
                 description="Description"
-                media={<Image src="https://source.unsplash.com/900x900/" />}
+                imageSrc="https://source.unsplash.com/900x900/"
             />
         </ThemeContextProvider>
     );
@@ -131,16 +130,17 @@ test('NakedCard onClose custom label', async () => {
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
 
-test('SmallNakedCard "href" label', async () => {
+test('NakedCard snap "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SmallNakedCard
+            <NakedCard
+                size="snap"
                 href="https://example.org"
-                media={<Image src="https://source.unsplash.com/900x900/" />}
+                imageSrc="https://source.unsplash.com/900x900/"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                extra={
+                slot={
                     <Stack space={4}>
                         <Text2 regular>Extra line 1</Text2>
                         <Text2 regular>Extra line 2</Text2>
@@ -153,16 +153,17 @@ test('SmallNakedCard "href" label', async () => {
     await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
 
-test('SmallNakedCard "to" label', async () => {
+test('NakedCard snap "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SmallNakedCard
+            <NakedCard
+                size="snap"
                 to="/foo/bar"
-                media={<Image src="https://source.unsplash.com/900x900/" />}
+                imageSrc="https://source.unsplash.com/900x900/"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                extra={
+                slot={
                     <Stack space={4}>
                         <Text2 regular>Extra line 1</Text2>
                         <Text2 regular>Extra line 2</Text2>
@@ -175,16 +176,17 @@ test('SmallNakedCard "to" label', async () => {
     await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
 
-test('SmallNakedCard "onPress" label', async () => {
+test('NakedCard snap "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SmallNakedCard
+            <NakedCard
+                size="snap"
                 onPress={() => {}}
-                media={<Image src="https://source.unsplash.com/900x900/" />}
+                imageSrc="https://source.unsplash.com/900x900/"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                extra={
+                slot={
                     <Stack space={4}>
                         <Text2 regular>Extra line 1</Text2>
                         <Text2 regular>Extra line 2</Text2>

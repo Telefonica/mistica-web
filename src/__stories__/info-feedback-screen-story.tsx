@@ -22,16 +22,16 @@ type Args = {
     title: string;
     description: string;
     multipleParagraphs: boolean;
-    extra: boolean;
+    slot: boolean;
 };
 
-export const Info: StoryComponent<Args> = ({asset, title, description, multipleParagraphs, extra}) => (
+export const Info: StoryComponent<Args> = ({asset, title, description, multipleParagraphs, slot}) => (
     <InfoFeedbackScreen
         title={title}
         description={multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description}
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
         Icon={asset === 'custom' ? IconShoppingBagRegular : undefined}
-        extra={extra ? <Placeholder /> : undefined}
+        slot={slot ? <Placeholder /> : undefined}
     />
 );
 
@@ -41,5 +41,5 @@ Info.args = {
     title: "I'm the title",
     description: "I'm the description",
     multipleParagraphs: false,
-    extra: false,
+    slot: false,
 };

@@ -1,15 +1,16 @@
 import * as React from 'react';
-import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../..';
+import {MediaCard, DataCard, Inline, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../..';
 
 const CardsTest = (): JSX.Element => (
     <Inline space={16}>
         <MediaCard
-            media={<Image aspectRatio="16:9" src="using-vr.jpg" />}
+            imageSrc="using-vr.jpg"
+            mediaAspectRatio="16:9"
             headline="headline"
             pretitle="pretitle"
             title="title"
             description="description"
-            button={
+            buttonPrimary={
                 <ButtonPrimary small href="https://google.com">
                     Action
                 </ButtonPrimary>
@@ -22,7 +23,7 @@ const CardsTest = (): JSX.Element => (
             subtitle="subtitle"
             description="description"
             asset={<IconAcademicLight />}
-            button={
+            buttonPrimary={
                 <ButtonPrimary small href="https://google.com">
                     Action
                 </ButtonPrimary>

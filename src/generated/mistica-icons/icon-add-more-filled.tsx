@@ -9,38 +9,55 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconAddMoreFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
-    const fillColor =
-        color ??
-        (themeVariant === 'brand' || themeVariant === 'media'
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
             ? vars.colors.neutralHighBrand
             : themeVariant === 'negative'
               ? vars.colors.neutralHighNegative
-              : vars.colors.neutralHigh);
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2a1 1 0 0 0-1 1v7.498H3.002a1.002 1.002 0 1 0 0 2.004H11V21a1 1 0 1 0 2 0v-8.498h7.998a1.002 1.002 0 1 0 0-2.004H13V3a1 1 0 0 0-1-1"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 2a1 1 0 0 0-1 1v7.498H3.002a1.002 1.002 0 1 0 0 2.004H11V21a1 1 0 1 0 2 0v-8.498h7.998a1.002 1.002 0 1 0 0-2.004H13V3a1 1 0 0 0-1-1"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2a1 1 0 0 0-1 1v7.498H3.002a1.002 1.002 0 1 0 0 2.004H11V21a1 1 0 1 0 2 0v-8.498h7.998a1.002 1.002 0 1 0 0-2.004H13V3a1 1 0 0 0-1-1"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2a1 1 0 0 0-1 1v7.498H3.002a1.002 1.002 0 1 0 0 2.004H11V21a1 1 0 1 0 2 0v-8.498h7.998a1.002 1.002 0 1 0 0-2.004H13V3a1 1 0 0 0-1-1"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconAddMoreFilled;
