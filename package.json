@@ -200,7 +200,11 @@
             [
                 "@semantic-release/release-notes-generator",
                 {
-                    "preset": "angular"
+                    "preset": "angular",
+                    "_comment": "TODO #1660: Remove breakingHeaderPattern once semantic-release angular preset supports ! notation natively",
+                    "parserOpts": {
+                        "breakingHeaderPattern": "^(\\w*)(?:\\((.*)\\))?!: (.*)$"
+                    }
                 }
             ],
             "@semantic-release/changelog",
