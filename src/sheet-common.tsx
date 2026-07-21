@@ -23,7 +23,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
-import {TABLET_SIDE_MARGIN} from './responsive-layout.css';
+import {LARGE_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
 import {vars as skinVars} from './skins/skin-contract.css';
 
@@ -304,8 +304,8 @@ export const SheetBody = ({
     const {spacing} = useTheme();
     const paddingX = {
         mobile: spacing.responsiveLayoutMargin.mobile as PadSize,
-        tablet: TABLET_SIDE_MARGIN as PadSize,
-        desktop: 40,
+        tablet: TABLET_SIDE_MARGIN,
+        desktop: LARGE_DESKTOP_SIDE_MARGIN,
     } as const;
 
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);

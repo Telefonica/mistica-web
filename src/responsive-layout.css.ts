@@ -3,8 +3,10 @@ import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
-export const TABLET_SIDE_MARGIN = 32;
-export const LARGE_DESKTOP_SIDE_MARGIN = 64;
+import type {PadSize} from './box';
+
+export const TABLET_SIDE_MARGIN: PadSize = 32;
+export const LARGE_DESKTOP_SIDE_MARGIN: PadSize = 64;
 export const EXTRA_LARGE_DESKTOP_MAX_WIDTH = 1704;
 
 const marginValue = {
