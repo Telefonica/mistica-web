@@ -3,12 +3,16 @@ import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
+export const TABLET_SIDE_MARGIN = 32;
+export const LARGE_DESKTOP_SIDE_MARGIN = 64;
+export const EXTRA_LARGE_DESKTOP_MAX_WIDTH = 1704;
+
 const marginValue = {
-    extraLargeDesktop: `calc(${skinVars.spacing.responsiveLayoutMargin.extraLargeDesktop} * 1px)`,
-    largeDesktop: `calc(${skinVars.spacing.responsiveLayoutMargin.largeDesktop} * 1px)`,
-    desktop: `calc(${skinVars.spacing.responsiveLayoutMargin.desktop} * 1px)`,
-    tablet: `calc(${skinVars.spacing.responsiveLayoutMargin.tablet} * 1px)`,
-    mobile: `calc(${skinVars.spacing.responsiveLayoutMargin.mobile} * 1px)`,
+    extraLargeDesktop: `calc((100vw - ${EXTRA_LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
+    largeDesktop: `${LARGE_DESKTOP_SIDE_MARGIN}px`,
+    desktop: `calc(${skinVars.spacing.responsiveLayoutMargin} * 1px)`,
+    tablet: `${TABLET_SIDE_MARGIN}px`,
+    mobile: `calc(${skinVars.spacing.responsiveLayoutMargin} * 1px)`,
 };
 
 const currentMargin = createVar();

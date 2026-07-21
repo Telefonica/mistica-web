@@ -209,7 +209,7 @@
 
 @media (min-width: 1024px) {
     .mistica-responsive-layout {
-        --mistica-responsive-layout-margin: 40px;
+        --mistica-responsive-layout-margin: 48px;
     }
 }
 

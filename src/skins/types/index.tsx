@@ -20,7 +20,6 @@ export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
 type ResponsiveValue<T> = {mobile: T; desktop: T};
-type FullyResponsiveValue<T> = ResponsiveValue<T> & {tablet: T; extraLargeDesktop: T; largeDesktop: T};
 
 type PaddingYValues = {
     top: ResponsiveValue<number>;
@@ -118,7 +117,7 @@ export type SpacingConfig = {
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
-    responsiveLayoutMargin: FullyResponsiveValue<number>;
+    responsiveLayoutMargin: ResponsiveValue<number>;
 };
 
 export type ThemeVariantsConfig = {

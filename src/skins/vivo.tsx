@@ -780,13 +780,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
-            responsiveLayoutMargin: {
-                mobile: 16,
-                tablet: 32,
-                desktop: 48,
-                largeDesktop: 64,
-                extraLargeDesktop: 80,
-            },
+            responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };
     return skin;

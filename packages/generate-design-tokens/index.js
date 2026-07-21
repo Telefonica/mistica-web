@@ -154,31 +154,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 .join(',')},
         },
         spacing: ${JSON.stringify(
-            Object.fromEntries(
-                Object.entries(designTokens.spacing).map(([name, spacingValue]) => {
-                    if (name === 'responsiveLayoutMargin') {
-                        const responsive = spacingValue.value || {};
-                        const defaults = {
-                            mobile: 16,
-                            tablet: 32,
-                            desktop: 48,
-                            largeDesktop: 64,
-                            extraLargeDesktop: 80,
-                        };
-                        return [
-                            name,
-                            {
-                                mobile: responsive.mobile ?? defaults.mobile,
-                                tablet: responsive.tablet ?? defaults.tablet,
-                                desktop: responsive.desktop ?? defaults.desktop,
-                                largeDesktop: responsive.largeDesktop ?? defaults.largeDesktop,
-                                extraLargeDesktop: responsive.extraLargeDesktop ?? defaults.extraLargeDesktop,
-                            },
-                        ];
-                    }
-                    return [name, spacingValue.value];
-                })
-            )
+            Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
         )},
     };
     return skin;
@@ -217,8 +193,7 @@ const generateSkinFiles = async () => {
         console.log('Generating tokens for skin', skinName);
 
         if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
-            console.error(`Missing ${skinName}.json file`);
-            console.error(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`));
+            console.error(`Missing ${path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`)} file`);
             return;
         }
 
