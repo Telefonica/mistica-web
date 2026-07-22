@@ -27,21 +27,21 @@ const IconAddMoreLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20.403 11.402h-7.802V3.599a.6.6 0 0 0-1.2 0v7.803H3.6a.599.599 0 1 0 0 1.199h7.803v7.8a.6.6 0 0 0 1.199 0v-7.8h7.8a.6.6 0 0 0 .002-1.2"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M11.42 2.72a.72.72 0 0 1 .716-.716.72.72 0 0 1 .716.716l.003 8.064 8.426.003a.72.72 0 0 1 .716.716.84.84 0 0 1-.22.552c-.127.127-.3.16-.493.16l-8.432.004v9.072a.7.7 0 0 1-.713.712.72.72 0 0 1-.715-.715v-9.072l-8.712.005a.72.72 0 0 1-.716-.715.72.72 0 0 1 .716-.716l8.712-.005z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M20.403 11.402h-7.802V3.599a.6.6 0 0 0-1.2 0v7.803H3.6a.599.599 0 1 0 0 1.199h7.803v7.8a.6.6 0 0 0 1.199 0v-7.8h7.8a.6.6 0 0 0 .002-1.2"
                     />
                 </svg>
             );
