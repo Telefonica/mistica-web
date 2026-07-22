@@ -302,11 +302,10 @@ export const SheetBody = ({
     children,
 }: SheetBodyProps): JSX.Element => {
     const {spacing} = useTheme();
-    // todo https://github.com/Telefonica/mistica-design/issues/2703 adopt tokens for sheets' dialogs (no hardcoded)
+    // todo https://github.com/Telefonica/mistica-design/issues/2703 adopt tokens for sheets' dialogs (no hardcoded, not mingling sources)
     const paddingX = {
         mobile: spacing.responsiveLayoutMargin.mobile as PadSize,
         tablet: TABLET_SIDE_MARGIN,
-
         desktop: 40,
     } as const;
 
