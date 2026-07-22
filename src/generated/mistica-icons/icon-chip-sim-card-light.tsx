@@ -27,20 +27,7 @@ const IconChipSimCardLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M7.32 20h9.36c.18 0 .32-.137.32-.305v-9.39a.314.314 0 0 0-.32-.305H7.32a.314.314 0 0 0-.32.305v9.39c0 .168.144.305.32.305m9.04-6.411v2.822H7.64V13.59zm-2.486 5.8v-2.367h2.486v2.367zm-3.12-2.367h2.48v2.367h-2.48zm-3.114 0h2.474v2.367H7.64zm2.474-4.044H7.64v-2.367h2.474zm3.12 0h-2.48v-2.367h2.48zm3.126 0h-2.486v-2.367h2.486z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19 20V4a2 2 0 0 0-2-2h-6.793a.5.5 0 0 0-.353.146L5.146 6.854A.5.5 0 0 0 5 7.207V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2m-.5-16v16a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V7.207L10.207 2.5H17A1.5 1.5 0 0 1 18.5 4"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,6 +37,19 @@ const IconChipSimCardLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     <path
                         fill={fillColor}
                         d="M19.9 22H4.11V4.144C4.11 2.964 5.079 2 6.26 2h7.646c.575 0 1.114.216 1.507.644l3.84 3.82c.393.392.646.928.646 1.5zm-1.436-1.428V7.964a.7.7 0 0 0-.217-.5l-3.802-3.82a.73.73 0 0 0-.539-.216H6.261a.72.72 0 0 0-.72.716v16.428z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.32 20h9.36c.18 0 .32-.137.32-.305v-9.39a.314.314 0 0 0-.32-.305H7.32a.314.314 0 0 0-.32.305v9.39c0 .168.144.305.32.305m9.04-6.411v2.822H7.64V13.59zm-2.486 5.8v-2.367h2.486v2.367zm-3.12-2.367h2.48v2.367h-2.48zm-3.114 0h2.474v2.367H7.64zm2.474-4.044H7.64v-2.367h2.474zm3.12 0h-2.48v-2.367h2.48zm3.126 0h-2.486v-2.367h2.486z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M19 20V4a2 2 0 0 0-2-2h-6.793a.5.5 0 0 0-.353.146L5.146 6.854A.5.5 0 0 0 5 7.207V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2m-.5-16v16a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V7.207L10.207 2.5H17A1.5 1.5 0 0 1 18.5 4"
                     />
                 </svg>
             );
