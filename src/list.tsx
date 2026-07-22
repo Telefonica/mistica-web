@@ -34,6 +34,8 @@ import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
+const RowListDividerContext = React.createContext(false);
+
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 interface CommonProps {
@@ -80,6 +82,7 @@ interface ContentProps extends CommonProps {
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
+    hideDivider?: boolean;
 }
 
 export const Content = ({
@@ -104,11 +107,13 @@ export const Content = ({
     labelId,
     disabled,
     control,
+    hideDivider,
 }: ContentProps): JSX.Element => {
     const outsideVariant = useThemeVariant();
     const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
+    const hasDivider = React.useContext(RowListDividerContext);
 
     return (
         <div className={styles.content} id={labelId}>
@@ -147,132 +152,135 @@ export const Content = ({
                     </div>
                 </div>
             )}
-
-            <div
-                className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
-                style={{justifyContent: centerY ? 'center' : 'flex-start'}}
-            >
-                <Text
-                    mobileSize={textPresets.text3.size.mobile}
-                    desktopSize={textPresets.text3.size.desktop}
-                    mobileLineHeight={textPresets.text3.lineHeight.mobile}
-                    desktopLineHeight={textPresets.text3.lineHeight.desktop}
-                    weight={textPresets.rowTitle.weight}
-                    color={danger ? vars.colors.textError : vars.colors.textPrimary}
-                    truncate={titleLinesMax}
-                    hyphens="auto"
-                    as={titleAs}
-                    dataAttributes={{testid: 'title'}}
+            <div className={styles.innerContent}>
+                <div
+                    className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
+                    style={{justifyContent: centerY ? 'center' : 'flex-start'}}
                 >
-                    {title}
-                </Text>
-                {headline && (
-                    <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
-                        <Text1
-                            regular
-                            color={vars.colors.textPrimary}
-                            hyphens="auto"
-                            dataAttributes={{testid: 'headline'}}
-                        >
-                            {headline}
-                        </Text1>
-                    </div>
-                )}
-                {subtitle && (
-                    <Box paddingTop={2}>
-                        <Text2
-                            regular
-                            color={vars.colors.textPrimary}
-                            truncate={subtitleLinesMax}
-                            hyphens="auto"
-                            dataAttributes={{testid: 'subtitle'}}
-                        >
-                            {subtitle}
-                        </Text2>
-                    </Box>
-                )}
-                {description && (
-                    <Box paddingTop={2}>
-                        <Text2
-                            regular
-                            color={vars.colors.textSecondary}
-                            truncate={descriptionLinesMax}
-                            hyphens="auto"
-                            dataAttributes={{testid: 'description'}}
-                        >
-                            {description}
-                        </Text2>
-                    </Box>
-                )}
-                {slot && (
-                    <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
-                        {slot}
-                    </Box>
-                )}
-            </div>
-
-            {badge && (
-                <Box paddingLeft={16}>
-                    <div className={classNames(styles.badge, {[styles.disabled]: disabled})}>
-                        <Badge value={badge === true ? undefined : badge} />
-                    </div>
-                </Box>
-            )}
-
-            {(detail || right || withChevron || control) && (
-                <div className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}>
-                    {detail && (
-                        <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
+                    <Text
+                        mobileSize={textPresets.text3.size.mobile}
+                        desktopSize={textPresets.text3.size.desktop}
+                        mobileLineHeight={textPresets.text3.lineHeight.mobile}
+                        desktopLineHeight={textPresets.text3.lineHeight.desktop}
+                        weight={textPresets.rowTitle.weight}
+                        color={danger ? vars.colors.textError : vars.colors.textPrimary}
+                        truncate={titleLinesMax}
+                        hyphens="auto"
+                        as={titleAs}
+                        dataAttributes={{testid: 'title'}}
+                    >
+                        {title}
+                    </Text>
+                    {headline && (
+                        <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
+                            <Text1
+                                regular
+                                color={vars.colors.textPrimary}
+                                hyphens="auto"
+                                dataAttributes={{testid: 'headline'}}
+                            >
+                                {headline}
+                            </Text1>
+                        </div>
+                    )}
+                    {subtitle && (
+                        <Box paddingTop={2}>
+                            <Text2
+                                regular
+                                color={vars.colors.textPrimary}
+                                truncate={subtitleLinesMax}
+                                hyphens="auto"
+                                dataAttributes={{testid: 'subtitle'}}
+                            >
+                                {subtitle}
+                            </Text2>
+                        </Box>
+                    )}
+                    {description && (
+                        <Box paddingTop={2}>
                             <Text2
                                 regular
                                 color={vars.colors.textSecondary}
+                                truncate={descriptionLinesMax}
                                 hyphens="auto"
-                                dataAttributes={{testid: 'detail'}}
+                                dataAttributes={{testid: 'description'}}
                             >
-                                {detail}
+                                {description}
                             </Text2>
-                        </div>
+                        </Box>
                     )}
-
-                    {right && (
-                        <div
-                            className={classNames({
-                                [styles.detailRight]: !!detail,
-                                [styles.disabled]: disabled,
-                            })}
-                            ref={rightRef}
-                            data-testid="endSlot"
-                        >
-                            {renderRight(right, centerY)}
-                        </div>
+                    {slot && (
+                        <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
+                            {slot}
+                        </Box>
                     )}
-
-                    {withChevron && (
-                        <div
-                            style={{paddingLeft: detail || right ? 4 : 0}}
-                            className={classNames(styles.center, {[styles.disabled]: disabled})}
-                            data-testid="chevron"
-                        >
-                            <IconChevronRightFilled
-                                size={16}
-                                color={
-                                    {
-                                        default: vars.colors.chevronIndicator,
-                                        alternative: vars.colors.chevronIndicator,
-                                        brand: vars.colors.textSecondaryBrand,
-                                        negative: vars.colors.textSecondaryNegative,
-                                        media: vars.colors.textSecondaryBrand,
-                                    }[outsideVariant]
-                                }
-                            />
+                </div>
+                {badge && (
+                    <Box paddingLeft={16}>
+                        <div className={classNames(styles.badge, {[styles.disabled]: disabled})}>
+                            <Badge value={badge === true ? undefined : badge} />
                         </div>
-                    )}
-
-                    {control && (
-                        <div style={{paddingLeft: detail || right ? 8 : 0}} className={styles.center}>
-                            {control}
-                        </div>
-                    )}
+                    </Box>
+                )}
+                {(detail || right || withChevron || control) && (
+                    <div
+                        className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}
+                    >
+                        {detail && (
+                            <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
+                                <Text2
+                                    regular
+                                    color={vars.colors.textSecondary}
+                                    hyphens="auto"
+                                    dataAttributes={{testid: 'detail'}}
+                                >
+                                    {detail}
+                                </Text2>
+                            </div>
+                        )}
+                        {right && (
+                            <div
+                                className={classNames({
+                                    [styles.detailRight]: !!detail,
+                                    [styles.disabled]: disabled,
+                                })}
+                                ref={rightRef}
+                                data-testid="endSlot"
+                            >
+                                {renderRight(right, centerY)}
+                            </div>
+                        )}
+                        {withChevron && (
+                            <div
+                                style={{paddingLeft: detail || right ? 4 : 0}}
+                                className={classNames(styles.center, {[styles.disabled]: disabled})}
+                                data-testid="chevron"
+                            >
+                                <IconChevronRightFilled
+                                    size={16}
+                                    color={
+                                        {
+                                            default: vars.colors.chevronIndicator,
+                                            alternative: vars.colors.chevronIndicator,
+                                            brand: vars.colors.textSecondaryBrand,
+                                            negative: vars.colors.textSecondaryNegative,
+                                            media: vars.colors.textSecondaryBrand,
+                                        }[outsideVariant]
+                                    }
+                                />
+                            </div>
+                        )}
+                        {control && (
+                            <div style={{paddingLeft: detail || right ? 8 : 0}} className={styles.center}>
+                                {control}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+            {hasDivider && !hideDivider && (
+                <div className={styles.rowDivider}>
+                    <Divider />
                 </div>
             )}
         </div>
@@ -433,6 +441,14 @@ const getNodeText = (node: HTMLElement | null): string => {
     return raw;
 };
 
+const assignRef = <T,>(ref: React.Ref<T> | undefined, value: T) => {
+    if (typeof ref === 'function') {
+        ref(value);
+    } else if (ref) {
+        ref.current = value;
+    }
+};
+
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
     const outsideVariant = useThemeVariant();
@@ -466,6 +482,31 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [slotText, setSlotText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
     const assetText = getAssetText(asset);
+    const hasDivider = React.useContext(RowListDividerContext);
+    const [dividerOffset, setDividerOffset] = React.useState(0);
+    const setDualActionRef = React.useCallback(
+        (dualActionContainerElement: HTMLDivElement | null) => {
+            assignRef(ref, dualActionContainerElement);
+
+            if (!dualActionContainerElement || !hasDivider) {
+                return;
+            }
+
+            const innerContentElement = dualActionContainerElement.querySelector<HTMLElement>(
+                `.${styles.innerContent}`
+            );
+
+            if (!innerContentElement) {
+                return;
+            }
+
+            const containerLeft = dualActionContainerElement.getBoundingClientRect().left;
+            const contentLeft = innerContentElement.getBoundingClientRect().left;
+
+            setDividerOffset(contentLeft - containerLeft);
+        },
+        [ref, hasDivider]
+    );
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
     const computedAriaLabel = [
@@ -513,7 +554,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = (contentProps?: {control?: React.ReactNode; labelId?: string; role?: string}) => (
+    const renderContent = (contentProps?: {
+        control?: React.ReactNode;
+        labelId?: string;
+        role?: string;
+        hideDivider?: boolean;
+    }) => (
         <Content
             asset={asset}
             headline={headline}
@@ -549,6 +595,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
+            hideDivider={contentProps?.hideDivider}
         />
     );
 
@@ -581,25 +628,30 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const renderRowWithDoubleInteraction = (control: React.ReactNode) => (
         <div
             className={styles.dualActionContainer}
-            ref={ref as React.Ref<HTMLDivElement>}
+            ref={setDualActionRef}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
-            <BaseTouchable
-                disabled={disabled}
-                {...interactiveProps}
-                role={touchableRole}
-                className={classNames(styles.dualActionLeft, {
-                    [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundBrand]: hasHoverInverse,
-                })}
-                tabIndex={tabIndex}
-            >
-                {renderContent({labelId: titleId, role})}
-            </BaseTouchable>
-
-            <div className={styles.dualActionDivider} />
-
-            {control}
+            <div className={styles.dualActionInner}>
+                <BaseTouchable
+                    disabled={disabled}
+                    {...interactiveProps}
+                    role={touchableRole}
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundBrand]: hasHoverInverse,
+                    })}
+                    tabIndex={tabIndex}
+                >
+                    {renderContent({labelId: titleId, role, hideDivider: true})}
+                </BaseTouchable>
+                <div className={styles.dualActionDivider} />
+                {control}
+            </div>
+            {hasDivider && (
+                <div className={styles.rowDividerDualAction} style={{paddingLeft: dividerOffset}}>
+                    <Divider />
+                </div>
+            )}
         </div>
     );
 
@@ -781,29 +833,19 @@ export const RowList = ({
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
 }: RowListProps): JSX.Element => {
-    const childrenContent = React.Children.toArray(children).filter(Boolean);
-    const lastIndex = childrenContent.length - 1;
-
     return (
-        <div
-            role={role}
-            aria-labelledby={ariaLabelledBy}
-            aria-label={ariaLabel}
-            aria-live={ariaLive}
-            aria-atomic={ariaAtomic}
-            {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
-        >
-            {childrenContent.map((child, index) => (
-                <React.Fragment key={index}>
-                    {child}
-                    {index < lastIndex && (
-                        <Box paddingX={16}>
-                            <Divider />
-                        </Box>
-                    )}
-                </React.Fragment>
-            ))}
-        </div>
+        <RowListDividerContext.Provider value={true}>
+            <div
+                role={role}
+                aria-labelledby={ariaLabelledBy}
+                aria-label={ariaLabel}
+                aria-live={ariaLive}
+                aria-atomic={ariaAtomic}
+                {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
+            >
+                {children}
+            </div>
+        </RowListDividerContext.Provider>
     );
 };
 

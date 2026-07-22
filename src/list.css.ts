@@ -7,7 +7,7 @@ export const disabled = style({
     opacity: 0.5,
 });
 
-export const row = sprinkles({
+export const row = style({
     width: '100%',
 });
 
@@ -83,16 +83,25 @@ export const rowContentPadding = sprinkles({
     paddingX: 16,
 });
 
-export const content = sprinkles({
+export const content = style([
+    sprinkles({
+        width: '100%',
+        paddingTop: 16,
+    }),
+    {
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+    },
+]);
+
+export const innerContent = style({
     display: 'flex',
-    width: '100%',
-    minHeight: 72,
-    paddingY: 16,
+    minHeight: 40,
+    paddingBottom: 16,
+    gridColumn: 2,
 });
 
-export const assetContainer = sprinkles({
-    paddingRight: 16,
-});
+export const assetContainer = style([sprinkles({paddingRight: 16}), {gridColumn: 1, paddingBottom: 16}]);
 
 export const asset = sprinkles({
     display: 'flex',
@@ -121,6 +130,24 @@ export const badge = style([
     }),
 ]);
 
+export const rowDivider = style({
+    gridColumn: '2 / -1',
+    selectors: {
+        [`${row}:last-child &`]: {
+            display: 'none',
+        },
+    },
+});
+
+export const rowDividerDualAction = style({
+    paddingRight: 16,
+    selectors: {
+        [`${row}:last-child &`]: {
+            display: 'none',
+        },
+    },
+});
+
 export const rightContent = style({display: 'flex', marginLeft: 16});
 export const rightRestrictedWidth = style({maxWidth: '40%'});
 
@@ -128,10 +155,16 @@ export const detailRight = style({paddingLeft: 8});
 
 export const detail = style([center, {textAlign: 'right'}]);
 
-export const dualActionContainer = sprinkles({
+export const dualActionContainer = style({
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+});
+
+export const dualActionInner = style({
     display: 'flex',
     flexDirection: 'row',
-    height: '100%',
+    flex: 1,
 });
 
 const dualActionBase = sprinkles({padding: 0, border: 'none', background: 'transparent'});
