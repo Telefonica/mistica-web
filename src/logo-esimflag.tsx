@@ -1,8 +1,5 @@
 import * as React from 'react';
-import * as styles from './logo.css';
 import {getEsimflagSkin} from './skins/esimflag';
-import {applyCssVars} from './utils/css';
-import {calcInlineVars} from './logo-common';
 
 import type {LogoImageProps} from './logo-common';
 
