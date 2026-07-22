@@ -100,4 +100,5 @@ export const defaultSpacing: SpacingConfig = {
         left: {mobile: 16, desktop: 24},
         right: {mobile: 16, desktop: 24},
     },
+    responsiveLayoutMargin: {mobile: 16, desktop: 48},
 };
