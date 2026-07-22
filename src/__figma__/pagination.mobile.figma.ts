@@ -1,0 +1,33 @@
+// url=https://www.figma.com/design/WCkDDzlXE16R6yXaljxddj/M%C3%ADstica-Mobile?node-id=66855-179
+// source=src/pagination.tsx
+// component=Pagination
+import figma from 'figma';
+
+const instance = figma.selectedInstance;
+
+// "Mode" is a VARIANT: "Default" → mode="default", "Icon only" → mode="iconOnly".
+const mode = instance.getEnum('Mode', {
+    Default: 'default',
+    'Icon only': 'iconOnly',
+});
+
+// "Show all pages" (True | False) is a Figma-only simplification: whether ellipsis
+// appears depends on the combination of totalPages and surroundingPageCount, not a
+// single prop. It has no direct code prop mapping and is omitted.
+
+// "Current page" (Start | Middle | End) is a Figma-only simplification to show
+// navigation control states; it has no direct code prop mapping and is omitted.
+
+export default {
+    example: figma.code`
+        <Pagination
+            totalPages={9}
+            currentPage={3}
+            onChange={(page) => {}}
+            ${mode === 'iconOnly' ? 'mode="iconOnly"' : ''}
+        />
+    `,
+    imports: ['import {Pagination} from "@telefonica/mistica";'],
+    id: 'pagination-mobile',
+    metadata: {nestable: false},
+};
