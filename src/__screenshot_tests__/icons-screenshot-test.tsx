@@ -18,7 +18,7 @@ test.each(getCases())('Icons catalog for %s (%s)', async (skin, type) => {
         id: 'icons-catalog--catalog',
         device: 'DESKTOP',
         skin: skin as (typeof SKINS)[number],
-        args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled'},
+        args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled', size: 32},
     });
 
     const icons = await page.screenshot({fullPage: true});

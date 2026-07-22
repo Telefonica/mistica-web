@@ -4,7 +4,7 @@ import {useSetOverscrollColor} from './overscroll-color-context';
 import {ThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import ResponsiveLayout from './responsive-layout';
-import {Text2, Text4} from './text';
+import {Text2, Text, getTextSizes} from './text';
 import Stack from './stack';
 import * as styles from './loading-screen.css';
 import Spinner from './spinner';
@@ -12,15 +12,15 @@ import classnames from 'classnames';
 import {Logo} from './logo';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
-const BackgroundColor = ({isInverse}: {isInverse: boolean}) => {
-    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;
+const BackgroundColor = ({isBrandVariant}: {isBrandVariant: boolean}) => {
+    const css = `body {background:${isBrandVariant ? vars.colors.backgroundBrand : vars.colors.background}}`;
     return <style>{css}</style>;
 };
 
@@ -50,6 +50,7 @@ type LoadingScreenTextsProps = {
 };
 
 const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScreenTextsProps) => {
+    const {textPresets} = useTheme();
     const [currentTextsIndex, setCurrentTextsIndex] = React.useState(0);
     const [isClosing, setIsClosing] = React.useState(false);
 
@@ -107,9 +108,14 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
                 <Stack space={8}>
                     {currentTitle && (
                         <div className={animateText ? styles.loadingScreenTextAnimated : undefined}>
-                            <Text4 textAlign="center" regular as="h1">
+                            <Text
+                                {...getTextSizes({textPreset: textPresets.loadingScreenTitle})}
+                                textAlign="center"
+                                weight="regular"
+                                as="h1"
+                            >
                                 {currentTitle}
-                            </Text4>
+                            </Text>
                         </div>
                     )}
                     {currentDescription && (
@@ -129,7 +135,7 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
 };
 
 type Props = {
-    isInverse?: boolean;
+    variant: 'default' | 'brand';
     isLoading?: boolean;
     animateText?: boolean;
     animateBackground?: boolean;
@@ -141,7 +147,7 @@ type Props = {
 const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
     (
         {
-            isInverse,
+            variant,
             children,
             isLoading = true,
             animateText,
@@ -198,21 +204,17 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 
         const centerContent = !children;
 
-        useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+        useSetOverscrollColor(variant === 'brand' ? {topColor: vars.colors.backgroundBrandTop} : {});
 
         return (
-            <ThemeVariant isInverse={isInverse}>
+            <ThemeVariant variant={variant}>
                 <div
                     ref={ref}
                     {...getPrefixedDataAttributes(dataAttributes)}
-                    className={classnames(
-                        styles.loadingScreen,
-                        styles.screenBackground[isInverse ? 'inverse' : 'default'],
-                        {
-                            [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
-                            [styles.screenBackgroundAnimated]: animateBackground,
-                        }
-                    )}
+                    className={classnames(styles.loadingScreen, styles.screenBackground[variant], {
+                        [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
+                        [styles.screenBackgroundAnimated]: animateBackground,
+                    })}
                     style={{
                         justifyContent: centerContent ? 'center' : 'space-between',
                     }}
@@ -224,7 +226,11 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
                     {children ? (
                         <div className={styles.loadingScreenChildren}>{children}</div>
                     ) : (
-                        <Spinner delay="0s" size={32} color={isInverse ? vars.colors.inverse : undefined} />
+                        <Spinner
+                            delay="0s"
+                            size={32}
+                            color={variant === 'brand' ? vars.colors.inverse : undefined}
+                        />
                     )}
                     <LoadingScreenTexts
                         animateText={animateText}
@@ -235,14 +241,14 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
                     {!centerContent && <div style={{height: 104}} />}
                 </div>
                 {/* needed for overscroll. TODO: review the case for brands with gradient like O2 */}
-                {isLoading && inAnimationEnd && <BackgroundColor isInverse={!!isInverse} />}
+                {isLoading && inAnimationEnd && <BackgroundColor isBrandVariant={variant === 'brand'} />}
             </ThemeVariant>
         );
     }
 );
 
 type LoadingScreenProps = {
-    isInverse?: boolean;
+    variant?: 'default' | 'brand';
     isLoading?: boolean;
     onClose?: () => void;
     children?: React.ReactNode;
@@ -254,6 +260,7 @@ export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps
         <BaseLoadingScreen
             ref={ref}
             {...props}
+            variant={props.variant ?? 'default'}
             dataAttributes={{'component-name': 'LoadingScreen', ...props.dataAttributes}}
             animateBackground
         />
@@ -296,7 +303,7 @@ const VivinhoLoadingAnimation = React.lazy(() => import('./vivinho-loading-anima
 const BrandLoadingAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadingAnimationProps) => {
     const {skinName} = useTheme();
 
-    if (skinName === VIVO_NEW_SKIN) {
+    if (skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN) {
         return (
             <React.Suspense fallback={null}>
                 <VivinhoLoadingAnimation
@@ -338,7 +345,12 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
         return (
             <BaseLoadingScreen
                 ref={ref}
-                isInverse={themeVariants.brandLoadingScreen === 'inverse'}
+                variant={
+                    themeVariants.brandLoadingScreen === 'inverse' ||
+                    themeVariants.brandLoadingScreen === 'brand'
+                        ? 'brand'
+                        : 'default'
+                }
                 {...textProps}
                 isLoading={isLoading || !isClosing}
                 onClose={() => {
@@ -346,7 +358,7 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
                     handleCloseEnd();
                 }}
                 animateText
-                dataAttributes={{'component-name': 'BrandLoadingScreen', ...dataAttributes}}
+                dataAttributes={{testid: 'BrandLoadingScreen', ...dataAttributes}}
             >
                 <BrandLoadingAnimation
                     isLoading={isLoading}

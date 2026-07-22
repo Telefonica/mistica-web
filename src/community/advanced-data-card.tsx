@@ -7,23 +7,22 @@ import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import * as mediaStyles from '../image.css';
 import Divider from '../divider';
-import {Text2, Text} from '../text';
-import * as textProps from '../text-props';
+import {Text2, Text, useTextPresetSizes} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
-import {CardActionsGroup, useInnerText} from '../card';
-import {useTheme} from '../hooks';
+import {useInnerText, useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
 import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
+import {TopActions} from '../card-internal';
 
+import type {CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
-import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
@@ -88,6 +87,7 @@ const CardContent = ({
     descriptionLinesMax,
 }: CardContentProps) => {
     const {textPresets} = useTheme();
+    const text4Sizes = useTextPresetSizes('text4');
 
     return (
         /** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */
@@ -97,7 +97,7 @@ const CardContent = ({
                     {title && (
                         <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                             <Text
-                                {...textProps.text4}
+                                {...text4Sizes}
                                 truncate={titleLinesMax}
                                 weight={textPresets.cardTitle.weight}
                                 as={titleAs}
@@ -149,7 +149,7 @@ const CardContent = ({
                     {title && (
                         <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                             <Text
-                                {...textProps.text4}
+                                {...text4Sizes}
                                 truncate={titleLinesMax}
                                 weight={textPresets.cardTitle.weight}
                                 as={titleAs}
@@ -256,7 +256,7 @@ const CardFooter = ({button, footerImage, footerText, footerTextLinesMax, button
     );
 };
 
-type AllowedExtra =
+type AllowedSlot =
     | typeof StackingGroup
     | typeof HighlightedValueBlock
     | typeof InformationBlock
@@ -278,9 +278,9 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: ReadonlyArray<RendersNullableElement<AllowedExtra>>;
-    extraDividerPadding?: 8 | 16 | 24;
-    noExtraDivider?: boolean;
+    slot?: ReadonlyArray<RendersNullableElement<AllowedSlot>>;
+    slotDividerPadding?: 8 | 16 | 24;
+    noSlotDivider?: boolean;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
@@ -308,9 +308,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             description,
             descriptionLinesMax,
 
-            extra,
-            extraDividerPadding = 24,
-            noExtraDivider = false,
+            slot,
+            slotDividerPadding = 24,
+            noSlotDivider = false,
 
             button,
             footerImage,
@@ -331,18 +331,18 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
-        const hasExtras = !!extra?.length;
+        const hasSlots = !!slot?.length;
 
         const topActionsCount = (actions?.length || 0) + (onClose ? 1 : 0);
 
         const {text: headlineText, ref: headlineRef} = useInnerText();
-        const {text: extraText, ref: extraRef} = useInnerText();
+        const {text: slotText, ref: slotRef} = useInnerText();
 
         const ariaLabel =
             ariaLabelProp ||
             (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, subtitle, description, extraText]
-                : [pretitle, headlineText, title, subtitle, description, extraText]
+                ? [title, headlineText, pretitle, subtitle, description, slotText]
+                : [pretitle, headlineText, title, subtitle, description, slotText]
             )
                 .filter(Boolean)
                 .join(' ');
@@ -350,7 +350,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         return (
             <section
                 className={styles.container}
-                {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
+                {...getPrefixedDataAttributes({testid: 'AdvancedDataCard', ...dataAttributes})}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabel}
             >
@@ -366,7 +366,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         <div
                             className={classNames(
                                 styles.cardContentStyle,
-                                !hasFooter && !hasExtras ? styles.minHeight : ''
+                                !hasFooter && !hasSlots ? styles.minHeight : ''
                             )}
                             aria-hidden={isTouchable}
                         >
@@ -402,16 +402,16 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                             </Box>
                         </div>
                         <div style={{flexGrow: 1}} />
-                        {hasExtras && (
-                            <div className={styles.extra} ref={extraRef}>
-                                {extra.map((item, index) => {
+                        {hasSlots && (
+                            <div className={styles.slot} ref={slotRef} aria-hidden={isTouchable}>
+                                {slot.map((item, index) => {
                                     return (
                                         <div key={index}>
                                             <div className={styles.paddingX}>{item}</div>
 
-                                            {index + 1 !== extra.length && (
-                                                <Box paddingY={extraDividerPadding}>
-                                                    {!noExtraDivider && <Divider />}
+                                            {index + 1 !== slot.length && (
+                                                <Box paddingY={slotDividerPadding}>
+                                                    {!noSlotDivider && <Divider />}
                                                 </Box>
                                             )}
                                         </div>
@@ -422,7 +422,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </Touchable>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <CardActionsGroup actions={actions} onClose={onClose} />
+                <TopActions actions={actions} onClose={onClose} />
             </section>
         );
     }

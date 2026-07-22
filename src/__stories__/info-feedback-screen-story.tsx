@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {InfoFeedbackScreen} from '../feedback';
 import {ButtonPrimary} from '../button';
-import IconError from '../icons/icon-error';
 import {Placeholder} from '../placeholder';
+import IconShoppingBagRegular from '../generated/mistica-icons/icon-shopping-bag-regular';
 
 export default {
     title: 'Patterns/Feedback/InfoFeedbackScreen',
@@ -19,21 +19,27 @@ export default {
 
 type Args = {
     asset: string;
-    extra: boolean;
+    title: string;
+    description: string;
+    multipleParagraphs: boolean;
+    slot: boolean;
 };
 
-export const Info: StoryComponent<Args> = ({asset, extra}) => (
+export const Info: StoryComponent<Args> = ({asset, title, description, multipleParagraphs, slot}) => (
     <InfoFeedbackScreen
-        title="I'm the title"
-        description="I'm the description"
+        title={title}
+        description={multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description}
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
-        Icon={asset === 'custom' ? IconError : undefined}
-        extra={extra ? <Placeholder /> : undefined}
+        Icon={asset === 'custom' ? IconShoppingBagRegular : undefined}
+        slot={slot ? <Placeholder /> : undefined}
     />
 );
 
 Info.storyName = 'InfoFeedbackScreen';
 Info.args = {
     asset: 'default',
-    extra: false,
+    title: "I'm the title",
+    description: "I'm the description",
+    multipleParagraphs: false,
+    slot: false,
 };

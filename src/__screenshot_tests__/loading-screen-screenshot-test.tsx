@@ -14,7 +14,7 @@ test.each(['MOBILE_IOS', 'DESKTOP'] as const)('LoadingScreen inverse in %s', asy
     const page = await openStoryPage({
         id: 'patterns-loading--loading-screen-story',
         device,
-        args: {inverse: true},
+        args: {variant: 'brand'},
     });
 
     const image = await page.screenshot();

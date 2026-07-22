@@ -172,9 +172,7 @@ const InternalRating = ({
     ];
 
     const defaultQuantitativeLabels = Array.from({length: count}, (_, index) =>
-        (texts.ratingQuantitativeLabel || t(tokens.ratingQuantitativeLabel))
-            .replace('1$s', String(index + 1))
-            .replace('2$s', String(count))
+        t(texts.ratingQuantitativeLabel || tokens.ratingQuantitativeLabel, index + 1, count)
     );
 
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
@@ -231,13 +229,20 @@ const InternalRating = ({
     };
 
     const getIconElement = (icon: RatingIconProps, index: number) => {
-        const activeColor = variant === 'inverse' ? vars.colors.inverse : iconList[index].color;
+        const activeColor =
+            variant === 'brand'
+                ? vars.colors.controlActivatedBrand
+                : variant === 'negative'
+                  ? vars.colors.controlActivatedNegative
+                  : iconList[index].color;
         const inactiveColor =
-            variant === 'inverse'
-                ? vars.colors.inverse
-                : isInteractive
-                  ? vars.colors.control
-                  : iconList[0].color;
+            variant === 'brand'
+                ? vars.colors.controlInverse
+                : variant === 'negative'
+                  ? vars.colors.controlNegative
+                  : isInteractive
+                    ? vars.colors.control
+                    : iconList[0].color;
 
         switch (getIconType(index + 1)) {
             case 'active':
@@ -328,11 +333,7 @@ const InternalRating = ({
 };
 
 export const Rating = ({dataAttributes, ...props}: RatingProps): JSX.Element => (
-    <InternalRating
-        role="radiogroup"
-        dataAttributes={{'component-name': 'Rating', ...dataAttributes}}
-        {...props}
-    />
+    <InternalRating role="radiogroup" dataAttributes={{testid: 'Rating', ...dataAttributes}} {...props} />
 );
 
 export const InfoRating = ({dataAttributes, icon, size, ...props}: InfoRatingProps): JSX.Element => (
@@ -340,7 +341,7 @@ export const InfoRating = ({dataAttributes, icon, size, ...props}: InfoRatingPro
         size={size ?? DEFAULT_INFO_RATING_SIZE}
         icon={icon ?? DEFAULT_INFO_RATING_ICON}
         role="img"
-        dataAttributes={{'component-name': 'InfoRating', ...dataAttributes}}
+        dataAttributes={{testid: 'InfoRating', ...dataAttributes}}
         {...props}
     />
 );

@@ -1,22 +1,20 @@
 'use client';
 import * as React from 'react';
-import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';
 import {useTheme} from './hooks';
-import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import * as styles from './spinner.css';
 import * as tokens from './text-tokens';
-import ScreenReaderOnly from './screen-reader-only';
+import {useThemeVariant} from './theme-variant-context';
+import {getPlatform} from './utils/platform';
 
 type Props = {
     color?: string;
     delay?: string;
     size?: number | string;
-    /** @deprecated Use aria-hidden instead */
-    rolePresentation?: boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
     'aria-label'?: string;
+    'aria-live'?: 'off' | 'polite' | 'assertive';
     style?: React.CSSProperties;
     children?: void;
 };
@@ -26,13 +24,21 @@ const Spinner = ({
     delay = '500ms',
     size = 24,
     style,
-    rolePresentation,
     'aria-hidden': ariaHidden,
     'aria-label': ariaLabel,
+    'aria-live': ariaLive = 'polite',
 }: Props): JSX.Element => {
     const {texts, platformOverrides, t} = useTheme();
-    const isInverse = useIsInverseOrMediaVariant();
-    color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
+    const variant = useThemeVariant();
+    color =
+        color ||
+        {
+            default: vars.colors.controlActivated,
+            alternative: vars.colors.controlActivated,
+            brand: vars.colors.controlBrand,
+            negative: vars.colors.controlNegative,
+            media: vars.colors.controlNegative,
+        }[variant];
     const label = ariaLabel || texts.loading || t(tokens.loading);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
@@ -41,9 +47,9 @@ const Spinner = ({
                 height={size}
                 style={{...style}}
                 role="progressbar"
-                aria-live="polite"
+                aria-live={ariaLive}
                 aria-label={label}
-                aria-hidden={ariaHidden || rolePresentation}
+                aria-hidden={ariaHidden}
                 viewBox="0 0 30 30"
                 width={size}
             >
@@ -91,14 +97,9 @@ const Spinner = ({
                 </g>
             </svg>
         ) : (
-            <div aria-hidden={ariaHidden || rolePresentation} aria-live="polite">
-                {/* Android TalkBack doesn't read label of role="progress" elements, so we need a ScreenReaderOnly with the label */}
-                <ScreenReaderOnly>
-                    <span>{label}</span>
-                </ScreenReaderOnly>
+            <div aria-hidden={ariaHidden} aria-live={ariaLive}>
                 <svg
                     role="progressbar"
-                    // this doesn't work in TalkBack, but it's needed for testing-library tests
                     aria-label={label}
                     className={styles.spinnerDefault}
                     height={size}
@@ -123,7 +124,7 @@ const Spinner = ({
         return content;
     }
     return (
-        <FadeIn delay={delay} dataAttributes={{'component-name': 'Spinner'}}>
+        <FadeIn delay={delay} dataAttributes={{testid: 'Spinner'}}>
             {content}
         </FadeIn>
     );

@@ -72,6 +72,15 @@ type VideoSourceWithType = {
     type?: string; // video/webm, video/mp4...
 };
 
+export type VideoTrack = {
+    src: string;
+    kind: 'subtitles' | 'captions';
+    /** https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag */
+    srcLang: string;
+    label?: string;
+    default?: boolean;
+};
+
 export type VideoSource =
     | string
     | ReadonlyArray<string>
@@ -103,6 +112,8 @@ export type VideoProps = {
     onPause?: () => void;
     onLoad?: () => void;
     poster?: string;
+    /** text track elements for subtitles and captions */
+    tracks?: ReadonlyArray<VideoTrack>;
     children?: void;
     /** defaults to none */
     preload?: 'none' | 'metadata' | 'auto';
@@ -116,6 +127,14 @@ export interface VideoElement extends HTMLDivElement {
     /** Stops the video and shows the poster image (if available) */
     stop: () => void;
     setCurrentTime: (time: number) => void;
+    getCurrentTime: () => number;
+    getDuration: () => number;
+    /**
+     * Sets the display mode of a track by its index.
+     * - 'showing': track is visible
+     * - 'disabled': track is inactive
+     */
+    setTrackMode: (index: number, mode: 'showing' | 'disabled') => void;
 }
 
 const Video = React.forwardRef<VideoElement, VideoProps>(
@@ -123,6 +142,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         {
             src,
             poster,
+            tracks,
             autoPlay = 'when-loaded',
             muted = true,
             loop = true,
@@ -140,7 +160,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
     ) => {
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
         const videoRef = React.useRef<HTMLVideoElement>(null);
-        const loadedSource = React.useRef<VideoSource>();
+        const loadedSource = React.useRef<VideoSource>(null);
         const posterRef = React.useRef<HTMLDivElement>(null);
 
         const ratio =
@@ -210,6 +230,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 disableRemotePlayback
                 muted={muted}
                 loop={loop}
+                crossOrigin={tracks?.length ? 'anonymous' : undefined}
                 className={classNames(styles.video, mediaStyles.defaultBorderRadius)}
                 preload={preload}
                 onError={handleError}
@@ -242,6 +263,16 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
                 ))}
+                {tracks?.map(({src, kind, srcLang, label, default: isDefault}, index) => (
+                    <track
+                        key={index}
+                        src={src}
+                        kind={kind}
+                        srcLang={srcLang}
+                        label={label}
+                        default={isDefault}
+                    />
+                ))}
             </video>
         );
 
@@ -269,7 +300,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 aspectRatio={ratio}
                 width={props.width}
                 height={props.height}
-                dataAttributes={getPrefixedDataAttributes(dataAttributes, 'Video')}
+                dataAttributes={getPrefixedDataAttributes({testid: 'Video', ...dataAttributes})}
             >
                 <div
                     style={{
@@ -319,11 +350,20 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                                     videoRef.current.currentTime = time;
                                 }
                             };
+                            containerElement.getCurrentTime = () => videoRef.current?.currentTime ?? 0;
+                            containerElement.getDuration = () => videoRef.current?.duration ?? NaN;
                             containerElement.stop = () => {
                                 if (videoRef.current) {
                                     videoRef.current.pause();
                                     videoRef.current.currentTime = 0;
                                     dispatch('stop');
+                                }
+                            };
+                            containerElement.setTrackMode = (index: number, mode: 'showing' | 'disabled') => {
+                                const trackElements = videoRef.current?.querySelectorAll('track');
+                                const trackElement = trackElements?.[index] as HTMLTrackElement | undefined;
+                                if (trackElement?.track) {
+                                    trackElement.track.mode = mode;
                                 }
                             };
                         }

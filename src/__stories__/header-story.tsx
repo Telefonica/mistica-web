@@ -32,9 +32,9 @@ type Args = {
     titleAs: HeadingType;
     description: string;
     small: boolean;
-    inverse: boolean;
-    extra: boolean;
-    sideBySideExtraOnDesktop: boolean;
+    variant: 'default' | 'brand';
+    slot: boolean;
+    sideBySideSlotOnDesktop: boolean;
     breadcrumbs: boolean;
     bleed: boolean;
     noPaddingY: boolean;
@@ -42,9 +42,9 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     header,
-    inverse,
+    variant,
     bleed,
-    sideBySideExtraOnDesktop,
+    sideBySideSlotOnDesktop,
     breadcrumbs,
     headlineType,
     headline,
@@ -55,16 +55,16 @@ export const Default: StoryComponent<Args> = ({
     titleAs,
     description,
     small,
-    extra,
+    slot,
     noPaddingY,
 }) => {
     return (
         <Stack space={16}>
             <HeaderLayout
                 dataAttributes={{testid: 'header-layout'}}
-                isInverse={inverse}
+                variant={variant}
                 bleed={bleed}
-                sideBySideExtraOnDesktop={sideBySideExtraOnDesktop}
+                sideBySideSlotOnDesktop={sideBySideSlotOnDesktop}
                 noPaddingY={noPaddingY}
                 breadcrumbs={
                     breadcrumbs ? (
@@ -87,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
                         />
                     ) : undefined
                 }
-                extra={extra ? <Placeholder /> : undefined}
+                slot={slot ? <Placeholder /> : undefined}
             />
             <ResponsiveLayout>
                 <Callout
@@ -114,11 +114,11 @@ Default.args = {
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
-    inverse: false,
+    variant: 'default',
     breadcrumbs: true,
     noPaddingY: false,
-    extra: true,
-    sideBySideExtraOnDesktop: true,
+    slot: true,
+    sideBySideSlotOnDesktop: true,
     bleed: false,
 };
 
@@ -143,6 +143,10 @@ Default.argTypes = {
     },
     description: {if: {arg: 'header'}},
     small: {if: {arg: 'header'}},
-    sideBySideExtraOnDesktop: {if: {arg: 'extra'}},
-    bleed: {if: {arg: 'extra'}},
+    sideBySideSlotOnDesktop: {if: {arg: 'slot'}},
+    bleed: {if: {arg: 'slot'}},
+    variant: {
+        options: ['default', 'brand'],
+        control: {type: 'select'},
+    },
 };

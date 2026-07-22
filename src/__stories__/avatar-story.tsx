@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ResponsiveLayout, Box} from '..';
 import avatarImg from './images/avatar.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
 export default {
@@ -18,6 +20,10 @@ export default {
             options: ['undefined', 'IconStarFilled', 'IconFireRegular', 'IconBrainRegular'],
             control: {type: 'select'},
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
     parameters: {
         fullScreen: true,
@@ -32,7 +38,7 @@ type Args = {
     initials: string;
     icon: string;
     badge: string;
-    inverse: boolean;
+    variantOutside: Variant;
     ariaLabel: string;
     border: boolean;
 };
@@ -43,7 +49,7 @@ export const Default: StoryComponent<Args> = ({
     badge,
     src,
     icon,
-    inverse,
+    variantOutside,
     hideImage,
     hideInitials,
     ariaLabel,
@@ -54,7 +60,7 @@ export const Default: StoryComponent<Args> = ({
     const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'avatar'}}>
                 <div
                     style={{
@@ -88,7 +94,7 @@ Default.args = {
     initials: 'PL',
     icon: 'undefined',
     badge: '5',
-    inverse: false,
+    variantOutside: 'default',
     ariaLabel: 'Avatar',
     border: false,
 };

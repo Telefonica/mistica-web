@@ -121,9 +121,9 @@ const Counter = ({
     return (
         <div
             className={classNames(styles.counter, {[styles.disabled]: disabled})}
-            {...getPrefixedDataAttributes(dataAttributes, 'Counter')}
+            {...getPrefixedDataAttributes({testid: 'Counter', ...dataAttributes})}
             style={{
-                border: `1px solid ${(variant === 'inverse' || variant === 'media') && !isDarkMode ? vars.colors.backgroundContainer : vars.colors.inputBorder}`,
+                border: `1px solid ${(variant === 'brand' || variant === 'media' || variant === 'negative') && !isDarkMode ? vars.colors.backgroundContainer : vars.colors.inputBorder}`,
             }}
         >
             <Inline space={8} alignItems="center">

@@ -6,23 +6,44 @@
  */
 
 import * as React from 'react';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconDownloadFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M11.99 21.824a.95.95 0 0 1-.726-.336l-8.84-9.143q-.016-.016-.032-.033a1.01 1.01 0 0 1-.128-1.079.96.96 0 0 1 .87-.56h3.934V4.077c0-1.05.854-1.905 1.904-1.905h6.031c1.053 0 1.905.851 1.905 1.905l-.003 6.596h3.96c.376 0 .718.219.875.56.17.353.12.776-.13 1.079q-.013.017-.03.033l-8.863 9.143a.96.96 0 0 1-.728.336"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.99 21.824a.95.95 0 0 1-.726-.336l-8.84-9.143-.032-.033a1.01 1.01 0 0 1-.128-1.079.96.96 0 0 1 .87-.56h3.934V4.077c0-1.05.854-1.905 1.904-1.905h6.031c1.053 0 1.905.851 1.905 1.905l-.003 6.596h3.96c.376 0 .718.219.875.56.17.353.12.776-.13 1.079q-.013.017-.03.033l-8.863 9.143a.96.96 0 0 1-.728.336"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconDownloadFilled;

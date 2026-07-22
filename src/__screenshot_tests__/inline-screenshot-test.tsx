@@ -47,3 +47,15 @@ test.skip('Inline negative space', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Inline with expand', async () => {
+    await openStoryPage({
+        id: 'layout-inline--expand',
+        device: 'DESKTOP',
+    });
+
+    const story = await screen.findByTestId('story');
+    const image = await story.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

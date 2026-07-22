@@ -12,16 +12,16 @@ import {
     VivoLogo,
     TelefonicaLogo,
     BlauLogo,
-    TuLogo,
     Inline,
     Circle,
     Touchable,
     IconButton,
     ToggleIconButton,
     Portal,
-    O2NewLogo,
+    O2Logo,
+    EsimflagLogo,
 } from '../../src';
-import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New} from '../themes';
+import {Movistar, Telefonica, Blau, Vivo, Vivo_Evolution, O2, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -30,6 +30,7 @@ import IconAppleOff from '../icons/icon-apple-off';
 import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
+import {useIsOsDarkModeEnabled} from '../../src/theme-context-provider';
 
 import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src';
 
@@ -38,7 +39,12 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Esimflag'>;
+type ValidSkinName = KnownSkinName;
+
+const BrandIcon = ({Logo}: {Logo: React.ComponentType<{size: number; color?: string}>}) => {
+    const {isDarkMode} = useTheme();
+    return <Logo size={24} color={isDarkMode ? skinVars.colors.inverse : undefined} />;
+};
 
 const themesMap: {
     [skinName in ValidSkinName]: {
@@ -50,32 +56,37 @@ const themesMap: {
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
-        Icon: () => <MovistarLogo size={24} />,
+        Icon: () => <BrandIcon Logo={MovistarLogo} />,
     },
-    'Vivo-new': {
+    Vivo: {
         text: 'Vivo',
-        themeConfig: Vivo_New,
-        Icon: () => <VivoLogo size={24} />,
+        themeConfig: Vivo,
+        Icon: () => <BrandIcon Logo={VivoLogo} />,
     },
-    'O2-new': {
+    'Vivo-evolution': {
+        text: 'Vivo Evolution',
+        themeConfig: Vivo_Evolution,
+        Icon: () => <BrandIcon Logo={VivoLogo} />,
+    },
+    O2: {
         text: 'O2',
-        themeConfig: O2_New,
-        Icon: () => <O2NewLogo size={24} />,
+        themeConfig: O2,
+        Icon: () => <BrandIcon Logo={O2Logo} />,
     },
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,
-        Icon: () => <TelefonicaLogo size={24} />,
+        Icon: () => <BrandIcon Logo={TelefonicaLogo} />,
     },
     Blau: {
         text: 'Blau',
         themeConfig: Blau,
-        Icon: () => <BlauLogo size={24} />,
+        Icon: () => <BrandIcon Logo={BlauLogo} />,
     },
-    Tu: {
-        text: 'Tu',
-        themeConfig: Tu,
-        Icon: () => <TuLogo size={24} />,
+    Esimflag: {
+        text: 'Esimflag',
+        themeConfig: Esimflag,
+        Icon: () => <BrandIcon Logo={EsimflagLogo} />,
     },
 };
 
@@ -228,17 +239,17 @@ type PreviewToolsProps = {
     floating?: boolean;
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     showPlatformSelector?: boolean;
-    showColorSchemeSelector?: boolean;
     forceMobile?: boolean;
     forceDesktop?: boolean;
     forceTabs?: boolean;
     hide?: boolean;
+    showBorder?: boolean;
     children: React.ReactNode;
 };
 
 const FLOATING_CONTROLS_ENTER_DURATION = 300;
 
-export const PreviewTools = ({
+const PreviewToolsComponent = ({
     children,
     floating,
     position = 'top-right',
@@ -247,6 +258,7 @@ export const PreviewTools = ({
     forceDesktop = false,
     forceTabs = false,
     hide,
+    showBorder = false,
 }: PreviewToolsProps): JSX.Element => {
     const {
         skinName: initialSkinName,
@@ -256,6 +268,7 @@ export const PreviewTools = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
+    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const [showControls, setShowControls] = React.useState(false);
     const controlsRef = React.useRef<HTMLDivElement | null>(null);
@@ -289,8 +302,18 @@ export const PreviewTools = ({
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
     const editStory = () => {
-        if (window.location.href.includes('/preview')) {
-            window.open(window.location.href.replace('/preview', ''));
+        try {
+            const href =
+                window.parent && window.parent !== window
+                    ? window.parent.location.href
+                    : window.location.href;
+            if (href.includes('/preview')) {
+                window.open(href.replace('/preview', ''), '_blank');
+            }
+        } catch {
+            if (window.location.href.includes('/preview')) {
+                window.open(window.location.href.replace('/preview', ''));
+            }
         }
     };
 
@@ -298,14 +321,14 @@ export const PreviewTools = ({
         return {
             ...themesMap[skinName].themeConfig,
             platformOverrides: {platform: os},
-            // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
+            // Don't override media queries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
             enableTabFocus: false,
-            colorScheme: 'light',
+            colorScheme,
             dimensions: {
                 headerMobileHeight: 'mistica',
             },
         };
-    }, [os, skinName]);
+    }, [colorScheme, os, skinName]);
 
     const controls = (
         <ThemeContextProvider theme={theme} as="div">
@@ -323,8 +346,17 @@ export const PreviewTools = ({
             />
         </ThemeContextProvider>
     );
+
+    const isDarkMode = colorScheme === 'dark' || (colorScheme === 'auto' && isOsDarkModeEnabled);
+    const border = showBorder && !isDarkMode ? <div className={styles.previewBorder} /> : undefined;
+
     if (hide) {
-        return <>{children}</>;
+        return (
+            <>
+                {border}
+                {children}
+            </>
+        );
     }
     if (floating) {
         return (
@@ -407,10 +439,21 @@ export const PreviewTools = ({
     } else {
         return (
             <>
-                <Portal>{controls}</Portal>
+                <Portal>
+                    {border}
+                    {controls}
+                </Portal>
                 <div className={styles.controlsHeight} />
                 {children}
             </>
         );
     }
+};
+
+export const PreviewTools = (props: PreviewToolsProps): JSX.Element | null => {
+    const {skinName} = useTheme();
+    if (!(skinName in themesMap)) {
+        return null;
+    }
+    return <PreviewToolsComponent {...props} />;
 };

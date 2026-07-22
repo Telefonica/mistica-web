@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const {VanillaExtractPlugin} = require('@vanilla-extract/webpack-plugin');
 
 // We deploy 3 different builds of playroom, one with all the breakpoints, one forcing mobile,
 // and one forcing desktop. This is needed for Brand Factory documentation site, where we need
@@ -13,6 +14,7 @@ const getMediaQueriesConfig = () => {
             tabletMinWidth: impossibleSize,
             desktopMinWidth: impossibleSize,
             largeDesktopMinWidth: impossibleSize,
+            extraLargeDesktopMinWidth: impossibleSize,
             desktopOrTabletMinHeight: impossibleSize,
         };
     }
@@ -21,6 +23,7 @@ const getMediaQueriesConfig = () => {
             tabletMinWidth: 0,
             desktopMinWidth: 0,
             largeDesktopMinWidth: impossibleSize,
+            extraLargeDesktopMinWidth: impossibleSize,
             desktopOrTabletMinHeight: 0,
         };
     }
@@ -48,7 +51,7 @@ const getWidths = () => {
     if (process.env.FORCE_DESKTOP) {
         return [1024];
     }
-    return [320, 360, 768, 1024, 1512];
+    return [360, 768, 1024, 1512, 1832];
 };
 
 const exampleCode = `
@@ -97,7 +100,7 @@ const config = {
                     ],
                 },
                 {
-                    test: /(reset|roboto|vivo-font|telefonica-font|onair-font)\.css$/,
+                    test: /(reset|roboto|vivo-font|telefonica-font|onair-font|movistar-font)\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
                 {
@@ -107,7 +110,7 @@ const config = {
                 {
                     test: /\.vanilla\.css/i,
                     // Don't process vanilla files from Playroom as they are handled separately.
-                    exclude: /node_modules\/playroom/,
+                    exclude: /node_modules\//,
                     use: [
                         'style-loader',
                         {
@@ -121,6 +124,7 @@ const config = {
             ],
         },
         plugins: [
+            new VanillaExtractPlugin(),
             new webpack.DefinePlugin({
                 'process.env.MISTICA_MEDIA_QUERIES_CONFIG': JSON.stringify(
                     JSON.stringify(getMediaQueriesConfig())

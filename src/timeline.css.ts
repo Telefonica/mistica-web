@@ -131,5 +131,5 @@ const lineCommon = style([
 
 export const line = styleVariants({
     default: [lineCommon, {backgroundColor: vars.colors.barTrack}],
-    inverse: [lineCommon, {backgroundColor: vars.colors.barTrackInverse}],
+    overBrand: [lineCommon, {backgroundColor: vars.colors.barTrackBrand}],
 });

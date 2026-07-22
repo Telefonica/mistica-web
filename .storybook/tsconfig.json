@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "module": "es2022",
+        "moduleResolution": "bundler"
+    },
+    "extends": "../tsconfig.json",
+    "include": ["**/*.ts", "**/*.tsx", "types.d.ts"]
+}

@@ -11,8 +11,8 @@ test.each`
         id: 'components-primitives-boxed--default',
         device: 'MOBILE_IOS',
         args: {
-            overInverse,
-            inverse,
+            variantOutside: overInverse ? 'brand' : 'default',
+            variant: inverse ? 'brand' : 'default',
         },
     });
 

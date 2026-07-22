@@ -7,64 +7,74 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconFaceNeutralLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M21.15 12a9.15 9.15 0 1 0-18.3 0 9.15 9.15 0 0 0 18.3 0m.85 0c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10M8 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2m8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m1 2.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1 0-1h9a.5.5 0 0 1 .5.5"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10m0-18.75c-4.825 0-8.75 3.925-8.75 8.75s3.925 8.75 8.75 8.75 8.75-3.925 8.75-8.75S16.825 3.25 12 3.25M8.607 8.5a.982.982 0 1 0-.001 1.963.982.982 0 0 0 .001-1.963m6.697 0a.982.982 0 1 0-.002 1.963.982.982 0 0 0 .002-1.963"
-                />
-                <path
-                    fill={fillColor}
-                    d="M7.375 13.875c0-.345.28-.625.625-.625h8a.625.625 0 1 1 0 1.25H8a.625.625 0 0 1-.625-.625"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10m0-18.75c-4.825 0-8.75 3.925-8.75 8.75s3.925 8.75 8.75 8.75 8.75-3.925 8.75-8.75S16.825 3.25 12 3.25M8.607 8.5a.982.982 0 1 0-.001 1.963.982.982 0 0 0 .001-1.963m6.697 0a.982.982 0 1 0-.002 1.963.982.982 0 0 0 .002-1.963"
-                />
-                <path
-                    fill={fillColor}
-                    d="M7.375 13.875c0-.345.28-.625.625-.625h8a.625.625 0 1 1 0 1.25H8a.625.625 0 0 1-.625-.625"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M21.838 11.997c0-6.706-3.628-9.846-9.846-9.846-6.219 0-9.84 3.14-9.84 9.846s3.621 9.84 9.84 9.84 9.845-3.134 9.845-9.84m-9.846 9.02c-5.986 0-9.02-3.034-9.02-9.02 0-5.989 3.034-9.025 9.02-9.025 5.988 0 9.025 3.036 9.025 9.025 0 5.986-3.037 9.02-9.025 9.02M9.008 10.44c-.327 0-.599-.101-.787-.292-.185-.187-.277-.448-.277-.775 0-.667.398-1.068 1.064-1.068.667 0 1.065.4 1.065 1.068q0 .49-.277.775c-.188.19-.46.292-.788.292m5.185-.292c.188.19.46.292.787.292.328 0 .6-.101.787-.292q.278-.285.278-.775c0-.667-.398-1.068-1.065-1.068s-1.064.4-1.064 1.068q0 .492.277.775"
-                />
-                <path
-                    fill={fillColor}
-                    d="M7.1 13.5c0-.22.18-.4.4-.4h9.105a.4.4 0 0 1 0 .8H7.5a.4.4 0 0 1-.4-.4"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10m0-18.75c-4.825 0-8.75 3.925-8.75 8.75s3.925 8.75 8.75 8.75 8.75-3.925 8.75-8.75S16.825 3.25 12 3.25M8.607 8.5a.982.982 0 1 0-.001 1.963.982.982 0 0 0 .001-1.963m6.697 0a.982.982 0 1 0-.002 1.963.982.982 0 0 0 .002-1.963"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M7.375 13.875c0-.345.28-.625.625-.625h8a.625.625 0 1 1 0 1.25H8a.625.625 0 0 1-.625-.625"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.15 12a9.15 9.15 0 1 0-18.3 0 9.15 9.15 0 0 0 18.3 0m.85 0c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10M8 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2m8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m1 2.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1 0-1h9a.5.5 0 0 1 .5.5"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15 14.25a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5zM9 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 2.25a9.75 9.75 0 1 1 0 19.502A9.75 9.75 0 0 1 12 2.25m0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconFaceNeutralLight;

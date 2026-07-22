@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'private-deprecated-card-stories-mediacard--default',
         device,
     });
 
@@ -19,7 +19,7 @@ test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'private-deprecated-card-stories-mediacard--default',
         device,
     });
 
@@ -34,7 +34,7 @@ test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device
 
 test('MediaCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--group',
+        id: 'private-deprecated-card-stories-mediacard--group',
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -44,10 +44,10 @@ test('MediaCard group', async () => {
 
 test('MediaCard with body ', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'private-deprecated-card-stories-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
         },
     });
@@ -59,10 +59,10 @@ test('MediaCard with body ', async () => {
 
 test('MediaCard with body closeable', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'private-deprecated-card-stories-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
             closable: true,
         },
@@ -75,10 +75,10 @@ test('MediaCard with body closeable', async () => {
 
 test('MediaCard with top actions', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'private-deprecated-card-stories-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
             topAction: true,
         },
@@ -91,7 +91,7 @@ test('MediaCard with top actions', async () => {
 
 test.each(TESTABLE_DEVICES)('MediaCard with asset in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'private-deprecated-card-stories-mediacard--default',
         device,
         args: {
             asset: 'circle with icon',

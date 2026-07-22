@@ -170,7 +170,7 @@ test('Select - display all options over inverse', async () => {
     const page = await openStoryPage({
         id: 'components-select--controlled',
         device: 'DESKTOP',
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const field = await screen.findByRole('button', {name: 'Select a fruit'});
@@ -216,7 +216,7 @@ test('Select - display all options with native select over inverse', async () =>
     const page = await openStoryPage({
         id: 'components-select--controlled',
         device: 'DESKTOP',
-        args: {native: true, inverse: true},
+        args: {native: true, variantOutside: 'brand'},
     });
 
     const field = await screen.findByLabelText('Select a fruit');

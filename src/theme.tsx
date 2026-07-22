@@ -7,6 +7,7 @@ import type {
     Colors,
     Skin,
     SkinName,
+    SpacingConfig,
     TextPresetsConfig,
     ThemeVariantsConfig,
 } from './skins/types';
@@ -145,7 +146,6 @@ export type ThemeConfig = Readonly<{
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;
-    enableTabFocus?: boolean;
     preventCopyInFormFields?: boolean;
 }>;
 
@@ -171,11 +171,12 @@ export type Theme = {
     colorValues: Colors;
     borderRadii: BorderRadiiConfig;
     textPresets: TextPresetsConfig;
+    spacing: SpacingConfig;
     themeVariants: ThemeVariantsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
-    t: (token: TextToken, ...params: Array<string | number>) => string;
+    t: (token: TextToken | string, ...params: Array<string | number>) => string;
     preventCopyInFormFields: boolean;
 };

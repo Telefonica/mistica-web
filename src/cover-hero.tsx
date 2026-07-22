@@ -13,6 +13,7 @@ import GridLayout from './grid-layout';
 import {CoverHeroMedia} from './cover-hero-media';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isBiggerHeading} from './utils/headings';
+import {normalizeVariant, type Variant} from './theme-variant-context';
 
 import type {DataAttributes, HeadingType} from './utils/types';
 import type {ImageProps, VideoProps} from './cover-hero-media';
@@ -21,7 +22,6 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
-import type {Variant} from './theme-variant-context';
 
 type BaseProps = {
     headline?: RendersNullableElement<typeof Tag>;
@@ -33,8 +33,8 @@ type BaseProps = {
     titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
-    sideExtra?: React.ReactNode;
+    slot?: React.ReactNode;
+    sideSlot?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -81,8 +81,8 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             titleAs = 'h1',
             description,
             descriptionLinesMax,
-            extra,
-            sideExtra,
+            slot,
+            sideSlot,
             button,
             secondaryButton,
             buttonLink,
@@ -104,10 +104,11 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             : mediaProps.background ||
               {
                   default: vars.colors.background,
-                  inverse: vars.colors.backgroundBrand,
+                  brand: vars.colors.backgroundBrand,
+                  negative: vars.colors.backgroundNegative,
                   alternative: vars.colors.backgroundAlternative,
                   media: 'none',
-              }[variant ?? 'default'];
+              }[normalizeVariant(variant ?? 'default')];
 
         const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
@@ -190,7 +191,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                         </div>
                     )}
                 </Stack>
-                {extra && <div data-testid="slot">{extra}</div>}
+                {slot && <div data-testid="slot">{slot}</div>}
             </div>
         );
 
@@ -198,7 +199,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
 
         return (
             <section
-                {...getPrefixedDataAttributes(dataAttributes, 'CoverHero')}
+                {...getPrefixedDataAttributes({testid: 'CoverHero', ...dataAttributes})}
                 aria-label={ariaLabel}
                 ref={ref}
                 className={classnames(styles.coverHeroContainer, {
@@ -218,14 +219,14 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                 <div
                     className={classnames(styles.coverHero, {
                         [styles.centered]: centered,
-                        [styles.hasSideExtra]: sideExtra,
+                        [styles.hasSideSlot]: sideSlot,
                     })}
                 >
                     {hasMedia ? <CoverHeroMedia {...mediaProps} /> : null}
                     <ResponsiveLayout variant={hasMedia ? 'media' : variant}>
                         <Box paddingY={noPaddingY ? 0 : {desktop: 56, tablet: 56, mobile: 24}}>
                             <Stack space={24}>
-                                {centered && !sideExtra ? (
+                                {centered && !sideSlot ? (
                                     <GridLayout template="8">{mainContent}</GridLayout>
                                 ) : (
                                     <GridLayout
@@ -233,8 +234,8 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                         collapseBreakpoint="mobile"
                                         left={mainContent}
                                         right={
-                                            <div className={styles.sideExtra} data-testid="sideSlot">
-                                                {sideExtra}
+                                            <div className={styles.sideSlot} data-testid="sideSlot">
+                                                {sideSlot}
                                             </div>
                                         }
                                     />
@@ -242,8 +243,8 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                 <ButtonGroup
                                     align={{
                                         mobile: centered ? 'center' : 'left',
-                                        tablet: centered && !sideExtra ? 'center' : 'left',
-                                        desktop: centered && !sideExtra ? 'center' : 'left',
+                                        tablet: centered && !sideSlot ? 'center' : 'left',
+                                        desktop: centered && !sideSlot ? 'center' : 'left',
                                     }}
                                     primaryButton={button}
                                     secondaryButton={secondaryButton}

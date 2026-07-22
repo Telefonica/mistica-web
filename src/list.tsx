@@ -9,11 +9,11 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {BaseTouchable} from './touchable';
-import {Text3, Text2, Text1} from './text';
+import {Text, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
@@ -27,10 +27,11 @@ import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
+import {useTheme} from './hooks';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
@@ -50,7 +51,7 @@ interface CommonProps {
     badge?: boolean | number;
     role?: string;
     touchableRole?: string;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     withChevron?: boolean;
@@ -75,7 +76,7 @@ const renderRight = (right: Right, centerY: boolean) => {
 interface ContentProps extends CommonProps {
     headlineRef?: React.Ref<HTMLDivElement>;
     rightRef?: React.Ref<HTMLDivElement>;
-    extraRef?: React.Ref<HTMLDivElement>;
+    slotRef?: React.Ref<HTMLDivElement>;
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
@@ -85,7 +86,7 @@ export const Content = ({
     withChevron,
     headline,
     headlineRef,
-    extraRef,
+    slotRef,
     title,
     titleAs,
     titleLinesMax,
@@ -99,14 +100,15 @@ export const Content = ({
     badge,
     right,
     rightRef,
-    extra,
+    slot,
     labelId,
     disabled,
     control,
 }: ContentProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
+    const outsideVariant = useThemeVariant();
+    const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
+    const {textPresets} = useTheme();
 
     return (
         <div className={styles.content} id={labelId}>
@@ -124,12 +126,20 @@ export const Content = ({
                         className={styles.asset}
                         style={applyCssVars({
                             color: danger
-                                ? isInverse
-                                    ? vars.colors.textErrorInverse
-                                    : vars.colors.textError
-                                : isInverse
-                                  ? vars.colors.textPrimaryInverse
-                                  : vars.colors.textPrimary,
+                                ? {
+                                      default: vars.colors.textError,
+                                      alternative: vars.colors.textError,
+                                      brand: vars.colors.textErrorBrand,
+                                      negative: vars.colors.textErrorNegative,
+                                      media: vars.colors.textErrorBrand,
+                                  }[outsideVariant]
+                                : {
+                                      default: vars.colors.textPrimary,
+                                      alternative: vars.colors.textPrimary,
+                                      brand: vars.colors.textPrimaryBrand,
+                                      negative: vars.colors.textPrimaryNegative,
+                                      media: vars.colors.textPrimaryMedia,
+                                  }[outsideVariant],
                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                         })}
                     >
@@ -142,8 +152,12 @@ export const Content = ({
                 className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
-                <Text3
-                    regular
+                <Text
+                    mobileSize={textPresets.text3.size.mobile}
+                    desktopSize={textPresets.text3.size.desktop}
+                    mobileLineHeight={textPresets.text3.lineHeight.mobile}
+                    desktopLineHeight={textPresets.text3.lineHeight.desktop}
+                    weight={textPresets.rowTitle.weight}
                     color={danger ? vars.colors.textError : vars.colors.textPrimary}
                     truncate={titleLinesMax}
                     hyphens="auto"
@@ -151,7 +165,7 @@ export const Content = ({
                     dataAttributes={{testid: 'title'}}
                 >
                     {title}
-                </Text3>
+                </Text>
                 {headline && (
                     <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
                         <Text1
@@ -190,9 +204,9 @@ export const Content = ({
                         </Text2>
                     </Box>
                 )}
-                {extra && (
-                    <Box ref={extraRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
-                        {extra}
+                {slot && (
+                    <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
+                        {slot}
                     </Box>
                 )}
             </div>
@@ -241,7 +255,15 @@ export const Content = ({
                         >
                             <IconChevronRightFilled
                                 size={16}
-                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
+                                color={
+                                    {
+                                        default: vars.colors.chevronIndicator,
+                                        alternative: vars.colors.chevronIndicator,
+                                        brand: vars.colors.textSecondaryBrand,
+                                        negative: vars.colors.textSecondaryNegative,
+                                        media: vars.colors.textSecondaryBrand,
+                                    }[outsideVariant]
+                                }
                             />
                         </div>
                     )}
@@ -264,7 +286,9 @@ type ControlProps = {
     onChange?: (checked: boolean) => void;
 };
 
-type BasicRowContentProps = CommonProps;
+interface BasicRowContentProps extends CommonProps {
+    atomicReading?: boolean;
+}
 
 interface SwitchRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
@@ -365,9 +389,55 @@ const hasControlProps = (
     return ['switch', 'checkbox', 'radioValue', 'iconButton'].some((prop) => obj[prop] !== undefined);
 };
 
+const getAssetText = (asset: React.ReactNode): string => {
+    let text = '';
+
+    const visit = (node: React.ReactNode) => {
+        if (!node) return;
+
+        if (React.isValidElement(node)) {
+            const props: any = node.props;
+
+            if (typeof props.alt === 'string' && props.alt.trim()) {
+                text += (text ? ' ' : '') + props.alt.trim();
+            }
+            if (typeof props['aria-label'] === 'string' && props['aria-label'].trim()) {
+                text += (text ? ' ' : '') + props['aria-label'].trim();
+            }
+            React.Children.forEach(props.children, visit);
+        }
+    };
+
+    visit(asset);
+
+    return text.trim();
+};
+
+const getNodeText = (node: HTMLElement | null): string => {
+    const raw = node?.innerText || node?.textContent || '';
+    /* In the real browser, innerText preserves line breaks between elements, but jsdom does not. 
+    As a result, when rows contain multiline content (e.g. `slot` with several Text components), jsdom returns the text concatenated without spaces. 
+    This causes the computed aria-label to differ from the real behaviour. 
+    To make tests reflect what VoiceOver would read in the browser, we normalise whitespace and insert missing spaces in test mode. */
+    if (process.env.NODE_ENV === 'test') {
+        return (
+            raw
+                // Normalise whitespace sequences to a single space
+                .replace(/\s+/g, ' ')
+                // Insert space between "non-space character" + "Uppercase"
+                // Ex: "lineExtra" -> "line Extra", "1Extra" -> "1 Extra"
+                .replace(/([^ ])([A-ZÁÉÍÓÚÑ])/g, '$1 $2')
+                .trim()
+        );
+    }
+    return raw;
+};
+
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
-    const isInverse = useIsInverseOrMediaVariant();
+    const outsideVariant = useThemeVariant();
+    const isOverBrand =
+        outsideVariant === 'brand' || outsideVariant === 'media' || outsideVariant === 'negative';
     const {
         asset,
         headline,
@@ -383,39 +453,42 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         badge,
         role,
         touchableRole,
-        extra,
+        slot,
         withChevron,
         dataAttributes,
         right,
         'aria-label': ariaLabelProp,
         tabIndex,
+        atomicReading,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
-    const [extraText, setExtraText] = React.useState<string>('');
+    const [slotText, setSlotText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
+    const assetText = getAssetText(asset);
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-    const computedAriaLabelForLink = [
+    const computedAriaLabel = [
         title,
+        assetText,
         headlineText,
         subtitle,
         description,
-        extraText,
+        slotText,
         detail,
         rightText,
     ]
         .filter(Boolean)
         .join(' ');
 
-    const ariaLabel = ariaLabelProp ?? (props.href || props.to ? computedAriaLabelForLink : undefined);
+    const isInteractive = !!props.onPress || !!props.href || !!props.to;
+    const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
-    const hasHoverDefault = !disabled && !isInverse;
-    const hasHoverInverse = !disabled && isInverse;
+    const hasHoverDefault = !disabled && !isOverBrand;
+    const hasHoverInverse = !disabled && isOverBrand;
     const hasControl = hasControlProps(props);
-    const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
 
     const interactiveProps = {
@@ -446,7 +519,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             headline={headline}
             headlineRef={(node) => {
                 if (node) {
-                    setHeadlineText(node.textContent || '');
+                    setHeadlineText(getNodeText(node));
                 }
             }}
             title={title}
@@ -462,16 +535,15 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             right={right}
             rightRef={(node) => {
                 if (node) {
-                    // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
-                    setRightText(node.innerText || node.textContent || '');
+                    setRightText(getNodeText(node));
                 }
             }}
             control={contentProps?.control}
             role={contentProps?.role}
-            extra={extra}
-            extraRef={(node) => {
+            slot={slot}
+            slotRef={(node) => {
                 if (node) {
-                    setExtraText(node.innerText || node.textContent || '');
+                    setSlotText(getNodeText(node));
                 }
             }}
             labelId={contentProps?.labelId}
@@ -486,7 +558,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 ref={ref}
                 className={classNames(styles.rowContent, {
                     [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
+                    [styles.touchableBackgroundBrand]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 {...interactiveProps}
@@ -495,7 +567,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 disabled={disabled}
                 tabIndex={tabIndex}
             >
-                <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
+                <Box
+                    paddingX={16}
+                    aria-hidden={!!props.to || !!props.href || props.touchableRole === 'link' || undefined}
+                    dataAttributes={{testid: 'content-container'}}
+                >
                     {renderContent({role})}
                 </Box>
             </BaseTouchable>
@@ -514,7 +590,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={touchableRole}
                 className={classNames(styles.dualActionLeft, {
                     [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
+                    [styles.touchableBackgroundBrand]: hasHoverInverse,
                 })}
                 tabIndex={tabIndex}
             >
@@ -531,7 +607,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         <div
             className={classNames(styles.rowContent, {
                 [styles.touchableBackground]: hasHoverDefault && isContentInsideControl,
-                [styles.touchableBackgroundInverse]: hasHoverInverse && isContentInsideControl,
+                [styles.touchableBackgroundBrand]: hasHoverInverse && isContentInsideControl,
                 [styles.pointer]: !disabled && isContentInsideControl,
             })}
             ref={ref as React.Ref<HTMLDivElement>}
@@ -651,22 +727,26 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
               );
     }
 
-    const hasCustomAriaLabel = !!props['aria-label'];
+    const shouldRenderScreenReaderOnly = !!ariaLabelProp || atomicReading;
 
     return (
-        <div
-            className={classNames(styles.rowContent, styles.rowContentPadding)}
-            role={role}
-            {...getPrefixedDataAttributes(dataAttributes)}
-            ref={ref as React.Ref<HTMLDivElement>}
-            tabIndex={tabIndex}
-        >
-            <div aria-hidden={hasCustomAriaLabel}>{renderContent({role})}</div>
-            {hasCustomAriaLabel && (
-                <ScreenReaderOnly className={styles.screenReaderOnly}>
-                    <span>{props['aria-label']}</span>
-                </ScreenReaderOnly>
-            )}
+        <div role={role}>
+            <div
+                className={classNames(styles.rowContent, styles.rowContentPadding)}
+                // role="text" makes VoiceOver read the whole div as a single text block. This is needed for VoiceOver rectangle to
+                // cover the whole row, otherwise it only covers the text inside ScreenReaderOnly
+                role={shouldRenderScreenReaderOnly ? 'text' : undefined}
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref as React.Ref<HTMLDivElement>}
+                tabIndex={tabIndex}
+            >
+                <div aria-hidden={shouldRenderScreenReaderOnly}>{renderContent({role})}</div>
+                {shouldRenderScreenReaderOnly && (
+                    <ScreenReaderOnly>
+                        <span>{ariaLabelProp ?? computedAriaLabel}</span>
+                    </ScreenReaderOnly>
+                )}
+            </div>
         </div>
     );
 });
@@ -674,11 +754,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
         <div role={role} className={styles.row}>
-            <RowContent
-                {...props}
-                ref={ref}
-                dataAttributes={{'component-name': 'Row', testid: 'Row', ...dataAttributes}}
-            />
+            <RowContent {...props} ref={ref} dataAttributes={{testid: 'Row', ...dataAttributes}} />
         </div>
     )
 );
@@ -690,15 +766,17 @@ type CommonAccessibilityProps = {
 
 type RowListProps = {
     children: React.ReactNode;
-    ariaLabelledby?: string;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 } & CommonAccessibilityProps;
 
 export const RowList = ({
     children,
-    ariaLabelledby,
     role = 'list',
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
@@ -709,10 +787,11 @@ export const RowList = ({
     return (
         <div
             role={role}
-            aria-labelledby={ariaLabelledby}
+            aria-labelledby={ariaLabelledBy}
+            aria-label={ariaLabel}
             aria-live={ariaLive}
             aria-atomic={ariaAtomic}
-            {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
+            {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
         >
             {childrenContent.map((child, index) => (
                 <React.Fragment key={index}>
@@ -728,18 +807,18 @@ export const RowList = ({
     );
 };
 
-// danger + isInverse is not allowed
+// danger + variant="brand" is not allowed
 type CommonBoxedRowProps =
     | {
-          isInverse?: false;
+          variant?: 'default';
           danger: true;
       }
     | {
-          isInverse?: boolean;
+          variant?: 'brand' | 'default';
           danger?: false;
       }
     | {
-          isInverse?: false;
+          variant?: 'default';
           danger: boolean;
       };
 
@@ -759,9 +838,9 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
     <InternalBoxed
         overflow="visible"
         className={styles.boxed}
-        variant={props.isInverse ? 'inverse' : 'default'}
+        variant={props.variant ?? 'default'}
         ref={ref}
-        dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
+        dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
     </InternalBoxed>
@@ -769,27 +848,90 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
 
 type BoxedRowListProps = {
     children: React.ReactNode;
-    ariaLabelledby?: string;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 } & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
     children,
-    ariaLabelledby,
     role = 'list',
     dataAttributes,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
 }: BoxedRowListProps): JSX.Element => (
     <Stack
         space={16}
         role={role}
-        aria-labelledby={ariaLabelledby}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
         aria-live={ariaLive}
         aria-atomic={ariaAtomic}
-        dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
+        dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
     >
         {children}
     </Stack>
 );
+
+type UnorderedListProps = {
+    children: React.ReactNode;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+};
+
+type OrderedListProps = UnorderedListProps;
+
+export const UnorderedList = ({
+    children,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+}: UnorderedListProps): JSX.Element => {
+    return (
+        // role="list" is needed for accesibility in Safari+VoiceOver. See: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#accessibility
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles
+        <ul role="list" className={styles.ul} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
+            {children}
+        </ul>
+    );
+};
+
+export const OrderedList = ({
+    children,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+}: OrderedListProps): JSX.Element => {
+    return (
+        // role="list" is needed for accesibility in Safari+VoiceOver. See: https://developer.mozilla.org/en-US/docs/Web/CSS/list-style#accessibility
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles
+        <ol role="list" className={styles.ul} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
+            {children}
+        </ol>
+    );
+};
+
+type ListItemProps = {
+    children: React.ReactNode;
+    Icon?: (props: IconProps) => JSX.Element;
+    icon?: JSX.Element;
+    withMarker?: boolean;
+};
+
+export const ListItem = ({children, Icon, icon, withMarker = true}: ListItemProps): JSX.Element => {
+    return !withMarker ? (
+        <li className={styles.liWithoutMarker}>
+            <div className={styles.liContent}>{children}</div>
+        </li>
+    ) : Icon || icon ? (
+        <li className={styles.liWithCustomIcon}>
+            <Box paddingRight={{mobile: 8, desktop: 16}}>
+                {Icon ? <Icon size="1em" color="currentColor" /> : icon}
+            </Box>
+            <div className={styles.liContent}>{children}</div>
+        </li>
+    ) : (
+        <li className={styles.li}>{children}</li>
+    );
+};

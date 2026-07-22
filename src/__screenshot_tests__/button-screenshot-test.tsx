@@ -31,7 +31,20 @@ test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
+    });
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(BUTTONS)('Buttons - %s - media', async (button) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+        device: 'MOBILE_IOS',
+        args: {variantOutside: 'media'},
     });
 
     const story = await screen.findByTestId('content');
@@ -59,6 +72,22 @@ test.each(BUTTONS)('Buttons - %s - small', async (button) => {
         device: 'MOBILE_IOS',
         args: {small: true},
     });
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Buttons - Link button - small disabled on hover', async () => {
+    await openStoryPage({
+        id: 'components-buttons--link-button',
+        device: 'DESKTOP',
+        args: {small: true, disabled: true, action: 'onPress'},
+    });
+
+    const button = await screen.findByRole('button', {name: 'Example'});
+    await button.hover();
 
     const story = await screen.findByTestId('content');
 
@@ -138,7 +167,7 @@ test('Buttons - Link button - with chevron in Vivo', async () => {
     await openStoryPage({
         id: 'components-buttons--link-button',
         device: 'MOBILE_IOS',
-        skin: 'Vivo-new',
+        skin: 'Vivo',
         args: {
             chevron: true,
         },
@@ -171,7 +200,7 @@ test('Buttons - Link button with chevron and big font size in Vivo', async () =>
     await openStoryPage({
         id: 'components-buttons--link-button',
         device: 'MOBILE_IOS',
-        skin: 'Vivo-new',
+        skin: 'Vivo',
         args: {
             chevron: true,
         },

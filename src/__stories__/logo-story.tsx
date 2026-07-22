@@ -1,16 +1,8 @@
 import * as React from 'react';
-import {
-    BlauLogo,
-    Logo,
-    MovistarLogo,
-    O2Logo,
-    TelefonicaLogo,
-    VivoLogo,
-    TuLogo,
-    O2NewLogo,
-    EsimflagLogo,
-} from '../logo';
+import {BlauLogo, Logo, MovistarLogo, O2Logo, TelefonicaLogo, VivoLogo, EsimflagLogo} from '../logo';
 import {Box, ResponsiveLayout, useTheme} from '../index';
+
+import type {Variant} from '../theme-variant-context';
 
 const COLOR_OPTIONS = ['default', 'neutralHigh', 'neutralMedium', '#000000'] as const;
 
@@ -31,10 +23,10 @@ export default {
 type Args = {
     type: 'isotype' | 'imagotype' | 'vertical';
     size: number;
-    inverse: boolean;
+    variantOutside: Variant;
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
-    brand: 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu' | 'Esimflag';
+    brand: 'Movistar' | 'O2' | 'Vivo' | 'Telefonica' | 'Blau' | 'Esimflag';
     color: (typeof COLOR_OPTIONS)[number];
 };
 
@@ -64,7 +56,7 @@ const getLogoActionProps = (action: string) => {
 export const Default: StoryComponent<Args> = ({
     type,
     size,
-    inverse,
+    variantOutside,
     action,
     forceBrandLogo,
     brand,
@@ -83,15 +75,13 @@ export const Default: StoryComponent<Args> = ({
         Movistar: MovistarLogo,
         Vivo: VivoLogo,
         O2: O2Logo,
-        'O2-new': O2NewLogo,
         Telefonica: TelefonicaLogo,
         Blau: BlauLogo,
-        Tu: TuLogo,
         Esimflag: EsimflagLogo,
     }[forceBrandLogo ? brand : 'default'];
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <CurrentLogo {...logoProps} dataAttributes={{testid: 'logo'}} />
             </Box>
@@ -105,7 +95,7 @@ Default.args = {
     type: 'isotype',
     action: 'none',
     size: 48,
-    inverse: false,
+    variantOutside: 'default',
     forceBrandLogo: false,
     brand: 'Movistar',
     color: 'default',
@@ -113,7 +103,7 @@ Default.args = {
 
 Default.argTypes = {
     brand: {
-        options: ['Movistar', 'O2', 'O2-new', 'Vivo', 'Telefonica', 'Blau', 'Tu', 'Esimflag'],
+        options: ['Movistar', 'O2', 'Vivo', 'Telefonica', 'Blau', 'Esimflag'],
         control: {type: 'select'},
         if: {arg: 'forceBrandLogo'},
     },
@@ -127,5 +117,9 @@ Default.argTypes = {
     },
     size: {
         control: {type: 'range', min: 8, max: 480, step: 8},
+    },
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
     },
 };

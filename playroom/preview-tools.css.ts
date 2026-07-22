@@ -27,10 +27,9 @@ export const controls = style([
         '::-webkit-scrollbar': {
             display: 'none', // Hide in Chrome/Safari
         },
-
+        background: skinVars.colors.background,
         gap: 8,
         zIndex: 2,
-        background: 'white',
         borderBottom: `1px solid ${skinVars.colors.divider}`,
     },
     controlsHeight,
@@ -72,6 +71,24 @@ export const floattingButtonBackground = sprinkles({
     width: 40,
     height: 40,
 });
+
+export const previewBorder = style([
+    sprinkles({
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+    }),
+    {
+        height: '100vh',
+        boxSizing: 'border-box',
+        border: '1px solid',
+        borderColor: skinVars.colors.divider,
+        borderRadius: 12,
+        pointerEvents: 'none',
+        zIndex: 3,
+    },
+]);
 
 export const floatingButtonIcon = style({
     transition: 'transform 0.3s ease',

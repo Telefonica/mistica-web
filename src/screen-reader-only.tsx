@@ -12,13 +12,13 @@ type Props = {
 };
 
 const ScreenReaderOnly = ({children, className, dataAttributes}: Props): JSX.Element => {
-    const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes, 'ScreenReaderOnly');
+    const prefixedDataAttributes = getPrefixedDataAttributes({testid: 'ScreenReaderOnly', ...dataAttributes});
 
     if (React.Children.count(children) === 1) {
         const element = React.Children.only(children);
         if (React.isValidElement(element)) {
-            return React.cloneElement(element as React.ReactElement, {
-                className: classnames(element.props.className, styles.screenReaderOnly, className),
+            return React.cloneElement(element as React.ReactElement<any>, {
+                className: classnames((element.props as any).className, styles.screenReaderOnly, className),
                 ...prefixedDataAttributes,
             });
         }

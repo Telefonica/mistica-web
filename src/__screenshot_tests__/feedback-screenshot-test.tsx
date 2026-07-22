@@ -1,9 +1,9 @@
 import {openStoryPage, setRootFontSize} from '../test-utils';
-import {BLAU_SKIN, MOVISTAR_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
+import {BLAU_SKIN, MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN} from '../skins/constants';
 
 import type {Device} from '../test-utils';
 
-const testableSkins = [MOVISTAR_SKIN, VIVO_NEW_SKIN, O2_NEW_SKIN, BLAU_SKIN] as const;
+const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, BLAU_SKIN] as const;
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const feedbackTypes = [
     'successfeedbackscreen--success',
@@ -27,9 +27,7 @@ const getExtraContentCases = () => {
     const cases: Array<[string, Device]> = [];
     for (const device of testableDevices) {
         for (const feedbackType of feedbackTypes) {
-            if (!feedbackType.includes('error')) {
-                cases.push([feedbackType, device]);
-            }
+            cases.push([feedbackType, device]);
         }
     }
     return cases;
@@ -50,12 +48,12 @@ test.each(getCases())(
 );
 
 test.each(getExtraContentCases())(
-    'Feedback %s screen with extra content appears properly on %s',
+    'Feedback %s screen with slot content appears properly on %s',
     async (feedbackType, device) => {
         const page = await openStoryPage({
             id: `patterns-feedback-${feedbackType}`,
             device,
-            args: {extra: true},
+            args: {slot: true},
         });
 
         const image = await page.screenshot();
@@ -89,11 +87,11 @@ test('Info feedback screen with custom icon', async () => {
 });
 
 test.each(testableDevices)(
-    'Success feedback screen appears properly with Vivo New skin on %s',
+    'Success feedback screen appears properly with Vivo skin on %s',
     async (device) => {
         const page = await openStoryPage({
             id: 'patterns-feedback-successfeedbackscreen--success',
-            skin: VIVO_NEW_SKIN,
+            skin: VIVO_SKIN,
             device,
         });
 

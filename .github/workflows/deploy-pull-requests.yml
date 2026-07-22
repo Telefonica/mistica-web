@@ -1,24 +1,29 @@
 name: deploy-pull-requests
 on: [pull_request]
+
+permissions:
+    contents: read
+    pull-requests: write
+
 concurrency:
     group: deploy-pull-requests-${{ github.ref }}
     cancel-in-progress: true
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        # Security: only deploy PRs from same repo, not from forks
+        # Prevents malicious code in package.json from accessing VERCEL_TOKEN
+        if: github.event.pull_request.head.repo.full_name == github.repository
         steps:
-            - uses: actions/checkout@v4
-
-            # we need to run a different buildCommand for PR previews (see package.json scripts)
-            - run: sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json
-              shell: bash
-
-            - uses: amondnet/vercel-action@master
-              id: vercel-deploy # identifier to reference this step
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
+            - uses: ./.github/actions/deploy-vercel-preview
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
                   vercel-token: ${{ secrets.VERCEL_TOKEN }} # required
                   vercel-org-id: ${{ secrets.MISTICA_WEB_VERCEL_ORG_ID}} # required
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID}} # required
                   vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
-                  working-directory: ./
+                  working-directory: ${{ github.workspace }}

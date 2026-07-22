@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Badge, IconBellFilled, ResponsiveLayout, Box, Touchable} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Badge',
     argTypes: {
@@ -8,18 +10,22 @@ export default {
             options: ['undefined', '0', '2', '14'],
             control: {type: 'select'},
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
     parameters: {fullScreen: true},
 };
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
     value: string;
 };
 
-export const Default: StoryComponent<Args> = ({inverse, value}) => {
+export const Default: StoryComponent<Args> = ({variantOutside, value}) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
                 <Badge value={value !== 'undefined' ? +value : undefined}>
                     <Touchable
@@ -37,6 +43,6 @@ export const Default: StoryComponent<Args> = ({inverse, value}) => {
 
 Default.storyName = 'Badge';
 Default.args = {
-    inverse: false,
+    variantOutside: 'default',
     value: '2',
 };

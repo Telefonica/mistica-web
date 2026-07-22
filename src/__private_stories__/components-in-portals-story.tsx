@@ -34,7 +34,7 @@ export const Default: StoryComponent = () => {
         dialog({
             title: 'Title',
             message: 'Message',
-            extra: (
+            slot: (
                 <Stack space={8}>
                     <Inline space={8}>
                         <Menu

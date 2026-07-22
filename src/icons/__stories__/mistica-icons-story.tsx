@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {Box, ResponsiveLayout, Text} from '../..';
-import {kebabCase, camelCase, upperFirst} from 'lodash';
-import iconKeywords from '../../generated/mistica-icons/icons-keywords';
+import {kebabCase, camelCase, upperFirst, sortBy} from 'lodash';
+import {iconKeywords, iconCategories} from '../../generated/mistica-icons/icons-keywords';
+
+import type {Variant} from '../../theme-variant-context';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
@@ -11,45 +13,67 @@ const fileNameToComponentName = (fileName: string) => {
     return upperFirst(camelCase(fileName.slice(lastSlashIdx + 1).replace('.tsx', '')));
 };
 
+const iconModules = import.meta.glob(
+    ['../../generated/mistica-icons/**/*.tsx', '!../../generated/mistica-icons/icons-keywords.tsx'],
+    {eager: true}
+);
+
 // require all icons
-const misticaIcons = ((requireContext) => {
-    return requireContext.keys().map((id: string) => {
-        const component = requireContext(id).default;
-        component.componentName = fileNameToComponentName(id);
-        return component;
-    });
-})(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
+const misticaIcons = Object.entries(iconModules).map(([id, module]) => {
+    const component = (module as any).default;
+    component.componentName = fileNameToComponentName(id);
+    return component;
+});
+
+const availableCategories = ['All', ...new Set(sortBy(Object.values(iconCategories).flat()))];
 
 export default {
     title: 'Icons/Catalog',
     argTypes: {
         size: {
-            control: {type: 'range', min: 24, max: 48, step: 4},
+            control: {type: 'range', min: 16, max: 48, step: 4},
+        },
+        category: {
+            control: {type: 'select'},
+            options: availableCategories,
+        },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+        gradient: {
+            control: {type: 'boolean'},
         },
     },
-    parameters: {fullScreen: true},
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
+    category: string;
     filter: string;
     size: number;
     regular: boolean;
     light: boolean;
     filled: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     names: boolean;
     background: boolean;
+    gradient: boolean;
 };
 
 export const Catalog: StoryComponent<Args> = ({
+    category,
     filter,
     size,
     regular,
     light,
     filled,
-    inverse,
+    variantOutside,
     names,
     background,
+    gradient,
 }) => {
     const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
     const getTypeSortValue = (name: string) => {
@@ -73,10 +97,23 @@ export const Catalog: StoryComponent<Args> = ({
             return false;
         }
 
+        const realName = getRealName(name);
+        const iconKeywordsData = iconKeywords[kebabCase(realName)];
+        const iconCategoriesData = iconCategories[kebabCase(realName)];
+
+        if (category && category !== 'All') {
+            const categories = iconCategoriesData || [];
+
+            if (!categories.includes(category)) {
+                return false;
+            }
+        }
+
         if (filter) {
-            const realName = getRealName(name);
-            const keywords = [...(iconKeywords[kebabCase(realName)] || []), realName.toLowerCase()];
-            return keywords.some((key) => key.includes(filter.toLocaleLowerCase()));
+            const keywords = iconKeywordsData || [];
+            const categories = iconCategoriesData || [];
+            const allSearchableTerms = [...keywords, ...categories, realName.toLowerCase()];
+            return allSearchableTerms.some((key) => key.toLowerCase().includes(filter.toLowerCase()));
         }
 
         return true;
@@ -106,9 +143,10 @@ export const Catalog: StoryComponent<Args> = ({
             ));
 
     const iconBackgroundColor = background ? '#aaa' : 'none';
+    const gradientColor = 'linear-gradient(225deg, #AE42E4 17.51%, #BD4AFF 38.3%, #EF7E9C 82.5%)';
 
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             {misticaIcons
                 .filter(({componentName}) => filterIcon(componentName))
                 .sort((a, b) => compareNames(a.componentName, b.componentName))
@@ -133,7 +171,7 @@ export const Catalog: StoryComponent<Args> = ({
                                     fontSize: 0,
                                 }}
                             >
-                                <Icon size={size} />
+                                <Icon size={size} color={gradient ? gradientColor : undefined} />
                             </div>
                             {names && (
                                 <Box paddingTop={8}>
@@ -148,12 +186,14 @@ export const Catalog: StoryComponent<Args> = ({
 };
 
 Catalog.args = {
+    category: 'All',
     filter: '',
-    size: 32,
+    size: 24,
     regular: true,
     light: true,
     filled: true,
-    inverse: false,
+    variantOutside: 'default',
     names: true,
     background: false,
+    gradient: false,
 };

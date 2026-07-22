@@ -190,9 +190,9 @@ export const section = style([
     },
 ]);
 
-export const selectedSectionVariantes = styleVariants({
+export const selectedSectionVariants = styleVariants({
     default: {borderColor: vars.colors.controlActivated},
-    inverse: {borderColor: vars.colors.inverse},
+    brand: {borderColor: vars.colors.inverse},
 });
 
 export const textWrapperVariants = styleVariants({
@@ -206,12 +206,42 @@ export const textWrapperVariants = styleVariants({
             },
         },
     },
-    inverse: {
-        color: vars.colors.textPrimaryInverse,
+    alternative: {
+        color: vars.colors.textPrimary,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    color: vars.colors.textSecondaryInverse,
+                    color: vars.colors.textSecondary,
+                },
+            },
+        },
+    },
+    brand: {
+        color: vars.colors.textPrimaryBrand,
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    color: vars.colors.textSecondaryBrand,
+                },
+            },
+        },
+    },
+    negative: {
+        color: vars.colors.textPrimaryNegative,
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    color: vars.colors.textSecondaryNegative,
+                },
+            },
+        },
+    },
+    media: {
+        color: vars.colors.textPrimaryMedia,
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    color: vars.colors.textSecondaryMedia,
                 },
             },
         },
@@ -282,7 +312,7 @@ export const navigationBarContentRightExpanded = style([
         flex: 1,
     }),
     {
-        paddingLeft: 136,
+        paddingLeft: 56,
     },
 ]);
 
@@ -371,7 +401,6 @@ export const burgerMenuButton = style({
 
 export const burgerMenu = sprinkles({
     position: 'fixed',
-    top: NAVBAR_HEIGHT_MOBILE,
     left: 0,
     right: 0,
     bottom: 0,

@@ -69,7 +69,7 @@ export const Default: StoryComponent<Args> = ({largeContent, input}) => {
                         title="Some title"
                         description="Some description text"
                         primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
-                        extra={
+                        slot={
                             <>
                                 {input ? <TextField name="text" label="Text" /> : undefined}
                                 {largeContent ? <Placeholder height={1000} /> : undefined}

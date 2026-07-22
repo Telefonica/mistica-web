@@ -4,9 +4,9 @@ import * as mq from './media-queries.css';
 import * as buttonStyles from './button.css';
 
 const buttonLayoutSpacing = '16px';
-const buttonLinkPadding = {
-    default: `calc(${buttonStyles.buttonPaddingX.default} + ${buttonStyles.borderSize})`,
-    small: `calc(${buttonStyles.buttonPaddingX.small} + ${buttonStyles.borderSize})`,
+const buttonLinkPaddingLeft = {
+    default: `calc(${buttonStyles.buttonPaddingLeft.default} + ${buttonStyles.borderSize})`,
+    small: `calc(${buttonStyles.buttonPaddingLeft.small} + ${buttonStyles.borderSize})`,
 };
 
 export const inline = style([
@@ -42,31 +42,31 @@ export const centerInDesktop = style({
 
 export const container = style({
     marginTop: `-${buttonLayoutSpacing}`,
-    marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPadding.default}))`,
+    marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPaddingLeft.default}))`,
 
     selectors: {
         [`&:has(${buttonStyles.smallLink})`]: {
-            marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPadding.small}))`,
+            marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPaddingLeft.small}))`,
         },
     },
 });
 
 export const containerWithSmallLink = style({
     marginTop: `-${buttonLayoutSpacing}`,
-    marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPadding.small}))`,
+    marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPaddingLeft.small}))`,
 });
 
 export const buttons = style({
-    marginLeft: buttonLinkPadding.default,
+    marginLeft: buttonLinkPaddingLeft.default,
     selectors: {
         [`${container}:has(${buttonStyles.smallLink}) &`]: {
-            marginLeft: buttonLinkPadding.small,
+            marginLeft: buttonLinkPaddingLeft.small,
         },
     },
 });
 
 export const buttonsWithSmallLink = style({
-    marginLeft: buttonLinkPadding.small,
+    marginLeft: buttonLinkPaddingLeft.small,
 });
 
 export const buttonChild = style({

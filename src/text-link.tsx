@@ -4,8 +4,7 @@
 import * as React from 'react';
 import {BaseTouchable} from './touchable';
 import classnames from 'classnames';
-import {useTheme} from './hooks';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
@@ -41,8 +40,7 @@ const TextLink = ({
     underline = 'always',
     ...props
 }: TextLinkProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const {isDarkMode} = useTheme();
+    const themeVariant = useThemeVariant();
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();
 
@@ -73,11 +71,7 @@ const TextLink = ({
             trackingEvent={props.trackingEvent ?? (trackEvent ? createDefaultTrackingEvent() : undefined)}
             disabled={disabled || formStatus === 'sending'}
             className={classnames(
-                isInverse
-                    ? isDarkMode
-                        ? styles.variants.inverseDark
-                        : styles.variants.inverseLight
-                    : styles.variants.default,
+                styles.variants[themeVariant === 'alternative' ? 'default' : themeVariant],
                 underlineStyle,
                 className
             )}

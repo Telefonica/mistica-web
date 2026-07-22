@@ -14,7 +14,7 @@ test.each`
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
-        args: {inverse},
+        args: {variant: inverse ? 'brand' : 'default'},
     });
 
     const story = await screen.findByTestId('header-layout');
@@ -22,11 +22,11 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test('Header vertical extra in desktop', async () => {
+test('Header vertical slot in desktop', async () => {
     await openStoryPage({
         id: 'components-headers-header--default',
         device: 'DESKTOP',
-        args: {sideBySideExtraOnDesktop: false},
+        args: {sideBySideSlotOnDesktop: false},
     });
 
     const story = await screen.findByTestId('header-layout');
@@ -47,7 +47,7 @@ test('Header small', async () => {
 });
 
 test.each`
-    device          | bleed    | sideBySideExtraOnDesktop
+    device          | bleed    | sideBySideSlotOnDesktop
     ${'MOBILE_IOS'} | ${true}  | ${false}
     ${'MOBILE_IOS'} | ${false} | ${false}
     ${'DESKTOP'}    | ${true}  | ${false}
@@ -55,12 +55,12 @@ test.each`
     ${'DESKTOP'}    | ${true}  | ${true}
     ${'DESKTOP'}    | ${false} | ${true}
 `(
-    'HeaderLayout without paddingY device=$device bleed=$bleed sideBySideExtraOnDesktop=$sideBySideExtraOnDesktop',
-    async ({device, bleed, sideBySideExtraOnDesktop}) => {
+    'HeaderLayout without paddingY device=$device bleed=$bleed sideBySideSlotOnDesktop=$sideBySideSlotOnDesktop',
+    async ({device, bleed, sideBySideSlotOnDesktop}) => {
         await openStoryPage({
             id: 'components-headers-header--default',
             device,
-            args: {noPaddingY: true, bleed, sideBySideExtraOnDesktop, inverse: true},
+            args: {noPaddingY: true, bleed, sideBySideSlotOnDesktop, variant: 'brand'},
         });
 
         const story = await screen.findByTestId('header-layout');
@@ -81,7 +81,7 @@ test.each`
         await openStoryPage({
             id: 'components-headers-mainsectionheader--default',
             device,
-            args: {inverse},
+            args: {variant: inverse ? 'brand' : 'default'},
         });
 
         const story = await screen.findByTestId('header-layout');
@@ -123,7 +123,7 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
-        args: {bleed: true, sideBySideExtraOnDesktop: false, inverse: true},
+        args: {bleed: true, sideBySideSlotOnDesktop: false, variant: 'brand'},
     });
 
     const story = await screen.findByTestId('header-layout');

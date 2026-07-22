@@ -16,7 +16,7 @@ export default {
 type LoadingSreenArgs = {
     title: string;
     description: string;
-    inverse: boolean;
+    variant: 'default' | 'brand';
     loading: boolean;
     multipleTexts: boolean;
     textDuration: number;
@@ -25,7 +25,7 @@ type LoadingSreenArgs = {
 export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     title,
     description,
-    inverse,
+    variant,
     loading,
     multipleTexts,
     textDuration,
@@ -66,7 +66,7 @@ export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     return (
         <LoadingScreen
             {...textProps}
-            isInverse={inverse}
+            variant={variant}
             isLoading={loading}
             onClose={() => {
                 setShowLoadingScreen(false);
@@ -78,13 +78,17 @@ LoadingScreenStory.storyName = 'LoadingScreen';
 LoadingScreenStory.args = {
     title: 'Title',
     description: 'Description',
-    inverse: false,
+    variant: 'default',
     loading: true,
     multipleTexts: false,
     textDuration: 5000,
 };
 LoadingScreenStory.argTypes = {
     textDuration: {if: {arg: 'multipleTexts'}},
+    variant: {
+        options: ['default', 'brand'],
+        control: {type: 'select'},
+    },
 };
 
 type BrandLoadingSreenArgs = {

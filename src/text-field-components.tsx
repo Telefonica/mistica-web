@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {Text1} from './text';
 import * as styles from './text-field-components.css';
@@ -10,8 +9,34 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 import ScreenReaderOnly from './screen-reader-only';
+import {fieldVars} from './text-field-base.css';
+import {applyCssVars, pxToRem} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
+
+export const useApplyCssVars = (): Record<string, string> => {
+    const {textPresets} = useTheme();
+
+    return applyCssVars({
+        [fieldVars.mobileFontSize]: pxToRem(textPresets.inputValue.size.mobile),
+        [fieldVars.desktopFontSize]: pxToRem(textPresets.inputValue.size.desktop),
+        [fieldVars.mobileLineHeight]: pxToRem(textPresets.inputValue.lineHeight.mobile),
+        [fieldVars.desktopLineHeight]: pxToRem(textPresets.inputValue.lineHeight.desktop),
+
+        [fieldVars.shrinkedLabelMobileFontSize]: pxToRem(textPresets.inputLabel.size.mobile),
+        [fieldVars.shrinkedLabelDesktopFontSize]: pxToRem(textPresets.inputLabel.size.desktop),
+        [fieldVars.shrinkedLabelMobileLineHeight]: pxToRem(textPresets.inputLabel.lineHeight.mobile),
+        [fieldVars.shrinkedLabelDesktopLineHeight]: pxToRem(textPresets.inputLabel.lineHeight.desktop),
+
+        [fieldVars.helperTextMobileFontSize]: pxToRem(textPresets.inputHelperText.size.mobile),
+        [fieldVars.helperTextDesktopFontSize]: pxToRem(textPresets.inputHelperText.size.desktop),
+        [fieldVars.helperTextMobileLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.mobile),
+        [fieldVars.helperTextDesktopLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.desktop),
+
+        [fieldVars.labelScaleMobile]: `calc(${textPresets.inputLabel.size.mobile} / ${textPresets.inputValue.size.mobile})`,
+        [fieldVars.labelScaleDesktop]: `calc(${textPresets.inputLabel.size.desktop} / ${textPresets.inputValue.size.desktop})`,
+    });
+};
 
 export type InputState = 'focused' | 'filled' | 'default';
 
@@ -58,6 +83,8 @@ export const Label = ({
         color = vars.colors.textActivated;
     }
 
+    const optionalText = texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix);
+
     return (
         <label
             className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
@@ -65,13 +92,16 @@ export const Label = ({
             style={{color, ...style, transition: transitionStyle}}
             data-testid="label"
         >
-            <span className={styles.labelText}>{children}</span>
-            {showOptional ? (
-                <span>
-                    &nbsp;(
-                    {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
-                </span>
-            ) : null}
+            {/* eslint-disable-next-line jsx-a11y/aria-role -- role="text" makes VoiceOver read the whole div as a single text block. */}
+            <span role="text" className={styles.labelInner}>
+                <span className={styles.labelText}>{children}</span>
+                {showOptional ? (
+                    <span>
+                        &nbsp;(
+                        {optionalText})
+                    </span>
+                ) : null}
+            </span>
         </label>
     );
 };
@@ -94,13 +124,7 @@ export const HelperText = ({
     rightTextLabel,
     error,
 }: HelperTextProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const leftColor = isInverse
-        ? vars.colors.textPrimaryInverse
-        : error
-          ? vars.colors.textError
-          : vars.colors.textSecondary;
-    const rightColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textSecondary;
+    const leftColor = error ? vars.colors.textError : vars.colors.textSecondary;
 
     return (
         <>
@@ -110,8 +134,8 @@ export const HelperText = ({
                     data-testid={error ? 'errorText' : 'helperText'}
                 >
                     {error && (
-                        <Text1 regular>
-                            <IconWarningRegular color={leftColor} className={styles.warnIcon} />
+                        <Text1 regular color={leftColor}>
+                            <IconWarningRegular color="currentColor" className={styles.warnIcon} />
                         </Text1>
                     )}
                     <Text1
@@ -130,7 +154,7 @@ export const HelperText = ({
                     data-testid="endHelperText"
                 >
                     <Text1
-                        color={rightColor}
+                        color={vars.colors.textSecondary}
                         regular
                         as="p"
                         textAlign="right"
@@ -156,10 +180,11 @@ type FieldContainerProps = {
     children: React.ReactNode;
     helperText?: React.ReactNode;
     className?: string;
-    fieldRef?: React.RefObject<HTMLDivElement>;
+    fieldRef?: React.RefObject<HTMLDivElement | null>;
     fullWidth?: boolean;
     readOnly?: boolean;
     dataAttributes?: DataAttributes;
+    focus?: boolean;
 };
 
 export const FieldContainer = ({
@@ -172,7 +197,9 @@ export const FieldContainer = ({
     fullWidth,
     readOnly,
     dataAttributes,
+    focus,
 }: FieldContainerProps): JSX.Element => {
+    const cssVarStyles = useApplyCssVars();
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
@@ -183,13 +210,15 @@ export const FieldContainer = ({
                 // We want to focus the input when the user clicks anywhere in the container (like in the label or the prefix)
                 e.currentTarget.querySelector(multiline ? 'textarea' : 'input')?.focus();
             }}
+            style={cssVarStyles}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             <div
                 className={classnames(
                     styles.field,
                     readOnly ? styles.background.readOnly : styles.background.default,
-                    className
+                    className,
+                    focus && styles.focused
                 )}
                 ref={fieldRef}
             >

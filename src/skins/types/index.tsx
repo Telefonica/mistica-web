@@ -8,12 +8,10 @@ export type SkinVariant = 'prominent';
 export type KnownSkinName =
     | 'Movistar'
     | 'O2'
-    | 'O2-new'
     | 'Vivo'
-    | 'Vivo-new'
+    | 'Vivo-evolution'
     | 'Telefonica'
     | 'Blau'
-    | 'Tu'
     | 'Esimflag';
 export type SkinName = KnownSkinName | string;
 
@@ -21,32 +19,63 @@ export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
+type ResponsiveValue<T> = {mobile: T; desktop: T};
+
+type PaddingYValues = {
+    top: ResponsiveValue<number>;
+    bottom: ResponsiveValue<number>;
+};
+
+type PaddingXValues = {
+    left: ResponsiveValue<number>;
+    right: ResponsiveValue<number>;
+};
+
+type PaddingValues = PaddingYValues & PaddingXValues;
+
 type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size?: never;
     lineHeight?: never;
 };
 
-type TextSizeTokenConfig = {
+export type TextSizeTokenConfig = {
     weight?: never;
-    size: {mobile: number; desktop: number};
-    lineHeight: {mobile: number; desktop: number};
+    size: ResponsiveValue<number>;
+    lineHeight: ResponsiveValue<number>;
 };
 
-type TextTokenConfig<PossibleFontWeights = FontWeight> = {
+export type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
-    size: {mobile: number; desktop: number};
-    lineHeight: {mobile: number; desktop: number};
+    size: ResponsiveValue<number>;
+    lineHeight: ResponsiveValue<number>;
 };
 
 export type TextPresetsConfig = {
     cardTitle: TextWeightTokenConfig;
+    rowTitle: TextWeightTokenConfig;
+    stepperStepLabel: TextSizeTokenConfig;
     button: TextWeightTokenConfig<'regular' | 'medium'>;
+    cardDescriptionDefault: TextSizeTokenConfig;
+    cardDescriptionSnap: TextSizeTokenConfig;
+    cardPretitleDefault: TextSizeTokenConfig;
+    cardPretitleSnap: TextSizeTokenConfig;
+    cardSubtitleDefault: TextSizeTokenConfig;
+    cardSubtitleSnap: TextSizeTokenConfig;
+    cardTitleDefault: TextSizeTokenConfig;
+    cardTitleSnap: TextSizeTokenConfig;
+    drawerTitle: TextTokenConfig;
+    chipLabel: TextTokenConfig;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
-    title1: TextWeightTokenConfig<'regular' | 'medium'>;
-    title2: TextWeightTokenConfig;
+    loadingScreenTitle: TextSizeTokenConfig;
+    title1: TextTokenConfig<'regular' | 'medium'>;
+    title2: TextTokenConfig;
     title3: TextTokenConfig;
+    title4: TextTokenConfig;
     indicator: TextWeightTokenConfig<'regular' | 'medium'>;
+    inputHelperText: TextSizeTokenConfig;
+    inputLabel: TextSizeTokenConfig;
+    inputValue: TextSizeTokenConfig;
     tabsLabel: TextTokenConfig;
     navigationBar: TextWeightTokenConfig;
     text1: TextSizeTokenConfig;
@@ -67,18 +96,28 @@ export type BorderRadiiConfig = {
     button: string;
     input: string;
     container: string;
-    /**
-     * This will be used for DisplayCards and PosterCards only for the moment. One day we'll unify the borderRadius in all the cards to use container.
-     * @deprecated Use `container` instead
-     */
-    legacyDisplay: string;
     popup: string;
     checkbox: string;
     indicator: string;
+    chip: string;
     sheet: string;
     bar: string;
     avatar: string;
     mediaSmall: string;
+    tag: string;
+};
+
+export type SpacingConfig = {
+    buttonDefaultPadding: PaddingXValues;
+    buttonSmallPadding: PaddingXValues;
+    cardDefaultPadding: PaddingValues;
+    inputPadding: PaddingYValues;
+    tagPadding: PaddingYValues;
+    feedbackScreenPadding: PaddingValues;
+    heroPadding: PaddingYValues;
+    headerPadding: PaddingYValues;
+    drawerPadding: PaddingValues;
+    responsiveLayoutMargin: ResponsiveValue<number>;
 };
 
 export type ThemeVariantsConfig = {
@@ -93,6 +132,7 @@ export type Skin = {
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
+    spacing?: SpacingConfig;
 };
 
 export type KnownSkin = {
@@ -102,4 +142,5 @@ export type KnownSkin = {
     textPresets?: PartialTextPresetsConfig;
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
+    spacing: SpacingConfig;
 };

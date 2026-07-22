@@ -20,9 +20,21 @@ import avatarImg from './images/avatar.jpg';
 import touchImg from './images/touch.jpg';
 import personPortraitImg from './images/person-portrait.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Accordions',
     parameters: {fullScreen: true},
+    argTypes: {
+        variant: {
+            options: ['default', 'brand'],
+            control: {type: 'select'},
+        },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
@@ -31,10 +43,10 @@ type Args = {
     detail: string;
     right: boolean;
     singleOpen: boolean;
-    overInverse: boolean;
+    variantOutside: Variant;
 };
 
-type BoxedArgs = Args & {inverse: boolean};
+type BoxedArgs = Args & {variant: 'default' | 'brand'};
 
 const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
     title,
@@ -42,8 +54,8 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
     detail,
     right,
     singleOpen,
-    inverse,
-    overInverse,
+    variant,
+    variantOutside,
     type,
 }) => {
     const content = <Placeholder height={100} />;
@@ -62,12 +74,12 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
                     <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
                 </div>
             ) : undefined,
-            ...(type === 'boxed' && {isInverse: inverse}),
+            ...(type === 'boxed' && {variant}),
         };
     };
 
     return (
-        <ResponsiveLayout fullWidth variant={overInverse ? 'inverse' : 'default'}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16}>
                 <AccordionComponent singleOpen={singleOpen} dataAttributes={{testid: 'accordion'}}>
                     <ItemComponent
@@ -136,13 +148,13 @@ const defaultArgs = {
     detail: '',
     right: false,
     singleOpen: false,
-    overInverse: false,
-};
+    variantOutside: 'default',
+} as const;
 
-export const AccordionStory: StoryComponent<Args> = (args) => <Template inverse={false} {...args} />;
+export const AccordionStory: StoryComponent<Args> = (args) => <Template variant="default" {...args} />;
 AccordionStory.storyName = 'Accordion';
 AccordionStory.args = defaultArgs;
 
 export const BoxedAccordionStory: StoryComponent<BoxedArgs> = (args) => <Template type="boxed" {...args} />;
 BoxedAccordionStory.storyName = 'BoxedAccordion';
-BoxedAccordionStory.args = {...defaultArgs, inverse: false};
+BoxedAccordionStory.args = {...defaultArgs, variant: 'default'};

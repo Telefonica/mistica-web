@@ -25,6 +25,23 @@ test.each(CHIP_OPTIONS)('Chip - %s', async (option) => {
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
+test.each(CHIP_OPTIONS)('Chip small - %s', async (option) => {
+    await openStoryPage({
+        id: 'components-chip--default',
+        device: 'DESKTOP',
+        args: {
+            badge: option.includes('badge') ? '2' : 'undefined',
+            icon: option.includes('icon'),
+            closable: option.includes('closable'),
+            small: true,
+        },
+    });
+
+    const story = await screen.findByTestId('chip');
+
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
+
 test.each`
     selection     | inverse  | badge
     ${'single'}   | ${false} | ${undefined}
@@ -39,7 +56,7 @@ test.each`
     const page = await openStoryPage({
         id: `components-chip--${selection}-selection`,
         device: 'DESKTOP',
-        args: {inverse, icon: true, badge},
+        args: {variantOutside: inverse ? 'brand' : 'default', icon: true, badge},
     });
 
     const story = await screen.findByTestId(`chip-${selection}-selection`);
@@ -82,7 +99,7 @@ test('Chip - navigable with href and active and inverse', async () => {
         device: 'DESKTOP',
         args: {
             icon: true,
-            inverse: true,
+            variantOutside: 'brand',
         },
     });
 

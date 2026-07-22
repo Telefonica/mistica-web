@@ -2,16 +2,24 @@ name: deploy-master
 on:
     push:
         branches: [master]
+
+permissions:
+    contents: read
+    deployments: write
+
 concurrency:
     group: deploy-master-${{ github.ref }}
     cancel-in-progress: true
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
 
-            - uses: amondnet/vercel-action@master
+            - uses: amondnet/vercel-action@v42.3.0
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
                   vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
@@ -19,4 +27,4 @@ jobs:
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID}} #Required
                   vercel-project-name: mistica-web # Not requried by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   vercel-args: '--prod'
-                  working-directory: ./
+                  working-directory: ${{ github.workspace }}

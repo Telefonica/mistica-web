@@ -1,6 +1,8 @@
 import {capitalize} from 'lodash';
 
 const imagePlaceholder = 'https://picsum.photos/1200/1200';
+const videoPlaceholder =
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4';
 
 type Snippet = {group: string; name: string; code: string};
 
@@ -25,9 +27,10 @@ const menuSnippet = {
       renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
           <MenuSection>
-            <MenuItem label="option 1" onPress={() => {}} />
+            <MenuItem label="option 1" description="Description for option 1" onPress={() => {}} />
             <MenuItem
               label="option 2"
+              description="Description for option 2"
               onPress={() => setState("option 2", !getState("option 2", false))}
               controlType="checkbox"
               checked={getState("option 2", false)}
@@ -489,6 +492,7 @@ const formSnippets: Array<Snippet> = [
     ['IbanField', '<IbanField name="bankAccount" label="IBAN" />'],
     ['CreditCardFields', '<CreditCardFields/>'],
     ['DateField', '<DateField name="date" label="Date"/>'],
+    ['TimeField', '<TimeField name="time" label="Time"/>'],
     ['DecimalField', '<DecimalField name="decimal" label="Decimal"/>'],
     ['IntegerField', '<IntegerField name="integer" label="Integer"/>'],
     ['PasswordField', '<PasswordField name="password" label="Password"/>'],
@@ -533,6 +537,18 @@ const formSnippets: Array<Snippet> = [
                 </Stack>
             </Box>
         </Form>`,
+    ],
+    [
+        'Autocomplete',
+        `<Autocomplete
+          label="Search fruits"
+          getSuggestions={(value) => {
+            const fruits = ['apple', 'banana', 'coconut']
+            return fruits.filter(fruit => fruit.startsWith(value));
+          }}
+          value={getState('autocomplete') ?? ''}
+          onChangeValue={setState('autocomplete')}
+        />`,
     ],
 ].map(([name, code]) => ({
     group: 'Forms',
@@ -1005,7 +1021,7 @@ const popoverSnippets = [
           }
           title="Amanda Harvey"
           description="Product designer"
-          extra={
+          slot={
             <Box paddingTop={16}>
               <Stack space={16}>
                 <Divider />
@@ -1042,7 +1058,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1051,13 +1067,13 @@ const headerSnippets: Array<Snippet> = [
         name: 'Basic header layout (inverse)',
         code: `
         <HeaderLayout
-            isInverse={true}
+            variant="brand"
             header={
                 <Header
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1077,7 +1093,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1086,7 +1102,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Header layout (with breadcrumbs)(no inverse)',
         code: `
         <HeaderLayout
-            isInverse={false}
+            variant="default"
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
@@ -1098,7 +1114,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                 />
             }
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />
         `,
     },
@@ -1120,7 +1136,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Main section header layout (no inverse)',
         code: `
         <MainSectionHeaderLayout
-            isInverse={false}>
+            variant="default">
             <MainSectionHeader
                 title="Title"
                 description="Some text here"
@@ -1175,15 +1191,32 @@ const tabsSnippets: Array<Snippet> = [
 const cardSnippets: Array<Snippet> = [
     {
         group: 'Cards',
-        name: 'HighlightedCard',
+        name: 'MediaCard right media position',
         code: `
-        <HighlightedCard
+        <MediaCard
+            mediaPosition="right"
             title="Title"
             description="Some description here"
-            imageUrl="${imagePlaceholder}"
-            imageFit="fill"
+            imageSrc="${imagePlaceholder}"
             onClose={() => {}}
-            button={
+            buttonPrimary={
+                <ButtonPrimary href="#" small>
+                    ButtonPrimary
+                </ButtonPrimary>
+            }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard left media position',
+        code: `
+        <MediaCard
+            mediaPosition="left"
+            title="Title"
+            description="Some description here"
+            imageSrc="${imagePlaceholder}"
+            onClose={() => {}}
+            buttonPrimary={
                 <ButtonPrimary href="#" small>
                     ButtonPrimary
                 </ButtonPrimary>
@@ -1195,15 +1228,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
             asset={<Avatar size={40} src="${imagePlaceholder}" />}
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1216,15 +1250,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Video',
         code: `
         <MediaCard
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            videoSrc="${videoPlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
             asset={<Avatar size={40} src="${imagePlaceholder}" />}
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1246,8 +1281,8 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1257,9 +1292,10 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'SnapCard',
+        name: 'DataCard snap size',
         code: `
-        <SnapCard
+        <DataCard
+            size="snap"
             asset={
               <Circle size={40} backgroundColor={colors.brandLow}>
                 <IconAcademicRegular color={colors.brand} />
@@ -1272,9 +1308,10 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayDataCard',
+        name: 'DataCard display size',
         code: `
-        <DisplayDataCard
+        <DataCard
+          size="display"
           asset={
             <Circle size={40} backgroundColor={colors.brandLow}>
               <IconInvoicePlanFileRegular color={colors.brand} />
@@ -1290,7 +1327,7 @@ const cardSnippets: Array<Snippet> = [
             </ButtonPrimary>
           }
           onClose={() => {}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1313,21 +1350,22 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with image',
+        name: 'CoverCard display size with image',
         code: `
-        <DisplayMediaCard
+        <CoverCard
+          size="display"
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="${imagePlaceholder}"
-          button={
+          imageSrc="${imagePlaceholder}"
+          buttonPrimary={
             <ButtonPrimary small href="https://google.com">
               Action
             </ButtonPrimary>
           }
           onClose={() => {}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1350,70 +1388,17 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with video',
+        name: 'CoverCard display size with video',
         code: `
-        <DisplayMediaCard
+        <CoverCard
+          size="display"
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="${imagePlaceholder}"
-          button={
-            <ButtonPrimary small href="https://google.com">
-              Action
-            </ButtonPrimary>
-          }
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with image',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          subtitle="Subtitle"
-          description="Description"
-          backgroundImage="${imagePlaceholder}"
-          onClose={() => {}}
-          onPress={() => {alert({ title: "pressed" });}}
-          actions={[
-            {
-              Icon: IconLightningRegular,
-              onPress: () => {},
-              label: "Lightning",
-            },
-            {
-              checkedProps: {
-                  Icon: IconStarFilled,
-                  label: 'checked',
-              },
-              uncheckedProps: {
-                  Icon: IconStarRegular,
-                  label: 'unchecked',
-              },
-              defaultChecked: false,
-              onChange: () => {},
-          },
-          ]}
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with video',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          subtitle="Subtitle"
-          description="Description"
-          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="${imagePlaceholder}"
-          onPress={() => {alert({ title: "pressed" });}}
-          button={
+          videoSrc="${videoPlaceholder}"
+          imageSrc="${imagePlaceholder}"
+          buttonPrimary={
             <ButtonPrimary small href="https://google.com">
               Action
             </ButtonPrimary>
@@ -1422,18 +1407,18 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard inverse',
+        name: 'CoverCard with image',
         code: `
-        <PosterCard
+        <CoverCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           subtitle="Subtitle"
           description="Description"
-          isInverse
+          imageSrc="${imagePlaceholder}"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1456,19 +1441,73 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard with backgroundColor',
+        name: 'CoverCard with video',
         code: `
-        <PosterCard
+        <CoverCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          videoSrc="${videoPlaceholder}"
+          imageSrc="${imagePlaceholder}"
+          onPress={() => {alert({ title: "pressed" });}}
+          buttonPrimary={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'CoverCard inverse',
+        code: `
+        <CoverCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          variant="inverse"
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          topActions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'CoverCard with backgroundColor',
+        code: `
+        <CoverCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           subtitle="Subtitle"
           description="Description"
           backgroundColor={colors.promo}
-          isInverse
+          variant="inverse"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
-          actions={[
+          topActions={[
             {
               Icon: IconLightningRegular,
               onPress: () => {},
@@ -1495,14 +1534,15 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Image',
         code: `
         <NakedCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1515,14 +1555,15 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Video',
         code: `
         <NakedCard
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            videoSrc="${videoPlaceholder}"
+            mediaAspectRatio="16:9"
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
-            button={
+            slot={<Placeholder />}
+            buttonPrimary={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
@@ -1533,13 +1574,52 @@ const cardSnippets: Array<Snippet> = [
 
     {
         group: 'Cards',
-        name: 'SmallNakedCard',
+        name: 'NakedCard snap size',
         code: `
-        <SmallNakedCard
-            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
+        <NakedCard
+            size="snap"
+            imageSrc="${imagePlaceholder}"
+            mediaAspectRatio="16:9"
             title="Title"
             subtitle="Subtitle"
             description="Description"
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'AiCard',
+        code: `
+        <AiCard
+            text="Lorem ipsum dolor sit amet, "
+            words={['consectetur', 'praesent', 'tempor', 'aliquam']}
+            onPress={() => {}}
+            borderColor={"linear-gradient(200deg, #AE42E459 17.51%, #BD4AFF59 38.3%, #EB3C7D59 82.5%)"}
+            asset={<svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.53957 16.0123C6.71957 15.6223 7.26973 15.6223 7.44973 16.0123L8.23977 17.7623L9.99953 18.5523C10.3894 18.7324 10.3895 19.2825 9.99953 19.4625L8.24953 20.2525L7.45949 22.0123C7.27949 22.4022 6.71964 22.4021 6.53957 22.0123L5.74953 20.2623L3.99953 19.4722C3.60953 19.2922 3.60953 18.7421 3.99953 18.5621L5.74953 17.772L6.53957 16.0123ZM15.0073 5.99861C15.3574 5.21869 16.4767 5.21864 16.8267 5.99861L18.4165 9.49861L21.9165 11.0885C22.6965 11.4485 22.6965 12.5588 21.9165 12.9088L18.4165 14.4986L16.8267 17.9986C16.4666 18.7783 15.3575 18.7783 15.0073 17.9986L13.4165 14.4986L9.91652 12.9088C9.13679 12.5487 9.13685 11.4386 9.91652 11.0885L13.4165 9.49861L15.0073 5.99861ZM4.33254 1.97322C4.5126 1.58347 5.06166 1.58347 5.24172 1.97322L6.03176 3.72322L7.7925 4.51326C8.18211 4.69337 8.18215 5.24334 7.7925 5.42342L6.0425 6.21345L5.25246 7.97322C5.07248 8.36318 4.5126 8.3631 4.33254 7.97322L3.5425 6.22322L1.7925 5.43318C1.4025 5.25318 1.4025 4.70302 1.7925 4.52302L3.5425 3.73299L4.33254 1.97322Z"
+                  fill="url(#paint0_linear_13522_368)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_13522_368"
+                    x1="18.84"
+                    y1="5.30652"
+                    x2="5.4224"
+                    y2="18.9388"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#AE42E4" />
+                    <stop offset="0.32" stop-color="#BD4AFF" />
+                    <stop offset="1" stop-color="#EF7E9C" />
+                  </linearGradient>
+                </defs>
+              </svg>}
         />`,
     },
 ];
@@ -1580,18 +1660,17 @@ const titlesSnippets: Array<Snippet> = [
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
 const tagSnippets: Array<Snippet> = [
-    'promo',
-    'info',
-    'active',
-    'inactive',
-    'success',
-    'warning',
-    'error',
-].map((type) => ({
-    name: `Tag (${type})`,
-    group: 'Tags',
-    code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
-}));
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+    ...['promo', 'info', 'active', 'inactive', 'success', 'warning', 'error'].map((type) => ({
+        name: `Small Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" small Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })),
+];
 
 const sliderSnippets: Array<Snippet> = [
     {
@@ -2094,7 +2173,7 @@ const exampleScreens: Array<Snippet> = [
   }
 />
 
-<MainSectionHeaderLayout isInverse={false}>
+<MainSectionHeaderLayout variant="default">
   <MainSectionHeader title="Hola, Alex" />
 </MainSectionHeaderLayout>
 
@@ -2104,7 +2183,7 @@ const exampleScreens: Array<Snippet> = [
       <Carousel
         itemsPerPage={2}
         items={Array.from({ length: 3 }, (_, idx) => (
-          <SnapCard
+          <DataCard size="snap"
             asset={
               [
                 <Circle size={40} backgroundColor={colors.brandLow}>
@@ -2125,9 +2204,9 @@ const exampleScreens: Array<Snippet> = [
       <Carousel
         itemsPerPage={1}
         items={Array.from({ length: 3 }, (_, idx) => (
-          <DisplayMediaCard
+          <CoverCard size="display"
             aspectRatio="7:10"
-            backgroundImage={
+            imageSrc={
               [
                 "https://www.ediiie.com/blog/assets/admin/uploads/apple-vision-pro-features.jpg",
                 "https://images.unsplash.com/photo-1549298620-833e1e37670b?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -2150,22 +2229,17 @@ const exampleScreens: Array<Snippet> = [
           mobilePageOffset="large"
           items={Array.from({ length: 3 }, (_, idx) => (
             <MediaCard
-              media={
+              imageSrc={
                 [
-                  <Image
-                    src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MME73?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1632861342000"
-                    aspectRatio="1:1"
-                  />,
-                  <Image
-                    src="https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-xr/iphone-xr-blue.jpg"
-                    aspectRatio="1:1"
-                  />,
+                  "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MME73?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1632861342000",
+                  "https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-xr/iphone-xr-blue.jpg",
                 ][idx % 2]
               }
+              mediaAspectRatio="1:1"
               headline={<Tag type="active">New</Tag>}
               title={["AirPods Pro", "Mobiles", "Tablets"][idx % 2]}
               description={["2nd generation", "Mobiles", "Tablets"][idx % 2]}
-              extra={
+              slot={
                 <Box paddingTop={16}>
                   <Stack space={4}>
                     <Text2
@@ -2193,7 +2267,7 @@ const exampleScreens: Array<Snippet> = [
         asset={<IconMobileDeviceRegular size={40} color={colors.brand} />}
         title="Looking for a smartphone?"
         description="These are some of the products you can you can buy with cryptocurrencies."
-        button={
+        buttonPrimary={
           <ButtonPrimary small onPress={() => {}}>
             Explore
           </ButtonPrimary>
@@ -2206,21 +2280,14 @@ const exampleScreens: Array<Snippet> = [
           itemsPerPage={1}
           mobilePageOffset="large"
           items={Array.from({ length: 3 }, (_, idx) => (
-            <SmallNakedCard
-              media={
+            <NakedCard size="snap"
+              imageSrc={
                 [
-                  <Image
-                    circular
-                    src="https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940"
-                    aspectRatio="1:1"
-                  />,
-                  <Image
-                    circular
-                    src="https://i.scdn.co/image/ab6761610000e5ebc698d53b77db34027b00f853"
-                    aspectRatio="1:1"
-                  />,
+                  "https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940",
+                  "https://i.scdn.co/image/ab6761610000e5ebc698d53b77db34027b00f853",
                 ][idx % 2]
               }
+              circledImage
               title={["Netflix", "Disney", "Tablets"][idx % 2]}
               description="The best series and films"
             />
@@ -2636,6 +2703,21 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar',
         code: `
           <MainNavigationBar
+            topSlotBackgroundColor={colors.backgroundNegative}
+            topSlot={
+              <ThemeVariant variant="negative">
+                <Box paddingY={8}>
+                  <Align x="center">
+                    <Inline space={24} alignItems="center">
+                      <Text2 medium>BLACK FRIDAY - 60% en tecnología</Text2>
+                      <ButtonSecondary small onPress={() => {}}>
+                        See offers
+                      </ButtonSecondary>
+                    </Inline>
+                  </Align>
+                </Box>
+              </ThemeVariant>
+            }
             sections={[
               {
                 title: "Start",
@@ -2868,12 +2950,12 @@ const navigationBarSnippets = [
                       ))}
 
                       <GridItem columnSpan={5} columnStart={8}>
-                        <DisplayMediaCard
+                        <CoverCard size="display"
                           headline={<Tag type="promo">Oferta</Tag>}
                           title="Movistar Plus+"
                           onPress={() => {}}
                           description="Contrata solo TV por 9,99 €"
-                          backgroundImage="${imagePlaceholder}"
+                          imageSrc="${imagePlaceholder}"
                         />
                       </GridItem>
                     </Grid>
@@ -2893,13 +2975,13 @@ const navigationBarSnippets = [
                         </Stack>
                       ))}
 
-                      <DisplayMediaCard
+                      <CoverCard size="display"
                         headline={<Tag type="promo">Oferta</Tag>}
                         title="Movistar Plus+"
                         aspectRatio="1:1"
                         onPress={() => {}}
                         description="Contrata solo TV por 9,99 €"
-                        backgroundImage="${imagePlaceholder}"
+                        imageSrc="${imagePlaceholder}"
                       />
                     </Stack>
                   ),
@@ -2977,8 +3059,9 @@ const carouselSnippets = [
       headline={<Tag type="promo">Headline</Tag>}
       title={'Card ' + idx}
       description="Description"
-      media={<Image src="${imagePlaceholder}" aspectRatio="16:9" />}
-      button={
+      imageSrc="${imagePlaceholder}"
+      mediaAspectRatio="16:9"
+      buttonPrimary={
         <ButtonPrimary small onPress={() => {}}>
           Action
         </ButtonPrimary>
@@ -3017,7 +3100,7 @@ const carouselSnippets = [
       >
           <div style={{flexShrink: 0}}>
               <Circle backgroundColor={colors.brand} size={160}>
-                  <ThemeVariant isInverse>
+                  <ThemeVariant variant="brand">
                       <Text10>{idx}</Text10>
                   </ThemeVariant>
               </Circle>
@@ -3120,7 +3203,7 @@ const alertSnippets = [
             title: 'Title',
             message: 'Message',
             acceptText: 'Accept terms and conditions',
-            extra: <Text1 regular>This is the extra zone</Text1>,
+            slot: <Text1 regular>This is the slot zone</Text1>,
             forceWeb: true,
             showCancel: true,
             link: <ButtonLink href="https://google.com">Link</ButtonLink>,
@@ -3287,181 +3370,6 @@ const alertSnippets = [
   </Sheet>
 )}`,
     },
-    {
-        group: 'Modals',
-        name: 'InfoSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen",false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <InfoSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    items={[
-      {
-        id: "1",
-        title: "Item 1",
-        description: "Description",
-        icon: { type: "bullet" },
-      },
-      {
-        id: "2",
-        title: "Item 2",
-        description: "Description",
-        icon: { type: "regular", Icon: IconCocktailRegular },
-      },
-      {
-        id: "3",
-        title: "Item 3",
-        description: "Description",
-        icon: { type: "small", Icon: IconCheckRegular },
-      },
-    ]}
-  />
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'RadioListSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen", false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <RadioListSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    onSelect={(selected) => console.log(selected)}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    items={[
-      "Apple",
-      "Banana",
-      "Pineapple",
-      "Mango",
-      "Peach",
-      "Pear",
-      "Strawberry",
-      "Watermelon",
-      "Kiwi",
-      "Cherry",
-      "Grape",
-      "Lemon",
-      "Lime",
-    ].map((fruit, idx) => ({
-      id: String(idx),
-      title: fruit,
-      description: "Description",
-      asset: (
-        <Circle backgroundColor={colors.brandLow} size={40}>
-          <IconMobileDeviceRegular color={colors.brand} />
-        </Circle>
-      ),
-    }))}
-  />
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'ActionsListSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen", false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <ActionsListSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    onSelect={(selected) => console.log(selected)}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    items={[
-      {
-        id: "1",
-        title: "Action with icon",
-        icon: {
-          Icon: IconLightningRegular,
-        },
-      },
-      {
-        id: "2",
-        title: "Action without icon",
-      },
-      {
-        id: "3",
-        title: "Destructive action",
-        style: "destructive",
-        icon: {
-          Icon: IconTrashCanRegular,
-        },
-      },
-    ]}
-  />
-)}`,
-    },
-    {
-        group: 'Modals',
-        name: 'ActionsSheet',
-        code: `
-<ButtonPrimary
-  aria-expanded={getState("isSheetOpen", false)}
-  aria-haspopup="dialog"
-  disabled={getState("isSheetOpen")}
-  onPress={() => {
-    setState("isSheetOpen", true);
-  }}
->
-  Open
-</ButtonPrimary>
-
-{getState("isSheetOpen") && (
-  <ActionsSheet
-    onClose={() => {
-      setState("isSheetOpen", false);
-    }}
-    onPressButton={(selected) => console.log(selected)}
-    title="Title"
-    subtitle="Subtitle"
-    description="Description"
-    button={{ text: "Primary" }}
-    secondaryButton={{ text: "Secondary" }}
-    buttonLink={{ text: "Link", withChevron: true }}
-  />
-)}`,
-    },
 ];
 
 const skeletonSnippets = [
@@ -3609,7 +3517,7 @@ const heroSnippets = [
                 pretitle="Pretitle"
                 title={["Title", "Title2"][idx]}
                 description="This is a long description with a long text to see how this works"
-                extra={<Placeholder />}
+                slot={<Placeholder />}
                 button={<ButtonPrimary fake>Action</ButtonPrimary>}
                 buttonLink={<ButtonLink href="#">Link</ButtonLink>}
                 dataAttributes={{ testid: "hero" }}
@@ -3630,8 +3538,8 @@ const heroSnippets = [
           title="Vuela con la Fibra 1Gb"
           description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
           button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
-          extra={<Placeholder />}
-          sideExtra={<Placeholder />}
+          slot={<Placeholder />}
+          sideSlot={<Placeholder />}
         />
       `,
     },
@@ -3646,8 +3554,8 @@ const heroSnippets = [
           title="Vuela con la Fibra 1Gb"
           description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
           button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
-          extra={<Placeholder />}
-          sideExtra={<Placeholder />}
+          slot={<Placeholder />}
+          sideSlot={<Placeholder />}
         />
       `,
     },
@@ -3670,8 +3578,8 @@ const heroSnippets = [
                   "",
                 ][idx]
               }
-              extra={<Placeholder />}
-              sideExtra={<Placeholder />}
+              slot={<Placeholder />}
+              sideSlot={<Placeholder />}
               button={<ButtonPrimary fake>Action</ButtonPrimary>}
               buttonLink={<ButtonLink href="#">Link</ButtonLink>}
             />
@@ -3800,7 +3708,7 @@ const gridSnippets = [
         code: `
 <Grid columns={2} rows={3} gap={8}>
   <GridItem>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3811,7 +3719,7 @@ const gridSnippets = [
     />
   </GridItem>
   <GridItem rowSpan={2}>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3822,7 +3730,7 @@ const gridSnippets = [
     />
   </GridItem>
   <GridItem>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3833,7 +3741,7 @@ const gridSnippets = [
     />
   </GridItem>
   <GridItem columnSpan={2}>
-    <SnapCard
+    <DataCard size="snap"
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
@@ -3852,7 +3760,7 @@ const gridSnippets = [
         code: `
 <Grid columns={{ minSize: 100 }} gap={8}>
   {Array.from({ length: 10 }, (_, idx) => (
-    <SnapCard
+    <DataCard size="snap"
       key={idx}
       asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
@@ -3896,7 +3804,7 @@ const advancedDataCardSnippets = [
           pretitle="pretitle"
           pretitleAs="h4"
           description="description"
-          extra={[
+          slot={[
             <RowBlock title="RowBlock" description="description" />,
             <SimpleBlock
               image={
@@ -4307,6 +4215,113 @@ const timelineSnippets: Array<Snippet> = [
     },
 ];
 
+const orderedListSnippets: Array<Snippet> = [
+    {
+        group: 'OrderedList',
+        name: 'OrderedList',
+        code: `
+        <Text3 regular as="div">
+  <OrderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <OrderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </OrderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </OrderedList>
+</Text3>`,
+    },
+    {
+        group: 'OrderedList',
+        name: 'OrderedList (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <OrderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </OrderedList>
+</Text3>`,
+    },
+];
+
+const unorderedListSnippets: Array<Snippet> = [
+    {
+        group: 'UnorderedList',
+        name: 'UnorderedList',
+        code: `
+        <Text3 regular as="div">
+  <UnorderedList>
+    <ListItem>List item 1</ListItem>
+    <ListItem>List item 2</ListItem>
+    <ListItem>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum
+      <UnorderedList>
+        <ListItem>Nested list item 2.1</ListItem>
+        <ListItem>Nested list item 2.2</ListItem>
+        <ListItem>Nested list item 2.3</ListItem>
+      </UnorderedList>
+    </ListItem>
+    <ListItem>List item 4</ListItem>
+  </UnorderedList>
+</Text3>`,
+    },
+    {
+        group: 'Ul',
+        name: 'Ul (with icons)',
+        code: `
+        <Text3 regular as="div">
+  <UnorderedList>
+    <ListItem Icon={IconLightningFilled}>List item 1</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 2</ListItem>
+    <ListItem Icon={IconLightningFilled}>List item 3</ListItem>
+  </UnorderedList>
+</Text3>`,
+    },
+];
+
+const listItemSnippets = [
+    {
+        group: 'ListItem',
+        name: 'ListItem',
+        code: `<ListItem>List item</ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem with icon',
+        code: `<ListItem Icon={IconLightningFilled}>List item</ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem with custom icon',
+        code: `<ListItem icon={<IconLightningFilled size="1em" color={colors.error} />}>
+      List item with custom icon rendering
+    </ListItem>`,
+    },
+    {
+        group: 'ListItem',
+        name: 'ListItem without marker',
+        code: `<ListItem withMarker={false}>List item</Li>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4353,6 +4368,8 @@ export default [
     ...accordionSnippets,
     ...listSnippets,
     ...listSnippetsAvatar,
+    ...orderedListSnippets,
+    ...unorderedListSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
     ...sliderSnippets,
@@ -4378,6 +4395,18 @@ export default [
         group: 'NavigationBreadcrumbs',
         name: 'NavigationBreadcrumbs',
         code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
+    },
+    {
+        group: 'Pagination',
+        name: 'Pagination',
+        code: `
+            <Pagination
+                mode="iconOnly"
+                totalPages={10}
+                surroundingPageCount={1}
+                currentPage={getState("paginationPage", 3)}
+                onChange={(page) => setState("paginationPage", page)}
+            />`,
     },
     ...titlesSnippets,
     ...emptyStatesGroup,
@@ -4415,7 +4444,7 @@ export default [
     {
         group: 'Chip',
         name: 'Chip navigation inverse',
-        code: ` <ResponsiveLayout isInverse={true} fullWidth>
+        code: ` <ResponsiveLayout variant="brand" fullWidth>
                   <Box padding={16} width="fit-content" >
                     <div style={{lineHeight: 0}}>
                       <Chip href="https://example.com">Chip</Chip>
@@ -4505,5 +4534,39 @@ export default [
     ...loadingScreenSnippets,
     ...tableSnippets,
     ...timelineSnippets,
+    ...listItemSnippets,
+    {
+        group: 'Forms',
+        name: 'FileUpload (with drop zone)',
+        code: `
+        <FileUpload
+            name="file"
+            withDropZone
+            asset={<IconExportRegular color="currentColor" />}
+            title="Drag or upload your file"
+            description="File can be up to 50Mb"
+            renderButton={(props) => (
+                <ButtonPrimary {...props}>
+                    Choose file
+                </ButtonPrimary>
+            )}
+        />`,
+    },
+    {
+        group: 'Forms',
+        name: 'FileUpload',
+        code: `
+        <FileUpload
+            name="file"
+            asset={<IconExportRegular color="currentColor" />}
+            title="Upload your file"
+            description="File can be up to 50Mb"
+            renderButton={(props) => (
+                <ButtonPrimary {...props}>
+                    Choose file
+                </ButtonPrimary>
+            )}
+        />`,
+    },
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

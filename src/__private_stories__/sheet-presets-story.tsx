@@ -1,22 +1,10 @@
 import * as React from 'react';
-import {
-    Box,
-    ButtonPrimary,
-    Circle,
-    IconCheckRegular,
-    IconCocktailRegular,
-    IconLightningRegular,
-    IconMobileDeviceRegular,
-    IconTrashCanRegular,
-    SheetRoot,
-    skinVars,
-    Stack,
-    Text3,
-} from '..';
+import {Box, ButtonPrimary, Circle, IconMobileDeviceRegular, SheetRoot, skinVars, Stack, Text3} from '..';
 import RadioListSheet from '../sheet-radio-list';
 import InfoSheet from '../sheet-info';
 import ActionsSheet from '../sheet-actions';
 import ActionsListSheet from '../sheet-actions-list';
+import avatarImg from '../__stories__/images/avatar.jpg';
 
 export default {
     title: 'Private/Sheet Presets',
@@ -98,6 +86,7 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({
                         'Lime',
                     ].map((fruit, idx) => ({
                         id: String(idx),
+                        tag: {type: 'promo', text: 'Tag'},
                         title: fruit,
                         description: 'Description',
                         asset: (
@@ -178,7 +167,7 @@ export const ActionsList: StoryComponent<SheetArgs> = ({
                             id: '1',
                             title: 'Action with icon',
                             icon: {
-                                Icon: IconLightningRegular,
+                                url: avatarImg,
                             },
                         },
                         {
@@ -190,7 +179,7 @@ export const ActionsList: StoryComponent<SheetArgs> = ({
                             title: 'Destructive action',
                             style: 'destructive',
                             icon: {
-                                Icon: IconTrashCanRegular,
+                                url: avatarImg,
                             },
                         },
                     ]}
@@ -263,10 +252,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({
                                 ? {type: 'bullet'}
                                 : {
                                       type: iconType,
-                                      Icon: {
-                                          regular: IconCocktailRegular,
-                                          small: IconCheckRegular,
-                                      }[iconType],
+                                      url: avatarImg,
                                   },
                     }))}
                 />

@@ -24,7 +24,7 @@ test.each(DEVICES)('Switch - inverse (%s)', async (device) => {
     await openStoryPage({
         id: 'components-switch--controlled',
         device,
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const wrapper = await screen.findByTestId('switch-wrapper');

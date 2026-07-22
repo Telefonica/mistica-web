@@ -25,25 +25,25 @@ const getCases = () => {
     const cases = [];
     for (const device of devices) {
         for (const control of controls) {
-            const extra = false;
+            const slot = false;
             const badge = true;
-            cases.push([device, control, extra, badge]);
+            cases.push([device, control, slot, badge]);
         }
-        for (const extra of [true, false]) {
+        for (const slot of [true, false]) {
             const badge = false;
-            cases.push([device, 'none', extra, badge]);
+            cases.push([device, 'none', slot, badge]);
         }
     }
     return cases;
 };
 
-test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+test.each(getCases())('Row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
     await openStoryPage({
         id: 'components-lists--row-list-story',
         device: device as Device,
         args: {
             control,
-            extra,
+            slot,
             badge,
             headline: 'Headline',
             detail: 'Detail',
@@ -56,13 +56,13 @@ test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, contr
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(getCases())('Boxed row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+test.each(getCases())('Boxed row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
     await openStoryPage({
         id: 'components-lists--boxed-row-list-story',
         device: device as Device,
         args: {
             control,
-            extra,
+            slot,
             badge,
             headline: 'Headline',
             detail: 'Detail',
@@ -187,7 +187,7 @@ test('Rows over inverse background', async () => {
         id: 'components-lists--row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse: true,
+            variantOutside: 'brand',
         },
     });
 
@@ -201,7 +201,7 @@ test('BoxedRows over inverse background', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse: true,
+            variantOutside: 'brand',
         },
     });
 
@@ -215,7 +215,7 @@ test('BoxedRows inverse', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            inverse: true,
+            variant: 'brand',
         },
     });
 
@@ -229,8 +229,8 @@ test('BoxedRows inverse over inverse', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            inverse: true,
-            overInverse: true,
+            variant: 'brand',
+            variantOutside: 'brand',
         },
     });
 
@@ -258,7 +258,7 @@ test('Rows danger over inverse background', async () => {
         id: 'components-lists--row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse: true,
+            variantOutside: 'brand',
             danger: true,
         },
     });
@@ -278,6 +278,82 @@ test('BoxedRows danger', async () => {
     });
 
     const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('UnorderedList', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--unordered-list-story',
+        device,
+    });
+
+    const list = await screen.findByLabelText('Unordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('UnorderedList default icons', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--unordered-list-story',
+        device,
+        args: {customIcon: false},
+    });
+
+    const list = await screen.findByLabelText('Unordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('UnorderedList without marker', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--unordered-list-story',
+        device,
+        args: {withMarker: false},
+    });
+
+    const list = await screen.findByLabelText('Unordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('OrderedList', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--ordered-list-story',
+        device,
+    });
+
+    const list = await screen.findByLabelText('Ordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('OrderedList default icons', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--ordered-list-story',
+        device,
+        args: {customIcon: false},
+    });
+
+    const list = await screen.findByLabelText('Ordered List');
+
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('OrderedList without marker', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--ordered-list-story',
+        device,
+        args: {withMarker: false},
+    });
+
+    const list = await screen.findByLabelText('Ordered List');
+
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });

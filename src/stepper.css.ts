@@ -110,6 +110,8 @@ export const step = style([
     },
 ]);
 
+const stepIconDesktopSize = `calc(${pxToRem(16)} + 16px)`;
+
 export const stepIconNumber = style([
     sprinkles({
         position: 'relative',
@@ -120,8 +122,8 @@ export const stepIconNumber = style([
         width: `calc(${pxToRem(8)} + 16px)`,
         '@media': {
             [mq.desktopOrBigger]: {
-                height: `calc(${pxToRem(16)} + 16px)`,
-                width: `calc(${pxToRem(16)} + 16px)`,
+                height: stepIconDesktopSize,
+                width: stepIconDesktopSize,
             },
         },
     },
@@ -174,7 +176,7 @@ export const textContainer = style([
     }),
     {
         width: 200,
-        top: `calc(${pxToRem(24)} + 18px)`,
+        top: `calc(${stepIconDesktopSize} + 16px)`,
         '@media': {
             [mq.tabletOrSmaller]: {
                 display: 'none',

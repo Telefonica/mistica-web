@@ -3,16 +3,16 @@ import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
-export const MOBILE_SIDE_MARGIN = 16;
 export const TABLET_SIDE_MARGIN = 32;
-export const SMALL_DESKTOP_SIDE_MARGIN = 48;
-export const LARGE_DESKTOP_MAX_WIDTH = 1416;
+export const LARGE_DESKTOP_SIDE_MARGIN = 64;
+export const EXTRA_LARGE_DESKTOP_MAX_WIDTH = 1704;
 
 const marginValue = {
-    largeDesktop: `calc((100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
-    desktop: `${SMALL_DESKTOP_SIDE_MARGIN}px`,
+    extraLargeDesktop: `calc((100vw - ${EXTRA_LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
+    largeDesktop: `${LARGE_DESKTOP_SIDE_MARGIN}px`,
+    desktop: skinVars.spacing.responsiveLayoutMargin,
     tablet: `${TABLET_SIDE_MARGIN}px`,
-    mobile: `${MOBILE_SIDE_MARGIN}px`,
+    mobile: skinVars.spacing.responsiveLayoutMargin,
 };
 
 const currentMargin = createVar();
@@ -67,6 +67,11 @@ export const responsiveLayoutContainer = style({
 
 export const desktopContainer = style({
     '@media': {
+        [mq.extraLargeDesktop]: {
+            vars: {
+                [currentMargin]: marginValue.extraLargeDesktop,
+            },
+        },
         [mq.largeDesktop]: {
             vars: {
                 [currentMargin]: marginValue.largeDesktop,
@@ -82,6 +87,11 @@ export const desktopContainer = style({
 
 export const forcedMarginDesktopContainer = style({
     '@media': {
+        [mq.extraLargeDesktop]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.extraLargeDesktop} + ${fallbackVar(sideMargin, '0px')})`,
+            },
+        },
         [mq.largeDesktop]: {
             vars: {
                 [currentMargin]: `calc(${marginValue.largeDesktop} + ${fallbackVar(sideMargin, '0px')})`,
@@ -126,7 +136,8 @@ export const forcedMarginMobileContainer = style({
 });
 
 export const backgroundVariant = {
-    inverse: sprinkles({background: skinVars.colors.backgroundBrand}),
+    brand: sprinkles({background: skinVars.colors.backgroundBrand}),
+    negative: sprinkles({background: skinVars.colors.backgroundNegative}),
     media: sprinkles({background: 'transparent'}),
     alternative: sprinkles({background: skinVars.colors.backgroundAlternative}),
 };

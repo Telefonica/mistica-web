@@ -10,6 +10,7 @@ import {
     ResponsiveLayout,
 } from '..';
 
+import type {Variant} from '../theme-variant-context';
 import type {DataAttributes} from '../utils/types';
 
 const badgeOptions = ['0', '2', '14', 'undefined'];
@@ -17,25 +18,32 @@ const badgeOptions = ['0', '2', '14', 'undefined'];
 export default {
     title: 'Components/Chip',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
     icon: boolean;
     closable: boolean;
     active: boolean;
     badge: string;
     href: string;
+    small: boolean;
 };
 
 type Props = {
-    inverse: boolean;
+    variant: Variant;
     children: React.ReactNode;
     dataAttributes: DataAttributes;
 };
 
-const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => (
-    <ResponsiveLayout isInverse={inverse} fullWidth>
+const ChipBackgroundContainer = ({variant, dataAttributes, children}: Props) => (
+    <ResponsiveLayout variant={variant} fullWidth>
         <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
             <div
                 style={{
@@ -51,24 +59,26 @@ const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => 
 );
 
 export const Default: StoryComponent<Args> = ({
-    inverse,
+    variantOutside,
     icon,
     closable,
     badge,
     active: chipActive,
     href: hrefProp,
+    small,
 }) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
         href: hrefProp !== 'undefined' ? hrefProp : '',
         active: chipActive,
+        small,
     };
 
     const {href, active, ...rest} = props;
 
     return (
-        <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
+        <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} variant={variantOutside}>
             {closable ? (
                 <Chip onClose={() => window.alert('closed')} {...rest}>
                     Chip
@@ -80,14 +90,20 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon}) => {
+export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({
+    variantOutside,
+    badge,
+    icon,
+    small,
+}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        small,
     };
 
     return (
-        <ChipBackgroundContainer dataAttributes={{testid: 'chip-single-selection'}} inverse={inverse}>
+        <ChipBackgroundContainer dataAttributes={{testid: 'chip-single-selection'}} variant={variantOutside}>
             <RadioGroup name="chip-group" defaultValue="1">
                 <Inline space={8}>
                     <RadioButton
@@ -120,14 +136,23 @@ export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse
     );
 };
 
-export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon}) => {
+export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({
+    variantOutside,
+    badge,
+    icon,
+    small,
+}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        small,
     };
 
     return (
-        <ChipBackgroundContainer dataAttributes={{testid: 'chip-multiple-selection'}} inverse={inverse}>
+        <ChipBackgroundContainer
+            dataAttributes={{testid: 'chip-multiple-selection'}}
+            variant={variantOutside}
+        >
             <Inline space={8}>
                 <Checkbox
                     name="chip-checkbox-1"
@@ -158,38 +183,42 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
     );
 };
 export const NavigableChip: StoryComponent<{
-    inverse: boolean;
+    variantOutside: Variant;
     icon: boolean;
     badge: string;
-}> = ({inverse, icon, badge}) => {
+    small: boolean;
+}> = ({variantOutside, icon, badge, small}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
         href: 'https://example.com',
         active: true,
+        small,
     };
 
     return (
-        <ChipBackgroundContainer dataAttributes={{testid: 'navigable-chip'}} inverse={inverse}>
+        <ChipBackgroundContainer dataAttributes={{testid: 'navigable-chip'}} variant={variantOutside}>
             <Chip {...props}>Chip</Chip>
         </ChipBackgroundContainer>
     );
 };
 
 const defaultArgs = {
-    inverse: false,
+    variantOutside: 'default',
     active: false,
     badge: '0',
     icon: false,
     closable: false,
+    small: false,
     href: 'undefined',
-};
+} as const;
 
 const navigableArgs = {
-    inverse: false,
+    variantOutside: 'default',
     badge: '0',
     icon: false,
-};
+    small: false,
+} as const;
 
 const defaultArgTypes = {
     badge: {

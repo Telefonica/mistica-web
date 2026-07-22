@@ -6,17 +6,24 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconAddBoltonFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-    const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -25,16 +32,18 @@ const IconAddBoltonFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
             </svg>
         );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M7 3h10l5 9-5 9H7l-5-9zm5.705 9.734h2.826c.393 0 .705-.33.705-.734s-.317-.733-.705-.733h-2.826v-2.94c0-.404-.316-.733-.705-.733s-.705.33-.705.734v2.939H8.469c-.389 0-.705.329-.705.733s.316.733.705.733h2.826v2.94c0 .404.316.733.705.733s.705-.33.705-.734z"
-                />
-            </svg>
-        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconAddBoltonFilled;

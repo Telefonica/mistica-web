@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './radio-button.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -81,7 +81,7 @@ const RadioButton = ({
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const {isIos} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const themeVariant = useThemeVariant();
 
     /**
      * The radio will gain focus with tab navigation if:
@@ -129,9 +129,11 @@ const RadioButton = ({
     const radio = (
         <div
             className={classnames(
-                isInverse
-                    ? styles.inverseOuterCircleVariants[outerCircleVariant]
-                    : styles.outerCircleVariants[outerCircleVariant],
+                themeVariant === 'brand' || themeVariant === 'media'
+                    ? styles.overBrandOuterCircleVariants[outerCircleVariant]
+                    : themeVariant === 'negative'
+                      ? styles.overNegativeOuterCircleVariants[outerCircleVariant]
+                      : styles.outerCircleVariants[outerCircleVariant],
                 {
                     [styles.disabled]: disabled,
                 }
@@ -140,9 +142,11 @@ const RadioButton = ({
             {!isIos && (
                 <div
                     className={
-                        isInverse
-                            ? styles.inverseInnerCircleVariant[innerCircleVariant]
-                            : styles.innerCircleVariant[innerCircleVariant]
+                        themeVariant === 'brand' || themeVariant === 'media'
+                            ? styles.overBrandInnerCircleVariant[innerCircleVariant]
+                            : themeVariant === 'negative'
+                              ? styles.overNegativeInnerCircleVariant[innerCircleVariant]
+                              : styles.innerCircleVariant[innerCircleVariant]
                     }
                 />
             )}
@@ -168,7 +172,7 @@ const RadioButton = ({
             }}
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
-            {...getPrefixedDataAttributes(dataAttributes, 'RadioButton')}
+            {...getPrefixedDataAttributes({testid: 'RadioButton', ...dataAttributes})}
         >
             {rest.render ? (
                 rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
@@ -296,7 +300,7 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
             role="radiogroup"
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : props['aria-labelledby']}
-            {...getPrefixedDataAttributes(props.dataAttributes, 'RadioGroup')}
+            {...getPrefixedDataAttributes({testid: 'RadioGroup', ...props.dataAttributes})}
         >
             <RadioContext.Provider
                 value={{

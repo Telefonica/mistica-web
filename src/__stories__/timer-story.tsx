@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {ResponsiveLayout, Box, Text3, Timer, TextTimer, Stack, Title1, Text2} from '..';
 import {isEqual} from '../utils/helpers';
+import mediaBackgroundImg from './images/beach.jpg';
 
 import type {RemainingTime, TimeUnit} from '../timer';
 import type {Variant} from '../theme-variant-context';
@@ -11,7 +12,7 @@ export default {
 };
 
 interface BaseArgs {
-    themeVariant: Variant;
+    variantOutside: Variant;
     minTimeUnit: TimeUnit;
     maxTimeUnit: TimeUnit;
     days: number;
@@ -26,7 +27,7 @@ const HOUR = MINUTE * 60;
 const DAY = HOUR * 24;
 
 const baseArgs: BaseArgs = {
-    themeVariant: 'default',
+    variantOutside: 'default',
     minTimeUnit: 'seconds',
     maxTimeUnit: 'hours',
     days: 1,
@@ -36,8 +37,8 @@ const baseArgs: BaseArgs = {
 };
 
 const baseArgTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative', 'media'],
         control: {type: 'select'},
     },
     minTimeUnit: {
@@ -54,7 +55,7 @@ type TextTimerArgs = BaseArgs & {labelType: 'none' | 'short' | 'long'};
 
 export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     labelType,
-    themeVariant,
+    variantOutside,
     minTimeUnit,
     maxTimeUnit,
     days,
@@ -72,7 +73,7 @@ export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     }, [days, hours, minutes, seconds]);
 
     return (
-        <ResponsiveLayout fullWidth variant={themeVariant}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16}>
                 <Stack space={16}>
                     <Text3 regular>
@@ -120,7 +121,7 @@ TextTimerStory.argTypes = {
 type TimerArgs = BaseArgs & {boxed: boolean};
 
 export const TimerStory: StoryComponent<TimerArgs> = ({
-    themeVariant,
+    variantOutside,
     minTimeUnit,
     maxTimeUnit,
     days,
@@ -139,32 +140,41 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
     }, [days, hours, minutes, seconds]);
 
     return (
-        <ResponsiveLayout fullWidth variant={themeVariant}>
-            <Box padding={16}>
-                <Stack space={16}>
-                    <Timer
-                        dataAttributes={{testid: 'timer'}}
-                        endTimestamp={endTimestamp}
-                        minTimeUnit={minTimeUnit}
-                        maxTimeUnit={maxTimeUnit}
-                        boxed={boxed}
-                        onProgress={(currentValue) => {
-                            if (!isEqual(currentValue, remainingTime)) {
-                                setRemainingTime(currentValue);
-                            }
-                        }}
-                    />
+        <ResponsiveLayout fullWidth variant={variantOutside}>
+            <div
+                style={{
+                    background:
+                        variantOutside === 'media'
+                            ? `url(${mediaBackgroundImg}) center/cover`
+                            : 'transparent',
+                }}
+            >
+                <Box padding={16}>
+                    <Stack space={16}>
+                        <Timer
+                            dataAttributes={{testid: 'timer'}}
+                            endTimestamp={endTimestamp}
+                            minTimeUnit={minTimeUnit}
+                            maxTimeUnit={maxTimeUnit}
+                            boxed={boxed}
+                            onProgress={(currentValue) => {
+                                if (!isEqual(currentValue, remainingTime)) {
+                                    setRemainingTime(currentValue);
+                                }
+                            }}
+                        />
 
-                    <Stack space={8}>
-                        <Title1 as="h2">onProgress callback value</Title1>
-                        {remainingTime && (
-                            <Text2 regular as="pre">
-                                {JSON.stringify(remainingTime, null, 2)}
-                            </Text2>
-                        )}
+                        <Stack space={8}>
+                            <Title1 as="h2">onProgress callback value</Title1>
+                            {remainingTime && (
+                                <Text2 regular as="pre">
+                                    {JSON.stringify(remainingTime, null, 2)}
+                                </Text2>
+                            )}
+                        </Stack>
                     </Stack>
-                </Stack>
-            </Box>
+                </Box>
+            </div>
         </ResponsiveLayout>
     );
 };

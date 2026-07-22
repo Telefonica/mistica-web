@@ -31,8 +31,10 @@ const buildApp = () => {
 
 const calcStats = () => {
     buildApp();
-    const appInitial = 139844; // precalculated - see webpack.config.js
-    const appInitialGzip = 45086;
+    // appInitial is the size of dist/main.js
+    // to get the gzip initial size: `gzip main.js`
+    const appInitial = 189643; // precalculated - see webpack.config.js
+    const appInitialGzip = 59422;
     const appWithMistica = getTotalSize([join(PATH_APP_BUILD, 'main.js')]);
     const appWithMisticaGzip = getTotalSize([join(PATH_APP_BUILD, 'main.js')], {gzip: true});
 

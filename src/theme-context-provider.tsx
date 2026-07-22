@@ -7,7 +7,6 @@ import {dimensions, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
-import TabFocus from './tab-focus';
 import ModalContextProvider from './modal-context-provider';
 import TooltipContextProvider from './tooltip-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
@@ -17,6 +16,7 @@ import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
 import {
     defaultBorderRadiiConfig,
+    defaultSpacing,
     defaultTextPresetsConfig,
     defaultThemeVariantsConfig,
 } from './skins/defaults';
@@ -25,7 +25,6 @@ import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
 import * as mq from './media-queries.css';
-import * as styles from './theme-context.css';
 import {localeToLanguage} from './utils/locale';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
@@ -125,7 +124,21 @@ type TextPresetsVars = {
     };
 };
 
+// Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
+const makeRawColors = (colors: Colors): Colors =>
+    Object.fromEntries(
+        Object.entries(colors).map(([colorName, colorValue]) => {
+            let rawColorValue = '';
+            if (colorValue.startsWith('#')) {
+                const [r, g, b] = fromHexToRgb(colorValue);
+                rawColorValue = `${r}, ${g}, ${b}`;
+            }
+            return [colorName, rawColorValue];
+        })
+    ) as Colors;
+
 const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
+    const themeScopeId = React.useId();
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -137,8 +150,8 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
     const language = localeToLanguage(theme.i18n.locale);
 
     const translate = React.useCallback(
-        (token: TextToken, ...params: Array<string | number>): string => {
-            const text = token[language] || token.en;
+        (token: TextToken | string, ...params: Array<string | number>): string => {
+            const text = typeof token === 'string' ? token : token[language] || token.en;
             if (!params.length) {
                 return text;
             }
@@ -186,6 +199,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             },
             borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
             textPresets,
+            spacing: theme.skin.spacing ?? defaultSpacing,
             themeVariants: theme.skin.themeVariants ?? defaultThemeVariantsConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
@@ -195,22 +209,6 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             preventCopyInFormFields: theme.preventCopyInFormFields ?? false,
         };
     }, [colors, theme, isDarkModeEnabled, translate]);
-
-    // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
-    const rawColors = React.useMemo(
-        () =>
-            Object.fromEntries(
-                Object.entries(colors).map(([colorName, colorValue]) => {
-                    let rawColorValue = '';
-                    if (colorValue.startsWith('#')) {
-                        const [r, g, b] = fromHexToRgb(colorValue);
-                        rawColorValue = `${r}, ${g}, ${b}`;
-                    }
-                    return [colorName, rawColorValue];
-                })
-            ) as Colors,
-        [colors]
-    );
 
     const textPresetsVars = React.useMemo(() => {
         // Get an object mapping textPresets tokens to objects containing the token's weight
@@ -244,73 +242,141 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         return Object.assign({}, ...tokenValues) as TextPresetsVars;
     }, [contextTheme]);
 
-    const themeVars = {
-        textPresets: textPresetsVars,
-        colors,
-        rawColors,
-        borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+    const spacingDesktopVars = React.useMemo(
+        () =>
+            Object.fromEntries(
+                Object.entries(contextTheme.spacing).map(([token, values]) => {
+                    if ('desktop' in values) {
+                        return [token, `${(values as any).desktop}px`];
+                    }
+
+                    return [
+                        token,
+                        {
+                            ...('top' in values ? {top: `${(values as any).top.desktop}px`} : {}),
+                            ...('right' in values ? {right: `${(values as any).right.desktop}px`} : {}),
+                            ...('bottom' in values ? {bottom: `${(values as any).bottom.desktop}px`} : {}),
+                            ...('left' in values ? {left: `${(values as any).left.desktop}px`} : {}),
+                        },
+                    ];
+                })
+            ) as typeof vars.spacing,
+        [contextTheme]
+    );
+
+    const spacingMobileVars = React.useMemo(
+        () =>
+            Object.fromEntries(
+                Object.entries(contextTheme.spacing).map(([token, values]) => {
+                    if ('mobile' in values) {
+                        return [token, `${(values as any).mobile}px`];
+                    }
+
+                    return [
+                        token,
+                        {
+                            ...('top' in values ? {top: `${(values as any).top.mobile}px`} : {}),
+                            ...('right' in values ? {right: `${(values as any).right.mobile}px`} : {}),
+                            ...('bottom' in values ? {bottom: `${(values as any).bottom.mobile}px`} : {}),
+                            ...('left' in values ? {left: `${(values as any).left.mobile}px`} : {}),
+                        },
+                    ];
+                })
+            ) as typeof vars.spacing,
+        [contextTheme]
+    );
+
+    const renderStyles = (selector: string) => {
+        if (withoutStyles || (process.env.NODE_ENV === 'test' && !process.env.SSR_TEST)) {
+            return null;
+        }
+
+        const lightRawColors = makeRawColors(lightColors);
+        const darkRawColors = makeRawColors(darkColors);
+
+        const [defaultColors, defaultRawColors] =
+            colorScheme === 'auto' || colorScheme === 'light'
+                ? [lightColors, lightRawColors]
+                : [darkColors, darkRawColors];
+
+        const darkModeMediaQuery =
+            colorScheme === 'auto'
+                ? `@media (prefers-color-scheme: dark) {
+                    ${selector} {
+                        ${assignInlineVars(vars.colors, darkColors)};
+                        ${assignInlineVars(vars.rawColors, darkRawColors)}
+                    }
+                }`
+                : '';
+
+        return (
+            <style>
+                {`
+                ${selector} {
+                    ${assignInlineVars(vars, {
+                        colors: defaultColors,
+                        rawColors: defaultRawColors,
+                        textPresets: textPresetsVars,
+                        borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+                        spacing: spacingDesktopVars,
+                    })}
+                }
+                @media ${mq.tabletOrSmaller} {
+                    ${selector} {
+                        ${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}
+                        ${assignInlineVars(vars.spacing, spacingMobileVars)}
+                    }
+                }
+                ${darkModeMediaQuery}
+            `}
+            </style>
+        );
     };
 
     return (
         <>
-            <TabFocus disabled={!theme.enableTabFocus}>
-                <ModalContextProvider>
-                    <TooltipContextProvider>
-                        <ThemeContext.Provider value={contextTheme}>
-                            <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                                <AspectRatioSupportProvider>
-                                    <DocumentVisibilityProvider>
-                                        <ScreenSizeContextProvider>
-                                            <DialogRoot>
-                                                <SnackbarRoot>
-                                                    {as ? (
-                                                        React.createElement(
+            <ModalContextProvider>
+                <TooltipContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                            <AspectRatioSupportProvider>
+                                <DocumentVisibilityProvider>
+                                    <ScreenSizeContextProvider>
+                                        <DialogRoot>
+                                            <SnackbarRoot>
+                                                {as ? (
+                                                    <>
+                                                        {renderStyles(
+                                                            `[data-mistica-theme="${themeScopeId}"]`
+                                                        )}
+                                                        {React.createElement(
                                                             as,
                                                             {
                                                                 style: {
                                                                     isolation: 'isolate',
-                                                                    ...assignInlineVars(
-                                                                        styles.themeVarsContract,
-                                                                        themeVars
-                                                                    ),
-                                                                    ...assignInlineVars(
-                                                                        styles.textPresetResponsiveVarsContract,
-                                                                        textPresetsResponsiveVars
-                                                                    ),
                                                                 },
-                                                                className: withoutStyles
+                                                                'data-mistica-theme': withoutStyles
                                                                     ? undefined
-                                                                    : styles.themeVars,
+                                                                    : themeScopeId,
                                                             },
                                                             children
-                                                        )
-                                                    ) : (
-                                                        <>
-                                                            {!withoutStyles &&
-                                                                (process.env.NODE_ENV !== 'test' ||
-                                                                    process.env.SSR_TEST) && (
-                                                                    <style>
-                                                                        {`
-                                                                                :root {${assignInlineVars(vars, themeVars)}}
-                                                                                @media ${mq.tabletOrSmaller} {
-                                                                                    :root {${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}}
-                                                                                }
-                                                                            `}
-                                                                    </style>
-                                                                )}
-                                                            {children}
-                                                        </>
-                                                    )}
-                                                </SnackbarRoot>
-                                            </DialogRoot>
-                                        </ScreenSizeContextProvider>
-                                    </DocumentVisibilityProvider>
-                                </AspectRatioSupportProvider>
-                            </TrackingConfig>
-                        </ThemeContext.Provider>
-                    </TooltipContextProvider>
-                </ModalContextProvider>
-            </TabFocus>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {renderStyles(':root')}
+                                                        {children}
+                                                    </>
+                                                )}
+                                            </SnackbarRoot>
+                                        </DialogRoot>
+                                    </ScreenSizeContextProvider>
+                                </DocumentVisibilityProvider>
+                            </AspectRatioSupportProvider>
+                        </TrackingConfig>
+                    </ThemeContext.Provider>
+                </TooltipContextProvider>
+            </ModalContextProvider>
             {!as && <SetupStackingContext />}
         </>
     );

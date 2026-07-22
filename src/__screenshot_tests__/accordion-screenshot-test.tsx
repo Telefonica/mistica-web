@@ -11,7 +11,7 @@ test.each`
         id: 'components-accordions--accordion-story',
         device: 'MOBILE_IOS',
         args: {
-            overInverse,
+            variantOutside: overInverse ? 'brand' : 'default',
             singleOpen,
         },
     });
@@ -46,8 +46,8 @@ test.each`
             id: 'components-accordions--boxed-accordion-story',
             device: 'MOBILE_IOS',
             args: {
-                inverse,
-                overInverse,
+                variant: inverse ? 'brand' : 'default',
+                variantOutside: overInverse ? 'brand' : 'default',
                 singleOpen,
             },
         });
@@ -82,7 +82,7 @@ test.each`
             args: {
                 detail,
                 right,
-                overInverse,
+                variantOutside: overInverse ? 'brand' : 'default',
             },
         });
 

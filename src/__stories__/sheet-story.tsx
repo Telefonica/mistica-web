@@ -226,6 +226,7 @@ export const ShowSheet: StoryComponent<ShowSheetArgs> = ({
                                     selectedId: '1',
                                     items: [
                                         {
+                                            tag: {type: 'promo', text: 'Tag'},
                                             id: '1',
                                             title: 'Item 1',
                                             description: 'Description',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useScreenSize, useTheme, skinVars, useDialog} from '../src';
 import curry from 'lodash/curry';
-import iconKeywords from '../src/generated/mistica-icons/icons-keywords';
+import {iconCategories, iconKeywords} from '../src/generated/mistica-icons/icons-keywords';
 
 import type {AlertProps, ConfirmProps, ExtendedDialogProps} from '../src/dialog';
 import type {Colors} from '../src/skins/types';
@@ -50,6 +50,7 @@ const useScope = (): {
     colors: Colors;
     rawColors: Colors;
     iconKeywords: typeof iconKeywords;
+    iconCategories: typeof iconCategories;
     alert: (params: AlertProps) => void;
     confirm: (params: ConfirmProps) => void;
     dialog: (params: ExtendedDialogProps) => void;
@@ -64,6 +65,7 @@ const useScope = (): {
         colors: skinVars.colors,
         rawColors: skinVars.rawColors,
         iconKeywords,
+        iconCategories,
         alert,
         confirm,
         dialog,

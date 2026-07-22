@@ -1,14 +1,15 @@
-import {globalStyle, style} from '@vanilla-extract/css';
-import {sprinkles} from './sprinkles.css';
-import {vars} from './skins/skin-contract.css';
-import * as mq from './media-queries.css';
-import {pxToRem} from './utils/css';
+import {createVar, globalStyle, style} from '@vanilla-extract/css';
 import {iconContainerSize} from './icon-button.css';
+import * as mq from './media-queries.css';
+import {vars as skinVars, vars} from './skins/skin-contract.css';
+import {sprinkles} from './sprinkles.css';
+import {pxToRem} from './utils/css';
 
 const borderSize = 1;
 
 // We need to substract border size from padding because the container has boxSizing: border-box
-export const fieldVerticalPadding = 8 - borderSize;
+export const fieldTopPadding = `calc(${vars.spacing.inputPadding.top} - ${borderSize}px)`;
+export const fieldBottomPadding = `calc(${vars.spacing.inputPadding.bottom} - ${borderSize}px)`;
 export const fieldLeftPadding = 12 - borderSize;
 export const fieldRightPadding = 16 - borderSize;
 
@@ -16,40 +17,61 @@ export const fieldElementsGap = 12;
 export const fieldEndIconGap = 4;
 export const iconButtonSize = iconContainerSize.default;
 
-export const mobileFontSize = pxToRem(16);
-export const desktopFontSize = pxToRem(18);
+const mobileFontSize = createVar();
+const desktopFontSize = createVar();
+const mobileLineHeight = createVar();
+const desktopLineHeight = createVar();
 
-export const labelLineHeight = pxToRem(24);
-export const inputLineHeight = pxToRem(24);
+const shrinkedLabelMobileFontSize = createVar();
+const shrinkedLabelDesktopFontSize = createVar();
+const shrinkedLabelMobileLineHeight = createVar();
+const shrinkedLabelDesktopLineHeight = createVar();
 
-export const shrinkedLabelLineHeight = {
-    mobile: pxToRem(16),
-    desktop: pxToRem(20),
-};
+const helperTextMobileFontSize = createVar();
+const helperTextDesktopFontSize = createVar();
+const helperTextMobileLineHeight = createVar();
+const helperTextDesktopLineHeight = createVar();
 
-export const labelFontSize = {
-    mobile: pxToRem(16),
-    desktop: pxToRem(18),
+const labelScaleDesktop = createVar();
+const labelScaleMobile = createVar();
+
+export const suggestionsContainerPadding = 8;
+
+export const fieldVars = {
+    mobileFontSize,
+    desktopFontSize,
+    mobileLineHeight,
+    desktopLineHeight,
+    shrinkedLabelMobileFontSize,
+    shrinkedLabelDesktopFontSize,
+    shrinkedLabelMobileLineHeight,
+    shrinkedLabelDesktopLineHeight,
+    helperTextMobileFontSize,
+    helperTextDesktopFontSize,
+    helperTextMobileLineHeight,
+    helperTextDesktopLineHeight,
+    labelScaleDesktop,
+    labelScaleMobile,
 };
 
 const topSpaceWithLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} + ${fieldTopPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} + ${fieldTopPadding})`,
 };
 
 const topSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldTopPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldTopPadding})`,
 };
 
 const bottomSpaceWithLabel = {
-    desktop: fieldVerticalPadding,
-    mobile: fieldVerticalPadding,
+    desktop: fieldBottomPadding,
+    mobile: fieldBottomPadding,
 };
 
 const bottomSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
+    desktop: `calc(${shrinkedLabelDesktopLineHeight} / 2 + ${fieldBottomPadding})`,
+    mobile: `calc(${shrinkedLabelMobileLineHeight} / 2 + ${fieldBottomPadding})`,
 };
 
 const commonInputStyles = style([
@@ -62,11 +84,12 @@ const commonInputStyles = style([
     {
         background: 'none',
         borderRadius: `calc(${vars.borderRadii.input} - 1px)`,
-        lineHeight: inputLineHeight,
+        lineHeight: desktopLineHeight,
         fontSize: desktopFontSize,
         '@media': {
             [mq.tabletOrSmaller]: {
                 fontSize: mobileFontSize,
+                lineHeight: mobileLineHeight,
             },
         },
         caretColor: vars.colors.controlActivated,
@@ -117,6 +140,8 @@ export const textArea = style([
         paddingY: 0,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         resize: 'none',
     },
     commonInputStyles,
@@ -143,7 +168,12 @@ export const emptyDateValue = style({
      */
     selectors: {
         '&::-webkit-date-and-time-value': {
-            minHeight: inputLineHeight,
+            minHeight: desktopLineHeight,
+            '@media': {
+                [mq.tabletOrSmaller]: {
+                    minHeight: mobileLineHeight,
+                },
+            },
         },
     },
 });
@@ -153,6 +183,8 @@ export const input = style([
         position: 'relative',
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         margin: 0,
         WebkitAppearance: 'none',
         appearance: 'none',
@@ -324,26 +356,40 @@ export const prefix = style([
     },
 ]);
 
-export const menuItem = style([
+export const menuItemBase = style([
     sprinkles({
         display: 'flex',
         alignItems: 'center',
-        cursor: 'pointer',
     }),
     {
-        height: pxToRem(48),
-        padding: '6px 16px',
-        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        selectors: {
-            '&:hover': {
-                background: 'rgba(0, 0, 0, 0.08)',
-            },
-        },
+        minHeight: pxToRem(48),
+        padding: '6px 8px',
+        userSelect: 'none',
+        borderRadius: `calc(${skinVars.borderRadii.popup} - ${suggestionsContainerPadding / 2}px)`,
     },
 ]);
 
-export const menuItemSelected = sprinkles({
-    background: vars.colors.backgroundAlternative,
+export const menuItem = style([
+    menuItemBase,
+    sprinkles({
+        cursor: 'pointer',
+    }),
+    {
+        transition: 'background-color 0.1s ease-in-out',
+    },
+]);
+
+export const menuItemSelected = style({
+    backgroundColor: skinVars.colors.backgroundContainerHover,
+    ':active': {
+        backgroundColor: skinVars.colors.backgroundContainerPressed,
+    },
+    '@media': {
+        [mq.touchableOnly]: {
+            backgroundColor: 'transparent',
+            transition: 'none',
+        },
+    },
 });
 
 export const suggestionsContainer = style([
@@ -351,9 +397,12 @@ export const suggestionsContainer = style([
         position: 'absolute',
     }),
     {
-        boxShadow:
-            '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
-        background: 'white',
+        marginTop: 8,
+        boxSizing: 'border-box',
+        boxShadow: '0px 2px 4px 0px #00000033',
+        padding: suggestionsContainerPadding,
+        background: skinVars.colors.backgroundContainer,
+        borderRadius: skinVars.borderRadii.popup,
 
         // one more than TextField label
         zIndex: 2,
@@ -364,9 +413,4 @@ globalStyle(`${suggestionsContainer} > ul`, {
     listStyleType: 'none',
     padding: 0,
     margin: 0,
-});
-
-export const fieldEndIconContainer = style({
-    // remove extra button space on the right so that icon is not too far from field's container
-    marginRight: -12,
 });

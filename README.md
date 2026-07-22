@@ -105,6 +105,53 @@ Explore the components in [Mistica storybook](https://mistica-web.vercel.app)
 Start prototyping interfaces with Mistica components in the
 [Mística playroom](https://mistica-web.vercel.app/playroom)
 
+## AI / LLM Integration
+
+Mistica ships documentation optimised for AI coding assistants. The package includes a `doc/llms/llms.md` file
+with concise component references, critical rules, and links to detailed documentation — all inside
+`node_modules`.
+
+### Using the skill
+
+If you use any agent that supports skills, you can install the bundled `mistica-react` skill so the agent
+automatically reads the right documentation before generating UI code:
+
+```terminal
+npx skills add telefonica/mistica-web
+```
+
+Once installed, your agent should load the skill whenever you ask it to build Mistica UIs and will consult the
+documentation automatically.
+
+Some example prompts that will trigger the skill:
+
+- "Implement a Netflix-like landing page using Mistica"
+- "Implement this design https://www.figma.com/design/ct7WJR90qZTxLnmJdR5C4B/Ai-SDLC-Metrics?node-id=1-2&m=dev
+  using Mistica" (requires an agent with access to Figma, for example via the Figma MCP server)
+- "Create a checkout form with Mistica components"
+- "Build a settings page for a Telefonica app using Mistica"
+
+You can also invoke the skill explicitly if your agent supports slash commands:
+
+```
+/mistica-react implement a Netflix-like landing page
+```
+
+### For LLMs reading this file
+
+If you are an AI assistant and `node_modules/@telefonica/mistica` is available in the project:
+
+1. Read `node_modules/@telefonica/mistica/doc/llms/llms.md` — start here, it has critical rules and an
+   overview.
+2. Read the specific doc files referenced inside `llms/llms.md` based on the task at hand.
+
+If `node_modules/@telefonica/mistica` is **not** available, fall back to the GitHub repository:
+
+- Main LLM reference: `https://github.com/Telefonica/mistica-web/blob/master/doc/llms/llms.md`
+- Components: `https://github.com/Telefonica/mistica-web/blob/master/doc/components.md`
+- Layout: `https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md`
+- Patterns: `https://github.com/Telefonica/mistica-web/blob/master/doc/patterns.md`
+
 ## More docs
 
 - [Examples](https://github.com/Telefonica/mistica-web/tree/master/examples)
@@ -124,7 +171,8 @@ Start prototyping interfaces with Mistica components in the
 - `yarn test-acceptance`: run acceptance tests headless (you need to start storybook first)
 - `yarn test-acceptance --ui`: run acceptance tests with ui (you need to start storybook first)
 - `yarn lint`: check codestyle
-- `yarn ts-check`: check static types
+- `yarn ts-check`: check static types (run `yarn build` first — the type check requires generated declaration
+  files in `dist/`)
 - `yarn build`: build package
 - `yarn storybook`: starts storybook
 - `yarn playroom`: starts playroom

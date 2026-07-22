@@ -1,5 +1,5 @@
 'use client';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './skeletons.css';
@@ -20,14 +20,11 @@ const SkeletonBase = ({
     className,
     noBorderRadius = false,
 }: SkeletonBaseProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const variant = useThemeVariant();
 
     return (
         <div
-            className={classnames(
-                className,
-                isInverse ? styles.background.inverse : styles.background.default
-            )}
+            className={classnames(className, styles.background[variant])}
             style={{
                 borderRadius: noBorderRadius ? 0 : radius,
                 width,

@@ -27,7 +27,7 @@ export const UseIsInViewport: StoryComponent = () => {
             ))}
             <div style={{position: 'fixed', right: 24, top: 24}}>
                 <Circle backgroundColor={skinVars.colors.backgroundBrand} size={64}>
-                    <Text6 color={skinVars.colors.inverse}>{inViewport ? 'Yes' : 'No'}</Text6>
+                    <Text6 color={skinVars.colors.textPrimaryBrand}>{inViewport ? 'Yes' : 'No'}</Text6>
                 </Circle>
             </div>
         </Stack>

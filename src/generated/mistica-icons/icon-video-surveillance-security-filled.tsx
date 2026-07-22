@@ -7,34 +7,57 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconVideoSurveillanceSecurityFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M21.797 8.465a1.45 1.45 0 0 0-.897-.677l-1.312-.339.188-.73a1.13 1.13 0 0 0-.12-.864 1.13 1.13 0 0 0-.698-.525L6.2 2.036a1.14 1.14 0 0 0-1.386.818l-1.412 5.47a1.14 1.14 0 0 0 .818 1.385l6.159 1.59-2.155 6.076H5.806v-2.487c0-.591-.484-1.072-1.075-1.072H3.075c-.594 0-1.075.48-1.075 1.072v5.978c0 .592.483 1.073 1.075 1.073H4.73c.591 0 1.075-.481 1.075-1.073v-2.483h2.481c.393 0 .74-.25.867-.618l2.203-6.212 5.619 1.45q.142.035.285.036c.507 0 .972-.34 1.103-.851l.168-.65 1.308.336q.187.05.373.05c.257 0 .512-.07.743-.207.34-.197.579-.516.677-.897l.318-1.242c.1-.38.044-.776-.154-1.113m-.823.861q0 .005 0 0l-.321 1.245a.455.455 0 0 1-.56.329l-1.312-.324.55-2.134 1.314.326a.456.456 0 0 1 .33.558"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M20.822 8.102a1.344 1.344 0 0 1 .974 1.644l-.364 1.434a1.357 1.357 0 0 1-1.647.98l-.736-.187-.056.216a1.458 1.458 0 0 1-1.773 1.056l-5.205-1.325L9.72 18.42a.62.62 0 0 1-.58.41H6.127v1.548a1.46 1.46 0 0 1-1.46 1.462H3.615a1.46 1.46 0 0 1-1.459-1.459v-5.317c0-.803.655-1.459 1.46-1.459h1.058c.807 0 1.46.656 1.46 1.462v2.535h2.58l2.112-5.986-5.936-1.51A1.466 1.466 0 0 1 3.833 8.33l1.288-5.07v-.006a1.46 1.46 0 0 1 1.773-1.05l12.34 3.14c.377.095.694.333.893.67.199.335.255.728.16 1.106l-.202.795zm-.732 2.865a.124.124 0 0 0 .152-.09l.364-1.43a.12.12 0 0 0-.09-.149l-.736-.188-.426 1.67z"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.797 8.465a1.45 1.45 0 0 0-.897-.677l-1.312-.339.188-.73a1.13 1.13 0 0 0-.12-.864 1.13 1.13 0 0 0-.698-.525L6.2 2.036a1.14 1.14 0 0 0-1.386.818l-1.412 5.47a1.14 1.14 0 0 0 .818 1.385l6.159 1.59-2.155 6.076H5.806v-2.487c0-.591-.484-1.072-1.075-1.072H3.075c-.594 0-1.075.48-1.075 1.072v5.978c0 .592.483 1.073 1.075 1.073H4.73c.591 0 1.075-.481 1.075-1.073v-2.483h2.481c.393 0 .74-.25.867-.618l2.203-6.212 5.619 1.45q.142.035.285.036c.507 0 .972-.34 1.103-.851l.168-.65 1.308.336q.187.05.373.05c.257 0 .512-.07.743-.207.34-.197.579-.516.677-.897l.318-1.242c.1-.38.044-.776-.154-1.113m-.823.861q0 .005 0 0l-.321 1.245a.455.455 0 0 1-.56.329l-1.312-.324.55-2.134 1.314.326a.456.456 0 0 1 .33.558"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17 3.5A1.5 1.5 0 0 1 18.5 5v5a1.5 1.5 0 0 1-1.5 1.5h-4.322l-.52 3.116a3.75 3.75 0 0 1-3.699 3.134H3.75V20a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0v2.25h4.709a2.25 2.25 0 0 0 2.219-1.88l.478-2.87H7A1.5 1.5 0 0 1 5.5 10V5A1.5 1.5 0 0 1 7 3.5zM9 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2m12-.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5z"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconVideoSurveillanceSecurityFilled;

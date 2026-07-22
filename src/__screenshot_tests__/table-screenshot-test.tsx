@@ -37,7 +37,7 @@ const cases = [
         'desktop inverse',
         {
             device: 'DESKTOP',
-            args: {inverse: true},
+            args: {variantOutside: 'brand'},
             fullPageScreenshot: false,
         },
     ],
@@ -45,7 +45,7 @@ const cases = [
         'desktop boxed inverse',
         {
             device: 'DESKTOP',
-            args: {inverse: true, boxed: true},
+            args: {variantOutside: 'brand', boxed: true},
             fullPageScreenshot: false,
         },
     ],
@@ -181,7 +181,7 @@ const cases = [
         'mobile collapse-rows inverse',
         {
             device: 'MOBILE_IOS',
-            args: {responsive: 'collapse-rows', inverse: true},
+            args: {responsive: 'collapse-rows', variantOutside: 'brand'},
             fullPageScreenshot: false,
         },
     ],
@@ -189,7 +189,7 @@ const cases = [
         'mobile collapse-rows boxed inverse',
         {
             device: 'MOBILE_IOS',
-            args: {responsive: 'collapse-rows', boxed: true, inverse: true},
+            args: {responsive: 'collapse-rows', boxed: true, variantOutside: 'brand'},
             fullPageScreenshot: false,
         },
     ],

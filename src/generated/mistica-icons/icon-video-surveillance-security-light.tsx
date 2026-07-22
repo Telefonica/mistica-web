@@ -7,34 +7,58 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconVideoSurveillanceSecurityLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="m21.074 7.943-1.61-.416.268-1.031a.872.872 0 0 0-.63-1.075L5.96 2.029a.88.88 0 0 0-1.075.63l-1.46 5.655c-.121.47.162.954.632 1.075l6.61 1.705.051-.142.02.008-.048.139-.02-.005-2.336 6.591-.003.005a.17.17 0 0 1-.1.103.2.2 0 0 1-.067.013h-3.09v-.008h.292v-2.823a.83.83 0 0 0-.833-.831h-1.7a.83.83 0 0 0-.833.83v6.142c0 .457.373.83.833.83h1.7a.83.83 0 0 0 .833-.828V18.3h2.796a.6.6 0 0 0 .208-.034.66.66 0 0 0 .45-.427l2.348-6.617 6.03 1.556q.113.028.222.028a.86.86 0 0 0 .445-.123.87.87 0 0 0 .406-.537l.244-.947 1.608.414q.154.042.313.041c.216 0 .43-.056.623-.17.285-.166.488-.437.57-.755l.33-1.276a1.24 1.24 0 0 0-.885-1.51M4.873 21.118a.336.336 0 0 1-.34.335h-1.7a.34.34 0 0 1-.34-.337v-6.141c0-.186.152-.337.34-.337h1.7c.188 0 .34.151.34.337zm12.922-9.093a.385.385 0 0 1-.473.277L4.181 8.91a.39.39 0 0 1-.278-.473l1.458-5.652a.385.385 0 0 1 .473-.278l13.142 3.392c.1.026.185.09.239.18.051.09.067.193.038.296zm3.688-2.695-.33 1.275a.73.73 0 0 1-.344.455c-.17.1-.37.129-.56.077l-1.608-.403.697-2.708 1.615.396a.746.746 0 0 1 .53.908"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M20.952 8.221c.303.076.563.269.72.538.16.266.207.585.126.888l-.372 1.462-.002.007-.001.007a1.166 1.166 0 0 1-1.423.835l-.955-.241-.107.423a1.28 1.28 0 0 1-1.557.927l-5.499-1.4-2.406 6.82a.42.42 0 0 1-.395.28H5.818l-.014-.003-.014-.002v1.798c0 .706-.574 1.28-1.28 1.28H3.434a1.28 1.28 0 0 1-1.283-1.28v-5.431c0-.706.574-1.283 1.283-1.283h1.073c.706 0 1.28.577 1.28 1.283v2.804q.009 0 .014-.003t.014-.003h2.966l2.283-6.468-6.282-1.6a1.27 1.27 0 0 1-.788-.585 1.28 1.28 0 0 1-.14-.972l1.317-5.179c.176-.686.871-1.1 1.557-.927l12.6 3.207c.686.177 1.1.874.927 1.56l-.258 1.014zm-3.361 4.036a.44.44 0 0 0 .535-.322s1.317-5.179 1.314-5.182a.44.44 0 0 0-.32-.538L6.521 3.011a.445.445 0 0 0-.538.322L4.667 8.51a.44.44 0 0 0 .05.333.43.43 0 0 0 .272.204l12.596 3.21zm3.025-1.355.373-1.463a.343.343 0 0 0-.241-.411l-.955-.244-.538 2.115.955.244.003.002h.003a.33.33 0 0 0 .4-.243M4.95 20.562h.002V15.13a.444.444 0 0 0-.442-.443H3.434a.444.444 0 0 0-.442.443v5.43c0 .247.196.444.442.446h1.073a.444.444 0 0 0 .443-.442"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m21.074 7.943-1.61-.416.268-1.031a.87.87 0 0 0-.63-1.075L5.96 2.029a.88.88 0 0 0-1.075.63l-1.46 5.655a.884.884 0 0 0 .632 1.075l6.61 1.705.051-.142.02.008-.048.139-.02-.005-2.336 6.591-.003.005a.17.17 0 0 1-.1.103.2.2 0 0 1-.067.013h-3.09v-.008h.292v-2.823a.83.83 0 0 0-.833-.831h-1.7a.83.83 0 0 0-.833.83v6.142c0 .457.373.83.833.83h1.7a.83.83 0 0 0 .833-.828V18.3h2.796a.6.6 0 0 0 .208-.034.66.66 0 0 0 .45-.427l2.348-6.617 6.03 1.556q.113.028.222.028a.86.86 0 0 0 .445-.123.87.87 0 0 0 .406-.537l.244-.947 1.608.414q.154.042.313.041c.216 0 .43-.056.623-.17.285-.166.488-.437.57-.755l.33-1.276a1.24 1.24 0 0 0-.885-1.51M4.873 21.118a.336.336 0 0 1-.34.335h-1.7a.34.34 0 0 1-.34-.337v-6.141c0-.186.152-.337.34-.337h1.7c.188 0 .34.151.34.337zm12.922-9.093a.385.385 0 0 1-.473.277L4.181 8.91a.39.39 0 0 1-.278-.473l1.458-5.652a.385.385 0 0 1 .473-.278l13.142 3.392a.38.38 0 0 1 .277.476zm3.688-2.695-.33 1.275a.73.73 0 0 1-.344.455c-.17.1-.37.129-.56.077l-1.608-.403.697-2.708 1.615.396a.746.746 0 0 1 .53.908"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path fill={fillColor} d="M9 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                    <path
+                        fill={fillColor}
+                        d="M17 3.25c.966 0 1.75.784 1.75 1.75v.25H21a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-2.25V10A1.75 1.75 0 0 1 17 11.75h-4.364l-.479 2.866A3.75 3.75 0 0 1 8.46 17.75H3.75V20a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0v2.25h4.709a2.25 2.25 0 0 0 2.219-1.88l.436-2.62H7A1.75 1.75 0 0 1 5.25 10V5c0-.966.784-1.75 1.75-1.75zM7 4.75a.25.25 0 0 0-.25.25v5c0 .138.112.25.25.25h10a.25.25 0 0 0 .25-.25V5a.25.25 0 0 0-.25-.25zm11.75 3.5h1.5v-1.5h-1.5z"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconVideoSurveillanceSecurityLight;

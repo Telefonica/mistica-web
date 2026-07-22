@@ -7,43 +7,66 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconPlayFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M7.023 22c-.37 0-.743-.108-1.08-.32-.607-.356-.943-1-.943-1.716v-15.9c0-.716.37-1.392 1.012-1.752.671-.392 1.449-.428 2.09-.032l12.909 7.928c.54.32.91.892.978 1.572.067.644-.17 1.32-.642 1.752-.034.036-.068.072-.102.072L8.069 21.716A2.13 2.13 0 0 1 7.023 22"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M7.023 22c-.37 0-.743-.108-1.08-.32-.607-.356-.943-1-.943-1.716v-15.9c0-.716.37-1.392 1.012-1.752.671-.392 1.449-.428 2.09-.032l12.909 7.928c.54.32.91.892.978 1.572.067.644-.17 1.32-.642 1.752-.034.036-.068.072-.102.072L8.069 21.716A2.13 2.13 0 0 1 7.023 22"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M7.496 21.145A1 1 0 0 1 6 20.277V3.723a1 1 0 0 1 1.496-.868l14.485 8.277a1 1 0 0 1 0 1.736z"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.023 22c-.37 0-.743-.108-1.08-.32-.607-.356-.943-1-.943-1.716v-15.9c0-.716.37-1.392 1.012-1.752.671-.392 1.449-.428 2.09-.032l12.909 7.928c.54.32.91.892.978 1.572.067.644-.17 1.32-.642 1.752-.034.036-.068.072-.102.072L8.069 21.716A2.13 2.13 0 0 1 7.023 22"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.496 21.145A1 1 0 0 1 6 20.277V3.723a1 1 0 0 1 1.496-.868l14.485 8.277a1 1 0 0 1 0 1.736z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.589 5.586a1 1 0 0 1 1.415-.448l10.5 5.999a1 1 0 0 1 0 1.728l-10.5 6a1 1 0 0 1-1.415-.45.5.5 0 0 1-.089-.284V5.87c0-.109.034-.206.089-.285"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconPlayFilled;

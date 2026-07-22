@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
 import * as styles from './stacking-group.css';
@@ -24,14 +24,29 @@ const StackingGroup = ({
     maxItems = Infinity,
     children,
 }: Props): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const variant = useThemeVariant();
     const countChildren = React.Children.count(children);
     const moreItemsCount = countChildren - maxItems + 1;
     const space = stacked ? -8 : 8;
     const size = moreItemsStyle.size;
 
     const borderRadius = moreItemsStyle.type === 'circle' ? '50%' : vars.borderRadii.mediaSmall;
-    const textColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand;
+
+    const textColor = {
+        default: vars.colors.textBrand,
+        alternative: vars.colors.textBrand,
+        brand: vars.colors.textPrimaryBrand,
+        negative: vars.colors.textPrimaryNegative,
+        media: vars.colors.textPrimaryNegative,
+    }[variant];
+
+    const backgroundColor = {
+        default: vars.colors.brandLow,
+        alternative: vars.colors.brandLow,
+        brand: vars.colors.backgroundContainerBrandOverBrand,
+        negative: vars.colors.backgroundContainerNegative,
+        media: vars.colors.backgroundContainerNegative,
+    }[variant];
 
     return (
         <div
@@ -52,7 +67,7 @@ const StackingGroup = ({
                             height: size,
                             color: textColor,
                             borderRadius,
-                            backgroundColor: isInverse ? vars.colors.brandHigh : vars.colors.brandLow,
+                            backgroundColor,
                             border: stacked ? `1px solid ${vars.colors.borderLow}` : 'none',
                         }}
                     >

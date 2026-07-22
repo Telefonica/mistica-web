@@ -174,70 +174,12 @@ export const handleContainer = style([
     },
 ]);
 
-export const handleTouchable = style([
-    sprinkles({
-        width: 24,
-        height: 4,
-    }),
-]);
-
 export const handleBar = sprinkles({
     background: skinVars.colors.control,
-    width: '100%',
-    height: '100%',
+    width: 24,
+    height: 4,
     borderRadius: 2,
 });
-
-export const modalCloseButton = style([
-    sprinkles({
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        padding: 24,
-    }),
-    {
-        zIndex: 1,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                display: 'none',
-            },
-        },
-    },
-]);
-
-export const modalCloseButtonIcon = style([
-    sprinkles({
-        width: 32,
-        height: 32,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-    }),
-    {
-        transition: 'background-color 0.1s ease-in-out',
-        selectors: {
-            ':not(:disabled) > &:active': {
-                background: skinVars.colors.backgroundContainerPressed,
-            },
-        },
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    ':not(:disabled) > &:hover': {
-                        background: skinVars.colors.backgroundContainerHover,
-                    },
-                    ':not(:disabled) > &:active': {
-                        background: skinVars.colors.backgroundContainerPressed,
-                    },
-                },
-            },
-            [mq.touchableOnly]: {
-                transition: 'none',
-            },
-        },
-    },
-]);
 
 const overlayClosedStyle = {opacity: 0};
 const overlayAnimation = keyframes({
@@ -261,6 +203,23 @@ export const overlay = style([
 ]);
 
 export const closingOverlay = style(overlayClosedStyle);
+
+export const dismissButton = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        zIndex: 1,
+        top: 24,
+        right: 16,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                top: 28,
+                right: 28,
+            },
+        },
+    },
+]);
 
 export const stickyTitle = style([
     sprinkles({

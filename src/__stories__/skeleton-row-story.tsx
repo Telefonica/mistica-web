@@ -1,38 +1,41 @@
 import * as React from 'react';
-import {ThemeVariant, skinVars} from '..';
+import {Box, ResponsiveLayout} from '..';
 import {SkeletonRow} from '../skeletons';
+
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Skeletons/SkeletonRow',
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
     ariaLabel: string;
     width: string;
 };
 
 const getSize = (n: number | string) => (Number.isNaN(+n) ? n : +n);
 
-export const Default: StoryComponent<Args> = ({inverse, ariaLabel, width}) => {
+export const Default: StoryComponent<Args> = ({variantOutside, ariaLabel, width}) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    padding: 16,
-                }}
-            >
+        <ResponsiveLayout variant={variantOutside}>
+            <Box paddingY={16}>
                 <SkeletonRow
                     ariaLabel={ariaLabel}
                     width={getSize(width)}
                     dataAttributes={{testid: 'skeleton-row'}}
                 />
-            </div>
-        </ThemeVariant>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -40,6 +43,6 @@ Default.storyName = 'SkeletonRow';
 
 Default.args = {
     width: '100%',
-    inverse: false,
+    variantOutside: 'default',
     ariaLabel: '',
 };

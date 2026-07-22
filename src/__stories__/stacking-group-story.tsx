@@ -5,10 +5,18 @@ import Image from '../image';
 import Avatar from '../avatar';
 import img from './images/avatar.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/StackingGroup',
     parameters: {
         fullScreen: true,
+    },
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
 };
 
@@ -19,7 +27,7 @@ type Args = {
     maxItems?: number;
     children?: React.ReactNode;
     itemsToInclude: number;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -28,10 +36,10 @@ export const Default: StoryComponent<Args> = ({
     type,
     maxItems,
     itemsToInclude,
-    inverse = false,
+    variantOutside,
 }) => {
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16} width="max-content" dataAttributes={{testid: 'stacking-group'}}>
                 <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
                     {Array.from({length: itemsToInclude}, (_, idx) =>
@@ -82,5 +90,5 @@ Default.args = {
     size: 64,
     maxItems: 4,
     stacked: true,
-    inverse: false,
+    variantOutside: 'default',
 };

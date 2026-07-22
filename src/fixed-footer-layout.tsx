@@ -39,9 +39,15 @@ type Props = {
     footer: React.ReactNode;
     footerHeight?: number | string;
     footerBgColor?: string;
+    footerRole?: string;
     containerBgColor?: string;
     children: React.ReactNode;
     onChangeFooterHeight?: (heightInPx: number) => void;
+    /**
+     * @default true
+     * When enabled an elevation will be displayed on the footer if it is fixed and there is scrollable content below it. Notice this layout is not fixed on Desktop.
+     */
+    footerScrollEffect?: boolean;
 };
 
 const MIN_AVAILABLE_HEIGHT_FOR_FIXED = 200;
@@ -51,9 +57,11 @@ const FixedFooterLayout = ({
     footer,
     footerHeight = 'auto',
     footerBgColor = vars.colors.background,
+    footerRole,
     containerBgColor = vars.colors.background,
     children,
     onChangeFooterHeight,
+    footerScrollEffect = true,
 }: Props): JSX.Element => {
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
@@ -78,7 +86,12 @@ const FixedFooterLayout = ({
          * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
          * content's height is too small, so we avoid unnecesary calculations in these cases.
          */
-        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || !isFooterFixed) {
+        if (
+            !footerScrollEffect ||
+            !isTabletOrSmaller ||
+            isRunningAcceptanceTest(platformOverrides) ||
+            !isFooterFixed
+        ) {
             setDisplayElevation(false);
             return;
         }
@@ -110,6 +123,7 @@ const FixedFooterLayout = ({
         platformOverrides,
         isTabletOrSmaller,
         isFooterFixed,
+        footerScrollEffect,
         // `topDistance` and `contentHeight` dependencies are needed to recalculate the elevation state
         topDistance,
         contentHeight,
@@ -192,9 +206,9 @@ const FixedFooterLayout = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside
+                    <div
+                        role={footerRole}
                         ref={ref}
-                        data-component-name="FixedFooter"
                         data-testid="FixedFooter"
                         style={{
                             height: footerHeight,
@@ -202,7 +216,7 @@ const FixedFooterLayout = ({
                         }}
                     >
                         {footer}
-                    </aside>
+                    </div>
                 )}
             </div>
         </>

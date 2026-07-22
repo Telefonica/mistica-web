@@ -1,27 +1,29 @@
+import {addons} from 'storybook/preview-api';
 import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
 import './css/onair-font.css';
+import './css/movistar-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
     ThemeContextProvider,
     MOVISTAR_SKIN,
     VIVO_SKIN,
-    VIVO_NEW_SKIN,
+    VIVO_EVOLUTION_SKIN,
     O2_SKIN,
-    O2_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
-    TU_SKIN,
     skinVars,
     OverscrollColorProvider,
     ESIMFLAG_SKIN,
 } from '../src';
+import {CYBER_SKIN} from '../src/community/skins/cyber-skin';
 import {AVAILABLE_THEMES, Movistar} from './themes';
-import {addons} from '@storybook/addons';
 import {getPlatform} from '../src/utils/platform';
 
+import type {Preview} from '@storybook/react-vite';
+import type {Decorator} from '@storybook/react';
 import type {ColorScheme, ThemeConfig} from '../src';
 
 type Platform = 'android' | 'desktop' | 'ios';
@@ -31,13 +33,12 @@ const getSkin = (searchParams: URLSearchParams) => {
     return [
         MOVISTAR_SKIN,
         O2_SKIN,
-        O2_NEW_SKIN,
         VIVO_SKIN,
-        VIVO_NEW_SKIN,
+        VIVO_EVOLUTION_SKIN,
         TELEFONICA_SKIN,
         BLAU_SKIN,
-        TU_SKIN,
         ESIMFLAG_SKIN,
+        CYBER_SKIN,
     ].find((skin) => skin === qsSkin);
 };
 
@@ -78,14 +79,20 @@ const getTheme = (
                   },
               }
             : {}),
-        enableTabFocus: true,
+        enableTabFocus: false,
         dimensions: {
             headerMobileHeight: 'mistica',
         },
     };
 };
 
-const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
+const MisticaThemeProvider = ({
+    Story,
+    context,
+}: {
+    Story: Parameters<Decorator>[0];
+    context: Parameters<Decorator>[1];
+}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState(getPlatformByUrl(searchParams));
@@ -96,10 +103,11 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
         const channel = addons.getChannel();
         channel.on('skin-selected', setSkin);
         channel.on('color-scheme-selected', setColorScheme);
-        channel.emit('story-mounted');
         channel.on('platform-selected', (value) => {
             setPlatform(getPlatformByValue(value));
         });
+
+        channel.emit('story-mounted');
 
         return () => {
             channel.off('skin-selected', setSkin);
@@ -119,14 +127,14 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
             {((skin && colorScheme && platform) || isStoryOnNewTab) && (
                 <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
                     <OverscrollColorProvider>
-                        {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
-                        {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
-                            <style>{`body {font-family: "Telefonica Sans"}`}</style>
+                        {(skin === VIVO_SKIN || skin === VIVO_EVOLUTION_SKIN) && (
+                            <style>{`body {font-family: "Vivo Type"}`}</style>
                         )}
-                        {(skin === O2_SKIN ||
-                            skin === O2_NEW_SKIN ||
-                            skin === MOVISTAR_SKIN ||
-                            skin === ESIMFLAG_SKIN) && <style>{`body {font-family: "On Air"}`}</style>}
+                        {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
+                        {(skin === O2_SKIN || skin === ESIMFLAG_SKIN) && (
+                            <style>{`body {font-family: "On Air"}`}</style>
+                        )}
+                        {skin === MOVISTAR_SKIN && <style>{`body {font-family: "Movistar Sans"}`}</style>}
                         <Story {...context} />
                     </OverscrollColorProvider>
                 </ThemeContextProvider>
@@ -135,8 +143,9 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withMisticaThemeProvider = (Story, context) => <MisticaThemeProvider Story={Story} context={context} />;
+const withMisticaThemeProvider: Decorator = (Story, context) => (
+    <MisticaThemeProvider Story={Story} context={context} />
+);
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);
@@ -157,8 +166,7 @@ const Styles = () => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withLayoutDecorator = (Story, context): React.ReactElement => {
+const withLayoutDecorator: Decorator = (Story, context) => {
     const isFullscreen = !!context?.parameters?.fullScreen;
     return (
         <>
@@ -171,9 +179,9 @@ const withLayoutDecorator = (Story, context): React.ReactElement => {
     );
 };
 
-export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
+const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 
-export const parameters = {
+const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
 
@@ -191,9 +199,29 @@ export const parameters = {
                 'Hooks',
                 'Mística Lab',
                 'Community',
+                ['Welcome', '*'],
             ],
         },
     },
-    // Workaround for: https://github.com/storybookjs/storybook/issues/17098
-    docs: {source: {type: 'code'}},
+
+    controls: {
+        matchers: {
+            color: /(background|color)$/i,
+            date: /Date$/i,
+        },
+        /** Disable the "You modified this story. Do you want to save your changes?" dialog */
+        disableSaveFromUI: true,
+    },
+
+    /** Hide actions tab */
+    actions: {
+        disable: true,
+    },
 };
+
+const preview: Preview = {
+    parameters,
+    decorators,
+};
+
+export default preview;

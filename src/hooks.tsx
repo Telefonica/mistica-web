@@ -215,7 +215,7 @@ type IntersectionObserverOptions = {
 };
 
 export const useIsInViewport = (
-    ref: React.RefObject<Element>,
+    ref: React.RefObject<Element | null>,
     defaultValue: boolean,
     options?: IntersectionObserverOptions
 ): boolean => {
@@ -264,7 +264,7 @@ const getBoundingClientRect = (element: Element): BoundingRect => {
 };
 
 export const useBoundingRect = (
-    ref: React.RefObject<Element>,
+    ref: React.RefObject<Element | null>,
     computeOnEveryFrame = true,
     trackIfNotVisible = false
 ): BoundingRect | undefined => {
@@ -297,4 +297,17 @@ export const useBoundingRect = (
     }, [ref, rect, isVisible, computeOnEveryFrame, trackIfNotVisible]);
 
     return rect;
+};
+
+export const useInnerText = (): {text: string; ref: (instance: HTMLElement | null) => void} => {
+    const [text, setText] = React.useState('');
+
+    const ref: React.LegacyRef<HTMLElement> = React.useCallback((node: HTMLElement) => {
+        if (node) {
+            // jsdom doesn't implements innerText. Using textContent as fallback in unit tests although it's not the same
+            setText((process.env.NODE_ENV === 'test' ? node.textContent : node.innerText) || '');
+        }
+    }, []);
+
+    return {text, ref};
 };

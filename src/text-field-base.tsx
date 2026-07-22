@@ -1,22 +1,22 @@
 'use client';
-import * as React from 'react';
-import {Label, HelperText, FieldContainer} from './text-field-components';
-import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
-import {Text3} from './text';
-import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
-import {useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
-import {combineRefs} from './utils/common';
-import * as styles from './text-field-base.css';
-import {vars} from './skins/skin-contract.css';
+import * as React from 'react';
+import {useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import {InternalIconButton, InternalToggleIconButton} from './icon-button';
-import {ThemeVariant} from './theme-variant-context';
 import {iconSize} from './icon-button.css';
+import {vars} from './skins/skin-contract.css';
+import {Text3} from './text';
+import * as styles from './text-field-base.css';
+import {FieldContainer, HelperText, Label} from './text-field-components';
+import {fieldVars} from './text-field-base.css';
 import * as tokens from './text-tokens';
+import {ThemeVariant} from './theme-variant-context';
+import {combineRefs} from './utils/common';
+import {isFirefox, isRunningAcceptanceTest} from './utils/platform';
 
-import type {DataAttributes, IconProps} from './utils/types';
-import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
+import type {InputState} from './text-field-components';
+import type {DataAttributes, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttribute) => {
@@ -58,26 +58,26 @@ export const FieldEndIcon = ({
     uncheckedProps,
     'aria-label': ariaLabel,
 }: FieldEndIconProps): JSX.Element => {
-    return (
-        <div className={styles.fieldEndIconContainer}>
-            {checkedProps ? (
-                <InternalToggleIconButton
-                    checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
-                    uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
-                    onChange={onChange}
-                    hasOverlay={hasBackgroundColor}
-                    disabled={disabled}
-                />
-            ) : (
-                <InternalIconButton
-                    Icon={Icon}
-                    disabled={disabled}
-                    aria-label={ariaLabel || ''}
-                    onPress={onPress}
-                    hasOverlay={hasBackgroundColor}
-                />
-            )}
-        </div>
+    return checkedProps ? (
+        <InternalToggleIconButton
+            checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
+            uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
+            onChange={onChange}
+            hasOverlay={hasBackgroundColor}
+            disabled={disabled}
+            small
+            bleedRight
+        />
+    ) : (
+        <InternalIconButton
+            Icon={Icon}
+            disabled={disabled}
+            aria-label={ariaLabel || ''}
+            onPress={onPress}
+            hasOverlay={hasBackgroundColor}
+            small
+            bleedRight
+        />
     );
 };
 
@@ -164,6 +164,8 @@ interface TextFieldBaseProps {
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    withSuggestionsEmptyCase?: boolean | string;
+    shouldShowSuggestions?: 'focus' | number;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: React.FocusEventHandler;
@@ -173,7 +175,7 @@ interface TextFieldBaseProps {
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;
     focus?: boolean;
-    fieldRef?: React.RefObject<HTMLDivElement>;
+    fieldRef?: React.RefObject<HTMLDivElement | null>;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
     inputMode?: string;
@@ -217,6 +219,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             dataAttributes,
             preventCopy,
             showOptionalLabel = true,
+            required,
             ...rest
         },
         ref
@@ -233,9 +236,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         );
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
-        const hasLabel = !!label || !rest.required;
+        const hasLabel = !!label || !required;
 
-        const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
+        const isDateInput =
+            rest.type === 'date' ||
+            rest.type === 'datetime-local' ||
+            rest.type === 'time' ||
+            rest.type === 'month';
         const valueRef = React.useRef<string | undefined>(undefined);
 
         useIsomorphicLayoutEffect(() => {
@@ -246,6 +253,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
              * it's opacity to 0 to avoid showing it.
              */
             const finalValue = isDateInput && !isValidInputValue(value, rest.type) ? '' : value;
+            const isControlled = value !== undefined;
 
             // if value prop has changed, we need to set the input state to default if the new value is not valid
             if (
@@ -259,9 +267,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             }
             valueRef.current = value;
 
-            if (inputState !== 'focused' && finalValue?.length) {
-                setCharacterCount(finalValue.length);
-                setInputState('filled');
+            if (inputState !== 'focused' && isControlled) {
+                setCharacterCount(finalValue?.length ?? 0);
+                setInputState(finalValue?.length ? 'filled' : 'default');
             }
             if (focus) {
                 setInputState('focused');
@@ -297,11 +305,15 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const startIconWidth = `calc(${iconSize.default} + ${styles.fieldElementsGap}px)`;
+        const startIconWidth = `calc(${iconSize.small} + ${styles.fieldElementsGap}px)`;
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-        const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
+        const scale = isShrinked
+            ? isTabletOrSmaller
+                ? fieldVars.labelScaleMobile
+                : fieldVars.labelScaleDesktop
+            : 1;
         const labelStyle = {
             left: `calc(${styles.fieldLeftPadding}px + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
@@ -327,10 +339,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
                         rightTextLabel={
                             multiline && maxLength
-                                ? texts.formTextMultilineMaxCount ||
-                                  t(tokens.formTextMultilineMaxCount)
-                                      .replace('1$s', String(characterCount))
-                                      .replace('2$s', String(maxLength))
+                                ? t(
+                                      texts.formTextMultilineMaxCount || tokens.formTextMultilineMaxCount,
+                                      characterCount,
+                                      maxLength
+                                  )
                                 : undefined
                         }
                     />
@@ -340,6 +353,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 fieldRef={fieldRef}
                 readOnly={rest.readOnly}
                 dataAttributes={dataAttributes}
+                focus={focus}
             >
                 <ThemeVariant variant="default">
                     {startIcon && (
@@ -371,7 +385,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             forId={id}
                             inputState={inputState}
                             shrinkLabel={shrinkLabel}
-                            showOptional={!rest.required && showOptionalLabel}
+                            showOptional={!required && showOptionalLabel}
                         >
                             {label}
                         </Label>
@@ -382,6 +396,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 ...inputRefProps,
                                 ...props,
                                 id,
+                                ...(required && {'aria-required': true}),
+                                ...(error && {'aria-invalid': true}),
                                 style: {
                                     paddingRight: endIcon
                                         ? 0
@@ -471,14 +487,29 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
 export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
-    ({getSuggestions, id: idProp, ...props}, ref) => {
+    (
+        {
+            getSuggestions,
+            id: idProp,
+            shouldShowSuggestions = 'focus',
+            withSuggestionsEmptyCase = false,
+            ...props
+        },
+        ref
+    ) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
+        const [areSuggestionsShown, setAreSuggestionsShown] = React.useState(false);
         const inputRef = React.useRef<HTMLInputElement>(null);
         const containerRef = React.useRef<HTMLDivElement>(null);
         const {platformOverrides, texts, t} = useTheme();
         const reactId = React.useId();
         const id = idProp || reactId;
         const autoSuggestId = React.useId();
+
+        const suggestionEmptyCaseText =
+            typeof withSuggestionsEmptyCase === 'string'
+                ? withSuggestionsEmptyCase
+                : texts.searchFieldSuggestionsEmptyCase || t(tokens.searchFieldSuggestionsEmptyCase);
 
         if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
             throw Error('Fields with suggestions must be used in controlled mode');
@@ -520,6 +551,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         return (
                             <TextFieldBase
                                 key={key}
+                                role="combobox" // react-autosuggest adds this role to the container, but according to ARIA specs it should be on the input
                                 {...(inputPropsWithoutKey as TextFieldBaseProps)}
                                 fieldRef={containerRef}
                                 inputRef={combineRefs(inputRef, props.inputRef, ref)}
@@ -527,8 +559,18 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         );
                     }}
                     suggestions={suggestions}
-                    onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
-                    onSuggestionsClearRequested={() => setSuggestions([])}
+                    shouldRenderSuggestions={(value) =>
+                        shouldShowSuggestions === 'focus' || value.trim().length >= shouldShowSuggestions
+                    }
+                    onSuggestionsFetchRequested={({value}) => {
+                        const matchedSuggestions = getSuggestions(value);
+                        setAreSuggestionsShown(true);
+                        setSuggestions(matchedSuggestions);
+                    }}
+                    onSuggestionsClearRequested={() => {
+                        setAreSuggestionsShown(false);
+                        setSuggestions([]);
+                    }}
                     getSuggestionValue={(suggestion: any) => suggestion}
                     renderSuggestion={(suggestion: any, {isHighlighted}) => (
                         <div
@@ -541,9 +583,28 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         </div>
                     )}
                     renderSuggestionsContainer={(options) => {
+                        if (!areSuggestionsShown) {
+                            return null;
+                        }
+
                         // extract key from containerProps to avoid React warning:
                         // "A props object containing a "key" prop is being spread into JSX"
                         const {key, ...containerPropsWithoutKey} = options.containerProps;
+                        const children =
+                            suggestions.length === 0 && withSuggestionsEmptyCase ? (
+                                <div role="status" className={classNames(styles.menuItemBase)}>
+                                    <Text3 regular color={vars.colors.textSecondary}>
+                                        {suggestionEmptyCaseText}
+                                    </Text3>
+                                </div>
+                            ) : (
+                                options.children
+                            );
+
+                        if (!children) {
+                            return null;
+                        }
+
                         return (
                             <div
                                 {...containerPropsWithoutKey}
@@ -554,7 +615,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                                 className={styles.suggestionsContainer}
                                 aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
                             >
-                                {options.children}
+                                {children}
                             </div>
                         );
                     }}

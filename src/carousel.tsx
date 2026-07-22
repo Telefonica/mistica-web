@@ -2,20 +2,20 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import classNames from 'classnames';
-import {useIsInverseOrMediaVariant, ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import * as mediaStyles from './image.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
-import {VIVO_NEW_SKIN} from './skins/constants';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
-import {IconButton, ToggleIconButton} from './icon-button';
+import {InternalIconButton, ToggleIconButton} from './icon-button';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import IconReloadRegular from './generated/mistica-icons/icon-reload-regular';
@@ -27,7 +27,7 @@ import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 const useShouldAutoplay = (
     autoplay: boolean,
-    ref: React.RefObject<HTMLElement>
+    ref: React.RefObject<HTMLElement | null>
 ): {isAutoplayEnabled: boolean; shouldAutoplay: boolean; setShouldAutoPlay: (enabled: boolean) => void} => {
     const reducedMotion = isClientSide()
         ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -167,7 +167,7 @@ export const useCarouselContext = (): CarouselControls => React.useContext(Carou
 export const CarouselContextConsumer = CarouselContext.Consumer;
 
 export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const themeVariant = useThemeVariant();
     const {isTablet, isDesktopOrBigger} = useScreenSize();
     const pagesCount =
         typeof numPages === 'number'
@@ -181,8 +181,10 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
     const getClassNames = (bulletIndex: number) => {
         const classNames: {[key: string]: boolean} = {};
 
-        if (isInverse) {
-            classNames[currentIndex === bulletIndex ? styles.bulletActiveInverse : styles.bulletInverse] =
+        if (themeVariant === 'brand' || themeVariant === 'media') {
+            classNames[currentIndex === bulletIndex ? styles.bulletActiveBrand : styles.bulletBrand] = true;
+        } else if (themeVariant === 'negative') {
+            classNames[currentIndex === bulletIndex ? styles.bulletActiveNegative : styles.bulletNegative] =
                 true;
         } else {
             classNames[currentIndex === bulletIndex ? styles.bulletActive : styles.bullet] = true;
@@ -230,7 +232,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
 
     return (
         <div
-            {...getPrefixedDataAttributes({'component-name': 'PageBullets'})}
+            {...getPrefixedDataAttributes({testid: 'PageBullets'})}
             className={classNames(styles.bulletsScrollableContainerBase, {
                 [styles.bulletsScrollableContainer]: pagesCount > styles.VISIBLE_BULLETS,
             })}
@@ -255,6 +257,7 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
                                   }
                         )}
                         key={i}
+                        data-testid={currentIndex === i ? 'active-bullet' : 'bullet'}
                         style={{
                             ...applyCssVars({
                                 [styles.vars.desktopBulletLeftPosition]:
@@ -272,11 +275,42 @@ export const PageBullets = ({currentIndex, numPages}: PageBulletsProps): JSX.Ele
     );
 };
 
+const useControlLabel = (type: 'prev' | 'next', pageIndex?: number, pageCount?: number) => {
+    const {texts, t} = useTheme();
+
+    const hasPageInfo = pageIndex !== undefined && pageCount !== undefined;
+    const isFirstPage = hasPageInfo && pageIndex === 0;
+    const isLastPage = hasPageInfo && pageIndex === pageCount - 1;
+
+    const getPageNumber = (pageIndex: number) => {
+        if (type === 'prev') {
+            return isFirstPage ? pageIndex + 1 : pageIndex;
+        }
+        return isLastPage ? pageIndex + 1 : pageIndex + 2;
+    };
+
+    const pageNumberText = hasPageInfo
+        ? `, ${t(texts.carouselPageNumber || tokens.carouselPageNumber, getPageNumber(pageIndex), pageCount)}`
+        : '';
+
+    if (type === 'prev') {
+        return isFirstPage
+            ? (texts.carouselFirstButton || t(tokens.carouselFirstButton)) + pageNumberText
+            : (texts.carouselPrevButton || t(tokens.carouselPrevButton)) + pageNumberText;
+    }
+
+    return isLastPage
+        ? (texts.carouselLastButton || t(tokens.carouselLastButton)) + pageNumberText
+        : (texts.carouselNextButton || t(tokens.carouselNextButton)) + pageNumberText;
+};
+
 type CarouselPageControlsProps = PageControlsProps & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     goPrev: () => void;
     goNext: () => void;
+    pagesCount?: number;
+    currentPageIndex?: number;
 };
 
 export const CarouselPageControls = ({
@@ -287,14 +321,18 @@ export const CarouselPageControls = ({
     setShouldAutoplay,
     prevArrowEnabled,
     nextArrowEnabled,
+    pagesCount,
+    currentPageIndex,
 }: CarouselPageControlsProps): JSX.Element => {
-    const {texts, t} = useTheme();
     const variant = useThemeVariant();
+    const prevPageLabel = useControlLabel('prev', currentPageIndex, pagesCount);
+    const nextPageLabel = useControlLabel('next', currentPageIndex, pagesCount);
+
     return (
         <Inline space={variant === 'media' ? 16 : 8}>
-            <IconButton
+            <InternalIconButton
                 Icon={IconChevronLeftRegular}
-                aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
+                aria-label={prevPageLabel}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
@@ -303,11 +341,11 @@ export const CarouselPageControls = ({
                     goPrev();
                     setShouldAutoplay(false);
                 }}
-                disabled={!prevArrowEnabled}
+                aria-disabled={!prevArrowEnabled}
             />
-            <IconButton
+            <InternalIconButton
                 Icon={IconChevronRightRegular}
-                aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
+                aria-label={nextPageLabel}
                 type="neutral"
                 backgroundType={variant === 'media' ? 'transparent' : 'soft'}
                 small
@@ -316,7 +354,7 @@ export const CarouselPageControls = ({
                     goNext();
                     setShouldAutoplay(false);
                 }}
-                disabled={!nextArrowEnabled}
+                aria-disabled={!nextArrowEnabled}
             />
         </Inline>
     );
@@ -751,7 +789,7 @@ const BaseCarousel = ({
     }
 
     const largePageOffset = '64px';
-    const vivoNewMobilePageOffset = '36px';
+    const vivoMobilePageOffset = '36px';
 
     const bulletsContainer = (
         <div
@@ -771,7 +809,10 @@ const BaseCarousel = ({
 
     return (
         <div
-            {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}
+            {...getPrefixedDataAttributes({
+                testid: 'Carousel',
+                ...dataAttributes,
+            })}
             className={styles.carouselComponentContainer}
             role="region"
             aria-label={
@@ -812,6 +853,8 @@ const BaseCarousel = ({
                                 setShouldAutoplay={setShouldAutoPlay}
                                 prevArrowEnabled={prevArrowEnabled}
                                 nextArrowEnabled={nextArrowEnabled}
+                                pagesCount={pagesCount}
+                                currentPageIndex={currentPageIndex}
                             />
                         </div>
                     </Inline>
@@ -839,8 +882,8 @@ const BaseCarousel = ({
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
                             ...(mobilePageOffset === 'large'
                                 ? {[styles.vars.mobilePageOffset]: largePageOffset}
-                                : skinName === VIVO_NEW_SKIN
-                                  ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
+                                : skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN
+                                  ? {[styles.vars.mobilePageOffset]: vivoMobilePageOffset}
                                   : {}),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
@@ -1084,7 +1127,7 @@ export const Slideshow = ({
         ? Math.floor((scrollLeft + carouselRef.current.clientWidth / 2) / carouselRef.current.clientWidth)
         : 0;
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const carouselEl = carouselRef.current;
         if (carouselEl) {
             const handleCarouselChange = () => {
@@ -1186,7 +1229,7 @@ export const Slideshow = ({
                     className={classNames(styles.slideshowContainer, {
                         [styles.slideshowWithBullets]: !!withBullets,
                     })}
-                    {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+                    {...getPrefixedDataAttributes({testid: 'SlideShow', ...dataAttributes})}
                 >
                     {items.length > 1 &&
                         (withControls ? (
@@ -1222,6 +1265,8 @@ export const Slideshow = ({
                                         setShouldAutoplay={setShouldAutoPlay}
                                         prevArrowEnabled={prevArrowEnabled}
                                         nextArrowEnabled={nextArrowEnabled}
+                                        pagesCount={items.length}
+                                        currentPageIndex={currentIndex}
                                     />
                                 </Inline>
                             </ThemeVariant>

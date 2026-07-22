@@ -6,13 +6,13 @@ import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 import Inline from './inline';
 import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
-import {useScreenSize, useTheme} from './hooks';
+import {useElementDimensions, useScreenSize, useTheme} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import {IconButton} from './icon-button';
 import {Row, RowList} from './list';
-import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
 import {Portal} from './portal';
 import GridLayout from './grid-layout';
@@ -25,7 +25,7 @@ import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as tokens from './text-tokens';
-import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE} from './theme';
+import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import TextLink from './text-link';
 import {Title1, Title3} from './title';
 import {ButtonLink} from './button';
@@ -36,7 +36,7 @@ import NegativeBox from './negative-box';
 
 import type {BoxProps} from './box';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {Variant} from './theme-variant-context';
+import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType, IconProps} from './utils/types';
 
@@ -53,7 +53,7 @@ const MenuSectionArrow = ({size = 24, color = vars.colors.neutralHigh, style, cl
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
-        <div className={styles.burgerIconContainer} role="presentation" data-component-name="BurgerMenuIcon">
+        <div className={styles.burgerIconContainer} role="presentation" data-testid="BurgerMenuIcon">
             <div className={isOpen ? styles.iconCloseOpen : styles.iconCloseHidden}>
                 <IconCloseRegular />
             </div>
@@ -67,37 +67,31 @@ const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
 type HeaderProps = {
     children: React.ReactNode;
     topFixed?: boolean;
-    variant?: Variant;
+    variant: NonDeprecatedVariant;
     withBorder?: boolean;
     isBurgerMenuOpen?: boolean;
     dataAttributes?: DataAttributes;
     isBottomRow?: boolean;
 };
 
-const Header = ({
-    children,
-    topFixed,
-    withBorder,
-    isBurgerMenuOpen,
-    variant = 'default',
-    dataAttributes,
-}: HeaderProps) => {
+const Header = ({children, topFixed, withBorder, isBurgerMenuOpen, variant, dataAttributes}: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
     const getBorderClass = () => {
-        const inverse = variant === 'inverse' && !isDarkMode;
-        if (inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
+        const isBrandVariant = (variant === 'brand' || variant === 'negative') && !isDarkMode;
+        if (isBrandVariant || !withBorder) return styles.navbarBorderColorVariants.noBorder;
         if (isBurgerMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
 
         return styles.navbarBorderColorVariants.default;
     };
 
-    const backgroundColor: {[key in Variant]: string} = {
+    const backgroundColor = {
         default: vars.colors.background,
-        inverse: vars.colors.navigationBarBackground,
+        brand: vars.colors.navigationBarBackground,
+        negative: vars.colors.backgroundNegative,
         alternative: vars.colors.backgroundAlternative,
         media: vars.colors.navigationBarBackground,
-    };
+    } as const;
 
     return (
         <header
@@ -150,12 +144,14 @@ type WideConfig = {
 const NavigationBarSideMargins = ({
     children,
     wide,
+    backgroundColor,
 }: {
     children: React.ReactNode;
     wide: boolean | WideConfig;
+    backgroundColor?: string;
 }) => {
     if (!wide) {
-        return <ResponsiveLayout>{children}</ResponsiveLayout>;
+        return <ResponsiveLayout backgroundColor={backgroundColor}>{children}</ResponsiveLayout>;
     }
 
     const defaultWidePaddingX: BoxProps['paddingX'] = {
@@ -177,6 +173,7 @@ const NavigationBarSideMargins = ({
                             ...wide.paddingX,
                         }
             }
+            background={backgroundColor}
         >
             {children}
         </Box>
@@ -196,13 +193,10 @@ interface NavigationBarCommonProps {
 
 interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
     topFixed?: true;
-    paddingX?: undefined;
 }
 
 interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
     topFixed: false;
-    /** @deprecated use wide */
-    paddingX?: number;
 }
 
 type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
@@ -214,7 +208,6 @@ export const NavigationBar = ({
     right,
     variant = 'default',
     topFixed = true,
-    paddingX = 0,
     withBorder = true,
     wide = false,
 }: NavigationBarProps): JSX.Element => {
@@ -239,23 +232,21 @@ export const NavigationBar = ({
     );
 
     const calcPaddingXWhenNotTopFixed = (): BoxProps['paddingX'] => {
-        if (wide !== undefined) {
-            if (typeof wide !== 'object') {
-                return 0;
-            }
-            return wide.paddingX ?? 0;
+        if (typeof wide !== 'object') {
+            return 0;
         }
-
-        return paddingX as BoxProps['paddingX'];
+        return wide.paddingX ?? 0;
     };
 
+    const normalizedVariant = normalizeVariant(variant);
+
     return (
-        <ThemeVariant variant={variant}>
+        <ThemeVariant variant={normalizedVariant}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
-                variant={variant}
-                dataAttributes={{'component-name': 'NavigationBar'}}
+                variant={normalizedVariant}
+                dataAttributes={{testid: 'NavigationBar'}}
             >
                 {topFixed ? (
                     <NavigationBarSideMargins wide={wide}>{content}</NavigationBarSideMargins>
@@ -315,12 +306,14 @@ type MainNavigationBarProps = {
     sections?: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     right?: React.ReactElement;
+    topSlot?: React.ReactElement;
+    topSlotBackgroundColor?: string;
     logo?: React.ReactElement;
     variant?: Variant;
     children?: undefined;
     topFixed?: boolean;
     withBorder?: boolean;
-    burgerMenuExtra?: React.ReactNode;
+    burgerMenuSlot?: React.ReactNode;
     large?: boolean;
     desktopLargeMenu?: boolean;
     wide?: boolean | WideConfig;
@@ -442,17 +435,19 @@ const MainNavigationBarBurgerSection = ({
 
 const MainNavigationBarBurgerMenu = ({
     sections,
-    extra,
+    slot,
     closeMenu,
     open,
+    topSlotHeight,
     id,
     disableFocusTrap,
     setDisableFocusTrap,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
-    extra: React.ReactNode;
+    slot: React.ReactNode;
     closeMenu: () => void;
     open: boolean;
+    topSlotHeight: number;
     id: string;
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
@@ -513,7 +508,10 @@ const MainNavigationBarBurgerMenu = ({
                 >
                     <nav
                         className={styles.burgerMenu}
-                        style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
+                        style={{
+                            boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`,
+                            top: NAVBAR_HEIGHT_MOBILE + topSlotHeight,
+                        }}
                         id={id}
                         ref={menuRef}
                     >
@@ -548,7 +546,7 @@ const MainNavigationBarBurgerMenu = ({
                                                 ))}
                                             </RowList>
                                         </ResetResponsiveLayout>
-                                        {extra && <Box paddingY={16}>{extra}</Box>}
+                                        {slot && <Box paddingY={16}>{slot}</Box>}
                                     </ResponsiveLayout>
                                 )}
                             </div>
@@ -868,18 +866,21 @@ const MainNavigationBarDesktopMenuContent = ({
     section,
     index,
     isLargeNavigationBar,
+    topSlotHeight,
     wide,
 }: {
     section: MainNavigationBarSection;
     index: number;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     wide: boolean | WideConfig;
 }): JSX.Element => {
     const menuRef = React.useRef<HTMLDivElement>(null);
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
 
     const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
     const bottomSpace = 40;
 
     const {menuStatus, isMenuOpen, openedSection, closeMenu, setIsMenuHovered, setMenuHeight} =
@@ -994,10 +995,13 @@ const MainNavigationBarDesktopMenuContent = ({
 // when using the keyboard or a screen reader to navigate
 const MainNavigationBarDesktopMenuBackground = ({
     isLargeNavigationBar,
+    topSlotHeight,
 }: {
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
 }): JSX.Element => {
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
 
     return (
@@ -1017,15 +1021,18 @@ const MainNavigationBarDesktopMenuBackground = ({
 const MainNavigationBarDesktopSmallMenu = ({
     section,
     isLargeNavigationBar,
+    topSlotHeight,
     leftPosition,
     index,
 }: {
     section: MainNavigationBarSection;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     leftPosition: number;
     index: number;
 }): JSX.Element => {
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
     const bottomSpace = 40;
 
     const columns = section.menu?.columns || [];
@@ -1083,6 +1090,7 @@ const MainNavigationBarDesktopSection = ({
     navigationBarRef,
     variant,
     isLargeNavigationBar,
+    topSlotHeight,
     desktopLargeMenu,
     wide,
 }: {
@@ -1091,9 +1099,10 @@ const MainNavigationBarDesktopSection = ({
     selectedIndex?: number;
     isFirstSection: boolean;
     isLastSection: boolean;
-    navigationBarRef: React.RefObject<HTMLDivElement>;
-    variant?: Variant;
+    navigationBarRef: React.RefObject<HTMLDivElement | null>;
+    variant: NonDeprecatedVariant;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     desktopLargeMenu?: boolean;
     wide: boolean | WideConfig;
 }): JSX.Element => {
@@ -1223,10 +1232,10 @@ const MainNavigationBarDesktopSection = ({
                     className={classnames(
                         styles.section,
                         {
-                            [styles.selectedSectionVariantes[variant === 'inverse' ? 'inverse' : 'default']]:
+                            [styles.selectedSectionVariants[variant === 'brand' ? 'brand' : 'default']]:
                                 index === selectedIndex,
                         },
-                        styles.textWrapperVariants[variant === 'inverse' ? 'inverse' : 'default']
+                        styles.textWrapperVariants[variant === 'brand' ? 'brand' : 'default']
                     )}
                 >
                     <Text3 regular color="inherit">
@@ -1273,6 +1282,7 @@ const MainNavigationBarDesktopSection = ({
                         <MainNavigationBarDesktopMenuContent
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
+                            topSlotHeight={topSlotHeight}
                             index={index}
                             wide={wide}
                         />
@@ -1280,6 +1290,7 @@ const MainNavigationBarDesktopSection = ({
                         <MainNavigationBarDesktopSmallMenu
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
+                            topSlotHeight={topSlotHeight}
                             leftPosition={smallMenuLeftPosition}
                             index={index}
                         />
@@ -1296,16 +1307,18 @@ const MainNavigationBarDesktopSections = ({
     navigationBarRef,
     variant,
     isLargeNavigationBar,
+    topSlotHeight,
     hasRightContent,
     desktopLargeMenu,
     wide,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
-    navigationBarRef: React.RefObject<HTMLDivElement>;
-    variant: Variant;
+    navigationBarRef: React.RefObject<HTMLDivElement | null>;
+    variant: NonDeprecatedVariant;
     hasRightContent: boolean;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     desktopLargeMenu: boolean;
     wide: boolean | WideConfig;
 }): JSX.Element => {
@@ -1340,6 +1353,7 @@ const MainNavigationBarDesktopSections = ({
                         variant={variant}
                         section={section}
                         isLargeNavigationBar={isLargeNavigationBar}
+                        topSlotHeight={topSlotHeight}
                         desktopLargeMenu={desktopLargeMenu}
                         wide={wide}
                     />
@@ -1356,14 +1370,17 @@ const MainNavigationBarDesktopSections = ({
 const MainNavigationBarContentWrapper = ({
     children,
     isLargeNavigationBar,
+    topSlotHeight,
     desktopLargeMenu,
 }: {
     children: React.ReactNode;
     isLargeNavigationBar: boolean;
+    topSlotHeight: number;
     desktopLargeMenu: boolean;
 }): JSX.Element => {
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const topSpace =
+        (isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP) + topSlotHeight;
 
     return (
         <div
@@ -1386,10 +1403,12 @@ export const MainNavigationBar = ({
     sections = [],
     selectedIndex,
     right,
+    topSlot,
+    topSlotBackgroundColor,
     variant = 'default',
     topFixed = true,
     withBorder = true,
-    burgerMenuExtra,
+    burgerMenuSlot,
     logo,
     large = false,
     desktopLargeMenu = false,
@@ -1404,16 +1423,20 @@ export const MainNavigationBar = ({
     const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
     const [disableFocusTrap, setDisableFocusTrap] = React.useState(true);
     const navigationBarRef = React.useRef<HTMLDivElement>(null);
+    const {height: topSlotHeight, ref: topSlotRef} = useElementDimensions();
     const setModalState = useSetModalState();
+
+    const normalizedVariant = normalizeVariant(variant);
 
     const desktopSections = (
         <MainNavigationBarDesktopSections
             sections={sections}
             selectedIndex={selectedIndex}
             navigationBarRef={navigationBarRef}
-            variant={variant}
+            variant={normalizedVariant}
             hasRightContent={!!right}
             isLargeNavigationBar={hasBottomSections}
+            topSlotHeight={topSlotHeight}
             desktopLargeMenu={desktopLargeMenu}
             wide={wide}
         />
@@ -1432,21 +1455,30 @@ export const MainNavigationBar = ({
     const showBurger = sections.length > 1;
 
     const mainNavBar = (
-        <ThemeVariant variant={variant}>
+        <ThemeVariant variant={normalizedVariant}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
                 isBurgerMenuOpen={isBurgerMenuOpen}
-                variant={variant}
-                dataAttributes={{'component-name': 'MainNavigationBar'}}
+                variant={normalizedVariant}
+                dataAttributes={{testid: 'MainNavigationBar'}}
             >
                 {desktopLargeMenu && (
-                    <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
+                    <MainNavigationBarDesktopMenuBackground
+                        isLargeNavigationBar={hasBottomSections}
+                        topSlotHeight={topSlotHeight}
+                    />
                 )}
                 <MainNavigationBarContentWrapper
                     isLargeNavigationBar={hasBottomSections}
+                    topSlotHeight={topSlotHeight}
                     desktopLargeMenu={desktopLargeMenu}
                 >
+                    {topSlot && (
+                        <NavigationBarSideMargins wide={wide} backgroundColor={topSlotBackgroundColor}>
+                            <div ref={topSlotRef}>{topSlot}</div>
+                        </NavigationBarSideMargins>
+                    )}
                     <NavigationBarSideMargins wide={wide}>
                         <NavigationBarContentContainer
                             ref={navigationBarRef}
@@ -1480,6 +1512,7 @@ export const MainNavigationBar = ({
                     </NavigationBarSideMargins>
                 </MainNavigationBarContentWrapper>
             </Header>
+            {topFixed && topSlotHeight > 0 && <div style={{height: topSlotHeight}} />}
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
         </ThemeVariant>
     );
@@ -1497,8 +1530,9 @@ export const MainNavigationBar = ({
                         open={isBurgerMenuOpen}
                         id={menuId}
                         sections={sections}
-                        extra={burgerMenuExtra}
+                        slot={burgerMenuSlot}
                         closeMenu={closeMenu}
+                        topSlotHeight={topSlotHeight}
                         disableFocusTrap={disableFocusTrap}
                         setDisableFocusTrap={setDisableFocusTrap}
                     />
@@ -1528,13 +1562,15 @@ export const FunnelNavigationBar = ({
 }: FunnelNavigationBarProps): JSX.Element => {
     logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
+    const normalizedVariant = normalizeVariant(variant);
+
     return (
-        <ThemeVariant variant={variant}>
+        <ThemeVariant variant={normalizedVariant}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
-                variant={variant}
-                dataAttributes={{'component-name': 'FunnelNavigationBar'}}
+                variant={normalizedVariant}
+                dataAttributes={{testid: 'FunnelNavigationBar'}}
             >
                 <NavigationBarSideMargins wide={wide}>
                     <GridLayout template="10">
@@ -1555,7 +1591,7 @@ type NavigationBarActionGroupProps = {
 
 export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupProps): JSX.Element => {
     return (
-        <div className={styles.lineHeightFix} data-component-name="NavigationBarActionGroup">
+        <div className={styles.lineHeightFix} data-testid="NavigationBarActionGroup">
             <Inline space={24} alignItems="center">
                 {children}
             </Inline>
@@ -1566,16 +1602,16 @@ export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupPro
 type NavigationBarActionProps = TouchableProps;
 
 export const NavigationBarAction = ({children, ...touchableProps}: NavigationBarActionProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const themeVariant = useThemeVariant();
     return (
         <BaseTouchable
             {...touchableProps}
             className={classnames(
                 styles.navigationBarAction,
                 styles.lineHeightFix,
-                styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
+                styles.textWrapperVariants[themeVariant]
             )}
-            dataAttributes={{'component-name': 'NavigationBarAction'}}
+            dataAttributes={{testid: 'NavigationBarAction'}}
         >
             <Inline space={16} alignItems="center">
                 {React.Children.map(children, (child) =>

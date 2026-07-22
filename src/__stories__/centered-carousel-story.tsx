@@ -67,7 +67,7 @@ export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => 
                                 >
                                     <div style={{flexShrink: 0}}>
                                         <Circle backgroundColor={skinVars.colors.brand} size={160}>
-                                            <ThemeVariant isInverse>
+                                            <ThemeVariant variant="brand">
                                                 <Text10>{idx}</Text10>
                                             </ThemeVariant>
                                         </Circle>
@@ -160,7 +160,7 @@ export const WithControls: StoryComponent<WithControlsStoryArgs> = ({
                             >
                                 <div style={{flexShrink: 0}}>
                                     <Circle backgroundColor={skinVars.colors.brand} size={160}>
-                                        <ThemeVariant isInverse>
+                                        <ThemeVariant variant="brand">
                                             <Text10>{idx}</Text10>
                                         </ThemeVariant>
                                     </Circle>

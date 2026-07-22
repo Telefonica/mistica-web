@@ -12,7 +12,7 @@ import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
 import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
 import {
@@ -23,6 +23,7 @@ import {
 } from './utils/types';
 import {isBiggerHeading} from './utils/headings';
 
+import type {NonDeprecatedVariant} from './theme-variant-context';
 import type Image from './image';
 import type Video from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -36,12 +37,12 @@ const CONTENT_BACKGROUND_COLOR = {
     none: 'transparent',
 };
 
-type LayoutProps = {children: React.ReactNode; isInverse: boolean; backgroundColor?: string};
+type LayoutProps = {children: React.ReactNode; variant: NonDeprecatedVariant; backgroundColor?: string};
 
-const Layout = ({children, isInverse, backgroundColor}: LayoutProps) => {
+const Layout = ({children, variant, backgroundColor}: LayoutProps) => {
     return (
         <InternalResponsiveLayout
-            isInverse={isInverse}
+            variant={variant}
             className={styles.layout}
             innerDivClassName={styles.layout}
             shouldExpandWhenNested
@@ -60,7 +61,7 @@ type HeroContentProps = {
     titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -74,7 +75,7 @@ const HeroContent = ({
     pretitleAs,
     description,
     descriptionLinesMax,
-    extra,
+    slot,
     button,
     secondaryButton,
     buttonLink,
@@ -139,7 +140,7 @@ const HeroContent = ({
                         </Text3>
                     )}
                 </Stack>
-                {extra && <div data-testid="slot">{extra}</div>}
+                {slot && <div data-testid="slot">{slot}</div>}
             </div>
             {(button || buttonLink) && (
                 <div className={styles.actions}>
@@ -162,7 +163,7 @@ type HeroProps = {
     titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
@@ -185,18 +186,25 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         const {isTabletOrSmaller} = useScreenSize();
         const slideshowContext = useSlideshowContext();
         const hasSlideshowBullets = !!slideshowContext?.withBullets;
-        const isInverseOutside = useIsInverseOrMediaVariant();
-        const isInverse =
+        const outsideVariant = useThemeVariant();
+        const variant =
             background === 'none'
-                ? isInverseOutside
-                : background === 'brand' || background === 'brand-secondary';
+                ? outsideVariant
+                : (
+                      {
+                          default: 'default',
+                          alternative: 'alternative',
+                          brand: 'brand',
+                          'brand-secondary': 'negative',
+                      } as const
+                  )[background];
 
         if (isTabletOrSmaller) {
             return (
                 <ResetResponsiveLayout>
                     <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                         <div
-                            {...getPrefixedDataAttributes(dataAttributes, 'Hero')}
+                            {...getPrefixedDataAttributes({testid: 'Hero', ...dataAttributes})}
                             ref={ref}
                             style={{
                                 ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
@@ -212,15 +220,16 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         >
                             {media}
 
-                            <Layout
-                                isInverse={isInverse}
-                                backgroundColor={CONTENT_BACKGROUND_COLOR[background]}
-                            >
+                            <Layout variant={variant} backgroundColor={CONTENT_BACKGROUND_COLOR[background]}>
                                 <div className={styles.expandedContent}>
                                     <div
                                         style={{
-                                            paddingTop: 24,
-                                            paddingBottom: hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24,
+                                            paddingTop: skinVars.spacing.heroPadding.top,
+                                            paddingBottom: hasSlideshowBullets
+                                                ? 48
+                                                : noPaddingY
+                                                  ? 0
+                                                  : skinVars.spacing.heroPadding.bottom,
                                         }}
                                         className={styles.layout}
                                     >
@@ -254,7 +263,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         return (
             <div
-                {...getPrefixedDataAttributes(dataAttributes, 'Hero')}
+                {...getPrefixedDataAttributes({testid: 'Hero', ...dataAttributes})}
                 ref={ref}
                 style={{
                     ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
@@ -266,14 +275,17 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                 }}
                 className={styles.hero}
             >
-                <Layout isInverse={isInverse}>
+                <Layout variant={variant}>
                     <GridLayout
                         template="6+6"
                         left={
                             <div
                                 style={{
-                                    paddingTop: noPaddingY ? 0 : 56,
-                                    paddingBottom: noPaddingY && !hasSlideshowBullets ? 0 : 56,
+                                    paddingTop: noPaddingY ? 0 : skinVars.spacing.heroPadding.top,
+                                    paddingBottom:
+                                        noPaddingY && !hasSlideshowBullets
+                                            ? 0
+                                            : skinVars.spacing.heroPadding.bottom,
                                 }}
                                 className={classnames(styles.container, styles.containerDesktop, {
                                     [styles.containerMinHeight]: !noPaddingY,
@@ -285,8 +297,11 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         right={
                             <div
                                 style={{
-                                    paddingTop: noPaddingY ? 0 : 56,
-                                    paddingBottom: noPaddingY && !hasSlideshowBullets ? 0 : 56,
+                                    paddingTop: noPaddingY ? 0 : skinVars.spacing.heroPadding.top,
+                                    paddingBottom:
+                                        noPaddingY && !hasSlideshowBullets
+                                            ? 0
+                                            : skinVars.spacing.heroPadding.bottom,
                                 }}
                                 className={classnames(styles.container, styles.containerDesktop)}
                             >

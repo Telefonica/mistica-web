@@ -19,7 +19,6 @@ import {
     IconBoxLight,
     DataCard,
     IconLightningRegular,
-    DisplayMediaCard,
     ButtonLinkDanger,
     PageBullets,
     Checkbox,
@@ -43,6 +42,7 @@ import {
     Title3,
     Title4,
     IconButton,
+    Pagination,
     Hero,
     Table,
     Timer,
@@ -55,6 +55,9 @@ import {
     Timeline,
     TimelineItem,
     IconShopRegular,
+    CoverCard,
+    IconExportRegular,
+    FileUpload,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -62,8 +65,8 @@ import usingVrImg from '../__stories__/images/using-vr.jpg';
 export default {
     title: 'Private/Components in different skins',
     argTypes: {
-        variant: {
-            options: ['default', 'inverse', 'alternative'],
+        variantOutside: {
+            options: ['default', 'brand', 'alternative', 'negative'],
             control: {type: 'select'},
         },
     },
@@ -73,7 +76,7 @@ export default {
 };
 
 type Args = {
-    variant: 'default' | 'inverse' | 'alternative';
+    variantOutside: 'default' | 'brand' | 'alternative' | 'negative';
 };
 
 const ComponentsGroup = ({children}: {children: React.ReactNode}): JSX.Element => {
@@ -84,27 +87,26 @@ const ComponentsGroup = ({children}: {children: React.ReactNode}): JSX.Element =
     );
 };
 
-export const Default: StoryComponent<Args> = ({variant}) => {
+export const Default: StoryComponent<Args> = ({variantOutside}) => {
     // Only show inverse header when the rest of the screen is default
-    const inverseHeader = variant === 'default';
+    const brandHeader = variantOutside === 'default';
     return (
-        <ResponsiveLayout variant={variant}>
-            <Box paddingTop={inverseHeader ? 0 : {mobile: 32, desktop: 48}} paddingBottom={16}>
+        <ResponsiveLayout variant={variantOutside}>
+            <Box paddingTop={brandHeader ? 0 : {mobile: 32, desktop: 48}} paddingBottom={16}>
                 <Stack space={32}>
                     <ComponentsGroup>
                         {/** Header */}
                         <HeaderLayout
-                            isInverse={inverseHeader}
+                            variant={brandHeader ? 'brand' : 'default'}
                             bleed
                             header={
                                 <Header
                                     title="Components in different skins"
-                                    description="This story is created to verify how some of the components look like when using
-                        different skins"
+                                    description="This story is created to verify how some of the components look like when using different skins"
                                 />
                             }
-                            extra={<Placeholder />}
-                            noPaddingY={!inverseHeader}
+                            slot={<Placeholder />}
+                            noPaddingY={!brandHeader}
                         />
 
                         {/** Row */}
@@ -148,8 +150,8 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                         {/** Avatar */}
                         <Inline space={16} alignItems="center" wrap>
-                            <Avatar src={avatarImg} size={64} badge={5} />
-                            <Avatar size={64} />
+                            <Avatar src={avatarImg} size={64} badge={5} aria-label="Avatar with badge" />
+                            <Avatar size={64} aria-label="Avatar unknown" />
                             <Avatar initials="MK" size={64} border />
                         </Inline>
 
@@ -170,6 +172,24 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             description="Description"
                             button={
                                 <ButtonSecondary
+                                    small
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonSecondary
+                                </ButtonSecondary>
+                            }
+                        />
+                        <Callout
+                            variant="inverse"
+                            asset={<IconBoxLight />}
+                            onClose={() => {}}
+                            title="Title"
+                            description="Description"
+                            button={
+                                <ButtonSecondary
+                                    small
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
                                     onPress={() => {}}
@@ -181,15 +201,14 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                     </ComponentsGroup>
 
                     <ComponentsGroup>
-                        {/** DataCard */}
                         <DataCard
                             title="Title"
                             subtitle="Subtitle"
                             pretitle="Pretitle"
                             description="Description"
                             onClose={() => {}}
-                            actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
-                            button={
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
                                 <ButtonPrimary
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
@@ -209,15 +228,15 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             }
                         />
 
-                        {/** DisplayMediaCard */}
-                        <DisplayMediaCard
-                            backgroundImage={usingVrImg}
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
                             title="Title"
                             pretitle="Pretitle"
                             description="Description"
                             onClose={() => {}}
-                            actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
-                            button={
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
                                 <ButtonDanger
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
@@ -237,8 +256,39 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             }
                         />
 
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
+                            title="Title"
+                            pretitle="Pretitle"
+                            description="Description"
+                            onClose={() => {}}
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
+                                <ButtonPrimary
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonPrimary
+                                </ButtonPrimary>
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonLink
+                                </ButtonLink>
+                            }
+                        />
+
                         {/** Carousel page bullets */}
                         <PageBullets currentIndex={2} numPages={10} />
+
+                        {/** Pagination */}
+                        <Pagination totalPages={40} defaultPage={32} surroundingPageCount={1} />
 
                         {/** Checkbox */}
                         <Inline space={16} wrap>
@@ -306,6 +356,16 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             helperText="Helper text"
                         />
 
+                        {/** FileUpload */}
+                        <FileUpload
+                            name="file"
+                            withDropZone
+                            asset={<IconExportRegular color="currentColor" />}
+                            title="Drag or upload your file"
+                            description="File can be up to 50Mb"
+                            renderButton={(props) => <ButtonPrimary {...props}>Choose file</ButtonPrimary>}
+                        />
+
                         {/** ProgressBar */}
                         <ProgressBar progressPercent={50} />
 
@@ -366,6 +426,29 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             <Tag type="warning">Warning</Tag>
                             <Tag type="error">Error</Tag>
                             <Tag type="info">Info</Tag>
+                        </Inline>
+                        <Inline space={16} wrap>
+                            <Tag small type="promo">
+                                Promo
+                            </Tag>
+                            <Tag small type="active">
+                                Active
+                            </Tag>
+                            <Tag small type="inactive">
+                                Inactive
+                            </Tag>
+                            <Tag small type="success">
+                                Success
+                            </Tag>
+                            <Tag small type="warning">
+                                Warning
+                            </Tag>
+                            <Tag small type="error" badge>
+                                Error
+                            </Tag>
+                            <Tag small type="info" badge={5}>
+                                Info
+                            </Tag>
                         </Inline>
 
                         {/** IconButton */}
@@ -553,5 +636,5 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
 Default.storyName = 'Components in different skins';
 Default.args = {
-    variant: 'default',
+    variantOutside: 'default',
 };

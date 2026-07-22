@@ -14,7 +14,7 @@ const LoadingBar = ({visible, dataAttributes}: Props): JSX.Element => {
         <Portal className={classnames(styles.portal, {[styles.hidden]: !visible})}>
             <div
                 className={styles.progressContainer}
-                {...getPrefixedDataAttributes(dataAttributes, 'LoadingBar')}
+                {...getPrefixedDataAttributes({testid: 'LoadingBar', ...dataAttributes})}
             >
                 <div className={styles.progress} />
             </div>

@@ -19,7 +19,7 @@ const cases = [
         'desktop with variant inverse',
         {
             device: 'DESKTOP',
-            args: {background: 'color from skin', variant: 'inverse'},
+            args: {background: 'color from skin', variant: 'brand'},
         },
     ],
     [
@@ -37,24 +37,24 @@ const cases = [
         },
     ],
     [
-        'desktop with extra and sideExtra',
+        'desktop with slot and sideSlot',
         {
             device: 'DESKTOP',
-            args: {extra: true, sideExtra: true},
+            args: {slot: true, sideSlot: true},
         },
     ],
     [
-        'mobile with extra and sideExtra',
+        'mobile with slot and sideSlot',
         {
             device: 'MOBILE_IOS',
-            args: {extra: true, sideExtra: true},
+            args: {slot: true, sideSlot: true},
         },
     ],
     [
-        'tablet with extra and sideExtra',
+        'tablet with slot and sideSlot',
         {
             device: 'TABLET',
-            args: {extra: true, sideExtra: true},
+            args: {slot: true, sideSlot: true},
         },
     ],
     [
@@ -72,25 +72,25 @@ const cases = [
         },
     ],
     [
-        'desktop centered with extra and sideExtra',
+        'desktop centered with slot and sideSlot',
         {
             device: 'DESKTOP',
             args: {
                 centered: true,
-                extra: true,
-                sideExtra: true,
+                slot: true,
+                sideSlot: true,
                 actions: 'button secondaryButton and link',
             },
         },
     ],
     [
-        'mobile centered with extra and sideExtra',
+        'mobile centered with slot and sideSlot',
         {
             device: 'MOBILE_IOS',
             args: {
                 centered: true,
-                extra: true,
-                sideExtra: true,
+                slot: true,
+                sideSlot: true,
                 actions: 'button secondaryButton and link',
             },
         },
@@ -134,13 +134,13 @@ const cases = [
         },
     ],
     [
-        'desktop long text with sideExtra',
+        'desktop long text with sideSlot',
         {
             device: 'DESKTOP',
             args: {
                 title: 'Long title '.repeat(10),
                 description: 'This is a long description with a long text to see how this works'.repeat(10),
-                sideExtra: true,
+                sideSlot: true,
             },
         },
     ],

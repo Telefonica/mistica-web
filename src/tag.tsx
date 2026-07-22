@@ -25,6 +25,7 @@ export type TagProps = {
     badge?: boolean | number;
     backgroundColor?: string;
     textColor?: string;
+    small?: boolean;
 };
 
 const {colors} = vars;
@@ -37,10 +38,11 @@ const Tag = ({
     badge,
     backgroundColor: customBackgroundColor,
     textColor: customTextColor,
+    small = false,
 }: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
-    const isInverse = themeVariant === 'inverse';
+    const isOverBrand = themeVariant === 'brand' || themeVariant === 'media';
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
@@ -51,63 +53,83 @@ const Tag = ({
         // [textColor, inverseTextColor, backgroundColor, backgroundColorInverse]
         promo: [
             colors.tagTextPromo,
-            colors.tagTextPromoInverse,
+            colors.tagTextPromoBrand,
             colors.tagBackgroundPromo,
-            colors.tagBackgroundPromoInverse,
+            colors.tagBackgroundPromoBrand,
         ],
         info: [
             colors.tagTextInfo,
-            colors.tagTextInfoInverse,
+            colors.tagTextInfoBrand,
             colors.tagBackgroundInfo,
-            colors.tagBackgroundInfoInverse,
+            colors.tagBackgroundInfoBrand,
         ],
         active: [
             colors.tagTextActive,
-            colors.tagTextActiveInverse,
+            colors.tagTextActiveBrand,
             colors.tagBackgroundActive,
-            colors.tagBackgroundActiveInverse,
+            colors.tagBackgroundActiveBrand,
         ],
         inactive: [
             colors.tagTextInactive,
-            colors.tagTextInactiveInverse,
+            colors.tagTextInactiveBrand,
             // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
             themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
-            colors.tagBackgroundInactiveInverse,
+            colors.tagBackgroundInactiveBrand,
         ],
         success: [
             colors.tagTextSuccess,
-            colors.tagTextSuccessInverse,
+            colors.tagTextSuccessBrand,
             colors.tagBackgroundSuccess,
-            colors.tagBackgroundSuccessInverse,
+            colors.tagBackgroundSuccessBrand,
         ],
         warning: [
             colors.tagTextWarning,
-            colors.tagTextWarningInverse,
+            colors.tagTextWarningBrand,
             colors.tagBackgroundWarning,
-            colors.tagBackgroundWarningInverse,
+            colors.tagBackgroundWarningBrand,
         ],
         error: [
             colors.tagTextError,
-            colors.tagTextErrorInverse,
+            colors.tagTextErrorBrand,
             colors.tagBackgroundError,
-            colors.tagBackgroundErrorInverse,
+            colors.tagBackgroundErrorBrand,
         ],
     } as const;
 
     const [defaultTextColor, inverseTextColor, defaultBackgroundColor, backgroundColorInverse] =
         tagTypeToColors[type];
 
-    const textColor = customTextColor || (isInverse ? inverseTextColor : defaultTextColor);
+    const textColor = customTextColor || (isOverBrand ? inverseTextColor : defaultTextColor);
     const backgroundColor =
-        customBackgroundColor || (isInverse ? backgroundColorInverse : defaultBackgroundColor);
+        customBackgroundColor || (isOverBrand ? backgroundColorInverse : defaultBackgroundColor);
+
+    const hasNumericBadge = typeof badge === 'number' && badge !== 0;
+    const hasNonNumericBadge = badge === true;
+    const hasBadge = hasNumericBadge || hasNonNumericBadge;
+
+    const calcPaddings = () => {
+        if (small) {
+            return {
+                paddingLeft: Icon ? 4 : 8,
+                paddingRight: hasNumericBadge ? 2 : hasNonNumericBadge ? 4 : 8,
+            };
+        } else {
+            return {
+                paddingLeft: Icon ? 8 : 12,
+                paddingRight: hasBadge ? 8 : 12,
+            };
+        }
+    };
+
+    const {paddingLeft, paddingRight} = calcPaddings();
 
     return (
         <span
-            {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
-            className={classNames(styles.tag)}
+            {...getPrefixedDataAttributes({testid: 'Tag', ...dataAttributes})}
+            className={classNames(small ? styles.smallTag : styles.tag)}
             style={{
-                paddingLeft: Icon ? 8 : 12,
-                paddingRight: badgeValue !== 0 ? 8 : 12,
+                paddingLeft,
+                paddingRight,
                 background: backgroundColor,
             }}
         >
@@ -116,11 +138,11 @@ const Tag = ({
                     <Icon color={textColor} size={pxToRem(16)} className={styles.icon} />
                 </Box>
             )}
-            <ThemeVariant isInverse={false}>
+            <ThemeVariant variant="default">
                 <Text
                     color={textColor}
-                    size={14}
-                    lineHeight={20}
+                    size={small ? 12 : 14}
+                    lineHeight={small ? 16 : 20}
                     weight={textPresets.indicator.weight}
                     truncate
                 >

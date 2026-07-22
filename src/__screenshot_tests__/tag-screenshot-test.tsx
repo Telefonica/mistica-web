@@ -31,7 +31,7 @@ test('Tags inverse', async () => {
     await openStoryPage({
         id: 'components-tag--default',
         device: 'DESKTOP',
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const tag = await screen.findByTestId('tags');
@@ -58,7 +58,7 @@ test('Tags inverse and dark mode', async () => {
         id: 'components-tag--default',
         device: 'DESKTOP',
         isDarkMode: true,
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const tag = await screen.findByTestId('tags');
@@ -148,6 +148,45 @@ test('Tags with custom colors', async () => {
     });
 
     await setRootFontSize(32);
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags small variant', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {small: true},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags small variant without icon', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {small: true, icon: false},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(BADGE_OPTIONS)('Tags small variant with badge={%s}', async (badge) => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {small: true, badge},
+    });
 
     const tag = await screen.findByTestId('tags');
 

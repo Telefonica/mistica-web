@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 test.each`
     values                 | type          | themeVariant | extraContent
@@ -20,17 +21,17 @@ test.each`
     ${[20, 20, 20, 20, 0]} | ${'linear'}   | ${'default'} | ${''}
     ${[20, 20, 20, 20, 0]} | ${'circular'} | ${'default'} | ${''}
     ${[20, 20, 20, 20, 0]} | ${'angular'}  | ${'default'} | ${''}
-    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a small extra'}
-    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
-    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a small extra'}
-    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
-    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a small extra'}
-    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
+    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a small slot'}
+    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a super long slot This is a super long slot This is a super long slot This is a super long slot'}
+    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a small slot'}
+    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a super long slot This is a super long slot This is a super long slot This is a super long slot'}
+    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a small slot'}
+    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a super long slot This is a super long slot This is a super long slot This is a super long slot'}
 `('Meter $themeVariant $type $values', async ({themeVariant, values, type, extraContent}) => {
     await openStoryPage({
         id: 'components-data-visualizations-meter--meter-story',
         args: {
-            themeVariant,
+            variantOutside: normalizeVariant(themeVariant),
             width: 200,
             type,
             valuesCount: values.length,

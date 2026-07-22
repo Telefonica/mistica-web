@@ -96,10 +96,10 @@ const DateField = ({
             type="month"
             endIconOverlay={
                 <div className={dateStyles.iconContainer} data-testid="endIcon">
-                    <IconCalendarRegular size={iconSize.default} />
+                    <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'MonthField', testid: 'MonthField', ...dataAttributes}}
+            dataAttributes={{testid: 'MonthField', ...dataAttributes}}
         />
     );
 
@@ -115,7 +115,7 @@ const DateField = ({
                 optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
                 mode="year-month"
-                dataAttributes={{'component-name': 'MonthField', testid: 'MonthField', ...dataAttributes}}
+                dataAttributes={{testid: 'MonthField', ...dataAttributes}}
             />
         </React.Suspense>
     );

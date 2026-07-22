@@ -6,23 +6,58 @@
  */
 
 import * as React from 'react';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useTheme} from '../../hooks';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconBookFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.463 3.83c-.213-.018-5.19-.379-9.468 1.812C7.721 3.454 2.746 3.81 2.533 3.829a.41.41 0 0 0-.378.406v13.46a.41.41 0 0 0 .409.409c5.24 0 9.204 2.03 9.244 2.05q.089.047.19.048c.025 0 .05-.017.079-.023.039-.008.078-.008.112-.028l.016-.008h.006l.003-.003c.252-.126 4.126-2.036 9.218-2.036a.41.41 0 0 0 .41-.41V4.236a.41.41 0 0 0-.379-.406"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const {skinName} = useTheme();
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.463 3.83c-.213-.018-5.19-.379-9.468 1.812C7.721 3.454 2.746 3.81 2.533 3.829a.41.41 0 0 0-.378.406v13.46a.41.41 0 0 0 .409.409c5.24 0 9.204 2.03 9.244 2.05q.089.047.19.048c.025 0 .05-.017.079-.023.039-.008.078-.008.112-.028l.016-.008h.006l.003-.003c.252-.126 4.126-2.036 9.218-2.036a.41.41 0 0 0 .41-.41V4.236a.41.41 0 0 0-.379-.406"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.5 4.04a9.7 9.7 0 0 1 3.503.655.39.39 0 0 1 .247.367v13.976a.26.26 0 0 1-.368.232 8.2 8.2 0 0 0-3.382-.73 8.26 8.26 0 0 0-4.125 1.11A.75.75 0 0 1 2.25 19V6l.007-.1a.75.75 0 0 1 .368-.55A9.76 9.76 0 0 1 7.5 4.04m9 0a9.76 9.76 0 0 1 4.875 1.31.75.75 0 0 1 .375.65v13a.75.75 0 0 1-1.125.65 8.26 8.26 0 0 0-4.125-1.11c-1.168 0-2.32.251-3.382.73a.26.26 0 0 1-.368-.232V5.062a.39.39 0 0 1 .247-.367A9.7 9.7 0 0 1 16.5 4.04"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconBookFilled;

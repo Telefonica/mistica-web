@@ -1,40 +1,43 @@
 import * as React from 'react';
 import {SkeletonRectangle} from '../skeletons';
-import {ThemeVariant, skinVars} from '..';
+import {Box, ResponsiveLayout} from '..';
+
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Skeletons/SkeletonRectangle',
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
     height: string;
     width: string;
-    inverse: boolean;
+    variantOutside: Variant;
     ariaLabel: string;
 };
 
 const getSize = (n: number | string) => (Number.isNaN(+n) ? n : +n);
 
-export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel}) => {
+export const Default: StoryComponent<Args> = ({height, width, variantOutside, ariaLabel}) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    padding: 16,
-                }}
-            >
+        <ResponsiveLayout variant={variantOutside}>
+            <Box paddingY={16}>
                 <SkeletonRectangle
                     height={getSize(height)}
                     width={getSize(width)}
                     ariaLabel={ariaLabel}
                     dataAttributes={{testid: 'skeleton-rectangle'}}
                 />
-            </div>
-        </ThemeVariant>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -43,6 +46,6 @@ Default.storyName = 'SkeletonRectangle';
 Default.args = {
     height: '100',
     width: '100',
-    inverse: false,
+    variantOutside: 'default',
     ariaLabel: '',
 };

@@ -3,7 +3,6 @@ import {Stack, Text2} from '..';
 
 export default {
     title: 'Layout/Stack',
-    component: Stack,
     argTypes: {
         space: {
             options: ['between', 'around', 'evenly', '0', '4', '8', '16', '24', '32', '40', '48', '56', '64'],

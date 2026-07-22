@@ -3,13 +3,11 @@ import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {
-    desktopFontSize,
     fieldEndIconGap,
     fieldLeftPadding,
     fieldRightPadding,
+    fieldVars,
     iconButtonSize,
-    inputLineHeight,
-    mobileFontSize,
 } from './text-field-base.css';
 import {pxToRem} from './utils/css';
 
@@ -28,6 +26,7 @@ export const vars = {
 };
 
 export const chevronSize = pxToRem(20);
+export const optionContainerPadding = 8;
 
 export const optionsContainer = style([
     sprinkles({
@@ -42,10 +41,8 @@ export const optionsContainer = style([
         top,
         left,
         minWidth,
-        boxShadow:
-            '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
-        paddingTop: 8,
-        paddingBottom: 8,
+        boxShadow: '0px 2px 4px 0px #00000033',
+        padding: optionContainerPadding,
         transformOrigin,
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         overflowY: 'auto',
@@ -69,7 +66,7 @@ const selectContainerBase = style([
         cursor: 'pointer',
     }),
     {
-        borderRadius: `calc(${skinVars.borderRadii.input} - 1px)`,
+        outline: 'none',
         '@media': {
             [mq.tabletOrSmaller]: {
                 width: '100%',
@@ -112,17 +109,20 @@ const selectBase = style([
         borderRadius: skinVars.borderRadii.input,
     }),
     {
+        // the outline is set in the field container
+        outline: 'none',
         fontFamily: 'inherit',
         paddingRight: `calc(${iconButtonSize} + ${fieldEndIconGap}px)`,
         paddingLeft: fieldLeftPadding,
         textOverflow: 'ellipsis',
         appearance: 'none',
 
-        lineHeight: inputLineHeight,
-        fontSize: desktopFontSize,
+        lineHeight: fieldVars.mobileLineHeight,
+        fontSize: fieldVars.mobileFontSize,
         '@media': {
-            [mq.tabletOrSmaller]: {
-                fontSize: mobileFontSize,
+            [mq.desktopOrBigger]: {
+                fontSize: fieldVars.desktopFontSize,
+                lineHeight: fieldVars.desktopLineHeight,
             },
         },
     },
@@ -155,11 +155,12 @@ const selectTextBase = style([
         top: 1, // for border
         left: fieldLeftPadding + 1, // +1 for border
         right: `calc(${iconButtonSize} + ${fieldEndIconGap}px + 1px)`, // +1 for border
-        lineHeight: inputLineHeight,
-        fontSize: desktopFontSize,
+        fontSize: fieldVars.mobileFontSize,
+        lineHeight: fieldVars.mobileLineHeight,
         '@media': {
-            [mq.tabletOrSmaller]: {
-                fontSize: mobileFontSize,
+            [mq.desktopOrBigger]: {
+                lineHeight: fieldVars.desktopLineHeight,
+                fontSize: fieldVars.desktopFontSize,
             },
         },
         textOverflow: 'ellipsis',
@@ -190,7 +191,7 @@ export const iconContainer = style({
     alignItems: 'center',
     justifyContent: 'center',
     // remove extra button space on the right so that icon is not too far from field's container
-    marginRight: -12,
+    marginRight: -14,
 });
 
 export const menuItem = style([
@@ -200,8 +201,12 @@ export const menuItem = style([
         alignItems: 'center',
         cursor: 'pointer',
         paddingY: 8,
-        paddingX: 16,
+        paddingX: 8,
     }),
+    {
+        borderRadius: `calc(${skinVars.borderRadii.popup} - ${optionContainerPadding / 2}px)`,
+    },
+
     {
         height: pxToRem(48),
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -209,7 +214,7 @@ export const menuItem = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                    backgroundColor: skinVars.colors.backgroundContainerHover,
                 },
             },
         },

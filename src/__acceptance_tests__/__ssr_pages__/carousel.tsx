@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, Carousel, MediaCard, Image, Tag, ButtonLink, ResponsiveLayout} from '../../..';
+import {ButtonPrimary, Carousel, MediaCard, Tag, ButtonLink, ResponsiveLayout} from '../../..';
 
 const CarouselTest = (): JSX.Element => (
     <ResponsiveLayout>
@@ -12,8 +12,7 @@ const CarouselTest = (): JSX.Element => (
                     headline={<Tag type="promo">Headline</Tag>}
                     title={'Card ' + idx}
                     description="Description"
-                    media={<Image src="tennis.jpg" aspectRatio="16:9" loadingFallback={false} />}
-                    button={
+                    buttonPrimary={
                         <ButtonPrimary small onPress={() => {}}>
                             Action
                         </ButtonPrimary>

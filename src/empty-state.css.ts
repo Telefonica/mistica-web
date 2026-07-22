@@ -21,7 +21,7 @@ export const container = style([
                 maxWidth: 368,
             },
             [mq.desktopOrBigger]: {
-                borderRadius: skin.vars.borderRadii.legacyDisplay,
+                borderRadius: skin.vars.borderRadii.container,
                 flexDirection: 'row',
                 overflow: 'hidden',
                 backgroundColor,
@@ -110,6 +110,10 @@ export const border = sprinkles({
     border: 'regular',
 });
 
-export const inverseBorder = style({
+export const borderOverBrand = style({
     border: `1px solid ${skin.vars.colors.backgroundContainer}`,
+});
+
+export const contentContainer = style({
+    flex: 1,
 });

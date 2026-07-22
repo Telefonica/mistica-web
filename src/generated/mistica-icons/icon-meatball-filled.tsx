@@ -6,23 +6,44 @@
  */
 
 import * as React from 'react';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconMeatballFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
 
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.745 12.314c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.456 1.037 2.456 2.314s-1.1 2.312-2.459 2.312c-1.36 0-2.456-1.035-2.456-2.312m-7.374 0c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.459 1.035 2.459 2.314 0 1.277-1.1 2.312-2.459 2.312-1.36 0-2.459-1.035-2.459-2.312M4.456 10C3.1 10 2 11.037 2 12.314s1.097 2.312 2.456 2.312c1.36 0 2.459-1.035 2.459-2.312 0-1.28-1.102-2.314-2.459-2.314"
-            />
-        </svg>
-    );
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.745 12.314c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.456 1.037 2.456 2.314s-1.1 2.312-2.459 2.312c-1.36 0-2.456-1.035-2.456-2.312m-7.374 0c0-1.277 1.1-2.314 2.459-2.314 1.36 0 2.459 1.035 2.459 2.314 0 1.277-1.1 2.312-2.459 2.312-1.36 0-2.459-1.035-2.459-2.312M4.456 10C3.1 10 2 11.037 2 12.314s1.097 2.312 2.456 2.312c1.36 0 2.459-1.035 2.459-2.312 0-1.28-1.102-2.314-2.459-2.314"
+                />
+            </svg>
+        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
+    }
+
+    return svgContent;
 };
 
 export default IconMeatballFilled;

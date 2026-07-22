@@ -194,6 +194,24 @@ test('TextField - end icon', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - prefix and end icon focus-ring', async () => {
+    const page = await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {prefix: 'Prefix', icon: true},
+    });
+
+    // press Tab until the field gets focused
+    do {
+        await page.keyboard.press('Tab');
+    } while ((await page.evaluate(() => document.activeElement?.tagName)) !== 'INPUT');
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - disabled', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
@@ -231,7 +249,7 @@ test('TextField - inverse and helper text', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
-        args: {inverse: true, helperText: 'Helper text'},
+        args: {variantOutside: 'brand', helperText: 'Helper text'},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
@@ -244,7 +262,7 @@ test('TextField - inverse and prefix', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
-        args: {inverse: true, prefix: 'Prefix'},
+        args: {variantOutside: 'brand', prefix: 'Prefix'},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
@@ -257,7 +275,7 @@ test('TextField - inverse and error', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
-        args: {inverse: true, error: true, helperText: 'I am a descriptive error'},
+        args: {variantOutside: 'brand', error: true, helperText: 'I am a descriptive error'},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
@@ -366,6 +384,37 @@ test('TextField - multiline', async () => {
     expect(filledFocusScreenshot).toMatchImageSnapshot();
 });
 
+test.each(['top', 'bottom'])('Autocomplete menu renders on %s', async (verticalPosition) => {
+    await openStoryPage({
+        id: 'components-input-fields-autocomplete--controlled',
+        device: 'MOBILE_IOS',
+        args: {verticalPosition},
+    });
+
+    const field = await screen.findByRole('combobox', {name: 'Label'});
+    await field.focus();
+
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+});
+
+test('Autocomplete scrolls to active option on keyboard navigation', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-autocomplete--controlled',
+        device: 'MOBILE_IOS',
+        viewport: {width: 375, height: 200},
+    });
+
+    const field = await screen.findByRole('combobox', {name: 'Label'});
+    await field.focus();
+
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('SearchField', async () => {
     await openStoryPage({
         id: 'components-input-fields-searchfield--controlled',
@@ -394,6 +443,21 @@ test('SearchField with suggestions', async () => {
 
     const field = await screen.findByLabelText('Label');
     await field.type('a');
+
+    const screenshot = await page.screenshot({fullPage: true});
+
+    expect(screenshot).toMatchImageSnapshot();
+});
+
+test('SearchField without suggestions', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-searchfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {suggestions: true, withSuggestionsEmptyCase: true},
+    });
+
+    const field = await screen.findByLabelText('Label');
+    await field.type('merry xmas');
 
     const screenshot = await page.screenshot({fullPage: true});
 
@@ -466,6 +530,28 @@ test('DateTimeField', async () => {
 
     await field.focus();
     await field.type('06' + '10' + '1980' + '13' + '14');
+
+    const filledScreenshot = await fieldWrapper.screenshot();
+
+    expect(filledScreenshot).toMatchImageSnapshot();
+});
+
+test('TimeField', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-timefield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {defaultValue: ''},
+    });
+
+    const fieldWrapper = await screen.findByTestId('time-field');
+    const field = await screen.findByLabelText('Label');
+
+    const emptyScreenshot = await fieldWrapper.screenshot();
+
+    expect(emptyScreenshot).toMatchImageSnapshot();
+
+    await field.focus();
+    await field.type('09' + '00');
 
     const filledScreenshot = await fieldWrapper.screenshot();
 

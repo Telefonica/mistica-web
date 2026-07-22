@@ -19,6 +19,9 @@ const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
 const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 
+/**
+ * @type {string | string[]}
+ */
 const SKIN_BLACKLIST = [];
 
 const checkoutMisticaIconsRepo = () => {
@@ -83,6 +86,9 @@ const getSvgIconsInfo = () => {
  * @param {svgIconsInfo} svgIconsInfo
  */
 const getAllIconNames = (svgIconsInfo) => {
+    /**
+     * @type {string[]}
+     */
     const allIconNames = [];
     Object.entries(svgIconsInfo).forEach(([, icons]) => {
         for (const [name] of icons) {
@@ -92,7 +98,7 @@ const getAllIconNames = (svgIconsInfo) => {
     return uniq(allIconNames).sort();
 };
 
-const format = async (src) =>
+const format = async (/** @type {string} */ src) =>
     prettier.format(src, {...(await prettier.resolveConfig('.')), parser: 'babel-ts'});
 
 /**
@@ -119,13 +125,17 @@ const getIconJsx = (svgFilename) => {
         .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
 
-/** Defines the skin check order, higher number means it's checked before */
-const SKIN_PRIORITY = {
+/** Higher specificity = checked first in the if/else chain;
+ * The skin with the LOWEST SPECIFICITY among those
+ * carrying the icon becomes the else FALLBACK for ALL OTHER SKINS.
+ * @type {{[skin: string]: number}}
+ */
+const SKIN_SPECIFICITY = {
+    // this is currently the default skin
     telefonica: 1,
     vivo: 2,
     o2: 3,
-    'o2-new': 4, // o2-new is checked before o2 because O2-new skin name would match with o2 regexp
-    blau: 5,
+    blau: 4,
 };
 
 /**
@@ -136,7 +146,7 @@ const SKIN_PRIORITY = {
 const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     // sort skins by priority, lower priority (more specific) first
     const skins = Object.keys(svgIconsInfo).sort(
-        (a, b) => (SKIN_PRIORITY[b] ?? 100) - (SKIN_PRIORITY[a] ?? 100)
+        (a, b) => (SKIN_SPECIFICITY[b] ?? 100) - (SKIN_SPECIFICITY[a] ?? 100)
     );
 
     const availableIcons = [];
@@ -161,7 +171,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
         let result = '';
         for (let i = 0; i < availableIcons.length; i++) {
             const [skin, filename] = availableIcons[i];
-            // using a match because we want "vivo" to match with "Vivo" and "Vivo-new"
+            // using a match because we want "vivo" to match with "Vivo" and "Vivo-evolution"
             const ifStr = i < availableIcons.length - 1 ? `if (skinName.match(/^${skin}/i))` : '';
             const elseStr = i > 0 ? 'else' : '';
             result += `${elseStr} ${ifStr} {return ${getIconJsx(filename)}}`;
@@ -182,16 +192,39 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     import {useTheme} from '../../hooks';`
             : ''
     }
-    import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+    import {useThemeVariant} from '../../theme-variant-context';
     import {vars} from '../../skins/skin-contract.css';
+    import {useIconGradient} from '../../utils/icon-gradient';
 
     import type {IconProps} from '../../utils/types';
 
     const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-        const isInverse = useIsInverseOrMediaVariant();
-        const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+        const themeVariant = useThemeVariant();
+        const defaultColor =
+            themeVariant === 'brand' || themeVariant === 'media'
+                ? vars.colors.neutralHighBrand
+                : themeVariant === 'negative'
+                    ? vars.colors.neutralHighNegative
+                    : vars.colors.neutralHigh;
+
+        const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
         ${hasVariants ? 'const {skinName} = useTheme();' : ''}
-        ${getVariants()}
+
+        const getSvgContent = () => {
+            ${getVariants()}
+        };
+
+        const svgContent = getSvgContent();
+        
+        if (gradientDef) {
+            return React.cloneElement(svgContent, {}, [
+                <defs key="gradient-defs">{gradientDef}</defs>,
+                ...React.Children.toArray(svgContent.props.children),
+            ]);
+        }
+
+        return svgContent;
     };
 
     export default ${componentName};
@@ -201,7 +234,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
 };
 
 /**
- * @typedef {{[key: string]: Array<string>}} IconKeywordsInfo
+ * @typedef {{[key: string]: {category: Array<string>, keywords: Array<string>}}} IconKeywordsInfo
  */
 const createAllIconKeywordsSource = () => {
     const keywordsPath = join(PATH_MISTICA_ICONS_REPO, 'icons', 'icons-keywords.json');
@@ -211,8 +244,12 @@ const createAllIconKeywordsSource = () => {
 
     // map icon names to kebab case
     const result = {};
-    for (const [icon, keywords] of Object.entries(keywordsMap)) {
-        result[kebabCase(icon)] = keywords;
+    for (const [icon, data] of Object.entries(keywordsMap)) {
+        const iconKey = kebabCase(icon);
+        result[iconKey] = {
+            category: data.category || [],
+            keywords: data.keywords || [],
+        };
     }
 
     const source = `/*
@@ -221,9 +258,16 @@ const createAllIconKeywordsSource = () => {
      * To update, execute "yarn start" inside "import-mistica-icons"
      */
 
-    const iconKeywords: {[key: string]: Array<string>} = ${JSON.stringify(result)};
+    const iconMetadata: {[key: string]: {keywords: Array<string>, category: Array<string>}} = ${JSON.stringify(result)};
 
-    export default iconKeywords;
+    export const iconKeywords: { [key: string]: Array<string> } = Object.fromEntries(
+    Object.entries(iconMetadata).map(([key, value]) => [key, value.keywords])
+    );
+
+    export const iconCategories: { [key: string]: Array<string> } = Object.fromEntries(
+    Object.entries(iconMetadata).map(([key, value]) => [key, value.category])
+    );
+
     `;
 
     return format(source);

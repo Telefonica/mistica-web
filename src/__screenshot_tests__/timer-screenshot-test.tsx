@@ -56,6 +56,19 @@ test.each(DEVICE)('Timer - boxed (%s)', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Timer - boxed over media', async () => {
+    await openStoryPage({
+        id: 'components-timer--timer-story',
+        device: 'MOBILE_IOS',
+        args: {minTimeUnit: 'seconds', maxTimeUnit: 'days', boxed: true, themeVariant: 'media'},
+    });
+
+    const timer = await screen.findByTestId('timer');
+
+    const image = await timer.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Timer - boxed with big fontSize', async () => {
     await openStoryPage({
         id: 'components-timer--timer-story',

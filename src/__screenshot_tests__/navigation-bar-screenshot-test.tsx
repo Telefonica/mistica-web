@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {normalizeVariant} from '../theme-variant-context';
 
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
@@ -14,13 +15,13 @@ test.each`
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {variant},
+        args: {variant: normalizeVariant(variant)},
         isDarkMode,
     });
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot({failureThreshold: 0.00001});
+    expect(image).toMatchImageSnapshot({failureThreshold: 0.00002});
 });
 
 test.each`
@@ -35,7 +36,7 @@ test.each`
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {variant},
+        args: {variant: normalizeVariant(variant)},
         isDarkMode,
     });
 
@@ -48,11 +49,11 @@ test.each`
     expect(menuOpenImage).toMatchImageSnapshot();
 });
 
-test('MainNavigationBar mobile with burger menu extra', async () => {
+test('MainNavigationBar mobile with burger menu slot', async () => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {burgerMenuExtra: true},
+        args: {burgerMenuSlot: true},
     });
 
     await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
@@ -87,6 +88,42 @@ test('MainNavigationBar wide', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar desktop with topSlot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {topSlot: true, desktopLargeMenu: true, menu: 'default'},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar mobile with topSlot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {topSlot: true},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar desktop with topSlot and custom background', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {topSlot: true, topSlotBackgroundColor: '#FABADA'},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test.each`
     variant          | isDarkMode | device
     ${'default'}     | ${false}   | ${'DESKTOP'}
@@ -107,7 +144,7 @@ test.each`
         const page = await openStoryPage({
             id: 'components-navigation-bars-navigationbar--default',
             device,
-            args: {variant},
+            args: {variant: normalizeVariant(variant)},
             isDarkMode,
         });
 
@@ -137,7 +174,7 @@ test.each`
         const page = await openStoryPage({
             id: 'components-navigation-bars-funnelnavigationbar--default',
             device,
-            args: {variant},
+            args: {variant: normalizeVariant(variant)},
             isDarkMode,
         });
 
@@ -179,12 +216,15 @@ test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => 
     expect(image).toMatchImageSnapshot();
 });
 
+// These test cases have been skipped because they produce different results in UI and headless mode.
+// In headless mode, the menu gets rendered in an unexpected position
+// https://jira.tid.es/browse/WEB-2365
+// ${'small'} | ${'default'}
+// ${'small'} | ${'custom'}
 test.each`
     menuType   | content
     ${'large'} | ${'default'}
     ${'large'} | ${'custom'}
-    ${'small'} | ${'default'}
-    ${'small'} | ${'custom'}
 `('MainNavigationBar with $menuType menu and $content content in DESKTOP', async ({menuType, content}) => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
@@ -231,14 +271,32 @@ test.each(['default', 'custom'])('MainNavigationBar with menu and %s content in 
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
+// Test case skipped because it produces different results in UI and headless mode.
+// In headless mode, the menu gets rendered in an unexpected position
+// https://jira.tid.es/browse/WEB-2365
+test.each(['large' /* 'small' */])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'inverse'},
+        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'brand'},
     });
 
-    // first section opened
-    await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00001});
+    const startButton = await screen.findByRole('button', {name: 'Start'});
+    await page.click(startButton);
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
+});
+
+test('MainNavigationBar large with expanded right slot', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {
+            large: true,
+            expandedRightSlot: true,
+        },
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
 });

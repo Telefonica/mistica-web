@@ -8,7 +8,7 @@ import {
     Title3,
     Grid,
     GridItem,
-    SnapCard,
+    DataCard,
     Circle,
     IconAcademicRegular,
 } from '..';
@@ -54,7 +54,7 @@ export const InsideFixedContainer: StoryComponent = () => {
                     }
                     title="Title"
                     description="Description"
-                    extra={<Placeholder />}
+                    slot={<Placeholder />}
                 />
             </div>
         </Stack>
@@ -172,7 +172,8 @@ export const WithTargetStyles: StoryComponent = () => {
                         targetStyle={{height: '100%'}}
                         position="bottom"
                         target={
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 dataAttributes={{testid: 'target-0'}}
                                 asset={
                                     <Circle size={40} backgroundColor={vars.colors.brandLow}>
@@ -192,7 +193,8 @@ export const WithTargetStyles: StoryComponent = () => {
                         targetStyle={{height: '100%'}}
                         position="bottom"
                         target={
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 dataAttributes={{testid: 'target-1'}}
                                 asset={
                                     <Circle size={40} backgroundColor={vars.colors.brandLow}>

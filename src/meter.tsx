@@ -40,8 +40,8 @@ const DEFAULT_COLORS = [
     vars.colors.promo,
 ];
 
-const DEFAULT_COLORS_INVERSE = [
-    vars.colors.controlActivatedInverse,
+const DEFAULT_COLORS_OVER_BRAND = [
+    vars.colors.controlActivatedBrand,
     vars.colors.warning,
     vars.colors.success,
     vars.colors.highlight,
@@ -128,7 +128,7 @@ type MeterProps = {
     colors?: Array<string>;
     reverse?: boolean;
     dataAttributes?: DataAttributes;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     'aria-hidden'?: boolean | 'true' | 'false';
     'aria-label'?: string;
     'aria-labelledby'?: string;
@@ -144,15 +144,17 @@ const MeterComponent = ({
     'aria-hidden': ariaHidden = false,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
-    extra,
+    slot,
 }: MeterProps): JSX.Element => {
     const {borderRadii, t} = useTheme();
     const {ref: containerRef, width: containerWidth} = useElementDimensions();
     const hasRoundLineCaps = parseInt(borderRadii.bar) !== 0;
     const themeVariant = useThemeVariant();
     const isOverMedia = themeVariant === 'media';
-    const isInverse = themeVariant === 'inverse';
-    const segmentColors = colors || (isInverse || isOverMedia ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
+    const isOverBrand = themeVariant === 'brand';
+    const isOverNegative = themeVariant === 'negative';
+    const segmentColors =
+        colors || (isOverBrand || isOverMedia || isOverNegative ? DEFAULT_COLORS_OVER_BRAND : DEFAULT_COLORS);
     const [width, setWidth] = React.useState<number>(typeof widthProp === 'number' ? widthProp : 0);
     const scaleFactor = width === 0 ? 1 : VIEW_BOX_WIDTH / width;
     const lineCapRadiusPx = hasRoundLineCaps ? STROKE_WIDTH_PX / 2 : 0;
@@ -196,8 +198,8 @@ const MeterComponent = ({
 
     const trackbarColor = isOverMedia
         ? vars.colors.inverse
-        : isInverse
-          ? vars.colors.barTrackInverse
+        : isOverBrand
+          ? vars.colors.barTrackBrand
           : vars.colors.barTrack;
 
     //  scale values to the range [0, 1]
@@ -283,7 +285,7 @@ const MeterComponent = ({
         ' ' +
         values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join('. ');
 
-    const extraStyle = React.useMemo(() => {
+    const slotStyle = React.useMemo(() => {
         if (type === TYPE_LINEAR) {
             return {display: 'flex'};
         }
@@ -313,7 +315,7 @@ const MeterComponent = ({
             aria-live="polite"
             aria-valuetext={valueText}
             aria-hidden={ariaHidden}
-            {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
+            {...getPrefixedDataAttributes({testid: 'Meter', ...dataAttributes})}
         >
             <svg
                 viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
@@ -499,7 +501,7 @@ const MeterComponent = ({
                         );
                     })}
             </svg>
-            {extra && <div style={extraStyle}>{extra}</div>}
+            {slot && <div style={slotStyle}>{slot}</div>}
         </div>
     );
 };

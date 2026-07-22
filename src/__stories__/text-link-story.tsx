@@ -15,6 +15,8 @@ import {
     Text10,
 } from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/TextLink',
     component: TextLink,
@@ -46,6 +48,10 @@ export default {
         },
         underline: {
             options: ['always', 'on hover'],
+            control: {type: 'select'},
+        },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
         },
     },
@@ -116,7 +122,7 @@ const getTextLinkActionProps = (action: 'href' | 'onPress', newTab: boolean) => 
 
 type Args = {
     text: string;
-    inverse: boolean;
+    variantOutside: Variant;
     disabled: boolean;
     action: 'href' | 'onPress';
     textStyle: 'Text1' | 'Text3' | 'Text5';
@@ -126,7 +132,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     text,
-    inverse,
+    variantOutside,
     disabled,
     action,
     newTab,
@@ -134,7 +140,7 @@ export const Default: StoryComponent<Args> = ({
     underline,
 }) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16} dataAttributes={{testid: 'text-link'}}>
                 <TextStyleWrapper textStyle={textStyle}>
                     Text link can be located in the middle of a paragraph:{' '}
@@ -157,7 +163,7 @@ Default.args = {
     text: 'Text link',
     action: 'href',
     textStyle: 'Text3',
-    inverse: false,
+    variantOutside: 'default',
     disabled: false,
     newTab: false,
     underline: 'always',

@@ -27,7 +27,7 @@ type Args = {
     background: 'image' | 'video' | 'custom color' | 'color from skin';
     backgroundColorCustom: string;
     backgroundColorFromSkin: string;
-    variant: 'default' | 'inverse' | 'alternative';
+    variant: 'default' | 'brand' | 'alternative';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -35,8 +35,8 @@ type Args = {
     title: string;
     titleAs: HeadingType;
     description: string;
-    extra: boolean;
-    sideExtra: boolean;
+    slot: boolean;
+    sideSlot: boolean;
     actions:
         | 'none'
         | 'button'
@@ -63,8 +63,8 @@ export const Default: StoryComponent<Args> = ({
     title,
     titleAs,
     description,
-    extra,
-    sideExtra,
+    slot,
+    sideSlot,
     actions,
     minHeight,
     aspectRatio,
@@ -101,8 +101,8 @@ export const Default: StoryComponent<Args> = ({
             title={title}
             titleAs={titleAs}
             description={description}
-            extra={extra ? <Placeholder /> : undefined}
-            sideExtra={sideExtra ? <Placeholder /> : undefined}
+            slot={slot ? <Placeholder /> : undefined}
+            sideSlot={sideSlot ? <Placeholder /> : undefined}
             button={button}
             secondaryButton={secondaryButton}
             buttonLink={buttonLink}
@@ -129,8 +129,8 @@ Default.args = {
     title: 'Title',
     titleAs: 'h1',
     description: 'This is a long description with a long text to see how this works',
-    extra: false,
-    sideExtra: false,
+    slot: false,
+    sideSlot: false,
     actions: 'button and link',
     minHeight: undefined,
     aspectRatio: 'auto',
@@ -157,7 +157,7 @@ Default.argTypes = {
         if: {arg: 'background', eq: 'color from skin'},
     },
     variant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'alternative'],
         control: {type: 'select'},
         // This control should only be visible when background is set to 'color from skin' or 'custom color'.
         // That could look similar to this in a future storybook version (see https://github.com/ComponentDriven/csf/pull/76):
@@ -231,8 +231,8 @@ export const CoverHeroInSlideshow: StoryComponent = () => (
                         idx
                     ]
                 }
-                extra={<Placeholder />}
-                sideExtra={<Placeholder />}
+                slot={<Placeholder />}
+                sideSlot={<Placeholder />}
                 button={<ButtonPrimary fake>Action</ButtonPrimary>}
                 buttonLink={<ButtonLink href="#">Link</ButtonLink>}
             />

@@ -20,24 +20,36 @@ export default {
 type SuccessArgs = {
     imageUrl: string | null;
     imageFit: 'fit' | 'fill';
+    title: string;
+    description: string;
     multipleParagraphs: boolean;
-    extra: boolean;
+    slot: boolean;
 };
 
-const defaultDescription = "I'm the description";
-
-export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multipleParagraphs, extra}) => (
+export const Success: StoryComponent<SuccessArgs> = ({
+    imageUrl,
+    imageFit,
+    title,
+    description,
+    multipleParagraphs,
+    slot,
+}) => (
     <SuccessFeedbackScreen
-        title="I'm the title"
-        description={
-            multipleParagraphs ? [defaultDescription, 'paragraph 2', 'paragraph 3'] : defaultDescription
-        }
+        title={title}
+        description={multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description}
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
         secondaryButton={<ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>}
         imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
-        extra={extra ? <Placeholder /> : undefined}
+        slot={slot ? <Placeholder /> : undefined}
     />
 );
 Success.storyName = 'SuccessFeedbackScreen';
-Success.args = {imageUrl: emptyStateImg, imageFit: 'fit', multipleParagraphs: false, extra: false};
+Success.args = {
+    imageUrl: emptyStateImg,
+    imageFit: 'fit',
+    title: "I'm the title",
+    description: "I'm the description",
+    multipleParagraphs: false,
+    slot: false,
+};

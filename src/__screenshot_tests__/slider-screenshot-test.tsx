@@ -18,7 +18,7 @@ test.each(DEVICES)('Slider - inverse in %s', async (device) => {
     await openStoryPage({
         id: 'components-slider--uncontrolled',
         device,
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const slider = await screen.findByTestId('slider');

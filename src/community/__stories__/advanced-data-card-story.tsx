@@ -11,7 +11,7 @@ import type {HeadingType} from '../../utils/types';
 import type {TagType} from '../../tag';
 
 export default {
-    title: 'Community/AdvancedDataCard',
+    title: 'Community/Vivo/AdvancedDataCard',
 };
 
 type Args = {
@@ -28,8 +28,8 @@ type Args = {
     footerText: string;
     actions: string;
     onClose: boolean;
-    extra: number;
-    noExtraDivider: boolean;
+    slot: number;
+    noSlotDivider: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -46,8 +46,8 @@ export const Default: StoryComponent<Args> = ({
     footerText,
     actions,
     onClose,
-    extra,
-    noExtraDivider,
+    slot,
+    noSlotDivider,
 }) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary
@@ -103,10 +103,10 @@ export const Default: StoryComponent<Args> = ({
             footerText={footerText}
             onClose={onClose ? () => window.alert('closed!') : undefined}
             href={href}
-            extra={Array.from({length: extra}, (_, i) => (
+            slot={Array.from({length: slot}, (_, i) => (
                 <Placeholder key={i} height={56} />
             ))}
-            noExtraDivider={noExtraDivider}
+            noSlotDivider={noSlotDivider}
         />
     );
 };
@@ -126,8 +126,8 @@ Default.args = {
     footerText: '',
     actions: 'button and link',
     onClose: true,
-    extra: 0,
-    noExtraDivider: false,
+    slot: 0,
+    noSlotDivider: false,
 };
 Default.argTypes = {
     headlineType: {

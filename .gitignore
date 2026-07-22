@@ -5,6 +5,7 @@ coverage/
 .directory
 .DS_Store
 .idea/
+mistica-web.iml
 *.js.map
 *.orig
 *.rej
@@ -30,3 +31,6 @@ community.d.ts
 !.yarn/versions
 # SonarQube scan
 .scannerwork
+*storybook.log
+.env*.local
+

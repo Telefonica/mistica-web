@@ -11,7 +11,7 @@ import {vars as skinVars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
 import {InternalBoxed} from './boxed';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
 import Inline from './inline';
@@ -123,6 +123,22 @@ const getAccordionItemIndex = (element: Element | null) => {
         .findIndex((e) => e === element);
 };
 
+const getAssetText = (asset: React.ReactNode): string => {
+    if (!React.isValidElement(asset)) return '';
+
+    const props = asset.props as {alt?: unknown; 'aria-label'?: unknown};
+
+    if (typeof props.alt === 'string' && props.alt.trim()) {
+        return props.alt.trim();
+    }
+
+    if (typeof props['aria-label'] === 'string' && props['aria-label'].trim()) {
+        return props['aria-label'].trim();
+    }
+
+    return '';
+};
+
 const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemContentProps>(
     (
         {
@@ -139,9 +155,13 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
-        const isInverse = useIsInverseOrMediaVariant();
+        const variant = useThemeVariant();
         const labelId = React.useId();
         const panelId = React.useId();
+
+        const assetText = getAssetText(props.asset);
+
+        const computedAriaLabel = ariaLabel ?? [props.title, assetText].filter(Boolean).join(' ');
 
         const [itemIndex, setItemIndex] = React.useState<number>();
         const isOpen = itemIndex !== undefined && index?.includes(itemIndex);
@@ -150,13 +170,23 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
             setItemIndex(getAccordionItemIndex(itemRef.current));
         }, []);
 
+        const iconColor = {
+            default: isOpen ? skinVars.colors.chevronIndicator : skinVars.colors.chevronIndicator,
+            alternative: isOpen ? skinVars.colors.chevronIndicator : skinVars.colors.chevronIndicator,
+            brand: skinVars.colors.textSecondaryBrand,
+            media: skinVars.colors.textSecondaryBrand,
+            negative: skinVars.colors.textSecondaryNegative,
+        }[variant];
+
         return (
             <div ref={itemRef} {...getPrefixedDataAttributes({...dataAttributes, 'accordion-item': true})}>
                 <BaseTouchable
                     ref={ref}
                     className={classNames(
                         styles.itemContent,
-                        isInverse ? styles.touchableBackgroundInverse : styles.touchableBackground
+                        variant === 'brand' || variant === 'media' || variant === 'negative'
+                            ? styles.touchableBackgroundOverBrand
+                            : styles.touchableBackground
                     )}
                     onPress={() => {
                         if (itemIndex !== undefined) toggle(itemIndex);
@@ -164,7 +194,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     trackingEvent={trackingEvent}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    aria-label={ariaLabel}
+                    aria-label={computedAriaLabel}
                     aria-labelledby={ariaLabelledby}
                 >
                     <Box paddingX={16}>
@@ -183,13 +213,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                             size={20}
                                             transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
                                             direction={isOpen ? 'up' : 'down'}
-                                            color={
-                                                isInverse
-                                                    ? skinVars.colors.inverse
-                                                    : isOpen
-                                                      ? skinVars.colors.neutralHigh
-                                                      : skinVars.colors.neutralMedium
-                                            }
+                                            color={iconColor}
                                         />
                                     </div>
                                 </Inline>
@@ -224,7 +248,7 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
             <AccordionItemContent
                 {...props}
                 ref={ref}
-                dataAttributes={{'component-name': 'AccordionItem', ...dataAttributes}}
+                dataAttributes={{testid: 'AccordionItem', ...dataAttributes}}
             />
         </div>
     )
@@ -273,7 +297,7 @@ export const Accordion = ({
         <AccordionContext.Provider value={{index: indexList, toggle}}>
             <div
                 role={role}
-                {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
+                {...getPrefixedDataAttributes({testid: 'Accordion', ...dataAttributes, accordion: true})}
             >
                 {childrenContent.map((child, index) => (
                     <React.Fragment key={index}>
@@ -291,17 +315,17 @@ export const Accordion = ({
 };
 
 interface BoxedAccordionItemProps extends AccordionItemContentProps {
-    isInverse?: boolean;
+    variant?: 'default' | 'brand';
 }
 
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
-    ({dataAttributes, isInverse, ...props}, ref) => (
+    ({dataAttributes, variant, ...props}, ref) => (
         <InternalBoxed
             overflow="visible"
             className={styles.boxed}
-            variant={isInverse ? 'inverse' : 'default'}
+            variant={variant ?? 'default'}
             ref={ref}
-            dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
+            dataAttributes={{testid: 'BoxedAccordionItem', ...dataAttributes}}
         >
             <AccordionItemContent {...props} />
         </InternalBoxed>
@@ -329,7 +353,7 @@ export const BoxedAccordion = ({
             <Stack
                 space={16}
                 role={role}
-                dataAttributes={{'component-name': 'BoxedAccordion', accordion: true, ...dataAttributes}}
+                dataAttributes={{testid: 'BoxedAccordion', accordion: true, ...dataAttributes}}
             >
                 {children}
             </Stack>

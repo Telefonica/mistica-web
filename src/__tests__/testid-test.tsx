@@ -9,7 +9,6 @@ import {
     DateField,
     Hero,
     Image,
-    HighlightedCard,
     IconShopRegular,
     Meter,
     Placeholder,
@@ -23,6 +22,8 @@ import {
     Header,
     MainSectionHeader,
     Drawer,
+    MediaCard,
+    NakedCard,
 } from '..';
 import {makeTheme} from './test-utils';
 
@@ -50,7 +51,7 @@ test('Row test ids', () => {
                 description="Description"
                 detail="Detail"
                 asset={<IconShopRegular />}
-                extra={<Placeholder />}
+                slot={<Placeholder />}
                 right="right"
                 href="#"
             />
@@ -74,7 +75,7 @@ test('Row test ids', () => {
     );
 });
 
-test('Cards test ids', () => {
+test('DataCard test ids', () => {
     checkTestIds(
         <DataCard
             headline="Headline"
@@ -82,9 +83,9 @@ test('Cards test ids', () => {
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            extra={<Placeholder />}
+            slot={<Placeholder />}
             asset={<IconShopRegular />}
-            actions={[
+            topActions={[
                 {
                     Icon: IconShopRegular,
                     onPress: () => {},
@@ -110,13 +111,86 @@ test('Cards test ids', () => {
     );
 });
 
-test('HighlightedCard test ids', () => {
-    checkTestIds(<HighlightedCard title="Title" description="Description" imageUrl="https://anyurl.com" />, [
-        {
-            componentName: 'HighlightedCard',
-            internalTestIds: ['title', 'description', 'image'],
-        },
-    ]);
+test('MediaCard test ids', () => {
+    checkTestIds(
+        <MediaCard
+            headline="Headline"
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            slot={<Placeholder />}
+            asset={<IconShopRegular />}
+            topActions={[
+                {
+                    Icon: IconShopRegular,
+                    onPress: () => {},
+                    label: 'Lightning',
+                },
+            ]}
+            imageSrc="https://picsum.photos/1200/1200"
+            showFooter
+            buttonPrimary={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+        />,
+        [
+            {
+                componentName: 'MediaCard',
+                internalTestIds: [
+                    'headline',
+                    'pretitle',
+                    'title',
+                    'subtitle',
+                    'description',
+                    'asset',
+                    'topActions',
+                    'slot',
+                    'footer',
+                    'image',
+                ],
+            },
+        ]
+    );
+});
+
+test('NakedCard test ids', () => {
+    checkTestIds(
+        <NakedCard
+            headline="Headline"
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            slot={<Placeholder />}
+            asset={<IconShopRegular />}
+            topActions={[
+                {
+                    Icon: IconShopRegular,
+                    onPress: () => {},
+                    label: 'Lightning',
+                },
+            ]}
+            imageSrc="https://picsum.photos/1200/1200"
+            showFooter
+            buttonPrimary={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+        />,
+        [
+            {
+                componentName: 'NakedCard',
+                internalTestIds: [
+                    'headline',
+                    'pretitle',
+                    'title',
+                    'subtitle',
+                    'description',
+                    'asset',
+                    'topActions',
+                    'slot',
+                    'footer',
+                    'image',
+                ],
+            },
+        ]
+    );
 });
 
 test('FeedbackScreen test ids', () => {
@@ -124,7 +198,7 @@ test('FeedbackScreen test ids', () => {
         <SuccessFeedbackScreen
             title="Title"
             description="Description"
-            extra={<Placeholder />}
+            slot={<Placeholder />}
             primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
             imageUrl="https://picsum.photos/1200/1200"
         />,
@@ -216,7 +290,7 @@ test('Hero test ids', () => {
             description="description"
             button={<ButtonPrimary fake>button</ButtonPrimary>}
             desktopMediaPosition="right"
-            extra={<Placeholder />}
+            slot={<Placeholder />}
         />,
         [
             {
@@ -236,8 +310,8 @@ test('CoverHero test ids', () => {
             title="title"
             description="description"
             button={<ButtonPrimary fake>button</ButtonPrimary>}
-            extra={<Placeholder />}
-            sideExtra={<Placeholder />}
+            slot={<Placeholder />}
+            sideSlot={<Placeholder />}
         />,
         [
             {

@@ -1,35 +1,35 @@
 import fs from 'fs';
 import path from 'path';
-import url from 'url';
 // eslint-disable-next-line import/extensions
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
 import prettier from 'prettier';
 
-/*
-By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
+/**
+ * Generates skin files and CSS from design tokens in mistica-design.
+ *
+ * By default, reads tokens from .github/mistica-design/tokens.
+ * To use a custom tokens folder:
+ *
+ *   node index.js /path/to/mistica-design/tokens
+ *   # or via yarn: yarn workspace generate-design-tokens generate /path/to/mistica-design/tokens
+ *
+ * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.js
+ *
+ * @see https://github.com/Telefonica/mistica-design
+ */
 
-To run this script locally using a custom path for the tokens, you can do the following:
-
-1. Clone this repo:
-    https://github.com/Telefonica/mistica-design
-
-2. Run:
-    DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
-*/
-
-// in node >= 20 we could use import.meta.dirname instead
-// @ts-ignore
-const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
-
-const DESIGN_TOKENS_FOLDER =
-    process.env.DESIGN_TOKENS_FOLDER || path.join(currentDir, '../../.github/mistica-design/tokens/');
+const DESIGN_TOKENS_FOLDER = path.resolve(
+    process.argv[2] ||
+        process.env.DESIGN_TOKENS_FOLDER ||
+        path.join(import.meta.dirname, '../../.github/mistica-design/tokens/')
+);
 
 console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 
-const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
-const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
+const SKINS_FOLDER = path.join(import.meta.dirname, '..', '..', 'src', 'skins');
+const CSS_FOLDER = path.join(import.meta.dirname, '..', '..', 'css');
 
-const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'o2-new', 'telefonica', 'vivo', 'vivo-new', 'tu', 'esimflag'];
+const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo', 'vivo-evolution', 'esimflag'];
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
@@ -153,6 +153,9 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 )
                 .join(',')},
         },
+        spacing: ${JSON.stringify(
+            Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
+        )},
     };
     return skin;
 };
@@ -190,10 +193,11 @@ const generateSkinFiles = async () => {
         console.log('Generating tokens for skin', skinName);
 
         if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
-            console.error(`Missing ${skinName}.json file`);
+            console.error(`Missing ${path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`)} file`);
             return;
         }
 
+        // todo https://github.com/Telefonica/mistica-web/issues/1633 add @generated banner to generated skin files so they are not mistakenly edited by hand
         const skinSrc = await formatTs(generateSkinSrc(skinName));
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
 

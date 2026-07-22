@@ -1,11 +1,19 @@
 import * as React from 'react';
 import {Box, Text1, Stack, ResponsiveLayout, SearchField} from '..';
-import {inspect} from 'util';
+import {inspect} from './utils';
 import {countriesList} from './helpers';
+
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Input fields/SearchField',
     parameters: {fullScreen: true},
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const getCountrySuggestions = (value: string) =>
@@ -18,7 +26,7 @@ interface SearchFieldBaseArgs {
     placeholder: string;
     helperText: string;
     error: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
     optional: boolean;
     showOptionalLabel: boolean;
     withStartIcon: boolean;
@@ -32,7 +40,7 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
     placeholder: '',
     helperText: '',
     error: false,
-    inverse: false,
+    variantOutside: 'default',
     optional: false,
     showOptionalLabel: true,
     withStartIcon: true,
@@ -44,10 +52,12 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
 interface SearchFieldControlledArgs extends SearchFieldBaseArgs {
     initialValue: string;
     suggestions: boolean;
+    withSuggestionsEmptyCase: boolean | string;
+    shouldShowSuggestions: 'focus' | number;
 }
 
 export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
-    inverse,
+    variantOutside,
     initialValue,
     suggestions,
     ...rest
@@ -56,7 +66,7 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <SearchField
@@ -90,9 +100,21 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
 
 Controlled.storyName = 'controlled';
 Controlled.args = {
-    initialValue: '',
     ...defaultBaseArgs,
+    initialValue: '',
     suggestions: false,
+    withSuggestionsEmptyCase: false,
+    shouldShowSuggestions: 'focus',
+};
+Controlled.argTypes = {
+    shouldShowSuggestions: {
+        options: ['focus', 1, 2, 3, 4, 5],
+        control: {type: 'select'},
+    },
+    withSuggestionsEmptyCase: {
+        options: [false, true, 'Custom no suggestions text'],
+        control: {type: 'select'},
+    },
 };
 
 interface SearchFieldUncontrolledArgs extends SearchFieldBaseArgs {
@@ -100,7 +122,7 @@ interface SearchFieldUncontrolledArgs extends SearchFieldBaseArgs {
 }
 
 export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
-    inverse,
+    variantOutside,
     defaultValue,
     ...rest
 }) => {
@@ -108,7 +130,7 @@ export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <SearchField

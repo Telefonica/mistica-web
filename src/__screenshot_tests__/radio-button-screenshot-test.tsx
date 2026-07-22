@@ -17,7 +17,7 @@ test.each(DEVICES)('RadioButton - inverse (%s)', async (device) => {
     await openStoryPage({
         id: 'components-radio-button--controlled',
         device,
-        args: {inverse: true},
+        args: {variantOutside: 'brand'},
     });
 
     const wrapper = await screen.findByTestId('radio-group-wrapper');

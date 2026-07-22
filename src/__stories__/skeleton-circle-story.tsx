@@ -1,36 +1,39 @@
 import * as React from 'react';
-import {ThemeVariant, skinVars} from '..';
+import {ResponsiveLayout, Box} from '..';
 import {SkeletonCircle} from '../skeletons';
+
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Skeletons/SkeletonCircle',
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
     size: number;
-    inverse: boolean;
+    variantOutside: Variant;
     ariaValueText: string;
 };
 
-export const Default: StoryComponent<Args> = ({size, inverse, ariaValueText}) => {
+export const Default: StoryComponent<Args> = ({size, variantOutside, ariaValueText}) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    padding: 16,
-                }}
-            >
+        <ResponsiveLayout variant={variantOutside}>
+            <Box paddingY={16}>
                 <SkeletonCircle
                     dataAttributes={{testid: 'skeleton-circle'}}
                     size={size}
                     ariaLabel={ariaValueText}
                 />
-            </div>
-        </ThemeVariant>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -38,6 +41,6 @@ Default.storyName = 'SkeletonCircle';
 
 Default.args = {
     size: 40,
-    inverse: false,
+    variantOutside: 'default',
     ariaValueText: '',
 };

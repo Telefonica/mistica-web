@@ -69,7 +69,14 @@ export const boxedTimerValueContainer = styleVariants({
         }),
     ],
 
-    inverse: [
+    brand: [
+        baseBoxedTimerValueContainer,
+        sprinkles({
+            background: vars.colors.backgroundContainer,
+        }),
+    ],
+
+    negative: [
         baseBoxedTimerValueContainer,
         sprinkles({
             background: vars.colors.backgroundContainer,

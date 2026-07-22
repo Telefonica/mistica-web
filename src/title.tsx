@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
-import Text, {Text1, Text2, Text6} from './text';
-import * as textProps from './text-props';
+import Text, {Text2} from './text';
 import Inline from './inline';
 import Box from './box';
 import {vars} from './skins/skin-contract.css';
@@ -32,6 +31,17 @@ const TitleLayout = ({title, right, dataAttributes}: TitleLayoutProps): React.Re
     );
 };
 
+const useTitleProps = (titleType: 'title1' | 'title2' | 'title3' | 'title4') => {
+    const {textPresets} = useTheme();
+    return {
+        weight: textPresets[titleType].weight,
+        size: textPresets[titleType].size.desktop,
+        mobileSize: textPresets[titleType].size.mobile,
+        lineHeight: textPresets[titleType].lineHeight.desktop,
+        mobileLineHeight: textPresets[titleType].lineHeight.mobile,
+    };
+};
+
 export type TitleProps = {
     children: React.ReactNode;
     id?: string;
@@ -42,75 +52,68 @@ export type TitleProps = {
 };
 
 export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
-    const {textPresets} = useTheme();
-    return (
-        <TitleLayout
-            title={
-                <Text1
-                    color={vars.colors.textSecondary}
-                    transform="uppercase"
-                    weight={textPresets.title1.weight}
-                    as={as}
-                    id={id}
-                    wordBreak={false}
-                >
-                    {children}
-                </Text1>
-            }
-            right={right}
-            dataAttributes={{'component-name': 'Title1', ...dataAttributes}}
-        />
-    );
-};
-
-export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
-    const {textPresets} = useTheme();
-    return (
-        <TitleLayout
-            title={
-                <Text as={as} id={id} {...textProps.text3} weight={textPresets.title2.weight}>
-                    {children}
-                </Text>
-            }
-            right={right}
-            dataAttributes={{'component-name': 'Title2', ...dataAttributes}}
-        />
-    );
-};
-
-export const Title3 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
-    const {textPresets} = useTheme();
+    const titleProps = useTitleProps('title1');
     return (
         <TitleLayout
             title={
                 <Text
                     as={as}
                     id={id}
-                    mobileSize={textPresets.title3.size.mobile}
-                    desktopSize={textPresets.title3.size.desktop}
-                    weight={textPresets.title3.weight}
-                    mobileLineHeight={textPresets.title3.lineHeight.mobile}
-                    desktopLineHeight={textPresets.title3.lineHeight.desktop}
+                    {...titleProps}
+                    color={vars.colors.textSecondary}
+                    transform="uppercase"
+                    wordBreak={false}
                 >
                     {children}
                 </Text>
             }
             right={right}
-            dataAttributes={{'component-name': 'Title3', ...dataAttributes}}
+            dataAttributes={{testid: 'Title1', ...dataAttributes}}
+        />
+    );
+};
+
+export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
+    const titleProps = useTitleProps('title2');
+    return (
+        <TitleLayout
+            title={
+                <Text as={as} id={id} {...titleProps}>
+                    {children}
+                </Text>
+            }
+            right={right}
+            dataAttributes={{testid: 'Title2', ...dataAttributes}}
+        />
+    );
+};
+
+export const Title3 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
+    const titleProps = useTitleProps('title3');
+    return (
+        <TitleLayout
+            title={
+                <Text as={as} id={id} {...titleProps}>
+                    {children}
+                </Text>
+            }
+            right={right}
+            dataAttributes={{testid: 'Title3', ...dataAttributes}}
         />
     );
 };
 
 export const Title4 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
+    const titleProps = useTitleProps('title4');
     return (
         <TitleLayout
             title={
-                <Text6 as={as} id={id}>
+                <Text as={as} id={id} {...titleProps}>
                     {children}
-                </Text6>
+                </Text>
             }
             right={right}
-            dataAttributes={{'component-name': 'Title4', ...dataAttributes}}
+            dataAttributes={{testid: 'Title4', ...dataAttributes}}
         />
     );
 };

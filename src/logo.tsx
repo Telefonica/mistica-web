@@ -1,12 +1,16 @@
 'use client';
 import * as React from 'react';
 import {useTheme} from './hooks';
-import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
-import {calcInlineVars} from './logo-common';
-import {applyCssVars} from './utils/css';
+import MovistarLogoShell from './logo-movistar-shell';
+import VivoLogoShell from './logo-vivo-shell';
+import O2LogoShell from './logo-o2-shell';
+import TelefonicaLogoShell from './logo-telefonica-shell';
+import BlauLogoShell from './logo-blau-shell';
+import EsimflagLogoShell from './logo-esimflag-shell';
 
 import type {LogoType} from './logo-common';
 import type {TouchableComponentProps} from './touchable';
@@ -39,14 +43,6 @@ const O2LogoImage = React.lazy(
         )
 );
 
-const O2NewLogoImage = React.lazy(
-    () =>
-        import(
-            /* webpackChunkName: "logo-o2-new" */
-            './logo-o2-new'
-        )
-);
-
 const TelefonicaLogoImage = React.lazy(
     () =>
         import(
@@ -60,14 +56,6 @@ const BlauLogoImage = React.lazy(
         import(
             /* webpackChunkName: "logo-blau" */
             './logo-blau'
-        )
-);
-
-const TuLogoImage = React.lazy(
-    () =>
-        import(
-            /* webpackChunkName: "logo-tu" */
-            './logo-tu'
         )
 );
 
@@ -87,89 +75,87 @@ type LogoBaseProps = {
 };
 
 const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
+    const themeVariant = useThemeVariant();
     const {isDarkMode} = useTheme();
     switch (skinName) {
         case 'Movistar':
             return (
-                <MovistarLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
+                <MovistarLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <MovistarLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </MovistarLogoShell>
             );
         case 'Vivo':
-        case 'Vivo-new':
+        case 'Vivo-evolution':
             return (
-                <VivoLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
+                <VivoLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <VivoLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </VivoLogoShell>
             );
         case 'O2':
             return (
-                <O2LogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
-            );
-        case 'O2-new':
-            return (
-                <O2NewLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
+                <O2LogoShell size={size}>
+                    <React.Suspense>
+                        <O2LogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </O2LogoShell>
             );
         case 'Telefonica':
             return (
-                <TelefonicaLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
+                <TelefonicaLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <TelefonicaLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </TelefonicaLogoShell>
             );
         case 'Blau':
             return (
-                <BlauLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
-            );
-        case 'Tu':
-            return (
-                <TuLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
+                <BlauLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <BlauLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </BlauLogoShell>
             );
         case 'Esimflag':
             return (
-                <EsimflagLogoImage
-                    size={size}
-                    type={type}
-                    isDarkMode={isDarkMode}
-                    isInverse={isInverse}
-                    color={color}
-                />
+                <EsimflagLogoShell size={size} type={type}>
+                    <React.Suspense>
+                        <EsimflagLogoImage
+                            type={type}
+                            isDarkMode={isDarkMode}
+                            themeVariant={themeVariant}
+                            color={color}
+                        />
+                    </React.Suspense>
+                </EsimflagLogoShell>
             );
         default:
             return <></>;
@@ -190,130 +176,60 @@ const MaybeTouchableLogo = (
         dataAttributes?: DataAttributes;
     }> & {size: ByBreakpoint<number>}
 ): JSX.Element => {
-    const dataAttributes = getPrefixedDataAttributes(props.dataAttributes, 'Logo');
+    const dataAttributes = getPrefixedDataAttributes({testid: 'Logo', ...props.dataAttributes});
 
     if (props.to || props.href || props.onPress) {
         return <Touchable {...props} />;
     }
 
     return (
-        <React.Suspense
-            fallback={
-                <div
-                    className={styles.svg}
-                    style={{
-                        // reserve the vertical space for the logo
-                        ...applyCssVars(calcInlineVars(props.size)),
-                        width: 1,
-                    }}
-                />
-            }
-        >
-            <div className={styles.logoContainer} {...dataAttributes}>
-                {props.children}
-            </div>
-        </React.Suspense>
+        <div className={styles.logoContainer} {...dataAttributes}>
+            {props.children}
+        </div>
     );
 };
 
-export const Logo = ({
+const LogoInternal = ({
     size = DEFAULT_HEIGHT_PX,
     type = 'isotype',
     color,
+    skinName,
     ...props
-}: LogoProps): JSX.Element => {
-    const {skinName} = useTheme();
+}: LogoProps & {skinName: KnownSkinName}): JSX.Element => {
     return (
         <MaybeTouchableLogo size={size} {...props}>
-            <LogoBase skinName={skinName as KnownSkinName} type={type} size={size} color={color} />
+            <LogoBase skinName={skinName} type={type} size={size} color={color} />
         </MaybeTouchableLogo>
     );
 };
 
-export const MovistarLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Movistar" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const Logo = ({size, type, color, ...props}: LogoProps): JSX.Element => {
+    const {skinName} = useTheme();
+    return (
+        <LogoInternal size={size} type={type} color={color} skinName={skinName as KnownSkinName} {...props} />
+    );
+};
+
+export const MovistarLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Movistar" {...props} />
 );
 
-export const VivoLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Vivo" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const VivoLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Vivo" {...props} />
 );
 
-export const O2Logo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const O2Logo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="O2" {...props} />
 );
 
-export const O2NewLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2-new" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const TelefonicaLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Telefonica" {...props} />
 );
 
-export const TelefonicaLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Telefonica" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const BlauLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Blau" {...props} />
 );
 
-export const BlauLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Blau" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
-);
-
-export const TuLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Tu" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
-);
-
-export const EsimflagLogo = ({
-    size = DEFAULT_HEIGHT_PX,
-    type = 'isotype',
-    color,
-    ...props
-}: LogoProps): JSX.Element => (
-    <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Esimflag" type={type} size={size} color={color} />
-    </MaybeTouchableLogo>
+export const EsimflagLogo = ({size, type, color, ...props}: LogoProps): JSX.Element => (
+    <LogoInternal size={size} type={type} color={color} skinName="Esimflag" {...props} />
 );

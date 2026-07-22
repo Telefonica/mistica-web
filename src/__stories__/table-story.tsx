@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {ResponsiveLayout, Box, Table, Tag, IconLightningRegular} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Table',
     parameters: {fullScreen: true},
@@ -34,7 +36,7 @@ const foodList = [
 ];
 
 type Args = {
-    inverse: boolean;
+    variantOutside: Variant;
     boxed: boolean;
     responsive: 'scroll' | 'collapse-rows';
     fullWidth: boolean;
@@ -52,7 +54,7 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({
-    inverse,
+    variantOutside,
     boxed,
     responsive,
     fullWidth,
@@ -69,7 +71,7 @@ export const Default: StoryComponent<Args> = ({
     rowHeaderIndex,
 }) => {
     return (
-        <ResponsiveLayout isInverse={inverse}>
+        <ResponsiveLayout variant={variantOutside}>
             <Box paddingY={24}>
                 <Table
                     fullWidth={fullWidth}
@@ -116,7 +118,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Table';
 Default.args = {
-    inverse: false,
+    variantOutside: 'default',
     boxed: false,
     responsive: 'scroll',
     fullWidth: true,
@@ -133,6 +135,10 @@ Default.args = {
     rowHeaderIndex: 0,
 };
 Default.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
     responsive: {
         options: ['scroll', 'collapse-rows'],
         control: {type: 'select'},

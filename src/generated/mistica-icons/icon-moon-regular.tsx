@@ -7,34 +7,57 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconMoonRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M11.682 2.412a.59.59 0 0 1-.27.69 6.956 6.956 0 1 0 9.487 9.487.59.59 0 0 1 1.098.348C21.515 18.022 17.233 22 12.021 22 6.487 22 2 17.513 2 11.98c0-5.212 3.978-9.494 9.064-9.976a.59.59 0 0 1 .618.409M8.76 3.757a8.85 8.85 0 0 0-5.581 8.222 8.84 8.84 0 0 0 8.842 8.842 8.85 8.85 0 0 0 8.221-5.58A8.135 8.135 0 0 1 8.76 3.757"
-                />
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M2.565 11.973c0 7.16 4.88 9.79 9.457 9.868.294 0 .608 0 .86-.003 1.459-.025 6.386-.456 8.493-5.008a.617.617 0 0 0-.866-.793c-1.361.774-2.83.92-3.594.936-.196.006-.434.006-.647.006-1.518-.026-6.484-.586-6.484-6.818 0-4.6 2.644-6.13 4.862-6.603a.616.616 0 0 0-.02-1.207 11 11 0 0 0-1.795-.188l-.88-.008c-4.537.059-9.386 2.667-9.386 9.818m1.238 0c0-7.647 5.897-8.518 7.983-8.583-1.686 1.062-3.238 3.05-3.235 6.768 0 5.846 3.978 7.989 7.711 8.048.239 0 .496 0 .692-.009a9.6 9.6 0 0 0 2.322-.339c-2.067 2.457-5.33 2.726-6.42 2.745-.252.009-.551.009-.82.009-1.933-.031-8.233-.751-8.233-8.639"
-                />
-            </svg>
-        );
+
+    const getSvgContent = () => {
+        if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.682 2.412a.59.59 0 0 1-.27.69 6.956 6.956 0 1 0 9.487 9.487.59.59 0 0 1 1.098.348C21.515 18.022 17.233 22 12.021 22 6.487 22 2 17.513 2 11.98c0-5.212 3.978-9.494 9.064-9.976a.59.59 0 0 1 .618.409M8.76 3.757a8.85 8.85 0 0 0-5.581 8.222 8.84 8.84 0 0 0 8.842 8.842 8.85 8.85 0 0 0 8.221-5.58A8.135 8.135 0 0 1 8.76 3.757"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.079 2.25h.314a.75.75 0 0 1 .51 1.3 6.75 6.75 0 0 0 7.129 11.2.75.75 0 0 1 .973.984A9.75 9.75 0 1 1 12 2.242q.04.002.079.008m-1.398 1.6a8.25 8.25 0 0 0-5.954 4.252 8.25 8.25 0 0 0 14.093 8.535 8.25 8.25 0 0 1-8.281-3.713 8.25 8.25 0 0 1 .142-9.075"
+                    />
+                </svg>
+            );
+        }
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconMoonRegular;

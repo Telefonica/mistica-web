@@ -193,15 +193,15 @@ export const MainSectionHeader = ({
 };
 
 type HeaderLayoutProps = {
-    isInverse?: boolean;
+    variant?: 'default' | 'brand';
     breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
     /**
      * Intentionally not forced to RendersElement<typeof Header> to allow skeletons for example
      * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
      */
     header?: React.ReactNode;
-    extra?: React.ReactNode;
-    sideBySideExtraOnDesktop?: boolean;
+    slot?: React.ReactNode;
+    sideBySideSlotOnDesktop?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
     bleed?: boolean;
@@ -209,16 +209,17 @@ type HeaderLayoutProps = {
 };
 
 export const HeaderLayout = ({
-    isInverse = false,
+    variant = 'default',
     breadcrumbs,
     header,
-    extra,
-    sideBySideExtraOnDesktop = false,
+    slot,
+    sideBySideSlotOnDesktop = false,
     dataAttributes,
     bleed = false,
     noPaddingY = false,
 }: HeaderLayoutProps): JSX.Element => {
-    const isBleedActivated = bleed && isInverse && extra;
+    const isBrandVariant = variant === 'brand';
+    const isBleedActivated = bleed && isBrandVariant && slot;
 
     const mainContent = (
         <div>
@@ -227,11 +228,11 @@ export const HeaderLayout = ({
         </div>
     );
 
-    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+    useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
 
     return (
-        <div {...getPrefixedDataAttributes(dataAttributes, 'HeaderLayout')}>
-            <ResponsiveLayout variant={isInverse ? 'inverse' : undefined}>
+        <div {...getPrefixedDataAttributes({testid: 'HeaderLayout', ...dataAttributes})}>
+            <ResponsiveLayout variant={isBrandVariant ? 'brand' : undefined}>
                 <Box
                     paddingTop={
                         noPaddingY
@@ -243,33 +244,33 @@ export const HeaderLayout = ({
                     }
                     paddingBottom={{
                         mobile: noPaddingY && !isBleedActivated ? 0 : 24,
-                        desktop: isBleedActivated && !sideBySideExtraOnDesktop ? 32 : noPaddingY ? 0 : 48,
+                        desktop: isBleedActivated && !sideBySideSlotOnDesktop ? 32 : noPaddingY ? 0 : 48,
                     }}
                 >
-                    {sideBySideExtraOnDesktop ? (
+                    {sideBySideSlotOnDesktop ? (
                         <GridLayout
                             template="6+6"
                             left={mainContent}
                             right={
                                 <div className={isBleedActivated ? styles.hideOnTabletOrSmaller : ''}>
-                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{extra}</Box>
+                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{slot}</Box>
                                 </div>
                             }
                         />
                     ) : (
                         <Stack space={header ? {mobile: 24, desktop: 32} : 0}>
                             {mainContent}
-                            {!isBleedActivated && extra}
+                            {!isBleedActivated && slot}
                         </Stack>
                     )}
                 </Box>
             </ResponsiveLayout>
             {isBleedActivated && (
                 <ResponsiveLayout
-                    className={sideBySideExtraOnDesktop ? styles.hideOnDesktop : ''}
+                    className={sideBySideSlotOnDesktop ? styles.hideOnDesktop : ''}
                     backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrandBottom} 40px, ${vars.colors.background} 0%)`}
                 >
-                    {extra}
+                    {slot}
                 </ResponsiveLayout>
             )}
         </div>
@@ -277,22 +278,22 @@ export const HeaderLayout = ({
 };
 
 type MainSectionHeaderLayoutProps = {
-    isInverse?: boolean;
+    variant?: 'default' | 'brand';
     children: RendersElement<typeof MainSectionHeader>;
     dataAttributes?: DataAttributes;
 };
 
 export const MainSectionHeaderLayout = ({
-    isInverse = false,
+    variant = 'default',
     children,
     dataAttributes,
 }: MainSectionHeaderLayoutProps): JSX.Element => {
-    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+    const isBrandVariant = variant === 'brand';
+    useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
-            variant={isInverse ? 'inverse' : undefined}
+            variant={isBrandVariant ? 'brand' : undefined}
             dataAttributes={{
-                'component-name': 'MainSectionHeaderLayout',
                 testid: 'MainSectionHeaderLayout',
                 ...dataAttributes,
             }}

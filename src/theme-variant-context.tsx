@@ -1,26 +1,34 @@
 'use client';
 import * as React from 'react';
 
-export type Variant = 'default' | 'inverse' | 'alternative' | 'media';
+export type NonDeprecatedVariant = 'default' | 'brand' | 'negative' | 'alternative' | 'media';
+
+export type Variant =
+    | 'default'
+    | 'brand'
+    | 'negative'
+    | 'alternative'
+    | 'media'
+    /** @deprecated use 'brand' instead */
+    | 'inverse';
+
+export const normalizeVariant = <T extends Variant>(variant: T): T extends 'inverse' ? 'brand' : T => {
+    if (variant === 'inverse') {
+        return 'brand' as T extends 'inverse' ? 'brand' : T;
+    }
+    return variant as T extends 'inverse' ? 'brand' : T;
+};
 
 const ThemeVariantContext = React.createContext<Variant>('default');
 
 type ThemeVariantProps = {
-    /** @deprecated Use variant = 'inverse' instead */
-    isInverse?: boolean;
     variant?: Variant;
     children: React.ReactNode;
 };
 
-export const ThemeVariant = ({isInverse, variant, children}: ThemeVariantProps): JSX.Element => (
-    <ThemeVariantContext.Provider value={variant ?? (isInverse ? 'inverse' : 'default')}>
-        {children}
-    </ThemeVariantContext.Provider>
+export const ThemeVariant = ({variant, children}: ThemeVariantProps): JSX.Element => (
+    <ThemeVariantContext.Provider value={variant ?? 'default'}>{children}</ThemeVariantContext.Provider>
 );
 
-export const useThemeVariant = (): Variant => React.useContext(ThemeVariantContext);
-export const useIsInverseVariant = (): boolean => useThemeVariant() === 'inverse';
-export const useIsInverseOrMediaVariant = (): boolean => {
-    const variant = useThemeVariant();
-    return variant === 'inverse' || variant === 'media';
-};
+export const useThemeVariant = (): NonDeprecatedVariant =>
+    normalizeVariant(React.useContext(ThemeVariantContext));

@@ -9,7 +9,7 @@ export default {
 };
 
 type Args = {
-    themeVariant: Variant;
+    variantOutside: Variant;
     items: number;
     activeItem: number;
     orientation: 'horizontal' | 'vertical';
@@ -17,14 +17,14 @@ type Args = {
 };
 
 export const TimelineStory: StoryComponent<Args> = ({
-    themeVariant,
+    variantOutside,
     orientation,
     asset,
     items,
     activeItem,
 }) => {
     return (
-        <ResponsiveLayout fullWidth variant={themeVariant}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <Timeline orientation={orientation}>
                 {Array.from({length: items}).map((_, index) => (
                     <TimelineItem
@@ -52,15 +52,15 @@ export const TimelineStory: StoryComponent<Args> = ({
 
 TimelineStory.storyName = 'Timeline';
 TimelineStory.args = {
-    themeVariant: 'default',
+    variantOutside: 'default',
     items: 3,
     activeItem: 1,
     orientation: 'vertical',
     asset: 'dot',
 };
 TimelineStory.argTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
         control: {type: 'select'},
     },
     orientation: {

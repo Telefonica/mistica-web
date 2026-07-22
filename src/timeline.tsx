@@ -95,13 +95,13 @@ export const TimelineItem = ({
     const {isDarkMode} = useTheme();
     const themeVariant = useThemeVariant();
     const backgroundVariant = isDarkMode ? 'default' : themeVariant;
-    const isOverInverse = backgroundVariant === 'inverse';
+    const isOverBrand = backgroundVariant === 'brand';
 
     const renderCompletedCircle = ({size, iconSize}: {size: number; iconSize: number}) => (
         <Circle
             background={
-                isOverInverse
-                    ? vars.colors.backgroundContainerBrandOverInverse
+                isOverBrand
+                    ? vars.colors.backgroundContainerBrandOverBrand
                     : vars.colors.backgroundContainerBrand
             }
             size={size}
@@ -115,11 +115,11 @@ export const TimelineItem = ({
             return null;
         }
         if (typeof asset === 'object' && 'kind' in asset) {
-            const completedOrActiveColor = isOverInverse
-                ? vars.colors.controlActivatedInverse
+            const completedOrActiveColor = isOverBrand
+                ? vars.colors.controlActivatedBrand
                 : vars.colors.controlActivated;
 
-            const inactiveColor = isOverInverse ? vars.colors.controlInverse : vars.colors.control;
+            const inactiveColor = isOverBrand ? vars.colors.controlBrand : vars.colors.control;
 
             const bareAssetColor = {
                 inactive: inactiveColor,
@@ -176,11 +176,7 @@ export const TimelineItem = ({
                     return state === 'completed' ? (
                         renderCompletedCircle({size: 40, iconSize: 24})
                     ) : (
-                        <Circle
-                            background={vars.colors.backgroundContainer}
-                            size={40}
-                            border={!isOverInverse}
-                        >
+                        <Circle background={vars.colors.backgroundContainer} size={40} border={!isOverBrand}>
                             {asset.Icon && (
                                 <asset.Icon
                                     size={24}
@@ -208,13 +204,13 @@ export const TimelineItem = ({
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
             aria-current={state === 'active' ? 'step' : undefined}
-            {...getPrefixedDataAttributes(dataAttributes, 'TimelineItem')}
+            {...getPrefixedDataAttributes({testid: 'TimelineItem', ...dataAttributes})}
         >
             <div className={styles.lineContainer}>
                 <div className={styles.asset} aria-hidden>
                     {renderAsset()}
                 </div>
-                <div className={styles.line[isOverInverse ? 'inverse' : 'default']} />
+                <div className={styles.line[isOverBrand ? 'overBrand' : 'default']} />
             </div>
             <div className={styles.itemContent}>{children}</div>
         </div>
@@ -244,7 +240,7 @@ const Timeline = ({
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            {...getPrefixedDataAttributes(dataAttributes, 'Timeline')}
+            {...getPrefixedDataAttributes({testid: 'Timeline', ...dataAttributes})}
         >
             {children}
         </div>

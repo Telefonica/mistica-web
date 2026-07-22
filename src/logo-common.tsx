@@ -1,14 +1,14 @@
 import * as styles from './logo.css';
 
+import type {NonDeprecatedVariant} from './theme-variant-context';
 import type {ByBreakpoint} from './utils/types';
 
 export type LogoType = 'isotype' | 'imagotype' | 'vertical';
 
 export type LogoImageProps = {
-    size: ByBreakpoint<number>;
     type: LogoType;
     isDarkMode: boolean;
-    isInverse: boolean;
+    themeVariant: NonDeprecatedVariant;
     color?: string;
 };
 

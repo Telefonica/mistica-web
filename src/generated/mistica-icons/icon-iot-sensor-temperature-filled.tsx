@@ -6,17 +6,24 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
-import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
+import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
 const IconIotSensorTemperatureFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseOrMediaVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-    const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    const themeVariant = useThemeVariant();
+    const defaultColor =
+        themeVariant === 'brand' || themeVariant === 'media'
+            ? vars.colors.neutralHighBrand
+            : themeVariant === 'negative'
+              ? vars.colors.neutralHighNegative
+              : vars.colors.neutralHigh;
+
+    const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
+    const getSvgContent = () => {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -25,16 +32,18 @@ const IconIotSensorTemperatureFilled = ({color, size = 24, ...rest}: IconProps):
                 />
             </svg>
         );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M14.91 15.148V4.963C14.91 3.333 13.602 2 12 2S9.09 3.332 9.09 4.963v10.185c-.69.74-1.09 1.74-1.09 2.779C8 20.189 9.783 22 12 22s4-1.816 4-4.073c0-1.038-.4-2.039-1.09-2.779M12 19.781c-1.02 0-1.82-.816-1.82-1.854 0-.816.544-1.517 1.27-1.74V4.963c0-.294.257-.554.545-.554.29 0 .545.26.545.554v11.224a1.83 1.83 0 0 1 1.271 1.74c.01 1.038-.791 1.854-1.811 1.854m.726-1.854a.734.734 0 0 0-.726-.74c-.4 0-.726.332-.726.74s.326.74.726.74.726-.332.726-.74"
-                />
-            </svg>
-        );
+    };
+
+    const svgContent = getSvgContent();
+
+    if (gradientDef) {
+        return React.cloneElement(svgContent, {}, [
+            <defs key="gradient-defs">{gradientDef}</defs>,
+            ...React.Children.toArray(svgContent.props.children),
+        ]);
     }
+
+    return svgContent;
 };
 
 export default IconIotSensorTemperatureFilled;

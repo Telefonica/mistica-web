@@ -13,7 +13,10 @@ test.each(COLORS)('ProgressBar - color={%s}', async (color) => {
 });
 
 test.each(COLORS)('ProgressBar - inverse and color={%s}', async (color) => {
-    await openStoryPage({id: 'components-progress-bars--progress-bar-story', args: {color, inverse: true}});
+    await openStoryPage({
+        id: 'components-progress-bars--progress-bar-story',
+        args: {color, variantOutside: 'brand'},
+    });
 
     const stepper = await screen.findByTestId('progress-bar');
 
@@ -35,7 +38,7 @@ test.each(COLORS)('ProgressBarStepped - color={%s}', async (color) => {
 test.each(COLORS)('ProgressBarStepped - inverse and color={%s}', async (color) => {
     await openStoryPage({
         id: 'components-progress-bars--progress-bar-stepped-story',
-        args: {color, inverse: true},
+        args: {color, variantOutside: 'brand'},
     });
 
     const stepper = await screen.findByTestId('progress-bar-stepped');

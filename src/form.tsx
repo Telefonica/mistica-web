@@ -74,13 +74,14 @@ const Form = ({
     }, []);
 
     const register = React.useCallback(
-        (name: string, {input, validator, focusableElement, label}: FieldRegistration) => {
+        (name: string, {input, validator, focusableElement, label, required}: FieldRegistration) => {
             if (input || focusableElement) {
                 fieldRegistrations.current.set(name, {
                     input,
                     validator,
                     focusableElement,
                     label,
+                    required,
                 });
             } else {
                 fieldRegistrations.current.delete(name);
@@ -107,7 +108,7 @@ const Form = ({
             if (element.tagName === 'SELECT') {
                 return false;
             }
-            if (['date', 'datetime-local', 'month'].includes(element.type)) {
+            if (['date', 'datetime-local', 'time', 'month'].includes(element.type)) {
                 return false;
             }
             return true;
@@ -120,12 +121,14 @@ const Form = ({
      */
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
-        for (const [name, {input, validator}] of fieldRegistrations.current) {
+        for (const [name, {input, validator, required}] of fieldRegistrations.current) {
             if (input) {
+                const isRequired = required ?? input.required;
+
                 if (input.disabled) {
                     continue;
                 }
-                if (input.required && !rawValues[name]?.trim()) {
+                if (isRequired && !rawValues[name]?.trim()) {
                     errors[name] = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
                 } else {
                     const error = validator?.(values[name], rawValues[name]);
@@ -264,7 +267,7 @@ const Form = ({
                 ref={formRef}
                 className={classnames(styles.form, className)}
                 noValidate
-                {...getPrefixedDataAttributes(dataAttributes, 'Form')}
+                {...getPrefixedDataAttributes({testid: 'Form', ...dataAttributes})}
             >
                 {hasMultipleFormErrors ? (
                     <ScreenReaderOnly>

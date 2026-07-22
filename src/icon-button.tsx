@@ -36,6 +36,7 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     hasOverlay?: boolean;
+    'aria-disabled'?: boolean;
 }
 
 export type IconButtonProps = TouchableComponentProps<BaseProps & IconButtonBaseProps & AriaProps>;
@@ -59,6 +60,7 @@ export const RawIconButton = React.forwardRef<
             bleedRight,
             bleedY,
             showSpinner: showSpinnerProp,
+            'aria-disabled': ariaDisabled,
             ...touchableProps
         },
         ref
@@ -86,20 +88,18 @@ export const RawIconButton = React.forwardRef<
 
         const commonProps = {
             disabled: disabled || showSpinner,
+            'aria-disabled': ariaDisabled,
             ref,
             trackingEvent,
             role,
-            dataAttributes: {'component-name': 'IconButton', testid: 'IconButton', ...dataAttributes},
+            dataAttributes: {testid: 'IconButton', ...dataAttributes},
             className: classNames(
-                styles.buttonContainer[buttonSize],
+                styles.button,
                 styles.iconButtonTokens[buttonTokensKey],
                 styles.minimumInteractiveArea,
                 {
-                    [styles.disabled]: disabled,
-                    [styles.overlayContainer]: !disabled && !showSpinner,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft,
-                    [styles.bleedRight[buttonSize]]: bleedRight,
-                    [styles.bleedY[buttonSize]]: bleedY,
+                    [styles.disabled]: disabled || ariaDisabled,
+                    [styles.overlayContainer]: !disabled && !showSpinner && !ariaDisabled,
                 }
             ),
             resetMargin: !bleedLeft && !bleedRight && !bleedY,
@@ -141,21 +141,29 @@ export const RawIconButton = React.forwardRef<
         }
 
         return (
-            <BaseTouchable {...commonProps} {...touchableProps} maybe>
-                {content}
-            </BaseTouchable>
+            <div
+                className={classNames(styles.buttonContainer[buttonSize], {
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
+                })}
+            >
+                <BaseTouchable {...commonProps} {...touchableProps} maybe>
+                    {content}
+                </BaseTouchable>
+            </div>
         );
     }
 );
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<IconButtonProps & InternalIconButtonBaseProps>
+    IconButtonProps & InternalIconButtonBaseProps
 >((props, ref) => <RawIconButton ref={ref} {...props} />);
 
-export const IconButton = React.forwardRef<TouchableElement, ExclusifyUnion<IconButtonProps>>(
-    (props, ref) => <InternalIconButton ref={ref} {...props} />
-);
+export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((props, ref) => (
+    <InternalIconButton ref={ref} {...props} />
+));
 
 type ToggleStateProps = {
     Icon: (props: IconProps) => JSX.Element;
@@ -199,7 +207,6 @@ export const InternalToggleIconButton = React.forwardRef<
             {...props}
             {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
             dataAttributes={{
-                'component-name': 'ToggleIconButton',
                 testid: 'ToggleIconButton',
                 ...dataAttributes,
             }}

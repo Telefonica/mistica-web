@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Badge from './badge';
 import Box from './box';
-import {Text2} from './text';
+import Text, {getTextSizesWithWeight} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
@@ -24,6 +24,7 @@ interface SimpleChipProps {
     id?: string;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
+    small?: boolean;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
@@ -46,9 +47,9 @@ type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableC
 const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, badge, active, onClose, closeButtonLabel} = props;
     const {texts, textPresets, t} = useTheme();
-    const themeVariante = useThemeVariant();
-    const overAlternative = themeVariante === 'alternative';
-    const overInverse = themeVariante === 'inverse';
+    const themeVariant = useThemeVariant();
+    const isOverAlternative = themeVariant === 'alternative';
+    const isOverBrand = themeVariant === 'brand' || themeVariant === 'media' || themeVariant === 'negative';
 
     const isTouchable = props.href || props.onPress || props.to;
     const isInteractive = active !== undefined || isTouchable;
@@ -60,8 +61,8 @@ const Chip = (props: ChipProps): JSX.Element => {
                     className={
                         active
                             ? isTouchable
-                                ? overInverse
-                                    ? styles.iconNavigationInverse
+                                ? isOverBrand
+                                    ? styles.iconNavigationOverBrand
                                     : styles.iconNavigation
                                 : styles.iconActive
                             : styles.icon
@@ -71,23 +72,35 @@ const Chip = (props: ChipProps): JSX.Element => {
                 </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
-                <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
+                <Text
+                    id={id}
+                    {...getTextSizesWithWeight({textPreset: textPresets.chipLabel})}
+                    truncate={1}
+                    color="currentColor"
+                >
                     {children}
-                </Text2>
+                </Text>
             </Box>
         </>
     );
 
-    const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
+    const chipDataAttributes = {testid: 'Chip', ...dataAttributes};
 
     if (onClose) {
         return (
             <div
                 className={classnames(
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    isOverAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
                     styles.chipWrapper,
-                    Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
-                    styles.rightPadding.withIcon
+                    Icon
+                        ? props.small
+                            ? styles.leftPadding.withIconSmall
+                            : styles.leftPadding.withIcon
+                        : props.small
+                          ? styles.leftPadding.small
+                          : styles.leftPadding.default,
+                    props.small ? styles.rightPadding.withIconSmall : styles.rightPadding.withIcon,
+                    {[styles.containerSmall]: props.small}
                 )}
                 {...getPrefixedDataAttributes(chipDataAttributes)}
             >
@@ -119,14 +132,15 @@ const Chip = (props: ChipProps): JSX.Element => {
     const renderContent = (dataAttributes?: DataAttributes) => (
         <div
             className={classnames(
+                isTouchable ? styles.minimumInteractiveArea : undefined,
                 styles.chipVariants[
                     active
                         ? isTouchable
-                            ? overInverse
-                                ? 'navigationActiveInverse'
+                            ? isOverBrand
+                                ? 'navigationActiveOverBrand'
                                 : 'navigationActive'
                             : 'active'
-                        : overAlternative
+                        : isOverAlternative
                           ? 'overAlternative'
                           : 'default'
                 ],
@@ -134,9 +148,22 @@ const Chip = (props: ChipProps): JSX.Element => {
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.interactive]: isInteractive,
+                    [styles.containerSmall]: props.small,
                 },
-                Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
-                badge ? styles.rightPadding.withIcon : styles.rightPadding.default
+                Icon
+                    ? props.small
+                        ? styles.leftPadding.withIconSmall
+                        : styles.leftPadding.withIcon
+                    : props.small
+                      ? styles.leftPadding.small
+                      : styles.leftPadding.default,
+                badge
+                    ? props.small
+                        ? styles.rightPadding.withIconSmall
+                        : styles.rightPadding.withIcon
+                    : props.small
+                      ? styles.rightPadding.small
+                      : styles.rightPadding.default
             )}
             {...getPrefixedDataAttributes(dataAttributes)}
         >

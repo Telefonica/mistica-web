@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "CommonJS",
+        "module": "NodeNext",
         "target": "es2020",
         "checkJs": true
     },

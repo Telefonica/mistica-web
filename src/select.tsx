@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
-import {FieldContainer, HelperText, Label} from './text-field-components';
+import {FieldContainer, HelperText, Label, useApplyCssVars} from './text-field-components';
 import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
@@ -95,6 +95,7 @@ const Select = ({
         register,
     } = useForm();
     const {platformOverrides} = useTheme();
+    const cssVarStyles = useApplyCssVars();
 
     const shouldUseNative =
         native ||
@@ -224,11 +225,12 @@ const Select = ({
             input: inputRef.current,
             focusableElement: focusableRef.current,
             label,
+            required: !optional,
         });
         return () => {
             register(name, {input: null, focusableElement: null, label: ''});
         };
-    }, [name, register, focusableRef, inputRef, focusableElement, inputElement, label]);
+    }, [name, register, focusableRef, inputRef, focusableElement, inputElement, label, optional]);
 
     React.useEffect(() => {
         const updateTentativeValueState = (e: KeyboardEvent) => {
@@ -358,7 +360,6 @@ const Select = ({
                         }}
                         ref={(actualRef) => {
                             [inputRef, focusableRef].forEach((currentRef) => {
-                                // @ts-expect-error current is typed as read-only
                                 currentRef.current = actualRef;
                             });
                         }}
@@ -403,6 +404,7 @@ const Select = ({
                         aria-haspopup="listbox"
                         ref={focusableRef as React.Ref<HTMLDivElement>}
                         {...(!disabled && containerActiveProps)}
+                        style={cssVarStyles}
                     >
                         <TextFieldBaseAutosuggest
                             style={{visibility: 'hidden'}}

@@ -40,11 +40,11 @@ test('Avatar with initials', async () => {
         expect(await element.screenshot()).toMatchImageSnapshot();
     }
 
-    // inverse
+    // over brand
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: 'PL', size: 64, src: '', inverse: 'true', badge: 0},
+        args: {initials: 'PL', size: 64, src: '', variantOutside: 'brand', badge: 0},
     });
 
     const element = await screen.findByTestId('avatar');
@@ -76,12 +76,19 @@ test('Avatar with icon', async () => {
         expect(await element.screenshot()).toMatchImageSnapshot();
     }
 
-    // inverse
+    // over brand
     {
         await openStoryPage({
             id: 'components-avatar--default',
             device: 'MOBILE_IOS',
-            args: {initials: '', size: 64, src: '', icon: 'IconFireRegular', inverse: 'true', badge: 0},
+            args: {
+                initials: '',
+                size: 64,
+                src: '',
+                icon: 'IconFireRegular',
+                variantOutside: 'brand',
+                badge: 0,
+            },
         });
 
         const element = await screen.findByTestId('avatar');

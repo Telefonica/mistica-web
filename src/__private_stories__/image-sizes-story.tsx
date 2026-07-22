@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, Stack, Text1, Text3} from '..';
+import {Image, Stack, Text1, Text3, skinVars} from '..';
 import beachImg from '../__stories__/images/beach.jpg';
 
 export default {
@@ -38,7 +38,7 @@ export const Default: StoryComponent<Args> = ({forceNonCssAspectRatio}) => {
     const renderValue = (value: any, name: string) => (
         <>
             <Text1 medium>{name}: </Text1>
-            <Text1 regular color="gray">
+            <Text1 regular color={skinVars.colors.textSecondary}>
                 {String(value)}
             </Text1>
             <Text1 medium>, </Text1>

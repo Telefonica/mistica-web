@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular, Touchable} from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Tooltip',
     argTypes: {
@@ -16,6 +18,10 @@ export default {
             options: ['top', 'bottom', 'left', 'right'],
             control: {type: 'select'},
         },
+        variantOutside: {
+            options: ['default', 'brand', 'negative', 'alternative'],
+            control: {type: 'select'},
+        },
     },
     parameters: {fullScreen: true},
 };
@@ -26,9 +32,9 @@ type Args = {
     position: 'top' | 'bottom' | 'left' | 'right';
     title: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     delay: boolean;
-    inverse: boolean;
+    variantOutside: Variant;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -37,9 +43,9 @@ export const Default: StoryComponent<Args> = ({
     position,
     title,
     description,
-    extra,
+    slot,
     delay,
-    inverse,
+    variantOutside,
 }) => {
     let left,
         right,
@@ -77,7 +83,7 @@ export const Default: StoryComponent<Args> = ({
     }
 
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variantOutside}>
             <div style={{width: '100vw', height: '100vh'}}>
                 <Tooltip
                     position={position}
@@ -92,7 +98,11 @@ export const Default: StoryComponent<Args> = ({
                                 transform: `translate(${translateX}, ${translateY})`,
                             }}
                         >
-                            <Touchable onPress={() => {}} dataAttributes={{testid: 'target'}}>
+                            <Touchable
+                                onPress={() => {}}
+                                dataAttributes={{testid: 'target'}}
+                                aria-label="Tooltip target"
+                            >
                                 <IconShopRegular style={{display: 'block'}} />
                             </Touchable>
                         </div>
@@ -100,7 +110,7 @@ export const Default: StoryComponent<Args> = ({
                     title={title}
                     delay={delay}
                     description={description}
-                    extra={extra ? <Placeholder /> : undefined}
+                    slot={slot ? <Placeholder /> : undefined}
                 />
             </div>
         </ResponsiveLayout>
@@ -115,7 +125,7 @@ Default.args = {
     position: 'top',
     title: 'Title',
     description: 'A description',
-    extra: false,
+    slot: false,
     delay: false,
-    inverse: false,
+    variantOutside: 'default',
 };

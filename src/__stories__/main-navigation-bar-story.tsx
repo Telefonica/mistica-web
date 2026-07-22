@@ -3,10 +3,12 @@ import {
     Avatar,
     Badge,
     IconShoppingCartRegular,
+    Inline,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
     Placeholder,
+    SearchField,
     Stack,
     Text3,
     useScreenSize,
@@ -18,7 +20,6 @@ import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Navigation bars/MainNavigationBar',
-    component: MainNavigationBar,
     parameters: {
         fullScreen: true,
     },
@@ -26,75 +27,105 @@ export default {
 
 const sectionTitles = ['Start', 'Account', 'Explore', 'Support'] as const;
 
+const sectionDefaultMenuItemsCount = {
+    Start: 3,
+    Account: 1,
+    Explore: 2,
+    Support: 3,
+};
+
 type Args = {
     variant: Variant;
     border: boolean;
-    burgerMenuExtra: boolean;
+    burgerMenuSlot: boolean;
     large: boolean;
     sections: boolean;
     menu: 'undefined' | 'default' | 'custom';
     desktopLargeMenu: boolean;
     customLogo: boolean;
+    topSlot: boolean;
+    topSlotBackgroundColor: string;
     wide: boolean;
     paddingX: PadSize | 'undefined';
+    expandedRightSlot: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
     variant,
     border,
-    burgerMenuExtra,
+    burgerMenuSlot,
     large,
     sections,
     menu,
     desktopLargeMenu,
     customLogo,
+    topSlot,
+    topSlotBackgroundColor,
     wide,
     paddingX,
+    expandedRightSlot,
 }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
 
-    const sectionDefaultMenuItemsCount = {
-        Start: 3,
-        Account: 1,
-        Explore: 2,
-        Support: 3,
-    };
+    const right = expandedRightSlot ? (
+        <Inline space={16} alignItems="center" expand={0}>
+            <SearchField fullWidth name="search" label="Search" />
+
+            <NavigationBarAction onPress={() => {}} aria-label="Entrar">
+                <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
+                {isDesktopOrBigger && 'Entrar'}
+            </NavigationBarAction>
+        </Inline>
+    ) : (
+        <NavigationBarActionGroup>
+            <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
+                <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                </Badge>
+            </NavigationBarAction>
+            <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
+                {isDesktopOrBigger && 'María López Serrano'}
+            </NavigationBarAction>
+        </NavigationBarActionGroup>
+    );
 
     return (
         <MainNavigationBar
             variant={variant}
             large={large}
             withBorder={border}
-            burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
+            burgerMenuSlot={burgerMenuSlot ? <Placeholder /> : undefined}
             desktopLargeMenu={desktopLargeMenu}
             logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
+            topSlot={topSlot ? <Placeholder height={24} /> : undefined}
+            topSlotBackgroundColor={topSlotBackgroundColor || undefined}
             sections={
                 sections
                     ? sectionTitles.map((title, idx) => ({
                           title,
                           onPress: () => setSelectedIndex(idx),
                           menu:
-                              menu === 'undefined'
-                                  ? undefined
-                                  : menu === 'default'
+                              menu === 'default'
+                                  ? {
+                                        title: `${title} menu`,
+                                        columns: Array.from(
+                                            {length: desktopLargeMenu ? 2 : 1},
+                                            (_, columnIndex) => ({
+                                                title: `${title} ${columnIndex + 1}`,
+                                                items: Array.from(
+                                                    {length: sectionDefaultMenuItemsCount[title]},
+                                                    (_, index) => ({
+                                                        title: `item ${index + 1}`,
+                                                        onPress: () => {},
+                                                    })
+                                                ),
+                                            })
+                                        ),
+                                    }
+                                  : menu === 'custom'
                                     ? {
-                                          title: `${title} menu`,
-                                          columns: Array.from(
-                                              {length: desktopLargeMenu ? 2 : 1},
-                                              (_, columnIndex) => ({
-                                                  title: `${title} ${columnIndex + 1}`,
-                                                  items: Array.from(
-                                                      {length: sectionDefaultMenuItemsCount[title]},
-                                                      (_, index) => ({
-                                                          title: `item ${index + 1}`,
-                                                          onPress: () => {},
-                                                      })
-                                                  ),
-                                              })
-                                          ),
-                                      }
-                                    : {
                                           content: (
                                               <Stack space={16}>
                                                   <Text3 regular>{title} menu</Text3>
@@ -106,24 +137,13 @@ export const Default: StoryComponent<Args> = ({
                                                   )}
                                               </Stack>
                                           ),
-                                      },
+                                      }
+                                    : undefined,
                       }))
                     : undefined
             }
             selectedIndex={selectedIndex}
-            right={
-                <NavigationBarActionGroup>
-                    <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
-                        <Badge value={2}>
-                            <IconShoppingCartRegular color="currentColor" />
-                        </Badge>
-                    </NavigationBarAction>
-                    <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                        <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
-                        {isDesktopOrBigger && 'María López Serrano'}
-                    </NavigationBarAction>
-                </NavigationBarActionGroup>
-            }
+            right={right}
             wide={wide ? (paddingX === 'undefined' ? true : {paddingX}) : false}
         />
     );
@@ -134,19 +154,22 @@ Default.storyName = 'MainNavigationBar';
 Default.args = {
     variant: 'default',
     border: true,
-    burgerMenuExtra: false,
+    burgerMenuSlot: false,
     large: false,
     sections: true,
     menu: 'undefined',
     desktopLargeMenu: false,
     customLogo: false,
+    topSlot: false,
+    topSlotBackgroundColor: '',
     wide: false,
     paddingX: 'undefined',
+    expandedRightSlot: false,
 };
 
 Default.argTypes = {
     variant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'brand', 'alternative'],
         control: {type: 'select'},
     },
     menu: {
@@ -155,6 +178,10 @@ Default.argTypes = {
         if: {arg: 'sections'},
     },
     desktopLargeMenu: {if: {arg: 'sections'}},
+    topSlotBackgroundColor: {
+        control: {type: 'color'},
+        if: {arg: 'topSlot'},
+    },
     paddingX: {
         options: ['undefined', 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80],
         control: {type: 'select'},

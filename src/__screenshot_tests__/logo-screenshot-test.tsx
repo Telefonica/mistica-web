@@ -5,12 +5,10 @@ import type {KnownSkinName} from '../skins/types';
 const SKINS: Array<KnownSkinName> = [
     'Movistar',
     'O2',
-    'O2-new',
     'Vivo',
-    'Vivo-new',
+    'Vivo-evolution',
     'Telefonica',
     'Blau',
-    'Tu',
     'Esimflag',
 ];
 const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];
@@ -20,7 +18,7 @@ const DARK_MODE_VALUES = [false, true];
 const getBrandLogoCases = () => {
     const cases = [];
     for (const skin of SKINS) {
-        if (skin !== 'Vivo-new') {
+        if (skin !== 'Vivo-evolution') {
             for (const type of LOGO_TYPES) {
                 for (const isInverse of INVERSE_VALUES) {
                     for (const isDarkMode of DARK_MODE_VALUES) {
@@ -39,7 +37,7 @@ test.each(getBrandLogoCases())(
         await openStoryPage({
             id: 'components-logo--default',
             device: 'DESKTOP',
-            args: {forceBrandLogo: true, brand, type, isInverse},
+            args: {forceBrandLogo: true, brand, type, variantOutside: isInverse ? 'brand' : 'default'},
             isDarkMode: isDarkMode as boolean,
         });
 
