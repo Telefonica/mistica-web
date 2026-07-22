@@ -27,16 +27,7 @@ const IconDownloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M11.264 21.488c.179.213.445.336.725.336s.546-.123.728-.336l8.863-9.143q.018-.016.03-.033c.25-.303.3-.726.13-1.079a.96.96 0 0 0-.874-.56h-3.961l.003-6.596a1.903 1.903 0 0 0-1.905-1.905h-6.03a1.906 1.906 0 0 0-1.905 1.905v6.596H3.135a.96.96 0 0 0-.871.56 1.01 1.01 0 0 0 .144 1.096l.015.016zm.728-.812-8.62-8.913v-.003h3.816a.987.987 0 0 0 .972-.997V4.077c0-.449.364-.816.815-.816h6.03c.452 0 .816.367.816.818l-.003 6.687c0 .549.437.997.972.997h3.843z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,6 +37,15 @@ const IconDownloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     <path
                         fill={fillColor}
                         d="M4.143 22h15.714A2.15 2.15 0 0 0 22 19.857V12a.716.716 0 0 0-.714-.714.716.716 0 0 0-.715.714v7.857a.716.716 0 0 1-.714.714H4.143a.716.716 0 0 1-.714-.714V12a.716.716 0 0 0-.715-.714A.716.716 0 0 0 2 12v7.857A2.15 2.15 0 0 0 4.143 22"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.264 21.488c.179.213.445.336.725.336s.546-.123.728-.336l8.863-9.143q.018-.016.03-.033c.25-.303.3-.726.13-1.079a.96.96 0 0 0-.874-.56h-3.961l.003-6.596a1.903 1.903 0 0 0-1.905-1.905h-6.03a1.906 1.906 0 0 0-1.905 1.905v6.596H3.135a.96.96 0 0 0-.871.56 1.01 1.01 0 0 0 .144 1.096l.015.016zm.728-.812-8.62-8.913v-.003h3.816a.987.987 0 0 0 .972-.997V4.077c0-.449.364-.816.815-.816h6.03c.452 0 .816.367.816.818l-.003 6.687c0 .549.437.997.972.997h3.843z"
                     />
                 </svg>
             );
