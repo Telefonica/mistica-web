@@ -328,7 +328,7 @@ ${textClasses}
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     margin: 0 var(--${prefix}responsive-layout-margin);
-    --${prefix}responsive-layout-margin: 16px;
+    --${prefix}responsive-layout-margin: ${designTokens.spacing.responsiveLayoutMargin.value.mobile}px;
 }
 
 ${tabletMediaQuery} {
@@ -339,7 +339,7 @@ ${tabletMediaQuery} {
 
 ${desktopMediaQuery} {
     .${prefix}responsive-layout {
-        --${prefix}responsive-layout-margin: 40px;
+        --${prefix}responsive-layout-margin: ${designTokens.spacing.responsiveLayoutMargin.value.desktop}px;
     }
 }
 

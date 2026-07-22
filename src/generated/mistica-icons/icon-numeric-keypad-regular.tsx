@@ -27,7 +27,17 @@ const IconNumericKeypadRegular = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
+        if (skinName.match(/^blau/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M4 2h2.668v2.668H4zm12.648 11.436 2.836.944c.724.244 1.16.964 1.044 1.716L19.548 22h-1.38l1.012-6.124a.184.184 0 0 0-.128-.204l-3.3-1.1a.68.68 0 0 1-.464-.644V10a.652.652 0 0 0-1.304 0v7.332c0 .288-.18.54-.448.64a.685.685 0 0 1-.752-.2l-1.96-2.32a.475.475 0 0 0-.624.024.53.53 0 0 0-.112.676L13.34 22h-1.556l-2.88-5.176a1.88 1.88 0 0 1 .408-2.384 1.85 1.85 0 0 1 2.436.008q.036.035.072.076l.8.948V10c0-.604.276-1.144.7-1.512V6h2.668v2.52c.404.368.66.892.66 1.48zM11.336 2H8.668v2.668h2.668zM4 6h2.668v2.668H4zm7.336 0H8.668v2.668h2.668zM4 10h2.668v2.668H4z"
+                    />
+                    <path fill={fillColor} d="M11.336 10H8.668v2.668h2.668zm1.988-8h2.668v2.668h-2.668z" />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -38,16 +48,6 @@ const IconNumericKeypadRegular = ({color, size = 24, ...rest}: IconProps): JSX.E
                         fill={fillColor}
                         d="M7.132 10.063c0-.827.476-1.213 1.207-1.213.734 0 1.207.383 1.207 1.213 0 .397-.109.694-.305.893-.21.219-.52.322-.902.322-.38 0-.692-.106-.902-.322-.196-.199-.305-.496-.305-.893"
                     />
-                </svg>
-            );
-        } else if (skinName.match(/^blau/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M4 2h2.668v2.668H4zm12.648 11.436 2.836.944c.724.244 1.16.964 1.044 1.716L19.548 22h-1.38l1.012-6.124a.184.184 0 0 0-.128-.204l-3.3-1.1a.68.68 0 0 1-.464-.644V10a.652.652 0 0 0-1.304 0v7.332c0 .288-.18.54-.448.64a.685.685 0 0 1-.752-.2l-1.96-2.32a.475.475 0 0 0-.624.024.53.53 0 0 0-.112.676L13.34 22h-1.556l-2.88-5.176a1.88 1.88 0 0 1 .408-2.384 1.85 1.85 0 0 1 2.436.008q.036.035.072.076l.8.948V10c0-.604.276-1.144.7-1.512V6h2.668v2.52c.404.368.66.892.66 1.48zM11.336 2H8.668v2.668h2.668zM4 6h2.668v2.668H4zm7.336 0H8.668v2.668h2.668zM4 10h2.668v2.668H4z"
-                    />
-                    <path fill={fillColor} d="M11.336 10H8.668v2.668h2.668zm1.988-8h2.668v2.668h-2.668z" />
                 </svg>
             );
         } else {

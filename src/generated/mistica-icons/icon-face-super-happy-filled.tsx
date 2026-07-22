@@ -27,16 +27,7 @@ const IconFaceSuperHappyFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2m4.005 6.54a1.335 1.335 0 1 0 0 2.67 1.335 1.335 0 0 0 0-2.67m-8.01 0a1.334 1.334 0 1 0 0 2.668 1.334 1.334 0 0 0 0-2.669m9.565 4.571a.67.67 0 0 0-.667-.686H7.107a.67.67 0 0 0-.666.674s.043 5.468 5.519 5.439c5.46-.03 5.6-5.427 5.6-5.427"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,6 +42,15 @@ const IconFaceSuperHappyFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
                     <path
                         fill={fillColor}
                         d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12s4.48 10 10 10 10-4.48 10-10m-4.63.627c.126.13.195.304.19.484 0 0-.14 5.398-5.6 5.427-5.476.03-5.52-5.44-5.52-5.44a.67.67 0 0 1 .667-.673h9.786c.18 0 .352.073.478.202M8.608 8.25a.982.982 0 1 1 .001 1.963.982.982 0 0 1 0-1.963m6.697 0a.982.982 0 1 1 0 1.963.982.982 0 0 1 0-1.963"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2m4.005 6.54a1.335 1.335 0 1 0 0 2.67 1.335 1.335 0 0 0 0-2.67m-8.01 0a1.334 1.334 0 1 0 0 2.668 1.334 1.334 0 0 0 0-2.669m9.565 4.571a.67.67 0 0 0-.667-.686H7.107a.67.67 0 0 0-.666.674s.043 5.468 5.519 5.439c5.46-.03 5.6-5.427 5.6-5.427"
                     />
                 </svg>
             );
