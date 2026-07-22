@@ -1,8 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-// eslint-disable-next-line import/extensions
-import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
-import prettier from 'prettier';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.ts';
+import * as prettier from 'prettier';
+
+import type {ColorDescription, DesignTokens, GradientDescription} from './token-types.ts';
 
 /**
  * Generates skin files and CSS from design tokens in mistica-design.
@@ -10,10 +11,10 @@ import prettier from 'prettier';
  * By default, reads tokens from .github/mistica-design/tokens.
  * To use a custom tokens folder:
  *
- *   node index.js /path/to/mistica-design/tokens
+ *   node index.ts /path/to/mistica-design/tokens
  *   # or via yarn: yarn workspace generate-design-tokens generate /path/to/mistica-design/tokens
  *
- * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.js
+ * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.ts
  *
  * @see https://github.com/Telefonica/mistica-design
  */
@@ -41,11 +42,11 @@ const GENERATED_BANNER = `/**
  */
 `;
 
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-const toPascalCase = (str) => capitalize(toCamelCase(str));
+const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
+const toCamelCase = (str: string): string => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+const toPascalCase = (str: string): string => capitalize(toCamelCase(str));
 
-const jsonSort = (obj) => {
+const jsonSort = (obj: unknown): unknown => {
     if (Array.isArray(obj)) {
         return obj.map(jsonSort);
     }
@@ -56,29 +57,22 @@ const jsonSort = (obj) => {
 
     return Object.keys(obj)
         .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}))
-        .reduce((acc, key) => {
-            acc[key] = jsonSort(obj[key]);
+        .reduce<Record<string, unknown>>((acc, key) => {
+            acc[key] = jsonSort((obj as Record<string, unknown>)[key]);
             return acc;
         }, {});
 };
 
-/**
- * @param {{angle: number, colors: Array<{
- *     value: string,
- *     stop: number, // value from 0 to 1
- * }>}} gradientDescription
- * @returns {string}
- */
-const buildGradient = (gradientDescription) => {
+const buildGradient = (gradientDescription: GradientDescription): string => {
     const stops = gradientDescription.colors.map((color) => {
-        // eslint-disable-next-line no-use-before-define
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         const formattedColor = '${' + buildColor(color) + '}';
         return `${formattedColor} ${color.stop * 100}%`;
     });
     return '`' + `linear-gradient(${gradientDescription.angle}deg, ${stops.join(', ')})` + '`';
 };
 
-const buildColor = (colorDescription) => {
+const buildColor = (colorDescription: ColorDescription): string => {
     if (colorDescription.type === 'linear-gradient') {
         return buildGradient(colorDescription.value);
     }
@@ -105,17 +99,13 @@ const buildColor = (colorDescription) => {
     throw new Error(`Unknown color format: ${colorDescription.value}`);
 };
 
-/**
- * @param {string} skinName
- * @param {SkinFamily} family
- */
-const generateSkinSrc = (skinName, family) => {
+const generateSkinSrc = (skinName: string, family: SkinFamily): string => {
     const designTokensFile = fs.readFileSync(path.join(family.tokensFolder, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
-    const designTokens = JSON.parse(designTokensFile);
+    const designTokens: DesignTokens = JSON.parse(designTokensFile);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
-    const textTokens = {};
+    const textTokens: Record<string, Record<string, unknown>> = {};
     Object.entries(designTokens.text).forEach(([textAttribute, textAttributeConfig]) => {
         Object.entries(textAttributeConfig).forEach(([textPresetName, {value}]) => {
             if (!textTokens[textPresetName]) {
@@ -184,9 +174,9 @@ ${functionSignature}
 `;
 };
 
-const generateColorTypesSrc = (skinName, tokensFolder) => {
+const generateColorTypesSrc = (skinName: string, tokensFolder: string): string => {
     const designTokensFile = fs.readFileSync(path.join(tokensFolder, `${skinName}.json`), 'utf8');
-    const designTokens = JSON.parse(designTokensFile);
+    const designTokens: DesignTokens = JSON.parse(designTokensFile);
 
     return `
 export type Colors = {
@@ -196,13 +186,13 @@ export type Colors = {
 };`;
 };
 
-const formatCss = async (source) =>
+const formatCss = async (source: string): Promise<string> =>
     prettier.format(`${GENERATED_BANNER}\n${source}`, {
         ...(await prettier.resolveConfig('.')),
         parser: 'css',
     });
 
-const formatTs = async (source) =>
+const formatTs = async (source: string): Promise<string> =>
     prettier.format(`${GENERATED_BANNER}\n${source}`, {
         ...(await prettier.resolveConfig('.')),
         parser: 'typescript',
@@ -211,40 +201,35 @@ const formatTs = async (source) =>
 /**
  * The variant-specific parts of a generated skin module: its imports, the exported skin type,
  * the optional skin-name constant declaration, and the generated function signature.
- *
- * @typedef {{
- *     constantsImport: string,
- *     skinTypeImport: string,
- *     skinConstantDeclaration: string,
- *     skinType: string,
- *     functionSignature: string,
- *     applyAlphaImportPath: string,
- * }} SkinModule
  */
+type SkinModule = {
+    constantsImport: string;
+    skinTypeImport: string;
+    skinConstantDeclaration: string;
+    skinType: string;
+    functionSignature: string;
+    applyAlphaImportPath: string;
+};
 
 /**
  * A skin family describes where its tokens live, where the generated files go, how each skin
  * module is shaped, and which skins it contains. Known and community skins share the same
  * generation pipeline and differ only in this descriptor.
- *
- * @typedef {{
- *     tokensFolder: string,
- *     skinsFolder: string,
- *     cssFolder: string,
- *     skins: Array<string>,
- *     skinFileName: (skinName: string) => string,
- *     skinModule: (skinName: string, skinConstantName: string) => SkinModule,
- *     generateSharedFiles?: (skinNames: Array<string>) => Promise<void>,
- * }} SkinFamily
  */
+type SkinFamily = {
+    tokensFolder: string;
+    skinsFolder: string;
+    cssFolder: string;
+    skins: Array<string>;
+    skinFileName: (skinName: string) => string;
+    skinModule: (skinName: string, skinConstantName: string) => SkinModule;
+    generateSharedFiles?: (skinNames: Array<string>) => Promise<void>;
+};
 
 /**
  * Returns the family's skins whose token file exists, logging an error for any that are missing.
- *
- * @param {SkinFamily} family
- * @returns {Array<string>}
  */
-const listExistingSkins = (family) =>
+const listExistingSkins = (family: SkinFamily): Array<string> =>
     family.skins.filter((skinName) => {
         const exists = fs.existsSync(path.join(family.tokensFolder, `${skinName}.json`));
         if (!exists) {
@@ -253,8 +238,7 @@ const listExistingSkins = (family) =>
         return exists;
     });
 
-/** @type {SkinFamily} */
-const OFFICIAL_SKINS_FAMILY = {
+const OFFICIAL_SKINS_FAMILY: SkinFamily = {
     tokensFolder: DESIGN_TOKENS_FOLDER,
     skinsFolder: SKINS_FOLDER,
     cssFolder: CSS_FOLDER,
@@ -282,8 +266,7 @@ const OFFICIAL_SKINS_FAMILY = {
     },
 };
 
-/** @type {SkinFamily} */
-const COMMUNITY_SKINS_FAMILY = {
+const COMMUNITY_SKINS_FAMILY: SkinFamily = {
     tokensFolder: path.join(DESIGN_TOKENS_FOLDER, 'community'),
     skinsFolder: COMMUNITY_SKINS_FOLDER,
     cssFolder: COMMUNITY_CSS_FOLDER,
@@ -299,8 +282,7 @@ const COMMUNITY_SKINS_FAMILY = {
     }),
 };
 
-/** @param {SkinFamily} family */
-const generateSkinFamily = async (family) => {
+const generateSkinFamily = async (family: SkinFamily): Promise<void> => {
     const skinNames = listExistingSkins(family);
     if (skinNames.length === 0) {
         return;
@@ -322,7 +304,7 @@ const generateSkinFamily = async (family) => {
     await family.generateSharedFiles?.(skinNames);
 };
 
-const main = async () => {
+const main = async (): Promise<void> => {
     await generateSkinFamily(OFFICIAL_SKINS_FAMILY);
     await generateSkinFamily(COMMUNITY_SKINS_FAMILY);
 };

@@ -12,8 +12,17 @@ and generates corresponding TypeScript and CSS files.
 
 ## Run
 
+The script is written in TypeScript and runs directly on Node (>= 24), which strips the types at runtime, so
+no build step is required:
+
 ```bash
-node index.js
+node index.ts
+```
+
+Type-check the package with:
+
+```bash
+yarn typecheck
 ```
 
 This script is used by the import-design-tokens GitHub workflow.
