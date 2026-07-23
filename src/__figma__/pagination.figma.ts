@@ -23,7 +23,7 @@ export default {
         <Pagination
             totalPages={9}
             currentPage={3}
-            onChange={(page) => {}}
+            onChange={() => {}}
             ${mode === 'iconOnly' ? 'mode="iconOnly"' : ''}
         />
     `,
