@@ -23,7 +23,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
-import {LARGE_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
+import {TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
 import {vars as skinVars} from './skins/skin-contract.css';
 
@@ -302,10 +302,11 @@ export const SheetBody = ({
     children,
 }: SheetBodyProps): JSX.Element => {
     const {spacing} = useTheme();
+    // todo https://github.com/Telefonica/mistica-design/issues/2703 adopt tokens for sheets' dialogs (no hardcoded, not mingling sources)
     const paddingX = {
         mobile: spacing.responsiveLayoutMargin.mobile as PadSize,
         tablet: TABLET_SIDE_MARGIN,
-        desktop: LARGE_DESKTOP_SIDE_MARGIN,
+        desktop: 40,
     } as const;
 
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
