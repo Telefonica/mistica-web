@@ -18,6 +18,9 @@ const mode = instance.getEnum('Mode', {
 // "Current page" (Start | Middle | End) is a Figma-only simplification to show
 // navigation control states; it has no direct code prop mapping and is omitted.
 
+const hideNavigationControls = instance.getBoolean('Hide navigation controls');
+const hidePageList = instance.getBoolean('Hide page list');
+
 export default {
     example: figma.code`
         <Pagination
@@ -25,6 +28,8 @@ export default {
             currentPage={3}
             onChange={() => {}}
             ${mode === 'iconOnly' ? 'mode="iconOnly"' : ''}
+            ${hideNavigationControls ? 'hideNavigationControls' : ''}
+            ${hidePageList ? 'hidePageList' : ''}
         />
     `,
     imports: ['import {Pagination} from "@telefonica/mistica";'],
