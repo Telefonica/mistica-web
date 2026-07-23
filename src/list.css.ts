@@ -96,7 +96,7 @@ export const content = style([
 
 export const innerContent = style({
     display: 'flex',
-    minHeight: 40,
+    minHeight: 56,
     paddingBottom: 16,
     gridColumn: 2,
 });
@@ -161,7 +161,7 @@ export const dualActionContainer = style({
     height: '100%',
 });
 
-export const dualActionInner = style({
+export const dualActionBody = style({
     display: 'flex',
     flexDirection: 'row',
     flex: 1,

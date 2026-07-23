@@ -25,6 +25,7 @@ import * as styles from './list.css';
 import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
+import {combineRefs} from './utils/common';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
@@ -441,14 +442,6 @@ const getNodeText = (node: HTMLElement | null): string => {
     return raw;
 };
 
-const assignRef = <T,>(ref: React.Ref<T> | undefined, value: T) => {
-    if (typeof ref === 'function') {
-        ref(value);
-    } else if (ref) {
-        ref.current = value;
-    }
-};
-
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = React.useId();
     const outsideVariant = useThemeVariant();
@@ -484,10 +477,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const assetText = getAssetText(asset);
     const hasDivider = React.useContext(RowListDividerContext);
     const [dividerOffset, setDividerOffset] = React.useState(0);
-    const setDualActionRef = React.useCallback(
+    const measureDividerOffset = React.useCallback(
         (dualActionContainerElement: HTMLDivElement | null) => {
-            assignRef(ref, dualActionContainerElement);
-
             if (!dualActionContainerElement || !hasDivider) {
                 return;
             }
@@ -505,7 +496,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
             setDividerOffset(contentLeft - containerLeft);
         },
-        [ref, hasDivider]
+        [hasDivider]
     );
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
@@ -628,10 +619,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const renderRowWithDoubleInteraction = (control: React.ReactNode) => (
         <div
             className={styles.dualActionContainer}
-            ref={setDualActionRef}
+            ref={combineRefs(ref, measureDividerOffset)}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
-            <div className={styles.dualActionInner}>
+            <div className={styles.dualActionBody}>
                 <BaseTouchable
                     disabled={disabled}
                     {...interactiveProps}
@@ -834,7 +825,7 @@ export const RowList = ({
     dataAttributes,
 }: RowListProps): JSX.Element => {
     return (
-        <RowListDividerContext.Provider value={true}>
+        <RowListDividerContext.Provider value>
             <div
                 role={role}
                 aria-labelledby={ariaLabelledBy}
