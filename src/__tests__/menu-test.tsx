@@ -66,6 +66,48 @@ test('Menu closes after pressing an option', async () => {
     });
 });
 
+test('Menu does not close after pressing a checkbox option', async () => {
+    const onPressSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Menu
+                renderTarget={({ref, onPress, isMenuOpen}) => (
+                    <Touchable ref={ref} onPress={onPress}>
+                        <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
+                    </Touchable>
+                )}
+                renderMenu={({ref, className}) => (
+                    <div ref={ref} className={className}>
+                        <MenuSection>
+                            {options.map((option) => (
+                                <MenuItem
+                                    key={option}
+                                    label={option}
+                                    controlType="checkbox"
+                                    onPress={onPressSpy}
+                                />
+                            ))}
+                        </MenuSection>
+                    </div>
+                )}
+            />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByText('menu is close'));
+
+    expect(screen.getByText('menu is open')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('menuitemcheckbox', {name: 'Option 1'}));
+
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+
+    expect(screen.getByText('menu is open')).toBeInTheDocument();
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+    expect(screen.getByText('Option 3')).toBeInTheDocument();
+});
+
 test('Menu closes after clicking an href option', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
