@@ -337,6 +337,7 @@ export type BackgroundImageOrVideoProps = {
     video?: React.ReactNode;
     src?: string;
     srcSet?: string;
+    alt?: string;
     backgroundVariant: Variant;
 };
 
@@ -344,6 +345,7 @@ const BackgroundImageOrVideo = ({
     video,
     src,
     srcSet,
+    alt,
     backgroundVariant,
 }: BackgroundImageOrVideoProps): JSX.Element => {
     return (
@@ -365,7 +367,7 @@ const BackgroundImageOrVideo = ({
                         height="100%"
                         src={src || ''}
                         srcSet={srcSet}
-                        alt=""
+                        alt={alt}
                     />
                 )}
             </div>
@@ -1482,6 +1484,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         video={video}
                         src={imageSrc}
                         srcSet={imageSrcSet}
+                        alt={imageAlt}
                         backgroundVariant={backgroundVariant}
                     />
                 )}
