@@ -1,4 +1,10 @@
-import type {BorderRadiiConfig, SpacingConfig, TextPresetsConfig, ThemeVariantsConfig} from './types';
+import type {
+    BorderRadiiConfig,
+    ComponentPropertiesConfig,
+    SpacingConfig,
+    TextPresetsConfig,
+    ThemeVariantsConfig,
+} from './types';
 
 export const defaultTextPresetsConfig: TextPresetsConfig = {
     text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
@@ -73,6 +79,17 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
 export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
     brandLoadingScreen: 'inverse',
     successFeedback: 'inverse',
+};
+
+export const defaultComponentPropertiesConfig: ComponentPropertiesConfig = {
+    dismissActionType: 'neutral',
+    showBoxedBorder: {
+        default: true,
+        alternative: true,
+        brand: true,
+        negative: true,
+        media: true,
+    },
 };
 
 export const defaultSpacing: SpacingConfig = {
