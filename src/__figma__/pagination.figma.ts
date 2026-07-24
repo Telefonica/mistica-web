@@ -1,4 +1,4 @@
-// url=https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=37559-163
+// url=https://www.figma.com/design/DSWhPLyJzbliP1fBrLxDUR/M%C3%ADstica-Desktop?node-id=37911-5734
 // source=src/pagination.tsx
 // component=Pagination
 import figma from 'figma';
