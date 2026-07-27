@@ -224,9 +224,7 @@ export const Content = ({
                     </Box>
                 )}
                 {(detail || right || withChevron || control) && (
-                    <div
-                        className={styles.rightContent}
-                    >
+                    <div className={styles.rightContent}>
                         {detail && (
                             <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
                                 <Text2
