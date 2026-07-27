@@ -99,6 +99,7 @@ export const innerContent = style({
     minHeight: 56,
     paddingBottom: 16,
     gridColumn: 2,
+    minWidth: 0,
 });
 
 export const assetContainer = style([sprinkles({paddingRight: 16}), {gridColumn: 1, paddingBottom: 16}]);
@@ -149,7 +150,6 @@ export const rowDividerDualAction = style({
 });
 
 export const rightContent = style({display: 'flex', marginLeft: 16});
-export const rightRestrictedWidth = style({maxWidth: '40%'});
 
 export const detailRight = style({paddingLeft: 8});
 
