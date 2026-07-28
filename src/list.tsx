@@ -37,6 +37,9 @@ import type {ExclusifyUnion} from './utils/utility-types';
 
 const RowListDividerContext = React.createContext(false);
 
+type ListContextType = {small: boolean};
+const ListContext = React.createContext<ListContextType>({small: false});
+
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 interface CommonProps {
@@ -115,6 +118,12 @@ export const Content = ({
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
     const hasDivider = React.useContext(RowListDividerContext);
+    const {small} = React.useContext(ListContext);
+    const titlePreset = small ? textPresets.text2 : textPresets.text3;
+
+    const SubtitleComponent = small ? Text1 : Text2;
+    const DescriptionComponent = small ? Text1 : Text2;
+    const DetailComponent = small ? Text1 : Text2;
 
     return (
         <div className={styles.content} id={labelId}>
@@ -159,10 +168,10 @@ export const Content = ({
                     style={{justifyContent: centerY ? 'center' : 'flex-start'}}
                 >
                     <Text
-                        mobileSize={textPresets.text3.size.mobile}
-                        desktopSize={textPresets.text3.size.desktop}
-                        mobileLineHeight={textPresets.text3.lineHeight.mobile}
-                        desktopLineHeight={textPresets.text3.lineHeight.desktop}
+                        mobileSize={titlePreset.size.mobile}
+                        desktopSize={titlePreset.size.desktop}
+                        mobileLineHeight={titlePreset.lineHeight.mobile}
+                        desktopLineHeight={titlePreset.lineHeight.desktop}
                         weight={textPresets.rowTitle.weight}
                         color={danger ? vars.colors.textError : vars.colors.textPrimary}
                         truncate={titleLinesMax}
@@ -186,7 +195,7 @@ export const Content = ({
                     )}
                     {subtitle && (
                         <Box paddingTop={2}>
-                            <Text2
+                            <SubtitleComponent
                                 regular
                                 color={vars.colors.textPrimary}
                                 truncate={subtitleLinesMax}
@@ -194,12 +203,12 @@ export const Content = ({
                                 dataAttributes={{testid: 'subtitle'}}
                             >
                                 {subtitle}
-                            </Text2>
+                            </SubtitleComponent>
                         </Box>
                     )}
                     {description && (
                         <Box paddingTop={2}>
-                            <Text2
+                            <DescriptionComponent
                                 regular
                                 color={vars.colors.textSecondary}
                                 truncate={descriptionLinesMax}
@@ -207,7 +216,7 @@ export const Content = ({
                                 dataAttributes={{testid: 'description'}}
                             >
                                 {description}
-                            </Text2>
+                            </DescriptionComponent>
                         </Box>
                     )}
                     {slot && (
@@ -227,14 +236,14 @@ export const Content = ({
                     <div className={styles.rightContent}>
                         {detail && (
                             <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
-                                <Text2
+                                <DetailComponent
                                     regular
                                     color={vars.colors.textSecondary}
                                     hyphens="auto"
                                     dataAttributes={{testid: 'detail'}}
                                 >
                                     {detail}
-                                </Text2>
+                                </DetailComponent>
                             </div>
                         )}
                         {right && (
@@ -811,6 +820,7 @@ type RowListProps = {
     'aria-labelledby'?: string;
     role?: string;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 } & CommonAccessibilityProps;
 
 export const RowList = ({
@@ -821,20 +831,23 @@ export const RowList = ({
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
+    small = false,
 }: RowListProps): JSX.Element => {
     return (
-        <RowListDividerContext.Provider value>
-            <div
-                role={role}
-                aria-labelledby={ariaLabelledBy}
-                aria-label={ariaLabel}
-                aria-live={ariaLive}
-                aria-atomic={ariaAtomic}
-                {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
-            >
-                {children}
-            </div>
-        </RowListDividerContext.Provider>
+        <ListContext.Provider value={{small}}>
+            <RowListDividerContext.Provider value>
+                <div
+                    role={role}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-label={ariaLabel}
+                    aria-live={ariaLive}
+                    aria-atomic={ariaAtomic}
+                    {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
+                >
+                    {children}
+                </div>
+            </RowListDividerContext.Provider>
+        </ListContext.Provider>
     );
 };
 
@@ -883,6 +896,7 @@ type BoxedRowListProps = {
     'aria-labelledby'?: string;
     role?: string;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 } & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
@@ -893,18 +907,21 @@ export const BoxedRowList = ({
     'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
+    small = false,
 }: BoxedRowListProps): JSX.Element => (
-    <Stack
-        space={16}
-        role={role}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        aria-live={ariaLive}
-        aria-atomic={ariaAtomic}
-        dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
-    >
-        {children}
-    </Stack>
+    <ListContext.Provider value={{small}}>
+        <Stack
+            space={16}
+            role={role}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
+            dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
+        >
+            {children}
+        </Stack>
+    </ListContext.Provider>
 );
 
 type UnorderedListProps = {
