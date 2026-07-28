@@ -9,7 +9,14 @@ export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 
 export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
-export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink, ButtonLinkDanger} from './button';
+export {
+    ButtonPrimary,
+    ButtonSecondary,
+    ButtonDanger,
+    ButtonLink,
+    ButtonLinkDanger,
+    ButtonLinkNeutral,
+} from './button';
 export {default as ButtonGroup} from './button-group';
 export {default as ButtonLayout} from './button-layout';
 export {default as Counter} from './counter';

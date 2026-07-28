@@ -20,6 +20,7 @@ import {
     DataCard,
     IconLightningRegular,
     ButtonLinkDanger,
+    ButtonLinkNeutral,
     PageBullets,
     Checkbox,
     Chip,
@@ -281,6 +282,34 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                                 >
                                     ButtonLink
                                 </ButtonLink>
+                            }
+                        />
+
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
+                            title="Title"
+                            pretitle="Pretitle"
+                            description="Description"
+                            onClose={() => {}}
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
+                                <ButtonPrimary
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonPrimary
+                                </ButtonPrimary>
+                            }
+                            buttonLink={
+                                <ButtonLinkNeutral
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonLinkNeutral
+                                </ButtonLinkNeutral>
                             }
                         />
 

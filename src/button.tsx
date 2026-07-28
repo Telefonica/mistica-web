@@ -269,7 +269,7 @@ const renderButtonContent = ({
     );
 };
 
-type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'linkDanger';
+type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'linkDanger' | 'linkNeutral';
 
 interface CommonProps {
     children: React.ReactNode;
@@ -375,6 +375,10 @@ const BaseButton = React.forwardRef<
                 break;
             case 'linkDanger':
                 component_type = 'danger_link';
+                action = eventActions.linkTapped;
+                break;
+            case 'linkNeutral':
+                component_type = 'neutral_link';
                 action = eventActions.linkTapped;
                 break;
             default:
@@ -592,6 +596,26 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
         );
     }
 );
+
+export const ButtonLinkNeutral = React.forwardRef<
+    TouchableElement,
+    ButtonLinkProps & {
+        withChevron?: boolean;
+    }
+>(({dataAttributes, className, ...props}, ref) => {
+    return (
+        <BaseButton
+            dataAttributes={{
+                testid: 'ButtonLinkNeutral',
+                ...dataAttributes,
+            }}
+            className={classnames(className, {[styles.smallLink]: props.small})}
+            {...props}
+            ref={ref}
+            buttonType="linkNeutral"
+        />
+    );
+});
 
 export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {

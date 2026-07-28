@@ -11,6 +11,7 @@ import {
     IconPhotoCameraRegular,
     ResponsiveLayout,
     ButtonLinkDanger,
+    ButtonLinkNeutral,
 } from '..';
 import tennisImg from './images/tennis.jpg';
 
@@ -203,6 +204,30 @@ export const LinkButtonDanger: StoryComponent<Args> = ({
     );
 };
 
+export const LinkButtonNeutral: StoryComponent<Args & {chevron: string}> = ({
+    variantOutside,
+    text,
+    icon,
+    action,
+    newTab,
+    chevron,
+    ...props
+}) => {
+    return (
+        <ButtonBackgroundContainer variant={variantOutside}>
+            <ButtonLinkNeutral
+                {...props}
+                withChevron={chevron === 'default' ? undefined : chevron === 'true'}
+                {...getButtonActionProps(action, newTab)}
+                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
+                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
+            >
+                {text}
+            </ButtonLinkNeutral>
+        </ButtonBackgroundContainer>
+    );
+};
+
 export const SubmitButton: StoryComponent = () => (
     <ButtonBackgroundContainer variant="default">
         <Text2 as="p" regular>
@@ -225,6 +250,7 @@ SecondaryButton.storyName = 'ButtonSecondary';
 DangerButton.storyName = 'ButtonDanger';
 LinkButton.storyName = 'ButtonLink';
 LinkButtonDanger.storyName = 'ButtonLinkDanger';
+LinkButtonNeutral.storyName = 'ButtonLinkNeutral';
 SubmitButton.storyName = 'Submit button';
 
 primaryButton.args = defaultArgs;
@@ -235,6 +261,10 @@ LinkButton.args = {
     chevron: 'default',
 };
 LinkButtonDanger.args = defaultArgs;
+LinkButtonNeutral.args = {
+    ...defaultArgs,
+    chevron: 'default',
+};
 
 primaryButton.argTypes = defaultArgTypes;
 SecondaryButton.argTypes = defaultArgTypes;
@@ -247,3 +277,10 @@ LinkButton.argTypes = {
     },
 };
 LinkButtonDanger.argTypes = defaultArgTypes;
+LinkButtonNeutral.argTypes = {
+    ...defaultArgTypes,
+    chevron: {
+        options: ['default', 'true', 'false'],
+        control: {type: 'select'},
+    },
+};
