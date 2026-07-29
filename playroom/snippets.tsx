@@ -4322,7 +4322,31 @@ const listItemSnippets = [
     },
 ];
 
+const sidenavBarSnippets: Array<Snippet> = [
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar',
+        code: `
+        <div style={{height: 480}}>
+            <SidenavBar aria-label="Main navigation">
+                <SidenavSection>
+                    <SidenavItem label="Home" Icon={IconHomeRegular} href="#home" selected />
+                    <SidenavItem label="Search" Icon={IconSearchRegular} href="#search" />
+                </SidenavSection>
+                <SidenavSection title="Workspace" dividerTop>
+                    <SidenavItem label="Projects" Icon={IconFolderRegular} defaultOpen>
+                        <SidenavItem label="Active" href="#active" />
+                        <SidenavItem label="Archived" href="#archived" />
+                    </SidenavItem>
+                    <SidenavItem label="Notifications" Icon={IconBellRegular} href="#notifications" />
+                </SidenavSection>
+            </SidenavBar>
+        </div>`,
+    },
+];
+
 export default [
+    ...sidenavBarSnippets,
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
