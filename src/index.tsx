@@ -1784,6 +1784,9 @@ export {default as IconPinOffFilled} from './generated/mistica-icons/icon-pin-of
 export {default as IconPinOffLight} from './generated/mistica-icons/icon-pin-off-light';
 export {default as IconPinOffRegular} from './generated/mistica-icons/icon-pin-off-regular';
 export {default as IconPinRegular} from './generated/mistica-icons/icon-pin-regular';
+export {default as IconPixFilled} from './generated/mistica-icons/icon-pix-filled';
+export {default as IconPixLight} from './generated/mistica-icons/icon-pix-light';
+export {default as IconPixRegular} from './generated/mistica-icons/icon-pix-regular';
 export {default as IconPlaneFilled} from './generated/mistica-icons/icon-plane-filled';
 export {default as IconPlaneLight} from './generated/mistica-icons/icon-plane-light';
 export {default as IconPlaneRegular} from './generated/mistica-icons/icon-plane-regular';
