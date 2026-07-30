@@ -126,7 +126,6 @@ export type ThemeVariantsConfig = {
 };
 
 export type ComponentPropertiesConfig = {
-    dismissActionType: string;
     showBoxedBorder: {
         default: boolean;
         alternative: boolean;

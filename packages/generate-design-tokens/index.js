@@ -154,15 +154,10 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 .join(',')},
         },
         ${
-            designTokens.componentProperties
-                ? `componentProperties: ${JSON.stringify(
-                      Object.fromEntries(
-                          Object.entries(designTokens.componentProperties).map(([name, {value}]) => [
-                              name,
-                              value,
-                          ])
-                      )
-                  )},`
+            designTokens.componentProperties?.showBoxedBorder
+                ? `componentProperties: ${JSON.stringify({
+                      showBoxedBorder: designTokens.componentProperties.showBoxedBorder.value,
+                  })},`
                 : ''
         }
         spacing: ${JSON.stringify(

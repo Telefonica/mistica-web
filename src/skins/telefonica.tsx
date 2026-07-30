@@ -778,6 +778,15 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             successFeedback: 'inverse',
             brandLoadingScreen: 'inverse',
         },
+        componentProperties: {
+            showBoxedBorder: {
+                default: true,
+                brand: true,
+                negative: true,
+                alternative: true,
+                media: true,
+            },
+        },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 20, desktop: 20}, right: {mobile: 20, desktop: 20}},
             buttonSmallPadding: {left: {mobile: 14, desktop: 14}, right: {mobile: 14, desktop: 14}},

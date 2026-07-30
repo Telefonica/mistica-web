@@ -82,7 +82,6 @@ export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
 };
 
 export const defaultComponentPropertiesConfig: ComponentPropertiesConfig = {
-    dismissActionType: 'neutral',
     showBoxedBorder: {
         default: true,
         alternative: true,
