@@ -5461,6 +5461,18 @@ const iconMetadata: {[key: string]: {keywords: Array<string>; category: Array<st
             'Ergänzung',
         ],
     },
+    pix: {
+        category: ['Business and finance'],
+        keywords: [
+            'chave de pagamento',
+            'chave pix',
+            'código pix',
+            'pagamento',
+            'pix key',
+            'payment key',
+            'payment',
+        ],
+    },
     plane: {
         category: ['Maps and vehicles'],
         keywords: ['aircraft', 'airplane', 'aeroplane', 'avión', 'avião', 'Flugzeug'],
