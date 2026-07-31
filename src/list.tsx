@@ -287,7 +287,7 @@ export const Content = ({
                 )}
             </div>
             {hasDivider && !hideDivider && (
-                <div className={styles.rowDivider}>
+                <div className={styles.rowDivider} data-testid="row-divider">
                     <Divider />
                 </div>
             )}
@@ -612,13 +612,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 disabled={disabled}
                 tabIndex={tabIndex}
             >
-                <Box
-                    paddingX={16}
+                <div
+                    className={styles.rowContentPadding}
                     aria-hidden={!!props.to || !!props.href || props.touchableRole === 'link' || undefined}
-                    dataAttributes={{testid: 'content-container'}}
+                    data-testid="content-container"
                 >
                     {renderContent({role})}
-                </Box>
+                </div>
             </BaseTouchable>
         );
     }
@@ -646,7 +646,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 {control}
             </div>
             {hasDivider && (
-                <div className={styles.rowDividerDualAction} style={{paddingLeft: dividerOffset}}>
+                <div
+                    className={styles.rowDividerDualAction}
+                    data-testid="row-divider-dual-action"
+                    style={{paddingLeft: dividerOffset}}
+                >
                     <Divider />
                 </div>
             )}
@@ -667,6 +671,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         </div>
     );
 
+    const renderDualActionRight = ({controlElement}: {controlElement: React.ReactNode}) => (
+        <div className={styles.dualActionRight}>{controlElement}</div>
+    );
+
     if (props.switch || props.checkbox) {
         const Control = props.switch ? Switch : Checkbox;
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
@@ -680,9 +688,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
                       onChange={toggle}
-                      render={({controlElement}) => (
-                          <div className={styles.dualActionRight}>{controlElement}</div>
-                      )}
+                      render={renderDualActionRight}
                   />
               )
             : renderRowWithSingleControl(
@@ -694,12 +700,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-labelledby={titleId}
                       onChange={toggle}
                       render={({controlElement, labelId}) => (
-                          <Box paddingX={16} role={role}>
+                          <div className={styles.rowContentPadding} role={role}>
                               {renderContent({
                                   labelId,
                                   control: <Stack space="around">{controlElement}</Stack>,
                               })}
-                          </Box>
+                          </div>
                       )}
                   />,
                   true
@@ -713,11 +719,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       value={props.radioValue}
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
-                      render={({controlElement}) => (
-                          <Stack space="around">
-                              <Box paddingX={16}>{controlElement}</Box>
-                          </Stack>
-                      )}
+                      render={renderDualActionRight}
                   />
               )
             : renderRowWithSingleControl(
@@ -726,12 +728,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
                       render={({controlElement}) => (
-                          <Box paddingX={16} role={role}>
+                          <div className={styles.rowContentPadding} role={role}>
                               {renderContent({
                                   labelId: titleId,
                                   control: <Stack space="around">{controlElement}</Stack>,
                               })}
-                          </Box>
+                          </div>
                       )}
                   />,
                   true
@@ -741,18 +743,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.iconButton) {
         return isInteractive
             ? renderRowWithDoubleInteraction(
-                  <Box padding={16}>
-                      <Stack space="around">
-                          {props.iconButton.Icon ? (
-                              <IconButton {...props.iconButton} disabled={props.disabled} />
-                          ) : (
-                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
-                          )}
-                      </Stack>
-                  </Box>
+                  <div className={styles.dualActionRightIconButton}>
+                      {props.iconButton.Icon ? (
+                          <IconButton {...props.iconButton} disabled={props.disabled} />
+                      ) : (
+                          <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                      )}
+                  </div>
               )
             : renderRowWithSingleControl(
-                  <Box paddingX={16}>
+                  <div className={styles.rowContentPadding}>
                       {renderContent({
                           labelId: titleId,
                           control: (
@@ -773,7 +773,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                               </Stack>
                           ),
                       })}
-                  </Box>
+                  </div>
               );
     }
 

@@ -79,8 +79,9 @@ export const rowContent = style([
     },
 ]);
 
-export const rowContentPadding = sprinkles({
-    paddingX: 16,
+export const rowContentPadding = style({
+    paddingLeft: vars.spacing.boxedDefaultPadding.left,
+    paddingRight: vars.spacing.boxedDefaultPadding.right,
 });
 
 export const content = style([
@@ -141,7 +142,7 @@ export const rowDivider = style({
 });
 
 export const rowDividerDualAction = style({
-    paddingRight: 16,
+    paddingRight: vars.spacing.boxedDefaultPadding.right,
     selectors: {
         [`${row}:last-child &`]: {
             display: 'none',
@@ -174,9 +175,10 @@ export const dualActionLeft = style([
     sprinkles({
         display: 'block',
         flexGrow: 1,
-        paddingX: 16,
     }),
     {
+        paddingLeft: vars.spacing.boxedDefaultPadding.left,
+        paddingRight: 16,
         selectors: {
             [`${boxed} &:active`]: {
                 // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
@@ -202,20 +204,15 @@ export const dualActionDivider = style([
     },
 ]);
 
-export const dualActionRight = style([
+const dualActionRightBase = style([
     dualActionBase,
-    sprinkles({
-        paddingX: 16,
-        display: 'flex',
-        alignItems: 'center',
-        flexGrow: 0,
-        width: 'auto',
-        height: '100%',
-    }),
-    {
-        lineHeight: 0,
-    },
+    sprinkles({display: 'flex', alignItems: 'center', flexGrow: 0, width: 'auto'}),
+    {paddingLeft: 16, paddingRight: vars.spacing.boxedDefaultPadding.right, lineHeight: 0},
 ]);
+
+export const dualActionRight = style([dualActionRightBase, sprinkles({height: '100%'})]);
+
+export const dualActionRightIconButton = style([dualActionRightBase, {paddingTop: 16, paddingBottom: 16}]);
 
 const ulVerticalGap = 8;
 const ulVerticalGapDesktop = 16;

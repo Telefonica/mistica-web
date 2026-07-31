@@ -760,6 +760,7 @@ export const getBlauSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 40},
             },
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
         },
     };
     return skin;
