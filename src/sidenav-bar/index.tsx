@@ -2,11 +2,12 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
-import {DEFAULT_WIDTH, COLLAPSED_WIDTH, NESTING_INDENT} from './sidenav-bar.css';
+import {DEFAULT_WIDTH, COLLAPSED_WIDTH, NESTING_INDENT, LOGO_SIZE} from './sidenav-bar.css';
 import {ThemeVariant, normalizeVariant} from '../theme-variant-context';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import {IconButton} from '../icon-button';
+import {Logo} from '../logo';
 import Touchable from '../touchable';
 import Tooltip from '../tooltip';
 import Divider from '../divider';
@@ -26,11 +27,11 @@ import type {DataAttributes, IconProps} from '../utils/types';
  * SidenavBar — first draft.
  *
  * This component follows the Mistica "sidenav" spec:
- * https://github.com/Telefonica/mistica-design/blob/main/specs/sidenav.md
+ * https://github.com/Telefonica/mistica-design/blob/aweell-generate-figma-specs/specs/sidenav.md
  *
  * The public API (props of SidenavBar / SidenavSection / SidenavItem) is meant to
  * be stable enough to start the review. Several behaviours described in the spec are
- * intentionally not implemented yet and are marked with `TODO(sidenav)` so reviewers
+ * intentionally not implemented yet and are marked with `TODO WIP` so reviewers
  * can see the intended surface while the internals are iterated:
  *
  *   - Collapsed "dialog panel" and "double panel" rendering of nested items.
@@ -40,6 +41,8 @@ import type {DataAttributes, IconProps} from '../utils/types';
  *   - Per-region colour token matrices for brand/alternative/negative/media variants
  *     (currently only the `default` variant is fully styled; other variants still
  *     provide the correct `ThemeVariant` context to descendant components).
+ *   - The collapse/uncollapse glyph, which is missing from the icon library (see the
+ *     TODO WIP on `defaultCollapseButton`).
  */
 
 // -----------------------------------------------------------------------------
@@ -248,7 +251,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     return (
         <>
             {row}
-            {/* TODO(sidenav): when collapsed, render children in a dialog/double panel instead. */}
+            {/* TODO WIP when collapsed, render children in a dialog/double panel instead. */}
             {isOpen && (
                 <div className={styles.nestedList} role="group" aria-label={label}>
                     <SidenavLevelContext.Provider value={level + 1}>{children}</SidenavLevelContext.Provider>
@@ -321,40 +324,83 @@ const SidenavSection = ({
 // SidenavBar
 // -----------------------------------------------------------------------------
 
-type SidenavBarProps = {
+type SidenavBarBaseProps = {
     children?: React.ReactNode;
     /** Accessible name of the navigation landmark. */
     'aria-label'?: string;
-    /** Colour variant. Adapts the content appearance. @default 'default' */
+    /** Color variant. Adapts the content appearance. @default 'default' */
     variant?: Variant;
-    /** Renders the sidenav as a floating box. Incompatible with `divider`. @default false */
-    boxed?: boolean;
-    /** Shows the vertical right divider. Ignored when `boxed`. @default true */
-    divider?: boolean;
-    /** Whether the user can toggle the collapsed state. @default true */
-    collapsible?: boolean;
-    /** Controlled collapsed state. */
-    collapsed?: boolean;
-    /** Initial collapsed state (uncontrolled). @default false */
-    defaultCollapsed?: boolean;
-    /** Called when the collapsed state changes. */
-    onCollapse?: (collapsed: boolean) => void;
     /** Opens nested items in a panel attached to the right of the sidenav. @default false */
     doublePanel?: boolean;
     /** Width of the expanded sidenav in px. @default 240 */
     width?: number;
     /** Width of the collapsed sidenav in px. @default 72 */
     collapsedWidth?: number;
-    /** Optional logo rendered in the header. */
-    logo?: React.ReactNode;
-    /** Optional header slot rendered next to the collapse control. */
-    header?: React.ReactNode;
-    /** Optional footer slot rendered at the bottom. */
-    footer?: React.ReactNode;
-    /** Custom render for the collapse/uncollapse control. */
-    renderCollapseButton?: (props: {collapsed: boolean; toggle: () => void}) => React.ReactNode;
+    /**
+     * Logo rendered in the header. Defaults to the skin logo at the 32px the header reserves
+     * in both the expanded and the collapsed state. Pass an element to override it, or `false`
+     * to render no logo at all.
+     *
+     * @default <Logo size={32} />
+     */
+    logo?: React.ReactElement | false;
+    /** Optional slot rendered in the header region, below the collapse control. */
+    headerSlot?: React.ReactNode;
+    /** Optional slot rendered in the footer region, at the bottom of the sidenav. */
+    footerSlot?: React.ReactNode;
     dataAttributes?: DataAttributes;
 };
+
+type RenderCollapseButton = (props: {collapsed: boolean; toggle: () => void}) => React.ReactNode;
+
+/**
+ * Three constraints are enforced by the type system:
+ *
+ * - A boxed sidenav has its own edge, so the vertical right divider does not apply to it:
+ *   `divider` is only accepted when `boxed` is false.
+ * - The collapsed state is either controlled through `collapsed` or uncontrolled through
+ *   `defaultCollapsed`, never both.
+ * - `onCollapse` and `renderCollapseButton` are only reachable while the sidenav is
+ *   collapsible, so they are rejected when `collapsible` is false. A non collapsible sidenav
+ *   can still be fixed in the collapsed state through `collapsed` or `defaultCollapsed`.
+ */
+type SidenavBarProps = SidenavBarBaseProps &
+    ExclusifyUnion<
+        | {
+              /** Renders the sidenav as a floating box. */
+              boxed: true;
+          }
+        | {
+              /** @default false */
+              boxed?: false;
+              /** Shows the vertical right divider. @default true */
+              divider?: boolean;
+          }
+    > &
+    ExclusifyUnion<
+        | {
+              /** Controlled collapsed state. */
+              collapsed: boolean;
+          }
+        | {
+              /** Initial collapsed state (uncontrolled). @default false */
+              defaultCollapsed?: boolean;
+          }
+    > &
+    ExclusifyUnion<
+        | {
+              /** Whether the user can toggle the collapsed state. @default true */
+              collapsible?: true;
+              /** Called when the collapsed state changes. */
+              onCollapse?: (collapsed: boolean) => void;
+              /** Custom render for the collapse/uncollapse control. */
+              renderCollapseButton?: RenderCollapseButton;
+          }
+        | {
+              /** The collapsed state cannot be toggled by the user. */
+              collapsible: false;
+          }
+    >;
 
 const SidenavBar = ({
     children,
@@ -370,8 +416,8 @@ const SidenavBar = ({
     width = DEFAULT_WIDTH,
     collapsedWidth = COLLAPSED_WIDTH,
     logo,
-    header,
-    footer,
+    headerSlot,
+    footerSlot,
     renderCollapseButton,
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
@@ -392,20 +438,31 @@ const SidenavBar = ({
         [collapsed, collapsible, doublePanel, toggleCollapsed]
     );
 
-    const showRightDivider = divider && !boxed;
     const currentWidth = collapsed ? collapsedWidth : width;
 
+    /*
+     * TODO WIP the design uses a rounded panel glyph with a left rail, not a chevron —
+     * `sidenav-collapse` when expanded and `sidenav-uncollapse` when collapsed (Figma file
+     * 4woEBHpukbLVkmk9UJTGUD, nodes 0:1593 and 0:1121). Both are vectors drawn inside the
+     * sidenav component and do not exist in Telefonica/mistica-icons, so they have to be added
+     * there first and pulled in with `yarn start` in packages/import-mistica-icons. The chevrons
+     * below are a stand-in until then; consumers needing the real glyph can pass
+     * `renderCollapseButton`.
+     */
     const defaultCollapseButton = (
         <IconButton
             Icon={collapsed ? IconChevronRightDoubleRegular : IconChevronLeftDoubleRegular}
-            type="neutral"
+            type="brand"
             backgroundType="transparent"
+            small
             onPress={toggleCollapsed}
             aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
         />
     );
 
-    const hasHeader = Boolean(logo || collapsible || header || renderCollapseButton);
+    const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
+
+    const hasHeader = Boolean(logoElement || collapsible || headerSlot);
 
     return (
         <ThemeVariant variant={normalizeVariant(variant)}>
@@ -413,24 +470,49 @@ const SidenavBar = ({
                 <nav
                     aria-label={ariaLabel}
                     className={classnames(styles.container, {
-                        [styles.withRightDivider]: showRightDivider,
+                        [styles.withRightDivider]: divider && !boxed,
                         [styles.boxed]: boxed,
                     })}
                     style={applyCssVars({[styles.sidenavWidthVar]: `${currentWidth}px`})}
                     {...getPrefixedDataAttributes({testid: 'SidenavBar', ...dataAttributes})}
                 >
                     {hasHeader && (
-                        <div className={classnames(styles.header, {[styles.headerCollapsed]: collapsed})}>
-                            {logo && !collapsed && <div className={styles.logo}>{logo}</div>}
-                            {collapsible &&
-                                (renderCollapseButton
-                                    ? renderCollapseButton({collapsed, toggle: toggleCollapsed})
-                                    : defaultCollapseButton)}
-                            {header && !collapsed && <div className={styles.headerSlot}>{header}</div>}
+                        <div
+                            className={classnames(styles.header, {
+                                [styles.headerCollapsed]: collapsed,
+                                [styles.headerBoxed]: boxed,
+                            })}
+                        >
+                            <div
+                                className={classnames(styles.headerControls, {
+                                    [styles.headerControlsCollapsed]: collapsed,
+                                })}
+                            >
+                                {logoElement && <div className={styles.logo}>{logoElement}</div>}
+                                {collapsible &&
+                                    (renderCollapseButton
+                                        ? renderCollapseButton({collapsed, toggle: toggleCollapsed})
+                                        : defaultCollapseButton)}
+                            </div>
+                            {headerSlot && (
+                                <div
+                                    className={classnames(styles.headerSlot, {
+                                        [styles.headerSlotCollapsed]: collapsed,
+                                    })}
+                                >
+                                    {headerSlot}
+                                </div>
+                            )}
                         </div>
                     )}
-                    <div className={styles.body}>{children}</div>
-                    {footer && <div className={styles.footer}>{footer}</div>}
+                    <div className={classnames(styles.body, {[styles.bodyWithoutHeader]: !hasHeader})}>
+                        {children}
+                    </div>
+                    {footerSlot && (
+                        <div className={classnames(styles.footer, {[styles.footerBoxed]: boxed})}>
+                            {footerSlot}
+                        </div>
+                    )}
                 </nav>
             </SidenavBarContext.Provider>
         </ThemeVariant>
