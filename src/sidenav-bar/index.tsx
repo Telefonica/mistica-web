@@ -68,11 +68,24 @@ const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(Side
 /** Nesting level of the items. Level 0 is the top level. */
 const SidenavLevelContext = React.createContext<number>(0);
 
+/**
+ * `React.ReactElement<Props>` cannot express these constraints, because every JSX expression is
+ * typed as `ReactElement<any, any>` and therefore satisfies any props type. Comparing against the
+ * component reference at runtime does work, so it is checked in development instead.
+ */
+const checkChildrenAre = (children: React.ReactNode, expected: React.ElementType, message: string) => {
+    React.Children.forEach(children, (child) => {
+        if (React.isValidElement(child) && child.type !== expected) {
+            console.error(message);
+        }
+    });
+};
+
 // -----------------------------------------------------------------------------
 // SidenavItem
 // -----------------------------------------------------------------------------
 
-interface SidenavItemBaseProps {
+type SidenavItemBaseProps = {
     /** Visible text of the item. Also used as the accessible name (mandatory when collapsed). */
     label: string;
     /** Leading asset. Optional when expanded, required when the sidenav is collapsed. */
@@ -86,37 +99,37 @@ interface SidenavItemBaseProps {
     /** When the item has children, whether they are expanded by default (ignored while collapsed). */
     defaultOpen?: boolean;
     dataAttributes?: DataAttributes;
-}
+};
 
-interface SidenavItemOnPressProps extends SidenavItemBaseProps {
+type SidenavItemOnPressProps = SidenavItemBaseProps & {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
-}
+};
 
-interface SidenavItemHrefProps extends SidenavItemBaseProps {
+type SidenavItemHrefProps = SidenavItemBaseProps & {
     href: string;
     newTab?: boolean;
     onNavigate?: () => void | Promise<void>;
     onPress?: undefined;
     to?: undefined;
-}
+};
 
-interface SidenavItemToProps extends SidenavItemBaseProps {
+type SidenavItemToProps = SidenavItemBaseProps & {
     to: string;
     newTab?: boolean;
     onNavigate?: () => void | Promise<void>;
     onPress?: undefined;
     href?: undefined;
-}
+};
 
 /** An item that only groups children (it expands, it does not navigate). */
-interface SidenavItemExpandOnlyProps extends SidenavItemBaseProps {
+type SidenavItemExpandOnlyProps = SidenavItemBaseProps & {
     children: React.ReactNode;
     onPress?: undefined;
     href?: undefined;
     to?: undefined;
-}
+};
 
 type SidenavItemProps = ExclusifyUnion<
     SidenavItemOnPressProps | SidenavItemHrefProps | SidenavItemToProps | SidenavItemExpandOnlyProps
@@ -129,6 +142,18 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const hasChildren = React.Children.count(children) > 0;
     const navigates = props.onPress !== undefined || props.href !== undefined || props.to !== undefined;
+
+    if (process.env.NODE_ENV !== 'production') {
+        checkChildrenAre(children, SidenavItem, 'SidenavItem children must be SidenavItem elements');
+        /*
+         * TODO WIP only top level items are rendered in the collapsed rail today, so only those
+         * need an asset. Revisit once nested items render in the dialog/double panel, since the
+         * items shown there may need one too.
+         */
+        if (collapsed && level === 0 && !Icon) {
+            console.error(`SidenavItem "${label}" needs an Icon to be usable in a collapsed sidenav`);
+        }
+    }
 
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const isOpen = hasChildren && !collapsed && open;
@@ -284,6 +309,10 @@ const SidenavSection = ({
     dataAttributes,
 }: SidenavSectionProps): JSX.Element => {
     const {collapsed} = useSidenavBarContext();
+
+    if (process.env.NODE_ENV !== 'production') {
+        checkChildrenAre(children, SidenavItem, 'SidenavSection children must be SidenavItem elements');
+    }
 
     return (
         <div
@@ -459,6 +488,10 @@ const SidenavBar = ({
             aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
         />
     );
+
+    if (process.env.NODE_ENV !== 'production') {
+        checkChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');
+    }
 
     const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
 
