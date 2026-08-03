@@ -354,6 +354,7 @@ const SidenavSection = ({
 // -----------------------------------------------------------------------------
 
 type SidenavBarBaseProps = {
+    /** Sections containing navigation items. Only `SidenavSection` children are allowed. */
     children?: React.ReactNode;
     /** Accessible name of the navigation landmark. */
     'aria-label'?: string;
