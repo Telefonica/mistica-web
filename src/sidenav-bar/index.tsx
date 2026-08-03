@@ -380,18 +380,13 @@ type SidenavBarBaseProps = {
     dataAttributes?: DataAttributes;
 };
 
-type RenderCollapseButton = (props: {collapsed: boolean; toggle: () => void}) => React.ReactNode;
-
 /**
- * Three constraints are enforced by the type system:
+ * Two constraints are enforced by the type system:
  *
  * - A boxed sidenav has its own edge, so the vertical right divider does not apply to it:
  *   `divider` is only accepted when `boxed` is false.
  * - The collapsed state is either controlled through `collapsed` or uncontrolled through
- *   `defaultCollapsed`, never both.
- * - `onCollapse` and `renderCollapseButton` are only reachable while the sidenav is
- *   collapsible, so they are rejected when `collapsible` is false. A non collapsible sidenav
- *   can still be fixed in the collapsed state through `collapsed` or `defaultCollapsed`.
+ *   `defaultCollapsed`, never both. `onCollapse` is only reachable while collapsible.
  */
 type SidenavBarProps = SidenavBarBaseProps &
     ExclusifyUnion<
@@ -422,8 +417,6 @@ type SidenavBarProps = SidenavBarBaseProps &
               collapsible?: true;
               /** Called when the collapsed state changes. */
               onCollapse?: (collapsed: boolean) => void;
-              /** Custom render for the collapse/uncollapse control. */
-              renderCollapseButton?: RenderCollapseButton;
           }
         | {
               /** The collapsed state cannot be toggled by the user. */
@@ -439,28 +432,27 @@ const SidenavBar = ({
     divider = true,
     collapsible = true,
     collapsed: collapsedProp,
+    collapsedWidth = COLLAPSED_WIDTH,
     defaultCollapsed = false,
     onCollapse,
     doublePanel = false,
     width = DEFAULT_WIDTH,
-    collapsedWidth = COLLAPSED_WIDTH,
     logo,
     headerSlot,
     footerSlot,
-    renderCollapseButton,
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
-    const isControlled = collapsedProp !== undefined;
+    const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
-    const collapsed = isControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
+    const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
 
     const toggleCollapsed = React.useCallback(() => {
         const next = !collapsed;
-        if (!isControlled) {
+        if (!isCollapsedControlled) {
             setUncontrolledCollapsed(next);
         }
         onCollapse?.(next);
-    }, [collapsed, isControlled, onCollapse]);
+    }, [collapsed, isCollapsedControlled, onCollapse]);
 
     const contextValue = React.useMemo(
         () => ({collapsed, collapsible, doublePanel, toggleCollapsed}),
@@ -470,15 +462,12 @@ const SidenavBar = ({
     const currentWidth = collapsed ? collapsedWidth : width;
 
     /*
-     * TODO WIP the design uses a rounded panel glyph with a left rail, not a chevron —
-     * `sidenav-collapse` when expanded and `sidenav-uncollapse` when collapsed (Figma file
-     * 4woEBHpukbLVkmk9UJTGUD, nodes 0:1593 and 0:1121). Both are vectors drawn inside the
-     * sidenav component and do not exist in Telefonica/mistica-icons, so they have to be added
-     * there first and pulled in with `yarn start` in packages/import-mistica-icons. The chevrons
-     * below are a stand-in until then; consumers needing the real glyph can pass
-     * `renderCollapseButton`.
+     * TODO WIP the design uses a rounded panel glyph with a left rail, not a chevron.
+     * Icons `sidenav-collapse` and `sidenav-uncollapse` will be added to mistica-icons
+     * and replace the chevrons below. This will be a Touchable with an Icon inside,
+     * not an IconButton.
      */
-    const defaultCollapseButton = (
+    const collapseButton = (
         <IconButton
             Icon={collapsed ? IconChevronRightDoubleRegular : IconChevronLeftDoubleRegular}
             type="brand"
@@ -523,10 +512,7 @@ const SidenavBar = ({
                                 })}
                             >
                                 {logoElement && <div className={styles.logo}>{logoElement}</div>}
-                                {collapsible &&
-                                    (renderCollapseButton
-                                        ? renderCollapseButton({collapsed, toggle: toggleCollapsed})
-                                        : defaultCollapseButton)}
+                                {collapsible && collapseButton}
                             </div>
                             {headerSlot && (
                                 <div
