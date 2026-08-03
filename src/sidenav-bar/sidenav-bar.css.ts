@@ -192,7 +192,7 @@ export const itemRow = style({
     alignItems: 'center',
     gap: 6,
     paddingLeft: itemIndentVar,
-    paddingRight: 8,
+    paddingRight: 10,
 });
 
 export const selectedIndicator = style({
