@@ -191,7 +191,7 @@ export const itemRow = style({
     display: 'flex',
     alignItems: 'center',
     gap: 6,
-    paddingLeft: itemIndentVar,
+    paddingLeft: `calc(${itemIndentVar} + 8px)`,
     paddingRight: 10,
 });
 
