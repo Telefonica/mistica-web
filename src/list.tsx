@@ -80,6 +80,7 @@ interface ContentProps extends CommonProps {
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
+    small?: boolean;
 }
 
 export const Content = ({
@@ -102,6 +103,7 @@ export const Content = ({
     rightRef,
     slot,
     labelId,
+    small = false,
     disabled,
     control,
 }: ContentProps): JSX.Element => {
@@ -109,6 +111,10 @@ export const Content = ({
     const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
+    const titlePreset = small ? textPresets.text2 : textPresets.text3;
+    const SubtitleComponent = small ? Text1 : Text2;
+    const DescriptionComponent = small ? Text1 : Text2;
+    const DetailComponent = small ? Text1 : Text2;
 
     return (
         <div className={styles.content} id={labelId}>
@@ -153,10 +159,10 @@ export const Content = ({
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
                 <Text
-                    mobileSize={textPresets.text3.size.mobile}
-                    desktopSize={textPresets.text3.size.desktop}
-                    mobileLineHeight={textPresets.text3.lineHeight.mobile}
-                    desktopLineHeight={textPresets.text3.lineHeight.desktop}
+                    mobileSize={titlePreset.size.mobile}
+                    desktopSize={titlePreset.size.desktop}
+                    mobileLineHeight={titlePreset.lineHeight.mobile}
+                    desktopLineHeight={titlePreset.lineHeight.desktop}
                     weight={textPresets.rowTitle.weight}
                     color={danger ? vars.colors.textError : vars.colors.textPrimary}
                     truncate={titleLinesMax}
@@ -180,7 +186,7 @@ export const Content = ({
                 )}
                 {subtitle && (
                     <Box paddingTop={2}>
-                        <Text2
+                        <SubtitleComponent
                             regular
                             color={vars.colors.textPrimary}
                             truncate={subtitleLinesMax}
@@ -188,12 +194,12 @@ export const Content = ({
                             dataAttributes={{testid: 'subtitle'}}
                         >
                             {subtitle}
-                        </Text2>
+                        </SubtitleComponent>
                     </Box>
                 )}
                 {description && (
                     <Box paddingTop={2}>
-                        <Text2
+                        <DescriptionComponent
                             regular
                             color={vars.colors.textSecondary}
                             truncate={descriptionLinesMax}
@@ -201,7 +207,7 @@ export const Content = ({
                             dataAttributes={{testid: 'description'}}
                         >
                             {description}
-                        </Text2>
+                        </DescriptionComponent>
                     </Box>
                 )}
                 {slot && (
@@ -223,14 +229,14 @@ export const Content = ({
                 <div className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}>
                     {detail && (
                         <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
-                            <Text2
+                            <DetailComponent
                                 regular
                                 color={vars.colors.textSecondary}
                                 hyphens="auto"
                                 dataAttributes={{testid: 'detail'}}
                             >
                                 {detail}
-                            </Text2>
+                            </DetailComponent>
                         </div>
                     )}
 
