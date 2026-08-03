@@ -41,7 +41,7 @@ export const boxed = style({
 // The 24px inset above the logo belongs to the header, not to the container: `background` and
 // `backgroundContainer` are the same in light mode but differ in dark, so painting that strip
 // with the container token would detach the header band from the top of the sidenav.
-export const header = style({
+export const headerBase = style({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -49,12 +49,22 @@ export const header = style({
     flexShrink: 0,
     paddingTop: 24,
     paddingBottom: 24,
-    backgroundColor: skinVars.colors.background,
 });
 
-// Boxed sidenavs use the container token for every region, so the box reads as one surface.
-export const headerBoxed = style({
-    backgroundColor: skinVars.colors.backgroundContainer,
+export const header = styleVariants({
+    default: {backgroundColor: skinVars.colors.background},
+    brand: {backgroundColor: skinVars.colors.backgroundBrandTop},
+    alternative: {backgroundColor: skinVars.colors.background},
+    negative: {backgroundColor: skinVars.colors.backgroundNegative},
+    media: {backgroundColor: skinVars.colors.backgroundNegative},
+});
+
+export const headerBoxed = styleVariants({
+    default: {backgroundColor: skinVars.colors.backgroundContainer},
+    brand: {backgroundColor: skinVars.colors.backgroundContainerBrand},
+    alternative: {backgroundColor: skinVars.colors.backgroundContainerAlternative},
+    negative: {backgroundColor: skinVars.colors.backgroundContainerNegative},
+    media: {backgroundColor: skinVars.colors.backgroundContainerNegative},
 });
 
 export const headerCollapsed = style({
@@ -123,17 +133,28 @@ export const bodyWithoutHeader = style({
 
 // Footer region ---------------------------------------------------------------
 
-export const footer = style({
+export const footerBase = style({
     flexShrink: 0,
     paddingTop: 24,
     paddingBottom: 24,
     paddingLeft: 16,
     paddingRight: 16,
-    backgroundColor: skinVars.colors.background,
 });
 
-export const footerBoxed = style({
-    backgroundColor: skinVars.colors.backgroundContainer,
+export const footer = styleVariants({
+    default: {backgroundColor: skinVars.colors.background},
+    brand: {backgroundColor: skinVars.colors.backgroundBrandTop},
+    alternative: {backgroundColor: skinVars.colors.background},
+    negative: {backgroundColor: skinVars.colors.backgroundNegative},
+    media: {backgroundColor: skinVars.colors.backgroundNegative},
+});
+
+export const footerBoxed = styleVariants({
+    default: {backgroundColor: skinVars.colors.backgroundContainer},
+    brand: {backgroundColor: skinVars.colors.backgroundContainerBrand},
+    alternative: {backgroundColor: skinVars.colors.backgroundContainerAlternative},
+    negative: {backgroundColor: skinVars.colors.backgroundContainerNegative},
+    media: {backgroundColor: skinVars.colors.backgroundContainerNegative},
 });
 
 // Section ---------------------------------------------------------------------

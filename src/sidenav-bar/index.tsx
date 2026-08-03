@@ -496,9 +496,10 @@ const SidenavBar = ({
     const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
 
     const hasHeader = Boolean(logoElement || collapsible || headerSlot);
+    const normalizedVariant = normalizeVariant(variant);
 
     return (
-        <ThemeVariant variant={normalizeVariant(variant)}>
+        <ThemeVariant variant={normalizedVariant}>
             <SidenavBarContext.Provider value={contextValue}>
                 <nav
                     aria-label={ariaLabel}
@@ -511,9 +512,9 @@ const SidenavBar = ({
                 >
                     {hasHeader && (
                         <div
-                            className={classnames(styles.header, {
+                            className={classnames(styles.headerBase, styles.header[normalizedVariant], {
                                 [styles.headerCollapsed]: collapsed,
-                                [styles.headerBoxed]: boxed,
+                                [styles.headerBoxed[normalizedVariant]]: boxed,
                             })}
                         >
                             <div
@@ -542,7 +543,11 @@ const SidenavBar = ({
                         {children}
                     </div>
                     {footerSlot && (
-                        <div className={classnames(styles.footer, {[styles.footerBoxed]: boxed})}>
+                        <div
+                            className={classnames(styles.footerBase, styles.footer[normalizedVariant], {
+                                [styles.footerBoxed[normalizedVariant]]: boxed,
+                            })}
+                        >
                             {footerSlot}
                         </div>
                     )}
