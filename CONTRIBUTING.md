@@ -57,15 +57,17 @@ Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every P
 
 ### Fork PRs — preview deployment
 
-PRs opened from a fork cannot access repository secrets, so the preview deployment does not run automatically.
-The process requires a maintainer to explicitly mark the code as safe to deploy:
+PRs opened from a fork cannot access repository secrets, so CI and the preview deployment do not run
+automatically. The process requires a maintainer to explicitly approve each step:
 
-1. A maintainer reviews the PR and adds the `safe-to-deploy` label. This captures the exact commit SHA at that
+1. A maintainer approves the CI run on the [Actions tab](https://github.com/Telefonica/mistica-web/actions) so
+   the standard checks execute against the fork's code.
+2. A maintainer reviews the PR and adds the `safe-to-deploy` label. This captures the exact commit SHA at that
    moment and triggers the deployment workflow.
-2. A maintainer must then open the triggered workflow run on the
+3. A maintainer must then open the triggered workflow run on the
    [Actions tab](https://github.com/Telefonica/mistica-web/actions) and click **Review deployments** to
    approve it. This approval gate is required before any secrets are exposed.
-3. Once approved, the preview is deployed against the pinned commit SHA. The deployment URL is printed in the
+4. Once approved, the preview is deployed against the pinned commit SHA. The deployment URL is printed in the
    workflow run logs.
 
 > [!IMPORTANT] If you push new commits to your branch after the `safe-to-deploy` label is added, the
