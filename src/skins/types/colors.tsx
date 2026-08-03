@@ -1,6 +1,15 @@
 export type Colors = {
     background: string;
     backgroundAlternative: string;
+    backgroundSelected: string;
+    backgroundSelectedHover: string;
+    backgroundSelectedPressed: string;
+    backgroundSelectedBrand: string;
+    backgroundSelectedBrandHover: string;
+    backgroundSelectedBrandPressed: string;
+    backgroundSelectedNegative: string;
+    backgroundSelectedNegativeHover: string;
+    backgroundSelectedNegativePressed: string;
     backgroundBrand: string;
     backgroundNegative: string;
     backgroundBrandSecondary: string;
@@ -56,6 +65,13 @@ export type Colors = {
     buttonLinkBackgroundNegativePressed: string;
     buttonLinkBackgroundBrandPressed: string;
     buttonLinkBackgroundMediaPressed: string;
+    buttonLinkNeutralBackgroundPressed: string;
+    buttonLinkNeutralBackgroundBrand: string;
+    buttonLinkNeutralBackgroundBrandPressed: string;
+    buttonLinkNeutralBackgroundNegative: string;
+    buttonLinkNeutralBackgroundNegativePressed: string;
+    buttonLinkNeutralBackgroundMedia: string;
+    buttonLinkNeutralBackgroundMediaPressed: string;
     buttonPrimaryBackground: string;
     buttonPrimaryBackgroundInverse: string;
     buttonPrimaryBackgroundNegative: string;
@@ -119,6 +135,11 @@ export type Colors = {
     textLinkDanger: string;
     textLinkDangerMedia: string;
     textLinkSnackbar: string;
+    textLinkNeutral: string;
+    textLinkNeutralBrand: string;
+    textLinkNeutralNegative: string;
+    textLinkNeutralAlternative: string;
+    textLinkNeutralMedia: string;
     textActivated: string;
     textBrand: string;
     inputBorder: string;

@@ -27,16 +27,7 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.572 20.225c0 .888-.79 1.61-1.76 1.61H6.057c-.969 0-1.759-.722-1.759-1.607v-6.933h-.386c-.723 0-1.367-.398-1.633-1.014-.255-.583-.124-1.232.347-1.69l8.081-7.951c.661-.653 1.91-.653 2.575 0l8.08 7.95c.468.459.603 1.105.348 1.688-.266.616-.91 1.014-1.633 1.014h-.504z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,6 +42,15 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     <path
                         fill={fillColor}
                         d="M21.443 12.284 12.012 2 2.584 12.284a.34.34 0 0 0-.068.396q.102.216.308.216h1.7V22h5.444v-6.428h4.083V22h5.444v-9.108h1.7c.137 0 .27-.072.309-.216.038-.14.038-.284-.061-.392"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.572 20.225c0 .888-.79 1.61-1.76 1.61H6.057c-.969 0-1.759-.722-1.759-1.607v-6.933h-.386c-.723 0-1.367-.398-1.633-1.014-.255-.583-.124-1.232.347-1.69l8.081-7.951c.661-.653 1.91-.653 2.575 0l8.08 7.95c.468.459.603 1.105.348 1.688-.266.616-.91 1.014-1.633 1.014h-.504z"
                     />
                 </svg>
             );

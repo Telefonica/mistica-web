@@ -27,21 +27,21 @@ const IconChevronUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 7.257c-.23 0-.46.1-.62.27l-7.15 7.6c-.32.34-.3.88.04 1.2s.88.31 1.2-.04L12 9.347l6.53 6.94c.32.34.86.36 1.2.04s.36-.86.04-1.2l-7.15-7.6a.85.85 0 0 0-.62-.27"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M11.999 7.6c-.21 0-.42.08-.58.23l-7.15 6.7c-.34.32-.36.86-.04 1.2s.86.36 1.2.04l6.57-6.16 6.57 6.16c.34.32.88.3 1.2-.04s.3-.88-.04-1.2l-7.15-6.7a.85.85 0 0 0-.58-.23"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 7.257c-.23 0-.46.1-.62.27l-7.15 7.6c-.32.34-.3.88.04 1.2s.88.31 1.2-.04L12 9.347l6.53 6.94c.32.34.86.36 1.2.04s.36-.86.04-1.2l-7.15-7.6a.85.85 0 0 0-.62-.27"
                     />
                 </svg>
             );

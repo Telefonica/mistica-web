@@ -27,7 +27,16 @@ const IconMobileDeviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
+        if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.784 2h6.432a3.575 3.575 0 0 1 3.568 3.572v12.856A3.58 3.58 0 0 1 15.212 22H8.784a3.58 3.58 0 0 1-3.572-3.572V5.572A3.58 3.58 0 0 1 8.784 2m-2.14 4.644V17.36H17.36V6.644zm2.14-3.216c-1.06 0-1.94.776-2.112 1.784h10.652a2.145 2.145 0 0 0-2.112-1.784zm0 17.144h6.432c1.06 0 1.94-.776 2.108-1.784H6.672a2.145 2.145 0 0 0 2.112 1.784"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -37,15 +46,6 @@ const IconMobileDeviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     <path
                         fill={fillColor}
                         d="M15.55 21.834H8.449c-1.028 0-1.77-.238-2.266-.731-.502-.496-.745-1.244-.745-2.28V5.167c0-1.008.243-1.745.742-2.249.507-.512 1.25-.762 2.269-.762h7.1c1.031 0 1.774.244 2.272.745.499.502.74 1.241.74 2.266v13.656c0 1.036-.244 1.781-.745 2.28-.496.493-1.238.731-2.266.731M8.449 2.716c-.863 0-1.474.194-1.871.594-.393.395-.583 1.003-.583 1.857v13.656c0 1.742.711 2.45 2.45 2.45h7.102c1.742 0 2.45-.708 2.45-2.45V5.167c0-.87-.187-1.484-.573-1.87-.387-.387-1-.58-1.874-.58z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M8.784 2h6.432a3.575 3.575 0 0 1 3.568 3.572v12.856A3.58 3.58 0 0 1 15.212 22H8.784a3.58 3.58 0 0 1-3.572-3.572V5.572A3.58 3.58 0 0 1 8.784 2m-2.14 4.644V17.36H17.36V6.644zm2.14-3.216c-1.06 0-1.94.776-2.112 1.784h10.652a2.145 2.145 0 0 0-2.112-1.784zm0 17.144h6.432c1.06 0 1.94-.776 2.108-1.784H6.672a2.145 2.145 0 0 0 2.112 1.784"
                     />
                 </svg>
             );

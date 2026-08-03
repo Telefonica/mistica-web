@@ -27,16 +27,7 @@ const IconAddMoreRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20.169 11.123H12.8V3.829a.79.79 0 0 0-.805-.798.8.8 0 0 0-.802.798v7.361H3.829c-.485.026-.853.376-.828.857.023.446.382.737.828.76h7.296v7.365a.876.876 0 0 0 1.75 0v-7.297h7.297a.876.876 0 0 0-.003-1.752"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,6 +42,15 @@ const IconAddMoreRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     <path
                         fill={fillColor}
                         d="M11.42 2.72a.72.72 0 0 1 .716-.716.72.72 0 0 1 .716.716l.003 8.064 8.426.003a.72.72 0 0 1 .716.716.84.84 0 0 1-.22.552c-.127.127-.3.16-.493.16l-8.432.004v9.072a.7.7 0 0 1-.713.712.72.72 0 0 1-.715-.715v-9.072l-8.712.005a.72.72 0 0 1-.716-.715.72.72 0 0 1 .716-.716l8.712-.005z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M20.169 11.123H12.8V3.829a.79.79 0 0 0-.805-.798.8.8 0 0 0-.802.798v7.361H3.829c-.485.026-.853.376-.828.857.023.446.382.737.828.76h7.296v7.365a.876.876 0 0 0 1.75 0v-7.297h7.297a.876.876 0 0 0-.003-1.752"
                     />
                 </svg>
             );

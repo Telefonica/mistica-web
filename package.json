@@ -226,7 +226,8 @@
     },
     "packageManager": "yarn@3.6.1",
     "workspaces": [
-        "packages/eslint-plugin-mistica-local-rules"
+        "packages/eslint-plugin-mistica-local-rules",
+        "packages/generate-design-tokens"
     ],
     "engines": {
         "node": ">=24.0.0"

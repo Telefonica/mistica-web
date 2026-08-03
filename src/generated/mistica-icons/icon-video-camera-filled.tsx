@@ -27,21 +27,21 @@ const IconVideoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21.611 6.946a.8.8 0 0 0-.786-.012l-3.642 2.039V7.058a2.33 2.33 0 0 0-2.33-2.33H4.33A2.33 2.33 0 0 0 2 7.058v9.882c0 .836.44 1.57 1.1 1.98l.093.055c.335.19.724.295 1.137.295h10.522a2.33 2.33 0 0 0 2.33-2.33v-1.914l3.624 2.029a.8.8 0 0 0 .786.01.8.8 0 0 0 .407-.694v-8.74c0-.28-.15-.542-.392-.685zM6.248 9.582a.605.605 0 1 1 .606-.606c0 .335-.27.606-.606.606"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M22 6.4v11.2c0 .16-.09.308-.228.37a.4.4 0 0 1-.147.03.36.36 0 0 1-.256-.113l-5.313-5.534v5.248c0 .215-.161.389-.36.389H2.36c-.2 0-.361-.174-.361-.39V6.4c0-.215.161-.39.36-.39H15.7c.2 0 .36.175.36.39v5.247l5.314-5.534a.35.35 0 0 1 .403-.082c.138.067.223.21.223.369"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.611 6.946a.8.8 0 0 0-.786-.012l-3.642 2.039V7.058a2.33 2.33 0 0 0-2.33-2.33H4.33A2.33 2.33 0 0 0 2 7.058v9.882c0 .836.44 1.57 1.1 1.98l.093.055c.335.19.724.295 1.137.295h10.522a2.33 2.33 0 0 0 2.33-2.33v-1.914l3.624 2.029a.8.8 0 0 0 .786.01.8.8 0 0 0 .407-.694v-8.74c0-.28-.15-.542-.392-.685zM6.248 9.582a.605.605 0 1 1 .606-.606c0 .335-.27.606-.606.606"
                     />
                 </svg>
             );

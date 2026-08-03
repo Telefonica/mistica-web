@@ -27,21 +27,21 @@ const IconPlayLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M5.647 2.694a.7.7 0 0 0-1.047.608v16.554a.7.7 0 0 0 1.047.607l14.485-8.276a.7.7 0 0 0 0-1.216zM4 3.302a1.3 1.3 0 0 1 1.945-1.129l14.484 8.277a1.3 1.3 0 0 1 0 2.258L5.945 20.984A1.3 1.3 0 0 1 4 19.856z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M4.444 21.68c.336.212.71.32 1.08.32.369 0 .739-.108 1.045-.284l13.176-8.112c.034 0 .068-.036.102-.072.472-.432.71-1.108.642-1.752a2.04 2.04 0 0 0-.978-1.572L6.603 2.28c-.642-.396-1.42-.36-2.091.032A2 2 0 0 0 3.5 4.064v15.9c0 .716.336 1.36.944 1.716m.743-18.152a.85.85 0 0 1 .404-.108c.098 0 .2.036.302.072l12.98 7.932a.64.64 0 0 1 .302.5.9.9 0 0 1-.17.5l-13.112 8.04c-.268.144-.57.072-.774-.036-.098-.072-.268-.212-.268-.464v-15.9c0-.284.234-.464.336-.536"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M5.647 2.694a.7.7 0 0 0-1.047.608v16.554a.7.7 0 0 0 1.047.607l14.485-8.276a.7.7 0 0 0 0-1.216zM4 3.302a1.3 1.3 0 0 1 1.945-1.129l14.484 8.277a1.3 1.3 0 0 1 0 2.258L5.945 20.984A1.3 1.3 0 0 1 4 19.856z"
                     />
                 </svg>
             );

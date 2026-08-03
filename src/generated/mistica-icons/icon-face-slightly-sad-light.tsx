@@ -27,20 +27,7 @@ const IconFaceSlightlySadLight = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 21.15a9.15 9.15 0 1 1 0-18.3 9.15 9.15 0 0 1 0 18.3m0 .85c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 13.5c-1.673 0-2.694.613-3.29 1.178a.5.5 0 1 1-.688-.725C8.788 13.227 10.05 12.5 12 12.5s3.212.726 3.978 1.454a.5.5 0 0 1-.689.724C14.694 14.113 13.673 13.5 12 13.5M9 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,6 +37,19 @@ const IconFaceSlightlySadLight = ({color, size = 24, ...rest}: IconProps): JSX.E
                     <path
                         fill={fillColor}
                         d="M7.957 15.264a.624.624 0 0 1-.09-.878c.98-1.204 2.472-1.893 4.097-1.886 1.622 0 3.115.686 4.093 1.882a.624.624 0 1 1-.968.79c-.728-.893-1.896-1.426-3.125-1.426-1.228 0-2.4.533-3.128 1.429a.624.624 0 0 1-.879.09"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 21.15a9.15 9.15 0 1 1 0-18.3 9.15 9.15 0 0 1 0 18.3m0 .85c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 13.5c-1.673 0-2.694.613-3.29 1.178a.5.5 0 1 1-.688-.725C8.788 13.227 10.05 12.5 12 12.5s3.212.726 3.978 1.454a.5.5 0 0 1-.689.724C14.694 14.113 13.673 13.5 12 13.5M9 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
                     />
                 </svg>
             );
