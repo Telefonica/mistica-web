@@ -367,11 +367,11 @@ type SidenavBarBaseProps = {
     /** Width of the collapsed sidenav in px. @default 72 */
     collapsedWidth?: number;
     /**
-     * Logo rendered in the header. Defaults to the skin logo at the 32px the header reserves
+     * Logo rendered in the header. Defaults to the skin logo at the 40px the header reserves
      * in both the expanded and the collapsed state. Pass an element to override it, or `false`
      * to render no logo at all.
      *
-     * @default <Logo size={32} />
+     * @default <Logo size={40} />
      */
     logo?: React.ReactElement | false;
     /** Optional slot rendered in the header region, below the collapse control. */
