@@ -45,7 +45,7 @@ jobs:
                         repo,
                         workflow_id: 'deploy-fork-pr-preview.yml',
                         ref: 'master',
-                        inputs: { prNumber: String(prNumber) },
+                        inputs: { prNumber: String(prNumber), commitSha: pr.head.sha },
                         return_run_details: true,
                       });
 
