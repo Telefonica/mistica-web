@@ -170,13 +170,16 @@ export const footerBoxed = styleVariants({
 export const section = style({
     display: 'flex',
     flexDirection: 'column',
-    paddingLeft: 10,
-    paddingRight: 10,
 });
 
 export const sectionTitle = style({
     padding: '0 16px',
     marginBottom: 8,
+});
+
+export const sectionContent = style({
+    paddingLeft: 10,
+    paddingRight: 10,
 });
 
 export const sectionDivider = style({

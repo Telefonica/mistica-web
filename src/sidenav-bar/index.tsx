@@ -321,11 +321,6 @@ const SidenavSection = ({
             aria-label={title}
             {...getPrefixedDataAttributes({testid: 'SidenavSection', ...dataAttributes})}
         >
-            {dividerTop && (
-                <div className={styles.sectionDivider}>
-                    <Divider />
-                </div>
-            )}
             {title && (
                 <div className={styles.sectionTitle}>
                     {collapsed ? (
@@ -339,12 +334,19 @@ const SidenavSection = ({
                     )}
                 </div>
             )}
-            {children}
-            {dividerBottom && (
-                <div className={styles.sectionDivider}>
-                    <Divider />
-                </div>
-            )}
+            <div className={styles.sectionContent}>
+                {dividerTop && (
+                    <div className={styles.sectionDivider}>
+                        <Divider />
+                    </div>
+                )}
+                {children}
+                {dividerBottom && (
+                    <div className={styles.sectionDivider}>
+                        <Divider />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
