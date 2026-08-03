@@ -1,5 +1,6 @@
 name: Reminder to deploy fork PRs
 
+# This is an unsafe event. It should not checkout code nor execute anything as it permits access to secrets and github token from forks.
 on:
     pull_request_target:
         types: [opened]
