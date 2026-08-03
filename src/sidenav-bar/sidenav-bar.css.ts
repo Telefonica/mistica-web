@@ -170,6 +170,8 @@ export const footerBoxed = styleVariants({
 export const section = style({
     display: 'flex',
     flexDirection: 'column',
+    paddingLeft: 10,
+    paddingRight: 10,
 });
 
 export const sectionTitle = style({
@@ -191,8 +193,7 @@ export const itemRow = style({
     display: 'flex',
     alignItems: 'center',
     gap: 6,
-    paddingLeft: `calc(${itemIndentVar} + 8px)`,
-    paddingRight: 10,
+    paddingLeft: itemIndentVar,
 });
 
 export const selectedIndicator = style({
