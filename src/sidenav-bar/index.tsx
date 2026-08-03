@@ -539,7 +539,11 @@ const SidenavBar = ({
                             )}
                         </div>
                     )}
-                    <div className={classnames(styles.body, {[styles.bodyWithoutHeader]: !hasHeader})}>
+                    <div
+                        className={classnames(styles.bodyBase, styles.body[normalizedVariant], {
+                            [styles.bodyWithoutHeader]: !hasHeader,
+                        })}
+                    >
                         {children}
                     </div>
                     {footerSlot && (

@@ -118,12 +118,20 @@ export const headerSlotCollapsed = style({
 
 // Body region -----------------------------------------------------------------
 
-export const body = style({
+export const bodyBase = style({
     flex: 1,
     minHeight: 0,
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
+});
+
+export const body = styleVariants({
+    default: {backgroundColor: skinVars.colors.backgroundContainer},
+    brand: {backgroundColor: 'transparent'},
+    alternative: {backgroundColor: skinVars.colors.backgroundContainerAlternative},
+    negative: {backgroundColor: skinVars.colors.backgroundContainerNegative},
+    media: {backgroundColor: skinVars.colors.backgroundContainerNegative},
 });
 
 // Without a header, the body owns the 24px top inset instead.
