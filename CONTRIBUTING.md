@@ -60,13 +60,11 @@ Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every P
 PRs opened from a fork cannot access repository secrets, so CI and the preview deployment do not run
 automatically. The process requires a maintainer to explicitly approve each step:
 
-1. A maintainer approves the CI run on the [Actions tab](https://github.com/Telefonica/mistica-web/actions) so
-   the standard checks execute against the fork's code.
+1. A maintainer approves the CI run on the PR so the standard checks execute against the fork's code.
 2. A maintainer reviews the PR and adds the `safe-to-deploy` label. This captures the exact commit SHA at that
    moment and triggers the deployment workflow.
-3. A maintainer must then open the triggered workflow run on the
-   [Actions tab](https://github.com/Telefonica/mistica-web/actions) and click **Review deployments** to
-   approve it. This approval gate is required before any secrets are exposed.
+3. The triggered workflow post a link to the workflow run, which a manitainer has to approve. This approval
+   gate is required before any secrets are exposed.
 4. Once approved, the preview is deployed against the pinned commit SHA. The deployment URL is printed in the
    workflow run logs.
 
