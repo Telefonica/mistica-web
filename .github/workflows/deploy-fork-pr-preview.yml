@@ -66,7 +66,6 @@ jobs:
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID }}
                   vercel-project-name: mistica-web
                   working-directory: ${{ github.workspace }}
-                  github-comment: 'false'
 
             - name: Comment deploy result on PR
               if: always() && steps.pr.outputs.pr_number != ''
