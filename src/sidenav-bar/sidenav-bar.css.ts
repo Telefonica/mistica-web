@@ -125,7 +125,8 @@ export const bodyWithoutHeader = style({
 
 export const footer = style({
     flexShrink: 0,
-    paddingTop: 8,
+    paddingTop: 24,
+    paddingBottom: 24,
     paddingLeft: 16,
     paddingRight: 16,
     backgroundColor: skinVars.colors.background,
