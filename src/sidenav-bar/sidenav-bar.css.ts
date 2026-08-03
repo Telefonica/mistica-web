@@ -7,7 +7,6 @@ export const COLLAPSED_WIDTH = 72;
 export const BOXED_INSET = 8;
 export const NESTING_INDENT = 24;
 export const LOGO_SIZE = 40;
-export const COLLAPSE_BUTTON_SIZE = 32;
 
 export const sidenavWidthVar = createVar();
 
@@ -91,11 +90,6 @@ export const logo = style({
     alignItems: 'center',
     width: LOGO_SIZE,
     height: LOGO_SIZE,
-});
-
-export const collapseButton = style({
-    width: COLLAPSE_BUTTON_SIZE,
-    height: COLLAPSE_BUTTON_SIZE,
 });
 
 export const headerSlot = style({

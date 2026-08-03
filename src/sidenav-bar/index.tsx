@@ -480,7 +480,6 @@ const SidenavBar = ({
      */
     const defaultCollapseButton = (
         <IconButton
-            className={styles.collapseButton}
             Icon={collapsed ? IconChevronRightDoubleRegular : IconChevronLeftDoubleRegular}
             type="brand"
             backgroundType="transparent"
