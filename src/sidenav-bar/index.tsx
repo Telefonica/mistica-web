@@ -16,8 +16,8 @@ import {Text2, Text3} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import IconChevronDownRegular from '../generated/mistica-icons/icon-chevron-down-regular';
 import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
-import IconChevronLeftDoubleRegular from '../generated/mistica-icons/icon-chevron-left-double-regular';
-import IconChevronRightDoubleRegular from '../generated/mistica-icons/icon-chevron-right-double-regular';
+import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
+import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
 
 import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
@@ -544,12 +544,6 @@ const SidenavBar = ({
 
     const currentWidth = collapsed ? collapsedWidth : width;
 
-    /* TODO WIP the design uses a rounded panel glyph with a left rail, not a chevron.
-     * Icons `sidenav-collapse` and `sidenav-uncollapse` will be added to mistica-icons
-     * and replace the chevrons below. This will be a Touchable with an Icon inside,
-     * not an IconButton.
-     */
-
     if (process.env.NODE_ENV !== 'production') {
         assertChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');
     }
@@ -586,11 +580,7 @@ const SidenavBar = ({
                                 {logoElement && <div className={styles.logo}>{logoElement}</div>}
                                 {collapsible && (
                                     <IconButton
-                                        Icon={
-                                            collapsed
-                                                ? IconChevronRightDoubleRegular
-                                                : IconChevronLeftDoubleRegular
-                                        }
+                                        Icon={collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular}
                                         type="brand"
                                         backgroundType="transparent"
                                         small
