@@ -11,10 +11,10 @@ import {
     IconPhotoCameraRegular,
     ResponsiveLayout,
     ButtonLinkDanger,
-    ButtonLinkNeutral,
 } from '..';
 import tennisImg from './images/tennis.jpg';
 
+import type {ButtonLinkType} from '..';
 import type {Variant} from '../theme-variant-context';
 
 export default {
@@ -60,6 +60,11 @@ type Args = {
     small: boolean;
     action: string;
     newTab: boolean;
+};
+
+type ButtonLinkArgs = Args & {
+    chevron: string;
+    type: ButtonLinkType;
 };
 
 const getButtonActionProps = (action: string, newTab: boolean) => {
@@ -158,19 +163,21 @@ export const DangerButton: StoryComponent<Args> = ({
     );
 };
 
-export const LinkButton: StoryComponent<Args & {chevron: string}> = ({
+export const LinkButton: StoryComponent<ButtonLinkArgs> = ({
     variantOutside,
     text,
     icon,
     action,
     newTab,
     chevron,
+    type,
     ...props
 }) => {
     return (
         <ButtonBackgroundContainer variant={variantOutside}>
             <ButtonLink
                 {...props}
+                type={type}
                 withChevron={chevron === 'default' ? undefined : chevron === 'true'}
                 {...getButtonActionProps(action, newTab)}
                 StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
@@ -215,15 +222,16 @@ export const LinkButtonNeutral: StoryComponent<Args & {chevron: string}> = ({
 }) => {
     return (
         <ButtonBackgroundContainer variant={variantOutside}>
-            <ButtonLinkNeutral
+            <ButtonLink
                 {...props}
+                type="neutral"
                 withChevron={chevron === 'default' ? undefined : chevron === 'true'}
                 {...getButtonActionProps(action, newTab)}
                 StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
                 EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
             >
                 {text}
-            </ButtonLinkNeutral>
+            </ButtonLink>
         </ButtonBackgroundContainer>
     );
 };
@@ -250,7 +258,7 @@ SecondaryButton.storyName = 'ButtonSecondary';
 DangerButton.storyName = 'ButtonDanger';
 LinkButton.storyName = 'ButtonLink';
 LinkButtonDanger.storyName = 'ButtonLinkDanger';
-LinkButtonNeutral.storyName = 'ButtonLinkNeutral';
+LinkButtonNeutral.storyName = 'ButtonLink type neutral';
 SubmitButton.storyName = 'Submit button';
 
 primaryButton.args = defaultArgs;
@@ -259,8 +267,16 @@ DangerButton.args = defaultArgs;
 LinkButton.args = {
     ...defaultArgs,
     chevron: 'default',
+    type: 'default',
 };
 LinkButtonDanger.args = defaultArgs;
+LinkButtonDanger.parameters = {
+    docs: {
+        description: {
+            story: 'Deprecated. Use ButtonLink with type="danger" instead.',
+        },
+    },
+};
 LinkButtonNeutral.args = {
     ...defaultArgs,
     chevron: 'default',
@@ -271,6 +287,10 @@ SecondaryButton.argTypes = defaultArgTypes;
 DangerButton.argTypes = defaultArgTypes;
 LinkButton.argTypes = {
     ...defaultArgTypes,
+    type: {
+        options: ['default', 'danger', 'neutral'],
+        control: {type: 'select'},
+    },
     chevron: {
         options: ['default', 'true', 'false'],
         control: {type: 'select'},

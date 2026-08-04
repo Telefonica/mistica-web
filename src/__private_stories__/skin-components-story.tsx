@@ -20,7 +20,6 @@ import {
     DataCard,
     IconLightningRegular,
     ButtonLinkDanger,
-    ButtonLinkNeutral,
     PageBullets,
     Checkbox,
     Chip,
@@ -303,13 +302,14 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                                 </ButtonPrimary>
                             }
                             buttonLink={
-                                <ButtonLinkNeutral
+                                <ButtonLink
+                                    type="neutral"
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
                                     onPress={() => {}}
                                 >
-                                    ButtonLinkNeutral
-                                </ButtonLinkNeutral>
+                                    ButtonLink neutral
+                                </ButtonLink>
                             }
                         />
 
