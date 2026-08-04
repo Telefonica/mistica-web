@@ -37,7 +37,6 @@ import type {DataAttributes, IconProps} from '../utils/types';
  *   - Collapsed "dialog panel" and "double panel" rendering of nested items.
  *   - Mobile burger-menu behaviour (reuses MainNavigationBar patterns).
  *   - Layout wrapper for the main content (whole-viewport / centered).
- *   - Fixed header/footer scroll-intersection dividers.
  *   - Per-region colour token matrices for brand/alternative/negative/media variants
  *     (currently only the `default` variant is fully styled; other variants still
  *     provide the correct `ThemeVariant` context to descendant components).
@@ -73,7 +72,7 @@ const SidenavLevelContext = React.createContext<number>(0);
  * typed as `ReactElement<any, any>` and therefore satisfies any props type. Comparing against the
  * component reference at runtime does work, so it is checked in development instead.
  */
-const checkChildrenAre = (children: React.ReactNode, expected: React.ElementType, message: string) => {
+const assertChildrenAre = (children: React.ReactNode, expected: React.ElementType, message: string) => {
     React.Children.forEach(children, (child) => {
         if (React.isValidElement(child) && child.type !== expected) {
             console.error(message);
@@ -88,12 +87,14 @@ const checkChildrenAre = (children: React.ReactNode, expected: React.ElementType
 type SidenavItemBaseProps = {
     /** Visible text of the item. Also used as the accessible name (mandatory when collapsed). */
     label: string;
-    /** Leading asset. Optional when expanded, required when the sidenav is collapsed. */
-    Icon?: (props: IconProps) => JSX.Element;
+    /** Leading asset: icon component or any ReactNode (avatar, badge, image, etc). Required for top-level items (shown when collapsed). Optional for nested items. */
+    asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
+    /** When the sidenav is expanded, whether to show the asset. @default true */
+    showIconWhenExpanded?: boolean;
     /** Marks the item as the current page. Rendered with a selected indicator + `aria-current="page"`. */
     selected?: boolean;
     /** Optional slot rendered before the chevron. Hidden when the sidenav is collapsed. */
-    right?: React.ReactNode;
+    rightSlot?: React.ReactNode;
     /** Nested items. An item with children renders a chevron and can be expanded. */
     children?: React.ReactNode;
     /** When the item has children, whether they are expanded by default (ignored while collapsed). */
@@ -136,7 +137,16 @@ type SidenavItemProps = ExclusifyUnion<
 >;
 
 const SidenavItem = (props: SidenavItemProps): JSX.Element => {
-    const {label, Icon, selected, right, children, defaultOpen, dataAttributes} = props;
+    const {
+        label,
+        asset,
+        selected,
+        rightSlot,
+        children,
+        defaultOpen,
+        dataAttributes,
+        showIconWhenExpanded = true,
+    } = props;
     const {collapsed, doublePanel} = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
 
@@ -144,35 +154,46 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const navigates = props.onPress !== undefined || props.href !== undefined || props.to !== undefined;
 
     if (process.env.NODE_ENV !== 'production') {
-        checkChildrenAre(children, SidenavItem, 'SidenavItem children must be SidenavItem elements');
-        /*
-         * TODO WIP only top level items are rendered in the collapsed rail today, so only those
-         * need an asset. Revisit once nested items render in the dialog/double panel, since the
-         * items shown there may need one too.
-         */
-        if (collapsed && level === 0 && !Icon) {
-            console.error(`SidenavItem "${label}" needs an Icon to be usable in a collapsed sidenav`);
+        assertChildrenAre(children, SidenavItem, 'SidenavItem children must be SidenavItem elements');
+        if (level === 0 && !asset) {
+            console.error(
+                `SidenavItem "${label}" at top level needs an asset to be usable in a collapsed sidenav`
+            );
         }
     }
 
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const isOpen = hasChildren && !collapsed && open;
 
-    const navigationProps = props.onPress
-        ? {onPress: props.onPress}
-        : props.href !== undefined
-          ? {href: props.href, newTab: props.newTab, onNavigate: props.onNavigate}
-          : props.to !== undefined
-            ? {to: props.to, newTab: props.newTab, onNavigate: props.onNavigate}
-            : null;
+    // todo WIP I don't know if you like it, but I do prefer it than a nested ternary
+    const navigationProps = (() => {
+        switch (true) {
+            case !!props.onPress:
+                return {onPress: props.onPress};
+            case props.href !== undefined:
+                return {href: props.href, newTab: props.newTab, onNavigate: props.onNavigate};
+            case props.to !== undefined:
+                return {to: props.to, newTab: props.newTab, onNavigate: props.onNavigate};
+            default:
+                return null;
+        }
+    })();
 
     const ChevronIcon = doublePanel ? IconChevronRightRegular : IconChevronDownRegular;
 
-    const asset = Icon ? (
-        <span className={styles.itemAsset}>
-            <Icon size={20} color="currentColor" />
-        </span>
-    ) : null;
+    const shouldShowAsset = asset && (collapsed || showIconWhenExpanded);
+    let assetContent: React.ReactNode = null;
+    if (shouldShowAsset) {
+        if (typeof asset === 'function') {
+            assetContent = (asset as (props: IconProps) => JSX.Element)({
+                size: 20,
+                color: 'currentColor',
+            });
+        } else {
+            assetContent = asset;
+        }
+    }
+    const assetElement = shouldShowAsset ? <span className={styles.itemAsset}>{assetContent}</span> : null;
 
     const labelNode = collapsed ? (
         <ScreenReaderOnly>
@@ -194,9 +215,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const rowContent = (
         <>
-            {asset}
+            {assetElement}
             {labelNode}
-            {!collapsed && right && <span className={styles.itemRightSlot}>{right}</span>}
+            {!collapsed && rightSlot && <span className={styles.itemRightSlot}>{rightSlot}</span>}
             {!collapsed && hasChildren && !navigates && (
                 <span className={styles.itemChevron} aria-hidden="true">
                     <ChevronIcon size={16} color="currentColor" />
@@ -207,11 +228,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const ariaCurrent = selected ? ('page' as const) : undefined;
 
-    // Case 1: expand-only item (has children, does not navigate). The whole row toggles.
-    // Case 2: navigating item. The row navigates; if it also has children, a second focus
-    //         stop (the chevron) toggles the panel/dropdown.
-    // Case 3: leaf item that neither navigates nor groups (rendered as static text).
     const interactiveRow = (() => {
+        // Case 1: expand-only item (has children, does not navigate). The whole row toggles.
         if (hasChildren && !navigates) {
             return (
                 <Touchable
@@ -224,6 +242,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 </Touchable>
             );
         }
+        // Case 2: navigating item. The row navigates; if it also has children, a second focus
+        //         stop (the chevron) toggles the panel/dropdown.
         if (navigationProps) {
             return (
                 <Touchable
@@ -236,6 +256,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 </Touchable>
             );
         }
+        // Case 3: leaf item that neither navigates nor groups (rendered as static text).
         return (
             <div className={touchableClassName} aria-current={ariaCurrent}>
                 {rowContent}
@@ -311,7 +332,7 @@ const SidenavSection = ({
     const {collapsed} = useSidenavBarContext();
 
     if (process.env.NODE_ENV !== 'production') {
-        checkChildrenAre(children, SidenavItem, 'SidenavSection children must be SidenavItem elements');
+        assertChildrenAre(children, SidenavItem, 'SidenavSection children must be SidenavItem elements');
     }
 
     return (
@@ -378,18 +399,18 @@ type SidenavBarBaseProps = {
     logo?: React.ReactElement | false;
     /** Optional slot rendered in the header region, below the collapse control. */
     headerSlot?: React.ReactNode;
-    /** Optional slot rendered in the footer region, at the bottom of the sidenav. */
-    footerSlot?: React.ReactNode;
     dataAttributes?: DataAttributes;
 };
 
 /**
- * Two constraints are enforced by the type system:
+ * Constraints enforced by the type system:
  *
  * - A boxed sidenav has its own edge, so the vertical right divider does not apply to it:
  *   `divider` is only accepted when `boxed` is false.
- * - The collapsed state is either controlled through `collapsed` or uncontrolled through
- *   `defaultCollapsed`, never both. `onCollapse` is only reachable while collapsible.
+ * - The collapsed state is either controlled through `collapsed` (requires `onCollapse`)
+ *   or uncontrolled through `defaultCollapsed` (optional `onCollapse`), never both.
+ * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed.
+ * - `fixedFooter` is only allowed when `footerSlot` is provided.
  */
 type SidenavBarProps = SidenavBarBaseProps &
     ExclusifyUnion<
@@ -406,24 +427,44 @@ type SidenavBarProps = SidenavBarBaseProps &
     > &
     ExclusifyUnion<
         | {
-              /** Controlled collapsed state. */
+              /** Controlled collapsed state. Requires `onCollapse` to handle state updates. */
               collapsed: boolean;
+              /** Called when the collapsed state changes. */
+              onCollapse: (collapsed: boolean) => void;
+              /** Whether the user can toggle the collapsed state. @default true */
+              collapsible?: true;
           }
         | {
               /** Initial collapsed state (uncontrolled). @default false */
               defaultCollapsed?: boolean;
+              /** Called when the collapsed state changes (optional, for logging/side-effects). */
+              onCollapse?: (collapsed: boolean) => void;
+              /** Whether the user can toggle the collapsed state. @default true */
+              collapsible?: true;
+          }
+        | {
+              /** Controlled collapsed state with toggling disabled. */
+              collapsed: boolean;
+              /** The collapsed state cannot be toggled by the user. */
+              collapsible: false;
+          }
+        | {
+              /** Uncontrolled collapsed state with toggling disabled. */
+              defaultCollapsed?: boolean;
+              /** The collapsed state cannot be toggled by the user. */
+              collapsible: false;
           }
     > &
     ExclusifyUnion<
         | {
-              /** Whether the user can toggle the collapsed state. @default true */
-              collapsible?: true;
-              /** Called when the collapsed state changes. */
-              onCollapse?: (collapsed: boolean) => void;
+              /** Optional slot rendered in the footer region, at the bottom of the sidenav. */
+              footerSlot: React.ReactNode;
+              /** Whether the footer should stay fixed at the bottom when scrolling. @default false */
+              fixedFooter?: boolean;
           }
         | {
-              /** The collapsed state cannot be toggled by the user. */
-              collapsible: false;
+              /** No footer slot provided. */
+              footerSlot?: undefined;
           }
     >;
 
@@ -443,16 +484,55 @@ const SidenavBar = ({
     logo,
     headerSlot,
     footerSlot,
+    fixedFooter = false,
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
     const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
 
+    const [showHeaderDivider, setShowHeaderDivider] = React.useState(false);
+    const [showFooterDivider, setShowFooterDivider] = React.useState(false);
+    const headerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
+    const footerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
+    const bodyRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (!bodyRef.current) return;
+
+        const headerObserver = new IntersectionObserver(
+            ([entry]) => {
+                setShowHeaderDivider(!entry.isIntersecting);
+            },
+            {root: bodyRef.current, threshold: 0}
+        );
+
+        const footerObserver = new IntersectionObserver(
+            ([entry]) => {
+                setShowFooterDivider(!entry.isIntersecting);
+            },
+            {root: bodyRef.current, threshold: 0}
+        );
+
+        if (headerDividerSentinelRef.current) {
+            headerObserver.observe(headerDividerSentinelRef.current);
+        }
+        if (footerDividerSentinelRef.current) {
+            footerObserver.observe(footerDividerSentinelRef.current);
+        }
+
+        return () => {
+            headerObserver.disconnect();
+            footerObserver.disconnect();
+        };
+    }, []);
+
     const toggleCollapsed = React.useCallback(() => {
         const next = !collapsed;
         if (!isCollapsedControlled) {
             setUncontrolledCollapsed(next);
+            onCollapse?.(next);
+            return;
         }
         onCollapse?.(next);
     }, [collapsed, isCollapsedControlled, onCollapse]);
@@ -464,25 +544,14 @@ const SidenavBar = ({
 
     const currentWidth = collapsed ? collapsedWidth : width;
 
-    /*
-     * TODO WIP the design uses a rounded panel glyph with a left rail, not a chevron.
+    /* TODO WIP the design uses a rounded panel glyph with a left rail, not a chevron.
      * Icons `sidenav-collapse` and `sidenav-uncollapse` will be added to mistica-icons
      * and replace the chevrons below. This will be a Touchable with an Icon inside,
      * not an IconButton.
      */
-    const collapseButton = (
-        <IconButton
-            Icon={collapsed ? IconChevronRightDoubleRegular : IconChevronLeftDoubleRegular}
-            type="brand"
-            backgroundType="transparent"
-            small
-            onPress={toggleCollapsed}
-            aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
-        />
-    );
 
     if (process.env.NODE_ENV !== 'production') {
-        checkChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');
+        assertChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');
     }
 
     const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
@@ -515,7 +584,20 @@ const SidenavBar = ({
                                 })}
                             >
                                 {logoElement && <div className={styles.logo}>{logoElement}</div>}
-                                {collapsible && collapseButton}
+                                {collapsible && (
+                                    <IconButton
+                                        Icon={
+                                            collapsed
+                                                ? IconChevronRightDoubleRegular
+                                                : IconChevronLeftDoubleRegular
+                                        }
+                                        type="brand"
+                                        backgroundType="transparent"
+                                        small
+                                        onPress={toggleCollapsed}
+                                        aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
+                                    />
+                                )}
                             </div>
                             {headerSlot && (
                                 <div
@@ -529,13 +611,49 @@ const SidenavBar = ({
                         </div>
                     )}
                     <div
+                        ref={bodyRef}
                         className={classnames(styles.bodyBase, styles.body[normalizedVariant], {
                             [styles.bodyWithoutHeader]: !hasHeader,
                         })}
                     >
+                        <div ref={headerDividerSentinelRef} />
+                        {showHeaderDivider && (
+                            <div
+                                className={classnames(
+                                    styles.scrollDivider,
+                                    styles.headerScrollDivider,
+                                    styles.scrollDividerVariant[normalizedVariant]
+                                )}
+                            />
+                        )}
                         {children}
+                        {footerSlot && !fixedFooter && (
+                            <>
+                                <div ref={footerDividerSentinelRef} />
+                                {showFooterDivider && (
+                                    <div
+                                        className={classnames(
+                                            styles.scrollDivider,
+                                            styles.footerScrollDivider,
+                                            styles.scrollDividerVariant[normalizedVariant]
+                                        )}
+                                    />
+                                )}
+                                <div
+                                    className={classnames(
+                                        styles.footerBase,
+                                        styles.footer[normalizedVariant],
+                                        {
+                                            [styles.footerBoxed[normalizedVariant]]: boxed,
+                                        }
+                                    )}
+                                >
+                                    {footerSlot}
+                                </div>
+                            </>
+                        )}
                     </div>
-                    {footerSlot && (
+                    {footerSlot && fixedFooter && (
                         <div
                             className={classnames(styles.footerBase, styles.footer[normalizedVariant], {
                                 [styles.footerBoxed[normalizedVariant]]: boxed,
@@ -552,4 +670,10 @@ const SidenavBar = ({
 
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
+export {default as SidenavLayout} from './sidenav-layout';
 export type {SidenavBarProps, SidenavSectionProps, SidenavItemProps};
+export type {
+    SidenavLayoutProps,
+    SidenavLayoutSidenavProps,
+    SidenavLayoutContentProps,
+} from './sidenav-layout';

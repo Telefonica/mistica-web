@@ -11,8 +11,8 @@ const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavBar aria-label="Main navigation" {...props}>
                 <SidenavSection title="Workspace">
-                    <SidenavItem label="Home" Icon={IconHomeRegular} href="/home" selected />
-                    <SidenavItem label="Projects" Icon={IconFolderRegular} defaultOpen>
+                    <SidenavItem label="Home" asset={IconHomeRegular} href="/home" selected />
+                    <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
                         <SidenavItem label="Active" href="/active" />
                     </SidenavItem>
                 </SidenavSection>

@@ -30,6 +30,8 @@ type Args = {
     collapsible: boolean;
     defaultCollapsed: boolean;
     doublePanel: boolean;
+    useCustomWidth: boolean;
+    width: number;
 };
 
 export const Default = ({
@@ -44,6 +46,8 @@ export const Default = ({
     collapsible,
     defaultCollapsed,
     doublePanel,
+    useCustomWidth,
+    width,
 }: Args): React.JSX.Element => (
     <div style={{height: '100vh'}}>
         <SidenavBar
@@ -57,6 +61,7 @@ export const Default = ({
             collapsible={collapsible}
             defaultCollapsed={defaultCollapsed}
             doublePanel={doublePanel}
+            {...(useCustomWidth ? {width} : ({} as any))}
         >
             <SidenavSection>
                 <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
@@ -87,6 +92,8 @@ Default.args = {
     collapsible: true,
     defaultCollapsed: false,
     doublePanel: false,
+    useCustomWidth: false,
+    width: 240,
 };
 
 Default.argTypes = {
@@ -96,6 +103,14 @@ Default.argTypes = {
     },
     divider: {if: {arg: 'boxed', truthy: false}},
     fixedFooter: {if: {arg: 'footerSlot', truthy: true}},
+    useCustomWidth: {
+        control: {type: 'boolean'},
+        description: 'Use custom width instead of default',
+    },
+    width: {
+        control: {type: 'range', min: 200, max: 400, step: 5},
+        description: 'Width of the sidenav in pixels (only when useCustomWidth is enabled)',
+    },
 };
 
 export const DeepNesting = (): React.JSX.Element => (
