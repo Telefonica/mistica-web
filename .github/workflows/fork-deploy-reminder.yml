@@ -1,0 +1,40 @@
+name: Reminder to deploy fork PRs
+
+# This is an unsafe event. It should not checkout code nor execute anything as it permits access to secrets and github token from forks.
+on:
+    pull_request_target:
+        types: [opened]
+
+permissions:
+    issues: write
+    pull-requests: write
+
+jobs:
+    fork-deploy-reminder:
+        runs-on: ubuntu-latest
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        steps:
+            - name: Comment fork deploy instructions
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { owner, repo } = context.repo;
+                      const prNumber = context.issue.number;
+                      const marker = '<!-- fork-deploy-reminder -->';
+                      const body = [
+                        marker,
+                        '### Preview deployment',
+                        '',
+                        'This PR comes from a fork and cannot be deployed automatically.',
+                        'To trigger a preview deployment, a maintainer must add the `safe-to-deploy` label.',
+                        '',
+                        '> [!NOTE]',
+                        '> If the label is already present, remove it and add it again to re-trigger the deployment.',
+                      ].join('\n');
+
+                      const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number: prNumber });
+                      const existing = comments.find(c => c.body && c.body.includes(marker));
+
+                      if (!existing) {
+                        await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body });
+                      }
