@@ -37,8 +37,8 @@ import type {ExclusifyUnion} from './utils/utility-types';
 
 const RowListDividerContext = React.createContext(false);
 
-type ListContextType = {small: boolean};
-const ListContext = React.createContext<ListContextType>({small: false});
+type ListCompactContextType = {small: boolean};
+const ListCompactContext = React.createContext<ListCompactContextType>({small: false});
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
@@ -86,7 +86,7 @@ interface ContentProps extends CommonProps {
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
-    hideDivider?: boolean;
+    showDivider?: boolean;
 }
 
 export const Content = ({
@@ -111,14 +111,13 @@ export const Content = ({
     labelId,
     disabled,
     control,
-    hideDivider,
+    showDivider,
 }: ContentProps): JSX.Element => {
     const outsideVariant = useThemeVariant();
     const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
-    const hasDivider = React.useContext(RowListDividerContext);
-    const {small} = React.useContext(ListContext);
+    const {small} = React.useContext(ListCompactContext);
     const titlePreset = small ? textPresets.text2 : textPresets.text3;
 
     const SubtitleComponent = small ? Text1 : Text2;
@@ -286,7 +285,7 @@ export const Content = ({
                     </div>
                 )}
             </div>
-            {hasDivider && !hideDivider && (
+            {showDivider && (
                 <div className={styles.rowDivider} data-testid="row-divider">
                     <Divider />
                 </div>
@@ -556,7 +555,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         control?: React.ReactNode;
         labelId?: string;
         role?: string;
-        hideDivider?: boolean;
+        showDivider?: boolean;
     }) => (
         <Content
             asset={asset}
@@ -593,7 +592,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
-            hideDivider={contentProps?.hideDivider}
+            showDivider={contentProps?.showDivider ?? hasDivider}
         />
     );
 
@@ -640,7 +639,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     })}
                     tabIndex={tabIndex}
                 >
-                    {renderContent({labelId: titleId, role, hideDivider: true})}
+                    {renderContent({labelId: titleId, role, showDivider: false})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
                 {control}
@@ -834,7 +833,7 @@ export const RowList = ({
     small = false,
 }: RowListProps): JSX.Element => {
     return (
-        <ListContext.Provider value={{small}}>
+        <ListCompactContext.Provider value={{small}}>
             <RowListDividerContext.Provider value>
                 <div
                     role={role}
@@ -847,7 +846,7 @@ export const RowList = ({
                     {children}
                 </div>
             </RowListDividerContext.Provider>
-        </ListContext.Provider>
+        </ListCompactContext.Provider>
     );
 };
 
@@ -909,7 +908,7 @@ export const BoxedRowList = ({
     'aria-atomic': ariaAtomic = false,
     small = false,
 }: BoxedRowListProps): JSX.Element => (
-    <ListContext.Provider value={{small}}>
+    <ListCompactContext.Provider value={{small}}>
         <Stack
             space={16}
             role={role}
@@ -921,7 +920,7 @@ export const BoxedRowList = ({
         >
             {children}
         </Stack>
-    </ListContext.Provider>
+    </ListCompactContext.Provider>
 );
 
 type UnorderedListProps = {
