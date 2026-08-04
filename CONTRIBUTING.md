@@ -63,7 +63,7 @@ automatically. The process requires a maintainer to explicitly approve each step
 1. A maintainer approves the CI run on the PR so the standard checks execute against the fork's code.
 2. A maintainer reviews the PR and adds the `safe-to-deploy` label. This captures the exact commit SHA at that
    moment and triggers the deployment workflow.
-3. The triggered workflow post a link to the workflow run, which a manitainer has to approve. This approval
+3. The triggered workflow post a link to the workflow run, which a maintainer has to approve. This approval
    gate is required before any secrets are exposed.
 4. Once approved, the preview is deployed against the pinned commit SHA. The deployment URL is printed in the
    workflow run logs.
