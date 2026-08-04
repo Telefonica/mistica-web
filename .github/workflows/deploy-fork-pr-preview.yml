@@ -1,4 +1,5 @@
 name: deploy-fork-pr-preview
+run-name: Deploy fork PR number ${{ inputs.prNumber }}
 on:
     workflow_dispatch:
         inputs:
@@ -55,7 +56,9 @@ jobs:
                   ref: ${{ steps.pr.outputs.merge_ref }}
                   persist-credentials: false
 
-            - uses: ./.github/actions/deploy-vercel-preview
+            - name: Deploy preview
+              id: deploy
+              uses: ./.github/actions/deploy-vercel-preview
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -63,3 +66,27 @@ jobs:
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID }}
                   vercel-project-name: mistica-web
                   working-directory: ${{ github.workspace }}
+
+            - name: Comment deploy result on PR
+              if: always() && steps.pr.outputs.pr_number != ''
+              uses: actions/github-script@v7
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const prNumber = Number('${{ steps.pr.outputs.pr_number }}');
+                      const { owner, repo } = context.repo;
+                      const marker = '<!-- vercel-preview-url -->';
+
+                      const succeeded = '${{ steps.deploy.outcome }}' === 'success';
+                      const body = succeeded
+                        ? `${marker}\n### Vercel Preview\n\n| Name | Link |\n| --- | --- |\n| Preview | ${{ steps.deploy.outputs.preview-url }} |`
+                        : `${marker}\n### Vercel Preview\n\n> [!CAUTION]\n> Deployment failed. [Check the workflow run](https://github.com/${owner}/${repo}/actions/runs/${{ github.run_id }}) for details.`;
+
+                      const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number: prNumber });
+                      const existing = comments.find(c => c.body && c.body.includes(marker));
+
+                      if (existing) {
+                        await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+                      } else {
+                        await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body });
+                      }
