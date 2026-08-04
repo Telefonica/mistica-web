@@ -69,8 +69,6 @@ export const headerBoxed = styleVariants({
 
 export const headerCollapsed = style({
     gap: 8,
-    paddingLeft: 10,
-    paddingRight: 10,
 });
 
 // The logo and the collapse control stack, both 32px wide. Their left edge is placed with
@@ -87,13 +85,7 @@ export const headerControls = style({
     paddingRight: 20,
 });
 
-export const headerControlsCollapsed = style({
-    justifyContent: 'center',
-    minHeight: LOGO_SIZE,
-    // `header` already contributes 10px when collapsed, keeping the total at 20px.
-    paddingLeft: 10,
-    paddingRight: 10,
-});
+export const headerControlsCollapsed = style({});
 
 export const logo = style({
     display: 'flex',
@@ -110,11 +102,7 @@ export const headerSlot = style({
     paddingRight: 24,
 });
 
-// Collapsed, the slot spans the rail inside the header's own 10px padding.
-export const headerSlotCollapsed = style({
-    paddingLeft: 0,
-    paddingRight: 0,
-});
+export const headerSlotCollapsed = style({});
 
 // Body region -----------------------------------------------------------------
 
@@ -124,6 +112,7 @@ export const bodyBase = style({
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
+    position: 'relative',
 });
 
 export const body = styleVariants({
@@ -137,6 +126,31 @@ export const body = styleVariants({
 // Without a header, the body owns the 24px top inset instead.
 export const bodyWithoutHeader = style({
     paddingTop: 24,
+});
+
+// Scroll-intersection divider (appears when content scrolls past header/footer)
+export const scrollDivider = style({
+    height: 1,
+    flexShrink: 0,
+    pointerEvents: 'none',
+    position: 'sticky',
+    zIndex: 1,
+});
+
+export const headerScrollDivider = style({
+    top: 0,
+});
+
+export const footerScrollDivider = style({
+    bottom: 0,
+});
+
+export const scrollDividerVariant = styleVariants({
+    default: {backgroundColor: skinVars.colors.divider},
+    brand: {backgroundColor: skinVars.colors.dividerBrand},
+    alternative: {backgroundColor: skinVars.colors.divider},
+    negative: {backgroundColor: skinVars.colors.dividerNegative},
+    media: {backgroundColor: skinVars.colors.dividerNegative},
 });
 
 // Footer region ---------------------------------------------------------------
@@ -178,6 +192,8 @@ export const sectionTitle = style({
 });
 
 export const sectionContent = style({
+    display: 'flex',
+    flexDirection: 'column',
     paddingLeft: 10,
     paddingRight: 10,
 });
