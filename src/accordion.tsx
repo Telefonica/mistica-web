@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {Content as HeaderContent} from './list';
 import IconChevron from './icons/icon-chevron';
-import Box from './box';
 import * as styles from './accordion.css';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
@@ -199,7 +198,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     aria-label={computedAriaLabel}
                     aria-labelledby={ariaLabelledby}
                 >
-                    <Box paddingX={16}>
+                    <div className={styles.accordionContentPadding}>
                         <HeaderContent
                             labelId={labelId}
                             {...props}
@@ -222,7 +221,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                 </Inline>
                             )}
                         />
-                    </Box>
+                    </div>
                 </BaseTouchable>
                 <CSSTransition
                     in={isOpen}
@@ -234,9 +233,9 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                 >
                     <div className={styles.panelContainer} ref={panelContainerRef}>
                         <div className={styles.panel} role="region" aria-labelledby={labelId} id={panelId}>
-                            <Box paddingX={16} paddingBottom={16}>
+                            <div className={styles.accordionContentPadding} style={{paddingBottom: 16}}>
                                 {content}
-                            </Box>
+                            </div>
                         </div>
                     </div>
                 </CSSTransition>
@@ -308,9 +307,9 @@ export const Accordion = ({
                     <React.Fragment key={index}>
                         {child}
                         {index < lastIndex && (
-                            <Box paddingX={16}>
+                            <div className={styles.accordionContentPadding}>
                                 <Divider />
-                            </Box>
+                            </div>
                         )}
                     </React.Fragment>
                 ))}
