@@ -11,7 +11,7 @@ const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavBar aria-label="Main navigation" {...props}>
                 <SidenavSection title="Workspace">
-                    <SidenavItem label="Home" asset={IconHomeRegular} href="/home" selected />
+                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="/home" />
                     <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
                         <SidenavItem label="Active" href="/active" />
                     </SidenavItem>
@@ -34,7 +34,7 @@ test('SidenavBar renders a navigation landmark with its items', async () => {
 });
 
 test('SidenavBar marks the selected item with aria-current="page"', async () => {
-    await renderSidenav();
+    await renderSidenav({selectedItemId: 'home'});
 
     expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');

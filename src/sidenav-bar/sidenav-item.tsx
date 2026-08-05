@@ -21,8 +21,6 @@ type SidenavItemBaseProps = {
     label: string;
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
     showIconWhenExpanded?: boolean;
-    selected?: boolean;
-    id?: string;
     rightSlot?: React.ReactNode;
     children?: React.ReactNode;
     defaultOpen?: boolean;
@@ -30,12 +28,14 @@ type SidenavItemBaseProps = {
 };
 
 type SidenavItemOnPressProps = SidenavItemBaseProps & {
+    id: string;
     onPress: () => void;
     href?: undefined;
     to?: undefined;
 };
 
 type SidenavItemHrefProps = SidenavItemBaseProps & {
+    id: string;
     href: string;
     newTab?: boolean;
     onNavigate?: () => void | Promise<void>;
@@ -44,6 +44,7 @@ type SidenavItemHrefProps = SidenavItemBaseProps & {
 };
 
 type SidenavItemToProps = SidenavItemBaseProps & {
+    id: string;
     to: string;
     newTab?: boolean;
     onNavigate?: () => void | Promise<void>;
@@ -52,7 +53,6 @@ type SidenavItemToProps = SidenavItemBaseProps & {
 };
 
 type SidenavItemExpandOnlyProps = SidenavItemBaseProps & {
-    children: React.ReactNode;
     onPress?: undefined;
     href?: undefined;
     to?: undefined;
@@ -66,7 +66,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const {
         label,
         asset,
-        selected: selectedProp,
         id,
         rightSlot,
         children,
@@ -86,7 +85,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
 
-    const selected = id !== undefined ? selectedItemId === id : selectedProp;
+    const selected = id !== undefined && selectedItemId === id;
 
     const hasChildren = React.Children.count(children) > 0;
     const navigates = props.onPress !== undefined || props.href !== undefined || props.to !== undefined;
@@ -129,7 +128,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const wrapNavCallback = (callback?: () => void | Promise<void>): (() => Promise<void>) => {
         return async () => {
-            if (id !== undefined && onSelectedItemIdChange) {
+            if (id && onSelectedItemIdChange) {
                 onSelectedItemIdChange(id);
             }
             await callback?.();

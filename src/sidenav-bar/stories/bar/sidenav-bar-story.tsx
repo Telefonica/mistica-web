@@ -32,6 +32,10 @@ type Args = {
     doublePanel: boolean;
     useCustomWidth: boolean;
     width: number;
+    useCustomBackgrounds: boolean;
+    headerBackgroundColor: string;
+    bodyBackgroundColor: string;
+    footerBackgroundColor: string;
 };
 
 export const Default = ({
@@ -48,6 +52,10 @@ export const Default = ({
     doublePanel,
     useCustomWidth,
     width,
+    useCustomBackgrounds,
+    headerBackgroundColor,
+    bodyBackgroundColor,
+    footerBackgroundColor,
 }: Args): React.JSX.Element => (
     <div style={{height: '100vh'}}>
         <SidenavBar
@@ -62,6 +70,15 @@ export const Default = ({
             defaultCollapsed={defaultCollapsed}
             doublePanel={doublePanel}
             {...(useCustomWidth ? {width} : ({} as any))}
+            {...(useCustomBackgrounds
+                ? {
+                      background: {
+                          header: headerBackgroundColor as any,
+                          body: bodyBackgroundColor,
+                          footer: footerBackgroundColor as any,
+                      },
+                  }
+                : {})}
         >
             <SidenavSection>
                 <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
@@ -69,10 +86,33 @@ export const Default = ({
             </SidenavSection>
             <SidenavSection title="Workspace" dividerTop>
                 <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
+                    <SidenavItem label="Active" asset={IconDocumentsRegular} href="#active" />
+                    <SidenavItem label="Archived" asset={IconDocumentsRegular} href="#archived" />
+                    <SidenavItem label="Draft" href="#draft" />
+                    <SidenavItem label="In Review" asset={IconDocumentsRegular} href="#review" />
+                </SidenavItem>
+                <SidenavItem label="Teams" asset={IconFolderRegular}>
+                    <SidenavItem label="Engineering" asset={IconSearchRegular} href="#eng" />
+                    <SidenavItem label="Design" asset={IconSearchRegular} href="#design" />
+                    <SidenavItem label="Marketing" asset={IconSearchRegular} href="#marketing" />
                 </SidenavItem>
                 <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
+            </SidenavSection>
+            <SidenavSection title="Account" dividerTop>
+                <SidenavItem label="Profile" asset={IconDocumentsRegular} href="#profile" />
+                <SidenavItem label="History" asset={IconAlarmClockRegular} href="#history" />
+                <SidenavItem label="Settings" asset={IconSettingsRegular} href="#settings" />
+            </SidenavSection>
+            <SidenavSection title="Help" dividerTop dividerBottom>
+                <SidenavItem label="Documentation" asset={IconDocumentsRegular} href="#docs" />
+                <SidenavItem label="Support" asset={IconSearchRegular} href="#support" />
+            </SidenavSection>
+            <SidenavSection title="More" dividerTop dividerBottom>
+                <SidenavItem label="Item 1" asset={IconHomeRegular} href="#item1" />
+                <SidenavItem label="Item 2" asset={IconFolderRegular} href="#item2" />
+                <SidenavItem label="Item 3" asset={IconBellRegular} href="#item3" />
+                <SidenavItem label="Item 4" asset={IconSettingsRegular} href="#item4" />
+                <SidenavItem label="Item 5" asset={IconDocumentsRegular} href="#item5" />
             </SidenavSection>
         </SidenavBar>
     </div>
@@ -94,6 +134,10 @@ Default.args = {
     doublePanel: false,
     useCustomWidth: false,
     width: 240,
+    useCustomBackgrounds: false,
+    headerBackgroundColor: '#e8f4f8',
+    bodyBackgroundColor: '#fafafa',
+    footerBackgroundColor: '#f0e8f4',
 };
 
 Default.argTypes = {
@@ -111,21 +155,44 @@ Default.argTypes = {
         control: {type: 'range', min: 200, max: 400, step: 5},
         description: 'Width of the sidenav in pixels (only when useCustomWidth is enabled)',
     },
+    useCustomBackgrounds: {
+        control: {type: 'boolean'},
+        description: 'Override background colors for each region',
+    },
+    headerBackgroundColor: {
+        control: {type: 'color'},
+        description: 'Background color for header (must be opaque)',
+        if: {arg: 'useCustomBackgrounds', truthy: true},
+    },
+    bodyBackgroundColor: {
+        control: {type: 'color'},
+        description: 'Background color for body (can be any color including transparent)',
+        if: {arg: 'useCustomBackgrounds', truthy: true},
+    },
+    footerBackgroundColor: {
+        control: {type: 'color'},
+        description: 'Background color for footer (must be opaque)',
+        if: {arg: 'useCustomBackgrounds', truthy: true},
+    },
 };
 
 export const DeepNesting = (): React.JSX.Element => (
     <div style={{height: '100vh'}}>
-        <SidenavBar aria-label="Deep nesting example">
+        <SidenavBar aria-label="Nested items example">
             <SidenavSection>
                 <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
             </SidenavSection>
             <SidenavSection title="Navigation" dividerTop>
-                <SidenavItem label="Level 1" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Level 2a" asset={IconDocumentsRegular} defaultOpen>
-                        <SidenavItem label="Level 3a" asset={IconDocumentsRegular} href="#l3a" />
-                        <SidenavItem label="Level 3b" asset={IconDocumentsRegular} href="#l3b" />
-                    </SidenavItem>
-                    <SidenavItem label="Level 2b" asset={IconDocumentsRegular} href="#l2b" />
+                <SidenavItem label="Products" asset={IconFolderRegular} defaultOpen>
+                    <SidenavItem label="Web App" asset={IconDocumentsRegular} href="#web" />
+                    <SidenavItem label="Mobile App" asset={IconDocumentsRegular} href="#mobile" />
+                    <SidenavItem label="Desktop App" asset={IconDocumentsRegular} href="#desktop" />
+                    <SidenavItem label="API Docs" href="#api" />
+                </SidenavItem>
+                <SidenavItem label="Resources" asset={IconFolderRegular}>
+                    <SidenavItem label="Documentation" asset={IconDocumentsRegular} href="#docs" />
+                    <SidenavItem label="Examples" asset={IconSearchRegular} href="#examples" />
+                    <SidenavItem label="FAQ" href="#faq" />
                 </SidenavItem>
                 <SidenavItem label="Other" asset={IconSearchRegular} href="#other" />
             </SidenavSection>
@@ -133,7 +200,7 @@ export const DeepNesting = (): React.JSX.Element => (
     </div>
 );
 
-DeepNesting.storyName = 'Deep nesting';
+DeepNesting.storyName = 'Nested items';
 
 export const WithRightSlots = (): React.JSX.Element => (
     <div style={{height: '100vh'}}>
@@ -247,163 +314,6 @@ MultipleSections.argTypes = {
     otherDividerBottom: {control: 'boolean'},
 };
 
-export const NotCollapsible = (): React.JSX.Element => (
-    <div style={{height: '100vh'}}>
-        <SidenavBar aria-label="Not collapsible example" collapsible={false}>
-            <SidenavSection>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
-            </SidenavSection>
-            <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
-                </SidenavItem>
-                <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
-            </SidenavSection>
-        </SidenavBar>
-    </div>
-);
-
-NotCollapsible.storyName = 'Not collapsible';
-
-export const Boxed = (): React.JSX.Element => (
-    <div style={{height: '100vh', padding: '24px', backgroundColor: '#f5f5f5'}}>
-        <SidenavBar aria-label="Boxed example" boxed>
-            <SidenavSection>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
-            </SidenavSection>
-            <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
-                </SidenavItem>
-                <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
-            </SidenavSection>
-        </SidenavBar>
-    </div>
-);
-
-Boxed.storyName = 'Boxed';
-
-type SectionDividersOnlyArgs = {
-    section1DividerTop: boolean;
-    section1DividerBottom: boolean;
-    section2DividerTop: boolean;
-    section2DividerBottom: boolean;
-    section3DividerTop: boolean;
-    section3DividerBottom: boolean;
-};
-
-export const SectionDividersOnly = ({
-    section1DividerTop,
-    section1DividerBottom,
-    section2DividerTop,
-    section2DividerBottom,
-    section3DividerTop,
-    section3DividerBottom,
-}: SectionDividersOnlyArgs): React.JSX.Element => (
-    <div style={{height: '100vh'}}>
-        <SidenavBar aria-label="Section dividers only example">
-            <SidenavSection dividerTop={section1DividerTop} dividerBottom={section1DividerBottom}>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
-            </SidenavSection>
-            <SidenavSection dividerTop={section2DividerTop} dividerBottom={section2DividerBottom}>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
-                </SidenavItem>
-                <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
-            </SidenavSection>
-            <SidenavSection dividerTop={section3DividerTop} dividerBottom={section3DividerBottom}>
-                <SidenavItem label="Profile" asset={IconDocumentsRegular} href="#profile" />
-                <SidenavItem label="Settings" asset={IconSettingsRegular} href="#settings" />
-            </SidenavSection>
-        </SidenavBar>
-    </div>
-);
-
-SectionDividersOnly.storyName = 'Section dividers only';
-
-SectionDividersOnly.args = {
-    section1DividerTop: false,
-    section1DividerBottom: false,
-    section2DividerTop: true,
-    section2DividerBottom: true,
-    section3DividerTop: true,
-    section3DividerBottom: false,
-};
-
-SectionDividersOnly.argTypes = {
-    section1DividerTop: {control: 'boolean'},
-    section1DividerBottom: {control: 'boolean'},
-    section2DividerTop: {control: 'boolean'},
-    section2DividerBottom: {control: 'boolean'},
-    section3DividerTop: {control: 'boolean'},
-    section3DividerBottom: {control: 'boolean'},
-};
-
-export const IconVisibility = (): React.JSX.Element => (
-    <div style={{height: '100vh'}}>
-        <SidenavBar aria-label="Icon visibility example">
-            <SidenavSection>
-                <SidenavItem
-                    label="Home"
-                    asset={IconHomeRegular}
-                    href="#home"
-                    selected
-                    showIconWhenExpanded
-                />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
-            </SidenavSection>
-            <SidenavSection title="With icons expanded" dividerTop>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
-                </SidenavItem>
-                <SidenavItem
-                    label="Notifications"
-                    asset={IconBellRegular}
-                    href="#notifications"
-                    showIconWhenExpanded
-                />
-            </SidenavSection>
-            <SidenavSection title="Without icons expanded" dividerTop dividerBottom>
-                <SidenavItem
-                    label="Profile"
-                    asset={IconDocumentsRegular}
-                    href="#profile"
-                    showIconWhenExpanded={false}
-                />
-                <SidenavItem
-                    label="Settings"
-                    asset={IconSettingsRegular}
-                    href="#settings"
-                    showIconWhenExpanded={false}
-                />
-            </SidenavSection>
-            <SidenavSection title="Mixed">
-                <SidenavItem
-                    label="History"
-                    asset={IconAlarmClockRegular}
-                    href="#history"
-                    showIconWhenExpanded
-                />
-                <SidenavItem
-                    label="Help"
-                    asset={IconSearchRegular}
-                    href="#help"
-                    showIconWhenExpanded={false}
-                />
-            </SidenavSection>
-        </SidenavBar>
-    </div>
-);
-
-IconVisibility.storyName = 'Icon visibility';
-
 export const DifferentAssets = (): React.JSX.Element => (
     <div style={{height: '100vh'}}>
         <SidenavBar aria-label="Different assets example">
@@ -505,43 +415,3 @@ export const DifferentAssets = (): React.JSX.Element => (
 );
 
 DifferentAssets.storyName = 'Different assets';
-
-export const ScrollingWithDividers = (): React.JSX.Element => (
-    <div style={{height: '100vh'}}>
-        <SidenavBar
-            aria-label="Scrolling example"
-            headerSlot={<Placeholder height={76} />}
-            footerSlot={<Placeholder height={76} />}
-        >
-            <SidenavSection>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
-            </SidenavSection>
-            <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
-                </SidenavItem>
-                <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
-            </SidenavSection>
-            <SidenavSection title="Account" dividerTop>
-                <SidenavItem label="Profile" asset={IconDocumentsRegular} href="#profile" />
-                <SidenavItem label="History" asset={IconAlarmClockRegular} href="#history" />
-                <SidenavItem label="Settings" asset={IconSettingsRegular} href="#settings" />
-            </SidenavSection>
-            <SidenavSection title="Help" dividerTop dividerBottom>
-                <SidenavItem label="Documentation" asset={IconDocumentsRegular} href="#docs" />
-                <SidenavItem label="Support" asset={IconSearchRegular} href="#support" />
-            </SidenavSection>
-            <SidenavSection title="More" dividerTop dividerBottom>
-                <SidenavItem label="Item 1" asset={IconHomeRegular} href="#item1" />
-                <SidenavItem label="Item 2" asset={IconFolderRegular} href="#item2" />
-                <SidenavItem label="Item 3" asset={IconBellRegular} href="#item3" />
-                <SidenavItem label="Item 4" asset={IconSettingsRegular} href="#item4" />
-                <SidenavItem label="Item 5" asset={IconDocumentsRegular} href="#item5" />
-            </SidenavSection>
-        </SidenavBar>
-    </div>
-);
-
-ScrollingWithDividers.storyName = 'Scrolling with dividers';

@@ -82,10 +82,14 @@ export const headerControls = style({
     gap: 8,
     width: '100%',
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 24,
 });
 
-export const headerControlsCollapsed = style({});
+export const headerControlsCollapsed = style({
+    alignItems: 'flex-start',
+    paddingLeft: 20,
+    paddingRight: 12,
+});
 
 export const logo = style({
     display: 'flex',
@@ -194,8 +198,8 @@ export const sectionTitle = style({
 export const sectionContent = style({
     display: 'flex',
     flexDirection: 'column',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 8,
+    paddingRight: 8,
 });
 
 export const sectionDivider = style({
@@ -292,4 +296,55 @@ export const itemChevron = style({
 export const nestedList = style({
     display: 'flex',
     flexDirection: 'column',
+});
+
+// Panel (Dialog and Double Panel) -----------------------------------------------
+
+export const panelOverlay = style({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
+    pointerEvents: 'auto',
+    backgroundColor: 'rgba(0,0,0,0.1)',
+});
+
+export const dialogPanel = style({
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: skinVars.colors.backgroundContainer,
+    borderRadius: skinVars.borderRadii.popup,
+    border: `1px solid ${skinVars.colors.border}`,
+    minWidth: DEFAULT_WIDTH,
+    maxHeight: '70vh',
+    overflowY: 'auto',
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 8,
+    paddingRight: 8,
+    boxShadow: '0px 4px 12px rgba(0,0,0,0.15)',
+    position: 'relative',
+    zIndex: 1001,
+});
+
+export const dialogPanelTitle = style({
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+});
+
+export const doublePanel = style({
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: skinVars.colors.backgroundContainer,
+    borderRight: `1px solid ${skinVars.colors.divider}`,
+    width: DEFAULT_WIDTH,
+    height: '100%',
+    overflowY: 'auto',
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingLeft: 8,
+    paddingRight: 8,
 });

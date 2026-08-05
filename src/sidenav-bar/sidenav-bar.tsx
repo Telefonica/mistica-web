@@ -410,6 +410,38 @@ const SidenavBar = ({
 
     if (process.env.NODE_ENV !== 'production') {
         assertChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');
+
+        const itemIds = new Set<string>();
+        const duplicateIds = new Set<string>();
+
+        const collectItemIds = (node: React.ReactNode): void => {
+            React.Children.forEach(node, (child) => {
+                if (React.isValidElement(child)) {
+                    if (child.type === SidenavSection) {
+                        collectItemIds(child.props.children);
+                    } else if (child.props?.id) {
+                        const id = child.props.id as string;
+                        if (itemIds.has(id)) {
+                            duplicateIds.add(id);
+                        } else {
+                            itemIds.add(id);
+                        }
+                        if (child.props.children) {
+                            collectItemIds(child.props.children);
+                        }
+                    }
+                }
+            });
+        };
+
+        collectItemIds(children);
+
+        if (duplicateIds.size > 0) {
+            console.error(
+                `SidenavBar: duplicate item IDs found: ${Array.from(duplicateIds).join(', ')}. ` +
+                    `All SidenavItem ids must be unique within a SidenavBar.`
+            );
+        }
     }
 
     const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
