@@ -122,7 +122,7 @@ export const getO2Skin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.white, 0.08),
-            buttonLinkNeutralBackgroundPressed: palette.grey20,
+            buttonLinkNeutralBackgroundPressed: applyAlpha(palette.grey30, 0.4),
             buttonLinkNeutralBackgroundBrand: palette.white,
             buttonLinkNeutralBackgroundBrandPressed: palette.grey20,
             buttonLinkNeutralBackgroundNegative: palette.white,
@@ -766,6 +766,7 @@ export const getO2Skin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

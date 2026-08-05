@@ -112,7 +112,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.white, 0.1),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.white, 0.1),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.white, 0.1),
-            buttonLinkNeutralBackgroundPressed: palette.grey1,
+            buttonLinkNeutralBackgroundPressed: palette.grey2,
             buttonLinkNeutralBackgroundBrand: palette.white,
             buttonLinkNeutralBackgroundBrandPressed: palette.grey1,
             buttonLinkNeutralBackgroundNegative: palette.white,
@@ -780,6 +780,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };
