@@ -126,6 +126,31 @@ const assertChildrenAre = (children: React.ReactNode, expected: React.ElementTyp
     });
 };
 
+/** Check if any descendant SidenavItem has the given ID */
+const hasDescendantWithId = (children: React.ReactNode, targetId: string | null): boolean => {
+    if (!targetId) return false;
+
+    let found = false;
+    const search = (node: React.ReactNode): void => {
+        React.Children.forEach(node, (child) => {
+            if (found) return;
+            if (React.isValidElement(child)) {
+                const props = child.props as {id?: string; children?: React.ReactNode};
+                if (props.id === targetId) {
+                    found = true;
+                    return;
+                }
+                if (props.children) {
+                    search(props.children);
+                }
+            }
+        });
+    };
+
+    search(children);
+    return found;
+};
+
 // -----------------------------------------------------------------------------
 // SidenavSection
 // -----------------------------------------------------------------------------
@@ -569,5 +594,12 @@ const SidenavBar = ({
 
 export default SidenavBar;
 export {SidenavBar, SidenavSection};
-export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, generateItemId, assertChildrenAre};
+export {
+    SidenavBarContext,
+    useSidenavBarContext,
+    SidenavLevelContext,
+    generateItemId,
+    assertChildrenAre,
+    hasDescendantWithId,
+};
 export type {SidenavBarProps, SidenavSectionProps, SidenavBarBackgroundColors};

@@ -3,7 +3,13 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
 import {NESTING_INDENT} from './sidenav-bar.css';
-import {useSidenavBarContext, SidenavLevelContext, generateItemId, assertChildrenAre} from './sidenav-bar';
+import {
+    useSidenavBarContext,
+    SidenavLevelContext,
+    generateItemId,
+    assertChildrenAre,
+    hasDescendantWithId,
+} from './sidenav-bar';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import Touchable from '../touchable';
@@ -85,7 +91,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
 
-    const selected = id !== undefined && selectedItemId === id;
+    const selected =
+        (id !== undefined && selectedItemId === id) ||
+        (collapsed && hasDescendantWithId(children, selectedItemId));
 
     const hasChildren = React.Children.count(children) > 0;
     const navigates = props.onPress !== undefined || props.href !== undefined || props.to !== undefined;
