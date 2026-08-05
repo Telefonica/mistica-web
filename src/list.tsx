@@ -35,10 +35,8 @@ import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
-const RowListDividerContext = React.createContext(false);
-
-type ListCompactContextType = {small: boolean};
-const ListCompactContext = React.createContext<ListCompactContextType>({small: false});
+type ListContextType = {small: boolean; hasDivider: boolean};
+const ListContext = React.createContext<ListContextType>({small: false, hasDivider: false});
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
@@ -86,7 +84,7 @@ interface ContentProps extends CommonProps {
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
-    showDivider?: boolean;
+    withDivider?: boolean;
 }
 
 export const Content = ({
@@ -111,13 +109,13 @@ export const Content = ({
     labelId,
     disabled,
     control,
-    showDivider,
+    withDivider,
 }: ContentProps): JSX.Element => {
     const outsideVariant = useThemeVariant();
     const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
-    const {small} = React.useContext(ListCompactContext);
+    const {small} = React.useContext(ListContext);
     const titlePreset = small ? textPresets.text2 : textPresets.text3;
 
     const SubtitleComponent = small ? Text1 : Text2;
@@ -285,7 +283,7 @@ export const Content = ({
                     </div>
                 )}
             </div>
-            {showDivider && (
+            {withDivider && (
                 <div className={styles.rowDivider} data-testid="row-divider">
                     <Divider />
                 </div>
@@ -481,7 +479,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [slotText, setSlotText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
     const assetText = getAssetText(asset);
-    const hasDivider = React.useContext(RowListDividerContext);
+    const {hasDivider} = React.useContext(ListContext);
     const [dividerOffset, setDividerOffset] = React.useState(0);
     const measureDividerOffset = React.useCallback(
         (dualActionContainerElement: HTMLDivElement | null) => {
@@ -555,7 +553,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         control?: React.ReactNode;
         labelId?: string;
         role?: string;
-        showDivider?: boolean;
+        withDivider?: boolean;
     }) => (
         <Content
             asset={asset}
@@ -592,7 +590,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
-            showDivider={contentProps?.showDivider ?? hasDivider}
+            withDivider={contentProps?.withDivider ?? hasDivider}
         />
     );
 
@@ -639,7 +637,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     })}
                     tabIndex={tabIndex}
                 >
-                    {renderContent({labelId: titleId, role, showDivider: false})}
+                    {renderContent({labelId: titleId, role, withDivider: false})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
                 {control}
@@ -833,20 +831,18 @@ export const RowList = ({
     small = false,
 }: RowListProps): JSX.Element => {
     return (
-        <ListCompactContext.Provider value={{small}}>
-            <RowListDividerContext.Provider value>
-                <div
-                    role={role}
-                    aria-labelledby={ariaLabelledBy}
-                    aria-label={ariaLabel}
-                    aria-live={ariaLive}
-                    aria-atomic={ariaAtomic}
-                    {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
-                >
-                    {children}
-                </div>
-            </RowListDividerContext.Provider>
-        </ListCompactContext.Provider>
+        <ListContext.Provider value={{small, hasDivider: true}}>
+            <div
+                role={role}
+                aria-labelledby={ariaLabelledBy}
+                aria-label={ariaLabel}
+                aria-live={ariaLive}
+                aria-atomic={ariaAtomic}
+                {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
+            >
+                {children}
+            </div>
+        </ListContext.Provider>
     );
 };
 
@@ -908,7 +904,7 @@ export const BoxedRowList = ({
     'aria-atomic': ariaAtomic = false,
     small = false,
 }: BoxedRowListProps): JSX.Element => (
-    <ListCompactContext.Provider value={{small}}>
+    <ListContext.Provider value={{small, hasDivider: false}}>
         <Stack
             space={16}
             role={role}
@@ -920,7 +916,7 @@ export const BoxedRowList = ({
         >
             {children}
         </Stack>
-    </ListCompactContext.Provider>
+    </ListContext.Provider>
 );
 
 type UnorderedListProps = {
