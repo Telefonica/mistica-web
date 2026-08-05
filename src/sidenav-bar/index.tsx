@@ -23,6 +23,42 @@ import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes, IconProps} from '../utils/types';
 
+// Branded type: a string that is guaranteed to be an opaque color
+type OpaqueColor = string & {readonly __brand: 'OpaqueColor'};
+
+// Type guard: checks if a color is opaque (no 'rgba' with alpha < 1, no 'transparent', etc)
+const isOpaqueColor = (value: string): value is OpaqueColor => {
+    if (value === 'transparent' || value === 'rgba(0,0,0,0)') {
+        return false;
+    }
+    const rgbaMatch = value.match(/rgba\([^,]+,\s*[^,]+,\s*[^,]+,\s*([^)]+)\)/);
+    if (rgbaMatch) {
+        const alpha = parseFloat(rgbaMatch[1]);
+        if (alpha < 1) return false;
+    }
+    return true;
+};
+
+// Helper: coerce a color to opaque (removes alpha channel if present)
+const toOpaqueColor = (color: string): OpaqueColor => {
+    const rgbaMatch = color.match(/^rgba\(([^,]+),\s*([^,]+),\s*([^)]+),\s*[^)]+\)$/);
+    if (rgbaMatch) {
+        return `rgb(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]})` as OpaqueColor;
+    }
+    return color as OpaqueColor;
+};
+
+// Helper: validate and warn in dev, coerce in production
+const enforceOpaqueColor = (color: string, region: 'header' | 'footer'): OpaqueColor => {
+    if (process.env.NODE_ENV !== 'production' && !isOpaqueColor(color)) {
+        console.warn(
+            `SidenavBar: ${region} background color must be opaque (no transparency), ` +
+                `but received "${color}". Coercing to opaque.`
+        );
+    }
+    return toOpaqueColor(color);
+};
+
 /*
  * SidenavBar — first draft.
  *
@@ -276,7 +312,12 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 <span className={styles.selectedIndicatorPlaceholder} />
             )}
             {collapsed ? (
-                <Tooltip position="right" description={label} target={interactiveRow} />
+                <Tooltip
+                    position="right"
+                    description={label}
+                    target={interactiveRow}
+                    targetStyle={{flex: 1}}
+                />
             ) : (
                 interactiveRow
             )}
@@ -376,6 +417,15 @@ const SidenavSection = ({
 // SidenavBar
 // -----------------------------------------------------------------------------
 
+type SidenavBarBackgroundColors = {
+    /** Custom background for header. Must be opaque to mask scrolling content. */
+    header?: OpaqueColor;
+    /** Custom background for body (scrollable content). Can be any color including transparent. */
+    body?: string;
+    /** Custom background for footer. Must be opaque to mask scrolling content. */
+    footer?: OpaqueColor;
+};
+
 type SidenavBarBaseProps = {
     /** Sections containing navigation items. Only `SidenavSection` children are allowed. */
     children?: React.ReactNode;
@@ -399,6 +449,8 @@ type SidenavBarBaseProps = {
     logo?: React.ReactElement | false;
     /** Optional slot rendered in the header region, below the collapse control. */
     headerSlot?: React.ReactNode;
+    /** Custom background colors for header, body, and footer regions. */
+    background?: SidenavBarBackgroundColors;
     dataAttributes?: DataAttributes;
 };
 
@@ -485,11 +537,21 @@ const SidenavBar = ({
     headerSlot,
     footerSlot,
     fixedFooter = false,
+    background,
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
     const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
+
+    // Extract and enforce opacity constraints on header/footer backgrounds
+    const headerBackgroundColor = background?.header
+        ? enforceOpaqueColor(background.header, 'header')
+        : undefined;
+    const footerBackgroundColor = background?.footer
+        ? enforceOpaqueColor(background.footer, 'footer')
+        : undefined;
+    const bodyBackgroundColor = background?.body;
 
     const [showHeaderDivider, setShowHeaderDivider] = React.useState(false);
     const [showFooterDivider, setShowFooterDivider] = React.useState(false);
@@ -571,6 +633,9 @@ const SidenavBar = ({
                                 [styles.headerCollapsed]: collapsed,
                                 [styles.headerBoxed[normalizedVariant]]: boxed,
                             })}
+                            style={
+                                headerBackgroundColor ? {backgroundColor: headerBackgroundColor} : undefined
+                            }
                         >
                             <div
                                 className={classnames(styles.headerControls, {
@@ -605,6 +670,7 @@ const SidenavBar = ({
                         className={classnames(styles.bodyBase, styles.body[normalizedVariant], {
                             [styles.bodyWithoutHeader]: !hasHeader,
                         })}
+                        style={bodyBackgroundColor ? {backgroundColor: bodyBackgroundColor} : undefined}
                     >
                         <div ref={headerDividerSentinelRef} />
                         {showHeaderDivider && (
@@ -637,6 +703,11 @@ const SidenavBar = ({
                                             [styles.footerBoxed[normalizedVariant]]: boxed,
                                         }
                                     )}
+                                    style={
+                                        footerBackgroundColor
+                                            ? {backgroundColor: footerBackgroundColor}
+                                            : undefined
+                                    }
                                 >
                                     {footerSlot}
                                 </div>
@@ -648,6 +719,9 @@ const SidenavBar = ({
                             className={classnames(styles.footerBase, styles.footer[normalizedVariant], {
                                 [styles.footerBoxed[normalizedVariant]]: boxed,
                             })}
+                            style={
+                                footerBackgroundColor ? {backgroundColor: footerBackgroundColor} : undefined
+                            }
                         >
                             {footerSlot}
                         </div>
@@ -661,7 +735,7 @@ const SidenavBar = ({
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
 export {default as SidenavLayout} from './sidenav-layout';
-export type {SidenavBarProps, SidenavSectionProps, SidenavItemProps};
+export type {SidenavBarProps, SidenavSectionProps, SidenavItemProps, SidenavBarBackgroundColors};
 export type {
     SidenavLayoutProps,
     SidenavLayoutSidenavProps,
