@@ -79,3 +79,57 @@ test('SidenavBar renders no logo when logo is false', async () => {
 
     expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
 });
+
+test('SidenavBar supports controlled selection with selectedItemId prop', async () => {
+    const onSelectedItemIdChange = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                aria-label="Main navigation"
+                selectedItemId="home"
+                onSelectedItemIdChange={onSelectedItemIdChange}
+            >
+                <SidenavSection title="Workspace">
+                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="/home" />
+                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} href="/projects" />
+                    <SidenavItem id="active" label="Active" asset={IconHomeRegular} href="/active" />
+                </SidenavSection>
+            </SidenavBar>
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', {name: 'Projects'})).not.toHaveAttribute('aria-current');
+    expect(screen.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');
+});
+
+test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', async () => {
+    const onSelectedItemIdChange = jest.fn();
+    const onPress = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                aria-label="Main navigation"
+                selectedItemId="home"
+                onSelectedItemIdChange={onSelectedItemIdChange}
+            >
+                <SidenavSection title="Workspace">
+                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} onPress={() => {}} />
+                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} onPress={onPress} />
+                </SidenavSection>
+            </SidenavBar>
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    const projectsButton = screen.getByRole('button', {name: 'Projects'});
+    fireEvent.click(projectsButton);
+
+    expect(onSelectedItemIdChange).toHaveBeenCalledWith('projects');
+    expect(onPress).toHaveBeenCalled();
+});
