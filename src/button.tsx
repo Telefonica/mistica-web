@@ -326,15 +326,12 @@ type ButtonProps = ExclusifyUnion<
 
 export type ButtonLinkType = 'default' | 'danger' | 'neutral';
 
-type BaseButtonLinkProps = ExclusifyUnion<
+type ButtonLinkProps = ExclusifyUnion<
     FakeButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 > & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
-};
-
-type ButtonLinkProps = BaseButtonLinkProps & {
     type?: ButtonLinkType;
 };
 
@@ -588,7 +585,7 @@ export const ButtonLink = React.forwardRef<
 });
 
 /** @deprecated Use ButtonLink with type="danger" instead. */
-export const ButtonLinkDanger = React.forwardRef<TouchableElement, BaseButtonLinkProps>(
+export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
     ({dataAttributes, className, ...props}, ref) => {
         return (
             <ButtonLink

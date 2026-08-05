@@ -10,7 +10,6 @@ import {
     Text2,
     IconPhotoCameraRegular,
     ResponsiveLayout,
-    ButtonLinkDanger,
 } from '..';
 import tennisImg from './images/tennis.jpg';
 
@@ -189,53 +188,6 @@ export const LinkButton: StoryComponent<ButtonLinkArgs> = ({
     );
 };
 
-export const LinkButtonDanger: StoryComponent<Args> = ({
-    variantOutside,
-    text,
-    icon,
-    action,
-    newTab,
-    ...props
-}) => {
-    return (
-        <ButtonBackgroundContainer variant={variantOutside}>
-            <ButtonLinkDanger
-                {...props}
-                {...getButtonActionProps(action, newTab)}
-                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
-                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
-            >
-                {text}
-            </ButtonLinkDanger>
-        </ButtonBackgroundContainer>
-    );
-};
-
-export const LinkButtonNeutral: StoryComponent<Args & {chevron: string}> = ({
-    variantOutside,
-    text,
-    icon,
-    action,
-    newTab,
-    chevron,
-    ...props
-}) => {
-    return (
-        <ButtonBackgroundContainer variant={variantOutside}>
-            <ButtonLink
-                {...props}
-                type="neutral"
-                withChevron={chevron === 'default' ? undefined : chevron === 'true'}
-                {...getButtonActionProps(action, newTab)}
-                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
-                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
-            >
-                {text}
-            </ButtonLink>
-        </ButtonBackgroundContainer>
-    );
-};
-
 export const SubmitButton: StoryComponent = () => (
     <ButtonBackgroundContainer variant="default">
         <Text2 as="p" regular>
@@ -257,8 +209,6 @@ primaryButton.storyName = 'ButtonPrimary';
 SecondaryButton.storyName = 'ButtonSecondary';
 DangerButton.storyName = 'ButtonDanger';
 LinkButton.storyName = 'ButtonLink';
-LinkButtonDanger.storyName = 'ButtonLinkDanger';
-LinkButtonNeutral.storyName = 'ButtonLink type neutral';
 SubmitButton.storyName = 'Submit button';
 
 primaryButton.args = defaultArgs;
@@ -268,18 +218,6 @@ LinkButton.args = {
     ...defaultArgs,
     chevron: 'default',
     type: 'default',
-};
-LinkButtonDanger.args = defaultArgs;
-LinkButtonDanger.parameters = {
-    docs: {
-        description: {
-            story: 'Deprecated. Use ButtonLink with type="danger" instead.',
-        },
-    },
-};
-LinkButtonNeutral.args = {
-    ...defaultArgs,
-    chevron: 'default',
 };
 
 primaryButton.argTypes = defaultArgTypes;
@@ -291,14 +229,6 @@ LinkButton.argTypes = {
         options: ['default', 'danger', 'neutral'],
         control: {type: 'select'},
     },
-    chevron: {
-        options: ['default', 'true', 'false'],
-        control: {type: 'select'},
-    },
-};
-LinkButtonDanger.argTypes = defaultArgTypes;
-LinkButtonNeutral.argTypes = {
-    ...defaultArgTypes,
     chevron: {
         options: ['default', 'true', 'false'],
         control: {type: 'select'},
