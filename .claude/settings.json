@@ -1,0 +1,16 @@
+{
+    "hooks": {
+        "PreToolUse": [
+            {
+                "matcher": "Bash",
+                "hooks": [
+                    {
+                        "type": "prompt",
+                        "prompt": "This command is about to run:\n\n$ARGUMENTS\n\nPlease confirm: do you want Claude to commit without asking first? (Only approve if you explicitly want Claude to commit on its own.)",
+                        "if": "Bash(git commit*)"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -81,38 +81,53 @@ export const Default = ({
                 : {})}
         >
             <SidenavSection>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
+                <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+                <SidenavItem id="search" label="Search" asset={IconSearchRegular} href="#search" />
             </SidenavSection>
             <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" asset={IconDocumentsRegular} href="#active" />
-                    <SidenavItem label="Archived" asset={IconDocumentsRegular} href="#archived" />
-                    <SidenavItem label="Draft" href="#draft" />
-                    <SidenavItem label="In Review" asset={IconDocumentsRegular} href="#review" />
+                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                    <SidenavItem id="active" label="Active" asset={IconDocumentsRegular} href="#active" />
+                    <SidenavItem
+                        id="archived"
+                        label="Archived"
+                        asset={IconDocumentsRegular}
+                        href="#archived"
+                    />
+                    <SidenavItem id="draft" label="Draft" href="#draft" />
+                    <SidenavItem id="review" label="In Review" asset={IconDocumentsRegular} href="#review" />
                 </SidenavItem>
-                <SidenavItem label="Teams" asset={IconFolderRegular}>
-                    <SidenavItem label="Engineering" asset={IconSearchRegular} href="#eng" />
-                    <SidenavItem label="Design" asset={IconSearchRegular} href="#design" />
-                    <SidenavItem label="Marketing" asset={IconSearchRegular} href="#marketing" />
+                <SidenavItem id="teams" label="Teams" asset={IconFolderRegular}>
+                    <SidenavItem id="eng" label="Engineering" asset={IconSearchRegular} href="#eng" />
+                    <SidenavItem id="design" label="Design" asset={IconSearchRegular} href="#design" />
+                    <SidenavItem
+                        id="marketing"
+                        label="Marketing"
+                        asset={IconSearchRegular}
+                        href="#marketing"
+                    />
                 </SidenavItem>
-                <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
+                <SidenavItem
+                    id="notifications"
+                    label="Notifications"
+                    asset={IconBellRegular}
+                    href="#notifications"
+                />
             </SidenavSection>
             <SidenavSection title="Account" dividerTop>
-                <SidenavItem label="Profile" asset={IconDocumentsRegular} href="#profile" />
-                <SidenavItem label="History" asset={IconAlarmClockRegular} href="#history" />
-                <SidenavItem label="Settings" asset={IconSettingsRegular} href="#settings" />
+                <SidenavItem id="profile" label="Profile" asset={IconDocumentsRegular} href="#profile" />
+                <SidenavItem id="history" label="History" asset={IconAlarmClockRegular} href="#history" />
+                <SidenavItem id="settings" label="Settings" asset={IconSettingsRegular} href="#settings" />
             </SidenavSection>
             <SidenavSection title="Help" dividerTop dividerBottom>
-                <SidenavItem label="Documentation" asset={IconDocumentsRegular} href="#docs" />
-                <SidenavItem label="Support" asset={IconSearchRegular} href="#support" />
+                <SidenavItem id="docs" label="Documentation" asset={IconDocumentsRegular} href="#docs" />
+                <SidenavItem id="support" label="Support" asset={IconSearchRegular} href="#support" />
             </SidenavSection>
             <SidenavSection title="More" dividerTop dividerBottom>
-                <SidenavItem label="Item 1" asset={IconHomeRegular} href="#item1" />
-                <SidenavItem label="Item 2" asset={IconFolderRegular} href="#item2" />
-                <SidenavItem label="Item 3" asset={IconBellRegular} href="#item3" />
-                <SidenavItem label="Item 4" asset={IconSettingsRegular} href="#item4" />
-                <SidenavItem label="Item 5" asset={IconDocumentsRegular} href="#item5" />
+                <SidenavItem id="item1" label="Item 1" asset={IconHomeRegular} href="#item1" />
+                <SidenavItem id="item2" label="Item 2" asset={IconFolderRegular} href="#item2" />
+                <SidenavItem id="item3" label="Item 3" asset={IconBellRegular} href="#item3" />
+                <SidenavItem id="item4" label="Item 4" asset={IconSettingsRegular} href="#item4" />
+                <SidenavItem id="item5" label="Item 5" asset={IconDocumentsRegular} href="#item5" />
             </SidenavSection>
         </SidenavBar>
     </div>
@@ -180,21 +195,26 @@ export const DeepNesting = (): React.JSX.Element => (
     <div style={{height: '100vh'}}>
         <SidenavBar aria-label="Nested items example">
             <SidenavSection>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
+                <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
             </SidenavSection>
             <SidenavSection title="Navigation" dividerTop>
-                <SidenavItem label="Products" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Web App" asset={IconDocumentsRegular} href="#web" />
-                    <SidenavItem label="Mobile App" asset={IconDocumentsRegular} href="#mobile" />
-                    <SidenavItem label="Desktop App" asset={IconDocumentsRegular} href="#desktop" />
-                    <SidenavItem label="API Docs" href="#api" />
+                <SidenavItem id="products" label="Products" asset={IconFolderRegular} defaultOpen>
+                    <SidenavItem id="web" label="Web App" asset={IconDocumentsRegular} href="#web" />
+                    <SidenavItem id="mobile" label="Mobile App" asset={IconDocumentsRegular} href="#mobile" />
+                    <SidenavItem
+                        id="desktop"
+                        label="Desktop App"
+                        asset={IconDocumentsRegular}
+                        href="#desktop"
+                    />
+                    <SidenavItem id="api" label="API Docs" href="#api" />
                 </SidenavItem>
-                <SidenavItem label="Resources" asset={IconFolderRegular}>
-                    <SidenavItem label="Documentation" asset={IconDocumentsRegular} href="#docs" />
-                    <SidenavItem label="Examples" asset={IconSearchRegular} href="#examples" />
-                    <SidenavItem label="FAQ" href="#faq" />
+                <SidenavItem id="resources" label="Resources" asset={IconFolderRegular}>
+                    <SidenavItem id="docs" label="Documentation" asset={IconDocumentsRegular} href="#docs" />
+                    <SidenavItem id="examples" label="Examples" asset={IconSearchRegular} href="#examples" />
+                    <SidenavItem id="faq" label="FAQ" href="#faq" />
                 </SidenavItem>
-                <SidenavItem label="Other" asset={IconSearchRegular} href="#other" />
+                <SidenavItem id="other" label="Other" asset={IconSearchRegular} href="#other" />
             </SidenavSection>
         </SidenavBar>
     </div>
@@ -207,13 +227,14 @@ export const WithRightSlots = (): React.JSX.Element => (
         <SidenavBar aria-label="Right slots example">
             <SidenavSection>
                 <SidenavItem
+                    id="home"
                     label="Home"
                     asset={IconHomeRegular}
                     href="#home"
-                    selected
                     rightSlot={<Badge value={3} />}
                 />
                 <SidenavItem
+                    id="notif"
                     label="Notifications"
                     asset={IconBellRegular}
                     href="#notif"
@@ -221,16 +242,18 @@ export const WithRightSlots = (): React.JSX.Element => (
                 />
             </SidenavSection>
             <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
+                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
                     <SidenavItem
+                        id="active"
                         label="Active"
                         asset={IconFolderRegular}
                         href="#active"
                         rightSlot={<Box paddingRight={8}>{/* custom content */}</Box>}
                     />
-                    <SidenavItem label="Archived" asset={IconFolderRegular} href="#archived" />
+                    <SidenavItem id="archived" label="Archived" asset={IconFolderRegular} href="#archived" />
                 </SidenavItem>
                 <SidenavItem
+                    id="settings"
                     label="Settings"
                     asset={IconSettingsRegular}
                     href="#settings"
@@ -263,32 +286,37 @@ export const MultipleSections = ({
     <div style={{height: '100vh'}}>
         <SidenavBar aria-label="Multiple sections example">
             <SidenavSection>
-                <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
+                <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+                <SidenavItem id="search" label="Search" asset={IconSearchRegular} href="#search" />
             </SidenavSection>
             <SidenavSection
                 title="Workspace"
                 dividerTop={workspaceDividerTop}
                 dividerBottom={workspaceDividerBottom}
             >
-                <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem label="Active" href="#active" />
-                    <SidenavItem label="Archived" href="#archived" />
+                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                    <SidenavItem id="active" label="Active" href="#active" />
+                    <SidenavItem id="archived" label="Archived" href="#archived" />
                 </SidenavItem>
-                <SidenavItem label="Notifications" asset={IconBellRegular} href="#notifications" />
+                <SidenavItem
+                    id="notifications"
+                    label="Notifications"
+                    asset={IconBellRegular}
+                    href="#notifications"
+                />
             </SidenavSection>
             <SidenavSection
                 title="Account"
                 dividerTop={accountDividerTop}
                 dividerBottom={accountDividerBottom}
             >
-                <SidenavItem label="Profile" asset={IconDocumentsRegular} href="#profile" />
-                <SidenavItem label="History" asset={IconAlarmClockRegular} href="#history" />
-                <SidenavItem label="Settings" asset={IconSettingsRegular} href="#settings" />
+                <SidenavItem id="profile" label="Profile" asset={IconDocumentsRegular} href="#profile" />
+                <SidenavItem id="history" label="History" asset={IconAlarmClockRegular} href="#history" />
+                <SidenavItem id="settings" label="Settings" asset={IconSettingsRegular} href="#settings" />
             </SidenavSection>
             <SidenavSection title="Other" dividerTop={otherDividerTop} dividerBottom={otherDividerBottom}>
-                <SidenavItem label="Documentation" href="#docs" asset={IconDocumentsRegular} />
-                <SidenavItem label="Help" href="#help" asset={IconSearchRegular} />
+                <SidenavItem id="docs" label="Documentation" href="#docs" asset={IconDocumentsRegular} />
+                <SidenavItem id="help" label="Help" href="#help" asset={IconSearchRegular} />
             </SidenavSection>
         </SidenavBar>
     </div>
@@ -318,11 +346,17 @@ export const DifferentAssets = (): React.JSX.Element => (
     <div style={{height: '100vh'}}>
         <SidenavBar aria-label="Different assets example">
             <SidenavSection>
-                <SidenavItem label="With icon" asset={IconHomeRegular} href="#icon-asset" />
+                <SidenavItem id="icon-asset" label="With icon" asset={IconHomeRegular} href="#icon-asset" />
             </SidenavSection>
             <SidenavSection title="Alternative assets" dividerTop>
-                <SidenavItem label="With badge" asset={<Badge value={5} />} href="#badge-asset" />
                 <SidenavItem
+                    id="badge-asset"
+                    label="With badge"
+                    asset={<Badge value={5} />}
+                    href="#badge-asset"
+                />
+                <SidenavItem
+                    id="avatar-asset"
                     label="With avatar"
                     asset={
                         <div
@@ -345,6 +379,7 @@ export const DifferentAssets = (): React.JSX.Element => (
                     href="#avatar-asset"
                 />
                 <SidenavItem
+                    id="image-asset"
                     label="With image"
                     asset={
                         <img
@@ -356,11 +391,13 @@ export const DifferentAssets = (): React.JSX.Element => (
                     href="#image-asset"
                 />
                 <SidenavItem
+                    id="emoji-asset"
                     label="With emoji"
                     asset={<span style={{fontSize: 20, lineHeight: 1}}>⭐</span>}
                     href="#emoji-asset"
                 />
                 <SidenavItem
+                    id="custom-box-asset"
                     label="With custom box"
                     asset={
                         <div
@@ -383,6 +420,7 @@ export const DifferentAssets = (): React.JSX.Element => (
                     href="#custom-box-asset"
                 />
                 <SidenavItem
+                    id="radio-asset"
                     label="With custom component"
                     asset={
                         <div
@@ -415,3 +453,110 @@ export const DifferentAssets = (): React.JSX.Element => (
 );
 
 DifferentAssets.storyName = 'Different assets';
+
+export const ControlledSelection = (): React.JSX.Element => {
+    const [selectedId, setSelectedId] = React.useState<string | null>('home');
+
+    return (
+        <div style={{display: 'flex', height: '100vh'}}>
+            <SidenavBar
+                aria-label="Controlled selection example"
+                selectedItemId={selectedId}
+                onSelectedItemIdChange={setSelectedId}
+            >
+                <SidenavSection>
+                    <SidenavItem
+                        id="home"
+                        label="Home"
+                        asset={IconHomeRegular}
+                        onPress={() => console.log('Home clicked')}
+                    />
+                    <SidenavItem
+                        id="search"
+                        label="Search"
+                        asset={IconSearchRegular}
+                        onPress={() => console.log('Search clicked')}
+                    />
+                </SidenavSection>
+                <SidenavSection title="Workspace" dividerTop>
+                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                        <SidenavItem
+                            id="projects-active"
+                            label="Active"
+                            asset={IconDocumentsRegular}
+                            onPress={() => console.log('Active clicked')}
+                        />
+                        <SidenavItem
+                            id="projects-archived"
+                            label="Archived"
+                            asset={IconDocumentsRegular}
+                            onPress={() => console.log('Archived clicked')}
+                        />
+                    </SidenavItem>
+                    <SidenavItem
+                        id="notifications"
+                        label="Notifications"
+                        asset={IconBellRegular}
+                        onPress={() => console.log('Notifications clicked')}
+                    />
+                </SidenavSection>
+                <SidenavSection title="Account" dividerTop>
+                    <SidenavItem
+                        id="profile"
+                        label="Profile"
+                        asset={IconDocumentsRegular}
+                        onPress={() => console.log('Profile clicked')}
+                    />
+                    <SidenavItem
+                        id="settings"
+                        label="Settings"
+                        asset={IconSettingsRegular}
+                        onPress={() => console.log('Settings clicked')}
+                    />
+                </SidenavSection>
+            </SidenavBar>
+            <div
+                style={{
+                    flex: 1,
+                    padding: '2rem',
+                    backgroundColor: '#f5f5f5',
+                    overflowY: 'auto',
+                }}
+            >
+                <h1>Controlled Selection Demo</h1>
+                <p>
+                    This demo showcases the controlled selection API. Click any item in the sidenav to update
+                    the selection.
+                </p>
+                <div
+                    style={{
+                        backgroundColor: 'white',
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        marginTop: '1rem',
+                        fontFamily: 'monospace',
+                    }}
+                >
+                    <strong>Selected Item ID:</strong>
+                    <div style={{fontSize: '1.5rem', color: '#0066CC', marginTop: '0.5rem'}}>
+                        {selectedId || '(none)'}
+                    </div>
+                </div>
+                <div style={{marginTop: '2rem', color: '#666'}}>
+                    <p>
+                        <strong>How it works:</strong>
+                    </p>
+                    <ul>
+                        <li>Each item has a unique `id` prop</li>
+                        <li>SidenavBar accepts `selectedItemId` to control which item is selected</li>
+                        <li>When an item is clicked, `onSelectedItemIdChange` is called with its ID</li>
+                        <li>The selected item gets `aria-current="page"` and selected styling</li>
+                        <li>You can programmatically update selection from anywhere in your app</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+ControlledSelection.storyName = 'Controlled selection';
