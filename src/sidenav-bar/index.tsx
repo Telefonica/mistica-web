@@ -219,17 +219,16 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const shouldShowAsset = asset && (collapsed || showIconWhenExpanded);
     let assetContent: React.ReactNode = null;
-    if (shouldShowAsset) {
-        if (typeof asset === 'function') {
-            assetContent = (asset as (props: IconProps) => JSX.Element)({
-                size: 20,
-                color: 'currentColor',
-            });
-        } else {
-            assetContent = asset;
-        }
+    if (typeof asset === 'function') {
+        assetContent = (asset as (props: IconProps) => JSX.Element)({
+            size: 20,
+            color: 'currentColor',
+        });
+    } else if (asset) {
+        assetContent = asset;
     }
-    const assetElement = shouldShowAsset ? <span className={styles.itemAsset}>{assetContent}</span> : null;
+    const assetElement =
+        shouldShowAsset && assetContent ? <span className={styles.itemAsset}>{assetContent}</span> : null;
 
     const labelNode = collapsed ? (
         <ScreenReaderOnly>
