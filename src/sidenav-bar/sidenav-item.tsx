@@ -198,7 +198,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const touchableClassName = classnames(
         styles.itemTouchable,
         styles.itemTouchableSelected[selected || isPanelOpen ? 'true' : 'false'],
-        {[styles.itemTouchableCollapsed]: collapsed}
+        {[styles.itemTouchableCollapsed]: collapsed && !isInsidePanel}
     );
 
     const rowContent = (
