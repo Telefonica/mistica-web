@@ -253,14 +253,15 @@ export const itemTouchableSelected = styleVariants({
 });
 
 export const itemAccent = style({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
+    position: 'absolute',
+    left: 0,
+    top: '50%',
+    transform: 'translateY(-50%)',
     width: 2,
     height: 20,
     borderRadius: 8,
     backgroundColor: skinVars.colors.controlActivated,
+    pointerEvents: 'none',
 });
 
 export const itemAsset = style({
