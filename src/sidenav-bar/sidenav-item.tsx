@@ -253,6 +253,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     onPress={handlePress}
                     aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
                     aria-label={label}
+                    dataAttributes={{parentItem: 'true'}}
                 >
                     {rowContent}
                 </Touchable>

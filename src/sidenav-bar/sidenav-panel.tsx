@@ -22,14 +22,12 @@ const SidenavPanel = ({itemId, label, containerRef, level, children}: SidenavPan
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as Node;
-            if (
-                panelRef.current &&
-                !panelRef.current.contains(target) &&
-                containerRef.current &&
-                !containerRef.current.contains(target)
-            ) {
-                setPanelOpenForItemId(null);
+            const target = event.target as Element;
+            if (panelRef.current && !panelRef.current.contains(target as Node)) {
+                const isParentItem = target instanceof Element && target.closest('[data-parentItem="true"]');
+                if (!isParentItem) {
+                    setPanelOpenForItemId(null);
+                }
             }
         };
 
@@ -39,11 +37,11 @@ const SidenavPanel = ({itemId, label, containerRef, level, children}: SidenavPan
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
         document.addEventListener('keydown', handleEscape);
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
             document.removeEventListener('keydown', handleEscape);
         };
     }, [containerRef, setPanelOpenForItemId]);
