@@ -10939,7 +10939,9 @@ __metadata:
   resolution: "generate-design-tokens@workspace:packages/generate-design-tokens"
   dependencies:
     "@telefonica/prettier-config": ^2.0.0
+    "@types/node": ^25.0.3
     prettier: ^3.3.3
+    typescript: ^5.9.3
   languageName: unknown
   linkType: soft
 
