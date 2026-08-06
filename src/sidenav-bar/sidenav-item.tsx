@@ -28,9 +28,16 @@ type SidenavItemBaseProps = {
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
     showIconWhenExpanded?: boolean;
     rightSlot?: React.ReactNode;
-    children?: React.ReactNode;
     defaultOpen?: boolean;
     dataAttributes?: DataAttributes;
+};
+
+type SidenavItemWithChildrenProps = SidenavItemBaseProps & {
+    id: string;
+    children: React.ReactNode;
+    onPress?: undefined;
+    href?: undefined;
+    to?: undefined;
 };
 
 type SidenavItemOnPressProps = SidenavItemBaseProps & {
@@ -38,6 +45,7 @@ type SidenavItemOnPressProps = SidenavItemBaseProps & {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
+    children?: undefined;
 };
 
 type SidenavItemHrefProps = SidenavItemBaseProps & {
@@ -47,6 +55,7 @@ type SidenavItemHrefProps = SidenavItemBaseProps & {
     onNavigate?: () => void | Promise<void>;
     onPress?: undefined;
     to?: undefined;
+    children?: undefined;
 };
 
 type SidenavItemToProps = SidenavItemBaseProps & {
@@ -56,17 +65,11 @@ type SidenavItemToProps = SidenavItemBaseProps & {
     onNavigate?: () => void | Promise<void>;
     onPress?: undefined;
     href?: undefined;
-};
-
-type SidenavItemExpandOnlyProps = SidenavItemBaseProps & {
-    id: string;
-    onPress?: undefined;
-    href?: undefined;
-    to?: undefined;
+    children?: undefined;
 };
 
 type SidenavItemProps = ExclusifyUnion<
-    SidenavItemOnPressProps | SidenavItemHrefProps | SidenavItemToProps | SidenavItemExpandOnlyProps
+    SidenavItemWithChildrenProps | SidenavItemOnPressProps | SidenavItemHrefProps | SidenavItemToProps
 >;
 
 const SidenavItem = (props: SidenavItemProps): JSX.Element => {
@@ -203,7 +206,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {assetElement}
             {labelNode}
             {!collapsed && rightSlot && <span className={styles.itemRightSlot}>{rightSlot}</span>}
-            {!collapsed && hasChildren && !navigates && (
+            {!collapsed && hasChildren && (
                 <span className={styles.itemChevron} aria-hidden="true">
                     <ChevronIcon size={16} color="currentColor" />
                 </span>
@@ -219,24 +222,27 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     };
 
     const interactiveRow = (() => {
-        if (hasChildren && !navigates) {
+        if (hasChildren) {
+            const handlePress = () => {
+                if (shouldShowPanelMode) {
+                    handleTogglePanel();
+                } else {
+                    setOpen((prev) => !prev);
+                }
+            };
+
             return (
                 <Touchable
                     className={touchableClassName}
-                    onPress={() => {
-                        if (shouldShowPanelMode) {
-                            handleTogglePanel();
-                        } else {
-                            setOpen((prev) => !prev);
-                        }
-                    }}
-                    aria-expanded={collapsed ? undefined : isOpen}
+                    onPress={handlePress}
+                    aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
                     aria-label={label}
                 >
                     {rowContent}
                 </Touchable>
             );
         }
+
         if (navigationProps) {
             return (
                 <Touchable
@@ -249,6 +255,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 </Touchable>
             );
         }
+
         return (
             <div className={touchableClassName} aria-current={ariaCurrent}>
                 {rowContent}
@@ -267,11 +274,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             style={applyCssVars({[styles.itemIndentVar]: `${level * NESTING_INDENT}px`})}
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
-            {selected ? (
-                <span className={styles.selectedIndicator} />
-            ) : (
-                <span className={styles.selectedIndicatorPlaceholder} />
-            )}
+            {(selected || isPanelOpen) && <div className={styles.itemAccent} />}
             {collapsed && !isInsidePanel ? (
                 <Tooltip
                     position="right"
@@ -281,22 +284,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 />
             ) : (
                 interactiveRow
-            )}
-            {hasChildren && navigates && (
-                <Touchable
-                    className={styles.itemChevron}
-                    onPress={() => {
-                        if (shouldShowPanelMode) {
-                            handleTogglePanel();
-                        } else {
-                            setOpen((prev) => !prev);
-                        }
-                    }}
-                    aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
-                    aria-label={`${shouldShowPanelMode ? (isPanelOpen ? 'Close' : 'Open') : isOpen ? 'Collapse' : 'Expand'} ${label}`}
-                >
-                    <ChevronIcon size={16} color="currentColor" />
-                </Touchable>
             )}
         </div>
     );

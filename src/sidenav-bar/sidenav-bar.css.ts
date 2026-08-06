@@ -219,20 +219,6 @@ export const itemRow = style({
     paddingLeft: itemIndentVar,
 });
 
-export const selectedIndicator = style({
-    flexShrink: 0,
-    width: 2,
-    height: 20,
-    borderRadius: 2,
-    backgroundColor: skinVars.colors.controlActivated,
-});
-
-export const selectedIndicatorPlaceholder = style({
-    flexShrink: 0,
-    width: 2,
-    height: 20,
-});
-
 export const itemTouchable = style({
     boxSizing: 'border-box',
     display: 'flex',
@@ -264,6 +250,17 @@ export const itemTouchableSelected = styleVariants({
         },
     },
     false: {},
+});
+
+export const itemAccent = style({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    width: 2,
+    height: 20,
+    borderRadius: 8,
+    backgroundColor: skinVars.colors.controlActivated,
 });
 
 export const itemAsset = style({
