@@ -109,7 +109,7 @@ const SidenavPanel = ({itemId, label, containerRef, level, children}: SidenavPan
                         }
                     >
                         <div className={styles.dialogPanelTitle}>
-                            <Text3 medium color={skinVars.colors.textSecondaryBrand}>
+                            <Text3 medium color={skinVars.colors.textSecondary}>
                                 {label}
                             </Text3>
                         </div>

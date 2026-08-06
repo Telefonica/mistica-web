@@ -24,16 +24,23 @@ import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes, IconProps} from '../utils/types';
 
 type SidenavItemBaseProps = {
+    /** Display text (truncated if too long). */
     label: string;
+    /** Icon component or element to display. Required for top-level items in collapsed sidenav. */
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
+    /** Show asset when expanded (not collapsed). @default true */
     showIconWhenExpanded?: boolean;
+    /** Custom content on the right side (e.g., Badge). */
     rightSlot?: React.ReactNode;
+    /** Initial expanded state for items with children. @default false */
     defaultOpen?: boolean;
     dataAttributes?: DataAttributes;
 };
 
 type SidenavItemWithChildrenProps = SidenavItemBaseProps & {
+    /** Unique identifier for selection tracking. */
     id: string;
+    /** Nested SidenavItem elements (max 2 nesting levels). */
     children: React.ReactNode;
     onPress?: undefined;
     href?: undefined;
@@ -41,7 +48,9 @@ type SidenavItemWithChildrenProps = SidenavItemBaseProps & {
 };
 
 type SidenavItemOnPressProps = SidenavItemBaseProps & {
+    /** Unique identifier for selection tracking. */
     id: string;
+    /** Click handler for custom actions. */
     onPress: () => void;
     href?: undefined;
     to?: undefined;
@@ -49,9 +58,13 @@ type SidenavItemOnPressProps = SidenavItemBaseProps & {
 };
 
 type SidenavItemHrefProps = SidenavItemBaseProps & {
+    /** Unique identifier for selection tracking. */
     id: string;
+    /** Navigation URL for href link. */
     href: string;
+    /** Open link in new tab. @default false */
     newTab?: boolean;
+    /** Called after navigation. */
     onNavigate?: () => void | Promise<void>;
     onPress?: undefined;
     to?: undefined;
@@ -59,9 +72,13 @@ type SidenavItemHrefProps = SidenavItemBaseProps & {
 };
 
 type SidenavItemToProps = SidenavItemBaseProps & {
+    /** Unique identifier for selection tracking. */
     id: string;
+    /** Router link target. */
     to: string;
+    /** Open link in new tab. @default false */
     newTab?: boolean;
+    /** Called after navigation. */
     onNavigate?: () => void | Promise<void>;
     onPress?: undefined;
     href?: undefined;
@@ -190,7 +207,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             </ScreenReaderOnly>
         ) : (
             <div className={styles.itemLabel}>
-                <Text2 regular truncate>
+                <Text2 regular truncate color={selected ? 'textPrimary' : undefined}>
                     {label}
                 </Text2>
             </div>

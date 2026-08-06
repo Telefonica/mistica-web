@@ -158,10 +158,11 @@ const hasDescendantWithId = (children: React.ReactNode, targetId: string | null)
 type SidenavSectionProps = {
     /** Section heading. Hidden (space reserved) when the sidenav is collapsed. */
     title?: string;
-    /** Renders a divider above the section. */
+    /** Renders a divider above the section. @default false */
     dividerTop?: boolean;
-    /** Renders a divider below the section. */
+    /** Renders a divider below the section. @default false */
     dividerBottom?: boolean;
+    /** Navigation items (SidenavItem elements). */
     children: React.ReactNode;
     dataAttributes?: DataAttributes;
 };
@@ -217,42 +218,34 @@ const SidenavSection = ({
 // -----------------------------------------------------------------------------
 
 type SidenavBarBackgroundColors = {
-    /** Custom background for header. Must be opaque to mask scrolling content. */
+    /** Header background color (must be opaque to mask scrolling content). */
     header?: OpaqueColor;
-    /** Custom background for body (scrollable content). Can be any color including transparent. */
+    /** Body background color (can be any color including transparent). */
     body?: string;
-    /** Custom background for footer. Must be opaque to mask scrolling content. */
+    /** Footer background color (must be opaque to mask scrolling content). */
     footer?: OpaqueColor;
 };
 
 type SidenavBarBaseProps = {
-    /** Sections containing navigation items. Only `SidenavSection` children are allowed. */
+    /** SidenavSection elements containing navigation items. */
     children?: React.ReactNode;
-    /** Accessible name of the navigation landmark. */
+    /** Accessible name of the navigation landmark. @default 'Main navigation' */
     'aria-label'?: string;
-    /** Color variant. Adapts the content appearance. @default 'default' */
+    /** Color variant (default, brand, alternative, negative, media). @default 'default' */
     variant?: Variant;
-    /** Opens nested items in a panel attached to the right of the sidenav. @default false */
+    /** Opens nested items in a panel to the right of the sidenav. @default false */
     doublePanel?: boolean;
-    /** Width of the expanded sidenav in px. @default 240 */
+    /** Width of expanded sidenav in pixels. @default 240 */
     width?: number;
-    /** Width of the collapsed sidenav in px. @default 72 */
-    collapsedWidth?: number;
-    /**
-     * Logo rendered in the header. Defaults to the skin logo at the 40px the header reserves
-     * in both the expanded and the collapsed state. Pass an element to override it, or `false`
-     * to render no logo at all.
-     *
-     * @default <Logo size={40} />
-     */
+    /** Logo element in header. Defaults to skin logo. Pass false to hide. @default <Logo size={40} /> */
     logo?: React.ReactElement | false;
-    /** Optional slot rendered in the header region, below the collapse control. */
+    /** Custom content below logo/collapse in header. */
     headerSlot?: React.ReactNode;
-    /** Custom background colors for header, body, and footer regions. */
+    /** Custom background colors for header (opaque), body (any), and footer (opaque) regions. */
     background?: SidenavBarBackgroundColors;
-    /** ID of the currently selected item. Use with `onSelectedItemIdChange` for controlled selection. */
+    /** ID of currently selected item (controlled selection). */
     selectedItemId?: string | null;
-    /** Called when a navigable item with an `id` prop is clicked. */
+    /** Called when selection changes. */
     onSelectedItemIdChange?: (id: string | null) => void;
     dataAttributes?: DataAttributes;
 };
@@ -270,55 +263,55 @@ type SidenavBarBaseProps = {
 type SidenavBarProps = SidenavBarBaseProps &
     ExclusifyUnion<
         | {
-              /** Renders the sidenav as a floating box. */
+              /** Renders as a floating box (with own edge). Divider not applicable. */
               boxed: true;
           }
         | {
-              /** @default false */
+              /** Renders as full-width. @default false */
               boxed?: false;
-              /** Shows the vertical right divider. @default true */
+              /** Shows vertical right divider (only when boxed=false). @default true */
               divider?: boolean;
           }
     > &
     ExclusifyUnion<
         | {
-              /** Controlled collapsed state. Requires `onCollapse` to handle state updates. */
+              /** Controlled collapsed state. */
               collapsed: boolean;
-              /** Called when the collapsed state changes. */
+              /** Handler for collapsed state changes (required for controlled mode). */
               onCollapse: (collapsed: boolean) => void;
-              /** Whether the user can toggle the collapsed state. @default true */
+              /** Whether user can toggle collapsed state. @default true */
               collapsible?: true;
           }
         | {
               /** Initial collapsed state (uncontrolled). @default false */
               defaultCollapsed?: boolean;
-              /** Called when the collapsed state changes (optional, for logging/side-effects). */
+              /** Optional handler for collapsed state changes (for logging/effects). */
               onCollapse?: (collapsed: boolean) => void;
-              /** Whether the user can toggle the collapsed state. @default true */
+              /** Whether user can toggle collapsed state. @default true */
               collapsible?: true;
           }
         | {
-              /** Controlled collapsed state with toggling disabled. */
+              /** Controlled collapsed state (non-toggleable). */
               collapsed: boolean;
-              /** The collapsed state cannot be toggled by the user. */
+              /** User cannot toggle collapsed state. */
               collapsible: false;
           }
         | {
-              /** Uncontrolled collapsed state with toggling disabled. */
+              /** Initial collapsed state (uncontrolled, non-toggleable). @default false */
               defaultCollapsed?: boolean;
-              /** The collapsed state cannot be toggled by the user. */
+              /** User cannot toggle collapsed state. */
               collapsible: false;
           }
     > &
     ExclusifyUnion<
         | {
-              /** Optional slot rendered in the footer region, at the bottom of the sidenav. */
+              /** Custom content in footer region (at bottom of sidenav). */
               footerSlot: React.ReactNode;
-              /** Whether the footer should stay fixed at the bottom when scrolling. @default false */
+              /** Keep footer fixed when scrolling. @default false */
               fixedFooter?: boolean;
           }
         | {
-              /** No footer slot provided. */
+              /** No footer slot. */
               footerSlot?: undefined;
           }
     >;
@@ -331,7 +324,6 @@ const SidenavBar = ({
     divider = true,
     collapsible = true,
     collapsed: collapsedProp,
-    collapsedWidth = COLLAPSED_WIDTH,
     defaultCollapsed = false,
     onCollapse,
     doublePanel = false,
@@ -431,7 +423,7 @@ const SidenavBar = ({
         ]
     );
 
-    const currentWidth = collapsed ? collapsedWidth : width;
+    const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 
     if (process.env.NODE_ENV !== 'production') {
         assertChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');

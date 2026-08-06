@@ -6,7 +6,7 @@ export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
 export const BOXED_INSET = 8;
 export const NESTING_INDENT = 24;
-export const LOGO_SIZE = 40;
+export const LOGO_SIZE = 32;
 
 export const sidenavWidthVar = createVar();
 
@@ -26,14 +26,16 @@ export const container = style([
 ]);
 
 export const withRightDivider = style({
-    borderRight: `1px solid ${skinVars.colors.divider}`,
+    outline: `1px solid ${skinVars.colors.divider}`,
+    outlineOffset: '-1px',
 });
 
 export const boxed = style({
     margin: BOXED_INSET,
     height: `calc(100% - ${BOXED_INSET * 2}px)`,
     borderRadius: skinVars.borderRadii.popup,
-    border: `1px solid ${skinVars.colors.border}`,
+    outline: `1px solid ${skinVars.colors.border}`,
+    outlineOffset: '-1px',
 });
 
 // Header region ---------------------------------------------------------------
@@ -86,9 +88,9 @@ export const headerControls = style({
 });
 
 export const headerControlsCollapsed = style({
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingLeft: 20,
-    paddingRight: 12,
+    paddingRight: 20,
 });
 
 export const logo = style({
@@ -204,7 +206,8 @@ export const sectionContent = style({
 
 export const sectionDivider = style({
     marginTop: 8,
-    marginBottom: 8,
+    marginBottom: 7,
+    marginRight: -8,
 });
 
 // Item ------------------------------------------------------------------------
