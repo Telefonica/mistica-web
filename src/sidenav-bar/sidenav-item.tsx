@@ -117,8 +117,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const selected = isItemSelected || hasDescendantSelected;
 
     const hasChildren = React.Children.count(children) > 0;
-    const navigates = props.onPress !== undefined || props.href !== undefined || props.to !== undefined;
-
     const itemIdRef = React.useRef<string | null>(null);
     if (itemIdRef.current === null && hasChildren) {
         itemIdRef.current = generateItemId();
