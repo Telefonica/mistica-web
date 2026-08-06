@@ -11,12 +11,22 @@ import {Placeholder} from '../../../placeholder';
 import Badge from '../../../badge';
 import Box from '../../../box';
 
+import type {Meta} from '@storybook/react';
 import type {Variant} from '../../../theme-variant-context';
 
-export default {
+const meta: Meta<typeof SidenavBar> = {
     title: 'Components/SidenavBar/Bar',
-    parameters: {fullScreen: true},
+    component: SidenavBar,
+    parameters: {
+        fullScreen: true,
+        docs: {
+            source: {state: 'open'},
+        },
+    },
+    tags: ['autodocs'],
 };
+
+export default meta;
 
 type Args = {
     label: string;
@@ -58,78 +68,183 @@ export const Default = ({
     footerBackgroundColor,
 }: Args): React.JSX.Element => (
     <div style={{height: '100vh'}}>
-        <SidenavBar
-            aria-label={label}
-            variant={variant}
-            logo={logo ? undefined : false}
-            headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
-            footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
-            fixedFooter={fixedFooter}
-            {...(boxed ? ({boxed: true} as const) : ({boxed: false, divider} as const))}
-            collapsible={collapsible}
-            defaultCollapsed={defaultCollapsed}
-            doublePanel={doublePanel}
-            {...(useCustomWidth ? {width} : ({} as any))}
-            {...(useCustomBackgrounds
-                ? {
-                      background: {
-                          header: headerBackgroundColor as any,
-                          body: bodyBackgroundColor,
-                          footer: footerBackgroundColor as any,
-                      },
-                  }
-                : {})}
-        >
-            <SidenavSection>
-                <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
-                <SidenavItem id="search" label="Search" asset={IconSearchRegular} href="#search" />
-            </SidenavSection>
-            <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem id="active" label="Active" asset={IconDocumentsRegular} href="#active" />
+        {boxed ? (
+            <SidenavBar
+                aria-label={label}
+                variant={variant}
+                logo={logo ? undefined : false}
+                headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
+                footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
+                fixedFooter={fixedFooter}
+                boxed
+                collapsible={collapsible}
+                defaultCollapsed={defaultCollapsed}
+                doublePanel={doublePanel}
+                {...(useCustomWidth && {width})}
+                {...(useCustomBackgrounds && {
+                    background: {
+                        header: headerBackgroundColor as any,
+                        body: bodyBackgroundColor,
+                        footer: footerBackgroundColor as any,
+                    },
+                })}
+            >
+                <SidenavSection>
+                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+                    <SidenavItem id="search" label="Search" asset={IconSearchRegular} href="#search" />
+                </SidenavSection>
+                <SidenavSection title="Workspace" dividerTop>
                     <SidenavItem
-                        id="archived"
-                        label="Archived"
-                        asset={IconDocumentsRegular}
-                        href="#archived"
-                    />
-                    <SidenavItem id="draft" label="Draft" href="#draft" />
-                    <SidenavItem id="review" label="In Review" asset={IconDocumentsRegular} href="#review" />
-                </SidenavItem>
-                <SidenavItem id="teams" label="Teams" asset={IconFolderRegular}>
-                    <SidenavItem id="eng" label="Engineering" asset={IconSearchRegular} href="#eng" />
-                    <SidenavItem id="design" label="Design" asset={IconSearchRegular} href="#design" />
+                        id="projects"
+                        label="Projects"
+                        asset={IconFolderRegular}
+                        defaultOpen
+                        href="#projects"
+                    >
+                        <SidenavItem id="active" label="Active" asset={IconDocumentsRegular} href="#active" />
+                        <SidenavItem
+                            id="archived"
+                            label="Archived"
+                            asset={IconDocumentsRegular}
+                            href="#archived"
+                        />
+                        <SidenavItem id="draft" label="Draft" href="#draft" />
+                        <SidenavItem
+                            id="review"
+                            label="In Review"
+                            asset={IconDocumentsRegular}
+                            href="#review"
+                        />
+                    </SidenavItem>
+                    <SidenavItem id="teams" label="Teams" asset={IconFolderRegular} onPress={() => {}}>
+                        <SidenavItem id="eng" label="Engineering" asset={IconSearchRegular} href="#eng" />
+                        <SidenavItem id="design" label="Design" asset={IconSearchRegular} href="#design" />
+                        <SidenavItem
+                            id="marketing"
+                            label="Marketing"
+                            asset={IconSearchRegular}
+                            href="#marketing"
+                        />
+                    </SidenavItem>
                     <SidenavItem
-                        id="marketing"
-                        label="Marketing"
-                        asset={IconSearchRegular}
-                        href="#marketing"
+                        id="notifications"
+                        label="Notifications"
+                        asset={IconBellRegular}
+                        href="#notifications"
                     />
-                </SidenavItem>
-                <SidenavItem
-                    id="notifications"
-                    label="Notifications"
-                    asset={IconBellRegular}
-                    href="#notifications"
-                />
-            </SidenavSection>
-            <SidenavSection title="Account" dividerTop>
-                <SidenavItem id="profile" label="Profile" asset={IconDocumentsRegular} href="#profile" />
-                <SidenavItem id="history" label="History" asset={IconAlarmClockRegular} href="#history" />
-                <SidenavItem id="settings" label="Settings" asset={IconSettingsRegular} href="#settings" />
-            </SidenavSection>
-            <SidenavSection title="Help" dividerTop dividerBottom>
-                <SidenavItem id="docs" label="Documentation" asset={IconDocumentsRegular} href="#docs" />
-                <SidenavItem id="support" label="Support" asset={IconSearchRegular} href="#support" />
-            </SidenavSection>
-            <SidenavSection title="More" dividerTop dividerBottom>
-                <SidenavItem id="item1" label="Item 1" asset={IconHomeRegular} href="#item1" />
-                <SidenavItem id="item2" label="Item 2" asset={IconFolderRegular} href="#item2" />
-                <SidenavItem id="item3" label="Item 3" asset={IconBellRegular} href="#item3" />
-                <SidenavItem id="item4" label="Item 4" asset={IconSettingsRegular} href="#item4" />
-                <SidenavItem id="item5" label="Item 5" asset={IconDocumentsRegular} href="#item5" />
-            </SidenavSection>
-        </SidenavBar>
+                </SidenavSection>
+                <SidenavSection title="Account" dividerTop>
+                    <SidenavItem id="profile" label="Profile" asset={IconDocumentsRegular} href="#profile" />
+                    <SidenavItem id="history" label="History" asset={IconAlarmClockRegular} href="#history" />
+                    <SidenavItem
+                        id="settings"
+                        label="Settings"
+                        asset={IconSettingsRegular}
+                        href="#settings"
+                    />
+                </SidenavSection>
+                <SidenavSection title="Help" dividerTop dividerBottom>
+                    <SidenavItem id="docs" label="Documentation" asset={IconDocumentsRegular} href="#docs" />
+                    <SidenavItem id="support" label="Support" asset={IconSearchRegular} href="#support" />
+                </SidenavSection>
+                <SidenavSection title="More" dividerTop dividerBottom>
+                    <SidenavItem id="item1" label="Item 1" asset={IconHomeRegular} href="#item1" />
+                    <SidenavItem id="item2" label="Item 2" asset={IconFolderRegular} href="#item2" />
+                    <SidenavItem id="item3" label="Item 3" asset={IconBellRegular} href="#item3" />
+                    <SidenavItem id="item4" label="Item 4" asset={IconSettingsRegular} href="#item4" />
+                    <SidenavItem id="item5" label="Item 5" asset={IconDocumentsRegular} href="#item5" />
+                </SidenavSection>
+            </SidenavBar>
+        ) : (
+            // @ts-expect-error Complex union type - spreads with conditionals
+            <SidenavBar
+                aria-label={label}
+                variant={variant}
+                logo={logo ? undefined : false}
+                headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
+                footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
+                fixedFooter={fixedFooter}
+                boxed={false}
+                divider={divider}
+                collapsible={collapsible}
+                defaultCollapsed={defaultCollapsed}
+                doublePanel={doublePanel}
+                {...(useCustomWidth && {width})}
+                {...(useCustomBackgrounds && {
+                    background: {
+                        header: headerBackgroundColor as any,
+                        body: bodyBackgroundColor,
+                        footer: footerBackgroundColor as any,
+                    },
+                })}
+            >
+                <SidenavSection>
+                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+                    <SidenavItem id="search" label="Search" asset={IconSearchRegular} href="#search" />
+                </SidenavSection>
+                <SidenavSection title="Workspace" dividerTop>
+                    <SidenavItem
+                        id="projects"
+                        label="Projects"
+                        asset={IconFolderRegular}
+                        defaultOpen
+                        href="#projects"
+                    >
+                        <SidenavItem id="active" label="Active" asset={IconDocumentsRegular} href="#active" />
+                        <SidenavItem
+                            id="archived"
+                            label="Archived"
+                            asset={IconDocumentsRegular}
+                            href="#archived"
+                        />
+                        <SidenavItem id="draft" label="Draft" href="#draft" />
+                        <SidenavItem
+                            id="review"
+                            label="In Review"
+                            asset={IconDocumentsRegular}
+                            href="#review"
+                        />
+                    </SidenavItem>
+                    <SidenavItem id="teams" label="Teams" asset={IconFolderRegular} onPress={() => {}}>
+                        <SidenavItem id="eng" label="Engineering" asset={IconSearchRegular} href="#eng" />
+                        <SidenavItem id="design" label="Design" asset={IconSearchRegular} href="#design" />
+                        <SidenavItem
+                            id="marketing"
+                            label="Marketing"
+                            asset={IconSearchRegular}
+                            href="#marketing"
+                        />
+                    </SidenavItem>
+                    <SidenavItem
+                        id="notifications"
+                        label="Notifications"
+                        asset={IconBellRegular}
+                        href="#notifications"
+                    />
+                </SidenavSection>
+                <SidenavSection title="Account" dividerTop>
+                    <SidenavItem id="profile" label="Profile" asset={IconDocumentsRegular} href="#profile" />
+                    <SidenavItem id="history" label="History" asset={IconAlarmClockRegular} href="#history" />
+                    <SidenavItem
+                        id="settings"
+                        label="Settings"
+                        asset={IconSettingsRegular}
+                        href="#settings"
+                    />
+                </SidenavSection>
+                <SidenavSection title="Help" dividerTop dividerBottom>
+                    <SidenavItem id="docs" label="Documentation" asset={IconDocumentsRegular} href="#docs" />
+                    <SidenavItem id="support" label="Support" asset={IconSearchRegular} href="#support" />
+                </SidenavSection>
+                <SidenavSection title="More" dividerTop dividerBottom>
+                    <SidenavItem id="item1" label="Item 1" asset={IconHomeRegular} href="#item1" />
+                    <SidenavItem id="item2" label="Item 2" asset={IconFolderRegular} href="#item2" />
+                    <SidenavItem id="item3" label="Item 3" asset={IconBellRegular} href="#item3" />
+                    <SidenavItem id="item4" label="Item 4" asset={IconSettingsRegular} href="#item4" />
+                    <SidenavItem id="item5" label="Item 5" asset={IconDocumentsRegular} href="#item5" />
+                </SidenavSection>
+            </SidenavBar>
+        )}
     </div>
 );
 
@@ -198,7 +313,13 @@ export const DeepNesting = (): React.JSX.Element => (
                 <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
             </SidenavSection>
             <SidenavSection title="Navigation" dividerTop>
-                <SidenavItem id="products" label="Products" asset={IconFolderRegular} defaultOpen>
+                <SidenavItem
+                    id="products"
+                    label="Products"
+                    asset={IconFolderRegular}
+                    defaultOpen
+                    href="#products"
+                >
                     <SidenavItem id="web" label="Web App" asset={IconDocumentsRegular} href="#web" />
                     <SidenavItem id="mobile" label="Mobile App" asset={IconDocumentsRegular} href="#mobile" />
                     <SidenavItem
@@ -209,7 +330,7 @@ export const DeepNesting = (): React.JSX.Element => (
                     />
                     <SidenavItem id="api" label="API Docs" href="#api" />
                 </SidenavItem>
-                <SidenavItem id="resources" label="Resources" asset={IconFolderRegular}>
+                <SidenavItem id="resources" label="Resources" asset={IconFolderRegular} onPress={() => {}}>
                     <SidenavItem id="docs" label="Documentation" asset={IconDocumentsRegular} href="#docs" />
                     <SidenavItem id="examples" label="Examples" asset={IconSearchRegular} href="#examples" />
                     <SidenavItem id="faq" label="FAQ" href="#faq" />
@@ -242,7 +363,13 @@ export const WithRightSlots = (): React.JSX.Element => (
                 />
             </SidenavSection>
             <SidenavSection title="Workspace" dividerTop>
-                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                <SidenavItem
+                    id="projects"
+                    label="Projects"
+                    asset={IconFolderRegular}
+                    defaultOpen
+                    href="#projects"
+                >
                     <SidenavItem
                         id="active"
                         label="Active"
@@ -294,7 +421,13 @@ export const MultipleSections = ({
                 dividerTop={workspaceDividerTop}
                 dividerBottom={workspaceDividerBottom}
             >
-                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                <SidenavItem
+                    id="projects"
+                    label="Projects"
+                    asset={IconFolderRegular}
+                    defaultOpen
+                    href="#projects"
+                >
                     <SidenavItem id="active" label="Active" href="#active" />
                     <SidenavItem id="archived" label="Archived" href="#archived" />
                 </SidenavItem>
@@ -479,7 +612,13 @@ export const ControlledSelection = (): React.JSX.Element => {
                     />
                 </SidenavSection>
                 <SidenavSection title="Water Activities" dividerTop>
-                    <SidenavItem id="water-sports" label="Water Sports" asset={IconFolderRegular} defaultOpen>
+                    <SidenavItem
+                        id="water-sports"
+                        label="Water Sports"
+                        asset={IconFolderRegular}
+                        defaultOpen
+                        href="#water-sports"
+                    >
                         <SidenavItem
                             id="water-sailing"
                             label="Sailing"
@@ -499,7 +638,7 @@ export const ControlledSelection = (): React.JSX.Element => {
                             onPress={() => console.log('Kayaking clicked')}
                         />
                     </SidenavItem>
-                    <SidenavItem id="beaches" label="Beaches" asset={IconFolderRegular}>
+                    <SidenavItem id="beaches" label="Beaches" asset={IconFolderRegular} onPress={() => {}}>
                         <SidenavItem
                             id="beach-riva"
                             label="Riva del Garda"
@@ -521,7 +660,12 @@ export const ControlledSelection = (): React.JSX.Element => {
                     </SidenavItem>
                 </SidenavSection>
                 <SidenavSection title="Mountain Activities" dividerTop>
-                    <SidenavItem id="mountain-trails" label="Hiking Trails" asset={IconFolderRegular}>
+                    <SidenavItem
+                        id="mountain-trails"
+                        label="Hiking Trails"
+                        asset={IconFolderRegular}
+                        onPress={() => {}}
+                    >
                         <SidenavItem
                             id="trail-sentiero-della-pace"
                             label="Sentiero della Pace"
@@ -549,7 +693,12 @@ export const ControlledSelection = (): React.JSX.Element => {
                     />
                 </SidenavSection>
                 <SidenavSection title="Culture & Nature" dividerTop>
-                    <SidenavItem id="castles" label="Castles & History" asset={IconFolderRegular}>
+                    <SidenavItem
+                        id="castles"
+                        label="Castles & History"
+                        asset={IconFolderRegular}
+                        onPress={() => {}}
+                    >
                         <SidenavItem
                             id="castle-arco"
                             label="Arco Castle"
@@ -752,3 +901,25 @@ export const ControlledSelection = (): React.JSX.Element => {
 };
 
 ControlledSelection.storyName = 'Controlled selection';
+
+export const PropsShowcase = (): React.JSX.Element => (
+    <div style={{height: '100vh'}}>
+        <SidenavBar aria-label="Main navigation">
+            <SidenavSection title="Example section">
+                <SidenavItem id="item1" label="Item 1" asset={IconHomeRegular} href="#item1" />
+                <SidenavItem id="item2" label="Item 2" asset={IconSearchRegular} href="#item2" />
+            </SidenavSection>
+        </SidenavBar>
+    </div>
+);
+
+PropsShowcase.storyName = 'Props showcase (for docs)';
+PropsShowcase.parameters = {
+    docs: {
+        controls: {
+            include: [],
+            hideNoControlsWarning: true,
+        },
+        source: {state: 'open'},
+    },
+};

@@ -12,8 +12,8 @@ const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}
             <SidenavBar aria-label="Main navigation" {...props}>
                 <SidenavSection title="Workspace">
                     <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="/home" />
-                    <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                        <SidenavItem label="Active" href="/active" />
+                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                        <SidenavItem id="active" label="Active" href="/active" />
                     </SidenavItem>
                 </SidenavSection>
             </SidenavBar>

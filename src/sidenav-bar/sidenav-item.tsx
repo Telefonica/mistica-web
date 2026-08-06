@@ -59,6 +59,7 @@ type SidenavItemToProps = SidenavItemBaseProps & {
 };
 
 type SidenavItemExpandOnlyProps = SidenavItemBaseProps & {
+    id: string;
     onPress?: undefined;
     href?: undefined;
     to?: undefined;

@@ -442,17 +442,18 @@ const SidenavBar = ({
         const collectItemIds = (node: React.ReactNode): void => {
             React.Children.forEach(node, (child) => {
                 if (React.isValidElement(child)) {
+                    const childProps = child.props as any;
                     if (child.type === SidenavSection) {
-                        collectItemIds(child.props.children);
-                    } else if (child.props?.id) {
-                        const id = child.props.id as string;
+                        collectItemIds(childProps.children);
+                    } else if (childProps?.id) {
+                        const id = childProps.id as string;
                         if (itemIds.has(id)) {
                             duplicateIds.add(id);
                         } else {
                             itemIds.add(id);
                         }
-                        if (child.props.children) {
-                            collectItemIds(child.props.children);
+                        if (childProps.children) {
+                            collectItemIds(childProps.children);
                         }
                     }
                 }

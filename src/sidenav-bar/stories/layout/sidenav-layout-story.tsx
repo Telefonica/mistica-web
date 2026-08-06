@@ -4,7 +4,6 @@ import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular'
 import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import {Placeholder} from '../../../placeholder';
 
 export default {
     title: 'Components/SidenavBar/Layout',
@@ -91,15 +90,21 @@ export const WholeViewport = (args: {
                             : ({boxed: false, divider: args.divider} as const))}
                     >
                         <SidenavSection>
-                            <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                            <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
+                            <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+                            <SidenavItem
+                                id="search"
+                                label="Search"
+                                asset={IconSearchRegular}
+                                href="#search"
+                            />
                         </SidenavSection>
                         <SidenavSection title="Workspace" dividerTop>
-                            <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                                <SidenavItem label="Active" href="#active" />
-                                <SidenavItem label="Archived" href="#archived" />
+                            <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                                <SidenavItem id="active" label="Active" href="#active" />
+                                <SidenavItem id="archived" label="Archived" href="#archived" />
                             </SidenavItem>
                             <SidenavItem
+                                id="notifications"
                                 label="Notifications"
                                 asset={IconBellRegular}
                                 href="#notifications"
@@ -169,15 +174,21 @@ export const Centered = (args: {
                             : ({boxed: false, divider: args.divider} as const))}
                     >
                         <SidenavSection>
-                            <SidenavItem label="Home" asset={IconHomeRegular} href="#home" selected />
-                            <SidenavItem label="Search" asset={IconSearchRegular} href="#search" />
+                            <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+                            <SidenavItem
+                                id="search"
+                                label="Search"
+                                asset={IconSearchRegular}
+                                href="#search"
+                            />
                         </SidenavSection>
                         <SidenavSection title="Workspace" dividerTop>
-                            <SidenavItem label="Projects" asset={IconFolderRegular} defaultOpen>
-                                <SidenavItem label="Active" href="#active" />
-                                <SidenavItem label="Archived" href="#archived" />
+                            <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                                <SidenavItem id="active" label="Active" href="#active" />
+                                <SidenavItem id="archived" label="Archived" href="#archived" />
                             </SidenavItem>
                             <SidenavItem
+                                id="notifications"
                                 label="Notifications"
                                 asset={IconBellRegular}
                                 href="#notifications"
