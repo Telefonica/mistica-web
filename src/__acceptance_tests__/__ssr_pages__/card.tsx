@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MediaCard, DataCard, Inline, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../..';
+import {MediaCard, DataCard, Inline, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../index';
 
 const CardsTest = (): JSX.Element => (
     <Inline space={16}>

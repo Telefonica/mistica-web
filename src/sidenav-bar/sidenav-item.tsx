@@ -95,9 +95,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
 
-    const selected =
-        (id !== undefined && selectedItemId === id) ||
-        (collapsed && hasDescendantWithId(children, selectedItemId));
+    const isItemSelected = id !== undefined && selectedItemId === id;
+    const hasDescendantSelected = collapsed && hasDescendantWithId(children, selectedItemId);
+    const selected = isItemSelected || hasDescendantSelected;
 
     const hasChildren = React.Children.count(children) > 0;
     const navigates = props.onPress !== undefined || props.href !== undefined || props.to !== undefined;
@@ -108,6 +108,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     }
     const itemId = itemIdRef.current;
     const isPanelOpen = itemId !== null && panelOpenForItemId === itemId;
+    const showAccent = isItemSelected || isPanelOpen;
 
     if (process.env.NODE_ENV !== 'production') {
         if (level > 1) {
@@ -197,7 +198,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const touchableClassName = classnames(
         styles.itemTouchable,
-        styles.itemTouchableSelected[selected || isPanelOpen ? 'true' : 'false'],
+        styles.itemTouchableSelected[showAccent ? 'true' : 'false'],
         {[styles.itemTouchableCollapsed]: collapsed && !isInsidePanel}
     );
 
@@ -274,7 +275,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             style={applyCssVars({[styles.itemIndentVar]: `${level * NESTING_INDENT}px`})}
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
-            {(selected || isPanelOpen) && <div className={styles.itemAccent} />}
+            {showAccent && <div className={styles.itemAccent} />}
             {collapsed && !isInsidePanel ? (
                 <Tooltip
                     position="right"

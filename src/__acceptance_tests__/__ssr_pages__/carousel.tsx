@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, Carousel, MediaCard, Tag, ButtonLink, ResponsiveLayout} from '../../..';
+import {ButtonPrimary, Carousel, MediaCard, Tag, ButtonLink, ResponsiveLayout} from '../../index';
 
 const CarouselTest = (): JSX.Element => (
     <ResponsiveLayout>

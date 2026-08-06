@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Title1, Image, Stack} from '../../..';
+import {ResponsiveLayout, Title1, Image, Stack} from '../../index';
 
 const ImageTest = (): JSX.Element => (
     <ResponsiveLayout>

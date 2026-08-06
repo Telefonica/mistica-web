@@ -241,7 +241,12 @@ export const itemTouchable = style({
 export const itemTouchableCollapsed = style({
     justifyContent: 'center',
     flex: 'none',
-    width: 'auto',
+    width: 36,
+    margin: '0 auto',
+    padding: '0 8px',
+    border: 'none',
+    lineHeight: 1,
+    textDecoration: 'none',
 });
 
 export const itemTouchableSelected = styleVariants({

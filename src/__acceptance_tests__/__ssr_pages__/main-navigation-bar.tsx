@@ -6,7 +6,7 @@ import {
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
-} from '../../..';
+} from '../../index';
 
 const NavigationBarTest = (): JSX.Element => (
     <MainNavigationBar
