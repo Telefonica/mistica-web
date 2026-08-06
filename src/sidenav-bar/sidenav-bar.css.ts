@@ -227,7 +227,7 @@ export const itemTouchable = style({
     flex: 1,
     minWidth: 0,
     height: 44,
-    padding: '0 8px',
+    padding: '0 8px 0 16px',
     borderRadius: 8,
     color: skinVars.colors.textPrimary,
     backgroundColor: 'transparent',
