@@ -112,7 +112,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.white, 0.1),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.white, 0.1),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.white, 0.1),
-            buttonLinkNeutralBackgroundPressed: palette.grey1,
+            buttonLinkNeutralBackgroundPressed: palette.grey2,
             buttonLinkNeutralBackgroundBrand: palette.white,
             buttonLinkNeutralBackgroundBrandPressed: palette.grey1,
             buttonLinkNeutralBackgroundNegative: palette.white,
