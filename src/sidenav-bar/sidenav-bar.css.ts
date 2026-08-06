@@ -317,7 +317,7 @@ export const panelOverlay = style({
     bottom: 0,
     zIndex: 1000,
     pointerEvents: 'auto',
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'transparent',
 });
 
 export const dialogPanel = style({

@@ -234,7 +234,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const handleTogglePanel = () => {
         if (itemId === null) return;
-        setPanelOpenForItemId(isPanelOpen ? null : itemId);
+        setPanelOpenForItemId(itemId);
     };
 
     const interactiveRow = (() => {
@@ -291,7 +291,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
             {showAccent && <div className={styles.itemAccent} />}
-            {collapsed && !isInsidePanel ? (
+            {collapsed && !isInsidePanel && !panelOpenForItemId ? (
                 <Tooltip
                     position="right"
                     description={label}

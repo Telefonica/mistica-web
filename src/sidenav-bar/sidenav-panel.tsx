@@ -80,43 +80,33 @@ const SidenavPanel = ({itemId, label, containerRef, level, children}: SidenavPan
         return (
             <Portal>
                 <div
-                    className={styles.panelOverlay}
-                    role="presentation"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) {
-                            setPanelOpenForItemId(null);
-                        }
-                    }}
+                    ref={panelRef}
+                    className={styles.dialogPanel}
+                    role="group"
+                    aria-label={label}
+                    style={
+                        panelPosition
+                            ? {
+                                  position: 'fixed' as const,
+                                  top: panelPosition.top,
+                                  left: panelPosition.left,
+                              }
+                            : {
+                                  position: 'fixed' as const,
+                                  top: '50%',
+                                  left: '50%',
+                                  transform: 'translate(-50%, -50%)',
+                              }
+                    }
                 >
-                    <div
-                        ref={panelRef}
-                        className={styles.dialogPanel}
-                        role="group"
-                        aria-label={label}
-                        style={
-                            panelPosition
-                                ? {
-                                      position: 'fixed' as const,
-                                      top: panelPosition.top,
-                                      left: panelPosition.left,
-                                  }
-                                : {
-                                      position: 'fixed' as const,
-                                      top: '50%',
-                                      left: '50%',
-                                      transform: 'translate(-50%, -50%)',
-                                  }
-                        }
-                    >
-                        <div className={styles.dialogPanelTitle}>
-                            <Text3 medium color={skinVars.colors.textSecondary}>
-                                {label}
-                            </Text3>
-                        </div>
-                        <SidenavBarContext.Provider value={panelContextValue}>
-                            <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
-                        </SidenavBarContext.Provider>
+                    <div className={styles.dialogPanelTitle}>
+                        <Text3 medium color={skinVars.colors.textSecondary}>
+                            {label}
+                        </Text3>
                     </div>
+                    <SidenavBarContext.Provider value={panelContextValue}>
+                        <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
+                    </SidenavBarContext.Provider>
                 </div>
             </Portal>
         );
