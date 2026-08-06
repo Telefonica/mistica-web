@@ -240,6 +240,8 @@ export const itemTouchable = style({
 
 export const itemTouchableCollapsed = style({
     justifyContent: 'center',
+    flex: 'none',
+    width: 'auto',
 });
 
 export const itemTouchableSelected = styleVariants({
