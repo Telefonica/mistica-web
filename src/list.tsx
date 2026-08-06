@@ -25,6 +25,7 @@ import * as styles from './list.css';
 import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
+import {combineRefs} from './utils/common';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
@@ -33,6 +34,9 @@ import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
+
+type ListContextType = {small: boolean; hasDivider: boolean};
+const ListContext = React.createContext<ListContextType>({small: false, hasDivider: false});
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
@@ -80,6 +84,7 @@ interface ContentProps extends CommonProps {
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
+    withDivider?: boolean;
 }
 
 export const Content = ({
@@ -104,11 +109,18 @@ export const Content = ({
     labelId,
     disabled,
     control,
+    withDivider,
 }: ContentProps): JSX.Element => {
     const outsideVariant = useThemeVariant();
     const numTextLines = [headline, title, subtitle, description, slot].filter(Boolean).length;
     const centerY = numTextLines === 1;
     const {textPresets} = useTheme();
+    const {small} = React.useContext(ListContext);
+    const titlePreset = small ? textPresets.text2 : textPresets.text3;
+
+    const SubtitleComponent = small ? Text1 : Text2;
+    const DescriptionComponent = small ? Text1 : Text2;
+    const DetailComponent = small ? Text1 : Text2;
 
     return (
         <div className={styles.content} id={labelId}>
@@ -147,132 +159,133 @@ export const Content = ({
                     </div>
                 </div>
             )}
-
-            <div
-                className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
-                style={{justifyContent: centerY ? 'center' : 'flex-start'}}
-            >
-                <Text
-                    mobileSize={textPresets.text3.size.mobile}
-                    desktopSize={textPresets.text3.size.desktop}
-                    mobileLineHeight={textPresets.text3.lineHeight.mobile}
-                    desktopLineHeight={textPresets.text3.lineHeight.desktop}
-                    weight={textPresets.rowTitle.weight}
-                    color={danger ? vars.colors.textError : vars.colors.textPrimary}
-                    truncate={titleLinesMax}
-                    hyphens="auto"
-                    as={titleAs}
-                    dataAttributes={{testid: 'title'}}
+            <div className={styles.innerContent}>
+                <div
+                    className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
+                    style={{justifyContent: centerY ? 'center' : 'flex-start'}}
                 >
-                    {title}
-                </Text>
-                {headline && (
-                    <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
-                        <Text1
-                            regular
-                            color={vars.colors.textPrimary}
-                            hyphens="auto"
-                            dataAttributes={{testid: 'headline'}}
-                        >
-                            {headline}
-                        </Text1>
-                    </div>
-                )}
-                {subtitle && (
-                    <Box paddingTop={2}>
-                        <Text2
-                            regular
-                            color={vars.colors.textPrimary}
-                            truncate={subtitleLinesMax}
-                            hyphens="auto"
-                            dataAttributes={{testid: 'subtitle'}}
-                        >
-                            {subtitle}
-                        </Text2>
-                    </Box>
-                )}
-                {description && (
-                    <Box paddingTop={2}>
-                        <Text2
-                            regular
-                            color={vars.colors.textSecondary}
-                            truncate={descriptionLinesMax}
-                            hyphens="auto"
-                            dataAttributes={{testid: 'description'}}
-                        >
-                            {description}
-                        </Text2>
-                    </Box>
-                )}
-                {slot && (
-                    <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
-                        {slot}
-                    </Box>
-                )}
-            </div>
-
-            {badge && (
-                <Box paddingLeft={16}>
-                    <div className={classNames(styles.badge, {[styles.disabled]: disabled})}>
-                        <Badge value={badge === true ? undefined : badge} />
-                    </div>
-                </Box>
-            )}
-
-            {(detail || right || withChevron || control) && (
-                <div className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}>
-                    {detail && (
-                        <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
-                            <Text2
+                    <Text
+                        mobileSize={titlePreset.size.mobile}
+                        desktopSize={titlePreset.size.desktop}
+                        mobileLineHeight={titlePreset.lineHeight.mobile}
+                        desktopLineHeight={titlePreset.lineHeight.desktop}
+                        weight={textPresets.rowTitle.weight}
+                        color={danger ? vars.colors.textError : vars.colors.textPrimary}
+                        truncate={titleLinesMax}
+                        hyphens="auto"
+                        as={titleAs}
+                        dataAttributes={{testid: 'title'}}
+                    >
+                        {title}
+                    </Text>
+                    {headline && (
+                        <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
+                            <Text1
+                                regular
+                                color={vars.colors.textPrimary}
+                                hyphens="auto"
+                                dataAttributes={{testid: 'headline'}}
+                            >
+                                {headline}
+                            </Text1>
+                        </div>
+                    )}
+                    {subtitle && (
+                        <Box paddingTop={2}>
+                            <SubtitleComponent
+                                regular
+                                color={vars.colors.textPrimary}
+                                truncate={subtitleLinesMax}
+                                hyphens="auto"
+                                dataAttributes={{testid: 'subtitle'}}
+                            >
+                                {subtitle}
+                            </SubtitleComponent>
+                        </Box>
+                    )}
+                    {description && (
+                        <Box paddingTop={2}>
+                            <DescriptionComponent
                                 regular
                                 color={vars.colors.textSecondary}
+                                truncate={descriptionLinesMax}
                                 hyphens="auto"
-                                dataAttributes={{testid: 'detail'}}
+                                dataAttributes={{testid: 'description'}}
                             >
-                                {detail}
-                            </Text2>
-                        </div>
+                                {description}
+                            </DescriptionComponent>
+                        </Box>
                     )}
-
-                    {right && (
-                        <div
-                            className={classNames({
-                                [styles.detailRight]: !!detail,
-                                [styles.disabled]: disabled,
-                            })}
-                            ref={rightRef}
-                            data-testid="endSlot"
-                        >
-                            {renderRight(right, centerY)}
-                        </div>
+                    {slot && (
+                        <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
+                            {slot}
+                        </Box>
                     )}
-
-                    {withChevron && (
-                        <div
-                            style={{paddingLeft: detail || right ? 4 : 0}}
-                            className={classNames(styles.center, {[styles.disabled]: disabled})}
-                            data-testid="chevron"
-                        >
-                            <IconChevronRightFilled
-                                size={16}
-                                color={
-                                    {
-                                        default: vars.colors.chevronIndicator,
-                                        alternative: vars.colors.chevronIndicator,
-                                        brand: vars.colors.textSecondaryBrand,
-                                        negative: vars.colors.textSecondaryNegative,
-                                        media: vars.colors.textSecondaryBrand,
-                                    }[outsideVariant]
-                                }
-                            />
+                </div>
+                {badge && (
+                    <Box paddingLeft={16}>
+                        <div className={classNames(styles.badge, {[styles.disabled]: disabled})}>
+                            <Badge value={badge === true ? undefined : badge} />
                         </div>
-                    )}
-
-                    {control && (
-                        <div style={{paddingLeft: detail || right ? 8 : 0}} className={styles.center}>
-                            {control}
-                        </div>
-                    )}
+                    </Box>
+                )}
+                {(detail || right || withChevron || control) && (
+                    <div className={styles.rightContent}>
+                        {detail && (
+                            <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
+                                <DetailComponent
+                                    regular
+                                    color={vars.colors.textSecondary}
+                                    hyphens="auto"
+                                    dataAttributes={{testid: 'detail'}}
+                                >
+                                    {detail}
+                                </DetailComponent>
+                            </div>
+                        )}
+                        {right && (
+                            <div
+                                className={classNames({
+                                    [styles.detailRight]: !!detail,
+                                    [styles.disabled]: disabled,
+                                })}
+                                ref={rightRef}
+                                data-testid="endSlot"
+                            >
+                                {renderRight(right, centerY)}
+                            </div>
+                        )}
+                        {withChevron && (
+                            <div
+                                style={{paddingLeft: detail || right ? 4 : 0}}
+                                className={classNames(styles.center, {[styles.disabled]: disabled})}
+                                data-testid="chevron"
+                            >
+                                <IconChevronRightFilled
+                                    size={16}
+                                    color={
+                                        {
+                                            default: vars.colors.chevronIndicator,
+                                            alternative: vars.colors.chevronIndicator,
+                                            brand: vars.colors.textSecondaryBrand,
+                                            negative: vars.colors.textSecondaryNegative,
+                                            media: vars.colors.textSecondaryBrand,
+                                        }[outsideVariant]
+                                    }
+                                />
+                            </div>
+                        )}
+                        {control && (
+                            <div style={{paddingLeft: detail || right ? 8 : 0}} className={styles.center}>
+                                {control}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+            {withDivider && (
+                <div className={styles.rowDivider} data-testid="row-divider">
+                    <Divider />
                 </div>
             )}
         </div>
@@ -466,6 +479,29 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const [slotText, setSlotText] = React.useState<string>('');
     const [rightText, setRightText] = React.useState<string>('');
     const assetText = getAssetText(asset);
+    const {hasDivider} = React.useContext(ListContext);
+    const [dividerOffset, setDividerOffset] = React.useState(0);
+    const measureDividerOffset = React.useCallback(
+        (dualActionContainerElement: HTMLDivElement | null) => {
+            if (!dualActionContainerElement || !hasDivider) {
+                return;
+            }
+
+            const innerContentElement = dualActionContainerElement.querySelector<HTMLElement>(
+                `.${styles.innerContent}`
+            );
+
+            if (!innerContentElement) {
+                return;
+            }
+
+            const containerLeft = dualActionContainerElement.getBoundingClientRect().left;
+            const contentLeft = innerContentElement.getBoundingClientRect().left;
+
+            setDividerOffset(contentLeft - containerLeft);
+        },
+        [hasDivider]
+    );
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
     const computedAriaLabel = [
@@ -513,7 +549,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = (contentProps?: {control?: React.ReactNode; labelId?: string; role?: string}) => (
+    const renderContent = (contentProps?: {
+        control?: React.ReactNode;
+        labelId?: string;
+        role?: string;
+        withDivider?: boolean;
+    }) => (
         <Content
             asset={asset}
             headline={headline}
@@ -549,6 +590,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
+            withDivider={contentProps?.withDivider ?? hasDivider}
         />
     );
 
@@ -567,13 +609,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 disabled={disabled}
                 tabIndex={tabIndex}
             >
-                <Box
-                    paddingX={16}
+                <div
+                    className={styles.rowContentPadding}
                     aria-hidden={!!props.to || !!props.href || props.touchableRole === 'link' || undefined}
-                    dataAttributes={{testid: 'content-container'}}
+                    data-testid="content-container"
                 >
                     {renderContent({role})}
-                </Box>
+                </div>
             </BaseTouchable>
         );
     }
@@ -581,25 +623,34 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const renderRowWithDoubleInteraction = (control: React.ReactNode) => (
         <div
             className={styles.dualActionContainer}
-            ref={ref as React.Ref<HTMLDivElement>}
+            ref={combineRefs(ref, measureDividerOffset)}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
-            <BaseTouchable
-                disabled={disabled}
-                {...interactiveProps}
-                role={touchableRole}
-                className={classNames(styles.dualActionLeft, {
-                    [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundBrand]: hasHoverInverse,
-                })}
-                tabIndex={tabIndex}
-            >
-                {renderContent({labelId: titleId, role})}
-            </BaseTouchable>
-
-            <div className={styles.dualActionDivider} />
-
-            {control}
+            <div className={styles.dualActionBody}>
+                <BaseTouchable
+                    disabled={disabled}
+                    {...interactiveProps}
+                    role={touchableRole}
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundBrand]: hasHoverInverse,
+                    })}
+                    tabIndex={tabIndex}
+                >
+                    {renderContent({labelId: titleId, role, withDivider: false})}
+                </BaseTouchable>
+                <div className={styles.dualActionDivider} />
+                {control}
+            </div>
+            {hasDivider && (
+                <div
+                    className={styles.rowDividerDualAction}
+                    data-testid="row-divider-dual-action"
+                    style={{paddingLeft: dividerOffset}}
+                >
+                    <Divider />
+                </div>
+            )}
         </div>
     );
 
@@ -617,6 +668,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         </div>
     );
 
+    const renderDualActionRight = ({controlElement}: {controlElement: React.ReactNode}) => (
+        <div className={styles.dualActionRight}>{controlElement}</div>
+    );
+
     if (props.switch || props.checkbox) {
         const Control = props.switch ? Switch : Checkbox;
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
@@ -630,9 +685,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
                       onChange={toggle}
-                      render={({controlElement}) => (
-                          <div className={styles.dualActionRight}>{controlElement}</div>
-                      )}
+                      render={renderDualActionRight}
                   />
               )
             : renderRowWithSingleControl(
@@ -644,12 +697,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-labelledby={titleId}
                       onChange={toggle}
                       render={({controlElement, labelId}) => (
-                          <Box paddingX={16} role={role}>
+                          <div className={styles.rowContentPadding} role={role}>
                               {renderContent({
                                   labelId,
                                   control: <Stack space="around">{controlElement}</Stack>,
                               })}
-                          </Box>
+                          </div>
                       )}
                   />,
                   true
@@ -663,11 +716,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       value={props.radioValue}
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
-                      render={({controlElement}) => (
-                          <Stack space="around">
-                              <Box paddingX={16}>{controlElement}</Box>
-                          </Stack>
-                      )}
+                      render={renderDualActionRight}
                   />
               )
             : renderRowWithSingleControl(
@@ -676,12 +725,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
                       render={({controlElement}) => (
-                          <Box paddingX={16} role={role}>
+                          <div className={styles.rowContentPadding} role={role}>
                               {renderContent({
                                   labelId: titleId,
                                   control: <Stack space="around">{controlElement}</Stack>,
                               })}
-                          </Box>
+                          </div>
                       )}
                   />,
                   true
@@ -691,18 +740,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.iconButton) {
         return isInteractive
             ? renderRowWithDoubleInteraction(
-                  <Box padding={16}>
-                      <Stack space="around">
-                          {props.iconButton.Icon ? (
-                              <IconButton {...props.iconButton} disabled={props.disabled} />
-                          ) : (
-                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
-                          )}
-                      </Stack>
-                  </Box>
+                  <div className={styles.dualActionRightIconButton}>
+                      {props.iconButton.Icon ? (
+                          <IconButton {...props.iconButton} disabled={props.disabled} />
+                      ) : (
+                          <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                      )}
+                  </div>
               )
             : renderRowWithSingleControl(
-                  <Box paddingX={16}>
+                  <div className={styles.rowContentPadding}>
                       {renderContent({
                           labelId: titleId,
                           control: (
@@ -723,7 +770,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                               </Stack>
                           ),
                       })}
-                  </Box>
+                  </div>
               );
     }
 
@@ -770,6 +817,7 @@ type RowListProps = {
     'aria-labelledby'?: string;
     role?: string;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 } & CommonAccessibilityProps;
 
 export const RowList = ({
@@ -780,30 +828,21 @@ export const RowList = ({
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
     dataAttributes,
+    small = false,
 }: RowListProps): JSX.Element => {
-    const childrenContent = React.Children.toArray(children).filter(Boolean);
-    const lastIndex = childrenContent.length - 1;
-
     return (
-        <div
-            role={role}
-            aria-labelledby={ariaLabelledBy}
-            aria-label={ariaLabel}
-            aria-live={ariaLive}
-            aria-atomic={ariaAtomic}
-            {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
-        >
-            {childrenContent.map((child, index) => (
-                <React.Fragment key={index}>
-                    {child}
-                    {index < lastIndex && (
-                        <Box paddingX={16}>
-                            <Divider />
-                        </Box>
-                    )}
-                </React.Fragment>
-            ))}
-        </div>
+        <ListContext.Provider value={{small, hasDivider: true}}>
+            <div
+                role={role}
+                aria-labelledby={ariaLabelledBy}
+                aria-label={ariaLabel}
+                aria-live={ariaLive}
+                aria-atomic={ariaAtomic}
+                {...getPrefixedDataAttributes({testid: 'RowList', ...dataAttributes})}
+            >
+                {children}
+            </div>
+        </ListContext.Provider>
     );
 };
 
@@ -852,6 +891,7 @@ type BoxedRowListProps = {
     'aria-labelledby'?: string;
     role?: string;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 } & CommonAccessibilityProps;
 
 export const BoxedRowList = ({
@@ -862,18 +902,21 @@ export const BoxedRowList = ({
     'aria-labelledby': ariaLabelledBy,
     'aria-live': ariaLive = 'off',
     'aria-atomic': ariaAtomic = false,
+    small = false,
 }: BoxedRowListProps): JSX.Element => (
-    <Stack
-        space={16}
-        role={role}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        aria-live={ariaLive}
-        aria-atomic={ariaAtomic}
-        dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
-    >
-        {children}
-    </Stack>
+    <ListContext.Provider value={{small, hasDivider: false}}>
+        <Stack
+            space={16}
+            role={role}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
+            dataAttributes={{testid: 'BoxedRowList', ...dataAttributes}}
+        >
+            {children}
+        </Stack>
+    </ListContext.Provider>
 );
 
 type UnorderedListProps = {

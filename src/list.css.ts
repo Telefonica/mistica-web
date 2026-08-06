@@ -7,7 +7,7 @@ export const disabled = style({
     opacity: 0.5,
 });
 
-export const row = sprinkles({
+export const row = style({
     width: '100%',
 });
 
@@ -79,20 +79,31 @@ export const rowContent = style([
     },
 ]);
 
-export const rowContentPadding = sprinkles({
-    paddingX: 16,
+export const rowContentPadding = style({
+    paddingLeft: vars.spacing.boxedDefaultPadding.left,
+    paddingRight: vars.spacing.boxedDefaultPadding.right,
 });
 
-export const content = sprinkles({
+export const content = style([
+    sprinkles({
+        width: '100%',
+        paddingTop: 16,
+    }),
+    {
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+    },
+]);
+
+export const innerContent = style({
     display: 'flex',
-    width: '100%',
-    minHeight: 72,
-    paddingY: 16,
+    minHeight: 56,
+    paddingBottom: 16,
+    gridColumn: 2,
+    minWidth: 0,
 });
 
-export const assetContainer = sprinkles({
-    paddingRight: 16,
-});
+export const assetContainer = style([sprinkles({paddingRight: 16}), {gridColumn: 1, paddingBottom: 16}]);
 
 export const asset = sprinkles({
     display: 'flex',
@@ -121,17 +132,40 @@ export const badge = style([
     }),
 ]);
 
+export const rowDivider = style({
+    gridColumn: '2 / -1',
+    selectors: {
+        [`${row}:last-child &`]: {
+            display: 'none',
+        },
+    },
+});
+
+export const rowDividerDualAction = style({
+    paddingRight: vars.spacing.boxedDefaultPadding.right,
+    selectors: {
+        [`${row}:last-child &`]: {
+            display: 'none',
+        },
+    },
+});
+
 export const rightContent = style({display: 'flex', marginLeft: 16});
-export const rightRestrictedWidth = style({maxWidth: '40%'});
 
 export const detailRight = style({paddingLeft: 8});
 
 export const detail = style([center, {textAlign: 'right'}]);
 
-export const dualActionContainer = sprinkles({
+export const dualActionContainer = style({
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+});
+
+export const dualActionBody = style({
     display: 'flex',
     flexDirection: 'row',
-    height: '100%',
+    flex: 1,
 });
 
 const dualActionBase = sprinkles({padding: 0, border: 'none', background: 'transparent'});
@@ -141,9 +175,10 @@ export const dualActionLeft = style([
     sprinkles({
         display: 'block',
         flexGrow: 1,
-        paddingX: 16,
     }),
     {
+        paddingLeft: vars.spacing.boxedDefaultPadding.left,
+        paddingRight: 16,
         selectors: {
             [`${boxed} &:active`]: {
                 // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
@@ -169,20 +204,15 @@ export const dualActionDivider = style([
     },
 ]);
 
-export const dualActionRight = style([
+const dualActionRightBase = style([
     dualActionBase,
-    sprinkles({
-        paddingX: 16,
-        display: 'flex',
-        alignItems: 'center',
-        flexGrow: 0,
-        width: 'auto',
-        height: '100%',
-    }),
-    {
-        lineHeight: 0,
-    },
+    sprinkles({display: 'flex', alignItems: 'center', flexGrow: 0, width: 'auto'}),
+    {paddingLeft: 16, paddingRight: vars.spacing.boxedDefaultPadding.right, lineHeight: 0},
 ]);
+
+export const dualActionRight = style([dualActionRightBase, sprinkles({height: '100%'})]);
+
+export const dualActionRightIconButton = style([dualActionRightBase, {paddingTop: 16, paddingBottom: 16}]);
 
 const ulVerticalGap = 8;
 const ulVerticalGapDesktop = 16;

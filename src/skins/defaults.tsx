@@ -100,5 +100,6 @@ export const defaultSpacing: SpacingConfig = {
         left: {mobile: 16, desktop: 24},
         right: {mobile: 16, desktop: 24},
     },
+    boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
     responsiveLayoutMargin: {mobile: 16, desktop: 48},
 };
