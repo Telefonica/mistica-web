@@ -8,6 +8,7 @@ import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import {useScreenSize, useTheme, useDisableBodyScroll} from '../hooks';
 import {IconButton} from '../icon-button';
+import * as tokens from '../text-tokens';
 import {Logo} from '../logo';
 import Divider from '../divider';
 import ScreenReaderOnly from '../screen-reader-only';
@@ -406,21 +407,12 @@ const SidenavBar = ({
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const {isMobile} = useScreenSize();
-    const theme = useTheme();
+    const {t} = useTheme();
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const [mobileNavStack, setMobileNavStack] = React.useState<Array<MobileNavigationLevel>>([]);
     useDisableBodyScroll(isMobile && mobileMenuOpen);
 
-    // Get localized back button text
-    const getBackButtonText = React.useCallback(() => {
-        const locale = theme.i18n.locale;
-        if (locale.startsWith('es')) return 'Atrás';
-        if (locale.startsWith('ca')) return 'Enrere';
-        if (locale.startsWith('pt')) return 'Voltar';
-        if (locale.startsWith('gl')) return 'Atrás';
-        if (locale.startsWith('eu')) return 'Atzera';
-        return 'Back'; // Default to English
-    }, [theme.i18n.locale]);
+    const getBackButtonText = (): string => t(tokens.sidenavMobileBackButton);
 
     const pushMobileNavLevel = React.useCallback((level: MobileNavigationLevel) => {
         setMobileNavStack((prev) => [...prev, level]);
