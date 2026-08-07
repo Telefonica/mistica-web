@@ -522,7 +522,7 @@ const SidenavBar = ({
 
     const contextValue = React.useMemo(
         () => ({
-            collapsed,
+            collapsed: isMobile ? false : collapsed,
             collapsible,
             doublePanel,
             toggleCollapsed,
