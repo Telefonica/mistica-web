@@ -37,30 +37,42 @@ type SidenavItemBaseProps = {
     dataAttributes?: DataAttributes;
 };
 
+/**
+ * SidenavItem with nested children.
+ * Mutually exclusive with `href`, `onPress`, and `to`.
+ */
 type SidenavItemWithChildrenProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
-    /** Nested SidenavItem elements (max 2 nesting levels). */
+    /** Nested SidenavItem elements (max 2 nesting levels). Mutually exclusive with `href`, `onPress`, and `to`. */
     children: React.ReactNode;
     onPress?: undefined;
     href?: undefined;
     to?: undefined;
 };
 
+/**
+ * SidenavItem with custom click handler.
+ * Mutually exclusive with `href`, `to`, and `children`.
+ */
 type SidenavItemOnPressProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
-    /** Click handler for custom actions. */
+    /** Click handler for custom actions. Mutually exclusive with `href`, `to`, and `children`. */
     onPress: () => void;
     href?: undefined;
     to?: undefined;
     children?: undefined;
 };
 
+/**
+ * SidenavItem with href navigation.
+ * Mutually exclusive with `onPress`, `to`, and `children`.
+ */
 type SidenavItemHrefProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
-    /** Navigation URL for href link. */
+    /** Navigation URL for href link. Mutually exclusive with `onPress`, `to`, and `children`. */
     href: string;
     /** Open link in new tab. @default false */
     newTab?: boolean;
@@ -71,10 +83,14 @@ type SidenavItemHrefProps = SidenavItemBaseProps & {
     children?: undefined;
 };
 
+/**
+ * SidenavItem with router link navigation.
+ * Mutually exclusive with `onPress`, `href`, and `children`.
+ */
 type SidenavItemToProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
-    /** Router link target. */
+    /** Router link target. Mutually exclusive with `onPress`, `href`, and `children`. */
     to: string;
     /** Open link in new tab. @default false */
     newTab?: boolean;
@@ -89,6 +105,10 @@ type SidenavItemProps = ExclusifyUnion<
     SidenavItemWithChildrenProps | SidenavItemOnPressProps | SidenavItemHrefProps | SidenavItemToProps
 >;
 
+/**
+ * Navigation item component for use within SidenavSection.
+ * Props `href`, `onPress`, `to`, and `children` are mutually exclusive—use exactly one of these to define the item's behavior.
+ */
 const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const {
         label,

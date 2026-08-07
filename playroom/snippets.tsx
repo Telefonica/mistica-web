@@ -4593,4 +4593,84 @@ export default [
         />`,
     },
     drawerSnippet,
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (href variant)',
+        code: `{/*
+SidenavItem (href variant) — Use for regular links.
+*/}
+<SidenavBar aria-label="Main navigation">
+    <SidenavSection title="Navigation">
+        <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+        <SidenavItem id="search" label="Search" asset={IconSearchRegular} href="#search" />
+        <SidenavItem id="settings" label="Settings" asset={IconSettingsRegular} href="#settings" />
+    </SidenavSection>
+</SidenavBar>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (onPress variant)',
+        code: `{/*
+SidenavItem (onPress variant) — Use for custom click handlers.
+See playroom/SIDENAV.md for full documentation.
+*/}
+<SidenavBar aria-label="Main navigation">
+    <SidenavSection title="Navigation">
+        <SidenavItem
+            id="home"
+            label="Home"
+            asset={IconHomeRegular}
+            onPress={() => console.log('Home clicked')}
+        />
+        <SidenavItem
+            id="search"
+            label="Search"
+            asset={IconSearchRegular}
+            onPress={() => console.log('Search clicked')}
+        />
+    </SidenavSection>
+</SidenavBar>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (children variant)',
+        code: `{/*
+SidenavItem (children variant) — Use for nested/expandable items (max 2 levels).
+See playroom/SIDENAV.md for full documentation.
+*/}
+<SidenavBar aria-label="Main navigation">
+    <SidenavSection title="Navigation">
+        <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
+        <SidenavItem
+            id="settings"
+            label="Settings"
+            asset={IconSettingsRegular}
+            defaultOpen
+        >
+            <SidenavItem id="settings-general" label="General" href="#settings/general" />
+            <SidenavItem id="settings-account" label="Account" href="#settings/account" />
+            <SidenavItem id="settings-privacy" label="Privacy" href="#settings/privacy" />
+        </SidenavItem>
+    </SidenavSection>
+</SidenavBar>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (to variant)',
+        code: `{/*
+SidenavItem (to variant) — Use for client-side router integration.
+See playroom/SIDENAV.md for full documentation.
+*/}
+<SidenavBar aria-label="Main navigation">
+    <SidenavSection title="Navigation">
+        <SidenavItem id="home" label="Home" asset={IconHomeRegular} to="/home" />
+        <SidenavItem id="search" label="Search" asset={IconSearchRegular} to="/search" />
+        <SidenavItem id="settings" label="Settings" asset={IconSettingsRegular} to="/settings" />
+    </SidenavSection>
+</SidenavBar>
+        `,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

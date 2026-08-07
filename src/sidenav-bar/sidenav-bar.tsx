@@ -162,7 +162,9 @@ type SidenavSectionProps = {
     dividerTop?: boolean;
     /** Renders a divider below the section. @default false */
     dividerBottom?: boolean;
-    /** Navigation items (SidenavItem elements). */
+    /** Navigation items (`SidenavItem` elements).
+     * @see SidenavItem
+     */
     children: React.ReactNode;
     dataAttributes?: DataAttributes;
 };
@@ -227,7 +229,10 @@ type SidenavBarBackgroundColors = {
 };
 
 type SidenavBarBaseProps = {
-    /** SidenavSection elements containing navigation items. */
+    /** Must be one or more `SidenavSection` elements. Each section can contain `SidenavItem` and nested `SidenavItem` elements.
+     * @see SidenavSection
+     * @see SidenavItem
+     */
     children?: React.ReactNode;
     /** Accessible name of the navigation landmark. @default 'Main navigation' */
     'aria-label'?: string;

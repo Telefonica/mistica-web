@@ -7,21 +7,20 @@ import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regu
 
 export default {
     title: 'Components/SidenavBar/Docs',
-    component: SidenavBar,
+    component: SidenavSection,
     parameters: {
         fullScreen: true,
         docs: {
             source: {state: 'open'},
             description: {
-                component:
-                    'Main sidenav navigation component. Can be collapsed/expanded and supports nested items via panels or inline expansion.',
+                component: 'Section container for grouping navigation items within a SidenavBar.',
             },
         },
     },
     tags: ['autodocs'],
 };
 
-export const Bar = (): React.JSX.Element => (
+export const DocsSection = (): React.JSX.Element => (
     <div style={{height: '100vh'}}>
         <SidenavBar aria-label="Main navigation">
             <SidenavSection title="Example section">
@@ -32,7 +31,8 @@ export const Bar = (): React.JSX.Element => (
     </div>
 );
 
-Bar.parameters = {
+DocsSection.storyName = 'SidenavSection';
+DocsSection.parameters = {
     docs: {
         source: {state: 'open'},
     },

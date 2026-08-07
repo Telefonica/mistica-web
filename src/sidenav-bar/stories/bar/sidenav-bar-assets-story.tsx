@@ -7,6 +7,9 @@ import Badge from '../../../badge';
 
 export default {
     title: 'Components/SidenavBar/Bar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 export const DifferentAssets = (): React.JSX.Element => (

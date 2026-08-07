@@ -11,6 +11,9 @@ import IconDocumentsRegular from '../../../generated/mistica-icons/icon-document
 
 export default {
     title: 'Components/SidenavBar/Bar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 export const ControlledSelection = (): React.JSX.Element => {

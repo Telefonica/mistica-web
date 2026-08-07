@@ -9,6 +9,9 @@ import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regu
 
 export default {
     title: 'Components/SidenavBar/Bar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 export const DeepNesting = (): React.JSX.Element => (

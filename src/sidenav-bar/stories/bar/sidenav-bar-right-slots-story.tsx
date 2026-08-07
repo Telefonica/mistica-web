@@ -11,6 +11,9 @@ import Box from '../../../box';
 
 export default {
     title: 'Components/SidenavBar/Bar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 export const WithRightSlots = (): React.JSX.Element => (

@@ -426,6 +426,9 @@ export default {
         docs: {
             source: {state: 'open'},
         },
+        controls: {
+            expanded: false,
+        },
     },
     tags: ['autodocs'],
     args: {
@@ -447,33 +450,57 @@ export default {
         footerBackgroundColor: '#f0e8f4',
     },
     argTypes: {
+        label: {
+            control: {type: 'text'},
+        },
         variant: {
             options: ['default', 'brand', 'alternative', 'negative', 'media'],
             control: {type: 'select'},
         },
-        divider: {if: {arg: 'boxed', truthy: false}},
-        fixedFooter: {if: {arg: 'footerSlot', truthy: true}},
+        logo: {
+            control: {type: 'boolean'},
+        },
+        headerSlot: {
+            control: {type: 'boolean'},
+        },
+        footerSlot: {
+            control: {type: 'boolean'},
+        },
+        fixedFooter: {
+            control: {type: 'boolean'},
+            if: {arg: 'footerSlot', truthy: true},
+        },
+        boxed: {
+            control: {type: 'boolean'},
+        },
+        divider: {
+            if: {arg: 'boxed', truthy: false},
+        },
+        collapsible: {
+            control: {type: 'boolean'},
+        },
+        defaultCollapsed: {
+            control: {type: 'boolean'},
+        },
+        doublePanel: {
+            control: {type: 'boolean'},
+        },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
-            description: 'Width of the expanded sidenav in pixels',
         },
         useCustomBackgrounds: {
             control: {type: 'boolean'},
-            description: 'Override background colors for each region',
         },
         headerBackgroundColor: {
             control: {type: 'color'},
-            description: 'Background color for header (must be opaque)',
             if: {arg: 'useCustomBackgrounds', truthy: true},
         },
         bodyBackgroundColor: {
             control: {type: 'color'},
-            description: 'Background color for body (can be any color including transparent)',
             if: {arg: 'useCustomBackgrounds', truthy: true},
         },
         footerBackgroundColor: {
             control: {type: 'color'},
-            description: 'Background color for footer (must be opaque)',
             if: {arg: 'useCustomBackgrounds', truthy: true},
         },
     },

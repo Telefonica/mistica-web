@@ -12,6 +12,9 @@ import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-
 
 export default {
     title: 'Components/SidenavBar/Bar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type MultipleSectionsArgs = {
