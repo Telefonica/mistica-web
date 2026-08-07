@@ -372,10 +372,11 @@ export const MOBILE_TOP_BAR_HEIGHT = 56;
 export const MOBILE_BOTTOM_BAR_HEIGHT = 48;
 
 export const mobileContainer = style({
+    position: 'fixed',
+    inset: 0,
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
-    width: '100%',
+    zIndex: 100,
 });
 
 export const mobileTopBar = style({
