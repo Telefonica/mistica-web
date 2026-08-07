@@ -93,6 +93,7 @@ export type Dictionary = {
     skipLinkNavLabel: string;
     fileUploadRemoveFile: string;
     fileUploadListLabel: string;
+    sidenavMobileBackButton: string;
 };
 
 export type TextToken = Record<Language, string>;
@@ -761,4 +762,11 @@ export const fileUploadListLabel: TextToken = {
     en: 'Files uploaded',
     de: 'Hochgeladene Dateien',
     pt: 'Arquivos enviados',
+};
+
+export const sidenavMobileBackButton: TextToken = {
+    es: 'Atrás',
+    en: 'Back',
+    de: 'Zurück',
+    pt: 'Voltar',
 };

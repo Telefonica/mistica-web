@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, FixedFooterLayout} from '../../..';
+import {ButtonPrimary, FixedFooterLayout} from '../../index';
 
 const FixedFooterLayoutTest = (): JSX.Element => (
     <FixedFooterLayout

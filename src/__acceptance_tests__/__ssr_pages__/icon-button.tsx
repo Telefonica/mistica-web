@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, IconButton, IconLightningRegular} from '../../..';
+import {Stack, IconButton, IconLightningRegular} from '../../index';
 
 const IconButtonTest = (): JSX.Element => (
     <Stack space={8}>

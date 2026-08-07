@@ -5,7 +5,7 @@ import path from 'path';
 import webpack from 'webpack';
 import http from 'http';
 import fs from 'fs';
-import {ThemeContextProvider, MOVISTAR_SKIN, getSkinByName, type KnownSkinName} from '../..';
+import {ThemeContextProvider, MOVISTAR_SKIN, getSkinByName, type KnownSkinName} from '../index';
 import {execSync} from 'child_process';
 
 const createWebpackEntries = (): {[entryName: string]: string} => {
@@ -27,7 +27,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
             import * as React from 'react';
             import { hydrateRoot } from 'react-dom/client';
             import Component from '../__acceptance_tests__/__ssr_pages__/${moduleName}';
-            import {ThemeContextProvider, getSkinByName} from '../..';
+            import {ThemeContextProvider, getSkinByName} from '../index';
 
             const skin = new URL(location).searchParams.get('skin');
 

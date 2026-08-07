@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DataCard, HorizontalMosaic, Stack, VerticalMosaic} from '../../..';
+import {DataCard, HorizontalMosaic, Stack, VerticalMosaic} from '../../index';
 
 const MosaicTest = (): JSX.Element => (
     <Stack space={16}>

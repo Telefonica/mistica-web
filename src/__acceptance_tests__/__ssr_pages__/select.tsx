@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Title1, Select, Stack, ThemeContextProvider, getMovistarSkin} from '../../..';
+import {ResponsiveLayout, Title1, Select, Stack, ThemeContextProvider, getMovistarSkin} from '../../index';
 
 const fruitOptions = [
     {text: 'Orange', value: 'orange'},
