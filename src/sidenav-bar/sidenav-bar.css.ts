@@ -376,6 +376,7 @@ export const mobileContainer = style({
     inset: 0,
     display: 'flex',
     flexDirection: 'column',
+    pointerEvents: 'none',
     zIndex: 100,
 });
 
@@ -393,6 +394,7 @@ export const mobileTopBar = style({
     paddingLeft: 16,
     paddingRight: 16,
     gap: 24,
+    pointerEvents: 'auto',
 });
 
 export const mobileTopBarControls = style({
@@ -412,6 +414,7 @@ export const mobilePanelOverlay = style({
     zIndex: 99,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     display: 'none',
+    pointerEvents: 'auto',
     selectors: {
         '&[data-open="true"]': {
             display: 'block',
@@ -430,6 +433,7 @@ export const mobilePanel = style({
     zIndex: 101,
     marginTop: MOBILE_TOP_BAR_HEIGHT,
     paddingTop: 24,
+    pointerEvents: 'auto',
 });
 
 export const mobilePanelHeader = style({

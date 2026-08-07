@@ -6,18 +6,31 @@ import {getPrefixedDataAttributes} from '../utils/dom';
 
 import type {DataAttributes} from '../utils/types';
 
+/**
+ * Props for the sidenav section of SidenavLayout.
+ */
 type SidenavLayoutSidenavProps = {
+    /** Content to render in the sidenav column (typically SidenavBar). */
     children: React.ReactNode;
 };
 
+/**
+ * Props for the main content section of SidenavLayout.
+ */
 type SidenavLayoutContentProps = {
+    /** Content to render in the main content area. */
     children: React.ReactNode;
 };
 
+/**
+ * Props for SidenavLayout wrapper component.
+ */
 type SidenavLayoutProps = {
-    /** Layout mode: 'whole-viewport' spans full width, 'centered' wraps in responsive container */
+    /** Layout mode: 'whole-viewport' spans full width, 'centered' wraps in responsive container. @default 'whole-viewport' */
     mode?: 'whole-viewport' | 'centered';
+    /** Layout sections: should contain `SidenavLayout.Sidenav` and `SidenavLayout.Content` children. */
     children: React.ReactNode;
+    /** Custom data attributes for testing and tracking. */
     dataAttributes?: DataAttributes;
 };
 

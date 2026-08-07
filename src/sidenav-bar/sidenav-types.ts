@@ -45,7 +45,7 @@ type SidenavItem = {
     defaultOpen?: boolean;
 
     /** Nested items (max 1 level). Only Level 0 items can have children. Mutually exclusive with href/to/onPress. */
-    children?: readonly SidenavItem[];
+    children?: ReadonlyArray<SidenavItem>;
 
     /** Called after navigation (when item has href, to, or onPress). */
     onNavigate?: () => void | Promise<void>;
@@ -86,7 +86,7 @@ type SidenavSection = {
     /** Show divider below section. */
     dividerBottom?: boolean;
     /** Navigation items in this section. */
-    items: readonly SidenavItem[];
+    items: ReadonlyArray<SidenavItem>;
 };
 
 export type {SidenavItem, SidenavSection};
