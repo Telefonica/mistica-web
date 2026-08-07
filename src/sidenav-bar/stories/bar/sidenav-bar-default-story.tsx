@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar, SidenavSection, SidenavItem} from '../../index';
+import {SidenavBar} from '../../index';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
@@ -13,6 +13,7 @@ import {Placeholder} from '../../../placeholder';
 import Badge from '../../../badge';
 
 import type {Variant} from '../../../theme-variant-context';
+import type {SidenavSection, SidenavItem} from '../../sidenav-types';
 
 type Args = {
     label: string;
@@ -27,10 +28,6 @@ type Args = {
     defaultCollapsed: boolean;
     doublePanel: boolean;
     width: number;
-    useCustomBackgrounds: boolean;
-    headerBackgroundColor: string;
-    bodyBackgroundColor: string;
-    footerBackgroundColor: string;
 };
 
 export const Default = ({
@@ -46,16 +43,152 @@ export const Default = ({
     defaultCollapsed,
     doublePanel,
     width,
-    useCustomBackgrounds,
-    headerBackgroundColor,
-    bodyBackgroundColor,
-    footerBackgroundColor,
 }: Args): React.JSX.Element => {
     const [lastAction, setLastAction] = React.useState<string>('');
 
     const handleAction = (actionName: string) => {
         setLastAction(`${new Date().toLocaleTimeString()}: ${actionName}`);
     };
+
+    const sections: SidenavSection[] = [
+        {
+            items: [
+                {
+                    id: 'home',
+                    label: 'Home (href)',
+                    asset: IconHomeRegular,
+                    href: '#home',
+                    onNavigate: () => handleAction('Home navigated'),
+                },
+                {
+                    id: 'search',
+                    label: 'Search (onPress)',
+                    asset: IconSearchRegular,
+                    onPress: () => handleAction('Search clicked'),
+                },
+            ],
+        },
+        {
+            title: 'Workspace',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'projects',
+                    label: 'Projects',
+                    asset: IconFolderRegular,
+                    defaultOpen: true,
+                    children: [
+                        {
+                            id: 'active',
+                            label: 'Active',
+                            asset: IconDocumentsRegular,
+                            href: '#active',
+                            onNavigate: () => handleAction('Active clicked'),
+                        },
+                        {
+                            id: 'archived',
+                            label: 'Archived',
+                            asset: IconDocumentsRegular,
+                            href: '#archived',
+                            onNavigate: () => handleAction('Archived clicked'),
+                        },
+                        {
+                            id: 'draft',
+                            label: 'Draft',
+                            href: '#draft',
+                            onNavigate: () => handleAction('Draft clicked'),
+                        },
+                        {
+                            id: 'review',
+                            label: 'In Review',
+                            asset: IconDocumentsRegular,
+                            href: '#review',
+                            onNavigate: () => handleAction('In Review clicked'),
+                        },
+                    ],
+                },
+                {
+                    id: 'teams',
+                    label: 'Teams',
+                    asset: IconFolderRegular,
+                    children: [
+                        {
+                            id: 'eng',
+                            label: 'Engineering',
+                            asset: IconSearchRegular,
+                            onPress: () => handleAction('Engineering team clicked'),
+                        },
+                        {
+                            id: 'design',
+                            label: 'Design',
+                            asset: IconSearchRegular,
+                            onPress: () => handleAction('Design team clicked'),
+                        },
+                        {
+                            id: 'marketing',
+                            label: 'Marketing',
+                            asset: IconSearchRegular,
+                            onPress: () => handleAction('Marketing team clicked'),
+                        },
+                    ],
+                },
+                {
+                    id: 'notifications',
+                    label: 'Notifications',
+                    asset: IconBellRegular,
+                    href: '#notifications',
+                    onNavigate: () => handleAction('Notifications clicked'),
+                    rightSlot: <Badge value={5} />,
+                },
+            ],
+        },
+        {
+            title: 'Account',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'profile',
+                    label: 'Profile',
+                    asset: IconDocumentsRegular,
+                    onPress: () => handleAction('Profile clicked'),
+                },
+                {
+                    id: 'history',
+                    label: 'History',
+                    asset: IconAlarmClockRegular,
+                    href: '#history',
+                    onNavigate: () => handleAction('History clicked'),
+                },
+                {
+                    id: 'settings',
+                    label: 'Settings',
+                    asset: IconSettingsRegular,
+                    href: '#settings',
+                    onNavigate: () => handleAction('Settings clicked'),
+                },
+            ],
+        },
+        {
+            title: 'Help',
+            dividerTop: true,
+            dividerBottom: true,
+            items: [
+                {
+                    id: 'docs',
+                    label: 'Documentation',
+                    asset: IconDocumentsRegular,
+                    href: '#docs',
+                    onNavigate: () => handleAction('Documentation clicked'),
+                },
+                {
+                    id: 'support',
+                    label: 'Support',
+                    asset: IconSearchRegular,
+                    onPress: () => handleAction('Support clicked'),
+                },
+            ],
+        },
+    ];
 
     return (
         <div style={{display: 'flex', height: '100vh'}}>
@@ -72,128 +205,9 @@ export const Default = ({
                     defaultCollapsed={defaultCollapsed}
                     doublePanel={doublePanel}
                     width={width}
-                    {...(useCustomBackgrounds && {
-                        background: {
-                            header: headerBackgroundColor as any,
-                            body: bodyBackgroundColor,
-                            footer: footerBackgroundColor as any,
-                        },
-                    })}
-                >
-                    <SidenavSection>
-                        <SidenavItem
-                            id="home"
-                            label="Home (href)"
-                            asset={IconHomeRegular}
-                            href="#home"
-                            onNavigate={() => handleAction('Home navigated')}
-                        />
-                        <SidenavItem
-                            id="search"
-                            label="Search (onPress)"
-                            asset={IconSearchRegular}
-                            onPress={() => handleAction('Search clicked')}
-                        />
-                    </SidenavSection>
-                    <SidenavSection title="Workspace" dividerTop>
-                        <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                            <SidenavItem
-                                id="active"
-                                label="Active"
-                                asset={IconDocumentsRegular}
-                                href="#active"
-                                onNavigate={() => handleAction('Active clicked')}
-                            />
-                            <SidenavItem
-                                id="archived"
-                                label="Archived"
-                                asset={IconDocumentsRegular}
-                                href="#archived"
-                                onNavigate={() => handleAction('Archived clicked')}
-                            />
-                            <SidenavItem
-                                id="draft"
-                                label="Draft"
-                                href="#draft"
-                                onNavigate={() => handleAction('Draft clicked')}
-                            />
-                            <SidenavItem
-                                id="review"
-                                label="In Review"
-                                asset={IconDocumentsRegular}
-                                href="#review"
-                                onNavigate={() => handleAction('In Review clicked')}
-                            />
-                        </SidenavItem>
-                        <SidenavItem id="teams" label="Teams" asset={IconFolderRegular}>
-                            <SidenavItem
-                                id="eng"
-                                label="Engineering"
-                                asset={IconSearchRegular}
-                                onPress={() => handleAction('Engineering team clicked')}
-                            />
-                            <SidenavItem
-                                id="design"
-                                label="Design"
-                                asset={IconSearchRegular}
-                                onPress={() => handleAction('Design team clicked')}
-                            />
-                            <SidenavItem
-                                id="marketing"
-                                label="Marketing"
-                                asset={IconSearchRegular}
-                                onPress={() => handleAction('Marketing team clicked')}
-                            />
-                        </SidenavItem>
-                        <SidenavItem
-                            id="notifications"
-                            label="Notifications"
-                            asset={IconBellRegular}
-                            href="#notifications"
-                            onNavigate={() => handleAction('Notifications clicked')}
-                            rightSlot={<Badge value={5} />}
-                        />
-                    </SidenavSection>
-                    <SidenavSection title="Account" dividerTop>
-                        <SidenavItem
-                            id="profile"
-                            label="Profile"
-                            asset={IconDocumentsRegular}
-                            onPress={() => handleAction('Profile clicked')}
-                        />
-                        <SidenavItem
-                            id="history"
-                            label="History"
-                            asset={IconAlarmClockRegular}
-                            href="#history"
-                            onNavigate={() => handleAction('History clicked')}
-                        />
-                        <SidenavItem
-                            id="settings"
-                            label="Settings"
-                            asset={IconSettingsRegular}
-                            href="#settings"
-                            onNavigate={() => handleAction('Settings clicked')}
-                        />
-                    </SidenavSection>
-                    <SidenavSection title="Help" dividerTop dividerBottom>
-                        <SidenavItem
-                            id="docs"
-                            label="Documentation"
-                            asset={IconDocumentsRegular}
-                            href="#docs"
-                            onNavigate={() => handleAction('Documentation clicked')}
-                        />
-                        <SidenavItem
-                            id="support"
-                            label="Support"
-                            asset={IconSearchRegular}
-                            onPress={() => handleAction('Support clicked')}
-                        />
-                    </SidenavSection>
-                </SidenavBar>
+                    sections={sections}
+                />
             ) : (
-                // @ts-expect-error Complex union type - spreads with conditionals
                 <SidenavBar
                     aria-label={label}
                     variant={variant}
@@ -207,126 +221,8 @@ export const Default = ({
                     defaultCollapsed={defaultCollapsed}
                     doublePanel={doublePanel}
                     width={width}
-                    {...(useCustomBackgrounds && {
-                        background: {
-                            header: headerBackgroundColor as any,
-                            body: bodyBackgroundColor,
-                            footer: footerBackgroundColor as any,
-                        },
-                    })}
-                >
-                    <SidenavSection>
-                        <SidenavItem
-                            id="home"
-                            label="Home (href)"
-                            asset={IconHomeRegular}
-                            href="#home"
-                            onNavigate={() => handleAction('Home navigated')}
-                        />
-                        <SidenavItem
-                            id="search"
-                            label="Search (onPress)"
-                            asset={IconSearchRegular}
-                            onPress={() => handleAction('Search clicked')}
-                        />
-                    </SidenavSection>
-                    <SidenavSection title="Workspace" dividerTop>
-                        <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                            <SidenavItem
-                                id="active"
-                                label="Active"
-                                asset={IconDocumentsRegular}
-                                href="#active"
-                                onNavigate={() => handleAction('Active clicked')}
-                            />
-                            <SidenavItem
-                                id="archived"
-                                label="Archived"
-                                asset={IconDocumentsRegular}
-                                href="#archived"
-                                onNavigate={() => handleAction('Archived clicked')}
-                            />
-                            <SidenavItem
-                                id="draft"
-                                label="Draft"
-                                href="#draft"
-                                onNavigate={() => handleAction('Draft clicked')}
-                            />
-                            <SidenavItem
-                                id="review"
-                                label="In Review"
-                                asset={IconDocumentsRegular}
-                                href="#review"
-                                onNavigate={() => handleAction('In Review clicked')}
-                            />
-                        </SidenavItem>
-                        <SidenavItem id="teams" label="Teams" asset={IconFolderRegular}>
-                            <SidenavItem
-                                id="eng"
-                                label="Engineering"
-                                asset={IconSearchRegular}
-                                onPress={() => handleAction('Engineering team clicked')}
-                            />
-                            <SidenavItem
-                                id="design"
-                                label="Design"
-                                asset={IconSearchRegular}
-                                onPress={() => handleAction('Design team clicked')}
-                            />
-                            <SidenavItem
-                                id="marketing"
-                                label="Marketing"
-                                asset={IconSearchRegular}
-                                onPress={() => handleAction('Marketing team clicked')}
-                            />
-                        </SidenavItem>
-                        <SidenavItem
-                            id="notifications"
-                            label="Notifications"
-                            asset={IconBellRegular}
-                            href="#notifications"
-                            onNavigate={() => handleAction('Notifications clicked')}
-                            rightSlot={<Badge value={5} />}
-                        />
-                    </SidenavSection>
-                    <SidenavSection title="Account" dividerTop>
-                        <SidenavItem
-                            id="profile"
-                            label="Profile"
-                            asset={IconDocumentsRegular}
-                            onPress={() => handleAction('Profile clicked')}
-                        />
-                        <SidenavItem
-                            id="history"
-                            label="History"
-                            asset={IconAlarmClockRegular}
-                            href="#history"
-                            onNavigate={() => handleAction('History clicked')}
-                        />
-                        <SidenavItem
-                            id="settings"
-                            label="Settings"
-                            asset={IconSettingsRegular}
-                            href="#settings"
-                            onNavigate={() => handleAction('Settings clicked')}
-                        />
-                    </SidenavSection>
-                    <SidenavSection title="Help" dividerTop dividerBottom>
-                        <SidenavItem
-                            id="docs"
-                            label="Documentation"
-                            asset={IconDocumentsRegular}
-                            href="#docs"
-                            onNavigate={() => handleAction('Documentation clicked')}
-                        />
-                        <SidenavItem
-                            id="support"
-                            label="Support"
-                            asset={IconSearchRegular}
-                            onPress={() => handleAction('Support clicked')}
-                        />
-                    </SidenavSection>
-                </SidenavBar>
+                    sections={sections}
+                />
             )}
             <div
                 style={{
@@ -444,10 +340,6 @@ export default {
         defaultCollapsed: false,
         doublePanel: false,
         width: 240,
-        useCustomBackgrounds: false,
-        headerBackgroundColor: '#e8f4f8',
-        bodyBackgroundColor: '#fafafa',
-        footerBackgroundColor: '#f0e8f4',
     },
     argTypes: {
         label: {
@@ -487,21 +379,6 @@ export default {
         },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
-        },
-        useCustomBackgrounds: {
-            control: {type: 'boolean'},
-        },
-        headerBackgroundColor: {
-            control: {type: 'color'},
-            if: {arg: 'useCustomBackgrounds', truthy: true},
-        },
-        bodyBackgroundColor: {
-            control: {type: 'color'},
-            if: {arg: 'useCustomBackgrounds', truthy: true},
-        },
-        footerBackgroundColor: {
-            control: {type: 'color'},
-            if: {arg: 'useCustomBackgrounds', truthy: true},
         },
     },
 };

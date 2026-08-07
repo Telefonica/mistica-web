@@ -2,21 +2,31 @@ import * as React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
 import ThemeContextProvider from '../../../theme-context-provider';
 import {makeTheme} from '../../../__tests__/test-utils';
-import {SidenavBar, SidenavSection, SidenavItem} from '../../index';
+import {SidenavBar} from '../../index';
+import type {SidenavItem, SidenavSection} from '../../sidenav-types';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
+
+const defaultSections: SidenavSection[] = [
+    {
+        title: 'Workspace',
+        items: [
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+            {
+                id: 'projects',
+                label: 'Projects',
+                asset: IconFolderRegular,
+                defaultOpen: true,
+                children: [{id: 'active', label: 'Active', href: '/active'}],
+            },
+        ],
+    },
+];
 
 const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}) => {
     const result = render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavBar aria-label="Main navigation" {...props}>
-                <SidenavSection title="Workspace">
-                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="/home" />
-                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                        <SidenavItem id="active" label="Active" href="/active" />
-                    </SidenavItem>
-                </SidenavSection>
-            </SidenavBar>
+            <SidenavBar aria-label="Main navigation" sections={defaultSections} {...props} />
         </ThemeContextProvider>
     );
 
@@ -83,19 +93,25 @@ test('SidenavBar renders no logo when logo is false', async () => {
 test('SidenavBar supports controlled selection with selectedItemId prop', async () => {
     const onSelectedItemIdChange = jest.fn();
 
+    const sections: SidenavSection[] = [
+        {
+            title: 'Workspace',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+                {id: 'projects', label: 'Projects', asset: IconFolderRegular, href: '/projects'},
+                {id: 'active', label: 'Active', asset: IconHomeRegular, href: '/active'},
+            ],
+        },
+    ];
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavBar
                 aria-label="Main navigation"
+                sections={sections}
                 selectedItemId="home"
                 onSelectedItemIdChange={onSelectedItemIdChange}
-            >
-                <SidenavSection title="Workspace">
-                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="/home" />
-                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} href="/projects" />
-                    <SidenavItem id="active" label="Active" asset={IconHomeRegular} href="/active" />
-                </SidenavSection>
-            </SidenavBar>
+            />
         </ThemeContextProvider>
     );
 
@@ -110,18 +126,24 @@ test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', 
     const onSelectedItemIdChange = jest.fn();
     const onPress = jest.fn();
 
+    const sections: SidenavSection[] = [
+        {
+            title: 'Workspace',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, onPress: () => {}},
+                {id: 'projects', label: 'Projects', asset: IconFolderRegular, onPress: onPress},
+            ],
+        },
+    ];
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavBar
                 aria-label="Main navigation"
+                sections={sections}
                 selectedItemId="home"
                 onSelectedItemIdChange={onSelectedItemIdChange}
-            >
-                <SidenavSection title="Workspace">
-                    <SidenavItem id="home" label="Home" asset={IconHomeRegular} onPress={() => {}} />
-                    <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} onPress={onPress} />
-                </SidenavSection>
-            </SidenavBar>
+            />
         </ThemeContextProvider>
     );
 

@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {SidenavBar, SidenavSection, SidenavItem, SidenavLayout} from '../../index';
+import {SidenavBar, SidenavLayout} from '../../index';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
+
+import type {SidenavSection} from '../../sidenav-types';
 
 export default {
     title: 'Components/SidenavBar/Layout',
@@ -70,6 +72,55 @@ export const WholeViewport = (args: {
 
     const sidenavWidth = args.useCustomWidth ? args.sidenavWidth : autoWidth;
 
+    const sections: SidenavSection[] = [
+        {
+            items: [
+                {
+                    id: 'home',
+                    label: 'Home',
+                    asset: IconHomeRegular,
+                    href: '#home',
+                },
+                {
+                    id: 'search',
+                    label: 'Search',
+                    asset: IconSearchRegular,
+                    href: '#search',
+                },
+            ],
+        },
+        {
+            title: 'Workspace',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'projects',
+                    label: 'Projects',
+                    asset: IconFolderRegular,
+                    defaultOpen: true,
+                    children: [
+                        {
+                            id: 'active',
+                            label: 'Active',
+                            href: '#active',
+                        },
+                        {
+                            id: 'archived',
+                            label: 'Archived',
+                            href: '#archived',
+                        },
+                    ],
+                },
+                {
+                    id: 'notifications',
+                    label: 'Notifications',
+                    asset: IconBellRegular,
+                    href: '#notifications',
+                },
+            ],
+        },
+    ];
+
     return (
         <div style={{width: '100%', height: '100vh'}}>
             <SidenavLayout mode="whole-viewport">
@@ -85,32 +136,11 @@ export const WholeViewport = (args: {
                             : {collapsible: false})}
                         logo={false}
                         width={sidenavWidth as any}
+                        sections={sections}
                         {...(args.boxed
                             ? ({boxed: true} as const)
                             : ({boxed: false, divider: args.divider} as const))}
-                    >
-                        <SidenavSection>
-                            <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
-                            <SidenavItem
-                                id="search"
-                                label="Search"
-                                asset={IconSearchRegular}
-                                href="#search"
-                            />
-                        </SidenavSection>
-                        <SidenavSection title="Workspace" dividerTop>
-                            <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                                <SidenavItem id="active" label="Active" href="#active" />
-                                <SidenavItem id="archived" label="Archived" href="#archived" />
-                            </SidenavItem>
-                            <SidenavItem
-                                id="notifications"
-                                label="Notifications"
-                                asset={IconBellRegular}
-                                href="#notifications"
-                            />
-                        </SidenavSection>
-                    </SidenavBar>
+                    />
                 </SidenavLayout.Sidenav>
                 <SidenavLayout.Content>
                     <div
@@ -155,6 +185,55 @@ export const Centered = (args: {
 
     const sidenavWidth = args.useCustomWidth ? args.sidenavWidth : autoWidth;
 
+    const sections: SidenavSection[] = [
+        {
+            items: [
+                {
+                    id: 'home',
+                    label: 'Home',
+                    asset: IconHomeRegular,
+                    href: '#home',
+                },
+                {
+                    id: 'search',
+                    label: 'Search',
+                    asset: IconSearchRegular,
+                    href: '#search',
+                },
+            ],
+        },
+        {
+            title: 'Workspace',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'projects',
+                    label: 'Projects',
+                    asset: IconFolderRegular,
+                    defaultOpen: true,
+                    children: [
+                        {
+                            id: 'active',
+                            label: 'Active',
+                            href: '#active',
+                        },
+                        {
+                            id: 'archived',
+                            label: 'Archived',
+                            href: '#archived',
+                        },
+                    ],
+                },
+                {
+                    id: 'notifications',
+                    label: 'Notifications',
+                    asset: IconBellRegular,
+                    href: '#notifications',
+                },
+            ],
+        },
+    ];
+
     return (
         <div style={{width: '100%', height: '100vh'}}>
             <SidenavLayout mode="centered">
@@ -169,32 +248,11 @@ export const Centered = (args: {
                               }
                             : {collapsible: false})}
                         width={sidenavWidth as any}
+                        sections={sections}
                         {...(args.boxed
                             ? ({boxed: true} as const)
                             : ({boxed: false, divider: args.divider} as const))}
-                    >
-                        <SidenavSection>
-                            <SidenavItem id="home" label="Home" asset={IconHomeRegular} href="#home" />
-                            <SidenavItem
-                                id="search"
-                                label="Search"
-                                asset={IconSearchRegular}
-                                href="#search"
-                            />
-                        </SidenavSection>
-                        <SidenavSection title="Workspace" dividerTop>
-                            <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                                <SidenavItem id="active" label="Active" href="#active" />
-                                <SidenavItem id="archived" label="Archived" href="#archived" />
-                            </SidenavItem>
-                            <SidenavItem
-                                id="notifications"
-                                label="Notifications"
-                                asset={IconBellRegular}
-                                href="#notifications"
-                            />
-                        </SidenavSection>
-                    </SidenavBar>
+                    />
                 </SidenavLayout.Sidenav>
                 <SidenavLayout.Content>
                     <div

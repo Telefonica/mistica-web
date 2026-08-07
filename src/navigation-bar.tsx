@@ -39,6 +39,7 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType, IconProps} from './utils/types';
+import type {InteractiveProps, MaybeInteractiveProps} from './navigation-types';
 
 const MAIN_NAVIGATION_BAR_MENU_DEBOUNCE_TIME = 120;
 
@@ -260,9 +261,6 @@ export const NavigationBar = ({
         </ThemeVariant>
     );
 };
-
-type InteractiveProps = ExclusifyUnion<{href: string} | {to: string} | {onPress: () => void}>;
-type MaybeInteractiveProps = ExclusifyUnion<{href?: string} | {to?: string} | {onPress?: () => void}>;
 
 type SectionItem = {title: string} & InteractiveProps;
 

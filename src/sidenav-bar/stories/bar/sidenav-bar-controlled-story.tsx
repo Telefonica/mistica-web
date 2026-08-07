@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar, SidenavSection, SidenavItem} from '../../index';
+import {SidenavBar} from '../../index';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
+
+import type {SidenavSection, SidenavItem} from '../../sidenav-types';
 
 export default {
     title: 'Components/SidenavBar/Bar',
@@ -19,120 +21,158 @@ export default {
 export const ControlledSelection = (): React.JSX.Element => {
     const [selectedId, setSelectedId] = React.useState<string | null>('home');
 
+    const sections: SidenavSection[] = [
+        {
+            items: [
+                {
+                    id: 'overview',
+                    label: 'Overview',
+                    asset: IconHomeRegular,
+                    onPress: () => console.log('Overview clicked'),
+                },
+                {
+                    id: 'weather',
+                    label: 'Weather',
+                    asset: IconSearchRegular,
+                    onPress: () => console.log('Weather clicked'),
+                },
+            ],
+        },
+        {
+            title: 'Water Activities',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'water-sports',
+                    label: 'Water Sports',
+                    asset: IconFolderRegular,
+                    defaultOpen: true,
+                    children: [
+                        {
+                            id: 'water-sailing',
+                            label: 'Sailing',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Sailing clicked'),
+                        },
+                        {
+                            id: 'water-windsurf',
+                            label: 'Windsurfing',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Windsurfing clicked'),
+                        },
+                        {
+                            id: 'water-kayak',
+                            label: 'Kayaking',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Kayaking clicked'),
+                        },
+                    ],
+                },
+                {
+                    id: 'beaches',
+                    label: 'Beaches',
+                    asset: IconFolderRegular,
+                    children: [
+                        {
+                            id: 'beach-riva',
+                            label: 'Riva del Garda',
+                            asset: IconSearchRegular,
+                            onPress: () => console.log('Riva del Garda clicked'),
+                        },
+                        {
+                            id: 'beach-torbole',
+                            label: 'Torbole',
+                            asset: IconSearchRegular,
+                            onPress: () => console.log('Torbole clicked'),
+                        },
+                        {
+                            id: 'beach-nago',
+                            label: 'Nago-Torbole',
+                            asset: IconSearchRegular,
+                            onPress: () => console.log('Nago-Torbole clicked'),
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            title: 'Mountain Activities',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'mountain-trails',
+                    label: 'Hiking Trails',
+                    asset: IconFolderRegular,
+                    children: [
+                        {
+                            id: 'trail-sentiero-della-pace',
+                            label: 'Sentiero della Pace',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Sentiero della Pace clicked'),
+                        },
+                        {
+                            id: 'trail-monte-cassian',
+                            label: 'Monte Cassian',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Monte Cassian clicked'),
+                        },
+                    ],
+                },
+                {
+                    id: 'climbing',
+                    label: 'Rock Climbing',
+                    asset: IconBellRegular,
+                    onPress: () => console.log('Rock Climbing clicked'),
+                },
+                {
+                    id: 'mtb',
+                    label: 'Mountain Biking',
+                    asset: IconSettingsRegular,
+                    onPress: () => console.log('Mountain Biking clicked'),
+                },
+            ],
+        },
+        {
+            title: 'Culture & Nature',
+            dividerTop: true,
+            items: [
+                {
+                    id: 'castles',
+                    label: 'Castles & History',
+                    asset: IconFolderRegular,
+                    children: [
+                        {
+                            id: 'castle-arco',
+                            label: 'Arco Castle',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Arco Castle clicked'),
+                        },
+                        {
+                            id: 'castle-drena',
+                            label: 'Drena Castle',
+                            asset: IconDocumentsRegular,
+                            onPress: () => console.log('Drena Castle clicked'),
+                        },
+                    ],
+                },
+                {
+                    id: 'botanical-gardens',
+                    label: 'Botanical Gardens',
+                    asset: IconSearchRegular,
+                    onPress: () => console.log('Botanical Gardens clicked'),
+                },
+            ],
+        },
+    ];
+
     return (
         <div style={{display: 'flex', height: '100vh'}}>
             <SidenavBar
                 aria-label="Alto Garda Activities"
                 selectedItemId={selectedId}
                 onSelectedItemIdChange={setSelectedId}
-            >
-                <SidenavSection>
-                    <SidenavItem
-                        id="overview"
-                        label="Overview"
-                        asset={IconHomeRegular}
-                        onPress={() => console.log('Overview clicked')}
-                    />
-                    <SidenavItem
-                        id="weather"
-                        label="Weather"
-                        asset={IconSearchRegular}
-                        onPress={() => console.log('Weather clicked')}
-                    />
-                </SidenavSection>
-                <SidenavSection title="Water Activities" dividerTop>
-                    <SidenavItem id="water-sports" label="Water Sports" asset={IconFolderRegular} defaultOpen>
-                        <SidenavItem
-                            id="water-sailing"
-                            label="Sailing"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Sailing clicked')}
-                        />
-                        <SidenavItem
-                            id="water-windsurf"
-                            label="Windsurfing"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Windsurfing clicked')}
-                        />
-                        <SidenavItem
-                            id="water-kayak"
-                            label="Kayaking"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Kayaking clicked')}
-                        />
-                    </SidenavItem>
-                    <SidenavItem id="beaches" label="Beaches" asset={IconFolderRegular}>
-                        <SidenavItem
-                            id="beach-riva"
-                            label="Riva del Garda"
-                            asset={IconSearchRegular}
-                            onPress={() => console.log('Riva del Garda clicked')}
-                        />
-                        <SidenavItem
-                            id="beach-torbole"
-                            label="Torbole"
-                            asset={IconSearchRegular}
-                            onPress={() => console.log('Torbole clicked')}
-                        />
-                        <SidenavItem
-                            id="beach-nago"
-                            label="Nago-Torbole"
-                            asset={IconSearchRegular}
-                            onPress={() => console.log('Nago-Torbole clicked')}
-                        />
-                    </SidenavItem>
-                </SidenavSection>
-                <SidenavSection title="Mountain Activities" dividerTop>
-                    <SidenavItem id="mountain-trails" label="Hiking Trails" asset={IconFolderRegular}>
-                        <SidenavItem
-                            id="trail-sentiero-della-pace"
-                            label="Sentiero della Pace"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Sentiero della Pace clicked')}
-                        />
-                        <SidenavItem
-                            id="trail-monte-cassian"
-                            label="Monte Cassian"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Monte Cassian clicked')}
-                        />
-                    </SidenavItem>
-                    <SidenavItem
-                        id="climbing"
-                        label="Rock Climbing"
-                        asset={IconBellRegular}
-                        onPress={() => console.log('Rock Climbing clicked')}
-                    />
-                    <SidenavItem
-                        id="mtb"
-                        label="Mountain Biking"
-                        asset={IconSettingsRegular}
-                        onPress={() => console.log('Mountain Biking clicked')}
-                    />
-                </SidenavSection>
-                <SidenavSection title="Culture & Nature" dividerTop>
-                    <SidenavItem id="castles" label="Castles & History" asset={IconFolderRegular}>
-                        <SidenavItem
-                            id="castle-arco"
-                            label="Arco Castle"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Arco Castle clicked')}
-                        />
-                        <SidenavItem
-                            id="castle-drena"
-                            label="Drena Castle"
-                            asset={IconDocumentsRegular}
-                            onPress={() => console.log('Drena Castle clicked')}
-                        />
-                    </SidenavItem>
-                    <SidenavItem
-                        id="botanical-gardens"
-                        label="Botanical Gardens"
-                        asset={IconSearchRegular}
-                        onPress={() => console.log('Botanical Gardens clicked')}
-                    />
-                </SidenavSection>
-            </SidenavBar>
+                sections={sections}
+            />
             <div
                 style={{
                     flex: 1,

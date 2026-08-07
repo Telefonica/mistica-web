@@ -14,10 +14,12 @@ import {Text3} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
+import {SidenavItem} from './sidenav-item';
 
 import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes} from '../utils/types';
+import type {SidenavItem as SidenavItemType, SidenavSection as SidenavSectionType} from './sidenav-types';
 
 // Branded type: a string that is guaranteed to be an opaque color
 type OpaqueColor = string & {readonly __brand: 'OpaqueColor'};
@@ -229,11 +231,11 @@ type SidenavBarBackgroundColors = {
 };
 
 type SidenavBarBaseProps = {
-    /** Must be one or more `SidenavSection` elements. Each section can contain `SidenavItem` and nested `SidenavItem` elements.
+    /** Navigation sections with items. Data-driven API replaces JSX children for better alignment with MainNavigationBar.
      * @see SidenavSection
      * @see SidenavItem
      */
-    children?: React.ReactNode;
+    sections?: readonly SidenavSectionType[];
     /** Accessible name of the navigation landmark. @default 'Main navigation' */
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
@@ -321,8 +323,30 @@ type SidenavBarProps = SidenavBarBaseProps &
           }
     >;
 
+// Render a single item with its nested children recursively
+const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {
+    return (
+        <SidenavItem
+            key={item.id}
+            id={item.id}
+            label={item.label}
+            asset={item.asset}
+            showIconWhenExpanded={item.showIconWhenExpanded}
+            rightSlot={item.rightSlot}
+            defaultOpen={item.defaultOpen}
+            href={item.href}
+            to={item.to}
+            onPress={item.onPress}
+            newTab={item.newTab}
+            onNavigate={item.onNavigate}
+        >
+            {item.children?.map((child) => renderSidenavItemFromData(child))}
+        </SidenavItem>
+    );
+};
+
 const SidenavBar = ({
-    children,
+    sections,
     'aria-label': ariaLabel = 'Main navigation',
     variant = 'default',
     boxed = false,
@@ -431,33 +455,25 @@ const SidenavBar = ({
     const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 
     if (process.env.NODE_ENV !== 'production') {
-        assertChildrenAre(children, SidenavSection, 'SidenavBar children must be SidenavSection elements');
-
         const itemIds = new Set<string>();
         const duplicateIds = new Set<string>();
 
-        const collectItemIds = (node: React.ReactNode): void => {
-            React.Children.forEach(node, (child) => {
-                if (React.isValidElement(child)) {
-                    const childProps = child.props as any;
-                    if (child.type === SidenavSection) {
-                        collectItemIds(childProps.children);
-                    } else if (childProps?.id) {
-                        const id = childProps.id as string;
-                        if (itemIds.has(id)) {
-                            duplicateIds.add(id);
-                        } else {
-                            itemIds.add(id);
-                        }
-                        if (childProps.children) {
-                            collectItemIds(childProps.children);
-                        }
-                    }
-                }
-            });
+        const collectItemIds = (item: SidenavItemType): void => {
+            if (itemIds.has(item.id)) {
+                duplicateIds.add(item.id);
+            } else {
+                itemIds.add(item.id);
+            }
+            if (item.children) {
+                item.children.forEach((child) => collectItemIds(child));
+            }
         };
 
-        collectItemIds(children);
+        if (sections) {
+            sections.forEach((section) => {
+                section.items.forEach((item) => collectItemIds(item));
+            });
+        }
 
         if (duplicateIds.size > 0) {
             console.error(
@@ -540,7 +556,16 @@ const SidenavBar = ({
                                 )}
                             />
                         )}
-                        {children}
+                        {sections?.map((section, sectionIndex) => (
+                            <SidenavSection
+                                key={section.title || `section-${sectionIndex}`}
+                                title={section.title}
+                                dividerTop={section.dividerTop}
+                                dividerBottom={section.dividerBottom}
+                            >
+                                {section.items.map((item) => renderSidenavItemFromData(item))}
+                            </SidenavSection>
+                        ))}
                         {footerSlot && !fixedFooter && (
                             <>
                                 <div ref={footerDividerSentinelRef} />
@@ -601,3 +626,4 @@ export {
     hasDescendantWithId,
 };
 export type {SidenavBarProps, SidenavSectionProps, SidenavBarBackgroundColors};
+export type {SidenavItemType as SidenavItem, SidenavSectionType as SidenavSection} from './sidenav-types';
