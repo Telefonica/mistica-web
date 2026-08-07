@@ -13,7 +13,7 @@ import {Placeholder} from '../../../placeholder';
 import Badge from '../../../badge';
 
 import type {Variant} from '../../../theme-variant-context';
-import type {SidenavSection, SidenavItem} from '../../sidenav-types';
+import type {SidenavSection} from '../../sidenav-types';
 
 type Args = {
     label: string;
@@ -50,7 +50,7 @@ export const Default = ({
         setLastAction(`${new Date().toLocaleTimeString()}: ${actionName}`);
     };
 
-    const sections: SidenavSection[] = [
+    const sections: Array<SidenavSection> = [
         {
             items: [
                 {
@@ -209,19 +209,21 @@ export const Default = ({
                 />
             ) : (
                 <SidenavBar
-                    aria-label={label}
-                    variant={variant}
-                    logo={logo ? undefined : false}
-                    headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
-                    footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
-                    fixedFooter={fixedFooter}
-                    boxed={false}
-                    divider={divider}
-                    collapsible={collapsible}
-                    defaultCollapsed={defaultCollapsed}
-                    doublePanel={doublePanel}
-                    width={width}
-                    sections={sections}
+                    {...({
+                        'aria-label': label,
+                        variant,
+                        logo: logo ? undefined : false,
+                        headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
+                        footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
+                        fixedFooter,
+                        boxed: false,
+                        divider,
+                        collapsible,
+                        defaultCollapsed,
+                        doublePanel,
+                        width,
+                        sections,
+                    } as any)}
                 />
             )}
             <div

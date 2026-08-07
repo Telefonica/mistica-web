@@ -6,6 +6,7 @@ import {DEFAULT_WIDTH, COLLAPSED_WIDTH, LOGO_SIZE} from './sidenav-bar.css';
 import {ThemeVariant, normalizeVariant} from '../theme-variant-context';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
+import {useScreenSize, useTheme, useDisableBodyScroll} from '../hooks';
 import {IconButton} from '../icon-button';
 import {Logo} from '../logo';
 import Divider from '../divider';
@@ -14,6 +15,9 @@ import {Text3} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
+import IconMenuRegular from '../generated/mistica-icons/icon-menu-regular';
+import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
+import IconChevronLeftRegular from '../generated/mistica-icons/icon-chevron-left-regular';
 import {SidenavItem} from './sidenav-item';
 
 import type {Variant} from '../theme-variant-context';
@@ -79,6 +83,12 @@ const enforceOpaqueColor = (color: string, region: 'header' | 'footer'): OpaqueC
 // Context
 // -----------------------------------------------------------------------------
 
+type MobileNavigationLevel = {
+    id: string | null;
+    label: string;
+    items: ReadonlyArray<SidenavItemType>;
+};
+
 type SidenavBarContextValue = {
     collapsed: boolean;
     collapsible: boolean;
@@ -90,6 +100,12 @@ type SidenavBarContextValue = {
     isInsidePanel: boolean;
     selectedItemId: string | null;
     onSelectedItemIdChange?: (id: string | null) => void;
+    isMobileMode?: boolean;
+    mobileMenuOpen?: boolean;
+    closeMobileMenu?: () => void;
+    mobileNavLevel?: Array<MobileNavigationLevel>;
+    pushMobileNavLevel?: (level: MobileNavigationLevel) => void;
+    popMobileNavLevel?: () => void;
 };
 
 const SidenavBarContext = React.createContext<SidenavBarContextValue>({
@@ -102,6 +118,12 @@ const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     containerRef: React.createRef(),
     isInsidePanel: false,
     selectedItemId: null,
+    isMobileMode: false,
+    mobileMenuOpen: false,
+    closeMobileMenu: () => {},
+    mobileNavLevel: [],
+    pushMobileNavLevel: () => {},
+    popMobileNavLevel: () => {},
 });
 
 const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(SidenavBarContext);
@@ -178,7 +200,7 @@ const SidenavSection = ({
     children,
     dataAttributes,
 }: SidenavSectionProps): JSX.Element => {
-    const {collapsed} = useSidenavBarContext();
+    const {collapsed, isMobileMode} = useSidenavBarContext();
 
     return (
         <div
@@ -202,13 +224,21 @@ const SidenavSection = ({
             )}
             <div className={styles.sectionContent}>
                 {dividerTop && (
-                    <div className={styles.sectionDivider}>
+                    <div
+                        className={classnames(styles.sectionDivider, {
+                            [styles.sectionDividerHidden]: isMobileMode,
+                        })}
+                    >
                         <Divider />
                     </div>
                 )}
                 {children}
                 {dividerBottom && (
-                    <div className={styles.sectionDivider}>
+                    <div
+                        className={classnames(styles.sectionDivider, {
+                            [styles.sectionDividerHidden]: isMobileMode,
+                        })}
+                    >
                         <Divider />
                     </div>
                 )}
@@ -235,7 +265,7 @@ type SidenavBarBaseProps = {
      * @see SidenavSection
      * @see SidenavItem
      */
-    sections?: readonly SidenavSectionType[];
+    sections?: ReadonlyArray<SidenavSectionType>;
     /** Accessible name of the navigation landmark. @default 'Main navigation' */
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
@@ -325,24 +355,33 @@ type SidenavBarProps = SidenavBarBaseProps &
 
 // Render a single item with its nested children recursively
 const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {
-    return (
-        <SidenavItem
-            key={item.id}
-            id={item.id}
-            label={item.label}
-            asset={item.asset}
-            showIconWhenExpanded={item.showIconWhenExpanded}
-            rightSlot={item.rightSlot}
-            defaultOpen={item.defaultOpen}
-            href={item.href}
-            to={item.to}
-            onPress={item.onPress}
-            newTab={item.newTab}
-            onNavigate={item.onNavigate}
-        >
-            {item.children?.map((child) => renderSidenavItemFromData(child))}
-        </SidenavItem>
-    );
+    const children = item.children?.map((child) => renderSidenavItemFromData(child));
+    const baseProps = {
+        key: item.id,
+        id: item.id,
+        label: item.label,
+        asset: item.asset,
+        showIconWhenExpanded: item.showIconWhenExpanded,
+        rightSlot: item.rightSlot,
+        defaultOpen: item.defaultOpen,
+        newTab: item.newTab,
+        onNavigate: item.onNavigate,
+        children,
+        childrenData: item.children,
+    };
+
+    // Build navigation props based on which one is defined
+    if (item.href !== undefined) {
+        return <SidenavItem {...(baseProps as any)} href={item.href} />;
+    }
+    if (item.to !== undefined) {
+        return <SidenavItem {...(baseProps as any)} to={item.to} />;
+    }
+    if (item.onPress !== undefined) {
+        return <SidenavItem {...(baseProps as any)} onPress={item.onPress} />;
+    }
+    // No navigation: this item has children
+    return <SidenavItem {...(baseProps as any)} />;
 };
 
 const SidenavBar = ({
@@ -366,6 +405,55 @@ const SidenavBar = ({
     onSelectedItemIdChange,
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
+    const {isMobile} = useScreenSize();
+    const theme = useTheme();
+    const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+    const [mobileNavStack, setMobileNavStack] = React.useState<Array<MobileNavigationLevel>>([]);
+    useDisableBodyScroll(isMobile && mobileMenuOpen);
+
+    // Get localized back button text
+    const getBackButtonText = React.useCallback(() => {
+        const locale = theme.i18n.locale;
+        if (locale.startsWith('es')) return 'Atrás';
+        if (locale.startsWith('ca')) return 'Enrere';
+        if (locale.startsWith('pt')) return 'Voltar';
+        if (locale.startsWith('gl')) return 'Atrás';
+        if (locale.startsWith('eu')) return 'Atzera';
+        return 'Back'; // Default to English
+    }, [theme.i18n.locale]);
+
+    const pushMobileNavLevel = React.useCallback((level: MobileNavigationLevel) => {
+        setMobileNavStack((prev) => [...prev, level]);
+    }, []);
+
+    const popMobileNavLevel = React.useCallback(() => {
+        setMobileNavStack((prev) => {
+            if (prev.length > 0) {
+                return prev.slice(0, -1);
+            }
+            return prev;
+        });
+    }, []);
+
+    React.useEffect(() => {
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                if (mobileNavStack.length > 0) {
+                    popMobileNavLevel();
+                } else if (mobileMenuOpen) {
+                    setMobileMenuOpen(false);
+                }
+            }
+        };
+
+        if (isMobile && (mobileMenuOpen || mobileNavStack.length > 0)) {
+            document.addEventListener('keydown', handleEscape);
+            return () => {
+                document.removeEventListener('keydown', handleEscape);
+            };
+        }
+    }, [isMobile, mobileMenuOpen, mobileNavStack.length, popMobileNavLevel]);
+
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
     const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
@@ -427,6 +515,11 @@ const SidenavBar = ({
         onCollapse?.(next);
     }, [collapsed, isCollapsedControlled, onCollapse]);
 
+    const closeMobileMenu = React.useCallback(() => {
+        setMobileMenuOpen(false);
+        setMobileNavStack([]);
+    }, []);
+
     const contextValue = React.useMemo(
         () => ({
             collapsed,
@@ -439,6 +532,12 @@ const SidenavBar = ({
             isInsidePanel: false,
             selectedItemId: selectedItemId ?? null,
             onSelectedItemIdChange,
+            isMobileMode: isMobile,
+            mobileMenuOpen,
+            closeMobileMenu,
+            mobileNavLevel: mobileNavStack,
+            pushMobileNavLevel,
+            popMobileNavLevel,
         }),
         [
             collapsed,
@@ -449,6 +548,12 @@ const SidenavBar = ({
             containerRef,
             selectedItemId,
             onSelectedItemIdChange,
+            isMobile,
+            mobileMenuOpen,
+            closeMobileMenu,
+            mobileNavStack,
+            pushMobileNavLevel,
+            popMobileNavLevel,
         ]
     );
 
@@ -487,6 +592,81 @@ const SidenavBar = ({
 
     const hasHeader = Boolean(logoElement || collapsible || headerSlot);
     const normalizedVariant = normalizeVariant(variant);
+
+    if (isMobile) {
+        return (
+            <ThemeVariant variant={normalizedVariant}>
+                <SidenavBarContext.Provider value={contextValue}>
+                    <div
+                        className={styles.mobileContainer}
+                        {...getPrefixedDataAttributes({testid: 'SidenavBarMobile', ...dataAttributes})}
+                    >
+                        <div className={styles.mobileTopBar}>
+                            <IconButton
+                                Icon={mobileMenuOpen ? IconCloseRegular : IconMenuRegular}
+                                type="neutral"
+                                backgroundType="transparent"
+                                onPress={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                            />
+                            {logoElement && <div className={styles.logo}>{logoElement}</div>}
+                            <div className={styles.mobileTopBarControls} />
+                        </div>
+
+                        {mobileMenuOpen && (
+                            <>
+                                <div
+                                    className={styles.mobilePanelOverlay}
+                                    data-open={mobileMenuOpen}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    role="presentation"
+                                />
+                                <nav className={styles.mobilePanel} aria-label={ariaLabel}>
+                                    {mobileNavStack.length > 0 && (
+                                        <div className={styles.mobilePanelHeader}>
+                                            <IconButton
+                                                Icon={IconChevronLeftRegular}
+                                                type="neutral"
+                                                backgroundType="transparent"
+                                                onPress={popMobileNavLevel}
+                                                aria-label={getBackButtonText()}
+                                            />
+                                            <Text3 regular>{getBackButtonText()}</Text3>
+                                        </div>
+                                    )}
+                                    <div className={styles.mobilePanelContent}>
+                                        {mobileNavStack.length > 0 && (
+                                            <div className={styles.sectionTitle}>
+                                                <Text3 medium color={skinVars.colors.textSecondaryBrand}>
+                                                    {mobileNavStack[mobileNavStack.length - 1].label}
+                                                </Text3>
+                                            </div>
+                                        )}
+                                        {mobileNavStack.length > 0
+                                            ? mobileNavStack[mobileNavStack.length - 1].items.map((item) =>
+                                                  renderSidenavItemFromData(item)
+                                              )
+                                            : sections?.map((section, sectionIndex) => (
+                                                  <SidenavSection
+                                                      key={section.title || `section-${sectionIndex}`}
+                                                      title={section.title}
+                                                      dividerTop={section.dividerTop}
+                                                      dividerBottom={section.dividerBottom}
+                                                  >
+                                                      {section.items.map((item) =>
+                                                          renderSidenavItemFromData(item)
+                                                      )}
+                                                  </SidenavSection>
+                                              ))}
+                                    </div>
+                                </nav>
+                            </>
+                        )}
+                    </div>
+                </SidenavBarContext.Provider>
+            </ThemeVariant>
+        );
+    }
 
     return (
         <ThemeVariant variant={normalizedVariant}>
@@ -616,7 +796,7 @@ const SidenavBar = ({
 };
 
 export default SidenavBar;
-export {SidenavBar, SidenavSection};
+export {SidenavBar, SidenavSection, SidenavItem};
 export {
     SidenavBarContext,
     useSidenavBarContext,
@@ -626,4 +806,3 @@ export {
     hasDescendantWithId,
 };
 export type {SidenavBarProps, SidenavSectionProps, SidenavBarBackgroundColors};
-export type {SidenavItemType as SidenavItem, SidenavSectionType as SidenavSection} from './sidenav-types';

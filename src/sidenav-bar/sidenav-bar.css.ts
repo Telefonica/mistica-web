@@ -210,6 +210,10 @@ export const sectionDivider = style({
     marginRight: -8,
 });
 
+export const sectionDividerHidden = style({
+    display: 'none',
+});
+
 // Item ------------------------------------------------------------------------
 
 export const itemIndentVar = createVar();
@@ -239,6 +243,10 @@ export const itemTouchable = style({
         '&:hover': {backgroundColor: skinVars.colors.backgroundContainerHover},
         '&:active': {backgroundColor: skinVars.colors.backgroundContainerPressed},
     },
+});
+
+export const itemTouchableMobile = style({
+    height: 48,
 });
 
 export const itemTouchableCollapsed = style({
@@ -354,6 +362,95 @@ export const doublePanel = style({
     overflowY: 'auto',
     paddingTop: 24,
     paddingBottom: 24,
+    paddingLeft: 8,
+    paddingRight: 8,
+});
+
+// Mobile -----------------------------------------------------------------------
+
+export const MOBILE_TOP_BAR_HEIGHT = 56;
+export const MOBILE_BOTTOM_BAR_HEIGHT = 48;
+
+export const mobileContainer = style({
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+});
+
+export const mobileTopBar = style({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: MOBILE_TOP_BAR_HEIGHT,
+    zIndex: 100,
+    backgroundColor: skinVars.colors.background,
+    borderBottom: `1px solid ${skinVars.colors.divider}`,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 16,
+    paddingRight: 16,
+    gap: 24,
+});
+
+export const mobileTopBarControls = style({
+    display: 'flex',
+    gap: 24,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1,
+});
+
+export const mobilePanelOverlay = style({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 99,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    display: 'none',
+    selectors: {
+        '&[data-open="true"]': {
+            display: 'block',
+        },
+    },
+});
+
+export const mobilePanel = style({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    backgroundColor: skinVars.colors.backgroundContainer,
+    overflowY: 'auto',
+    zIndex: 101,
+    marginTop: MOBILE_TOP_BAR_HEIGHT,
+    paddingTop: 24,
+});
+
+export const mobilePanelHeader = style({
+    display: 'flex',
+    alignItems: 'center',
+    gap: 16,
+    paddingLeft: 8,
+    paddingRight: 16,
+    paddingBottom: 16,
+    paddingTop: 16,
+    height: 'auto',
+    minHeight: 44,
+});
+
+export const mobilePanelHeaderTitle = style({
+    flex: 1,
+    textAlign: 'left',
+});
+
+export const mobilePanelContent = style({
+    display: 'flex',
+    flexDirection: 'column',
     paddingLeft: 8,
     paddingRight: 8,
 });

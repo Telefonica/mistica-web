@@ -10,6 +10,7 @@ import {
     assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-bar';
+import {SidenavPanel} from './sidenav-panel';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import Touchable from '../touchable';
@@ -18,8 +19,9 @@ import ScreenReaderOnly from '../screen-reader-only';
 import {Text2} from '../text';
 import IconChevronDownRegular from '../generated/mistica-icons/icon-chevron-down-regular';
 import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
-import {SidenavPanel} from './sidenav-panel';
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import type {SidenavItem} from './sidenav-types';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes, IconProps} from '../utils/types';
 
@@ -35,6 +37,8 @@ type SidenavItemBaseProps = {
     /** Initial expanded state for items with children. @default false */
     defaultOpen?: boolean;
     dataAttributes?: DataAttributes;
+    /** Original children data (for mobile navigation extraction). Internal use only. */
+    childrenData?: ReadonlyArray<SidenavItem>;
 };
 
 /**
@@ -119,7 +123,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         defaultOpen,
         dataAttributes,
         showIconWhenExpanded = true,
-    } = props;
+        childrenData,
+    } = props as any;
     const {
         collapsed,
         doublePanel,
@@ -129,6 +134,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         isInsidePanel,
         selectedItemId,
         onSelectedItemIdChange,
+        isMobileMode,
+        closeMobileMenu,
+        pushMobileNavLevel,
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
 
@@ -183,6 +191,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             if (isInsidePanel) {
                 setPanelOpenForItemId(null);
             }
+            if (isMobileMode && !hasChildren && closeMobileMenu) {
+                closeMobileMenu();
+            }
         };
     };
 
@@ -203,7 +214,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
     })();
 
-    const ChevronIcon = doublePanel ? IconChevronRightRegular : IconChevronDownRegular;
+    const ChevronIcon = isMobileMode || doublePanel ? IconChevronRightRegular : IconChevronDownRegular;
 
     const shouldShowAsset = asset && (collapsed || showIconWhenExpanded);
     let assetContent: React.ReactNode = null;
@@ -234,7 +245,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const touchableClassName = classnames(
         styles.itemTouchable,
         styles.itemTouchableSelected[showAccent ? 'true' : 'false'],
-        {[styles.itemTouchableCollapsed]: collapsed && !isInsidePanel}
+        {
+            [styles.itemTouchableCollapsed]: collapsed && !isInsidePanel,
+            [styles.itemTouchableMobile]: isMobileMode,
+        }
     );
 
     const rowContent = (
@@ -260,9 +274,24 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const interactiveRow = (() => {
         if (hasChildren) {
             const handlePress = () => {
+                // Mobile: Always navigate to children with stacked navigation (exit early)
+                if (isMobileMode) {
+                    if (pushMobileNavLevel && childrenData && id && label) {
+                        pushMobileNavLevel({
+                            id,
+                            label,
+                            items: childrenData,
+                        });
+                    }
+                    return; // CRITICAL: Exit to prevent desktop behavior
+                }
+
+                // Desktop: Use dialog or double panel mode
                 if (shouldShowPanelMode) {
                     handleTogglePanel();
-                } else {
+                }
+                // Desktop: Inline expansion
+                else {
                     setOpen((prev) => !prev);
                 }
             };
@@ -271,7 +300,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 <Touchable
                     className={touchableClassName}
                     onPress={handlePress}
-                    aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
+                    aria-expanded={!isMobileMode && (shouldShowPanelMode ? isPanelOpen : isOpen)}
                     aria-label={label}
                     dataAttributes={{parentItem: 'true'}}
                 >
@@ -328,7 +357,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     return (
         <>
             {row}
-            {isOpen && (
+            {isOpen && !isMobileMode && (
                 <div className={styles.nestedList} role="group" aria-label={label}>
                     <SidenavLevelContext.Provider value={level + 1}>{children}</SidenavLevelContext.Provider>
                 </div>
