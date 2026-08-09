@@ -34,3 +34,4 @@ community.d.ts
 *storybook.log
 .env*.local
 
+.claude/settings.local.json
