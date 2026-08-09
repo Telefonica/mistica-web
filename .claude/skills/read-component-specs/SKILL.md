@@ -14,7 +14,9 @@ When developing a new component in mistica-web, consult specifications in this o
 
 ## Workflow
 
-- Ask for these resources when starting component work if not already available
+- Start with the GitHub issue ticket—it often already contains links to both the markdown specs and Figma
+  design
+- Ask for these resources when starting component work if not already available in the ticket
 - Always verify specifications match across all three sources before implementation
 - If you find conflicts, markdown specs take precedence over the Figma design
 
