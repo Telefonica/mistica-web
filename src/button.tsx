@@ -269,7 +269,7 @@ const renderButtonContent = ({
     );
 };
 
-type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'linkDanger';
+type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'linkDanger' | 'linkNeutral';
 
 interface CommonProps {
     children: React.ReactNode;
@@ -324,12 +324,15 @@ type ButtonProps = ExclusifyUnion<
     FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 >;
 
+export type ButtonLinkType = 'default' | 'danger' | 'neutral';
+
 type ButtonLinkProps = ExclusifyUnion<
     FakeButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 > & {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
+    type?: ButtonLinkType;
 };
 
 const BaseButton = React.forwardRef<
@@ -375,6 +378,10 @@ const BaseButton = React.forwardRef<
                 break;
             case 'linkDanger':
                 component_type = 'danger_link';
+                action = eventActions.linkTapped;
+                break;
+            case 'linkNeutral':
+                component_type = 'neutral_link';
                 action = eventActions.linkTapped;
                 break;
             default:
@@ -563,22 +570,25 @@ export const ButtonLink = React.forwardRef<
     ButtonLinkProps & {
         withChevron?: boolean;
     }
->(({dataAttributes, className, ...props}, ref) => {
+>(({dataAttributes, className, type = 'default', ...props}, ref) => {
+    const buttonType = type === 'danger' ? 'linkDanger' : type === 'neutral' ? 'linkNeutral' : 'link';
+
     return (
         <BaseButton
             dataAttributes={{testid: 'ButtonLink', ...dataAttributes}}
             className={classnames(className, {[styles.smallLink]: props.small})}
             {...props}
             ref={ref}
-            buttonType="link"
+            buttonType={buttonType}
         />
     );
 });
 
+/** @deprecated Use ButtonLink with type="danger" instead. */
 export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
     ({dataAttributes, className, ...props}, ref) => {
         return (
-            <BaseButton
+            <ButtonLink
                 dataAttributes={{
                     testid: 'ButtonLinkDanger',
                     ...dataAttributes,
@@ -587,7 +597,7 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
                 {...props}
                 withChevron={false}
                 ref={ref}
-                buttonType="linkDanger"
+                type="danger"
             />
         );
     }
