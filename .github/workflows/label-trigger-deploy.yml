@@ -40,16 +40,26 @@ jobs:
                         return;
                       }
 
-                      await github.rest.actions.createWorkflowDispatch({
+                      const { data: dispatch } = await github.rest.actions.createWorkflowDispatch({
                         owner,
                         repo,
                         workflow_id: 'deploy-fork-pr-preview.yml',
                         ref: 'master',
                         inputs: { prNumber: String(prNumber) },
+                        return_run_details: true,
                       });
 
                       core.info(`Dispatched deploy-fork-pr-preview for PR #${prNumber}`);
 
                       // post an audit comment on the PR
-                      const commentBody = `Label '${TARGET_LABEL}' added — dispatching fork preview workflow. Awaiting environment approval to expose deploy secrets.`;
+                      const runUrl = dispatch?.html_url ?? `https://github.com/${owner}/${repo}/actions`;
+                      const commentBody = [
+                        '### 🚀 Fork preview deploy triggered',
+                        '',
+                        `The \`${TARGET_LABEL}\` label was added and the fork preview workflow has been dispatched.`,
+                        '',
+                        '> [!IMPORTANT]',
+                        '> A reviewer must **approve the workflow run** before it can access deploy secrets.',
+                        `> [Open the run and click **Review deployments** to approve it.](${runUrl})`,
+                      ].join('\n');
                       await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body: commentBody });

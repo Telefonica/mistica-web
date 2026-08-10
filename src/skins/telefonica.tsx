@@ -123,7 +123,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.white, 0.08),
-            buttonLinkNeutralBackgroundPressed: palette.grey1,
+            buttonLinkNeutralBackgroundPressed: applyAlpha(palette.grey2, 0.4),
             buttonLinkNeutralBackgroundBrand: palette.white,
             buttonLinkNeutralBackgroundBrandPressed: palette.grey1,
             buttonLinkNeutralBackgroundNegative: palette.white,
