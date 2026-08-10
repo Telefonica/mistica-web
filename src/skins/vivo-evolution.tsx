@@ -833,6 +833,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 24}, right: {mobile: 16, desktop: 24}},
             responsiveLayoutMargin: {mobile: 8, desktop: 48},
         },
     };

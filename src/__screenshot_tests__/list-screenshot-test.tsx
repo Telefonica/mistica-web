@@ -357,3 +357,37 @@ test.each(devices)('OrderedList without marker', async (device) => {
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(devices)('Row list small', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device,
+        args: {
+            small: true,
+            headline: 'Headline',
+            subtitle: 'Subtitle',
+            detail: 'Detail',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('Boxed row list small', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device,
+        args: {
+            small: true,
+            headline: 'Headline',
+            subtitle: 'Subtitle',
+            detail: 'Detail',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
