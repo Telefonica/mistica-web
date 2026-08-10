@@ -32,3 +32,27 @@ test.each`
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each`
+    actions              | title           | closable | asset    | case
+    ${'button and link'} | ${'Some title'} | ${true}  | ${true}  | ${'small'}
+    ${'none'}            | ${''}           | ${false} | ${false} | ${'small only description'}
+`('Callout $case', async ({actions, title, closable, asset}) => {
+    await openStoryPage({
+        id: 'components-callout--default',
+        args: {
+            actions,
+            title,
+            variant: normalizeVariant('default'),
+            variantOutside: normalizeVariant('default'),
+            closable,
+            asset,
+            small: true,
+        },
+    });
+
+    const callout = await screen.findByRole('region');
+    const image = await callout.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
