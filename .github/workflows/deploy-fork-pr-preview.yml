@@ -6,6 +6,9 @@ on:
             prNumber:
                 description: 'Pull request number to deploy preview for'
                 required: true
+            commitSha:
+                description: 'Exact commit SHA at the time the safe-to-deploy label was added'
+                required: true
 
 permissions:
     contents: read
@@ -30,6 +33,12 @@ jobs:
                         return;
                       }
 
+                      const commitSha = '${{ github.event.inputs.commitSha }}';
+                      if (!/^[0-9a-f]{40}$/i.test(commitSha)) {
+                        core.setFailed('Invalid commitSha input: must be a 40-character hex SHA');
+                        return;
+                      }
+
                       const {owner, repo} = context.repo;
                       const {data: pr} = await github.rest.pulls.get({owner, repo, pull_number: prNumber});
 
@@ -43,17 +52,22 @@ jobs:
                         return;
                       }
 
+                      if (pr.head.sha !== commitSha) {
+                        core.setFailed(`Commit SHA mismatch: the PR head is now ${pr.head.sha} but this workflow was triggered for ${commitSha}. The fork may have been updated after the label was added.`);
+                        return;
+                      }
+
                       const labels = (pr.labels || []).map((label) => label.name);
                       if (!labels.includes(REQUIRED_LABEL)) {
                         core.setFailed(`PR #${prNumber} is missing required label: ${REQUIRED_LABEL}`);
                         return;
                       }
 
-                      core.setOutput('merge_ref', `refs/pull/${prNumber}/merge`);
+                      core.setOutput('commit_sha', commitSha);
                       core.setOutput('pr_number', String(prNumber));
             - uses: actions/checkout@v6
               with:
-                  ref: ${{ steps.pr.outputs.merge_ref }}
+                  ref: ${{ steps.pr.outputs.commit_sha }}
                   persist-credentials: false
 
             - name: Deploy preview
