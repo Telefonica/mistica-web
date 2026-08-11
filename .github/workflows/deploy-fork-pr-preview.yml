@@ -75,12 +75,12 @@ jobs:
                   script: |
                       const prNumber = Number('${{ steps.pr.outputs.pr_number }}');
                       const { owner, repo } = context.repo;
-                      const marker = '<!-- vercel-preview-url -->';
+                      const marker = '<!-- fork-deploy-status -->';
 
                       const succeeded = '${{ steps.deploy.outcome }}' === 'success';
                       const body = succeeded
-                        ? `${marker}\n### Vercel Preview\n\n| Name | Link |\n| --- | --- |\n| Preview | ${{ steps.deploy.outputs.preview-url }} |`
-                        : `${marker}\n### Vercel Preview\n\n> [!CAUTION]\n> Deployment failed. [Check the workflow run](https://github.com/${owner}/${repo}/actions/runs/${{ github.run_id }}) for details.`;
+                        ? `${marker}\n### Preview deployment\n\n**Step 3/3** — Deployed! ✅\n\n| Name | Link |\n| --- | --- |\n| Preview | ${{ steps.deploy.outputs.preview-url }} |`
+                        : `${marker}\n### Preview deployment\n\n**Step 3/3** — Deployment failed. ❌\n\n> [!CAUTION]\n> [Check the workflow run](https://github.com/${owner}/${repo}/actions/runs/${{ github.run_id }}) for details.`;
 
                       const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number: prNumber });
                       const existing = comments.find(c => c.body && c.body.includes(marker));
