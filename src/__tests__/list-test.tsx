@@ -504,3 +504,98 @@ test('aria-label is read by screen readers in informative rows', () => {
 
     expect(screen.getByText('Some custom label')).toBeInTheDocument();
 });
+
+test('RowList renders with small prop', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList small>
+                <Row title="Title" description="Description" subtitle="Subtitle" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('title')).toBeInTheDocument();
+    expect(screen.getByTestId('description')).toBeInTheDocument();
+    expect(screen.getByTestId('subtitle')).toBeInTheDocument();
+});
+
+test('BoxedRowList renders with small prop', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList small>
+                <BoxedRow title="Title" description="Description" subtitle="Subtitle" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('title')).toBeInTheDocument();
+    expect(screen.getByTestId('description')).toBeInTheDocument();
+    expect(screen.getByTestId('subtitle')).toBeInTheDocument();
+});
+
+test('RowList renders divider between rows', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="First" />
+                <Row title="Last" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rows = screen.getAllByRole('listitem');
+    expect(rows).toHaveLength(2);
+    expect(within(rows[0]).getByTestId('row-divider')).toBeInTheDocument();
+});
+
+const renderDualActionRow = (firstRowProps: Record<string, unknown>, needsRadioGroup = false) => {
+    const rowList = (
+        <RowList>
+            <Row title="First" onPress={() => {}} {...(firstRowProps as any)} />
+            <Row title="Last" {...((needsRadioGroup ? {radioValue: 'last'} : {}) as any)} />
+        </RowList>
+    );
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            {needsRadioGroup ? <RadioGroup name="radio-group">{rowList}</RadioGroup> : rowList}
+        </ThemeContextProvider>
+    );
+};
+
+const expectDualActionDividers = () => {
+    const firstRow = screen.getAllByRole('listitem')[0];
+    expect(within(firstRow).queryByTestId('row-divider')).not.toBeInTheDocument();
+    expect(within(firstRow).getByTestId('row-divider-dual-action')).toBeInTheDocument();
+};
+
+test('Row with switch and onPress hides inner divider and renders outer dual-action divider', () => {
+    renderDualActionRow({switch: {defaultValue: false}});
+    expectDualActionDividers();
+});
+
+test('Row with checkbox and onPress hides inner divider and renders outer dual-action divider', () => {
+    renderDualActionRow({checkbox: {defaultValue: false}});
+    expectDualActionDividers();
+});
+
+test('Row with radioValue and onPress hides inner divider and renders outer dual-action divider', () => {
+    renderDualActionRow({radioValue: 'first'}, true);
+    expectDualActionDividers();
+});
+
+test('dual-action divider has inline paddingLeft style for offset measurement', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="First" onPress={() => {}} switch={{defaultValue: false}} />
+                <Row title="Last" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rows = screen.getAllByRole('listitem');
+    const firstRow = rows[0];
+    const dualActionDivider = within(firstRow).getByTestId('row-divider-dual-action');
+
+    expect(dualActionDivider).toHaveStyle({paddingLeft: '0px'});
+});

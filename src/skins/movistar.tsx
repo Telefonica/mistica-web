@@ -745,6 +745,15 @@ export const getMovistarSkin: GetKnownSkin = () => {
             successFeedback: 'inverse',
             brandLoadingScreen: 'default',
         },
+        componentProperties: {
+            showBoxedBorder: {
+                default: true,
+                brand: true,
+                negative: true,
+                alternative: true,
+                media: true,
+            },
+        },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             buttonSmallPadding: {left: {mobile: 8, desktop: 12}, right: {mobile: 8, desktop: 12}},
@@ -770,6 +779,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 24},
                 right: {mobile: 16, desktop: 24},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

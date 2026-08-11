@@ -123,7 +123,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.white, 0.08),
-            buttonLinkNeutralBackgroundPressed: palette.grey1,
+            buttonLinkNeutralBackgroundPressed: applyAlpha(palette.grey2, 0.4),
             buttonLinkNeutralBackgroundBrand: palette.white,
             buttonLinkNeutralBackgroundBrandPressed: palette.grey1,
             buttonLinkNeutralBackgroundNegative: palette.white,
@@ -778,6 +778,15 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             successFeedback: 'inverse',
             brandLoadingScreen: 'inverse',
         },
+        componentProperties: {
+            showBoxedBorder: {
+                default: true,
+                brand: true,
+                negative: true,
+                alternative: true,
+                media: true,
+            },
+        },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 20, desktop: 20}, right: {mobile: 20, desktop: 20}},
             buttonSmallPadding: {left: {mobile: 14, desktop: 14}, right: {mobile: 14, desktop: 14}},
@@ -803,6 +812,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

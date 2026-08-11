@@ -66,6 +66,7 @@ type Args = {
     slot: boolean;
     disabled: boolean;
     danger: boolean;
+    small: boolean;
     variantOutside: Variant;
     'aria-live': 'off' | 'polite' | 'assertive';
     'aria-atomic': boolean;
@@ -93,6 +94,7 @@ const Template: StoryComponent<
     variant,
     variantOutside,
     danger,
+    small,
     'aria-live': ariaLive,
     'aria-atomic': ariaAtomic,
 }) => {
@@ -252,7 +254,12 @@ const Template: StoryComponent<
 
     let row = 1;
     const list = (
-        <ListComponent dataAttributes={{testid: 'list'}} aria-live={ariaLive} aria-atomic={ariaAtomic}>
+        <ListComponent
+            dataAttributes={{testid: 'list'}}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
+            small={small}
+        >
             <RowComponent
                 headline={headline}
                 title={title}
@@ -441,6 +448,7 @@ const defaultArgs = {
     slot: false,
     disabled: false,
     danger: false,
+    small: false,
     variantOutside: 'default',
     'aria-live': 'off',
     'aria-atomic': false,

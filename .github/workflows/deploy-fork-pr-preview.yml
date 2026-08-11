@@ -6,6 +6,9 @@ on:
             prNumber:
                 description: 'Pull request number to deploy preview for'
                 required: true
+            commitSha:
+                description: 'Exact commit SHA at the time the safe-to-deploy label was added'
+                required: true
 
 permissions:
     contents: read
@@ -30,6 +33,12 @@ jobs:
                         return;
                       }
 
+                      const commitSha = '${{ github.event.inputs.commitSha }}';
+                      if (!/^[0-9a-f]{40}$/i.test(commitSha)) {
+                        core.setFailed('Invalid commitSha input: must be a 40-character hex SHA');
+                        return;
+                      }
+
                       const {owner, repo} = context.repo;
                       const {data: pr} = await github.rest.pulls.get({owner, repo, pull_number: prNumber});
 
@@ -43,17 +52,22 @@ jobs:
                         return;
                       }
 
+                      if (pr.head.sha !== commitSha) {
+                        core.setFailed(`Commit SHA mismatch: the PR head is now ${pr.head.sha} but this workflow was triggered for ${commitSha}. The fork may have been updated after the label was added.`);
+                        return;
+                      }
+
                       const labels = (pr.labels || []).map((label) => label.name);
                       if (!labels.includes(REQUIRED_LABEL)) {
                         core.setFailed(`PR #${prNumber} is missing required label: ${REQUIRED_LABEL}`);
                         return;
                       }
 
-                      core.setOutput('merge_ref', `refs/pull/${prNumber}/merge`);
+                      core.setOutput('commit_sha', commitSha);
                       core.setOutput('pr_number', String(prNumber));
             - uses: actions/checkout@v6
               with:
-                  ref: ${{ steps.pr.outputs.merge_ref }}
+                  ref: ${{ steps.pr.outputs.commit_sha }}
                   persist-credentials: false
 
             - name: Deploy preview
@@ -75,12 +89,12 @@ jobs:
                   script: |
                       const prNumber = Number('${{ steps.pr.outputs.pr_number }}');
                       const { owner, repo } = context.repo;
-                      const marker = '<!-- vercel-preview-url -->';
+                      const marker = '<!-- fork-deploy-status -->';
 
                       const succeeded = '${{ steps.deploy.outcome }}' === 'success';
                       const body = succeeded
-                        ? `${marker}\n### Vercel Preview\n\n| Name | Link |\n| --- | --- |\n| Preview | ${{ steps.deploy.outputs.preview-url }} |`
-                        : `${marker}\n### Vercel Preview\n\n> [!CAUTION]\n> Deployment failed. [Check the workflow run](https://github.com/${owner}/${repo}/actions/runs/${{ github.run_id }}) for details.`;
+                        ? `${marker}\n### Preview deployment\n\n**Step 3/3** — Deployed! ✅\n\n| Name | Link |\n| --- | --- |\n| Preview | ${{ steps.deploy.outputs.preview-url }} |`
+                        : `${marker}\n### Preview deployment\n\n**Step 3/3** — Deployment failed. ❌\n\n> [!CAUTION]\n> [Check the workflow run](https://github.com/${owner}/${repo}/actions/runs/${{ github.run_id }}) for details.`;
 
                       const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number: prNumber });
                       const existing = comments.find(c => c.body && c.body.includes(marker));
