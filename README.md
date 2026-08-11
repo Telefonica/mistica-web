@@ -1,4 +1,4 @@
-![Mistica for Web](img/mistica-web-light.svg#gh-light-mode-only)
+a![Mistica for Web](img/mistica-web-light.svg#gh-light-mode-only)
 ![Mistica for Web](img/mistica-web-dark.svg#gh-dark-mode-only)
 
 React components library for Telefonica Design System ([Mística](https://github.com/Telefonica/mistica))
