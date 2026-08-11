@@ -105,6 +105,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
                 startIcon={withStartIcon ? <IconSearchRegular size={iconSize.small} /> : undefined}
+                reserveEndIconSpace
                 endIcon={
                     controlledValue ? (
                         <FieldEndIcon
