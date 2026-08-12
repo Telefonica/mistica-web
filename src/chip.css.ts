@@ -186,7 +186,7 @@ export const iconNavigationOverBrand = style([
 
 export const iconActive = style([
     sprinkles({paddingRight: 4}),
-    {color: vars.colors.controlActivated, paddingRight: 4},
+    {color: vars.colors.controlActivated, paddingRight: 4, display: 'flex'},
 ]);
 
 export const leftPadding = styleVariants({
