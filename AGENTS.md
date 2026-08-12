@@ -18,9 +18,11 @@ React component library for Telefonica's Design System.
 
 **Components**:
 
-- If you create a new component always create a snippet for playroom.
+- If you create a new component always create a snippet for playroom;
 - If you add props to a component always update stories accordingly and add the new props to args and
-  argTypes.
+  argTypes;
+- make sure `yarn ts-check` and `yarn lint` pass when modifying them. You probably need to cycle several time
+  to really make sure you've fixed everything
 
 ---
 

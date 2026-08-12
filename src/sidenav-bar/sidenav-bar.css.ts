@@ -25,17 +25,21 @@ export const container = style([
     },
 ]);
 
+// Same reasoning as `boxed`: the container's `overflow: hidden` clips a negatively-offset outline,
+// so the divider barely shows. Only the right edge is relevant for a full-height bar, so a plain
+// right border renders it reliably without being clipped.
 export const withRightDivider = style({
-    outline: `1px solid ${skinVars.colors.divider}`,
-    outlineOffset: '-1px',
+    borderRight: `1px solid ${skinVars.colors.divider}`,
 });
 
+// A real border (not an inset outline) is used here: the container has `overflow: hidden`, which
+// clips a negatively-offset outline and leaves the box edge barely visible. A border on the
+// border-box renders on all four sides while children stay clipped to the rounded corners.
 export const boxed = style({
     margin: BOXED_INSET,
     height: `calc(100% - ${BOXED_INSET * 2}px)`,
     borderRadius: skinVars.borderRadii.popup,
-    outline: `1px solid ${skinVars.colors.border}`,
-    outlineOffset: '-1px',
+    border: `1px solid ${skinVars.colors.border}`,
 });
 
 // Header region ---------------------------------------------------------------

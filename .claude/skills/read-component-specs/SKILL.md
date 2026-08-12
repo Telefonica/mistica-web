@@ -1,24 +1,122 @@
 ---
 name: read-component-specs
-description: Specification precedence and workflow for developing new mistica-web components
+description: Proactively load and consolidate specifications when discussing mistica-web components
 ---
 
 # read-component-specs
 
-When developing a new component in mistica-web, consult specifications in this order of precedence:
+**Proactively invoke this skill whenever a component is being discussed or modified.**
+
+Load component specifications in order of precedence:
 
 1. **GitHub issue ticket** — requirements and context
 2. **Markdown specifications** — design team specs extracted from Figma; **overrides Figma** if conflicts
    exist
 3. **Figma design** — original design file; can be superseded by markdown specs
 
-## Workflow
+## When to Use (Auto-trigger)
 
-- Start with the GitHub issue ticket—it often already contains links to both the markdown specs and Figma
-  design
-- Ask for these resources when starting component work if not already available in the ticket
-- Always verify specifications match across all three sources before implementation
-- If you find conflicts, markdown specs take precedence over the Figma design
+Automatically load this skill when:
+
+- User starts working on a component (new or existing)
+- User describes changes to a component
+- User asks about component behavior/API
+- Component is mentioned in the context of a task
+- Before making any component modifications
+
+## Workflow: Auto-load and Fetch
+
+When component work is detected:
+
+1. **Check memory** — Is there already a `component-{name}.md` in project memory?
+
+   - ✅ If yes → Load and reference existing specs
+   - ❌ If no → Proceed to fetch
+
+2. **Ask for specifications** if missing:
+
+   - "Which component are you working on?"
+   - "What's the GitHub issue number? (e.g., #1592)"
+   - Or provide component name directly
+
+3. **Auto-fetch in parallel:**
+
+   - `gh issue view {issue} --json body --jq '.body'` → extract requirements and resource links
+   - `curl -s https://raw.githubusercontent.com/Telefonica/mistica-design/aweell-generate-figma-specs/specs/{name}.md`
+     → fetch full spec
+
+4. **Extract and consolidate** key sections:
+
+   - Issue requirements and context
+   - Anatomy/structure
+   - Behaviour specifications
+   - Token usage (default, brand, alternative, negative, media variants)
+   - Design decisions and edge cases
+   - Figma design link
+
+5. **Present consolidated summary** with precedence notes:
+
+   - Highlight conflicts between sources (markdown takes precedence)
+   - Link to all three sources
+   - Extract actionable requirements
+
+6. **Save to memory** — Create `component-{name}.md` for future sessions:
+   - GitHub Issue link
+   - Specs Markdown link
+   - Figma Design link
+   - Key requirements
+   - Design decisions
+   - Development notes
+
+## Memory Format
+
+Store specs in
+`/Users/mbertamini/.claude/projects/-Users-mbertamini-Code-Work-mistica-web/memory/component-{name}.md`:
+
+```markdown
+---
+name: component-{name}
+description: Specifications and context for {component-name}
+metadata:
+  type: project
+---
+
+**GitHub Issue**: [#{issue}](url) **Specs**: [specs/{name}.md](url) **Figma**: [Design](url)
+
+## Requirements
+
+[From issue and specs]
+
+## Anatomy
+
+[Key structure]
+
+## Behaviour
+
+[Key behaviours]
+
+## Tokens
+
+[Token usage by variant]
+
+## Design decisions
+
+[Conflicts resolved, precedence notes]
+
+## Notes
+
+[Blockers, learnings, next steps]
+```
+
+## Specification Precedence
+
+If conflicts exist between sources:
+
+1. **Markdown specs** take precedence (design team canonical source)
+2. **GitHub issue** provides context and requirements
+3. **Figma design** is reference (can be superseded)
+
+Always note conflicts when found.
 
 ## Saving to memory
 

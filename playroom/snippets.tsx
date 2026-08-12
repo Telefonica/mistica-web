@@ -4776,4 +4776,69 @@ Useful for complex multi-level navigation.
 </div>
         `,
     },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (multiple sections with nested items)',
+        code: `{/*
+Multiple sections with first and second level items.
+Demonstrates organized navigation structure.
+*/}
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        sections={[
+            {
+                items: [
+                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                ],
+            },
+            {
+                title: 'Shopping',
+                dividerTop: true,
+                items: [
+                    {
+                        id: 'categories',
+                        label: 'Categories',
+                        asset: IconShopRegular,
+                        defaultOpen: true,
+                        children: [
+                            {id: 'electronics', label: 'Electronics', href: '#categories/electronics'},
+                            {id: 'clothing', label: 'Clothing', href: '#categories/clothing'},
+                            {id: 'home', label: 'Home & Garden', href: '#categories/home'},
+                        ],
+                    },
+                    {
+                        id: 'brands',
+                        label: 'Brands',
+                        asset: IconTagRegular,
+                        children: [
+                            {id: 'premium', label: 'Premium', href: '#brands/premium'},
+                            {id: 'value', label: 'Value', href: '#brands/value'},
+                        ],
+                    },
+                    {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals', rightSlot: <Badge value={5} />},
+                ],
+            },
+            {
+                title: 'Account',
+                dividerTop: true,
+                items: [
+                    {
+                        id: 'profile',
+                        label: 'My Profile',
+                        asset: IconUserRegular,
+                        children: [
+                            {id: 'personal', label: 'Personal Info', href: '#profile/personal'},
+                            {id: 'addresses', label: 'Addresses', href: '#profile/addresses'},
+                        ],
+                    },
+                    {id: 'orders', label: 'Orders', asset: IconShoppingBagRegular, href: '#orders'},
+                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

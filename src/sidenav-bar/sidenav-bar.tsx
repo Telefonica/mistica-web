@@ -358,7 +358,6 @@ type SidenavBarProps = SidenavBarBaseProps &
 const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {
     const children = item.children?.map((child) => renderSidenavItemFromData(child));
     const baseProps = {
-        key: item.id,
         id: item.id,
         label: item.label,
         asset: item.asset,
@@ -373,16 +372,16 @@ const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement =>
 
     // Build navigation props based on which one is defined
     if (item.href !== undefined) {
-        return <SidenavItem {...(baseProps as any)} href={item.href} />;
+        return <SidenavItem key={item.id} {...(baseProps as any)} href={item.href} />;
     }
     if (item.to !== undefined) {
-        return <SidenavItem {...(baseProps as any)} to={item.to} />;
+        return <SidenavItem key={item.id} {...(baseProps as any)} to={item.to} />;
     }
     if (item.onPress !== undefined) {
-        return <SidenavItem {...(baseProps as any)} onPress={item.onPress} />;
+        return <SidenavItem key={item.id} {...(baseProps as any)} onPress={item.onPress} />;
     }
     // No navigation: this item has children
-    return <SidenavItem {...(baseProps as any)} />;
+    return <SidenavItem key={item.id} {...(baseProps as any)} />;
 };
 
 const SidenavBar = ({
@@ -410,6 +409,7 @@ const SidenavBar = ({
     const {t} = useTheme();
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const [mobileNavStack, setMobileNavStack] = React.useState<Array<MobileNavigationLevel>>([]);
+    const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(null);
     useDisableBodyScroll(isMobile && mobileMenuOpen);
 
     const getBackButtonText = (): string => t(tokens.sidenavMobileBackButton);
@@ -449,8 +449,18 @@ const SidenavBar = ({
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
     const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
-    const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(null);
     const containerRef = React.useRef<HTMLElement>(null);
+
+    // Reset all state when sections changes to prevent hook reconciliation errors
+    const prevSectionsLengthRef = React.useRef(sections?.length ?? 0);
+    React.useEffect(() => {
+        if ((sections?.length ?? 0) !== prevSectionsLengthRef.current) {
+            prevSectionsLengthRef.current = sections?.length ?? 0;
+            setPanelOpenForItemId(null);
+            setMobileNavStack([]);
+            setMobileMenuOpen(false);
+        }
+    }, [sections?.length]);
 
     // Extract and enforce opacity constraints on header/footer backgrounds
     const headerBackgroundColor = background?.header

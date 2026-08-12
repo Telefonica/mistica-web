@@ -141,7 +141,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const level = React.useContext(SidenavLevelContext);
 
     const isItemSelected = id !== undefined && selectedItemId === id;
-    const hasDescendantSelected = collapsed && hasDescendantWithId(children, selectedItemId);
+    const hasDescendantSelected = hasDescendantWithId(children, selectedItemId);
     const selected = isItemSelected || hasDescendantSelected;
 
     const hasChildren = React.Children.count(children) > 0;
@@ -151,7 +151,11 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     }
     const itemId = itemIdRef.current;
     const isPanelOpen = itemId !== null && panelOpenForItemId === itemId;
+    // The left accent bar marks the directly-selected item (or the parent whose panel is open).
     const showAccent = isItemSelected || isPanelOpen;
+    // The selected background also appears on a parent whose descendant is selected, so the parent
+    // reads as contextually active without borrowing the accent bar that belongs to the child.
+    const showBackground = isItemSelected || isPanelOpen || hasDescendantSelected;
 
     if (process.env.NODE_ENV !== 'production') {
         if (level > 1) {
@@ -172,8 +176,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
         assertChildrenAre(children, SidenavItem, 'SidenavItem children must be SidenavItem elements');
         if (level === 0 && !asset) {
-            console.error(
-                `SidenavItem "${label}" at top level needs an asset to be usable in a collapsed sidenav`
+            console.warn(
+                `SidenavItem "${label}" at top level may not be visible when sidenav is collapsed (asset icon recommended)`
             );
         }
     }
@@ -181,6 +185,14 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
     const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
+
+    // Auto-expand this parent whenever one of its descendants becomes the selected item. It only
+    // ever opens (never force-closes), so a user's manual collapse and sibling parents are left as-is.
+    React.useEffect(() => {
+        if (hasDescendantSelected) {
+            setOpen(true);
+        }
+    }, [hasDescendantSelected]);
 
     const wrapNavCallback = (callback?: () => void | Promise<void>): (() => Promise<void>) => {
         return async () => {
@@ -244,7 +256,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const touchableClassName = classnames(
         styles.itemTouchable,
-        styles.itemTouchableSelected[showAccent ? 'true' : 'false'],
+        styles.itemTouchableSelected[showBackground ? 'true' : 'false'],
         {
             [styles.itemTouchableCollapsed]: collapsed && !isInsidePanel,
             [styles.itemTouchableMobile]: isMobileMode,
@@ -268,7 +280,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const handleTogglePanel = () => {
         if (itemId === null) return;
-        setPanelOpenForItemId(itemId);
+        setPanelOpenForItemId(isPanelOpen ? null : itemId);
     };
 
     const interactiveRow = (() => {
@@ -302,7 +314,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     onPress={handlePress}
                     aria-expanded={!isMobileMode && (shouldShowPanelMode ? isPanelOpen : isOpen)}
                     aria-label={label}
-                    dataAttributes={{parentItem: 'true'}}
+                    dataAttributes={{'parent-item': 'true'}}
                 >
                     {rowContent}
                 </Touchable>

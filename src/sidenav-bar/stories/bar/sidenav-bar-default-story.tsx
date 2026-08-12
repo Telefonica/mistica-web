@@ -85,7 +85,6 @@ const getDefaultSections = (): Array<SidenavSection> => [
                 asset: IconBellRegular,
                 href: '#notifications',
                 onNavigate: () => console.log('Notifications clicked'),
-                rightSlot: <Badge value={5} />,
             },
         ],
     },
@@ -137,7 +136,6 @@ export const Default = ({
     defaultCollapsed,
     doublePanel,
     width,
-    sections: sectionsArg,
     'Colors/Enabled': colorsEnabled,
     'Colors/Header': headerColor,
     'Colors/Body': bodyColor,
@@ -151,8 +149,7 @@ export const Default = ({
           }
         : {};
 
-    const sections: Array<SidenavSection> =
-        sectionsArg && sectionsArg.length > 0 ? sectionsArg : getDefaultSections();
+    const sections: Array<SidenavSection> = getDefaultSections();
 
     return (
         <div style={{display: 'flex', height: '100vh'}}>
@@ -481,7 +478,12 @@ export default {
             control: {type: 'range', min: 200, max: 400, step: 5},
         },
         sections: {
-            control: {type: 'object'},
+            control: false,
+            description:
+                'Navigation sections (fixed in this story). Use "Editable Sections" story to edit sections via JSON control.',
+            table: {
+                category: 'Data',
+            },
         },
         'Colors/Enabled': {
             control: {type: 'boolean'},

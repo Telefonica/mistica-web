@@ -8,6 +8,7 @@ import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regu
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
+import Badge from '../../../badge';
 
 import type {SidenavSection, SidenavItem} from '../../sidenav-types';
 
@@ -18,10 +19,35 @@ export default {
     },
 };
 
-export const ControlledSelection = (): React.JSX.Element => {
-    const [selectedId, setSelectedId] = React.useState<string | null>('home');
+type SelectionButton = {id: string; label: string};
 
-    const sections: SidenavSection[] = [
+// Flatten a section's items into the leaf (selectable) entries. Parents only expand, so they are not
+// selectable themselves; their descendants are the ones tracked by selectedItemId.
+const collectSelectableItems = (items: ReadonlyArray<SidenavItem>): Array<SelectionButton> => {
+    const result: Array<SelectionButton> = [];
+    items.forEach((item) => {
+        if (item.children && item.children.length > 0) {
+            result.push(...collectSelectableItems(item.children));
+            return;
+        }
+        result.push({id: item.id, label: item.label});
+    });
+    return result;
+};
+
+const getSelectionButtonStyle = (isActive: boolean): React.CSSProperties => ({
+    padding: '0.5rem 1rem',
+    backgroundColor: isActive ? '#0066CC' : '#e0e0e0',
+    color: isActive ? 'white' : 'black',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+});
+
+export const ControlledSelection = (): React.JSX.Element => {
+    const [selectedId, setSelectedId] = React.useState<string | null>('overview');
+
+    const sections: Array<SidenavSection> = [
         {
             items: [
                 {
@@ -47,6 +73,8 @@ export const ControlledSelection = (): React.JSX.Element => {
                     label: 'Water Sports',
                     asset: IconFolderRegular,
                     defaultOpen: true,
+                    // A parent (expandable item) can also carry a rightSlot alongside its expand chevron.
+                    rightSlot: <Badge value={3} />,
                     children: [
                         {
                             id: 'water-sailing',
@@ -208,128 +236,35 @@ export const ControlledSelection = (): React.JSX.Element => {
                     </div>
                 </div>
 
-                <div style={{marginTop: '2rem'}}>
-                    <strong>Water Activities:</strong>
-                    <div style={{display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap'}}>
-                        <button
-                            onClick={() => setSelectedId('water-sailing')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'water-sailing' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'water-sailing' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
+                {sections.map((section, index) => {
+                    const buttons = collectSelectableItems(section.items);
+                    return (
+                        <div
+                            key={section.title ?? `section-${index}`}
+                            style={{marginTop: index === 0 ? '2rem' : '1.5rem'}}
                         >
-                            Sailing
-                        </button>
-                        <button
-                            onClick={() => setSelectedId('water-windsurf')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'water-windsurf' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'water-windsurf' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Windsurfing
-                        </button>
-                        <button
-                            onClick={() => setSelectedId('beach-riva')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'beach-riva' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'beach-riva' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Riva del Garda
-                        </button>
-                    </div>
-                </div>
-
-                <div style={{marginTop: '1.5rem'}}>
-                    <strong>Mountain Activities:</strong>
-                    <div style={{display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap'}}>
-                        <button
-                            onClick={() => setSelectedId('trail-sentiero-della-pace')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor:
-                                    selectedId === 'trail-sentiero-della-pace' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'trail-sentiero-della-pace' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Sentiero della Pace
-                        </button>
-                        <button
-                            onClick={() => setSelectedId('climbing')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'climbing' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'climbing' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Rock Climbing
-                        </button>
-                        <button
-                            onClick={() => setSelectedId('mtb')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'mtb' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'mtb' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Mountain Biking
-                        </button>
-                    </div>
-                </div>
-
-                <div style={{marginTop: '1.5rem'}}>
-                    <strong>Culture & Nature:</strong>
-                    <div style={{display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap'}}>
-                        <button
-                            onClick={() => setSelectedId('castle-arco')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'castle-arco' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'castle-arco' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Arco Castle
-                        </button>
-                        <button
-                            onClick={() => setSelectedId('botanical-gardens')}
-                            style={{
-                                padding: '0.5rem 1rem',
-                                backgroundColor: selectedId === 'botanical-gardens' ? '#0066CC' : '#e0e0e0',
-                                color: selectedId === 'botanical-gardens' ? 'white' : 'black',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Botanical Gardens
-                        </button>
-                    </div>
-                </div>
+                            <strong>{section.title ?? 'General'}:</strong>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    gap: '0.5rem',
+                                    marginTop: '0.5rem',
+                                    flexWrap: 'wrap',
+                                }}
+                            >
+                                {buttons.map((button) => (
+                                    <button
+                                        key={button.id}
+                                        onClick={() => setSelectedId(button.id)}
+                                        style={getSelectionButtonStyle(selectedId === button.id)}
+                                    >
+                                        {button.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })}
 
                 <div
                     style={{
@@ -344,10 +279,17 @@ export const ControlledSelection = (): React.JSX.Element => {
                         <li>Click buttons above to change selection programmatically</li>
                         <li>Click items in the sidenav to update selection</li>
                         <li>Toggle the collapse button in the sidenav</li>
-                        <li>When expanded: only the selected item highlights</li>
                         <li>
-                            When collapsed: parent items do not highlight if a child is selected. Open the
-                            dropdown to see the selected child.
+                            When expanded: the selected item shows the accent bar, and its parent shows a
+                            selected background and auto-expands.
+                        </li>
+                        <li>
+                            When collapsed: a parent whose child is selected shows a selected background (no
+                            accent bar). Open its dropdown to see the selected child.
+                        </li>
+                        <li>
+                            A parent can also carry a right slot: &quot;Water Sports&quot; shows a badge next
+                            to its expand chevron.
                         </li>
                     </ul>
                 </div>

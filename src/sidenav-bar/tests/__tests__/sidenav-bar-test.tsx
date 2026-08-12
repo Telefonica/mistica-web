@@ -3,11 +3,22 @@ import {render, screen, fireEvent} from '@testing-library/react';
 import ThemeContextProvider from '../../../theme-context-provider';
 import {makeTheme} from '../../../__tests__/test-utils';
 import {SidenavBar} from '../../index';
-import type {SidenavItem, SidenavSection} from '../../sidenav-types';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
 
-const defaultSections: SidenavSection[] = [
+import type {SidenavSection} from '../../sidenav-types';
+
+class MockIntersectionObserver {
+    observe = jest.fn();
+    unobserve = jest.fn();
+    disconnect = jest.fn();
+}
+
+beforeAll(() => {
+    window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
+});
+
+const defaultSections: Array<SidenavSection> = [
     {
         title: 'Workspace',
         items: [
@@ -56,6 +67,33 @@ test('SidenavBar renders nested children of an open item', async () => {
     expect(screen.getByRole('link', {name: 'Active'})).toHaveAttribute('href', '/active');
 });
 
+test('SidenavBar auto-expands a parent when one of its children is selected', async () => {
+    const sections: Array<SidenavSection> = [
+        {
+            title: 'Workspace',
+            items: [
+                {
+                    id: 'projects',
+                    label: 'Projects',
+                    asset: IconFolderRegular,
+                    children: [{id: 'active', label: 'Active', href: '/active'}],
+                },
+            ],
+        },
+    ];
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" sections={sections} selectedItemId="active" />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    // The parent is not defaultOpen, so the child would be hidden unless the selection auto-expands it.
+    expect(screen.getByRole('link', {name: 'Active'})).toBeInTheDocument();
+});
+
 test('SidenavBar collapse button toggles the accessible label', async () => {
     await renderSidenav();
 
@@ -93,7 +131,7 @@ test('SidenavBar renders no logo when logo is false', async () => {
 test('SidenavBar supports controlled selection with selectedItemId prop', async () => {
     const onSelectedItemIdChange = jest.fn();
 
-    const sections: SidenavSection[] = [
+    const sections: Array<SidenavSection> = [
         {
             title: 'Workspace',
             items: [
@@ -126,12 +164,12 @@ test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', 
     const onSelectedItemIdChange = jest.fn();
     const onPress = jest.fn();
 
-    const sections: SidenavSection[] = [
+    const sections: Array<SidenavSection> = [
         {
             title: 'Workspace',
             items: [
                 {id: 'home', label: 'Home', asset: IconHomeRegular, onPress: () => {}},
-                {id: 'projects', label: 'Projects', asset: IconFolderRegular, onPress: onPress},
+                {id: 'projects', label: 'Projects', asset: IconFolderRegular, onPress},
             ],
         },
     ];

@@ -24,7 +24,7 @@ const SidenavPanel = ({itemId, label, containerRef, level, children}: SidenavPan
         const handleClickOutside = (event: MouseEvent) => {
             const target = event.target as Element;
             if (panelRef.current && !panelRef.current.contains(target as Node)) {
-                const isParentItem = target instanceof Element && target.closest('[data-parentItem="true"]');
+                const isParentItem = target instanceof Element && target.closest('[data-parent-item="true"]');
                 if (!isParentItem) {
                     setPanelOpenForItemId(null);
                 }

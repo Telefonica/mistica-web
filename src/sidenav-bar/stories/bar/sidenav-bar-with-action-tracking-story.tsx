@@ -82,7 +82,6 @@ export const WithActionTracking = ({
                     id: 'projects',
                     label: 'Projects',
                     asset: IconFolderRegular,
-                    onPress: () => handleAction('Projects expanded'),
                     children: [
                         {
                             id: 'active',
@@ -105,7 +104,6 @@ export const WithActionTracking = ({
                     id: 'documents',
                     label: 'Documents',
                     asset: IconDocumentsRegular,
-                    onPress: () => handleAction('Documents expanded'),
                     children: [
                         {
                             id: 'shared',
@@ -129,7 +127,6 @@ export const WithActionTracking = ({
                     id: 'tasks',
                     label: 'My Tasks',
                     asset: IconCheckRegular,
-                    onPress: () => handleAction('Tasks expanded'),
                     children: [
                         {
                             id: 'pending',
