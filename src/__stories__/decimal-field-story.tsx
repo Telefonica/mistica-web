@@ -26,6 +26,7 @@ interface DecimalFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: DecimalFieldBaseArgs = {
@@ -39,6 +40,7 @@ const defaultBaseArgs: DecimalFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 } as const;
 
 interface DecimalFieldControlledArgs extends DecimalFieldBaseArgs {

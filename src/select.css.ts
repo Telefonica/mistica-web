@@ -153,7 +153,7 @@ const selectTextBase = style([
     {
         pointerEvents: 'none',
         top: 1, // for border
-        left: fieldLeftPadding + 1, // +1 for border
+        left: `calc(${fieldLeftPadding} + 1px)`, // +1 for border
         right: `calc(${iconButtonSize} + ${fieldEndIconGap}px + 1px)`, // +1 for border
         fontSize: fieldVars.mobileFontSize,
         lineHeight: fieldVars.mobileLineHeight,

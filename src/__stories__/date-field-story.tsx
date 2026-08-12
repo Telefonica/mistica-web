@@ -27,6 +27,7 @@ interface DateFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
     min: boolean;
     max: boolean;
 }
@@ -40,6 +41,7 @@ const defaultBaseArgs: DateFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
     min: false,
     max: false,
 };

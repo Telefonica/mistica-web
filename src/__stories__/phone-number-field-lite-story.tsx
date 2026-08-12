@@ -43,6 +43,7 @@ interface PhoneNumberFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: PhoneNumberFieldBaseArgs = {
@@ -57,6 +58,7 @@ const defaultBaseArgs: PhoneNumberFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 } as const;
 
 interface PhoneNumberFieldControlledArgs extends PhoneNumberFieldBaseArgs {

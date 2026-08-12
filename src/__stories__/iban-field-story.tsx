@@ -26,6 +26,7 @@ interface IbanFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: IbanFieldBaseArgs = {
@@ -39,6 +40,7 @@ const defaultBaseArgs: IbanFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 };
 
 interface IbanFieldControlledArgs extends IbanFieldBaseArgs {

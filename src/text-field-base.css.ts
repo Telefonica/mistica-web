@@ -10,8 +10,8 @@ const borderSize = 1;
 // We need to substract border size from padding because the container has boxSizing: border-box
 export const fieldTopPadding = `calc(${vars.spacing.inputPadding.top} - ${borderSize}px)`;
 export const fieldBottomPadding = `calc(${vars.spacing.inputPadding.bottom} - ${borderSize}px)`;
-export const fieldLeftPadding = 12 - borderSize;
-export const fieldRightPadding = 16 - borderSize;
+export const fieldLeftPadding = `calc(${vars.spacing.inputPadding.left} - ${borderSize}px)`;
+export const fieldRightPadding = `calc(${vars.spacing.inputPadding.right} - ${borderSize}px)`;
 
 export const fieldElementsGap = 12;
 export const fieldEndIconGap = 4;
