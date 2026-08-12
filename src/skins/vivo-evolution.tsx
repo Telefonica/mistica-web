@@ -156,7 +156,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.vivoNeutral0, 0.1),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.vivoNeutral0, 0.1),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.vivoNeutral0, 0.1),
-            buttonLinkNeutralBackgroundPressed: palette.vivoNeutral25,
+            buttonLinkNeutralBackgroundPressed: palette.vivoNeutral100,
             buttonLinkNeutralBackgroundBrand: palette.vivoNeutral0,
             buttonLinkNeutralBackgroundBrandPressed: palette.vivoNeutral25,
             buttonLinkNeutralBackgroundNegative: palette.vivoNeutral0,
@@ -798,6 +798,15 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
         themeVariants: {
             successFeedback: 'inverse',
             brandLoadingScreen: 'inverse',
+        },
+        componentProperties: {
+            showBoxedBorder: {
+                default: true,
+                brand: true,
+                negative: true,
+                alternative: false,
+                media: true,
+            },
         },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},

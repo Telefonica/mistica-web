@@ -117,6 +117,7 @@ export type SpacingConfig = {
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
+    boxedDefaultPadding: PaddingXValues;
     responsiveLayoutMargin: ResponsiveValue<number>;
     boxedDefaultPadding: PaddingXValues;
 };
@@ -124,6 +125,16 @@ export type SpacingConfig = {
 export type ThemeVariantsConfig = {
     successFeedback: Variant;
     brandLoadingScreen: Variant;
+};
+
+export type ComponentPropertiesConfig = {
+    showBoxedBorder: {
+        default: boolean;
+        alternative: boolean;
+        brand: boolean;
+        negative: boolean;
+        media: boolean;
+    };
 };
 
 export type Skin = {
@@ -134,6 +145,7 @@ export type Skin = {
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
     spacing?: SpacingConfig;
+    componentProperties?: ComponentPropertiesConfig;
 };
 
 export type KnownSkin = {
@@ -144,4 +156,5 @@ export type KnownSkin = {
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
     spacing: SpacingConfig;
+    componentProperties?: ComponentPropertiesConfig;
 };
