@@ -34,6 +34,9 @@ import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
+type ListContextType = {small: boolean};
+export const ListContext = React.createContext<ListContextType>({small: false});
+
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 interface CommonProps {

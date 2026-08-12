@@ -1,8 +1,9 @@
 'use client';
 import * as React from 'react';
-import {Content as HeaderContent} from './list';
+import {Content as HeaderContent, ListContext} from './list';
 import IconChevron from './icons/icon-chevron';
 import * as styles from './accordion.css';
+import Box from './box';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
@@ -24,13 +25,11 @@ const ACCORDION_TRANSITION_DURATION_IN_MS = 400;
 type AccordionContextType = {
     index: ReadonlyArray<number>;
     toggle: (item: number) => void;
-    small: boolean;
 };
 
 const AccordionContext = React.createContext<AccordionContextType>({
     index: [],
     toggle: () => {},
-    small: false,
 });
 
 const useAccordionContext = (): AccordionContextType => React.useContext(AccordionContext);
@@ -155,7 +154,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
     ) => {
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
-        const {index, toggle, small} = useAccordionContext();
+        const {index, toggle} = useAccordionContext();
         const variant = useThemeVariant();
         const labelId = React.useId();
         const panelId = React.useId();
@@ -202,7 +201,6 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                         <HeaderContent
                             labelId={labelId}
                             {...props}
-                            small={small}
                             right={({centerY}) => (
                                 <Inline
                                     space={4}
@@ -298,22 +296,24 @@ export const Accordion = ({
     const lastIndex = childrenContent.length - 1;
 
     return (
-        <AccordionContext.Provider value={{index: indexList, toggle, small}}>
-            <div
-                role={role}
-                {...getPrefixedDataAttributes({testid: 'Accordion', ...dataAttributes, accordion: true})}
-            >
-                {childrenContent.map((child, index) => (
-                    <React.Fragment key={index}>
-                        {child}
-                        {index < lastIndex && (
-                            <div className={styles.accordionContentPadding}>
-                                <Divider />
-                            </div>
-                        )}
-                    </React.Fragment>
-                ))}
-            </div>
+        <AccordionContext.Provider value={{index: indexList, toggle}}>
+            <ListContext.Provider value={{small}}>
+                <div
+                    role={role}
+                    {...getPrefixedDataAttributes({testid: 'Accordion', ...dataAttributes, accordion: true})}
+                >
+                    {childrenContent.map((child, index) => (
+                        <React.Fragment key={index}>
+                            {child}
+                            {index < lastIndex && (
+                                <Box paddingX={16}>
+                                    <Divider />
+                                </Box>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </div>
+            </ListContext.Provider>
         </AccordionContext.Provider>
     );
 };
@@ -354,14 +354,16 @@ export const BoxedAccordion = ({
     });
 
     return (
-        <AccordionContext.Provider value={{index: indexList, toggle, small}}>
-            <Stack
-                space={16}
-                role={role}
-                dataAttributes={{testid: 'BoxedAccordion', accordion: true, ...dataAttributes}}
-            >
-                {children}
-            </Stack>
+        <AccordionContext.Provider value={{index: indexList, toggle}}>
+            <ListContext.Provider value={{small}}>
+                <Stack
+                    space={16}
+                    role={role}
+                    dataAttributes={{testid: 'BoxedAccordion', accordion: true, ...dataAttributes}}
+                >
+                    {children}
+                </Stack>
+            </ListContext.Provider>
         </AccordionContext.Provider>
     );
 };
