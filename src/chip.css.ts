@@ -172,7 +172,7 @@ export const interactiveChipOverlay = style([
 
 export const icon = style([
     sprinkles({paddingRight: 4}),
-    {color: vars.colors.neutralMedium, paddingRight: 4},
+    {color: vars.colors.neutralMedium, paddingRight: 4, display: 'flex'},
 ]);
 export const iconNavigation = style([
     sprinkles({paddingRight: 4}),
