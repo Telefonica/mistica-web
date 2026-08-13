@@ -386,7 +386,6 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
     boxedDefaultPadding: {left: '', right: ''},
     responsiveLayoutMargin: '',
-    boxedDefaultPadding: {left: '', right: ''},
 };
 
 export const vars = createThemeContract({

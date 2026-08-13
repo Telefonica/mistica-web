@@ -119,7 +119,6 @@ export type SpacingConfig = {
     drawerPadding: PaddingValues;
     boxedDefaultPadding: PaddingXValues;
     responsiveLayoutMargin: ResponsiveValue<number>;
-    boxedDefaultPadding: PaddingXValues;
 };
 
 export type ThemeVariantsConfig = {
