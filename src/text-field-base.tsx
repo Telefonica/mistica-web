@@ -160,7 +160,8 @@ interface TextFieldBaseProps {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     endIconOverlay?: React.ReactNode;
-    reserveEndIconSpace?: boolean;
+    /** Reserves space for an end icon that is rendered conditionally. */
+    endIconSpaceReserved?: boolean;
     style?: React.CSSProperties;
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
@@ -209,7 +210,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             startIcon,
             endIcon,
             endIconOverlay,
-            reserveEndIconSpace,
+            endIconSpaceReserved,
             shrinkLabel,
             multiline = false,
             focus,
@@ -309,8 +310,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
         const startIconWidth = `calc(${iconSize.small} + ${styles.fieldElementsGap}px)`;
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
-        const hasEndIconSlot = !!endIcon || reserveEndIconSpace;
-        const hasEndIconSpace = hasEndIconSlot || !!endIconOverlay;
+        const hasEndIcon = !!endIcon;
+        const reservesRightSpace = hasEndIcon || endIconSpaceReserved;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked
@@ -323,7 +324,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
             // Let's keep the original width.
             width: `calc((100% - ${styles.fieldLeftPadding}px - ${startIcon ? startIconWidth : '0px'} - ${
-                hasEndIconSpace ? endIconWidth : `${styles.fieldRightPadding}px`
+                reservesRightSpace || endIconOverlay ? endIconWidth : `${styles.fieldRightPadding}px`
             }) / ${scale})`,
         };
 
@@ -403,7 +404,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 ...(required && {'aria-required': true}),
                                 ...(error && {'aria-invalid': true}),
                                 style: {
-                                    paddingRight: hasEndIconSlot
+                                    paddingRight: reservesRightSpace
                                         ? 0
                                         : endIconOverlay
                                           ? endIconWidth
@@ -476,11 +477,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {hasEndIconSlot && (
+                    {reservesRightSpace && (
                         <div
                             className={styles.endIconContainer}
-                            data-testid={endIcon ? 'endIcon' : undefined}
-                            aria-hidden={endIcon ? undefined : true}
+                            data-testid={hasEndIcon ? 'endIcon' : undefined}
+                            aria-hidden={hasEndIcon ? undefined : true}
                         >
                             {endIcon || <div className={styles.endIconPlaceholder} />}
                         </div>

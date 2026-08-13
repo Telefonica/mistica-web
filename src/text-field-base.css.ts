@@ -1,5 +1,5 @@
 import {createVar, globalStyle, style} from '@vanilla-extract/css';
-import {iconContainerSize, iconSize} from './icon-button.css';
+import {bleedArea, iconContainerSize} from './icon-button.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars, vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
@@ -333,7 +333,7 @@ export const endIconContainer = style([
 
 export const endIconPlaceholder = style({
     flexShrink: 0,
-    width: `calc(${iconContainerSize.small} - (${iconContainerSize.small} - ${iconSize.small}) / 2)`,
+    width: `calc(${iconContainerSize.small} - ${bleedArea.small})`,
     height: iconContainerSize.small,
 });
 

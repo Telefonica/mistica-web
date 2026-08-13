@@ -353,7 +353,7 @@ export const iconContainerSize = {
     small: `calc(${iconSize.small} + 12px)`,
 };
 
-const bleedArea = {
+export const bleedArea = {
     default: `calc((${iconContainerSize.default} - ${iconSize.default}) / 2)`,
     small: `calc((${iconContainerSize.small} - ${iconSize.small}) / 2)`,
 };
