@@ -153,6 +153,13 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 )
                 .join(',')},
         },
+        ${
+            designTokens.componentProperties?.showBoxedBorder
+                ? `componentProperties: ${JSON.stringify({
+                      showBoxedBorder: designTokens.componentProperties.showBoxedBorder.value,
+                  })},`
+                : ''
+        }
         spacing: ${JSON.stringify(
             Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
         )},

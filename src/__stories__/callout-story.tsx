@@ -25,6 +25,7 @@ export default {
 type Args = {
     title: string;
     description: string;
+    small: boolean;
     actions: string;
     asset: boolean;
     closable: boolean;
@@ -35,6 +36,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({
     title,
     description,
+    small,
     asset,
     actions,
     closable,
@@ -68,6 +70,7 @@ export const Default: StoryComponent<Args> = ({
                     onClose={closable ? () => {} : undefined}
                     title={title}
                     description={description}
+                    small={small}
                     button={button}
                     secondaryButton={secondaryButton}
                     buttonLink={buttonLink}
@@ -84,6 +87,7 @@ Default.args = {
     title: 'Some title',
     description: 'This is a description for the callout',
     actions: 'button and link',
+    small: false,
     asset: true,
     closable: true,
     variantOutside: 'default',

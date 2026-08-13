@@ -799,6 +799,15 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             successFeedback: 'inverse',
             brandLoadingScreen: 'inverse',
         },
+        componentProperties: {
+            showBoxedBorder: {
+                default: true,
+                brand: true,
+                negative: true,
+                alternative: false,
+                media: true,
+            },
+        },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             buttonSmallPadding: {left: {mobile: 12, desktop: 12}, right: {mobile: 12, desktop: 12}},
@@ -824,6 +833,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 24}, right: {mobile: 16, desktop: 24}},
             responsiveLayoutMargin: {mobile: 8, desktop: 48},
         },
     };

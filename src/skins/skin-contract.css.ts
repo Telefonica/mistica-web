@@ -384,6 +384,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     heroPadding: {top: '', bottom: ''},
     headerPadding: {top: '', bottom: ''},
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
+    boxedDefaultPadding: {left: '', right: ''},
     responsiveLayoutMargin: '',
 };
 
