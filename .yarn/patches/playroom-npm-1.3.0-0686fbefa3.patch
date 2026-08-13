@@ -1,5 +1,5 @@
 diff --git a/src/components/Preview/Preview.css.ts b/src/components/Preview/Preview.css.ts
-index 4431c0abe73040cc889164c25ceb92c46469ea53..42b612edf5a09feafbec1868f0871f289b3aac19 100644
+index 6b33c06f95995eef33c0ddd7f4e17ba553449610..d0de9a39f846f6cf49134df4b303e45d3ca46593 100644
 --- a/src/components/Preview/Preview.css.ts
 +++ b/src/components/Preview/Preview.css.ts
 @@ -18,12 +18,10 @@ export const root = style([
