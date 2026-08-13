@@ -129,7 +129,7 @@
         "lodash": "^4.17.21",
         "mini-css-extract-plugin": "^1.6.2",
         "node-fetch": "^2.6.7",
-        "playroom": "^1.2.1",
+        "playroom": "^1.3.0",
         "postcss": "^8.4.18",
         "postcss-loader": "^4.2.0",
         "prettier": "^3.3.2",
@@ -222,7 +222,7 @@
         "@types/react-dom": "19.2.3",
         "@testing-library/dom": "^8.19.1",
         "lottie-react@^2.4.0": "patch:lottie-react@npm%3A2.4.0#./.yarn/patches/lottie-react-npm-2.4.0-d4d95c55aa.patch",
-        "playroom@^1.2.1": "patch:playroom@npm%3A1.2.1#./.yarn/patches/playroom-npm-1.2.1-6d189aed91.patch"
+        "playroom@^1.3.0": "patch:playroom@npm%3A1.3.0#./.yarn/patches/playroom-npm-1.3.0-0686fbefa3.patch"
     },
     "packageManager": "yarn@3.6.1",
     "workspaces": [
