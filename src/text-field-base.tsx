@@ -160,7 +160,6 @@ interface TextFieldBaseProps {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     endIconOverlay?: React.ReactNode;
-    /** Reserves space for an end icon that is rendered conditionally. */
     endIconSpaceReserved?: boolean;
     style?: React.CSSProperties;
     value?: string;
