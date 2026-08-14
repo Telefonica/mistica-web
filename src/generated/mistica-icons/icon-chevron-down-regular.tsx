@@ -27,16 +27,7 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 16.633a.97.97 0 0 1-.73-.32L4.273 8.876c-.38-.4-.36-1.04.04-1.42a1.01 1.01 0 0 1 1.422.04L12 14.15l6.266-6.656a1 1 0 0 1 1.42-.04c.401.38.421 1.021.04 1.421l-6.995 7.437c-.19.2-.46.32-.73.32"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,6 +42,15 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     <path
                         fill={fillColor}
                         d="M12.002 16.571c-.25 0-.49-.09-.69-.27l-6.99-6.56a1 1 0 0 1-.05-1.42c.38-.4 1.02-.43 1.42-.05l6.31 5.91 6.31-5.91a1 1 0 0 1 1.42.05 1 1 0 0 1-.05 1.42l-6.99 6.56c-.19.18-.44.27-.69.27"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 16.633a.97.97 0 0 1-.73-.32L4.273 8.876c-.38-.4-.36-1.04.04-1.42a1.01 1.01 0 0 1 1.422.04L12 14.15l6.266-6.656a1 1 0 0 1 1.42-.04c.401.38.421 1.021.04 1.421l-6.995 7.437c-.19.2-.46.32-.73.32"
                     />
                 </svg>
             );

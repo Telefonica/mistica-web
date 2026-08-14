@@ -104,6 +104,7 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
                   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
+                  fork-pr: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
 
     validate-pr-title:
         # This job validates the PR title against the conventional commit format. Needed for semantic-release to generate release notes.

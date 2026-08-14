@@ -213,6 +213,24 @@ test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
     expect(await getValue(field)).toBe('');
 });
 
+test.each(STORY_TYPES)(
+    'SearchField width does not change when clear icon appears (%s)',
+    async (storyType) => {
+        const page = await openStoryPage(getStoryOfType('searchfield', storyType));
+
+        const fieldWrapper = await screen.findByTestId('search-field');
+        const field = await screen.findByLabelText('Label');
+
+        const emptyWidth = await fieldWrapper.evaluate((element) => element.getBoundingClientRect().width);
+
+        await clearAndType(page, field, 'something');
+
+        const filledWidth = await fieldWrapper.evaluate((element) => element.getBoundingClientRect().width);
+
+        expect(filledWidth).toBeCloseTo(emptyWidth);
+    }
+);
+
 test.each(STORY_TYPES)('PinField (%s)', async (storyType) => {
     await openStoryPage(getStoryOfType('pinfield', storyType));
 
