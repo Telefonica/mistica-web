@@ -711,7 +711,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             container: '24px',
             indicator: '24px',
             chip: '24px',
-            tag: '10px',
+            tag: '8px',
             input: '16px',
             popup: '16px',
             sheet: '24px',
@@ -800,13 +800,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             brandLoadingScreen: 'inverse',
         },
         componentProperties: {
-            showBoxedBorder: {
-                default: true,
-                brand: true,
-                negative: true,
-                alternative: false,
-                media: true,
-            },
+            showBoxedBorder: {default: true, brand: true, negative: true, alternative: false, media: true},
         },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},

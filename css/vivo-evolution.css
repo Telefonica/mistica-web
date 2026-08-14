@@ -150,7 +150,7 @@
         var(--mistica-vivo-evolution-raw-vivoNeutral0),
         0.1
     );
-    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
     --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
     --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -427,7 +427,7 @@
     --mistica-border-radius-container: 24px;
     --mistica-border-radius-indicator: 24px;
     --mistica-border-radius-chip: 24px;
-    --mistica-border-radius-tag: 10px;
+    --mistica-border-radius-tag: 8px;
     --mistica-border-radius-input: 16px;
     --mistica-border-radius-popup: 16px;
     --mistica-border-radius-sheet: 24px;
@@ -1511,7 +1511,7 @@
             var(--mistica-vivo-evolution-raw-vivoNeutral0),
             0.1
         );
-        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
         --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
         --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
