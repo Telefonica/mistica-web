@@ -55,6 +55,7 @@ interface MenuItemBaseProps {
     label: string;
     description?: string;
     Icon?: (props: IconProps) => JSX.Element;
+    asset?: React.ReactElement;
     destructive?: boolean;
     disabled?: boolean;
     dataAttributes?: DataAttributes;
@@ -95,6 +96,7 @@ type MenuItemProps = ExclusifyUnion<MenuItemOnPressProps | MenuItemHrefProps | M
 export const MenuItem = ({
     label,
     Icon,
+    asset,
     destructive,
     disabled,
     onPress,
@@ -135,9 +137,12 @@ export const MenuItem = ({
 
     const renderItemContent = (labelId?: string) => (
         <div className={styles.itemContent}>
-            {Icon && (
-                <div className={styles.iconContainer}>
-                    <Icon size={24} color={contentColor} />
+            {(asset || Icon) && (
+                <div
+                    className={styles.iconContainer}
+                    {...(asset ? getPrefixedDataAttributes({testid: 'asset'}) : {})}
+                >
+                    {asset || (Icon && <Icon size={24} color={contentColor} />)}
                 </div>
             )}
             {renderTextContent(labelId)}

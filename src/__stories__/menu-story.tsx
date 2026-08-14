@@ -10,6 +10,7 @@ import {
     Text2,
     MenuItem,
     IconLightningRegular,
+    Avatar,
     MenuSection,
     useDialog,
 } from '..';
@@ -24,6 +25,7 @@ type MenuArgs = {
     horizontalPosition: 'right' | 'left';
     verticalPosition: 'top' | 'bottom';
     icon: boolean;
+    asset: boolean;
     checkbox: boolean;
     description: boolean;
 };
@@ -33,6 +35,7 @@ export const Default: StoryComponent<MenuArgs> = ({
     horizontalPosition,
     verticalPosition,
     icon,
+    asset,
     checkbox,
     description,
 }) => {
@@ -107,6 +110,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                                 checked: valuesState.includes(optionIndex),
                                             })}
                                             Icon={icon ? IconLightningRegular : undefined}
+                                            asset={asset ? <Avatar size={40} initials="MS" /> : undefined}
                                         />
                                     ))}
                                 </MenuSection>
@@ -133,6 +137,7 @@ Default.args = {
     horizontalPosition: 'right',
     verticalPosition: 'top',
     icon: false,
+    asset: false,
     checkbox: true,
     description: false,
 };
