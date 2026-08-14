@@ -17,7 +17,7 @@ export default {
 };
 
 export const DeepNesting = (): React.JSX.Element => {
-    const sections: SidenavSection[] = [
+    const sections: Array<SidenavSection> = [
         {
             items: [
                 {

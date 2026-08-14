@@ -114,7 +114,7 @@ export {default as Drawer} from './drawer';
 export {default as Timeline, TimelineItem} from './timeline';
 export {default as SkipLink, SkipLinkNav} from './skip-link';
 export {SidenavBar, SidenavSection, SidenavItem, SidenavLayout} from './sidenav-bar';
-export type {SidenavBarProps, SidenavSectionProps, SidenavLayoutProps} from './sidenav-bar';
+export type {SidenavBarProps, SidenavSectionProps, SidenavLayoutProps, SidenavEntry} from './sidenav-bar';
 export type {SidenavItemProps} from './sidenav-bar/sidenav-item';
 
 // Sheets

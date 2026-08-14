@@ -5,12 +5,37 @@ import {vars as skinVars} from '../skins/skin-contract.css';
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
 export const BOXED_INSET = 8;
-export const NESTING_INDENT = 24;
+// Per-level nesting step applied as the item row's left padding. It combines with the item content
+// box's own 8px left margin (which clears the selected indicator on the rail) so a nested item's
+// content box lands 24px from the section rail — the total nesting indent the Figma spec calls for
+// (16 + 8). Using the full 24 here would double-count the 8px margin and over-indent children.
+export const NESTING_INDENT = 16;
 export const LOGO_SIZE = 32;
+// Vertical space between two first-level entries of the body (section to section, section to
+// stand-alone item, or stand-alone item to stand-alone item). Items inside a section stay adjacent.
+export const FIRST_LEVEL_GAP = 16;
 
 export const sidenavWidthVar = createVar();
+export const sidenavPanelWidthVar = createVar();
 
+// The container is a row of columns: the main column, and the double panel column when it is open. Its
+// width is intrinsic, so an open panel widens the sidenav and pushes the main content of the layout.
 export const container = style([
+    sprinkles({
+        display: 'flex',
+        flexDirection: 'row',
+    }),
+    {
+        position: 'relative',
+        boxSizing: 'border-box',
+        height: '100%',
+        overflow: 'hidden',
+        backgroundColor: skinVars.colors.backgroundContainer,
+    },
+]);
+
+// The column that carries the header, the body, and the footer regions.
+export const mainColumn = style([
     sprinkles({
         display: 'flex',
         flexDirection: 'column',
@@ -20,8 +45,8 @@ export const container = style([
         boxSizing: 'border-box',
         height: '100%',
         width: sidenavWidthVar,
-        overflow: 'hidden',
-        backgroundColor: skinVars.colors.backgroundContainer,
+        flexShrink: 0,
+        minWidth: 0,
     },
 ]);
 
@@ -138,6 +163,14 @@ export const bodyWithoutHeader = style({
     paddingTop: 24,
 });
 
+// List of first-level entries (sections and stand-alone items). It owns the space between the
+// entries, so the scroll sentinels and the footer, which are siblings of this list, stay untouched.
+export const bodyContent = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: FIRST_LEVEL_GAP,
+});
+
 // Scroll-intersection divider (appears when content scrolls past header/footer)
 export const scrollDivider = style({
     height: 1,
@@ -201,6 +234,18 @@ export const sectionTitle = style({
     marginBottom: 8,
 });
 
+// Collapsed: the title is hidden, but it still reserves its space, so the items of a section keep the
+// same vertical rhythm in both states. The title text truncates to one line (see the `truncate` prop
+// in the component), because the 72px collapsed bar would otherwise reserve several lines.
+export const sectionTitleCollapsed = style({
+    visibility: 'hidden',
+});
+
+// The rail that carries the items of a section. A first-level stand-alone item reuses it, so that
+// it lands on the same rail as the items that belong to a section (see `standaloneItem`).
+// Horizontal insets are asymmetric by design: the left rail (8px) hosts the selected indicator, and
+// each item's content box adds a further 8px left margin (16px total), while the right side takes a
+// flat 8px. This yields the Figma insets: 16px on the left, 8px on the right.
 export const sectionContent = style({
     display: 'flex',
     flexDirection: 'column',
@@ -208,10 +253,14 @@ export const sectionContent = style({
     paddingRight: 8,
 });
 
+// A stand-alone item is not wrapped in a section, so it carries the items rail itself.
+export const standaloneItem = sectionContent;
+
+// The dividers sit outside `sectionContent`, so they span the whole sidenav width, and the Figma
+// anatomy order is: top divider, 8px, section title, 8px, items, 8px, bottom divider.
 export const sectionDivider = style({
     marginTop: 8,
-    marginBottom: 7,
-    marginRight: -8,
+    marginBottom: 8,
 });
 
 export const sectionDividerHidden = style({
@@ -356,18 +405,38 @@ export const dialogPanelTitle = style({
     paddingRight: 8,
 });
 
-export const doublePanel = style({
+// The second column of the sidenav. It holds the children of the open parent item, spans the whole
+// height of the sidenav, and scrolls on its own. Its horizontal inset (8px) is the same as the items
+// rail of a section, so the children land on the same rail as the items of the main column.
+export const doublePanelColumn = style({
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: skinVars.colors.backgroundContainer,
-    borderRight: `1px solid ${skinVars.colors.divider}`,
-    width: DEFAULT_WIDTH,
+    width: sidenavPanelWidthVar,
     height: '100%',
+    flexShrink: 0,
     overflowY: 'auto',
     paddingTop: 24,
     paddingBottom: 24,
     paddingLeft: 8,
     paddingRight: 8,
+});
+
+// The panel's own 8px inset plus these 8px place the title 16px from the panel edge, which is the
+// x-padding of a section title. The 16px bottom margin is the title-to-items gap of the spec.
+export const doublePanelTitle = style({
+    padding: '0 8px',
+    marginBottom: 16,
+});
+
+// Separates the main column from the double panel column. It renders whenever the panel is open, even
+// when the sidenav hides its right divider, because the two columns always need a visible boundary.
+export const columnSeparator = styleVariants({
+    default: {borderRight: `1px solid ${skinVars.colors.divider}`},
+    brand: {borderRight: `1px solid ${skinVars.colors.dividerBrand}`},
+    alternative: {borderRight: `1px solid ${skinVars.colors.divider}`},
+    negative: {borderRight: `1px solid ${skinVars.colors.dividerNegative}`},
+    media: {borderRight: `1px solid ${skinVars.colors.dividerNegative}`},
 });
 
 // Mobile -----------------------------------------------------------------------

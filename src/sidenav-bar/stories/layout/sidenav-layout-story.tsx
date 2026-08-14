@@ -72,7 +72,7 @@ export const WholeViewport = (args: {
 
     const sidenavWidth = args.useCustomWidth ? args.sidenavWidth : autoWidth;
 
-    const sections: SidenavSection[] = [
+    const sections: Array<SidenavSection> = [
         {
             items: [
                 {
@@ -185,7 +185,7 @@ export const Centered = (args: {
 
     const sidenavWidth = args.useCustomWidth ? args.sidenavWidth : autoWidth;
 
-    const sections: SidenavSection[] = [
+    const sections: Array<SidenavSection> = [
         {
             items: [
                 {

@@ -6,11 +6,10 @@ import {NESTING_INDENT} from './sidenav-bar.css';
 import {
     useSidenavBarContext,
     SidenavLevelContext,
-    generateItemId,
     assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-bar';
-import {SidenavPanel} from './sidenav-panel';
+import {SidenavDialogPanel} from './sidenav-panel';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import Touchable from '../touchable';
@@ -145,17 +144,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const selected = isItemSelected || hasDescendantSelected;
 
     const hasChildren = React.Children.count(children) > 0;
-    const itemIdRef = React.useRef<string | null>(null);
-    if (itemIdRef.current === null && hasChildren) {
-        itemIdRef.current = generateItemId();
-    }
-    const itemId = itemIdRef.current;
-    const isPanelOpen = itemId !== null && panelOpenForItemId === itemId;
-    // The left accent bar marks the directly-selected item (or the parent whose panel is open).
-    const showAccent = isItemSelected || isPanelOpen;
-    // The selected background also appears on a parent whose descendant is selected, so the parent
-    // reads as contextually active without borrowing the accent bar that belongs to the child.
-    const showBackground = isItemSelected || isPanelOpen || hasDescendantSelected;
+    const isPanelOpen = hasChildren && panelOpenForItemId === id;
+    // The left accent bar marks the directly-selected item only. A parent whose panel is open shows the
+    // selected background, but never the accent: the accent belongs to the selected child.
+    const showAccent = isItemSelected;
 
     if (process.env.NODE_ENV !== 'production') {
         if (level > 1) {
@@ -175,7 +167,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
 
         assertChildrenAre(children, SidenavItem, 'SidenavItem children must be SidenavItem elements');
-        if (level === 0 && !asset) {
+        // A panel item renders at level 0 to keep it on the same rail as a section item, but it never
+        // appears in the collapsed rail, so it does not need an asset.
+        if (level === 0 && !asset && !isInsidePanel) {
             console.warn(
                 `SidenavItem "${label}" at top level may not be visible when sidenav is collapsed (asset icon recommended)`
             );
@@ -185,14 +179,26 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
     const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
+    // In double panel mode the sidenav renders the panel as its second column, so the item only tracks
+    // the open state. The dialog panel, instead, is anchored to this item and rendered here.
+    const isDialogMode = shouldShowPanelMode && !doublePanel;
 
-    // Auto-expand this parent whenever one of its descendants becomes the selected item. It only
-    // ever opens (never force-closes), so a user's manual collapse and sibling parents are left as-is.
+    // The selected background also marks a parent whose descendant is selected, but only while that
+    // parent is closed (accordion collapsed, or in collapsed/panel mode) so it flags the hidden
+    // selection. Once the accordion is open the selected child renders its own background, so the
+    // parent drops it to avoid two stacked highlights.
+    const showBackground = isItemSelected || isPanelOpen || (hasDescendantSelected && !isOpen);
+
+    // Auto-expand this parent whenever the selection moves to one of its descendants. The effect keys
+    // on the selected descendant id (not on a boolean) so that a selection change between two siblings
+    // reopens a parent the user closed, which keeps the new selection visible. It only ever opens
+    // (never force-closes), so sibling parents and unrelated manual collapses are left as-is.
+    const selectedDescendantId = hasDescendantSelected ? selectedItemId : null;
     React.useEffect(() => {
-        if (hasDescendantSelected) {
+        if (selectedDescendantId !== null) {
             setOpen(true);
         }
-    }, [hasDescendantSelected]);
+    }, [selectedDescendantId]);
 
     const wrapNavCallback = (callback?: () => void | Promise<void>): (() => Promise<void>) => {
         return async () => {
@@ -200,9 +206,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 onSelectedItemIdChange(id);
             }
             await callback?.();
-            if (isInsidePanel) {
-                setPanelOpenForItemId(null);
-            }
+            // Any navigation closes the open panel: a press on one of its children, and also a press on
+            // a first-level item that navigates instead of revealing children.
+            setPanelOpenForItemId(null);
             if (isMobileMode && !hasChildren && closeMobileMenu) {
                 closeMobileMenu();
             }
@@ -279,8 +285,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const ariaCurrent = selected ? ('page' as const) : undefined;
 
     const handleTogglePanel = () => {
-        if (itemId === null) return;
-        setPanelOpenForItemId(isPanelOpen ? null : itemId);
+        setPanelOpenForItemId(isPanelOpen ? null : id);
     };
 
     const interactiveRow = (() => {
@@ -342,8 +347,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     })();
 
     const itemDataAttributes: DataAttributes = {testid: 'SidenavItem', ...dataAttributes};
-    if (itemId) {
-        itemDataAttributes['sidenav-item-id'] = itemId;
+    if (id) {
+        itemDataAttributes['sidenav-item-id'] = id;
     }
 
     const row = (
@@ -374,10 +379,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     <SidenavLevelContext.Provider value={level + 1}>{children}</SidenavLevelContext.Provider>
                 </div>
             )}
-            {isPanelOpen && itemId && (
-                <SidenavPanel itemId={itemId} label={label} containerRef={containerRef} level={level}>
+            {isPanelOpen && isDialogMode && (
+                <SidenavDialogPanel itemId={id} label={label} containerRef={containerRef}>
                     {children}
-                </SidenavPanel>
+                </SidenavDialogPanel>
             )}
         </>
     );

@@ -4739,13 +4739,14 @@ SidenavItem with rightSlot — Useful for badges, counts, or other indicators.
         group: 'SidenavBar',
         name: 'SidenavBar (doublePanel mode)',
         code: `{/*
-Double panel mode — Nested items open in a right panel instead of inline.
-Useful for complex multi-level navigation.
+Double panel mode — The children of an item open in a second column, to the right of the sidenav.
+The second column pushes the main content. Use panelWidth to give the column a custom width.
 */}
-<div style={{height: 480}}>
+<div style={{display: 'flex', height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
         doublePanel
+        panelWidth={240}
         sections={[
             {
                 items: [
@@ -4836,6 +4837,31 @@ Demonstrates organized navigation structure.
                     {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
                 ],
             },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (sections and stand-alone items)',
+        code: `{/*
+The first level admits sections and stand-alone items, in any order.
+A stand-alone item needs no section around it.
+*/}
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        sections={[
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+            {
+                title: 'Shopping',
+                items: [
+                    {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals'},
+                    {id: 'orders', label: 'Orders', asset: IconShoppingBagRegular, href: '#orders'},
+                ],
+            },
+            {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
         ]}
     />
 </div>

@@ -11,7 +11,6 @@ import {IconButton} from '../icon-button';
 import * as tokens from '../text-tokens';
 import {Logo} from '../logo';
 import Divider from '../divider';
-import ScreenReaderOnly from '../screen-reader-only';
 import {Text3} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
@@ -20,11 +19,13 @@ import IconMenuRegular from '../generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from '../generated/mistica-icons/icon-chevron-left-regular';
 import {SidenavItem} from './sidenav-item';
+import {SidenavDoublePanel} from './sidenav-panel';
+import {isSidenavSection} from './sidenav-types';
 
 import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes} from '../utils/types';
-import type {SidenavItem as SidenavItemType, SidenavSection as SidenavSectionType} from './sidenav-types';
+import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-types';
 
 // Branded type: a string that is guaranteed to be an opaque color
 type OpaqueColor = string & {readonly __brand: 'OpaqueColor'};
@@ -132,12 +133,6 @@ const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(Side
 /** Nesting level of the items. Level 0 is the top level. */
 const SidenavLevelContext = React.createContext<number>(0);
 
-/** Generate a unique ID for tracking panel state */
-let itemIdCounter = 0;
-const generateItemId = (): string => {
-    return `sidenav-item-${++itemIdCounter}`;
-};
-
 /**
  * `React.ReactElement<Props>` cannot express these constraints, because every JSX expression is
  * typed as `ReactElement<any, any>` and therefore satisfies any props type. Comparing against the
@@ -210,40 +205,36 @@ const SidenavSection = ({
             aria-label={title}
             {...getPrefixedDataAttributes({testid: 'SidenavSection', ...dataAttributes})}
         >
-            {title && (
-                <div className={styles.sectionTitle}>
-                    {collapsed ? (
-                        <ScreenReaderOnly>
-                            <span>{title}</span>
-                        </ScreenReaderOnly>
-                    ) : (
-                        <Text3 medium color={skinVars.colors.textSecondaryBrand}>
-                            {title}
-                        </Text3>
-                    )}
+            {dividerTop && (
+                <div
+                    className={classnames(styles.sectionDivider, {
+                        [styles.sectionDividerHidden]: isMobileMode,
+                    })}
+                >
+                    <Divider />
                 </div>
             )}
-            <div className={styles.sectionContent}>
-                {dividerTop && (
-                    <div
-                        className={classnames(styles.sectionDivider, {
-                            [styles.sectionDividerHidden]: isMobileMode,
-                        })}
-                    >
-                        <Divider />
-                    </div>
-                )}
-                {children}
-                {dividerBottom && (
-                    <div
-                        className={classnames(styles.sectionDivider, {
-                            [styles.sectionDividerHidden]: isMobileMode,
-                        })}
-                    >
-                        <Divider />
-                    </div>
-                )}
-            </div>
+            {title && (
+                <div
+                    className={classnames(styles.sectionTitle, {
+                        [styles.sectionTitleCollapsed]: collapsed,
+                    })}
+                >
+                    <Text3 medium truncate={collapsed ? 1 : undefined} color={skinVars.colors.textSecondary}>
+                        {title}
+                    </Text3>
+                </div>
+            )}
+            <div className={styles.sectionContent}>{children}</div>
+            {dividerBottom && (
+                <div
+                    className={classnames(styles.sectionDivider, {
+                        [styles.sectionDividerHidden]: isMobileMode,
+                    })}
+                >
+                    <Divider />
+                </div>
+            )}
         </div>
     );
 };
@@ -262,17 +253,18 @@ type SidenavBarBackgroundColors = {
 };
 
 type SidenavBarBaseProps = {
-    /** Navigation sections with items. Data-driven API replaces JSX children for better alignment with MainNavigationBar.
+    /** First-level entries of the body. Each entry is either a section with items, or a stand-alone
+     * item that needs no section. Data-driven API replaces JSX children for better alignment with
+     * MainNavigationBar.
+     * @see SidenavEntry
      * @see SidenavSection
      * @see SidenavItem
      */
-    sections?: ReadonlyArray<SidenavSectionType>;
+    sections?: ReadonlyArray<SidenavEntry>;
     /** Accessible name of the navigation landmark. @default 'Main navigation' */
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
     variant?: Variant;
-    /** Opens nested items in a panel to the right of the sidenav. @default false */
-    doublePanel?: boolean;
     /** Width of expanded sidenav in pixels. @default 240 */
     width?: number;
     /** Logo element in header. Defaults to skin logo. Pass false to hide. @default <Logo size={40} /> */
@@ -297,8 +289,21 @@ type SidenavBarBaseProps = {
  *   or uncontrolled through `defaultCollapsed` (optional `onCollapse`), never both.
  * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed.
  * - `fixedFooter` is only allowed when `footerSlot` is provided.
+ * - `panelWidth` describes the second column, so it is only accepted with `doublePanel: true`.
  */
 type SidenavBarProps = SidenavBarBaseProps &
+    ExclusifyUnion<
+        | {
+              /** Opens the children of a parent item in a second column, to the right of the sidenav. */
+              doublePanel: true;
+              /** Width of the second column in pixels. Defaults to the sidenav `width`. */
+              panelWidth?: number;
+          }
+        | {
+              /** Opens the children of a parent item in a second column. @default false */
+              doublePanel?: boolean;
+          }
+    > &
     ExclusifyUnion<
         | {
               /** Renders as a floating box (with own edge). Divider not applicable. */
@@ -384,6 +389,52 @@ const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement =>
     return <SidenavItem key={item.id} {...(baseProps as any)} />;
 };
 
+/** The items of the first level, in order: the items of every section, and every stand-alone item. */
+const getFirstLevelItems = (entries: ReadonlyArray<SidenavEntry>): Array<SidenavItemType> =>
+    entries.flatMap((entry) => (isSidenavSection(entry) ? [...entry.items] : [entry as SidenavItemType]));
+
+/**
+ * Finds the first-level item that owns the given child id. The sidenav supports a single nesting
+ * level, so the parent of an item is always a first-level item.
+ */
+const findParentOfItem = (
+    entries: ReadonlyArray<SidenavEntry>,
+    childId: string
+): SidenavItemType | undefined =>
+    getFirstLevelItems(entries).find((item) => item.children?.some((child) => child.id === childId));
+
+/** Finds a first-level item by id. Only these items can open a panel. */
+const findFirstLevelItem = (
+    entries: ReadonlyArray<SidenavEntry>,
+    itemId: string
+): SidenavItemType | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
+
+/**
+ * Render the first-level entries of the body. An entry is either a section, which groups its items,
+ * or a stand-alone item, which the items rail wraps so that it aligns with the items of a section.
+ */
+const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> =>
+    entries.map((entry, entryIndex) => {
+        if (isSidenavSection(entry)) {
+            return (
+                <SidenavSection
+                    key={entry.title || `section-${entryIndex}`}
+                    title={entry.title}
+                    dividerTop={entry.dividerTop}
+                    dividerBottom={entry.dividerBottom}
+                >
+                    {entry.items.map((item) => renderSidenavItemFromData(item))}
+                </SidenavSection>
+            );
+        }
+
+        return (
+            <div key={entry.id} className={styles.standaloneItem}>
+                {renderSidenavItemFromData(entry as SidenavItemType)}
+            </div>
+        );
+    });
+
 const SidenavBar = ({
     sections,
     'aria-label': ariaLabel = 'Main navigation',
@@ -396,6 +447,7 @@ const SidenavBar = ({
     onCollapse,
     doublePanel = false,
     width = DEFAULT_WIDTH,
+    panelWidth,
     logo,
     headerSlot,
     footerSlot,
@@ -450,6 +502,31 @@ const SidenavBar = ({
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
     const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
     const containerRef = React.useRef<HTMLElement>(null);
+
+    // The effects below read the entries without depending on the array itself: a consumer that builds
+    // the entries inline would otherwise re-run them on every render.
+    const sectionsRef = React.useRef(sections);
+    sectionsRef.current = sections;
+
+    // A parent item opens the second column, so the column closes as soon as the mode goes off.
+    React.useEffect(() => {
+        if (!doublePanel) {
+            setPanelOpenForItemId(null);
+        }
+    }, [doublePanel]);
+
+    // When an external navigation event selects a child, the second column opens on its parent, so that
+    // the new selection stays visible. The effect keys on the selected id, so a column the user closed
+    // stays closed until the selection changes again.
+    React.useEffect(() => {
+        if (!doublePanel || !selectedItemId) return;
+        const entries = sectionsRef.current;
+        if (!entries) return;
+        const parent = findParentOfItem(entries, selectedItemId);
+        if (parent) {
+            setPanelOpenForItemId(parent.id);
+        }
+    }, [doublePanel, selectedItemId]);
 
     // Reset all state when sections changes to prevent hook reconciliation errors
     const prevSectionsLengthRef = React.useRef(sections?.length ?? 0);
@@ -577,9 +654,7 @@ const SidenavBar = ({
         };
 
         if (sections) {
-            sections.forEach((section) => {
-                section.items.forEach((item) => collectItemIds(item));
-            });
+            getFirstLevelItems(sections).forEach((item) => collectItemIds(item));
         }
 
         if (duplicateIds.size > 0) {
@@ -594,6 +669,15 @@ const SidenavBar = ({
 
     const hasHeader = Boolean(logoElement || collapsible || headerSlot);
     const normalizedVariant = normalizeVariant(variant);
+
+    // The second column belongs to the sidenav, not to the item that opens it, so that it can span the
+    // whole height of the sidenav and push the content of the layout.
+    const doublePanelItem =
+        doublePanel && panelOpenForItemId && sections
+            ? findFirstLevelItem(sections, panelOpenForItemId)
+            : undefined;
+    const doublePanelChildren = doublePanelItem?.children;
+    const isDoublePanelOpen = !isMobile && Boolean(doublePanelChildren?.length);
 
     if (isMobile) {
         return (
@@ -639,27 +723,20 @@ const SidenavBar = ({
                                     <div className={styles.mobilePanelContent}>
                                         {mobileNavStack.length > 0 && (
                                             <div className={styles.sectionTitle}>
-                                                <Text3 medium color={skinVars.colors.textSecondaryBrand}>
+                                                <Text3 medium color={skinVars.colors.textSecondary}>
                                                     {mobileNavStack[mobileNavStack.length - 1].label}
                                                 </Text3>
                                             </div>
                                         )}
-                                        {mobileNavStack.length > 0
-                                            ? mobileNavStack[mobileNavStack.length - 1].items.map((item) =>
-                                                  renderSidenavItemFromData(item)
-                                              )
-                                            : sections?.map((section, sectionIndex) => (
-                                                  <SidenavSection
-                                                      key={section.title || `section-${sectionIndex}`}
-                                                      title={section.title}
-                                                      dividerTop={section.dividerTop}
-                                                      dividerBottom={section.dividerBottom}
-                                                  >
-                                                      {section.items.map((item) =>
-                                                          renderSidenavItemFromData(item)
-                                                      )}
-                                                  </SidenavSection>
-                                              ))}
+                                        {mobileNavStack.length > 0 ? (
+                                            mobileNavStack[mobileNavStack.length - 1].items.map((item) =>
+                                                renderSidenavItemFromData(item)
+                                            )
+                                        ) : (
+                                            <div className={styles.bodyContent}>
+                                                {sections ? renderSidenavEntries(sections) : null}
+                                            </div>
+                                        )}
                                     </div>
                                 </nav>
                             </>
@@ -680,116 +757,135 @@ const SidenavBar = ({
                         [styles.withRightDivider]: divider && !boxed,
                         [styles.boxed]: boxed,
                     })}
-                    style={applyCssVars({[styles.sidenavWidthVar]: `${currentWidth}px`})}
+                    style={applyCssVars({
+                        [styles.sidenavWidthVar]: `${currentWidth}px`,
+                        [styles.sidenavPanelWidthVar]: `${panelWidth ?? width}px`,
+                    })}
                     {...getPrefixedDataAttributes({testid: 'SidenavBar', ...dataAttributes})}
                 >
-                    {hasHeader && (
-                        <div
-                            className={classnames(styles.headerBase, styles.header[normalizedVariant], {
-                                [styles.headerCollapsed]: collapsed,
-                                [styles.headerBoxed[normalizedVariant]]: boxed,
-                            })}
-                            style={
-                                headerBackgroundColor ? {backgroundColor: headerBackgroundColor} : undefined
-                            }
-                        >
+                    <div
+                        className={classnames(styles.mainColumn, {
+                            [styles.columnSeparator[normalizedVariant]]: isDoublePanelOpen,
+                        })}
+                    >
+                        {hasHeader && (
                             <div
-                                className={classnames(styles.headerControls, {
-                                    [styles.headerControlsCollapsed]: collapsed,
+                                className={classnames(styles.headerBase, styles.header[normalizedVariant], {
+                                    [styles.headerCollapsed]: collapsed,
+                                    [styles.headerBoxed[normalizedVariant]]: boxed,
                                 })}
+                                style={
+                                    headerBackgroundColor
+                                        ? {backgroundColor: headerBackgroundColor}
+                                        : undefined
+                                }
                             >
-                                {logoElement && <div className={styles.logo}>{logoElement}</div>}
-                                {collapsible && (
-                                    <IconButton
-                                        Icon={collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular}
-                                        type="brand"
-                                        backgroundType="transparent"
-                                        small
-                                        onPress={toggleCollapsed}
-                                        aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
-                                    />
-                                )}
-                            </div>
-                            {headerSlot && (
                                 <div
-                                    className={classnames(styles.headerSlot, {
-                                        [styles.headerSlotCollapsed]: collapsed,
+                                    className={classnames(styles.headerControls, {
+                                        [styles.headerControlsCollapsed]: collapsed,
                                     })}
                                 >
-                                    {headerSlot}
+                                    {logoElement && <div className={styles.logo}>{logoElement}</div>}
+                                    {collapsible && (
+                                        <IconButton
+                                            Icon={
+                                                collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular
+                                            }
+                                            type="brand"
+                                            backgroundType="transparent"
+                                            small
+                                            onPress={toggleCollapsed}
+                                            aria-label={
+                                                collapsed ? 'Expand navigation' : 'Collapse navigation'
+                                            }
+                                        />
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                    )}
-                    <div
-                        ref={bodyRef}
-                        className={classnames(styles.bodyBase, styles.body[normalizedVariant], {
-                            [styles.bodyWithoutHeader]: !hasHeader,
-                        })}
-                        style={bodyBackgroundColor ? {backgroundColor: bodyBackgroundColor} : undefined}
-                    >
-                        <div ref={headerDividerSentinelRef} />
-                        {showHeaderDivider && (
-                            <div
-                                className={classnames(
-                                    styles.scrollDivider,
-                                    styles.headerScrollDivider,
-                                    styles.scrollDividerVariant[normalizedVariant]
-                                )}
-                            />
-                        )}
-                        {sections?.map((section, sectionIndex) => (
-                            <SidenavSection
-                                key={section.title || `section-${sectionIndex}`}
-                                title={section.title}
-                                dividerTop={section.dividerTop}
-                                dividerBottom={section.dividerBottom}
-                            >
-                                {section.items.map((item) => renderSidenavItemFromData(item))}
-                            </SidenavSection>
-                        ))}
-                        {footerSlot && !fixedFooter && (
-                            <>
-                                <div ref={footerDividerSentinelRef} />
-                                {showFooterDivider && (
+                                {headerSlot && (
                                     <div
-                                        className={classnames(
-                                            styles.scrollDivider,
-                                            styles.footerScrollDivider,
-                                            styles.scrollDividerVariant[normalizedVariant]
-                                        )}
-                                    />
+                                        className={classnames(styles.headerSlot, {
+                                            [styles.headerSlotCollapsed]: collapsed,
+                                        })}
+                                    >
+                                        {headerSlot}
+                                    </div>
                                 )}
+                            </div>
+                        )}
+                        <div
+                            ref={bodyRef}
+                            className={classnames(styles.bodyBase, styles.body[normalizedVariant], {
+                                [styles.bodyWithoutHeader]: !hasHeader,
+                            })}
+                            style={bodyBackgroundColor ? {backgroundColor: bodyBackgroundColor} : undefined}
+                        >
+                            <div ref={headerDividerSentinelRef} />
+                            {showHeaderDivider && (
                                 <div
                                     className={classnames(
-                                        styles.footerBase,
-                                        styles.footer[normalizedVariant],
-                                        {
-                                            [styles.footerBoxed[normalizedVariant]]: boxed,
-                                        }
+                                        styles.scrollDivider,
+                                        styles.headerScrollDivider,
+                                        styles.scrollDividerVariant[normalizedVariant]
                                     )}
-                                    style={
-                                        footerBackgroundColor
-                                            ? {backgroundColor: footerBackgroundColor}
-                                            : undefined
-                                    }
-                                >
-                                    {footerSlot}
-                                </div>
-                            </>
+                                />
+                            )}
+                            {sections && (
+                                <div className={styles.bodyContent}>{renderSidenavEntries(sections)}</div>
+                            )}
+                            {footerSlot && !fixedFooter && (
+                                <>
+                                    <div ref={footerDividerSentinelRef} />
+                                    {showFooterDivider && (
+                                        <div
+                                            className={classnames(
+                                                styles.scrollDivider,
+                                                styles.footerScrollDivider,
+                                                styles.scrollDividerVariant[normalizedVariant]
+                                            )}
+                                        />
+                                    )}
+                                    <div
+                                        className={classnames(
+                                            styles.footerBase,
+                                            styles.footer[normalizedVariant],
+                                            {
+                                                [styles.footerBoxed[normalizedVariant]]: boxed,
+                                            }
+                                        )}
+                                        style={
+                                            footerBackgroundColor
+                                                ? {backgroundColor: footerBackgroundColor}
+                                                : undefined
+                                        }
+                                    >
+                                        {footerSlot}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                        {footerSlot && fixedFooter && (
+                            <div
+                                className={classnames(styles.footerBase, styles.footer[normalizedVariant], {
+                                    [styles.footerBoxed[normalizedVariant]]: boxed,
+                                })}
+                                style={
+                                    footerBackgroundColor
+                                        ? {backgroundColor: footerBackgroundColor}
+                                        : undefined
+                                }
+                            >
+                                {footerSlot}
+                            </div>
                         )}
                     </div>
-                    {footerSlot && fixedFooter && (
-                        <div
-                            className={classnames(styles.footerBase, styles.footer[normalizedVariant], {
-                                [styles.footerBoxed[normalizedVariant]]: boxed,
-                            })}
-                            style={
-                                footerBackgroundColor ? {backgroundColor: footerBackgroundColor} : undefined
-                            }
+                    {isDoublePanelOpen && doublePanelItem && doublePanelChildren && (
+                        <SidenavDoublePanel
+                            label={doublePanelItem.label}
+                            variant={normalizedVariant}
+                            backgroundColor={bodyBackgroundColor}
                         >
-                            {footerSlot}
-                        </div>
+                            {doublePanelChildren.map((child) => renderSidenavItemFromData(child))}
+                        </SidenavDoublePanel>
                     )}
                 </nav>
             </SidenavBarContext.Provider>
@@ -799,12 +895,5 @@ const SidenavBar = ({
 
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
-export {
-    SidenavBarContext,
-    useSidenavBarContext,
-    SidenavLevelContext,
-    generateItemId,
-    assertChildrenAre,
-    hasDescendantWithId,
-};
+export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, assertChildrenAre, hasDescendantWithId};
 export type {SidenavBarProps, SidenavSectionProps, SidenavBarBackgroundColors};

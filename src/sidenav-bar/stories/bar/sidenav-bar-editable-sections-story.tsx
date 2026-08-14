@@ -3,10 +3,20 @@
 import * as React from 'react';
 import {SidenavBar} from '../../index';
 
-import type {SidenavSection} from '../../sidenav-types';
+import type {SidenavEntry} from '../../sidenav-types';
 
-const DEFAULT_SECTIONS: Array<SidenavSection> = [
+// The first level admits sections and stand-alone items, in any order. An entry with `items` is a
+// section, an entry with an `id` is a stand-alone item. Every section declares both dividers, so you
+// can switch them on and off from the `sections` control.
+const DEFAULT_SECTIONS: Array<SidenavEntry> = [
     {
+        id: 'dashboard',
+        label: 'Dashboard (stand-alone item)',
+        href: '#dashboard',
+    },
+    {
+        dividerTop: false,
+        dividerBottom: false,
         items: [
             {
                 id: 'home',
@@ -23,6 +33,7 @@ const DEFAULT_SECTIONS: Array<SidenavSection> = [
     {
         title: 'Workspace',
         dividerTop: true,
+        dividerBottom: false,
         items: [
             {
                 id: 'projects',
@@ -44,8 +55,14 @@ const DEFAULT_SECTIONS: Array<SidenavSection> = [
         ],
     },
     {
+        id: 'support',
+        label: 'Support (stand-alone item)',
+        href: '#support',
+    },
+    {
         title: 'Settings',
         dividerTop: true,
+        dividerBottom: false,
         items: [
             {
                 id: 'config',
@@ -57,20 +74,25 @@ const DEFAULT_SECTIONS: Array<SidenavSection> = [
 ];
 
 type Args = {
-    sections: Array<SidenavSection>;
+    sections: Array<SidenavEntry>;
 };
 
 export const EditableSections = ({sections}: Args): React.JSX.Element => {
     return (
-        <div style={{display: 'flex', height: '100vh', gap: '1rem'}}>
-            <div style={{width: '300px', borderRight: '1px solid #ccc', overflow: 'auto'}}>
-                <SidenavBar sections={sections} aria-label="Sidenav" />
-            </div>
+        <div style={{display: 'flex', height: '100vh'}}>
+            <SidenavBar sections={sections} aria-label="Sidenav" />
             <div style={{flex: 1, padding: '2rem', overflowY: 'auto'}}>
                 <h1>Editable Sections (JSON-Safe)</h1>
                 <p>
                     ✅ Edit the `sections` control below to test the component with different navigation
                     structures
+                </p>
+                <p>
+                    The first level takes sections and stand-alone items, in any order. Every section declares{' '}
+                    <code>dividerTop</code> and <code>dividerBottom</code>, so you can switch each divider on
+                    and off in the control. A stand-alone item takes no dividers. The collapsed state needs an{' '}
+                    <code>asset</code> per item, so it has its own story:{' '}
+                    <strong>Sections and stand-alone items</strong>.
                 </p>
 
                 <div
@@ -103,10 +125,16 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                             <code>defaultOpen</code> (boolean) — expand by default
                         </li>
                         <li>
+                            <code>items</code> (array) — items of a section
+                        </li>
+                        <li>
                             <code>title</code> (string) — section heading
                         </li>
                         <li>
-                            <code>dividerTop</code> (boolean) — section divider
+                            <code>dividerTop</code> (boolean) — divider above a section
+                        </li>
+                        <li>
+                            <code>dividerBottom</code> (boolean) — divider below a section
                         </li>
                     </ul>
                 </div>
@@ -175,7 +203,7 @@ export default {
         sections: {
             control: {type: 'object'},
             description:
-                'Edit JSON with: id, label, href/to, children, defaultOpen, title, dividerTop. Cannot include: onPress, asset, rightSlot (these are functions/components).',
+                'Edit JSON with: id, label, href/to, children, defaultOpen, items, title, dividerTop, dividerBottom. Cannot include: onPress, asset, rightSlot (these are functions/components).',
             table: {
                 category: 'Data (JSON-editable)',
             },

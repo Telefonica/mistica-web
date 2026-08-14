@@ -8,7 +8,6 @@ import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regu
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import IconAlarmClockRegular from '../../../generated/mistica-icons/icon-alarm-clock-regular';
 import {Placeholder} from '../../../placeholder';
 import Badge from '../../../badge';
 
@@ -84,6 +83,7 @@ const getDefaultSections = (): Array<SidenavSection> => [
                 label: 'Notifications',
                 asset: IconBellRegular,
                 href: '#notifications',
+                rightSlot: <Badge value={2} />,
                 onNavigate: () => console.log('Notifications clicked'),
             },
         ],
@@ -115,6 +115,7 @@ type Args = {
     collapsible: boolean;
     defaultCollapsed: boolean;
     doublePanel: boolean;
+    panelWidth: number;
     width: number;
     sections: Array<SidenavSection>;
     'Colors/Enabled'?: boolean;
@@ -135,6 +136,7 @@ export const Default = ({
     collapsible,
     defaultCollapsed,
     doublePanel,
+    panelWidth,
     width,
     'Colors/Enabled': colorsEnabled,
     'Colors/Header': headerColor,
@@ -153,42 +155,25 @@ export const Default = ({
 
     return (
         <div style={{display: 'flex', height: '100vh'}}>
-            {boxed ? (
-                <SidenavBar
-                    aria-label={label}
-                    variant={variant}
-                    logo={logo ? undefined : false}
-                    headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
-                    footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
-                    fixedFooter={fixedFooter}
-                    boxed
-                    collapsible={collapsible}
-                    defaultCollapsed={defaultCollapsed}
-                    doublePanel={doublePanel}
-                    width={width}
-                    sections={sections}
-                    background={background}
-                />
-            ) : (
-                <SidenavBar
-                    {...({
-                        'aria-label': label,
-                        variant,
-                        logo: logo ? undefined : false,
-                        headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
-                        footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
-                        fixedFooter,
-                        boxed: false,
-                        divider,
-                        collapsible,
-                        defaultCollapsed,
-                        doublePanel,
-                        width,
-                        sections,
-                        background,
-                    } as any)}
-                />
-            )}
+            <SidenavBar
+                {...({
+                    'aria-label': label,
+                    variant,
+                    logo: logo ? undefined : false,
+                    headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
+                    footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
+                    fixedFooter,
+                    boxed,
+                    divider,
+                    collapsible,
+                    defaultCollapsed,
+                    doublePanel,
+                    panelWidth,
+                    width,
+                    sections,
+                    background,
+                } as any)}
+            />
             <div
                 style={{
                     flex: 1,
@@ -255,157 +240,6 @@ export const Default = ({
 
 Default.storyName = 'SidenavBar';
 
-export const CustomSections = ({
-    label,
-    variant,
-    logo,
-    headerSlot,
-    footerSlot,
-    fixedFooter,
-    boxed,
-    divider,
-    collapsible,
-    defaultCollapsed,
-    doublePanel,
-    width,
-}: Args): React.JSX.Element => {
-    // Custom sections with different structure
-    const sections: Array<SidenavSection> = [
-        {
-            items: [
-                {
-                    id: 'dashboard',
-                    label: 'Dashboard',
-                    asset: IconHomeRegular,
-                    href: '#dashboard',
-                    onNavigate: () => console.log('Dashboard'),
-                },
-            ],
-        },
-        {
-            title: 'Products',
-            dividerTop: true,
-            items: [
-                {
-                    id: 'mobile',
-                    label: 'Mobile Services',
-                    asset: IconSearchRegular,
-                    children: [
-                        {
-                            id: 'plans',
-                            label: 'Plans & Offers',
-                            asset: IconFolderRegular,
-                            href: '#plans',
-                            onNavigate: () => console.log('Plans clicked'),
-                        },
-                        {
-                            id: 'devices',
-                            label: 'My Devices',
-                            asset: IconFolderRegular,
-                            href: '#devices',
-                            onNavigate: () => console.log('Devices clicked'),
-                        },
-                    ],
-                },
-                {
-                    id: 'broadband',
-                    label: 'Broadband',
-                    asset: IconSearchRegular,
-                    href: '#broadband',
-                    onNavigate: () => console.log('Broadband clicked'),
-                    rightSlot: <Badge value={2} />,
-                },
-            ],
-        },
-        {
-            title: 'Quick Links',
-            dividerTop: true,
-            dividerBottom: true,
-            items: [
-                {
-                    id: 'billing',
-                    label: 'Billing & Payments',
-                    asset: IconAlarmClockRegular,
-                    href: '#billing',
-                    onNavigate: () => console.log('Billing clicked'),
-                },
-                {
-                    id: 'support',
-                    label: 'Customer Support',
-                    asset: IconBellRegular,
-                    href: '#support',
-                    onNavigate: () => console.log('Support clicked'),
-                },
-                {
-                    id: 'settings',
-                    label: 'Settings',
-                    asset: IconSettingsRegular,
-                    href: '#settings',
-                    onNavigate: () => console.log('Settings clicked'),
-                },
-            ],
-        },
-    ];
-
-    return (
-        <div style={{display: 'flex', height: '100vh'}}>
-            {boxed ? (
-                <SidenavBar
-                    aria-label={label}
-                    variant={variant}
-                    logo={logo ? undefined : false}
-                    headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
-                    footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
-                    fixedFooter={fixedFooter}
-                    boxed
-                    collapsible={collapsible}
-                    defaultCollapsed={defaultCollapsed}
-                    doublePanel={doublePanel}
-                    width={width}
-                    sections={sections}
-                />
-            ) : (
-                <SidenavBar
-                    {...({
-                        'aria-label': label,
-                        variant,
-                        logo: logo ? undefined : false,
-                        headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
-                        footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
-                        fixedFooter,
-                        boxed: false,
-                        divider,
-                        collapsible,
-                        defaultCollapsed,
-                        doublePanel,
-                        width,
-                        sections,
-                    } as any)}
-                />
-            )}
-            <div
-                style={{
-                    flex: 1,
-                    padding: '2rem',
-                    backgroundColor: '#f5f5f5',
-                    overflowY: 'auto',
-                }}
-            >
-                <h1>Custom Sections Example</h1>
-                <p>This is a modified version with custom sections structure:</p>
-                <ul>
-                    <li>Dashboard (single item)</li>
-                    <li>Products section with nested Mobile Services</li>
-                    <li>Broadband service with notification badge</li>
-                    <li>Quick Links section</li>
-                </ul>
-            </div>
-        </div>
-    );
-};
-
-CustomSections.storyName = 'Custom Sections';
-
 export default {
     title: 'Components/SidenavBar/Bar',
     component: SidenavBar,
@@ -431,6 +265,7 @@ export default {
         collapsible: true,
         defaultCollapsed: false,
         doublePanel: false,
+        panelWidth: 240,
         width: 240,
         sections: getDefaultSections(),
         'Colors/Enabled': false,
@@ -473,6 +308,11 @@ export default {
         },
         doublePanel: {
             control: {type: 'boolean'},
+        },
+        panelWidth: {
+            control: {type: 'range', min: 200, max: 400, step: 5},
+            description: 'Width of the second column. Only applies when doublePanel is true.',
+            if: {arg: 'doublePanel', truthy: true},
         },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},

@@ -284,6 +284,10 @@ export const ControlledSelection = (): React.JSX.Element => {
                             selected background and auto-expands.
                         </li>
                         <li>
+                            When expanded: close a parent that holds the selection, then select a sibling
+                            child with the buttons above. The parent reopens to show the new selection.
+                        </li>
+                        <li>
                             When collapsed: a parent whose child is selected shows a selected background (no
                             accent bar). Open its dropdown to see the selected child.
                         </li>

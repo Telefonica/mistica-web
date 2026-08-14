@@ -105,4 +105,30 @@ type SidenavSection = {
     items: ReadonlyArray<SidenavItem>;
 };
 
-export type {SidenavItem, SidenavSection};
+/**
+ * First-level entry of the sidenav body. The first level admits sections and stand-alone items,
+ * in any order, so an item does not need a section around it.
+ *
+ * Each entry is exactly one of:
+ * - **Section** — has `items` and groups them under an optional title and optional dividers.
+ * - **Stand-alone item** — a `SidenavItem` placed directly at the first level.
+ *
+ * A stand-alone item aligns with the items of a section, and every first-level entry is
+ * separated from the next one by the same vertical space.
+ *
+ * @example
+ * // A stand-alone item, then a section, then another stand-alone item
+ * [
+ *   {id: 'home', label: 'Home', asset: IconHome, href: '/'},
+ *   {title: 'Workspace', items: [{id: 'teams', label: 'Teams', asset: IconPeople, href: '/teams'}]},
+ *   {id: 'settings', label: 'Settings', asset: IconSettings, href: '/settings'}
+ * ]
+ */
+type SidenavEntry = ExclusifyUnion<SidenavSection | SidenavItem>;
+
+/** Tells a first-level section apart from a first-level stand-alone item. */
+const isSidenavSection = (entry: SidenavEntry): entry is SidenavSection =>
+    Array.isArray((entry as SidenavSection).items);
+
+export {isSidenavSection};
+export type {SidenavItem, SidenavSection, SidenavEntry};

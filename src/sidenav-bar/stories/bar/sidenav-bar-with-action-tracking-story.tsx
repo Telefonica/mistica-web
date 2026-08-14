@@ -24,6 +24,7 @@ type Args = {
     collapsible: boolean;
     defaultCollapsed: boolean;
     doublePanel: boolean;
+    panelWidth: number;
     width: number;
     'Colors/Enabled': boolean;
     'Colors/Header': string;
@@ -43,6 +44,7 @@ export const WithActionTracking = ({
     collapsible,
     defaultCollapsed,
     doublePanel,
+    panelWidth,
     width,
     'Colors/Enabled': colorsEnabled,
     'Colors/Header': headerColor,
@@ -164,42 +166,25 @@ export const WithActionTracking = ({
 
     return (
         <div style={{display: 'flex', height: '100vh'}}>
-            {boxed ? (
-                <SidenavBar
-                    aria-label={label}
-                    variant={variant}
-                    logo={logo ? undefined : false}
-                    headerSlot={headerSlot ? <Placeholder height={76} /> : undefined}
-                    footerSlot={footerSlot ? <Placeholder height={76} /> : undefined}
-                    fixedFooter={fixedFooter}
-                    boxed
-                    collapsible={collapsible}
-                    defaultCollapsed={defaultCollapsed}
-                    doublePanel={doublePanel}
-                    width={width}
-                    background={background}
-                    sections={sections}
-                />
-            ) : (
-                <SidenavBar
-                    {...({
-                        'aria-label': label,
-                        variant,
-                        logo: logo ? undefined : false,
-                        headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
-                        footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
-                        fixedFooter,
-                        boxed: false,
-                        divider,
-                        collapsible,
-                        defaultCollapsed,
-                        doublePanel,
-                        width,
-                        background,
-                        sections,
-                    } as any)}
-                />
-            )}
+            <SidenavBar
+                {...({
+                    'aria-label': label,
+                    variant,
+                    logo: logo ? undefined : false,
+                    headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
+                    footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
+                    fixedFooter,
+                    boxed,
+                    divider,
+                    collapsible,
+                    defaultCollapsed,
+                    doublePanel,
+                    panelWidth,
+                    width,
+                    background,
+                    sections,
+                } as any)}
+            />
             <div
                 style={{
                     flex: 1,
@@ -264,6 +249,7 @@ export default {
         collapsible: true,
         defaultCollapsed: false,
         doublePanel: false,
+        panelWidth: 240,
         width: 256,
         'Colors/Enabled': false,
         'Colors/Header': '#ffffff',
@@ -290,6 +276,11 @@ export default {
         collapsible: {control: 'boolean'},
         defaultCollapsed: {control: 'boolean'},
         doublePanel: {control: 'boolean'},
+        panelWidth: {
+            control: {type: 'range', min: 200, max: 400, step: 5},
+            description: 'Width of the second column. Only applies when doublePanel is true.',
+            if: {arg: 'doublePanel', truthy: true},
+        },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
         },
