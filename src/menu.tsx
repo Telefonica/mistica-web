@@ -18,6 +18,7 @@ import {CSSTransition} from 'react-transition-group';
 import {combineRefs} from './utils/common';
 import {applyCssVars} from './utils/css';
 import {isRunningAcceptanceTest} from './utils/platform';
+import * as mediaStyles from './image.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -141,6 +142,7 @@ export const MenuItem = ({
                 <div
                     className={styles.iconContainer}
                     {...(asset ? getPrefixedDataAttributes({testid: 'asset'}) : {})}
+                    style={asset ? applyCssVars({[mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall}) : undefined}
                 >
                     {asset || (Icon && <Icon size={24} color={contentColor} />)}
                 </div>

@@ -10,10 +10,11 @@ import {
     Text2,
     MenuItem,
     IconLightningRegular,
-    Avatar,
+    Image,
     MenuSection,
     useDialog,
 } from '..';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Menu',
@@ -110,7 +111,11 @@ export const Default: StoryComponent<MenuArgs> = ({
                                                 checked: valuesState.includes(optionIndex),
                                             })}
                                             Icon={icon ? IconLightningRegular : undefined}
-                                            asset={asset ? <Avatar size={40} initials="MS" /> : undefined}
+                                            asset={
+                                                asset ? (
+                                                    <Image src={avatarImg} width={40} aspectRatio="1:1" />
+                                                ) : undefined
+                                            }
                                         />
                                     ))}
                                 </MenuSection>
