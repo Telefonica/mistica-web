@@ -142,7 +142,13 @@ export const MenuItem = ({
                 <div
                     className={styles.iconContainer}
                     {...(asset ? getPrefixedDataAttributes({testid: 'asset'}) : {})}
-                    style={asset ? applyCssVars({[mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall}) : undefined}
+                    style={
+                        asset
+                            ? applyCssVars({
+                                  [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                              })
+                            : undefined
+                    }
                 >
                     {asset || (Icon && <Icon size={24} color={contentColor} />)}
                 </div>
