@@ -23,10 +23,15 @@ React component library for Telefonica's Design System.
   argTypes;
 - make sure `yarn ts-check` and `yarn lint` pass when modifying them. You probably need to cycle several time
   to really make sure you've fixed everything
+- Before you claim a component works or matches its spec, drive it in the browser that CI uses:
+  `yarn browse <story-id> --click <selector> --measure <selector> --shot <selector>`. It reports runtime
+  errors too. Read [agents/skills/run-in-browser](./agents/skills/run-in-browser/SKILL.md) before you use it.
 
 ---
 
 ## Conventions
 
 - Read [CONTRIBUTING](./CONTRIBUTING.md) before creating a PR or contributing to Mistica repo;
+- The skills for agents live in [agents/skills/](./agents/README.md). Every tool-specific path is a symlink
+  into that directory;
 - Always add the `AI` label to PRs where the code was written by an AI agent.
