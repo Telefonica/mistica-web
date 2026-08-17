@@ -46,6 +46,7 @@
     --mistica-o2-raw-white: 255, 255, 255;
     --mistica-o2-raw-black: 0, 0, 30;
     --mistica-o2-raw-beyondBlue90: 0, 16, 51;
+    --mistica-o2-raw-grey30: 217, 217, 221;
     --mistica-o2-raw-beyondBlue30: 128, 167, 255;
     --mistica-o2-raw-darkModeGrey: 8, 19, 43;
 
@@ -126,7 +127,7 @@
     --mistica-color-buttonLinkBackgroundNegativePressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-o2-raw-white), 0.08);
     --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.08);
-    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-o2-grey20);
+    --mistica-color-buttonLinkNeutralBackgroundPressed: rgba(var(--mistica-o2-raw-grey30), 0.4);
     --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-o2-white);
     --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-o2-grey20);
     --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-o2-white);
@@ -384,6 +385,7 @@
     --mistica-border-radius-popup: 8px;
     --mistica-border-radius-sheet: 16px;
     --mistica-border-radius-mediaSmall: 8px;
+    --mistica-border-radius-snackbar: 8px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -1173,7 +1175,7 @@
         --mistica-color-buttonLinkBackgroundNegativePressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-o2-raw-white), 0.08);
         --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-o2-raw-white), 0.08);
-        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-o2-grey20);
+        --mistica-color-buttonLinkNeutralBackgroundPressed: rgba(var(--mistica-o2-raw-grey30), 0.4);
         --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-o2-white);
         --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-o2-grey20);
         --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-o2-white);

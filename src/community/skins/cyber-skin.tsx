@@ -680,6 +680,7 @@ export const getCyberSkin = (): Skin => {
             popup: '4px',
             sheet: '0px',
             mediaSmall: '2px',
+            snackbar: '4px',
         },
         textPresets: {
             cardTitle: {
