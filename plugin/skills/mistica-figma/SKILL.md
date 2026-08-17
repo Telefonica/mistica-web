@@ -162,6 +162,58 @@ frame** — never inside a `Layout/<FormFactor>` wrapper:
 Header, Hero, CoverHero, NavigationBar, MainNavigationBar, FunnelNavigationBar, FeedbackScreen, LoadingScreen,
 BrandLoadingScreen, Carousel, ButtonFixedFooterLayout.
 
+### Overlay components (Dialog, Confirm, Alert, Drawer)
+
+Dialog, Confirm, Alert, and Drawer render as full-screen overlays. They follow stricter placement rules than
+other components.
+
+**Component names**
+
+| Library | Dialog | Confirm | Alert | Drawer | Sheet |
+| ------- | ------ | ------- | ----- | ------ | ----- |
+| Desktop | `Dialog [D]` | `Confirm [D]` | `Alert [D]` | `Drawer [D]` | `Sheet [D]` |
+| Mobile  | `Web/Dialog` | `Web/Confirm` | `Web/Alert` | `Drawer` | `Sheet` |
+
+**Placement rules**
+
+1. **Direct child of the screen frame** — never inside a `Layout/…`, `Main`, or any other wrapper.
+2. **Last child** — append after all content children so the overlay renders above them.
+3. **Position** — set `x = 0` and `y = 0`. The component's default position is wrong; always override it.
+4. **Size** — resize to match the screen frame exactly. After `appendChild`, set:
+
+```js
+overlay.layoutSizingHorizontal = 'FIXED';
+overlay.layoutSizingVertical   = 'FIXED';
+overlay.resize(screenFrame.width, screenFrame.height);
+```
+
+5. **Constraints** — set `STRETCH` on both axes so the overlay follows the frame when it is resized:
+
+```js
+overlay.constraints = { horizontal: 'STRETCH', vertical: 'STRETCH' };
+```
+
+**Mandatory validation.** Immediately after placing each overlay, run a dedicated `use_figma` call to confirm
+the position and dimensions. If `valid` is `false`, delete the instance and re-place it before proceeding.
+
+```js
+// Replace IDs with the actual node ids returned during placement.
+const screen  = figma.getNodeById('SCREEN_FRAME_ID');
+const overlay = figma.getNodeById('OVERLAY_INSTANCE_ID');
+const xOk = overlay.x === 0;
+const yOk = overlay.y === 0;
+const wOk = Math.round(overlay.width)  === Math.round(screen.width);
+const hOk = Math.round(overlay.height) === Math.round(screen.height);
+return {
+  x: overlay.x, y: overlay.y,
+  width: overlay.width, height: overlay.height,
+  screenWidth: screen.width, screenHeight: screen.height,
+  valid: xOk && yOk && wOk && hOk,
+};
+```
+
+---
+
 ### Responsive layout frame
 
 A responsive layout frame defines **only the horizontal padding** for a section. It is the Figma equivalent of
