@@ -105,6 +105,7 @@ export type BorderRadiiConfig = {
     avatar: string;
     mediaSmall: string;
     tag: string;
+    snackbar: string;
 };
 
 export type SpacingConfig = {

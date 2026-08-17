@@ -679,6 +679,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             popup: '16px',
             sheet: '16px',
             mediaSmall: '8px',
+            snackbar: '16px',
         },
         textPresets: {
             button: {weight: 'medium'},
@@ -739,13 +740,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             brandLoadingScreen: 'inverse',
         },
         componentProperties: {
-            showBoxedBorder: {
-                default: true,
-                brand: true,
-                negative: true,
-                alternative: true,
-                media: true,
-            },
+            showBoxedBorder: {default: true, brand: true, negative: true, alternative: true, media: true},
         },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},

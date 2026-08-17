@@ -150,7 +150,7 @@
         var(--mistica-vivo-evolution-raw-vivoNeutral0),
         0.1
     );
-    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
     --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
     --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -432,6 +432,7 @@
     --mistica-border-radius-popup: 16px;
     --mistica-border-radius-sheet: 24px;
     --mistica-border-radius-mediaSmall: 12px;
+    --mistica-border-radius-snackbar: 24px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -1511,7 +1512,7 @@
             var(--mistica-vivo-evolution-raw-vivoNeutral0),
             0.1
         );
-        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
         --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
         --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);

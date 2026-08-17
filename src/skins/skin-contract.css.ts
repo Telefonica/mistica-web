@@ -323,6 +323,7 @@ const borderRadii: BorderRadiiConfig = {
     avatar: '',
     mediaSmall: '',
     tag: '',
+    snackbar: '',
 };
 
 type ToThemeTokens<T> = T extends {mobile: number; desktop: number}

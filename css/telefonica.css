@@ -49,6 +49,7 @@
     --mistica-telefonica-raw-black: 0, 0, 0;
     --mistica-telefonica-raw-telefonicaBlue: 0, 102, 255;
     --mistica-telefonica-raw-telefonicaBlue80: 0, 46, 115;
+    --mistica-telefonica-raw-grey2: 209, 213, 228;
     --mistica-telefonica-raw-darkModeTelefonicaBlue: 34, 122, 255;
     --mistica-telefonica-raw-darkModeGrey: 0, 24, 47;
     --mistica-telefonica-raw-coral60: 210, 42, 30;
@@ -127,7 +128,7 @@
     --mistica-color-buttonLinkBackgroundNegativePressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
     --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
     --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
-    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-telefonica-grey1);
+    --mistica-color-buttonLinkNeutralBackgroundPressed: rgba(var(--mistica-telefonica-raw-grey2), 0.4);
     --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-telefonica-white);
     --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-telefonica-grey1);
     --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-telefonica-white);
@@ -385,6 +386,7 @@
     --mistica-border-radius-popup: 4px;
     --mistica-border-radius-sheet: 0px;
     --mistica-border-radius-mediaSmall: 2px;
+    --mistica-border-radius-snackbar: 4px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -1299,7 +1301,7 @@
         --mistica-color-buttonLinkBackgroundNegativePressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
         --mistica-color-buttonLinkBackgroundBrandPressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
         --mistica-color-buttonLinkBackgroundMediaPressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
-        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-telefonica-grey1);
+        --mistica-color-buttonLinkNeutralBackgroundPressed: rgba(var(--mistica-telefonica-raw-grey2), 0.4);
         --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-telefonica-white);
         --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-telefonica-grey1);
         --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-telefonica-white);
