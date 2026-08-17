@@ -672,7 +672,6 @@ export const getVivoSkin: GetKnownSkin = () => {
             popup: '16px',
             sheet: '24px',
             mediaSmall: '12px',
-            snackbar: '16px',
         },
         textPresets: {
             button: {weight: 'medium'},
@@ -714,19 +713,32 @@ export const getVivoSkin: GetKnownSkin = () => {
             text3: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 18, mobile: 16}},
             text4: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
             text5: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'medium'},
-            text6: {lineHeight: {desktop: 40, mobile: 32}, size: {desktop: 32, mobile: 24}, weight: 'medium'},
-            text7: {lineHeight: {desktop: 48, mobile: 32}, size: {desktop: 40, mobile: 28}, weight: 'medium'},
+            text6: {
+                letterSpacing: {desktop: '-0.24', mobile: '-0.24'},
+                lineHeight: {desktop: 40, mobile: 32},
+                size: {desktop: 32, mobile: 24},
+                weight: 'medium',
+            },
+            text7: {
+                letterSpacing: {desktop: '-0.42', mobile: '-0.42'},
+                lineHeight: {desktop: 48, mobile: 32},
+                size: {desktop: 40, mobile: 28},
+                weight: 'medium',
+            },
             text8: {
+                letterSpacing: {desktop: '-0.8', mobile: '-0.544'},
                 lineHeight: {desktop: 56, mobile: 40},
                 size: {desktop: 48, mobile: 32},
                 weight: 'regular',
             },
             text9: {
+                letterSpacing: {desktop: '-1.4', mobile: '-0.8'},
                 lineHeight: {desktop: 64, mobile: 48},
                 size: {desktop: 56, mobile: 40},
                 weight: 'regular',
             },
             text10: {
+                letterSpacing: {desktop: '-1.92', mobile: '-1.056'},
                 lineHeight: {desktop: 72, mobile: 56},
                 size: {desktop: 64, mobile: 48},
                 weight: 'regular',

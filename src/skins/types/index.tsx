@@ -43,12 +43,14 @@ export type TextSizeTokenConfig = {
     weight?: never;
     size: ResponsiveValue<number>;
     lineHeight: ResponsiveValue<number>;
+    letterSpacing?: ResponsiveValue<number>;
 };
 
 export type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size: ResponsiveValue<number>;
     lineHeight: ResponsiveValue<number>;
+    letterSpacing?: ResponsiveValue<number>;
 };
 
 export type TextPresetsConfig = {
