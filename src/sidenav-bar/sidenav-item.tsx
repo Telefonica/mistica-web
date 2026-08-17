@@ -12,6 +12,7 @@ import {
 import {SidenavDialogPanel} from './sidenav-panel';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
+import {useThemeVariant} from '../theme-variant-context';
 import Touchable from '../touchable';
 import Tooltip from '../tooltip';
 import ScreenReaderOnly from '../screen-reader-only';
@@ -129,6 +130,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         doublePanel,
         panelOpenForItemId,
         setPanelOpenForItemId,
+        closePanelForSelection,
         containerRef,
         isInsidePanel,
         selectedItemId,
@@ -138,6 +140,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         pushMobileNavLevel,
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
+    // `SidenavBar` overrides the ambient variant with its own, so the item takes its colors from here. The
+    // floating panel of a collapsed sidenav restores the default variant, and its items follow.
+    const variant = useThemeVariant();
 
     const isItemSelected = id !== undefined && selectedItemId === id;
     const hasDescendantSelected = hasDescendantWithId(children, selectedItemId);
@@ -183,11 +188,17 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // the open state. The dialog panel, instead, is anchored to this item and rendered here.
     const isDialogMode = shouldShowPanelMode && !doublePanel;
 
+    // The panel of another parent takes the background for itself, so that the sidenav never shows two
+    // highlighted parents. This parent takes the background back as soon as that panel closes, which
+    // needs no change of the selection.
+    const isPanelOpenForAnotherItem = Boolean(panelOpenForItemId && panelOpenForItemId !== id);
+
     // The selected background also marks a parent whose descendant is selected, but only while that
     // parent is closed (accordion collapsed, or in collapsed/panel mode) so it flags the hidden
     // selection. Once the accordion is open the selected child renders its own background, so the
     // parent drops it to avoid two stacked highlights.
-    const showBackground = isItemSelected || isPanelOpen || (hasDescendantSelected && !isOpen);
+    const showBackground =
+        isItemSelected || isPanelOpen || (hasDescendantSelected && !isOpen && !isPanelOpenForAnotherItem);
 
     // Auto-expand this parent whenever the selection moves to one of its descendants. The effect keys
     // on the selected descendant id (not on a boolean) so that a selection change between two siblings
@@ -202,13 +213,15 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const wrapNavCallback = (callback?: () => void | Promise<void>): (() => Promise<void>) => {
         return async () => {
+            // Any navigation closes the open panel: a press on one of its children, and also a press on
+            // a first-level item that navigates instead of revealing children. The close comes first and
+            // carries the new selection, because the selection of this press must not reopen the panel,
+            // and the bar reads that selection as soon as the consumer applies it.
+            closePanelForSelection(id ?? null);
             if (id && onSelectedItemIdChange) {
                 onSelectedItemIdChange(id);
             }
             await callback?.();
-            // Any navigation closes the open panel: a press on one of its children, and also a press on
-            // a first-level item that navigates instead of revealing children.
-            setPanelOpenForItemId(null);
             if (isMobileMode && !hasChildren && closeMobileMenu) {
                 closeMobileMenu();
             }
@@ -245,7 +258,11 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         assetContent = asset;
     }
     const assetElement =
-        shouldShowAsset && assetContent ? <span className={styles.itemAsset}>{assetContent}</span> : null;
+        shouldShowAsset && assetContent ? (
+            <span className={classnames(styles.itemAsset, styles.itemAssetVariant[variant])}>
+                {assetContent}
+            </span>
+        ) : null;
 
     const labelNode =
         collapsed && !isInsidePanel ? (
@@ -254,20 +271,17 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             </ScreenReaderOnly>
         ) : (
             <div className={styles.itemLabel}>
-                <Text2 regular truncate color={selected ? 'textPrimary' : undefined}>
+                <Text2 regular truncate color="inherit">
                     {label}
                 </Text2>
             </div>
         );
 
-    const touchableClassName = classnames(
-        styles.itemTouchable,
-        styles.itemTouchableSelected[showBackground ? 'true' : 'false'],
-        {
-            [styles.itemTouchableCollapsed]: collapsed && !isInsidePanel,
-            [styles.itemTouchableMobile]: isMobileMode,
-        }
-    );
+    const touchableClassName = classnames(styles.itemTouchable, styles.itemTouchableVariant[variant], {
+        [styles.itemTouchableSelected[variant]]: showBackground,
+        [styles.itemTouchableCollapsed]: collapsed && !isInsidePanel,
+        [styles.itemTouchableMobile]: isMobileMode,
+    });
 
     const rowContent = (
         <>
@@ -275,7 +289,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {labelNode}
             {!collapsed && rightSlot && <span className={styles.itemRightSlot}>{rightSlot}</span>}
             {!collapsed && hasChildren && (
-                <span className={styles.itemChevron} aria-hidden="true">
+                <span
+                    className={classnames(styles.itemChevron, styles.itemChevronVariant[variant])}
+                    aria-hidden="true"
+                >
                     <ChevronIcon size={16} color="currentColor" />
                 </span>
             )}
@@ -346,6 +363,12 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         );
     })();
 
+    // The collapsed rail shows only the icon of an item, so a tooltip gives its label. The dialog panel
+    // floats over the rail, and a tooltip would overlap it, so the rail drops its tooltips while that
+    // panel is open. The second column, instead, sits beside the rail, so the rail keeps its tooltips. Only
+    // the item that owns the column drops its own, because the column already shows its label as a title.
+    const showTooltip = collapsed && !isInsidePanel && (doublePanel ? !isPanelOpen : !panelOpenForItemId);
+
     const itemDataAttributes: DataAttributes = {testid: 'SidenavItem', ...dataAttributes};
     if (id) {
         itemDataAttributes['sidenav-item-id'] = id;
@@ -357,8 +380,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             style={applyCssVars({[styles.itemIndentVar]: `${level * NESTING_INDENT}px`})}
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
-            {showAccent && <div className={styles.itemAccent} />}
-            {collapsed && !isInsidePanel && !panelOpenForItemId ? (
+            {showAccent && (
+                <div className={classnames(styles.itemAccent, styles.itemAccentVariant[variant])} />
+            )}
+            {showTooltip ? (
                 <Tooltip
                     position="right"
                     description={label}

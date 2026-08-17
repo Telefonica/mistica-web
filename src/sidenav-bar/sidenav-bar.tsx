@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
 import {DEFAULT_WIDTH, COLLAPSED_WIDTH, LOGO_SIZE} from './sidenav-bar.css';
-import {ThemeVariant, normalizeVariant} from '../theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from '../theme-variant-context';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import {useScreenSize, useTheme, useDisableBodyScroll} from '../hooks';
@@ -98,6 +98,12 @@ type SidenavBarContextValue = {
     toggleCollapsed: () => void;
     panelOpenForItemId: string | null;
     setPanelOpenForItemId: (id: string | null) => void;
+    /**
+     * Closes the open panel, and marks `selectionId` as the selection that must not reopen the second
+     * column. A press on an item closes the column and moves the selection at the same time, and the
+     * selection alone would otherwise reopen the column that the press just closed.
+     */
+    closePanelForSelection: (selectionId: string | null) => void;
     containerRef: React.RefObject<HTMLElement | null>;
     isInsidePanel: boolean;
     selectedItemId: string | null;
@@ -117,6 +123,7 @@ const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     toggleCollapsed: () => {},
     panelOpenForItemId: null,
     setPanelOpenForItemId: () => {},
+    closePanelForSelection: () => {},
     containerRef: React.createRef(),
     isInsidePanel: false,
     selectedItemId: null,
@@ -197,6 +204,7 @@ const SidenavSection = ({
     dataAttributes,
 }: SidenavSectionProps): JSX.Element => {
     const {collapsed, isMobileMode} = useSidenavBarContext();
+    const variant = useThemeVariant();
 
     return (
         <div
@@ -216,11 +224,11 @@ const SidenavSection = ({
             )}
             {title && (
                 <div
-                    className={classnames(styles.sectionTitle, {
+                    className={classnames(styles.sectionTitle, styles.sectionTitleVariant[variant], {
                         [styles.sectionTitleCollapsed]: collapsed,
                     })}
                 >
-                    <Text3 medium truncate={collapsed ? 1 : undefined} color={skinVars.colors.textSecondary}>
+                    <Text3 medium truncate={collapsed ? 1 : undefined} color="inherit">
                         {title}
                     </Text3>
                 </div>
@@ -252,6 +260,19 @@ type SidenavBarBackgroundColors = {
     footer?: OpaqueColor;
 };
 
+/**
+ * Props of the collapse action of the header. A consumer that paints its own action spreads them onto its
+ * own control, which then keeps the behavior and the accessible name of the default action.
+ */
+type SidenavCollapseActionRenderProps = {
+    /** Current collapsed state, which gives the direction of the action. */
+    collapsed: boolean;
+    /** Toggles the collapsed state. */
+    onPress: () => void;
+    /** Accessible name of the action, which follows the collapsed state. */
+    'aria-label': string;
+};
+
 type SidenavBarBaseProps = {
     /** First-level entries of the body. Each entry is either a section with items, or a stand-alone
      * item that needs no section. Data-driven API replaces JSX children for better alignment with
@@ -265,9 +286,12 @@ type SidenavBarBaseProps = {
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
     variant?: Variant;
-    /** Width of expanded sidenav in pixels. @default 240 */
+    /** Width of expanded sidenav in pixels. The second column takes the same width. @default 240 */
     width?: number;
-    /** Logo element in header. Defaults to skin logo. Pass false to hide. @default <Logo size={40} /> */
+    /** Opens the children of a parent item in a second column, to the right of the sidenav.
+     * @default false */
+    doublePanel?: boolean;
+    /** Logo element in header. Defaults to skin logo. Pass false to hide. @default <Logo size={32} /> */
     logo?: React.ReactElement | false;
     /** Custom content below logo/collapse in header. */
     headerSlot?: React.ReactNode;
@@ -287,23 +311,12 @@ type SidenavBarBaseProps = {
  *   `divider` is only accepted when `boxed` is false.
  * - The collapsed state is either controlled through `collapsed` (requires `onCollapse`)
  *   or uncontrolled through `defaultCollapsed` (optional `onCollapse`), never both.
- * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed.
+ * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed, and
+ *   `defaultCollapsed` drives the collapsed state of every render instead of seeding it once. That sidenav
+ *   shows no collapse action either, so `renderCollapseAction` is not allowed there.
  * - `fixedFooter` is only allowed when `footerSlot` is provided.
- * - `panelWidth` describes the second column, so it is only accepted with `doublePanel: true`.
  */
 type SidenavBarProps = SidenavBarBaseProps &
-    ExclusifyUnion<
-        | {
-              /** Opens the children of a parent item in a second column, to the right of the sidenav. */
-              doublePanel: true;
-              /** Width of the second column in pixels. Defaults to the sidenav `width`. */
-              panelWidth?: number;
-          }
-        | {
-              /** Opens the children of a parent item in a second column. @default false */
-              doublePanel?: boolean;
-          }
-    > &
     ExclusifyUnion<
         | {
               /** Renders as a floating box (with own edge). Divider not applicable. */
@@ -324,6 +337,8 @@ type SidenavBarProps = SidenavBarBaseProps &
               onCollapse: (collapsed: boolean) => void;
               /** Whether user can toggle collapsed state. @default true */
               collapsible?: true;
+              /** Paints a custom collapse action in the header, instead of the default icon button. */
+              renderCollapseAction?: (props: SidenavCollapseActionRenderProps) => React.ReactNode;
           }
         | {
               /** Initial collapsed state (uncontrolled). @default false */
@@ -332,6 +347,8 @@ type SidenavBarProps = SidenavBarBaseProps &
               onCollapse?: (collapsed: boolean) => void;
               /** Whether user can toggle collapsed state. @default true */
               collapsible?: true;
+              /** Paints a custom collapse action in the header, instead of the default icon button. */
+              renderCollapseAction?: (props: SidenavCollapseActionRenderProps) => React.ReactNode;
           }
         | {
               /** Controlled collapsed state (non-toggleable). */
@@ -340,7 +357,8 @@ type SidenavBarProps = SidenavBarBaseProps &
               collapsible: false;
           }
         | {
-              /** Initial collapsed state (uncontrolled, non-toggleable). @default false */
+              /** Collapsed state. The user cannot toggle it, so the sidenav follows this prop on every
+               * render. @default false */
               defaultCollapsed?: boolean;
               /** User cannot toggle collapsed state. */
               collapsible: false;
@@ -445,9 +463,9 @@ const SidenavBar = ({
     collapsed: collapsedProp,
     defaultCollapsed = false,
     onCollapse,
+    renderCollapseAction,
     doublePanel = false,
     width = DEFAULT_WIDTH,
-    panelWidth,
     logo,
     headerSlot,
     footerSlot,
@@ -500,7 +518,13 @@ const SidenavBar = ({
 
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
-    const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
+    // A sidenav that the user cannot toggle keeps no state of its own: it drops the seeded state and reads
+    // `defaultCollapsed` on every render, so a later change of that prop moves the sidenav.
+    const collapsed = isCollapsedControlled
+        ? Boolean(collapsedProp)
+        : collapsible
+          ? uncontrolledCollapsed
+          : defaultCollapsed;
     const containerRef = React.useRef<HTMLElement>(null);
 
     // The effects below read the entries without depending on the array itself: a consumer that builds
@@ -515,18 +539,109 @@ const SidenavBar = ({
         }
     }, [doublePanel]);
 
-    // When an external navigation event selects a child, the second column opens on its parent, so that
-    // the new selection stays visible. The effect keys on the selected id, so a column the user closed
-    // stays closed until the selection changes again.
+    // A press on an item of the sidenav closes the second column and moves the selection at the same
+    // time. The effect below reacts to the new selection, so the press records its selection here to
+    // tell that effect that the user already dismissed the column for it.
+    const dismissedSelectionRef = React.useRef<string | null>(null);
+
+    const closePanelForSelection = React.useCallback(
+        (selectionId: string | null) => {
+            if (doublePanel) {
+                dismissedSelectionRef.current = selectionId;
+            }
+            setPanelOpenForItemId(null);
+        },
+        [doublePanel]
+    );
+
+    // A press outside of the bar counts here instead of closing the column on its own. That press often
+    // carries a new selection too, and both signals then reach the effect below in the same render, which
+    // decides once. A close made from the listener would instead race the new selection.
+    const [outsidePressCount, setOutsidePressCount] = React.useState(0);
+
+    const panelOpenForItemIdRef = React.useRef(panelOpenForItemId);
+    panelOpenForItemIdRef.current = panelOpenForItemId;
+
+    // `undefined` marks a selection that the effect below never read. The first run then counts as a new
+    // selection, and the column opens on the parent of the item the consumer selected from the start.
+    const previousSelectionRef = React.useRef<string | null | undefined>(undefined);
+
+    // The single owner of the second column, for every signal that comes from outside of the sidenav.
+    // A new selection wins over a press outside of the bar, because the press that selects a child of the
+    // app (a breadcrumb, a card, a button) lands outside of the bar:
+    //   - a second-level item opens the column on its parent, so that the new selection stays visible;
+    //   - a first-level item without children closes the column, because it has nothing to show there;
+    //   - a press inside the sidenav closes the column through `closePanelForSelection`, and that press
+    //     wins over the selection it carries.
+    // A press outside of the bar with no new selection closes the column, unless the column holds the
+    // current selection: the consumer that re-selects the child it already shows produces no render, so
+    // the two cases are the same event for the component.
     React.useEffect(() => {
-        if (!doublePanel || !selectedItemId) return;
+        if (!doublePanel) return;
         const entries = sectionsRef.current;
         if (!entries) return;
-        const parent = findParentOfItem(entries, selectedItemId);
-        if (parent) {
-            setPanelOpenForItemId(parent.id);
+
+        const selectionChanged = previousSelectionRef.current !== selectedItemId;
+        previousSelectionRef.current = selectedItemId;
+
+        const dismissedSelection = dismissedSelectionRef.current;
+        dismissedSelectionRef.current = null;
+
+        if (selectionChanged) {
+            if (!selectedItemId || dismissedSelection === selectedItemId) return;
+
+            const parent = findParentOfItem(entries, selectedItemId);
+            if (parent) {
+                setPanelOpenForItemId(parent.id);
+                return;
+            }
+
+            const firstLevelItem = findFirstLevelItem(entries, selectedItemId);
+            if (firstLevelItem && !firstLevelItem.children?.length) {
+                setPanelOpenForItemId(null);
+            }
+            return;
         }
-    }, [doublePanel, selectedItemId]);
+
+        setPanelOpenForItemId((openForItemId) => {
+            if (!openForItemId) return openForItemId;
+            if (!selectedItemId) return null;
+            return findParentOfItem(entries, selectedItemId)?.id === openForItemId ? openForItemId : null;
+        });
+    }, [doublePanel, selectedItemId, outsidePressCount]);
+
+    // Only a press outside of the whole bar dismisses the second column, together with the Escape key. A
+    // press inside the bar that lands on no item (the background of a column, a section title) keeps the
+    // column open, and a press on an item closes it through `closePanelForSelection`.
+    React.useEffect(() => {
+        if (!doublePanel) return;
+
+        const handlePressOutside = (event: MouseEvent) => {
+            if (!panelOpenForItemIdRef.current) return;
+            const target = event.target;
+            if (target instanceof Node && containerRef.current?.contains(target)) return;
+            // A press on a parent item opens the column, or replaces its content. That press re-renders
+            // the item (a collapsed item drops its tooltip wrapper, for instance), so its node can leave
+            // the document before this listener runs, and the check above then reads it as a press
+            // outside of the bar. The node still carries the marker of a parent item, which tells that
+            // the press came from the bar itself.
+            if (target instanceof Element && target.closest('[data-parent-item="true"]')) return;
+            setOutsidePressCount((count) => count + 1);
+        };
+
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setPanelOpenForItemId(null);
+            }
+        };
+
+        document.addEventListener('click', handlePressOutside);
+        document.addEventListener('keydown', handleEscape);
+        return () => {
+            document.removeEventListener('click', handlePressOutside);
+            document.removeEventListener('keydown', handleEscape);
+        };
+    }, [doublePanel]);
 
     // Reset all state when sections changes to prevent hook reconciliation errors
     const prevSectionsLengthRef = React.useRef(sections?.length ?? 0);
@@ -607,6 +722,7 @@ const SidenavBar = ({
             toggleCollapsed,
             panelOpenForItemId,
             setPanelOpenForItemId,
+            closePanelForSelection,
             containerRef,
             isInsidePanel: false,
             selectedItemId: selectedItemId ?? null,
@@ -624,6 +740,7 @@ const SidenavBar = ({
             doublePanel,
             toggleCollapsed,
             panelOpenForItemId,
+            closePanelForSelection,
             containerRef,
             selectedItemId,
             onSelectedItemIdChange,
@@ -667,7 +784,36 @@ const SidenavBar = ({
 
     const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
 
-    const hasHeader = Boolean(logoElement || collapsible || headerSlot);
+    // The header shows an icon button by default. A consumer that needs another control receives the props
+    // of that button, so its own control keeps the behavior and the accessible name of the default one.
+    const collapseActionElement = (() => {
+        if (!collapsible) {
+            return null;
+        }
+
+        const collapseActionProps: SidenavCollapseActionRenderProps = {
+            collapsed,
+            onPress: toggleCollapsed,
+            'aria-label': collapsed ? 'Expand navigation' : 'Collapse navigation',
+        };
+
+        if (renderCollapseAction) {
+            return renderCollapseAction(collapseActionProps);
+        }
+
+        return (
+            <IconButton
+                Icon={collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular}
+                type="brand"
+                backgroundType="transparent"
+                small
+                onPress={collapseActionProps.onPress}
+                aria-label={collapseActionProps['aria-label']}
+            />
+        );
+    })();
+
+    const hasHeader = Boolean(logoElement || collapseActionElement || headerSlot);
     const normalizedVariant = normalizeVariant(variant);
 
     // The second column belongs to the sidenav, not to the item that opens it, so that it can span the
@@ -754,12 +900,14 @@ const SidenavBar = ({
                     ref={containerRef}
                     aria-label={ariaLabel}
                     className={classnames(styles.container, {
-                        [styles.withRightDivider]: divider && !boxed,
+                        [styles.withRightDivider[normalizedVariant]]: divider && !boxed,
                         [styles.boxed]: boxed,
                     })}
                     style={applyCssVars({
                         [styles.sidenavWidthVar]: `${currentWidth}px`,
-                        [styles.sidenavPanelWidthVar]: `${panelWidth ?? width}px`,
+                        // The second column takes the width of the expanded sidenav, which the collapsed
+                        // rail does not: a rail of 72px would give a column too narrow for its children.
+                        [styles.sidenavPanelWidthVar]: `${width}px`,
                     })}
                     {...getPrefixedDataAttributes({testid: 'SidenavBar', ...dataAttributes})}
                 >
@@ -770,10 +918,10 @@ const SidenavBar = ({
                     >
                         {hasHeader && (
                             <div
-                                className={classnames(styles.headerBase, styles.header[normalizedVariant], {
-                                    [styles.headerCollapsed]: collapsed,
-                                    [styles.headerBoxed[normalizedVariant]]: boxed,
-                                })}
+                                className={classnames(
+                                    styles.headerBase,
+                                    styles.regionBackground[normalizedVariant]
+                                )}
                                 style={
                                     headerBackgroundColor
                                         ? {backgroundColor: headerBackgroundColor}
@@ -786,20 +934,7 @@ const SidenavBar = ({
                                     })}
                                 >
                                     {logoElement && <div className={styles.logo}>{logoElement}</div>}
-                                    {collapsible && (
-                                        <IconButton
-                                            Icon={
-                                                collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular
-                                            }
-                                            type="brand"
-                                            backgroundType="transparent"
-                                            small
-                                            onPress={toggleCollapsed}
-                                            aria-label={
-                                                collapsed ? 'Expand navigation' : 'Collapse navigation'
-                                            }
-                                        />
-                                    )}
+                                    {collapseActionElement}
                                 </div>
                                 {headerSlot && (
                                     <div
@@ -814,9 +949,13 @@ const SidenavBar = ({
                         )}
                         <div
                             ref={bodyRef}
-                            className={classnames(styles.bodyBase, styles.body[normalizedVariant], {
-                                [styles.bodyWithoutHeader]: !hasHeader,
-                            })}
+                            className={classnames(
+                                styles.bodyBase,
+                                styles.regionBackground[normalizedVariant],
+                                {
+                                    [styles.bodyWithoutHeader]: !hasHeader,
+                                }
+                            )}
                             style={bodyBackgroundColor ? {backgroundColor: bodyBackgroundColor} : undefined}
                         >
                             <div ref={headerDividerSentinelRef} />
@@ -847,10 +986,7 @@ const SidenavBar = ({
                                     <div
                                         className={classnames(
                                             styles.footerBase,
-                                            styles.footer[normalizedVariant],
-                                            {
-                                                [styles.footerBoxed[normalizedVariant]]: boxed,
-                                            }
+                                            styles.regionBackground[normalizedVariant]
                                         )}
                                         style={
                                             footerBackgroundColor
@@ -865,9 +1001,10 @@ const SidenavBar = ({
                         </div>
                         {footerSlot && fixedFooter && (
                             <div
-                                className={classnames(styles.footerBase, styles.footer[normalizedVariant], {
-                                    [styles.footerBoxed[normalizedVariant]]: boxed,
-                                })}
+                                className={classnames(
+                                    styles.footerBase,
+                                    styles.regionBackground[normalizedVariant]
+                                )}
                                 style={
                                     footerBackgroundColor
                                         ? {backgroundColor: footerBackgroundColor}
@@ -896,4 +1033,9 @@ const SidenavBar = ({
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
 export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, assertChildrenAre, hasDescendantWithId};
-export type {SidenavBarProps, SidenavSectionProps, SidenavBarBackgroundColors};
+export type {
+    SidenavBarProps,
+    SidenavSectionProps,
+    SidenavBarBackgroundColors,
+    SidenavCollapseActionRenderProps,
+};

@@ -24,7 +24,6 @@ type Args = {
     collapsible: boolean;
     defaultCollapsed: boolean;
     doublePanel: boolean;
-    panelWidth: number;
     width: number;
     'Colors/Enabled': boolean;
     'Colors/Header': string;
@@ -44,7 +43,6 @@ export const WithActionTracking = ({
     collapsible,
     defaultCollapsed,
     doublePanel,
-    panelWidth,
     width,
     'Colors/Enabled': colorsEnabled,
     'Colors/Header': headerColor,
@@ -179,7 +177,6 @@ export const WithActionTracking = ({
                     collapsible,
                     defaultCollapsed,
                     doublePanel,
-                    panelWidth,
                     width,
                     background,
                     sections,
@@ -249,7 +246,6 @@ export default {
         collapsible: true,
         defaultCollapsed: false,
         doublePanel: false,
-        panelWidth: 240,
         width: 256,
         'Colors/Enabled': false,
         'Colors/Header': '#ffffff',
@@ -276,11 +272,6 @@ export default {
         collapsible: {control: 'boolean'},
         defaultCollapsed: {control: 'boolean'},
         doublePanel: {control: 'boolean'},
-        panelWidth: {
-            control: {type: 'range', min: 200, max: 400, step: 5},
-            description: 'Width of the second column. Only applies when doublePanel is true.',
-            if: {arg: 'doublePanel', truthy: true},
-        },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
         },

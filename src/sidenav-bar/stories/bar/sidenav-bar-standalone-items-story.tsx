@@ -14,16 +14,10 @@ import type {SidenavEntry} from '../../sidenav-types';
 type Args = {
     defaultCollapsed: boolean;
     doublePanel: boolean;
-    panelWidth: number;
     divider: boolean;
 };
 
-export const StandaloneItems = ({
-    defaultCollapsed,
-    doublePanel,
-    panelWidth,
-    divider,
-}: Args): React.JSX.Element => {
+export const StandaloneItems = ({defaultCollapsed, doublePanel, divider}: Args): React.JSX.Element => {
     const [selectedItemId, setSelectedItemId] = React.useState<string | null>('section-1-item-1');
 
     // The first level admits sections and stand-alone items, in any order.
@@ -97,7 +91,6 @@ export const StandaloneItems = ({
                     sections,
                     defaultCollapsed,
                     doublePanel,
-                    panelWidth,
                     divider,
                     selectedItemId,
                     onSelectedItemIdChange: setSelectedItemId,
@@ -123,7 +116,6 @@ export default {
     args: {
         defaultCollapsed: false,
         doublePanel: false,
-        panelWidth: 240,
         divider: true,
     },
     argTypes: {
@@ -132,11 +124,6 @@ export default {
         },
         doublePanel: {
             control: {type: 'boolean'},
-        },
-        panelWidth: {
-            control: {type: 'range', min: 200, max: 400, step: 5},
-            description: 'Width of the second column. Only applies when doublePanel is true.',
-            if: {arg: 'doublePanel', truthy: true},
         },
         divider: {
             control: {type: 'boolean'},

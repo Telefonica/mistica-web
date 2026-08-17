@@ -153,6 +153,75 @@ test('SidenavBar hides the collapse button when collapsible is false', async () 
     expect(screen.queryByRole('button', {name: /navigation/})).not.toBeInTheDocument();
 });
 
+const queryItemRow = (itemId: string): HTMLElement => {
+    // eslint-disable-next-line testing-library/no-node-access
+    const row = document.querySelector(`[data-sidenav-item-id="${itemId}"]`);
+    if (!row) {
+        throw new Error(`No sidenav item with id "${itemId}"`);
+    }
+    return row as HTMLElement;
+};
+
+const hasStyle = (row: HTMLElement, className: string): boolean =>
+    // eslint-disable-next-line testing-library/no-node-access
+    Boolean(row.querySelector(`.${className}`));
+
+const renderCollapsible = (props: React.ComponentProps<typeof SidenavBar>) => (
+    <ThemeContextProvider theme={makeTheme()}>
+        <SidenavBar aria-label="Main navigation" sections={defaultSections} {...props} />
+    </ThemeContextProvider>
+);
+
+// The user cannot toggle a sidenav with `collapsible: false`, so that sidenav keeps no state of its own,
+// and a later change of `defaultCollapsed` moves it.
+test('SidenavBar follows a change of defaultCollapsed when collapsible is false', async () => {
+    const {rerender} = render(renderCollapsible({collapsible: false, defaultCollapsed: false}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
+
+    rerender(renderCollapsible({collapsible: false, defaultCollapsed: true}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
+});
+
+// A sidenav that the user can toggle owns its collapsed state, so `defaultCollapsed` only seeds it: a later
+// change of that prop does not overrule the choice of the user.
+test('SidenavBar ignores a change of defaultCollapsed when the user can toggle it', async () => {
+    const {rerender} = render(renderCollapsible({defaultCollapsed: false}));
+    await React.act(async () => {});
+
+    rerender(renderCollapsible({defaultCollapsed: true}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
+});
+
+// The consumer paints its own collapse action, which receives the props of the default one: the custom
+// control then toggles the sidenav, and it reads the collapsed state to give its own label.
+test('SidenavBar paints a custom collapse action that toggles the sidenav', async () => {
+    await renderSidenav({
+        renderCollapseAction: ({collapsed, onPress, 'aria-label': ariaLabel}) => (
+            <button onClick={onPress} aria-label={ariaLabel}>
+                {collapsed ? 'Show' : 'Hide'}
+            </button>
+        ),
+    });
+
+    // The custom control replaces the default icon button, it does not join it, and only it carries a text.
+    expect(screen.getAllByRole('button', {name: /navigation/})).toHaveLength(1);
+
+    const customAction = screen.getByRole('button', {name: 'Collapse navigation'});
+
+    expect(customAction).toHaveTextContent('Hide');
+
+    fireEvent.click(customAction);
+
+    expect(screen.getByRole('button', {name: 'Expand navigation'})).toHaveTextContent('Show');
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
+});
+
 test('SidenavBar keeps the header slot when collapsed', async () => {
     await renderSidenav({headerSlot: <span>header slot</span>, defaultCollapsed: true});
 
@@ -379,7 +448,7 @@ test('SidenavBar double panel closes when the user presses the same parent item 
     expect(getPanel('Projects')).not.toBeInTheDocument();
 });
 
-test('SidenavBar double panel closes when the user presses outside of it', async () => {
+test('SidenavBar double panel closes when the user presses outside of the bar', async () => {
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
@@ -388,6 +457,29 @@ test('SidenavBar double panel closes when the user presses outside of it', async
     fireEvent.click(document.body);
 
     expect(getPanel('Projects')).not.toBeInTheDocument();
+});
+
+// The second column is a column of the bar, not a floating dialog, so a press that lands on the bar
+// itself (the background of a column, a section title) leaves it open.
+test('SidenavBar double panel stays open when the user presses the background of the bar', async () => {
+    await renderDoublePanelSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    fireEvent.click(screen.getByText('Workspace'));
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+});
+
+// A column that holds the current selection survives a press outside of the bar: the app selects a child
+// with a press of its own, and dismissing the column would hide the new selection.
+test('SidenavBar double panel stays open when the user presses outside of the bar and it holds the selection', async () => {
+    await renderDoublePanelSidenav({selectedItemId: 'active'});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(document.body);
+
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
 
 test('SidenavBar double panel closes when the user presses a first-level item without children', async () => {
@@ -423,21 +515,133 @@ test('SidenavBar double panel opens when the selection moves to one of its child
     expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
 });
 
+test('SidenavBar double panel closes when the selection moves to a first-level item without children', async () => {
+    const renderWithSelection = (selectedItemId: string) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                {...({
+                    'aria-label': 'Main navigation',
+                    sections: doublePanelSections,
+                    doublePanel: true,
+                    selectedItemId,
+                } as any)}
+            />
+        </ThemeContextProvider>
+    );
+
+    const {rerender} = render(renderWithSelection('active'));
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    rerender(renderWithSelection('home'));
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).not.toBeInTheDocument();
+});
+
+// A press inside the second column moves the selection and closes the column at the same time. The
+// selection of that press must not reopen the column, so the press wins over the selection.
+test('SidenavBar double panel closes when the user presses one of its children, with a controlled selection', async () => {
+    const ControlledSidenav = (): JSX.Element => {
+        const [selectedItemId, setSelectedItemId] = React.useState<string | null>('active');
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <SidenavBar
+                    {...({
+                        'aria-label': 'Main navigation',
+                        sections: doublePanelSections,
+                        doublePanel: true,
+                        selectedItemId,
+                        onSelectedItemIdChange: setSelectedItemId,
+                    } as any)}
+                />
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<ControlledSidenav />);
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Archived'}));
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).not.toBeInTheDocument();
+});
+
+// The press that selects a child of the app lands outside of the bar, so it is both a new selection and a
+// press outside of the bar. The new selection wins, and the column moves to the parent of that child.
+test('SidenavBar double panel moves to the parent of a child selected outside of the bar', async () => {
+    const ControlledSidenav = (): JSX.Element => {
+        const [selectedItemId, setSelectedItemId] = React.useState<string | null>('active');
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <SidenavBar
+                    {...({
+                        'aria-label': 'Main navigation',
+                        sections: doublePanelSections,
+                        doublePanel: true,
+                        selectedItemId,
+                        onSelectedItemIdChange: setSelectedItemId,
+                    } as any)}
+                />
+                <button onClick={() => setSelectedItemId('shared')}>Select from the app</button>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<ControlledSidenav />);
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Select from the app'}));
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).not.toBeInTheDocument();
+
+    const panel = getPanel('Documents');
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
+});
+
+// The tooltip of the collapsed rail wraps the row of the item, and the wrapper carries `aria-describedby`.
+const hasTooltip = (itemId: string): boolean =>
+    // eslint-disable-next-line testing-library/no-node-access
+    Boolean(document.querySelector(`[data-sidenav-item-id="${itemId}"] [aria-describedby]`));
+
+// The second column sits beside the collapsed rail, so it hides no item: the other items of the rail keep
+// their tooltip, which gives the label of an item that shows only its icon.
+test('SidenavBar collapsed double panel keeps the tooltips of the other items while a column is open', async () => {
+    await renderDoublePanelSidenav({collapsed: true, onCollapse: () => {}});
+
+    expect(hasTooltip('documents')).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(hasTooltip('documents')).toBe(true);
+    expect(hasTooltip('home')).toBe(true);
+    // The column already shows the label of this item as its title.
+    expect(hasTooltip('projects')).toBe(false);
+});
+
+// The dialog panel of the collapsed rail floats over the items, so a tooltip would overlap it.
+test('SidenavBar collapsed drops the tooltips of the rail while the dialog panel is open', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    expect(hasTooltip('documents')).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(hasTooltip('documents')).toBe(false);
+    expect(hasTooltip('projects')).toBe(false);
+});
+
 // The accent bar and the selected background are style-only marks, without any semantic query. The item id
 // lives in a data attribute, and the two marks live in class names, so the test reads the DOM directly.
-const queryItemRow = (itemId: string): HTMLElement => {
-    // eslint-disable-next-line testing-library/no-node-access
-    const row = document.querySelector(`[data-sidenav-item-id="${itemId}"]`);
-    if (!row) {
-        throw new Error(`No sidenav item with id "${itemId}"`);
-    }
-    return row as HTMLElement;
-};
-
-const hasStyle = (row: HTMLElement, className: string): boolean =>
-    // eslint-disable-next-line testing-library/no-node-access
-    Boolean(row.querySelector(`.${className}`));
-
 // The accent bar marks the selected item. The parent of the selected child shows the selected background
 // only, so that the sidenav never displays two accent bars.
 test('SidenavBar double panel gives the accent to the selected child, and the background to the parent', async () => {
@@ -447,8 +651,28 @@ test('SidenavBar double panel gives the accent to the selected child, and the ba
     const childRow = queryItemRow('archived');
 
     expect(hasStyle(parentRow, styles.itemAccent)).toBe(false);
-    expect(hasStyle(parentRow, styles.itemTouchableSelected.true)).toBe(true);
+    expect(hasStyle(parentRow, styles.itemTouchableSelected.default)).toBe(true);
     expect(hasStyle(childRow, styles.itemAccent)).toBe(true);
+});
+
+// Only one parent at a time carries the selected background. The parent of the open column takes it, and
+// the parent of the selected child takes it back when that column closes, with no change of the selection.
+test('SidenavBar double panel gives the background to the parent of the open column only', async () => {
+    await renderDoublePanelSidenav({selectedItemId: 'archived'});
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default)).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default)).toBe(false);
+    expect(hasStyle(queryItemRow('documents'), styles.itemTouchableSelected.default)).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default)).toBe(true);
+    expect(hasStyle(queryItemRow('documents'), styles.itemTouchableSelected.default)).toBe(false);
 });
 
 test('SidenavBar expands the children inline when doublePanel is false', async () => {

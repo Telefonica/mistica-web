@@ -6,7 +6,7 @@ import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './si
 import {Portal} from '../portal';
 import {Text3} from '../text';
 import {listenResize} from '../utils/dom';
-import {vars as skinVars} from '../skins/skin-contract.css';
+import {ThemeVariant} from '../theme-variant-context';
 
 import type {NonDeprecatedVariant} from '../theme-variant-context';
 
@@ -14,8 +14,11 @@ import type {NonDeprecatedVariant} from '../theme-variant-context';
 const VIEWPORT_MARGIN = 8;
 
 /**
- * Closes the panel when the user presses outside of it, or presses the Escape key. A press on a parent
- * item does not close the panel here: that item toggles the panel itself, or replaces its content.
+ * Closes the dialog panel when the user presses outside of it, or presses the Escape key. A press on a
+ * parent item does not close the panel here: that item toggles the panel itself, or replaces its content.
+ *
+ * The double panel does not use this hook: it is a column of the sidenav, not a floating dialog, so only
+ * a press outside of the whole bar dismisses it. `SidenavBar` owns that rule.
  */
 const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): void => {
     const {setPanelOpenForItemId} = useSidenavBarContext();
@@ -136,14 +139,16 @@ const SidenavDialogPanel = ({
                           }
                 }
             >
-                <div className={styles.dialogPanelTitle}>
-                    <Text3 medium color={skinVars.colors.textSecondary}>
-                        {label}
-                    </Text3>
-                </div>
-                <SidenavBarContext.Provider value={panelContextValue}>
-                    <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
-                </SidenavBarContext.Provider>
+                <ThemeVariant variant="default">
+                    <div className={classnames(styles.dialogPanelTitle, styles.sectionTitleVariant.default)}>
+                        <Text3 medium color="inherit">
+                            {label}
+                        </Text3>
+                    </div>
+                    <SidenavBarContext.Provider value={panelContextValue}>
+                        <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
+                    </SidenavBarContext.Provider>
+                </ThemeVariant>
             </div>
         </Portal>
     );
@@ -167,9 +172,6 @@ const SidenavDoublePanel = ({
     children,
 }: SidenavDoublePanelProps): JSX.Element => {
     const contextValue = useSidenavBarContext();
-    const [panelElement, setPanelElement] = React.useState<HTMLDivElement | null>(null);
-
-    useClosePanelOnOutsideInteraction(panelElement);
 
     const panelContextValue = {
         ...contextValue,
@@ -180,14 +182,13 @@ const SidenavDoublePanel = ({
 
     return (
         <div
-            ref={setPanelElement}
-            className={classnames(styles.doublePanelColumn, styles.body[variant])}
+            className={classnames(styles.doublePanelColumn, styles.regionBackground[variant])}
             style={backgroundColor ? {backgroundColor} : undefined}
             role="group"
             aria-label={label}
         >
-            <div className={styles.doublePanelTitle}>
-                <Text3 medium color={skinVars.colors.textSecondary}>
+            <div className={classnames(styles.doublePanelTitle, styles.sectionTitleVariant[variant])}>
+                <Text3 medium color="inherit">
                     {label}
                 </Text3>
             </div>

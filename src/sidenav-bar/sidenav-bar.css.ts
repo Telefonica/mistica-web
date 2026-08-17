@@ -2,6 +2,8 @@ import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import {vars as skinVars} from '../skins/skin-contract.css';
 
+import type {NonDeprecatedVariant} from '../theme-variant-context';
+
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
 export const BOXED_INSET = 8;
@@ -16,10 +18,128 @@ export const LOGO_SIZE = 32;
 export const FIRST_LEVEL_GAP = 16;
 
 export const sidenavWidthVar = createVar();
+// The second column always takes the `width` of the expanded sidenav, so it needs its own variable: the
+// variable above carries the width of the collapsed rail while the sidenav is collapsed.
 export const sidenavPanelWidthVar = createVar();
+
+// Tokens ----------------------------------------------------------------------
+
+// TODO WIP The spec paints the header, the body and the footer of every variant with the
+// `sideNavBackgroundContainer` family (one member per variant, boxed or not). None of those five tokens
+// reached the skin contract yet, so each variant takes the closest opaque token here. The negative and the
+// media variants take `backgroundNegative` and not `backgroundContainerNegative`, because the latter is a
+// translucent overlay in several skins, and these bands must mask the content that scrolls under them.
+const sideNavBackgroundContainer: Record<NonDeprecatedVariant, string> = {
+    default: skinVars.colors.backgroundContainer,
+    brand: skinVars.colors.backgroundContainerBrand,
+    alternative: skinVars.colors.backgroundContainerAlternative,
+    negative: skinVars.colors.backgroundNegative,
+    media: skinVars.colors.backgroundNegative,
+};
+
+// TODO WIP The spec gives the hovered and the pressed item of the media variant
+// `backgroundContainerNegativeHover` and `backgroundContainerNegativePressed`, and the selected item the
+// `backgroundContainerSelected` family. Neither group reached the skin contract yet, so the brand container
+// states and the negative selected states stand in for them.
+const backgroundContainerNegativeHover = skinVars.colors.backgroundContainerBrandHover;
+const backgroundContainerNegativePressed = skinVars.colors.backgroundContainerBrandPressed;
+const backgroundContainerSelected = skinVars.colors.backgroundSelectedNegative;
+const backgroundContainerSelectedHover = skinVars.colors.backgroundSelectedNegativeHover;
+const backgroundContainerSelectedPressed = skinVars.colors.backgroundSelectedNegativePressed;
+
+// Every divider of the sidenav (the right divider, the two overscroll dividers, the section dividers and the
+// separator of the double panel column) takes the same token for a given variant.
+const dividerColor: Record<NonDeprecatedVariant, string> = {
+    default: skinVars.colors.divider,
+    brand: skinVars.colors.dividerBrand,
+    alternative: skinVars.colors.divider,
+    negative: skinVars.colors.dividerNegative,
+    media: skinVars.colors.dividerNegative,
+};
+
+const sectionTitleColor: Record<NonDeprecatedVariant, string> = {
+    default: skinVars.colors.textSecondary,
+    brand: skinVars.colors.textSecondaryBrand,
+    alternative: skinVars.colors.textSecondary,
+    negative: skinVars.colors.textSecondaryNegative,
+    media: skinVars.colors.textSecondaryNegative,
+};
+
+type ItemColors = {
+    label: string;
+    asset: string;
+    chevron: string;
+    indicator: string;
+    hover: string;
+    pressed: string;
+    selected: string;
+    selectedHover: string;
+    selectedPressed: string;
+};
+
+// The resting background of an item is transparent in every variant, so the region behind it shows through.
+const itemColors: Record<NonDeprecatedVariant, ItemColors> = {
+    default: {
+        label: skinVars.colors.textPrimary,
+        asset: skinVars.colors.neutralHigh,
+        chevron: skinVars.colors.chevronIndicator,
+        indicator: skinVars.colors.controlActivated,
+        hover: skinVars.colors.backgroundContainerHover,
+        pressed: skinVars.colors.backgroundContainerPressed,
+        selected: skinVars.colors.backgroundSelected,
+        selectedHover: skinVars.colors.backgroundSelectedHover,
+        selectedPressed: skinVars.colors.backgroundSelectedPressed,
+    },
+    brand: {
+        label: skinVars.colors.textPrimaryBrand,
+        asset: skinVars.colors.neutralHighBrand,
+        chevron: skinVars.colors.neutralHighBrand,
+        indicator: skinVars.colors.controlActivatedBrand,
+        hover: skinVars.colors.backgroundContainerBrandHover,
+        pressed: skinVars.colors.backgroundContainerBrandPressed,
+        selected: skinVars.colors.backgroundSelectedBrand,
+        selectedHover: skinVars.colors.backgroundSelectedBrandHover,
+        selectedPressed: skinVars.colors.backgroundSelectedBrandPressed,
+    },
+    alternative: {
+        label: skinVars.colors.textPrimary,
+        asset: skinVars.colors.neutralHigh,
+        chevron: skinVars.colors.chevronIndicator,
+        indicator: skinVars.colors.controlActivated,
+        hover: skinVars.colors.backgroundContainerHover,
+        pressed: skinVars.colors.backgroundContainerPressed,
+        selected: skinVars.colors.backgroundSelected,
+        selectedHover: skinVars.colors.backgroundSelectedHover,
+        selectedPressed: skinVars.colors.backgroundSelectedPressed,
+    },
+    negative: {
+        label: skinVars.colors.textPrimaryNegative,
+        asset: skinVars.colors.neutralHighNegative,
+        chevron: skinVars.colors.neutralHighNegative,
+        indicator: skinVars.colors.controlActivatedNegative,
+        hover: skinVars.colors.backgroundContainerBrandHover,
+        pressed: skinVars.colors.backgroundContainerBrandPressed,
+        selected: skinVars.colors.backgroundSelectedNegative,
+        selectedHover: skinVars.colors.backgroundSelectedNegativeHover,
+        selectedPressed: skinVars.colors.backgroundSelectedNegativePressed,
+    },
+    media: {
+        label: skinVars.colors.textPrimaryNegative,
+        asset: skinVars.colors.neutralHighNegative,
+        chevron: skinVars.colors.neutralHighNegative,
+        indicator: skinVars.colors.controlActivatedNegative,
+        hover: backgroundContainerNegativeHover,
+        pressed: backgroundContainerNegativePressed,
+        selected: backgroundContainerSelected,
+        selectedHover: backgroundContainerSelectedHover,
+        selectedPressed: backgroundContainerSelectedPressed,
+    },
+};
 
 // The container is a row of columns: the main column, and the double panel column when it is open. Its
 // width is intrinsic, so an open panel widens the sidenav and pushes the main content of the layout.
+// It paints no background of its own: each region owns its token, and the body of the default variant
+// is transparent, so the page shows through it.
 export const container = style([
     sprinkles({
         display: 'flex',
@@ -30,7 +150,6 @@ export const container = style([
         boxSizing: 'border-box',
         height: '100%',
         overflow: 'hidden',
-        backgroundColor: skinVars.colors.backgroundContainer,
     },
 ]);
 
@@ -50,12 +169,32 @@ export const mainColumn = style([
     },
 ]);
 
-// Same reasoning as `boxed`: the container's `overflow: hidden` clips a negatively-offset outline,
-// so the divider barely shows. Only the right edge is relevant for a full-height bar, so a plain
-// right border renders it reliably without being clipped.
-export const withRightDivider = style({
-    borderRight: `1px solid ${skinVars.colors.divider}`,
-});
+// A vertical divider paints over the last pixel column of the box that owns it, as an absolutely
+// positioned overlay. A real border grows the intrinsic width of the container instead, so the whole
+// sidenav (and the content next to it) shifted by 1px when the consumer toggled the divider. With the
+// overlay, `width` is a total width, dividers included, for both columns, and no child moves. An
+// outline is not an option either: the container has `overflow: hidden`, which clips it.
+const verticalDividerOverlay = {
+    content: '',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    width: 1,
+    pointerEvents: 'none',
+    // Above the sticky scroll dividers of the body, which would otherwise cross this line.
+    zIndex: 2,
+} as const;
+
+export const withRightDivider = styleVariants(dividerColor, (color) => ({
+    '::after': {...verticalDividerOverlay, backgroundColor: color},
+}));
+
+// The header, the body and the footer share one background per variant, so the three bands of the sidenav
+// stay uniform, and a boxed sidenav paints the same colours as a full-height one.
+export const regionBackground = styleVariants(sideNavBackgroundContainer, (color) => ({
+    backgroundColor: color,
+}));
 
 // A real border (not an inset outline) is used here: the container has `overflow: hidden`, which
 // clips a negatively-offset outline and leaves the box edge barely visible. A border on the
@@ -69,9 +208,10 @@ export const boxed = style({
 
 // Header region ---------------------------------------------------------------
 
-// The 24px inset above the logo belongs to the header, not to the container: `background` and
-// `backgroundContainer` are the same in light mode but differ in dark, so painting that strip
-// with the container token would detach the header band from the top of the sidenav.
+// The 24px inset above the logo belongs to the header, so the header band reaches the top edge of the
+// sidenav in every variant.
+// The 32px gap separates the collapse action from the header slot, and the collapsed rail keeps it: the
+// spec gives one value for both states.
 export const headerBase = style({
     display: 'flex',
     flexDirection: 'column',
@@ -80,26 +220,6 @@ export const headerBase = style({
     flexShrink: 0,
     paddingTop: 24,
     paddingBottom: 24,
-});
-
-export const header = styleVariants({
-    default: {backgroundColor: skinVars.colors.background},
-    brand: {backgroundColor: skinVars.colors.backgroundBrandTop},
-    alternative: {backgroundColor: skinVars.colors.background},
-    negative: {backgroundColor: skinVars.colors.backgroundNegative},
-    media: {backgroundColor: skinVars.colors.backgroundNegative},
-});
-
-export const headerBoxed = styleVariants({
-    default: {backgroundColor: skinVars.colors.backgroundContainer},
-    brand: {backgroundColor: skinVars.colors.backgroundContainerBrand},
-    alternative: {backgroundColor: skinVars.colors.backgroundContainerAlternative},
-    negative: {backgroundColor: skinVars.colors.backgroundContainerNegative},
-    media: {backgroundColor: skinVars.colors.backgroundContainerNegative},
-});
-
-export const headerCollapsed = style({
-    gap: 8,
 });
 
 // The logo and the collapse control stack, both 32px wide. Their left edge is placed with
@@ -150,14 +270,6 @@ export const bodyBase = style({
     position: 'relative',
 });
 
-export const body = styleVariants({
-    default: {backgroundColor: skinVars.colors.backgroundContainer},
-    brand: {backgroundColor: 'transparent'},
-    alternative: {backgroundColor: skinVars.colors.backgroundContainerAlternative},
-    negative: {backgroundColor: skinVars.colors.backgroundContainerNegative},
-    media: {backgroundColor: skinVars.colors.backgroundContainerNegative},
-});
-
 // Without a header, the body owns the 24px top inset instead.
 export const bodyWithoutHeader = style({
     paddingTop: 24,
@@ -188,13 +300,7 @@ export const footerScrollDivider = style({
     bottom: 0,
 });
 
-export const scrollDividerVariant = styleVariants({
-    default: {backgroundColor: skinVars.colors.divider},
-    brand: {backgroundColor: skinVars.colors.dividerBrand},
-    alternative: {backgroundColor: skinVars.colors.divider},
-    negative: {backgroundColor: skinVars.colors.dividerNegative},
-    media: {backgroundColor: skinVars.colors.dividerNegative},
-});
+export const scrollDividerVariant = styleVariants(dividerColor, (color) => ({backgroundColor: color}));
 
 // Footer region ---------------------------------------------------------------
 
@@ -204,22 +310,6 @@ export const footerBase = style({
     paddingBottom: 24,
     paddingLeft: 16,
     paddingRight: 16,
-});
-
-export const footer = styleVariants({
-    default: {backgroundColor: skinVars.colors.background},
-    brand: {backgroundColor: skinVars.colors.backgroundBrandTop},
-    alternative: {backgroundColor: skinVars.colors.background},
-    negative: {backgroundColor: skinVars.colors.backgroundNegative},
-    media: {backgroundColor: skinVars.colors.backgroundNegative},
-});
-
-export const footerBoxed = styleVariants({
-    default: {backgroundColor: skinVars.colors.backgroundContainer},
-    brand: {backgroundColor: skinVars.colors.backgroundContainerBrand},
-    alternative: {backgroundColor: skinVars.colors.backgroundContainerAlternative},
-    negative: {backgroundColor: skinVars.colors.backgroundContainerNegative},
-    media: {backgroundColor: skinVars.colors.backgroundContainerNegative},
 });
 
 // Section ---------------------------------------------------------------------
@@ -233,6 +323,10 @@ export const sectionTitle = style({
     padding: '0 16px',
     marginBottom: 8,
 });
+
+// The title text inherits this colour (see the `color="inherit"` of its `Text3`), so every title of the
+// sidenav takes its token from one place.
+export const sectionTitleVariant = styleVariants(sectionTitleColor, (color) => ({color}));
 
 // Collapsed: the title is hidden, but it still reserves its space, so the items of a section keep the
 // same vertical rhythm in both states. The title text truncates to one line (see the `truncate` prop
@@ -290,13 +384,18 @@ export const itemTouchable = style({
     padding: '0 8px',
     marginLeft: 8,
     borderRadius: 8,
-    color: skinVars.colors.textPrimary,
     backgroundColor: 'transparent',
-    selectors: {
-        '&:hover': {backgroundColor: skinVars.colors.backgroundContainerHover},
-        '&:active': {backgroundColor: skinVars.colors.backgroundContainerPressed},
-    },
 });
+
+// The label inherits the `color` of the row (see the `color="inherit"` of its `Text2`), while the asset and
+// the chevron override it with their own token (see `itemAssetVariant` and `itemChevronVariant`).
+export const itemTouchableVariant = styleVariants(itemColors, (colors) => ({
+    color: colors.label,
+    selectors: {
+        '&:hover': {backgroundColor: colors.hover},
+        '&:active': {backgroundColor: colors.pressed},
+    },
+}));
 
 export const itemTouchableMobile = style({
     height: 48,
@@ -313,16 +412,15 @@ export const itemTouchableCollapsed = style({
     textDecoration: 'none',
 });
 
-export const itemTouchableSelected = styleVariants({
-    true: {
-        backgroundColor: skinVars.colors.backgroundSelected,
-        selectors: {
-            '&:hover': {backgroundColor: skinVars.colors.backgroundSelectedHover},
-            '&:active': {backgroundColor: skinVars.colors.backgroundSelectedPressed},
-        },
+// It follows `itemTouchableVariant` in this file on purpose: both rules have the same specificity, so the
+// selected background wins over the resting one by source order.
+export const itemTouchableSelected = styleVariants(itemColors, (colors) => ({
+    backgroundColor: colors.selected,
+    selectors: {
+        '&:hover': {backgroundColor: colors.selectedHover},
+        '&:active': {backgroundColor: colors.selectedPressed},
     },
-    false: {},
-});
+}));
 
 export const itemAccent = style({
     position: 'absolute',
@@ -332,9 +430,12 @@ export const itemAccent = style({
     width: 2,
     height: 20,
     borderRadius: 8,
-    backgroundColor: skinVars.colors.controlActivated,
     pointerEvents: 'none',
 });
+
+export const itemAccentVariant = styleVariants(itemColors, (colors) => ({
+    backgroundColor: colors.indicator,
+}));
 
 export const itemAsset = style({
     display: 'flex',
@@ -342,6 +443,8 @@ export const itemAsset = style({
     width: 20,
     height: 20,
 });
+
+export const itemAssetVariant = styleVariants(itemColors, (colors) => ({color: colors.asset}));
 
 export const itemLabel = style({
     flex: 1,
@@ -360,8 +463,9 @@ export const itemChevron = style({
     flexShrink: 0,
     width: 16,
     height: 16,
-    color: skinVars.colors.neutralHigh,
 });
+
+export const itemChevronVariant = styleVariants(itemColors, (colors) => ({color: colors.chevron}));
 
 export const nestedList = style({
     display: 'flex',
@@ -431,13 +535,11 @@ export const doublePanelTitle = style({
 
 // Separates the main column from the double panel column. It renders whenever the panel is open, even
 // when the sidenav hides its right divider, because the two columns always need a visible boundary.
-export const columnSeparator = styleVariants({
-    default: {borderRight: `1px solid ${skinVars.colors.divider}`},
-    brand: {borderRight: `1px solid ${skinVars.colors.dividerBrand}`},
-    alternative: {borderRight: `1px solid ${skinVars.colors.divider}`},
-    negative: {borderRight: `1px solid ${skinVars.colors.dividerNegative}`},
-    media: {borderRight: `1px solid ${skinVars.colors.dividerNegative}`},
-});
+// It is an overlay too (see `verticalDividerOverlay`), so the items of the main column keep the same
+// width when the panel opens.
+export const columnSeparator = styleVariants(dividerColor, (color) => ({
+    '::after': {...verticalDividerOverlay, backgroundColor: color},
+}));
 
 // Mobile -----------------------------------------------------------------------
 

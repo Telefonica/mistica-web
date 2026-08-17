@@ -4740,13 +4740,12 @@ SidenavItem with rightSlot — Useful for badges, counts, or other indicators.
         name: 'SidenavBar (doublePanel mode)',
         code: `{/*
 Double panel mode — The children of an item open in a second column, to the right of the sidenav.
-The second column pushes the main content. Use panelWidth to give the column a custom width.
+The second column pushes the main content, and it takes the same width as the main column.
 */}
 <div style={{display: 'flex', height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
         doublePanel
-        panelWidth={240}
         sections={[
             {
                 items: [
@@ -4770,6 +4769,44 @@ The second column pushes the main content. Use panelWidth to give the column a c
                             {id: 'orders-completed', label: 'Completed', href: '#orders/completed'},
                         ],
                     },
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (custom collapse action)',
+        code: `{/*
+Custom collapse action — The header shows an icon button by default. renderCollapseAction paints another
+control, which receives the collapsed state, the press handler and the accessible name.
+*/}
+<div style={{display: 'flex', height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        renderCollapseAction={({collapsed, onPress, 'aria-label': ariaLabel}) =>
+            collapsed ? (
+                <IconButton
+                    Icon={IconChevronRightRegular}
+                    type="neutral"
+                    backgroundType="transparent"
+                    small
+                    onPress={onPress}
+                    aria-label={ariaLabel}
+                />
+            ) : (
+                <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
+                    Hide
+                </ButtonLink>
+            )
+        }
+        sections={[
+            {
+                items: [
+                    {id: 'dashboard', label: 'Dashboard', asset: IconDashboardRegular, href: '#dashboard'},
+                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
                 ],
             },
         ]}

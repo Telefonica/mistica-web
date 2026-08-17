@@ -11,11 +11,39 @@ import IconDocumentsRegular from '../../../generated/mistica-icons/icon-document
 import Badge from '../../../badge';
 
 import type {SidenavSection, SidenavItem} from '../../sidenav-types';
+import type {Variant} from '../../../theme-variant-context';
+
+type Args = {
+    variant: Variant;
+    doublePanel: boolean;
+    boxed: boolean;
+};
 
 export default {
     title: 'Components/SidenavBar/Bar',
     parameters: {
         fullScreen: true,
+    },
+    args: {
+        variant: 'default',
+        doublePanel: false,
+        boxed: false,
+    },
+    argTypes: {
+        variant: {
+            options: ['default', 'brand', 'alternative', 'negative', 'media'],
+            control: {type: 'select'},
+            description: 'Color variant of the sidenav, which the selected item follows.',
+        },
+        doublePanel: {
+            control: {type: 'boolean'},
+            description:
+                'Opens the children of a parent item in a second column, instead of expanding them inline.',
+        },
+        boxed: {
+            control: {type: 'boolean'},
+            description: 'Renders the sidenav as a floating box, with its own edge instead of a divider.',
+        },
     },
 };
 
@@ -44,7 +72,7 @@ const getSelectionButtonStyle = (isActive: boolean): React.CSSProperties => ({
     cursor: 'pointer',
 });
 
-export const ControlledSelection = (): React.JSX.Element => {
+export const ControlledSelection = ({variant, doublePanel, boxed}: Args): React.JSX.Element => {
     const [selectedId, setSelectedId] = React.useState<string | null>('overview');
 
     const sections: Array<SidenavSection> = [
@@ -197,9 +225,12 @@ export const ControlledSelection = (): React.JSX.Element => {
         <div style={{display: 'flex', height: '100vh'}}>
             <SidenavBar
                 aria-label="Alto Garda Activities"
+                variant={variant}
                 selectedItemId={selectedId}
                 onSelectedItemIdChange={setSelectedId}
                 sections={sections}
+                doublePanel={doublePanel}
+                {...(boxed ? {boxed: true as const} : {boxed: false as const})}
             />
             <div
                 style={{
@@ -294,6 +325,27 @@ export const ControlledSelection = (): React.JSX.Element => {
                         <li>
                             A parent can also carry a right slot: &quot;Water Sports&quot; shows a badge next
                             to its expand chevron.
+                        </li>
+                        <li>
+                            Turn on the <strong>doublePanel</strong> control: a parent then opens its children
+                            in a second column instead of expanding them inline.
+                        </li>
+                        <li>
+                            With doublePanel on: select a child with the buttons above. The second column
+                            opens on its parent and stays open, even when you press the same button again.
+                        </li>
+                        <li>
+                            With doublePanel on: select a child of another parent with the buttons above. The
+                            second column moves to that parent.
+                        </li>
+                        <li>
+                            Turn on the <strong>boxed</strong> control: the sidenav floats as a box, with its
+                            own edge and its own inset. The second column stays inside that box.
+                        </li>
+                        <li>
+                            With doublePanel on: the second column closes when you press one of its children,
+                            when you press its parent again, and when the selection moves to a first-level
+                            item without children.
                         </li>
                     </ul>
                 </div>

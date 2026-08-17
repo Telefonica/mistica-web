@@ -8,12 +8,15 @@ import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regu
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
+import IconChevronRightRegular from '../../../generated/mistica-icons/icon-chevron-right-regular';
 import {Placeholder} from '../../../placeholder';
 import Badge from '../../../badge';
+import {IconButton} from '../../../icon-button';
+import {ButtonLink} from '../../../button';
 
 import type {Variant} from '../../../theme-variant-context';
 import type {SidenavSection} from '../../sidenav-types';
-import type {SidenavBarBackgroundColors} from '../../sidenav-bar';
+import type {SidenavBarBackgroundColors, SidenavCollapseActionRenderProps} from '../../sidenav-bar';
 
 const getDefaultSections = (): Array<SidenavSection> => [
     {
@@ -103,6 +106,29 @@ const getDefaultSections = (): Array<SidenavSection> => [
     },
 ];
 
+// A custom collapse action receives the props of the default one, so it keeps the behavior and the
+// accessible name. This one also reads `collapsed`: it shows a text link on the expanded sidenav, and an
+// icon on the collapsed rail, where a text would not fit.
+const renderCustomCollapseAction = ({
+    collapsed,
+    onPress,
+    'aria-label': ariaLabel,
+}: SidenavCollapseActionRenderProps): React.ReactNode =>
+    collapsed ? (
+        <IconButton
+            Icon={IconChevronRightRegular}
+            type="neutral"
+            backgroundType="transparent"
+            small
+            onPress={onPress}
+            aria-label={ariaLabel}
+        />
+    ) : (
+        <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
+            Hide
+        </ButtonLink>
+    );
+
 type Args = {
     label: string;
     variant: Variant;
@@ -113,9 +139,9 @@ type Args = {
     boxed: boolean;
     divider: boolean;
     collapsible: boolean;
+    customCollapseAction: boolean;
     defaultCollapsed: boolean;
     doublePanel: boolean;
-    panelWidth: number;
     width: number;
     sections: Array<SidenavSection>;
     'Colors/Enabled'?: boolean;
@@ -134,9 +160,9 @@ export const Default = ({
     boxed,
     divider,
     collapsible,
+    customCollapseAction,
     defaultCollapsed,
     doublePanel,
-    panelWidth,
     width,
     'Colors/Enabled': colorsEnabled,
     'Colors/Header': headerColor,
@@ -166,9 +192,9 @@ export const Default = ({
                     boxed,
                     divider,
                     collapsible,
+                    renderCollapseAction: customCollapseAction ? renderCustomCollapseAction : undefined,
                     defaultCollapsed,
                     doublePanel,
-                    panelWidth,
                     width,
                     sections,
                     background,
@@ -231,6 +257,12 @@ export const Default = ({
                         <li>Use onPress for client-side actions, href/to for navigation</li>
                         <li>onNavigate callback fires on both href and to navigation</li>
                         <li>Items marked with "(href)" or "(onPress)" show the prop type being used</li>
+                        <li>
+                            The header shows a collapse action by default. Turn on the{' '}
+                            <strong>customCollapseAction</strong> control to paint that action with
+                            renderCollapseAction, which receives the collapsed state, the press handler and
+                            the accessible name.
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -263,9 +295,9 @@ export default {
         boxed: false,
         divider: true,
         collapsible: true,
+        customCollapseAction: false,
         defaultCollapsed: false,
         doublePanel: false,
-        panelWidth: 240,
         width: 240,
         sections: getDefaultSections(),
         'Colors/Enabled': false,
@@ -303,16 +335,19 @@ export default {
         collapsible: {
             control: {type: 'boolean'},
         },
+        customCollapseAction: {
+            control: {type: 'boolean'},
+            description:
+                'Paints the collapse action with renderCollapseAction: a text link on the expanded sidenav, and an icon on the collapsed rail.',
+            if: {arg: 'collapsible', truthy: true},
+        },
         defaultCollapsed: {
             control: {type: 'boolean'},
+            description:
+                'Initial collapsed state. It seeds the state of a collapsible sidenav, so a later change of this control moves the sidenav only when collapsible is off.',
         },
         doublePanel: {
             control: {type: 'boolean'},
-        },
-        panelWidth: {
-            control: {type: 'range', min: 200, max: 400, step: 5},
-            description: 'Width of the second column. Only applies when doublePanel is true.',
-            if: {arg: 'doublePanel', truthy: true},
         },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},

@@ -14,11 +14,10 @@ type Args = {
     collapsed: boolean;
     boxed: boolean;
     divider: boolean;
-    panelWidth: number;
     width: number;
 };
 
-export const DoublePanel = ({collapsed, boxed, divider, panelWidth, width}: Args): React.JSX.Element => {
+export const DoublePanel = ({collapsed, boxed, divider, width}: Args): React.JSX.Element => {
     const [selectedItemId, setSelectedItemId] = React.useState<string | null>('home');
 
     const sections: Array<SidenavSection> = [
@@ -87,7 +86,6 @@ export const DoublePanel = ({collapsed, boxed, divider, panelWidth, width}: Args
                             sections,
                             logo: false,
                             doublePanel: true,
-                            panelWidth,
                             width,
                             boxed,
                             divider,
@@ -107,10 +105,24 @@ export const DoublePanel = ({collapsed, boxed, divider, panelWidth, width}: Args
                         </p>
                         <ul>
                             <li>
-                                The panel closes when you press a child, an item without children, or outside.
+                                The panel closes when you press one of its children, an item without children,
+                                the same parent again, or outside of the bar.
+                            </li>
+                            <li>
+                                A press inside the bar that lands on no item, on the background of a column or
+                                on a section title, keeps the panel open.
                             </li>
                             <li>The panel refreshes when you press another parent item.</li>
+                            <li>
+                                A selection that comes from outside of the bar opens the panel on the parent
+                                of the selected child, and keeps it open. It moves the panel to that parent
+                                when the panel shows another one.
+                            </li>
                             <li>The panel shows the label of the parent item as its title.</li>
+                            <li>
+                                Turn on the <strong>collapsed</strong> control: the rail keeps the tooltip of
+                                every item while the column is open, except the item that owns the column.
+                            </li>
                         </ul>
                         <p>
                             Selected item: <strong>{selectedItemId ?? 'none'}</strong>
@@ -133,7 +145,6 @@ export default {
         collapsed: false,
         boxed: false,
         divider: true,
-        panelWidth: 240,
         width: 240,
     },
     argTypes: {
@@ -148,10 +159,6 @@ export default {
             description:
                 'Right divider of the sidenav. The divider between the two columns always renders while the panel is open.',
             if: {arg: 'boxed', truthy: false},
-        },
-        panelWidth: {
-            control: {type: 'range', min: 200, max: 400, step: 5},
-            description: 'Width of the second column.',
         },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
