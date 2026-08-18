@@ -680,6 +680,7 @@ export const getCyberSkin = (): Skin => {
             popup: '4px',
             sheet: '0px',
             mediaSmall: '2px',
+            snackbar: '4px',
         },
         textPresets: {
             cardTitle: {
@@ -1131,6 +1132,16 @@ export const getCyberSkin = (): Skin => {
                 right: {
                     mobile: 16,
                     desktop: 40,
+                },
+            },
+            boxedDefaultPadding: {
+                left: {
+                    mobile: 16,
+                    desktop: 16,
+                },
+                right: {
+                    mobile: 16,
+                    desktop: 16,
                 },
             },
             responsiveLayoutMargin: {mobile: 16, desktop: 48},

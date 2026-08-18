@@ -6,6 +6,7 @@
     --mistica-vivo-evolution-vivoPurple900: #380057;
     --mistica-vivo-evolution-vivoPurple600: #7a2fb3;
     --mistica-vivo-evolution-vivoPepper25: #fce4ef;
+    --mistica-vivo-evolution-vivoPurple650: #7020a6;
     --mistica-vivo-evolution-vivoNeutral200: #dcd8e5;
     --mistica-vivo-evolution-vivoPurple50: #eee7f3;
     --mistica-vivo-evolution-vivoNeutral100: #eae6f0;
@@ -82,7 +83,7 @@
     );
     --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-evolution-vivoPurple900);
     --mistica-color-backgroundContainerNegative: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral950), 0.4);
-    --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-vivoPurple900);
+    --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-vivoPurple650);
     --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-evolution-vivoNeutral25);
     --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.6);
     --mistica-color-backgroundSkeleton: var(--mistica-vivo-evolution-vivoNeutral200);
@@ -149,7 +150,7 @@
         var(--mistica-vivo-evolution-raw-vivoNeutral0),
         0.1
     );
-    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
     --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
     --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -431,6 +432,7 @@
     --mistica-border-radius-popup: 16px;
     --mistica-border-radius-sheet: 24px;
     --mistica-border-radius-mediaSmall: 12px;
+    --mistica-border-radius-snackbar: 24px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -465,7 +467,7 @@
     --mistica-font-size-drawerTitle: 1.25rem;
     --mistica-line-height-drawerTitle: 1.5rem;
     --mistica-font-weight-drawerTitle: 500;
-    --mistica-font-weight-rowTitle: 400;
+    --mistica-font-weight-rowTitle: 500;
     --mistica-font-weight-button: 500;
     --mistica-font-size-tabsLabel: 1.125rem;
     --mistica-line-height-tabsLabel: 1.5rem;
@@ -488,13 +490,13 @@
     --mistica-font-size-chipLabel: 0.875rem;
     --mistica-line-height-chipLabel: 1.25rem;
     --mistica-font-weight-chipLabel: 500;
-    --mistica-font-size-cardPretitleSnap: 0.875rem;
+    --mistica-font-size-cardPretitleSnap: 0.75rem;
     --mistica-line-height-cardPretitleSnap: 1.25rem;
-    --mistica-font-size-cardTitleSnap: 0.875rem;
+    --mistica-font-size-cardTitleSnap: 1rem;
     --mistica-line-height-cardTitleSnap: 1.25rem;
-    --mistica-font-size-cardSubtitleSnap: 0.875rem;
+    --mistica-font-size-cardSubtitleSnap: 0.75rem;
     --mistica-line-height-cardSubtitleSnap: 1.25rem;
-    --mistica-font-size-cardDescriptionSnap: 0.875rem;
+    --mistica-font-size-cardDescriptionSnap: 0.75rem;
     --mistica-line-height-cardDescriptionSnap: 1.25rem;
     --mistica-font-size-cardPretitleDefault: 0.875rem;
     --mistica-line-height-cardPretitleDefault: 1.25rem;
@@ -1434,7 +1436,7 @@
             var(--mistica-vivo-evolution-raw-vivoNeutral950),
             0.4
         );
-        --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-vivoPurple900);
+        --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-vivo-evolution-vivoPurple650);
         --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-evolution-vivoNeutral25);
         --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.6);
         --mistica-color-backgroundSkeleton: var(--mistica-vivo-evolution-vivoNeutral200);
@@ -1510,7 +1512,7 @@
             var(--mistica-vivo-evolution-raw-vivoNeutral0),
             0.1
         );
-        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
         --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
         --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -1828,13 +1830,13 @@
 
         --mistica-font-size-chipLabel: 1rem;
         --mistica-line-height-chipLabel: 1.5rem;
-        --mistica-font-size-cardPretitleSnap: 1rem;
+        --mistica-font-size-cardPretitleSnap: 0.875rem;
         --mistica-line-height-cardPretitleSnap: 1.5rem;
-        --mistica-font-size-cardTitleSnap: 1rem;
+        --mistica-font-size-cardTitleSnap: 1.125rem;
         --mistica-line-height-cardTitleSnap: 1.5rem;
-        --mistica-font-size-cardSubtitleSnap: 1rem;
+        --mistica-font-size-cardSubtitleSnap: 0.875rem;
         --mistica-line-height-cardSubtitleSnap: 1.5rem;
-        --mistica-font-size-cardDescriptionSnap: 1rem;
+        --mistica-font-size-cardDescriptionSnap: 0.875rem;
         --mistica-line-height-cardDescriptionSnap: 1.5rem;
         --mistica-font-size-cardPretitleDefault: 1rem;
         --mistica-line-height-cardPretitleDefault: 1.5rem;

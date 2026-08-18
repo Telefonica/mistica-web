@@ -323,6 +323,7 @@ const borderRadii: BorderRadiiConfig = {
     avatar: '',
     mediaSmall: '',
     tag: '',
+    snackbar: '',
 };
 
 type ToThemeTokens<T> = T extends {mobile: number; desktop: number}
@@ -384,6 +385,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     heroPadding: {top: '', bottom: ''},
     headerPadding: {top: '', bottom: ''},
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
+    boxedDefaultPadding: {left: '', right: ''},
     responsiveLayoutMargin: '',
 };
 
