@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 import {O2_SKIN} from './constants';
 import {applyAlpha} from '../utils/color';
 
@@ -361,6 +370,10 @@ export const getO2Skin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.o2Red10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            sideNavBackgroundContainerBrand: palette.beyondBlue,
+            sideNavBackgroundContainer: palette.white,
+            sideNavBackgroundContainerNegative: applyAlpha(palette.darkModeBlack, 0.4),
+            sideNavBackgroundContainerMedia: applyAlpha(palette.darkModeBlack, 0.4),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -668,6 +681,10 @@ export const getO2Skin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.darkModeGrey6,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            sideNavBackgroundContainerBrand: palette.darkModeGrey,
+            sideNavBackgroundContainer: palette.darkModeGrey,
+            sideNavBackgroundContainerNegative: palette.darkModeGrey,
+            sideNavBackgroundContainerMedia: palette.darkModeGrey,
         },
         borderRadii: {
             avatar: '50%',

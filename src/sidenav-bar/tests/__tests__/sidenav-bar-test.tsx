@@ -4,9 +4,13 @@ import ThemeContextProvider from '../../../theme-context-provider';
 import {makeTheme} from '../../../__tests__/test-utils';
 import {SidenavBar} from '../../index';
 import * as styles from '../../sidenav-bar.css';
+import {ThemeVariant} from '../../../theme-variant-context';
+import {getMovistarSkin} from '../../../skins/movistar';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
 
+import type {Variant} from '../../../theme-variant-context';
+import type {Skin} from '../../../skins/types';
 import type {SidenavEntry, SidenavSection} from '../../sidenav-types';
 
 class MockIntersectionObserver {
@@ -701,4 +705,69 @@ test('SidenavBar renders a stand-alone item with children at the first level', a
 
     expect(screen.getByRole('button', {name: 'Standalone parent'})).toBeInTheDocument();
     expect(screen.getByRole('link', {name: 'Child'})).toHaveAttribute('href', '/child');
+});
+
+const renderBoxedSidenav = async ({
+    variant,
+    pageVariant,
+    skin = getMovistarSkin(),
+}: {
+    variant?: Variant;
+    pageVariant?: Variant;
+    skin?: Skin;
+} = {}) => {
+    render(
+        <ThemeContextProvider theme={makeTheme({skin})}>
+            <ThemeVariant variant={pageVariant ?? 'default'}>
+                <SidenavBar aria-label="Main navigation" sections={defaultSections} variant={variant} boxed />
+            </ThemeVariant>
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    return screen.getByRole('navigation');
+};
+
+// The border of the box follows `shouldShowBoxedBorder`, the rule that `Boxed` also follows: it reads over a
+// default and over an alternative page, and it does not over a brand, a negative or a media page.
+test.each([
+    ['default', true],
+    ['alternative', true],
+    ['brand', false],
+    ['negative', false],
+    ['media', false],
+] as const)('SidenavBar boxed over a %s page paints its border: %s', async (pageVariant, expected) => {
+    const sidenavBar = await renderBoxedSidenav({pageVariant});
+
+    expect(sidenavBar).toHaveClass(styles.boxed);
+    expect(sidenavBar.classList.contains(styles.boxedBorder)).toBe(expected);
+});
+
+// A box that paints its own variant carries its own background, which the border would cut across.
+test('SidenavBar boxed drops its border when the sidenav carries a variant of its own', async () => {
+    const sidenavBar = await renderBoxedSidenav({variant: 'brand'});
+
+    expect(sidenavBar).not.toHaveClass(styles.boxedBorder);
+});
+
+test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off', async () => {
+    const movistarSkin = getMovistarSkin();
+    const skin: Skin = {
+        ...movistarSkin,
+        componentProperties: {
+            ...movistarSkin.componentProperties,
+            showBoxedBorder: {
+                default: false,
+                alternative: false,
+                brand: false,
+                negative: false,
+                media: false,
+            },
+        },
+    };
+
+    const sidenavBar = await renderBoxedSidenav({skin});
+
+    expect(sidenavBar).not.toHaveClass(styles.boxedBorder);
 });

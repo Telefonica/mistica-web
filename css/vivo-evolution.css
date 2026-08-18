@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 [data-mistica-skin='vivo-evolution'] {
     /* Palette colors */
     --mistica-vivo-evolution-vivoNeutral0: #ffffff;
@@ -418,6 +427,16 @@
         rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7) 100%
     );
     --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7);
+    --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-vivo-evolution-vivoPurple700);
+    --mistica-color-sideNavBackgroundContainer: var(--mistica-vivo-evolution-vivoNeutral0);
+    --mistica-color-sideNavBackgroundContainerNegative: rgba(
+        var(--mistica-vivo-evolution-raw-vivoNeutral950),
+        0.4
+    );
+    --mistica-color-sideNavBackgroundContainerMedia: rgba(
+        var(--mistica-vivo-evolution-raw-vivoNeutral950),
+        0.4
+    );
 
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
@@ -928,6 +947,10 @@
         rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7) 100%
     );
     --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7);
+    --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-sideNavBackgroundContainer: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-sideNavBackgroundContainerNegative: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-sideNavBackgroundContainerMedia: var(--mistica-vivo-evolution-vivoNeutral900);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1380,6 +1403,10 @@
             rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7) 100%
         );
         --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7);
+        --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-sideNavBackgroundContainer: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-sideNavBackgroundContainerNegative: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-sideNavBackgroundContainerMedia: var(--mistica-vivo-evolution-vivoNeutral900);
     }
 
     [data-mistica-skin='vivo-evolution'][data-mistica-color-scheme='light'] {
@@ -1785,6 +1812,16 @@
             rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7) 100%
         );
         --mistica-color-cardFooterOverlay: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral975), 0.7);
+        --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-vivo-evolution-vivoPurple700);
+        --mistica-color-sideNavBackgroundContainer: var(--mistica-vivo-evolution-vivoNeutral0);
+        --mistica-color-sideNavBackgroundContainerNegative: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral950),
+            0.4
+        );
+        --mistica-color-sideNavBackgroundContainerMedia: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral950),
+            0.4
+        );
     }
 }
 

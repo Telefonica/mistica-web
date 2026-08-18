@@ -308,6 +308,10 @@ const colors: Colors = {
     tagBackgroundErrorBrand: '',
     cardContentOverlay: '',
     cardFooterOverlay: '',
+    sideNavBackgroundContainerBrand: '',
+    sideNavBackgroundContainer: '',
+    sideNavBackgroundContainerNegative: '',
+    sideNavBackgroundContainerMedia: '',
 };
 
 const borderRadii: BorderRadiiConfig = {

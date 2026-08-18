@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 export type Colors = {
     background: string;
     backgroundAlternative: string;
@@ -304,4 +313,8 @@ export type Colors = {
     tagBackgroundErrorBrand: string;
     cardContentOverlay: string;
     cardFooterOverlay: string;
+    sideNavBackgroundContainerBrand: string;
+    sideNavBackgroundContainer: string;
+    sideNavBackgroundContainerNegative: string;
+    sideNavBackgroundContainerMedia: string;
 };

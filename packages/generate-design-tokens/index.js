@@ -11,7 +11,7 @@ import prettier from 'prettier';
  * To use a custom tokens folder:
  *
  *   node index.js /path/to/mistica-design/tokens
- *   # or via yarn: yarn workspace generate-design-tokens generate /path/to/mistica-design/tokens
+ *   # or via yarn, from the repo root: yarn generate-design-tokens /path/to/mistica-design/tokens
  *
  * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.js
  *
@@ -30,6 +30,18 @@ const SKINS_FOLDER = path.join(import.meta.dirname, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(import.meta.dirname, '..', '..', 'css');
 
 const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo', 'vivo-evolution', 'esimflag'];
+
+// Marks every output file, so nobody edits it by hand. The block comment syntax is valid in TS and in CSS.
+const GENERATED_FILE_BANNER = `/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run \`yarn generate-design-tokens\` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */`;
+
+const withBanner = (source) => `${GENERATED_FILE_BANNER}\n${source}`;
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
@@ -181,15 +193,17 @@ export type Colors = {
 };`;
 };
 
+// `resolveConfig` needs a file path, and returns null for a folder path, so it takes one of the files it
+// formats. Without the config, prettier falls back to its own defaults and rewrites every generated file.
 const formatCss = async (source) =>
     prettier.format(source, {
-        ...(await prettier.resolveConfig('.')),
+        ...(await prettier.resolveConfig(path.join(CSS_FOLDER, 'mistica-common.css'))),
         parser: 'css',
     });
 
 const formatTs = async (source) =>
     prettier.format(source, {
-        ...(await prettier.resolveConfig('.')),
+        ...(await prettier.resolveConfig(path.join(SKINS_FOLDER, 'movistar.tsx'))),
         parser: 'typescript',
     });
 
@@ -204,21 +218,20 @@ const generateSkinFiles = async () => {
             return;
         }
 
-        // todo https://github.com/Telefonica/mistica-web/issues/1633 add @generated banner to generated skin files so they are not mistakenly edited by hand
-        const skinSrc = await formatTs(generateSkinSrc(skinName));
+        const skinSrc = await formatTs(withBanner(generateSkinSrc(skinName)));
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
 
-        const skinCssSrc = await formatCss(generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER));
+        const skinCssSrc = await formatCss(withBanner(generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER)));
         fs.writeFileSync(path.join(CSS_FOLDER, `${skinName}.css`), skinCssSrc);
 
         anyGeneratedSkin = skinName;
     }
 
     if (anyGeneratedSkin) {
-        const typesSrc = await formatTs(generateColorTypesSrc(anyGeneratedSkin));
+        const typesSrc = await formatTs(withBanner(generateColorTypesSrc(anyGeneratedSkin)));
         fs.writeFileSync(path.join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
 
-        const commonCssSrc = await formatCss(generateCommonCssSrc(DESIGN_TOKENS_FOLDER));
+        const commonCssSrc = await formatCss(withBanner(generateCommonCssSrc(DESIGN_TOKENS_FOLDER)));
         fs.writeFileSync(path.join(CSS_FOLDER, `mistica-common.css`), commonCssSrc);
     }
 };

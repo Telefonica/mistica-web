@@ -36,6 +36,7 @@
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\" \"**/*.css\" \"**/*.html\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
+        "generate-design-tokens": "node packages/generate-design-tokens/index.js",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
         "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache && bash -c 'yarn jest --clearCache > /dev/null 2>&1'",

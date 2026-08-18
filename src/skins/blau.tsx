@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 import {BLAU_SKIN} from './constants';
 import {applyAlpha} from '../utils/color';
 
@@ -354,6 +363,10 @@ export const getBlauSkin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.blauRed10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(palette.grey6, 0.4)} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.grey6, 0.7),
+            sideNavBackgroundContainerBrand: palette.blauBluePrimary,
+            sideNavBackgroundContainer: palette.white,
+            sideNavBackgroundContainerNegative: applyAlpha(palette.darkModeBlack, 0.4),
+            sideNavBackgroundContainerMedia: applyAlpha(palette.darkModeBlack, 0.4),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -661,6 +674,10 @@ export const getBlauSkin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.darkModeGrey6,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(palette.grey6, 0.4)} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.grey6, 0.7),
+            sideNavBackgroundContainerBrand: palette.darkModeGrey,
+            sideNavBackgroundContainer: palette.darkModeGrey,
+            sideNavBackgroundContainerNegative: palette.darkModeGrey,
+            sideNavBackgroundContainerMedia: palette.darkModeGrey,
         },
         borderRadii: {
             avatar: '50%',

@@ -24,17 +24,16 @@ export const sidenavPanelWidthVar = createVar();
 
 // Tokens ----------------------------------------------------------------------
 
-// TODO WIP The spec paints the header, the body and the footer of every variant with the
-// `sideNavBackgroundContainer` family (one member per variant, boxed or not). None of those five tokens
-// reached the skin contract yet, so each variant takes the closest opaque token here. The negative and the
-// media variants take `backgroundNegative` and not `backgroundContainerNegative`, because the latter is a
-// translucent overlay in several skins, and these bands must mask the content that scrolls under them.
+// The spec paints the header, the body and the footer of every variant with the `sideNavBackgroundContainer`
+// family (one member per variant, boxed or not).
+// todo WIP The family carries no `sideNavBackgroundContainerAlternative`, so the alternative variant keeps
+//  `backgroundContainerAlternative` until the design tokens add that member.
 const sideNavBackgroundContainer: Record<NonDeprecatedVariant, string> = {
-    default: skinVars.colors.backgroundContainer,
-    brand: skinVars.colors.backgroundContainerBrand,
+    default: skinVars.colors.sideNavBackgroundContainer,
+    brand: skinVars.colors.sideNavBackgroundContainerBrand,
     alternative: skinVars.colors.backgroundContainerAlternative,
-    negative: skinVars.colors.backgroundNegative,
-    media: skinVars.colors.backgroundNegative,
+    negative: skinVars.colors.sideNavBackgroundContainerNegative,
+    media: skinVars.colors.sideNavBackgroundContainerMedia,
 };
 
 // TODO WIP The spec gives the hovered and the pressed item of the media variant
@@ -196,13 +195,18 @@ export const regionBackground = styleVariants(sideNavBackgroundContainer, (color
     backgroundColor: color,
 }));
 
-// A real border (not an inset outline) is used here: the container has `overflow: hidden`, which
-// clips a negatively-offset outline and leaves the box edge barely visible. A border on the
-// border-box renders on all four sides while children stay clipped to the rounded corners.
 export const boxed = style({
     margin: BOXED_INSET,
     height: `calc(100% - ${BOXED_INSET * 2}px)`,
     borderRadius: skinVars.borderRadii.popup,
+});
+
+// A real border (not an inset outline) is used here: the container has `overflow: hidden`, which
+// clips a negatively-offset outline and leaves the box edge barely visible. A border on the
+// border-box renders on all four sides while children stay clipped to the rounded corners.
+// `shouldShowBoxedBorder` decides when this class applies: the border only reads over a default or an
+// alternative page, and a skin can switch it off.
+export const boxedBorder = style({
     border: `1px solid ${skinVars.colors.border}`,
 });
 

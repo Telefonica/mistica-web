@@ -380,6 +380,10 @@ export const getCyberSkin = (): Skin => {
             tagBackgroundErrorBrand: palette.red10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            sideNavBackgroundContainerBrand: palette.brand,
+            sideNavBackgroundContainer: palette.white,
+            sideNavBackgroundContainerNegative: applyAlpha(palette.white, 0.1),
+            sideNavBackgroundContainerMedia: applyAlpha(palette.white, 0.1),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -666,6 +670,10 @@ export const getCyberSkin = (): Skin => {
             tagBackgroundErrorBrand: palette.red90,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            sideNavBackgroundContainerBrand: palette.darkModeGrey,
+            sideNavBackgroundContainer: palette.darkModeGrey,
+            sideNavBackgroundContainerNegative: palette.darkModeGrey,
+            sideNavBackgroundContainerMedia: palette.darkModeGrey,
         },
         borderRadii: {
             avatar: '50%',

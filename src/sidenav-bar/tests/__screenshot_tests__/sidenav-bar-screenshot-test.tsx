@@ -59,7 +59,30 @@ test.each`
     await openStoryPage({
         id: 'components-sidenavbar-bar--controlled-selection',
         device: 'DESKTOP',
-        args: {variant},
+        args: {variant, pageVariant: variant},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+// A boxed sidenav paints its border only over a default or an alternative page, the same rule that `Boxed`
+// follows. The border reads against those two pages, and it does not against a brand, a negative or a media
+// page. One screenshot per page context guards the rule.
+test.each`
+    pageVariant
+    ${'default'}
+    ${'brand'}
+    ${'alternative'}
+    ${'negative'}
+    ${'media'}
+`('SidenavBar boxed over pageVariant($pageVariant)', async ({pageVariant}) => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--controlled-selection',
+        device: 'DESKTOP',
+        args: {variant: 'default', pageVariant, boxed: true},
     });
 
     const sidenavBar = await screen.findByRole('navigation');

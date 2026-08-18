@@ -21,6 +21,7 @@ import IconChevronLeftRegular from '../generated/mistica-icons/icon-chevron-left
 import {SidenavItem} from './sidenav-item';
 import {SidenavDoublePanel} from './sidenav-panel';
 import {isSidenavSection} from './sidenav-types';
+import {shouldShowBoxedBorder} from '../boxed';
 
 import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
@@ -476,7 +477,10 @@ const SidenavBar = ({
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const {isMobile} = useScreenSize();
-    const {t} = useTheme();
+    const {t, componentProperties} = useTheme();
+    // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
+    // sidenav, and not the variant of the sidenav itself.
+    const pageVariant = normalizeVariant(useThemeVariant());
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const [mobileNavStack, setMobileNavStack] = React.useState<Array<MobileNavigationLevel>>([]);
     const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(null);
@@ -815,6 +819,8 @@ const SidenavBar = ({
 
     const hasHeader = Boolean(logoElement || collapseActionElement || headerSlot);
     const normalizedVariant = normalizeVariant(variant);
+    const hasBoxedBorder =
+        boxed && shouldShowBoxedBorder(normalizedVariant, pageVariant, componentProperties.showBoxedBorder);
 
     // The second column belongs to the sidenav, not to the item that opens it, so that it can span the
     // whole height of the sidenav and push the content of the layout.
@@ -902,6 +908,7 @@ const SidenavBar = ({
                     className={classnames(styles.container, {
                         [styles.withRightDivider[normalizedVariant]]: divider && !boxed,
                         [styles.boxed]: boxed,
+                        [styles.boxedBorder]: hasBoxedBorder,
                     })}
                     style={applyCssVars({
                         [styles.sidenavWidthVar]: `${currentWidth}px`,
