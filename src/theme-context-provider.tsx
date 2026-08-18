@@ -122,6 +122,7 @@ type TextPresetsVars = {
         weight: string;
         size: string;
         lineHeight: string;
+        letterSpacing?: string;
     };
 };
 
@@ -222,6 +223,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                     ...(config.weight && {weight: String(mapToWeight[config.weight])}),
                     ...(config.size && {size: `${config.size.desktop}px`}),
                     ...(config.lineHeight && {lineHeight: `${config.lineHeight.desktop}px`}),
+                    ...('letterSpacing' in config && config.letterSpacing !== undefined && {
+                        letterSpacing: `${config.letterSpacing.desktop}px`,
+                    }),
                 },
             };
         });
@@ -234,9 +238,12 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             return {
                 [token]: {
                     ...(config.weight && {weight: String(mapToWeight[config.weight])}),
-                    // Use mobile values for size/lineHeight
+                    // Use mobile values for size/lineHeight/letterSpacing
                     ...(config.size && {size: `${config.size.mobile}px`}),
                     ...(config.lineHeight && {lineHeight: `${config.lineHeight.mobile}px`}),
+                    ...('letterSpacing' in config && config.letterSpacing !== undefined && {
+                        letterSpacing: `${config.letterSpacing.mobile}px`,
+                    }),
                 },
             };
         });

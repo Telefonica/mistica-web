@@ -123,6 +123,10 @@ interface TextProps extends TextPresetProps {
     mobileLineHeight?: string | number;
     /** in pixels, will be converted to rem in runtime */
     desktopLineHeight?: string | number;
+    /** in pixels, will be converted to rem in runtime */
+    mobileLetterSpacing?: number;
+    /** in pixels, will be converted to rem in runtime */
+    desktopLetterSpacing?: number;
     letterSpacing?: number;
 
     forzeMobileSize?: never;
@@ -144,6 +148,8 @@ export const Text = ({
     lineHeight,
     mobileLineHeight = lineHeight,
     desktopLineHeight = lineHeight,
+    mobileLetterSpacing,
+    desktopLetterSpacing,
     letterSpacing,
     textAlign,
     textShadow,
@@ -195,6 +201,12 @@ export const Text = ({
         [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : 'inherit',
         [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : 'inherit',
         [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : 'inherit',
+        ...(mobileLetterSpacing !== undefined && {
+            [styles.vars.mobileLetterSpacing]: pxToRem(mobileLetterSpacing),
+        }),
+        ...(desktopLetterSpacing !== undefined && {
+            [styles.vars.desktopLetterSpacing]: pxToRem(desktopLetterSpacing),
+        }),
     });
     const textVars = truncate
         ? applyCssVars({
@@ -295,12 +307,15 @@ type TextSizes =
     | {
           size: number;
           lineHeight: string | number;
+          letterSpacing?: number;
       }
     | {
           mobileSize: number;
           mobileLineHeight: string | number;
           desktopSize: number;
           desktopLineHeight: string | number;
+          mobileLetterSpacing?: number;
+          desktopLetterSpacing?: number;
       };
 
 type TextPreset = TextSizeTokenConfig | TextTokenConfig;
@@ -321,6 +336,9 @@ export const getTextSizes = ({
         return {
             size: mobileSize,
             lineHeight: mobileLineHeight,
+            ...(textPreset.letterSpacing !== undefined && {
+                letterSpacing: textPreset.letterSpacing.mobile,
+            }),
         };
     } else {
         return {
@@ -328,6 +346,10 @@ export const getTextSizes = ({
             mobileLineHeight,
             desktopSize,
             desktopLineHeight,
+            ...(textPreset.letterSpacing !== undefined && {
+                mobileLetterSpacing: textPreset.letterSpacing.mobile,
+                desktopLetterSpacing: textPreset.letterSpacing.desktop,
+            }),
         };
     }
 };

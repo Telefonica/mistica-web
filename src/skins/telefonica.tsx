@@ -730,26 +730,31 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
                 weight: 'regular',
             },
             text6: {
+                letterSpacing: {desktop: -0.24, mobile: -0.24},
                 lineHeight: {desktop: 40, mobile: 32},
                 size: {desktop: 32, mobile: 24},
                 weight: 'regular',
             },
             text7: {
+                letterSpacing: {desktop: -0.42, mobile: -0.42},
                 lineHeight: {desktop: 48, mobile: 32},
                 size: {desktop: 40, mobile: 28},
                 weight: 'regular',
             },
             text8: {
+                letterSpacing: {desktop: -0.8, mobile: -0.544},
                 lineHeight: {desktop: 56, mobile: 40},
                 size: {desktop: 48, mobile: 32},
                 weight: 'regular',
             },
             text9: {
+                letterSpacing: {desktop: -1.4, mobile: -0.8},
                 lineHeight: {desktop: 64, mobile: 48},
                 size: {desktop: 56, mobile: 40},
                 weight: 'regular',
             },
             text10: {
+                letterSpacing: {desktop: -1.92, mobile: -1.056},
                 lineHeight: {desktop: 72, mobile: 56},
                 size: {desktop: 64, mobile: 48},
                 weight: 'regular',
