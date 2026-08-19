@@ -140,7 +140,7 @@ export const MenuItem = ({
         <div className={styles.itemContent}>
             {(asset || Icon) && (
                 <div
-                    className={styles.iconContainer}
+                    className={styles.assetContainer}
                     {...(asset ? getPrefixedDataAttributes({testid: 'asset'}) : {})}
                     style={
                         asset
