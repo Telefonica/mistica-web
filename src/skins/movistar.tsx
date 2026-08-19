@@ -760,9 +760,9 @@ export const getMovistarSkin: GetKnownSkin = () => {
             },
             inputPadding: {
                 top: {mobile: 9, desktop: 3},
+                right: {mobile: 16, desktop: 16},
                 bottom: {mobile: 9, desktop: 3},
                 left: {mobile: 12, desktop: 12},
-                right: {mobile: 16, desktop: 16},
             },
             tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
             feedbackScreenPadding: {

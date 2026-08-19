@@ -476,14 +476,14 @@
     --mistica-font-size-title1: 0.75rem;
     --mistica-line-height-title1: 1rem;
     --mistica-font-weight-title1: 500;
-    --mistica-font-size-title2: 1rem;
-    --mistica-line-height-title2: 1.5rem;
+    --mistica-font-size-title2: 0.875rem;
+    --mistica-line-height-title2: 1.25rem;
     --mistica-font-weight-title2: 500;
-    --mistica-font-size-title3: 1.125rem;
+    --mistica-font-size-title3: 1rem;
     --mistica-line-height-title3: 1.5rem;
     --mistica-font-weight-title3: 500;
-    --mistica-font-size-title4: 1.5rem;
-    --mistica-line-height-title4: 2rem;
+    --mistica-font-size-title4: 1.25rem;
+    --mistica-line-height-title4: 1.5rem;
     --mistica-font-weight-title4: 500;
     --mistica-font-weight-indicator: 500;
     --mistica-font-weight-navigationBar: 400;
@@ -1821,12 +1821,12 @@
 
         --mistica-font-size-title1: 0.875rem;
         --mistica-line-height-title1: 1.25rem;
-        --mistica-font-size-title2: 1.125rem;
+        --mistica-font-size-title2: 1rem;
         --mistica-line-height-title2: 1.5rem;
-        --mistica-font-size-title3: 1.5rem;
-        --mistica-line-height-title3: 1.75rem;
-        --mistica-font-size-title4: 2rem;
-        --mistica-line-height-title4: 2.5rem;
+        --mistica-font-size-title3: 1.125rem;
+        --mistica-line-height-title3: 1.5rem;
+        --mistica-font-size-title4: 1.75rem;
+        --mistica-line-height-title4: 2rem;
 
         --mistica-font-size-chipLabel: 1rem;
         --mistica-line-height-chipLabel: 1.5rem;

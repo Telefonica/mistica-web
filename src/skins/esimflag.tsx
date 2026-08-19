@@ -753,9 +753,9 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             },
             inputPadding: {
                 top: {mobile: 8, desktop: 8},
+                right: {mobile: 16, desktop: 16},
                 bottom: {mobile: 8, desktop: 8},
                 left: {mobile: 12, desktop: 12},
-                right: {mobile: 16, desktop: 16},
             },
             tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},
             feedbackScreenPadding: {
