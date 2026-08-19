@@ -2,6 +2,12 @@
 
 import * as React from 'react';
 import {SidenavBar} from '../../index';
+import Box from '../../../box';
+import Stack from '../../../stack';
+import {Boxed} from '../../../boxed';
+import {UnorderedList, ListItem} from '../../../list';
+import {Text2, Text3, Text6} from '../../../text';
+import {vars as skinVars} from '../../../skins/skin-contract.css';
 
 import type {SidenavEntry} from '../../sidenav-types';
 
@@ -81,106 +87,89 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
     return (
         <div style={{display: 'flex', height: '100vh'}}>
             <SidenavBar sections={sections} aria-label="Sidenav" />
-            <div style={{flex: 1, padding: '2rem', overflowY: 'auto'}}>
-                <h1>Editable Sections (JSON-Safe)</h1>
-                <p>
-                    ✅ Edit the `sections` control below to test the component with different navigation
-                    structures
-                </p>
-                <p>
-                    The first level takes sections and stand-alone items, in any order. Every section declares{' '}
-                    <code>dividerTop</code> and <code>dividerBottom</code>, so you can switch each divider on
-                    and off in the control. A stand-alone item takes no dividers. The collapsed state needs an{' '}
-                    <code>asset</code> per item, so it has its own story:{' '}
-                    <strong>Sections and stand-alone items</strong>.
-                </p>
+            <div style={{flex: 1, overflowY: 'auto'}}>
+                <Box padding={32}>
+                    <Stack space={24}>
+                        <Stack space={8}>
+                            <Text6 as="h1">Editable sections</Text6>
+                            <Text3 regular>
+                                Edit the sections control to test the component with another navigation
+                                structure.
+                            </Text3>
+                            <Text3 regular>
+                                The first level takes sections and stand-alone items, in any order. Every
+                                section declares dividerTop and dividerBottom, so you can switch each divider
+                                on and off in the control. A stand-alone item takes no dividers. The collapsed
+                                state needs an asset per item, so it has its own story: &quot;Sections and
+                                stand-alone items&quot;.
+                            </Text3>
+                        </Stack>
 
-                <div
-                    style={{
-                        backgroundColor: '#f0f8ff',
-                        padding: '1rem',
-                        borderRadius: '4px',
-                        border: '1px solid #0284c7',
-                        marginTop: '1rem',
-                    }}
-                >
-                    <h3>✓ Supported in JSON:</h3>
-                    <ul style={{margin: '0.5rem 0', paddingLeft: '1.5rem'}}>
-                        <li>
-                            <code>id</code> (string) — unique identifier
-                        </li>
-                        <li>
-                            <code>label</code> (string) — display text
-                        </li>
-                        <li>
-                            <code>href</code> (string) — link URL
-                        </li>
-                        <li>
-                            <code>to</code> (string) — router link
-                        </li>
-                        <li>
-                            <code>children</code> (array) — nested items
-                        </li>
-                        <li>
-                            <code>defaultOpen</code> (boolean) — expand by default
-                        </li>
-                        <li>
-                            <code>items</code> (array) — items of a section
-                        </li>
-                        <li>
-                            <code>title</code> (string) — section heading
-                        </li>
-                        <li>
-                            <code>dividerTop</code> (boolean) — divider above a section
-                        </li>
-                        <li>
-                            <code>dividerBottom</code> (boolean) — divider below a section
-                        </li>
-                    </ul>
-                </div>
+                        <Boxed>
+                            <Box padding={24}>
+                                <Stack space={16}>
+                                    <Text3 medium as="h2" id="supported">
+                                        The control accepts these properties
+                                    </Text3>
+                                    <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                        <UnorderedList aria-labelledby="supported">
+                                            <ListItem>id, a string, the unique identifier.</ListItem>
+                                            <ListItem>label, a string, the text of the item.</ListItem>
+                                            <ListItem>href, a string, the URL of the link.</ListItem>
+                                            <ListItem>to, a string, the route of the link.</ListItem>
+                                            <ListItem>children, an array of nested items.</ListItem>
+                                            <ListItem>
+                                                defaultOpen, a boolean, opens the item on the first render.
+                                            </ListItem>
+                                            <ListItem>items, an array, the items of a section.</ListItem>
+                                            <ListItem>title, a string, the heading of a section.</ListItem>
+                                            <ListItem>
+                                                dividerTop, a boolean, the divider above a section.
+                                            </ListItem>
+                                            <ListItem>
+                                                dividerBottom, a boolean, the divider below a section.
+                                            </ListItem>
+                                        </UnorderedList>
+                                    </Text2>
+                                </Stack>
+                            </Box>
+                        </Boxed>
 
-                <div
-                    style={{
-                        backgroundColor: '#fee',
-                        padding: '1rem',
-                        borderRadius: '4px',
-                        border: '1px solid #fcc',
-                        marginTop: '1rem',
-                    }}
-                >
-                    <h3>✗ NOT supported in JSON:</h3>
-                    <ul style={{margin: '0.5rem 0', paddingLeft: '1.5rem'}}>
-                        <li>
-                            <code>onPress</code> — functions cannot be in JSON
-                        </li>
-                        <li>
-                            <code>asset</code> — React components/icons cannot be in JSON
-                        </li>
-                        <li>
-                            <code>rightSlot</code> — React elements cannot be in JSON
-                        </li>
-                        <li>
-                            <code>onNavigate</code> — callback functions cannot be in JSON
-                        </li>
-                    </ul>
-                    <p style={{fontSize: '0.9rem', marginTop: '0.5rem'}}>
-                        For these features, use the <strong>SidenavBar</strong> story which showcases all
-                        capabilities via JSX.
-                    </p>
-                </div>
+                        <Boxed variant="alternative">
+                            <Box padding={24}>
+                                <Stack space={16}>
+                                    <Text3 medium as="h2" id="not-supported">
+                                        The control rejects these properties
+                                    </Text3>
+                                    <Text2 as="div" regular>
+                                        <UnorderedList aria-labelledby="not-supported">
+                                            <ListItem>onPress, because JSON holds no function.</ListItem>
+                                            <ListItem>asset, because JSON holds no React component.</ListItem>
+                                            <ListItem>
+                                                rightSlot, because JSON holds no React element.
+                                            </ListItem>
+                                            <ListItem>onNavigate, because JSON holds no callback.</ListItem>
+                                        </UnorderedList>
+                                    </Text2>
+                                    <Text2 regular>
+                                        For these properties, open the SidenavBar story, which declares the
+                                        sections in JSX.
+                                    </Text2>
+                                </Stack>
+                            </Box>
+                        </Boxed>
 
-                <pre
-                    style={{
-                        backgroundColor: '#f5f5f5',
-                        padding: '1rem',
-                        overflow: 'auto',
-                        marginTop: '1rem',
-                        border: '1px solid #ddd',
-                        borderRadius: '4px',
-                    }}
-                >
-                    {JSON.stringify(sections, null, 2)}
-                </pre>
+                        <Boxed>
+                            <Box padding={24}>
+                                <Text2 as="div" regular>
+                                    <pre style={{margin: 0, overflow: 'auto'}}>
+                                        {JSON.stringify(sections, null, 2)}
+                                    </pre>
+                                </Text2>
+                            </Box>
+                        </Boxed>
+                    </Stack>
+                </Box>
             </div>
         </div>
     );

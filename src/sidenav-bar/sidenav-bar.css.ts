@@ -181,8 +181,9 @@ const verticalDividerOverlay = {
     bottom: 0,
     width: 1,
     pointerEvents: 'none',
-    // Above the sticky scroll dividers of the body, which would otherwise cross this line.
-    zIndex: 2,
+    // Above the sticky scroll dividers of the body, and above the edge of a boxed sidenav (see
+    // `boxedBorder`), so this line reaches the top and the bottom of the box.
+    zIndex: 3,
 } as const;
 
 export const withRightDivider = styleVariants(dividerColor, (color) => ({
@@ -201,13 +202,29 @@ export const boxed = style({
     borderRadius: skinVars.borderRadii.popup,
 });
 
-// A real border (not an inset outline) is used here: the container has `overflow: hidden`, which
-// clips a negatively-offset outline and leaves the box edge barely visible. A border on the
-// border-box renders on all four sides while children stay clipped to the rounded corners.
+// The edge of the box is an overlay, not a real border. A real border takes 1px of the container on
+// each side, and `overflow: hidden` clips every child to the padding box, so the separator of the
+// double panel could not reach the top and the bottom edge of the box: it stopped one pixel short of
+// them, and that pixel reads as a gap wherever the border token matches the background of the sidenav,
+// which every dark mode does. The overlay keeps the border out of the intrinsic size too, so a boxed
+// sidenav of `width` pixels measures exactly that width. An outline is not an option: `overflow:
+// hidden` clips a negatively-offset outline.
 // `shouldShowBoxedBorder` decides when this class applies: the border only reads over a default or an
 // alternative page, and a skin can switch it off.
 export const boxedBorder = style({
-    border: `1px solid ${skinVars.colors.border}`,
+    '::before': {
+        content: '',
+        position: 'absolute',
+        inset: 0,
+        boxSizing: 'border-box',
+        border: `1px solid ${skinVars.colors.border}`,
+        // The container owns the radius (see `boxed`), and the edge follows it.
+        borderRadius: 'inherit',
+        pointerEvents: 'none',
+        // Above the background of both columns and above the sticky scroll dividers of the body, and
+        // below the vertical dividers, which cross it (see `verticalDividerOverlay`).
+        zIndex: 2,
+    },
 });
 
 // Header region ---------------------------------------------------------------

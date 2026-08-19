@@ -9,6 +9,11 @@ import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-
 import IconCheckRegular from '../../../generated/mistica-icons/icon-check-regular';
 import IconTrashCanRegular from '../../../generated/mistica-icons/icon-trash-can-regular';
 import {Placeholder} from '../../../placeholder';
+import Box from '../../../box';
+import Stack from '../../../stack';
+import Callout from '../../../callout';
+import {Text3, Text6} from '../../../text';
+import {vars as skinVars} from '../../../skins/skin-contract.css';
 
 import type {Variant} from '../../../theme-variant-context';
 
@@ -182,40 +187,24 @@ export const WithActionTracking = ({
                     sections,
                 } as any)}
             />
-            <div
-                style={{
-                    flex: 1,
-                    padding: '2rem',
-                    backgroundColor: '#f5f5f5',
-                    overflowY: 'auto',
-                }}
-            >
-                <h1>Action Tracking Example</h1>
-                <p>Click items or expand sections in the sidenav to see actions tracked below.</p>
+            <div style={{flex: 1, overflowY: 'auto'}}>
+                <Box padding={32}>
+                    <Stack space={24}>
+                        <Stack space={8}>
+                            <Text6 as="h1">Action tracking example</Text6>
+                            <Text3 regular>
+                                Press the items of the sidenav, or open a parent item, to track the actions
+                                below.
+                            </Text3>
+                        </Stack>
 
-                <div
-                    style={{
-                        backgroundColor: '#fffbea',
-                        padding: '1.5rem',
-                        borderRadius: '8px',
-                        marginTop: '1.5rem',
-                        border: '1px solid #ffc107',
-                    }}
-                >
-                    <h3>Last Action Triggered</h3>
-                    <div
-                        style={{
-                            fontSize: '1rem',
-                            color: '#d97706',
-                            marginTop: '0.5rem',
-                            fontFamily: 'monospace',
-                            minHeight: '24px',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        {lastAction || '(Click items to trigger actions)'}
-                    </div>
-                </div>
+                        <Callout
+                            asset={<IconCheckRegular color={skinVars.colors.brand} />}
+                            title="Last action"
+                            description={lastAction || 'Press an item to trigger an action.'}
+                        />
+                    </Stack>
+                </Box>
             </div>
         </div>
     );

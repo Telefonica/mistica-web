@@ -115,3 +115,24 @@ test.each`
         expect(image).toMatchImageSnapshot();
     }
 );
+
+// The separator of the two columns crosses the edge of a boxed sidenav, so it reaches the top and the
+// bottom of the box. In dark mode the border token carries the background colour of the sidenav, so the
+// edge itself is invisible and the box reads by its background: a separator that stopped at that edge
+// left a 1px gap. Only a dark screenshot guards that pixel.
+test('SidenavBar double panel boxed in dark mode', async () => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--double-panel',
+        device: 'DESKTOP',
+        isDarkMode: true,
+        args: {boxed: true},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+
+    await (await screen.findByRole('button', {name: 'Projects'})).click();
+
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

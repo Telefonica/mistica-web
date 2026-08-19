@@ -13,6 +13,12 @@ import {Placeholder} from '../../../placeholder';
 import Badge from '../../../badge';
 import {IconButton} from '../../../icon-button';
 import {ButtonLink} from '../../../button';
+import Box from '../../../box';
+import Stack from '../../../stack';
+import {Boxed} from '../../../boxed';
+import {UnorderedList, ListItem} from '../../../list';
+import {Text2, Text3, Text6} from '../../../text';
+import {vars as skinVars} from '../../../skins/skin-contract.css';
 
 import type {Variant} from '../../../theme-variant-context';
 import type {SidenavSection} from '../../sidenav-types';
@@ -200,71 +206,82 @@ export const Default = ({
                     background,
                 } as any)}
             />
-            <div
-                style={{
-                    flex: 1,
-                    padding: '2rem',
-                    backgroundColor: '#f5f5f5',
-                    overflowY: 'auto',
-                }}
-            >
-                <h1>SidenavItem Props Showcase</h1>
-                <p>Click items in the sidenav to see the different prop types in action.</p>
+            <div style={{flex: 1, overflowY: 'auto'}}>
+                <Box padding={32}>
+                    <Stack space={24}>
+                        <Stack space={8}>
+                            <Text6 as="h1">SidenavItem props showcase</Text6>
+                            <Text3 regular>
+                                Press the items of the sidenav to see each type of prop in action.
+                            </Text3>
+                        </Stack>
 
-                <div
-                    style={{
-                        backgroundColor: 'white',
-                        padding: '1.5rem',
-                        borderRadius: '8px',
-                        marginTop: '1.5rem',
-                        border: '1px solid #e0e0e0',
-                    }}
-                >
-                    <h2>SidenavItem Prop Types</h2>
-                    <ul>
-                        <li>
-                            <strong>href</strong> — Navigation via hyperlink with optional onNavigate
-                            callback. Example: "Home (href)"
-                        </li>
-                        <li>
-                            <strong>onPress</strong> — Click handler for custom actions. Example: "Search
-                            (onPress)", "Profile"
-                        </li>
-                        <li>
-                            <strong>children</strong> — Creates expandable items (e.g., "Projects", "Teams").
-                            Cannot have href or onPress.
-                        </li>
-                        <li>
-                            <strong>rightSlot</strong> — Adds custom content to the right side (e.g., Badge on
-                            "Notifications")
-                        </li>
-                    </ul>
-                </div>
+                        <Boxed>
+                            <Box padding={24}>
+                                <Stack space={16}>
+                                    <Text3 medium as="h2" id="prop-types">
+                                        Types of props of a SidenavItem
+                                    </Text3>
+                                    <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                        <UnorderedList aria-labelledby="prop-types">
+                                            <ListItem>
+                                                href navigates with a hyperlink, and it takes an optional
+                                                onNavigate callback. See &quot;Home (href)&quot;.
+                                            </ListItem>
+                                            <ListItem>
+                                                onPress runs a custom action. See &quot;Search
+                                                (onPress)&quot;.
+                                            </ListItem>
+                                            <ListItem>
+                                                children makes the item expandable. See &quot;Projects&quot;
+                                                and &quot;Teams&quot;. Such an item takes neither href nor
+                                                onPress.
+                                            </ListItem>
+                                            <ListItem>
+                                                rightSlot adds custom content on the right side. See the badge
+                                                of &quot;Notifications&quot;.
+                                            </ListItem>
+                                        </UnorderedList>
+                                    </Text2>
+                                </Stack>
+                            </Box>
+                        </Boxed>
 
-                <div
-                    style={{
-                        backgroundColor: '#f0f9ff',
-                        padding: '1.5rem',
-                        borderRadius: '8px',
-                        marginTop: '1.5rem',
-                        border: '1px solid #0284c7',
-                    }}
-                >
-                    <h3>Key Features</h3>
-                    <ul style={{color: '#0c4a6e'}}>
-                        <li>Parent items can have children (expandable) or navigation (href/onPress/to)</li>
-                        <li>Child items cannot have children themselves (max 2 levels of nesting)</li>
-                        <li>Use onPress for client-side actions, href/to for navigation</li>
-                        <li>onNavigate callback fires on both href and to navigation</li>
-                        <li>Items marked with "(href)" or "(onPress)" show the prop type being used</li>
-                        <li>
-                            The header shows a collapse action by default. Turn on the{' '}
-                            <strong>customCollapseAction</strong> control to paint that action with
-                            renderCollapseAction, which receives the collapsed state, the press handler and
-                            the accessible name.
-                        </li>
-                    </ul>
-                </div>
+                        <Boxed variant="alternative">
+                            <Box padding={24}>
+                                <Stack space={16}>
+                                    <Text3 medium as="h2" id="key-features">
+                                        Key features
+                                    </Text3>
+                                    <Text2 as="div" regular>
+                                        <UnorderedList aria-labelledby="key-features">
+                                            <ListItem>
+                                                A first level item either expands its children, or navigates
+                                                with href, to, or onPress.
+                                            </ListItem>
+                                            <ListItem>
+                                                A child item takes no children, so the tree holds two levels.
+                                            </ListItem>
+                                            <ListItem>
+                                                The onNavigate callback runs for href and for to.
+                                            </ListItem>
+                                            <ListItem>
+                                                The label of an item says which prop it uses, either
+                                                &quot;(href)&quot; or &quot;(onPress)&quot;.
+                                            </ListItem>
+                                            <ListItem>
+                                                The header shows a collapse action by default. Turn on the
+                                                customCollapseAction control to paint that action with
+                                                renderCollapseAction, which receives the collapsed state, the
+                                                press handler, and the accessible name.
+                                            </ListItem>
+                                        </UnorderedList>
+                                    </Text2>
+                                </Stack>
+                            </Box>
+                        </Boxed>
+                    </Stack>
+                </Box>
             </div>
         </div>
     );

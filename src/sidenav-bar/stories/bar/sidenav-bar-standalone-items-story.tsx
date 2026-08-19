@@ -8,6 +8,8 @@ import IconDocumentsRegular from '../../../generated/mistica-icons/icon-document
 import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
 import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
+import Box from '../../../box';
+import {Text3} from '../../../text';
 
 import type {SidenavEntry} from '../../sidenav-types';
 
@@ -96,11 +98,14 @@ export const StandaloneItems = ({defaultCollapsed, doublePanel, divider}: Args):
                     onSelectedItemIdChange: setSelectedItemId,
                 } as any)}
             />
-            <div style={{flex: 1, padding: 24}}>
-                <p>
-                    Sections and stand-alone items share the first level. A stand-alone item aligns with the
-                    items of a section, and every first-level entry keeps the same 16px space to the next one.
-                </p>
+            <div style={{flex: 1}}>
+                <Box padding={24}>
+                    <Text3 regular>
+                        Sections and stand-alone items share the first level. A stand-alone item aligns with
+                        the items of a section, and every first level entry keeps the same 16px space to the
+                        next one.
+                    </Text3>
+                </Box>
             </div>
         </div>
     );

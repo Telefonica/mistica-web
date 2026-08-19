@@ -9,6 +9,13 @@ import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular'
 import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
 import Badge from '../../../badge';
+import Box from '../../../box';
+import Stack from '../../../stack';
+import Inline from '../../../inline';
+import Chip from '../../../chip';
+import {Boxed} from '../../../boxed';
+import {UnorderedList, ListItem} from '../../../list';
+import {Text2, Text3, Text5, Text6} from '../../../text';
 import {vars as skinVars} from '../../../skins/skin-contract.css';
 import {ThemeVariant} from '../../../theme-variant-context';
 
@@ -82,15 +89,6 @@ const collectSelectableItems = (items: ReadonlyArray<SidenavItem>): Array<Select
     });
     return result;
 };
-
-const getSelectionButtonStyle = (isActive: boolean): React.CSSProperties => ({
-    padding: '0.5rem 1rem',
-    backgroundColor: isActive ? '#0066CC' : '#e0e0e0',
-    color: isActive ? 'white' : 'black',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-});
 
 export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: Args): React.JSX.Element => {
     const [selectedId, setSelectedId] = React.useState<string | null>('overview');
@@ -261,123 +259,115 @@ export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: 
                     doublePanel={doublePanel}
                     {...(boxed ? {boxed: true as const} : {boxed: false as const})}
                 />
-                <div
-                    style={{
-                        flex: 1,
-                        padding: '2rem',
-                        backgroundColor: '#f5f5f5',
-                        overflowY: 'auto',
-                    }}
-                >
-                    <h1>Alto Garda Activities - Controlled Selection</h1>
-                    <p>
-                        Click items in the sidenav or use the controls below to update the selection. Watch
-                        how the parent items highlight when collapsed and a child is selected.
-                    </p>
+                <div style={{flex: 1, overflowY: 'auto'}}>
+                    <Box padding={32}>
+                        <Stack space={24}>
+                            <Stack space={8}>
+                                <Text6 as="h1">Alto Garda Activities - Controlled Selection</Text6>
+                                <Text3 regular>
+                                    Press the items of the sidenav, or the chips below, to update the
+                                    selection. A parent item highlights when the sidenav collapses and one of
+                                    its children is selected.
+                                </Text3>
+                            </Stack>
 
-                    <div
-                        style={{
-                            backgroundColor: 'white',
-                            padding: '1.5rem',
-                            borderRadius: '8px',
-                            marginTop: '1.5rem',
-                        }}
-                    >
-                        <strong>Current Selection:</strong>
-                        <div
-                            style={{
-                                fontSize: '1.5rem',
-                                color: '#0066CC',
-                                marginTop: '0.5rem',
-                                fontFamily: 'monospace',
-                            }}
-                        >
-                            {selectedId || '(none)'}
-                        </div>
-                    </div>
+                            <Boxed>
+                                <Box padding={24}>
+                                    <Stack space={8}>
+                                        <Text2 medium color={skinVars.colors.textSecondary}>
+                                            Current selection
+                                        </Text2>
+                                        <Text5>{selectedId ?? '(none)'}</Text5>
+                                    </Stack>
+                                </Box>
+                            </Boxed>
 
-                    {sections.map((section, index) => {
-                        const buttons = collectSelectableItems(section.items);
-                        return (
-                            <div
-                                key={section.title ?? `section-${index}`}
-                                style={{marginTop: index === 0 ? '2rem' : '1.5rem'}}
-                            >
-                                <strong>{section.title ?? 'General'}:</strong>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        gap: '0.5rem',
-                                        marginTop: '0.5rem',
-                                        flexWrap: 'wrap',
-                                    }}
-                                >
-                                    {buttons.map((button) => (
-                                        <button
-                                            key={button.id}
-                                            onClick={() => setSelectedId(button.id)}
-                                            style={getSelectionButtonStyle(selectedId === button.id)}
-                                        >
-                                            {button.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            <Stack space={16}>
+                                {sections.map((section, index) => (
+                                    <Stack space={8} key={section.title ?? `section-${index}`}>
+                                        <Text2 medium>{section.title ?? 'General'}</Text2>
+                                        <Inline space={8} verticalSpace={8} wrap>
+                                            {collectSelectableItems(section.items).map((button) => (
+                                                <Chip
+                                                    key={button.id}
+                                                    active={selectedId === button.id}
+                                                    onPress={() => setSelectedId(button.id)}
+                                                >
+                                                    {button.label}
+                                                </Chip>
+                                            ))}
+                                        </Inline>
+                                    </Stack>
+                                ))}
+                            </Stack>
 
-                    <div
-                        style={{
-                            marginTop: '2rem',
-                            padding: '1rem',
-                            backgroundColor: '#f0f0f0',
-                            borderRadius: '4px',
-                        }}
-                    >
-                        <strong>How to test:</strong>
-                        <ul style={{marginTop: '0.5rem', color: '#666'}}>
-                            <li>Click buttons above to change selection programmatically</li>
-                            <li>Click items in the sidenav to update selection</li>
-                            <li>Toggle the collapse button in the sidenav</li>
-                            <li>
-                                When expanded: the selected item shows the accent bar, and its parent shows a
-                                selected background and auto-expands.
-                            </li>
-                            <li>
-                                When expanded: close a parent that holds the selection, then select a sibling
-                                child with the buttons above. The parent reopens to show the new selection.
-                            </li>
-                            <li>
-                                When collapsed: a parent whose child is selected shows a selected background
-                                (no accent bar). Open its dropdown to see the selected child.
-                            </li>
-                            <li>
-                                A parent can also carry a right slot: &quot;Water Sports&quot; shows a badge
-                                next to its expand chevron.
-                            </li>
-                            <li>
-                                Turn on the <strong>doublePanel</strong> control: a parent then opens its
-                                children in a second column instead of expanding them inline.
-                            </li>
-                            <li>
-                                With doublePanel on: select a child with the buttons above. The second column
-                                opens on its parent and stays open, even when you press the same button again.
-                            </li>
-                            <li>
-                                With doublePanel on: select a child of another parent with the buttons above.
-                                The second column moves to that parent.
-                            </li>
-                            <li>
-                                Turn on the <strong>boxed</strong> control: the sidenav floats as a box, with
-                                its own edge and its own inset. The second column stays inside that box.
-                            </li>
-                            <li>
-                                With doublePanel on: the second column closes when you press one of its
-                                children, when you press its parent again, and when the selection moves to a
-                                first-level item without children.
-                            </li>
-                        </ul>
-                    </div>
+                            <Boxed>
+                                <Box padding={24}>
+                                    <Stack space={16}>
+                                        <Text2 medium id="how-to-test">
+                                            How to test
+                                        </Text2>
+                                        <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                            <UnorderedList aria-labelledby="how-to-test">
+                                                <ListItem>
+                                                    Press the chips above to move the selection from the page.
+                                                </ListItem>
+                                                <ListItem>
+                                                    Press the items of the sidenav to move the selection from
+                                                    the sidenav.
+                                                </ListItem>
+                                                <ListItem>Press the collapse action of the sidenav.</ListItem>
+                                                <ListItem>
+                                                    When the sidenav is expanded, the selected item shows the
+                                                    accent bar. Its parent shows a selected background and it
+                                                    opens.
+                                                </ListItem>
+                                                <ListItem>
+                                                    When the sidenav is expanded, close the parent that holds
+                                                    the selection. Then select a sibling child with the chips.
+                                                    The parent opens again on the new selection.
+                                                </ListItem>
+                                                <ListItem>
+                                                    When the sidenav is collapsed, a parent with a selected
+                                                    child shows a selected background, and no accent bar. Open
+                                                    its dropdown to see the selected child.
+                                                </ListItem>
+                                                <ListItem>
+                                                    A parent also holds a right slot. &quot;Water Sports&quot;
+                                                    shows a badge next to its expand chevron.
+                                                </ListItem>
+                                                <ListItem>
+                                                    Turn on the doublePanel control. A parent then opens its
+                                                    children in a second column, instead of an inline
+                                                    expansion.
+                                                </ListItem>
+                                                <ListItem>
+                                                    With doublePanel on, select a child with the chips. The
+                                                    second column opens on its parent, and it stays open when
+                                                    you press the same chip again.
+                                                </ListItem>
+                                                <ListItem>
+                                                    With doublePanel on, select a child of another parent with
+                                                    the chips. The second column moves to that parent.
+                                                </ListItem>
+                                                <ListItem>
+                                                    Turn on the boxed control. The sidenav floats as a box,
+                                                    with its own edge and its own inset. The second column
+                                                    stays inside that box.
+                                                </ListItem>
+                                                <ListItem>
+                                                    With doublePanel on, the second column closes when you
+                                                    press one of its children, when you press its parent
+                                                    again, and when the selection moves to a first level item
+                                                    without children.
+                                                </ListItem>
+                                            </UnorderedList>
+                                        </Text2>
+                                    </Stack>
+                                </Box>
+                            </Boxed>
+                        </Stack>
+                    </Box>
                 </div>
             </div>
         </ThemeVariant>
