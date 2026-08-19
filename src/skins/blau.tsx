@@ -747,7 +747,12 @@ export const getBlauSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 24},
                 right: {mobile: 16, desktop: 24},
             },
-            inputPadding: {top: {mobile: 8, desktop: 8}, bottom: {mobile: 8, desktop: 8}},
+            inputPadding: {
+                top: {mobile: 8, desktop: 8},
+                bottom: {mobile: 8, desktop: 8},
+                left: {mobile: 12, desktop: 12},
+                right: {mobile: 16, desktop: 16},
+            },
             tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},
             feedbackScreenPadding: {
                 top: {mobile: 64, desktop: 64},

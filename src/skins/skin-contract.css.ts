@@ -379,7 +379,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     buttonDefaultPadding: {left: '', right: ''},
     buttonSmallPadding: {left: '', right: ''},
     cardDefaultPadding: {left: '', right: '', top: '', bottom: ''},
-    inputPadding: {top: '', bottom: ''},
+    inputPadding: {top: '', bottom: '', left: '', right: ''},
     tagPadding: {top: '', bottom: ''},
     feedbackScreenPadding: {top: '', bottom: '', left: '', right: ''},
     heroPadding: {top: '', bottom: ''},

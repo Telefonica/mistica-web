@@ -112,7 +112,7 @@ export type SpacingConfig = {
     buttonDefaultPadding: PaddingXValues;
     buttonSmallPadding: PaddingXValues;
     cardDefaultPadding: PaddingValues;
-    inputPadding: PaddingYValues;
+    inputPadding: PaddingValues;
     tagPadding: PaddingYValues;
     feedbackScreenPadding: PaddingValues;
     heroPadding: PaddingYValues;

@@ -26,7 +26,7 @@ export const labelContainer = style([
                 transform: `translateY(calc(${fieldVars.shrinkedLabelMobileLineHeight} / 2)) scale(1)`,
             },
         },
-        width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px)`,
+        width: `calc(100% - ${fieldLeftPadding} - ${fieldRightPadding})`,
     },
 ]);
 
@@ -55,12 +55,12 @@ export const labelText = style([
 export const shrinked = style({
     transform: `translateY(0) scale(${fieldVars.labelScaleDesktop})`,
     lineHeight: `calc(${fieldVars.shrinkedLabelDesktopLineHeight} / ${fieldVars.labelScaleDesktop})`,
-    width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px / ${fieldVars.labelScaleDesktop})`,
+    width: `calc(100% - ${fieldLeftPadding} - ${fieldRightPadding} / ${fieldVars.labelScaleDesktop})`,
     '@media': {
         [mq.tabletOrSmaller]: {
             transform: `translateY(0) scale(${fieldVars.labelScaleMobile})`,
             lineHeight: `calc(${fieldVars.shrinkedLabelMobileLineHeight} / ${fieldVars.labelScaleMobile})`,
-            width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px / ${fieldVars.labelScaleMobile})`,
+            width: `calc(100% - ${fieldLeftPadding} - ${fieldRightPadding} / ${fieldVars.labelScaleMobile})`,
         },
     },
 });
@@ -129,11 +129,15 @@ export const field = style([
     fieldFocusRing,
 ]);
 
-export const helperContainer = sprinkles({
-    paddingLeft: 12,
-    paddingRight: 16,
-    display: 'flex',
-});
+export const helperContainer = style([
+    sprinkles({
+        display: 'flex',
+    }),
+    {
+        paddingLeft: vars.spacing.inputPadding.left,
+        paddingRight: vars.spacing.inputPadding.right,
+    },
+]);
 
 export const leftHelperText = style([
     sprinkles({

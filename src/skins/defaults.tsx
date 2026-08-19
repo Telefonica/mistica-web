@@ -101,7 +101,12 @@ export const defaultSpacing: SpacingConfig = {
         left: {mobile: 16, desktop: 16},
         right: {mobile: 16, desktop: 16},
     },
-    inputPadding: {top: {mobile: 9, desktop: 3}, bottom: {mobile: 9, desktop: 3}},
+    inputPadding: {
+        top: {mobile: 9, desktop: 3},
+        bottom: {mobile: 9, desktop: 3},
+        left: {mobile: 12, desktop: 12},
+        right: {mobile: 16, desktop: 16},
+    },
     tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
     feedbackScreenPadding: {
         top: {mobile: 64, desktop: 40},

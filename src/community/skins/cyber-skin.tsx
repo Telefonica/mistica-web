@@ -1067,6 +1067,14 @@ export const getCyberSkin = (): Skin => {
                     mobile: 8,
                     desktop: 8,
                 },
+                left: {
+                    mobile: 12,
+                    desktop: 12,
+                },
+                right: {
+                    mobile: 16,
+                    desktop: 16,
+                },
             },
             tagPadding: {
                 top: {

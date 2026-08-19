@@ -38,6 +38,7 @@ interface TextFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: TextFieldBaseArgs = {
@@ -55,6 +56,7 @@ const defaultBaseArgs: TextFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 };
 
 interface TextFieldControlledArgs extends TextFieldBaseArgs {
