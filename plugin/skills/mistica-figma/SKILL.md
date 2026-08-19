@@ -160,7 +160,74 @@ These components include their own full-width layout and must be placed as **dir
 frame** — never inside a `Layout/<FormFactor>` wrapper:
 
 Header, Hero, CoverHero, NavigationBar, MainNavigationBar, FunnelNavigationBar, FeedbackScreen, LoadingScreen,
-BrandLoadingScreen, Carousel, ButtonFixedFooterLayout.
+BrandLoadingScreen, Carousel, ButtonFixedFooterLayout. why n
+
+### Overlay components (Dialog, Confirm, Alert, Drawer, Sheet)
+
+Dialog, Confirm, Alert, Drawer, and Sheet render as full-screen overlays. They follow stricter placement rules
+than other components.
+
+**Component names**
+
+| Library | Dialog       | Confirm       | Alert       | Drawer       | Sheet       |
+| ------- | ------------ | ------------- | ----------- | ------------ | ----------- |
+| Desktop | `Dialog [D]` | `Confirm [D]` | `Alert [D]` | `Drawer [D]` | `Sheet [D]` |
+| Mobile  | `Web/Dialog` | `Web/Confirm` | `Web/Alert` | `Drawer`     | `Sheet`     |
+
+**Placement rules**
+
+1. **Autolayout screen frames** — check whether the screen frame uses autolayout before appending. If it does,
+   opt the overlay out of the autolayout flow immediately after `appendChild` so it stays pinned at the origin.
+   `FILL` sizing cannot be used on absolute children — `FIXED` + `resize()` (rule 4) is the correct approach:
+
+```js
+if (screenFrame.layoutMode !== 'NONE') {
+  overlay.layoutPositioning = 'ABSOLUTE';
+}
+```
+
+2. **Direct child of the screen frame** — never inside a `Layout/…`, `Main`, or any other wrapper.
+3. **Last child** — append after all content children so the overlay renders above them.
+4. **Position** — set `x = 0` and `y = 0`. The component's default position is wrong; always override it.
+5. **Size** — resize to match the screen frame exactly. After `appendChild`, set:
+
+```js
+overlay.layoutSizingHorizontal = 'FIXED';
+overlay.layoutSizingVertical   = 'FIXED';
+overlay.resize(screenFrame.width, screenFrame.height);
+```
+
+6. **Constraints** — set `STRETCH` on both axes so the overlay follows the frame when it is resized:
+
+```js
+overlay.constraints = { horizontal: 'STRETCH', vertical: 'STRETCH' };
+```
+
+**Mandatory validation.** Immediately after placing each overlay, run a dedicated `use_figma` call to confirm
+the position, dimensions, and constraints. If `valid` is `false`, delete the instance and re-place it before
+proceeding.
+
+```js
+// Replace IDs with the actual node ids returned during placement.
+const screen  = figma.getNodeById('SCREEN_FRAME_ID');
+const overlay = figma.getNodeById('OVERLAY_INSTANCE_ID');
+if (!screen || !overlay) return { valid: false, error: 'node not found' };
+const xOk  = overlay.x === 0;
+const yOk  = overlay.y === 0;
+const wOk  = Math.round(overlay.width)  === Math.round(screen.width);
+const hOk  = Math.round(overlay.height) === Math.round(screen.height);
+const cOk  = overlay.constraints.horizontal === 'STRETCH' &&
+             overlay.constraints.vertical   === 'STRETCH';
+return {
+  x: overlay.x, y: overlay.y,
+  width: overlay.width, height: overlay.height,
+  screenWidth: screen.width, screenHeight: screen.height,
+  constraints: overlay.constraints,
+  valid: xOk && yOk && wOk && hOk && cOk,
+};
+```
+
+---
 
 ### Responsive layout frame
 
