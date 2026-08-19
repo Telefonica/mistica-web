@@ -21,6 +21,10 @@ React component library for Telefonica's Design System.
 - If you create a new component always create a snippet for playroom;
 - If you add props to a component always update stories accordingly and add the new props to args and
   argTypes;
+- storybook should use as much mística components as possible to showcase. i.e:
+  - if a button is needed to control/showcase things, use a mística button itself.
+  - if a text is needed, use a mística text component instead of a native html element, like
+    `<Text2 regular>text</Text2>`
 - make sure `yarn ts-check` and `yarn lint` pass when modifying them. You probably need to cycle several time
   to really make sure you've fixed everything
 - Before you claim a component works or matches its spec, drive it in the browser that CI uses:
