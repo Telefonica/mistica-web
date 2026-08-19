@@ -36,7 +36,7 @@ import type {DataAttributes, TrackingEvent, IconProps} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 type ListContextType = {small: boolean};
-const ListContext = React.createContext<ListContextType>({small: false});
+export const ListContext = React.createContext<ListContextType>({small: false});
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 

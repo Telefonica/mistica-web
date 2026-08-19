@@ -43,6 +43,7 @@ type Args = {
     detail: string;
     right: boolean;
     singleOpen: boolean;
+    small: boolean;
     variantOutside: Variant;
 };
 
@@ -54,6 +55,7 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
     detail,
     right,
     singleOpen,
+    small,
     variant,
     variantOutside,
     type,
@@ -81,7 +83,11 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
     return (
         <ResponsiveLayout fullWidth variant={variantOutside}>
             <Box padding={16}>
-                <AccordionComponent singleOpen={singleOpen} dataAttributes={{testid: 'accordion'}}>
+                <AccordionComponent
+                    singleOpen={singleOpen}
+                    small={small}
+                    dataAttributes={{testid: 'accordion'}}
+                >
                     <ItemComponent
                         {...getAccordionItemContentProps()}
                         dataAttributes={{testid: 'accordion-item-1'}}
@@ -148,6 +154,7 @@ const defaultArgs = {
     detail: '',
     right: false,
     singleOpen: false,
+    small: false,
     variantOutside: 'default',
 } as const;
 
