@@ -683,6 +683,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             popup: '4px',
             sheet: '0px',
             mediaSmall: '2px',
+            snackbar: '4px',
         },
         textPresets: {
             button: {weight: 'medium'},

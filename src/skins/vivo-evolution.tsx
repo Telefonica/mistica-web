@@ -716,6 +716,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             popup: '16px',
             sheet: '24px',
             mediaSmall: '12px',
+            snackbar: '24px',
         },
         textPresets: {
             button: {weight: 'medium'},

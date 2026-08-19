@@ -679,6 +679,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             popup: '16px',
             sheet: '16px',
             mediaSmall: '8px',
+            snackbar: '16px',
         },
         textPresets: {
             button: {weight: 'medium'},

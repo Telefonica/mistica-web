@@ -686,6 +686,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             popup: '8px',
             sheet: '16px',
             mediaSmall: '8px',
+            snackbar: '8px',
         },
         textPresets: {
             button: {weight: 'medium'},

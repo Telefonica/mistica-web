@@ -71,3 +71,7 @@ export const fourItemsContainer = style({
         },
     },
 });
+
+export const horizontalMosaicPageContainer = style({
+    height: '100%',
+});

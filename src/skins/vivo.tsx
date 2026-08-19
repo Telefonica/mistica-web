@@ -672,6 +672,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             popup: '16px',
             sheet: '24px',
             mediaSmall: '12px',
+            snackbar: '16px',
         },
         textPresets: {
             button: {weight: 'medium'},
