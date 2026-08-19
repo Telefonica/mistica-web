@@ -18,6 +18,7 @@ import {CSSTransition} from 'react-transition-group';
 import {combineRefs} from './utils/common';
 import {applyCssVars} from './utils/css';
 import {isRunningAcceptanceTest} from './utils/platform';
+import * as mediaStyles from './image.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -55,6 +56,7 @@ interface MenuItemBaseProps {
     label: string;
     description?: string;
     Icon?: (props: IconProps) => JSX.Element;
+    asset?: React.ReactElement;
     destructive?: boolean;
     disabled?: boolean;
     dataAttributes?: DataAttributes;
@@ -95,6 +97,7 @@ type MenuItemProps = ExclusifyUnion<MenuItemOnPressProps | MenuItemHrefProps | M
 export const MenuItem = ({
     label,
     Icon,
+    asset,
     destructive,
     disabled,
     onPress,
@@ -135,9 +138,19 @@ export const MenuItem = ({
 
     const renderItemContent = (labelId?: string) => (
         <div className={styles.itemContent}>
-            {Icon && (
-                <div className={styles.iconContainer}>
-                    <Icon size={24} color={contentColor} />
+            {(asset || Icon) && (
+                <div
+                    className={styles.assetContainer}
+                    {...(asset ? getPrefixedDataAttributes({testid: 'asset'}) : {})}
+                    style={
+                        asset
+                            ? applyCssVars({
+                                  [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                              })
+                            : undefined
+                    }
+                >
+                    {asset || (Icon && <Icon size={24} color={contentColor} />)}
                 </div>
             )}
             {renderTextContent(labelId)}

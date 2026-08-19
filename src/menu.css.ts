@@ -146,7 +146,7 @@ export const itemTextContent = style({
     gap: 2,
 });
 
-export const iconContainer = style({
+export const assetContainer = style({
     display: 'flex',
     paddingRight: 8,
 });
