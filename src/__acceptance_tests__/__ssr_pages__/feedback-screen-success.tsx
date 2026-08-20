@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SuccessFeedbackScreen, ButtonPrimary} from '../../index';
+import {SuccessFeedbackScreen, ButtonPrimary} from '../../..';
 
 const SuccessFeedbackScreenTest = (): JSX.Element => (
     <SuccessFeedbackScreen

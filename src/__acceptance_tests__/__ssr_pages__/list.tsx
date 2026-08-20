@@ -1,14 +1,5 @@
 import * as React from 'react';
-import {
-    ResponsiveLayout,
-    Title1,
-    NegativeBox,
-    RowList,
-    Row,
-    Avatar,
-    BoxedRowList,
-    BoxedRow,
-} from '../../index';
+import {ResponsiveLayout, Title1, NegativeBox, RowList, Row, Avatar, BoxedRowList, BoxedRow} from '../../..';
 
 const ListTest = (): JSX.Element => (
     <ResponsiveLayout>

@@ -7,7 +7,7 @@ import {
     ButtonPrimary,
     Stack,
     Placeholder,
-} from '../../index';
+} from '../../..';
 
 const HeaderTest = (): JSX.Element => (
     <Stack space={8}>

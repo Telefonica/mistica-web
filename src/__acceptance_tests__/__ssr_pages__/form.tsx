@@ -18,7 +18,7 @@ import {
     CvvField,
     SearchField,
     Select,
-} from '../../index';
+} from '../../..';
 
 const FormTest = (): JSX.Element => (
     <Form onSubmit={() => {}}>

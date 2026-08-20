@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Popover} from '../../index';
+import {Popover} from '../../..';
 
 const PopoverTest = (): JSX.Element => (
     <Popover

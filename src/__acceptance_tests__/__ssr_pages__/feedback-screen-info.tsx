@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {InfoFeedbackScreen, ButtonPrimary} from '../../index';
+import {InfoFeedbackScreen, ButtonPrimary} from '../../..';
 
 const InfoFeedbackScreenTest = (): JSX.Element => (
     <InfoFeedbackScreen

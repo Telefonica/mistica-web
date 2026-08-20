@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CoverHero, Tag, ButtonPrimary, Placeholder} from '../../index';
+import {CoverHero, Tag, ButtonPrimary, Placeholder} from '../../..';
 
 const CarouselTest = (): JSX.Element => (
     <CoverHero
