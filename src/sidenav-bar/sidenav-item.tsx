@@ -8,7 +8,7 @@ import {
     SidenavLevelContext,
     assertChildrenAre,
     hasDescendantWithId,
-} from './sidenav-bar';
+} from './sidenav-context';
 import {SidenavDialogPanel} from './sidenav-panel';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
