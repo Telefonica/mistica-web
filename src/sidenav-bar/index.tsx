@@ -1,4 +1,5 @@
-export {SidenavBar} from './sidenav-bar';
+export {SidenavBar, SidenavSection} from './sidenav-bar';
+export {SidenavItem} from './sidenav-item';
 export {default as SidenavLayout} from './sidenav-layout';
 export type {
     SidenavBarProps,
@@ -7,7 +8,11 @@ export type {
     SidenavCollapseActionRenderProps,
     SidenavLogoRenderProps,
 } from './sidenav-bar';
-export type {SidenavItem, SidenavSection, SidenavEntry} from './sidenav-types';
+export type {
+    SidenavItem as SidenavItemData,
+    SidenavSection as SidenavSectionData,
+    SidenavEntry,
+} from './sidenav-types';
 export type {
     SidenavLayoutProps,
     SidenavLayoutSidenavProps,
