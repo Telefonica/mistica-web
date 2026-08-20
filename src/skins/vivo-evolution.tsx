@@ -781,18 +781,18 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             title2: {
+                lineHeight: {desktop: 24, mobile: 20},
+                size: {desktop: 16, mobile: 14},
+                weight: 'medium',
+            },
+            title3: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 16},
                 weight: 'medium',
             },
-            title3: {
-                lineHeight: {desktop: 28, mobile: 24},
-                size: {desktop: 24, mobile: 18},
-                weight: 'medium',
-            },
             title4: {
-                lineHeight: {desktop: 40, mobile: 32},
-                size: {desktop: 32, mobile: 24},
+                lineHeight: {desktop: 32, mobile: 24},
+                size: {desktop: 28, mobile: 20},
                 weight: 'medium',
             },
         },
