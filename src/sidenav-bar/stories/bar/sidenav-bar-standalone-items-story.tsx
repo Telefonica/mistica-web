@@ -10,6 +10,7 @@ import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-
 import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
 import Box from '../../../box';
 import {Text3} from '../../../text';
+import {SidenavStoryPage} from './sidenav-story-page';
 
 import type {SidenavEntry} from '../../sidenav-types';
 
@@ -86,28 +87,28 @@ export const StandaloneItems = ({defaultCollapsed, doublePanel, divider}: Args):
     ];
 
     return (
-        <div style={{display: 'flex', height: '100vh'}}>
-            <SidenavBar
-                {...({
-                    'aria-label': 'Sections and stand-alone items',
-                    sections,
-                    defaultCollapsed,
-                    doublePanel,
-                    divider,
-                    selectedItemId,
-                    onSelectedItemIdChange: setSelectedItemId,
-                } as any)}
-            />
-            <div style={{flex: 1}}>
-                <Box padding={24}>
-                    <Text3 regular>
-                        Sections and stand-alone items share the first level. A stand-alone item aligns with
-                        the items of a section, and every first level entry keeps the same 16px space to the
-                        next one.
-                    </Text3>
-                </Box>
-            </div>
-        </div>
+        <SidenavStoryPage
+            sidenav={
+                <SidenavBar
+                    {...({
+                        'aria-label': 'Sections and stand-alone items',
+                        sections,
+                        defaultCollapsed,
+                        doublePanel,
+                        divider,
+                        selectedItemId,
+                        onSelectedItemIdChange: setSelectedItemId,
+                    } as any)}
+                />
+            }
+        >
+            <Box padding={24}>
+                <Text3 regular>
+                    Sections and stand-alone items share the first level. A stand-alone item aligns with the
+                    items of a section, and every first level entry keeps the same 16px space to the next one.
+                </Text3>
+            </Box>
+        </SidenavStoryPage>
     );
 };
 

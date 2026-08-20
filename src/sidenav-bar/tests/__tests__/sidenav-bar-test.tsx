@@ -246,17 +246,69 @@ test('SidenavBar keeps the space of the section title when collapsed', async () 
     });
 });
 
-// The logo is muted for assistive technology, so there is no semantic query for it.
-test('SidenavBar renders the skin logo by default', async () => {
+// The logo is muted for assistive technology, so there is no semantic query for it. The type of the
+// default logo shows up in the viewBox of its svg: the imagotype of Movistar is wider than its isotype.
+const getLogoViewBox = (): string | null =>
+    // eslint-disable-next-line testing-library/no-node-access
+    screen.getByTestId('Logo').querySelector('svg')?.getAttribute('viewBox') ?? null;
+
+test('SidenavBar renders the imagotype of the skin by default', async () => {
     await renderSidenav();
 
-    expect(screen.getByTestId('Logo')).toBeInTheDocument();
+    expect(getLogoViewBox()).toBe('0 0 203 72');
+});
+
+test('SidenavBar renders the isotype of the skin when it is collapsed', async () => {
+    await renderSidenav({collapsed: true, onCollapse: jest.fn()});
+
+    expect(getLogoViewBox()).toBe('0 0 72 72');
+});
+
+test('SidenavBar renders the default logo when logo is true', async () => {
+    await renderSidenav({logo: true});
+
+    expect(getLogoViewBox()).toBe('0 0 203 72');
 });
 
 test('SidenavBar renders no logo when logo is false', async () => {
     await renderSidenav({logo: false});
 
     expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
+});
+
+test('SidenavBar renders the element that logo carries', async () => {
+    await renderSidenav({logo: <img src="/brand.svg" alt="Brand of the product" />});
+
+    expect(screen.getByRole('img', {name: 'Brand of the product'})).toBeInTheDocument();
+    expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
+});
+
+// A logo of the consumer follows the collapsed state through the function form of the prop, the same way
+// that the default logo swaps the imagotype for the isotype.
+const renderLogoByState = ({collapsed}: {collapsed: boolean}) => (
+    <img src="/brand.svg" alt={collapsed ? 'Mark of the product' : 'Mark and name of the product'} />
+);
+
+test('SidenavBar gives the collapsed state to the function that logo carries', async () => {
+    await renderSidenav({logo: renderLogoByState});
+
+    expect(screen.getByRole('img', {name: 'Mark and name of the product'})).toBeInTheDocument();
+});
+
+test('SidenavBar gives the collapsed state to that function on the collapsed rail', async () => {
+    await renderSidenav({logo: renderLogoByState, collapsed: true, onCollapse: jest.fn()});
+
+    expect(screen.getByRole('img', {name: 'Mark of the product'})).toBeInTheDocument();
+});
+
+test('SidenavBar moves the logo of that function when the user collapses the sidenav', async () => {
+    await renderSidenav({logo: renderLogoByState});
+
+    await React.act(async () => {
+        fireEvent.click(screen.getByRole('button', {name: 'Collapse navigation'}));
+    });
+
+    expect(screen.getByRole('img', {name: 'Mark of the product'})).toBeInTheDocument();
 });
 
 test('SidenavBar supports controlled selection with selectedItemId prop', async () => {

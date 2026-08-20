@@ -5,6 +5,7 @@ export type {
     SidenavSectionProps,
     SidenavBarBackgroundColors,
     SidenavCollapseActionRenderProps,
+    SidenavLogoRenderProps,
 } from './sidenav-bar';
 export type {SidenavItem, SidenavSection, SidenavEntry} from './sidenav-types';
 export type {

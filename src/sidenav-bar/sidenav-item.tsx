@@ -20,8 +20,6 @@ import {Text2} from '../text';
 import IconChevronDownRegular from '../generated/mistica-icons/icon-chevron-down-regular';
 import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import type {SidenavItem} from './sidenav-types';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes, IconProps} from '../utils/types';
 
@@ -37,8 +35,6 @@ type SidenavItemBaseProps = {
     /** Initial expanded state for items with children. @default false */
     defaultOpen?: boolean;
     dataAttributes?: DataAttributes;
-    /** Original children data (for mobile navigation extraction). Internal use only. */
-    childrenData?: ReadonlyArray<SidenavItem>;
 };
 
 /**
@@ -123,7 +119,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         defaultOpen,
         dataAttributes,
         showIconWhenExpanded = true,
-        childrenData,
     } = props as any;
     const {
         collapsed,
@@ -135,9 +130,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         isInsidePanel,
         selectedItemId,
         onSelectedItemIdChange,
-        isMobileMode,
-        closeMobileMenu,
-        pushMobileNavLevel,
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
     // `SidenavBar` overrides the ambient variant with its own, so the item takes its colors from here. The
@@ -222,9 +214,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 onSelectedItemIdChange(id);
             }
             await callback?.();
-            if (isMobileMode && !hasChildren && closeMobileMenu) {
-                closeMobileMenu();
-            }
         };
     };
 
@@ -245,7 +234,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
     })();
 
-    const ChevronIcon = isMobileMode || doublePanel ? IconChevronRightRegular : IconChevronDownRegular;
+    const ChevronIcon = doublePanel ? IconChevronRightRegular : IconChevronDownRegular;
 
     const shouldShowAsset = asset && (collapsed || showIconWhenExpanded);
     let assetContent: React.ReactNode = null;
@@ -280,7 +269,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const touchableClassName = classnames(styles.itemTouchable, styles.itemTouchableVariant[variant], {
         [styles.itemTouchableSelected[variant]]: showBackground,
         [styles.itemTouchableCollapsed]: collapsed && !isInsidePanel,
-        [styles.itemTouchableMobile]: isMobileMode,
     });
 
     const rowContent = (
@@ -308,23 +296,11 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const interactiveRow = (() => {
         if (hasChildren) {
             const handlePress = () => {
-                // Mobile: Always navigate to children with stacked navigation (exit early)
-                if (isMobileMode) {
-                    if (pushMobileNavLevel && childrenData && id && label) {
-                        pushMobileNavLevel({
-                            id,
-                            label,
-                            items: childrenData,
-                        });
-                    }
-                    return; // CRITICAL: Exit to prevent desktop behavior
-                }
-
-                // Desktop: Use dialog or double panel mode
+                // The dialog panel and the second column both open from the panel state
                 if (shouldShowPanelMode) {
                     handleTogglePanel();
                 }
-                // Desktop: Inline expansion
+                // The expanded sidenav opens the children in place
                 else {
                     setOpen((prev) => !prev);
                 }
@@ -334,7 +310,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 <Touchable
                     className={touchableClassName}
                     onPress={handlePress}
-                    aria-expanded={!isMobileMode && (shouldShowPanelMode ? isPanelOpen : isOpen)}
+                    aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
                     aria-label={label}
                     dataAttributes={{'parent-item': 'true'}}
                 >
@@ -399,7 +375,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     return (
         <>
             {row}
-            {isOpen && !isMobileMode && (
+            {isOpen && (
                 <div className={styles.nestedList} role="group" aria-label={label}>
                     <SidenavLevelContext.Provider value={level + 1}>{children}</SidenavLevelContext.Provider>
                 </div>

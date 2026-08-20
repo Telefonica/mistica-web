@@ -6,27 +6,28 @@ import {DEFAULT_WIDTH, COLLAPSED_WIDTH, LOGO_SIZE} from './sidenav-bar.css';
 import {ThemeVariant, normalizeVariant, useThemeVariant} from '../theme-variant-context';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
-import {useScreenSize, useTheme, useDisableBodyScroll} from '../hooks';
+import {useScreenSize, useTheme} from '../hooks';
 import {IconButton} from '../icon-button';
-import * as tokens from '../text-tokens';
 import {Logo} from '../logo';
 import Divider from '../divider';
 import {Text3} from '../text';
-import {vars as skinVars} from '../skins/skin-contract.css';
 import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
-import IconMenuRegular from '../generated/mistica-icons/icon-menu-regular';
-import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
-import IconChevronLeftRegular from '../generated/mistica-icons/icon-chevron-left-regular';
 import {SidenavItem} from './sidenav-item';
 import {SidenavDoublePanel} from './sidenav-panel';
+import {SidenavMobileBar} from './sidenav-mobile';
 import {isSidenavSection} from './sidenav-types';
 import {shouldShowBoxedBorder} from '../boxed';
 
 import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes} from '../utils/types';
-import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-types';
+import type {
+    SidenavEntry,
+    SidenavItem as SidenavItemType,
+    SidenavLogo,
+    SidenavLogoRenderProps,
+} from './sidenav-types';
 
 // Branded type: a string that is guaranteed to be an opaque color
 type OpaqueColor = string & {readonly __brand: 'OpaqueColor'};
@@ -73,9 +74,9 @@ const enforceOpaqueColor = (color: string, region: 'header' | 'footer'): OpaqueC
  * The public API (props of SidenavBar / SidenavSection / SidenavItem) is stable and includes:
  *   - Dialog panel rendering of nested items when collapsed
  *   - Double panel rendering of nested items when doublePanel={true}
+ *   - The mobile and tablet burger menu, which `SidenavMobileBar` renders
  *
  * Behaviours described in the spec that are not yet implemented:
- *   - Mobile burger-menu behaviour (reuses MainNavigationBar patterns).
  *   - Layout wrapper for the main content (whole-viewport / centered).
  *   - Per-region colour token matrices for brand/alternative/negative/media variants
  *     (currently only the `default` variant is fully styled; other variants still
@@ -85,12 +86,6 @@ const enforceOpaqueColor = (color: string, region: 'header' | 'footer'): OpaqueC
 // -----------------------------------------------------------------------------
 // Context
 // -----------------------------------------------------------------------------
-
-type MobileNavigationLevel = {
-    id: string | null;
-    label: string;
-    items: ReadonlyArray<SidenavItemType>;
-};
 
 type SidenavBarContextValue = {
     collapsed: boolean;
@@ -109,12 +104,6 @@ type SidenavBarContextValue = {
     isInsidePanel: boolean;
     selectedItemId: string | null;
     onSelectedItemIdChange?: (id: string | null) => void;
-    isMobileMode?: boolean;
-    mobileMenuOpen?: boolean;
-    closeMobileMenu?: () => void;
-    mobileNavLevel?: Array<MobileNavigationLevel>;
-    pushMobileNavLevel?: (level: MobileNavigationLevel) => void;
-    popMobileNavLevel?: () => void;
 };
 
 const SidenavBarContext = React.createContext<SidenavBarContextValue>({
@@ -128,12 +117,6 @@ const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     containerRef: React.createRef(),
     isInsidePanel: false,
     selectedItemId: null,
-    isMobileMode: false,
-    mobileMenuOpen: false,
-    closeMobileMenu: () => {},
-    mobileNavLevel: [],
-    pushMobileNavLevel: () => {},
-    popMobileNavLevel: () => {},
 });
 
 const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(SidenavBarContext);
@@ -204,7 +187,7 @@ const SidenavSection = ({
     children,
     dataAttributes,
 }: SidenavSectionProps): JSX.Element => {
-    const {collapsed, isMobileMode} = useSidenavBarContext();
+    const {collapsed} = useSidenavBarContext();
     const variant = useThemeVariant();
 
     return (
@@ -215,11 +198,7 @@ const SidenavSection = ({
             {...getPrefixedDataAttributes({testid: 'SidenavSection', ...dataAttributes})}
         >
             {dividerTop && (
-                <div
-                    className={classnames(styles.sectionDivider, {
-                        [styles.sectionDividerHidden]: isMobileMode,
-                    })}
-                >
+                <div className={styles.sectionDivider}>
                     <Divider />
                 </div>
             )}
@@ -236,11 +215,7 @@ const SidenavSection = ({
             )}
             <div className={styles.sectionContent}>{children}</div>
             {dividerBottom && (
-                <div
-                    className={classnames(styles.sectionDivider, {
-                        [styles.sectionDividerHidden]: isMobileMode,
-                    })}
-                >
+                <div className={styles.sectionDivider}>
                     <Divider />
                 </div>
             )}
@@ -292,8 +267,13 @@ type SidenavBarBaseProps = {
     /** Opens the children of a parent item in a second column, to the right of the sidenav.
      * @default false */
     doublePanel?: boolean;
-    /** Logo element in header. Defaults to skin logo. Pass false to hide. @default <Logo size={32} /> */
-    logo?: React.ReactElement | false;
+    /** Logo of the header. Defaults to the logo of the skin: the imagotype when the sidenav is expanded,
+     * and the isotype when it is collapsed, both 32px tall. It takes true for that same default, false to
+     * hide the logo, an element of your own, or a function that receives the collapsed state and returns
+     * one logo for each state. The collapsed rail clamps the width of the logo to 32px. The mobile top bar
+     * is not a rail, so it shows the imagotype at 40px, and it reports a collapsed state of false.
+     * @see SidenavLogoRenderProps */
+    logo?: SidenavLogo;
     /** Custom content below logo/collapse in header. */
     headerSlot?: React.ReactNode;
     /** Custom background colors for header (opaque), body (any), and footer (opaque) regions. */
@@ -391,7 +371,6 @@ const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement =>
         newTab: item.newTab,
         onNavigate: item.onNavigate,
         children,
-        childrenData: item.children,
     };
 
     // Build navigation props based on which one is defined
@@ -476,49 +455,12 @@ const SidenavBar = ({
     onSelectedItemIdChange,
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
-    const {isMobile} = useScreenSize();
-    const {t, componentProperties} = useTheme();
+    const {isTabletOrSmaller} = useScreenSize();
+    const {componentProperties} = useTheme();
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
-    const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-    const [mobileNavStack, setMobileNavStack] = React.useState<Array<MobileNavigationLevel>>([]);
     const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(null);
-    useDisableBodyScroll(isMobile && mobileMenuOpen);
-
-    const getBackButtonText = (): string => t(tokens.sidenavMobileBackButton);
-
-    const pushMobileNavLevel = React.useCallback((level: MobileNavigationLevel) => {
-        setMobileNavStack((prev) => [...prev, level]);
-    }, []);
-
-    const popMobileNavLevel = React.useCallback(() => {
-        setMobileNavStack((prev) => {
-            if (prev.length > 0) {
-                return prev.slice(0, -1);
-            }
-            return prev;
-        });
-    }, []);
-
-    React.useEffect(() => {
-        const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                if (mobileNavStack.length > 0) {
-                    popMobileNavLevel();
-                } else if (mobileMenuOpen) {
-                    setMobileMenuOpen(false);
-                }
-            }
-        };
-
-        if (isMobile && (mobileMenuOpen || mobileNavStack.length > 0)) {
-            document.addEventListener('keydown', handleEscape);
-            return () => {
-                document.removeEventListener('keydown', handleEscape);
-            };
-        }
-    }, [isMobile, mobileMenuOpen, mobileNavStack.length, popMobileNavLevel]);
 
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
@@ -653,8 +595,6 @@ const SidenavBar = ({
         if ((sections?.length ?? 0) !== prevSectionsLengthRef.current) {
             prevSectionsLengthRef.current = sections?.length ?? 0;
             setPanelOpenForItemId(null);
-            setMobileNavStack([]);
-            setMobileMenuOpen(false);
         }
     }, [sections?.length]);
 
@@ -713,14 +653,9 @@ const SidenavBar = ({
         onCollapse?.(next);
     }, [collapsed, isCollapsedControlled, onCollapse]);
 
-    const closeMobileMenu = React.useCallback(() => {
-        setMobileMenuOpen(false);
-        setMobileNavStack([]);
-    }, []);
-
     const contextValue = React.useMemo(
         () => ({
-            collapsed: isMobile ? false : collapsed,
+            collapsed,
             collapsible,
             doublePanel,
             toggleCollapsed,
@@ -731,12 +666,6 @@ const SidenavBar = ({
             isInsidePanel: false,
             selectedItemId: selectedItemId ?? null,
             onSelectedItemIdChange,
-            isMobileMode: isMobile,
-            mobileMenuOpen,
-            closeMobileMenu,
-            mobileNavLevel: mobileNavStack,
-            pushMobileNavLevel,
-            popMobileNavLevel,
         }),
         [
             collapsed,
@@ -748,12 +677,6 @@ const SidenavBar = ({
             containerRef,
             selectedItemId,
             onSelectedItemIdChange,
-            isMobile,
-            mobileMenuOpen,
-            closeMobileMenu,
-            mobileNavStack,
-            pushMobileNavLevel,
-            popMobileNavLevel,
         ]
     );
 
@@ -786,7 +709,51 @@ const SidenavBar = ({
         }
     }
 
-    const logoElement = logo === false ? null : logo ?? <Logo size={LOGO_SIZE} />;
+    const normalizedVariant = normalizeVariant(variant);
+
+    // A tablet has no room for the rail either, so both breakpoints take the mobile treatment. The spec
+    // gives "N/A" for the width of the sidenav on mobile and on tablet. The mobile bar owns its own state,
+    // so the desktop tree below keeps none of it.
+    if (isTabletOrSmaller) {
+        return (
+            <SidenavMobileBar
+                entries={sections}
+                aria-label={ariaLabel}
+                variant={normalizedVariant}
+                logo={logo}
+                headerSlot={headerSlot}
+                footerSlot={footerSlot}
+                selectedItemId={selectedItemId ?? null}
+                onSelectedItemIdChange={onSelectedItemIdChange}
+                dataAttributes={dataAttributes}
+            />
+        );
+    }
+
+    // The expanded sidenav has room for the brand name, so the default logo is the imagotype. The
+    // collapsed rail only fits the symbol, so it falls back to the isotype. Both keep the same height.
+    // The symbol shifts a little between the two states, and the sidenav does not cause it: both boxes
+    // sit at the same top and the same left. Each brand draws its symbol at its own scale and offset
+    // inside the canvas of 72 units of its two artworks. Movistar centers the symbol in the imagotype
+    // and places it 1.5 units above centre in the isotype, which reads as 0.67px at a height of 32px.
+    // Telefonica reaches 4px. A correction belongs to the artwork of the skin, not here: an offset in
+    // this component would need one value per skin and would still leave the other components unaligned.
+    // `logo` takes true for the default logo, so that a consumer can drive the header from a flag of its
+    // own without repeating the default element. It also takes a function, which receives the same state
+    // that the default logo reads, so a logo of its own swaps with the sidenav as well.
+    const isLogoCollapsed = collapsed;
+    const logoElement = (() => {
+        if (logo === false) {
+            return null;
+        }
+        if (typeof logo === 'function') {
+            return logo({collapsed: isLogoCollapsed});
+        }
+        if (logo === undefined || logo === true) {
+            return <Logo size={LOGO_SIZE} type={isLogoCollapsed ? 'isotype' : 'imagotype'} />;
+        }
+        return logo;
+    })();
 
     // The header shows an icon button by default. A consumer that needs another control receives the props
     // of that button, so its own control keeps the behavior and the accessible name of the default one.
@@ -808,7 +775,7 @@ const SidenavBar = ({
         return (
             <IconButton
                 Icon={collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular}
-                type="brand"
+                type="neutral"
                 backgroundType="transparent"
                 small
                 onPress={collapseActionProps.onPress}
@@ -818,7 +785,6 @@ const SidenavBar = ({
     })();
 
     const hasHeader = Boolean(logoElement || collapseActionElement || headerSlot);
-    const normalizedVariant = normalizeVariant(variant);
     const hasBoxedBorder =
         boxed && shouldShowBoxedBorder(normalizedVariant, pageVariant, componentProperties.showBoxedBorder);
 
@@ -829,75 +795,7 @@ const SidenavBar = ({
             ? findFirstLevelItem(sections, panelOpenForItemId)
             : undefined;
     const doublePanelChildren = doublePanelItem?.children;
-    const isDoublePanelOpen = !isMobile && Boolean(doublePanelChildren?.length);
-
-    if (isMobile) {
-        return (
-            <ThemeVariant variant={normalizedVariant}>
-                <SidenavBarContext.Provider value={contextValue}>
-                    <div
-                        className={styles.mobileContainer}
-                        {...getPrefixedDataAttributes({testid: 'SidenavBarMobile', ...dataAttributes})}
-                    >
-                        <div className={styles.mobileTopBar}>
-                            <IconButton
-                                Icon={mobileMenuOpen ? IconCloseRegular : IconMenuRegular}
-                                type="neutral"
-                                backgroundType="transparent"
-                                onPress={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                            />
-                            {logoElement && <div className={styles.logo}>{logoElement}</div>}
-                            <div className={styles.mobileTopBarControls} />
-                        </div>
-
-                        {mobileMenuOpen && (
-                            <>
-                                <div
-                                    className={styles.mobilePanelOverlay}
-                                    data-open={mobileMenuOpen}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    role="presentation"
-                                />
-                                <nav className={styles.mobilePanel} aria-label={ariaLabel}>
-                                    {mobileNavStack.length > 0 && (
-                                        <div className={styles.mobilePanelHeader}>
-                                            <IconButton
-                                                Icon={IconChevronLeftRegular}
-                                                type="neutral"
-                                                backgroundType="transparent"
-                                                onPress={popMobileNavLevel}
-                                                aria-label={getBackButtonText()}
-                                            />
-                                            <Text3 regular>{getBackButtonText()}</Text3>
-                                        </div>
-                                    )}
-                                    <div className={styles.mobilePanelContent}>
-                                        {mobileNavStack.length > 0 && (
-                                            <div className={styles.sectionTitle}>
-                                                <Text3 medium color={skinVars.colors.textSecondary}>
-                                                    {mobileNavStack[mobileNavStack.length - 1].label}
-                                                </Text3>
-                                            </div>
-                                        )}
-                                        {mobileNavStack.length > 0 ? (
-                                            mobileNavStack[mobileNavStack.length - 1].items.map((item) =>
-                                                renderSidenavItemFromData(item)
-                                            )
-                                        ) : (
-                                            <div className={styles.bodyContent}>
-                                                {sections ? renderSidenavEntries(sections) : null}
-                                            </div>
-                                        )}
-                                    </div>
-                                </nav>
-                            </>
-                        )}
-                    </div>
-                </SidenavBarContext.Provider>
-            </ThemeVariant>
-        );
-    }
+    const isDoublePanelOpen = Boolean(doublePanelChildren?.length);
 
     return (
         <ThemeVariant variant={normalizedVariant}>
@@ -940,7 +838,15 @@ const SidenavBar = ({
                                         [styles.headerControlsCollapsed]: collapsed,
                                     })}
                                 >
-                                    {logoElement && <div className={styles.logo}>{logoElement}</div>}
+                                    {logoElement && (
+                                        <div
+                                            className={classnames(styles.logo, {
+                                                [styles.logoCollapsed]: collapsed,
+                                            })}
+                                        >
+                                            {logoElement}
+                                        </div>
+                                    )}
                                     {collapseActionElement}
                                 </div>
                                 {headerSlot && (
@@ -1045,4 +951,5 @@ export type {
     SidenavSectionProps,
     SidenavBarBackgroundColors,
     SidenavCollapseActionRenderProps,
+    SidenavLogoRenderProps,
 };

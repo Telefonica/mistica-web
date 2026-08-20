@@ -1,26 +1,29 @@
 'use client';
 import * as React from 'react';
-import {CSSTransition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 import Inline from './inline';
 import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
 import {useElementDimensions, useScreenSize, useTheme} from './hooks';
-import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
-import {IconButton} from './icon-button';
 import {Row, RowList} from './list';
 import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
-import {Portal} from './portal';
+import {MobileNavigationMenu} from './mobile-navigation-menu';
+import {
+    BurgerMenuIcon,
+    Header,
+    NavigationBar,
+    NavigationBarContentContainer,
+    NavigationBarSideMargins,
+} from './navigation-shared';
 import GridLayout from './grid-layout';
 import {useSetModalState} from './modal-context-provider';
 import {Logo} from './logo';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './navigation-bar.css';
-import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
+import * as sharedStyles from './navigation-shared.css';
+import {cancelEvent} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
@@ -34,14 +37,21 @@ import {DOWN, ESC, UP} from './utils/keys';
 import {debounce, isEqual} from './utils/helpers';
 import NegativeBox from './negative-box';
 
-import type {BoxProps} from './box';
+import type {WideConfig} from './navigation-shared';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
-import type {DataAttributes, HeadingType, IconProps} from './utils/types';
+import type {IconProps} from './utils/types';
 import type {InteractiveProps, MaybeInteractiveProps} from './navigation-types';
 
+// `NavigationBar` builds the simplest bar of the family, and the second level of both burger menus paints
+// its back bar with it, so it lives in the shared module. The package still publishes it from here.
+export {NavigationBar};
+
 const MAIN_NAVIGATION_BAR_MENU_DEBOUNCE_TIME = 120;
+
+// The top bar and the burger menu share one focus trap, so the focus moves between the two of them.
+const MAIN_NAVIGATION_BAR_FOCUS_TRAP_GROUP = 'burger-menu-lock';
 
 const MenuSectionArrow = ({size = 24, color = vars.colors.neutralHigh, style, className}: IconProps) => (
     <svg width={size} height={size} viewBox="0 0 8 8" style={style} className={className}>
@@ -51,216 +61,6 @@ const MenuSectionArrow = ({size = 24, color = vars.colors.neutralHigh, style, cl
         />
     </svg>
 );
-
-const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
-    return (
-        <div className={styles.burgerIconContainer} role="presentation" data-testid="BurgerMenuIcon">
-            <div className={isOpen ? styles.iconCloseOpen : styles.iconCloseHidden}>
-                <IconCloseRegular />
-            </div>
-            <div className={isOpen ? styles.iconMenuHidden : styles.iconMenuOpen}>
-                <IconMenuRegular />
-            </div>
-        </div>
-    );
-};
-
-type HeaderProps = {
-    children: React.ReactNode;
-    topFixed?: boolean;
-    variant: NonDeprecatedVariant;
-    withBorder?: boolean;
-    isBurgerMenuOpen?: boolean;
-    dataAttributes?: DataAttributes;
-    isBottomRow?: boolean;
-};
-
-const Header = ({children, topFixed, withBorder, isBurgerMenuOpen, variant, dataAttributes}: HeaderProps) => {
-    const {isDarkMode} = useTheme();
-
-    const getBorderClass = () => {
-        const isBrandVariant = (variant === 'brand' || variant === 'negative') && !isDarkMode;
-        if (isBrandVariant || !withBorder) return styles.navbarBorderColorVariants.noBorder;
-        if (isBurgerMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
-
-        return styles.navbarBorderColorVariants.default;
-    };
-
-    const backgroundColor = {
-        default: vars.colors.background,
-        brand: vars.colors.navigationBarBackground,
-        negative: vars.colors.backgroundNegative,
-        alternative: vars.colors.backgroundAlternative,
-        media: vars.colors.navigationBarBackground,
-    } as const;
-
-    return (
-        <header
-            className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
-            style={{
-                background: backgroundColor[variant],
-            }}
-            {...getPrefixedDataAttributes(dataAttributes)}
-        >
-            {children}
-        </header>
-    );
-};
-
-type NavigationBarContentContainerProps = {
-    right?: React.ReactNode;
-    children?: React.ReactNode;
-    desktopOnly?: boolean;
-    expandRightContent?: boolean;
-};
-
-const NavigationBarContentContainer = React.forwardRef<HTMLDivElement, NavigationBarContentContainerProps>(
-    ({right, children, desktopOnly, expandRightContent}, ref) => {
-        return (
-            <div
-                ref={ref}
-                className={classnames(styles.navigationBarContent, {[styles.desktopOnly]: desktopOnly})}
-            >
-                {children}
-                {right && (
-                    <div
-                        className={
-                            expandRightContent
-                                ? styles.navigationBarContentRightExpanded
-                                : styles.navigationBarContentRight
-                        }
-                    >
-                        {right}
-                    </div>
-                )}
-            </div>
-        );
-    }
-);
-
-type WideConfig = {
-    paddingX: BoxProps['paddingX'];
-};
-
-const NavigationBarSideMargins = ({
-    children,
-    wide,
-    backgroundColor,
-}: {
-    children: React.ReactNode;
-    wide: boolean | WideConfig;
-    backgroundColor?: string;
-}) => {
-    if (!wide) {
-        return <ResponsiveLayout backgroundColor={backgroundColor}>{children}</ResponsiveLayout>;
-    }
-
-    const defaultWidePaddingX: BoxProps['paddingX'] = {
-        mobile: 16,
-        tablet: 24,
-        desktop: 24,
-    };
-
-    return (
-        <Box
-            width="100%"
-            paddingX={
-                wide === true
-                    ? defaultWidePaddingX
-                    : typeof wide.paddingX === 'number'
-                      ? wide.paddingX
-                      : {
-                            ...defaultWidePaddingX,
-                            ...wide.paddingX,
-                        }
-            }
-            background={backgroundColor}
-        >
-            {children}
-        </Box>
-    );
-};
-
-interface NavigationBarCommonProps {
-    variant?: Variant;
-    onBack?: () => void;
-    title?: string;
-    titleAs?: HeadingType;
-    right?: React.ReactElement;
-    withBorder?: boolean;
-    children?: undefined;
-    wide?: boolean | WideConfig;
-}
-
-interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
-    topFixed?: true;
-}
-
-interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
-    topFixed: false;
-}
-
-type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
-
-export const NavigationBar = ({
-    onBack,
-    title,
-    titleAs,
-    right,
-    variant = 'default',
-    topFixed = true,
-    withBorder = true,
-    wide = false,
-}: NavigationBarProps): JSX.Element => {
-    const {texts, t} = useTheme();
-    const content = (
-        <NavigationBarContentContainer right={right} expandRightContent>
-            <Inline space={24} alignItems="center">
-                {onBack && (
-                    <IconButton
-                        aria-label={texts.backNavigationBar || t(tokens.backNavigationBar)}
-                        onPress={onBack}
-                        Icon={IconChevronLeftRegular}
-                        bleedLeft
-                        bleedRight
-                    />
-                )}
-                <Text3 regular truncate as={titleAs}>
-                    {title}
-                </Text3>
-            </Inline>
-        </NavigationBarContentContainer>
-    );
-
-    const calcPaddingXWhenNotTopFixed = (): BoxProps['paddingX'] => {
-        if (typeof wide !== 'object') {
-            return 0;
-        }
-        return wide.paddingX ?? 0;
-    };
-
-    const normalizedVariant = normalizeVariant(variant);
-
-    return (
-        <ThemeVariant variant={normalizedVariant}>
-            <Header
-                topFixed={topFixed}
-                withBorder={withBorder}
-                variant={normalizedVariant}
-                dataAttributes={{testid: 'NavigationBar'}}
-            >
-                {topFixed ? (
-                    <NavigationBarSideMargins wide={wide}>{content}</NavigationBarSideMargins>
-                ) : (
-                    <Box width="100%" paddingX={calcPaddingXWhenNotTopFixed()}>
-                        {content}
-                    </Box>
-                )}
-            </Header>
-            {topFixed && <div className={styles.spacer} />}
-        </ThemeVariant>
-    );
-};
 
 type SectionItem = {title: string} & InteractiveProps;
 
@@ -319,30 +119,6 @@ type MainNavigationBarProps = {
 
 type MainNavigationBarMenuStatus = 'opening' | 'opened' | 'closing' | 'closed';
 type MainNavigationBarMenuAction = 'open' | 'finishOpen' | 'close' | 'finishClose';
-
-const mainNavigationBurgerMenuTranstions: Record<
-    MainNavigationBarMenuStatus,
-    Partial<Record<MainNavigationBarMenuAction, MainNavigationBarMenuStatus>>
-> = {
-    opening: {
-        close: 'closing',
-        finishOpen: 'opened',
-    },
-    opened: {
-        close: 'closing',
-    },
-    closing: {
-        open: 'opening',
-        finishClose: 'closed',
-    },
-    closed: {
-        open: 'opening',
-    },
-};
-
-const burgerMenuReducer = (state: MainNavigationBarMenuStatus, action: MainNavigationBarMenuAction) => {
-    return mainNavigationBurgerMenuTranstions[state][action] || state;
-};
 
 const MainNavigationBarBurgerSection = ({
     section,
@@ -450,125 +226,59 @@ const MainNavigationBarBurgerMenu = ({
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
-    const {isDarkMode, texts, t} = useTheme();
     const [openedSection, setOpenedSection] = React.useState(-1);
     const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
-    const [subMenuStatus, dispatch] = React.useReducer(burgerMenuReducer, 'closed');
-    const menuRef = React.useRef<HTMLDivElement>(null);
-
-    const shadowAlpha = isDarkMode ? 1 : 0.2;
-    const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.BURGER_MENU_ANIMATION_DURATION_MS;
-
-    React.useEffect(() => {
-        let id: NodeJS.Timeout;
-
-        // menu starts opening or closing
-        if (isSubMenuOpen) {
-            dispatch('open');
-            id = setTimeout(() => dispatch('finishOpen'), menuAnimationDuration);
-        } else {
-            dispatch('close');
-            id = setTimeout(() => dispatch('finishClose'), menuAnimationDuration);
-        }
-
-        return () => clearTimeout(id);
-    }, [isSubMenuOpen, menuAnimationDuration]);
-
-    const sectionContainerRef = React.useRef<HTMLDivElement>(null);
-
-    React.useEffect(() => {
-        // Make screen reader focus on back button when opening any section's menu
-        if (subMenuStatus === 'opening') {
-            const sectionBackButtonElement = sectionContainerRef.current?.querySelector<HTMLButtonElement>(
-                `button[aria-label="${texts.backNavigationBar || t(tokens.backNavigationBar)}"]`
-            );
-
-            sectionBackButtonElement?.focus();
-        }
-    }, [subMenuStatus, t, texts]);
 
     return (
-        <Portal>
-            <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                <CSSTransition
-                    onEntered={() => setDisableFocusTrap(false)}
-                    onExiting={() => setDisableFocusTrap(true)}
-                    onExited={() => {
-                        setIsSubMenuOpen(false);
-                        setOpenedSection(-1);
-                    }}
-                    classNames={styles.burgerMenuTransition}
-                    in={open}
-                    nodeRef={menuRef}
-                    timeout={menuAnimationDuration}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <nav
-                        className={styles.burgerMenu}
-                        style={{
-                            boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`,
-                            top: NAVBAR_HEIGHT_MOBILE + topSlotHeight,
-                        }}
-                        id={id}
-                        ref={menuRef}
-                    >
-                        <div className={styles.burgerMenuContainer}>
-                            <div
-                                className={styles.burgerMenuContentContainer}
-                                style={{
-                                    transform: `translate(${isSubMenuOpen ? '-100vw' : '0'})`,
-                                }}
-                            >
-                                {subMenuStatus !== 'opened' && (
-                                    <ResponsiveLayout>
-                                        <ResetResponsiveLayout>
-                                            <RowList>
-                                                {sections.map(({title, menu, ...interactiveProps}, index) => (
-                                                    <Row
-                                                        key={index}
-                                                        title={title}
-                                                        {...(menu
-                                                            ? {
-                                                                  onPress: () => {
-                                                                      setIsSubMenuOpen(true);
-                                                                      setOpenedSection(index);
-                                                                  },
-                                                              }
-                                                            : // Close the menu when one of the rows is pressed
-                                                              getInteractivePropsWithCloseMenu(
-                                                                  interactiveProps as InteractiveProps,
-                                                                  closeMenu
-                                                              ))}
-                                                    />
-                                                ))}
-                                            </RowList>
-                                        </ResetResponsiveLayout>
-                                        {slot && <Box paddingY={16}>{slot}</Box>}
-                                    </ResponsiveLayout>
-                                )}
-                            </div>
-
-                            <div
-                                className={styles.burgerMenuContentContainer}
-                                ref={sectionContainerRef}
-                                style={{
-                                    transform: `translate(${isSubMenuOpen ? '0' : '100vw'})`,
-                                }}
-                            >
-                                {subMenuStatus !== 'closed' && openedSection !== -1 && (
-                                    <MainNavigationBarBurgerSection
-                                        section={sections[openedSection]}
-                                        closeMenu={closeMenu}
-                                        closeSubMenu={() => setIsSubMenuOpen(false)}
-                                    />
-                                )}
-                            </div>
-                        </div>
-                    </nav>
-                </CSSTransition>
-            </FocusTrap>
-        </Portal>
+        <MobileNavigationMenu
+            open={open}
+            id={id}
+            topOffset={NAVBAR_HEIGHT_MOBILE + topSlotHeight}
+            secondLevelOpen={isSubMenuOpen}
+            onExited={() => {
+                setIsSubMenuOpen(false);
+                setOpenedSection(-1);
+            }}
+            focusTrapGroup={MAIN_NAVIGATION_BAR_FOCUS_TRAP_GROUP}
+            disableFocusTrap={disableFocusTrap}
+            setDisableFocusTrap={setDisableFocusTrap}
+            firstLevel={
+                <ResponsiveLayout>
+                    <ResetResponsiveLayout>
+                        <RowList>
+                            {sections.map(({title, menu, ...interactiveProps}, index) => (
+                                <Row
+                                    key={index}
+                                    title={title}
+                                    {...(menu
+                                        ? {
+                                              onPress: () => {
+                                                  setIsSubMenuOpen(true);
+                                                  setOpenedSection(index);
+                                              },
+                                          }
+                                        : // Close the menu when one of the rows is pressed
+                                          getInteractivePropsWithCloseMenu(
+                                              interactiveProps as InteractiveProps,
+                                              closeMenu
+                                          ))}
+                                />
+                            ))}
+                        </RowList>
+                    </ResetResponsiveLayout>
+                    {slot && <Box paddingY={16}>{slot}</Box>}
+                </ResponsiveLayout>
+            }
+            secondLevel={
+                openedSection !== -1 ? (
+                    <MainNavigationBarBurgerSection
+                        section={sections[openedSection]}
+                        closeMenu={closeMenu}
+                        closeSubMenu={() => setIsSubMenuOpen(false)}
+                    />
+                ) : null
+            }
+        />
     );
 };
 
@@ -925,7 +635,7 @@ const MainNavigationBarDesktopMenuContent = ({
     const customContent = section?.menu?.content;
 
     return (
-        <div className={styles.desktopOnly}>
+        <div className={sharedStyles.desktopOnly}>
             <ThemeVariant variant="default">
                 {openedSection === index && (
                     <ResetResponsiveLayout>
@@ -1003,7 +713,7 @@ const MainNavigationBarDesktopMenuBackground = ({
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
 
     return (
-        <div className={styles.desktopOnly}>
+        <div className={sharedStyles.desktopOnly}>
             <div className={styles.desktopMenuWrapper} style={{top: topSpace}}>
                 <div
                     className={styles.desktopMenuBackgroundContainer}
@@ -1039,7 +749,7 @@ const MainNavigationBarDesktopSmallMenu = ({
     const {openedSection, menuStatus, setIsMenuHovered, closeMenu} = useMainNavigationBarDesktopMenuState();
 
     return (
-        <div className={styles.desktopOnly}>
+        <div className={sharedStyles.desktopOnly}>
             {index === openedSection && (
                 <ThemeVariant variant="default">
                     <div
@@ -1325,7 +1035,7 @@ const MainNavigationBarDesktopSections = ({
     return (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <nav
-            className={classnames(styles.desktopOnly, styles.mainNavBarSectionsContainer)}
+            className={classnames(sharedStyles.desktopOnly, styles.mainNavBarSectionsContainer)}
             style={{
                 paddingLeft: !isLargeNavigationBar ? 48 : 0,
                 paddingRight: !isLargeNavigationBar && hasRightContent ? 136 : 0,
@@ -1485,7 +1195,7 @@ export const MainNavigationBar = ({
                         >
                             {showBurger && (
                                 <Touchable
-                                    className={styles.burgerMenuButton}
+                                    className={sharedStyles.burgerMenuButton}
                                     aria-live="polite"
                                     aria-label={
                                         isBurgerMenuOpen
@@ -1499,7 +1209,7 @@ export const MainNavigationBar = ({
                                     <BurgerMenuIcon isOpen={isBurgerMenuOpen} />
                                 </Touchable>
                             )}
-                            <div className={styles.logoContainer}>{logoElement}</div>
+                            <div className={sharedStyles.logoContainer}>{logoElement}</div>
                             {!hasBottomSections && desktopSections}
                         </NavigationBarContentContainer>
                         {hasBottomSections && (
@@ -1511,7 +1221,7 @@ export const MainNavigationBar = ({
                 </MainNavigationBarContentWrapper>
             </Header>
             {topFixed && topSlotHeight > 0 && <div style={{height: topSlotHeight}} />}
-            {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
+            {topFixed && <div className={hasBottomSections ? styles.spacerLarge : sharedStyles.spacer} />}
         </ThemeVariant>
     );
 
@@ -1521,7 +1231,7 @@ export const MainNavigationBar = ({
                 mainNavBar
             ) : (
                 <>
-                    <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                    <FocusTrap disabled={disableFocusTrap} group={MAIN_NAVIGATION_BAR_FOCUS_TRAP_GROUP}>
                         {mainNavBar}
                     </FocusTrap>
                     <MainNavigationBarBurgerMenu
@@ -1578,7 +1288,7 @@ export const FunnelNavigationBar = ({
                     </GridLayout>
                 </NavigationBarSideMargins>
             </Header>
-            {topFixed && <div className={styles.spacer} />}
+            {topFixed && <div className={sharedStyles.spacer} />}
         </ThemeVariant>
     );
 };

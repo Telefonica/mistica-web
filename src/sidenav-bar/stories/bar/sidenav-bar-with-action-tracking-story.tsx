@@ -14,6 +14,7 @@ import Stack from '../../../stack';
 import Callout from '../../../callout';
 import {Text3, Text6} from '../../../text';
 import {vars as skinVars} from '../../../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-story-page';
 
 import type {Variant} from '../../../theme-variant-context';
 
@@ -168,45 +169,45 @@ export const WithActionTracking = ({
     ];
 
     return (
-        <div style={{display: 'flex', height: '100vh'}}>
-            <SidenavBar
-                {...({
-                    'aria-label': label,
-                    variant,
-                    logo: logo ? undefined : false,
-                    headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
-                    footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
-                    fixedFooter,
-                    boxed,
-                    divider,
-                    collapsible,
-                    defaultCollapsed,
-                    doublePanel,
-                    width,
-                    background,
-                    sections,
-                } as any)}
-            />
-            <div style={{flex: 1, overflowY: 'auto'}}>
-                <Box padding={32}>
-                    <Stack space={24}>
-                        <Stack space={8}>
-                            <Text6 as="h1">Action tracking example</Text6>
-                            <Text3 regular>
-                                Press the items of the sidenav, or open a parent item, to track the actions
-                                below.
-                            </Text3>
-                        </Stack>
-
-                        <Callout
-                            asset={<IconCheckRegular color={skinVars.colors.brand} />}
-                            title="Last action"
-                            description={lastAction || 'Press an item to trigger an action.'}
-                        />
+        <SidenavStoryPage
+            sidenav={
+                <SidenavBar
+                    {...({
+                        'aria-label': label,
+                        variant,
+                        logo,
+                        headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
+                        footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
+                        fixedFooter,
+                        boxed,
+                        divider,
+                        collapsible,
+                        defaultCollapsed,
+                        doublePanel,
+                        width,
+                        background,
+                        sections,
+                    } as any)}
+                />
+            }
+        >
+            <Box padding={32}>
+                <Stack space={24}>
+                    <Stack space={8}>
+                        <Text6 as="h1">Action tracking example</Text6>
+                        <Text3 regular>
+                            Press the items of the sidenav, or open a parent item, to track the actions below.
+                        </Text3>
                     </Stack>
-                </Box>
-            </div>
-        </div>
+
+                    <Callout
+                        asset={<IconCheckRegular color={skinVars.colors.brand} />}
+                        title="Last action"
+                        description={lastAction || 'Press an item to trigger an action.'}
+                    />
+                </Stack>
+            </Box>
+        </SidenavStoryPage>
     );
 };
 
@@ -247,7 +248,9 @@ export default {
             options: ['default', 'brand', 'alternative', 'negative', 'media'],
             control: {type: 'select'},
         },
-        logo: {control: 'boolean'},
+        // The prop takes an element or a boolean, and Storybook drops a control value that does not match
+        // the type it reads from that union. The story declares the type of its own arg instead.
+        logo: {control: 'boolean', type: {name: 'boolean'}},
         headerSlot: {control: 'boolean'},
         footerSlot: {control: 'boolean'},
         fixedFooter: {

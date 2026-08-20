@@ -10,19 +10,27 @@ import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-
 import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
 import IconChevronRightRegular from '../../../generated/mistica-icons/icon-chevron-right-regular';
 import {Placeholder} from '../../../placeholder';
+import Circle from '../../../circle';
 import Badge from '../../../badge';
 import {IconButton} from '../../../icon-button';
 import {ButtonLink} from '../../../button';
 import Box from '../../../box';
 import Stack from '../../../stack';
+import Inline from '../../../inline';
 import {Boxed} from '../../../boxed';
 import {UnorderedList, ListItem} from '../../../list';
 import {Text2, Text3, Text6} from '../../../text';
+import {useScreenSize} from '../../../hooks';
 import {vars as skinVars} from '../../../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-story-page';
 
 import type {Variant} from '../../../theme-variant-context';
 import type {SidenavSection} from '../../sidenav-types';
-import type {SidenavBarBackgroundColors, SidenavCollapseActionRenderProps} from '../../sidenav-bar';
+import type {
+    SidenavBarBackgroundColors,
+    SidenavCollapseActionRenderProps,
+    SidenavLogoRenderProps,
+} from '../../sidenav-bar';
 
 const getDefaultSections = (): Array<SidenavSection> => [
     {
@@ -135,10 +143,33 @@ const renderCustomCollapseAction = ({
         </ButtonLink>
     );
 
+// The logo slot takes an element, and a function when that element must follow the collapsed state, the
+// same way that the default logo swaps the imagotype for the isotype. This one is the mark of a product,
+// built with Mistica components: the rail shows the mark alone, because it clamps the width of the logo to
+// 32px, and the expanded sidenav adds the name of the product beside it.
+const productMark = (
+    <Circle size={32} backgroundColor={skinVars.colors.brand}>
+        <Text2 medium color={skinVars.colors.textPrimaryInverse}>
+            M
+        </Text2>
+    </Circle>
+);
+
+const renderCustomLogo = ({collapsed}: SidenavLogoRenderProps): React.ReactNode =>
+    collapsed ? (
+        productMark
+    ) : (
+        <Inline space={8} alignItems="center">
+            {productMark}
+            <Text3 medium>Console</Text3>
+        </Inline>
+    );
+
 type Args = {
     label: string;
     variant: Variant;
     logo: boolean;
+    customLogo: boolean;
     headerSlot: boolean;
     footerSlot: boolean;
     fixedFooter: boolean;
@@ -160,6 +191,7 @@ export const Default = ({
     label,
     variant,
     logo,
+    customLogo,
     headerSlot,
     footerSlot,
     fixedFooter,
@@ -175,6 +207,7 @@ export const Default = ({
     'Colors/Body': bodyColor,
     'Colors/Footer': footerColor,
 }: Args): React.JSX.Element => {
+    const {isTabletOrSmaller} = useScreenSize();
     const background: SidenavBarBackgroundColors = colorsEnabled
         ? {
               header: headerColor as any,
@@ -185,105 +218,118 @@ export const Default = ({
 
     const sections: Array<SidenavSection> = getDefaultSections();
 
+    // The mobile top bar holds the header slot, and it is 56px tall, so the slot of that breakpoint takes
+    // the size of an action of a navigation bar. The expanded sidenav has a whole row for it instead.
+    const headerSlotContent = isTabletOrSmaller ? (
+        <Placeholder height={32} width={72} />
+    ) : (
+        <Placeholder height={76} />
+    );
+
     return (
-        <div style={{display: 'flex', height: '100vh'}}>
-            <SidenavBar
-                {...({
-                    'aria-label': label,
-                    variant,
-                    logo: logo ? undefined : false,
-                    headerSlot: headerSlot ? <Placeholder height={76} /> : undefined,
-                    footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
-                    fixedFooter,
-                    boxed,
-                    divider,
-                    collapsible,
-                    renderCollapseAction: customCollapseAction ? renderCustomCollapseAction : undefined,
-                    defaultCollapsed,
-                    doublePanel,
-                    width,
-                    sections,
-                    background,
-                } as any)}
-            />
-            <div style={{flex: 1, overflowY: 'auto'}}>
-                <Box padding={32}>
-                    <Stack space={24}>
-                        <Stack space={8}>
-                            <Text6 as="h1">SidenavItem props showcase</Text6>
-                            <Text3 regular>
-                                Press the items of the sidenav to see each type of prop in action.
-                            </Text3>
-                        </Stack>
-
-                        <Boxed>
-                            <Box padding={24}>
-                                <Stack space={16}>
-                                    <Text3 medium as="h2" id="prop-types">
-                                        Types of props of a SidenavItem
-                                    </Text3>
-                                    <Text2 as="div" regular color={skinVars.colors.textSecondary}>
-                                        <UnorderedList aria-labelledby="prop-types">
-                                            <ListItem>
-                                                href navigates with a hyperlink, and it takes an optional
-                                                onNavigate callback. See &quot;Home (href)&quot;.
-                                            </ListItem>
-                                            <ListItem>
-                                                onPress runs a custom action. See &quot;Search
-                                                (onPress)&quot;.
-                                            </ListItem>
-                                            <ListItem>
-                                                children makes the item expandable. See &quot;Projects&quot;
-                                                and &quot;Teams&quot;. Such an item takes neither href nor
-                                                onPress.
-                                            </ListItem>
-                                            <ListItem>
-                                                rightSlot adds custom content on the right side. See the badge
-                                                of &quot;Notifications&quot;.
-                                            </ListItem>
-                                        </UnorderedList>
-                                    </Text2>
-                                </Stack>
-                            </Box>
-                        </Boxed>
-
-                        <Boxed variant="alternative">
-                            <Box padding={24}>
-                                <Stack space={16}>
-                                    <Text3 medium as="h2" id="key-features">
-                                        Key features
-                                    </Text3>
-                                    <Text2 as="div" regular>
-                                        <UnorderedList aria-labelledby="key-features">
-                                            <ListItem>
-                                                A first level item either expands its children, or navigates
-                                                with href, to, or onPress.
-                                            </ListItem>
-                                            <ListItem>
-                                                A child item takes no children, so the tree holds two levels.
-                                            </ListItem>
-                                            <ListItem>
-                                                The onNavigate callback runs for href and for to.
-                                            </ListItem>
-                                            <ListItem>
-                                                The label of an item says which prop it uses, either
-                                                &quot;(href)&quot; or &quot;(onPress)&quot;.
-                                            </ListItem>
-                                            <ListItem>
-                                                The header shows a collapse action by default. Turn on the
-                                                customCollapseAction control to paint that action with
-                                                renderCollapseAction, which receives the collapsed state, the
-                                                press handler, and the accessible name.
-                                            </ListItem>
-                                        </UnorderedList>
-                                    </Text2>
-                                </Stack>
-                            </Box>
-                        </Boxed>
+        <SidenavStoryPage
+            sidenav={
+                <SidenavBar
+                    {...({
+                        'aria-label': label,
+                        variant,
+                        logo: logo && customLogo ? renderCustomLogo : logo,
+                        headerSlot: headerSlot ? headerSlotContent : undefined,
+                        footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
+                        fixedFooter,
+                        boxed,
+                        divider,
+                        collapsible,
+                        renderCollapseAction: customCollapseAction ? renderCustomCollapseAction : undefined,
+                        defaultCollapsed,
+                        doublePanel,
+                        width,
+                        sections,
+                        background,
+                    } as any)}
+                />
+            }
+        >
+            <Box padding={32}>
+                <Stack space={24}>
+                    <Stack space={8}>
+                        <Text6 as="h1">SidenavItem props showcase</Text6>
+                        <Text3 regular>
+                            Press the items of the sidenav to see each type of prop in action.
+                        </Text3>
                     </Stack>
-                </Box>
-            </div>
-        </div>
+
+                    <Boxed>
+                        <Box padding={24}>
+                            <Stack space={16}>
+                                <Text3 medium as="h2" id="prop-types">
+                                    Types of props of a SidenavItem
+                                </Text3>
+                                <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                    <UnorderedList aria-labelledby="prop-types">
+                                        <ListItem>
+                                            href navigates with a hyperlink, and it takes an optional
+                                            onNavigate callback. See &quot;Home (href)&quot;.
+                                        </ListItem>
+                                        <ListItem>
+                                            onPress runs a custom action. See &quot;Search (onPress)&quot;.
+                                        </ListItem>
+                                        <ListItem>
+                                            children makes the item expandable. See &quot;Projects&quot; and
+                                            &quot;Teams&quot;. Such an item takes neither href nor onPress.
+                                        </ListItem>
+                                        <ListItem>
+                                            rightSlot adds custom content on the right side. See the badge of
+                                            &quot;Notifications&quot;.
+                                        </ListItem>
+                                    </UnorderedList>
+                                </Text2>
+                            </Stack>
+                        </Box>
+                    </Boxed>
+
+                    <Boxed variant="alternative">
+                        <Box padding={24}>
+                            <Stack space={16}>
+                                <Text3 medium as="h2" id="key-features">
+                                    Key features
+                                </Text3>
+                                <Text2 as="div" regular>
+                                    <UnorderedList aria-labelledby="key-features">
+                                        <ListItem>
+                                            A first level item either expands its children, or navigates with
+                                            href, to, or onPress.
+                                        </ListItem>
+                                        <ListItem>
+                                            A child item takes no children, so the tree holds two levels.
+                                        </ListItem>
+                                        <ListItem>The onNavigate callback runs for href and for to.</ListItem>
+                                        <ListItem>
+                                            The label of an item says which prop it uses, either
+                                            &quot;(href)&quot; or &quot;(onPress)&quot;.
+                                        </ListItem>
+                                        <ListItem>
+                                            The header shows a collapse action by default. Turn on the
+                                            customCollapseAction control to paint that action with
+                                            renderCollapseAction, which receives the collapsed state, the
+                                            press handler, and the accessible name.
+                                        </ListItem>
+                                        <ListItem>
+                                            The header shows the logo of the skin by default: the imagotype on
+                                            the expanded sidenav, and the isotype on the collapsed rail. The
+                                            logo prop also takes an element of your own, or a function that
+                                            receives the collapsed state and returns one logo for each state.
+                                            Turn on the customLogo control to see that function, and turn the
+                                            logo control off to hide the slot.
+                                        </ListItem>
+                                    </UnorderedList>
+                                </Text2>
+                            </Stack>
+                        </Box>
+                    </Boxed>
+                </Stack>
+            </Box>
+        </SidenavStoryPage>
     );
 };
 
@@ -306,6 +352,7 @@ export default {
         label: 'Main navigation',
         variant: 'default',
         logo: true,
+        customLogo: false,
         headerSlot: true,
         footerSlot: true,
         fixedFooter: false,
@@ -332,6 +379,17 @@ export default {
         },
         logo: {
             control: {type: 'boolean'},
+            // The prop takes an element or a boolean, and Storybook drops a control value that does not
+            // match the type it reads from that union. The story declares the type of its own arg instead.
+            type: {name: 'boolean'},
+            description:
+                'The logo of the skin: the imagotype on the expanded sidenav, and the isotype on the collapsed rail. It also takes an element of your own, or a function of the collapsed state.',
+        },
+        customLogo: {
+            control: {type: 'boolean'},
+            description:
+                'Puts a logo of your own in the slot with a function of the collapsed state: the mark of a product alone on the rail, and the mark with the name of the product on the expanded sidenav.',
+            if: {arg: 'logo', truthy: true},
         },
         headerSlot: {
             control: {type: 'boolean'},

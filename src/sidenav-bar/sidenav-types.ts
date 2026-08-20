@@ -126,9 +126,24 @@ type SidenavSection = {
  */
 type SidenavEntry = ExclusifyUnion<SidenavSection | SidenavItem>;
 
+/**
+ * Props of the logo of the header. A consumer that needs a logo of its own for each state reads them, the
+ * same way that the default logo swaps the imagotype for the isotype.
+ */
+type SidenavLogoRenderProps = {
+    /** Current collapsed state. The mobile top bar reports false, because it is not a rail. */
+    collapsed: boolean;
+};
+
+/**
+ * Logo of the header. It takes true for the logo of the skin, false to hide the logo, an element of your
+ * own, or a function that receives the collapsed state and returns one logo for each state.
+ */
+type SidenavLogo = React.ReactElement | boolean | ((props: SidenavLogoRenderProps) => React.ReactNode);
+
 /** Tells a first-level section apart from a first-level stand-alone item. */
 const isSidenavSection = (entry: SidenavEntry): entry is SidenavSection =>
     Array.isArray((entry as SidenavSection).items);
 
 export {isSidenavSection};
-export type {SidenavItem, SidenavSection, SidenavEntry};
+export type {SidenavItem, SidenavSection, SidenavEntry, SidenavLogo, SidenavLogoRenderProps};

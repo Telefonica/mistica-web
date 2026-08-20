@@ -243,7 +243,7 @@ export const headerBase = style({
     paddingBottom: 24,
 });
 
-// The logo and the collapse control stack, both 32px wide. Their left edge is placed with
+// The logo and the collapse control stack, both 32px tall. Their left edge is placed with
 // explicit padding rather than by centering, so that it stays at 20px in both states
 // regardless of the right divider border and of whether the consumer loads css/reset.css.
 export const headerControls = style({
@@ -263,11 +263,17 @@ export const headerControlsCollapsed = style({
     paddingRight: 20,
 });
 
+// The height of the logo is the same in both states. The width is not: the expanded sidenav shows the
+// imagotype, which is wider than the box of the rail, so only the collapsed rail clamps the width.
 export const logo = style({
     display: 'flex',
     alignItems: 'center',
-    width: LOGO_SIZE,
+    flexShrink: 0,
     height: LOGO_SIZE,
+});
+
+export const logoCollapsed = style({
+    width: LOGO_SIZE,
 });
 
 export const headerSlot = style({
@@ -378,10 +384,6 @@ export const sectionDivider = style({
     marginBottom: 8,
 });
 
-export const sectionDividerHidden = style({
-    display: 'none',
-});
-
 // Item ------------------------------------------------------------------------
 
 export const itemIndentVar = createVar();
@@ -417,10 +419,6 @@ export const itemTouchableVariant = styleVariants(itemColors, (colors) => ({
         '&:active': {backgroundColor: colors.pressed},
     },
 }));
-
-export const itemTouchableMobile = style({
-    height: 48,
-});
 
 export const itemTouchableCollapsed = style({
     justifyContent: 'center',
@@ -561,97 +559,3 @@ export const doublePanelTitle = style({
 export const columnSeparator = styleVariants(dividerColor, (color) => ({
     '::after': {...verticalDividerOverlay, backgroundColor: color},
 }));
-
-// Mobile -----------------------------------------------------------------------
-
-export const MOBILE_TOP_BAR_HEIGHT = 56;
-export const MOBILE_BOTTOM_BAR_HEIGHT = 48;
-
-export const mobileContainer = style({
-    position: 'fixed',
-    inset: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    pointerEvents: 'none',
-    zIndex: 100,
-});
-
-export const mobileTopBar = style({
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: MOBILE_TOP_BAR_HEIGHT,
-    zIndex: 100,
-    backgroundColor: skinVars.colors.background,
-    borderBottom: `1px solid ${skinVars.colors.divider}`,
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: 16,
-    paddingRight: 16,
-    gap: 24,
-    pointerEvents: 'auto',
-});
-
-export const mobileTopBarControls = style({
-    display: 'flex',
-    gap: 24,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flex: 1,
-});
-
-export const mobilePanelOverlay = style({
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 99,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    display: 'none',
-    pointerEvents: 'auto',
-    selectors: {
-        '&[data-open="true"]': {
-            display: 'block',
-        },
-    },
-});
-
-export const mobilePanel = style({
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    backgroundColor: skinVars.colors.backgroundContainer,
-    overflowY: 'auto',
-    zIndex: 101,
-    marginTop: MOBILE_TOP_BAR_HEIGHT,
-    paddingTop: 24,
-    pointerEvents: 'auto',
-});
-
-export const mobilePanelHeader = style({
-    display: 'flex',
-    alignItems: 'center',
-    gap: 16,
-    paddingLeft: 8,
-    paddingRight: 16,
-    paddingBottom: 16,
-    paddingTop: 16,
-    height: 'auto',
-    minHeight: 44,
-});
-
-export const mobilePanelHeaderTitle = style({
-    flex: 1,
-    textAlign: 'left',
-});
-
-export const mobilePanelContent = style({
-    display: 'flex',
-    flexDirection: 'column',
-    paddingLeft: 8,
-    paddingRight: 8,
-});

@@ -16,7 +16,9 @@ import {IconButton} from '../../../icon-button';
 import {Boxed} from '../../../boxed';
 import {UnorderedList, ListItem} from '../../../list';
 import {Text2, Text3, Text5, Text6} from '../../../text';
+import {useScreenSize} from '../../../hooks';
 import {vars as skinVars} from '../../../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-story-page';
 
 import type {SidenavEntry} from '../../sidenav-types';
 
@@ -74,6 +76,7 @@ const sections: Array<SidenavEntry> = [
 export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Args): React.JSX.Element => {
     // The page owns the collapsed state, so every control that writes it moves the sidenav through the
     // `collapsed` prop. The button of the header slot is one of those controls.
+    const {isTabletOrSmaller} = useScreenSize();
     const [collapsed, setCollapsed] = React.useState(false);
     const [selectedItemId, setSelectedItemId] = React.useState<string | null>('overview');
 
@@ -107,80 +110,83 @@ export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
     );
 
     return (
-        <div style={{display: 'flex', height: '100vh'}}>
-            <SidenavBar
-                aria-label="Alto Garda activities"
-                sections={sections}
-                collapsed={collapsed}
-                onCollapse={setCollapsed}
-                // A story that hides the default action proves that the button of the header slot drives the
-                // sidenav on its own.
-                renderCollapseAction={showDefaultCollapseAction ? undefined : () => null}
-                headerSlot={headerSlot}
-                selectedItemId={selectedItemId}
-                onSelectedItemIdChange={setSelectedItemId}
-                {...(boxed ? {boxed: true as const} : {boxed: false as const})}
-            />
-            <div style={{flex: 1, overflowY: 'auto'}}>
-                <Box padding={32}>
-                    <Stack space={24}>
-                        <Stack space={8}>
-                            <Text6 as="h1">Collapse control in the header slot</Text6>
-                            <Text3 regular>
-                                The page holds the collapsed state and passes it to the sidenav with the
-                                collapsed prop. The button of the header slot writes that state.
-                            </Text3>
-                        </Stack>
-
-                        <Boxed>
-                            <Box padding={24}>
-                                <Stack space={16}>
-                                    <Stack space={8}>
-                                        <Text2 medium color={skinVars.colors.textSecondary}>
-                                            Value of the collapsed prop
-                                        </Text2>
-                                        <Text5>{String(collapsed)}</Text5>
-                                    </Stack>
-                                    <ButtonSecondary small onPress={() => setCollapsed(!collapsed)}>
-                                        {collapsed ? 'Expand from the page' : 'Collapse from the page'}
-                                    </ButtonSecondary>
-                                </Stack>
-                            </Box>
-                        </Boxed>
-
-                        <Boxed>
-                            <Box padding={24}>
-                                <Stack space={16}>
-                                    <Text3 medium as="h2" id="how-to-test">
-                                        How to test
-                                    </Text3>
-                                    <Text2 as="div" regular color={skinVars.colors.textSecondary}>
-                                        <UnorderedList aria-labelledby="how-to-test">
-                                            <ListItem>
-                                                Press the Collapse button in the header of the sidenav. The
-                                                sidenav becomes a rail, and the readout above shows true.
-                                            </ListItem>
-                                            <ListItem>
-                                                Press the icon button of the rail. The sidenav expands again.
-                                            </ListItem>
-                                            <ListItem>
-                                                Press the button of the page. Both controls write the same
-                                                state, so the sidenav follows either of them.
-                                            </ListItem>
-                                            <ListItem>
-                                                Turn on the showDefaultCollapseAction control. The header then
-                                                shows the default action next to the logo, and both actions
-                                                move the same state.
-                                            </ListItem>
-                                        </UnorderedList>
-                                    </Text2>
-                                </Stack>
-                            </Box>
-                        </Boxed>
+        <SidenavStoryPage
+            sidenav={
+                <SidenavBar
+                    aria-label="Alto Garda activities"
+                    sections={sections}
+                    collapsed={collapsed}
+                    onCollapse={setCollapsed}
+                    // A story that hides the default action proves that the button of the header slot drives
+                    // the sidenav on its own.
+                    renderCollapseAction={showDefaultCollapseAction ? undefined : () => null}
+                    // The mobile sidenav is a top bar, and it never collapses, so a control that writes the
+                    // collapsed state has no meaning there. The story drops the slot on that breakpoint.
+                    headerSlot={isTabletOrSmaller ? undefined : headerSlot}
+                    selectedItemId={selectedItemId}
+                    onSelectedItemIdChange={setSelectedItemId}
+                    {...(boxed ? {boxed: true as const} : {boxed: false as const})}
+                />
+            }
+        >
+            <Box padding={32}>
+                <Stack space={24}>
+                    <Stack space={8}>
+                        <Text6 as="h1">Collapse control in the header slot</Text6>
+                        <Text3 regular>
+                            The page holds the collapsed state and passes it to the sidenav with the collapsed
+                            prop. The button of the header slot writes that state.
+                        </Text3>
                     </Stack>
-                </Box>
-            </div>
-        </div>
+
+                    <Boxed>
+                        <Box padding={24}>
+                            <Stack space={16}>
+                                <Stack space={8}>
+                                    <Text2 medium color={skinVars.colors.textSecondary}>
+                                        Value of the collapsed prop
+                                    </Text2>
+                                    <Text5>{String(collapsed)}</Text5>
+                                </Stack>
+                                <ButtonSecondary small onPress={() => setCollapsed(!collapsed)}>
+                                    {collapsed ? 'Expand from the page' : 'Collapse from the page'}
+                                </ButtonSecondary>
+                            </Stack>
+                        </Box>
+                    </Boxed>
+
+                    <Boxed>
+                        <Box padding={24}>
+                            <Stack space={16}>
+                                <Text3 medium as="h2" id="how-to-test">
+                                    How to test
+                                </Text3>
+                                <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                    <UnorderedList aria-labelledby="how-to-test">
+                                        <ListItem>
+                                            Press the Collapse button in the header of the sidenav. The
+                                            sidenav becomes a rail, and the readout above shows true.
+                                        </ListItem>
+                                        <ListItem>
+                                            Press the icon button of the rail. The sidenav expands again.
+                                        </ListItem>
+                                        <ListItem>
+                                            Press the button of the page. Both controls write the same state,
+                                            so the sidenav follows either of them.
+                                        </ListItem>
+                                        <ListItem>
+                                            Turn on the showDefaultCollapseAction control. The header then
+                                            shows the default action next to the logo, and both actions move
+                                            the same state.
+                                        </ListItem>
+                                    </UnorderedList>
+                                </Text2>
+                            </Stack>
+                        </Box>
+                    </Boxed>
+                </Stack>
+            </Box>
+        </SidenavStoryPage>
     );
 };
 

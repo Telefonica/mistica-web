@@ -1,8 +1,13 @@
 import {openStoryPage, screen} from '../../../test-utils';
 
+// Every test of the rail asks for a desktop device. A tablet takes the mobile treatment, and the default
+// device of `openStoryPage` is a tablet, so the rail needs the request. The mobile tests live at the end of
+// this file.
+
 test('SidenavBar', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
     });
 
     const sidenavBar = await screen.findByRole('navigation');
@@ -16,6 +21,7 @@ test('SidenavBar', async () => {
 test('SidenavBar collapsed with a header slot', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
         args: {defaultCollapsed: true},
     });
 
@@ -35,6 +41,7 @@ test.each`
 `('SidenavBar in dark mode. boxed($boxed)', async ({boxed}) => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
         isDarkMode: true,
         args: {boxed, divider: false},
     });
@@ -135,4 +142,73 @@ test('SidenavBar double panel boxed in dark mode', async () => {
     const image = await sidenavBar.screenshot();
 
     expect(image).toMatchImageSnapshot();
+});
+
+// Mobile ----------------------------------------------------------------------
+
+const OPEN_MENU_LABEL = 'Abrir menú de navegación';
+
+// The mobile sidenav is a top bar with a burger menu, so the whole page carries the component: the top bar
+// holds the logo and the header slot, and the panel of the burger holds the items and the footer slot.
+test.each`
+    isDarkMode
+    ${false}
+    ${true}
+`('SidenavBar mobile. isDarkMode($isDarkMode)', async ({isDarkMode}) => {
+    const page = await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'MOBILE_IOS',
+        isDarkMode,
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(await screen.findByRole('button', {name: OPEN_MENU_LABEL}));
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+// A parent item reveals its children in the second level, which shows the back bar and the label of that
+// parent. The rows of both levels paint their right slot before the chevron.
+test('SidenavBar mobile second level', async () => {
+    const page = await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'MOBILE_IOS',
+    });
+
+    await page.click(await screen.findByRole('button', {name: OPEN_MENU_LABEL}));
+    await page.click(await screen.findByRole('button', {name: 'Projects'}));
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+// The variant paints the top bar alone. The panel always renders in the default variant, so one screenshot
+// per variant guards the tokens of the bar, and the panel of the burger stays out of the frame.
+test.each`
+    variant
+    ${'brand'}
+    ${'alternative'}
+    ${'negative'}
+    ${'media'}
+`('SidenavBar mobile variant($variant)', async ({variant}) => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--controlled-selection',
+        device: 'MOBILE_IOS',
+        args: {variant, pageVariant: variant},
+    });
+
+    const topBar = await screen.findByRole('banner');
+    expect(await topBar.screenshot()).toMatchImageSnapshot();
+});
+
+// A tablet has no room for the rail, so it takes the same top bar as a mobile.
+test('SidenavBar tablet takes the mobile treatment', async () => {
+    const page = await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'TABLET',
+    });
+
+    await page.click(await screen.findByRole('button', {name: OPEN_MENU_LABEL}));
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
