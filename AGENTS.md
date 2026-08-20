@@ -25,8 +25,8 @@ React component library for Telefonica's Design System.
   - if a button is needed to control/showcase things, use a mística button itself.
   - if a text is needed, use a mística text component instead of a native html element, like
     `<Text2 regular>text</Text2>`
-- make sure `yarn ts-check` and `yarn lint` pass when modifying them. You probably need to cycle several time
-  to really make sure you've fixed everything
+- make sure `yarn ts-check`, `yarn lint` and `yarn circular-dependencies` pass when modifying them. You
+  probably need to cycle several time to really make sure you've fixed everything
 - Before you claim a component works or matches its spec, drive it in the browser that CI uses:
   `yarn browse <story-id> --click <selector> --measure <selector> --shot <selector>`. It reports runtime
   errors too. Read [agents/skills/run-in-browser](./agents/skills/run-in-browser/SKILL.md) before you use it.
