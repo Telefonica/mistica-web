@@ -7,6 +7,14 @@ import * as React from 'react';
 
 type SidenavBarContextValue = {
     collapsed: boolean;
+    /**
+     * The collapsed state, reported only once the movement of the rail ended. It drives the parts of the
+     * row of an item that appear and disappear instead of moving, and above all the tooltip of the
+     * collapsed rail: that tooltip wraps the row, so its arrival replaces the row in the DOM, and a
+     * replaced node starts at its final style instead of animating. Reading the settled state keeps the
+     * row untouched for the whole movement, and changes it when nothing moves any more.
+     */
+    collapsedSettled: boolean;
     collapsible: boolean;
     doublePanel: boolean;
     toggleCollapsed: () => void;
@@ -26,6 +34,7 @@ type SidenavBarContextValue = {
 
 const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     collapsed: false,
+    collapsedSettled: false,
     collapsible: true,
     doublePanel: false,
     toggleCollapsed: () => {},
@@ -41,6 +50,15 @@ const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(Side
 
 /** Nesting level of the items. Level 0 is the top level. */
 const SidenavLevelContext = React.createContext<number>(0);
+
+/**
+ * Position of an item among the first-level entries of the body. The labels fade out one after the
+ * other when the sidenav collapses, and this position gives the delay of each one. A provider renders
+ * no node of its own, so the sidenav carries this position without a wrapper element and without a
+ * public prop on `SidenavItem`. A nested item inherits the position of its parent, which never shows
+ * on screen: the collapsed rail closes every group.
+ */
+const SidenavItemIndexContext = React.createContext<number>(0);
 
 /**
  * `React.ReactElement<Props>` cannot express these constraints, because every JSX expression is
@@ -80,5 +98,12 @@ const hasDescendantWithId = (children: React.ReactNode, targetId: string | null)
     return found;
 };
 
-export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, assertChildrenAre, hasDescendantWithId};
+export {
+    SidenavBarContext,
+    useSidenavBarContext,
+    SidenavLevelContext,
+    SidenavItemIndexContext,
+    assertChildrenAre,
+    hasDescendantWithId,
+};
 export type {SidenavBarContextValue};

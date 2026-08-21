@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../../../theme-context-provider';
 import {makeTheme} from '../../../__tests__/test-utils';
 import {SidenavBar} from '../../index';
@@ -22,6 +22,13 @@ class MockIntersectionObserver {
 beforeAll(() => {
     window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
 });
+
+// The group of a parent item and the second column both slide away instead of disappearing, so their node
+// stays in the document until the movement ends.
+const waitForRemoval = (queryElement: () => HTMLElement | null): Promise<void> =>
+    waitFor(() => {
+        expect(queryElement()).not.toBeInTheDocument();
+    });
 
 const defaultSections: Array<SidenavSection> = [
     {
@@ -129,7 +136,7 @@ test('SidenavBar reopens a closed parent when the selection moves to a sibling c
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    expect(screen.queryByRole('link', {name: 'Active'})).not.toBeInTheDocument();
+    await waitForRemoval(() => screen.queryByRole('link', {name: 'Active'}));
 
     rerender(
         <ThemeContextProvider theme={makeTheme()}>
@@ -244,6 +251,33 @@ test('SidenavBar keeps the space of the section title when collapsed', async () 
     screen.queryAllByTestId('ScreenReaderOnly').forEach((element) => {
         expect(element).not.toContainElement(title);
     });
+});
+
+// The spec keeps the label of every item in the DOM on the collapsed rail, and hides it with opacity and
+// width alone. A screen-reader-only label would leave nothing to fade, and it would carry no box either.
+test('SidenavBar keeps the label of an item in the document when collapsed', async () => {
+    await renderSidenav({defaultCollapsed: true});
+
+    const label = screen.getByText('Home');
+
+    expect(label).toBeInTheDocument();
+    expect(hasStyle(queryItemRow('home'), styles.itemLabelCollapsed)).toBe(true);
+    screen.queryAllByTestId('ScreenReaderOnly').forEach((element) => {
+        expect(element).not.toContainElement(label);
+    });
+});
+
+// The chevron of a parent item turns half a turn, so that it reports the state of its group.
+test('SidenavBar turns the chevron of a parent item that the user opens', async () => {
+    await renderSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemChevronRotated)).toBe(false);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemChevronRotated)).toBe(true);
 });
 
 // The logo is muted for assistive technology, so there is no semantic query for it. The type of the
@@ -490,9 +524,7 @@ test('SidenavBar double panel closes when the user presses one of its children',
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Active'}));
 
-    await React.act(async () => {});
-
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 test('SidenavBar double panel closes when the user presses the same parent item again', async () => {
@@ -501,7 +533,7 @@ test('SidenavBar double panel closes when the user presses the same parent item 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 test('SidenavBar double panel closes when the user presses outside of the bar', async () => {
@@ -512,7 +544,7 @@ test('SidenavBar double panel closes when the user presses outside of the bar', 
 
     fireEvent.click(document.body);
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 // The second column is a column of the bar, not a floating dialog, so a press that lands on the bar
@@ -522,6 +554,21 @@ test('SidenavBar double panel stays open when the user presses the background of
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByText('Workspace'));
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+});
+
+// The rail keeps its open column when the user collapses it. A real browser also needs the listener that
+// watches for a press outside of the bar to read the path of that press, because the collapse action
+// swaps its icon and the node that the press started on leaves the document. jsdom keeps that node, so
+// the acceptance test of the same name is the one that guards the fix.
+test('SidenavBar double panel stays open when the user collapses the sidenav', async () => {
+    await renderDoublePanelSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Collapse navigation'}));
 
     expect(getPanel('Projects')).toBeInTheDocument();
 });
@@ -544,9 +591,7 @@ test('SidenavBar double panel closes when the user presses a first-level item wi
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Home'}));
 
-    await React.act(async () => {});
-
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 test('SidenavBar double panel refreshes when the user presses another parent item', async () => {
@@ -591,9 +636,8 @@ test('SidenavBar double panel closes when the selection moves to a first-level i
     expect(getPanel('Projects')).toBeInTheDocument();
 
     rerender(renderWithSelection('home'));
-    await React.act(async () => {});
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 // A press inside the second column moves the selection and closes the column at the same time. The
@@ -622,9 +666,8 @@ test('SidenavBar double panel closes when the user presses one of its children, 
     expect(getPanel('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Archived'}));
-    await React.act(async () => {});
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 // The press that selects a child of the app lands outside of the bar, so it is both a new selection and a

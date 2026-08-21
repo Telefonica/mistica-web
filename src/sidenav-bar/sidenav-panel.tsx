@@ -25,12 +25,23 @@ const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): vo
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as Element;
-            if (panelElement && !panelElement.contains(target as Node)) {
-                const isParentItem = target instanceof Element && target.closest('[data-parent-item="true"]');
-                if (!isParentItem) {
-                    setPanelOpenForItemId(null);
-                }
+            if (!panelElement) {
+                return;
+            }
+            // See the same call in `sidenav-bar.tsx`: the path holds the nodes that the press travelled
+            // through, and not the node that survived until this listener ran.
+            const path = event.composedPath();
+            if (path.includes(panelElement)) {
+                return;
+            }
+            // A press on a parent item lands outside of this panel, but that item owns the panel and
+            // toggles it on its own, so this listener leaves it alone. The marker travels in the path
+            // above, which is why it still reads a row that React already replaced.
+            const isParentItem = path.some(
+                (node) => node instanceof Element && node.matches('[data-parent-item="true"]')
+            );
+            if (!isParentItem) {
+                setPanelOpenForItemId(null);
             }
         };
 
@@ -164,40 +175,44 @@ type SidenavDoublePanelProps = {
 /**
  * The second column of the sidenav, with the children of the open parent item. It is used in double
  * panel mode, both when the sidenav is expanded and when it is collapsed.
+ *
+ * It forwards its ref because `SidenavBar` slides it out and back in with a `CSSTransition`, which needs
+ * the node of the column. The column itself carries no padding: an inner box of the width of the open
+ * column holds it instead, so the column can narrow to zero without reflowing its content.
  */
-const SidenavDoublePanel = ({
-    label,
-    variant,
-    backgroundColor,
-    children,
-}: SidenavDoublePanelProps): JSX.Element => {
-    const contextValue = useSidenavBarContext();
+const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelProps>(
+    ({label, variant, backgroundColor, children}, ref) => {
+        const contextValue = useSidenavBarContext();
 
-    const panelContextValue = {
-        ...contextValue,
-        // The children of the panel always show their label and never a tooltip, even when the sidenav
-        // is collapsed, and a press on one of them closes the panel.
-        isInsidePanel: true,
-    };
+        const panelContextValue = {
+            ...contextValue,
+            // The children of the panel always show their label and never a tooltip, even when the sidenav
+            // is collapsed, and a press on one of them closes the panel.
+            isInsidePanel: true,
+        };
 
-    return (
-        <div
-            className={classnames(styles.doublePanelColumn, styles.regionBackground[variant])}
-            style={backgroundColor ? {backgroundColor} : undefined}
-            role="group"
-            aria-label={label}
-        >
-            <div className={classnames(styles.doublePanelTitle, styles.sectionTitleVariant[variant])}>
-                <Text3 medium color="inherit">
-                    {label}
-                </Text3>
+        return (
+            <div
+                ref={ref}
+                className={classnames(styles.doublePanelColumn, styles.regionBackground[variant])}
+                style={backgroundColor ? {backgroundColor} : undefined}
+                role="group"
+                aria-label={label}
+            >
+                <div className={styles.doublePanelContent}>
+                    <div className={classnames(styles.doublePanelTitle, styles.sectionTitleVariant[variant])}>
+                        <Text3 medium color="inherit">
+                            {label}
+                        </Text3>
+                    </div>
+                    <SidenavBarContext.Provider value={panelContextValue}>
+                        <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
+                    </SidenavBarContext.Provider>
+                </div>
             </div>
-            <SidenavBarContext.Provider value={panelContextValue}>
-                <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
-            </SidenavBarContext.Provider>
-        </div>
-    );
-};
+        );
+    }
+);
 
 export {SidenavDialogPanel, SidenavDoublePanel};
 export type {SidenavDialogPanelProps, SidenavDoublePanelProps};

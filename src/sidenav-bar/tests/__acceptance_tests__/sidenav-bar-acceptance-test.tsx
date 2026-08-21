@@ -51,3 +51,22 @@ test('SidenavBar collapses and expands again from its collapse action', async ()
 
     await screen.findByRole('button', {name: 'Collapse navigation'});
 });
+
+// The collapse action swaps its icon when the user presses it, so the node that the press started on has
+// already left the document when the listener that watches for a press outside of the bar runs. Reading
+// `event.target` there counted that press as a press outside, and the second column closed with it.
+test('SidenavBar double panel stays open when the user collapses the sidenav', async () => {
+    await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {doublePanel: true},
+    });
+
+    await (await screen.findByRole('button', {name: 'Teams'})).click();
+    await screen.findByRole('group', {name: 'Teams'});
+
+    await (await screen.findByRole('button', {name: 'Collapse navigation'})).click();
+
+    await screen.findByRole('button', {name: 'Expand navigation'});
+    await screen.findByRole('group', {name: 'Teams'});
+});

@@ -1,11 +1,19 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
+import {CSSTransition} from 'react-transition-group';
 import * as styles from './sidenav-bar.css';
-import {DEFAULT_WIDTH, COLLAPSED_WIDTH, LOGO_SIZE} from './sidenav-bar.css';
+import {
+    DEFAULT_WIDTH,
+    COLLAPSED_WIDTH,
+    LOGO_SIZE,
+    COLLAPSE_DURATION_MS,
+    CONTENT_DURATION_MS,
+} from './sidenav-bar.css';
 import {ThemeVariant, normalizeVariant, useThemeVariant} from '../theme-variant-context';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
+import {isRunningAcceptanceTest} from '../utils/platform';
 import {useScreenSize, useTheme} from '../hooks';
 import {IconButton} from '../icon-button';
 import {Logo} from '../logo';
@@ -21,6 +29,7 @@ import {
     SidenavBarContext,
     useSidenavBarContext,
     SidenavLevelContext,
+    SidenavItemIndexContext,
     assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-context';
@@ -115,7 +124,7 @@ const SidenavSection = ({
     children,
     dataAttributes,
 }: SidenavSectionProps): JSX.Element => {
-    const {collapsed} = useSidenavBarContext();
+    const {collapsed, collapsedSettled} = useSidenavBarContext();
     const variant = useThemeVariant();
 
     return (
@@ -134,6 +143,9 @@ const SidenavSection = ({
                 <div
                     className={classnames(styles.sectionTitle, styles.sectionTitleVariant[variant], {
                         [styles.sectionTitleCollapsed]: collapsed,
+                        // The title holds the width of its text while the sidenav moves, in both
+                        // directions. See `sectionTitleKeepsWidth`.
+                        [styles.sectionTitleKeepsWidth]: collapsed || collapsedSettled,
                     })}
                 >
                     <Text3 medium truncate={collapsed ? 1 : undefined} color="inherit">
@@ -336,11 +348,27 @@ const findFirstLevelItem = (
 ): SidenavItemType | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
 
 /**
+ * Wraps an item with its position among the first-level entries of the body. The labels fade out one
+ * after the other when the sidenav collapses, and that position gives the delay of each fade. The
+ * provider renders no node of its own, so the sidenav carries the position without a wrapper element and
+ * without a public prop on `SidenavItem`.
+ */
+const withItemIndex = (item: SidenavItemType, index: number): React.ReactElement => (
+    <SidenavItemIndexContext.Provider key={item.id} value={index}>
+        {renderSidenavItemFromData(item)}
+    </SidenavItemIndexContext.Provider>
+);
+
+/**
  * Render the first-level entries of the body. An entry is either a section, which groups its items,
  * or a stand-alone item, which the items rail wraps so that it aligns with the items of a section.
  */
-const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> =>
-    entries.map((entry, entryIndex) => {
+const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> => {
+    // The position runs over the whole body, and not over one section, so the fade travels down the
+    // sidenav from the first item to the last one.
+    let itemIndex = 0;
+
+    return entries.map((entry, entryIndex) => {
         if (isSidenavSection(entry)) {
             return (
                 <SidenavSection
@@ -349,17 +377,18 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
                     dividerTop={entry.dividerTop}
                     dividerBottom={entry.dividerBottom}
                 >
-                    {entry.items.map((item) => renderSidenavItemFromData(item))}
+                    {entry.items.map((item) => withItemIndex(item, itemIndex++))}
                 </SidenavSection>
             );
         }
 
         return (
             <div key={entry.id} className={styles.standaloneItem}>
-                {renderSidenavItemFromData(entry as SidenavItemType)}
+                {withItemIndex(entry as SidenavItemType, itemIndex++)}
             </div>
         );
     });
+};
 
 const SidenavBar = ({
     sections,
@@ -384,7 +413,10 @@ const SidenavBar = ({
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {componentProperties} = useTheme();
+    const {componentProperties, platformOverrides} = useTheme();
+    // An acceptance run reads every result as soon as it presses a control, so it receives no movement at
+    // all: the durations below go to zero, and the parts that wait for the movement change at once.
+    const isTestRun = isRunningAcceptanceTest(platformOverrides);
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
@@ -400,6 +432,31 @@ const SidenavBar = ({
           ? uncontrolledCollapsed
           : defaultCollapsed;
     const containerRef = React.useRef<HTMLElement>(null);
+
+    // The second column slides away instead of disappearing, so it still renders while it closes, when the
+    // item that opened it is already gone. It therefore keeps the title and the children of that item
+    // until a new item replaces them.
+    const doublePanelRef = React.useRef<HTMLDivElement>(null);
+    const lastDoublePanelContentRef = React.useRef<{
+        label: string;
+        children: ReadonlyArray<SidenavItemType>;
+    } | null>(null);
+
+    // See `collapsedSettled` in `sidenav-context.tsx` for why the sidenav reports the collapsed state
+    // twice. A user who turned motion down sees no movement, so the settled state follows at once there.
+    const [collapsedSettled, setCollapsedSettled] = React.useState(collapsed);
+    React.useEffect(() => {
+        if (collapsedSettled === collapsed) {
+            return;
+        }
+        const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion)').matches;
+        if (isTestRun || prefersReducedMotion) {
+            setCollapsedSettled(collapsed);
+            return;
+        }
+        const timeoutId = setTimeout(() => setCollapsedSettled(collapsed), COLLAPSE_DURATION_MS);
+        return () => clearTimeout(timeoutId);
+    }, [collapsed, collapsedSettled, isTestRun]);
 
     // The effects below read the entries without depending on the array itself: a consumer that builds
     // the entries inline would otherwise re-run them on every render.
@@ -492,14 +549,14 @@ const SidenavBar = ({
 
         const handlePressOutside = (event: MouseEvent) => {
             if (!panelOpenForItemIdRef.current) return;
-            const target = event.target;
-            if (target instanceof Node && containerRef.current?.contains(target)) return;
-            // A press on a parent item opens the column, or replaces its content. That press re-renders
-            // the item (a collapsed item drops its tooltip wrapper, for instance), so its node can leave
-            // the document before this listener runs, and the check above then reads it as a press
-            // outside of the bar. The node still carries the marker of a parent item, which tells that
-            // the press came from the bar itself.
-            if (target instanceof Element && target.closest('[data-parent-item="true"]')) return;
+            const container = containerRef.current;
+            if (!container) return;
+            // The browser builds this path when it dispatches the press, so the path still holds the node
+            // that the user pressed and all of its ancestors, even when React replaced them before this
+            // listener ran. Reading `event.target` instead counts a press on a control that swaps its own
+            // node as a press outside of the bar: the collapse action swaps its icon, and a parent item
+            // swaps its whole row, so both of them closed the column that they should have left alone.
+            if (event.composedPath().includes(container)) return;
             setOutsidePressCount((count) => count + 1);
         };
 
@@ -571,7 +628,15 @@ const SidenavBar = ({
         };
     }, []);
 
+    // The rail is travelling between its two widths. See `columnsWhileMoving`.
+    const isMoving = collapsed !== collapsedSettled;
+
     const toggleCollapsed = React.useCallback(() => {
+        // The collapse action keeps the focus while the rail moves, so the pointer rule of
+        // `columnsWhileMoving` does not reach a press made with the keyboard. This does.
+        if (isMoving) {
+            return;
+        }
         const next = !collapsed;
         if (!isCollapsedControlled) {
             setUncontrolledCollapsed(next);
@@ -579,11 +644,12 @@ const SidenavBar = ({
             return;
         }
         onCollapse?.(next);
-    }, [collapsed, isCollapsedControlled, onCollapse]);
+    }, [collapsed, isMoving, isCollapsedControlled, onCollapse]);
 
     const contextValue = React.useMemo(
         () => ({
             collapsed,
+            collapsedSettled,
             collapsible,
             doublePanel,
             toggleCollapsed,
@@ -597,6 +663,7 @@ const SidenavBar = ({
         }),
         [
             collapsed,
+            collapsedSettled,
             collapsible,
             doublePanel,
             toggleCollapsed,
@@ -718,6 +785,11 @@ const SidenavBar = ({
     const doublePanelChildren = doublePanelItem?.children;
     const isDoublePanelOpen = Boolean(doublePanelChildren?.length);
 
+    if (isDoublePanelOpen && doublePanelItem && doublePanelChildren) {
+        lastDoublePanelContentRef.current = {label: doublePanelItem.label, children: doublePanelChildren};
+    }
+    const doublePanelContent = lastDoublePanelContentRef.current;
+
     return (
         <ThemeVariant variant={normalizedVariant}>
             <SidenavBarContext.Provider value={contextValue}>
@@ -728,12 +800,17 @@ const SidenavBar = ({
                         [styles.withRightDivider[normalizedVariant]]: divider && !boxed,
                         [styles.boxed]: boxed,
                         [styles.boxedBorder]: hasBoxedBorder,
+                        [styles.columnsWhileMoving]: isMoving,
                     })}
                     style={applyCssVars({
                         [styles.sidenavWidthVar]: `${currentWidth}px`,
                         // The second column takes the width of the expanded sidenav, which the collapsed
                         // rail does not: a rail of 72px would give a column too narrow for its children.
                         [styles.sidenavPanelWidthVar]: `${width}px`,
+                        // Every animated rule of the sidenav reads its duration from these two variables,
+                        // which the whole tree inherits from this element.
+                        [styles.collapseDurationVar]: `${isTestRun ? 0 : COLLAPSE_DURATION_MS}ms`,
+                        [styles.contentDurationVar]: `${isTestRun ? 0 : CONTENT_DURATION_MS}ms`,
                     })}
                     {...getPrefixedDataAttributes({testid: 'SidenavBar', ...dataAttributes})}
                 >
@@ -849,14 +926,25 @@ const SidenavBar = ({
                             </div>
                         )}
                     </div>
-                    {isDoublePanelOpen && doublePanelItem && doublePanelChildren && (
-                        <SidenavDoublePanel
-                            label={doublePanelItem.label}
-                            variant={normalizedVariant}
-                            backgroundColor={bodyBackgroundColor}
+                    {doublePanelContent && (
+                        <CSSTransition
+                            in={isDoublePanelOpen}
+                            timeout={isTestRun ? 0 : COLLAPSE_DURATION_MS}
+                            nodeRef={doublePanelRef}
+                            classNames={styles.doublePanelTransitionClasses}
+                            appear
+                            mountOnEnter
+                            unmountOnExit
                         >
-                            {doublePanelChildren.map((child) => renderSidenavItemFromData(child))}
-                        </SidenavDoublePanel>
+                            <SidenavDoublePanel
+                                ref={doublePanelRef}
+                                label={doublePanelContent.label}
+                                variant={normalizedVariant}
+                                backgroundColor={bodyBackgroundColor}
+                            >
+                                {doublePanelContent.children.map((child) => renderSidenavItemFromData(child))}
+                            </SidenavDoublePanel>
+                        </CSSTransition>
                     )}
                 </nav>
             </SidenavBarContext.Provider>

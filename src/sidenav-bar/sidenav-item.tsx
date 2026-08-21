@@ -1,21 +1,30 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
+import {CSSTransition} from 'react-transition-group';
 import * as styles from './sidenav-bar.css';
-import {NESTING_INDENT} from './sidenav-bar.css';
+import {
+    NESTING_INDENT,
+    CONTENT_DURATION_MS,
+    LABEL_DELAY_BASE_MS,
+    LABEL_DELAY_STEP_MS,
+    LABEL_DELAY_MAX_MS,
+} from './sidenav-bar.css';
 import {
     useSidenavBarContext,
     SidenavLevelContext,
+    SidenavItemIndexContext,
     assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-context';
 import {SidenavDialogPanel} from './sidenav-panel';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
+import {isRunningAcceptanceTest} from '../utils/platform';
+import {useTheme} from '../hooks';
 import {useThemeVariant} from '../theme-variant-context';
 import Touchable from '../touchable';
 import Tooltip from '../tooltip';
-import ScreenReaderOnly from '../screen-reader-only';
 import {Text2} from '../text';
 import IconChevronDownRegular from '../generated/mistica-icons/icon-chevron-down-regular';
 import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
@@ -122,6 +131,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     } = props as any;
     const {
         collapsed,
+        collapsedSettled,
         doublePanel,
         panelOpenForItemId,
         setPanelOpenForItemId,
@@ -132,6 +142,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         onSelectedItemIdChange,
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
+    const itemIndex = React.useContext(SidenavItemIndexContext);
+    const {platformOverrides} = useTheme();
     // `SidenavBar` overrides the ambient variant with its own, so the item takes its colors from here. The
     // floating panel of a collapsed sidenav restores the default variant, and its items follow.
     const variant = useThemeVariant();
@@ -174,6 +186,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     }
 
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
+    const nestedListRef = React.useRef<HTMLDivElement>(null);
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
     const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
     // In double panel mode the sidenav renders the panel as its second column, so the item only tracks
@@ -253,22 +266,29 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             </span>
         ) : null;
 
-    const labelNode =
-        collapsed && !isInsidePanel ? (
-            <ScreenReaderOnly>
-                <span>{label}</span>
-            </ScreenReaderOnly>
-        ) : (
-            <div className={styles.itemLabel}>
-                <Text2 regular truncate color="inherit">
-                    {label}
-                </Text2>
-            </div>
-        );
+    // The label keeps its box on the collapsed rail, where it fades out. It stays in the DOM there, which
+    // the spec asks for: a screen reader still reads it, and the fade needs it.
+    const isLabelCollapsed = collapsed && !isInsidePanel;
+    // The label holds the width of its text while the sidenav moves, in both directions: during a collapse
+    // the sidenav is already collapsed, and during an expansion the settled state still reports the rail.
+    // See `itemLabelKeepsWidth`.
+    const isLabelWidthKept = (collapsed || collapsedSettled) && !isInsidePanel;
+    const labelNode = (
+        <div
+            className={classnames(styles.itemLabel, {
+                [styles.itemLabelCollapsed]: isLabelCollapsed,
+                [styles.itemLabelKeepsWidth]: isLabelWidthKept,
+            })}
+        >
+            <Text2 regular truncate color="inherit">
+                {label}
+            </Text2>
+        </div>
+    );
 
     const touchableClassName = classnames(styles.itemTouchable, styles.itemTouchableVariant[variant], {
         [styles.itemTouchableSelected[variant]]: showBackground,
-        [styles.itemTouchableCollapsed]: collapsed && !isInsidePanel,
+        [styles.itemTouchableCollapsed]: isLabelCollapsed,
     });
 
     const rowContent = (
@@ -278,7 +298,11 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {!collapsed && rightSlot && <span className={styles.itemRightSlot}>{rightSlot}</span>}
             {!collapsed && hasChildren && (
                 <span
-                    className={classnames(styles.itemChevron, styles.itemChevronVariant[variant])}
+                    className={classnames(styles.itemChevron, styles.itemChevronVariant[variant], {
+                        // Only the chevron that points down reports the state of a group by turning. See
+                        // `itemChevronRotated`.
+                        [styles.itemChevronRotated]: isOpen,
+                    })}
                     aria-hidden="true"
                 >
                     <ChevronIcon size={16} color="currentColor" />
@@ -343,17 +367,27 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // floats over the rail, and a tooltip would overlap it, so the rail drops its tooltips while that
     // panel is open. The second column, instead, sits beside the rail, so the rail keeps its tooltips. Only
     // the item that owns the column drops its own, because the column already shows its label as a title.
-    const showTooltip = collapsed && !isInsidePanel && (doublePanel ? !isPanelOpen : !panelOpenForItemId);
+    // The tooltip follows the settled collapsed state, and not the one of this render: its wrapper replaces
+    // the row in the DOM, and a replaced row would drop the movement of the rail (see `collapsedSettled`).
+    const showTooltip =
+        collapsedSettled && !isInsidePanel && (doublePanel ? !isPanelOpen : !panelOpenForItemId);
 
     const itemDataAttributes: DataAttributes = {testid: 'SidenavItem', ...dataAttributes};
     if (id) {
         itemDataAttributes['sidenav-item-id'] = id;
     }
 
+    // The labels fade out one after the other, from the first item of the body to the last one. The delay
+    // stops growing at the last value of the spec, so that a long list ends its fade with the rail.
+    const labelDelay = Math.min(LABEL_DELAY_BASE_MS + itemIndex * LABEL_DELAY_STEP_MS, LABEL_DELAY_MAX_MS);
+
     const row = (
         <div
             className={styles.itemRow}
-            style={applyCssVars({[styles.itemIndentVar]: `${level * NESTING_INDENT}px`})}
+            style={applyCssVars({
+                [styles.itemIndentVar]: `${level * NESTING_INDENT}px`,
+                [styles.itemLabelDelayVar]: `${labelDelay}ms`,
+            })}
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
             {showAccent && (
@@ -364,7 +398,11 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     position="right"
                     description={label}
                     target={interactiveRow}
-                    targetStyle={{flex: 1}}
+                    // The wrapper of the tooltip becomes the box that the row measures itself against, so
+                    // it has to take the width of the rail. Without `minWidth`, a flex item never shrinks
+                    // below the content that it holds, and the row and its wrapper would then widen each
+                    // other past the rail.
+                    targetStyle={{flex: 1, minWidth: 0}}
                 />
             ) : (
                 interactiveRow
@@ -375,10 +413,23 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     return (
         <>
             {row}
-            {isOpen && (
-                <div className={styles.nestedList} role="group" aria-label={label}>
-                    <SidenavLevelContext.Provider value={level + 1}>{children}</SidenavLevelContext.Provider>
-                </div>
+            {hasChildren && (
+                <CSSTransition
+                    in={isOpen}
+                    timeout={isRunningAcceptanceTest(platformOverrides) ? 0 : CONTENT_DURATION_MS}
+                    nodeRef={nestedListRef}
+                    classNames={styles.nestedListTransitionClasses}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <div className={styles.nestedListContainer} ref={nestedListRef}>
+                        <div className={styles.nestedList} role="group" aria-label={label}>
+                            <SidenavLevelContext.Provider value={level + 1}>
+                                {children}
+                            </SidenavLevelContext.Provider>
+                        </div>
+                    </div>
+                </CSSTransition>
             )}
             {isPanelOpen && isDialogMode && (
                 <SidenavDialogPanel itemId={id} label={label} containerRef={containerRef}>

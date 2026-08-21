@@ -1,4 +1,4 @@
-import {createVar, style, styleVariants} from '@vanilla-extract/css';
+import {createVar, globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import {vars as skinVars} from '../skins/skin-contract.css';
 
@@ -13,6 +13,19 @@ export const BOXED_INSET = 8;
 // (16 + 8). Using the full 24 here would double-count the 8px margin and over-indent children.
 export const NESTING_INDENT = 16;
 export const LOGO_SIZE = 32;
+// Horizontal inset of the items rail on each side of a section (see `sectionContent`). The selected
+// indicator of an item sits on that inset, at the left edge of the rail.
+const RAIL_INSET = 10;
+// Margin of the row of an item, on each side of the items rail. On the left it is measured from the left
+// edge of the selected indicator, which is 2px wide, so the row keeps a gap of 6px from that indicator.
+// The expanded sidenav and the collapsed rail share this number: the row of an item stands in the same
+// place in both states, 18px from each edge of the sidenav.
+const ITEM_ROW_INSET = 8;
+// Gap between the icon, the label, the right slot and the chevron of a row.
+const ITEM_ROW_GAP = 8;
+// Distance from the edge of the sidenav to the title of a section, which the title of the second column
+// takes as well.
+const SECTION_TITLE_INSET = 16;
 // Vertical space between two first-level entries of the body (section to section, section to
 // stand-alone item, or stand-alone item to stand-alone item). Items inside a section stay adjacent.
 export const FIRST_LEVEL_GAP = 16;
@@ -21,6 +34,43 @@ export const sidenavWidthVar = createVar();
 // The second column always takes the `width` of the expanded sidenav, so it needs its own variable: the
 // variable above carries the width of the collapsed rail while the sidenav is collapsed.
 export const sidenavPanelWidthVar = createVar();
+
+// Animation ------------------------------------------------------------------
+
+// The rail, the labels, the header and the second column move together when the user collapses or
+// expands the sidenav.
+export const COLLAPSE_DURATION_MS = 350;
+// The children of a parent item, and the chevron that reports their state, take their own duration.
+export const CONTENT_DURATION_MS = 400;
+
+const COLLAPSE_EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';
+const CONTENT_EASING = 'ease';
+
+// The labels fade out one after the other. The first one waits 80ms, and each of the next ones waits
+// 40ms more, up to the last delay of the spec: a list of thirty items would otherwise end its stagger
+// more than a second after the rail stopped.
+export const LABEL_DELAY_BASE_MS = 80;
+export const LABEL_DELAY_STEP_MS = 40;
+export const LABEL_DELAY_MAX_MS = 160;
+
+// `SidenavBar` fills both durations on its root element, and every rule below reads them from there.
+// An acceptance run receives 0ms, so a test that presses a control and reads the result at once never
+// catches a frame of the movement.
+export const collapseDurationVar = createVar();
+export const contentDurationVar = createVar();
+
+// Delay of the fade of one label, which follows the position of its item (see `LABEL_DELAY_BASE_MS`).
+export const itemLabelDelayVar = createVar();
+
+// Every animated rule of this file carries this block: the spec asks for an instant change when the
+// user turns motion down in the operating system.
+const reducedMotion = {
+    '@media': {
+        ['(prefers-reduced-motion)']: {
+            transition: 'none',
+        },
+    },
+} as const;
 
 // Tokens ----------------------------------------------------------------------
 
@@ -153,6 +203,8 @@ export const container = style([
 ]);
 
 // The column that carries the header, the body, and the footer regions.
+// `sidenavWidthVar` carries the width of the expanded sidenav or the width of the collapsed rail, so the
+// transition below runs whenever the user toggles the sidenav.
 export const mainColumn = style([
     sprinkles({
         display: 'flex',
@@ -165,6 +217,8 @@ export const mainColumn = style([
         width: sidenavWidthVar,
         flexShrink: 0,
         minWidth: 0,
+        transition: `width ${collapseDurationVar} ${COLLAPSE_EASING}`,
+        ...reducedMotion,
     },
 ]);
 
@@ -195,6 +249,17 @@ export const withRightDivider = styleVariants(dividerColor, (color) => ({
 export const regionBackground = styleVariants(sideNavBackgroundContainer, (color) => ({
     backgroundColor: color,
 }));
+
+// While the rail moves, every column of the sidenav stops answering the pointer: the row that the user
+// aims at is travelling, and a floating panel opened here would measure an edge that has not arrived yet.
+// The rule lands on the columns, and not on the container, so the container still takes the press: a press
+// that fell through to the page behind would read as a press outside of the bar, and it would close the
+// second column.
+export const columnsWhileMoving = style({});
+
+globalStyle(`${columnsWhileMoving} > *`, {
+    pointerEvents: 'none',
+});
 
 export const boxed = style({
     margin: BOXED_INSET,
@@ -257,40 +322,57 @@ export const headerControls = style({
     paddingRight: 24,
 });
 
+// The collapsed rail keeps the same left padding, and it keeps `flex-start` too. Centring the controls
+// gives the same result at rest, because the rail leaves the logo exactly its 32px, but it moves them
+// while the rail moves: a centre travels with the box that holds it, and a left edge does not.
 export const headerControlsCollapsed = style({
-    alignItems: 'center',
-    paddingLeft: 20,
     paddingRight: 20,
 });
 
 // The default isotype is a square as wide as its height in both states. The collapsed rail still clamps
 // the width, because a logo of the consumer, or the function form of the prop, can be wider than the rail.
+// The spec fades the label of the header 50ms after the rail starts to move. Our default header carries no
+// label, because the default logo is the isotype in both states, so what this rule gives is the smooth
+// clamp of the width, and a smooth fade for a consumer that drives the opacity of its own logo.
 export const logo = style({
     display: 'flex',
     alignItems: 'center',
     flexShrink: 0,
     height: LOGO_SIZE,
+    // The clamp below is a `max-width`, and not a `width`, so that it interpolates: `auto` has no value to
+    // animate from.
+    maxWidth: '100%',
+    transition: `max-width ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} 50ms`,
+    ...reducedMotion,
 });
 
 export const logoCollapsed = style({
-    width: LOGO_SIZE,
+    maxWidth: LOGO_SIZE,
 });
 
+// The slot follows the same rule as the logo above. It never rests at opacity 0, because the collapsed
+// rail keeps the slot: the fade serves a consumer that drives the opacity of its own header content.
 export const headerSlot = style({
     boxSizing: 'border-box',
     width: '100%',
     minWidth: 0,
     paddingLeft: 24,
     paddingRight: 24,
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} 50ms`,
+    ...reducedMotion,
 });
 
 export const headerSlotCollapsed = style({});
 
 // Body region -----------------------------------------------------------------
 
+// The body scrolls up and down, never sideways. The rule below is not the default: a box that scrolls on
+// one axis takes `auto` on the other one as well, and the title of a section, which keeps the width of its
+// text while the sidenav moves, would then give the collapsed rail a horizontal scrollbar.
 export const bodyBase = style({
     flex: 1,
     minHeight: 0,
+    overflowX: 'hidden',
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
@@ -346,9 +428,14 @@ export const section = style({
     flexDirection: 'column',
 });
 
+// The title fades with the labels of the items below it. `visibility` changes in one step, and a
+// transition holds a step like this one until the end, so the title stays readable for a screen reader
+// while it fades out, and it leaves the accessibility tree only once the rail stopped.
 export const sectionTitle = style({
-    padding: '0 16px',
+    padding: `0 ${SECTION_TITLE_INSET}px`,
     marginBottom: 8,
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING}, visibility ${collapseDurationVar} ${COLLAPSE_EASING}`,
+    ...reducedMotion,
 });
 
 // The title text inherits this colour (see the `color="inherit"` of its `Text3`), so every title of the
@@ -356,22 +443,28 @@ export const sectionTitle = style({
 export const sectionTitleVariant = styleVariants(sectionTitleColor, (color) => ({color}));
 
 // Collapsed: the title is hidden, but it still reserves its space, so the items of a section keep the
-// same vertical rhythm in both states. The title text truncates to one line (see the `truncate` prop
-// in the component), because the 72px collapsed bar would otherwise reserve several lines.
+// same vertical rhythm in both states. Neither `opacity` nor `visibility` takes a box out of the flow.
 export const sectionTitleCollapsed = style({
+    opacity: 0,
     visibility: 'hidden',
+});
+
+// While the sidenav moves, the title keeps the width of its text, for the same reason as the label of an
+// item (see `itemLabelKeepsWidth`). Without this, the title would wrap over several lines as the rail
+// narrows, and the whole body of the sidenav would move down with it.
+export const sectionTitleKeepsWidth = style({
+    width: 'max-content',
 });
 
 // The rail that carries the items of a section. A first-level stand-alone item reuses it, so that
 // it lands on the same rail as the items that belong to a section (see `standaloneItem`).
-// Horizontal insets are asymmetric by design: the left rail (8px) hosts the selected indicator, and
-// each item's content box adds a further 8px left margin (16px total), while the right side takes a
-// flat 8px. This yields the Figma insets: 16px on the left, 8px on the right.
+// The left inset hosts the selected indicator, and the row of each item adds `ITEM_ROW_INSET` on top of
+// it, which gives the 18px that the spec measures from the edge of the sidenav to the row.
 export const sectionContent = style({
     display: 'flex',
     flexDirection: 'column',
-    paddingLeft: 8,
-    paddingRight: 8,
+    paddingLeft: RAIL_INSET,
+    paddingRight: RAIL_INSET,
 });
 
 // A stand-alone item is not wrapped in a section, so it carries the items rail itself.
@@ -396,18 +489,25 @@ export const itemRow = style({
     paddingLeft: itemIndentVar,
 });
 
+// The row of an item takes the same box in both states: `ITEM_ROW_INSET` on each side of the items rail.
+// Its width is a percentage of the rail, so it follows the rail while the rail moves, and it needs no
+// transition of its own. The collapsed rail leaves it 36px, which holds the icon and its two paddings.
+// The overflow keeps the label, the right slot and the chevron inside the row while it narrows.
 export const itemTouchable = style({
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
-    gap: 8,
-    flex: 1,
+    gap: ITEM_ROW_GAP,
+    flex: 'none',
+    width: `calc(100% - ${ITEM_ROW_INSET * 2}px)`,
     minWidth: 0,
     height: 44,
     padding: '0 8px',
-    marginLeft: 8,
+    marginLeft: ITEM_ROW_INSET,
+    marginRight: ITEM_ROW_INSET,
     borderRadius: 8,
     backgroundColor: 'transparent',
+    overflow: 'hidden',
 });
 
 // The label inherits the `color` of the row (see the `color="inherit"` of its `Text2`), while the asset and
@@ -420,12 +520,11 @@ export const itemTouchableVariant = styleVariants(itemColors, (colors) => ({
     },
 }));
 
+// The collapsed rail keeps the box of the row untouched, so that the row never moves between the two
+// states. The 36px that the rail leaves hold the icon and its two paddings exactly, which places the icon
+// at the centre of the rail. The label and the gap that precedes it overflow that box, and the row clips
+// them, so the icon keeps its place from the first frame of the movement to the last one.
 export const itemTouchableCollapsed = style({
-    justifyContent: 'center',
-    flex: 'none',
-    width: 36,
-    margin: '0 auto',
-    padding: '0 8px',
     border: 'none',
     lineHeight: 1,
     textDecoration: 'none',
@@ -465,9 +564,30 @@ export const itemAsset = style({
 
 export const itemAssetVariant = styleVariants(itemColors, (colors) => ({color: colors.asset}));
 
+// The label keeps its box in the DOM on the collapsed rail, so a screen reader still reads it, and so the
+// fade of the spec has something to fade. Its own box needs no width animation: it grows and shrinks with
+// the row that holds it, because it takes the space that the row leaves.
 export const itemLabel = style({
     flex: 1,
     minWidth: 0,
+    overflow: 'hidden',
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    ...reducedMotion,
+});
+
+// Only the opacity changes. The label keeps its place beside the icon, so the text stands still while it
+// fades. A margin or a width of its own would drag the text toward the icon instead.
+export const itemLabelCollapsed = style({
+    opacity: 0,
+});
+
+// While the sidenav moves, the label keeps the width that its text asks for, instead of taking the share
+// of the row that the flex layout would give it. The row narrows under a text that does not move, and the
+// edge of the sidenav passes over that text: without this, the label would shrink with the row and the
+// text would truncate one letter at a time, which reads as the text redrawing itself.
+// The expanded sidenav at rest drops this rule, so a label longer than the row truncates there as usual.
+export const itemLabelKeepsWidth = style({
+    minWidth: 'max-content',
 });
 
 export const itemRightSlot = style({
@@ -482,13 +602,49 @@ export const itemChevron = style({
     flexShrink: 0,
     width: 16,
     height: 16,
+    transition: `transform ${contentDurationVar} ${CONTENT_EASING}`,
+    ...reducedMotion,
+});
+
+// The chevron of an open parent item turns half a turn, so that it reports the state of its group. It
+// applies to the chevron that points down, which the sidenav uses for a group that opens in place. The
+// double panel keeps the chevron that points right, and never turns it: half a turn would make it point
+// away from the column that it opens.
+export const itemChevronRotated = style({
+    transform: 'rotate(180deg)',
 });
 
 export const itemChevronVariant = styleVariants(itemColors, (colors) => ({color: colors.chevron}));
 
+// The children of a parent item grow and shrink as one group. A grid row of `0fr` collapses the group
+// without a measured height, which is the pattern that `Accordion` uses (see `accordion.css.ts`).
+export const nestedListContainer = style({
+    display: 'grid',
+});
+
+export const nestedListTransitionClasses = {
+    enter: style({
+        gridTemplateRows: '0fr',
+    }),
+    enterActive: style({
+        gridTemplateRows: '1fr',
+        transition: `grid-template-rows ${contentDurationVar} ${CONTENT_EASING}`,
+        ...reducedMotion,
+    }),
+    exit: style({
+        gridTemplateRows: '1fr',
+    }),
+    exitActive: style({
+        gridTemplateRows: '0fr',
+        transition: `grid-template-rows ${contentDurationVar} ${CONTENT_EASING}`,
+        ...reducedMotion,
+    }),
+};
+
 export const nestedList = style({
     display: 'flex',
     flexDirection: 'column',
+    overflow: 'hidden',
 });
 
 // Panel (Dialog and Double Panel) -----------------------------------------------
@@ -538,17 +694,60 @@ export const doublePanelColumn = style({
     width: sidenavPanelWidthVar,
     height: '100%',
     flexShrink: 0,
+    overflowX: 'hidden',
     overflowY: 'auto',
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingLeft: 8,
-    paddingRight: 8,
 });
 
-// The panel's own 8px inset plus these 8px place the title 16px from the panel edge, which is the
-// x-padding of a section title. The 16px bottom margin is the title-to-items gap of the spec.
+// The column slides out of the main column and slides back into it, with the movement of the rail. Its
+// children keep the width of the open column while it moves, so the text never reflows: the column clips
+// them instead (see the `overflow` above, and `doublePanelContent` below).
+const doublePanelClosed = style({
+    width: 0,
+});
+
+const doublePanelOpening = style({
+    width: sidenavPanelWidthVar,
+    transition: `width ${collapseDurationVar} ${COLLAPSE_EASING}`,
+    ...reducedMotion,
+});
+
+// The first column that a sidenav opens arrives with the item that owns it, so it enters the tree while it
+// is already open. `appear` gives that first column the same movement as every later one.
+export const doublePanelTransitionClasses = {
+    appear: doublePanelClosed,
+    appearActive: doublePanelOpening,
+    enter: doublePanelClosed,
+    enterActive: doublePanelOpening,
+    exit: style({
+        width: sidenavPanelWidthVar,
+    }),
+    exitActive: style({
+        width: 0,
+        transition: `width ${collapseDurationVar} ${COLLAPSE_EASING}`,
+        ...reducedMotion,
+    }),
+};
+
+// The paddings of the column belong to this box, so the column itself can reach a width of zero. Its
+// horizontal inset is the inset of the items rail, so the children of the column land on the same rail as
+// the items of the main column.
+export const doublePanelContent = style({
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    width: sidenavPanelWidthVar,
+    flexShrink: 0,
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingLeft: RAIL_INSET,
+    paddingRight: RAIL_INSET,
+});
+
+// The inset of the column plus this padding place the title where a section title stands, at
+// `SECTION_TITLE_INSET` from the edge of the column. The 16px bottom margin is the title-to-items gap of
+// the spec.
 export const doublePanelTitle = style({
-    padding: '0 8px',
+    padding: `0 ${SECTION_TITLE_INSET - RAIL_INSET}px`,
     marginBottom: 16,
 });
 

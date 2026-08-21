@@ -180,7 +180,6 @@ type Args = {
     defaultCollapsed: boolean;
     doublePanel: boolean;
     width: number;
-    sections: Array<SidenavSection>;
     'Colors/Enabled'?: boolean;
     'Colors/Header'?: string;
     'Colors/Body'?: string;
@@ -363,7 +362,6 @@ export default {
         defaultCollapsed: false,
         doublePanel: false,
         width: 240,
-        sections: getDefaultSections(),
         'Colors/Enabled': false,
         'Colors/Header': '#ffffff',
         'Colors/Body': '#f5f5f5',
@@ -426,14 +424,6 @@ export default {
         },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
-        },
-        sections: {
-            control: false,
-            description:
-                'Navigation sections (fixed in this story). Use "Editable Sections" story to edit sections via JSON control.',
-            table: {
-                category: 'Data',
-            },
         },
         'Colors/Enabled': {
             control: {type: 'boolean'},

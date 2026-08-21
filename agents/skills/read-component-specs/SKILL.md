@@ -16,8 +16,8 @@ Load component specifications in order of precedence:
 2. **Markdown specifications** — design team specs extracted from Figma; **overrides Figma** if conflicts
    exist
 3. **Figma design** — original design file; can be superseded by markdown specs. For measurements, trust the
-   dimension-annotated images ("cotas"), not the raw values a Figma MCP tool reports (see
-   [Figma MCP usage](#figma-mcp-usage))
+   dimension-annotated images ("cotas", or images under "anatomy" with red labels measuring things), not the
+   raw values a Figma MCP tool reports (see [Figma MCP usage](#figma-mcp-usage))
 
 ## When to Use (Auto-trigger)
 
@@ -33,10 +33,11 @@ Automatically load this skill when:
 
 When component work is detected:
 
-1. **Check memory** — Is there already a `component-{name}.md` in project memory?
+1. **Check for a saved spec** — Prefer Claude Code memory when it is available; otherwise read
+   `.component-specs/{name}.md` from the working tree.
 
-   - ✅ If yes → Load and reference existing specs
-   - ❌ If no → Proceed to fetch
+   - ✅ If found in either place → Load and reference existing specs
+   - ❌ If neither has it → Proceed to fetch
 
 2. **Ask for specifications** if missing:
 
@@ -65,7 +66,8 @@ When component work is detected:
    - Link to all three sources
    - Extract actionable requirements
 
-6. **Save to memory** — Create `component-{name}.md` for future sessions:
+6. **Save the spec** — When Claude Code memory is available, save it there as the primary store. Always also
+   write `.component-specs/{name}.md` in the working tree, so tools without memory keep a usable fallback:
    - GitHub Issue link
    - Specs Markdown link
    - Figma Design link
@@ -73,10 +75,22 @@ When component work is detected:
    - Design decisions
    - Development notes
 
-## Memory Format
+## Where the spec is stored
 
-Store specs in
-`/Users/mbertamini/.claude/projects/-Users-mbertamini-Code-Work-mistica-web/memory/component-{name}.md`:
+This follows the repo-wide rule for AI-derived local context in [AGENTS.md](../../../AGENTS.md): prefer the
+tool's own memory when available, and always also write a git-ignored file so a tool without memory keeps a
+fallback. For this skill the two stores are:
+
+1. **Claude Code memory** (primary, when available) — Claude recalls it automatically in future sessions. See
+   [Claude Code memory](#claude-code-memory) below.
+2. **`.component-specs/{name}.md`** (fallback, always written) — a local file for tools without memory (GitHub
+   Copilot, Cursor, …). The path is repo-relative, so any assistant reads and writes it with a normal file
+   operation.
+
+The canonical sources stay the GitHub issue, the specs markdown, and Figma; both stores only cache the
+consolidation on your machine.
+
+## Spec File Format
 
 ```markdown
 ---
@@ -132,13 +146,19 @@ For **measurements**, do not trust the raw values that a Figma MCP tool returns 
 `get_metadata`). The design team can set a final measurement that differs from the raw Figma layout. Use the
 dimension-annotated images ("cotas") in the spec or design file instead.
 
-## Saving to memory
+## Saving the spec
 
-After consolidating specifications, save key details to project memory so they persist across development
-sessions. Use the format in [Memory Format](#memory-format) above, stored at
-`/Users/mbertamini/.claude/projects/-Users-mbertamini-Code-Work-mistica-web/memory/component-{name}.md`.
+After consolidating specifications, save the key details so they persist across development sessions and
+across tools. Prefer Claude Code memory when available (see [Claude Code memory](#claude-code-memory)), and
+always also write `.component-specs/{name}.md` using the format in [Spec File Format](#spec-file-format)
+above. The directory is git-ignored, so the cache stays local and is never committed.
 
-In future sessions, Claude will automatically recall this context from memory.
+### Claude Code memory
+
+When Claude Code is in use, save the spec to its private per-project memory
+(`~/.claude/projects/<project>/memory/component-{name}.md`). Claude recalls it automatically in later
+sessions, so it is the primary store. Other tools cannot read this memory, which is why the
+`.component-specs/{name}.md` fallback must be written as well.
 
 ## Using with a subagent
 
