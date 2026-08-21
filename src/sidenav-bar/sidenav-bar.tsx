@@ -24,6 +24,8 @@ import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-coll
 import {SidenavItem} from './sidenav-item';
 import {SidenavDoublePanel} from './sidenav-panel';
 import {SidenavMobileBar} from './sidenav-mobile';
+import {useIsReducedMotion} from './sidenav-motion';
+import {useSidenavRailKeyboard} from './sidenav-keyboard';
 import {isSidenavSection} from './sidenav-types';
 import {
     SidenavBarContext,
@@ -187,6 +189,8 @@ type SidenavCollapseActionRenderProps = {
     onPress: () => void;
     /** Accessible name of the action, which follows the collapsed state. */
     'aria-label': string;
+    /** Disclosure state of the sidenav: true while expanded, false while collapsed. */
+    'aria-expanded': boolean;
 };
 
 type SidenavBarBaseProps = {
@@ -415,8 +419,11 @@ const SidenavBar = ({
     const {isTabletOrSmaller} = useScreenSize();
     const {componentProperties, platformOverrides} = useTheme();
     // An acceptance run reads every result as soon as it presses a control, so it receives no movement at
-    // all: the durations below go to zero, and the parts that wait for the movement change at once.
-    const isTestRun = isRunningAcceptanceTest(platformOverrides);
+    // all: the durations below go to zero, and the parts that wait for the movement change at once. A user
+    // who asked for less motion gets the same treatment, so that the document never keeps a box that the
+    // screen already closed.
+    const isReducedMotion = useIsReducedMotion();
+    const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
@@ -449,14 +456,13 @@ const SidenavBar = ({
         if (collapsedSettled === collapsed) {
             return;
         }
-        const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion)').matches;
-        if (isTestRun || prefersReducedMotion) {
+        if (isMotionOff) {
             setCollapsedSettled(collapsed);
             return;
         }
         const timeoutId = setTimeout(() => setCollapsedSettled(collapsed), COLLAPSE_DURATION_MS);
         return () => clearTimeout(timeoutId);
-    }, [collapsed, collapsedSettled, isTestRun]);
+    }, [collapsed, collapsedSettled, isMotionOff]);
 
     // The effects below read the entries without depending on the array itself: a consumer that builds
     // the entries inline would otherwise re-run them on every render.
@@ -675,6 +681,8 @@ const SidenavBar = ({
         ]
     );
 
+    const handleRailKeyDown = useSidenavRailKeyboard(containerRef);
+
     const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -730,6 +738,10 @@ const SidenavBar = ({
     // header from a flag of its own without repeating the default element. It also takes a function,
     // which receives the collapsed state, so a logo of its own swaps with the sidenav as well.
     const isLogoCollapsed = collapsed;
+    // The default logo is the brand mark of the skin, which carries no navigation, so the header mutes it and
+    // its reading order starts at the collapse action. A logo of the consumer keeps whatever the consumer
+    // built into it, because that logo can hold meaning of its own.
+    const isDefaultLogo = logo === undefined || logo === true;
     const logoElement = (() => {
         if (logo === false) {
             return null;
@@ -737,7 +749,7 @@ const SidenavBar = ({
         if (typeof logo === 'function') {
             return logo({collapsed: isLogoCollapsed});
         }
-        if (logo === undefined || logo === true) {
+        if (isDefaultLogo) {
             return <Logo size={LOGO_SIZE} type="isotype" />;
         }
         return logo;
@@ -754,6 +766,7 @@ const SidenavBar = ({
             collapsed,
             onPress: toggleCollapsed,
             'aria-label': collapsed ? 'Expand navigation' : 'Collapse navigation',
+            'aria-expanded': !collapsed,
         };
 
         if (renderCollapseAction) {
@@ -768,6 +781,7 @@ const SidenavBar = ({
                 small
                 onPress={collapseActionProps.onPress}
                 aria-label={collapseActionProps['aria-label']}
+                aria-expanded={collapseActionProps['aria-expanded']}
             />
         );
     })();
@@ -793,9 +807,13 @@ const SidenavBar = ({
     return (
         <ThemeVariant variant={normalizedVariant}>
             <SidenavBarContext.Provider value={contextValue}>
+                {/* The rail moves the focus between its items with the arrow keys, so the landmark holds the
+                    key handler that owns that movement. */}
+                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                 <nav
                     ref={containerRef}
                     aria-label={ariaLabel}
+                    onKeyDown={handleRailKeyDown}
                     className={classnames(styles.container, {
                         [styles.withRightDivider[normalizedVariant]]: divider && !boxed,
                         [styles.boxed]: boxed,
@@ -809,8 +827,8 @@ const SidenavBar = ({
                         [styles.sidenavPanelWidthVar]: `${width}px`,
                         // Every animated rule of the sidenav reads its duration from these two variables,
                         // which the whole tree inherits from this element.
-                        [styles.collapseDurationVar]: `${isTestRun ? 0 : COLLAPSE_DURATION_MS}ms`,
-                        [styles.contentDurationVar]: `${isTestRun ? 0 : CONTENT_DURATION_MS}ms`,
+                        [styles.collapseDurationVar]: `${isMotionOff ? 0 : COLLAPSE_DURATION_MS}ms`,
+                        [styles.contentDurationVar]: `${isMotionOff ? 0 : CONTENT_DURATION_MS}ms`,
                     })}
                     {...getPrefixedDataAttributes({testid: 'SidenavBar', ...dataAttributes})}
                 >
@@ -841,6 +859,9 @@ const SidenavBar = ({
                                             className={classnames(styles.logo, {
                                                 [styles.logoCollapsed]: collapsed,
                                             })}
+                                            // Only the default brand mark leaves the reading order. A logo of
+                                            // the consumer keeps its own accessibility.
+                                            aria-hidden={isDefaultLogo || undefined}
                                         >
                                             {logoElement}
                                         </div>
@@ -929,7 +950,7 @@ const SidenavBar = ({
                     {doublePanelContent && (
                         <CSSTransition
                             in={isDoublePanelOpen}
-                            timeout={isTestRun ? 0 : COLLAPSE_DURATION_MS}
+                            timeout={isMotionOff ? 0 : COLLAPSE_DURATION_MS}
                             nodeRef={doublePanelRef}
                             classNames={styles.doublePanelTransitionClasses}
                             appear

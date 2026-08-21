@@ -3,6 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
 import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-context';
+import {useDialogPanelKeyboard} from './sidenav-keyboard';
 import {Portal} from '../portal';
 import {Text3} from '../text';
 import {listenResize} from '../utils/dom';
@@ -86,6 +87,7 @@ const SidenavDialogPanel = ({
     const [panelPosition, setPanelPosition] = React.useState<{top: number; left: number} | null>(null);
 
     useClosePanelOnOutsideInteraction(panelElement);
+    useDialogPanelKeyboard({panelElement, containerRef, itemId});
 
     // The panel opens aligned with its trigger, but a trigger close to the bottom edge pushes the
     // panel out of the viewport. The top is therefore clamped to the lowest position where the whole
@@ -131,7 +133,8 @@ const SidenavDialogPanel = ({
                 ref={setPanelElement}
                 className={styles.dialogPanel}
                 role="group"
-                aria-label={label}
+                aria-label={`${label} submenu`}
+                data-sidenav-dialog-panel={itemId}
                 style={
                     panelPosition
                         ? {
@@ -151,7 +154,12 @@ const SidenavDialogPanel = ({
                 }
             >
                 <ThemeVariant variant="default">
-                    <div className={classnames(styles.dialogPanelTitle, styles.sectionTitleVariant.default)}>
+                    <div
+                        className={classnames(styles.dialogPanelTitle, styles.sectionTitleVariant.default)}
+                        // The panel already carries the label through its `aria-label`, and the trigger
+                        // announces it too, so the visible title stays out of the reading order.
+                        aria-hidden="true"
+                    >
                         <Text3 medium color="inherit">
                             {label}
                         </Text3>
@@ -200,7 +208,12 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                 aria-label={label}
             >
                 <div className={styles.doublePanelContent}>
-                    <div className={classnames(styles.doublePanelTitle, styles.sectionTitleVariant[variant])}>
+                    <div
+                        className={classnames(styles.doublePanelTitle, styles.sectionTitleVariant[variant])}
+                        // The column already carries the label through its `aria-label`, and the trigger
+                        // item announces it too, so the visible title stays out of the reading order.
+                        aria-hidden="true"
+                    >
                         <Text3 medium color="inherit">
                             {label}
                         </Text3>

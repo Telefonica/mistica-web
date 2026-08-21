@@ -866,3 +866,98 @@ test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off'
 
     expect(sidenavBar).not.toHaveClass(styles.boxedBorder);
 });
+
+// The spec asks the collapse action to report its disclosure state through `aria-expanded`: true while the
+// sidenav is expanded, false while it is collapsed.
+test('SidenavBar collapse button reports its state through aria-expanded', async () => {
+    await renderSidenav();
+
+    const collapseButton = screen.getByRole('button', {name: 'Collapse navigation'});
+    expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(collapseButton);
+
+    expect(screen.getByRole('button', {name: 'Expand navigation'})).toHaveAttribute('aria-expanded', 'false');
+});
+
+const keyboardSections: Array<SidenavSection> = [
+    {
+        items: [
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+            {id: 'search', label: 'Search', asset: IconHomeRegular, href: '/search'},
+            {
+                id: 'teams',
+                label: 'Teams',
+                asset: IconFolderRegular,
+                children: [{id: 'eng', label: 'Engineering', href: '/eng'}],
+            },
+        ],
+    },
+];
+
+const renderKeyboardSidenav = async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" sections={keyboardSections} />
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+};
+
+test('SidenavBar moves the focus down and up with the arrow keys', async () => {
+    await renderKeyboardSidenav();
+
+    const home = screen.getByRole('link', {name: 'Home'});
+    const search = screen.getByRole('link', {name: 'Search'});
+
+    home.focus();
+    fireEvent.keyDown(home, {key: 'ArrowDown'});
+    expect(search).toHaveFocus();
+
+    fireEvent.keyDown(search, {key: 'ArrowUp'});
+    expect(home).toHaveFocus();
+});
+
+test('SidenavBar focuses the first and last items with Home and End', async () => {
+    await renderKeyboardSidenav();
+
+    const home = screen.getByRole('link', {name: 'Home'});
+    const teams = screen.getByRole('button', {name: 'Teams'});
+
+    home.focus();
+    fireEvent.keyDown(home, {key: 'End'});
+    expect(teams).toHaveFocus();
+
+    fireEvent.keyDown(teams, {key: 'Home'});
+    expect(home).toHaveFocus();
+});
+
+test('SidenavBar expands a closed parent with ArrowRight and collapses it with ArrowLeft', async () => {
+    await renderKeyboardSidenav();
+
+    const teams = screen.getByRole('button', {name: 'Teams', expanded: false});
+
+    teams.focus();
+    fireEvent.keyDown(teams, {key: 'ArrowRight'});
+
+    expect(screen.getByRole('button', {name: 'Teams', expanded: true})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Engineering'})).toBeInTheDocument();
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Teams'}), {key: 'ArrowLeft'});
+
+    await waitForRemoval(() => screen.queryByRole('link', {name: 'Engineering'}));
+});
+
+test('SidenavBar moves the focus to the parent with ArrowLeft from a child', async () => {
+    await renderKeyboardSidenav();
+
+    const teams = screen.getByRole('button', {name: 'Teams'});
+    teams.focus();
+    fireEvent.keyDown(teams, {key: 'ArrowRight'});
+
+    const eng = screen.getByRole('link', {name: 'Engineering'});
+    eng.focus();
+    fireEvent.keyDown(eng, {key: 'ArrowLeft'});
+
+    expect(screen.getByRole('button', {name: 'Teams'})).toHaveFocus();
+});

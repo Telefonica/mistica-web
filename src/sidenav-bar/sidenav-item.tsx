@@ -18,6 +18,7 @@ import {
     hasDescendantWithId,
 } from './sidenav-context';
 import {SidenavDialogPanel} from './sidenav-panel';
+import {useIsReducedMotion} from './sidenav-motion';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import {applyCssVars} from '../utils/css';
 import {isRunningAcceptanceTest} from '../utils/platform';
@@ -144,6 +145,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const level = React.useContext(SidenavLevelContext);
     const itemIndex = React.useContext(SidenavItemIndexContext);
     const {platformOverrides} = useTheme();
+    const isReducedMotion = useIsReducedMotion();
+    // The group of this item closes at once for an acceptance run and for a user who asked for less
+    // motion, so the document never keeps a group that the screen already closed.
+    const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
     // `SidenavBar` overrides the ambient variant with its own, so the item takes its colors from here. The
     // floating panel of a collapsed sidenav restores the default variant, and its items follow.
     const variant = useThemeVariant();
@@ -416,13 +421,19 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {hasChildren && (
                 <CSSTransition
                     in={isOpen}
-                    timeout={isRunningAcceptanceTest(platformOverrides) ? 0 : CONTENT_DURATION_MS}
+                    timeout={isMotionOff ? 0 : CONTENT_DURATION_MS}
                     nodeRef={nestedListRef}
                     classNames={styles.nestedListTransitionClasses}
                     mountOnEnter
                     unmountOnExit
                 >
-                    <div className={styles.nestedListContainer} ref={nestedListRef}>
+                    <div
+                        className={styles.nestedListContainer}
+                        ref={nestedListRef}
+                        // Marks this group with the id of its parent, so ArrowLeft on a child moves the
+                        // focus back to the trigger that owns the group.
+                        data-sidenav-nested-list-for={id}
+                    >
                         <div className={styles.nestedList} role="group" aria-label={label}>
                             <SidenavLevelContext.Provider value={level + 1}>
                                 {children}
