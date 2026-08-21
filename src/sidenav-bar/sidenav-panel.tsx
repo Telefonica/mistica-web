@@ -7,7 +7,9 @@ import {useDialogPanelKeyboard} from './sidenav-keyboard';
 import {Portal} from '../portal';
 import {Text3} from '../text';
 import {listenResize} from '../utils/dom';
+import {useTheme} from '../hooks';
 import {ThemeVariant} from '../theme-variant-context';
+import * as tokens from '../text-tokens';
 
 import type {NonDeprecatedVariant} from '../theme-variant-context';
 
@@ -80,6 +82,7 @@ const SidenavDialogPanel = ({
     children,
 }: SidenavDialogPanelProps): JSX.Element => {
     const contextValue = useSidenavBarContext();
+    const {texts, t} = useTheme();
     // `Portal` creates its host element in an effect, so the panel node appears one render after the
     // panel mounts. Keeping the node in state (instead of in a ref) re-runs the effects that measure
     // it as soon as it exists.
@@ -133,7 +136,7 @@ const SidenavDialogPanel = ({
                 ref={setPanelElement}
                 className={styles.dialogPanel}
                 role="group"
-                aria-label={`${label} submenu`}
+                aria-label={t(texts.sidenavSubmenu || tokens.sidenavSubmenu, label)}
                 data-sidenav-dialog-panel={itemId}
                 style={
                     panelPosition

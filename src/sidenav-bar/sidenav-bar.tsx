@@ -17,29 +17,35 @@ import {isRunningAcceptanceTest} from '../utils/platform';
 import {useScreenSize, useTheme} from '../hooks';
 import {IconButton} from '../icon-button';
 import {Logo} from '../logo';
-import Divider from '../divider';
-import {Text3} from '../text';
 import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
 import {SidenavItem} from './sidenav-item';
+import {SidenavSection} from './sidenav-section';
+import {
+    renderSidenavItemFromData,
+    getFirstLevelItems,
+    findParentOfItem,
+    findFirstLevelItem,
+    renderSidenavEntries,
+} from './sidenav-entries';
 import {SidenavDoublePanel} from './sidenav-panel';
 import {SidenavMobileBar} from './sidenav-mobile';
 import {useIsReducedMotion} from './sidenav-motion';
 import {useSidenavRailKeyboard} from './sidenav-keyboard';
-import {isSidenavSection} from './sidenav-types';
 import {
     SidenavBarContext,
     useSidenavBarContext,
     SidenavLevelContext,
-    SidenavItemIndexContext,
     assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-context';
 import {shouldShowBoxedBorder} from '../boxed';
+import * as tokens from '../text-tokens';
 
 import type {Variant} from '../theme-variant-context';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type {DataAttributes} from '../utils/types';
+import type {SidenavSectionProps} from './sidenav-section';
 import type {
     SidenavEntry,
     SidenavItem as SidenavItemType,
@@ -83,92 +89,6 @@ const enforceOpaqueColor = (color: string, region: 'header' | 'footer'): OpaqueC
     return toOpaqueColor(color);
 };
 
-/*
- * SidenavBar — Mistica sidenav navigation component.
- *
- * This component follows the Mistica "sidenav" spec:
- * https://github.com/Telefonica/mistica-design/blob/aweell-generate-figma-specs/specs/sidenav.md
- *
- * The public API (props of SidenavBar / SidenavSection / SidenavItem) is stable and includes:
- *   - Dialog panel rendering of nested items when collapsed
- *   - Double panel rendering of nested items when doublePanel={true}
- *   - The mobile and tablet burger menu, which `SidenavMobileBar` renders
- *
- * Behaviours described in the spec that are not yet implemented:
- *   - Layout wrapper for the main content (whole-viewport / centered).
- *   - Per-region colour token matrices for brand/alternative/negative/media variants
- *     (currently only the `default` variant is fully styled; other variants still
- *     provide the correct `ThemeVariant` context to descendant components).
- */
-
-// -----------------------------------------------------------------------------
-// SidenavSection
-// -----------------------------------------------------------------------------
-
-type SidenavSectionProps = {
-    /** Section heading. Hidden (space reserved) when the sidenav is collapsed. */
-    title?: string;
-    /** Renders a divider above the section. @default false */
-    dividerTop?: boolean;
-    /** Renders a divider below the section. @default false */
-    dividerBottom?: boolean;
-    /** Navigation items (`SidenavItem` elements).
-     * @see SidenavItem
-     */
-    children: React.ReactNode;
-    dataAttributes?: DataAttributes;
-};
-
-const SidenavSection = ({
-    title,
-    dividerTop,
-    dividerBottom,
-    children,
-    dataAttributes,
-}: SidenavSectionProps): JSX.Element => {
-    const {collapsed, collapsedSettled} = useSidenavBarContext();
-    const variant = useThemeVariant();
-
-    return (
-        <div
-            className={styles.section}
-            role="group"
-            aria-label={title}
-            {...getPrefixedDataAttributes({testid: 'SidenavSection', ...dataAttributes})}
-        >
-            {dividerTop && (
-                <div className={styles.sectionDivider}>
-                    <Divider />
-                </div>
-            )}
-            {title && (
-                <div
-                    className={classnames(styles.sectionTitle, styles.sectionTitleVariant[variant], {
-                        [styles.sectionTitleCollapsed]: collapsed,
-                        // The title holds the width of its text while the sidenav moves, in both
-                        // directions. See `sectionTitleKeepsWidth`.
-                        [styles.sectionTitleKeepsWidth]: collapsed || collapsedSettled,
-                    })}
-                >
-                    <Text3 medium truncate={collapsed ? 1 : undefined} color="inherit">
-                        {title}
-                    </Text3>
-                </div>
-            )}
-            <div className={styles.sectionContent}>{children}</div>
-            {dividerBottom && (
-                <div className={styles.sectionDivider}>
-                    <Divider />
-                </div>
-            )}
-        </div>
-    );
-};
-
-// -----------------------------------------------------------------------------
-// SidenavBar
-// -----------------------------------------------------------------------------
-
 type SidenavBarBackgroundColors = {
     /** Header background color (must be opaque to mask scrolling content). */
     header?: OpaqueColor;
@@ -195,14 +115,13 @@ type SidenavCollapseActionRenderProps = {
 
 type SidenavBarBaseProps = {
     /** First-level entries of the body. Each entry is either a section with items, or a stand-alone
-     * item that needs no section. Data-driven API replaces JSX children for better alignment with
-     * MainNavigationBar.
+     * item that needs no section.
      * @see SidenavEntry
      * @see SidenavSection
      * @see SidenavItem
      */
     sections?: ReadonlyArray<SidenavEntry>;
-    /** Accessible name of the navigation landmark. @default 'Main navigation' */
+    /** Accessible name of the navigation landmark. Defaults to a localized "Main navigation". */
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
     variant?: Variant;
@@ -302,101 +221,9 @@ type SidenavBarProps = SidenavBarBaseProps &
           }
     >;
 
-// Render a single item with its nested children recursively
-const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {
-    const children = item.children?.map((child) => renderSidenavItemFromData(child));
-    const baseProps = {
-        id: item.id,
-        label: item.label,
-        asset: item.asset,
-        showIconWhenExpanded: item.showIconWhenExpanded,
-        rightSlot: item.rightSlot,
-        defaultOpen: item.defaultOpen,
-        newTab: item.newTab,
-        onNavigate: item.onNavigate,
-        children,
-    };
-
-    // Build navigation props based on which one is defined
-    if (item.href !== undefined) {
-        return <SidenavItem key={item.id} {...(baseProps as any)} href={item.href} />;
-    }
-    if (item.to !== undefined) {
-        return <SidenavItem key={item.id} {...(baseProps as any)} to={item.to} />;
-    }
-    if (item.onPress !== undefined) {
-        return <SidenavItem key={item.id} {...(baseProps as any)} onPress={item.onPress} />;
-    }
-    // No navigation: this item has children
-    return <SidenavItem key={item.id} {...(baseProps as any)} />;
-};
-
-/** The items of the first level, in order: the items of every section, and every stand-alone item. */
-const getFirstLevelItems = (entries: ReadonlyArray<SidenavEntry>): Array<SidenavItemType> =>
-    entries.flatMap((entry) => (isSidenavSection(entry) ? [...entry.items] : [entry as SidenavItemType]));
-
-/**
- * Finds the first-level item that owns the given child id. The sidenav supports a single nesting
- * level, so the parent of an item is always a first-level item.
- */
-const findParentOfItem = (
-    entries: ReadonlyArray<SidenavEntry>,
-    childId: string
-): SidenavItemType | undefined =>
-    getFirstLevelItems(entries).find((item) => item.children?.some((child) => child.id === childId));
-
-/** Finds a first-level item by id. Only these items can open a panel. */
-const findFirstLevelItem = (
-    entries: ReadonlyArray<SidenavEntry>,
-    itemId: string
-): SidenavItemType | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
-
-/**
- * Wraps an item with its position among the first-level entries of the body. The labels fade out one
- * after the other when the sidenav collapses, and that position gives the delay of each fade. The
- * provider renders no node of its own, so the sidenav carries the position without a wrapper element and
- * without a public prop on `SidenavItem`.
- */
-const withItemIndex = (item: SidenavItemType, index: number): React.ReactElement => (
-    <SidenavItemIndexContext.Provider key={item.id} value={index}>
-        {renderSidenavItemFromData(item)}
-    </SidenavItemIndexContext.Provider>
-);
-
-/**
- * Render the first-level entries of the body. An entry is either a section, which groups its items,
- * or a stand-alone item, which the items rail wraps so that it aligns with the items of a section.
- */
-const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> => {
-    // The position runs over the whole body, and not over one section, so the fade travels down the
-    // sidenav from the first item to the last one.
-    let itemIndex = 0;
-
-    return entries.map((entry, entryIndex) => {
-        if (isSidenavSection(entry)) {
-            return (
-                <SidenavSection
-                    key={entry.title || `section-${entryIndex}`}
-                    title={entry.title}
-                    dividerTop={entry.dividerTop}
-                    dividerBottom={entry.dividerBottom}
-                >
-                    {entry.items.map((item) => withItemIndex(item, itemIndex++))}
-                </SidenavSection>
-            );
-        }
-
-        return (
-            <div key={entry.id} className={styles.standaloneItem}>
-                {withItemIndex(entry as SidenavItemType, itemIndex++)}
-            </div>
-        );
-    });
-};
-
 const SidenavBar = ({
     sections,
-    'aria-label': ariaLabel = 'Main navigation',
+    'aria-label': ariaLabelProp,
     variant = 'default',
     boxed = false,
     divider = true,
@@ -417,12 +244,12 @@ const SidenavBar = ({
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {componentProperties, platformOverrides} = useTheme();
-    // An acceptance run reads every result as soon as it presses a control, so it receives no movement at
-    // all: the durations below go to zero, and the parts that wait for the movement change at once. A user
-    // who asked for less motion gets the same treatment, so that the document never keeps a box that the
-    // screen already closed.
+    const {componentProperties, platformOverrides, texts, t} = useTheme();
+    // The landmark keeps a localized default, and a consumer that passes `aria-label` overrides it.
+    const ariaLabel = ariaLabelProp ?? (texts.sidenavLandmark || t(tokens.sidenavLandmark));
     const isReducedMotion = useIsReducedMotion();
+    // Acceptance runs and reduced motion both force zero-duration motion, so no half-animated node is
+    // left in the DOM after the state that removed it.
     const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
@@ -765,7 +592,9 @@ const SidenavBar = ({
         const collapseActionProps: SidenavCollapseActionRenderProps = {
             collapsed,
             onPress: toggleCollapsed,
-            'aria-label': collapsed ? 'Expand navigation' : 'Collapse navigation',
+            'aria-label': collapsed
+                ? texts.sidenavExpand || t(tokens.sidenavExpand)
+                : texts.sidenavCollapse || t(tokens.sidenavCollapse),
             'aria-expanded': !collapsed,
         };
 

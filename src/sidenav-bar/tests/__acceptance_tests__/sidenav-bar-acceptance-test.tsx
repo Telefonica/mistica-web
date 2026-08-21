@@ -1,8 +1,13 @@
 import {openStoryPage, screen, waitFor} from '../../../test-utils';
+import {sidenavCollapse, sidenavExpand, sidenavSubmenu} from '../../../text-tokens';
 
 import type {PageApi} from '../../../test-utils';
 
 const STORY_ID = 'components-sidenavbar-bar--default';
+
+// Storybook renders in `es`, so the collapse action reads the Spanish text of these tokens.
+const COLLAPSE_LABEL = sidenavCollapse.es;
+const EXPAND_LABEL = sidenavExpand.es;
 
 // The id of the item that holds the focus, read from the row that wraps the focused control. It gives a
 // stable target for the keyboard tests, regardless of the tag that each item renders.
@@ -52,15 +57,15 @@ test('SidenavBar collapses and expands again from its collapse action', async ()
         device: 'DESKTOP',
     });
 
-    const collapseAction = await screen.findByRole('button', {name: 'Collapse navigation'});
+    const collapseAction = await screen.findByRole('button', {name: COLLAPSE_LABEL});
 
     await collapseAction.click();
 
-    const expandAction = await screen.findByRole('button', {name: 'Expand navigation'});
+    const expandAction = await screen.findByRole('button', {name: EXPAND_LABEL});
 
     await expandAction.click();
 
-    await screen.findByRole('button', {name: 'Collapse navigation'});
+    await screen.findByRole('button', {name: COLLAPSE_LABEL});
 });
 
 // The collapse action swaps its icon when the user presses it, so the node that the press started on has
@@ -76,9 +81,9 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
     await (await screen.findByRole('button', {name: 'Teams'})).click();
     await screen.findByRole('group', {name: 'Teams'});
 
-    await (await screen.findByRole('button', {name: 'Collapse navigation'})).click();
+    await (await screen.findByRole('button', {name: COLLAPSE_LABEL})).click();
 
-    await screen.findByRole('button', {name: 'Expand navigation'});
+    await screen.findByRole('button', {name: EXPAND_LABEL});
     await screen.findByRole('group', {name: 'Teams'});
 });
 
@@ -89,12 +94,12 @@ test('SidenavBar collapse action reports its state through aria-expanded', async
         device: 'DESKTOP',
     });
 
-    const collapseAction = await screen.findByRole('button', {name: 'Collapse navigation'});
+    const collapseAction = await screen.findByRole('button', {name: COLLAPSE_LABEL});
     expect(await collapseAction.evaluate((element) => element.getAttribute('aria-expanded'))).toBe('true');
 
     await collapseAction.click();
 
-    const expandAction = await screen.findByRole('button', {name: 'Expand navigation'});
+    const expandAction = await screen.findByRole('button', {name: EXPAND_LABEL});
     expect(await expandAction.evaluate((element) => element.getAttribute('aria-expanded'))).toBe('false');
 });
 
@@ -156,11 +161,11 @@ test('SidenavBar carries the focus into the floating panel and back on Escape', 
         device: 'DESKTOP',
     });
 
-    await (await screen.findByRole('button', {name: 'Collapse navigation'})).click();
-    await screen.findByRole('button', {name: 'Expand navigation'});
+    await (await screen.findByRole('button', {name: COLLAPSE_LABEL})).click();
+    await screen.findByRole('button', {name: EXPAND_LABEL});
 
     await (await screen.findByRole('button', {name: 'Teams'})).click();
-    await screen.findByRole('group', {name: 'Teams submenu'});
+    await screen.findByRole('group', {name: sidenavSubmenu.es.replace('1$s', 'Teams')});
 
     await page.keyboard.press('ArrowDown');
     expect(await getFocusedItemId(page)).toBe('eng');

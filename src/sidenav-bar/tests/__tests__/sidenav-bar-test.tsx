@@ -6,12 +6,17 @@ import {SidenavBar} from '../../index';
 import * as styles from '../../sidenav-bar.css';
 import {ThemeVariant} from '../../../theme-variant-context';
 import {getMovistarSkin} from '../../../skins/movistar';
+import {sidenavCollapse, sidenavExpand} from '../../../text-tokens';
 import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
 import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
 
 import type {Variant} from '../../../theme-variant-context';
 import type {Skin} from '../../../skins/types';
 import type {SidenavEntry, SidenavSection} from '../../sidenav-types';
+
+// The test theme resolves to `es-ES`, so the collapse action reads the Spanish text of these tokens.
+const COLLAPSE_LABEL = sidenavCollapse.es;
+const EXPAND_LABEL = sidenavExpand.es;
 
 class MockIntersectionObserver {
     observe = jest.fn();
@@ -152,16 +157,18 @@ test('SidenavBar reopens a closed parent when the selection moves to a sibling c
 test('SidenavBar collapse button toggles the accessible label', async () => {
     await renderSidenav();
 
-    const collapseButton = screen.getByRole('button', {name: 'Collapse navigation'});
+    const collapseButton = screen.getByRole('button', {name: COLLAPSE_LABEL});
     fireEvent.click(collapseButton);
 
-    expect(screen.getByRole('button', {name: 'Expand navigation'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: EXPAND_LABEL})).toBeInTheDocument();
 });
 
 test('SidenavBar hides the collapse button when collapsible is false', async () => {
     await renderSidenav({collapsible: false});
 
-    expect(screen.queryByRole('button', {name: /navigation/})).not.toBeInTheDocument();
+    expect(
+        screen.queryByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
+    ).not.toBeInTheDocument();
 });
 
 const queryItemRow = (itemId: string): HTMLElement => {
@@ -221,15 +228,17 @@ test('SidenavBar paints a custom collapse action that toggles the sidenav', asyn
     });
 
     // The custom control replaces the default icon button, it does not join it, and only it carries a text.
-    expect(screen.getAllByRole('button', {name: /navigation/})).toHaveLength(1);
+    expect(
+        screen.getAllByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
+    ).toHaveLength(1);
 
-    const customAction = screen.getByRole('button', {name: 'Collapse navigation'});
+    const customAction = screen.getByRole('button', {name: COLLAPSE_LABEL});
 
     expect(customAction).toHaveTextContent('Hide');
 
     fireEvent.click(customAction);
 
-    expect(screen.getByRole('button', {name: 'Expand navigation'})).toHaveTextContent('Show');
+    expect(screen.getByRole('button', {name: EXPAND_LABEL})).toHaveTextContent('Show');
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
 });
 
@@ -339,7 +348,7 @@ test('SidenavBar moves the logo of that function when the user collapses the sid
     await renderSidenav({logo: renderLogoByState});
 
     await React.act(async () => {
-        fireEvent.click(screen.getByRole('button', {name: 'Collapse navigation'}));
+        fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
     });
 
     expect(screen.getByRole('img', {name: 'Mark of the product'})).toBeInTheDocument();
@@ -568,7 +577,7 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     expect(getPanel('Projects')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', {name: 'Collapse navigation'}));
+    fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
 
     expect(getPanel('Projects')).toBeInTheDocument();
 });
@@ -872,12 +881,12 @@ test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off'
 test('SidenavBar collapse button reports its state through aria-expanded', async () => {
     await renderSidenav();
 
-    const collapseButton = screen.getByRole('button', {name: 'Collapse navigation'});
+    const collapseButton = screen.getByRole('button', {name: COLLAPSE_LABEL});
     expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
 
     fireEvent.click(collapseButton);
 
-    expect(screen.getByRole('button', {name: 'Expand navigation'})).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('button', {name: EXPAND_LABEL})).toHaveAttribute('aria-expanded', 'false');
 });
 
 const keyboardSections: Array<SidenavSection> = [

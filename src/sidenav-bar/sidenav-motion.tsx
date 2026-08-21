@@ -14,6 +14,8 @@ const REDUCED_MOTION_QUERY = '(prefers-reduced-motion)';
  * It reports `false` on the server and for the first render, where no media query exists. A toggle of the
  * sidenav always comes later than that, so the value is settled by the time anything reads it.
  */
+// TODO WIP study it if promoting this hook to `src/hooks` and reuse it? `carousel`, `meter`, and `ai-card` inline their
+// own one-shot `matchMedia('(prefers-reduced-motion)')` reads; this reactive, SSR-safe version could replace them.
 const useIsReducedMotion = (): boolean => {
     const [isReducedMotion, setIsReducedMotion] = React.useState(false);
 

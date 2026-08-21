@@ -2,10 +2,6 @@ import {style} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import * as mq from '../media-queries.css';
 
-export const DESKTOP_WIDTH = 240;
-export const LARGE_DESKTOP_WIDTH = 296;
-export const LARGE_DESKTOP_BREAKPOINT = 1920;
-
 // A mobile or tablet sidenav is a top bar, and not a column, so the two regions stack there. The spec
 // gives "N/A" for the width of the sidenav on both breakpoints.
 export const container = style([

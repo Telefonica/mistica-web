@@ -6,7 +6,7 @@ import type {NonDeprecatedVariant} from '../theme-variant-context';
 
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
-export const BOXED_INSET = 8;
+const BOXED_INSET = 8;
 // Per-level nesting step applied as the item row's left padding. It combines with the item content
 // box's own 8px left margin (which clears the selected indicator on the rail) so a nested item's
 // content box lands 24px from the section rail — the total nesting indent the Figma spec calls for
@@ -28,7 +28,7 @@ const ITEM_ROW_GAP = 8;
 const SECTION_TITLE_INSET = 16;
 // Vertical space between two first-level entries of the body (section to section, section to
 // stand-alone item, or stand-alone item to stand-alone item). Items inside a section stay adjacent.
-export const FIRST_LEVEL_GAP = 16;
+const FIRST_LEVEL_GAP = 16;
 
 export const sidenavWidthVar = createVar();
 // The second column always takes the `width` of the expanded sidenav, so it needs its own variable: the
@@ -648,17 +648,6 @@ export const nestedList = style({
 });
 
 // Panel (Dialog and Double Panel) -----------------------------------------------
-
-export const panelOverlay = style({
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1000,
-    pointerEvents: 'auto',
-    backgroundColor: 'transparent',
-});
 
 export const dialogPanel = style({
     display: 'flex',
