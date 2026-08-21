@@ -263,8 +263,8 @@ export const headerControlsCollapsed = style({
     paddingRight: 20,
 });
 
-// The height of the logo is the same in both states. The width is not: the expanded sidenav shows the
-// imagotype, which is wider than the box of the rail, so only the collapsed rail clamps the width.
+// The default isotype is a square as wide as its height in both states. The collapsed rail still clamps
+// the width, because a logo of the consumer, or the function form of the prop, can be wider than the rail.
 export const logo = style({
     display: 'flex',
     alignItems: 'center',

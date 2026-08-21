@@ -195,11 +195,11 @@ type SidenavBarBaseProps = {
     /** Opens the children of a parent item in a second column, to the right of the sidenav.
      * @default false */
     doublePanel?: boolean;
-    /** Logo of the header. Defaults to the logo of the skin: the imagotype when the sidenav is expanded,
-     * and the isotype when it is collapsed, both 32px tall. It takes true for that same default, false to
-     * hide the logo, an element of your own, or a function that receives the collapsed state and returns
-     * one logo for each state. The collapsed rail clamps the width of the logo to 32px. The mobile top bar
-     * is not a rail, so it shows the imagotype at 40px, and it reports a collapsed state of false.
+    /** Logo of the header. Defaults to the isotype of the skin at 32px, in both the expanded and the
+     * collapsed state. It takes true for that same default, false to hide the logo, an element of your
+     * own, or a function that receives the collapsed state and returns one logo for each state. The
+     * collapsed rail clamps the width of the logo to 32px. The mobile top bar is not a rail, so it shows
+     * the imagotype at 40px, and it reports a collapsed state of false.
      * @see SidenavLogoRenderProps */
     logo?: SidenavLogo;
     /** Custom content below logo/collapse in header. */
@@ -658,17 +658,10 @@ const SidenavBar = ({
         );
     }
 
-    // The expanded sidenav has room for the brand name, so the default logo is the imagotype. The
-    // collapsed rail only fits the symbol, so it falls back to the isotype. Both keep the same height.
-    // The symbol shifts a little between the two states, and the sidenav does not cause it: both boxes
-    // sit at the same top and the same left. Each brand draws its symbol at its own scale and offset
-    // inside the canvas of 72 units of its two artworks. Movistar centers the symbol in the imagotype
-    // and places it 1.5 units above centre in the isotype, which reads as 0.67px at a height of 32px.
-    // Telefonica reaches 4px. A correction belongs to the artwork of the skin, not here: an offset in
-    // this component would need one value per skin and would still leave the other components unaligned.
-    // `logo` takes true for the default logo, so that a consumer can drive the header from a flag of its
-    // own without repeating the default element. It also takes a function, which receives the same state
-    // that the default logo reads, so a logo of its own swaps with the sidenav as well.
+    // The default logo is the isotype in both states, so the symbol keeps its place when the sidenav
+    // collapses or expands. `logo` takes true for the default logo, so that a consumer can drive the
+    // header from a flag of its own without repeating the default element. It also takes a function,
+    // which receives the collapsed state, so a logo of its own swaps with the sidenav as well.
     const isLogoCollapsed = collapsed;
     const logoElement = (() => {
         if (logo === false) {
@@ -678,7 +671,7 @@ const SidenavBar = ({
             return logo({collapsed: isLogoCollapsed});
         }
         if (logo === undefined || logo === true) {
-            return <Logo size={LOGO_SIZE} type={isLogoCollapsed ? 'isotype' : 'imagotype'} />;
+            return <Logo size={LOGO_SIZE} type="isotype" />;
         }
         return logo;
     })();

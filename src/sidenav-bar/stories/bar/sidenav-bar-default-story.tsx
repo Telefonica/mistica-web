@@ -143,8 +143,8 @@ const renderCustomCollapseAction = ({
         </ButtonLink>
     );
 
-// The logo slot takes an element, and a function when that element must follow the collapsed state, the
-// same way that the default logo swaps the imagotype for the isotype. This one is the mark of a product,
+// The logo slot takes an element, and a function when that element must follow the collapsed state, even
+// though the default logo keeps the isotype in both states. This one is the mark of a product,
 // built with Mistica components: the rail shows the mark alone, because it clamps the width of the logo to
 // 32px, and the expanded sidenav adds the name of the product beside it.
 const productMark = (
@@ -315,12 +315,12 @@ export const Default = ({
                                             press handler, and the accessible name.
                                         </ListItem>
                                         <ListItem>
-                                            The header shows the logo of the skin by default: the imagotype on
-                                            the expanded sidenav, and the isotype on the collapsed rail. The
-                                            logo prop also takes an element of your own, or a function that
-                                            receives the collapsed state and returns one logo for each state.
-                                            Turn on the customLogo control to see that function, and turn the
-                                            logo control off to hide the slot.
+                                            The header shows the logo of the skin by default: the isotype on
+                                            both the expanded sidenav and the collapsed rail. The logo prop
+                                            also takes an element of your own, or a function that receives the
+                                            collapsed state and returns one logo for each state. Turn on the
+                                            customLogo control to see that function, and turn the logo control
+                                            off to hide the slot.
                                         </ListItem>
                                     </UnorderedList>
                                 </Text2>
@@ -383,7 +383,7 @@ export default {
             // match the type it reads from that union. The story declares the type of its own arg instead.
             type: {name: 'boolean'},
             description:
-                'The logo of the skin: the imagotype on the expanded sidenav, and the isotype on the collapsed rail. It also takes an element of your own, or a function of the collapsed state.',
+                'The logo of the skin: the isotype on both the expanded sidenav and the collapsed rail. It also takes an element of your own, or a function of the collapsed state.',
         },
         customLogo: {
             control: {type: 'boolean'},

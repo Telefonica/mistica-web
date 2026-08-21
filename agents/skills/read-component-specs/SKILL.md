@@ -15,7 +15,9 @@ Load component specifications in order of precedence:
 1. **GitHub issue ticket** — requirements and context
 2. **Markdown specifications** — design team specs extracted from Figma; **overrides Figma** if conflicts
    exist
-3. **Figma design** — original design file; can be superseded by markdown specs
+3. **Figma design** — original design file; can be superseded by markdown specs. For measurements, trust the
+   dimension-annotated images ("cotas"), not the raw values a Figma MCP tool reports (see
+   [Figma MCP usage](#figma-mcp-usage))
 
 ## When to Use (Auto-trigger)
 
@@ -121,43 +123,20 @@ If conflicts exist between sources:
 
 Always note conflicts when found.
 
+## Figma MCP usage
+
+Call a Figma MCP tool only when the markdown spec and the GitHub issue do not answer the question — each call
+has a real cost. Reduce the number of calls; do not skip Figma entirely.
+
+For **measurements**, do not trust the raw values that a Figma MCP tool returns (`get_design_context`,
+`get_metadata`). The design team can set a final measurement that differs from the raw Figma layout. Use the
+dimension-annotated images ("cotas") in the spec or design file instead.
+
 ## Saving to memory
 
 After consolidating specifications, save key details to project memory so they persist across development
-sessions:
-
-- **Component name** and GitHub issue reference
-- **Resource links**: GitHub issue, markdown specs, Figma design
-- **Key requirements**: scope, API, interactions, edge cases
-- **Design decisions**: conflicts resolved, precedence notes, implementation approach
-- **Development notes**: blockers, learnings, next steps
-
-Store in `/Users/mbertamini/.claude/projects/-Users-mbertamini-Code-Work-mistica-web/memory/` with a file
-named `component-{name}.md` using this format:
-
-```markdown
----
-name: component-{name}
-description: Specifications and context for {component-name}
-metadata:
-  type: project
----
-
-**GitHub Issue**: [#{issue-number}](issue-url) **Specs Markdown**: [specs/{name}.md](specs-url) **Figma
-Design**: [Figma file](figma-url)
-
-## Requirements
-
-[Key requirements from issue and specs]
-
-## Design decisions
-
-[Conflicts resolved, precedence notes, implementation approach]
-
-## Notes
-
-[Blockers, learnings, next steps]
-```
+sessions. Use the format in [Memory Format](#memory-format) above, stored at
+`/Users/mbertamini/.claude/projects/-Users-mbertamini-Code-Work-mistica-web/memory/component-{name}.md`.
 
 In future sessions, Claude will automatically recall this context from memory.
 

@@ -247,18 +247,18 @@ test('SidenavBar keeps the space of the section title when collapsed', async () 
 });
 
 // The logo is muted for assistive technology, so there is no semantic query for it. The type of the
-// default logo shows up in the viewBox of its svg: the imagotype of Movistar is wider than its isotype.
+// default logo shows up in the viewBox of its svg: the isotype of Movistar is a square of 72 units.
 const getLogoViewBox = (): string | null =>
     // eslint-disable-next-line testing-library/no-node-access
     screen.getByTestId('Logo').querySelector('svg')?.getAttribute('viewBox') ?? null;
 
-test('SidenavBar renders the imagotype of the skin by default', async () => {
+test('SidenavBar renders the isotype of the skin by default', async () => {
     await renderSidenav();
 
-    expect(getLogoViewBox()).toBe('0 0 203 72');
+    expect(getLogoViewBox()).toBe('0 0 72 72');
 });
 
-test('SidenavBar renders the isotype of the skin when it is collapsed', async () => {
+test('SidenavBar keeps the isotype of the skin when it is collapsed', async () => {
     await renderSidenav({collapsed: true, onCollapse: jest.fn()});
 
     expect(getLogoViewBox()).toBe('0 0 72 72');
@@ -267,7 +267,7 @@ test('SidenavBar renders the isotype of the skin when it is collapsed', async ()
 test('SidenavBar renders the default logo when logo is true', async () => {
     await renderSidenav({logo: true});
 
-    expect(getLogoViewBox()).toBe('0 0 203 72');
+    expect(getLogoViewBox()).toBe('0 0 72 72');
 });
 
 test('SidenavBar renders no logo when logo is false', async () => {
@@ -283,8 +283,8 @@ test('SidenavBar renders the element that logo carries', async () => {
     expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
 });
 
-// A logo of the consumer follows the collapsed state through the function form of the prop, the same way
-// that the default logo swaps the imagotype for the isotype.
+// A logo of the consumer follows the collapsed state through the function form of the prop, even though
+// the default logo keeps the isotype in both states.
 const renderLogoByState = ({collapsed}: {collapsed: boolean}) => (
     <img src="/brand.svg" alt={collapsed ? 'Mark of the product' : 'Mark and name of the product'} />
 );

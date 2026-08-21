@@ -127,8 +127,8 @@ type SidenavSection = {
 type SidenavEntry = ExclusifyUnion<SidenavSection | SidenavItem>;
 
 /**
- * Props of the logo of the header. A consumer that needs a logo of its own for each state reads them, the
- * same way that the default logo swaps the imagotype for the isotype.
+ * Props of the logo of the header. A consumer that needs a logo of its own for each state reads them. The
+ * default logo keeps the isotype in both states.
  */
 type SidenavLogoRenderProps = {
     /** Current collapsed state. The mobile top bar reports false, because it is not a rail. */
