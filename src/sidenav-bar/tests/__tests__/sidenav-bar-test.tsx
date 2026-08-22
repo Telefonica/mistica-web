@@ -29,11 +29,16 @@ beforeAll(() => {
 });
 
 // The group of a parent item and the second column both slide away instead of disappearing, so their node
-// stays in the document until the movement ends.
+// stays in the document until the movement ends. Motion is off in the tests, so the exit unmounts on a
+// zero timeout; the browser still runs that unmount on a macrotask, which a heavy re-render of the bar can
+// delay well past the default deadline on a busy CI machine. A generous timeout keeps the wait stable.
 const waitForRemoval = (queryElement: () => HTMLElement | null): Promise<void> =>
-    waitFor(() => {
-        expect(queryElement()).not.toBeInTheDocument();
-    });
+    waitFor(
+        () => {
+            expect(queryElement()).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
 
 const defaultSections: Array<SidenavSection> = [
     {
