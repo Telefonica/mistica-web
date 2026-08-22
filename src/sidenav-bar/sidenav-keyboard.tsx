@@ -164,11 +164,13 @@ type DialogPanelKeyboardArgs = {
 };
 
 /**
- * Keeps the focus inside the dialog panel and returns it to the trigger once the panel closes.
+ * Keeps the focus on the trigger while the panel opens, keeps it inside the panel once the user steps in,
+ * and returns it to the trigger once the panel closes.
  *
- * The panel opens without moving the focus. ArrowDown and Tab move between its items, and ArrowUp above
- * the first item returns to the trigger. Escape closes the panel through the document listener of
- * `sidenav-panel.tsx`, which unmounts the panel, and the restore below then returns the focus.
+ * The open and the close both replace the trigger row in the DOM, so the focus needs a restore on each
+ * end. ArrowDown and Tab move between the items of the panel, and ArrowUp above the first item returns to
+ * the trigger. Escape closes the panel through the document listener of `sidenav-panel.tsx`, which unmounts
+ * the panel, and the restore below then returns the focus.
  */
 const useDialogPanelKeyboard = ({panelElement, containerRef, itemId}: DialogPanelKeyboardArgs): void => {
     const triggerRef = React.useRef<HTMLElement | null>(null);
@@ -180,35 +182,44 @@ const useDialogPanelKeyboard = ({panelElement, containerRef, itemId}: DialogPane
         triggerRef.current = row?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? null;
     }, [containerRef, itemId, panelElement]);
 
-    // The panel returns the focus to the trigger once it closes. It re-reads the trigger from the DOM after
-    // the close, because the collapsed rail wraps the row in a tooltip as soon as the panel goes, which
-    // replaces the node that `triggerRef` held. The restore waits one frame for that replacement, and it
-    // runs only when the browser sent the focus back to the document body, so a focus that the user moved
-    // elsewhere stays where it is.
-    React.useEffect(
-        () => () => {
-            const container = containerRef.current;
-            if (!container) {
+    // Both the open and the close of the panel replace the trigger row in the DOM, because the collapsed
+    // rail drops the tooltips of the rail while the panel is open and wraps the row again once it goes. Each
+    // replacement destroys the node that held the focus, so the browser sends the focus back to the document
+    // body. This re-reads the fresh trigger from the DOM one frame later and returns the focus to it, but
+    // only when the focus rests on the body, so a focus that the user moved elsewhere stays where it is.
+    const restoreFocusToTrigger = React.useCallback(() => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+        const restoreFocus = () => {
+            const active = document.activeElement;
+            if (active && active !== document.body) {
                 return;
             }
-            const restoreFocus = () => {
-                const active = document.activeElement;
-                if (active && active !== document.body) {
-                    return;
-                }
-                const row = container.querySelector(
-                    `[data-sidenav-item-id="${escapeAttributeValue(itemId)}"]`
-                );
-                row?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus();
-            };
-            if (typeof requestAnimationFrame === 'function') {
-                requestAnimationFrame(restoreFocus);
-            } else {
-                restoreFocus();
-            }
-        },
-        [containerRef, itemId]
-    );
+            const row = container.querySelector(`[data-sidenav-item-id="${escapeAttributeValue(itemId)}"]`);
+            row?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus();
+        };
+        if (typeof requestAnimationFrame === 'function') {
+            requestAnimationFrame(restoreFocus);
+        } else {
+            restoreFocus();
+        }
+    }, [containerRef, itemId]);
+
+    // Opening the panel drops the tooltips of the rail, which replaces the trigger row and drops the focus
+    // that the press left on it. The panel node appears one render after the panel mounts, so this returns
+    // the focus to the fresh trigger as soon as that node exists.
+    React.useEffect(() => {
+        if (!panelElement) {
+            return;
+        }
+        restoreFocusToTrigger();
+    }, [panelElement, restoreFocusToTrigger]);
+
+    // The panel returns the focus to the trigger once it closes as well, because the rail wraps the row in a
+    // tooltip again and replaces the node that held the focus.
+    React.useEffect(() => () => restoreFocusToTrigger(), [restoreFocusToTrigger]);
 
     React.useEffect(() => {
         if (!panelElement) {
