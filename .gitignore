@@ -34,3 +34,7 @@ community.d.ts
 *storybook.log
 .env*.local
 
+.claude/settings.local.json
+
+# Local, derived component spec cache (see agents/skills/read-component-specs)
+.component-specs/

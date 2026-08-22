@@ -37,6 +37,10 @@ export type Dictionary = {
     mainNavigationBarOpenSectionMenu: string;
     mainNavigationBarSectionSeeAll: string;
     backNavigationBar: string;
+    sidenavExpand: string;
+    sidenavCollapse: string;
+    sidenavSubmenu: string;
+    sidenavLandmark: string;
     clearButton: string;
     carouselRegion: string;
     carouselPauseAutoplay: string;
@@ -347,6 +351,38 @@ export const backNavigationBar: TextToken = {
     en: 'Back',
     de: 'Zurück',
     pt: 'Voltar',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
+export const sidenavExpand: TextToken = {
+    es: 'Expandir navegación',
+    en: 'Expand navigation',
+    de: 'Navigation ausklappen',
+    pt: 'Expandir navegação',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
+export const sidenavCollapse: TextToken = {
+    es: 'Contraer navegación',
+    en: 'Collapse navigation',
+    de: 'Navigation einklappen',
+    pt: 'Recolher navegação',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final. `1$s` is the item label.
+export const sidenavSubmenu: TextToken = {
+    es: 'Submenú de 1$s',
+    en: '1$s submenu',
+    de: 'Untermenü von 1$s',
+    pt: 'Submenu de 1$s',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
+export const sidenavLandmark: TextToken = {
+    es: 'Navegación principal',
+    en: 'Main navigation',
+    de: 'Hauptnavigation',
+    pt: 'Navegação principal',
 };
 
 export const clearButton: TextToken = {

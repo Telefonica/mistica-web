@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 import {TELEFONICA_SKIN} from './constants';
 import {applyAlpha} from '../utils/color';
 
@@ -362,6 +371,10 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.coral10,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            sideNavBackgroundContainerBrand: palette.telefonicaBlue,
+            sideNavBackgroundContainer: palette.white,
+            sideNavBackgroundContainerNegative: applyAlpha(palette.white, 0.1),
+            sideNavBackgroundContainerMedia: applyAlpha(palette.white, 0.1),
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -669,6 +682,10 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.coral90,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.black, 0.7),
+            sideNavBackgroundContainerBrand: palette.darkModeGrey,
+            sideNavBackgroundContainer: palette.darkModeGrey,
+            sideNavBackgroundContainerNegative: palette.darkModeGrey,
+            sideNavBackgroundContainerMedia: palette.darkModeGrey,
         },
         borderRadii: {
             avatar: '50%',

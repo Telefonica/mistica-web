@@ -29,10 +29,9 @@ test('Pagination ellipses are non-interactive', async () => {
         },
     });
 
-    await screen.findByRole('button', {
-        name: 'Página 10, página actual',
-        current: 'page',
-    });
+    const currentPage = await screen.findByRole('button', {name: 'Página 10, página actual'});
+    expect(await currentPage.evaluate((element) => element.getAttribute('aria-current'))).toBe('page');
+
     const ellipses = await screen.findAllByText('...');
     let ellipsisClicked = false;
 
@@ -46,5 +45,6 @@ test('Pagination ellipses are non-interactive', async () => {
 
     expect(ellipsisClicked).toBe(true);
 
-    await screen.findByRole('button', {name: 'Página 10, página actual', current: 'page'});
+    const currentPageAfter = await screen.findByRole('button', {name: 'Página 10, página actual'});
+    expect(await currentPageAfter.evaluate((element) => element.getAttribute('aria-current'))).toBe('page');
 });

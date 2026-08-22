@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 import {VIVO_EVOLUTION_SKIN} from './constants';
 import {applyAlpha} from '../utils/color';
 
@@ -395,6 +404,10 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.vivoPepper25,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.vivoNeutral975, 0)} 0%, ${applyAlpha(palette.vivoNeutral975, 0.4)} 30%, ${applyAlpha(palette.vivoNeutral975, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.vivoNeutral975, 0.7),
+            sideNavBackgroundContainerBrand: palette.vivoPurple700,
+            sideNavBackgroundContainer: palette.vivoNeutral0,
+            sideNavBackgroundContainerNegative: applyAlpha(palette.vivoNeutral950, 0.4),
+            sideNavBackgroundContainerMedia: applyAlpha(palette.vivoNeutral950, 0.4),
         },
         darkModeColors: {
             background: palette.vivoNeutral950,
@@ -702,6 +715,10 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             tagBackgroundErrorBrand: palette.vivoNeutral800,
             cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.vivoNeutral975, 0)} 0%, ${applyAlpha(palette.vivoNeutral975, 0.4)} 30%, ${applyAlpha(palette.vivoNeutral975, 0.7)} 100%)`,
             cardFooterOverlay: applyAlpha(palette.vivoNeutral975, 0.7),
+            sideNavBackgroundContainerBrand: palette.vivoNeutral900,
+            sideNavBackgroundContainer: palette.vivoNeutral900,
+            sideNavBackgroundContainerNegative: palette.vivoNeutral900,
+            sideNavBackgroundContainerMedia: palette.vivoNeutral900,
         },
         borderRadii: {
             avatar: '50%',

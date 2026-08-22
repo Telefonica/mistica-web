@@ -1,0 +1,1 @@
+../../../agents/skills/read-component-specs/SKILL.md

@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 [data-mistica-skin='blau'] {
     /* Palette colors */
     --mistica-blau-white: #ffffff;
@@ -357,6 +366,10 @@
         rgba(var(--mistica-blau-raw-grey6), 0.7) 100%
     );
     --mistica-color-cardFooterOverlay: rgba(var(--mistica-blau-raw-grey6), 0.7);
+    --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-blau-blauBluePrimary);
+    --mistica-color-sideNavBackgroundContainer: var(--mistica-blau-white);
+    --mistica-color-sideNavBackgroundContainerNegative: rgba(var(--mistica-blau-raw-darkModeBlack), 0.4);
+    --mistica-color-sideNavBackgroundContainerMedia: rgba(var(--mistica-blau-raw-darkModeBlack), 0.4);
 
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
@@ -768,6 +781,10 @@
         rgba(var(--mistica-blau-raw-grey6), 0.7) 100%
     );
     --mistica-color-cardFooterOverlay: rgba(var(--mistica-blau-raw-grey6), 0.7);
+    --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-blau-darkModeGrey);
+    --mistica-color-sideNavBackgroundContainer: var(--mistica-blau-darkModeGrey);
+    --mistica-color-sideNavBackgroundContainerNegative: var(--mistica-blau-darkModeGrey);
+    --mistica-color-sideNavBackgroundContainerMedia: var(--mistica-blau-darkModeGrey);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1091,6 +1108,10 @@
             rgba(var(--mistica-blau-raw-grey6), 0.7) 100%
         );
         --mistica-color-cardFooterOverlay: rgba(var(--mistica-blau-raw-grey6), 0.7);
+        --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-blau-darkModeGrey);
+        --mistica-color-sideNavBackgroundContainer: var(--mistica-blau-darkModeGrey);
+        --mistica-color-sideNavBackgroundContainerNegative: var(--mistica-blau-darkModeGrey);
+        --mistica-color-sideNavBackgroundContainerMedia: var(--mistica-blau-darkModeGrey);
     }
 
     [data-mistica-skin='blau'][data-mistica-color-scheme='light'] {
@@ -1404,6 +1425,10 @@
             rgba(var(--mistica-blau-raw-grey6), 0.7) 100%
         );
         --mistica-color-cardFooterOverlay: rgba(var(--mistica-blau-raw-grey6), 0.7);
+        --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-blau-blauBluePrimary);
+        --mistica-color-sideNavBackgroundContainer: var(--mistica-blau-white);
+        --mistica-color-sideNavBackgroundContainerNegative: rgba(var(--mistica-blau-raw-darkModeBlack), 0.4);
+        --mistica-color-sideNavBackgroundContainerMedia: rgba(var(--mistica-blau-raw-darkModeBlack), 0.4);
     }
 }
 

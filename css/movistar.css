@@ -1,3 +1,12 @@
+/**
+ * @generated
+ *
+ * This file was generated from the mistica-design tokens. Do not edit it by hand, your changes will be
+ * lost on the next import. Run `yarn generate-design-tokens` to update it.
+ *
+ * @see packages/generate-design-tokens
+ */
+
 [data-mistica-skin='movistar'] {
     /* Palette colors */
     --mistica-movistar-white: #ffffff;
@@ -362,6 +371,10 @@
         rgba(var(--mistica-movistar-raw-black), 0.7) 100%
     );
     --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
+    --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-movistar-movistarBlue);
+    --mistica-color-sideNavBackgroundContainer: var(--mistica-movistar-white);
+    --mistica-color-sideNavBackgroundContainerNegative: rgba(var(--mistica-movistar-raw-movistarBlack), 0.2);
+    --mistica-color-sideNavBackgroundContainerMedia: rgba(var(--mistica-movistar-raw-movistarBlack), 0.2);
 
     /* Border radius */
     --mistica-border-radius-avatar: 50%;
@@ -785,6 +798,10 @@
         rgba(var(--mistica-movistar-raw-black), 0.7) 100%
     );
     --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
+    --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-movistar-darkModeGrey);
+    --mistica-color-sideNavBackgroundContainer: var(--mistica-movistar-darkModeGrey);
+    --mistica-color-sideNavBackgroundContainerNegative: var(--mistica-movistar-darkModeGrey);
+    --mistica-color-sideNavBackgroundContainerMedia: var(--mistica-movistar-darkModeGrey);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1138,6 +1155,10 @@
             rgba(var(--mistica-movistar-raw-black), 0.7) 100%
         );
         --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
+        --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-movistar-darkModeGrey);
+        --mistica-color-sideNavBackgroundContainer: var(--mistica-movistar-darkModeGrey);
+        --mistica-color-sideNavBackgroundContainerNegative: var(--mistica-movistar-darkModeGrey);
+        --mistica-color-sideNavBackgroundContainerMedia: var(--mistica-movistar-darkModeGrey);
     }
 
     [data-mistica-skin='movistar'][data-mistica-color-scheme='light'] {
@@ -1454,6 +1475,13 @@
             rgba(var(--mistica-movistar-raw-black), 0.7) 100%
         );
         --mistica-color-cardFooterOverlay: rgba(var(--mistica-movistar-raw-black), 0.7);
+        --mistica-color-sideNavBackgroundContainerBrand: var(--mistica-movistar-movistarBlue);
+        --mistica-color-sideNavBackgroundContainer: var(--mistica-movistar-white);
+        --mistica-color-sideNavBackgroundContainerNegative: rgba(
+            var(--mistica-movistar-raw-movistarBlack),
+            0.2
+        );
+        --mistica-color-sideNavBackgroundContainerMedia: rgba(var(--mistica-movistar-raw-movistarBlack), 0.2);
     }
 }
 
