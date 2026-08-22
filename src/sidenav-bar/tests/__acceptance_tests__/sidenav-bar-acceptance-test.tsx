@@ -167,6 +167,13 @@ test('SidenavBar carries the focus into the floating panel and back on Escape', 
     await (await screen.findByRole('button', {name: 'Teams'})).click();
     await screen.findByRole('group', {name: sidenavSubmenu.es.replace('1$s', 'Teams')});
 
+    // Opening the panel drops the tooltips of the rail, which replaces the trigger row with a fresh node
+    // and returns the focus to it one frame later. ArrowDown reads the focus, so it waits for that node to
+    // hold it again; otherwise it would run against the document body and move nothing.
+    await waitFor(async () => {
+        expect(await getFocusedItemId(page)).toBe('teams');
+    });
+
     await page.keyboard.press('ArrowDown');
     expect(await getFocusedItemId(page)).toBe('eng');
 
