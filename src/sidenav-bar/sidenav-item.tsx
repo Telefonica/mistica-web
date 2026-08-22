@@ -165,7 +165,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     if (process.env.NODE_ENV !== 'production') {
         if (level > 1) {
-            throw new Error(
+            console.error(
                 `SidenavItem nesting limit exceeded: "${label}" is at level ${level}. ` +
                     `SidenavItem only supports 2 levels of nesting (level 0 and level 1). ` +
                     `Items at level 1 cannot have children.`
@@ -173,7 +173,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
 
         if (level === 1 && hasChildren) {
-            throw new Error(
+            console.error(
                 `SidenavItem "${label}" at level 1 (nested item) cannot have children. ` +
                     `SidenavItem supports maximum 2 levels of nesting. ` +
                     `Only level 0 items can have children.`

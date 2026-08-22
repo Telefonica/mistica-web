@@ -31,7 +31,7 @@ import {
 import {SidenavDoublePanel} from './sidenav-panel';
 import {SidenavMobileBar} from './sidenav-mobile';
 import {useIsReducedMotion} from './sidenav-motion';
-import {useSidenavRailKeyboard} from './sidenav-keyboard';
+import {useSidenavRailKeyboard} from './use-sidenav-keyboard';
 import {
     SidenavBarContext,
     useSidenavBarContext,
