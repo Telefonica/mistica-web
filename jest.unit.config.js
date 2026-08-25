@@ -8,6 +8,7 @@ module.exports = {
         '**/src/**/*.[jt]s(x)?',
         '!**/node_modules/**',
         '!**/__*__/**', // ignore tests, acceptance, stories, etc
+        '!**/stories/**', // ignore colocated stories (screaming architecture)
         '!**/src/generated/**', // ignore generated files
         '!**/*.d.ts',
     ],

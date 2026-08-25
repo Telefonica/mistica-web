@@ -4323,7 +4323,46 @@ const listItemSnippets = [
     },
 ];
 
+const sidenavBarSnippets: Array<Snippet> = [
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (basic)',
+        code: `
+        <div style={{height: 480}}>
+            <SidenavBar
+                aria-label="Main navigation"
+                sections={[
+                    {
+                        items: [
+                            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                            {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                        ],
+                    },
+                    {
+                        title: 'Workspace',
+                        dividerTop: true,
+                        items: [
+                            {
+                                id: 'projects',
+                                label: 'Projects',
+                                asset: IconFolderRegular,
+                                defaultOpen: true,
+                                children: [
+                                    {id: 'active', label: 'Active', href: '#active'},
+                                    {id: 'archived', label: 'Archived', href: '#archived'},
+                                ],
+                            },
+                            {id: 'notifications', label: 'Notifications', asset: IconBellRegular, href: '#notifications'},
+                        ],
+                    },
+                ]}
+            />
+        </div>`,
+    },
+];
+
 export default [
+    ...sidenavBarSnippets,
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
@@ -4570,4 +4609,300 @@ export default [
         />`,
     },
     drawerSnippet,
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (href variant)',
+        code: `{/*
+SidenavItem (href variant) — Use for regular links.
+*/}
+<SidenavBar
+    aria-label="Main navigation"
+    sections={[
+        {
+            title: 'Navigation',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+            ],
+        },
+    ]}
+/>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (onPress variant)',
+        code: `{/*
+SidenavItem (onPress variant) — Use for custom click handlers.
+See playroom/SIDENAV.md for full documentation.
+*/}
+<SidenavBar
+    aria-label="Main navigation"
+    sections={[
+        {
+            title: 'Navigation',
+            items: [
+                {
+                    id: 'home',
+                    label: 'Home',
+                    asset: IconHomeRegular,
+                    onPress: () => console.log('Home clicked'),
+                },
+                {
+                    id: 'search',
+                    label: 'Search',
+                    asset: IconSearchRegular,
+                    onPress: () => console.log('Search clicked'),
+                },
+            ],
+        },
+    ]}
+/>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (children variant)',
+        code: `{/*
+SidenavItem (children variant) — Use for nested/expandable items (max 2 levels).
+See playroom/SIDENAV.md for full documentation.
+*/}
+<SidenavBar
+    aria-label="Main navigation"
+    sections={[
+        {
+            title: 'Navigation',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                {
+                    id: 'settings',
+                    label: 'Settings',
+                    asset: IconSettingsRegular,
+                    defaultOpen: true,
+                    children: [
+                        {id: 'settings-general', label: 'General', href: '#settings/general'},
+                        {id: 'settings-account', label: 'Account', href: '#settings/account'},
+                        {id: 'settings-privacy', label: 'Privacy', href: '#settings/privacy'},
+                    ],
+                },
+            ],
+        },
+    ]}
+/>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavItem (to variant)',
+        code: `{/*
+SidenavItem (to variant) — Use for client-side router integration.
+See playroom/SIDENAV.md for full documentation.
+*/}
+<SidenavBar
+    aria-label="Main navigation"
+    sections={[
+        {
+            title: 'Navigation',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, to: '/home'},
+                {id: 'search', label: 'Search', asset: IconSearchRegular, to: '/search'},
+                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, to: '/settings'},
+            ],
+        },
+    ]}
+/>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (with rightSlot)',
+        code: `{/*
+SidenavItem with rightSlot — Useful for badges, counts, or other indicators.
+*/}
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        sections={[
+            {
+                items: [
+                    {id: 'inbox', label: 'Inbox', asset: IconBellRegular, href: '#inbox', rightSlot: <Badge value={3} />},
+                    {id: 'messages', label: 'Messages', asset: IconEmailRegular, href: '#messages', rightSlot: <Badge value={5} />},
+                    {id: 'tasks', label: 'Tasks', asset: IconCheckCircleRegular, href: '#tasks'},
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (doublePanel mode)',
+        code: `{/*
+Double panel mode — The children of an item open in a second column, to the right of the sidenav.
+The second column pushes the main content, and it takes the same width as the main column.
+*/}
+<div style={{display: 'flex', height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        doublePanel
+        sections={[
+            {
+                items: [
+                    {id: 'dashboard', label: 'Dashboard', asset: IconDashboardRegular, href: '#dashboard'},
+                    {
+                        id: 'products',
+                        label: 'Products',
+                        asset: IconShopRegular,
+                        children: [
+                            {id: 'prod-all', label: 'All Products', href: '#products/all'},
+                            {id: 'prod-featured', label: 'Featured', href: '#products/featured'},
+                            {id: 'prod-new', label: 'New Arrivals', href: '#products/new'},
+                        ],
+                    },
+                    {
+                        id: 'orders',
+                        label: 'Orders',
+                        asset: IconShoppingCartRegular,
+                        children: [
+                            {id: 'orders-pending', label: 'Pending', href: '#orders/pending'},
+                            {id: 'orders-completed', label: 'Completed', href: '#orders/completed'},
+                        ],
+                    },
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (custom collapse action)',
+        code: `{/*
+Custom collapse action — The header shows an icon button by default. renderCollapseAction paints another
+control, which receives the collapsed state, the press handler and the accessible name.
+*/}
+<div style={{display: 'flex', height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        renderCollapseAction={({collapsed, onPress, 'aria-label': ariaLabel}) =>
+            collapsed ? (
+                <IconButton
+                    Icon={IconChevronRightRegular}
+                    type="neutral"
+                    backgroundType="transparent"
+                    small
+                    onPress={onPress}
+                    aria-label={ariaLabel}
+                />
+            ) : (
+                <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
+                    Hide
+                </ButtonLink>
+            )
+        }
+        sections={[
+            {
+                items: [
+                    {id: 'dashboard', label: 'Dashboard', asset: IconDashboardRegular, href: '#dashboard'},
+                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (multiple sections with nested items)',
+        code: `{/*
+Multiple sections with first and second level items.
+Demonstrates organized navigation structure.
+*/}
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        sections={[
+            {
+                items: [
+                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                ],
+            },
+            {
+                title: 'Shopping',
+                dividerTop: true,
+                items: [
+                    {
+                        id: 'categories',
+                        label: 'Categories',
+                        asset: IconShopRegular,
+                        defaultOpen: true,
+                        children: [
+                            {id: 'electronics', label: 'Electronics', href: '#categories/electronics'},
+                            {id: 'clothing', label: 'Clothing', href: '#categories/clothing'},
+                            {id: 'home', label: 'Home & Garden', href: '#categories/home'},
+                        ],
+                    },
+                    {
+                        id: 'brands',
+                        label: 'Brands',
+                        asset: IconTagRegular,
+                        children: [
+                            {id: 'premium', label: 'Premium', href: '#brands/premium'},
+                            {id: 'value', label: 'Value', href: '#brands/value'},
+                        ],
+                    },
+                    {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals', rightSlot: <Badge value={5} />},
+                ],
+            },
+            {
+                title: 'Account',
+                dividerTop: true,
+                items: [
+                    {
+                        id: 'profile',
+                        label: 'My Profile',
+                        asset: IconUserRegular,
+                        children: [
+                            {id: 'personal', label: 'Personal Info', href: '#profile/personal'},
+                            {id: 'addresses', label: 'Addresses', href: '#profile/addresses'},
+                        ],
+                    },
+                    {id: 'orders', label: 'Orders', asset: IconShoppingBagRegular, href: '#orders'},
+                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (sections and stand-alone items)',
+        code: `{/*
+The first level admits sections and stand-alone items, in any order.
+A stand-alone item needs no section around it.
+*/}
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        sections={[
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+            {
+                title: 'Shopping',
+                items: [
+                    {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals'},
+                    {id: 'orders', label: 'Orders', asset: IconShoppingBagRegular, href: '#orders'},
+                ],
+            },
+            {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+        ]}
+    />
+</div>
+        `,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
