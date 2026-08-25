@@ -278,7 +278,13 @@ const Template: StoryComponent<
             />
             <RowComponent
                 asset={<IconThumbUpFilled size={24} color="currentColor" />}
-                headline={headline && <Tag type="promo">{headline}</Tag>}
+                headline={
+                    headline && (
+                        <Tag type="promo" small={small}>
+                            {headline}
+                        </Tag>
+                    )
+                }
                 title={title}
                 subtitle={subtitle}
                 description={description}
