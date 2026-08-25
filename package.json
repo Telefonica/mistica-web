@@ -44,6 +44,7 @@
         "storybook": "storybook dev -p 6006",
         "storybook-for-acceptance-tests": "cross-env NODE_ENV=production yarn storybook --ci 2>&1",
         "playroom": "playroom start",
+        "browse": "node scripts/browse-story.js",
         "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
         "build-mistica-css": "cd examples/css && yarn && yarn build && cp -r dist ../../public/mistica-css",
         "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/ && yarn build-mistica-css",
@@ -183,7 +184,9 @@
         "*.css"
     ],
     "lint-staged": {
-        "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json,html}": "prettier --write"
+        "{,!(.claude|.cursor|.github)/**/}*.{js,css,md,yml,yaml,ts,tsx,d.ts,json,html}": "prettier --write",
+        ".github/{workflows,actions,ISSUE_TEMPLATE}/**/*.{js,yml,yaml,md,json}": "prettier --write",
+        ".claude/*.json": "prettier --write"
     },
     "release": {
         "plugins": [
