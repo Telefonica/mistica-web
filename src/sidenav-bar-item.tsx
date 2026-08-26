@@ -47,10 +47,6 @@ type SidenavItemBaseProps = {
     dataAttributes?: DataAttributes;
 };
 
-/**
- * SidenavItem with nested children.
- * Mutually exclusive with `href`, `onPress`, and `to`.
- */
 type SidenavItemWithChildrenProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
@@ -61,10 +57,6 @@ type SidenavItemWithChildrenProps = SidenavItemBaseProps & {
     to?: undefined;
 };
 
-/**
- * SidenavItem with custom click handler.
- * Mutually exclusive with `href`, `to`, and `children`.
- */
 type SidenavItemOnPressProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
@@ -75,10 +67,6 @@ type SidenavItemOnPressProps = SidenavItemBaseProps & {
     children?: undefined;
 };
 
-/**
- * SidenavItem with href navigation.
- * Mutually exclusive with `onPress`, `to`, and `children`.
- */
 type SidenavItemHrefProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
@@ -93,10 +81,6 @@ type SidenavItemHrefProps = SidenavItemBaseProps & {
     children?: undefined;
 };
 
-/**
- * SidenavItem with router link navigation.
- * Mutually exclusive with `onPress`, `href`, and `children`.
- */
 type SidenavItemToProps = SidenavItemBaseProps & {
     /** Unique identifier for selection tracking. */
     id: string;
@@ -146,8 +130,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const itemIndex = React.useContext(SidenavItemIndexContext);
     const {platformOverrides} = useTheme();
     const isReducedMotion = useIsReducedMotion();
-    // The group of this item closes at once for an acceptance run and for a user who asked for less
-    // motion, so the document never keeps a group that the screen already closed.
     const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
     // `SidenavBar` overrides the ambient variant with its own, so the item takes its colors from here. The
     // floating panel of a collapsed sidenav restores the default variant, and its items follow.
@@ -304,8 +286,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {!collapsed && hasChildren && (
                 <span
                     className={classnames(styles.itemChevron, styles.itemChevronVariant[variant], {
-                        // Only the chevron that points down reports the state of a group by turning. See
-                        // `itemChevronRotated`.
                         [styles.itemChevronRotated]: isOpen,
                     })}
                     aria-hidden="true"
@@ -325,12 +305,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const interactiveRow = (() => {
         if (hasChildren) {
             const handlePress = () => {
-                // The dialog panel and the second column both open from the panel state
                 if (shouldShowPanelMode) {
                     handleTogglePanel();
-                }
-                // The expanded sidenav opens the children in place
-                else {
+                } else {
                     setOpen((prev) => !prev);
                 }
             };

@@ -25,7 +25,7 @@ type Args = {
 
 export default {
     title: 'Components/SidenavBar/Layout',
-    parameters: {fullScreen: true},
+    parameters: {fullScreen: true, controls: {expanded: true}},
     argTypes: {
         useCustomWidth: {
             control: {type: 'boolean'},
@@ -100,8 +100,6 @@ type ContentProps = {
     selectedItemId: string | null;
 };
 
-// The placeholder sits at the bottom of the content area, outside of the horizontal padding, so that it
-// shows the whole width that the body takes next to the sidenav.
 const Content = ({title, description, selectedItemId}: ContentProps): React.JSX.Element => (
     <div
         style={{
@@ -313,9 +311,6 @@ export const Centered = (args: Args): React.JSX.Element => {
 
 Centered.storyName = 'Centered';
 
-// The layout owns no scroll region of its own: the document scrolls, and the rail sticks to the top of the
-// viewport beside the content. This story gives the content more height than the viewport, so you scroll the
-// page and watch the rail keep its place. A long rail scrolls on its own inside that sticky column.
 export const ScrollingContent = (args: Args): React.JSX.Element => {
     const sidenavWidth = useSidenavWidth(args);
     const [internalCollapsed, setInternalCollapsed] = useCollapsedState(args);

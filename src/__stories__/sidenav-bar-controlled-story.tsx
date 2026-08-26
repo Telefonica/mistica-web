@@ -34,6 +34,7 @@ export default {
     title: 'Components/SidenavBar/Bar',
     parameters: {
         fullScreen: true,
+        controls: {expanded: true},
     },
     args: {
         variant: 'default',
@@ -77,8 +78,6 @@ const pageBackgroundColor: Record<NonDeprecatedVariant, string> = {
 
 type SelectionButton = {id: string; label: string};
 
-// Flatten a section's items into the leaf (selectable) entries. Parents only expand, so they are not
-// selectable themselves; their descendants are the ones tracked by selectedItemId.
 const collectSelectableItems = (items: ReadonlyArray<SidenavItem>): Array<SelectionButton> => {
     const result: Array<SelectionButton> = [];
     items.forEach((item) => {
@@ -120,7 +119,6 @@ export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: 
                     label: 'Water Sports',
                     asset: IconFolderRegular,
                     defaultOpen: true,
-                    // A parent (expandable item) can also carry a rightSlot alongside its expand chevron.
                     rightSlot: <Badge value={3} />,
                     children: [
                         {

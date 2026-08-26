@@ -9,7 +9,10 @@ import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
 import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
+import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
+import IconCheckRegular from '../generated/mistica-icons/icon-check-regular';
 import {Placeholder} from '../placeholder';
+import Callout from '../callout';
 import Circle from '../circle';
 import Badge from '../badge';
 import {IconButton} from '../icon-button';
@@ -25,14 +28,14 @@ import {vars as skinVars} from '../skins/skin-contract.css';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
 
 import type {Variant} from '../theme-variant-context';
-import type {SidenavSection} from '../sidenav-bar-types';
+import type {SidenavEntry} from '../sidenav-bar-types';
 import type {
     SidenavBarBackgroundColors,
     SidenavCollapseActionRenderProps,
     SidenavLogoRenderProps,
 } from '../sidenav-bar';
 
-const getDefaultSections = (): Array<SidenavSection> => [
+const getDefaultSections = (onAction: (action: string) => void): Array<SidenavEntry> => [
     {
         items: [
             {
@@ -40,13 +43,13 @@ const getDefaultSections = (): Array<SidenavSection> => [
                 label: 'Home (href)',
                 asset: IconHomeRegular,
                 href: '#home',
-                onNavigate: () => console.log('Home navigated'),
+                onNavigate: () => onAction('Home navigated'),
             },
             {
                 id: 'search',
                 label: 'Search (onPress)',
                 asset: IconSearchRegular,
-                onPress: () => console.log('Search clicked'),
+                onPress: () => onAction('Search clicked'),
             },
         ],
     },
@@ -65,14 +68,13 @@ const getDefaultSections = (): Array<SidenavSection> => [
                         label: 'Active',
                         asset: IconDocumentsRegular,
                         href: '#active',
-                        onNavigate: () => console.log('Active clicked'),
+                        onNavigate: () => onAction('Active clicked'),
                     },
                     {
                         id: 'archived',
-                        label: 'Archived',
-                        asset: IconDocumentsRegular,
+                        label: 'Archived (no asset)',
                         href: '#archived',
-                        onNavigate: () => console.log('Archived clicked'),
+                        onNavigate: () => onAction('Archived clicked'),
                     },
                 ],
             },
@@ -85,13 +87,13 @@ const getDefaultSections = (): Array<SidenavSection> => [
                         id: 'eng',
                         label: 'Engineering',
                         asset: IconSearchRegular,
-                        onPress: () => console.log('Engineering team clicked'),
+                        onPress: () => onAction('Engineering team clicked'),
                     },
                     {
                         id: 'design',
                         label: 'Design',
                         asset: IconSearchRegular,
-                        onPress: () => console.log('Design team clicked'),
+                        onPress: () => onAction('Design team clicked'),
                     },
                 ],
             },
@@ -101,9 +103,16 @@ const getDefaultSections = (): Array<SidenavSection> => [
                 asset: IconBellRegular,
                 href: '#notifications',
                 rightSlot: <Badge value={2} />,
-                onNavigate: () => console.log('Notifications clicked'),
+                onNavigate: () => onAction('Notifications clicked'),
             },
         ],
+    },
+    {
+        id: 'favorites',
+        label: 'Favorites (stand-alone)',
+        asset: IconStarRegular,
+        href: '#favorites',
+        onNavigate: () => onAction('Favorites clicked'),
     },
     {
         title: 'Account',
@@ -114,15 +123,12 @@ const getDefaultSections = (): Array<SidenavSection> => [
                 label: 'Settings',
                 asset: IconSettingsRegular,
                 href: '#settings',
-                onNavigate: () => console.log('Settings clicked'),
+                onNavigate: () => onAction('Settings clicked'),
             },
         ],
     },
 ];
 
-// A custom collapse action receives the props of the default one, so it keeps the behavior and the
-// accessible name. This one also reads `collapsed`: it shows a text link on the expanded sidenav, and an
-// icon on the collapsed rail, where a text would not fit.
 const renderCustomCollapseAction = ({
     collapsed,
     onPress,
@@ -143,10 +149,6 @@ const renderCustomCollapseAction = ({
         </ButtonLink>
     );
 
-// The logo slot takes an element, and a function when that element must follow the collapsed state, even
-// though the default logo keeps the isotype in both states. This one is the mark of a product,
-// built with Mistica components: the rail shows the mark alone, because it clamps the width of the logo to
-// 32px, and the expanded sidenav adds the name of the product beside it.
 const productMark = (
     <Circle size={32} backgroundColor={skinVars.colors.brand}>
         <Text2 medium color={skinVars.colors.textPrimaryInverse}>
@@ -166,8 +168,9 @@ const renderCustomLogo = ({collapsed}: SidenavLogoRenderProps): React.ReactNode 
     );
 
 type Args = {
-    label: string;
+    'aria-label': string;
     variant: Variant;
+    selectedItemId: string;
     logo: boolean;
     customLogo: boolean;
     headerSlot: boolean;
@@ -178,6 +181,7 @@ type Args = {
     collapsible: boolean;
     customCollapseAction: boolean;
     defaultCollapsed: boolean;
+    collapsed: boolean;
     doublePanel: boolean;
     width: number;
     'Colors/Enabled'?: boolean;
@@ -187,8 +191,9 @@ type Args = {
 };
 
 export const Default = ({
-    label,
+    'aria-label': label,
     variant,
+    selectedItemId,
     logo,
     customLogo,
     headerSlot,
@@ -199,6 +204,7 @@ export const Default = ({
     collapsible,
     customCollapseAction,
     defaultCollapsed,
+    collapsed,
     doublePanel,
     width,
     'Colors/Enabled': colorsEnabled,
@@ -207,6 +213,15 @@ export const Default = ({
     'Colors/Footer': footerColor,
 }: Args): React.JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
+    const [lastAction, setLastAction] = React.useState('');
+
+    // The control seeds the selection, and a press on an item moves it. The effect follows the control, so
+    // a later change of the control also moves the selection.
+    const selectedIdFromControl = selectedItemId === 'none' ? null : selectedItemId;
+    const [selectedId, setSelectedId] = React.useState<string | null>(selectedIdFromControl);
+    React.useEffect(() => {
+        setSelectedId(selectedIdFromControl);
+    }, [selectedIdFromControl]);
     const background: SidenavBarBackgroundColors = colorsEnabled
         ? {
               header: headerColor as any,
@@ -215,10 +230,8 @@ export const Default = ({
           }
         : {};
 
-    const sections: Array<SidenavSection> = getDefaultSections();
+    const sections: Array<SidenavEntry> = getDefaultSections(setLastAction);
 
-    // The mobile top bar holds the header slot, and it is 56px tall, so the slot of that breakpoint takes
-    // the size of an action of a navigation bar. The expanded sidenav has a whole row for it instead.
     const headerSlotContent = isTabletOrSmaller ? (
         <Placeholder height={32} width={72} />
     ) : (
@@ -238,13 +251,26 @@ export const Default = ({
                         fixedFooter,
                         boxed,
                         divider,
-                        collapsible,
-                        renderCollapseAction: customCollapseAction ? renderCustomCollapseAction : undefined,
-                        defaultCollapsed,
+                        ...(collapsible
+                            ? {
+                                  collapsible: true,
+                                  defaultCollapsed,
+                                  renderCollapseAction: customCollapseAction
+                                      ? renderCustomCollapseAction
+                                      : undefined,
+                                  onCollapse: (isCollapsed: boolean) =>
+                                      setLastAction(isCollapsed ? 'Sidenav collapsed' : 'Sidenav expanded'),
+                              }
+                            : {collapsible: false, collapsed}),
                         doublePanel,
                         width,
                         sections,
                         background,
+                        selectedItemId: selectedId,
+                        onSelectedItemIdChange: (id: string | null) => {
+                            setSelectedId(id);
+                            setLastAction(`Selection moved to ${id ?? 'none'}`);
+                        },
                     } as any)}
                 />
             }
@@ -254,9 +280,16 @@ export const Default = ({
                     <Stack space={8}>
                         <Text6 as="h1">SidenavItem props showcase</Text6>
                         <Text3 regular>
-                            Press the items of the sidenav to see each type of prop in action.
+                            Press the items of the sidenav to see each type of prop in action. The panel below
+                            tracks the last action.
                         </Text3>
                     </Stack>
+
+                    <Callout
+                        asset={<IconCheckRegular color={skinVars.colors.brand} />}
+                        title="Last action"
+                        description={lastAction || 'Press an item to trigger an action.'}
+                    />
 
                     <Boxed>
                         <Box padding={24}>
@@ -281,6 +314,10 @@ export const Default = ({
                                             rightSlot adds custom content on the right side. See the badge of
                                             &quot;Notifications&quot;.
                                         </ListItem>
+                                        <ListItem>
+                                            asset is optional. See &quot;Archived (no asset)&quot; inside
+                                            &quot;Projects&quot;.
+                                        </ListItem>
                                     </UnorderedList>
                                 </Text2>
                             </Stack>
@@ -300,9 +337,20 @@ export const Default = ({
                                             href, to, or onPress.
                                         </ListItem>
                                         <ListItem>
+                                            The first level admits sections and stand-alone items, in any
+                                            order. See &quot;Favorites (stand-alone)&quot; between the two
+                                            sections.
+                                        </ListItem>
+                                        <ListItem>
                                             A child item takes no children, so the tree holds two levels.
                                         </ListItem>
                                         <ListItem>The onNavigate callback runs for href and for to.</ListItem>
+                                        <ListItem>
+                                            The selectedItemId control seeds the selection, a press on an item
+                                            moves it, and the sidenav reports every move through
+                                            onSelectedItemIdChange. It also reports each collapse through
+                                            onCollapse. The tracker above shows both.
+                                        </ListItem>
                                         <ListItem>
                                             The label of an item says which prop it uses, either
                                             &quot;(href)&quot; or &quot;(onPress)&quot;.
@@ -343,13 +391,14 @@ export default {
             source: {state: 'open'},
         },
         controls: {
-            expanded: false,
+            expanded: true,
         },
     },
     tags: ['autodocs'],
     args: {
-        label: 'Main navigation',
+        'aria-label': 'Main navigation',
         variant: 'default',
+        selectedItemId: 'none',
         logo: true,
         customLogo: false,
         headerSlot: true,
@@ -360,6 +409,7 @@ export default {
         collapsible: true,
         customCollapseAction: false,
         defaultCollapsed: false,
+        collapsed: false,
         doublePanel: false,
         width: 240,
         'Colors/Enabled': false,
@@ -368,20 +418,44 @@ export default {
         'Colors/Footer': '#ffffff',
     },
     argTypes: {
-        label: {
+        // The items stay out of the controls: an object of that shape does not edit well in the panel. The
+        // docs table keeps the prop with the description of its JSDoc.
+        sections: {
+            control: false,
+        },
+        'aria-label': {
             control: {type: 'text'},
         },
         variant: {
             options: ['default', 'brand', 'alternative', 'negative', 'media'],
             control: {type: 'select'},
         },
+        selectedItemId: {
+            options: [
+                'none',
+                'home',
+                'search',
+                'active',
+                'archived',
+                'eng',
+                'design',
+                'notifications',
+                'favorites',
+                'settings',
+            ],
+            control: {type: 'select'},
+            // The prop takes a string or null, and Storybook drops a control value that does not match the
+            // type it reads from that union. The story declares the type of its own arg instead.
+            type: {name: 'string'},
+            description:
+                'Seeds the selected item. A press on an item also moves the selection, and the sidenav reports it through onSelectedItemIdChange.',
+        },
         logo: {
             control: {type: 'boolean'},
             // The prop takes an element or a boolean, and Storybook drops a control value that does not
             // match the type it reads from that union. The story declares the type of its own arg instead.
+            // The description comes from the JSDoc of the prop.
             type: {name: 'boolean'},
-            description:
-                'The logo of the skin: the isotype on both the expanded sidenav and the collapsed rail. It also takes an element of your own, or a function of the collapsed state.',
         },
         customLogo: {
             control: {type: 'boolean'},
@@ -392,21 +466,28 @@ export default {
         headerSlot: {
             control: {type: 'boolean'},
         },
+        // The docgen of Storybook drops the props that live inside the branches of ExclusifyUnion, so the
+        // next five descriptions carry a copy of the JSDoc of each prop.
         footerSlot: {
             control: {type: 'boolean'},
+            description: 'Custom content in footer region (at bottom of sidenav).',
         },
         fixedFooter: {
             control: {type: 'boolean'},
             if: {arg: 'footerSlot', truthy: true},
+            description: 'Keep footer fixed when scrolling.',
         },
         boxed: {
             control: {type: 'boolean'},
+            description: 'Renders as a floating box, with its own edge. The divider does not apply to it.',
         },
         divider: {
             if: {arg: 'boxed', truthy: false},
+            description: 'Shows the vertical right divider (only when boxed is false).',
         },
         collapsible: {
             control: {type: 'boolean'},
+            description: 'Whether the user can toggle the collapsed state.',
         },
         customCollapseAction: {
             control: {type: 'boolean'},
@@ -416,8 +497,15 @@ export default {
         },
         defaultCollapsed: {
             control: {type: 'boolean'},
+            if: {arg: 'collapsible', truthy: true},
             description:
-                'Initial collapsed state. It seeds the state of a collapsible sidenav, so a later change of this control moves the sidenav only when collapsible is off.',
+                'Initial collapsed state (uncontrolled). It seeds the state once, so a later change of this control does not move the sidenav.',
+        },
+        collapsed: {
+            control: {type: 'boolean'},
+            if: {arg: 'collapsible', truthy: false},
+            description:
+                'Collapsed state of a non-toggleable sidenav, which mirrors this prop on every render. Unlike defaultCollapsed, it is not a seed: a later change of it moves the sidenav.',
         },
         doublePanel: {
             control: {type: 'boolean'},

@@ -73,18 +73,12 @@ const sections: Array<SidenavEntry> = [
     },
 ];
 
-export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Args): React.JSX.Element => {
-    // The page owns the collapsed state, so every control that writes it moves the sidenav through the
-    // `collapsed` prop. The button of the header slot is one of those controls.
+export const FooterSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Args): React.JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
     const [collapsed, setCollapsed] = React.useState(false);
     const [selectedItemId, setSelectedItemId] = React.useState<string | null>('overview');
 
-    // The collapsed rail leaves 24px between the insets of the header slot, so the rail takes an icon
-    // button instead of the full button of the expanded sidenav.
-    // The names of these two controls differ from the names of the default action, so that the two of them
-    // stay apart when the story shows both.
-    const headerSlot = collapsed ? (
+    const footerSlot = collapsed ? (
         <div style={{display: 'flex', justifyContent: 'center', flexFlow: 'column'}}>
             <Text2 as="p" regular>
                 This button has been rendered within the slot
@@ -117,12 +111,10 @@ export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
                     sections={sections}
                     collapsed={collapsed}
                     onCollapse={setCollapsed}
-                    // A story that hides the default action proves that the button of the header slot drives
-                    // the sidenav on its own.
                     renderCollapseAction={showDefaultCollapseAction ? undefined : () => null}
                     // The mobile sidenav is a top bar, and it never collapses, so a control that writes the
-                    // collapsed state has no meaning there. The story drops the slot on that breakpoint.
-                    headerSlot={isTabletOrSmaller ? undefined : headerSlot}
+                    // collapsed state has no meaning there.
+                    footerSlot={isTabletOrSmaller ? undefined : footerSlot}
                     selectedItemId={selectedItemId}
                     onSelectedItemIdChange={setSelectedItemId}
                     {...(boxed ? {boxed: true as const} : {boxed: false as const})}
@@ -132,10 +124,10 @@ export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
             <Box padding={32}>
                 <Stack space={24}>
                     <Stack space={8}>
-                        <Text6 as="h1">Collapse control in the header slot</Text6>
+                        <Text6 as="h1">Collapse control in the footer slot</Text6>
                         <Text3 regular>
                             The page holds the collapsed state and passes it to the sidenav with the collapsed
-                            prop. The button of the header slot writes that state.
+                            prop. The button of the footer slot writes that state.
                         </Text3>
                     </Stack>
 
@@ -164,7 +156,7 @@ export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
                                 <Text2 as="div" regular color={skinVars.colors.textSecondary}>
                                     <UnorderedList aria-labelledby="how-to-test">
                                         <ListItem>
-                                            Press the Collapse button in the header of the sidenav. The
+                                            Press the Collapse button in the footer of the sidenav. The
                                             sidenav becomes a rail, and the readout above shows true.
                                         </ListItem>
                                         <ListItem>
@@ -190,12 +182,13 @@ export const HeaderSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
     );
 };
 
-HeaderSlotCollapseControl.storyName = 'Collapse control in the header slot';
+FooterSlotCollapseControl.storyName = 'Collapse control in the footer slot';
 
 export default {
     title: 'Components/SidenavBar/Bar',
     parameters: {
         fullScreen: true,
+        controls: {expanded: true},
     },
     args: {
         showDefaultCollapseAction: false,
@@ -205,7 +198,7 @@ export default {
         showDefaultCollapseAction: {
             control: {type: 'boolean'},
             description:
-                'Keeps the default collapse action of the header. When it is off, renderCollapseAction hides that action, and only the button of the header slot collapses the sidenav.',
+                'Keeps the default collapse action of the header. When it is off, renderCollapseAction hides that action, and only the button of the footer slot collapses the sidenav.',
         },
         boxed: {
             control: {type: 'boolean'},

@@ -75,9 +75,6 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-// A boxed sidenav paints its border only over a default or an alternative page, the same rule that `Boxed`
-// follows. The border reads against those two pages, and it does not against a brand, a negative or a media
-// page. One screenshot per page context guards the rule.
 test.each`
     pageVariant
     ${'default'}
@@ -148,8 +145,6 @@ test('SidenavBar double panel boxed in dark mode', async () => {
 
 const OPEN_MENU_LABEL = 'Abrir menú de navegación';
 
-// The mobile sidenav is a top bar with a burger menu, so the whole page carries the component: the top bar
-// holds the logo and the header slot, and the panel of the burger holds the items and the footer slot.
 test.each`
     isDarkMode
     ${false}
@@ -168,8 +163,6 @@ test.each`
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-// A parent item reveals its children in the second level, which shows the back bar and the label of that
-// parent. The rows of both levels paint their right slot before the chevron.
 test('SidenavBar mobile second level', async () => {
     const page = await openStoryPage({
         id: 'components-sidenavbar-bar--default',
@@ -201,7 +194,6 @@ test.each`
     expect(await topBar.screenshot()).toMatchImageSnapshot();
 });
 
-// A tablet has no room for the rail, so it takes the same top bar as a mobile.
 test('SidenavBar tablet takes the mobile treatment', async () => {
     const page = await openStoryPage({
         id: 'components-sidenavbar-bar--default',

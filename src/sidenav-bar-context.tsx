@@ -1,10 +1,6 @@
 'use client';
 import * as React from 'react';
 
-// -----------------------------------------------------------------------------
-// Context
-// -----------------------------------------------------------------------------
-
 type SidenavBarContextValue = {
     collapsed: boolean;
     /**
@@ -52,11 +48,9 @@ const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(Side
 const SidenavLevelContext = React.createContext<number>(0);
 
 /**
- * Position of an item among the first-level entries of the body. The labels fade out one after the
- * other when the sidenav collapses, and this position gives the delay of each one. A provider renders
- * no node of its own, so the sidenav carries this position without a wrapper element and without a
- * public prop on `SidenavItem`. A nested item inherits the position of its parent, which never shows
- * on screen: the collapsed rail closes every group.
+ * Position of an item among the first-level entries of the body, which gives the delay of its label
+ * fade. A nested item inherits the position of its parent, which never shows on screen: the collapsed
+ * rail closes every group.
  */
 const SidenavItemIndexContext = React.createContext<number>(0);
 

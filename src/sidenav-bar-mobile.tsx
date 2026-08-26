@@ -132,11 +132,6 @@ const SidenavMobileBar = ({
         return logo;
     })();
 
-    /**
-     * One row of the panel. A parent item opens the second level, and never navigates. Any other item
-     * navigates, moves the selection, and closes the panel, the same way that a row of the burger menu of
-     * the main navigation bar does.
-     */
     const renderRow = (item: SidenavItem): JSX.Element => {
         const commonProps = {
             title: item.label,

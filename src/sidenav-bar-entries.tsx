@@ -8,7 +8,6 @@ import {SidenavItemIndexContext} from './sidenav-bar-context';
 
 import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-bar-types';
 
-// Render a single item with its nested children recursively
 const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {
     const children = item.children?.map((child) => renderSidenavItemFromData(child));
     const baseProps = {
@@ -23,7 +22,6 @@ const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement =>
         children,
     };
 
-    // Build navigation props based on which one is defined
     if (item.href !== undefined) {
         return <SidenavItem key={item.id} {...(baseProps as any)} href={item.href} />;
     }
@@ -33,7 +31,6 @@ const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement =>
     if (item.onPress !== undefined) {
         return <SidenavItem key={item.id} {...(baseProps as any)} onPress={item.onPress} />;
     }
-    // No navigation: this item has children
     return <SidenavItem key={item.id} {...(baseProps as any)} />;
 };
 
@@ -57,25 +54,15 @@ const findFirstLevelItem = (
     itemId: string
 ): SidenavItemType | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
 
-/**
- * Wraps an item with its position among the first-level entries of the body. The labels fade out one
- * after the other when the sidenav collapses, and that position gives the delay of each fade. The
- * provider renders no node of its own, so the sidenav carries the position without a wrapper element and
- * without a public prop on `SidenavItem`.
- */
+/** Wraps an item with its position among the first-level entries, which gives the delay of its label fade. */
 const withItemIndex = (item: SidenavItemType, index: number): React.ReactElement => (
     <SidenavItemIndexContext.Provider key={item.id} value={index}>
         {renderSidenavItemFromData(item)}
     </SidenavItemIndexContext.Provider>
 );
 
-/**
- * Render the first-level entries of the body. An entry is either a section, which groups its items,
- * or a stand-alone item, which the items rail wraps so that it aligns with the items of a section.
- */
 const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> => {
-    // The position runs over the whole body, and not over one section, so the fade travels down the
-    // sidenav from the first item to the last one.
+    // The position runs over the whole body, not over one section, so the fade travels down the sidenav.
     let itemIndex = 0;
 
     return entries.map((entry, entryIndex) => {

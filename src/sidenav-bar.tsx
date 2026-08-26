@@ -207,7 +207,6 @@ const SidenavBar = ({
 }: SidenavBarProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
     const {componentProperties, platformOverrides, texts, t} = useTheme();
-    // The landmark keeps a localized default, and a consumer that passes `aria-label` overrides it.
     const ariaLabel = ariaLabelProp ?? (texts.sidenavLandmark || t(tokens.sidenavLandmark));
     const isReducedMotion = useIsReducedMotion();
     // Acceptance runs and reduced motion both force zero-duration motion, so no half-animated node is
@@ -216,7 +215,6 @@ const SidenavBar = ({
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
-    // The column opens from the start on the parent of the item the consumer selected from the start.
     const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(() =>
         doublePanel && sections && selectedItemId
             ? findParentOfItem(sections, selectedItemId)?.id ?? null
@@ -318,12 +316,10 @@ const SidenavBar = ({
         setPanelOpenForItemId(null);
     }
 
-    // Only a press outside of the whole bar dismisses the second column, together with the Escape key. A
-    // press inside the bar that lands on no item (the background of a column, a section title) keeps the
-    // column open, and a press on an item closes it through `closePanelForSelection`. The listeners exist
-    // only while a column is open, so they read no other state. A press that also carries a new selection
-    // does not race the close: the adjustment above reopens the column for that selection in the same
-    // batch of updates.
+    // Only a press outside of the whole bar, or Escape, dismisses the second column: a press inside the
+    // bar that lands on no item keeps it open, and a press on an item closes it through
+    // `closePanelForSelection`. A press that also carries a new selection does not race the close: the
+    // adjustment above reopens the column for that selection in the same batch of updates.
     React.useEffect(() => {
         if (!doublePanel || !panelOpenForItemId) {
             return;
@@ -355,8 +351,6 @@ const SidenavBar = ({
         };
     }, [doublePanel, panelOpenForItemId]);
 
-    // The header and the footer are sticky over the scrolling body, so their background should be opaque
-    // (see `SidenavBarBackgroundColors`). The component takes the color as given and does not enforce it.
     const headerBackgroundColor = background?.header;
     const footerBackgroundColor = background?.footer;
     const bodyBackgroundColor = background?.body;
@@ -481,9 +475,7 @@ const SidenavBar = ({
 
     const normalizedVariant = normalizeVariant(variant);
 
-    // A tablet has no room for the rail either, so both breakpoints take the mobile treatment. The spec
-    // gives "N/A" for the width of the sidenav on mobile and on tablet. The mobile bar owns its own state,
-    // so the desktop tree below keeps none of it.
+    // A tablet has no room for the rail either, so both breakpoints take the mobile treatment.
     if (isTabletOrSmaller) {
         return (
             <SidenavMobileBar
@@ -500,14 +492,7 @@ const SidenavBar = ({
         );
     }
 
-    // The default logo is the isotype in both states, so the symbol keeps its place when the sidenav
-    // collapses or expands. `logo` takes true for the default logo, so that a consumer can drive the
-    // header from a flag of its own without repeating the default element. It also takes a function,
-    // which receives the collapsed state, so a logo of its own swaps with the sidenav as well.
     const isLogoCollapsed = collapsed;
-    // The default logo is the brand mark of the skin, which carries no navigation, so the header mutes it and
-    // its reading order starts at the collapse action. A logo of the consumer keeps whatever the consumer
-    // built into it, because that logo can hold meaning of its own.
     const isDefaultLogo = logo === undefined || logo === true;
     const logoElement = (() => {
         if (logo === false) {
@@ -522,8 +507,6 @@ const SidenavBar = ({
         return logo;
     })();
 
-    // The header shows an icon button by default. A consumer that needs another control receives the props
-    // of that button, so its own control keeps the behavior and the accessible name of the default one.
     const collapseActionElement = (() => {
         if (!collapsible) {
             return null;
@@ -591,11 +574,7 @@ const SidenavBar = ({
                     })}
                     style={applyCssVars({
                         [styles.sidenavWidthVar]: `${currentWidth}px`,
-                        // The second column takes the width of the expanded sidenav, which the collapsed
-                        // rail does not: a rail of 72px would give a column too narrow for its children.
                         [styles.sidenavPanelWidthVar]: `${width}px`,
-                        // Every animated rule of the sidenav reads its duration from these two variables,
-                        // which the whole tree inherits from this element.
                         [styles.collapseDurationVar]: `${isMotionOff ? 0 : COLLAPSE_DURATION_MS}ms`,
                         [styles.contentDurationVar]: `${isMotionOff ? 0 : CONTENT_DURATION_MS}ms`,
                     })}

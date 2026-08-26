@@ -34,8 +34,6 @@ test('SidenavBar renders its items', async () => {
     expect(homeHref).toBe('#home');
 });
 
-// An item with children only expands, so a real press is the single proof that it opens its group and that
-// it moves `aria-expanded`. "Teams" starts closed, while "Projects" carries `defaultOpen`.
 test('SidenavBar expands a parent item on press', async () => {
     await openStoryPage({
         id: STORY_ID,
@@ -87,7 +85,6 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
     await screen.findByRole('group', {name: 'Teams'});
 });
 
-// The spec asks the collapse action to report its disclosure state through `aria-expanded`.
 test('SidenavBar collapse action reports its state through aria-expanded', async () => {
     await openStoryPage({
         id: STORY_ID,
@@ -103,8 +100,7 @@ test('SidenavBar collapse action reports its state through aria-expanded', async
     expect(await expandAction.evaluate((element) => element.getAttribute('aria-expanded'))).toBe('false');
 });
 
-// The arrow keys, Home, and End move the focus between the items of the rail. "Projects" carries
-// `defaultOpen`, so its children sit between "Search" and "Teams".
+// "Projects" carries `defaultOpen`, so its children sit between "Search" and "Teams".
 test('SidenavBar moves the focus between items with the arrow keys, Home, and End', async () => {
     const page = await openStoryPage({
         id: STORY_ID,
@@ -129,8 +125,6 @@ test('SidenavBar moves the focus between items with the arrow keys, Home, and En
     expect(await getFocusedItemId(page)).toBe('settings');
 });
 
-// ArrowRight expands a closed parent, ArrowLeft collapses it again, and ArrowLeft on a child moves the
-// focus back to its parent.
 test('SidenavBar expands, collapses, and steps out of a group with the arrow keys', async () => {
     const page = await openStoryPage({
         id: STORY_ID,
@@ -153,8 +147,6 @@ test('SidenavBar expands, collapses, and steps out of a group with the arrow key
     await screen.findByRole('button', {name: 'Teams', expanded: false});
 });
 
-// A collapsed parent opens a floating panel. ArrowDown carries the focus into the panel, and Escape closes
-// the panel and returns the focus to the trigger.
 test('SidenavBar carries the focus into the floating panel and back on Escape', async () => {
     const page = await openStoryPage({
         id: STORY_ID,

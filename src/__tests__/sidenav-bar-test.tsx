@@ -195,8 +195,6 @@ const renderCollapsible = (props: React.ComponentProps<typeof SidenavBar>) => (
     </ThemeContextProvider>
 );
 
-// The user cannot toggle a sidenav with `collapsible: false`, so that sidenav keeps no state of its own,
-// and a later change of `collapsed` moves it.
 test('SidenavBar follows a change of collapsed when collapsible is false', async () => {
     const {rerender} = render(renderCollapsible({collapsible: false, collapsed: false}));
     await React.act(async () => {});
@@ -209,8 +207,6 @@ test('SidenavBar follows a change of collapsed when collapsible is false', async
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
 });
 
-// A sidenav that the user can toggle owns its collapsed state, so `defaultCollapsed` only seeds it: a later
-// change of that prop does not overrule the choice of the user.
 test('SidenavBar ignores a change of defaultCollapsed when the user can toggle it', async () => {
     const {rerender} = render(renderCollapsible({defaultCollapsed: false}));
     await React.act(async () => {});
@@ -221,8 +217,6 @@ test('SidenavBar ignores a change of defaultCollapsed when the user can toggle i
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 });
 
-// The consumer paints its own collapse action, which receives the props of the default one: the custom
-// control then toggles the sidenav, and it reads the collapsed state to give its own label.
 test('SidenavBar paints a custom collapse action that toggles the sidenav', async () => {
     await renderSidenav({
         renderCollapseAction: ({collapsed, onPress, 'aria-label': ariaLabel}) => (
@@ -232,7 +226,7 @@ test('SidenavBar paints a custom collapse action that toggles the sidenav', asyn
         ),
     });
 
-    // The custom control replaces the default icon button, it does not join it, and only it carries a text.
+    // The custom control replaces the default icon button, it does not join it.
     expect(
         screen.getAllByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
     ).toHaveLength(1);
@@ -281,7 +275,6 @@ test('SidenavBar keeps the label of an item in the document when collapsed', asy
     });
 });
 
-// The chevron of a parent item turns half a turn, so that it reports the state of its group.
 test('SidenavBar turns the chevron of a parent item that the user opens', async () => {
     await renderSidenav();
 
@@ -331,8 +324,6 @@ test('SidenavBar renders the element that logo carries', async () => {
     expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
 });
 
-// A logo of the consumer follows the collapsed state through the function form of the prop, even though
-// the default logo keeps the isotype in both states.
 const renderLogoByState = ({collapsed}: {collapsed: boolean}) => (
     <img src="/brand.svg" alt={collapsed ? 'Mark of the product' : 'Mark and name of the product'} />
 );
@@ -753,10 +744,8 @@ test('SidenavBar collapsed drops the tooltips of the rail while the dialog panel
     expect(hasTooltip('projects')).toBe(false);
 });
 
-// The accent bar and the selected background are style-only marks, without any semantic query. The item id
-// lives in a data attribute, and the two marks live in class names, so the test reads the DOM directly.
-// The accent bar marks the selected item. The parent of the selected child shows the selected background
-// only, so that the sidenav never displays two accent bars.
+// The accent bar and the selected background are style-only marks, without any semantic query, so the
+// test reads the DOM directly.
 test('SidenavBar double panel gives the accent to the selected child, and the background to the parent', async () => {
     await renderDoublePanelSidenav({selectedItemId: 'archived'});
 
@@ -793,7 +782,6 @@ test('SidenavBar expands the children inline when doublePanel is false', async (
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    // Without the double panel mode, the children expand inline, inside a group of the parent item.
     const nestedGroup = screen.getByRole('group', {name: 'Projects'});
     expect(nestedGroup).toContainElement(screen.getByRole('button', {name: 'Active'}));
     expect(nestedGroup).not.toHaveTextContent('Projects');
@@ -881,8 +869,6 @@ test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off'
     expect(sidenavBar).not.toHaveClass(styles.boxedBorder);
 });
 
-// The spec asks the collapse action to report its disclosure state through `aria-expanded`: true while the
-// sidenav is expanded, false while it is collapsed.
 test('SidenavBar collapse button reports its state through aria-expanded', async () => {
     await renderSidenav();
 

@@ -155,6 +155,7 @@ export default {
     title: 'Components/SidenavBar/Bar',
     parameters: {
         fullScreen: true,
+        controls: {expanded: true},
     },
     args: {
         collapsed: false,

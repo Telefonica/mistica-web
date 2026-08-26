@@ -207,8 +207,6 @@ const parameters = {
         },
         /** Disable the "You modified this story. Do you want to save your changes?" dialog */
         disableSaveFromUI: true,
-        /** Expand control rows to show descriptions */
-        expanded: true,
     },
 
     /** Hide actions tab */

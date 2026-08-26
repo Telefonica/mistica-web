@@ -12,9 +12,6 @@ import {SidenavStoryPage} from './sidenav-bar-story-page';
 
 import type {SidenavEntry} from '../sidenav-bar-types';
 
-// The first level admits sections and stand-alone items, in any order. An entry with `items` is a
-// section, an entry with an `id` is a stand-alone item. Every section declares both dividers, so you
-// can switch them on and off from the `sections` control.
 const DEFAULT_SECTIONS: Array<SidenavEntry> = [
     {
         id: 'dashboard',
@@ -178,7 +175,7 @@ export default {
         fullScreen: true,
         // This playground is only about editing the `sections` data, so restrict the Controls panel
         // to that single control instead of every inferred SidenavBar prop.
-        controls: {include: ['sections']},
+        controls: {include: ['sections'], expanded: true},
     },
     args: {
         sections: DEFAULT_SECTIONS,

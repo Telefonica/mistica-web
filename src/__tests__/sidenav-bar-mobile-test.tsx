@@ -91,7 +91,6 @@ test('SidenavBar mobile shows a top bar with the burger, and no panel', async ()
     expect(screen.queryByRole('navigation', {name: 'Main navigation'})).not.toBeInTheDocument();
 });
 
-// The spec relocates the header slot to the top bar, where it reads before the burger opens the panel.
 test('SidenavBar mobile puts the header slot in the top bar', async () => {
     await renderSidenav({headerSlot: <button type="button">Header action</button>});
 
@@ -156,7 +155,6 @@ test('SidenavBar mobile closes the panel when the user presses an item that navi
     );
 });
 
-// A parent item reveals its children, so it never navigates and never moves the selection.
 test('SidenavBar mobile keeps the panel open when the user presses a parent item', async () => {
     const onSelectedItemIdChange = jest.fn();
     await renderSidenav({onSelectedItemIdChange});
