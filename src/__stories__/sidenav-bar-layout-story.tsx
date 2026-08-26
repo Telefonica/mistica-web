@@ -244,7 +244,6 @@ export const WholeViewport = (args: Args): React.JSX.Element => {
                                   onCollapse: setInternalCollapsed,
                               }
                             : {collapsible: false})}
-                        logo={false}
                         width={sidenavWidth as any}
                         sections={sections}
                         doublePanel={args.doublePanel}
@@ -256,11 +255,20 @@ export const WholeViewport = (args: Args): React.JSX.Element => {
                     />
                 </SidenavLayout.Sidenav>
                 <SidenavLayout.Content>
-                    <Content
-                        title="Main Content"
-                        description="Content starts immediately after the sidenav."
-                        selectedItemId={selectedItemId}
-                    />
+                    <Box paddingX={32} paddingY={32}>
+                        <Stack space={16}>
+                            <Text6 as="h1">Whole viewport</Text6>
+                            <Text3 regular>
+                                Content starts immediately after the sidenav and spans the full width. It is
+                                taller than the viewport, so the page scrolls. The rail stays at the top
+                                beside it, because it sticks to the viewport and the document scrolls.
+                            </Text3>
+                            <Text3 medium>Selected item: {selectedItemId ?? 'none'}</Text3>
+                            {Array.from({length: 12}).map((_, index) => (
+                                <Placeholder key={index} height={160} />
+                            ))}
+                        </Stack>
+                    </Box>
                 </SidenavLayout.Content>
             </SidenavLayout>
         </div>
@@ -310,53 +318,3 @@ export const Centered = (args: Args): React.JSX.Element => {
 };
 
 Centered.storyName = 'Centered';
-
-export const ScrollingContent = (args: Args): React.JSX.Element => {
-    const sidenavWidth = useSidenavWidth(args);
-    const [internalCollapsed, setInternalCollapsed] = useCollapsedState(args);
-    const [selectedItemId, setSelectedItemId] = React.useState<string | null>('home');
-
-    return (
-        <div style={{width: '100%', minHeight: '100vh'}}>
-            <SidenavLayout mode="whole-viewport">
-                <SidenavLayout.Sidenav>
-                    <SidenavBar
-                        aria-label="Main navigation"
-                        {...(args.collapsible
-                            ? {
-                                  collapsible: true,
-                                  collapsed: internalCollapsed,
-                                  onCollapse: setInternalCollapsed,
-                              }
-                            : {collapsible: false})}
-                        width={sidenavWidth as any}
-                        sections={sections}
-                        doublePanel={args.doublePanel}
-                        selectedItemId={selectedItemId}
-                        onSelectedItemIdChange={setSelectedItemId}
-                        {...(args.boxed
-                            ? ({boxed: true} as const)
-                            : ({boxed: false, divider: args.divider} as const))}
-                    />
-                </SidenavLayout.Sidenav>
-                <SidenavLayout.Content>
-                    <Box paddingX={32} paddingY={32}>
-                        <Stack space={16}>
-                            <Text6 as="h1">Scrolling content</Text6>
-                            <Text3 regular>
-                                The content is taller than the viewport, so the page scrolls. The rail stays
-                                at the top beside it, because it sticks to the viewport and the document
-                                scrolls.
-                            </Text3>
-                            {Array.from({length: 12}).map((_, index) => (
-                                <Placeholder key={index} height={160} />
-                            ))}
-                        </Stack>
-                    </Box>
-                </SidenavLayout.Content>
-            </SidenavLayout>
-        </div>
-    );
-};
-
-ScrollingContent.storyName = 'Scrolling Content';
