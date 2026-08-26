@@ -10,48 +10,48 @@ import {
     COLLAPSE_DURATION_MS,
     CONTENT_DURATION_MS,
 } from './sidenav-bar.css';
-import {ThemeVariant, normalizeVariant, useThemeVariant} from '../theme-variant-context';
-import {getPrefixedDataAttributes} from '../utils/dom';
-import {applyCssVars} from '../utils/css';
-import {isRunningAcceptanceTest} from '../utils/platform';
-import {useScreenSize, useTheme} from '../hooks';
-import {IconButton} from '../icon-button';
-import {Logo} from '../logo';
-import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
-import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
-import {SidenavItem} from './sidenav-item';
-import {SidenavSection} from './sidenav-section';
+import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
+import {getPrefixedDataAttributes} from './utils/dom';
+import {applyCssVars} from './utils/css';
+import {isRunningAcceptanceTest} from './utils/platform';
+import {useScreenSize, useTheme} from './hooks';
+import {IconButton} from './icon-button';
+import {Logo} from './logo';
+import IconPanelExpandRegular from './generated/mistica-icons/icon-panel-expand-regular';
+import IconPanelCollapseRegular from './generated/mistica-icons/icon-panel-collapse-regular';
+import {SidenavItem} from './sidenav-bar-item';
+import {SidenavSection} from './sidenav-bar-section';
 import {
     renderSidenavItemFromData,
     getFirstLevelItems,
     findParentOfItem,
     findFirstLevelItem,
     renderSidenavEntries,
-} from './sidenav-entries';
-import {SidenavDoublePanel} from './sidenav-panel';
-import {SidenavMobileBar} from './sidenav-mobile';
-import {useIsReducedMotion} from './sidenav-motion';
-import {useSidenavRailKeyboard} from './use-sidenav-keyboard';
+} from './sidenav-bar-entries';
+import {SidenavDoublePanel} from './sidenav-bar-panel';
+import {SidenavMobileBar} from './sidenav-bar-mobile';
+import {useIsReducedMotion} from './sidenav-bar-motion';
+import {useSidenavRailKeyboard} from './use-sidenav-bar-keyboard';
 import {
     SidenavBarContext,
     useSidenavBarContext,
     SidenavLevelContext,
     assertChildrenAre,
     hasDescendantWithId,
-} from './sidenav-context';
-import {shouldShowBoxedBorder} from '../boxed';
-import * as tokens from '../text-tokens';
+} from './sidenav-bar-context';
+import {shouldShowBoxedBorder} from './boxed';
+import * as tokens from './text-tokens';
 
-import type {Variant} from '../theme-variant-context';
-import type {ExclusifyUnion} from '../utils/utility-types';
-import type {DataAttributes} from '../utils/types';
-import type {SidenavSectionProps} from './sidenav-section';
+import type {Variant} from './theme-variant-context';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {DataAttributes} from './utils/types';
+import type {SidenavSectionProps} from './sidenav-bar-section';
 import type {
     SidenavEntry,
     SidenavItem as SidenavItemType,
     SidenavLogo,
     SidenavLogoRenderProps,
-} from './sidenav-types';
+} from './sidenav-bar-types';
 
 // Branded type: a string that is guaranteed to be an opaque color
 type OpaqueColor = string & {readonly __brand: 'OpaqueColor'};
@@ -276,7 +276,7 @@ const SidenavBar = ({
         children: ReadonlyArray<SidenavItemType>;
     } | null>(null);
 
-    // See `collapsedSettled` in `sidenav-context.tsx` for why the sidenav reports the collapsed state
+    // See `collapsedSettled` in `sidenav-bar-context.tsx` for why the sidenav reports the collapsed state
     // twice. A user who turned motion down sees no movement, so the settled state follows at once there.
     const [collapsedSettled, setCollapsedSettled] = React.useState(collapsed);
     React.useEffect(() => {

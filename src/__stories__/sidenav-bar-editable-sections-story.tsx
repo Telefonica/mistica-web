@@ -1,16 +1,16 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import Box from '../../../box';
-import Stack from '../../../stack';
-import {Boxed} from '../../../boxed';
-import {UnorderedList, ListItem} from '../../../list';
-import {Text2, Text3, Text6} from '../../../text';
-import {vars as skinVars} from '../../../skins/skin-contract.css';
-import {SidenavStoryPage} from './sidenav-story-page';
+import {SidenavBar} from '..';
+import Box from '../box';
+import Stack from '../stack';
+import {Boxed} from '../boxed';
+import {UnorderedList, ListItem} from '../list';
+import {Text2, Text3, Text6} from '../text';
+import {vars as skinVars} from '../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavEntry} from '../../sidenav-types';
+import type {SidenavEntry} from '../sidenav-bar-types';
 
 // The first level admits sections and stand-alone items, in any order. An entry with `items` is a
 // section, an entry with an `id` is a stand-alone item. Every section declares both dividers, so you

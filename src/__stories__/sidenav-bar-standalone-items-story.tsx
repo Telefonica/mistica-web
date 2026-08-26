@@ -1,18 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
-import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
-import Box from '../../../box';
-import {Text3} from '../../../text';
-import {SidenavStoryPage} from './sidenav-story-page';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
+import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
+import Box from '../box';
+import {Text3} from '../text';
+import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavEntry} from '../../sidenav-types';
+import type {SidenavEntry} from '../sidenav-bar-types';
 
 type Args = {
     defaultCollapsed: boolean;

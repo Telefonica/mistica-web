@@ -1,36 +1,36 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
-import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import IconChevronRightRegular from '../../../generated/mistica-icons/icon-chevron-right-regular';
-import {Placeholder} from '../../../placeholder';
-import Circle from '../../../circle';
-import Badge from '../../../badge';
-import {IconButton} from '../../../icon-button';
-import {ButtonLink} from '../../../button';
-import Box from '../../../box';
-import Stack from '../../../stack';
-import Inline from '../../../inline';
-import {Boxed} from '../../../boxed';
-import {UnorderedList, ListItem} from '../../../list';
-import {Text2, Text3, Text6} from '../../../text';
-import {useScreenSize} from '../../../hooks';
-import {vars as skinVars} from '../../../skins/skin-contract.css';
-import {SidenavStoryPage} from './sidenav-story-page';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
+import {Placeholder} from '../placeholder';
+import Circle from '../circle';
+import Badge from '../badge';
+import {IconButton} from '../icon-button';
+import {ButtonLink} from '../button';
+import Box from '../box';
+import Stack from '../stack';
+import Inline from '../inline';
+import {Boxed} from '../boxed';
+import {UnorderedList, ListItem} from '../list';
+import {Text2, Text3, Text6} from '../text';
+import {useScreenSize} from '../hooks';
+import {vars as skinVars} from '../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {Variant} from '../../../theme-variant-context';
-import type {SidenavSection} from '../../sidenav-types';
+import type {Variant} from '../theme-variant-context';
+import type {SidenavSection} from '../sidenav-bar-types';
 import type {
     SidenavBarBackgroundColors,
     SidenavCollapseActionRenderProps,
     SidenavLogoRenderProps,
-} from '../../sidenav-bar';
+} from '../sidenav-bar';
 
 const getDefaultSections = (): Array<SidenavSection> => [
     {

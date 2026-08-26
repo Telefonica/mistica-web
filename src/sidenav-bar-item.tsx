@@ -16,22 +16,22 @@ import {
     SidenavItemIndexContext,
     assertChildrenAre,
     hasDescendantWithId,
-} from './sidenav-context';
-import {SidenavDialogPanel} from './sidenav-panel';
-import {useIsReducedMotion} from './sidenav-motion';
-import {getPrefixedDataAttributes} from '../utils/dom';
-import {applyCssVars} from '../utils/css';
-import {isRunningAcceptanceTest} from '../utils/platform';
-import {useTheme} from '../hooks';
-import {useThemeVariant} from '../theme-variant-context';
-import Touchable from '../touchable';
-import Tooltip from '../tooltip';
-import {Text2} from '../text';
-import IconChevronDownRegular from '../generated/mistica-icons/icon-chevron-down-regular';
-import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
+} from './sidenav-bar-context';
+import {SidenavDialogPanel} from './sidenav-bar-panel';
+import {useIsReducedMotion} from './sidenav-bar-motion';
+import {getPrefixedDataAttributes} from './utils/dom';
+import {applyCssVars} from './utils/css';
+import {isRunningAcceptanceTest} from './utils/platform';
+import {useTheme} from './hooks';
+import {useThemeVariant} from './theme-variant-context';
+import Touchable from './touchable';
+import Tooltip from './tooltip';
+import {Text2} from './text';
+import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
+import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 
-import type {ExclusifyUnion} from '../utils/utility-types';
-import type {DataAttributes, IconProps} from '../utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {DataAttributes, IconProps} from './utils/types';
 
 type SidenavItemBaseProps = {
     /** Display text (truncated if too long). */

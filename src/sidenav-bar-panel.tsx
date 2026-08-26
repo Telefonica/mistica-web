@@ -2,16 +2,16 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
-import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-context';
-import {useDialogPanelKeyboard} from './use-sidenav-keyboard';
-import {Portal} from '../portal';
-import {Text3} from '../text';
-import {listenResize} from '../utils/dom';
-import {useTheme} from '../hooks';
-import {ThemeVariant} from '../theme-variant-context';
-import * as tokens from '../text-tokens';
+import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-bar-context';
+import {useDialogPanelKeyboard} from './use-sidenav-bar-keyboard';
+import {Portal} from './portal';
+import {Text3} from './text';
+import {listenResize} from './utils/dom';
+import {useTheme} from './hooks';
+import {ThemeVariant} from './theme-variant-context';
+import * as tokens from './text-tokens';
 
-import type {NonDeprecatedVariant} from '../theme-variant-context';
+import type {NonDeprecatedVariant} from './theme-variant-context';
 
 /** Minimum distance kept between the panel and the viewport edges. */
 const VIEWPORT_MARGIN = 8;

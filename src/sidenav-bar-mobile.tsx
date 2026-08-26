@@ -6,27 +6,27 @@ import {
     NavigationBar,
     NavigationBarContentContainer,
     NavigationBarSideMargins,
-} from '../navigation-shared';
-import {MobileNavigationMenu} from '../mobile-navigation-menu';
-import * as sharedStyles from '../navigation-shared.css';
-import ResponsiveLayout, {ResetResponsiveLayout} from '../responsive-layout';
-import {Row, RowList} from '../list';
-import {Title1, Title3} from '../title';
-import Touchable from '../touchable';
-import FocusTrap from '../focus-trap';
-import Stack from '../stack';
-import Box from '../box';
-import {Logo} from '../logo';
-import {ThemeVariant} from '../theme-variant-context';
-import {useDisableBodyScroll, useTheme} from '../hooks';
-import {useSetModalState} from '../modal-context-provider';
-import {NAVBAR_HEIGHT_MOBILE} from '../theme';
-import * as tokens from '../text-tokens';
-import {isSidenavSection} from './sidenav-types';
+} from './navigation-shared';
+import {MobileNavigationMenu} from './mobile-navigation-menu';
+import * as sharedStyles from './navigation-shared.css';
+import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
+import {Row, RowList} from './list';
+import {Title1, Title3} from './title';
+import Touchable from './touchable';
+import FocusTrap from './focus-trap';
+import Stack from './stack';
+import Box from './box';
+import {Logo} from './logo';
+import {ThemeVariant} from './theme-variant-context';
+import {useDisableBodyScroll, useTheme} from './hooks';
+import {useSetModalState} from './modal-context-provider';
+import {NAVBAR_HEIGHT_MOBILE} from './theme';
+import * as tokens from './text-tokens';
+import {isSidenavSection} from './sidenav-bar-types';
 
-import type {NonDeprecatedVariant} from '../theme-variant-context';
-import type {DataAttributes} from '../utils/types';
-import type {SidenavEntry, SidenavItem, SidenavLogo} from './sidenav-types';
+import type {NonDeprecatedVariant} from './theme-variant-context';
+import type {DataAttributes} from './utils/types';
+import type {SidenavEntry, SidenavItem, SidenavLogo} from './sidenav-bar-types';
 
 /*
  * The mobile sidenav follows the mobile Main Navigation Bar as closely as the spec asks:

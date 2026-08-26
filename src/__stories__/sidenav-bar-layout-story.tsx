@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {SidenavBar, SidenavLayout} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import Box from '../../../box';
-import Stack from '../../../stack';
-import {Text2, Text3, Text6} from '../../../text';
-import {Placeholder} from '../../../placeholder';
-import {vars as skinVars} from '../../../skins/skin-contract.css';
+import {SidenavBar, SidenavLayout} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import Box from '../box';
+import Stack from '../stack';
+import {Text2, Text3, Text6} from '../text';
+import {Placeholder} from '../placeholder';
+import {vars as skinVars} from '../skins/skin-contract.css';
 
-import type {SidenavSection} from '../../sidenav-types';
+import type {SidenavSection} from '../sidenav-bar-types';
 
 type Args = {
     useCustomWidth: boolean;

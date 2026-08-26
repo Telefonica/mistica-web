@@ -1,6 +1,6 @@
-import type {ExclusifyUnion} from '../utils/utility-types';
-import type {IconProps} from '../utils/types';
-import type {MaybeInteractiveProps} from '../navigation-types';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {IconProps} from './utils/types';
+import type {MaybeInteractiveProps} from './navigation-types';
 
 /** Props shared by every navigation item, regardless of whether it is expandable or navigable. */
 type SidenavItemBaseProps = {

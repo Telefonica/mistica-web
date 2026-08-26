@@ -1,6 +1,6 @@
 import {style} from '@vanilla-extract/css';
-import {sprinkles} from '../sprinkles.css';
-import * as mq from '../media-queries.css';
+import {sprinkles} from './sprinkles.css';
+import * as mq from './media-queries.css';
 
 // A mobile or tablet sidenav is a top bar, and not a column, so the two regions stack there. The spec
 // gives "N/A" for the width of the sidenav on both breakpoints.

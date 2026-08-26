@@ -1,26 +1,26 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
-import IconPanelCollapseRegular from '../../../generated/mistica-icons/icon-panel-collapse-regular';
-import IconPanelExpandRegular from '../../../generated/mistica-icons/icon-panel-expand-regular';
-import Box from '../../../box';
-import Stack from '../../../stack';
-import {ButtonSecondary} from '../../../button';
-import {IconButton} from '../../../icon-button';
-import {Boxed} from '../../../boxed';
-import {UnorderedList, ListItem} from '../../../list';
-import {Text2, Text3, Text5, Text6} from '../../../text';
-import {useScreenSize} from '../../../hooks';
-import {vars as skinVars} from '../../../skins/skin-contract.css';
-import {SidenavStoryPage} from './sidenav-story-page';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
+import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
+import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
+import Box from '../box';
+import Stack from '../stack';
+import {ButtonSecondary} from '../button';
+import {IconButton} from '../icon-button';
+import {Boxed} from '../boxed';
+import {UnorderedList, ListItem} from '../list';
+import {Text2, Text3, Text5, Text6} from '../text';
+import {useScreenSize} from '../hooks';
+import {vars as skinVars} from '../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavEntry} from '../../sidenav-types';
+import type {SidenavEntry} from '../sidenav-bar-types';
 
 type Args = {
     showDefaultCollapseAction: boolean;

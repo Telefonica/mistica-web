@@ -1,12 +1,12 @@
 'use client';
 import * as React from 'react';
 import * as styles from './sidenav-bar.css';
-import {SidenavItem} from './sidenav-item';
-import {SidenavSection} from './sidenav-section';
-import {isSidenavSection} from './sidenav-types';
-import {SidenavItemIndexContext} from './sidenav-context';
+import {SidenavItem} from './sidenav-bar-item';
+import {SidenavSection} from './sidenav-bar-section';
+import {isSidenavSection} from './sidenav-bar-types';
+import {SidenavItemIndexContext} from './sidenav-bar-context';
 
-import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-types';
+import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-bar-types';
 
 // Render a single item with its nested children recursively
 const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {

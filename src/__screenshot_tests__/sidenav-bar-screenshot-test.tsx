@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../../../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 // Every test of the rail asks for a desktop device. A tablet takes the mobile treatment, and the default
 // device of `openStoryPage` is a tablet, so the rail needs the request. The mobile tests live at the end of

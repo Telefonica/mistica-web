@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ThemeContextProvider from '../../../theme-context-provider';
-import {makeTheme} from '../../../__tests__/test-utils';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 
-import type {SidenavEntry} from '../../sidenav-types';
+import type {SidenavEntry} from '../sidenav-bar-types';
 
 class MockIntersectionObserver {
     observe = jest.fn();

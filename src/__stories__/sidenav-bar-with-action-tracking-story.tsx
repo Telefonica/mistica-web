@@ -1,22 +1,22 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
-import IconCheckRegular from '../../../generated/mistica-icons/icon-check-regular';
-import IconTrashCanRegular from '../../../generated/mistica-icons/icon-trash-can-regular';
-import {Placeholder} from '../../../placeholder';
-import Box from '../../../box';
-import Stack from '../../../stack';
-import Callout from '../../../callout';
-import {Text3, Text6} from '../../../text';
-import {vars as skinVars} from '../../../skins/skin-contract.css';
-import {SidenavStoryPage} from './sidenav-story-page';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
+import IconCheckRegular from '../generated/mistica-icons/icon-check-regular';
+import IconTrashCanRegular from '../generated/mistica-icons/icon-trash-can-regular';
+import {Placeholder} from '../placeholder';
+import Box from '../box';
+import Stack from '../stack';
+import Callout from '../callout';
+import {Text3, Text6} from '../text';
+import {vars as skinVars} from '../skins/skin-contract.css';
+import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {Variant} from '../../../theme-variant-context';
+import type {Variant} from '../theme-variant-context';
 
 type Args = {
     label: string;

@@ -1,27 +1,27 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconSearchRegular from '../../../generated/mistica-icons/icon-search-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
-import IconDocumentsRegular from '../../../generated/mistica-icons/icon-documents-regular';
-import Badge from '../../../badge';
-import Box from '../../../box';
-import Stack from '../../../stack';
-import Inline from '../../../inline';
-import Chip from '../../../chip';
-import {Boxed} from '../../../boxed';
-import {UnorderedList, ListItem} from '../../../list';
-import {Text2, Text3, Text5, Text6} from '../../../text';
-import {vars as skinVars} from '../../../skins/skin-contract.css';
-import {ThemeVariant} from '../../../theme-variant-context';
-import {SidenavStoryPage} from './sidenav-story-page';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import Badge from '../badge';
+import Box from '../box';
+import Stack from '../stack';
+import Inline from '../inline';
+import Chip from '../chip';
+import {Boxed} from '../boxed';
+import {UnorderedList, ListItem} from '../list';
+import {Text2, Text3, Text5, Text6} from '../text';
+import {vars as skinVars} from '../skins/skin-contract.css';
+import {ThemeVariant} from '../theme-variant-context';
+import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavSection, SidenavItem} from '../../sidenav-types';
-import type {NonDeprecatedVariant} from '../../../theme-variant-context';
+import type {SidenavSection, SidenavItem} from '../sidenav-bar-types';
+import type {NonDeprecatedVariant} from '../theme-variant-context';
 
 type Args = {
     variant: NonDeprecatedVariant;

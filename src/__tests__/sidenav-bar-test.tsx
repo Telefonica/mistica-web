@@ -1,18 +1,18 @@
 import * as React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
-import ThemeContextProvider from '../../../theme-context-provider';
-import {makeTheme} from '../../../__tests__/test-utils';
-import {SidenavBar} from '../../index';
-import * as styles from '../../sidenav-bar.css';
-import {ThemeVariant} from '../../../theme-variant-context';
-import {getMovistarSkin} from '../../../skins/movistar';
-import {sidenavCollapse, sidenavExpand} from '../../../text-tokens';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {SidenavBar} from '..';
+import * as styles from '../sidenav-bar.css';
+import {ThemeVariant} from '../theme-variant-context';
+import {getMovistarSkin} from '../skins/movistar';
+import {sidenavCollapse, sidenavExpand} from '../text-tokens';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 
-import type {Variant} from '../../../theme-variant-context';
-import type {Skin} from '../../../skins/types';
-import type {SidenavEntry, SidenavSection} from '../../sidenav-types';
+import type {Variant} from '../theme-variant-context';
+import type {Skin} from '../skins/types';
+import type {SidenavEntry, SidenavSection} from '../sidenav-bar-types';
 
 // The test theme resolves to `es-ES`, so the collapse action reads the Spanish text of these tokens.
 const COLLAPSE_LABEL = sidenavCollapse.es;

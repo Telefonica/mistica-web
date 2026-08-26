@@ -1,8 +1,8 @@
 import {createVar, globalStyle, style, styleVariants} from '@vanilla-extract/css';
-import {sprinkles} from '../sprinkles.css';
-import {vars as skinVars} from '../skins/skin-contract.css';
+import {sprinkles} from './sprinkles.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 
-import type {NonDeprecatedVariant} from '../theme-variant-context';
+import type {NonDeprecatedVariant} from './theme-variant-context';
 
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;

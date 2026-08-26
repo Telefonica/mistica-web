@@ -1,7 +1,7 @@
-import {openStoryPage, screen, waitFor} from '../../../test-utils';
-import {sidenavCollapse, sidenavExpand, sidenavSubmenu} from '../../../text-tokens';
+import {openStoryPage, screen, waitFor} from '../test-utils';
+import {sidenavCollapse, sidenavExpand, sidenavSubmenu} from '../text-tokens';
 
-import type {PageApi} from '../../../test-utils';
+import type {PageApi} from '../test-utils';
 
 const STORY_ID = 'components-sidenavbar-bar--default';
 

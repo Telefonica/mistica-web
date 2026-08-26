@@ -1,15 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavBar} from '../../index';
-import IconHomeRegular from '../../../generated/mistica-icons/icon-home-regular';
-import IconBellRegular from '../../../generated/mistica-icons/icon-bell-regular';
-import IconFolderRegular from '../../../generated/mistica-icons/icon-folder-regular';
-import IconSettingsRegular from '../../../generated/mistica-icons/icon-settings-regular';
-import Badge from '../../../badge';
-import Box from '../../../box';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
+import Badge from '../badge';
+import Box from '../box';
 
-import type {SidenavSection} from '../../sidenav-types';
+import type {SidenavSection} from '../sidenav-bar-types';
 
 export default {
     title: 'Components/SidenavBar/Bar',

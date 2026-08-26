@@ -2,13 +2,13 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
-import {useThemeVariant} from '../theme-variant-context';
-import {getPrefixedDataAttributes} from '../utils/dom';
-import Divider from '../divider';
-import {Text3} from '../text';
-import {useSidenavBarContext} from './sidenav-context';
+import {useThemeVariant} from './theme-variant-context';
+import {getPrefixedDataAttributes} from './utils/dom';
+import Divider from './divider';
+import {Text3} from './text';
+import {useSidenavBarContext} from './sidenav-bar-context';
 
-import type {DataAttributes} from '../utils/types';
+import type {DataAttributes} from './utils/types';
 
 type SidenavSectionProps = {
     /** Section heading. Hidden (space reserved) when the sidenav is collapsed. */

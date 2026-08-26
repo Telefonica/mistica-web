@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import {SidenavLayout} from '../../index';
+import {SidenavLayout} from '..';
 
 type SidenavStoryPageProps = {
     /** The sidenav of the page. */

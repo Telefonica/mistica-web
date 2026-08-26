@@ -1,10 +1,10 @@
 'use client';
 import * as React from 'react';
-import * as styles from './sidenav-layout.css';
-import {InternalResponsiveLayout} from '../responsive-layout';
-import {getPrefixedDataAttributes} from '../utils/dom';
+import * as styles from './sidenav-bar-layout.css';
+import {InternalResponsiveLayout} from './responsive-layout';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {DataAttributes} from '../utils/types';
+import type {DataAttributes} from './utils/types';
 
 /**
  * Props for the sidenav section of SidenavLayout.
