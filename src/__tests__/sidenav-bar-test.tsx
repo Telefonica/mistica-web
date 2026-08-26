@@ -196,14 +196,14 @@ const renderCollapsible = (props: React.ComponentProps<typeof SidenavBar>) => (
 );
 
 // The user cannot toggle a sidenav with `collapsible: false`, so that sidenav keeps no state of its own,
-// and a later change of `defaultCollapsed` moves it.
-test('SidenavBar follows a change of defaultCollapsed when collapsible is false', async () => {
-    const {rerender} = render(renderCollapsible({collapsible: false, defaultCollapsed: false}));
+// and a later change of `collapsed` moves it.
+test('SidenavBar follows a change of collapsed when collapsible is false', async () => {
+    const {rerender} = render(renderCollapsible({collapsible: false, collapsed: false}));
     await React.act(async () => {});
 
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 
-    rerender(renderCollapsible({collapsible: false, defaultCollapsed: true}));
+    rerender(renderCollapsible({collapsible: false, collapsed: true}));
     await React.act(async () => {});
 
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
