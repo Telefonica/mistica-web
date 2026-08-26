@@ -34,7 +34,8 @@ overrides:
     # navigation-bar. This override repeats the patterns above, because eslint replaces the options of a rule
     # instead of merging them.
     - files:
-          - 'src/sidenav-bar/**/*.tsx'
+          - 'src/sidenav-bar*.tsx'
+          - 'src/use-sidenav-bar-keyboard.tsx'
       rules:
           no-restricted-imports:
               - error
