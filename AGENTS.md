@@ -13,6 +13,9 @@ React component library for Telefonica's Design System.
 - Always namespace React hooks: `React.useState`, `React.useEffect`
 - Wrap unit tests with `ThemeContextProvider` + `makeTheme()`
 - Prefer semantic queries (`getByRole`, `getByLabelText`) over `getByTestId`
+- Write a comment only when it conveys something that the code and its semantics cannot: a corner case, a
+  non-obvious decision, a workaround. Never narrate what the code already says. Keep docblocks on public
+  APIs; drop docblocks that only repeat the name of an internal type or function.
 
 **Conventions**: `type` over `interface`, `export type` for types, `'use client';` for client components
 
