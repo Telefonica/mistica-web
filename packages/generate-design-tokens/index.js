@@ -181,15 +181,17 @@ export type Colors = {
 };`;
 };
 
+const prettierConfigPromise = prettier.resolveConfig(import.meta.filename);
+
 const formatCss = async (source) =>
     prettier.format(source, {
-        ...(await prettier.resolveConfig('.')),
+        ...(await prettierConfigPromise),
         parser: 'css',
     });
 
 const formatTs = async (source) =>
     prettier.format(source, {
-        ...(await prettier.resolveConfig('.')),
+        ...(await prettierConfigPromise),
         parser: 'typescript',
     });
 

@@ -690,39 +690,15 @@ export const getMovistarSkin: GetKnownSkin = () => {
         },
         textPresets: {
             button: {weight: 'medium'},
-            cardDescriptionDefault: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
-            cardDescriptionSnap: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
-            cardPretitleDefault: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
-            cardPretitleSnap: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
-            cardSubtitleDefault: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
-            cardSubtitleSnap: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
+            cardDescriptionDefault: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardDescriptionSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardPretitleDefault: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardPretitleSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardSubtitleDefault: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardSubtitleSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             cardTitle: {weight: 'bold'},
-            cardTitleDefault: {
-                lineHeight: {desktop: 24, mobile: 22},
-                size: {desktop: 18, mobile: 16},
-            },
-            cardTitleSnap: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
+            cardTitleDefault: {lineHeight: {desktop: 24, mobile: 22}, size: {desktop: 18, mobile: 16}},
+            cardTitleSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 18, mobile: 14},
@@ -734,123 +710,48 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 weight: 'bold',
             },
             indicator: {weight: 'medium'},
-            inputHelperText: {
-                lineHeight: {desktop: 20, mobile: 20},
-                size: {desktop: 14, mobile: 14},
-            },
-            inputLabel: {
-                lineHeight: {desktop: 20, mobile: 16},
-                size: {desktop: 14, mobile: 12},
-            },
-            inputValue: {
-                lineHeight: {desktop: 22, mobile: 22},
-                size: {desktop: 16, mobile: 16},
-            },
+            inputHelperText: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            inputLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+            inputValue: {lineHeight: {desktop: 22, mobile: 22}, size: {desktop: 16, mobile: 16}},
             link: {weight: 'medium'},
-            loadingScreenTitle: {
-                lineHeight: {desktop: 32, mobile: 28},
-                size: {desktop: 28, mobile: 24},
-            },
+            loadingScreenTitle: {lineHeight: {desktop: 32, mobile: 28}, size: {desktop: 28, mobile: 24}},
             navigationBar: {weight: 'medium'},
             rowTitle: {weight: 'medium'},
-            stepperStepLabel: {
-                lineHeight: {desktop: 20, mobile: 16},
-                size: {desktop: 14, mobile: 12},
-            },
+            stepperStepLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
             tabsLabel: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 16},
                 weight: 'medium',
             },
-            text1: {
-                lineHeight: {desktop: 20, mobile: 16},
-                size: {desktop: 14, mobile: 12},
-            },
-            text2: {
-                lineHeight: {desktop: 22, mobile: 20},
-                size: {desktop: 16, mobile: 14},
-            },
-            text3: {
-                lineHeight: {desktop: 24, mobile: 22},
-                size: {desktop: 18, mobile: 16},
-            },
-            text4: {
-                lineHeight: {desktop: 26, mobile: 24},
-                size: {desktop: 20, mobile: 18},
-            },
-            text5: {
-                lineHeight: {desktop: 28, mobile: 26},
-                size: {desktop: 24, mobile: 20},
-                weight: 'bold',
-            },
-            text6: {
-                lineHeight: {desktop: 32, mobile: 28},
-                size: {desktop: 28, mobile: 24},
-                weight: 'bold',
-            },
-            text7: {
-                lineHeight: {desktop: 38, mobile: 32},
-                size: {desktop: 32, mobile: 28},
-                weight: 'bold',
-            },
-            text8: {
-                lineHeight: {desktop: 48, mobile: 38},
-                size: {desktop: 40, mobile: 32},
-                weight: 'bold',
-            },
-            text9: {
-                lineHeight: {desktop: 56, mobile: 48},
-                size: {desktop: 48, mobile: 40},
-                weight: 'bold',
-            },
-            text10: {
-                lineHeight: {desktop: 64, mobile: 56},
-                size: {desktop: 56, mobile: 48},
-                weight: 'bold',
-            },
+            text1: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+            text2: {lineHeight: {desktop: 22, mobile: 20}, size: {desktop: 16, mobile: 14}},
+            text3: {lineHeight: {desktop: 24, mobile: 22}, size: {desktop: 18, mobile: 16}},
+            text4: {lineHeight: {desktop: 26, mobile: 24}, size: {desktop: 20, mobile: 18}},
+            text5: {lineHeight: {desktop: 28, mobile: 26}, size: {desktop: 24, mobile: 20}, weight: 'bold'},
+            text6: {lineHeight: {desktop: 32, mobile: 28}, size: {desktop: 28, mobile: 24}, weight: 'bold'},
+            text7: {lineHeight: {desktop: 38, mobile: 32}, size: {desktop: 32, mobile: 28}, weight: 'bold'},
+            text8: {lineHeight: {desktop: 48, mobile: 38}, size: {desktop: 40, mobile: 32}, weight: 'bold'},
+            text9: {lineHeight: {desktop: 56, mobile: 48}, size: {desktop: 48, mobile: 40}, weight: 'bold'},
+            text10: {lineHeight: {desktop: 64, mobile: 56}, size: {desktop: 56, mobile: 48}, weight: 'bold'},
             title1: {
                 lineHeight: {desktop: 22, mobile: 20},
                 size: {desktop: 16, mobile: 14},
                 weight: 'medium',
             },
-            title2: {
-                lineHeight: {desktop: 24, mobile: 22},
-                size: {desktop: 18, mobile: 16},
-                weight: 'bold',
-            },
-            title3: {
-                lineHeight: {desktop: 26, mobile: 24},
-                size: {desktop: 20, mobile: 18},
-                weight: 'bold',
-            },
-            title4: {
-                lineHeight: {desktop: 28, mobile: 26},
-                size: {desktop: 24, mobile: 20},
-                weight: 'bold',
-            },
+            title2: {lineHeight: {desktop: 24, mobile: 22}, size: {desktop: 18, mobile: 16}, weight: 'bold'},
+            title3: {lineHeight: {desktop: 26, mobile: 24}, size: {desktop: 20, mobile: 18}, weight: 'bold'},
+            title4: {lineHeight: {desktop: 28, mobile: 26}, size: {desktop: 24, mobile: 20}, weight: 'bold'},
         },
         themeVariants: {
             successFeedback: 'inverse',
             brandLoadingScreen: 'default',
         },
         componentProperties: {
-            showBoxedBorder: {
-                default: true,
-                brand: true,
-                negative: true,
-                alternative: true,
-                media: true,
-            },
+            showBoxedBorder: {default: true, brand: true, negative: true, alternative: true, media: true},
         },
         spacing: {
-            buttonDefaultPadding: {
-                left: {mobile: 16, desktop: 16},
-                right: {mobile: 16, desktop: 16},
-            },
-            buttonSmallPadding: {
-                left: {mobile: 8, desktop: 12},
-                right: {mobile: 8, desktop: 12},
-            },
+            buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            buttonSmallPadding: {left: {mobile: 8, desktop: 12}, right: {mobile: 8, desktop: 12}},
             cardDefaultPadding: {
                 top: {mobile: 16, desktop: 16},
                 bottom: {mobile: 16, desktop: 16},
@@ -863,34 +764,22 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 bottom: {mobile: 9, desktop: 3},
                 left: {mobile: 12, desktop: 12},
             },
-            tagPadding: {
-                top: {mobile: 2, desktop: 2},
-                bottom: {mobile: 2, desktop: 2},
-            },
+            tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
             feedbackScreenPadding: {
                 top: {mobile: 64, desktop: 40},
                 bottom: {mobile: 16, desktop: 40},
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
-            heroPadding: {
-                top: {mobile: 16, desktop: 56},
-                bottom: {mobile: 16, desktop: 56},
-            },
-            headerPadding: {
-                top: {mobile: 16, desktop: 48},
-                bottom: {mobile: 16, desktop: 48},
-            },
+            heroPadding: {top: {mobile: 16, desktop: 56}, bottom: {mobile: 16, desktop: 56}},
+            headerPadding: {top: {mobile: 16, desktop: 48}, bottom: {mobile: 16, desktop: 48}},
             drawerPadding: {
                 top: {mobile: 32, desktop: 32},
                 bottom: {mobile: 16, desktop: 32},
                 left: {mobile: 16, desktop: 24},
                 right: {mobile: 16, desktop: 24},
             },
-            boxedDefaultPadding: {
-                left: {mobile: 16, desktop: 16},
-                right: {mobile: 16, desktop: 16},
-            },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

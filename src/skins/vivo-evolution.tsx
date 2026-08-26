@@ -720,39 +720,15 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
         },
         textPresets: {
             button: {weight: 'medium'},
-            cardDescriptionDefault: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 16, mobile: 14},
-            },
-            cardDescriptionSnap: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 14, mobile: 12},
-            },
-            cardPretitleDefault: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 16, mobile: 14},
-            },
-            cardPretitleSnap: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 14, mobile: 12},
-            },
-            cardSubtitleDefault: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 16, mobile: 14},
-            },
-            cardSubtitleSnap: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 14, mobile: 12},
-            },
+            cardDescriptionDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+            cardDescriptionSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 14, mobile: 12}},
+            cardPretitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+            cardPretitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 14, mobile: 12}},
+            cardSubtitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+            cardSubtitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 14, mobile: 12}},
             cardTitle: {weight: 'medium'},
-            cardTitleDefault: {
-                lineHeight: {desktop: 28, mobile: 24},
-                size: {desktop: 24, mobile: 18},
-            },
-            cardTitleSnap: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 18, mobile: 16},
-            },
+            cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
+            cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 18, mobile: 16}},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 16, mobile: 14},
@@ -764,65 +740,26 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             indicator: {weight: 'medium'},
-            inputHelperText: {
-                lineHeight: {desktop: 20, mobile: 16},
-                size: {desktop: 14, mobile: 12},
-            },
-            inputLabel: {
-                lineHeight: {desktop: 20, mobile: 16},
-                size: {desktop: 14, mobile: 12},
-            },
-            inputValue: {
-                lineHeight: {desktop: 24, mobile: 24},
-                size: {desktop: 18, mobile: 16},
-            },
+            inputHelperText: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+            inputLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+            inputValue: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 18, mobile: 16}},
             link: {weight: 'medium'},
-            loadingScreenTitle: {
-                lineHeight: {desktop: 28, mobile: 24},
-                size: {desktop: 24, mobile: 18},
-            },
+            loadingScreenTitle: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
             navigationBar: {weight: 'regular'},
             rowTitle: {weight: 'medium'},
-            stepperStepLabel: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 16, mobile: 14},
-            },
+            stepperStepLabel: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             tabsLabel: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 18},
                 weight: 'medium',
             },
-            text1: {
-                lineHeight: {desktop: 20, mobile: 16},
-                size: {desktop: 14, mobile: 12},
-            },
-            text2: {
-                lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 16, mobile: 14},
-            },
-            text3: {
-                lineHeight: {desktop: 24, mobile: 24},
-                size: {desktop: 18, mobile: 16},
-            },
-            text4: {
-                lineHeight: {desktop: 28, mobile: 24},
-                size: {desktop: 24, mobile: 18},
-            },
-            text5: {
-                lineHeight: {desktop: 32, mobile: 24},
-                size: {desktop: 28, mobile: 20},
-                weight: 'medium',
-            },
-            text6: {
-                lineHeight: {desktop: 40, mobile: 32},
-                size: {desktop: 32, mobile: 24},
-                weight: 'medium',
-            },
-            text7: {
-                lineHeight: {desktop: 48, mobile: 32},
-                size: {desktop: 40, mobile: 28},
-                weight: 'medium',
-            },
+            text1: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
+            text2: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+            text3: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 18, mobile: 16}},
+            text4: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
+            text5: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'medium'},
+            text6: {lineHeight: {desktop: 40, mobile: 32}, size: {desktop: 32, mobile: 24}, weight: 'medium'},
+            text7: {lineHeight: {desktop: 48, mobile: 32}, size: {desktop: 40, mobile: 28}, weight: 'medium'},
             text8: {
                 lineHeight: {desktop: 56, mobile: 40},
                 size: {desktop: 48, mobile: 32},
@@ -864,23 +801,11 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             brandLoadingScreen: 'inverse',
         },
         componentProperties: {
-            showBoxedBorder: {
-                default: true,
-                brand: true,
-                negative: true,
-                alternative: false,
-                media: true,
-            },
+            showBoxedBorder: {default: true, brand: true, negative: true, alternative: false, media: true},
         },
         spacing: {
-            buttonDefaultPadding: {
-                left: {mobile: 16, desktop: 16},
-                right: {mobile: 16, desktop: 16},
-            },
-            buttonSmallPadding: {
-                left: {mobile: 12, desktop: 12},
-                right: {mobile: 12, desktop: 12},
-            },
+            buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            buttonSmallPadding: {left: {mobile: 12, desktop: 12}, right: {mobile: 12, desktop: 12}},
             cardDefaultPadding: {
                 top: {mobile: 16, desktop: 24},
                 bottom: {mobile: 16, desktop: 24},
@@ -893,34 +818,22 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 bottom: {mobile: 8, desktop: 8},
                 left: {mobile: 16, desktop: 16},
             },
-            tagPadding: {
-                top: {mobile: 4, desktop: 4},
-                bottom: {mobile: 4, desktop: 4},
-            },
+            tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},
             feedbackScreenPadding: {
                 top: {mobile: 64, desktop: 64},
                 bottom: {mobile: 16, desktop: 64},
                 left: {mobile: 16, desktop: 64},
                 right: {mobile: 16, desktop: 64},
             },
-            heroPadding: {
-                top: {mobile: 24, desktop: 56},
-                bottom: {mobile: 24, desktop: 56},
-            },
-            headerPadding: {
-                top: {mobile: 24, desktop: 48},
-                bottom: {mobile: 24, desktop: 48},
-            },
+            heroPadding: {top: {mobile: 24, desktop: 56}, bottom: {mobile: 24, desktop: 56}},
+            headerPadding: {top: {mobile: 24, desktop: 48}, bottom: {mobile: 24, desktop: 48}},
             drawerPadding: {
                 top: {mobile: 32, desktop: 40},
                 bottom: {mobile: 16, desktop: 24},
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
-            boxedDefaultPadding: {
-                left: {mobile: 16, desktop: 24},
-                right: {mobile: 16, desktop: 24},
-            },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 24}, right: {mobile: 16, desktop: 24}},
             responsiveLayoutMargin: {mobile: 8, desktop: 48},
         },
     };
