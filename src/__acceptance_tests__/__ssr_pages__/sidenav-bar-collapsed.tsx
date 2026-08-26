@@ -29,7 +29,7 @@ const SidenavBarCollapsedTest = (): JSX.Element => (
         aria-label="Main navigation"
         sections={sections}
         selectedItemId="home"
-        defaultCollapsed={true}
+        defaultCollapsed
         logo={<span>LOGO</span>}
     />
 );

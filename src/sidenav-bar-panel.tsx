@@ -5,7 +5,7 @@ import * as styles from './sidenav-bar.css';
 import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-bar-context';
 import {useDialogPanelKeyboard} from './use-sidenav-bar-keyboard';
 import {Portal} from './portal';
-import {Text3} from './text';
+import {Text2} from './text';
 import {listenResize} from './utils/dom';
 import {useTheme} from './hooks';
 import {ThemeVariant} from './theme-variant-context';
@@ -163,9 +163,9 @@ const SidenavDialogPanel = ({
                         // announces it too, so the visible title stays out of the reading order.
                         aria-hidden="true"
                     >
-                        <Text3 medium color="inherit">
+                        <Text2 medium color="inherit">
                             {label}
-                        </Text3>
+                        </Text2>
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
                         <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
@@ -217,9 +217,9 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                         // item announces it too, so the visible title stays out of the reading order.
                         aria-hidden="true"
                     >
-                        <Text3 medium color="inherit">
+                        <Text2 medium color="inherit">
                             {label}
-                        </Text3>
+                        </Text2>
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
                         <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>

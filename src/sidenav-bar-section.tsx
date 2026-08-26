@@ -5,7 +5,7 @@ import * as styles from './sidenav-bar.css';
 import {useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
-import {Text3} from './text';
+import {Text2} from './text';
 import {useSidenavBarContext} from './sidenav-bar-context';
 
 import type {DataAttributes} from './utils/types';
@@ -55,9 +55,9 @@ const SidenavSection = ({
                         [styles.sectionTitleKeepsWidth]: collapsed || collapsedSettled,
                     })}
                 >
-                    <Text3 medium truncate={collapsed ? 1 : undefined} color="inherit">
+                    <Text2 medium truncate={collapsed ? 1 : undefined} color="inherit">
                         {title}
-                    </Text3>
+                    </Text2>
                 </div>
             )}
             <div className={styles.sectionContent}>{children}</div>
