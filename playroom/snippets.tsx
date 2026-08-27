@@ -4333,7 +4333,7 @@ const sidenavBarSnippets: Array<Snippet> = [
         <SidenavBar
             aria-label="Main navigation"
             logo={({collapsed}) => <Logo size={32} type={collapsed ? 'isotype' : 'imagotype'} />}
-            headerSlot={<Tag type="promo">Beta</Tag>}
+            headerSlot={<Placeholder height={32} />}
             collapsed={getState('sidenavCollapsed', false)}
             onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
             selectedItemId={getState('sidenavSelectedItem', 'home')}
@@ -4403,7 +4403,7 @@ const sidenavBarSnippets: Array<Snippet> = [
             fixedFooter
             footerSlot={
                 <Box padding={16}>
-                    <Text2 regular color={skinVars.colors.textSecondary}>Signed in as Ada</Text2>
+                    <Placeholder height={48} />
                 </Box>
             }
         />
