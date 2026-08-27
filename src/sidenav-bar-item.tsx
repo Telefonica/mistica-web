@@ -211,10 +211,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const shouldShowAsset = asset && (collapsed || showIconWhenExpanded);
     let assetContent: React.ReactNode = null;
     if (typeof asset === 'function') {
-        assetContent = (asset as (props: IconProps) => JSX.Element)({
-            size: 20,
-            color: 'currentColor',
-        });
+        const Asset = asset;
+        assetContent = <Asset size={20} color="currentColor" />;
     } else if (asset) {
         assetContent = asset;
     }
