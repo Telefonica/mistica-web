@@ -2,6 +2,13 @@
 
 import * as React from 'react';
 import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
+import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
 import Box from '../box';
 import Stack from '../stack';
 import {Boxed} from '../boxed';
@@ -10,12 +17,60 @@ import {Text2, Text3, Text6} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavEntry} from '../sidenav-bar-types';
+import type {SidenavEntry, SidenavItem} from '../sidenav-bar-types';
 
-const DEFAULT_SECTIONS: Array<SidenavEntry> = [
+const ICONS = {
+    home: IconHomeRegular,
+    search: IconSearchRegular,
+    folder: IconFolderRegular,
+    documents: IconDocumentsRegular,
+    bell: IconBellRegular,
+    star: IconStarRegular,
+    settings: IconSettingsRegular,
+};
+
+const ICON_NAMES = Object.keys(ICONS);
+
+type IconName = keyof typeof ICONS;
+
+/**
+ * JSON form of a `SidenavItem`. The Controls panel holds no React component, so the item takes an `icon`
+ * name instead of an `asset`, and the story maps that name to the icon of the design system.
+ */
+type EditableItem = {
+    id: string;
+    label: string;
+    icon?: IconName;
+    href?: string;
+    to?: string;
+    defaultOpen?: boolean;
+    children?: ReadonlyArray<EditableItem>;
+};
+
+type EditableSection = {
+    title?: string;
+    dividerTop?: boolean;
+    dividerBottom?: boolean;
+    items: ReadonlyArray<EditableItem>;
+};
+
+type EditableEntry = EditableSection | EditableItem;
+
+const toSidenavItem = ({icon, children, ...item}: EditableItem): SidenavItem =>
+    ({
+        ...item,
+        asset: icon ? ICONS[icon] : undefined,
+        children: children?.map(toSidenavItem),
+    }) as SidenavItem;
+
+const toSidenavEntry = (entry: EditableEntry): SidenavEntry =>
+    'items' in entry ? {...entry, items: entry.items.map(toSidenavItem)} : toSidenavItem(entry);
+
+const DEFAULT_SECTIONS: Array<EditableEntry> = [
     {
         id: 'dashboard',
         label: 'Dashboard (stand-alone item)',
+        icon: 'star',
         href: '#dashboard',
     },
     {
@@ -25,11 +80,13 @@ const DEFAULT_SECTIONS: Array<SidenavEntry> = [
             {
                 id: 'home',
                 label: 'Home',
+                icon: 'home',
                 href: '#home',
             },
             {
                 id: 'search',
                 label: 'Search',
+                icon: 'search',
                 href: '#search',
             },
         ],
@@ -42,16 +99,18 @@ const DEFAULT_SECTIONS: Array<SidenavEntry> = [
             {
                 id: 'projects',
                 label: 'Projects',
+                icon: 'folder',
                 defaultOpen: true,
                 children: [
                     {
                         id: 'active',
                         label: 'Active',
+                        icon: 'documents',
                         href: '#active',
                     },
                     {
                         id: 'archived',
-                        label: 'Archived',
+                        label: 'Archived (no icon)',
                         href: '#archived',
                     },
                 ],
@@ -61,6 +120,7 @@ const DEFAULT_SECTIONS: Array<SidenavEntry> = [
     {
         id: 'support',
         label: 'Support (stand-alone item)',
+        icon: 'bell',
         href: '#support',
     },
     {
@@ -71,6 +131,7 @@ const DEFAULT_SECTIONS: Array<SidenavEntry> = [
             {
                 id: 'config',
                 label: 'Configuration',
+                icon: 'settings',
                 href: '#config',
             },
         ],
@@ -78,12 +139,14 @@ const DEFAULT_SECTIONS: Array<SidenavEntry> = [
 ];
 
 type Args = {
-    sections: Array<SidenavEntry>;
+    sections: Array<EditableEntry>;
 };
 
 export const EditableSections = ({sections}: Args): React.JSX.Element => {
+    const entries = React.useMemo(() => sections.map(toSidenavEntry), [sections]);
+
     return (
-        <SidenavStoryPage sidenav={<SidenavBar sections={sections} aria-label="Sidenav" />}>
+        <SidenavStoryPage sidenav={<SidenavBar sections={entries} aria-label="Sidenav" />}>
             <Box padding={32}>
                 <Stack space={24}>
                     <Stack space={8}>
@@ -94,9 +157,13 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                         <Text3 regular>
                             The first level takes sections and stand-alone items, in any order. Every section
                             declares dividerTop and dividerBottom, so you can switch each divider on and off
-                            in the control. A stand-alone item takes no dividers. The collapsed state needs an
-                            asset per item, so it has its own story: &quot;Sections and stand-alone
-                            items&quot;.
+                            in the control. A stand-alone item takes no dividers.
+                        </Text3>
+                        <Text3 regular>
+                            Give an icon to every first-level item. The collapsed rail shows the icon instead
+                            of the label, so a first-level item without an icon disappears there, and the
+                            component reports it in the console. An item of the second level takes an optional
+                            icon, as &quot;Archived (no icon)&quot; shows.
                         </Text3>
                     </Stack>
 
@@ -110,6 +177,10 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                                     <UnorderedList aria-labelledby="supported">
                                         <ListItem>id, a string, the unique identifier.</ListItem>
                                         <ListItem>label, a string, the text of the item.</ListItem>
+                                        <ListItem>
+                                            icon, a string, the name of the icon. The story accepts:{' '}
+                                            {ICON_NAMES.join(', ')}.
+                                        </ListItem>
                                         <ListItem>href, a string, the URL of the link.</ListItem>
                                         <ListItem>to, a string, the route of the link.</ListItem>
                                         <ListItem>children, an array of nested items.</ListItem>
@@ -139,7 +210,10 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                                 <Text2 as="div" regular>
                                     <UnorderedList aria-labelledby="not-supported">
                                         <ListItem>onPress, because JSON holds no function.</ListItem>
-                                        <ListItem>asset, because JSON holds no React component.</ListItem>
+                                        <ListItem>
+                                            asset, because JSON holds no React component. Use the icon name
+                                            instead. The component itself takes an asset.
+                                        </ListItem>
                                         <ListItem>rightSlot, because JSON holds no React element.</ListItem>
                                         <ListItem>onNavigate, because JSON holds no callback.</ListItem>
                                     </UnorderedList>
@@ -183,8 +257,9 @@ export default {
     argTypes: {
         sections: {
             control: {type: 'object'},
-            description:
-                'Edit JSON with: id, label, href/to, children, defaultOpen, items, title, dividerTop, dividerBottom. Cannot include: onPress, asset, rightSlot (these are functions/components).',
+            description: `Edit JSON with: id, label, icon (${ICON_NAMES.join(
+                ' | '
+            )}), href/to, children, defaultOpen, items, title, dividerTop, dividerBottom. Cannot include: onPress, asset, rightSlot (these are functions/components).`,
             table: {
                 category: 'Data (JSON-editable)',
             },
