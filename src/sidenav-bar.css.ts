@@ -552,6 +552,8 @@ export const itemTouchableSelected = styleVariants(itemColors, (colors) => ({
     },
 }));
 
+// The accent fades with the label of its item, so the collapsed rail marks the selection with the
+// background only, like it does for a parent whose descendant is selected.
 export const itemAccent = style({
     position: 'absolute',
     left: 0,
@@ -561,6 +563,12 @@ export const itemAccent = style({
     height: 20,
     borderRadius: 8,
     pointerEvents: 'none',
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    ...reducedMotion,
+});
+
+export const itemAccentCollapsed = style({
+    opacity: 0,
 });
 
 export const itemAccentVariant = styleVariants(itemColors, (colors) => ({
@@ -602,10 +610,20 @@ export const itemLabelKeepsWidth = style({
     minWidth: 'max-content',
 });
 
+// The right slot and the chevron stay in the DOM on the collapsed rail and fade with the label of their
+// item, so that nothing of the row pops while the rail moves. The `visibility` step ends with the fade,
+// which takes the slot out of the accessibility tree and the tab order once the rail stopped.
 export const itemRightSlot = style({
     display: 'flex',
     alignItems: 'center',
     flexShrink: 0,
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}, visibility ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    ...reducedMotion,
+});
+
+export const itemRightSlotCollapsed = style({
+    opacity: 0,
+    visibility: 'hidden',
 });
 
 export const itemChevron = style({
@@ -614,8 +632,13 @@ export const itemChevron = style({
     flexShrink: 0,
     width: 16,
     height: 16,
-    transition: `transform ${contentDurationVar} ${CONTENT_EASING}`,
+    transition: `transform ${contentDurationVar} ${CONTENT_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}, visibility ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
     ...reducedMotion,
+});
+
+export const itemChevronCollapsed = style({
+    opacity: 0,
+    visibility: 'hidden',
 });
 
 // The chevron of an open parent item turns half a turn, so that it reports the state of its group. It
@@ -634,21 +657,27 @@ export const nestedListContainer = style({
     display: 'grid',
 });
 
+// The group also fades while it folds: the fold clips its rows, and a selected row would otherwise leave
+// at full opacity, with its accent and its background.
 export const nestedListTransitionClasses = {
     enter: style({
         gridTemplateRows: '0fr',
+        opacity: 0,
     }),
     enterActive: style({
         gridTemplateRows: '1fr',
-        transition: `grid-template-rows ${contentDurationVar} ${CONTENT_EASING}`,
+        opacity: 1,
+        transition: `grid-template-rows ${contentDurationVar} ${CONTENT_EASING}, opacity ${contentDurationVar} ${CONTENT_EASING}`,
         ...reducedMotion,
     }),
     exit: style({
         gridTemplateRows: '1fr',
+        opacity: 1,
     }),
     exitActive: style({
         gridTemplateRows: '0fr',
-        transition: `grid-template-rows ${contentDurationVar} ${CONTENT_EASING}`,
+        opacity: 0,
+        transition: `grid-template-rows ${contentDurationVar} ${CONTENT_EASING}, opacity ${contentDurationVar} ${CONTENT_EASING}`,
         ...reducedMotion,
     }),
 };

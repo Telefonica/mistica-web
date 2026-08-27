@@ -54,6 +54,46 @@ const findFirstLevelItem = (
     itemId: string
 ): SidenavItemType | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
 
+/**
+ * Development-only validation of the entries. It walks the data instead of checking inside each
+ * `SidenavItem` render: every item of the sidenav comes from this data, so one walk covers all of
+ * them, it reports each problem once, and it does not see the re-renders of the panel.
+ */
+const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
+    const seenIds = new Set<string>();
+    const duplicateIds = new Set<string>();
+
+    const visitItem = (item: SidenavItemType, level: number): void => {
+        if (seenIds.has(item.id)) {
+            duplicateIds.add(item.id);
+        } else {
+            seenIds.add(item.id);
+        }
+        if (level === 0 && !item.asset) {
+            console.warn(
+                `SidenavItem "${item.label}" at top level may not be visible when sidenav is collapsed (asset icon recommended)`
+            );
+        }
+        if (level > 0 && item.children?.length) {
+            console.error(
+                `SidenavItem "${item.label}" at level ${level} cannot have children. ` +
+                    `SidenavItem supports maximum 2 levels of nesting. ` +
+                    `Only level 0 items can have children.`
+            );
+        }
+        item.children?.forEach((child) => visitItem(child, level + 1));
+    };
+
+    getFirstLevelItems(entries).forEach((item) => visitItem(item, 0));
+
+    if (duplicateIds.size > 0) {
+        console.error(
+            `SidenavBar: duplicate item IDs found: ${Array.from(duplicateIds).join(', ')}. ` +
+                `All SidenavItem ids must be unique within a SidenavBar.`
+        );
+    }
+};
+
 /** Wraps an item with its position among the first-level entries, which gives the delay of its label fade. */
 const withItemIndex = (item: SidenavItemType, index: number): React.ReactElement => (
     <SidenavItemIndexContext.Provider key={item.id} value={index}>
@@ -93,4 +133,5 @@ export {
     findParentOfItem,
     findFirstLevelItem,
     renderSidenavEntries,
+    validateSidenavEntries,
 };

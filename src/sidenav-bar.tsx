@@ -23,10 +23,10 @@ import {SidenavItem} from './sidenav-bar-item';
 import {SidenavSection} from './sidenav-bar-section';
 import {
     renderSidenavItemFromData,
-    getFirstLevelItems,
     findParentOfItem,
     findFirstLevelItem,
     renderSidenavEntries,
+    validateSidenavEntries,
 } from './sidenav-bar-entries';
 import {SidenavDoublePanel} from './sidenav-bar-panel';
 import {SidenavMobileBar} from './sidenav-bar-mobile';
@@ -36,7 +36,6 @@ import {
     SidenavBarContext,
     useSidenavBarContext,
     SidenavLevelContext,
-    assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-bar-context';
 import {shouldShowBoxedBorder} from './boxed';
@@ -446,31 +445,8 @@ const SidenavBar = ({
 
     const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 
-    if (process.env.NODE_ENV !== 'production') {
-        const itemIds = new Set<string>();
-        const duplicateIds = new Set<string>();
-
-        const collectItemIds = (item: SidenavItemType): void => {
-            if (itemIds.has(item.id)) {
-                duplicateIds.add(item.id);
-            } else {
-                itemIds.add(item.id);
-            }
-            if (item.children) {
-                item.children.forEach((child) => collectItemIds(child));
-            }
-        };
-
-        if (sections) {
-            getFirstLevelItems(sections).forEach((item) => collectItemIds(item));
-        }
-
-        if (duplicateIds.size > 0) {
-            console.error(
-                `SidenavBar: duplicate item IDs found: ${Array.from(duplicateIds).join(', ')}. ` +
-                    `All SidenavItem ids must be unique within a SidenavBar.`
-            );
-        }
+    if (process.env.NODE_ENV !== 'production' && sections) {
+        validateSidenavEntries(sections);
     }
 
     const normalizedVariant = normalizeVariant(variant);
@@ -730,7 +706,7 @@ const SidenavBar = ({
 
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
-export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, assertChildrenAre, hasDescendantWithId};
+export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, hasDescendantWithId};
 export type {
     SidenavBarProps,
     SidenavSectionProps,

@@ -54,19 +54,6 @@ const SidenavLevelContext = React.createContext<number>(0);
  */
 const SidenavItemIndexContext = React.createContext<number>(0);
 
-/**
- * `React.ReactElement<Props>` cannot express these constraints, because every JSX expression is
- * typed as `ReactElement<any, any>` and therefore satisfies any props type. Comparing against the
- * component reference at runtime does work, so it is checked in development instead.
- */
-const assertChildrenAre = (children: React.ReactNode, expected: React.ElementType, message: string): void => {
-    React.Children.forEach(children, (child) => {
-        if (React.isValidElement(child) && child.type !== expected) {
-            console.error(message);
-        }
-    });
-};
-
 /** Check if any descendant SidenavItem has the given ID */
 const hasDescendantWithId = (children: React.ReactNode, targetId: string | null): boolean => {
     if (!targetId) return false;
@@ -97,7 +84,6 @@ export {
     useSidenavBarContext,
     SidenavLevelContext,
     SidenavItemIndexContext,
-    assertChildrenAre,
     hasDescendantWithId,
 };
 export type {SidenavBarContextValue};

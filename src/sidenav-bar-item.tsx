@@ -14,7 +14,6 @@ import {
     useSidenavBarContext,
     SidenavLevelContext,
     SidenavItemIndexContext,
-    assertChildrenAre,
     hasDescendantWithId,
 } from './sidenav-bar-context';
 import {SidenavDialogPanel} from './sidenav-bar-panel';
@@ -145,33 +144,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // selected background, but never the accent: the accent belongs to the selected child.
     const showAccent = isItemSelected;
 
-    if (process.env.NODE_ENV !== 'production') {
-        if (level > 1) {
-            console.error(
-                `SidenavItem nesting limit exceeded: "${label}" is at level ${level}. ` +
-                    `SidenavItem only supports 2 levels of nesting (level 0 and level 1). ` +
-                    `Items at level 1 cannot have children.`
-            );
-        }
-
-        if (level === 1 && hasChildren) {
-            console.error(
-                `SidenavItem "${label}" at level 1 (nested item) cannot have children. ` +
-                    `SidenavItem supports maximum 2 levels of nesting. ` +
-                    `Only level 0 items can have children.`
-            );
-        }
-
-        assertChildrenAre(children, SidenavItem, 'SidenavItem children must be SidenavItem elements');
-        // A panel item renders at level 0 to keep it on the same rail as a section item, but it never
-        // appears in the collapsed rail, so it does not need an asset.
-        if (level === 0 && !asset && !isInsidePanel) {
-            console.warn(
-                `SidenavItem "${label}" at top level may not be visible when sidenav is collapsed (asset icon recommended)`
-            );
-        }
-    }
-
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const nestedListRef = React.useRef<HTMLDivElement>(null);
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
@@ -259,7 +231,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // The label holds the width of its text while the sidenav moves, in both directions: during a collapse
     // the sidenav is already collapsed, and during an expansion the settled state still reports the rail.
     // See `itemLabelKeepsWidth`.
-    const isLabelWidthKept = (collapsed || collapsedSettled) && !isInsidePanel;
+    const isLabelWidthKept = false;
     const labelNode = (
         <div
             className={classnames(styles.itemLabel, {
@@ -282,11 +254,20 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         <>
             {assetElement}
             {labelNode}
-            {!collapsed && rightSlot && <span className={styles.itemRightSlot}>{rightSlot}</span>}
-            {!collapsed && hasChildren && (
+            {rightSlot && (
+                <span
+                    className={classnames(styles.itemRightSlot, {
+                        [styles.itemRightSlotCollapsed]: isLabelCollapsed,
+                    })}
+                >
+                    {rightSlot}
+                </span>
+            )}
+            {hasChildren && (
                 <span
                     className={classnames(styles.itemChevron, styles.itemChevronVariant[variant], {
                         [styles.itemChevronRotated]: isOpen,
+                        [styles.itemChevronCollapsed]: isLabelCollapsed,
                     })}
                     aria-hidden="true"
                 >
@@ -373,7 +354,11 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
             {showAccent && (
-                <div className={classnames(styles.itemAccent, styles.itemAccentVariant[variant])} />
+                <div
+                    className={classnames(styles.itemAccent, styles.itemAccentVariant[variant], {
+                        [styles.itemAccentCollapsed]: isLabelCollapsed,
+                    })}
+                />
             )}
             {showTooltip ? (
                 <Tooltip

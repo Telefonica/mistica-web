@@ -4331,6 +4331,8 @@ const sidenavBarSnippets: Array<Snippet> = [
         <div style={{height: 480}}>
             <SidenavBar
                 aria-label="Main navigation"
+                selectedItemId={getState('sidenavSelectedItem', 'home')}
+                onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
                 sections={[
                     {
                         items: [
@@ -4612,9 +4614,7 @@ export default [
     {
         group: 'SidenavBar',
         name: 'SidenavItem (href variant)',
-        code: `{/*
-SidenavItem (href variant) — Use for regular links.
-*/}
+        code: `
 <SidenavBar
     aria-label="Main navigation"
     sections={[
@@ -4633,10 +4633,7 @@ SidenavItem (href variant) — Use for regular links.
     {
         group: 'SidenavBar',
         name: 'SidenavItem (onPress variant)',
-        code: `{/*
-SidenavItem (onPress variant) — Use for custom click handlers.
-See playroom/SIDENAV.md for full documentation.
-*/}
+        code: `
 <SidenavBar
     aria-label="Main navigation"
     sections={[
@@ -4664,10 +4661,7 @@ See playroom/SIDENAV.md for full documentation.
     {
         group: 'SidenavBar',
         name: 'SidenavItem (children variant)',
-        code: `{/*
-SidenavItem (children variant) — Use for nested/expandable items (max 2 levels).
-See playroom/SIDENAV.md for full documentation.
-*/}
+        code: `
 <SidenavBar
     aria-label="Main navigation"
     sections={[
@@ -4695,10 +4689,7 @@ See playroom/SIDENAV.md for full documentation.
     {
         group: 'SidenavBar',
         name: 'SidenavItem (to variant)',
-        code: `{/*
-SidenavItem (to variant) — Use for client-side router integration.
-See playroom/SIDENAV.md for full documentation.
-*/}
+        code: `
 <SidenavBar
     aria-label="Main navigation"
     sections={[
@@ -4717,9 +4708,7 @@ See playroom/SIDENAV.md for full documentation.
     {
         group: 'SidenavBar',
         name: 'SidenavBar (with rightSlot)',
-        code: `{/*
-SidenavItem with rightSlot — Useful for badges, counts, or other indicators.
-*/}
+        code: `
 <div style={{height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
@@ -4728,7 +4717,7 @@ SidenavItem with rightSlot — Useful for badges, counts, or other indicators.
                 items: [
                     {id: 'inbox', label: 'Inbox', asset: IconBellRegular, href: '#inbox', rightSlot: <Badge value={3} />},
                     {id: 'messages', label: 'Messages', asset: IconEmailRegular, href: '#messages', rightSlot: <Badge value={5} />},
-                    {id: 'tasks', label: 'Tasks', asset: IconCheckCircleRegular, href: '#tasks'},
+                    {id: 'tasks', label: 'Tasks', asset: IconCheckedRegular, href: '#tasks'},
                 ],
             },
         ]}
@@ -4739,10 +4728,7 @@ SidenavItem with rightSlot — Useful for badges, counts, or other indicators.
     {
         group: 'SidenavBar',
         name: 'SidenavBar (doublePanel mode)',
-        code: `{/*
-Double panel mode — The children of an item open in a second column, to the right of the sidenav.
-The second column pushes the main content, and it takes the same width as the main column.
-*/}
+        code: `
 <div style={{display: 'flex', height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
@@ -4750,7 +4736,7 @@ The second column pushes the main content, and it takes the same width as the ma
         sections={[
             {
                 items: [
-                    {id: 'dashboard', label: 'Dashboard', asset: IconDashboardRegular, href: '#dashboard'},
+                    {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
                     {
                         id: 'products',
                         label: 'Products',
@@ -4780,10 +4766,7 @@ The second column pushes the main content, and it takes the same width as the ma
     {
         group: 'SidenavBar',
         name: 'SidenavBar (custom collapse action)',
-        code: `{/*
-Custom collapse action — The header shows an icon button by default. renderCollapseAction paints another
-control, which receives the collapsed state, the press handler and the accessible name.
-*/}
+        code: `
 <div style={{display: 'flex', height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
@@ -4806,7 +4789,7 @@ control, which receives the collapsed state, the press handler and the accessibl
         sections={[
             {
                 items: [
-                    {id: 'dashboard', label: 'Dashboard', asset: IconDashboardRegular, href: '#dashboard'},
+                    {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
                     {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
                 ],
             },
@@ -4818,10 +4801,7 @@ control, which receives the collapsed state, the press handler and the accessibl
     {
         group: 'SidenavBar',
         name: 'SidenavBar (multiple sections with nested items)',
-        code: `{/*
-Multiple sections with first and second level items.
-Demonstrates organized navigation structure.
-*/}
+        code: `
 <div style={{height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
@@ -4865,7 +4845,7 @@ Demonstrates organized navigation structure.
                     {
                         id: 'profile',
                         label: 'My Profile',
-                        asset: IconUserRegular,
+                        asset: IconComputerUserRegular,
                         children: [
                             {id: 'personal', label: 'Personal Info', href: '#profile/personal'},
                             {id: 'addresses', label: 'Addresses', href: '#profile/addresses'},
@@ -4883,10 +4863,7 @@ Demonstrates organized navigation structure.
     {
         group: 'SidenavBar',
         name: 'SidenavBar (sections and stand-alone items)',
-        code: `{/*
-The first level admits sections and stand-alone items, in any order.
-A stand-alone item needs no section around it.
-*/}
+        code: `
 <div style={{height: 480}}>
     <SidenavBar
         aria-label="Main navigation"
@@ -4900,6 +4877,123 @@ A stand-alone item needs no section around it.
                 ],
             },
             {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavLayout (full page)',
+        code: `
+<SidenavLayout>
+    <SidenavLayout.Sidenav>
+        <SidenavBar
+            aria-label="Main navigation"
+            selectedItemId={getState('sidenavSelectedItem', 'home')}
+            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
+            sections={[
+                {
+                    items: [
+                        {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                        {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                        {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                    ],
+                },
+            ]}
+            footerSlot={
+                <Box padding={16}>
+                    <Text2 regular color={skinVars.colors.textSecondary}>v1.0.0</Text2>
+                </Box>
+            }
+        />
+    </SidenavLayout.Sidenav>
+    <SidenavLayout.Content>
+        <Box padding={24}>
+            <Stack space={16}>
+                <Text5 as="h1">Page title</Text5>
+                <Text2 regular as="p">
+                    The layout places the sidenav and the content side by side. The sidenav stays
+                    sticky while the content scrolls with the document.
+                </Text2>
+                <Placeholder height={900} />
+            </Stack>
+        </Box>
+    </SidenavLayout.Content>
+</SidenavLayout>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (brand variant, boxed)',
+        code: `
+<div style={{height: 480}}>
+    <Box padding={16}>
+        <SidenavBar
+            aria-label="Main navigation"
+            variant="brand"
+            boxed
+            sections={[
+                {
+                    items: [
+                        {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                        {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                        {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                    ],
+                },
+            ]}
+        />
+    </Box>
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (header and footer slots)',
+        code: `
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        logo={({collapsed}) => <Logo size={32} type={collapsed ? 'isotype' : 'imagotype'} />}
+        headerSlot={
+            <Tag type="promo">Beta</Tag>
+        }
+        footerSlot={
+            <Box padding={16}>
+                <Text2 regular color={skinVars.colors.textSecondary}>Signed in as Ada</Text2>
+            </Box>
+        }
+        fixedFooter
+        sections={[
+            {
+                items: [
+                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                    {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                ],
+            },
+        ]}
+    />
+</div>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (controlled collapse)',
+        code: `
+<div style={{height: 480}}>
+    <SidenavBar
+        aria-label="Main navigation"
+        collapsed={getState('sidenavCollapsed', false)}
+        onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
+        sections={[
+            {
+                items: [
+                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                    {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                ],
+            },
         ]}
     />
 </div>
