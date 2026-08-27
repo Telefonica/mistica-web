@@ -34,6 +34,41 @@ test('SidenavBar renders its items', async () => {
     expect(homeHref).toBe('#home');
 });
 
+// A boxed sidenav paints its edge on the root, so a root wider than its columns drew that edge far to the
+// right of the items. `SidenavLayout` hid the defect, because a flex item measures its content: the bar
+// only stretched under a plain block parent, which is what a consumer writes when it places the bar itself.
+test('SidenavBar takes the width of its columns under a parent that constrains neither axis', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {boxed: true, width: 200},
+    });
+
+    await screen.findByRole('navigation', {name: 'Main navigation'});
+
+    const sizes = await page.evaluate(() => {
+        const nav = document.querySelector('[data-testid="SidenavBar"]') as HTMLElement;
+        const host = document.createElement('div');
+        document.body.appendChild(host);
+        host.appendChild(nav);
+
+        return {
+            root: Math.round(nav.getBoundingClientRect().width),
+            column: Math.round((nav.firstElementChild as HTMLElement).getBoundingClientRect().width),
+            host: Math.round(host.getBoundingClientRect().width),
+            // The bar fills the height of the viewport, minus the two 8px margins of the box, although
+            // nothing above it carries a height.
+            height: Math.round(nav.getBoundingClientRect().height),
+            viewportHeight: window.innerHeight,
+        };
+    });
+
+    expect(sizes.root).toBe(200);
+    expect(sizes.column).toBe(200);
+    expect(sizes.host).toBeGreaterThan(sizes.root);
+    expect(sizes.height).toBe(sizes.viewportHeight - 16);
+});
+
 test('SidenavBar expands a parent item on press', async () => {
     await openStoryPage({
         id: STORY_ID,

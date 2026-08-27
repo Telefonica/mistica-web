@@ -185,6 +185,12 @@ const itemColors: Record<NonDeprecatedVariant, ItemColors> = {
 // width is intrinsic, so an open panel widens the sidenav and pushes the main content of the layout.
 // It paints no background of its own: each region owns its token, and the body of the default variant
 // is transparent, so the page shows through it.
+// The three heights below replace the plain `100%` that a rail of `SidenavLayout` would need on its own.
+// A percentage height resolves to `auto` under a parent that takes the height of its content, and the
+// sidenav then shrinks to the height of its items, which is what a consumer sees when it renders the bar
+// outside of the layout. A percentage `min-height` reads as `0` under that same parent, and a percentage
+// `max-height` reads as `none`, so the two of them pin the sidenav to the height of its parent wherever
+// that height exists, and they leave the height of the viewport wherever it does not.
 export const container = style([
     sprinkles({
         display: 'flex',
@@ -193,7 +199,14 @@ export const container = style([
     {
         position: 'relative',
         boxSizing: 'border-box',
-        height: '100%',
+        // The width belongs to the columns, so the root takes the width that they ask for. A block-level
+        // box otherwise fills the width of its parent, and the edge of a boxed sidenav, which the root
+        // paints, then stood far to the right of the items of a narrower `width`. A flex item resolves
+        // its width the same way, so a rail of `SidenavLayout` measured the columns already.
+        width: 'fit-content',
+        height: '100vh',
+        minHeight: '100%',
+        maxHeight: '100%',
         overflow: 'hidden',
     },
 ]);
@@ -257,9 +270,13 @@ globalStyle(`${columnsWhileMoving} > *`, {
     pointerEvents: 'none',
 });
 
+// The margins of the box belong to the height, so a boxed sidenav and a full-height one take the same
+// room. The three heights follow the rule of `container` above.
 export const boxed = style({
     margin: BOXED_INSET,
-    height: `calc(100% - ${BOXED_INSET * 2}px)`,
+    height: `calc(100vh - ${BOXED_INSET * 2}px)`,
+    minHeight: `calc(100% - ${BOXED_INSET * 2}px)`,
+    maxHeight: `calc(100% - ${BOXED_INSET * 2}px)`,
     borderRadius: skinVars.borderRadii.popup,
 });
 

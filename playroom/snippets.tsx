@@ -4884,9 +4884,9 @@ export default [
     },
     {
         group: 'SidenavBar',
-        name: 'SidenavLayout (full page)',
+        name: 'SidenavLayout (whole viewport)',
         code: `
-<SidenavLayout>
+<SidenavLayout mode="whole-viewport">
     <SidenavLayout.Sidenav>
         <SidenavBar
             aria-label="Main navigation"
@@ -4913,8 +4913,44 @@ export default [
             <Stack space={16}>
                 <Text5 as="h1">Page title</Text5>
                 <Text2 regular as="p">
-                    The layout places the sidenav and the content side by side. The sidenav stays
-                    sticky while the content scrolls with the document.
+                    The content starts after the sidenav and takes the rest of the width of the
+                    viewport. The sidenav stays sticky while the content scrolls with the document.
+                </Text2>
+                <Placeholder height={900} />
+            </Stack>
+        </Box>
+    </SidenavLayout.Content>
+</SidenavLayout>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavLayout (centered)',
+        code: `
+<SidenavLayout mode="centered">
+    <SidenavLayout.Sidenav>
+        <SidenavBar
+            aria-label="Main navigation"
+            selectedItemId={getState('sidenavSelectedItem', 'home')}
+            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
+            sections={[
+                {
+                    items: [
+                        {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                        {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
+                        {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+                    ],
+                },
+            ]}
+        />
+    </SidenavLayout.Sidenav>
+    <SidenavLayout.Content>
+        <Box padding={24}>
+            <Stack space={16}>
+                <Text5 as="h1">Page title</Text5>
+                <Text2 regular as="p">
+                    The sidenav and the content share the responsive grid of the page, so the two of
+                    them stay inside the margins that every other centered layout takes.
                 </Text2>
                 <Placeholder height={900} />
             </Stack>

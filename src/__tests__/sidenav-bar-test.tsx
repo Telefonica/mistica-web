@@ -76,6 +76,27 @@ test('SidenavBar renders a navigation landmark with its items', async () => {
     expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('href', '/home');
 });
 
+test('SidenavBar falls back to the height of the viewport when no parent constrains it', async () => {
+    await renderSidenav();
+
+    // A percentage height alone resolves to `auto` under a parent that takes the height of its content, so
+    // the bar would shrink to the height of its items outside of `SidenavLayout`. The bounds carry the
+    // percentage instead, and they read as `0` and `none` under such a parent.
+    const style = getComputedStyle(screen.getByRole('navigation', {name: 'Main navigation'}));
+    expect(style.height).toBe('100vh');
+    expect(style.minHeight).toBe('100%');
+    expect(style.maxHeight).toBe('100%');
+});
+
+test('SidenavBar keeps the same fallback when it is boxed, minus the inset of the box', async () => {
+    await renderSidenav({boxed: true});
+
+    const style = getComputedStyle(screen.getByRole('navigation', {name: 'Main navigation'}));
+    expect(style.height).toBe('calc(100vh - 16px)');
+    expect(style.minHeight).toBe('calc(100% - 16px)');
+    expect(style.maxHeight).toBe('calc(100% - 16px)');
+});
+
 test('SidenavBar marks the selected item with aria-current="page"', async () => {
     await renderSidenav({selectedItemId: 'home'});
 
