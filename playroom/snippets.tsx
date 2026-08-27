@@ -4326,40 +4326,179 @@ const listItemSnippets = [
 const sidenavBarSnippets: Array<Snippet> = [
     {
         group: 'SidenavBar',
-        name: 'SidenavBar (basic)',
+        name: 'SidenavBar (full page)',
         code: `
-        <div style={{height: 480}}>
-            <SidenavBar
-                aria-label="Main navigation"
-                selectedItemId={getState('sidenavSelectedItem', 'home')}
-                onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
-                sections={[
-                    {
-                        items: [
-                            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                            {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                        ],
-                    },
-                    {
-                        title: 'Workspace',
-                        dividerTop: true,
-                        items: [
-                            {
-                                id: 'projects',
-                                label: 'Projects',
-                                asset: IconFolderRegular,
-                                defaultOpen: true,
-                                children: [
-                                    {id: 'active', label: 'Active', href: '#active'},
-                                    {id: 'archived', label: 'Archived', href: '#archived'},
-                                ],
-                            },
-                            {id: 'notifications', label: 'Notifications', asset: IconBellRegular, href: '#notifications'},
-                        ],
-                    },
-                ]}
-            />
-        </div>`,
+<SidenavLayout mode="whole-viewport">
+    <SidenavLayout.Sidenav>
+        <SidenavBar
+            aria-label="Main navigation"
+            logo={({collapsed}) => <Logo size={32} type={collapsed ? 'isotype' : 'imagotype'} />}
+            headerSlot={<Tag type="promo">Beta</Tag>}
+            collapsed={getState('sidenavCollapsed', false)}
+            onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
+            selectedItemId={getState('sidenavSelectedItem', 'home')}
+            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
+            sections={[
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                {
+                    title: 'Workspace',
+                    dividerTop: true,
+                    items: [
+                        {
+                            id: 'projects',
+                            label: 'Projects',
+                            asset: IconFolderRegular,
+                            defaultOpen: true,
+                            children: [
+                                {id: 'projects-active', label: 'Active', href: '#projects/active'},
+                                {id: 'projects-archived', label: 'Archived', to: '/projects/archived'},
+                            ],
+                        },
+                        {
+                            id: 'inbox',
+                            label: 'Inbox',
+                            asset: IconEmailRegular,
+                            href: '#inbox',
+                            rightSlot: <Badge value={3} />,
+                        },
+                        {
+                            id: 'tasks',
+                            label: 'Tasks',
+                            asset: IconCheckedRegular,
+                            onPress: () => console.log('Tasks pressed'),
+                            onNavigate: () => console.log('Tasks selected'),
+                        },
+                    ],
+                },
+                {
+                    title: 'Account',
+                    dividerTop: true,
+                    items: [
+                        {
+                            id: 'profile',
+                            label: 'My profile',
+                            asset: IconComputerUserRegular,
+                            children: [
+                                {id: 'profile-personal', label: 'Personal info', href: '#profile/personal'},
+                                {
+                                    id: 'profile-security',
+                                    label: 'Security',
+                                    href: '#profile/security',
+                                    rightSlot: <Badge />,
+                                },
+                            ],
+                        },
+                        {
+                            id: 'docs',
+                            label: 'Documentation',
+                            asset: IconSearchRegular,
+                            showIconWhenExpanded: false,
+                            href: 'https://example.org',
+                            newTab: true,
+                        },
+                    ],
+                },
+                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+            ]}
+            fixedFooter
+            footerSlot={
+                <Box padding={16}>
+                    <Text2 regular color={skinVars.colors.textSecondary}>Signed in as Ada</Text2>
+                </Box>
+            }
+        />
+    </SidenavLayout.Sidenav>
+    <SidenavLayout.Content>
+        <Box padding={24}>
+            <Stack space={16}>
+                <Text5 as="h1">Page title</Text5>
+                <Text2 regular as="p">
+                    The sidenav stays sticky while the content scrolls with the document. Collapse the
+                    sidenav to see the rail, and resize to a tablet width to see the mobile top bar.
+                </Text2>
+                <Placeholder height={900} />
+            </Stack>
+        </Box>
+    </SidenavLayout.Content>
+</SidenavLayout>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (double panel, brand, boxed)',
+        code: `
+<div style={{display: 'flex', height: 520}}>
+    <Box padding={16}>
+        <SidenavBar
+            aria-label="Main navigation"
+            variant="brand"
+            boxed
+            doublePanel
+            width={260}
+            defaultCollapsed={false}
+            selectedItemId={getState('sidenavPanelSelectedItem', 'dashboard')}
+            onSelectedItemIdChange={(id) => setState('sidenavPanelSelectedItem', id)}
+            renderCollapseAction={({collapsed, onPress, 'aria-label': ariaLabel}) =>
+                collapsed ? (
+                    <IconButton
+                        Icon={IconChevronRightRegular}
+                        type="neutral"
+                        backgroundType="transparent"
+                        small
+                        onPress={onPress}
+                        aria-label={ariaLabel}
+                    />
+                ) : (
+                    <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
+                        Hide
+                    </ButtonLink>
+                )
+            }
+            sections={[
+                {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
+                {
+                    title: 'Catalog',
+                    dividerTop: true,
+                    dividerBottom: true,
+                    items: [
+                        {
+                            id: 'products',
+                            label: 'Products',
+                            asset: IconShopRegular,
+                            children: [
+                                {id: 'products-all', label: 'All products', href: '#products/all'},
+                                {id: 'products-featured', label: 'Featured', href: '#products/featured'},
+                                {id: 'products-new', label: 'New arrivals', href: '#products/new'},
+                            ],
+                        },
+                        {
+                            id: 'brands',
+                            label: 'Brands',
+                            asset: IconTagRegular,
+                            children: [
+                                {id: 'brands-premium', label: 'Premium', href: '#brands/premium'},
+                                {id: 'brands-value', label: 'Value', href: '#brands/value'},
+                            ],
+                        },
+                    ],
+                },
+                {
+                    items: [
+                        {
+                            id: 'orders',
+                            label: 'Orders',
+                            asset: IconShoppingCartRegular,
+                            href: '#orders',
+                            rightSlot: <Badge value={5} />,
+                        },
+                        {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals'},
+                    ],
+                },
+            ]}
+        />
+    </Box>
+</div>
+        `,
     },
 ];
 
@@ -4611,428 +4750,4 @@ export default [
         />`,
     },
     drawerSnippet,
-    {
-        group: 'SidenavBar',
-        name: 'SidenavItem (href variant)',
-        code: `
-<SidenavBar
-    aria-label="Main navigation"
-    sections={[
-        {
-            title: 'Navigation',
-            items: [
-                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-            ],
-        },
-    ]}
-/>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavItem (onPress variant)',
-        code: `
-<SidenavBar
-    aria-label="Main navigation"
-    sections={[
-        {
-            title: 'Navigation',
-            items: [
-                {
-                    id: 'home',
-                    label: 'Home',
-                    asset: IconHomeRegular,
-                    onPress: () => console.log('Home clicked'),
-                },
-                {
-                    id: 'search',
-                    label: 'Search',
-                    asset: IconSearchRegular,
-                    onPress: () => console.log('Search clicked'),
-                },
-            ],
-        },
-    ]}
-/>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavItem (children variant)',
-        code: `
-<SidenavBar
-    aria-label="Main navigation"
-    sections={[
-        {
-            title: 'Navigation',
-            items: [
-                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                {
-                    id: 'settings',
-                    label: 'Settings',
-                    asset: IconSettingsRegular,
-                    defaultOpen: true,
-                    children: [
-                        {id: 'settings-general', label: 'General', href: '#settings/general'},
-                        {id: 'settings-account', label: 'Account', href: '#settings/account'},
-                        {id: 'settings-privacy', label: 'Privacy', href: '#settings/privacy'},
-                    ],
-                },
-            ],
-        },
-    ]}
-/>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavItem (to variant)',
-        code: `
-<SidenavBar
-    aria-label="Main navigation"
-    sections={[
-        {
-            title: 'Navigation',
-            items: [
-                {id: 'home', label: 'Home', asset: IconHomeRegular, to: '/home'},
-                {id: 'search', label: 'Search', asset: IconSearchRegular, to: '/search'},
-                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, to: '/settings'},
-            ],
-        },
-    ]}
-/>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (with rightSlot)',
-        code: `
-<div style={{height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        sections={[
-            {
-                items: [
-                    {id: 'inbox', label: 'Inbox', asset: IconBellRegular, href: '#inbox', rightSlot: <Badge value={3} />},
-                    {id: 'messages', label: 'Messages', asset: IconEmailRegular, href: '#messages', rightSlot: <Badge value={5} />},
-                    {id: 'tasks', label: 'Tasks', asset: IconCheckedRegular, href: '#tasks'},
-                ],
-            },
-        ]}
-    />
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (doublePanel mode)',
-        code: `
-<div style={{display: 'flex', height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        doublePanel
-        sections={[
-            {
-                items: [
-                    {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
-                    {
-                        id: 'products',
-                        label: 'Products',
-                        asset: IconShopRegular,
-                        children: [
-                            {id: 'prod-all', label: 'All Products', href: '#products/all'},
-                            {id: 'prod-featured', label: 'Featured', href: '#products/featured'},
-                            {id: 'prod-new', label: 'New Arrivals', href: '#products/new'},
-                        ],
-                    },
-                    {
-                        id: 'orders',
-                        label: 'Orders',
-                        asset: IconShoppingCartRegular,
-                        children: [
-                            {id: 'orders-pending', label: 'Pending', href: '#orders/pending'},
-                            {id: 'orders-completed', label: 'Completed', href: '#orders/completed'},
-                        ],
-                    },
-                ],
-            },
-        ]}
-    />
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (custom collapse action)',
-        code: `
-<div style={{display: 'flex', height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        renderCollapseAction={({collapsed, onPress, 'aria-label': ariaLabel}) =>
-            collapsed ? (
-                <IconButton
-                    Icon={IconChevronRightRegular}
-                    type="neutral"
-                    backgroundType="transparent"
-                    small
-                    onPress={onPress}
-                    aria-label={ariaLabel}
-                />
-            ) : (
-                <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
-                    Hide
-                </ButtonLink>
-            )
-        }
-        sections={[
-            {
-                items: [
-                    {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
-                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                ],
-            },
-        ]}
-    />
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (multiple sections with nested items)',
-        code: `
-<div style={{height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        sections={[
-            {
-                items: [
-                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                ],
-            },
-            {
-                title: 'Shopping',
-                dividerTop: true,
-                items: [
-                    {
-                        id: 'categories',
-                        label: 'Categories',
-                        asset: IconShopRegular,
-                        defaultOpen: true,
-                        children: [
-                            {id: 'electronics', label: 'Electronics', href: '#categories/electronics'},
-                            {id: 'clothing', label: 'Clothing', href: '#categories/clothing'},
-                            {id: 'home', label: 'Home & Garden', href: '#categories/home'},
-                        ],
-                    },
-                    {
-                        id: 'brands',
-                        label: 'Brands',
-                        asset: IconTagRegular,
-                        children: [
-                            {id: 'premium', label: 'Premium', href: '#brands/premium'},
-                            {id: 'value', label: 'Value', href: '#brands/value'},
-                        ],
-                    },
-                    {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals', rightSlot: <Badge value={5} />},
-                ],
-            },
-            {
-                title: 'Account',
-                dividerTop: true,
-                items: [
-                    {
-                        id: 'profile',
-                        label: 'My Profile',
-                        asset: IconComputerUserRegular,
-                        children: [
-                            {id: 'personal', label: 'Personal Info', href: '#profile/personal'},
-                            {id: 'addresses', label: 'Addresses', href: '#profile/addresses'},
-                        ],
-                    },
-                    {id: 'orders', label: 'Orders', asset: IconShoppingBagRegular, href: '#orders'},
-                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                ],
-            },
-        ]}
-    />
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (sections and stand-alone items)',
-        code: `
-<div style={{height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        sections={[
-            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-            {
-                title: 'Shopping',
-                items: [
-                    {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals'},
-                    {id: 'orders', label: 'Orders', asset: IconShoppingBagRegular, href: '#orders'},
-                ],
-            },
-            {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-        ]}
-    />
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavLayout (whole viewport)',
-        code: `
-<SidenavLayout mode="whole-viewport">
-    <SidenavLayout.Sidenav>
-        <SidenavBar
-            aria-label="Main navigation"
-            selectedItemId={getState('sidenavSelectedItem', 'home')}
-            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
-            sections={[
-                {
-                    items: [
-                        {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                        {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                        {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                    ],
-                },
-            ]}
-            footerSlot={
-                <Box padding={16}>
-                    <Text2 regular color={skinVars.colors.textSecondary}>v1.0.0</Text2>
-                </Box>
-            }
-        />
-    </SidenavLayout.Sidenav>
-    <SidenavLayout.Content>
-        <Box padding={24}>
-            <Stack space={16}>
-                <Text5 as="h1">Page title</Text5>
-                <Text2 regular as="p">
-                    The content starts after the sidenav and takes the rest of the width of the
-                    viewport. The sidenav stays sticky while the content scrolls with the document.
-                </Text2>
-                <Placeholder height={900} />
-            </Stack>
-        </Box>
-    </SidenavLayout.Content>
-</SidenavLayout>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavLayout (centered)',
-        code: `
-<SidenavLayout mode="centered">
-    <SidenavLayout.Sidenav>
-        <SidenavBar
-            aria-label="Main navigation"
-            selectedItemId={getState('sidenavSelectedItem', 'home')}
-            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
-            sections={[
-                {
-                    items: [
-                        {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                        {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                        {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                    ],
-                },
-            ]}
-        />
-    </SidenavLayout.Sidenav>
-    <SidenavLayout.Content>
-        <Box padding={24}>
-            <Stack space={16}>
-                <Text5 as="h1">Page title</Text5>
-                <Text2 regular as="p">
-                    The sidenav and the content share the responsive grid of the page, so the two of
-                    them stay inside the margins that every other centered layout takes.
-                </Text2>
-                <Placeholder height={900} />
-            </Stack>
-        </Box>
-    </SidenavLayout.Content>
-</SidenavLayout>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (brand variant, boxed)',
-        code: `
-<div style={{height: 480}}>
-    <Box padding={16}>
-        <SidenavBar
-            aria-label="Main navigation"
-            variant="brand"
-            boxed
-            sections={[
-                {
-                    items: [
-                        {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                        {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                        {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                    ],
-                },
-            ]}
-        />
-    </Box>
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (header and footer slots)',
-        code: `
-<div style={{height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        logo={({collapsed}) => <Logo size={32} type={collapsed ? 'isotype' : 'imagotype'} />}
-        headerSlot={
-            <Tag type="promo">Beta</Tag>
-        }
-        footerSlot={
-            <Box padding={16}>
-                <Text2 regular color={skinVars.colors.textSecondary}>Signed in as Ada</Text2>
-            </Box>
-        }
-        fixedFooter
-        sections={[
-            {
-                items: [
-                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                    {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                ],
-            },
-        ]}
-    />
-</div>
-        `,
-    },
-    {
-        group: 'SidenavBar',
-        name: 'SidenavBar (controlled collapse)',
-        code: `
-<div style={{height: 480}}>
-    <SidenavBar
-        aria-label="Main navigation"
-        collapsed={getState('sidenavCollapsed', false)}
-        onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
-        sections={[
-            {
-                items: [
-                    {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
-                    {id: 'search', label: 'Search', asset: IconSearchRegular, href: '#search'},
-                    {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
-                ],
-            },
-        ]}
-    />
-</div>
-        `,
-    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
