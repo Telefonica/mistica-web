@@ -25,10 +25,10 @@ const ITEM_ROW_INSET = 8;
 const ITEM_ROW_GAP = 8;
 // Distance from the edge of the sidenav to the title of a section, which the title of the second column
 // takes as well.
-const SECTION_TITLE_INSET = 16;
+const SECTION_TITLE_INSET = 24;
 // Vertical space between two first-level entries of the body (section to section, section to
 // stand-alone item, or stand-alone item to stand-alone item). Items inside a section stay adjacent.
-const FIRST_LEVEL_GAP = 16;
+const FIRST_LEVEL_GAP = 8;
 
 export const sidenavWidthVar = createVar();
 // The second column always takes the `width` of the expanded sidenav, so it needs its own variable: the
@@ -473,12 +473,14 @@ export const sectionContent = style({
 export const standaloneItem = sectionContent;
 
 // The dividers sit outside `sectionContent`, so they span the whole sidenav width, and the Figma
-// anatomy order is: top divider, 8px, section title, 8px, items, 8px, bottom divider.
+// anatomy order is: top divider, 24px, section title, 8px, items. The margins are asymmetric on
+// purpose: the 8px top margin combines with `FIRST_LEVEL_GAP` into the 16px that the spec measures
+// between the last item of the previous entry and the divider.
 // The 1px right inset keeps the line off the vertical divider on the right edge, for the same reason as
 // `scrollDivider` above.
 export const sectionDivider = style({
     marginTop: 8,
-    marginBottom: 8,
+    marginBottom: 24,
     marginRight: 1,
 });
 
