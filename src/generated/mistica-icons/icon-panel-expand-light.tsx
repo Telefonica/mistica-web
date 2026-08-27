@@ -6,14 +6,13 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 import {useIconGradient} from '../../utils/icon-gradient';
 
 import type {IconProps} from '../../utils/types';
 
-const IconCheckFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
+const IconPanelExpandLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();
     const defaultColor =
         themeVariant === 'brand' || themeVariant === 'media'
@@ -24,28 +23,15 @@ const IconCheckFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
-    const {skinName} = useTheme();
-
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-evolution/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21.717 5.097a1 1 0 0 1-.014 1.414L9.044 18.917a1 1 0 0 1-1.413-.013L2.284 13.47a1 1 0 0 1 1.426-1.403l4.647 4.724L20.303 5.083a1 1 0 0 1 1.414.014"
-                    />
-                </svg>
-            );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="m8.552 19.5-6.284-6.713a.965.965 0 0 1 .048-1.381.937.937 0 0 1 1.364.049l4.92 5.132L20.345 4.795a.937.937 0 0 1 1.364 0 .965.965 0 0 1 0 1.381z"
-                    />
-                </svg>
-            );
-        }
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 4.25A3.75 3.75 0 0 1 20.75 8v8A3.75 3.75 0 0 1 17 19.75H7A3.75 3.75 0 0 1 3.25 16V8A3.75 3.75 0 0 1 7 4.25zm-8.25 14H17A2.25 2.25 0 0 0 19.25 16V8A2.25 2.25 0 0 0 17 5.75H8.75zM7 5.75A2.25 2.25 0 0 0 4.75 8v8A2.25 2.25 0 0 0 7 18.25h.25V5.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();
@@ -60,4 +46,4 @@ const IconCheckFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     return svgContent;
 };
 
-export default IconCheckFilled;
+export default IconPanelExpandLight;

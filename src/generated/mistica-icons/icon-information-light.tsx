@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 import {useIconGradient} from '../../utils/icon-gradient';
@@ -23,19 +24,36 @@ const IconInformationLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 1 1 0 2.25zm.01 8A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
-                />
-                <path
-                    fill={fillColor}
-                    d="M12 22.125a10.125 10.125 0 0 1-.498-20.237L12 1.875A10.126 10.126 0 0 1 22.125 12 10.125 10.125 0 0 1 12 22.125m0-2.25a7.875 7.875 0 0 0 0-15.75l-.388.01A7.875 7.875 0 0 0 12 19.875"
-                />
-            </svg>
-        );
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 9.733a.5.5 0 0 1 .5.5v6.26a.5.5 0 0 1-1 0v-6.26a.5.5 0 0 1 .5-.5m0-1.234a.496.496 0 1 0 0-.992.496.496 0 0 0 0 .992"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M2 10.3A8.3 8.3 0 0 1 10.3 2h3.4a8.3 8.3 0 0 1 8.3 8.3v3.4a8.3 8.3 0 0 1-8.3 8.3h-3.4A8.3 8.3 0 0 1 2 13.7zM10.3 3A7.3 7.3 0 0 0 3 10.3v3.4a7.3 7.3 0 0 0 7.3 7.3h3.4a7.3 7.3 0 0 0 7.3-7.3v-3.4A7.3 7.3 0 0 0 13.7 3z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.99 9.125a1.125 1.125 0 0 1 0-2.25H12a1.125 1.125 0 1 1 0 2.25zm.01 8A1.125 1.125 0 0 1 10.875 16v-4a1.125 1.125 0 0 1 2.25 0v4c0 .621-.504 1.125-1.125 1.125"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 22.125a10.125 10.125 0 0 1-.498-20.237L12 1.875A10.126 10.126 0 0 1 22.125 12 10.125 10.125 0 0 1 12 22.125m0-2.25a7.875 7.875 0 0 0 0-15.75l-.388.01A7.875 7.875 0 0 0 12 19.875"
+                    />
+                </svg>
+            );
+        }
     };
 
     const svgContent = getSvgContent();

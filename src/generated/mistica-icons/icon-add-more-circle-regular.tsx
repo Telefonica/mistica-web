@@ -27,7 +27,20 @@ const IconAddMoreCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M6.75 12a.75.75 0 0 1 .75-.75h3.75V7.5a.75.75 0 0 1 1.5 0v3.75h3.75a.75.75 0 0 1 0 1.5h-3.75v3.75a.75.75 0 0 1-1.5 0v-3.75H7.5a.75.75 0 0 1-.75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M2 10.25A8.25 8.25 0 0 1 10.25 2h3.5A8.25 8.25 0 0 1 22 10.25v3.5A8.25 8.25 0 0 1 13.75 22h-3.5A8.25 8.25 0 0 1 2 13.75zm8.25-6.75a6.75 6.75 0 0 0-6.75 6.75v3.5a6.75 6.75 0 0 0 6.75 6.75h3.5a6.75 6.75 0 0 0 6.75-6.75v-3.5a6.75 6.75 0 0 0-6.75-6.75z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

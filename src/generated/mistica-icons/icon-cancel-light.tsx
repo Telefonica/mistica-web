@@ -27,7 +27,20 @@ const IconCancelLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.465 15.535a.5.5 0 0 1 0-.707L11.293 12 8.464 9.172a.5.5 0 1 1 .707-.707L12 11.293l2.829-2.829a.5.5 0 1 1 .707.707l-2.829 2.83 2.828 2.828a.5.5 0 1 1-.707.707L12 12.708l-2.828 2.827a.5.5 0 0 1-.707 0"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.3 2A8.3 8.3 0 0 0 2 10.3v3.4a8.3 8.3 0 0 0 8.3 8.3h3.4a8.3 8.3 0 0 0 8.3-8.3v-3.4A8.3 8.3 0 0 0 13.7 2zM3 10.3A7.3 7.3 0 0 1 10.3 3h3.4a7.3 7.3 0 0 1 7.3 7.3v3.4a7.3 7.3 0 0 1-7.3 7.3h-3.4A7.3 7.3 0 0 1 3 13.7z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
