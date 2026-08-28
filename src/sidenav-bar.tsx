@@ -236,7 +236,7 @@ const SidenavBar = ({
     // item that opened it is already gone. It therefore keeps the title and the children of that item
     // until a new item replaces them.
     const doublePanelRef = React.useRef<HTMLDivElement>(null);
-    const lastDoublePanelContentRef = React.useRef<{
+    const [doublePanelContent, setDoublePanelContent] = React.useState<{
         label: string;
         children: ReadonlyArray<SidenavItemType>;
     } | null>(null);
@@ -524,10 +524,17 @@ const SidenavBar = ({
     const doublePanelChildren = doublePanelItem?.children;
     const isDoublePanelOpen = Boolean(doublePanelChildren?.length);
 
-    if (isDoublePanelOpen && doublePanelItem && doublePanelChildren) {
-        lastDoublePanelContentRef.current = {label: doublePanelItem.label, children: doublePanelChildren};
+    // The update runs during the render, as the selection adjustment above does, so React re-renders with the
+    // new content before it paints. The comparison keeps that update out of the renders that change nothing.
+    if (
+        isDoublePanelOpen &&
+        doublePanelItem &&
+        doublePanelChildren &&
+        (doublePanelContent?.label !== doublePanelItem.label ||
+            doublePanelContent?.children !== doublePanelChildren)
+    ) {
+        setDoublePanelContent({label: doublePanelItem.label, children: doublePanelChildren});
     }
-    const doublePanelContent = lastDoublePanelContentRef.current;
 
     return (
         <ThemeVariant variant={normalizedVariant}>
