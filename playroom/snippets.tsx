@@ -4328,8 +4328,9 @@ const sidenavBarSnippets: Array<Snippet> = [
         group: 'SidenavBar',
         name: 'SidenavBar (full page)',
         code: `
-<SidenavLayout mode="whole-viewport">
-    <SidenavLayout.Sidenav>
+<SidenavLayout
+    mode="whole-viewport"
+    sidenav={
         <SidenavBar
             aria-label="Main navigation"
             logo={({collapsed}) => <Logo size={32} type={collapsed ? 'isotype' : 'imagotype'} />}
@@ -4407,19 +4408,18 @@ const sidenavBarSnippets: Array<Snippet> = [
                 </Box>
             }
         />
-    </SidenavLayout.Sidenav>
-    <SidenavLayout.Content>
-        <Box padding={24}>
-            <Stack space={16}>
-                <Text5 as="h1">Page title</Text5>
-                <Text2 regular as="p">
-                    The sidenav stays sticky while the content scrolls with the document. Collapse the
-                    sidenav to see the rail, and resize to a tablet width to see the mobile top bar.
-                </Text2>
-                <Placeholder height={900} />
-            </Stack>
-        </Box>
-    </SidenavLayout.Content>
+    }
+>
+    <Box padding={24}>
+        <Stack space={16}>
+            <Text5 as="h1">Page title</Text5>
+            <Text2 regular as="p">
+                The sidenav stays sticky while the content scrolls with the document. Collapse the
+                sidenav to see the rail, and resize to a tablet width to see the mobile top bar.
+            </Text2>
+            <Placeholder height={900} />
+        </Stack>
+    </Box>
 </SidenavLayout>
         `,
     },

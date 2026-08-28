@@ -83,8 +83,9 @@ export const DoublePanel = ({collapsed, boxed, divider, width}: Args): React.JSX
 
     return (
         <div style={{width: '100%', minHeight: '100vh'}}>
-            <SidenavLayout mode="whole-viewport">
-                <SidenavLayout.Sidenav>
+            <SidenavLayout
+                mode="whole-viewport"
+                sidenav={
                     <SidenavBar
                         {...({
                             'aria-label': 'Main navigation',
@@ -100,50 +101,47 @@ export const DoublePanel = ({collapsed, boxed, divider, width}: Args): React.JSX
                             onSelectedItemIdChange: setSelectedItemId,
                         } as any)}
                     />
-                </SidenavLayout.Sidenav>
-                <SidenavLayout.Content>
-                    <Box padding={32}>
-                        <Stack space={24}>
-                            <Stack space={8}>
-                                <Text6 as="h1">Double panel</Text6>
-                                <Text3 regular>
-                                    Press a parent item to open its children in a second column. The column
-                                    pushes this content, it does not overlay it.
-                                </Text3>
-                            </Stack>
-
-                            <Text2 as="div" regular color={skinVars.colors.textSecondary}>
-                                <UnorderedList>
-                                    <ListItem>
-                                        The panel closes when you press one of its children, an item without
-                                        children, the same parent again, or outside of the bar.
-                                    </ListItem>
-                                    <ListItem>
-                                        A press inside the bar that lands on no item, on the background of a
-                                        column, or on a section title, keeps the panel open.
-                                    </ListItem>
-                                    <ListItem>
-                                        The panel refreshes when you press another parent item.
-                                    </ListItem>
-                                    <ListItem>
-                                        A selection that comes from outside of the bar opens the panel on the
-                                        parent of the selected child, and it keeps the panel open. It moves
-                                        the panel to that parent when the panel shows another one.
-                                    </ListItem>
-                                    <ListItem>
-                                        The panel shows the label of the parent item as its title.
-                                    </ListItem>
-                                    <ListItem>
-                                        Turn on the collapsed control. The rail keeps the tooltip of every
-                                        item while the column is open, except the item that owns the column.
-                                    </ListItem>
-                                </UnorderedList>
-                            </Text2>
-
-                            <Text3 medium>Selected item: {selectedItemId ?? 'none'}</Text3>
+                }
+            >
+                <Box padding={32}>
+                    <Stack space={24}>
+                        <Stack space={8}>
+                            <Text6 as="h1">Double panel</Text6>
+                            <Text3 regular>
+                                Press a parent item to open its children in a second column. The column pushes
+                                this content, it does not overlay it.
+                            </Text3>
                         </Stack>
-                    </Box>
-                </SidenavLayout.Content>
+
+                        <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                            <UnorderedList>
+                                <ListItem>
+                                    The panel closes when you press one of its children, an item without
+                                    children, the same parent again, or outside of the bar.
+                                </ListItem>
+                                <ListItem>
+                                    A press inside the bar that lands on no item, on the background of a
+                                    column, or on a section title, keeps the panel open.
+                                </ListItem>
+                                <ListItem>The panel refreshes when you press another parent item.</ListItem>
+                                <ListItem>
+                                    A selection that comes from outside of the bar opens the panel on the
+                                    parent of the selected child, and it keeps the panel open. It moves the
+                                    panel to that parent when the panel shows another one.
+                                </ListItem>
+                                <ListItem>
+                                    The panel shows the label of the parent item as its title.
+                                </ListItem>
+                                <ListItem>
+                                    Turn on the collapsed control. The rail keeps the tooltip of every item
+                                    while the column is open, except the item that owns the column.
+                                </ListItem>
+                            </UnorderedList>
+                        </Text2>
+
+                        <Text3 medium>Selected item: {selectedItemId ?? 'none'}</Text3>
+                    </Stack>
+                </Box>
             </SidenavLayout>
         </div>
     );

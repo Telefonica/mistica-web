@@ -6,36 +6,21 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
-type SidenavLayoutSidenavProps = {
-    /** Content to render in the sidenav column (typically SidenavBar). */
-    children: React.ReactNode;
-};
-
-type SidenavLayoutContentProps = {
-    /** Content to render in the main content area. */
-    children: React.ReactNode;
-};
-
 type SidenavLayoutProps = {
+    /** Content of the sidenav column (typically SidenavBar). */
+    sidenav: React.ReactNode;
+    /** Content of the main area, which sits beside the sidenav. */
+    children: React.ReactNode;
     /** Layout mode: 'whole-viewport' spans full width, 'centered' wraps in responsive container. @default 'whole-viewport' */
     mode?: 'whole-viewport' | 'centered';
-    /** Layout sections: should contain `SidenavLayout.Sidenav` and `SidenavLayout.Content` children. */
-    children: React.ReactNode;
     /** Custom data attributes for testing and tracking. */
     dataAttributes?: DataAttributes;
 };
 
-const SidenavLayoutSidenav = ({children}: SidenavLayoutSidenavProps): JSX.Element => (
-    <div className={styles.sidenav}>{children}</div>
-);
-
-const SidenavLayoutContent = ({children}: SidenavLayoutContentProps): JSX.Element => (
-    <div className={styles.content}>{children}</div>
-);
-
 const SidenavLayout = ({
-    mode = 'whole-viewport',
+    sidenav,
     children,
+    mode = 'whole-viewport',
     dataAttributes,
 }: SidenavLayoutProps): JSX.Element => {
     const layout = (
@@ -43,7 +28,8 @@ const SidenavLayout = ({
             className={styles.container}
             {...getPrefixedDataAttributes({testid: 'SidenavLayout', ...dataAttributes})}
         >
-            {children}
+            <div className={styles.sidenav}>{sidenav}</div>
+            <div className={styles.content}>{children}</div>
         </div>
     );
 
@@ -61,9 +47,6 @@ const SidenavLayout = ({
     return layout;
 };
 
-SidenavLayout.Sidenav = SidenavLayoutSidenav;
-SidenavLayout.Content = SidenavLayoutContent;
-
 export default SidenavLayout;
-export {SidenavLayout, SidenavLayoutSidenav, SidenavLayoutContent};
-export type {SidenavLayoutProps, SidenavLayoutSidenavProps, SidenavLayoutContentProps};
+export {SidenavLayout};
+export type {SidenavLayoutProps};

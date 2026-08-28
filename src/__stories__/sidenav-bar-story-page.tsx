@@ -18,9 +18,8 @@ type SidenavStoryPageProps = {
  */
 const SidenavStoryPage = ({sidenav, children, backgroundColor}: SidenavStoryPageProps): React.JSX.Element => (
     <div style={{minHeight: '100vh', backgroundColor}}>
-        <SidenavLayout mode="whole-viewport">
-            <SidenavLayout.Sidenav>{sidenav}</SidenavLayout.Sidenav>
-            <SidenavLayout.Content>{children}</SidenavLayout.Content>
+        <SidenavLayout mode="whole-viewport" sidenav={sidenav}>
+            {children}
         </SidenavLayout>
     </div>
 );
