@@ -245,16 +245,13 @@ const SidenavBar = ({
     // twice. A user who turned motion down sees no movement, so the settled state follows at once there.
     const [collapsedSettled, setCollapsedSettled] = React.useState(collapsed);
     React.useEffect(() => {
-        if (collapsedSettled === collapsed) {
-            return;
-        }
         if (isMotionOff) {
             setCollapsedSettled(collapsed);
             return;
         }
         const timeoutId = setTimeout(() => setCollapsedSettled(collapsed), COLLAPSE_DURATION_MS);
         return () => clearTimeout(timeoutId);
-    }, [collapsed, collapsedSettled, isMotionOff]);
+    }, [collapsed, isMotionOff]);
 
     // A press on an item of the sidenav closes the second column and moves the selection at the same
     // time. The press records its selection here, so the adjustment below knows the user already
