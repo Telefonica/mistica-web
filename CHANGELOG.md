@@ -1,3 +1,23 @@
+# [17.2.0](https://github.com/Telefonica/mistica-web/compare/v17.1.0...v17.2.0) (2026-08-28)
+
+
+### Bug Fixes
+
+* **mistica-figma skill:** add overlay component placement rules ([#1702](https://github.com/Telefonica/mistica-web/issues/1702)) ([7f6a81c](https://github.com/Telefonica/mistica-web/commit/7f6a81c492c6505b50a27a8eecfb94dcdb16b056)), closes [#1700](https://github.com/Telefonica/mistica-web/issues/1700) [#1700](https://github.com/Telefonica/mistica-web/issues/1700)
+* **Mosaic:** fix carousel page height consistency on mobile ([#1696](https://github.com/Telefonica/mistica-web/issues/1696)) ([d0024f6](https://github.com/Telefonica/mistica-web/commit/d0024f62b807f94257aa05cd4dd9d64f9b7633ab))
+* **Stepper:** Completed step token color ([#1699](https://github.com/Telefonica/mistica-web/issues/1699)) ([8b33153](https://github.com/Telefonica/mistica-web/commit/8b33153211eb9c5a668a6e085e8f20d0f49d8692))
+
+
+### Features
+
+* **Accordion:** add small prop and boxedDefaultPadding token ([#1697](https://github.com/Telefonica/mistica-web/issues/1697)) ([3152b73](https://github.com/Telefonica/mistica-web/commit/3152b73403693df666defab9eebfd093439c8b6b))
+* **Menu, IconButton:** Use danger backgrounds with danger types ([#1505](https://github.com/Telefonica/mistica-web/issues/1505)) ([ae29142](https://github.com/Telefonica/mistica-web/commit/ae291429eabbf654f4f36e25210f4cd744219237))
+* **Menu:** Add asset property ([#1698](https://github.com/Telefonica/mistica-web/issues/1698)) ([1113c69](https://github.com/Telefonica/mistica-web/commit/1113c69c29a8326cc80f55c8534f258eeacdb293))
+* **skins and icons:** import latest mistica icons and skins changes ([#1708](https://github.com/Telefonica/mistica-web/issues/1708)) ([1131dd9](https://github.com/Telefonica/mistica-web/commit/1131dd9baa97fbe8c4c62f79422082d13b960696))
+* **Snackbar:** update border radius token and adapt component ([#1693](https://github.com/Telefonica/mistica-web/issues/1693)) ([51d2c4d](https://github.com/Telefonica/mistica-web/commit/51d2c4dc144f3230a4f3e3d4d283af3ed315f518))
+* **TextField:** adds new input padding values and prop small to input field variants  ([#1695](https://github.com/Telefonica/mistica-web/issues/1695)) ([c068c16](https://github.com/Telefonica/mistica-web/commit/c068c16d95fb4d5095f12872664956c53266da28))
+* **Title:** update title size and lineHeight tokens for vivo evolution skin ([#1706](https://github.com/Telefonica/mistica-web/issues/1706)) ([3461916](https://github.com/Telefonica/mistica-web/commit/3461916e9c3b00a5eb61f94c1e56f31de70f5a9d))
+
 # [17.1.0](https://github.com/Telefonica/mistica-web/compare/v17.0.0...v17.1.0) (2026-08-14)
 
 
