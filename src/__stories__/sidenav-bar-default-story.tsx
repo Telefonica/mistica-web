@@ -35,7 +35,11 @@ import type {
     SidenavLogoRenderProps,
 } from '../sidenav-bar';
 
-const getDefaultSections = (onAction: (action: string) => void): Array<SidenavEntry> => [
+const getDefaultSections = (
+    onAction: (action: string) => void,
+    sectionDividerTop: boolean,
+    sectionDividerBottom: boolean
+): Array<SidenavEntry> => [
     {
         items: [
             {
@@ -55,7 +59,8 @@ const getDefaultSections = (onAction: (action: string) => void): Array<SidenavEn
     },
     {
         title: 'Workspace',
-        dividerTop: true,
+        dividerTop: sectionDividerTop,
+        dividerBottom: sectionDividerBottom,
         items: [
             {
                 id: 'projects',
@@ -116,7 +121,8 @@ const getDefaultSections = (onAction: (action: string) => void): Array<SidenavEn
     },
     {
         title: 'Account',
-        dividerTop: true,
+        dividerTop: sectionDividerTop,
+        dividerBottom: sectionDividerBottom,
         items: [
             {
                 id: 'settings',
@@ -178,6 +184,8 @@ type Args = {
     fixedFooter: boolean;
     boxed: boolean;
     divider: boolean;
+    sectionDividerTop: boolean;
+    sectionDividerBottom: boolean;
     collapsible: boolean;
     customCollapseAction: boolean;
     defaultCollapsed: boolean;
@@ -201,6 +209,8 @@ export const Default = ({
     fixedFooter,
     boxed,
     divider,
+    sectionDividerTop,
+    sectionDividerBottom,
     collapsible,
     customCollapseAction,
     defaultCollapsed,
@@ -230,7 +240,11 @@ export const Default = ({
           }
         : {};
 
-    const sections: Array<SidenavEntry> = getDefaultSections(setLastAction);
+    const sections: Array<SidenavEntry> = getDefaultSections(
+        setLastAction,
+        sectionDividerTop,
+        sectionDividerBottom
+    );
 
     const headerSlotContent = isTabletOrSmaller ? (
         <Placeholder height={32} width={72} />
@@ -406,6 +420,8 @@ export default {
         fixedFooter: false,
         boxed: false,
         divider: true,
+        sectionDividerTop: true,
+        sectionDividerBottom: false,
         collapsible: true,
         customCollapseAction: false,
         defaultCollapsed: false,
@@ -418,10 +434,9 @@ export default {
         'Colors/Footer': '#ffffff',
     },
     argTypes: {
-        // The items stay out of the controls: an object of that shape does not edit well in the panel. The
-        // docs table keeps the prop with the description of its JSDoc.
+        // The items stay out of the panel: an object of that shape does not edit well in a control.
         sections: {
-            control: false,
+            table: {disable: true},
         },
         'aria-label': {
             control: {type: 'text'},
@@ -484,6 +499,18 @@ export default {
         divider: {
             if: {arg: 'boxed', truthy: false},
             description: 'Shows the vertical right divider (only when boxed is false).',
+        },
+        sectionDividerTop: {
+            control: {type: 'boolean'},
+            description:
+                'Sets the dividerTop flag of the "Workspace" and the "Account" sections, which paints a divider over each of them.',
+            table: {category: 'Section dividers'},
+        },
+        sectionDividerBottom: {
+            control: {type: 'boolean'},
+            description:
+                'Sets the dividerBottom flag of the "Workspace" and the "Account" sections, which paints a divider under each of them.',
+            table: {category: 'Section dividers'},
         },
         collapsible: {
             control: {type: 'boolean'},
