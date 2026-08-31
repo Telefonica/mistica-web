@@ -118,7 +118,8 @@ export const container = style([
     containerBase,
     {
         cursor: 'pointer',
-        display: 'flex',
+        display: 'inline-flex',
+        verticalAlign: 'bottom',
         flexDirection: 'column',
     },
 ]);
