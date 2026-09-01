@@ -120,6 +120,11 @@
     line-height: var(--mistica-line-height-chipLabel);
     font-weight: var(--mistica-font-weight-chipLabel);
 }
+.mistica-text-headerPretitle {
+    font-size: var(--mistica-font-size-headerPretitle);
+    line-height: var(--mistica-line-height-headerPretitle);
+    font-weight: var(--mistica-font-weight-headerPretitle);
+}
 .mistica-text-cardPretitleSnap {
     font-size: var(--mistica-font-size-cardPretitleSnap);
     line-height: var(--mistica-line-height-cardPretitleSnap);
