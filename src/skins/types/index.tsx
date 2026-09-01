@@ -60,7 +60,7 @@ export type TextPresetsConfig = {
     cardDescriptionSnap: TextSizeTokenConfig;
     cardPretitleDefault: TextSizeTokenConfig;
     cardPretitleSnap: TextSizeTokenConfig;
-    headerPretitle: TextSizeTokenConfig;
+    headerPretitle: TextTokenConfig;
     cardSubtitleDefault: TextSizeTokenConfig;
     cardSubtitleSnap: TextSizeTokenConfig;
     cardTitleDefault: TextSizeTokenConfig;
