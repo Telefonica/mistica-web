@@ -26,6 +26,10 @@ const ITEM_ROW_GAP = 8;
 // Distance from the edge of the sidenav to the title of a section, which the title of the second column
 // takes as well.
 const SECTION_TITLE_INSET = 24;
+// Horizontal inset of the floating dialog panel. The row of each item adds `ITEM_ROW_INSET` on top of it,
+// so the content of a child item lands at `SECTION_TITLE_INSET` from the edge of the panel.
+const DIALOG_PANEL_INSET = 8;
+const DIALOG_PANEL_PADDING_Y = 16;
 // Vertical space between two first-level entries of the body (section to section, section to
 // stand-alone item, or stand-alone item to stand-alone item). Items inside a section stay adjacent.
 const FIRST_LEVEL_GAP = 8;
@@ -718,19 +722,21 @@ export const dialogPanel = style({
     minWidth: DEFAULT_WIDTH,
     maxHeight: '70vh',
     overflowY: 'auto',
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
+    paddingTop: DIALOG_PANEL_PADDING_Y,
+    paddingBottom: DIALOG_PANEL_PADDING_Y,
+    paddingLeft: DIALOG_PANEL_INSET,
+    paddingRight: DIALOG_PANEL_INSET,
     boxShadow: '0px 4px 12px rgba(0,0,0,0.15)',
     position: 'relative',
     zIndex: 1001,
 });
 
+// The inset of the panel plus this padding place the title where a section title stands, at
+// `SECTION_TITLE_INSET` from the edge of the panel, on the rail of the content of the items below it.
 export const dialogPanelTitle = style({
     paddingBottom: 8,
-    paddingLeft: 8,
-    paddingRight: 8,
+    paddingLeft: SECTION_TITLE_INSET - DIALOG_PANEL_INSET,
+    paddingRight: SECTION_TITLE_INSET - DIALOG_PANEL_INSET,
 });
 
 // The second column of the sidenav. It holds the children of the open parent item, spans the whole
