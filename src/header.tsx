@@ -9,7 +9,7 @@ import {Text7, Text6, Text, Text2, Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {Title3, Title4} from './title';
+import {Title1, Title2, Title3, Title4} from './title';
 import {
     type DataAttributes,
     type HeadingType,
@@ -31,12 +31,15 @@ type OverridableTextProps = {
 
 type RichText = string | ({text: string} & OverridableTextProps);
 
+type TitlePresetsType = 'title1' | 'title2' | 'title3' | 'title4';
+
 type HeaderProps = {
     headline?: React.ReactNode;
     pretitle?: RichText;
     pretitleAs?: HeadingType;
     title?: string;
     titleAs?: HeadingType;
+    titleTextPreset?: TitlePresetsType;
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
@@ -48,6 +51,7 @@ export const Header = ({
     pretitleAs,
     title,
     titleAs = 'h2',
+    titleTextPreset,
     description,
     dataAttributes,
     small = false,
@@ -95,19 +99,30 @@ export const Header = ({
         );
     };
 
+    const renderTitle = () => {
+        if (!title) return undefined;
+
+        const baseTitleProps = {
+            children: title,
+            as: titleAs,
+            dataAttributes: {testid: 'title'},
+        } as const;
+
+        const titleComponents = {
+            title1: Title1,
+            title2: Title2,
+            title3: Title3,
+            title4: Title4,
+        } as const;
+
+        const TitleComponent = titleTextPreset ? titleComponents[titleTextPreset] : small ? Title3 : Title4;
+
+        return <TitleComponent {...baseTitleProps} />;
+    };
+
     const pretitleContent = renderPretitle();
 
-    const titleContent = title ? (
-        small ? (
-            <Title3 as={titleAs} dataAttributes={{testid: 'title'}}>
-                {title}
-            </Title3>
-        ) : (
-            <Title4 as={titleAs} dataAttributes={{testid: 'title'}}>
-                {title}
-            </Title4>
-        )
-    ) : undefined;
+    const titleContent = renderTitle();
 
     const headlineContent = headline ? (
         <div
