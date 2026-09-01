@@ -25,7 +25,7 @@ export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => 
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
-                <div data-testid="switch-wrapper">
+                <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Switch name="switch" checked={checked} onChange={onChange} disabled={disabled}>
                         switch content
                     </Switch>
@@ -45,7 +45,7 @@ export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) =
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
-                <div data-testid="switch-wrapper">
+                <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Switch name="switch" defaultChecked={false} disabled={disabled}>
                         switch content
                     </Switch>
@@ -65,7 +65,7 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
-                <div data-testid="switch-wrapper">
+                <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Switch
                         name="switch"
                         disabled={disabled}
