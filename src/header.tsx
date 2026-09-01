@@ -17,11 +17,11 @@ import {
     type RendersNullableElement,
 } from './utils/types';
 import {isBiggerHeading} from './utils/headings';
+import {useTheme} from './hooks';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
 import type {TextPresetProps} from './text';
-import {useTheme} from './hooks';
 
 type OverridableTextProps = {
     color?: TextPresetProps['color'];
