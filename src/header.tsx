@@ -5,7 +5,7 @@ import Stack from './stack';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useSetOverscrollColor} from './overscroll-color-context';
-import {Text7, Text6, Text3, Text2} from './text';
+import {Text7, Text6, Text, Text2, Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -21,6 +21,7 @@ import {isBiggerHeading} from './utils/headings';
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
 import type {TextPresetProps} from './text';
+import {useTheme} from './hooks';
 
 type OverridableTextProps = {
     color?: TextPresetProps['color'];
@@ -51,6 +52,8 @@ export const Header = ({
     dataAttributes,
     small = false,
 }: HeaderProps): JSX.Element => {
+    const {textPresets} = useTheme();
+
     const renderPretitle = () => {
         if (!pretitle) {
             return null;
@@ -63,13 +66,32 @@ export const Header = ({
         } as const;
 
         if (typeof pretitle === 'string') {
-            return <Text3 {...baseTextProps}>{pretitle}</Text3>;
+            return (
+                <Text
+                    {...baseTextProps}
+                    desktopSize={textPresets.headerPretitle.size.desktop}
+                    mobileSize={textPresets.headerPretitle.size.mobile}
+                    desktopLineHeight={textPresets.headerPretitle.lineHeight.desktop}
+                    mobileLineHeight={textPresets.headerPretitle.lineHeight.mobile}
+                    weight={textPresets.headerPretitle.weight}
+                >
+                    {pretitle}
+                </Text>
+            );
         }
         const {text, ...textProps} = pretitle;
         return (
-            <Text3 {...baseTextProps} {...textProps}>
+            <Text
+                {...baseTextProps}
+                desktopSize={textPresets.headerPretitle.size.desktop}
+                mobileSize={textPresets.headerPretitle.size.mobile}
+                desktopLineHeight={textPresets.headerPretitle.lineHeight.desktop}
+                mobileLineHeight={textPresets.headerPretitle.lineHeight.mobile}
+                weight={textPresets.headerPretitle.weight}
+                {...textProps}
+            >
                 {text}
-            </Text3>
+            </Text>
         );
     };
 
