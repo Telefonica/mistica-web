@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, screen, fireEvent, waitFor} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import {SidenavBar} from '..';
@@ -466,6 +466,69 @@ test('SidenavBar renders stand-alone items at the first level, outside any secti
     expect(workspace).not.toContainElement(screen.getByRole('link', {name: 'Standalone bottom'}));
 });
 
+// The body of the sidenav is a tree of lists: one list per level, and one list item per entry. A screen
+// reader then gives the position of an item among its siblings, at every level.
+
+/**
+ * The list items that a list owns. A query by role would also return the ones of the lists below it, and
+ * these tests read one level at a time.
+ */
+const getListItems = (list: HTMLElement): Array<HTMLElement> =>
+    // eslint-disable-next-line testing-library/no-node-access
+    (Array.from(list.children) as Array<HTMLElement>).filter(
+        (child) => child.getAttribute('role') === 'listitem'
+    );
+
+/** The list item that holds an element, which is the entry that the element belongs to. */
+const getOwnListItem = (element: HTMLElement): HTMLElement =>
+    // eslint-disable-next-line testing-library/no-node-access
+    element.closest('[role="listitem"]') as HTMLElement;
+
+test('SidenavBar builds one list for the first level, with one item per entry', async () => {
+    await renderSidenav({sections: mixedFirstLevel});
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
+    const entries = getListItems(bodyList);
+
+    expect(entries).toHaveLength(3);
+    expect(entries[0]).toContainElement(screen.getByRole('link', {name: 'Standalone top'}));
+    expect(entries[1]).toContainElement(screen.getByRole('group', {name: 'Workspace'}));
+    expect(entries[2]).toContainElement(screen.getByRole('link', {name: 'Standalone bottom'}));
+});
+
+test('SidenavBar gives each section a list of its own inside its group', async () => {
+    await renderSidenav({sections: mixedFirstLevel});
+
+    const workspace = screen.getByRole('group', {name: 'Workspace'});
+    const sectionList = within(workspace).getByRole('list');
+
+    expect(getListItems(sectionList)).toHaveLength(1);
+    expect(sectionList).toContainElement(screen.getByRole('link', {name: 'Home'}));
+});
+
+// A stand-alone entry carries the rail of the items on a wrapper of its own, and that wrapper is its list
+// item. The item inside renders none: two nested list items would report one entry instead of two.
+test('SidenavBar gives a stand-alone entry a single list item', async () => {
+    await renderSidenav({sections: mixedFirstLevel});
+
+    const entry = getOwnListItem(screen.getByRole('link', {name: 'Standalone top'}));
+
+    expect(within(entry).queryAllByRole('listitem')).toHaveLength(0);
+});
+
+// The trigger of a group and the children that it opens share one list item, so a screen reader ties them
+// together. It matters on desktop VoiceOver, which does not announce the expanded state of the trigger.
+test('SidenavBar keeps a parent item and its children in the same list item', async () => {
+    await renderSidenav();
+
+    const entry = getOwnListItem(screen.getByRole('button', {name: 'Projects'}));
+    const children = screen.getByRole('group', {name: 'Projects'});
+
+    expect(entry).toContainElement(children);
+    expect(within(children).getByRole('list')).toContainElement(screen.getByRole('link', {name: 'Active'}));
+});
+
 test('SidenavBar keeps the declared order of sections and stand-alone items', async () => {
     await renderSidenav({sections: mixedFirstLevel});
 
@@ -542,6 +605,92 @@ test('SidenavBar double panel opens with the label of the parent item and its ch
     expect(panel).toContainElement(screen.getByRole('button', {name: 'Active'}));
     expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
     expect(screen.getByRole('button', {name: 'Projects'})).toHaveAttribute('aria-expanded', 'true');
+});
+
+// The second column takes the focus when it opens, as the dialog panel does, so a screen reader announces
+// the group that the user opened. VoiceOver on desktop does not announce the expanded state of a trigger,
+// so the arrival on the group is what tells the user where they stand.
+test('SidenavBar double panel moves the focus to the column when it opens', async () => {
+    await renderDoublePanelSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    await waitFor(() => {
+        expect(getPanel('Projects')).toHaveFocus();
+    });
+});
+
+// The column belongs to no item of the rail, so it answers these keys itself. It stays open either way:
+// it is a column of the bar, and not a floating panel.
+test('SidenavBar double panel steps into the column and back to its parent with the arrow keys', async () => {
+    await renderDoublePanelSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    const column = getPanel('Projects') as HTMLElement;
+    await waitFor(() => {
+        expect(column).toHaveFocus();
+    });
+
+    fireEvent.keyDown(column, {key: 'ArrowDown'});
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+
+    // The keys above answer the column while the column itself holds the focus. Inside it, the items of the
+    // column follow the rail.
+    column.focus();
+    fireEvent.keyDown(column, {key: 'ArrowUp'});
+    expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
+    expect(getPanel('Projects')).toBeInTheDocument();
+});
+
+// One press of ArrowRight opens the column and steps into it, so the user reaches the first item without
+// a second press. The column exists only after that press, so the item that opens it carries the request.
+test('SidenavBar double panel opens the column and lands on its first item with one ArrowRight', async () => {
+    await renderDoublePanelSidenav();
+
+    const trigger = screen.getByRole('button', {name: 'Projects', expanded: false});
+    trigger.focus();
+    fireEvent.keyDown(trigger, {key: 'ArrowRight'});
+
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    });
+});
+
+// A parent whose column already stands open answers ArrowRight with the first item of that column. The
+// column announced itself when it opened, and it stands beside the rail, so the user needs no second stop.
+test('SidenavBar double panel steps back into the open column with ArrowRight', async () => {
+    await renderDoublePanelSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    const column = getPanel('Projects') as HTMLElement;
+    await waitFor(() => {
+        expect(column).toHaveFocus();
+    });
+
+    const trigger = screen.getByRole('button', {name: 'Projects'});
+    trigger.focus();
+    fireEvent.keyDown(trigger, {key: 'ArrowRight'});
+
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    expect(column).toBeInTheDocument();
+});
+
+// The second column and the dialog panel of the collapsed rail hold the children of one parent item, so
+// each of them carries a list of its own inside the group that names it.
+test.each`
+    collapsed | representation
+    ${false}  | ${'second column'}
+    ${true}   | ${'dialog panel'}
+`('SidenavBar gives a list to the $representation', async ({collapsed}) => {
+    await renderDoublePanelSidenav({defaultCollapsed: collapsed});
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    const panel = getPanel('Projects') as HTMLElement;
+    const panelList = within(panel).getByRole('list');
+
+    expect(getListItems(panelList)).toHaveLength(2);
+    expect(panelList).toContainElement(screen.getByRole('button', {name: 'Active'}));
 });
 
 test('SidenavBar double panel closes when the user presses one of its children', async () => {
@@ -765,6 +914,134 @@ test('SidenavBar collapsed drops the tooltips of the rail while the dialog panel
     expect(hasTooltip('projects')).toBe(false);
 });
 
+// The dialog panel opens in a portal, at the end of the document, so a screen reader that reads the page
+// in order never reaches it from its trigger. The panel itself takes the focus, and not its first item, so
+// the user hears the name of the group that they entered.
+test('SidenavBar collapsed moves the focus to the dialog panel and names it to the trigger', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    const panelId = screen.getByRole('button', {name: 'Projects'}).getAttribute('aria-controls');
+    // eslint-disable-next-line testing-library/no-node-access
+    const panel = panelId ? document.getElementById(panelId) : null;
+
+    await waitFor(() => {
+        expect(panel).toHaveFocus();
+    });
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Active'}));
+});
+
+/** Opens the dialog panel of a parent of the collapsed rail, and waits for the focus to land on it. */
+const openDialogPanel = async (parentLabel: string): Promise<HTMLElement> => {
+    fireEvent.click(screen.getByRole('button', {name: parentLabel}));
+
+    const panelId = screen.getByRole('button', {name: parentLabel}).getAttribute('aria-controls');
+    // eslint-disable-next-line testing-library/no-node-access
+    const panel = panelId ? document.getElementById(panelId) : null;
+    await waitFor(() => {
+        expect(panel).toHaveFocus();
+    });
+    return panel as HTMLElement;
+};
+
+// The panel belongs to no item of its own list, so the first ArrowDown steps into it.
+test('SidenavBar collapsed steps from the dialog panel into its first item', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    const panel = await openDialogPanel('Projects');
+
+    fireEvent.keyDown(panel, {key: 'ArrowDown'});
+
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+});
+
+// Tab reads the sequence of the spec: the trigger, the children of its panel, then the item that follows
+// the trigger on the rail. The panel lives in a portal, at the end of the document, so nothing of that
+// sequence comes from the document itself.
+test('SidenavBar collapsed reads the dialog panel between its trigger and the next item with Tab', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    const panel = await openDialogPanel('Projects');
+
+    fireEvent.keyDown(panel, {key: 'Tab'});
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'Tab'});
+    expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
+
+    // The last child of the panel steps to the item that follows its trigger on the rail.
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Archived'}), {key: 'Tab'});
+    expect(screen.getByRole('button', {name: 'Documents'})).toHaveFocus();
+
+    // And backwards, that item steps to the last child of the panel.
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Documents'}), {key: 'Tab', shiftKey: true});
+    expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
+});
+
+// ArrowLeft leaves the group, the same way it collapses a group that opens in place.
+test('SidenavBar collapsed closes the dialog panel with ArrowLeft and returns to its parent', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    const panel = await openDialogPanel('Projects');
+    fireEvent.keyDown(panel, {key: 'ArrowDown'});
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowLeft'});
+
+    await waitForRemoval(() => screen.queryByRole('button', {name: 'Active'}));
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
+    });
+});
+
+// ArrowUp on the first item of the panel leads out of the group as well: above it stands its parent.
+test('SidenavBar collapsed closes the dialog panel with ArrowUp on its first item', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    const panel = await openDialogPanel('Projects');
+    fireEvent.keyDown(panel, {key: 'ArrowDown'});
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowUp'});
+
+    await waitForRemoval(() => screen.queryByRole('button', {name: 'Active'}));
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
+    });
+});
+
+// A parent that already stands open answers ArrowRight with its group: the user steps back into the panel
+// that they left, without closing and opening it again.
+test('SidenavBar collapsed steps back into the open dialog panel with ArrowRight', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    const panel = await openDialogPanel('Projects');
+
+    const trigger = screen.getByRole('button', {name: 'Projects'});
+    trigger.focus();
+
+    fireEvent.keyDown(trigger, {key: 'ArrowRight'});
+
+    expect(panel).toHaveFocus();
+});
+
+// The rail travels on its own: an open panel keeps its place while the focus passes its trigger, so the
+// user reads the whole rail without losing the panel.
+test('SidenavBar collapsed keeps the dialog panel open while the arrow keys travel the rail', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    await openDialogPanel('Projects');
+
+    // The user steps back onto the rail. Tab and Shift+Tab do it without closing the panel, and this test
+    // reaches the same state directly, so it asserts the travel of the rail alone.
+    const trigger = screen.getByRole('button', {name: 'Projects'});
+    trigger.focus();
+
+    fireEvent.keyDown(trigger, {key: 'ArrowDown'});
+
+    expect(screen.getByRole('button', {name: 'Documents'})).toHaveFocus();
+    expect(screen.getByRole('button', {name: 'Active'})).toBeInTheDocument();
+});
+
 // The accent bar and the selected background are style-only marks, without any semantic query, so the
 // test reads the DOM directly.
 test('SidenavBar double panel gives the accent to the selected child, and the background to the parent', async () => {
@@ -967,6 +1244,19 @@ test('SidenavBar expands a closed parent with ArrowRight and collapses it with A
     fireEvent.keyDown(screen.getByRole('button', {name: 'Teams'}), {key: 'ArrowLeft'});
 
     await waitForRemoval(() => screen.queryByRole('link', {name: 'Engineering'}));
+});
+
+// The second ArrowRight steps into the group that the first one opened, which is what a tree does.
+test('SidenavBar steps into the group of an open parent with ArrowRight', async () => {
+    await renderKeyboardSidenav();
+
+    const teams = screen.getByRole('button', {name: 'Teams', expanded: false});
+
+    teams.focus();
+    fireEvent.keyDown(teams, {key: 'ArrowRight'});
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Teams'}), {key: 'ArrowRight'});
+
+    expect(screen.getByRole('link', {name: 'Engineering'})).toHaveFocus();
 });
 
 test('SidenavBar moves the focus to the parent with ArrowLeft from a child', async () => {

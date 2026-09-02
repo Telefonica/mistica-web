@@ -60,7 +60,10 @@ const SidenavSection = ({
                     </Text2>
                 </div>
             )}
-            <div className={styles.sectionContent}>{children}</div>
+            {/* The group names the section, and the list gives the count of its items. */}
+            <div className={styles.sectionContent} role="list">
+                {children}
+            </div>
             {dividerBottom && (
                 <div className={styles.sectionDivider}>
                     <Divider />

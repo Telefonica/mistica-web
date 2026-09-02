@@ -4,7 +4,7 @@ import * as styles from './sidenav-bar.css';
 import {SidenavItem} from './sidenav-bar-item';
 import {SidenavSection} from './sidenav-bar-section';
 import {isSidenavSection} from './sidenav-bar-types';
-import {SidenavItemIndexContext} from './sidenav-bar-context';
+import {SidenavItemIndexContext, SidenavHasOuterListItemContext} from './sidenav-bar-context';
 
 import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-bar-types';
 
@@ -105,23 +105,29 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
     // The position runs over the whole body, not over one section, so the fade travels down the sidenav.
     let itemIndex = 0;
 
+    // Every entry of the first level is one item of the body list, a section as much as a stand-alone
+    // item. A section holds a list of its own, and a stand-alone item holds a single row.
     return entries.map((entry, entryIndex) => {
         if (isSidenavSection(entry)) {
             return (
-                <SidenavSection
-                    key={entry.title || `section-${entryIndex}`}
-                    title={entry.title}
-                    dividerTop={entry.dividerTop}
-                    dividerBottom={entry.dividerBottom}
-                >
-                    {entry.items.map((item) => withItemIndex(item, itemIndex++))}
-                </SidenavSection>
+                <div key={entry.title || `section-${entryIndex}`} role="listitem">
+                    <SidenavSection
+                        title={entry.title}
+                        dividerTop={entry.dividerTop}
+                        dividerBottom={entry.dividerBottom}
+                    >
+                        {entry.items.map((item) => withItemIndex(item, itemIndex++))}
+                    </SidenavSection>
+                </div>
             );
         }
 
         return (
-            <div key={entry.id} className={styles.standaloneItem}>
-                {withItemIndex(entry as SidenavItemType, itemIndex++)}
+            <div key={entry.id} className={styles.standaloneItem} role="listitem">
+                {/* This wrapper is the list item of the entry, so the item inside renders none. */}
+                <SidenavHasOuterListItemContext.Provider value>
+                    {withItemIndex(entry as SidenavItemType, itemIndex++)}
+                </SidenavHasOuterListItemContext.Provider>
             </div>
         );
     });

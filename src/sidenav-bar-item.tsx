@@ -14,6 +14,7 @@ import {
     useSidenavBarContext,
     SidenavLevelContext,
     SidenavItemIndexContext,
+    SidenavHasOuterListItemContext,
     hasDescendantWithId,
 } from './sidenav-bar-context';
 import {SidenavDialogPanel} from './sidenav-bar-panel';
@@ -33,7 +34,7 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
 
 type SidenavItemBaseProps = {
-    /** Display text (truncated if too long). */
+    /** Display text. A text longer than the row wraps over several lines, and it never truncates. */
     label: string;
     /** Icon component or element to display. Required for top-level items in collapsed sidenav. */
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
@@ -127,6 +128,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
     const itemIndex = React.useContext(SidenavItemIndexContext);
+    const hasOuterListItem = React.useContext(SidenavHasOuterListItemContext);
     const {platformOverrides} = useTheme();
     const isReducedMotion = useIsReducedMotion();
     const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
@@ -146,6 +148,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const nestedListRef = React.useRef<HTMLDivElement>(null);
+    // The dialog panel lives in a portal, far from its trigger in the document, so the trigger names it
+    // with `aria-controls`. The id exists on every item, and only the open dialog panel carries it.
+    const dialogPanelId = React.useId();
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
     const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
     // In double panel mode the sidenav renders the panel as its second column, so the item only tracks
@@ -228,8 +233,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const isLabelCollapsed = collapsed && !isInsidePanel;
     // The label holds the width of its text while the sidenav moves, in both directions: during a collapse
     // the sidenav is already collapsed, and during an expansion the settled state still reports the rail.
-    // See `itemLabelKeepsWidth`.
-    const isLabelWidthKept = false;
+    // The expanded sidenav at rest drops it, and the label wraps there. See `itemLabelKeepsWidth`.
+    const isLabelWidthKept = !isInsidePanel && (collapsed || collapsedSettled);
     const labelNode = (
         <div
             className={classnames(styles.itemLabel, {
@@ -237,7 +242,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 [styles.itemLabelKeepsWidth]: isLabelWidthKept,
             })}
         >
-            <Text2 regular truncate color="inherit">
+            <Text2 regular color="inherit">
                 {label}
             </Text2>
         </div>
@@ -296,6 +301,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     className={touchableClassName}
                     onPress={handlePress}
                     aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
+                    aria-controls={isPanelOpen && isDialogMode ? dialogPanelId : undefined}
                     aria-label={label}
                     dataAttributes={{'parent-item': 'true'}}
                 >
@@ -375,39 +381,52 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         </div>
     );
 
+    // The row of an item and the group of its children live in the same list item, so that a screen
+    // reader ties them together: the trigger opens what the list item holds. A stand-alone entry of the
+    // first level already sits in a list item of the body list, and this one steps aside there.
     return (
-        <>
-            {row}
-            {hasChildren && (
-                <CSSTransition
-                    in={isOpen}
-                    timeout={isMotionOff ? 0 : CONTENT_DURATION_MS}
-                    nodeRef={nestedListRef}
-                    classNames={styles.nestedListTransitionClasses}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <div
-                        className={styles.nestedListContainer}
-                        ref={nestedListRef}
-                        // Marks this group with the id of its parent, so ArrowLeft on a child moves the
-                        // focus back to the trigger that owns the group.
-                        data-sidenav-nested-list-for={id}
+        <div role={hasOuterListItem ? undefined : 'listitem'}>
+            {/* Every item below this one owns its list item: the flag applies to this item alone. */}
+            <SidenavHasOuterListItemContext.Provider value={false}>
+                {row}
+                {hasChildren && (
+                    <CSSTransition
+                        in={isOpen}
+                        timeout={isMotionOff ? 0 : CONTENT_DURATION_MS}
+                        nodeRef={nestedListRef}
+                        classNames={styles.nestedListTransitionClasses}
+                        mountOnEnter
+                        unmountOnExit
                     >
-                        <div className={styles.nestedList} role="group" aria-label={label}>
-                            <SidenavLevelContext.Provider value={level + 1}>
-                                {children}
-                            </SidenavLevelContext.Provider>
+                        <div
+                            className={styles.nestedListContainer}
+                            ref={nestedListRef}
+                            // Marks this group with the id of its parent, so ArrowLeft on a child moves
+                            // the focus back to the trigger that owns the group.
+                            data-sidenav-nested-list-for={id}
+                        >
+                            <div className={styles.nestedList} role="group" aria-label={label}>
+                                <div className={styles.nestedListRows} role="list">
+                                    <SidenavLevelContext.Provider value={level + 1}>
+                                        {children}
+                                    </SidenavLevelContext.Provider>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </CSSTransition>
-            )}
-            {isPanelOpen && isDialogMode && (
-                <SidenavDialogPanel itemId={id} label={label} containerRef={containerRef}>
-                    {children}
-                </SidenavDialogPanel>
-            )}
-        </>
+                    </CSSTransition>
+                )}
+                {isPanelOpen && isDialogMode && (
+                    <SidenavDialogPanel
+                        id={dialogPanelId}
+                        itemId={id}
+                        label={label}
+                        containerRef={containerRef}
+                    >
+                        {children}
+                    </SidenavDialogPanel>
+                )}
+            </SidenavHasOuterListItemContext.Provider>
+        </div>
     );
 };
 

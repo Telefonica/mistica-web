@@ -35,10 +35,14 @@ import type {
     SidenavLogoRenderProps,
 } from '../sidenav-bar';
 
+// A section title and an item label never truncate: they wrap over as many lines as their text needs, and
+// the row grows with them. The longLabels control swaps four entries for a text that does not fit, at each
+// level of the tree, so that the behaviour is visible in one screen.
 const getDefaultSections = (
     onAction: (action: string) => void,
     sectionDividerTop: boolean,
-    sectionDividerBottom: boolean
+    sectionDividerBottom: boolean,
+    longLabels: boolean
 ): Array<SidenavEntry> => [
     {
         items: [
@@ -58,7 +62,7 @@ const getDefaultSections = (
         ],
     },
     {
-        title: 'Workspace',
+        title: longLabels ? 'Workspace and shared team resources' : 'Workspace',
         dividerTop: sectionDividerTop,
         dividerBottom: sectionDividerBottom,
         items: [
@@ -77,7 +81,7 @@ const getDefaultSections = (
                     },
                     {
                         id: 'archived',
-                        label: 'Archived (no asset)',
+                        label: longLabels ? 'Archived projects of the last two years' : 'Archived (no asset)',
                         href: '#archived',
                         onNavigate: () => onAction('Archived clicked'),
                     },
@@ -104,7 +108,7 @@ const getDefaultSections = (
             },
             {
                 id: 'notifications',
-                label: 'Notifications',
+                label: longLabels ? 'Notifications and system alerts' : 'Notifications',
                 asset: IconBellRegular,
                 href: '#notifications',
                 rightSlot: <Badge value={2} />,
@@ -114,7 +118,7 @@ const getDefaultSections = (
     },
     {
         id: 'favorites',
-        label: 'Favorites (stand-alone)',
+        label: longLabels ? 'Favorites and recently opened files' : 'Favorites (stand-alone)',
         asset: IconStarRegular,
         href: '#favorites',
         onNavigate: () => onAction('Favorites clicked'),
@@ -186,6 +190,7 @@ type Args = {
     divider: boolean;
     sectionDividerTop: boolean;
     sectionDividerBottom: boolean;
+    longLabels: boolean;
     collapsible: boolean;
     customCollapseAction: boolean;
     defaultCollapsed: boolean;
@@ -211,6 +216,7 @@ export const Default = ({
     divider,
     sectionDividerTop,
     sectionDividerBottom,
+    longLabels,
     collapsible,
     customCollapseAction,
     defaultCollapsed,
@@ -243,7 +249,8 @@ export const Default = ({
     const sections: Array<SidenavEntry> = getDefaultSections(
         setLastAction,
         sectionDividerTop,
-        sectionDividerBottom
+        sectionDividerBottom,
+        longLabels
     );
 
     const headerSlotContent = isTabletOrSmaller ? (
@@ -370,6 +377,11 @@ export const Default = ({
                                             &quot;(href)&quot; or &quot;(onPress)&quot;.
                                         </ListItem>
                                         <ListItem>
+                                            A section title and an item label never truncate. A text that does
+                                            not fit wraps over several lines, and its row grows with it. Turn
+                                            on the longLabels control to see it.
+                                        </ListItem>
+                                        <ListItem>
                                             The header shows a collapse action by default. Turn on the
                                             customCollapseAction control to paint that action with
                                             renderCollapseAction, which receives the collapsed state, the
@@ -422,6 +434,7 @@ export default {
         divider: true,
         sectionDividerTop: true,
         sectionDividerBottom: false,
+        longLabels: false,
         collapsible: true,
         customCollapseAction: false,
         defaultCollapsed: false,
@@ -511,6 +524,11 @@ export default {
             description:
                 'Sets the dividerBottom flag of the "Workspace" and the "Account" sections, which paints a divider under each of them.',
             table: {category: 'Section dividers'},
+        },
+        longLabels: {
+            control: {type: 'boolean'},
+            description:
+                'Gives a long text to one section title, to one stand-alone item, to one item with a right slot and to one nested item. Such a text wraps over several lines, and the row grows with it. It never truncates.',
         },
         collapsible: {
             control: {type: 'boolean'},

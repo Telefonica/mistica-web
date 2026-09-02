@@ -31,6 +31,37 @@ test('SidenavBar collapsed with a header slot', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+// A section title and an item label never truncate: a text that does not fit wraps over several lines, and
+// its row grows with it. Only a screenshot guards this, at every level of the tree: a section title, a
+// stand-alone item, an item with a right slot, and a nested item.
+test('SidenavBar with labels that wrap', async () => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
+        args: {longLabels: true},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+// The collapsed rail holds each row at one line: the label keeps the width of its text and the rail clips
+// it, so a long label never wraps there and never grows the rail.
+test('SidenavBar collapsed with labels that wrap', async () => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
+        args: {longLabels: true, defaultCollapsed: true},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 // The background tokens of the header and the footer differ from the ones of the body only in dark mode,
 // where `background` and `backgroundContainer` carry two different blacks. A light screenshot passes with
 // the wrong token, so these two cases guard the tokens of the spec.

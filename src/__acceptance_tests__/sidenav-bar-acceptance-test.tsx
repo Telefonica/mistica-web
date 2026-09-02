@@ -18,6 +18,25 @@ const getFocusedItemId = (page: PageApi): Promise<string | null> =>
             null
     );
 
+// The name of the dialog panel when the panel itself holds the focus, and `null` when it does not.
+const getFocusedPanelLabel = (page: PageApi): Promise<string | null> =>
+    page.evaluate(() => {
+        const active = document.activeElement;
+        return active?.hasAttribute('data-sidenav-dialog-panel') ? active.getAttribute('aria-label') : null;
+    });
+
+// The name of the second column when the column itself holds the focus, and `null` when it does not.
+const getFocusedColumnLabel = (page: PageApi): Promise<string | null> =>
+    page.evaluate(() => {
+        const active = document.activeElement;
+        return active?.hasAttribute('data-sidenav-double-panel') ? active.getAttribute('aria-label') : null;
+    });
+
+// Whether a dialog panel stands in the document. The query helpers of this harness return a handle for a
+// missing element too, so the test reads the DOM instead.
+const isDialogPanelOpen = (page: PageApi): Promise<boolean> =>
+    page.evaluate(() => document.querySelector('[data-sidenav-dialog-panel]') !== null);
+
 test('SidenavBar renders its items', async () => {
     await openStoryPage({
         id: STORY_ID,
@@ -120,6 +139,120 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
     await screen.findByRole('group', {name: 'Teams'});
 });
 
+// The second column takes the focus when it opens, so a screen reader announces the group. It belongs to
+// no item of the rail, so it answers the arrow keys itself, and it stays open while the focus steps out.
+test('SidenavBar double panel moves the focus to the column, and steps in and out with the arrow keys', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {doublePanel: true},
+    });
+
+    await (await screen.findByRole('button', {name: 'Teams'})).click();
+    await screen.findByRole('group', {name: 'Teams'});
+
+    await waitFor(async () => {
+        expect(await getFocusedColumnLabel(page)).toBe('Teams');
+    });
+
+    await page.keyboard.press('ArrowDown');
+    expect(await getFocusedItemId(page)).toBe('eng');
+
+    // One press of ArrowRight on a closed parent opens its column and lands on the first item.
+    await page.keyboard.press('ArrowLeft');
+    await page.keyboard.press('ArrowLeft');
+    expect(await getFocusedItemId(page)).toBe('teams');
+    await (await screen.findByRole('button', {name: 'Projects'})).press('ArrowRight');
+    await waitFor(async () => {
+        expect(await getFocusedItemId(page)).toBe('active');
+    });
+
+    await (await screen.findByRole('button', {name: 'Teams'})).click();
+    await waitFor(async () => {
+        expect(await getFocusedColumnLabel(page)).toBe('Teams');
+    });
+
+    // ArrowRight on the trigger of an open column steps to the first item of that column.
+    await (await screen.findByRole('button', {name: 'Teams'})).press('ArrowRight');
+    await waitFor(async () => {
+        expect(await getFocusedItemId(page)).toBe('eng');
+    });
+
+    await page.keyboard.press('ArrowLeft');
+    expect(await getFocusedItemId(page)).toBe('teams');
+    await screen.findByRole('group', {name: 'Teams'});
+});
+
+// The spec of the reading order asks for item 1, the children that it opened, then item 2. Neither panel
+// stands there in the document, so Tab walks that sequence by hand. "Projects" carries `defaultOpen`, so
+// its children sit in the rail between "Search" and "Teams"; "Teams" is the parent that opens a column.
+test('SidenavBar reads an item, then the children of its open panel, then the next item, with Tab', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {doublePanel: true},
+    });
+
+    await (await screen.findByRole('button', {name: 'Teams'})).click();
+    await screen.findByRole('group', {name: 'Teams'});
+    await waitFor(async () => {
+        expect(await getFocusedColumnLabel(page)).toBe('Teams');
+    });
+
+    // From the column, back onto its trigger, and then forward through the whole sequence.
+    await page.keyboard.down('Shift');
+    await page.keyboard.press('Tab');
+    await page.keyboard.up('Shift');
+    expect(await getFocusedItemId(page)).toBe('teams');
+
+    await page.keyboard.press('Tab');
+    expect(await getFocusedItemId(page)).toBe('eng');
+    await page.keyboard.press('Tab');
+    expect(await getFocusedItemId(page)).toBe('design');
+    await page.keyboard.press('Tab');
+    expect(await getFocusedItemId(page)).toBe('notifications');
+
+    // And backwards: the item after the trigger steps to the last child of that trigger.
+    await page.keyboard.down('Shift');
+    await page.keyboard.press('Tab');
+    await page.keyboard.up('Shift');
+    expect(await getFocusedItemId(page)).toBe('design');
+    await page.keyboard.down('Shift');
+    await page.keyboard.press('Tab');
+    await page.keyboard.up('Shift');
+    expect(await getFocusedItemId(page)).toBe('eng');
+    await page.keyboard.down('Shift');
+    await page.keyboard.press('Tab');
+    await page.keyboard.up('Shift');
+    expect(await getFocusedItemId(page)).toBe('teams');
+});
+
+// The arrows keep to one level. They travel the rail without the rows of the column, which stand at the
+// end of the same landmark in the document.
+test('SidenavBar travels the rail with the arrow keys while a column stands open', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {doublePanel: true},
+    });
+
+    await (await screen.findByRole('button', {name: 'Teams'})).click();
+    await screen.findByRole('group', {name: 'Teams'});
+    await waitFor(async () => {
+        expect(await getFocusedColumnLabel(page)).toBe('Teams');
+    });
+
+    await page.keyboard.press('ArrowLeft');
+    expect(await getFocusedItemId(page)).toBe('teams');
+
+    await page.keyboard.press('ArrowDown');
+    expect(await getFocusedItemId(page)).toBe('notifications');
+
+    await page.keyboard.press('End');
+    expect(await getFocusedItemId(page)).toBe('settings');
+    await screen.findByRole('group', {name: 'Teams'});
+});
+
 test('SidenavBar collapse action reports its state through aria-expanded', async () => {
     await openStoryPage({
         id: STORY_ID,
@@ -194,20 +327,97 @@ test('SidenavBar carries the focus into the floating panel and back on Escape', 
     await (await screen.findByRole('button', {name: 'Teams'})).click();
     await screen.findByRole('group', {name: sidenavSubmenu.es.replace('1$s', 'Teams')});
 
-    // Opening the panel drops the tooltips of the rail, which replaces the trigger row with a fresh node
-    // and returns the focus to it one frame later. ArrowDown reads the focus, so it waits for that node to
-    // hold it again; otherwise it would run against the document body and move nothing.
+    // The panel opens in a portal, at the end of the document, so a screen reader that reads the page in
+    // order never reaches it from the trigger. The panel itself takes the focus as soon as it stands where
+    // it belongs, which names the group to the user. It belongs to no item, so the first ArrowDown steps
+    // into the panel, and the next one moves inside it.
     await waitFor(async () => {
-        expect(await getFocusedItemId(page)).toBe('teams');
+        expect(await getFocusedPanelLabel(page)).toBe(sidenavSubmenu.es.replace('1$s', 'Teams'));
     });
 
     await page.keyboard.press('ArrowDown');
     expect(await getFocusedItemId(page)).toBe('eng');
+
+    await page.keyboard.press('ArrowDown');
+    expect(await getFocusedItemId(page)).toBe('design');
 
     await page.keyboard.press('Escape');
     // The collapsed rail wraps the trigger row in a tooltip once the panel closes, so the focus returns to
     // the fresh trigger node one frame later.
     await waitFor(async () => {
         expect(await getFocusedItemId(page)).toBe('teams');
+    });
+});
+
+// ArrowLeft leaves the group, and ArrowUp on its first item does the same: above that item stands its
+// parent. Both close the panel and return the focus to the trigger.
+test('SidenavBar closes the floating panel with ArrowLeft and with ArrowUp on its first item', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+    });
+
+    const panelName = sidenavSubmenu.es.replace('1$s', 'Teams');
+
+    await (await screen.findByRole('button', {name: COLLAPSE_LABEL})).click();
+    await screen.findByRole('button', {name: EXPAND_LABEL});
+
+    const openPanelAndStepIn = async () => {
+        await (await screen.findByRole('button', {name: 'Teams'})).click();
+        await screen.findByRole('group', {name: panelName});
+        await waitFor(async () => {
+            expect(await getFocusedPanelLabel(page)).toBe(panelName);
+        });
+        await page.keyboard.press('ArrowDown');
+        expect(await getFocusedItemId(page)).toBe('eng');
+    };
+
+    await openPanelAndStepIn();
+    await page.keyboard.press('ArrowLeft');
+    await waitFor(async () => {
+        expect(await getFocusedItemId(page)).toBe('teams');
+    });
+    expect(await isDialogPanelOpen(page)).toBe(false);
+
+    await openPanelAndStepIn();
+    await page.keyboard.press('ArrowUp');
+    await waitFor(async () => {
+        expect(await getFocusedItemId(page)).toBe('teams');
+    });
+    expect(await isDialogPanelOpen(page)).toBe(false);
+});
+
+// A parent that already stands open answers ArrowRight with its group, so the user steps back into the
+// panel that they left instead of closing it and opening it again.
+test('SidenavBar steps back into the open floating panel with ArrowRight', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+    });
+
+    const panelName = sidenavSubmenu.es.replace('1$s', 'Teams');
+
+    await (await screen.findByRole('button', {name: COLLAPSE_LABEL})).click();
+    await screen.findByRole('button', {name: EXPAND_LABEL});
+
+    // ArrowRight opens the panel, and the panel takes the focus. Shift+Tab steps back onto the trigger
+    // and leaves the panel open, which is the state that the second ArrowRight answers.
+    const teams = await screen.findByRole('button', {name: 'Teams'});
+    await teams.press('ArrowRight');
+    await waitFor(async () => {
+        expect(await getFocusedPanelLabel(page)).toBe(panelName);
+    });
+
+    await page.keyboard.down('Shift');
+    await page.keyboard.press('Tab');
+    await page.keyboard.up('Shift');
+    await waitFor(async () => {
+        expect(await getFocusedItemId(page)).toBe('teams');
+    });
+    expect(await isDialogPanelOpen(page)).toBe(true);
+
+    await page.keyboard.press('ArrowRight');
+    await waitFor(async () => {
+        expect(await getFocusedPanelLabel(page)).toBe(panelName);
     });
 });

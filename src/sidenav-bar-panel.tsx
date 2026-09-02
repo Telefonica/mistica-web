@@ -65,6 +65,7 @@ const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): vo
 };
 
 type SidenavDialogPanelProps = {
+    id: string;
     itemId: string;
     label: string;
     containerRef: React.RefObject<HTMLElement | null>;
@@ -76,6 +77,7 @@ type SidenavDialogPanelProps = {
  * double panel mode is off. The panel is anchored to the top of its trigger whenever it fits.
  */
 const SidenavDialogPanel = ({
+    id,
     itemId,
     label,
     containerRef,
@@ -90,7 +92,15 @@ const SidenavDialogPanel = ({
     const [panelPosition, setPanelPosition] = React.useState<{top: number; left: number} | null>(null);
 
     useClosePanelOnOutsideInteraction(panelElement);
-    useDialogPanelKeyboard({panelElement, containerRef, itemId});
+    // The panel takes the focus only once it stands where it belongs: it stays hidden until the effect
+    // below measures it, and a hidden element takes no focus.
+    useDialogPanelKeyboard({
+        panelElement,
+        containerRef,
+        itemId,
+        isPositioned: panelPosition !== null,
+        onClose: () => contextValue.setPanelOpenForItemId(null),
+    });
 
     // The panel opens aligned with its trigger, but a trigger close to the bottom edge pushes the
     // panel out of the viewport. The top is therefore clamped to the lowest position where the whole
@@ -134,6 +144,11 @@ const SidenavDialogPanel = ({
         <Portal>
             <div
                 ref={setPanelElement}
+                id={id}
+                // The panel takes the focus when it opens, so a screen reader announces the group and its
+                // name before anything else. `-1` keeps it out of the tab order: the user reaches it
+                // through its trigger alone.
+                tabIndex={-1}
                 className={styles.dialogPanel}
                 role="group"
                 aria-label={t(texts.sidenavSubmenu || tokens.sidenavSubmenu, label)}
@@ -168,7 +183,12 @@ const SidenavDialogPanel = ({
                         </Text2>
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
-                        <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
+                        <SidenavLevelContext.Provider value={0}>
+                            {/* The group names the panel, and the list gives the count of its items. */}
+                            <div className={styles.panelRows} role="list">
+                                {children}
+                            </div>
+                        </SidenavLevelContext.Provider>
                     </SidenavBarContext.Provider>
                 </ThemeVariant>
             </div>
@@ -177,6 +197,7 @@ const SidenavDialogPanel = ({
 };
 
 type SidenavDoublePanelProps = {
+    itemId: string;
     label: string;
     variant: NonDeprecatedVariant;
     backgroundColor?: string;
@@ -192,7 +213,7 @@ type SidenavDoublePanelProps = {
  * column holds it instead, so the column can narrow to zero without reflowing its content.
  */
 const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelProps>(
-    ({label, variant, backgroundColor, children}, ref) => {
+    ({itemId, label, variant, backgroundColor, children}, ref) => {
         const contextValue = useSidenavBarContext();
 
         const panelContextValue = {
@@ -209,6 +230,12 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                 style={backgroundColor ? {backgroundColor} : undefined}
                 role="group"
                 aria-label={label}
+                // The column takes the focus when it opens, so a screen reader announces the group. `-1`
+                // keeps it out of the tab order: the user reaches it through its trigger alone.
+                tabIndex={-1}
+                // Marks the column with the id of the item that owns it, so the keyboard of the rail finds
+                // the group of a trigger, and the trigger of a group.
+                data-sidenav-double-panel={itemId}
             >
                 <div className={styles.doublePanelContent}>
                     <div
@@ -222,7 +249,12 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                         </Text2>
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
-                        <SidenavLevelContext.Provider value={0}>{children}</SidenavLevelContext.Provider>
+                        <SidenavLevelContext.Provider value={0}>
+                            {/* The group names the column, and the list gives the count of its items. */}
+                            <div className={styles.panelRows} role="list">
+                                {children}
+                            </div>
+                        </SidenavLevelContext.Provider>
                     </SidenavBarContext.Provider>
                 </div>
             </div>

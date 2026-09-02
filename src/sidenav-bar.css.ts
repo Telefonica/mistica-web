@@ -23,6 +23,12 @@ const RAIL_INSET = 10;
 const ITEM_ROW_INSET = 8;
 // Gap between the icon, the label, the right slot and the chevron of a row.
 const ITEM_ROW_GAP = 8;
+// Height of a row that holds a single line of text, which the spec gives for every item.
+const ITEM_ROW_HEIGHT = 44;
+// Vertical padding of a row. A label that wraps keeps this room above and below its text, and a label of
+// one line keeps the row at `ITEM_ROW_HEIGHT`: `Text2` measures 24px on the skin that gives it the most
+// room, and 24 plus the two paddings is exactly that height.
+const ITEM_ROW_PADDING_Y = 10;
 // Distance from the edge of the sidenav to the title of a section, which the title of the second column
 // takes as well.
 const SECTION_TITLE_INSET = 24;
@@ -527,6 +533,10 @@ export const itemRow = style({
 // Its width is a percentage of the rail, so it follows the rail while the rail moves, and it needs no
 // transition of its own. The collapsed rail leaves it 36px, which holds the icon and its two paddings.
 // The overflow keeps the label, the right slot and the chevron inside the row while it narrows.
+// The height is a minimum, and not a fixed number: the spec asks for a label that wraps over several
+// lines instead of one that truncates, and the row grows with it. A row that holds a single line keeps the
+// 44px of the spec, because `ITEM_ROW_PADDING_Y` leaves that line the room that it needs: one line of
+// `Text2` measures 24px on the widest skin, and 44px hold it with the two paddings.
 export const itemTouchable = style({
     boxSizing: 'border-box',
     display: 'flex',
@@ -535,8 +545,8 @@ export const itemTouchable = style({
     flex: 'none',
     width: `calc(100% - ${ITEM_ROW_INSET * 2}px)`,
     minWidth: 0,
-    height: 44,
-    padding: '0 8px',
+    minHeight: ITEM_ROW_HEIGHT,
+    padding: `${ITEM_ROW_PADDING_Y}px 8px`,
     marginLeft: ITEM_ROW_INSET,
     marginRight: ITEM_ROW_INSET,
     borderRadius: 8,
@@ -626,9 +636,10 @@ export const itemLabelCollapsed = style({
 
 // While the sidenav moves, the label keeps the width that its text asks for, instead of taking the share
 // of the row that the flex layout would give it. The row narrows under a text that does not move, and the
-// edge of the sidenav passes over that text: without this, the label would shrink with the row and the
-// text would truncate one letter at a time, which reads as the text redrawing itself.
-// The expanded sidenav at rest drops this rule, so a label longer than the row truncates there as usual.
+// edge of the sidenav passes over that text: without this, the label would wrap over more and more lines
+// as the rail narrows, and every row of the body would grow and then shrink again.
+// The expanded sidenav at rest drops this rule, so a label longer than the row wraps there, which is what
+// the spec asks for.
 export const itemLabelKeepsWidth = style({
     minWidth: 'max-content',
 });
@@ -711,7 +722,21 @@ export const nestedList = style({
     overflow: 'hidden',
 });
 
+// One node carries one role, so the group of the children and the list of their rows are two nodes. This
+// one repeats the column of the group above it, and the rows keep the box that they had.
+export const nestedListRows = style({
+    display: 'flex',
+    flexDirection: 'column',
+});
+
 // Panel (Dialog and Double Panel) -----------------------------------------------
+
+// The rows of a panel, under the group that names it. It repeats the column of that group, for the same
+// reason as `nestedListRows`.
+export const panelRows = style({
+    display: 'flex',
+    flexDirection: 'column',
+});
 
 export const dialogPanel = style({
     display: 'flex',
