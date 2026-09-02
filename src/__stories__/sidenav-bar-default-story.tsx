@@ -37,7 +37,8 @@ import type {
 
 // A section title and an item label never truncate: they wrap over as many lines as their text needs, and
 // the row grows with them. The longLabels control swaps four entries for a text that does not fit, at each
-// level of the tree, so that the behaviour is visible in one screen.
+// level of the tree, so that the behaviour is visible in one screen. The stand-alone item carries a single
+// word instead of a phrase, which is the case that has no space to wrap at.
 const getDefaultSections = (
     onAction: (action: string) => void,
     sectionDividerTop: boolean,
@@ -118,7 +119,8 @@ const getDefaultSections = (
     },
     {
         id: 'favorites',
-        label: longLabels ? 'Favorites and recently opened files' : 'Favorites (stand-alone)',
+        // One word longer than the row, which has nothing to wrap at. `Text` breaks it inside the word.
+        label: longLabels ? 'Favoritesandrecentlyopenedfiles' : 'Favorites (stand-alone)',
         asset: IconStarRegular,
         href: '#favorites',
         onNavigate: () => onAction('Favorites clicked'),
@@ -528,7 +530,7 @@ export default {
         longLabels: {
             control: {type: 'boolean'},
             description:
-                'Gives a long text to one section title, to one stand-alone item, to one item with a right slot and to one nested item. Such a text wraps over several lines, and the row grows with it. It never truncates.',
+                'Gives a long text to one section title, to one stand-alone item, to one item with a right slot and to one nested item. Such a text wraps over several lines, and the row grows with it. It never truncates. The stand-alone item carries a single word, which breaks inside the word.',
         },
         collapsible: {
             control: {type: 'boolean'},
