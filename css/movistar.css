@@ -77,6 +77,8 @@
     --mistica-color-backgroundContainerNegative: rgba(var(--mistica-movistar-raw-movistarBlack), 0.2);
     --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-movistar-blue800);
     --mistica-color-backgroundContainerAlternative: var(--mistica-movistar-grey100);
+    --mistica-color-backgroundContainerAlternativeOverAlternative: var(--mistica-movistar-white);
+    --mistica-color-backgroundContainerAlternativeOverBrand: var(--mistica-movistar-blue800);
     --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-raw-movistarBlack), 0.6);
     --mistica-color-backgroundSkeleton: var(--mistica-movistar-grey200);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-blue800);
@@ -500,6 +502,8 @@
     --mistica-color-backgroundContainerNegative: var(--mistica-movistar-darkModeGrey);
     --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-movistar-darkModeGrey);
     --mistica-color-backgroundContainerAlternative: var(--mistica-movistar-darkModeGrey);
+    --mistica-color-backgroundContainerAlternativeOverAlternative: var(--mistica-movistar-darkModeGrey);
+    --mistica-color-backgroundContainerAlternativeOverBrand: var(--mistica-movistar-darkModeGrey);
     --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-raw-darkModeGrey), 0.8);
     --mistica-color-backgroundSkeleton: var(--mistica-movistar-grey600);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-grey600);
@@ -832,6 +836,8 @@
         --mistica-color-backgroundContainerNegative: var(--mistica-movistar-darkModeGrey);
         --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-movistar-darkModeGrey);
         --mistica-color-backgroundContainerAlternative: var(--mistica-movistar-darkModeGrey);
+        --mistica-color-backgroundContainerAlternativeOverAlternative: var(--mistica-movistar-darkModeGrey);
+        --mistica-color-backgroundContainerAlternativeOverBrand: var(--mistica-movistar-darkModeGrey);
         --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-raw-darkModeGrey), 0.8);
         --mistica-color-backgroundSkeleton: var(--mistica-movistar-grey600);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-grey600);
@@ -1166,6 +1172,8 @@
         --mistica-color-backgroundContainerNegative: rgba(var(--mistica-movistar-raw-movistarBlack), 0.2);
         --mistica-color-backgroundContainerBrandOverBrand: var(--mistica-movistar-blue800);
         --mistica-color-backgroundContainerAlternative: var(--mistica-movistar-grey100);
+        --mistica-color-backgroundContainerAlternativeOverAlternative: var(--mistica-movistar-white);
+        --mistica-color-backgroundContainerAlternativeOverBrand: var(--mistica-movistar-blue800);
         --mistica-color-backgroundOverlay: rgba(var(--mistica-movistar-raw-movistarBlack), 0.6);
         --mistica-color-backgroundSkeleton: var(--mistica-movistar-grey200);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-movistar-blue800);
