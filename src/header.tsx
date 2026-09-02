@@ -63,7 +63,6 @@ export const Header = ({
             return null;
         }
         const baseTextProps = {
-            regular: true,
             color: vars.colors.textPrimary,
             as: pretitleAs,
             dataAttributes: {testid: 'pretitle'},
