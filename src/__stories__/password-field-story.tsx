@@ -26,6 +26,7 @@ interface PasswordFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: PasswordFieldBaseArgs = {
@@ -39,6 +40,7 @@ const defaultBaseArgs: PasswordFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 } as const;
 
 interface PasswordFieldControlledArgs extends PasswordFieldBaseArgs {

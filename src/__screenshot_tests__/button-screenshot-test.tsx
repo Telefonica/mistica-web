@@ -3,7 +3,7 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
-const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button', 'Link button danger'];
+const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button'];
 
 const getCases = () => {
     const cases = [];

@@ -681,6 +681,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             popup: '8px',
             sheet: '8px',
             mediaSmall: '8px',
+            snackbar: '8px',
         },
         textPresets: {
             button: {weight: 'medium'},
@@ -740,6 +741,9 @@ export const getBlauSkin: GetKnownSkin = () => {
             successFeedback: 'default',
             brandLoadingScreen: 'default',
         },
+        componentProperties: {
+            showBoxedBorder: {default: true, brand: true, negative: true, alternative: true, media: true},
+        },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
             buttonSmallPadding: {left: {mobile: 12, desktop: 12}, right: {mobile: 12, desktop: 12}},
@@ -749,7 +753,12 @@ export const getBlauSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 24},
                 right: {mobile: 16, desktop: 24},
             },
-            inputPadding: {top: {mobile: 8, desktop: 8}, bottom: {mobile: 8, desktop: 8}},
+            inputPadding: {
+                top: {mobile: 8, desktop: 8},
+                right: {mobile: 16, desktop: 16},
+                bottom: {mobile: 8, desktop: 8},
+                left: {mobile: 12, desktop: 12},
+            },
             tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},
             feedbackScreenPadding: {
                 top: {mobile: 64, desktop: 64},
@@ -766,6 +775,7 @@ export const getBlauSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 40},
             },
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
         },
     };
     return skin;

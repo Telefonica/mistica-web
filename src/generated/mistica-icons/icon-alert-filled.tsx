@@ -27,7 +27,16 @@ const IconAlertFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.999 2.866c.13 0 .27.004.403.016 1.152.104 2.252.723 2.89 1.778l.008.012.008.014 6.169 11.202.125.224a3.48 3.48 0 0 1-.144 3.48c-.645 1.01-1.868 1.543-3.07 1.543H5.612c-1.2 0-2.424-.532-3.069-1.543-.708-1.108-.731-2.525-.019-3.704l6.17-11.202.007-.014.008-.012c.638-1.055 1.738-1.674 2.89-1.778a4 4 0 0 1 .395-.016h.003zM12 15.98a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5m0-7.504a.75.75 0 0 0-.75.75v5a.75.75 0 0 0 1.5 0v-5a.75.75 0 0 0-.75-.75"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

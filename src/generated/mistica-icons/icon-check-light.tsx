@@ -27,7 +27,16 @@ const IconCheckLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.858 5.288a.5.5 0 0 1-.01.707L8.778 18.722a.5.5 0 0 1-.698 0l-5.928-5.77a.5.5 0 0 1 .698-.717l5.579 5.43L21.15 5.279a.5.5 0 0 1 .707.01"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

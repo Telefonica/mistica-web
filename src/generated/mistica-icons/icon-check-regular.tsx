@@ -27,7 +27,16 @@ const IconCheckRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.788 5.227a.75.75 0 0 1-.015 1.06l-12.847 12.5a.75.75 0 0 1-1.046 0l-5.653-5.5a.75.75 0 1 1 1.046-1.075l5.13 4.991 12.324-11.99a.75.75 0 0 1 1.06.014"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

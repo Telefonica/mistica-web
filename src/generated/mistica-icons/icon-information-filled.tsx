@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 import {useIconGradient} from '../../utils/icon-gradient';
@@ -23,15 +24,28 @@ const IconInformationFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 21.875a9.875 9.875 0 0 1-.485-19.738L12 2.125A9.877 9.877 0 0 1 21.875 12 9.875 9.875 0 0 1 12 21.875m0-12.75a1.125 1.125 0 0 0 0-2.25h-.01a1.125 1.125 0 0 0 0 2.25zm0 8c.621 0 1.125-.504 1.125-1.125v-4a1.125 1.125 0 0 0-2.25 0v4c0 .621.504 1.125 1.125 1.125"
-                />
-            </svg>
-        );
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M2 10.25A8.25 8.25 0 0 1 10.25 2h3.5A8.25 8.25 0 0 1 22 10.25v3.5A8.25 8.25 0 0 1 13.75 22h-3.5A8.25 8.25 0 0 1 2 13.75zm9.998-.613a1 1 0 0 0-1 1v5.724a1 1 0 0 0 2 0v-5.724a1 1 0 0 0-1-1m.004-.555a1 1 0 1 0 0-1.999 1 1 0 0 0 0 1.999"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 21.875a9.875 9.875 0 0 1-.485-19.738L12 2.125A9.877 9.877 0 0 1 21.875 12 9.875 9.875 0 0 1 12 21.875m0-12.75a1.125 1.125 0 0 0 0-2.25h-.01a1.125 1.125 0 0 0 0 2.25zm0 8c.621 0 1.125-.504 1.125-1.125v-4a1.125 1.125 0 0 0-2.25 0v4c0 .621.504 1.125 1.125 1.125"
+                    />
+                </svg>
+            );
+        }
     };
 
     const svgContent = getSvgContent();

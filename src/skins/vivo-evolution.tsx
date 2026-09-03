@@ -162,7 +162,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             buttonLinkBackgroundNegativePressed: applyAlpha(palette.vivoNeutral0, 0.1),
             buttonLinkBackgroundBrandPressed: applyAlpha(palette.vivoNeutral0, 0.1),
             buttonLinkBackgroundMediaPressed: applyAlpha(palette.vivoNeutral0, 0.1),
-            buttonLinkNeutralBackgroundPressed: palette.vivoNeutral25,
+            buttonLinkNeutralBackgroundPressed: palette.vivoNeutral100,
             buttonLinkNeutralBackgroundBrand: palette.vivoNeutral0,
             buttonLinkNeutralBackgroundBrandPressed: palette.vivoNeutral25,
             buttonLinkNeutralBackgroundNegative: palette.vivoNeutral0,
@@ -717,11 +717,12 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             container: '24px',
             indicator: '24px',
             chip: '24px',
-            tag: '10px',
+            tag: '8px',
             input: '16px',
             popup: '16px',
             sheet: '24px',
             mediaSmall: '12px',
+            snackbar: '24px',
         },
         textPresets: {
             button: {weight: 'medium'},
@@ -751,7 +752,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             link: {weight: 'medium'},
             loadingScreenTitle: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
             navigationBar: {weight: 'regular'},
-            rowTitle: {weight: 'regular'},
+            rowTitle: {weight: 'medium'},
             stepperStepLabel: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             tabsLabel: {
                 lineHeight: {desktop: 24, mobile: 24},
@@ -786,24 +787,27 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             title2: {
+                lineHeight: {desktop: 24, mobile: 20},
+                size: {desktop: 16, mobile: 14},
+                weight: 'medium',
+            },
+            title3: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 16},
                 weight: 'medium',
             },
-            title3: {
-                lineHeight: {desktop: 28, mobile: 24},
-                size: {desktop: 24, mobile: 18},
-                weight: 'medium',
-            },
             title4: {
-                lineHeight: {desktop: 40, mobile: 32},
-                size: {desktop: 32, mobile: 24},
+                lineHeight: {desktop: 32, mobile: 24},
+                size: {desktop: 28, mobile: 20},
                 weight: 'medium',
             },
         },
         themeVariants: {
             successFeedback: 'inverse',
             brandLoadingScreen: 'inverse',
+        },
+        componentProperties: {
+            showBoxedBorder: {default: true, brand: true, negative: true, alternative: false, media: true},
         },
         spacing: {
             buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
@@ -814,7 +818,12 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 24},
                 right: {mobile: 16, desktop: 24},
             },
-            inputPadding: {top: {mobile: 8, desktop: 8}, bottom: {mobile: 8, desktop: 8}},
+            inputPadding: {
+                top: {mobile: 8, desktop: 8},
+                right: {mobile: 16, desktop: 16},
+                bottom: {mobile: 8, desktop: 8},
+                left: {mobile: 16, desktop: 16},
+            },
             tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},
             feedbackScreenPadding: {
                 top: {mobile: 64, desktop: 64},
@@ -830,6 +839,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 left: {mobile: 16, desktop: 40},
                 right: {mobile: 16, desktop: 40},
             },
+            boxedDefaultPadding: {left: {mobile: 16, desktop: 24}, right: {mobile: 16, desktop: 24}},
             responsiveLayoutMargin: {mobile: 8, desktop: 48},
         },
     };

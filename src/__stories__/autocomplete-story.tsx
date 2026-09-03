@@ -19,6 +19,7 @@ export default {
     args: {
         suggestionEmptyCase: '',
         verticalPosition: 'top',
+        small: false,
     },
 };
 
@@ -31,12 +32,14 @@ type ControlledArgs = {
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
     suggestionEmptyCase?: string;
     verticalPosition?: 'top' | 'bottom';
+    small: boolean;
 };
 
 export const Controlled: StoryComponent<ControlledArgs> = ({
     variantOutside,
     suggestionEmptyCase,
     verticalPosition,
+    small,
 }) => {
     const [value, setValue] = React.useState('');
 
@@ -58,6 +61,7 @@ export const Controlled: StoryComponent<ControlledArgs> = ({
                             onChangeValue={(newValue) => setValue(newValue)}
                             getSuggestions={getCountrySuggestions}
                             suggestionEmptyCase={suggestionEmptyCase}
+                            small={small}
                         />
                     </Box>
                 </div>

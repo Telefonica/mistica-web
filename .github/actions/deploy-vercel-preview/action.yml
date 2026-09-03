@@ -23,6 +23,11 @@ inputs:
         required: false
         default: ${{ github.workspace }}
 
+outputs:
+    preview-url:
+        description: The Vercel preview deployment URL
+        value: ${{ steps.vercel-deploy.outputs.preview-url }}
+
 runs:
     using: composite
     steps:

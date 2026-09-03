@@ -6,7 +6,7 @@ export default {
     title: 'Components/Input fields/Input field with custom formatter',
 };
 
-export const Default: StoryComponent = () => {
+export const Default: StoryComponent<{small: boolean}> = ({small}) => {
     const [value, setValue] = React.useState('');
 
     /**
@@ -41,8 +41,12 @@ export const Default: StoryComponent = () => {
             value={rifm.value}
             onChange={rifm.onChange}
             helperText="Cadastro de Pessoas Físicas"
+            small={small}
         />
     );
 };
 
 Default.storyName = 'Input field with custom formatter';
+Default.args = {
+    small: false,
+};

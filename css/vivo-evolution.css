@@ -156,7 +156,7 @@
         var(--mistica-vivo-evolution-raw-vivoNeutral0),
         0.1
     );
-    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
     --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
     --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -433,11 +433,12 @@
     --mistica-border-radius-container: 24px;
     --mistica-border-radius-indicator: 24px;
     --mistica-border-radius-chip: 24px;
-    --mistica-border-radius-tag: 10px;
+    --mistica-border-radius-tag: 8px;
     --mistica-border-radius-input: 16px;
     --mistica-border-radius-popup: 16px;
     --mistica-border-radius-sheet: 24px;
     --mistica-border-radius-mediaSmall: 12px;
+    --mistica-border-radius-snackbar: 24px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
@@ -472,7 +473,7 @@
     --mistica-font-size-drawerTitle: 1.25rem;
     --mistica-line-height-drawerTitle: 1.5rem;
     --mistica-font-weight-drawerTitle: 500;
-    --mistica-font-weight-rowTitle: 400;
+    --mistica-font-weight-rowTitle: 500;
     --mistica-font-weight-button: 500;
     --mistica-font-size-tabsLabel: 1.125rem;
     --mistica-line-height-tabsLabel: 1.5rem;
@@ -481,14 +482,14 @@
     --mistica-font-size-title1: 0.75rem;
     --mistica-line-height-title1: 1rem;
     --mistica-font-weight-title1: 500;
-    --mistica-font-size-title2: 1rem;
-    --mistica-line-height-title2: 1.5rem;
+    --mistica-font-size-title2: 0.875rem;
+    --mistica-line-height-title2: 1.25rem;
     --mistica-font-weight-title2: 500;
-    --mistica-font-size-title3: 1.125rem;
+    --mistica-font-size-title3: 1rem;
     --mistica-line-height-title3: 1.5rem;
     --mistica-font-weight-title3: 500;
-    --mistica-font-size-title4: 1.5rem;
-    --mistica-line-height-title4: 2rem;
+    --mistica-font-size-title4: 1.25rem;
+    --mistica-line-height-title4: 1.5rem;
     --mistica-font-weight-title4: 500;
     --mistica-font-weight-indicator: 500;
     --mistica-font-weight-navigationBar: 400;
@@ -1517,7 +1518,7 @@
             var(--mistica-vivo-evolution-raw-vivoNeutral0),
             0.1
         );
-        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
         --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
         --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -1826,12 +1827,12 @@
 
         --mistica-font-size-title1: 0.875rem;
         --mistica-line-height-title1: 1.25rem;
-        --mistica-font-size-title2: 1.125rem;
+        --mistica-font-size-title2: 1rem;
         --mistica-line-height-title2: 1.5rem;
-        --mistica-font-size-title3: 1.5rem;
-        --mistica-line-height-title3: 1.75rem;
-        --mistica-font-size-title4: 2rem;
-        --mistica-line-height-title4: 2.5rem;
+        --mistica-font-size-title3: 1.125rem;
+        --mistica-line-height-title3: 1.5rem;
+        --mistica-font-size-title4: 1.75rem;
+        --mistica-line-height-title4: 2rem;
 
         --mistica-font-size-chipLabel: 1rem;
         --mistica-line-height-chipLabel: 1.5rem;

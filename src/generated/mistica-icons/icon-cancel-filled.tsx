@@ -27,7 +27,16 @@ const IconCancelFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v3.5A8.25 8.25 0 0 0 10.25 22h3.5A8.25 8.25 0 0 0 22 13.75v-3.5A8.25 8.25 0 0 0 13.75 2zM8.11 15.873a1 1 0 0 1 0-1.414l2.475-2.475L8.11 9.51a1 1 0 0 1 1.415-1.414l2.474 2.475 2.475-2.475A1 1 0 0 1 15.89 9.51l-2.475 2.475 2.475 2.475a1 1 0 0 1-1.415 1.414L12 13.398l-2.475 2.475a1 1 0 0 1-1.414 0"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

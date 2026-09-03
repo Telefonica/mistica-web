@@ -16,6 +16,7 @@ import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
 import {
     defaultBorderRadiiConfig,
+    defaultComponentPropertiesConfig,
     defaultSpacing,
     defaultTextPresetsConfig,
     defaultThemeVariantsConfig,
@@ -201,6 +202,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             textPresets,
             spacing: theme.skin.spacing ?? defaultSpacing,
             themeVariants: theme.skin.themeVariants ?? defaultThemeVariantsConfig,
+            componentProperties: theme.skin.componentProperties ?? defaultComponentPropertiesConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',

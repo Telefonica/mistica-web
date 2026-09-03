@@ -27,7 +27,16 @@ const IconCheckedFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.5 2A8.5 8.5 0 0 0 2 10.5v3a8.5 8.5 0 0 0 8.5 8.5h3a8.5 8.5 0 0 0 8.5-8.5v-3A8.5 8.5 0 0 0 13.5 2zm6.207 7.93-5.555 5.555a1 1 0 0 1-1.415 0L7.293 13.04a1 1 0 1 1 1.414-1.414l1.737 1.738 4.849-4.849a1 1 0 1 1 1.414 1.414"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

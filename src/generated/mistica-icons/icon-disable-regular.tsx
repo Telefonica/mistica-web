@@ -27,7 +27,16 @@ const IconDisableRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v3.5c0 2.205.865 4.209 2.275 5.689a.75.75 0 0 0 .286.286A8.22 8.22 0 0 0 10.25 22h3.5A8.25 8.25 0 0 0 22 13.75v-3.5a8.22 8.22 0 0 0-2.275-5.69.75.75 0 0 0-.286-.285A8.22 8.22 0 0 0 13.75 2zm7.713 2.976L4.976 17.963A6.72 6.72 0 0 1 3.5 13.75v-3.5a6.75 6.75 0 0 1 6.75-6.75h3.5a6.72 6.72 0 0 1 4.213 1.476M6.037 19.024 19.024 6.037A6.72 6.72 0 0 1 20.5 10.25v3.5a6.75 6.75 0 0 1-6.75 6.75h-3.5a6.72 6.72 0 0 1-4.213-1.476"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
