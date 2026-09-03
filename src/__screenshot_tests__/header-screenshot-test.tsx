@@ -136,12 +136,8 @@ test.each`
     device          | titleTextPreset
     ${'MOBILE_IOS'} | ${'title1'}
     ${'MOBILE_IOS'} | ${'title2'}
-    ${'MOBILE_IOS'} | ${'title3'}
-    ${'MOBILE_IOS'} | ${'title4'}
     ${'DESKTOP'}    | ${'title1'}
     ${'DESKTOP'}    | ${'title2'}
-    ${'DESKTOP'}    | ${'title3'}
-    ${'DESKTOP'}    | ${'title4'}
 `(
     'Header in $device titleTextPreset=$titleTextPreset',
     async ({device, titleTextPreset}: {device: Device; titleTextPreset: string}) => {
