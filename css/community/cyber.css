@@ -389,6 +389,7 @@
     --mistica-border-radius-popup: 4px;
     --mistica-border-radius-sheet: 0px;
     --mistica-border-radius-mediaSmall: 2px;
+    --mistica-border-radius-snackbar: 4px;
 
     /* Text */
     --mistica-font-size-1: 0.75rem;
