@@ -386,7 +386,6 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // first level already sits in a list item of the body list, and this one steps aside there.
     return (
         <div role={hasOuterListItem ? undefined : 'listitem'}>
-            {/* Every item below this one owns its list item: the flag applies to this item alone. */}
             <SidenavHasOuterListItemContext.Provider value={false}>
                 {row}
                 {hasChildren && (

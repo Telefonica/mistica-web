@@ -124,7 +124,6 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
 
         return (
             <div key={entry.id} className={styles.standaloneItem} role="listitem">
-                {/* This wrapper is the list item of the entry, so the item inside renders none. */}
                 <SidenavHasOuterListItemContext.Provider value>
                     {withItemIndex(entry as SidenavItemType, itemIndex++)}
                 </SidenavHasOuterListItemContext.Provider>
