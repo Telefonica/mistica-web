@@ -66,33 +66,19 @@ export const Header = ({
             color: vars.colors.textPrimary,
             as: pretitleAs,
             dataAttributes: {testid: 'pretitle'},
+            desktopSize: textPresets.headerPretitle.size.desktop,
+            mobileSize: textPresets.headerPretitle.size.mobile,
+            desktopLineHeight: textPresets.headerPretitle.lineHeight.desktop,
+            mobileLineHeight: textPresets.headerPretitle.lineHeight.mobile,
+            weight: textPresets.headerPretitle.weight,
         } as const;
 
         if (typeof pretitle === 'string') {
-            return (
-                <Text
-                    {...baseTextProps}
-                    desktopSize={textPresets.headerPretitle.size.desktop}
-                    mobileSize={textPresets.headerPretitle.size.mobile}
-                    desktopLineHeight={textPresets.headerPretitle.lineHeight.desktop}
-                    mobileLineHeight={textPresets.headerPretitle.lineHeight.mobile}
-                    weight={textPresets.headerPretitle.weight}
-                >
-                    {pretitle}
-                </Text>
-            );
+            return <Text {...baseTextProps}>{pretitle}</Text>;
         }
         const {text, ...textProps} = pretitle;
         return (
-            <Text
-                {...baseTextProps}
-                desktopSize={textPresets.headerPretitle.size.desktop}
-                mobileSize={textPresets.headerPretitle.size.mobile}
-                desktopLineHeight={textPresets.headerPretitle.lineHeight.desktop}
-                mobileLineHeight={textPresets.headerPretitle.lineHeight.mobile}
-                weight={textPresets.headerPretitle.weight}
-                {...textProps}
-            >
+            <Text {...baseTextProps} {...textProps}>
                 {text}
             </Text>
         );
