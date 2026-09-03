@@ -151,6 +151,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // The dialog panel lives in a portal, far from its trigger in the document, so the trigger names it
     // with `aria-controls`. The id exists on every item, and only the open dialog panel carries it.
     const dialogPanelId = React.useId();
+    // The visible label of the trigger also names the list of its children (the disclosure pattern), so
+    // the name a screen reader speaks is always the text the user sees.
+    const labelId = React.useId();
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
     const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
     // In double panel mode the sidenav renders the panel as its second column, so the item only tracks
@@ -237,6 +240,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const isLabelWidthKept = !isInsidePanel && (collapsed || collapsedSettled);
     const labelNode = (
         <div
+            id={labelId}
             className={classnames(styles.itemLabel, {
                 [styles.itemLabelCollapsed]: isLabelCollapsed,
                 [styles.itemLabelKeepsWidth]: isLabelWidthKept,
@@ -381,7 +385,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         </div>
     );
 
-    // The row of an item and the group of its children live in the same list item, so that a screen
+    // The row of an item and the list of its children live in the same list item, so that a screen
     // reader ties them together: the trigger opens what the list item holds. A stand-alone entry of the
     // first level already sits in a list item of the body list, and this one steps aside there.
     return (
@@ -400,12 +404,12 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                         <div
                             className={styles.nestedListContainer}
                             ref={nestedListRef}
-                            // Marks this group with the id of its parent, so ArrowLeft on a child moves
-                            // the focus back to the trigger that owns the group.
+                            // Marks this list with the id of its parent, so ArrowLeft on a child moves
+                            // the focus back to the trigger that owns the list.
                             data-sidenav-nested-list-for={id}
                         >
-                            <div className={styles.nestedList} role="group" aria-label={label}>
-                                <div className={styles.nestedListRows} role="list">
+                            <div className={styles.nestedList}>
+                                <div className={styles.nestedListRows} role="list" aria-labelledby={labelId}>
                                     <SidenavLevelContext.Provider value={level + 1}>
                                         {children}
                                     </SidenavLevelContext.Provider>

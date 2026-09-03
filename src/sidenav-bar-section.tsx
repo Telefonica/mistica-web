@@ -33,12 +33,14 @@ const SidenavSection = ({
 }: SidenavSectionProps): JSX.Element => {
     const {collapsed, collapsedSettled} = useSidenavBarContext();
     const variant = useThemeVariant();
+    // The visible title names the list of the section, so the name a screen reader speaks is always the
+    // text the user sees. The section itself carries no role and no name: the named list is the whole
+    // structure, as in the second level (see `sidenav-bar-panel.tsx`).
+    const titleId = React.useId();
 
     return (
         <div
             className={styles.section}
-            role="group"
-            aria-label={title}
             {...getPrefixedDataAttributes({testid: 'SidenavSection', ...dataAttributes})}
         >
             {dividerTop && (
@@ -48,6 +50,11 @@ const SidenavSection = ({
             )}
             {title && (
                 <div
+                    id={titleId}
+                    // The list already speaks this text as its name, so the title steps out of the
+                    // reading order. The name survives: `aria-labelledby` reads a hidden element that
+                    // it references directly.
+                    aria-hidden="true"
                     className={classnames(styles.sectionTitle, styles.sectionTitleVariant[variant], {
                         [styles.sectionTitleCollapsed]: collapsed,
                         // The title holds the width of its text while the sidenav moves, in both
@@ -60,8 +67,8 @@ const SidenavSection = ({
                     </Text2>
                 </div>
             )}
-            {/* The group names the section, and the list gives the count of its items. */}
-            <div className={styles.sectionContent} role="list">
+            {/* The title names the list, and the list gives the count of its items. */}
+            <div className={styles.sectionContent} role="list" aria-labelledby={title ? titleId : undefined}>
                 {children}
             </div>
             {dividerBottom && (

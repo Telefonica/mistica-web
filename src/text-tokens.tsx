@@ -39,7 +39,6 @@ export type Dictionary = {
     backNavigationBar: string;
     sidenavExpand: string;
     sidenavCollapse: string;
-    sidenavSubmenu: string;
     sidenavLandmark: string;
     clearButton: string;
     carouselRegion: string;
@@ -367,14 +366,6 @@ export const sidenavCollapse: TextToken = {
     en: 'Collapse navigation',
     de: 'Navigation einklappen',
     pt: 'Recolher navegação',
-};
-
-// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final. `1$s` is the item label.
-export const sidenavSubmenu: TextToken = {
-    es: 'Submenú de 1$s',
-    en: '1$s submenu',
-    de: 'Untermenü von 1$s',
-    pt: 'Submenu de 1$s',
 };
 
 // TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.

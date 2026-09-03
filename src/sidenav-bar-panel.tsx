@@ -7,9 +7,7 @@ import {useDialogPanelKeyboard} from './use-sidenav-bar-keyboard';
 import {Portal} from './portal';
 import {Text2} from './text';
 import {listenResize} from './utils/dom';
-import {useTheme} from './hooks';
 import {ThemeVariant} from './theme-variant-context';
-import * as tokens from './text-tokens';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';
 
@@ -84,16 +82,18 @@ const SidenavDialogPanel = ({
     children,
 }: SidenavDialogPanelProps): JSX.Element => {
     const contextValue = useSidenavBarContext();
-    const {texts, t} = useTheme();
     // `Portal` creates its host element in an effect, so the panel node appears one render after the
     // panel mounts. Keeping the node in state (instead of in a ref) re-runs the effects that measure
     // it as soon as it exists.
     const [panelElement, setPanelElement] = React.useState<HTMLDivElement | null>(null);
     const [panelPosition, setPanelPosition] = React.useState<{top: number; left: number} | null>(null);
+    // The visible title names the list, so the name a screen reader speaks is always the text the user
+    // sees. The panel itself carries no role and no name: the named list is the whole structure.
+    const titleId = React.useId();
 
     useClosePanelOnOutsideInteraction(panelElement);
-    // The panel takes the focus only once it stands where it belongs: it stays hidden until the effect
-    // below measures it, and a hidden element takes no focus.
+    // The first item of the panel takes the focus only once the panel stands where it belongs: it stays
+    // hidden until the effect below measures it, and a hidden element takes no focus.
     useDialogPanelKeyboard({
         panelElement,
         containerRef,
@@ -145,13 +145,7 @@ const SidenavDialogPanel = ({
             <div
                 ref={setPanelElement}
                 id={id}
-                // The panel takes the focus when it opens, so a screen reader announces the group and its
-                // name before anything else. `-1` keeps it out of the tab order: the user reaches it
-                // through its trigger alone.
-                tabIndex={-1}
                 className={styles.dialogPanel}
-                role="group"
-                aria-label={t(texts.sidenavSubmenu || tokens.sidenavSubmenu, label)}
                 data-sidenav-dialog-panel={itemId}
                 style={
                     panelPosition
@@ -173,9 +167,11 @@ const SidenavDialogPanel = ({
             >
                 <ThemeVariant variant="default">
                     <div
+                        id={titleId}
                         className={classnames(styles.dialogPanelTitle, styles.sectionTitleVariant.default)}
-                        // The panel already carries the label through its `aria-label`, and the trigger
-                        // announces it too, so the visible title stays out of the reading order.
+                        // The list already speaks this text as its name, so the title steps out of the
+                        // reading order. The name survives: `aria-labelledby` reads a hidden element that
+                        // it references directly.
                         aria-hidden="true"
                     >
                         <Text2 medium color="inherit">
@@ -184,8 +180,8 @@ const SidenavDialogPanel = ({
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
                         <SidenavLevelContext.Provider value={0}>
-                            {/* The group names the panel, and the list gives the count of its items. */}
-                            <div className={styles.panelRows} role="list">
+                            {/* The title names the list, and the list gives the count of its items. */}
+                            <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
                                 {children}
                             </div>
                         </SidenavLevelContext.Provider>
@@ -215,6 +211,9 @@ type SidenavDoublePanelProps = {
 const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelProps>(
     ({itemId, label, variant, backgroundColor, children}, ref) => {
         const contextValue = useSidenavBarContext();
+        // The visible title names the list, so the name a screen reader speaks is always the text the
+        // user sees. The column itself carries no role and no name: the named list is the whole structure.
+        const titleId = React.useId();
 
         const panelContextValue = {
             ...contextValue,
@@ -228,20 +227,17 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                 ref={ref}
                 className={classnames(styles.doublePanelColumn, styles.regionBackground[variant])}
                 style={backgroundColor ? {backgroundColor} : undefined}
-                role="group"
-                aria-label={label}
-                // The column takes the focus when it opens, so a screen reader announces the group. `-1`
-                // keeps it out of the tab order: the user reaches it through its trigger alone.
-                tabIndex={-1}
                 // Marks the column with the id of the item that owns it, so the keyboard of the rail finds
-                // the group of a trigger, and the trigger of a group.
+                // the list of a trigger, and the trigger of a list.
                 data-sidenav-double-panel={itemId}
             >
                 <div className={styles.doublePanelContent}>
                     <div
+                        id={titleId}
                         className={classnames(styles.doublePanelTitle, styles.sectionTitleVariant[variant])}
-                        // The column already carries the label through its `aria-label`, and the trigger
-                        // item announces it too, so the visible title stays out of the reading order.
+                        // The list already speaks this text as its name, so the title steps out of the
+                        // reading order. The name survives: `aria-labelledby` reads a hidden element that
+                        // it references directly.
                         aria-hidden="true"
                     >
                         <Text2 medium color="inherit">
@@ -250,8 +246,8 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
                         <SidenavLevelContext.Provider value={0}>
-                            {/* The group names the column, and the list gives the count of its items. */}
-                            <div className={styles.panelRows} role="list">
+                            {/* The title names the list, and the list gives the count of its items. */}
+                            <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
                                 {children}
                             </div>
                         </SidenavLevelContext.Provider>

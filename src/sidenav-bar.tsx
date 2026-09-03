@@ -362,22 +362,16 @@ const SidenavBar = ({
     const footerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
     const bodyRef = React.useRef<HTMLDivElement>(null);
 
-    // ArrowRight on a closed parent opens its column and steps into it with the same press, so the id of
-    // that parent travels here and the effect below lands on the first item instead of the column. Every
-    // other way of opening lands on the column itself.
-    const openColumnOnFirstItemRef = React.useRef<string | null>(null);
-
-    // The second column takes the focus when it opens, and again when it moves to another parent, so a
-    // screen reader announces the group that the user opened. The dialog panel of the collapsed rail takes
-    // its own focus, and this effect leaves it alone: no column stands there.
+    // The first item of the second column takes the focus when the column opens, and again when the column
+    // moves to another parent, so a screen reader announces the named list that the user entered. The
+    // dialog panel of the collapsed rail takes its own focus, and this effect leaves it alone: no column
+    // stands there.
     // It only takes a focus that already belongs to the sidenav, or one that fell to the body when the
     // collapsed rail replaced the trigger row. An app that moves the selection from elsewhere on the page
     // opens this column too, and it must not drag the user out of the place they were reading.
     React.useEffect(() => {
         const column = doublePanelRef.current;
         const container = containerRef.current;
-        const stepsIntoTheFirstItem = openColumnOnFirstItemRef.current === panelOpenForItemId;
-        openColumnOnFirstItemRef.current = null;
         if (!panelOpenForItemId || !column || !container) {
             return;
         }
@@ -385,16 +379,11 @@ const SidenavBar = ({
         if (active && active !== document.body && !container.contains(active)) {
             return;
         }
-        if (stepsIntoTheFirstItem) {
-            const firstItem = column.querySelector<HTMLElement>(
+        column
+            .querySelector<HTMLElement>(
                 '[data-sidenav-item-id] a[href], [data-sidenav-item-id] button:not([disabled])'
-            );
-            if (firstItem) {
-                firstItem.focus();
-                return;
-            }
-        }
-        column.focus();
+            )
+            ?.focus();
     }, [panelOpenForItemId]);
 
     React.useEffect(() => {
@@ -474,7 +463,7 @@ const SidenavBar = ({
         ]
     );
 
-    const handleRailKeyDown = useSidenavRailKeyboard(containerRef, openColumnOnFirstItemRef);
+    const handleRailKeyDown = useSidenavRailKeyboard(containerRef);
 
     const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 

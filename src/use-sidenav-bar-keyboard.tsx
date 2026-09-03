@@ -6,8 +6,8 @@ import * as React from 'react';
  *
  *   - `useSidenavRailKeyboard` runs on the `<nav>` and moves the focus between the items of the rail. It
  *     also carries the focus into an open dialog panel, because that panel lives in a portal, so the
- *     browser would otherwise skip it, and it answers the keys of the second column, which takes the focus
- *     when it opens and belongs to no item of the rail.
+ *     browser would otherwise skip it, and it answers the keys of the second column, whose first item
+ *     takes the focus when the column opens.
  *   - `useDialogPanelKeyboard` runs on the dialog panel. It keeps the focus inside the panel, and it
  *     returns the focus to the trigger once the panel closes.
  *
@@ -129,12 +129,7 @@ const getParentTrigger = (child: HTMLElement, container: HTMLElement): HTMLEleme
  * (`aria-expanded`, the nesting markers), so it needs no knowledge of the data behind the sidenav.
  */
 const useSidenavRailKeyboard = (
-    containerRef: React.RefObject<HTMLElement | null>,
-    /**
-     * Carries the id of the parent whose column must open on its first item, instead of on the column
-     * itself. ArrowRight fills it, because that press opens the column and steps into it at once.
-     */
-    openColumnOnFirstItemRef: React.MutableRefObject<string | null>
+    containerRef: React.RefObject<HTMLElement | null>
 ): ((event: React.KeyboardEvent) => void) =>
     React.useCallback(
         (event: React.KeyboardEvent) => {
@@ -155,9 +150,7 @@ const useSidenavRailKeyboard = (
                 const columnItemId = column.getAttribute('data-sidenav-double-panel') ?? '';
                 const trigger = getRailFocusable(columnItemId, container);
                 const columnItems = getItemFocusables(column);
-                // The column itself holds the focus right after it opens, and it belongs to none of its
-                // rows, so it stands before the first one.
-                const columnIndex = active === column ? -1 : columnItems.indexOf(active);
+                const columnIndex = columnItems.indexOf(active);
 
                 switch (event.key) {
                     case 'ArrowDown':
@@ -177,9 +170,6 @@ const useSidenavRailKeyboard = (
                         return;
                     case 'ArrowRight':
                         event.preventDefault();
-                        if (columnIndex === -1) {
-                            columnItems[0]?.focus();
-                        }
                         return;
                     case 'Home':
                         event.preventDefault();
@@ -247,29 +237,21 @@ const useSidenavRailKeyboard = (
                     items[items.length - 1]?.focus();
                     return;
                 }
-                // ArrowRight opens a closed parent, and it steps into the group of a parent that already
-                // stands open: the floating panel of the collapsed rail, or the group that an expanded
-                // sidenav opens in place. The panel itself takes the focus, and it names its group.
+                // ArrowRight opens a closed parent, and it steps into the list of a parent that already
+                // stands open: the floating panel of the collapsed rail, or the list that an expanded
+                // sidenav opens in place. The first item of the list takes the focus.
                 case 'ArrowRight': {
                     if (active.getAttribute('aria-expanded') === 'false') {
                         event.preventDefault();
-                        // One press opens the group and steps into it. The column does not exist yet, so
-                        // the id travels to the effect that gives it the focus.
-                        const itemId = active
-                            .closest('[data-sidenav-item-id]')
-                            ?.getAttribute('data-sidenav-item-id');
-                        openColumnOnFirstItemRef.current = itemId ?? null;
+                        // One press opens the panel or the column, and the effect that watches the open
+                        // state gives the focus to the first item.
                         active.click();
                         return;
                     }
-                    // The floating panel takes the focus itself, because it hides the rail behind it and
-                    // the user needs to hear which group they entered. The second column stands beside the
-                    // rail and already announced itself when it opened, so ArrowRight goes straight to its
-                    // first item, as it does for a group that opens in place.
                     const dialogPanel = getOpenDialogPanel(active);
                     if (dialogPanel) {
                         event.preventDefault();
-                        dialogPanel.focus();
+                        getItemFocusables(dialogPanel)[0]?.focus();
                         return;
                     }
                     const column = getOpenDoublePanel(active, container);
@@ -328,7 +310,7 @@ const useSidenavRailKeyboard = (
                     return;
             }
         },
-        [containerRef, openColumnOnFirstItemRef]
+        [containerRef]
     );
 
 type DialogPanelKeyboardArgs = {
@@ -346,14 +328,14 @@ type DialogPanelKeyboardArgs = {
  * panel closes.
  *
  * The panel opens in a portal, at the end of the document, so a screen reader that reads the page in order
- * never reaches it from the trigger. The focus therefore travels to the panel itself, whatever opened it: a
- * press of the mouse, of the keyboard, or of a screen reader. The panel carries `role="group"` and a name,
- * so the user hears which group they entered before they hear its first item.
+ * never reaches it from the trigger. The focus therefore travels to the first item of the panel, whatever
+ * opened it: a press of the mouse, of the keyboard, or of a screen reader. The list of the panel takes its
+ * name from the visible title, so the user hears which list they entered when the focus lands in it.
  *
- * ArrowDown and Tab move from the panel to its first item and then between the items. ArrowLeft, and
- * ArrowUp on the first item, close the panel and return to the trigger: the user leaves the group the way
- * they left an accordion, and the rail shows where they stand. Escape closes the panel through the document listener of `sidenav-panel.tsx`, which unmounts the
- * panel, and the restore below then returns the focus.
+ * ArrowDown and Tab move between the items. ArrowLeft, and ArrowUp on the first item, close the panel and
+ * return to the trigger: the user leaves the list the way they left an accordion, and the rail shows where
+ * they stand. Escape closes the panel through the document listener of `sidenav-panel.tsx`, which unmounts
+ * the panel, and the restore below then returns the focus.
  */
 const useDialogPanelKeyboard = ({
     panelElement,
@@ -400,15 +382,15 @@ const useDialogPanelKeyboard = ({
         }
     }, [containerRef, itemId]);
 
-    // The panel itself takes the focus as soon as it stands where it belongs, and not its first item: a
-    // screen reader then announces the group and its name, which tells the user where the panel took them.
-    // Opening the panel also drops the tooltips of the rail, which replaces the trigger row and drops the
-    // focus that the press left on it, so the focus would otherwise fall to the body.
+    // The first item of the panel takes the focus as soon as the panel stands where it belongs: the named
+    // list around it tells a screen reader which list the focus entered. Opening the panel also drops the
+    // tooltips of the rail, which replaces the trigger row and drops the focus that the press left on it,
+    // so the focus would otherwise fall to the body.
     React.useEffect(() => {
         if (!panelElement || !isPositioned) {
             return;
         }
-        panelElement.focus();
+        getItemFocusables(panelElement)[0]?.focus();
     }, [panelElement, isPositioned]);
 
     // The panel returns the focus to the trigger once it closes as well, because the rail wraps the row in a
@@ -455,8 +437,7 @@ const useDialogPanelKeyboard = ({
                     focusables[focusables.length - 1].focus();
                     return;
                 // Tab reads the sequence of the spec: the trigger, the children of the panel, then the item
-                // that follows the trigger on the rail. The panel itself holds the focus right after it
-                // opens, and it belongs to no item of its list, so it stands before the first one.
+                // that follows the trigger on the rail.
                 case 'Tab': {
                     event.preventDefault();
                     if (event.shiftKey) {
