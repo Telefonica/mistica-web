@@ -33,6 +33,7 @@ export type DesignTokens = {
     radius: Record<string, RadiusDescription>;
     text: Record<string, Record<string, {value: TextTokenValue}>>;
     themeVariant: Record<string, {value: string}>;
+    componentProperties?: {showBoxedBorder?: {value: boolean}};
     spacing: {
         responsiveLayoutMargin: {value: {mobile: number; desktop: number}};
         [spacingName: string]: {value: SpacingValue};

@@ -190,6 +190,13 @@ ${functionSignature}
                 )
                 .join(',')},
         },
+        ${
+            designTokens.componentProperties?.showBoxedBorder
+                ? `componentProperties: ${JSON.stringify({
+                      showBoxedBorder: designTokens.componentProperties.showBoxedBorder.value,
+                  })},`
+                : ''
+        }
         spacing: ${JSON.stringify(
             Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
         )},
@@ -211,15 +218,17 @@ export type Colors = {
 };`;
 };
 
+const prettierConfigPromise = prettier.resolveConfig(import.meta.filename);
+
 const formatCss = async (source: string): Promise<string> =>
     prettier.format(`${GENERATED_BANNER}\n${source}`, {
-        ...(await prettier.resolveConfig('.')),
+        ...(await prettierConfigPromise),
         parser: 'css',
     });
 
 const formatTs = async (source: string): Promise<string> =>
     prettier.format(`${GENERATED_BANNER}\n${source}`, {
-        ...(await prettier.resolveConfig('.')),
+        ...(await prettierConfigPromise),
         parser: 'typescript',
     });
 
