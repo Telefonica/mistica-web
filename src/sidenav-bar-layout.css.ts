@@ -1,6 +1,14 @@
-import {style} from '@vanilla-extract/css';
+import {createVar, fallbackVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
+
+// The height of a persistent band above the layout (a fixed or sticky top header). The rail sticks
+// below that band and subtracts it from its viewport height, so the sidenav does not slide under the
+// header and does not overflow the bottom of the viewport. A header that scrolls away with the document
+// needs no offset: the rail sticks at the top of the viewport once the header has left it.
+export const topOffsetVar = createVar();
+
+const topOffset = fallbackVar(topOffsetVar, '0px');
 
 // A mobile or tablet sidenav is a top bar, and not a column, so the two regions stack there. The spec
 // gives "N/A" for the width of the sidenav on both breakpoints.
@@ -41,9 +49,9 @@ export const sidenav = style([
         flexShrink: 0,
         width: 'auto',
         position: 'sticky',
-        top: 0,
+        top: topOffset,
         alignSelf: 'flex-start',
-        height: '100vh',
+        height: `calc(100vh - ${topOffset})`,
         margin: 0,
         padding: 0,
         // Firefox keeps a cached layer for a sticky column and does not always invalidate its right edge

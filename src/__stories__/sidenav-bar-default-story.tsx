@@ -495,15 +495,18 @@ export default {
         },
         headerSlot: {
             control: {type: 'boolean'},
+            type: {name: 'boolean'},
         },
         // The docgen of Storybook drops the props that live inside the branches of ExclusifyUnion, so the
         // next five descriptions carry a copy of the JSDoc of each prop.
         footerSlot: {
             control: {type: 'boolean'},
+            type: {name: 'boolean'},
             description: 'Custom content in footer region (at bottom of sidenav).',
         },
         fixedFooter: {
             control: {type: 'boolean'},
+            type: {name: 'boolean'},
             if: {arg: 'footerSlot', truthy: true},
             description: 'Keep footer fixed when scrolling.',
         },

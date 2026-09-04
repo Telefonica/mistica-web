@@ -254,9 +254,9 @@ const verticalDividerOverlay = {
     bottom: 0,
     width: 1,
     pointerEvents: 'none',
-    // Above the sticky scroll dividers of the body, and above the edge of a boxed sidenav (see
-    // `boxedBorder`), so this line reaches the top and the bottom of the box.
-    zIndex: 3,
+    // Above the sticky scroll dividers of the body, above the header, and above the edge of a boxed
+    // sidenav (see `boxedBorder`), so this line reaches the top and the bottom of the box.
+    zIndex: 4,
 } as const;
 
 export const withRightDivider = styleVariants(dividerColor, (color) => ({
@@ -309,9 +309,9 @@ export const boxedBorder = style({
         // The container owns the radius (see `boxed`), and the edge follows it.
         borderRadius: 'inherit',
         pointerEvents: 'none',
-        // Above the background of both columns and above the sticky scroll dividers of the body, and
-        // below the vertical dividers, which cross it (see `verticalDividerOverlay`).
-        zIndex: 2,
+        // Above the background of both columns, the sticky scroll dividers of the body and the header,
+        // and below the vertical dividers, which cross it (see `verticalDividerOverlay`).
+        zIndex: 3,
     },
 });
 
@@ -328,7 +328,13 @@ export const headerBase = style({
     gap: 32,
     flexShrink: 0,
     paddingTop: 24,
-    paddingBottom: 24,
+    // Above the background of the body and above the painted scroll spacer, which follow it. Without a
+    // header slot, the collapse control ends the header, and its focus ring draws a few pixels below it,
+    // over the body: the body background, or the band of the spacer while the user scrolls, would
+    // otherwise cover that part of the ring. Below the boxed edge (zIndex 3) and the vertical dividers
+    // (zIndex 4).
+    position: 'relative',
+    zIndex: 2,
 });
 
 // The logo and the collapse control stack, both 32px tall. Their left edge is placed with
@@ -400,11 +406,61 @@ export const bodyBase = style({
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
+    // When the keyboard moves the focus to a row outside of the view, the browser scrolls that row just
+    // to the edge of the scrollport. At the top, that edge sits under the painted spacer, which would
+    // cover the top of the focus ring. The scroll padding makes the browser leave the spacer and the
+    // ring their room. The 4px of both values are the room of the ring alone, top and bottom.
+    scrollPaddingTop: 28,
+    scrollPaddingBottom: 4,
 });
 
-// Without a header, the body owns the 24px top inset instead.
-export const bodyWithoutHeader = style({
-    paddingTop: 24,
+// The 24px inset between the header and the first row lives inside the scrollport, as this sticky
+// spacer, and not as a padding of the header or of the body. A padding of the header sits outside the
+// scrollport, and the seam clips the focus ring of the first row; a padding of the body sits inside it,
+// and the rows stay visible under the header while the user scrolls. The spacer gives both behaviours:
+// transparent at rest, it leaves the ring its room, and while the content scrolls it paints the
+// background of the body over the rows that pass beneath, with the divider on its bottom edge. It is
+// always in the flow, so nothing jumps on the scroll threshold: only its paint changes.
+// The flex places the line of the spacer on its outer edge: the last child lands on the bottom edge of
+// the header spacer, and the first child on the top edge of the footer spacer. An absolutely positioned
+// line is not an option: it does not anchor to the sticky box reliably, and it lands at the bottom of
+// the scroll content instead.
+const scrollSpacerBase = {
+    height: 24,
+    flexShrink: 0,
+    position: 'sticky',
+    zIndex: 1,
+    pointerEvents: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+} as const;
+
+export const headerScrollSpacer = style({
+    ...scrollSpacerBase,
+    top: 0,
+    justifyContent: 'flex-end',
+});
+
+// The mirror of `headerScrollSpacer` for a fixed footer, which sits outside of the scrollport like the
+// header does. The band covers the rows that pass beneath it toward the footer.
+export const footerScrollSpacer = style({
+    ...scrollSpacerBase,
+    bottom: 0,
+});
+
+// The line of a spacer. It stops 1px before the right edge, so it never crosses the vertical divider
+// that sits there (see the comment of `scrollDivider` below), and a boxed sidenav insets it on the left
+// (see the `boxed` rule below).
+export const scrollSpacerDivider = style({
+    height: 1,
+    marginRight: 1,
+});
+
+// A keyboard-focused row must stop clear of the band of the fixed footer: the 24px of the band plus the
+// 4px of the ring, like `scrollPaddingTop` above. The inline footer keeps the 4px of `bodyBase`,
+// because it scrolls with the content and needs no band.
+export const bodyWithFixedFooter = style({
+    scrollPaddingBottom: 28,
 });
 
 // List of first-level entries (sections and stand-alone items). It owns the space between the
@@ -415,7 +471,7 @@ export const bodyContent = style({
     gap: FIRST_LEVEL_GAP,
 });
 
-// Scroll-intersection divider (appears when content scrolls past header/footer)
+// Scroll-intersection divider of the footer (appears when content scrolls past the footer).
 // It stops 1px before the right edge, so it never crosses the vertical divider that sits there (the right
 // divider, or the separator of the double panel). The divider token is translucent in dark mode, so two
 // lines that overlap paint a brighter pixel at the crossing. The gap is invisible when no vertical divider
@@ -428,10 +484,6 @@ export const scrollDivider = style({
     position: 'sticky',
     zIndex: 1,
     marginRight: 1,
-});
-
-export const headerScrollDivider = style({
-    top: 0,
 });
 
 export const footerScrollDivider = style({
@@ -448,6 +500,17 @@ export const footerBase = style({
     paddingBottom: 24,
     paddingLeft: 16,
     paddingRight: 16,
+});
+
+// A fixed footer hands its top inset to `footerScrollSpacer`, which owns that space inside the
+// scrollport, so the focus ring of the last row has room to draw. The footer content does not move: it
+// anchors to the bottom, and only the boundary of its band shifts. The stacking mirrors `headerBase`:
+// a control on the top edge of the footer slot draws its ring a few pixels above the footer, and the
+// painted band would cover that part of the ring otherwise.
+export const footerFixed = style({
+    paddingTop: 0,
+    position: 'relative',
+    zIndex: 2,
 });
 
 // Section ---------------------------------------------------------------------
@@ -513,7 +576,7 @@ export const sectionDivider = style({
 
 // A boxed sidenav draws a border on its left edge too (see `boxedBorder`), so the horizontal dividers keep
 // off that edge as well. A non-boxed sidenav has no divider on the left, so the lines reach that edge.
-globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${sectionDivider}`, {
+globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${sectionDivider}, ${boxed} ${scrollSpacerDivider}`, {
     marginLeft: 1,
 });
 
@@ -561,6 +624,7 @@ export const itemTouchableVariant = styleVariants(itemColors, (colors) => ({
     color: colors.label,
     selectors: {
         '&:hover': {backgroundColor: colors.hover},
+        '&:focus-visible': {backgroundColor: colors.hover},
         '&:active': {backgroundColor: colors.pressed},
     },
 }));
@@ -581,6 +645,7 @@ export const itemTouchableSelected = styleVariants(itemColors, (colors) => ({
     backgroundColor: colors.selected,
     selectors: {
         '&:hover': {backgroundColor: colors.selectedHover},
+        '&:focus-visible': {backgroundColor: colors.selectedHover},
         '&:active': {backgroundColor: colors.selectedPressed},
     },
 }));
@@ -719,8 +784,17 @@ export const nestedListTransitionClasses = {
 export const nestedList = style({
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
 });
+
+// nestedListContainer   display: grid  ← the only grid; its row animates 0fr ↔ 1fr
+// └─ nestedList         flex column    ← clips its rows while the track moves
+//    └─ nestedListRows  flex column, role="list"
+//       └─ item rows
+// the selection would be clipped (borders) when not animating. this fixes it.
+globalStyle(
+    `:is(${nestedListTransitionClasses.enter}, ${nestedListTransitionClasses.enterActive}, ${nestedListTransitionClasses.exit}, ${nestedListTransitionClasses.exitActive}) > ${nestedList}`,
+    {overflow: 'hidden'}
+);
 
 // One node carries one role, so the group of the children and the list of their rows are two nodes. This
 // one repeats the column of the group above it, and the rows keep the box that they had.

@@ -389,18 +389,22 @@ const SidenavBar = ({
     React.useEffect(() => {
         if (!bodyRef.current) return;
 
+        // The sentinels have no height, and at rest they sit exactly on the edge of the scrollport. A
+        // fractional layout (a boxed sidenav measures 100vh minus its margins) can leave them half a
+        // pixel outside, and the observer would then paint the divider before any scroll. The 1px root
+        // margin counts an edge-adjacent sentinel as inside.
         const headerObserver = new IntersectionObserver(
             ([entry]) => {
                 setShowHeaderDivider(!entry.isIntersecting);
             },
-            {root: bodyRef.current, threshold: 0}
+            {root: bodyRef.current, threshold: 0, rootMargin: '1px 0px 1px 0px'}
         );
 
         const footerObserver = new IntersectionObserver(
             ([entry]) => {
                 setShowFooterDivider(!entry.isIntersecting);
             },
-            {root: bodyRef.current, threshold: 0}
+            {root: bodyRef.current, threshold: 0, rootMargin: '1px 0px 1px 0px'}
         );
 
         if (headerDividerSentinelRef.current) {
@@ -646,22 +650,46 @@ const SidenavBar = ({
                             className={classnames(
                                 styles.bodyBase,
                                 styles.regionBackground[normalizedVariant],
-                                {
-                                    [styles.bodyWithoutHeader]: !hasHeader,
-                                }
+                                {[styles.bodyWithFixedFooter]: !!footerSlot && fixedFooter}
                             )}
                             style={bodyBackgroundColor ? {backgroundColor: bodyBackgroundColor} : undefined}
+                            onFocus={(event) => {
+                                // A row can take the focus while its ring crosses a seam: the row itself
+                                // is visible, so the browser scrolls nothing, and the scroll padding of
+                                // the body never engages. The nudge applies it. `nearest` keeps an
+                                // already-clear row untouched, and the check leaves a pointer focus
+                                // alone, which draws no ring.
+                                const target = event.target as HTMLElement;
+                                try {
+                                    if (target.matches(':focus-visible')) {
+                                        target.scrollIntoView({block: 'nearest'});
+                                    }
+                                } catch {
+                                    // jsdom implements neither `:focus-visible` nor `scrollIntoView`.
+                                }
+                            }}
                         >
                             <div ref={headerDividerSentinelRef} />
-                            {hasHeader && showHeaderDivider && (
-                                <div
-                                    className={classnames(
-                                        styles.scrollDivider,
-                                        styles.headerScrollDivider,
-                                        styles.scrollDividerVariant[normalizedVariant]
-                                    )}
-                                />
-                            )}
+                            <div
+                                className={classnames(styles.headerScrollSpacer, {
+                                    [styles.regionBackground[normalizedVariant]]:
+                                        hasHeader && showHeaderDivider,
+                                })}
+                                style={
+                                    hasHeader && showHeaderDivider && bodyBackgroundColor
+                                        ? {backgroundColor: bodyBackgroundColor}
+                                        : undefined
+                                }
+                            >
+                                {hasHeader && showHeaderDivider && (
+                                    <div
+                                        className={classnames(
+                                            styles.scrollSpacerDivider,
+                                            styles.scrollDividerVariant[normalizedVariant]
+                                        )}
+                                    />
+                                )}
+                            </div>
                             {sections && (
                                 // The body is the list of the first level. Each entry is one of its items.
                                 <div className={styles.bodyContent} role="list">
@@ -695,11 +723,36 @@ const SidenavBar = ({
                                     </div>
                                 </>
                             )}
+                            {footerSlot && fixedFooter && (
+                                <>
+                                    <div ref={footerDividerSentinelRef} />
+                                    <div
+                                        className={classnames(styles.footerScrollSpacer, {
+                                            [styles.regionBackground[normalizedVariant]]: showFooterDivider,
+                                        })}
+                                        style={
+                                            showFooterDivider && bodyBackgroundColor
+                                                ? {backgroundColor: bodyBackgroundColor}
+                                                : undefined
+                                        }
+                                    >
+                                        {showFooterDivider && (
+                                            <div
+                                                className={classnames(
+                                                    styles.scrollSpacerDivider,
+                                                    styles.scrollDividerVariant[normalizedVariant]
+                                                )}
+                                            />
+                                        )}
+                                    </div>
+                                </>
+                            )}
                         </div>
                         {footerSlot && fixedFooter && (
                             <div
                                 className={classnames(
                                     styles.footerBase,
+                                    styles.footerFixed,
                                     styles.regionBackground[normalizedVariant]
                                 )}
                                 style={

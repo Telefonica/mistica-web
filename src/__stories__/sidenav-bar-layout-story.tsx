@@ -23,6 +23,10 @@ type Args = {
     doublePanel: boolean;
 };
 
+type TopHeaderArgs = Args & {
+    headerHeight: number;
+};
+
 export default {
     title: 'Components/SidenavBar/Layout',
     parameters: {fullScreen: true, controls: {expanded: true}},
@@ -318,3 +322,78 @@ export const Centered = (args: Args): React.JSX.Element => {
 };
 
 Centered.storyName = 'Centered';
+
+export const WithTopHeader = (args: TopHeaderArgs): React.JSX.Element => {
+    const sidenavWidth = useSidenavWidth(args);
+    const [internalCollapsed, setInternalCollapsed] = useCollapsedState(args);
+    const [selectedItemId, setSelectedItemId] = React.useState<string | null>('home');
+
+    return (
+        <div style={{width: '100%', minHeight: '100vh'}}>
+            <header
+                style={{
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    boxSizing: 'border-box',
+                    height: args.headerHeight,
+                    padding: '0 32px',
+                    background: skinVars.colors.background,
+                    borderBottom: `1px solid ${skinVars.colors.divider}`,
+                }}
+            >
+                <Text3 medium>Persistent top header ({args.headerHeight}px)</Text3>
+            </header>
+            <SidenavLayout
+                mode="whole-viewport"
+                topOffset={args.headerHeight}
+                sidenav={
+                    <SidenavBar
+                        aria-label="Main navigation"
+                        {...(args.collapsible
+                            ? {
+                                  collapsible: true,
+                                  collapsed: internalCollapsed,
+                                  onCollapse: setInternalCollapsed,
+                              }
+                            : {collapsible: false})}
+                        width={sidenavWidth as any}
+                        sections={sections}
+                        doublePanel={args.doublePanel}
+                        selectedItemId={selectedItemId}
+                        onSelectedItemIdChange={setSelectedItemId}
+                        {...(args.boxed
+                            ? ({boxed: true} as const)
+                            : ({boxed: false, divider: args.divider} as const))}
+                    />
+                }
+            >
+                <Box paddingX={32} paddingY={32}>
+                    <Stack space={16}>
+                        <Text6 as="h1">With a top header</Text6>
+                        <Text3 regular>
+                            A sticky header sits above the layout, and `topOffset` carries its height. The
+                            rail sticks below the header and subtracts it from its viewport height, so the
+                            sidenav does not slide under the header while the page scrolls.
+                        </Text3>
+                        <Text3 medium>Selected item: {selectedItemId ?? 'none'}</Text3>
+                        {Array.from({length: 12}).map((_, index) => (
+                            <Placeholder key={index} height={160} />
+                        ))}
+                    </Stack>
+                </Box>
+            </SidenavLayout>
+        </div>
+    );
+};
+
+WithTopHeader.storyName = 'With top header';
+WithTopHeader.args = {headerHeight: 64};
+WithTopHeader.argTypes = {
+    headerHeight: {
+        control: {type: 'range', min: 40, max: 120, step: 4},
+        description: 'Height of the sticky header, passed to the layout as topOffset',
+    },
+};

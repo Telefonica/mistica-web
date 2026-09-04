@@ -2,8 +2,9 @@ import * as React from 'react';
 import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {SidenavBar} from '..';
+import {SidenavBar, SidenavLayout} from '..';
 import * as styles from '../sidenav-bar.css';
+import * as layoutStyles from '../sidenav-bar-layout.css';
 import {ThemeVariant} from '../theme-variant-context';
 import {getMovistarSkin} from '../skins/movistar';
 import {sidenavCollapse, sidenavExpand} from '../text-tokens';
@@ -95,6 +96,40 @@ test('SidenavBar keeps the same fallback when it is boxed, minus the inset of th
     expect(style.height).toBe('calc(100vh - 16px)');
     expect(style.minHeight).toBe('calc(100% - 16px)');
     expect(style.maxHeight).toBe('calc(100% - 16px)');
+});
+
+test('SidenavLayout offsets the sticky rail by topOffset', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavLayout
+                topOffset={64}
+                sidenav={<SidenavBar aria-label="Main navigation" sections={defaultSections} />}
+            >
+                content
+            </SidenavLayout>
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+
+    // `createVar` returns `var(--name)`, and the inline style needs the bare `--name`. The rail reads
+    // this variable for its sticky `top` and its `height`; jsdom does not resolve `var()` in those
+    // longhands, so the assertion stays on the declaration.
+    const topOffsetVarName = layoutStyles.topOffsetVar.slice('var('.length, -1);
+    expect(screen.getByTestId('SidenavLayout').style.getPropertyValue(topOffsetVarName)).toBe('64px');
+});
+
+test('SidenavLayout leaves the rail at the top of the viewport without topOffset', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavLayout sidenav={<SidenavBar aria-label="Main navigation" sections={defaultSections} />}>
+                content
+            </SidenavLayout>
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+
+    const topOffsetVarName = layoutStyles.topOffsetVar.slice('var('.length, -1);
+    expect(screen.getByTestId('SidenavLayout').style.getPropertyValue(topOffsetVarName)).toBe('');
 });
 
 test('SidenavBar marks the selected item with aria-current="page"', async () => {
