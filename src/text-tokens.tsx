@@ -37,6 +37,9 @@ export type Dictionary = {
     mainNavigationBarOpenSectionMenu: string;
     mainNavigationBarSectionSeeAll: string;
     backNavigationBar: string;
+    sidenavExpand: string;
+    sidenavCollapse: string;
+    sidenavLandmark: string;
     clearButton: string;
     carouselRegion: string;
     carouselPauseAutoplay: string;
@@ -347,6 +350,30 @@ export const backNavigationBar: TextToken = {
     en: 'Back',
     de: 'Zurück',
     pt: 'Voltar',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
+export const sidenavExpand: TextToken = {
+    es: 'Expandir navegación',
+    en: 'Expand navigation',
+    de: 'Navigation ausklappen',
+    pt: 'Expandir navegação',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
+export const sidenavCollapse: TextToken = {
+    es: 'Contraer navegación',
+    en: 'Collapse navigation',
+    de: 'Navigation einklappen',
+    pt: 'Recolher navegação',
+};
+
+// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
+export const sidenavLandmark: TextToken = {
+    es: 'Navegación principal',
+    en: 'Main navigation',
+    de: 'Hauptnavigation',
+    pt: 'Navegação principal',
 };
 
 export const clearButton: TextToken = {

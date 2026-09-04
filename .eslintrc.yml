@@ -29,6 +29,25 @@ overrides:
                           - '@vanilla-extract/css'
                           - '**/sprinkles.css'
                       message: This package should only be imported in css files
+    # SidenavBar shares the top bar and the burger menu with the navigation bars. Every shared part lives in
+    # navigation-shared and in mobile-navigation-menu, so the sidenav never reads the internals of
+    # navigation-bar. This override repeats the patterns above, because eslint replaces the options of a rule
+    # instead of merging them.
+    - files:
+          - 'src/sidenav-bar*.tsx'
+          - 'src/use-sidenav-bar-keyboard.tsx'
+      rules:
+          no-restricted-imports:
+              - error
+              - patterns:
+                    - group:
+                          - '@vanilla-extract/css'
+                          - '**/sprinkles.css'
+                      message: This package should only be imported in css files
+                    - group:
+                          - '**/navigation-bar'
+                          - '**/navigation-bar.css'
+                      message: Import the shared parts from navigation-shared or mobile-navigation-menu
 rules:
     import/extensions:
         - error

@@ -4323,7 +4323,187 @@ const listItemSnippets = [
     },
 ];
 
+const sidenavBarSnippets: Array<Snippet> = [
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (full page)',
+        code: `
+<SidenavLayout
+    mode="whole-viewport"
+    sidenav={
+        <SidenavBar
+            aria-label="Main navigation"
+            logo={({collapsed}) => <Logo size={32} type={collapsed ? 'isotype' : 'imagotype'} />}
+            headerSlot={<Placeholder height={32} />}
+            collapsed={getState('sidenavCollapsed', false)}
+            onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
+            selectedItemId={getState('sidenavSelectedItem', 'home')}
+            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
+            sections={[
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                {
+                    title: 'Workspace',
+                    dividerTop: true,
+                    items: [
+                        {
+                            id: 'projects',
+                            label: 'Projects',
+                            asset: IconFolderRegular,
+                            defaultOpen: true,
+                            children: [
+                                {id: 'projects-active', label: 'Active', href: '#projects/active'},
+                                {id: 'projects-archived', label: 'Archived', to: '/projects/archived'},
+                            ],
+                        },
+                        {
+                            id: 'inbox',
+                            label: 'Inbox',
+                            asset: IconEmailRegular,
+                            href: '#inbox',
+                            rightSlot: <Badge value={3} />,
+                        },
+                        {
+                            id: 'tasks',
+                            label: 'Tasks',
+                            asset: IconCheckedRegular,
+                            onPress: () => console.log('Tasks pressed'),
+                            onNavigate: () => console.log('Tasks selected'),
+                        },
+                    ],
+                },
+                {
+                    title: 'Account',
+                    dividerTop: true,
+                    items: [
+                        {
+                            id: 'profile',
+                            label: 'My profile',
+                            asset: IconComputerUserRegular,
+                            children: [
+                                {id: 'profile-personal', label: 'Personal info', href: '#profile/personal'},
+                                {
+                                    id: 'profile-security',
+                                    label: 'Security',
+                                    href: '#profile/security',
+                                    rightSlot: <Badge />,
+                                },
+                            ],
+                        },
+                        {
+                            id: 'docs',
+                            label: 'Documentation',
+                            asset: IconSearchRegular,
+                            showIconWhenExpanded: false,
+                            href: 'https://example.org',
+                            newTab: true,
+                        },
+                    ],
+                },
+                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+            ]}
+            fixedFooter
+            footerSlot={
+                <Box padding={16}>
+                    <Placeholder height={48} />
+                </Box>
+            }
+        />
+    }
+>
+    <Box padding={24}>
+        <Stack space={16}>
+            <Text5 as="h1">Page title</Text5>
+            <Text2 regular as="p">
+                The sidenav stays sticky while the content scrolls with the document. Collapse the
+                sidenav to see the rail, and resize to a tablet width to see the mobile top bar.
+            </Text2>
+            <Placeholder height={900} />
+        </Stack>
+    </Box>
+</SidenavLayout>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (double panel, brand, boxed)',
+        code: `
+<div style={{display: 'flex', height: 520}}>
+    <Box padding={16}>
+        <SidenavBar
+            aria-label="Main navigation"
+            variant="brand"
+            boxed
+            doublePanel
+            width={260}
+            defaultCollapsed={false}
+            selectedItemId={getState('sidenavPanelSelectedItem', 'dashboard')}
+            onSelectedItemIdChange={(id) => setState('sidenavPanelSelectedItem', id)}
+            renderCollapseAction={({collapsed, onPress, 'aria-label': ariaLabel}) =>
+                collapsed ? (
+                    <IconButton
+                        Icon={IconChevronRightRegular}
+                        type="neutral"
+                        backgroundType="transparent"
+                        small
+                        onPress={onPress}
+                        aria-label={ariaLabel}
+                    />
+                ) : (
+                    <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
+                        Hide
+                    </ButtonLink>
+                )
+            }
+            sections={[
+                {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
+                {
+                    title: 'Catalog',
+                    dividerTop: true,
+                    dividerBottom: true,
+                    items: [
+                        {
+                            id: 'products',
+                            label: 'Products',
+                            asset: IconShopRegular,
+                            children: [
+                                {id: 'products-all', label: 'All products', href: '#products/all'},
+                                {id: 'products-featured', label: 'Featured', href: '#products/featured'},
+                                {id: 'products-new', label: 'New arrivals', href: '#products/new'},
+                            ],
+                        },
+                        {
+                            id: 'brands',
+                            label: 'Brands',
+                            asset: IconTagRegular,
+                            children: [
+                                {id: 'brands-premium', label: 'Premium', href: '#brands/premium'},
+                                {id: 'brands-value', label: 'Value', href: '#brands/value'},
+                            ],
+                        },
+                    ],
+                },
+                {
+                    items: [
+                        {
+                            id: 'orders',
+                            label: 'Orders',
+                            asset: IconShoppingCartRegular,
+                            href: '#orders',
+                            rightSlot: <Badge value={5} />,
+                        },
+                        {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals'},
+                    ],
+                },
+            ]}
+        />
+    </Box>
+</div>
+        `,
+    },
+];
+
 export default [
+    ...sidenavBarSnippets,
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
