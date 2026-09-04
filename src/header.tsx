@@ -5,11 +5,11 @@ import Stack from './stack';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useSetOverscrollColor} from './overscroll-color-context';
-import {Text7, Text6, Text3, Text2} from './text';
+import {Text7, Text6, Text, Text2, Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {Title3, Title4} from './title';
+import {Title1, Title2, Title3, Title4} from './title';
 import {
     type DataAttributes,
     type HeadingType,
@@ -17,6 +17,7 @@ import {
     type RendersNullableElement,
 } from './utils/types';
 import {isBiggerHeading} from './utils/headings';
+import {useTheme} from './hooks';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -30,12 +31,15 @@ type OverridableTextProps = {
 
 type RichText = string | ({text: string} & OverridableTextProps);
 
+type TitlePresetsType = 'title1' | 'title2' | 'title3' | 'title4';
+
 type HeaderProps = {
     headline?: React.ReactNode;
     pretitle?: RichText;
     pretitleAs?: HeadingType;
     title?: string;
     titleAs?: HeadingType;
+    titleTextPreset?: TitlePresetsType;
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
@@ -47,45 +51,63 @@ export const Header = ({
     pretitleAs,
     title,
     titleAs = 'h2',
+    titleTextPreset,
     description,
     dataAttributes,
     small = false,
 }: HeaderProps): JSX.Element => {
+    const {textPresets} = useTheme();
+
     const renderPretitle = () => {
         if (!pretitle) {
             return null;
         }
         const baseTextProps = {
-            regular: true,
             color: vars.colors.textPrimary,
             as: pretitleAs,
             dataAttributes: {testid: 'pretitle'},
+            desktopSize: textPresets.headerPretitle.size.desktop,
+            mobileSize: textPresets.headerPretitle.size.mobile,
+            desktopLineHeight: textPresets.headerPretitle.lineHeight.desktop,
+            mobileLineHeight: textPresets.headerPretitle.lineHeight.mobile,
+            weight: textPresets.headerPretitle.weight,
         } as const;
 
         if (typeof pretitle === 'string') {
-            return <Text3 {...baseTextProps}>{pretitle}</Text3>;
+            return <Text {...baseTextProps}>{pretitle}</Text>;
         }
         const {text, ...textProps} = pretitle;
         return (
-            <Text3 {...baseTextProps} {...textProps}>
+            <Text {...baseTextProps} {...textProps}>
                 {text}
-            </Text3>
+            </Text>
         );
+    };
+
+    const renderTitle = () => {
+        if (!title) return undefined;
+
+        const baseTitleProps = {
+            children: title,
+            as: titleAs,
+            dataAttributes: {testid: 'title'},
+        } as const;
+
+        const titleComponents = {
+            title1: Title1,
+            title2: Title2,
+            title3: Title3,
+            title4: Title4,
+        } as const;
+
+        const TitleComponent = titleTextPreset ? titleComponents[titleTextPreset] : small ? Title3 : Title4;
+
+        return <TitleComponent {...baseTitleProps} />;
     };
 
     const pretitleContent = renderPretitle();
 
-    const titleContent = title ? (
-        small ? (
-            <Title3 as={titleAs} dataAttributes={{testid: 'title'}}>
-                {title}
-            </Title3>
-        ) : (
-            <Title4 as={titleAs} dataAttributes={{testid: 'title'}}>
-                {title}
-            </Title4>
-        )
-    ) : undefined;
+    const titleContent = renderTitle();
 
     const headlineContent = headline ? (
         <div

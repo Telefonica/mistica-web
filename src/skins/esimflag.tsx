@@ -708,6 +708,11 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 size: {desktop: 28, mobile: 20},
                 weight: 'bold',
             },
+            headerPretitle: {
+                lineHeight: {desktop: 24, mobile: 24},
+                size: {desktop: 18, mobile: 16},
+                weight: 'regular',
+            },
             indicator: {weight: 'medium'},
             inputHelperText: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
             inputLabel: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},

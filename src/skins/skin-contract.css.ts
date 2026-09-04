@@ -373,6 +373,7 @@ const textPresets: ToThemeTokens<TextPresetsConfig> = {
         size: '',
         weight: '',
     },
+    headerPretitle: {lineHeight: '', size: '', weight: ''},
 };
 
 const spacing: ToThemeTokens<SpacingConfig> = {
