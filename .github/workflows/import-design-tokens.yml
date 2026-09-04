@@ -58,7 +58,7 @@ jobs:
               run: yarn install --immutable --immutable-cache
 
             - name: Generate skins from design tokens
-              run: cd packages/generate-design-tokens && yarn && node index.js
+              run: cd packages/generate-design-tokens && yarn && node index.ts
 
             - name: Prettier
               run: yarn prettier src/skins --write

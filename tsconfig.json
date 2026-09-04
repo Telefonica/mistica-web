@@ -90,5 +90,5 @@
     },
 
     // this also excludes paths from VSCode auto import feature
-    "exclude": ["dist", "dist-ts", "dist-es", "node_modules", "examples"]
+    "exclude": ["dist", "dist-ts", "dist-es", "node_modules", "examples", "packages"]
 }
