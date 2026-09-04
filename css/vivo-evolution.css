@@ -157,12 +157,24 @@
         0.1
     );
     --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
-    --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
-    --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
-    --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
-    --mistica-color-buttonLinkNeutralBackgroundNegativePressed: var(--mistica-vivo-evolution-vivoNeutral25);
-    --mistica-color-buttonLinkNeutralBackgroundMedia: var(--mistica-vivo-evolution-vivoNeutral0);
-    --mistica-color-buttonLinkNeutralBackgroundMediaPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-buttonLinkNeutralBackgroundBrand: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral0), 0);
+    --mistica-color-buttonLinkNeutralBackgroundBrandPressed: rgba(
+        var(--mistica-vivo-evolution-raw-vivoNeutral0),
+        0.1
+    );
+    --mistica-color-buttonLinkNeutralBackgroundNegative: rgba(
+        var(--mistica-vivo-evolution-raw-vivoNeutral0),
+        0
+    );
+    --mistica-color-buttonLinkNeutralBackgroundNegativePressed: rgba(
+        var(--mistica-vivo-evolution-raw-vivoNeutral0),
+        0.1
+    );
+    --mistica-color-buttonLinkNeutralBackgroundMedia: rgba(var(--mistica-vivo-evolution-raw-vivoNeutral0), 0);
+    --mistica-color-buttonLinkNeutralBackgroundMediaPressed: rgba(
+        var(--mistica-vivo-evolution-raw-vivoNeutral0),
+        0.1
+    );
     --mistica-color-buttonPrimaryBackground: var(--mistica-vivo-evolution-vivoPurple700);
     --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-buttonPrimaryBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -251,10 +263,10 @@
     --mistica-color-textLinkDangerMedia: var(--mistica-vivo-evolution-vivoPepper600);
     --mistica-color-textLinkSnackbar: var(--mistica-vivo-evolution-vivoPurple100);
     --mistica-color-textLinkNeutral: var(--mistica-vivo-evolution-vivoNeutral975);
-    --mistica-color-textLinkNeutralBrand: var(--mistica-vivo-evolution-vivoNeutral975);
-    --mistica-color-textLinkNeutralNegative: var(--mistica-vivo-evolution-vivoNeutral975);
+    --mistica-color-textLinkNeutralBrand: var(--mistica-vivo-evolution-vivoNeutral0);
+    --mistica-color-textLinkNeutralNegative: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-textLinkNeutralAlternative: var(--mistica-vivo-evolution-vivoNeutral975);
-    --mistica-color-textLinkNeutralMedia: var(--mistica-vivo-evolution-vivoNeutral975);
+    --mistica-color-textLinkNeutralMedia: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-textActivated: var(--mistica-vivo-evolution-vivoPurple700);
     --mistica-color-textBrand: var(--mistica-vivo-evolution-vivoPurple700);
     --mistica-color-inputBorder: var(--mistica-vivo-evolution-vivoNeutral500);
@@ -1522,14 +1534,30 @@
             0.1
         );
         --mistica-color-buttonLinkNeutralBackgroundPressed: var(--mistica-vivo-evolution-vivoNeutral100);
-        --mistica-color-buttonLinkNeutralBackgroundBrand: var(--mistica-vivo-evolution-vivoNeutral0);
-        --mistica-color-buttonLinkNeutralBackgroundBrandPressed: var(--mistica-vivo-evolution-vivoNeutral25);
-        --mistica-color-buttonLinkNeutralBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
-        --mistica-color-buttonLinkNeutralBackgroundNegativePressed: var(
-            --mistica-vivo-evolution-vivoNeutral25
+        --mistica-color-buttonLinkNeutralBackgroundBrand: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral0),
+            0
         );
-        --mistica-color-buttonLinkNeutralBackgroundMedia: var(--mistica-vivo-evolution-vivoNeutral0);
-        --mistica-color-buttonLinkNeutralBackgroundMediaPressed: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-buttonLinkNeutralBackgroundBrandPressed: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral0),
+            0.1
+        );
+        --mistica-color-buttonLinkNeutralBackgroundNegative: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral0),
+            0
+        );
+        --mistica-color-buttonLinkNeutralBackgroundNegativePressed: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral0),
+            0.1
+        );
+        --mistica-color-buttonLinkNeutralBackgroundMedia: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral0),
+            0
+        );
+        --mistica-color-buttonLinkNeutralBackgroundMediaPressed: rgba(
+            var(--mistica-vivo-evolution-raw-vivoNeutral0),
+            0.1
+        );
         --mistica-color-buttonPrimaryBackground: var(--mistica-vivo-evolution-vivoPurple700);
         --mistica-color-buttonPrimaryBackgroundInverse: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-buttonPrimaryBackgroundNegative: var(--mistica-vivo-evolution-vivoNeutral0);
@@ -1621,10 +1649,10 @@
         --mistica-color-textLinkDangerMedia: var(--mistica-vivo-evolution-vivoPepper600);
         --mistica-color-textLinkSnackbar: var(--mistica-vivo-evolution-vivoPurple100);
         --mistica-color-textLinkNeutral: var(--mistica-vivo-evolution-vivoNeutral975);
-        --mistica-color-textLinkNeutralBrand: var(--mistica-vivo-evolution-vivoNeutral975);
-        --mistica-color-textLinkNeutralNegative: var(--mistica-vivo-evolution-vivoNeutral975);
+        --mistica-color-textLinkNeutralBrand: var(--mistica-vivo-evolution-vivoNeutral0);
+        --mistica-color-textLinkNeutralNegative: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-textLinkNeutralAlternative: var(--mistica-vivo-evolution-vivoNeutral975);
-        --mistica-color-textLinkNeutralMedia: var(--mistica-vivo-evolution-vivoNeutral975);
+        --mistica-color-textLinkNeutralMedia: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-textActivated: var(--mistica-vivo-evolution-vivoPurple700);
         --mistica-color-textBrand: var(--mistica-vivo-evolution-vivoPurple700);
         --mistica-color-inputBorder: var(--mistica-vivo-evolution-vivoNeutral500);
