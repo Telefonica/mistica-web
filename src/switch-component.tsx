@@ -155,7 +155,15 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             onKeyDown={disabled ? undefined : handleKeyDown}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={disabled ? styles.containerDisabled : styles.container}
+            className={
+                props.render
+                    ? disabled
+                        ? styles.containerDisabledFullWidth
+                        : styles.containerFullWidth
+                    : disabled
+                      ? styles.containerDisabled
+                      : styles.container
+            }
             aria-disabled={disabled}
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : labelId}
