@@ -26,7 +26,7 @@ import {isSidenavSection} from './sidenav-bar-types';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
-import type {SidenavEntry, SidenavItem, SidenavLogo} from './sidenav-bar-types';
+import type {SidenavEntry, SidenavItem, SidenavNestedItem, SidenavLogo} from './sidenav-bar-types';
 
 /*
  * The mobile sidenav follows the mobile Main Navigation Bar as closely as the spec asks:
@@ -132,7 +132,7 @@ const SidenavMobileBar = ({
         return logo;
     })();
 
-    const renderRow = (item: SidenavItem): JSX.Element => {
+    const renderRow = (item: SidenavItem | SidenavNestedItem): JSX.Element => {
         const commonProps = {
             title: item.label,
             right: item.rightSlot,

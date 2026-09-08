@@ -2,18 +2,41 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {IconProps} from './utils/types';
 import type {MaybeInteractiveProps} from './navigation-types';
 
-/** Props shared by every navigation item, regardless of whether it is expandable or navigable. */
+type SidenavAsset = ((props: IconProps) => JSX.Element) | React.ReactElement;
+
+/** Props shared by every navigation item, at any level. */
 type SidenavItemBaseProps = {
     /** Unique identifier within the sidenav for selection tracking and panel state. */
     id: string;
     /** Display text (truncated if too long). */
     label: string;
-    /** Icon component or element. Required for top-level items in collapsed sidenav. */
-    asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
-    /** Show asset when expanded (not collapsed). @default true */
-    showIconWhenExpanded?: boolean;
     /** Custom content on right side (e.g., Badge). */
     rightSlot?: React.ReactNode;
+};
+
+/**
+ * Props of a first-level item. The collapsed rail shows only the asset of these items, so the asset is
+ * required there. An item that does not want the asset next to its label hides it with
+ * `showIconWhenExpanded`.
+ */
+type SidenavFirstLevelItemProps = SidenavItemBaseProps & {
+    /** Icon component or element. It is the only visible part of the item on the collapsed rail. */
+    asset: SidenavAsset;
+    /** Show asset when expanded (not collapsed). @default true */
+    showIconWhenExpanded?: boolean;
+};
+
+/**
+ * Props of a nested item. The collapsed rail never shows it, so the asset is optional and
+ * `showIconWhenExpanded` has no meaning. The `undefined` members let a consumer read both item types
+ * through one union.
+ */
+type SidenavNestedItemProps = SidenavItemBaseProps & {
+    /** Icon component or element. */
+    asset?: SidenavAsset;
+    showIconWhenExpanded?: undefined;
+    children?: undefined;
+    defaultOpen?: undefined;
 };
 
 /**
@@ -22,7 +45,7 @@ type SidenavItemBaseProps = {
  */
 type SidenavExpandableItemProps = {
     /** Nested items (max 1 level, level 0 items only). An expandable item cannot navigate. */
-    children: ReadonlyArray<SidenavItem>;
+    children: ReadonlyArray<SidenavNestedItem>;
     /** Initial expanded state for items with children. @default false */
     defaultOpen?: boolean;
 };
@@ -41,8 +64,9 @@ type SidenavNavigableItemProps = MaybeInteractiveProps & {
  * Navigation item data for SidenavBar.
  *
  * Supports 2-level nesting:
- * - **Level 0 items** can have children (expandable/collapsible)
- * - **Level 1 items** (children) cannot have children (leaf nodes)
+ * - **Level 0 items** can have children (expandable/collapsible). They always carry an `asset`, because
+ *   the collapsed rail shows nothing else of them.
+ * - **Level 1 items** (children) cannot have children (leaf nodes). See `SidenavNestedItem`.
  *
  * Each item is exactly one of:
  * - **Expandable** — has `children` and only opens/closes them. It cannot navigate, so
@@ -65,10 +89,19 @@ type SidenavNavigableItemProps = MaybeInteractiveProps & {
  * }
  *
  * // Item with right slot (e.g., badge)
- * {id: 'notifications', label: 'Notifications', href: '#', rightSlot: <Badge value={5} />}
+ * {id: 'notifications', label: 'Notifications', asset: IconBell, href: '#', rightSlot: <Badge value={5} />}
  */
-type SidenavItem = SidenavItemBaseProps &
+type SidenavItem = SidenavFirstLevelItemProps &
     ExclusifyUnion<SidenavExpandableItemProps | SidenavNavigableItemProps>;
+
+/**
+ * Nested item data: a child of an expandable first-level item. It is always navigable, and it cannot
+ * have children of its own. See `SidenavItem`.
+ *
+ * @example
+ * {id: 'active', label: 'Active', href: '/projects/active'}
+ */
+type SidenavNestedItem = SidenavNestedItemProps & SidenavNavigableItemProps;
 
 /**
  * Section data that groups navigation items with optional title and dividers.
@@ -146,4 +179,11 @@ const isSidenavSection = (entry: SidenavEntry): entry is SidenavSection =>
     Array.isArray((entry as SidenavSection).items);
 
 export {isSidenavSection};
-export type {SidenavItem, SidenavSection, SidenavEntry, SidenavLogo, SidenavLogoRenderProps};
+export type {
+    SidenavItem,
+    SidenavNestedItem,
+    SidenavSection,
+    SidenavEntry,
+    SidenavLogo,
+    SidenavLogoRenderProps,
+};

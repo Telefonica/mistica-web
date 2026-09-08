@@ -169,6 +169,15 @@ const productMark = (
     </Circle>
 );
 
+// A logo larger than its slot, in both directions. The slot clips it, so it never paints over the header.
+const oversizedLogo = (
+    <Circle size={96} backgroundColor={skinVars.colors.brand}>
+        <Text3 medium color={skinVars.colors.textPrimaryInverse}>
+            Too big
+        </Text3>
+    </Circle>
+);
+
 const renderCustomLogo = ({collapsed}: SidenavLogoRenderProps): React.ReactNode =>
     collapsed ? (
         productMark
@@ -185,6 +194,7 @@ type Args = {
     selectedItemId: string;
     logo: boolean;
     customLogo: boolean;
+    oversizedLogo: boolean;
     headerSlot: boolean;
     footerSlot: boolean;
     fixedFooter: boolean;
@@ -211,6 +221,7 @@ export const Default = ({
     selectedItemId,
     logo,
     customLogo,
+    oversizedLogo: isLogoOversized,
     headerSlot,
     footerSlot,
     fixedFooter,
@@ -268,7 +279,13 @@ export const Default = ({
                     {...({
                         'aria-label': label,
                         variant,
-                        logo: logo && customLogo ? renderCustomLogo : logo,
+                        logo: !logo
+                            ? false
+                            : isLogoOversized
+                              ? oversizedLogo
+                              : customLogo
+                                ? renderCustomLogo
+                                : logo,
                         headerSlot: headerSlot ? headerSlotContent : undefined,
                         footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
                         fixedFooter,
@@ -429,6 +446,7 @@ export default {
         selectedItemId: 'none',
         logo: true,
         customLogo: false,
+        oversizedLogo: false,
         headerSlot: true,
         footerSlot: true,
         fixedFooter: false,
@@ -491,6 +509,12 @@ export default {
             control: {type: 'boolean'},
             description:
                 'Puts a logo of your own in the slot with a function of the collapsed state: the mark of a product alone on the rail, and the mark with the name of the product on the expanded sidenav.',
+            if: {arg: 'logo', truthy: true},
+        },
+        oversizedLogo: {
+            control: {type: 'boolean'},
+            description:
+                'Puts a logo larger than its slot, to show that the slot clips it in both states. It wins over customLogo.',
             if: {arg: 'logo', truthy: true},
         },
         headerSlot: {

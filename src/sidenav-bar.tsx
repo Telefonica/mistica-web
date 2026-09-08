@@ -45,12 +45,7 @@ import type {Variant} from './theme-variant-context';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 import type {SidenavSectionProps} from './sidenav-bar-section';
-import type {
-    SidenavEntry,
-    SidenavItem as SidenavItemType,
-    SidenavLogo,
-    SidenavLogoRenderProps,
-} from './sidenav-bar-types';
+import type {SidenavEntry, SidenavNestedItem, SidenavLogo, SidenavLogoRenderProps} from './sidenav-bar-types';
 
 type SidenavBarBackgroundColors = {
     /** Header background color. Use an opaque color: the header is sticky over the scrolling body, so a
@@ -239,7 +234,7 @@ const SidenavBar = ({
     const [doublePanelContent, setDoublePanelContent] = React.useState<{
         itemId: string;
         label: string;
-        children: ReadonlyArray<SidenavItemType>;
+        children: ReadonlyArray<SidenavNestedItem>;
     } | null>(null);
 
     // See `collapsedSettled` in `sidenav-bar-context.tsx` for why the sidenav reports the collapsed state

@@ -18,7 +18,7 @@ import {
     hasDescendantWithId,
 } from './sidenav-bar-context';
 import {SidenavDialogPanel} from './sidenav-bar-panel';
-import {useIsReducedMotion} from './sidenav-bar-motion';
+import {useIsReducedMotion, useRestWidth} from './sidenav-bar-motion';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {isRunningAcceptanceTest} from './utils/platform';
@@ -27,8 +27,7 @@ import {useThemeVariant} from './theme-variant-context';
 import Touchable from './touchable';
 import Tooltip from './tooltip';
 import {Text2} from './text';
-import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
-import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
+import IconChevron from './icons/icon-chevron';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -36,9 +35,13 @@ import type {DataAttributes, IconProps} from './utils/types';
 type SidenavItemBaseProps = {
     /** Display text. A text longer than the row wraps over several lines, and it never truncates. */
     label: string;
-    /** Icon component or element to display. Required for top-level items in collapsed sidenav. */
+    /**
+     * Icon component or element to display. A first-level item must carry one, because the collapsed rail
+     * shows nothing else of it. The component learns its level at runtime, so it reports a missing asset
+     * in the console instead of in the type. `SidenavEntry` enforces it in the type.
+     */
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
-    /** Show asset when expanded (not collapsed). @default true */
+    /** Show asset when expanded (not collapsed). Only a first-level item reads it. @default true */
     showIconWhenExpanded?: boolean;
     /** Custom content on the right side (e.g., Badge). */
     rightSlot?: React.ReactNode;
@@ -214,9 +217,19 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
     })();
 
-    const ChevronIcon = doublePanel ? IconChevronRightRegular : IconChevronDownRegular;
-
-    const shouldShowAsset = asset && (collapsed || showIconWhenExpanded);
+    // The panel resets the level to 0 for the indentation, but its items are nested items of the sidenav.
+    const isFirstLevel = level === 0 && !isInsidePanel;
+    const hasAsset = !!asset;
+    React.useEffect(() => {
+        if (process.env.NODE_ENV !== 'production' && isFirstLevel && !hasAsset) {
+            console.error(
+                `SidenavItem "${label}" is a first-level item without an asset, so the collapsed sidenav shows nothing of it. ` +
+                    `Pass an asset, and hide it with showIconWhenExpanded if you do not want it next to the label.`
+            );
+        }
+    }, [isFirstLevel, hasAsset, label]);
+    // The collapsed rail never shows a nested item, so `showIconWhenExpanded` has no meaning there.
+    const shouldShowAsset = asset && (collapsed || showIconWhenExpanded || !isFirstLevel);
     let assetContent: React.ReactNode = null;
     if (typeof asset === 'function') {
         const Asset = asset;
@@ -238,17 +251,23 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // the sidenav is already collapsed, and during an expansion the settled state still reports the rail.
     // The expanded sidenav at rest drops it, and the label wraps there. See `itemLabelKeepsWidth`.
     const isLabelWidthKept = !isInsidePanel && (collapsed || collapsedSettled);
+    const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(isLabelWidthKept);
     const labelNode = (
         <div
+            ref={labelRef}
             id={labelId}
             className={classnames(styles.itemLabel, {
                 [styles.itemLabelCollapsed]: isLabelCollapsed,
-                [styles.itemLabelKeepsWidth]: isLabelWidthKept,
+                [styles.itemLabelFrozenWidth]: labelWidth !== undefined,
+                [styles.itemLabelKeepsWidth]: isLabelWidthKept && labelWidth === undefined,
             })}
+            style={labelWidth !== undefined ? {width: labelWidth} : undefined}
         >
-            <Text2 regular color="inherit">
-                {label}
-            </Text2>
+            <div className={styles.itemLabelContent}>
+                <Text2 regular color="inherit">
+                    {label}
+                </Text2>
+            </div>
         </div>
     );
 
@@ -278,7 +297,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     })}
                     aria-hidden="true"
                 >
-                    <ChevronIcon size={16} color="currentColor" />
+                    <IconChevron size={16} color="currentColor" direction={doublePanel ? 'right' : 'down'} />
                 </span>
             )}
         </>
@@ -362,11 +381,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             {...getPrefixedDataAttributes(itemDataAttributes)}
         >
             {showAccent && (
-                <div
-                    className={classnames(styles.itemAccent, styles.itemAccentVariant[variant], {
-                        [styles.itemAccentCollapsed]: isLabelCollapsed,
-                    })}
-                />
+                <div className={classnames(styles.itemAccent, styles.itemAccentVariant[variant])} />
             )}
             {showTooltip ? (
                 <Tooltip

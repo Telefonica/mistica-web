@@ -1,14 +1,15 @@
 'use client';
 import * as React from 'react';
+import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
 import {SidenavItem} from './sidenav-bar-item';
 import {SidenavSection} from './sidenav-bar-section';
 import {isSidenavSection} from './sidenav-bar-types';
 import {SidenavItemIndexContext, SidenavHasOuterListItemContext} from './sidenav-bar-context';
 
-import type {SidenavEntry, SidenavItem as SidenavItemType} from './sidenav-bar-types';
+import type {SidenavEntry, SidenavItem as SidenavItemType, SidenavNestedItem} from './sidenav-bar-types';
 
-const renderSidenavItemFromData = (item: SidenavItemType): React.ReactElement => {
+const renderSidenavItemFromData = (item: SidenavItemType | SidenavNestedItem): React.ReactElement => {
     const children = item.children?.map((child) => renderSidenavItemFromData(child));
     const baseProps = {
         id: item.id,
@@ -63,16 +64,11 @@ const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
     const seenIds = new Set<string>();
     const duplicateIds = new Set<string>();
 
-    const visitItem = (item: SidenavItemType, level: number): void => {
+    const visitItem = (item: SidenavItemType | SidenavNestedItem, level: number): void => {
         if (seenIds.has(item.id)) {
             duplicateIds.add(item.id);
         } else {
             seenIds.add(item.id);
-        }
-        if (level === 0 && !item.asset) {
-            console.warn(
-                `SidenavItem "${item.label}" at top level may not be visible when sidenav is collapsed (asset icon recommended)`
-            );
         }
         if (level > 0 && item.children?.length) {
             console.error(
@@ -109,11 +105,26 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
     // item. A section holds a list of its own, and a stand-alone item holds a single row.
     return entries.map((entry, entryIndex) => {
         if (isSidenavSection(entry)) {
+            // Two consecutive sections share one line when the first ends with a divider and the second
+            // starts with one: the second drops its top divider, and its entry drops the gap of the first
+            // level, so the shared divider keeps 16px on each side.
+            const previousEntry = entries[entryIndex - 1];
+            const sharesDividerWithPrevious =
+                !!entry.dividerTop &&
+                !!previousEntry &&
+                isSidenavSection(previousEntry) &&
+                !!previousEntry.dividerBottom;
             return (
-                <div key={entry.title || `section-${entryIndex}`} role="listitem">
+                <div
+                    key={entry.title || `section-${entryIndex}`}
+                    className={classnames(styles.sectionEntry, {
+                        [styles.sectionEntryAfterSharedDivider]: sharesDividerWithPrevious,
+                    })}
+                    role="listitem"
+                >
                     <SidenavSection
                         title={entry.title}
-                        dividerTop={entry.dividerTop}
+                        dividerTop={entry.dividerTop && !sharesDividerWithPrevious}
                         dividerBottom={entry.dividerBottom}
                     >
                         {entry.items.map((item) => withItemIndex(item, itemIndex++))}

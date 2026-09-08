@@ -36,9 +36,12 @@ const SECTION_TITLE_INSET = 24;
 // so the content of a child item lands at `SECTION_TITLE_INSET` from the edge of the panel.
 const DIALOG_PANEL_INSET = 8;
 const DIALOG_PANEL_PADDING_Y = 16;
-// Vertical space between two first-level entries of the body (section to section, section to
-// stand-alone item, or stand-alone item to stand-alone item). Items inside a section stay adjacent.
+// Vertical space between a section and its neighbour at the first level of the body (section to section,
+// or section to stand-alone item). Two stand-alone items stay adjacent, like the items inside a section.
 const FIRST_LEVEL_GAP = 8;
+// Vertical space on each side of a section divider. A section without dividers carries no vertical space
+// of its own: the Figma frame of the stand-alone items puts its title against the gap of the body.
+const SECTION_DIVIDER_MARGIN_Y = 16;
 
 export const sidenavWidthVar = createVar();
 // The second column always takes the `width` of the expanded sidenav, so it needs its own variable: the
@@ -137,7 +140,7 @@ const itemColors: Record<NonDeprecatedVariant, ItemColors> = {
     default: {
         label: skinVars.colors.textPrimary,
         asset: 'currentColor',
-        chevron: skinVars.colors.neutralHigh,
+        chevron: skinVars.colors.chevronIndicator,
         indicator: skinVars.colors.controlActivated,
         hover: skinVars.colors.backgroundContainerHover,
         pressed: skinVars.colors.backgroundContainerPressed,
@@ -159,7 +162,7 @@ const itemColors: Record<NonDeprecatedVariant, ItemColors> = {
     alternative: {
         label: skinVars.colors.textPrimary,
         asset: 'currentColor',
-        chevron: skinVars.colors.neutralHigh,
+        chevron: skinVars.colors.chevronIndicator,
         indicator: skinVars.colors.controlActivated,
         hover: skinVars.colors.backgroundContainerHover,
         pressed: skinVars.colors.backgroundContainerPressed,
@@ -371,6 +374,9 @@ export const logo = style({
     // The clamp below is a `max-width`, and not a `width`, so that it interpolates: `auto` has no value to
     // animate from.
     maxWidth: '100%',
+    // A logo of the consumer that is larger than this box is clipped, so it never paints over the
+    // controls of the header or past the edge of the collapsed rail.
+    overflow: 'hidden',
     transition: `max-width ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} 50ms`,
     ...reducedMotion,
 });
@@ -463,12 +469,29 @@ export const bodyWithFixedFooter = style({
     scrollPaddingBottom: 28,
 });
 
-// List of first-level entries (sections and stand-alone items). It owns the space between the
-// entries, so the scroll sentinels and the footer, which are siblings of this list, stay untouched.
+// List of first-level entries (sections and stand-alone items). The space between the entries lives on
+// the entries themselves (see `sectionEntry`), so the scroll sentinels and the footer, which are siblings
+// of this list, stay untouched.
 export const bodyContent = style({
     display: 'flex',
     flexDirection: 'column',
-    gap: FIRST_LEVEL_GAP,
+});
+
+// The list item of the body that wraps a section. Only a boundary that touches a section takes the
+// `FIRST_LEVEL_GAP`: a `gap` on the list would also part two stand-alone items, which stay adjacent.
+export const sectionEntry = style({});
+
+globalStyle(`${bodyContent} > ${sectionEntry} + *, ${bodyContent} > * + ${sectionEntry}`, {
+    marginTop: FIRST_LEVEL_GAP,
+});
+
+// A section that shares the divider of the section before it (see `sidenav-bar-entries.tsx`) drops the
+// gap: the margins of that divider already give the 16px on each side. The rule comes after the one above
+// with the same specificity, so it wins.
+export const sectionEntryAfterSharedDivider = style({});
+
+globalStyle(`${bodyContent} > * + ${sectionEntryAfterSharedDivider}`, {
+    marginTop: 0,
 });
 
 // Scroll-intersection divider of the footer (appears when content scrolls past the footer).
@@ -515,35 +538,51 @@ export const footerFixed = style({
 
 // Section ---------------------------------------------------------------------
 
+// No vertical padding here: the space around a section belongs to its dividers (see `sectionDividerTop`),
+// so a section without them meets its neighbour across the `FIRST_LEVEL_GAP` alone.
 export const section = style({
     display: 'flex',
     flexDirection: 'column',
 });
 
-// The title fades with the labels of the items below it. `visibility` changes in one step, and a
-// transition holds a step like this one until the end, so the title stays readable for a screen reader
-// while it fades out, and it leaves the accessibility tree only once the rail stopped.
+// The title fades with the labels of the items below it, and its box closes at the same time, so the
+// items move up while the rail narrows. A grid row goes from `1fr` to `0fr` with a transition, which a
+// height in `auto` cannot do (the same pattern as the panel of the Accordion). The CI Chromium predates
+// that interpolation and snaps the row, which its screenshots accept.
 export const sectionTitle = style({
-    padding: `0 ${SECTION_TITLE_INSET}px`,
+    display: 'grid',
+    gridTemplateRows: '1fr',
     marginBottom: 8,
-    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING}, visibility ${collapseDurationVar} ${COLLAPSE_EASING}`,
+    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, margin-bottom ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
+});
+
+// The row of the grid clips its content, so the text disappears with the row and never paints over the
+// items while the row closes.
+export const sectionTitleContent = style({
+    minHeight: 0,
+    overflow: 'hidden',
+    padding: `0 ${SECTION_TITLE_INSET}px`,
 });
 
 // The title text inherits this colour (see the `color="inherit"` of its `Text3`), so every title of the
 // sidenav takes its token from one place.
 export const sectionTitleVariant = styleVariants(sectionTitleColor, (color) => ({color}));
 
-// Collapsed: the title is hidden, but it still reserves its space, so the items of a section keep the
-// same vertical rhythm in both states. Neither `opacity` nor `visibility` takes a box out of the flow.
+// Collapsed: the title gives its space back, so the first item of a section moves up to where the title
+// stood. The element stays in the document, out of the reading order with `aria-hidden`, because the
+// list of the section takes its name from it (see `sidenav-bar-section.tsx`). No `visibility: hidden`: a
+// box without height takes no click, and jsdom would drop the name of the list with it.
 export const sectionTitleCollapsed = style({
+    gridTemplateRows: '0fr',
+    marginBottom: 0,
     opacity: 0,
-    visibility: 'hidden',
 });
 
-// While the sidenav moves, the title keeps the width of its text, for the same reason as the label of an
-// item (see `itemLabelKeepsWidth`). Without this, the title would wrap over several lines as the rail
-// narrows, and the whole body of the sidenav would move down with it.
+// While the sidenav moves, the title keeps the width that it had at rest (an inline `width`, see
+// `useRestWidth`), for the same reason as the label of an item (see `itemLabelFrozenWidth`). Without
+// this, the title would wrap over several lines as the rail narrows, and the whole body of the sidenav
+// would move down with it. A title with no width at rest yet takes the width of its text on one line.
 export const sectionTitleKeepsWidth = style({
     width: 'max-content',
 });
@@ -559,24 +598,28 @@ export const sectionContent = style({
     paddingRight: RAIL_INSET,
 });
 
-// A stand-alone item is not wrapped in a section, so it carries the items rail itself.
-export const standaloneItem = sectionContent;
+// A stand-alone item is not wrapped in a section, so it carries the items rail itself. It is a class of
+// its own, so that a selector can tell it from the rail inside a section.
+export const standaloneItem = style([sectionContent]);
 
-// The dividers sit outside `sectionContent`, so they span the whole sidenav width, and the Figma
-// anatomy order is: top divider, 24px, section title, 8px, items. The margins are asymmetric on
-// purpose: the 8px top margin combines with `FIRST_LEVEL_GAP` into the 16px that the spec measures
-// between the last item of the previous entry and the divider.
+// The dividers sit outside `sectionContent`, so they span the whole sidenav width. The Figma anatomy
+// order is: 16px, top divider, 16px, section title, 8px, items, 16px, bottom divider, 16px. Each divider
+// carries its two 16px as margins, so a section without a divider on one side has no space of its own on
+// that side. The collapsed rail keeps the same distances, because the title closes without a trace.
 // The 1px right inset keeps the line off the vertical divider on the right edge, for the same reason as
 // `scrollDivider` above.
-export const sectionDivider = style({
-    marginTop: 8,
-    marginBottom: 24,
+const sectionDividerBase = style({
+    marginTop: SECTION_DIVIDER_MARGIN_Y,
+    marginBottom: SECTION_DIVIDER_MARGIN_Y,
     marginRight: 1,
 });
 
+export const sectionDividerTop = style([sectionDividerBase]);
+export const sectionDividerBottom = style([sectionDividerBase]);
+
 // A boxed sidenav draws a border on its left edge too (see `boxedBorder`), so the horizontal dividers keep
 // off that edge as well. A non-boxed sidenav has no divider on the left, so the lines reach that edge.
-globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${sectionDivider}, ${boxed} ${scrollSpacerDivider}`, {
+globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${sectionDividerBase}, ${boxed} ${scrollSpacerDivider}`, {
     marginLeft: 1,
 });
 
@@ -650,8 +693,9 @@ export const itemTouchableSelected = styleVariants(itemColors, (colors) => ({
     },
 }));
 
-// The accent fades with the label of its item, so the collapsed rail marks the selection with the
-// background only, like it does for a parent whose descendant is selected.
+// The accent stays on the collapsed rail: a selected first-level item keeps its bar in both states. Only
+// a parent whose descendant is selected marks the selection with the background alone, because the bar
+// belongs to the selected child (see `showAccent` in `sidenav-bar-item.tsx`).
 export const itemAccent = style({
     position: 'absolute',
     left: 0,
@@ -661,12 +705,6 @@ export const itemAccent = style({
     height: 20,
     borderRadius: 8,
     pointerEvents: 'none',
-    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
-    ...reducedMotion,
-});
-
-export const itemAccentCollapsed = style({
-    opacity: 0,
 });
 
 export const itemAccentVariant = styleVariants(itemColors, (colors) => ({
@@ -685,26 +723,45 @@ export const itemAssetVariant = styleVariants(itemColors, (colors) => ({color: c
 // The label keeps its box in the DOM on the collapsed rail, so a screen reader still reads it, and so the
 // fade of the spec has something to fade. Its own box needs no width animation: it grows and shrinks with
 // the row that holds it, because it takes the space that the row leaves.
+// The box is a grid row that folds from `1fr` to the height of one line while the rail collapses, the same
+// pattern as the section title: a label that wraps over several lines then shrinks its row with the rail,
+// instead of making it jump to one line at the first frame. The CI Chromium snaps that row (see
+// `sectionTitle`).
 export const itemLabel = style({
     flex: 1,
     minWidth: 0,
-    overflow: 'hidden',
-    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    display: 'grid',
+    gridTemplateRows: '1fr',
+    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
     ...reducedMotion,
 });
 
-// Only the opacity changes. The label keeps its place beside the icon, so the text stands still while it
-// fades. A margin or a width of its own would drag the text toward the icon instead.
+// The folded row stops at one line of text, which is what a row of 44px holds, so a label of one line
+// never changes its box. The clip hides the lines below the first one while the row folds.
+export const itemLabelContent = style({
+    minHeight: skinVars.textPresets.text2.lineHeight,
+    overflow: 'hidden',
+});
+
+// The label keeps its place beside the icon, so the text stands still while it fades. A margin or a width
+// of its own would drag the text toward the icon instead.
 export const itemLabelCollapsed = style({
+    gridTemplateRows: '0fr',
     opacity: 0,
 });
 
-// While the sidenav moves, the label keeps the width that its text asks for, instead of taking the share
-// of the row that the flex layout would give it. The row narrows under a text that does not move, and the
-// edge of the sidenav passes over that text: without this, the label would wrap over more and more lines
-// as the rail narrows, and every row of the body would grow and then shrink again.
-// The expanded sidenav at rest drops this rule, so a label longer than the row wraps there, which is what
-// the spec asks for.
+// While the sidenav moves, the label keeps the width that it had at rest (an inline `width`, see
+// `useRestWidth`), instead of taking the share of the row that the flex layout would give it. The row
+// narrows under a text that does not move, and the edge of the sidenav passes over that text: without
+// this, the label would wrap over more and more lines as the rail narrows, and every row of the body would
+// grow and then shrink again. The expanded sidenav at rest drops this rule, so a label longer than the
+// row wraps there, which is what the spec asks for.
+export const itemLabelFrozenWidth = style({
+    flex: 'none',
+});
+
+// Fallback for a label with no width at rest yet (a sidenav that mounted collapsed): the width that its
+// text asks for, on one line. The label then wraps when the rail settles, which is one jump at the end.
 export const itemLabelKeepsWidth = style({
     minWidth: 'max-content',
 });
@@ -740,12 +797,13 @@ export const itemChevronCollapsed = style({
     visibility: 'hidden',
 });
 
-// The chevron of an open parent item turns half a turn, so that it reports the state of its group. It
-// applies to the chevron that points down, which the sidenav uses for a group that opens in place. The
-// double panel keeps the chevron that points right, and never turns it: half a turn would make it point
-// away from the column that it opens.
+// The chevron of an open parent item turns half a turn counterclockwise, the same direction as the chevron
+// of `Accordion` (see `icons/icon-chevron.tsx`), so that it reports the state of its group. It applies to
+// the chevron that points down, which the sidenav uses for a group that opens in place. The double panel
+// keeps the chevron that points right, and never turns it: half a turn would make it point away from the
+// column that it opens.
 export const itemChevronRotated = style({
-    transform: 'rotate(180deg)',
+    transform: 'rotate(-180deg)',
 });
 
 export const itemChevronVariant = styleVariants(itemColors, (colors) => ({color: colors.chevron}));

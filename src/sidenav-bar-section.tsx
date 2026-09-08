@@ -7,11 +7,12 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
 import {Text2} from './text';
 import {useSidenavBarContext} from './sidenav-bar-context';
+import {useRestWidth} from './sidenav-bar-motion';
 
 import type {DataAttributes} from './utils/types';
 
 type SidenavSectionProps = {
-    /** Section heading. Hidden (space reserved) when the sidenav is collapsed. */
+    /** Section heading. When the sidenav is collapsed it closes and the items move up, but it still names the list. */
     title?: string;
     /** Renders a divider above the section. @default false */
     dividerTop?: boolean;
@@ -37,6 +38,10 @@ const SidenavSection = ({
     // text the user sees. The section itself carries no role and no name: the named list is the whole
     // structure, as in the second level (see `sidenav-bar-panel.tsx`).
     const titleId = React.useId();
+    // The title holds the width that it had at rest while the sidenav moves, in both directions, so its
+    // lines stay where they are while its box folds. See `sectionTitleKeepsWidth` for the fallback.
+    const isTitleWidthKept = collapsed || collapsedSettled;
+    const {ref: titleRef, frozenWidth: titleWidth} = useRestWidth(isTitleWidthKept);
 
     return (
         <div
@@ -44,12 +49,13 @@ const SidenavSection = ({
             {...getPrefixedDataAttributes({testid: 'SidenavSection', ...dataAttributes})}
         >
             {dividerTop && (
-                <div className={styles.sectionDivider}>
+                <div className={styles.sectionDividerTop}>
                     <Divider />
                 </div>
             )}
             {title && (
                 <div
+                    ref={titleRef}
                     id={titleId}
                     // The list already speaks this text as its name, so the title steps out of the
                     // reading order. The name survives: `aria-labelledby` reads a hidden element that
@@ -57,14 +63,15 @@ const SidenavSection = ({
                     aria-hidden="true"
                     className={classnames(styles.sectionTitle, styles.sectionTitleVariant[variant], {
                         [styles.sectionTitleCollapsed]: collapsed,
-                        // The title holds the width of its text while the sidenav moves, in both
-                        // directions. See `sectionTitleKeepsWidth`.
-                        [styles.sectionTitleKeepsWidth]: collapsed || collapsedSettled,
+                        [styles.sectionTitleKeepsWidth]: isTitleWidthKept && titleWidth === undefined,
                     })}
+                    style={titleWidth !== undefined ? {width: titleWidth} : undefined}
                 >
-                    <Text2 medium truncate={collapsed ? 1 : undefined} color="inherit">
-                        {title}
-                    </Text2>
+                    <div className={styles.sectionTitleContent}>
+                        <Text2 medium color="inherit">
+                            {title}
+                        </Text2>
+                    </div>
                 </div>
             )}
             {/* The title names the list, and the list gives the count of its items. */}
@@ -72,7 +79,7 @@ const SidenavSection = ({
                 {children}
             </div>
             {dividerBottom && (
-                <div className={styles.sectionDivider}>
+                <div className={styles.sectionDividerBottom}>
                     <Divider />
                 </div>
             )}

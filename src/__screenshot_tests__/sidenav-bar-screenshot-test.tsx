@@ -31,6 +31,36 @@ test('SidenavBar collapsed with a header slot', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+// The collapsed rail keeps the accent bar of a selected first-level item, beside its selected background.
+// Only a screenshot guards the bar: it is a style-only mark, with no semantic query.
+test('SidenavBar collapsed with a selected first-level item', async () => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
+        args: {defaultCollapsed: true, selectedItemId: 'home'},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+// The slot of the logo clips a logo larger than itself, so it never paints over the header controls or
+// past the collapsed rail. Only a screenshot guards the clip.
+test.each([false, true])('SidenavBar clips an oversized logo. collapsed(%s)', async (collapsed) => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
+        args: {oversizedLogo: true, defaultCollapsed: collapsed},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 // A section title and an item label never truncate: a text that does not fit wraps over several lines, and
 // its row grows with it. Only a screenshot guards this, at every level of the tree: a section title, a
 // stand-alone item, an item with a right slot, and a nested item.

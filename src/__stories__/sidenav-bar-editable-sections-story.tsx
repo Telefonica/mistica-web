@@ -74,8 +74,14 @@ const DEFAULT_SECTIONS: Array<EditableEntry> = [
         href: '#dashboard',
     },
     {
+        id: 'reports',
+        label: 'Reports (stand-alone item)',
+        icon: 'documents',
+        href: '#reports',
+    },
+    {
         dividerTop: false,
-        dividerBottom: false,
+        dividerBottom: true,
         items: [
             {
                 id: 'home',
@@ -157,7 +163,9 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                         <Text3 regular>
                             The first level takes sections and stand-alone items, in any order. Every section
                             declares dividerTop and dividerBottom, so you can switch each divider on and off
-                            in the control. A stand-alone item takes no dividers.
+                            in the control. A stand-alone item takes no dividers. Two consecutive sections
+                            share one divider when the first ends with one and the second starts with one, as
+                            the untitled section and &quot;Workspace&quot; show.
                         </Text3>
                         <Text3 regular>
                             Give an icon to every first-level item. The collapsed rail shows the icon instead

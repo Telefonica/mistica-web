@@ -2,7 +2,7 @@ import * as React from 'react';
 import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {SidenavBar, SidenavLayout} from '..';
+import {SidenavBar, SidenavLayout, SidenavSection as SidenavSectionComponent, SidenavItem} from '..';
 import * as styles from '../sidenav-bar.css';
 import * as layoutStyles from '../sidenav-bar-layout.css';
 import {ThemeVariant} from '../theme-variant-context';
@@ -303,17 +303,16 @@ test('SidenavBar keeps the header slot when collapsed', async () => {
     expect(screen.getByText('header slot')).toBeInTheDocument();
 });
 
-// Collapsed, the section title is hidden with CSS, but it stays in the layout to reserve its space.
-// A screen-reader-only title would not reserve any space, so the test asserts that it is not one.
-test('SidenavBar keeps the space of the section title when collapsed', async () => {
+// Collapsed, the box of the section title closes and the items move up. The title stays in the document,
+// because the list of the section takes its name from it, so a screen reader still hears the section.
+test('SidenavBar closes the section title when collapsed and keeps the name of its list', async () => {
     await renderSidenav({defaultCollapsed: true});
 
-    const title = screen.getByText('Workspace');
+    // eslint-disable-next-line testing-library/no-node-access
+    const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
 
-    expect(title).toBeInTheDocument();
-    screen.queryAllByTestId('ScreenReaderOnly').forEach((element) => {
-        expect(element).not.toContainElement(title);
-    });
+    expect(titleBox).toHaveClass(styles.sectionTitleCollapsed);
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
 });
 
 // The spec keeps the label of every item in the DOM on the collapsed rail, and hides it with opacity and
@@ -364,6 +363,17 @@ test('SidenavBar renders the default logo when logo is true', async () => {
     await renderSidenav({logo: true});
 
     expect(getLogoViewBox()).toBe('0 0 72 72');
+});
+
+// The slot of the logo clips a node of the consumer that is larger than the slot. jsdom resolves the
+// class styles, so the computed overflow of the slot is readable here.
+test('SidenavBar clips a logo larger than its slot', async () => {
+    await renderSidenav({logo: <div data-testid="huge-logo" style={{width: 400, height: 400}} />});
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const slot = screen.getByTestId('huge-logo').parentElement as HTMLElement;
+
+    expect(getComputedStyle(slot).overflow).toBe('hidden');
 });
 
 test('SidenavBar renders no logo when logo is false', async () => {
@@ -560,6 +570,65 @@ test('SidenavBar keeps a parent item and its children in the same list item', as
 
     expect(entry).toContainElement(children);
     expect(children).toContainElement(screen.getByRole('link', {name: 'Active'}));
+});
+
+// The 8px of the first level parts a section from its neighbours only. Two stand-alone items stay
+// adjacent, like the items inside a section, so a run of them reads as one group.
+test('SidenavBar parts a section from its neighbours, and keeps two stand-alone items adjacent', async () => {
+    await renderSidenav({
+        sections: [
+            {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
+            {id: 'second', label: 'Second', asset: IconHomeRegular, href: '/second'},
+            {
+                title: 'Workspace',
+                items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+            },
+            {id: 'third', label: 'Third', asset: IconHomeRegular, href: '/third'},
+            {id: 'fourth', label: 'Fourth', asset: IconHomeRegular, href: '/fourth'},
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
+    // jsdom reads an unset margin as an empty string.
+    const marginTops = getListItems(bodyList).map((entry) => getComputedStyle(entry).marginTop || '0px');
+
+    expect(marginTops).toEqual(['0px', '0px', '8px', '8px', '0px']);
+});
+
+// A bottom divider that meets a top divider would paint two lines with 32px between them. The second
+// section drops its top divider and the gap of the first level, so one line parts the two sections.
+test('SidenavBar shares one divider between a section with a bottom divider and a section with a top divider', async () => {
+    await renderSidenav({
+        sections: [
+            {
+                title: 'First',
+                dividerBottom: true,
+                items: [{id: 'one', label: 'One', asset: IconHomeRegular, href: '/one'}],
+            },
+            {
+                title: 'Second',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'two', label: 'Two', asset: IconHomeRegular, href: '/two'}],
+            },
+            {
+                title: 'Third',
+                items: [{id: 'three', label: 'Three', asset: IconHomeRegular, href: '/three'}],
+            },
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
+    const entries = getListItems(bodyList);
+    // Both divider classes compose one base class, which comes last in the string.
+    const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
+    // eslint-disable-next-line testing-library/no-node-access
+    const countDividers = (entry: HTMLElement) => entry.querySelectorAll(`.${dividerBaseClass}`).length;
+
+    expect(entries.map(countDividers)).toEqual([1, 1, 0]);
+    expect(entries.map((entry) => getComputedStyle(entry).marginTop || '0px')).toEqual(['0px', '0px', '8px']);
 });
 
 test('SidenavBar keeps the declared order of sections and stand-alone items', async () => {
@@ -1073,6 +1142,15 @@ test('SidenavBar collapsed keeps the dialog panel open while the arrow keys trav
     expect(screen.getByRole('button', {name: 'Active'})).toBeInTheDocument();
 });
 
+// The collapsed rail keeps the accent of a selected first-level item, so the selection reads the same in
+// both states. Only a parent with a selected descendant marks it with the background alone.
+test('SidenavBar keeps the accent of a selected first-level item on the collapsed rail', async () => {
+    await renderSidenav({defaultCollapsed: true, selectedItemId: 'home'});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemAccent)).toBe(true);
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableSelected.default)).toBe(true);
+});
+
 // The accent bar and the selected background are style-only marks, without any semantic query, so the
 // test reads the DOM directly.
 test('SidenavBar double panel gives the accent to the selected child, and the background to the parent', async () => {
@@ -1303,4 +1381,28 @@ test('SidenavBar moves the focus to the parent with ArrowLeft from a child', asy
     fireEvent.keyDown(eng, {key: 'ArrowLeft'});
 
     expect(screen.getByRole('button', {name: 'Teams'})).toHaveFocus();
+});
+
+// `SidenavBar` takes its items from `sections`, whose type requires the asset. The JSX components render
+// on their own here, because the type cannot know the level of a `SidenavItem` element.
+test('SidenavItem reports a first-level item without an asset, and it accepts a nested one', async () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavSectionComponent>
+                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
+                    <SidenavItem id="active" label="Active" href="/active" />
+                </SidenavItem>
+                <SidenavItem id="home" label="Home" href="/home" />
+            </SidenavSectionComponent>
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+
+    const messages = consoleError.mock.calls.map(([message]) => String(message));
+    expect(messages.filter((message) => message.includes('is a first-level item without an asset'))).toEqual([
+        expect.stringContaining('SidenavItem "Home"'),
+    ]);
+    consoleError.mockRestore();
 });

@@ -20,7 +20,7 @@ import {vars as skinVars} from '../skins/skin-contract.css';
 import {ThemeVariant} from '../theme-variant-context';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavSection, SidenavItem} from '../sidenav-bar-types';
+import type {SidenavSection, SidenavItem, SidenavNestedItem} from '../sidenav-bar-types';
 import type {NonDeprecatedVariant} from '../theme-variant-context';
 
 type Args = {
@@ -78,7 +78,9 @@ const pageBackgroundColor: Record<NonDeprecatedVariant, string> = {
 
 type SelectionButton = {id: string; label: string};
 
-const collectSelectableItems = (items: ReadonlyArray<SidenavItem>): Array<SelectionButton> => {
+const collectSelectableItems = (
+    items: ReadonlyArray<SidenavItem | SidenavNestedItem>
+): Array<SelectionButton> => {
     const result: Array<SelectionButton> = [];
     items.forEach((item) => {
         if (item.children && item.children.length > 0) {
