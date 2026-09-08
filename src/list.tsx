@@ -38,7 +38,13 @@ import type {ExclusifyUnion} from './utils/utility-types';
 type ListContextType = {small: boolean};
 export const ListContext = React.createContext<ListContextType>({small: false});
 
-type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
+type RightProps = {
+    centerY: boolean;
+    selected: boolean;
+    onSelectedChange: (selected: boolean) => void;
+};
+
+type Right = ((props: RightProps) => React.ReactNode) | React.ReactNode;
 
 interface CommonProps {
     children?: void; // no children allowed
@@ -66,7 +72,7 @@ interface CommonProps {
 }
 
 const renderRight = (right: Right, centerY: boolean) => {
-    if (typeof right === 'function') return right?.({centerY});
+    if (typeof right === 'function') return right?.({centerY, selected: false, onSelectedChange: () => {}});
 
     return centerY ? (
         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
@@ -802,6 +808,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivi
     }
 );
 
+const useSelectableRight = (right: Right, hasControl: boolean): [Right, boolean] => {
+    const [selected, setSelected] = React.useState(false);
+
+    if (typeof right !== 'function' || hasControl) {
+        return [right, false];
+    }
+
+    return [({centerY}) => right({centerY, selected, onSelectedChange: setSelected}), selected];
+};
+
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
         <div role={role} className={styles.row}>
@@ -877,17 +893,22 @@ type BoxedRowProps = ExclusifyUnion<
 > &
     CommonBoxedRowProps;
 
-export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
-    <InternalBoxed
-        overflow="visible"
-        className={styles.boxed}
-        variant={props.variant ?? 'default'}
-        ref={ref}
-        dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
-    >
-        <RowContent {...props} hasDivider={false} />
-    </InternalBoxed>
-));
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => {
+    const outsideVariant = useThemeVariant();
+    const [right, selected] = useSelectableRight(props.right, hasControlProps(props));
+
+    return (
+        <InternalBoxed
+            overflow="visible"
+            className={classNames(styles.boxed, styles.selectable, styles.selectionOutline[outsideVariant])}
+            variant={props.variant ?? 'default'}
+            ref={ref}
+            dataAttributes={{testid: 'BoxedRow', ...dataAttributes, selected}}
+        >
+            <RowContent {...props} right={right} hasDivider={false} />
+        </InternalBoxed>
+    );
+});
 
 type BoxedRowListProps = {
     children: React.ReactNode;

@@ -20,6 +20,23 @@ const controls = [
 
 const controlsWithOnPress = ['checkbox', 'switch', 'radio'];
 const controlsWithIconButton = ['iconButton', 'iconButton and onPress', 'toggleIconButton'];
+const selectionControls = [
+    'checkbox',
+    'checkbox and onPress',
+    'checkbox with custom element',
+    'switch',
+    'switch and onPress',
+    'radio',
+    'radio and onPress',
+    'toggleIconButton',
+];
+
+const getSelectableControlRole = (control: string) => {
+    if (control.includes('checkbox')) return 'checkbox';
+    if (control.includes('switch')) return 'switch';
+    if (control.includes('radio')) return 'radio';
+    return 'button';
+};
 
 const getCases = () => {
     const cases = [];
@@ -164,6 +181,37 @@ test.each(controlsWithOnPress)('Click control with onPress - %s', async (control
     await elements[0].click();
 
     const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(selectionControls)('Boxed rows change selection with %s', async (control) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            control,
+        },
+    });
+
+    const controlElement = await screen.findByRole(getSelectableControlRole(control));
+    await controlElement.click();
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Selectable custom boxed row', async () => {
+    await openStoryPage({
+        id: 'components-lists--selectable-boxed-rows-story',
+        device: 'MOBILE_IOS',
+    });
+
+    const buttons = await screen.findAllByRole('button', {name: 'Select row'});
+    await buttons[1].click();
+
+    const list = await screen.findByTestId('selectable-boxed-row-list');
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });
