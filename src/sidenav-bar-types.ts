@@ -130,9 +130,9 @@ type SidenavNestedItem = SidenavNestedItemProps & SidenavNavigableItemProps;
 type SidenavSection = {
     /** Section heading (hidden when collapsed, but available to screen readers). */
     title?: string;
-    /** Show divider above section. */
+    /** Show divider above section. The first entry of the body draws none: a line parts two entries. */
     dividerTop?: boolean;
-    /** Show divider below section. */
+    /** Show divider below section. The last entry of the body draws none: a line parts two entries. */
     dividerBottom?: boolean;
     /** Navigation items in this section. */
     items: ReadonlyArray<SidenavItem>;

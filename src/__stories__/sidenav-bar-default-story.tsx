@@ -29,11 +29,7 @@ import {SidenavStoryPage} from './sidenav-bar-story-page';
 
 import type {Variant} from '../theme-variant-context';
 import type {SidenavEntry} from '../sidenav-bar-types';
-import type {
-    SidenavBarBackgroundColors,
-    SidenavCollapseActionRenderProps,
-    SidenavLogoRenderProps,
-} from '../sidenav-bar';
+import type {SidenavCollapseActionRenderProps, SidenavLogoRenderProps} from '../sidenav-bar';
 
 // A section title and an item label never truncate: they wrap over as many lines as their text needs, and
 // the row grows with them. The longLabels control swaps four entries for a text that does not fit, at each
@@ -209,10 +205,8 @@ type Args = {
     collapsed: boolean;
     doublePanel: boolean;
     width: number;
-    'Colors/Enabled'?: boolean;
-    'Colors/Header'?: string;
-    'Colors/Body'?: string;
-    'Colors/Footer'?: string;
+    colorsEnabled?: boolean;
+    backgroundColor?: string;
 };
 
 export const Default = ({
@@ -236,10 +230,8 @@ export const Default = ({
     collapsed,
     doublePanel,
     width,
-    'Colors/Enabled': colorsEnabled,
-    'Colors/Header': headerColor,
-    'Colors/Body': bodyColor,
-    'Colors/Footer': footerColor,
+    colorsEnabled,
+    backgroundColor,
 }: Args): React.JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
     const [lastAction, setLastAction] = React.useState('');
@@ -251,13 +243,7 @@ export const Default = ({
     React.useEffect(() => {
         setSelectedId(selectedIdFromControl);
     }, [selectedIdFromControl]);
-    const background: SidenavBarBackgroundColors = colorsEnabled
-        ? {
-              header: headerColor as any,
-              body: bodyColor as any,
-              footer: footerColor as any,
-          }
-        : {};
+    const background = colorsEnabled ? backgroundColor : undefined;
 
     const sections: Array<SidenavEntry> = getDefaultSections(
         setLastAction,
@@ -461,14 +447,16 @@ export default {
         collapsed: false,
         doublePanel: false,
         width: 240,
-        'Colors/Enabled': false,
-        'Colors/Header': '#ffffff',
-        'Colors/Body': '#f5f5f5',
-        'Colors/Footer': '#ffffff',
+        colorsEnabled: false,
+        backgroundColor: '#f5f5f5',
     },
     argTypes: {
         // The items stay out of the panel: an object of that shape does not edit well in a control.
         sections: {
+            table: {disable: true},
+        },
+        // The story takes this color from the Colors controls, so its own row would never take effect.
+        background: {
             table: {disable: true},
         },
         'aria-label': {
@@ -587,24 +575,17 @@ export default {
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},
         },
-        'Colors/Enabled': {
+        colorsEnabled: {
             control: {type: 'boolean'},
+            description: 'Paints the sidenav with the color below, instead of the color of the variant.',
             table: {category: 'Colors'},
         },
-        'Colors/Header': {
+        backgroundColor: {
             control: {type: 'color'},
-            description: 'Header background color (must be opaque)',
+            description:
+                'Background color of the whole sidenav. Use an opaque color: the header and the footer are sticky over the scrolling body.',
             table: {category: 'Colors'},
-        },
-        'Colors/Body': {
-            control: {type: 'color'},
-            description: 'Body background color (can be any color)',
-            table: {category: 'Colors'},
-        },
-        'Colors/Footer': {
-            control: {type: 'color'},
-            description: 'Footer background color (must be opaque)',
-            table: {category: 'Colors'},
+            if: {arg: 'colorsEnabled', truthy: true},
         },
     },
 };

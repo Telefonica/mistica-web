@@ -572,9 +572,10 @@ test('SidenavBar keeps a parent item and its children in the same list item', as
     expect(children).toContainElement(screen.getByRole('link', {name: 'Active'}));
 });
 
-// The 8px of the first level parts a section from its neighbours only. Two stand-alone items stay
-// adjacent, like the items inside a section, so a run of them reads as one group.
-test('SidenavBar parts a section from its neighbours, and keeps two stand-alone items adjacent', async () => {
+// Every entry of the first level owns 8px above and below itself, a section as much as a stand-alone item,
+// so the body list holds one 16px gap between any two neighbours and 8px at each of its two ends. The
+// entries themselves carry no margin of their own.
+test('SidenavBar keeps every entry of the first level 8px from its neighbours and from the two ends', async () => {
     await renderSidenav({
         sections: [
             {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
@@ -584,20 +585,88 @@ test('SidenavBar parts a section from its neighbours, and keeps two stand-alone 
                 items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
             },
             {id: 'third', label: 'Third', asset: IconHomeRegular, href: '/third'},
-            {id: 'fourth', label: 'Fourth', asset: IconHomeRegular, href: '/fourth'},
         ],
     });
 
     const nav = screen.getByRole('navigation', {name: 'Main navigation'});
     const [bodyList] = within(nav).getAllByRole('list');
+    const listStyle = getComputedStyle(bodyList);
+
+    expect(listStyle.gap).toBe('16px');
+    expect(listStyle.paddingTop).toBe('8px');
+    expect(listStyle.paddingBottom).toBe('8px');
     // jsdom reads an unset margin as an empty string.
     const marginTops = getListItems(bodyList).map((entry) => getComputedStyle(entry).marginTop || '0px');
-
-    expect(marginTops).toEqual(['0px', '0px', '8px', '8px', '0px']);
+    expect(marginTops).toEqual(['0px', '0px', '0px', '0px']);
 });
 
-// A bottom divider that meets a top divider would paint two lines with 32px between them. The second
-// section drops its top divider and the gap of the first level, so one line parts the two sections.
+// A divider owns 16px on the side of its items only. Its outward side is the edge of the entry, where the
+// gap of the body list already gives the 16px to the neighbour, so a line reads 16px on each side.
+test('SidenavBar gives each section divider its 16px on the side of the items only', async () => {
+    await renderSidenav({
+        sections: [
+            {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
+            {
+                title: 'Workspace',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+            },
+            {id: 'last', label: 'Last', asset: IconHomeRegular, href: '/last'},
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    // Both divider classes compose one base class, which comes last in the string.
+    const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
+    // eslint-disable-next-line testing-library/no-node-access
+    const [topDivider, bottomDivider] = Array.from(nav.querySelectorAll<HTMLElement>(`.${dividerBaseClass}`));
+
+    expect(getComputedStyle(topDivider).marginTop || '0px').toBe('0px');
+    expect(getComputedStyle(topDivider).marginBottom).toBe('16px');
+    expect(getComputedStyle(bottomDivider).marginTop).toBe('16px');
+    expect(getComputedStyle(bottomDivider).marginBottom || '0px').toBe('0px');
+});
+
+// A line parts two entries, so the body draws none at its own two ends, whatever the sections ask for.
+test('SidenavBar draws no divider above the first entry nor below the last one', async () => {
+    await renderSidenav({
+        sections: [
+            {
+                title: 'First',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'one', label: 'One', asset: IconHomeRegular, href: '/one'}],
+            },
+            {
+                title: 'Second',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'two', label: 'Two', asset: IconHomeRegular, href: '/two'}],
+            },
+            {
+                title: 'Third',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'three', label: 'Three', asset: IconHomeRegular, href: '/three'}],
+            },
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
+    const entries = getListItems(bodyList);
+    const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
+    // eslint-disable-next-line testing-library/no-node-access
+    const countDividers = (entry: HTMLElement) => entry.querySelectorAll(`.${dividerBaseClass}`).length;
+
+    // The first entry keeps its bottom line, which the second one shares. The second keeps its bottom
+    // line too, which the third one shares. The third draws nothing.
+    expect(entries.map(countDividers)).toEqual([1, 1, 0]);
+});
+
+// A bottom divider that meets a top divider would paint two lines with 16px between them. The second
+// section drops its top divider, so one line parts the two sections, with 16px on each side.
 test('SidenavBar shares one divider between a section with a bottom divider and a section with a top divider', async () => {
     await renderSidenav({
         sections: [
@@ -628,7 +697,6 @@ test('SidenavBar shares one divider between a section with a bottom divider and 
     const countDividers = (entry: HTMLElement) => entry.querySelectorAll(`.${dividerBaseClass}`).length;
 
     expect(entries.map(countDividers)).toEqual([1, 1, 0]);
-    expect(entries.map((entry) => getComputedStyle(entry).marginTop || '0px')).toEqual(['0px', '0px', '8px']);
 });
 
 test('SidenavBar keeps the declared order of sections and stand-alone items', async () => {

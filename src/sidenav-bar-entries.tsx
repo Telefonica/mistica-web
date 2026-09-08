@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
 import {SidenavItem} from './sidenav-bar-item';
 import {SidenavSection} from './sidenav-bar-section';
@@ -105,27 +104,26 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
     // item. A section holds a list of its own, and a stand-alone item holds a single row.
     return entries.map((entry, entryIndex) => {
         if (isSidenavSection(entry)) {
+            // A line parts two entries, so the body draws none at its own two ends: the first entry drops
+            // its top divider, and the last one drops its bottom divider. The header and the footer paint
+            // their own overscroll lines there.
             // Two consecutive sections share one line when the first ends with a divider and the second
-            // starts with one: the second drops its top divider, and its entry drops the gap of the first
-            // level, so the shared divider keeps 16px on each side.
+            // starts with one: the second drops its top divider. The gap of the body list already gives
+            // the shared line its 16px on the side of the second section.
             const previousEntry = entries[entryIndex - 1];
             const sharesDividerWithPrevious =
                 !!entry.dividerTop &&
                 !!previousEntry &&
                 isSidenavSection(previousEntry) &&
                 !!previousEntry.dividerBottom;
+            const isFirstEntry = entryIndex === 0;
+            const isLastEntry = entryIndex === entries.length - 1;
             return (
-                <div
-                    key={entry.title || `section-${entryIndex}`}
-                    className={classnames(styles.sectionEntry, {
-                        [styles.sectionEntryAfterSharedDivider]: sharesDividerWithPrevious,
-                    })}
-                    role="listitem"
-                >
+                <div key={entry.title || `section-${entryIndex}`} role="listitem">
                     <SidenavSection
                         title={entry.title}
-                        dividerTop={entry.dividerTop && !sharesDividerWithPrevious}
-                        dividerBottom={entry.dividerBottom}
+                        dividerTop={entry.dividerTop && !isFirstEntry && !sharesDividerWithPrevious}
+                        dividerBottom={entry.dividerBottom && !isLastEntry}
                     >
                         {entry.items.map((item) => withItemIndex(item, itemIndex++))}
                     </SidenavSection>

@@ -36,12 +36,28 @@ const SECTION_TITLE_INSET = 24;
 // so the content of a child item lands at `SECTION_TITLE_INSET` from the edge of the panel.
 const DIALOG_PANEL_INSET = 8;
 const DIALOG_PANEL_PADDING_Y = 16;
-// Vertical space between a section and its neighbour at the first level of the body (section to section,
-// or section to stand-alone item). Two stand-alone items stay adjacent, like the items inside a section.
-const FIRST_LEVEL_GAP = 8;
-// Vertical space on each side of a section divider. A section without dividers carries no vertical space
-// of its own: the Figma frame of the stand-alone items puts its title against the gap of the body.
+// Vertical space that every entry of the first level of the body (a section or a stand-alone item) owns
+// above and below itself. Two neighbours therefore stand twice this apart, and the first and the last
+// entries keep it towards the header and the footer.
+const ENTRY_SPACE_Y = 8;
+// Vertical space between a section divider and the items that it faces. The outward side of the divider
+// owns nothing: the entries around it already stand `ENTRY_SPACE_Y` apart on each side.
 const SECTION_DIVIDER_MARGIN_Y = 16;
+// A section divider does not span the whole width: it keeps 8px on each side, in both states.
+const SECTION_DIVIDER_MARGIN_X = 8;
+// Inset between the header and the first row of the body, which `headerScrollSpacer` owns.
+const HEADER_SCROLL_SPACER_HEIGHT = 24;
+// Horizontal inset of the header slot and of the footer slot, which stand on the same two edges.
+const SLOT_INSET_X = 24;
+// The collapsed rail draws both slots on the rail of the items, so they take `RAIL_INSET` there. The
+// expanded inset would leave a slot only 24px of the 72px rail.
+const COLLAPSED_SLOT_INSET_X = RAIL_INSET;
+// Vertical insets of the footer slot, which are not equal to each other: the Figma anatomy frame of the
+// footer region gives its slot 8px above and 32px below.
+const FOOTER_PADDING_TOP = 8;
+const FOOTER_PADDING_BOTTOM = 32;
+// Room that a focus ring needs beyond the edge of the scrollport, above and below.
+const FOCUS_RING_ROOM = 4;
 
 export const sidenavWidthVar = createVar();
 // The second column always takes the `width` of the expanded sidenav, so it needs its own variable: the
@@ -387,17 +403,21 @@ export const logoCollapsed = style({
 
 // The slot follows the same rule as the logo above. It never rests at opacity 0, because the collapsed
 // rail keeps the slot: the fade serves a consumer that drives the opacity of its own header content.
+// The padding travels with the rail, so the slot never snaps to its collapsed inset while the rail moves.
 export const headerSlot = style({
     boxSizing: 'border-box',
     width: '100%',
     minWidth: 0,
-    paddingLeft: 24,
-    paddingRight: 24,
-    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} 50ms`,
+    paddingLeft: SLOT_INSET_X,
+    paddingRight: SLOT_INSET_X,
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} 50ms, padding ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 
-export const headerSlotCollapsed = style({});
+export const headerSlotCollapsed = style({
+    paddingLeft: COLLAPSED_SLOT_INSET_X,
+    paddingRight: COLLAPSED_SLOT_INSET_X,
+});
 
 // Body region -----------------------------------------------------------------
 
@@ -415,12 +435,12 @@ export const bodyBase = style({
     // When the keyboard moves the focus to a row outside of the view, the browser scrolls that row just
     // to the edge of the scrollport. At the top, that edge sits under the painted spacer, which would
     // cover the top of the focus ring. The scroll padding makes the browser leave the spacer and the
-    // ring their room. The 4px of both values are the room of the ring alone, top and bottom.
-    scrollPaddingTop: 28,
-    scrollPaddingBottom: 4,
+    // ring their room. `FOCUS_RING_ROOM` is the room of the ring alone, top and bottom.
+    scrollPaddingTop: HEADER_SCROLL_SPACER_HEIGHT + FOCUS_RING_ROOM,
+    scrollPaddingBottom: FOCUS_RING_ROOM,
 });
 
-// The 24px inset between the header and the first row lives inside the scrollport, as this sticky
+// The inset between the header and the first row lives inside the scrollport, as this sticky
 // spacer, and not as a padding of the header or of the body. A padding of the header sits outside the
 // scrollport, and the seam clips the focus ring of the first row; a padding of the body sits inside it,
 // and the rows stay visible under the header while the user scrolls. The spacer gives both behaviours:
@@ -432,7 +452,6 @@ export const bodyBase = style({
 // line is not an option: it does not anchor to the sticky box reliably, and it lands at the bottom of
 // the scroll content instead.
 const scrollSpacerBase = {
-    height: 24,
     flexShrink: 0,
     position: 'sticky',
     zIndex: 1,
@@ -443,14 +462,17 @@ const scrollSpacerBase = {
 
 export const headerScrollSpacer = style({
     ...scrollSpacerBase,
+    height: HEADER_SCROLL_SPACER_HEIGHT,
     top: 0,
     justifyContent: 'flex-end',
 });
 
 // The mirror of `headerScrollSpacer` for a fixed footer, which sits outside of the scrollport like the
-// header does. The band covers the rows that pass beneath it toward the footer.
+// header does. The band covers the rows that pass beneath it toward the footer. It is shorter than the
+// header spacer, because it carries the top inset of the footer, which the spec makes smaller.
 export const footerScrollSpacer = style({
     ...scrollSpacerBase,
+    height: FOOTER_PADDING_TOP,
     bottom: 0,
 });
 
@@ -462,36 +484,23 @@ export const scrollSpacerDivider = style({
     marginRight: 1,
 });
 
-// A keyboard-focused row must stop clear of the band of the fixed footer: the 24px of the band plus the
-// 4px of the ring, like `scrollPaddingTop` above. The inline footer keeps the 4px of `bodyBase`,
-// because it scrolls with the content and needs no band.
+// A keyboard-focused row must stop clear of the band of the fixed footer: the height of the band plus the
+// room of the ring, like `scrollPaddingTop` above. The inline footer keeps the `FOCUS_RING_ROOM` of
+// `bodyBase`, because it scrolls with the content and needs no band.
 export const bodyWithFixedFooter = style({
-    scrollPaddingBottom: 28,
+    scrollPaddingBottom: FOOTER_PADDING_TOP + FOCUS_RING_ROOM,
 });
 
-// List of first-level entries (sections and stand-alone items). The space between the entries lives on
-// the entries themselves (see `sectionEntry`), so the scroll sentinels and the footer, which are siblings
-// of this list, stay untouched.
+// List of first-level entries (sections and stand-alone items). Every entry owns `ENTRY_SPACE_Y` above and
+// below itself, whatever its kind: the gap carries the two spaces that meet between two neighbours, and the
+// padding carries the space of the first entry and of the last one. The space lives on this list, so the
+// scroll sentinels and the footer, which are its siblings, stay untouched.
 export const bodyContent = style({
     display: 'flex',
     flexDirection: 'column',
-});
-
-// The list item of the body that wraps a section. Only a boundary that touches a section takes the
-// `FIRST_LEVEL_GAP`: a `gap` on the list would also part two stand-alone items, which stay adjacent.
-export const sectionEntry = style({});
-
-globalStyle(`${bodyContent} > ${sectionEntry} + *, ${bodyContent} > * + ${sectionEntry}`, {
-    marginTop: FIRST_LEVEL_GAP,
-});
-
-// A section that shares the divider of the section before it (see `sidenav-bar-entries.tsx`) drops the
-// gap: the margins of that divider already give the 16px on each side. The rule comes after the one above
-// with the same specificity, so it wins.
-export const sectionEntryAfterSharedDivider = style({});
-
-globalStyle(`${bodyContent} > * + ${sectionEntryAfterSharedDivider}`, {
-    marginTop: 0,
+    gap: ENTRY_SPACE_Y * 2,
+    paddingTop: ENTRY_SPACE_Y,
+    paddingBottom: ENTRY_SPACE_Y,
 });
 
 // Scroll-intersection divider of the footer (appears when content scrolls past the footer).
@@ -517,12 +526,21 @@ export const scrollDividerVariant = styleVariants(dividerColor, (color) => ({bac
 
 // Footer region ---------------------------------------------------------------
 
+// The horizontal padding travels with the rail, like the one of `headerSlot`: the two slots keep the same
+// two edges through the whole movement, and neither of them snaps to its collapsed inset.
 export const footerBase = style({
     flexShrink: 0,
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingTop: FOOTER_PADDING_TOP,
+    paddingBottom: FOOTER_PADDING_BOTTOM,
+    paddingLeft: SLOT_INSET_X,
+    paddingRight: SLOT_INSET_X,
+    transition: `padding ${collapseDurationVar} ${COLLAPSE_EASING}`,
+    ...reducedMotion,
+});
+
+export const footerCollapsed = style({
+    paddingLeft: COLLAPSED_SLOT_INSET_X,
+    paddingRight: COLLAPSED_SLOT_INSET_X,
 });
 
 // A fixed footer hands its top inset to `footerScrollSpacer`, which owns that space inside the
@@ -538,8 +556,8 @@ export const footerFixed = style({
 
 // Section ---------------------------------------------------------------------
 
-// No vertical padding here: the space around a section belongs to its dividers (see `sectionDividerTop`),
-// so a section without them meets its neighbour across the `FIRST_LEVEL_GAP` alone.
+// No vertical padding here: a section owns no space of its own. Its dividers own the space that faces the
+// items (see `sectionDividerTop`), and the body list owns the space between the entries.
 export const section = style({
     display: 'flex',
     flexDirection: 'column',
@@ -602,24 +620,25 @@ export const sectionContent = style({
 // its own, so that a selector can tell it from the rail inside a section.
 export const standaloneItem = style([sectionContent]);
 
-// The dividers sit outside `sectionContent`, so they span the whole sidenav width. The Figma anatomy
-// order is: 16px, top divider, 16px, section title, 8px, items, 16px, bottom divider, 16px. Each divider
-// carries its two 16px as margins, so a section without a divider on one side has no space of its own on
-// that side. The collapsed rail keeps the same distances, because the title closes without a trace.
-// The 1px right inset keeps the line off the vertical divider on the right edge, for the same reason as
-// `scrollDivider` above.
+// The dividers sit outside `sectionContent`, on the edges of the section. The anatomy of a section reads,
+// top to bottom: top divider, 16px, title, 8px, items, 16px, bottom divider. Each divider carries its 16px
+// as a margin on the side of the items only. The outward side is the edge of the entry, and the body list
+// keeps every entry 16px from its neighbour there, so a line reads 16px on each side, shared or not. The
+// collapsed rail keeps the same distances, because the title closes without a trace. The horizontal margin
+// also keeps the line off the vertical divider on the right edge, for the same reason as `scrollDivider`
+// above.
 const sectionDividerBase = style({
-    marginTop: SECTION_DIVIDER_MARGIN_Y,
-    marginBottom: SECTION_DIVIDER_MARGIN_Y,
-    marginRight: 1,
+    marginLeft: SECTION_DIVIDER_MARGIN_X,
+    marginRight: SECTION_DIVIDER_MARGIN_X,
 });
 
-export const sectionDividerTop = style([sectionDividerBase]);
-export const sectionDividerBottom = style([sectionDividerBase]);
+export const sectionDividerTop = style([sectionDividerBase, {marginBottom: SECTION_DIVIDER_MARGIN_Y}]);
+export const sectionDividerBottom = style([sectionDividerBase, {marginTop: SECTION_DIVIDER_MARGIN_Y}]);
 
-// A boxed sidenav draws a border on its left edge too (see `boxedBorder`), so the horizontal dividers keep
-// off that edge as well. A non-boxed sidenav has no divider on the left, so the lines reach that edge.
-globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${sectionDividerBase}, ${boxed} ${scrollSpacerDivider}`, {
+// A boxed sidenav draws a border on its left edge too (see `boxedBorder`), so the scroll dividers keep off
+// that edge as well. A non-boxed sidenav has no divider on the left, so the lines reach that edge. A section
+// divider needs no rule here: its 8px margin already clears both edges.
+globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${scrollSpacerDivider}`, {
     marginLeft: 1,
 });
 

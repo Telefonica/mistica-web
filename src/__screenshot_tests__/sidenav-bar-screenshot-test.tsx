@@ -113,6 +113,22 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
+// One colour of the consumer replaces the token of the variant on the header, on the body and on the
+// footer. Only a screenshot proves that the three bands take it, and that no seam stays behind. The story
+// encodes the colour as Storybook does, because the argument parser drops a raw "#".
+test('SidenavBar with a custom background', async () => {
+    await openStoryPage({
+        id: 'components-sidenavbar-bar--default',
+        device: 'DESKTOP',
+        args: {colorsEnabled: true, backgroundColor: '!hex(ffdddd)', fixedFooter: true},
+    });
+
+    const sidenavBar = await screen.findByRole('navigation');
+    const image = await sidenavBar.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 // Each variant paints its own tokens on the three bands, on the labels, on the assets, on the chevrons, on
 // the section titles, on the selected background and on the selected indicator. The controlled story opens
 // with a selected item, so one screenshot per variant guards the whole set.

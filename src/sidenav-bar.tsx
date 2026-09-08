@@ -47,17 +47,6 @@ import type {DataAttributes} from './utils/types';
 import type {SidenavSectionProps} from './sidenav-bar-section';
 import type {SidenavEntry, SidenavNestedItem, SidenavLogo, SidenavLogoRenderProps} from './sidenav-bar-types';
 
-type SidenavBarBackgroundColors = {
-    /** Header background color. Use an opaque color: the header is sticky over the scrolling body, so a
-     * translucent color lets the body content show through it. */
-    header?: string;
-    /** Body background color (can be any color including transparent). */
-    body?: string;
-    /** Footer background color. Use an opaque color: the footer is sticky over the scrolling body, so a
-     * translucent color lets the body content show through it. */
-    footer?: string;
-};
-
 /**
  * Props of the collapse action of the header. A consumer that paints its own action spreads them onto its
  * own control, which then keeps the behavior and the accessible name of the default action.
@@ -99,8 +88,10 @@ type SidenavBarBaseProps = {
     logo?: SidenavLogo;
     /** Custom content below logo/collapse in header. */
     headerSlot?: React.ReactNode;
-    /** Custom background colors for header (opaque), body (any), and footer (opaque) regions. */
-    background?: SidenavBarBackgroundColors;
+    /** Custom background color of the whole sidenav: header, body, footer and second column. Use an
+     * opaque color: the header and the footer are sticky over the scrolling body, so a translucent color
+     * lets the body content show through them. */
+    background?: string;
     /** ID of currently selected item (controlled selection). */
     selectedItemId?: string | null;
     /** Called when selection changes. */
@@ -343,9 +334,7 @@ const SidenavBar = ({
         };
     }, [doublePanel, panelOpenForItemId]);
 
-    const headerBackgroundColor = background?.header;
-    const footerBackgroundColor = background?.footer;
-    const bodyBackgroundColor = background?.body;
+    const backgroundStyle = background ? {backgroundColor: background} : undefined;
 
     const [showHeaderDivider, setShowHeaderDivider] = React.useState(false);
     const [showFooterDivider, setShowFooterDivider] = React.useState(false);
@@ -604,11 +593,7 @@ const SidenavBar = ({
                                             boxed && normalizedVariant === 'negative',
                                     }
                                 )}
-                                style={
-                                    headerBackgroundColor
-                                        ? {backgroundColor: headerBackgroundColor}
-                                        : undefined
-                                }
+                                style={backgroundStyle}
                             >
                                 <div
                                     className={classnames(styles.headerControls, {
@@ -647,7 +632,7 @@ const SidenavBar = ({
                                 styles.regionBackground[normalizedVariant],
                                 {[styles.bodyWithFixedFooter]: !!footerSlot && fixedFooter}
                             )}
-                            style={bodyBackgroundColor ? {backgroundColor: bodyBackgroundColor} : undefined}
+                            style={backgroundStyle}
                             onFocus={(event) => {
                                 // A row can take the focus while its ring crosses a seam: the row itself
                                 // is visible, so the browser scrolls nothing, and the scroll padding of
@@ -670,11 +655,7 @@ const SidenavBar = ({
                                     [styles.regionBackground[normalizedVariant]]:
                                         hasHeader && showHeaderDivider,
                                 })}
-                                style={
-                                    hasHeader && showHeaderDivider && bodyBackgroundColor
-                                        ? {backgroundColor: bodyBackgroundColor}
-                                        : undefined
-                                }
+                                style={hasHeader && showHeaderDivider ? backgroundStyle : undefined}
                             >
                                 {hasHeader && showHeaderDivider && (
                                     <div
@@ -706,13 +687,10 @@ const SidenavBar = ({
                                     <div
                                         className={classnames(
                                             styles.footerBase,
-                                            styles.regionBackground[normalizedVariant]
+                                            styles.regionBackground[normalizedVariant],
+                                            {[styles.footerCollapsed]: collapsed}
                                         )}
-                                        style={
-                                            footerBackgroundColor
-                                                ? {backgroundColor: footerBackgroundColor}
-                                                : undefined
-                                        }
+                                        style={backgroundStyle}
                                     >
                                         {footerSlot}
                                     </div>
@@ -725,11 +703,7 @@ const SidenavBar = ({
                                         className={classnames(styles.footerScrollSpacer, {
                                             [styles.regionBackground[normalizedVariant]]: showFooterDivider,
                                         })}
-                                        style={
-                                            showFooterDivider && bodyBackgroundColor
-                                                ? {backgroundColor: bodyBackgroundColor}
-                                                : undefined
-                                        }
+                                        style={showFooterDivider ? backgroundStyle : undefined}
                                     >
                                         {showFooterDivider && (
                                             <div
@@ -748,13 +722,10 @@ const SidenavBar = ({
                                 className={classnames(
                                     styles.footerBase,
                                     styles.footerFixed,
-                                    styles.regionBackground[normalizedVariant]
+                                    styles.regionBackground[normalizedVariant],
+                                    {[styles.footerCollapsed]: collapsed}
                                 )}
-                                style={
-                                    footerBackgroundColor
-                                        ? {backgroundColor: footerBackgroundColor}
-                                        : undefined
-                                }
+                                style={backgroundStyle}
                             >
                                 {footerSlot}
                             </div>
@@ -777,7 +748,7 @@ const SidenavBar = ({
                                 itemId={doublePanelContent.itemId}
                                 label={doublePanelContent.label}
                                 variant={normalizedVariant}
-                                backgroundColor={bodyBackgroundColor}
+                                backgroundColor={background}
                             >
                                 {doublePanelContent.children.map((child) => renderSidenavItemFromData(child))}
                             </SidenavDoublePanel>
@@ -792,10 +763,4 @@ const SidenavBar = ({
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
 export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, hasDescendantWithId};
-export type {
-    SidenavBarProps,
-    SidenavSectionProps,
-    SidenavBarBackgroundColors,
-    SidenavCollapseActionRenderProps,
-    SidenavLogoRenderProps,
-};
+export type {SidenavBarProps, SidenavSectionProps, SidenavCollapseActionRenderProps, SidenavLogoRenderProps};

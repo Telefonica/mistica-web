@@ -1,6 +1,7 @@
 import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
 
 import type {SidenavEntry, SidenavItem, SidenavNestedItem, SidenavSection} from '../sidenav-bar-types';
+import type {SidenavBarProps} from '../sidenav-bar';
 
 // OK - a first-level item carries an asset
 const firstLevelItem: SidenavItem = {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/'};
@@ -66,4 +67,17 @@ const entries: Array<SidenavEntry> = [
     {id: 'settings', label: 'Settings', href: '/settings'},
 ];
 
-export {firstLevelItemWithoutAsset, nestedItemWithHiddenAsset, nestedItemWithChildren, entries};
+// OK - one colour paints the whole sidenav
+const barWithBackground: SidenavBarProps = {background: '#ff0000'};
+
+// @ts-expect-error - the background takes one colour, and not one colour per region
+const barWithBackgroundPerRegion: SidenavBarProps = {background: {header: '#ff0000', body: '#00ff00'}};
+
+export {
+    firstLevelItemWithoutAsset,
+    nestedItemWithHiddenAsset,
+    nestedItemWithChildren,
+    entries,
+    barWithBackground,
+    barWithBackgroundPerRegion,
+};
