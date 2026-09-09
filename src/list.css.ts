@@ -21,7 +21,6 @@ export const selectionOutline = style({
     borderRadius: vars.borderRadii.container,
     selectors: {
         '&::after': {
-            // Keep the selection ring rounded in browsers that don't apply border radius to outlines.
             content: '',
             position: 'absolute',
             inset: -(selectionOutlineWidth + selectionOutlineOffset),
