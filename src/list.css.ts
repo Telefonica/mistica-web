@@ -25,7 +25,7 @@ export const selectionOutline = style({
             position: 'absolute',
             inset: -(selectionOutlineWidth + selectionOutlineOffset),
             border: `${selectionOutlineWidth}px solid transparent`,
-            borderRadius: vars.borderRadii.container,
+            borderRadius: `calc(${vars.borderRadii.container} + 2px)`,
             pointerEvents: 'none',
             transition: 'border-color 0.08s ease-in-out',
         },
