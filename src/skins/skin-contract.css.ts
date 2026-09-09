@@ -28,6 +28,8 @@ const colors: Colors = {
     backgroundContainerNegative: '',
     backgroundContainerBrandOverBrand: '',
     backgroundContainerAlternative: '',
+    backgroundContainerAlternativeOverAlternative: '',
+    backgroundContainerAlternativeOverBrand: '',
     backgroundOverlay: '',
     backgroundSkeleton: '',
     backgroundSkeletonInverse: '',

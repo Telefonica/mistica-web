@@ -38,11 +38,13 @@ export const closeButtonContainerSize = style({
 export const background = styleVariants({
     'default-over-brand': [sprinkles({background: skin.vars.colors.backgroundContainer})],
     'default-over-negative': [sprinkles({background: skin.vars.colors.backgroundContainer})],
-    'default-over-alternative': [sprinkles({background: skin.vars.colors.backgroundContainer})],
+    'default-over-alternative': [
+        sprinkles({background: skin.vars.colors.backgroundContainerAlternativeOverAlternative}),
+    ],
     'default-over-default': [sprinkles({background: skin.vars.colors.backgroundContainerAlternative})],
     'default-over-media': [sprinkles({background: skin.vars.colors.backgroundContainer})],
 
-    'brand-over-brand': [sprinkles({background: skin.vars.colors.backgroundContainerBrandOverInverse})],
+    'brand-over-brand': [sprinkles({background: skin.vars.colors.backgroundContainerAlternativeOverBrand})],
     'brand-over-negative': [sprinkles({background: skin.vars.colors.backgroundContainerBrandOverInverse})],
     'brand-over-alternative': [sprinkles({background: skin.vars.colors.backgroundContainerBrand})],
     'brand-over-default': [sprinkles({background: skin.vars.colors.backgroundContainerBrand})],
