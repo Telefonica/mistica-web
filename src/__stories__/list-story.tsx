@@ -519,7 +519,7 @@ type SelectableBoxedRowsArgs = {
 
 const SelectableBoxedRows = () => {
     return (
-        <BoxedRowList dataAttributes={{testid: 'selectable-boxed-row-list'}}>
+        <BoxedRowList>
             <BoxedRow
                 title="Toggle icon button"
                 description="Select this row with the icon button"
@@ -558,7 +558,7 @@ const SelectableBoxedRows = () => {
 export const SelectableBoxedRowsStory: StoryComponent<SelectableBoxedRowsArgs> = ({variantOutside}) => {
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
-            <Box padding={16}>
+            <Box padding={16} dataAttributes={{testid: 'selectable-boxed-row-list'}}>
                 <SelectableBoxedRows />
             </Box>
         </ResponsiveLayout>

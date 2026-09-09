@@ -38,6 +38,8 @@ import type {ExclusifyUnion} from './utils/utility-types';
 type ListContextType = {small: boolean};
 export const ListContext = React.createContext<ListContextType>({small: false});
 
+const BoxedRowSelectionContext = React.createContext<((selected: boolean) => void) | undefined>(undefined);
+
 type RightProps = {
     centerY: boolean;
     selected: boolean;
@@ -398,6 +400,43 @@ const useControlState = ({
     return [isControlledByParent ? !!value : isChecked, toggle];
 };
 
+const SelectableToggleIconButton = ({
+    checked,
+    defaultChecked,
+    onChange,
+    onSelectedChange,
+    ...props
+}: ToggleIconButtonProps & {
+    onSelectedChange?: (selected: boolean) => void;
+}) => {
+    const initialSelected = React.useRef(!!defaultChecked).current;
+
+    React.useEffect(() => {
+        onSelectedChange?.(checked ?? initialSelected);
+    }, [checked, initialSelected, onSelectedChange]);
+
+    const handleChange = (selected: boolean) => {
+        const result = onChange?.(selected);
+
+        if (checked !== undefined) {
+            return result;
+        }
+        if (result) {
+            return result.then(() => onSelectedChange?.(selected));
+        }
+        onSelectedChange?.(selected);
+    };
+
+    return (
+        <ToggleIconButton
+            {...props}
+            checked={checked}
+            defaultChecked={defaultChecked}
+            onChange={handleChange}
+        />
+    );
+};
+
 const hasControlProps = (
     obj: any
 ): obj is
@@ -528,6 +567,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivi
         const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
 
         const radioContext = useRadioContext();
+        const onSelectedChange = React.useContext(BoxedRowSelectionContext);
         const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
         const hasHoverDefault = !disabled && !isOverBrand;
         const hasHoverInverse = !disabled && isOverBrand;
@@ -555,6 +595,18 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivi
         } as TouchableProps;
 
         const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+        const selectedControl =
+            props.switch || props.checkbox
+                ? isChecked
+                : props.radioValue !== undefined
+                  ? radioContext.selectedValue === props.radioValue
+                  : undefined;
+
+        React.useEffect(() => {
+            if (selectedControl !== undefined) {
+                onSelectedChange?.(selectedControl);
+            }
+        }, [onSelectedChange, selectedControl]);
 
         const renderContent = (contentProps?: {
             control?: React.ReactNode;
@@ -753,7 +805,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivi
                           {props.iconButton.Icon ? (
                               <IconButton {...props.iconButton} disabled={props.disabled} />
                           ) : (
-                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                              <SelectableToggleIconButton
+                                  {...props.iconButton}
+                                  disabled={props.disabled}
+                                  onSelectedChange={onSelectedChange}
+                              />
                           )}
                       </div>
                   )
@@ -770,10 +826,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivi
                                               role={role}
                                           />
                                       ) : (
-                                          <ToggleIconButton
+                                          <SelectableToggleIconButton
                                               {...props.iconButton}
                                               disabled={props.disabled}
                                               role={role}
+                                              onSelectedChange={onSelectedChange}
                                           />
                                       )}
                                   </Stack>
@@ -808,14 +865,17 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivi
     }
 );
 
-const useSelectableRight = (right: Right, hasControl: boolean): [Right, boolean] => {
+const useSelectableRight = (
+    right: Right,
+    hasControl: boolean
+): [Right, boolean, (selected: boolean) => void] => {
     const [selected, setSelected] = React.useState(false);
 
     if (typeof right !== 'function' || hasControl) {
-        return [right, false];
+        return [right, selected, setSelected];
     }
 
-    return [({centerY}) => right({centerY, selected, onSelectedChange: setSelected}), selected];
+    return [({centerY}) => right({centerY, selected, onSelectedChange: setSelected}), selected, setSelected];
 };
 
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
@@ -895,17 +955,23 @@ type BoxedRowProps = ExclusifyUnion<
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => {
     const outsideVariant = useThemeVariant();
-    const [right, selected] = useSelectableRight(props.right, hasControlProps(props));
+    const [right, selected, setSelected] = useSelectableRight(props.right, hasControlProps(props));
 
     return (
         <InternalBoxed
             overflow="visible"
-            className={classNames(styles.boxed, styles.selectable, styles.selectionOutline[outsideVariant])}
+            className={classNames(
+                styles.boxed,
+                styles.selectionOutline,
+                styles.selectionOutlineColor[outsideVariant]
+            )}
             variant={props.variant ?? 'default'}
             ref={ref}
             dataAttributes={{testid: 'BoxedRow', ...dataAttributes, selected}}
         >
-            <RowContent {...props} right={right} hasDivider={false} />
+            <BoxedRowSelectionContext.Provider value={setSelected}>
+                <RowContent {...props} right={right} hasDivider={false} />
+            </BoxedRowSelectionContext.Provider>
         </InternalBoxed>
     );
 });

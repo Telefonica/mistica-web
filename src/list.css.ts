@@ -13,24 +13,35 @@ export const row = style({
     width: '100%',
 });
 
-export const selectable = style({
-    outline: '2px solid transparent',
-    outlineOffset: 2,
+const selectionOutlineWidth = 2;
+const selectionOutlineOffset = 2;
+
+export const selectionOutline = style({
+    position: 'relative',
     borderRadius: vars.borderRadii.container,
-    transition: 'outline 0.08s ease-in-out',
+    selectors: {
+        '&::after': {
+            // Keep the selection ring rounded in browsers that don't apply border radius to outlines.
+            content: '',
+            position: 'absolute',
+            inset: -(selectionOutlineWidth + selectionOutlineOffset),
+            border: `${selectionOutlineWidth}px solid transparent`,
+            borderRadius: vars.borderRadii.container,
+            pointerEvents: 'none',
+            transition: 'border-color 0.08s ease-in-out',
+        },
+    },
 });
 
 export const boxed = style({});
 
 const selectedOutlineStyles = (outlineColor: string): StyleRule => ({
     selectors: {
-        '&[data-selected="true"]': {outlineColor},
-        '&:has([aria-checked="true"])': {outlineColor},
-        '&:has([data-checked="true"])': {outlineColor},
+        '&[data-selected="true"]::after': {borderColor: outlineColor},
     },
 });
 
-export const selectionOutline = styleVariants({
+export const selectionOutlineColor = styleVariants({
     default: selectedOutlineStyles(vars.colors.controlActivated),
     alternative: selectedOutlineStyles(vars.colors.controlActivated),
     brand: selectedOutlineStyles(vars.colors.controlActivatedBrand),
