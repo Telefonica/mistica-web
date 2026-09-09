@@ -1,9 +1,11 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
-const pxToRem = (px) => `${(px / 16).toFixed(3)}rem`;
+import type {ColorDescription, DesignTokens, GradientDescription, RadiusDescription} from './token-types.ts';
 
-const fromHexToRgb = (hexColor) => {
+const pxToRem = (px: number): string => `${(px / 16).toFixed(3)}rem`;
+
+const fromHexToRgb = (hexColor: string): [number, number, number] => {
     if (!hexColor.startsWith('#')) {
         throw Error(`Bad hex color, ${hexColor}`);
     }
@@ -24,7 +26,7 @@ const fromHexToRgb = (hexColor) => {
     throw Error(`Bad hex color, ${hexColor}`);
 };
 
-export const buildRadius = (radiusDescription) => {
+export const buildRadius = (radiusDescription: RadiusDescription): string => {
     if (radiusDescription.value.endsWith('%')) {
         return radiusDescription.value;
     }
@@ -42,45 +44,44 @@ export const buildRadius = (radiusDescription) => {
 };
 
 const prefix = 'mistica-';
-const colorSchemeSelector = (colorScheme) => `[data-${prefix}color-scheme="${colorScheme}"]`;
-const buildVarName = (propertyName, name) => `--${prefix}${propertyName}-${name}`;
-const buildColorVarName = (colorName) => buildVarName('color', colorName);
-const buildBorderRadiusVarName = (radiusName) => buildVarName('border-radius', radiusName);
-const buildFontSizeVarName = (textPreset) => buildVarName('font-size', textPreset);
-const buildLineHeightVarName = (textPreset) => buildVarName('line-height', textPreset);
-const buildFontWeightVarName = (textPreset) => buildVarName('font-weight', textPreset);
+const colorSchemeSelector = (colorScheme: string): string => `[data-${prefix}color-scheme="${colorScheme}"]`;
+const buildVarName = (propertyName: string, name: string): string => `--${prefix}${propertyName}-${name}`;
+const buildColorVarName = (colorName: string): string => buildVarName('color', colorName);
+const buildBorderRadiusVarName = (radiusName: string): string => buildVarName('border-radius', radiusName);
+const buildFontSizeVarName = (textPreset: string): string => buildVarName('font-size', textPreset);
+const buildLineHeightVarName = (textPreset: string): string => buildVarName('line-height', textPreset);
+const buildFontWeightVarName = (textPreset: string): string => buildVarName('font-weight', textPreset);
 const tabletMediaQuery = '@media (min-width: 768px)';
 const desktopMediaQuery = '@media (min-width: 1024px)';
 const largeDesktopMediaQuery = '@media (min-width: 1512px)';
 
-export const generateSkinCssSrc = (skinName, DESIGN_TOKENS_FOLDER) => {
+type TextPreset = {
+    size?: {mobile: number; desktop: number};
+    lineHeight?: {mobile: number; desktop: number};
+    weight?: 'light' | 'regular' | 'medium' | 'bold';
+};
+
+export const generateSkinCssSrc = (skinName: string, DESIGN_TOKENS_FOLDER: string): string => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
-    const designTokens = JSON.parse(designTokensFile);
+    const designTokens: DesignTokens = JSON.parse(designTokensFile);
 
     const skinSelector = `[data-${prefix}skin='${skinName}']`;
     const palettePrefix = prefix + `${skinName}-`;
-    const buildPaletteColorVarName = (colorName) => `--${palettePrefix}${colorName}`;
-    const buildRawPaletteColorVarName = (colorName) => `--${palettePrefix}raw-${colorName}`;
+    const buildPaletteColorVarName = (colorName: string): string => `--${palettePrefix}${colorName}`;
+    const buildRawPaletteColorVarName = (colorName: string): string => `--${palettePrefix}raw-${colorName}`;
 
-    const usedPaleteColors = new Set();
-    const usedRawPaletteColors = new Set();
+    const usedPaleteColors = new Set<string>();
+    const usedRawPaletteColors = new Set<string>();
 
-    /**
-     * @param {{angle: number, colors: Array<{
-     *     value: string,
-     *     stop: number, // value from 0 to 1
-     * }>}} gradientDescription
-     * @returns {string}
-     */
-    const buildCssGradient = (gradientDescription) => {
+    const buildCssGradient = (gradientDescription: GradientDescription): string => {
         const stops = gradientDescription.colors.map((color) => {
-            // eslint-disable-next-line no-use-before-define
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
             return `${buildCssColor(color)} ${color.stop * 100}%`;
         });
         return `linear-gradient(${gradientDescription.angle}deg, ${stops.join(', ')})`;
     };
 
-    const buildCssColor = (colorDescription) => {
+    const buildCssColor = (colorDescription: ColorDescription): string => {
         if (colorDescription.type === 'linear-gradient') {
             return buildCssGradient(colorDescription.value);
         }
@@ -146,7 +147,7 @@ export const generateSkinCssSrc = (skinName, DESIGN_TOKENS_FOLDER) => {
         )
         .join('\n');
 
-    const textPresets = {
+    const textPresets: Record<string, TextPreset> = {
         1: {
             size: {mobile: 12, desktop: 14},
             lineHeight: {mobile: 16, desktop: 20},
@@ -193,13 +194,15 @@ export const generateSkinCssSrc = (skinName, DESIGN_TOKENS_FOLDER) => {
         },
     };
     Object.entries(designTokens.text).forEach(([textAttribute, textAttributeConfig]) => {
-        Object.entries(textAttributeConfig).forEach(([presetName, {value}]) => {
-            presetName = presetName.startsWith('text') ? presetName.replace('text', '') : presetName;
+        Object.entries(textAttributeConfig).forEach(([rawPresetName, {value}]) => {
+            const presetName = rawPresetName.startsWith('text')
+                ? rawPresetName.replace('text', '')
+                : rawPresetName;
 
             textPresets[presetName] = {
                 ...(textPresets[presetName] ?? {}),
                 [textAttribute]: value,
-            };
+            } as TextPreset;
         });
     });
 
@@ -263,7 +266,7 @@ ${skinSelector}${colorSchemeSelector('dark')} {
     ${skinSelector} {
         ${darkModeColors}
     }
-    
+
     ${skinSelector}${colorSchemeSelector('light')} {
         ${forceLightModeColors}
     }
@@ -278,9 +281,9 @@ ${desktopMediaQuery} {
 `;
 };
 
-export const generateCommonCssSrc = (DESIGN_TOKENS_FOLDER) => {
+export const generateCommonCssSrc = (DESIGN_TOKENS_FOLDER: string): string => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `movistar.json`), 'utf8');
-    const designTokens = JSON.parse(designTokensFile);
+    const designTokens: DesignTokens = JSON.parse(designTokensFile);
 
     const textPresets = new Set([
         'text1',

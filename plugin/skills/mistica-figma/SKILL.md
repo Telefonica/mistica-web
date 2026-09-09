@@ -177,8 +177,9 @@ than other components.
 **Placement rules**
 
 1. **Autolayout screen frames** — check whether the screen frame uses autolayout before appending. If it does,
-   opt the overlay out of the autolayout flow immediately after `appendChild` so it stays pinned at the origin.
-   `FILL` sizing cannot be used on absolute children — `FIXED` + `resize()` (rule 4) is the correct approach:
+   opt the overlay out of the autolayout flow immediately after `appendChild` so it stays pinned at the
+   origin. `FILL` sizing cannot be used on absolute children — `FIXED` + `resize()` (rule 4) is the correct
+   approach:
 
 ```js
 if (screenFrame.layoutMode !== 'NONE') {
@@ -193,14 +194,14 @@ if (screenFrame.layoutMode !== 'NONE') {
 
 ```js
 overlay.layoutSizingHorizontal = 'FIXED';
-overlay.layoutSizingVertical   = 'FIXED';
+overlay.layoutSizingVertical = 'FIXED';
 overlay.resize(screenFrame.width, screenFrame.height);
 ```
 
 6. **Constraints** — set `STRETCH` on both axes so the overlay follows the frame when it is resized:
 
 ```js
-overlay.constraints = { horizontal: 'STRETCH', vertical: 'STRETCH' };
+overlay.constraints = {horizontal: 'STRETCH', vertical: 'STRETCH'};
 ```
 
 **Mandatory validation.** Immediately after placing each overlay, run a dedicated `use_figma` call to confirm
@@ -209,19 +210,21 @@ proceeding.
 
 ```js
 // Replace IDs with the actual node ids returned during placement.
-const screen  = figma.getNodeById('SCREEN_FRAME_ID');
+const screen = figma.getNodeById('SCREEN_FRAME_ID');
 const overlay = figma.getNodeById('OVERLAY_INSTANCE_ID');
-if (!screen || !overlay) return { valid: false, error: 'node not found' };
-const xOk  = overlay.x === 0;
-const yOk  = overlay.y === 0;
-const wOk  = Math.round(overlay.width)  === Math.round(screen.width);
-const hOk  = Math.round(overlay.height) === Math.round(screen.height);
-const cOk  = overlay.constraints.horizontal === 'STRETCH' &&
-             overlay.constraints.vertical   === 'STRETCH';
+if (!screen || !overlay) return {valid: false, error: 'node not found'};
+const xOk = overlay.x === 0;
+const yOk = overlay.y === 0;
+const wOk = Math.round(overlay.width) === Math.round(screen.width);
+const hOk = Math.round(overlay.height) === Math.round(screen.height);
+const cOk = overlay.constraints.horizontal === 'STRETCH' && overlay.constraints.vertical === 'STRETCH';
 return {
-  x: overlay.x, y: overlay.y,
-  width: overlay.width, height: overlay.height,
-  screenWidth: screen.width, screenHeight: screen.height,
+  x: overlay.x,
+  y: overlay.y,
+  width: overlay.width,
+  height: overlay.height,
+  screenWidth: screen.width,
+  screenHeight: screen.height,
   constraints: overlay.constraints,
   valid: xOk && yOk && wOk && hOk && cOk,
 };

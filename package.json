@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "17.2.0",
+    "version": "17.3.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -36,7 +36,7 @@
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\" \"**/*.css\" \"**/*.html\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
-        "generate-design-tokens": "node packages/generate-design-tokens/index.js",
+        "generate-design-tokens": "node packages/generate-design-tokens/index.ts",
         "import-mistica-icons": "node packages/import-mistica-icons/index.js",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
