@@ -28,10 +28,6 @@ import type {Variant} from '../theme-variant-context';
 import type {SidenavEntry} from '../sidenav-bar-types';
 import type {SidenavLogoRenderProps} from '../sidenav-bar';
 
-// A section title and an item label never truncate: they wrap over as many lines as their text needs, and
-// the row grows with them. The longLabels control swaps four entries for a text that does not fit, at each
-// level of the tree, so that the behaviour is visible in one screen. The stand-alone item carries a single
-// word instead of a phrase, which is the case that has no space to wrap at.
 const getDefaultSections = (
     onAction: (action: string) => void,
     sectionDividerTop: boolean,

@@ -352,7 +352,6 @@ export const backNavigationBar: TextToken = {
     pt: 'Voltar',
 };
 
-// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
 export const sidenavExpand: TextToken = {
     es: 'Expandir navegación',
     en: 'Expand navigation',
@@ -360,7 +359,6 @@ export const sidenavExpand: TextToken = {
     pt: 'Expandir navegação',
 };
 
-// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
 export const sidenavCollapse: TextToken = {
     es: 'Contraer navegación',
     en: 'Collapse navigation',
@@ -368,7 +366,6 @@ export const sidenavCollapse: TextToken = {
     pt: 'Recolher navegação',
 };
 
-// TODO WIP es/de/pt are drafts pending official localization sign-off; en is final.
 export const sidenavLandmark: TextToken = {
     es: 'Navegación principal',
     en: 'Main navigation',
