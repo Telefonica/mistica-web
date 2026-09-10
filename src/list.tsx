@@ -38,13 +38,7 @@ import type {ExclusifyUnion} from './utils/utility-types';
 type ListContextType = {small: boolean};
 export const ListContext = React.createContext<ListContextType>({small: false});
 
-type RightProps = {
-    centerY: boolean;
-    selected: boolean;
-    onSelectedChange: (selected: boolean) => void;
-};
-
-type Right = ((props: RightProps) => React.ReactNode) | React.ReactNode;
+type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 interface CommonProps {
     children?: void; // no children allowed
@@ -72,7 +66,7 @@ interface CommonProps {
 }
 
 const renderRight = (right: Right, centerY: boolean) => {
-    if (typeof right === 'function') return right?.({centerY, selected: false, onSelectedChange: () => {}});
+    if (typeof right === 'function') return right?.({centerY});
 
     return centerY ? (
         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
@@ -862,19 +856,6 @@ const RowContent = React.forwardRef<
     );
 });
 
-const useSelectableRight = (
-    right: Right,
-    hasControl: boolean
-): [Right, boolean, (selected: boolean) => void] => {
-    const [selected, setSelected] = React.useState(false);
-
-    if (typeof right !== 'function' || hasControl) {
-        return [right, selected, setSelected];
-    }
-
-    return [({centerY}) => right({centerY, selected, onSelectedChange: setSelected}), selected, setSelected];
-};
-
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
         <div role={role} className={styles.row}>
@@ -924,7 +905,9 @@ export const RowList = ({
 };
 
 // danger + variant="brand" is not allowed
-type CommonBoxedRowProps =
+type CommonBoxedRowProps = {
+    selected?: boolean;
+} & (
     | {
           variant?: 'default';
           danger: true;
@@ -936,7 +919,8 @@ type CommonBoxedRowProps =
     | {
           variant?: 'default';
           danger: boolean;
-      };
+      }
+);
 
 type BoxedRowProps = ExclusifyUnion<
     | BasicRowContentProps
@@ -951,8 +935,10 @@ type BoxedRowProps = ExclusifyUnion<
     CommonBoxedRowProps;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => {
+    const {selected, ...rowProps} = props;
     const outsideVariant = useThemeVariant();
-    const [right, selected, setSelected] = useSelectableRight(props.right, hasControlProps(props));
+    const [controlSelected, setControlSelected] = React.useState(false);
+    const isSelected = selected ?? controlSelected;
 
     return (
         <InternalBoxed
@@ -960,13 +946,13 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
             className={classNames(
                 styles.boxed,
                 styles.selectionOutline,
-                selected && styles.selectionOutlineColor[outsideVariant]
+                isSelected && styles.selectionOutlineColor[outsideVariant]
             )}
-            variant={props.variant ?? 'default'}
+            variant={rowProps.variant ?? 'default'}
             ref={ref}
             dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
         >
-            <RowContent {...props} right={right} hasDivider={false} onSelectedChange={setSelected} />
+            <RowContent {...rowProps} hasDivider={false} onSelectedChange={setControlSelected} />
         </InternalBoxed>
     );
 });

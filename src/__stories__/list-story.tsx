@@ -518,6 +518,8 @@ type SelectableBoxedRowsArgs = {
 };
 
 const SelectableBoxedRows = () => {
+    const [selected, setSelected] = React.useState(false);
+
     return (
         <BoxedRowList>
             <BoxedRow
@@ -539,17 +541,18 @@ const SelectableBoxedRows = () => {
                 }}
             />
             <BoxedRow
+                selected={selected}
                 title="Custom render"
                 description="Select this row with the icon button"
-                right={({selected, onSelectedChange}) => (
+                right={
                     <IconButton
                         Icon={selected ? IconHeartFilled : IconHeartRegular}
                         aria-label={selected ? 'Unselect row' : 'Select row'}
                         backgroundType={selected ? 'solid' : 'transparent'}
                         type="brand"
-                        onPress={() => onSelectedChange(!selected)}
+                        onPress={() => setSelected(!selected)}
                     />
-                )}
+                }
             />
         </BoxedRowList>
     );

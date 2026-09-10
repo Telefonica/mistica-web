@@ -51,17 +51,26 @@ test('BoxedRowList has a list role by default', () => {
 });
 
 test('BoxedRow updates its selected state from custom right content', async () => {
+    const CustomBoxedRow = () => {
+        const [selected, setSelected] = React.useState(false);
+
+        return (
+            <BoxedRow
+                selected={selected}
+                title="Title"
+                right={
+                    <button onClick={() => setSelected(!selected)}>
+                        {selected ? 'Selected' : 'Unselected'}
+                    </button>
+                }
+            />
+        );
+    };
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <BoxedRowList>
-                <BoxedRow
-                    title="Title"
-                    right={({selected, onSelectedChange}) => (
-                        <button onClick={() => onSelectedChange(!selected)}>
-                            {selected ? 'Selected' : 'Unselected'}
-                        </button>
-                    )}
-                />
+                <CustomBoxedRow />
             </BoxedRowList>
         </ThemeContextProvider>
     );
