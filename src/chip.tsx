@@ -68,7 +68,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                             : styles.icon
                     }
                 >
-                    <Icon color="currentColor" size={pxToRem(16)} />
+                    <Icon color="currentColor" size={pxToRem(20)} />
                 </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
