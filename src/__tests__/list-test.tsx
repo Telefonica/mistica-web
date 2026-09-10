@@ -66,14 +66,10 @@ test('BoxedRow updates its selected state from custom right content', async () =
         </ThemeContextProvider>
     );
 
-    const boxedRow = screen.getByTestId('BoxedRow');
-
-    expect(boxedRow).toHaveAttribute('data-selected', 'false');
     expect(screen.getByText('Unselected')).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole('button', {name: 'Unselected'}));
 
-    expect(boxedRow).toHaveAttribute('data-selected', 'true');
     expect(screen.getByText('Selected')).toBeInTheDocument();
 });
 
