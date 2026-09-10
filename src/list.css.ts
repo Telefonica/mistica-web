@@ -36,7 +36,7 @@ export const boxed = style({});
 
 const selectedOutlineStyles = (outlineColor: string): StyleRule => ({
     selectors: {
-        '&[data-selected="true"]::after': {borderColor: outlineColor},
+        '&::after': {borderColor: outlineColor},
     },
 });
 
