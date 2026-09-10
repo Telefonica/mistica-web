@@ -401,11 +401,9 @@ const SelectableToggleIconButton = ({
 }: ToggleIconButtonProps & {
     onSelectedChange?: (selected: boolean) => void;
 }) => {
-    const initialSelected = React.useRef(!!defaultChecked).current;
-
     React.useEffect(() => {
-        onSelectedChange?.(checked ?? initialSelected);
-    }, [checked, initialSelected, onSelectedChange]);
+        onSelectedChange?.(checked ?? !!defaultChecked);
+    }, [checked, defaultChecked, onSelectedChange]);
 
     const handleChange = (selected: boolean) => {
         const result = onChange?.(selected);
