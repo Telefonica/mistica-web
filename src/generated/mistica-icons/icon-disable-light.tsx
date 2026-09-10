@@ -27,7 +27,16 @@ const IconDisableLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.3 2A8.3 8.3 0 0 0 2 10.3v3.4a8.3 8.3 0 0 0 8.3 8.3h3.4a8.3 8.3 0 0 0 8.3-8.3v-3.4A8.3 8.3 0 0 0 13.7 2zM3 10.3A7.3 7.3 0 0 1 10.3 3h3.4c1.836 0 3.513.678 4.796 1.797l-13.7 13.7A7.27 7.27 0 0 1 3 13.7zm2.504 8.903 13.7-13.7A7.27 7.27 0 0 1 21 10.3v3.4a7.3 7.3 0 0 1-7.3 7.3h-3.4a7.27 7.27 0 0 1-4.796-1.797"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

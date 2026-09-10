@@ -4323,7 +4323,241 @@ const listItemSnippets = [
     },
 ];
 
+const sidenavBarSnippets: Array<Snippet> = [
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (full page)',
+        code: `
+<SidenavLayout
+    mode="whole-viewport"
+    sidenav={
+        <SidenavBar
+            aria-label="Main navigation"
+            logo={({state}) => <Logo size={32} type={state === 'collapsed' ? 'isotype' : 'imagotype'} />}
+            headerSlot={({state}) => {
+                // The name fades with the rail: it starts to fade when the rail starts to narrow, and it
+                // comes back as soon as the rail starts to widen. The box keeps its width, so the edge of
+                // the rail cuts the name instead of wrapping it under the avatar.
+                const isNameVisible = state === 'expanded' || state === 'expanding';
+                // The avatar stands on the centre of the rail, and on the icons of the items when the
+                // sidenav is expanded. The inset moves with the padding of the slot, over the same curve.
+                const isRail = !isNameVisible;
+                return (
+                    <div
+                        style={{
+                            width: 'max-content',
+                            paddingLeft: isRail ? 10 : 2,
+                            transition: 'padding 350ms cubic-bezier(0.4, 0, 0.2, 1)',
+                        }}
+                    >
+                        <Inline space={8} alignItems="center">
+                            <Avatar size={32} initials="SP" />
+                            <span
+                                style={{opacity: isNameVisible ? 1 : 0, transition: 'opacity 350ms ease'}}
+                                aria-hidden={!isNameVisible || undefined}
+                            >
+                                <Text2 medium>Sandro Pertini</Text2>
+                            </span>
+                        </Inline>
+                    </div>
+                );
+            }}
+            collapsed={getState('sidenavCollapsed', false)}
+            onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
+            selectedItemId={getState('sidenavSelectedItem', 'home')}
+            onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
+            sections={[
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
+                {
+                    // A hidden title paints no heading, and a screen reader still reads it as the
+                    // name of the list of the section.
+                    title: {text: 'Overview', hidden: true},
+                    items: [
+                        {id: 'activity', label: 'Activity', asset: IconBellRegular, href: '#activity'},
+                        {id: 'reports', label: 'Reports', asset: IconDocumentsRegular, href: '#reports'},
+                    ],
+                },
+                {
+                    title: 'Workspace',
+                    dividerTop: true,
+                    items: [
+                        {
+                            id: 'projects',
+                            label: 'Projects',
+                            asset: IconFolderRegular,
+                            defaultOpen: true,
+                            children: [
+                                {id: 'projects-active', label: 'Active', href: '#projects/active'},
+                                {id: 'projects-archived', label: 'Archived', to: '/projects/archived'},
+                            ],
+                        },
+                        {
+                            id: 'inbox',
+                            label: 'Inbox',
+                            asset: IconEmailRegular,
+                            href: '#inbox',
+                            rightSlot: <Badge value={3} />,
+                        },
+                        {
+                            id: 'tasks',
+                            label: 'Tasks',
+                            asset: IconCheckedRegular,
+                            onPress: () => console.log('Tasks pressed'),
+                            onNavigate: () => console.log('Tasks selected'),
+                        },
+                    ],
+                },
+                {
+                    title: 'Account',
+                    dividerTop: true,
+                    items: [
+                        {
+                            id: 'profile',
+                            label: 'My profile',
+                            asset: IconComputerUserRegular,
+                            children: [
+                                {id: 'profile-personal', label: 'Personal info', href: '#profile/personal'},
+                                {
+                                    id: 'profile-security',
+                                    label: 'Security',
+                                    href: '#profile/security',
+                                    rightSlot: <Badge />,
+                                },
+                            ],
+                        },
+                        {
+                            id: 'docs',
+                            label: 'Documentation',
+                            asset: IconSearchRegular,
+                            showAssetWhenExpanded: false,
+                            href: 'https://example.org',
+                            newTab: true,
+                        },
+                    ],
+                },
+                {id: 'settings', label: 'Settings', asset: IconSettingsRegular, href: '#settings'},
+            ]}
+            fixedFooter
+            footerSlot={({state}) => {
+                // Two actions cross-fade in one cell of a grid: the text button on the expanded sidenav,
+                // and the icon button on the rail. The hidden one ends with visibility hidden, so it never
+                // takes the focus. The icon button keeps a left inset, so its centre stands on the centre
+                // of the rail, and it does not travel while the rail moves.
+                const isRail = state === 'collapsed' || state === 'collapsing';
+                const fade = (isVisible) => ({
+                    gridArea: '1 / 1',
+                    opacity: isVisible ? 1 : 0,
+                    visibility: isVisible ? 'visible' : 'hidden',
+                    transition: 'opacity 350ms ease, visibility 350ms',
+                });
+                return (
+                    <div style={{display: 'grid', justifyItems: 'start'}}>
+                        <div style={fade(!isRail)}>
+                            <ButtonSecondary
+                                small
+                                StartIcon={IconLogoutRegular}
+                                onPress={() => alert({title: 'Logged out'})}
+                            >
+                                Log out
+                            </ButtonSecondary>
+                        </div>
+                        <div style={{...fade(isRail), paddingLeft: 10}}>
+                            <IconButton
+                                Icon={IconLogoutRegular}
+                                type="neutral"
+                                backgroundType="transparent"
+                                small
+                                aria-label="Log out"
+                                onPress={() => alert({title: 'Logged out'})}
+                            />
+                        </div>
+                    </div>
+                );
+            }}
+        />
+    }
+>
+    <Box padding={24}>
+        <Stack space={16}>
+            <Text5 as="h1">Page title</Text5>
+            <Text2 regular as="p">
+                The sidenav stays sticky while the content scrolls with the document. Collapse the
+                sidenav to see the rail, and resize to a tablet width to see the mobile top bar.
+            </Text2>
+            <Placeholder height={900} />
+        </Stack>
+    </Box>
+</SidenavLayout>
+        `,
+    },
+    {
+        group: 'SidenavBar',
+        name: 'SidenavBar (double panel, brand, boxed)',
+        code: `
+<div style={{display: 'flex', height: 520}}>
+    <Box padding={16}>
+        <SidenavBar
+            aria-label="Main navigation"
+            variant="brand"
+            boxed
+            doublePanel
+            width={260}
+            defaultCollapsed={false}
+            selectedItemId={getState('sidenavPanelSelectedItem', 'dashboard')}
+            onSelectedItemIdChange={(id) => setState('sidenavPanelSelectedItem', id)}
+            sections={[
+                {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
+                {
+                    title: 'Catalog',
+                    dividerTop: true,
+                    dividerBottom: true,
+                    items: [
+                        {
+                            id: 'products',
+                            label: 'Products',
+                            asset: IconShopRegular,
+                            children: [
+                                {id: 'products-all', label: 'All products', href: '#products/all'},
+                                {id: 'products-featured', label: 'Featured', href: '#products/featured'},
+                                {id: 'products-new', label: 'New arrivals', href: '#products/new'},
+                            ],
+                        },
+                        {
+                            id: 'brands',
+                            label: 'Brands',
+                            asset: IconTagRegular,
+                            children: [
+                                {id: 'brands-premium', label: 'Premium', href: '#brands/premium'},
+                                {id: 'brands-value', label: 'Value', href: '#brands/value'},
+                            ],
+                        },
+                    ],
+                },
+                {
+                    // A hidden title paints no heading, and a screen reader still reads it as the
+                    // name of the list of the section.
+                    title: {text: 'Sales', hidden: true},
+                    items: [
+                        {
+                            id: 'orders',
+                            label: 'Orders',
+                            asset: IconShoppingCartRegular,
+                            href: '#orders',
+                            rightSlot: <Badge value={5} />,
+                        },
+                        {id: 'deals', label: 'Deals', asset: IconBellRegular, href: '#deals'},
+                    ],
+                },
+            ]}
+        />
+    </Box>
+</div>
+        `,
+    },
+];
+
 export default [
+    ...sidenavBarSnippets,
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
