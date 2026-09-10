@@ -552,6 +552,8 @@ export default {
         },
         doublePanel: {
             control: {type: 'boolean'},
+            description:
+                'A press on a parent item opens its children in a second column, which pushes the page instead of overlaying it. The column shows the label of the parent as its title. It closes on a press on one of its children, on an item without children, on the same parent again, or outside of the bar. A press inside the bar that lands on no item, on the background of a column, or on a section title, keeps it open. A press on another parent refreshes it. A selection from outside of the bar opens the column on the parent of the selected child, and moves it there when it shows another parent. On the collapsed rail, every item keeps its tooltip while the column is open, except the item that owns the column.',
         },
         width: {
             control: {type: 'range', min: 200, max: 400, step: 5},

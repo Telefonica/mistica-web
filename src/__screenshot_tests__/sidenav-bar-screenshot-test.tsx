@@ -162,9 +162,9 @@ test.each`
     'SidenavBar double panel. collapsed($collapsed) boxed($boxed) divider($divider)',
     async ({collapsed, boxed, divider}) => {
         await openStoryPage({
-            id: 'components-sidenavbar-bar--double-panel',
+            id: 'components-sidenavbar-bar--default',
             device: 'DESKTOP',
-            args: {collapsed, boxed, divider},
+            args: {doublePanel: true, logo: 'none', defaultCollapsed: collapsed, boxed, divider},
         });
 
         const sidenavBar = await screen.findByRole('navigation');
@@ -179,10 +179,10 @@ test.each`
 
 test('SidenavBar double panel boxed in dark mode runs the separator to the edge of the box', async () => {
     await openStoryPage({
-        id: 'components-sidenavbar-bar--double-panel',
+        id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
         isDarkMode: true,
-        args: {boxed: true},
+        args: {doublePanel: true, logo: 'none', boxed: true},
     });
 
     const sidenavBar = await screen.findByRole('navigation');
