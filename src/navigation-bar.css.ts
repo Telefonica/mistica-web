@@ -5,10 +5,6 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {NAVBAR_ZINDEX, spacerMobile} from './navigation-shared.css';
 
-// The styles of the bar itself live in `navigation-shared.css.ts`, which every navigation surface reads.
-// This file holds what belongs to `MainNavigationBar` and `FunnelNavigationBar` alone: the desktop menu,
-// the sections of the bar, and the actions.
-
 export const DESKTOP_SMALL_MENU_WIDTH = 184;
 
 export const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;

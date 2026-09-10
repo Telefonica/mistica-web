@@ -52,17 +52,10 @@ import type {
 // The top bar matches the mobile main navigation bar: the isotype of the skin at the same size.
 const MOBILE_LOGO_SIZE = 40;
 
-// Distance from the top bar to the first entry of the panel.
 const PANEL_TOP_PADDING = 24;
-
-// Space around the footer slot, and between two first-level entries.
 const FOOTER_SLOT_PADDING = 16;
 const ENTRY_SPACE = 32;
-
-// Space between the title of a section and its first item.
 const SECTION_TITLE_SPACE = 8;
-
-// Space between the back bar of the second level and the label of the parent.
 const BACK_BAR_SPACE = 16;
 
 // The top bar and the panel share one focus trap, so the focus moves between the two of them. The group is

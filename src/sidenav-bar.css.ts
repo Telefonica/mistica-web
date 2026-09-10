@@ -21,16 +21,12 @@ const RAIL_INSET = 10;
 // The expanded sidenav and the collapsed rail share this number: the row of an item stands in the same
 // place in both states, 18px from each edge of the sidenav.
 const ITEM_ROW_INSET = 8;
-// Gap between the icon, the label, the right slot and the chevron of a row.
 const ITEM_ROW_GAP = 8;
-// Height of a row that holds a single line of text, which the spec gives for every item.
 const ITEM_ROW_HEIGHT = 44;
 // Vertical padding of a row. A label that wraps keeps this room above and below its text, and a label of
 // one line keeps the row at `ITEM_ROW_HEIGHT`: `Text2` measures 24px on the skin that gives it the most
 // room, and 24 plus the two paddings is exactly that height.
 const ITEM_ROW_PADDING_Y = 10;
-// Distance from the edge of the sidenav to the title of a section, which the title of the second column
-// takes as well.
 const SECTION_TITLE_INSET = 24;
 // Horizontal inset of the floating dialog panel. The row of each item adds `ITEM_ROW_INSET` on top of it,
 // so the content of a child item lands at `SECTION_TITLE_INSET` from the edge of the panel.
@@ -43,11 +39,8 @@ const ENTRY_SPACE_Y = 8;
 // Vertical space between a section divider and the items that it faces. The outward side of the divider
 // owns nothing: the entries around it already stand `ENTRY_SPACE_Y` apart on each side.
 const SECTION_DIVIDER_MARGIN_Y = 16;
-// A section divider does not span the whole width: it keeps 8px on each side, in both states.
 const SECTION_DIVIDER_MARGIN_X = 8;
-// Inset between the header and the first row of the body, which `headerScrollSpacer` owns.
 const HEADER_SCROLL_SPACER_HEIGHT = 24;
-// Horizontal inset of the header slot and of the footer slot, which stand on the same two edges.
 const SLOT_INSET_X = 24;
 // The collapsed rail draws both slots on the rail of the items, so they take `RAIL_INSET` there. The
 // expanded inset would leave a slot only 24px of the 72px rail.
@@ -56,7 +49,6 @@ const COLLAPSED_SLOT_INSET_X = RAIL_INSET;
 // footer region gives its slot 8px above and 32px below.
 const FOOTER_PADDING_TOP = 8;
 const FOOTER_PADDING_BOTTOM = 32;
-// Room that a focus ring needs beyond the edge of the scrollport, above and below.
 const FOCUS_RING_ROOM = 4;
 
 export const sidenavWidthVar = createVar();
@@ -66,10 +58,7 @@ export const sidenavPanelWidthVar = createVar();
 
 // Animation ------------------------------------------------------------------
 
-// The rail, the labels, the header and the second column move together when the user collapses or
-// expands the sidenav.
 export const COLLAPSE_DURATION_MS = 350;
-// The children of a parent item, and the chevron that reports their state, take their own duration.
 export const CONTENT_DURATION_MS = 400;
 
 const COLLAPSE_EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';

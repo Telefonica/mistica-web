@@ -37,8 +37,8 @@ type SidenavItemBaseProps = {
     label: string;
     /**
      * Icon component or element to display. A first-level item must carry one, because the collapsed rail
-     * shows nothing else of it. The component learns its level at runtime, so it reports a missing asset
-     * in the console instead of in the type. `SidenavEntry` enforces it in the type.
+     * shows nothing else of it. The level is only known at runtime, so a missing asset is reported in the
+     * console. `SidenavEntry` enforces it in the type.
      */
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
     /** Show asset when expanded (not collapsed). Only a first-level item reads it. @default true */
@@ -104,7 +104,7 @@ type SidenavItemProps = ExclusifyUnion<
 
 /**
  * Navigation item component for use within SidenavSection.
- * Props `href`, `onPress`, `to`, and `children` are mutually exclusive—use exactly one of these to define the item's behavior.
+ * Props `href`, `onPress`, `to`, and `children` are mutually exclusive: use exactly one of them.
  */
 const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const {
@@ -135,8 +135,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isReducedMotion = useIsReducedMotion();
     const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
-    // `SidenavBar` overrides the ambient variant with its own, so the item takes its colors from here. The
-    // floating panel of a collapsed sidenav restores the default variant, and its items follow.
+    // Read from context, not from `SidenavBar`: the floating panel restores the default variant.
     const variant = useThemeVariant();
 
     const isItemSelected = id !== undefined && selectedItemId === id;
@@ -145,40 +144,28 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const hasChildren = React.Children.count(children) > 0;
     const isPanelOpen = hasChildren && panelOpenForItemId === id;
-    // The left accent bar marks the directly-selected item only. A parent whose panel is open shows the
-    // selected background, but never the accent: the accent belongs to the selected child.
+    // The accent belongs to the selected item only, never to a parent of it.
     const showAccent = isItemSelected;
 
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     const nestedListRef = React.useRef<HTMLDivElement>(null);
-    // The dialog panel lives in a portal, far from its trigger in the document, so the trigger names it
-    // with `aria-controls`. The id exists on every item, and only the open dialog panel carries it.
+    // The dialog panel renders in a portal, so the trigger points at it with `aria-controls`.
     const dialogPanelId = React.useId();
-    // The visible label of the trigger also names the list of its children (the disclosure pattern), so
-    // the name a screen reader speaks is always the text the user sees.
     const labelId = React.useId();
     const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
     const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
-    // In double panel mode the sidenav renders the panel as its second column, so the item only tracks
-    // the open state. The dialog panel, instead, is anchored to this item and rendered here.
+    // In double panel mode the bar renders the panel as its second column; the dialog panel renders here.
     const isDialogMode = shouldShowPanelMode && !doublePanel;
 
-    // The panel of another parent takes the background for itself, so that the sidenav never shows two
-    // highlighted parents. This parent takes the background back as soon as that panel closes, which
-    // needs no change of the selection.
     const isPanelOpenForAnotherItem = Boolean(panelOpenForItemId && panelOpenForItemId !== id);
 
-    // The selected background also marks a parent whose descendant is selected, but only while that
-    // parent is closed (accordion collapsed, or in collapsed/panel mode) so it flags the hidden
-    // selection. Once the accordion is open the selected child renders its own background, so the
-    // parent drops it to avoid two stacked highlights.
+    // Never two highlighted rows: a closed parent flags a hidden selected descendant, an open parent
+    // leaves the background to the selected child, and an open panel takes it from every other parent.
     const showBackground =
         isItemSelected || isPanelOpen || (hasDescendantSelected && !isOpen && !isPanelOpenForAnotherItem);
 
-    // Auto-expand this parent whenever the selection moves to one of its descendants. The effect keys
-    // on the selected descendant id (not on a boolean) so that a selection change between two siblings
-    // reopens a parent the user closed, which keeps the new selection visible. It only ever opens
-    // (never force-closes), so sibling parents and unrelated manual collapses are left as-is.
+    // Keyed on the descendant id, not on a boolean, so that a selection change between two siblings
+    // reopens a parent the user closed. It only opens, never closes.
     const selectedDescendantId = hasDescendantSelected ? selectedItemId : null;
     React.useEffect(() => {
         if (selectedDescendantId !== null) {
@@ -188,10 +175,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const wrapNavCallback = (callback?: () => void | Promise<void>): (() => Promise<void>) => {
         return async () => {
-            // Any navigation closes the open panel: a press on one of its children, and also a press on
-            // a first-level item that navigates instead of revealing children. The close comes first and
-            // carries the new selection, because the selection of this press must not reopen the panel,
-            // and the bar reads that selection as soon as the consumer applies it.
+            // The close carries the new selection, so that this selection does not reopen the panel.
             closePanelForSelection(id ?? null);
             if (id && onSelectedItemIdChange) {
                 onSelectedItemIdChange(id);
@@ -217,7 +201,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
     })();
 
-    // The panel resets the level to 0 for the indentation, but its items are nested items of the sidenav.
+    // The panel resets the level to 0 for the indentation, so `level` alone does not tell the first level.
     const isFirstLevel = level === 0 && !isInsidePanel;
     const hasAsset = !!asset;
     React.useEffect(() => {
@@ -244,12 +228,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
             </span>
         ) : null;
 
-    // The label keeps its box on the collapsed rail, where it fades out. It stays in the DOM there, which
-    // the spec asks for: a screen reader still reads it, and the fade needs it.
+    // The collapsed label stays in the DOM: a screen reader still reads it, and the fade needs it.
     const isLabelCollapsed = collapsed && !isInsidePanel;
-    // The label holds the width of its text while the sidenav moves, in both directions: during a collapse
-    // the sidenav is already collapsed, and during an expansion the settled state still reports the rail.
-    // The expanded sidenav at rest drops it, and the label wraps there. See `itemLabelKeepsWidth`.
+    // The label keeps the width of its text while the bar moves in either direction, and wraps only at
+    // rest expanded. See `itemLabelKeepsWidth`.
     const isLabelWidthKept = !isInsidePanel && (collapsed || collapsedSettled);
     const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(isLabelWidthKept);
     const labelNode = (
@@ -353,12 +335,9 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         );
     })();
 
-    // The collapsed rail shows only the icon of an item, so a tooltip gives its label. The dialog panel
-    // floats over the rail, and a tooltip would overlap it, so the rail drops its tooltips while that
-    // panel is open. The second column, instead, sits beside the rail, so the rail keeps its tooltips. Only
-    // the item that owns the column drops its own, because the column already shows its label as a title.
-    // The tooltip follows the settled collapsed state, and not the one of this render: its wrapper replaces
-    // the row in the DOM, and a replaced row would drop the movement of the rail (see `collapsedSettled`).
+    // The rail drops every tooltip while the dialog panel floats over it. Beside a second column only the
+    // owner item drops its own, because the column shows its label as a title. `collapsedSettled` and not
+    // `collapsed`: the tooltip wrapper replaces the row node, and a replaced row drops its transition.
     const showTooltip =
         collapsedSettled && !isInsidePanel && (doublePanel ? !isPanelOpen : !panelOpenForItemId);
 
@@ -367,8 +346,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         itemDataAttributes['sidenav-item-id'] = id;
     }
 
-    // The labels fade out one after the other, from the first item of the body to the last one. The delay
-    // stops growing at the last value of the spec, so that a long list ends its fade with the rail.
+    // The delay stops growing at the spec maximum, so that a long list ends its fade with the rail.
     const labelDelay = Math.min(LABEL_DELAY_BASE_MS + itemIndex * LABEL_DELAY_STEP_MS, LABEL_DELAY_MAX_MS);
 
     const row = (
@@ -388,10 +366,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                     position="right"
                     description={label}
                     target={interactiveRow}
-                    // The wrapper of the tooltip becomes the box that the row measures itself against, so
-                    // it has to take the width of the rail. Without `minWidth`, a flex item never shrinks
-                    // below the content that it holds, and the row and its wrapper would then widen each
-                    // other past the rail.
+                    // Without `minWidth: 0` the wrapper never shrinks below its content, past the rail.
                     targetStyle={{flex: 1, minWidth: 0}}
                 />
             ) : (
@@ -400,9 +375,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         </div>
     );
 
-    // The row of an item and the list of its children live in the same list item, so that a screen
-    // reader ties them together: the trigger opens what the list item holds. A stand-alone entry of the
-    // first level already sits in a list item of the body list, and this one steps aside there.
+    // The row and its nested list share one list item. A stand-alone first-level entry already sits in
+    // a list item of the body list, so this one steps aside there.
     return (
         <div role={hasOuterListItem ? undefined : 'listitem'}>
             <SidenavHasOuterListItemContext.Provider value={false}>
@@ -419,8 +393,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                         <div
                             className={styles.nestedListContainer}
                             ref={nestedListRef}
-                            // Marks this list with the id of its parent, so ArrowLeft on a child moves
-                            // the focus back to the trigger that owns the list.
+                            // ArrowLeft on a child reads it to move the focus back to the trigger.
                             data-sidenav-nested-list-for={id}
                         >
                             <div className={styles.nestedList}>
