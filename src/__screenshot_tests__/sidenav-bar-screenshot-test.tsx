@@ -80,13 +80,11 @@ test('SidenavBar collapsed clips a long label at one line', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// Only dark mode tells the header and footer tokens apart from the body token: `background` and
-// `backgroundContainer` carry two different blacks there. A light screenshot passes with the wrong token.
 test.each`
     boxed
     ${false}
     ${true}
-`('SidenavBar in dark mode paints header and footer tokens. boxed($boxed)', async ({boxed}) => {
+`('SidenavBar in dark mode paints the three bands with one token. boxed($boxed)', async ({boxed}) => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -100,7 +98,7 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-// The story encodes the colour as Storybook does, because the argument parser drops a raw "#".
+// A raw "#" does not survive the URL of the story, so the colour uses the encoding of Storybook.
 test('SidenavBar with a custom background on the three bands and no seam', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
@@ -114,8 +112,6 @@ test('SidenavBar with a custom background on the three bands and no seam', async
     expect(image).toMatchImageSnapshot();
 });
 
-// The controlled story opens with a selected item, so one screenshot per variant also guards the
-// selected background and the selected indicator.
 test.each`
     variant
     ${'default'}
@@ -181,9 +177,6 @@ test.each`
     }
 );
 
-// In dark mode the border token carries the background colour of the sidenav, so the edge of the box is
-// invisible and the box reads by its background. A separator that stopped at that edge left a 1px gap,
-// and only a dark screenshot catches that pixel.
 test('SidenavBar double panel boxed in dark mode runs the separator to the edge of the box', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--double-panel',
@@ -235,7 +228,6 @@ test('SidenavBar mobile second level', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-// The panel always renders in the default variant, so the screenshot frames the top bar alone.
 test.each`
     variant
     ${'brand'}
