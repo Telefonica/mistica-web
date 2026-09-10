@@ -14,18 +14,22 @@ type SidenavBarContextValue = {
     collapsible: boolean;
     doublePanel: boolean;
     toggleCollapsed: () => void;
-    panelOpenForItemId: string | null;
-    setPanelOpenForItemId: (id: string | null) => void;
     /**
-     * Closes the open panel, and marks `selectionId` as the selection that must not reopen the second
-     * column. A press on an item closes the column and moves the selection at the same time, and the
-     * selection alone would otherwise reopen the column that the press just closed.
+     * The first-level item whose children show in the sub menu: the second column in double panel mode,
+     * or the dialog panel of the collapsed rail. Only one of the two forms shows at a time.
      */
-    closePanelForSelection: (selectionId: string | null) => void;
+    subMenuOpenForItemId: string | null;
+    setSubMenuOpenForItemId: (id: string | null) => void;
+    /**
+     * The press of an item that navigates: it closes the open sub menu, then it reports the item as the
+     * new selection. One call does both, because the selection alone would reopen the second column that
+     * the press just closed. The item passes `null` when it has no id.
+     */
+    selectItemAndCloseSubMenu: (itemId: string | null) => void;
     containerRef: React.RefObject<HTMLElement | null>;
-    isInsidePanel: boolean;
+    /** True for an item that renders inside the sub menu (the second column or the dialog panel). */
+    isInsideSubMenu: boolean;
     selectedItemId: string | null;
-    onSelectedItemIdChange?: (id: string | null) => void;
 };
 
 const SidenavBarContext = React.createContext<SidenavBarContextValue>({
@@ -34,11 +38,11 @@ const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     collapsible: true,
     doublePanel: false,
     toggleCollapsed: () => {},
-    panelOpenForItemId: null,
-    setPanelOpenForItemId: () => {},
-    closePanelForSelection: () => {},
+    subMenuOpenForItemId: null,
+    setSubMenuOpenForItemId: () => {},
+    selectItemAndCloseSubMenu: () => {},
     containerRef: React.createRef(),
-    isInsidePanel: false,
+    isInsideSubMenu: false,
     selectedItemId: null,
 });
 

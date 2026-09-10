@@ -164,7 +164,7 @@ test('SidenavBar double panel moves the focus to the first item of the column, a
 });
 
 // The column is not next to its trigger in the document, so the bar walks the reading order by hand.
-test('SidenavBar reads an item, then the children of its open panel, then the next item, with Tab', async () => {
+test('SidenavBar reads an item, then the children of its open sub menu, then the next item, with Tab', async () => {
     const page = await openStoryPage({
         id: STORY_ID,
         device: 'DESKTOP',

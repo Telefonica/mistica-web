@@ -28,7 +28,7 @@ import {
     renderSidenavEntries,
     validateSidenavEntries,
 } from './sidenav-bar-entries';
-import {SidenavDoublePanel} from './sidenav-bar-panel';
+import {SidenavDoublePanel} from './sidenav-bar-sub-menu';
 import {SidenavMobileBar} from './sidenav-bar-mobile';
 import {useIsReducedMotion} from './sidenav-bar-motion';
 import {useSidenavRailKeyboard} from './sidenav-bar-keyboard';
@@ -193,7 +193,7 @@ const SidenavBar = ({
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
-    const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(() =>
+    const [subMenuOpenForItemId, setSubMenuOpenForItemId] = React.useState<string | null>(() =>
         doublePanel && sections && selectedItemId
             ? findParentOfItem(sections, selectedItemId)?.id ?? null
             : null
@@ -240,26 +240,29 @@ const SidenavBar = ({
           ? 'expanding'
           : 'expanded';
 
-    // A press on an item of the sidenav closes the second column and moves the selection at the same
-    // time. The press records its selection here, so the adjustment below knows the user already
-    // dismissed the column for that selection, and does not reopen it.
+    // A press on an item of the sidenav closes the sub menu and moves the selection at the same time.
+    // The press records its selection here, so the adjustment below knows the user already dismissed
+    // the second column for that selection, and does not reopen it.
     const [dismissedSelection, setDismissedSelection] = React.useState<string | null>(null);
 
-    const closePanelForSelection = React.useCallback(
-        (selectionId: string | null) => {
+    const selectItemAndCloseSubMenu = React.useCallback(
+        (itemId: string | null) => {
             if (doublePanel) {
-                setDismissedSelection(selectionId);
+                setDismissedSelection(itemId);
             }
-            setPanelOpenForItemId(null);
+            setSubMenuOpenForItemId(null);
+            if (itemId) {
+                onSelectedItemIdChange?.(itemId);
+            }
         },
-        [doublePanel]
+        [doublePanel, onSelectedItemIdChange]
     );
 
     // The second column follows the selection, which can also move from outside of the sidenav (a
     // breadcrumb, a card, a button of the app):
     //   - a second-level item opens the column on its parent, so that the new selection stays visible;
     //   - a first-level item without children closes the column, because it has nothing to show there;
-    //   - a press inside the sidenav closes the column through `closePanelForSelection`, and that press
+    //   - a press inside the sidenav closes the column through `selectItemAndCloseSubMenu`, and that press
     //     wins over the selection it carries.
     // The adjustment runs during the render, where the entries and the previous selection are both in
     // scope, so it needs no effect and no refs. React applies the state it sets before it paints.
@@ -272,11 +275,11 @@ const SidenavBar = ({
         if (doublePanel && sections && selectedItemId && dismissedSelection !== selectedItemId) {
             const parent = findParentOfItem(sections, selectedItemId);
             if (parent) {
-                setPanelOpenForItemId(parent.id);
+                setSubMenuOpenForItemId(parent.id);
             } else {
                 const firstLevelItem = findFirstLevelItem(sections, selectedItemId);
                 if (firstLevelItem && !firstLevelItem.children?.length) {
-                    setPanelOpenForItemId(null);
+                    setSubMenuOpenForItemId(null);
                 }
             }
         }
@@ -288,7 +291,7 @@ const SidenavBar = ({
     if (doublePanel !== previousDoublePanel) {
         setPreviousDoublePanel(doublePanel);
         if (!doublePanel) {
-            setPanelOpenForItemId(null);
+            setSubMenuOpenForItemId(null);
         }
     }
 
@@ -296,15 +299,15 @@ const SidenavBar = ({
     const [previousSectionsLength, setPreviousSectionsLength] = React.useState(sections?.length ?? 0);
     if ((sections?.length ?? 0) !== previousSectionsLength) {
         setPreviousSectionsLength(sections?.length ?? 0);
-        setPanelOpenForItemId(null);
+        setSubMenuOpenForItemId(null);
     }
 
     // Only a press outside of the whole bar, or Escape, dismisses the second column: a press inside the
     // bar that lands on no item keeps it open, and a press on an item closes it through
-    // `closePanelForSelection`. A press that also carries a new selection does not race the close: the
+    // `selectItemAndCloseSubMenu`. A press that also carries a new selection does not race the close: the
     // adjustment above reopens the column for that selection in the same batch of updates.
     React.useEffect(() => {
-        if (!doublePanel || !panelOpenForItemId) {
+        if (!doublePanel || !subMenuOpenForItemId) {
             return;
         }
 
@@ -317,12 +320,12 @@ const SidenavBar = ({
             // node as a press outside of the bar: the collapse action swaps its icon, and a parent item
             // swaps its whole row, so both of them closed the column that they should have left alone.
             if (event.composedPath().includes(container)) return;
-            setPanelOpenForItemId(null);
+            setSubMenuOpenForItemId(null);
         };
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setPanelOpenForItemId(null);
+                setSubMenuOpenForItemId(null);
             }
         };
 
@@ -332,7 +335,7 @@ const SidenavBar = ({
             document.removeEventListener('click', handlePressOutside);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [doublePanel, panelOpenForItemId]);
+    }, [doublePanel, subMenuOpenForItemId]);
 
     const backgroundStyle = background ? {backgroundColor: background} : undefined;
 
@@ -356,7 +359,7 @@ const SidenavBar = ({
     React.useEffect(() => {
         const column = doublePanelRef.current;
         const container = containerRef.current;
-        if (!panelOpenForItemId || !column || !container) {
+        if (!subMenuOpenForItemId || !column || !container) {
             return;
         }
         const active = document.activeElement;
@@ -368,7 +371,7 @@ const SidenavBar = ({
                 '[data-sidenav-item-id] a[href], [data-sidenav-item-id] button:not([disabled])'
             )
             ?.focus();
-    }, [panelOpenForItemId]);
+    }, [subMenuOpenForItemId]);
 
     React.useEffect(() => {
         if (!bodyRef.current) return;
@@ -429,13 +432,12 @@ const SidenavBar = ({
             collapsible,
             doublePanel,
             toggleCollapsed,
-            panelOpenForItemId,
-            setPanelOpenForItemId,
-            closePanelForSelection,
+            subMenuOpenForItemId,
+            setSubMenuOpenForItemId,
+            selectItemAndCloseSubMenu,
             containerRef,
-            isInsidePanel: false,
+            isInsideSubMenu: false,
             selectedItemId: selectedItemId ?? null,
-            onSelectedItemIdChange,
         }),
         [
             collapsed,
@@ -443,11 +445,10 @@ const SidenavBar = ({
             collapsible,
             doublePanel,
             toggleCollapsed,
-            panelOpenForItemId,
-            closePanelForSelection,
+            subMenuOpenForItemId,
+            selectItemAndCloseSubMenu,
             containerRef,
             selectedItemId,
-            onSelectedItemIdChange,
         ]
     );
 
@@ -524,8 +525,8 @@ const SidenavBar = ({
     // The second column belongs to the sidenav, not to the item that opens it, so that it can span the
     // whole height of the sidenav and push the content of the layout.
     const doublePanelItem =
-        doublePanel && panelOpenForItemId && sections
-            ? findFirstLevelItem(sections, panelOpenForItemId)
+        doublePanel && subMenuOpenForItemId && sections
+            ? findFirstLevelItem(sections, subMenuOpenForItemId)
             : undefined;
     const doublePanelChildren = doublePanelItem?.children;
     const isDoublePanelOpen = Boolean(doublePanelChildren?.length);

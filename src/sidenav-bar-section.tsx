@@ -44,7 +44,7 @@ const SidenavSection = ({
     const {text: titleText, isHeadingVisible} = getSidenavSectionTitle(title);
     // The title names the list of the section, so the name a screen reader speaks is always the text of
     // the heading, visible or not. The section itself carries no role and no name: the named list is the
-    // whole structure, as in the second level (see `sidenav-bar-panel.tsx`).
+    // whole structure, as in the second level (see `sidenav-bar-sub-menu.tsx`).
     const titleId = React.useId();
     // The title holds the width that it had at rest while the sidenav moves, in both directions, so its
     // lines stay where they are while its box folds. See `sectionTitleKeepsWidth` for the fallback. A

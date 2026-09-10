@@ -22,7 +22,7 @@ const VIEWPORT_MARGIN = 8;
  * a press outside of the whole bar dismisses it. `SidenavBar` owns that rule.
  */
 const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): void => {
-    const {setPanelOpenForItemId} = useSidenavBarContext();
+    const {setSubMenuOpenForItemId} = useSidenavBarContext();
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -42,13 +42,13 @@ const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): vo
                 (node) => node instanceof Element && node.matches('[data-parent-item="true"]')
             );
             if (!isParentItem) {
-                setPanelOpenForItemId(null);
+                setSubMenuOpenForItemId(null);
             }
         };
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setPanelOpenForItemId(null);
+                setSubMenuOpenForItemId(null);
             }
         };
 
@@ -59,7 +59,7 @@ const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): vo
             document.removeEventListener('click', handleClickOutside);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [panelElement, setPanelOpenForItemId]);
+    }, [panelElement, setSubMenuOpenForItemId]);
 };
 
 type SidenavDialogPanelProps = {
@@ -99,7 +99,7 @@ const SidenavDialogPanel = ({
         containerRef,
         itemId,
         isPositioned: panelPosition !== null,
-        onClose: () => contextValue.setPanelOpenForItemId(null),
+        onClose: () => contextValue.setSubMenuOpenForItemId(null),
     });
 
     // The panel opens aligned with its trigger, but a trigger close to the bottom edge pushes the
@@ -135,9 +135,9 @@ const SidenavDialogPanel = ({
         };
     }, [itemId, containerRef, panelElement]);
 
-    const panelContextValue = {
+    const subMenuContextValue = {
         ...contextValue,
-        isInsidePanel: true,
+        isInsideSubMenu: true,
     };
 
     return (
@@ -178,10 +178,10 @@ const SidenavDialogPanel = ({
                             {label}
                         </Text2>
                     </div>
-                    <SidenavBarContext.Provider value={panelContextValue}>
+                    <SidenavBarContext.Provider value={subMenuContextValue}>
                         <SidenavLevelContext.Provider value={0}>
                             {/* The title names the list, and the list gives the count of its items. */}
-                            <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
+                            <div className={styles.subMenuRows} role="list" aria-labelledby={titleId}>
                                 {children}
                             </div>
                         </SidenavLevelContext.Provider>
@@ -215,11 +215,11 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
         // user sees. The column itself carries no role and no name: the named list is the whole structure.
         const titleId = React.useId();
 
-        const panelContextValue = {
+        const subMenuContextValue = {
             ...contextValue,
-            // The children of the panel always show their label and never a tooltip, even when the sidenav
-            // is collapsed, and a press on one of them closes the panel.
-            isInsidePanel: true,
+            // The children of the sub menu always show their label and never a tooltip, even when the
+            // sidenav is collapsed, and a press on one of them closes the sub menu.
+            isInsideSubMenu: true,
         };
 
         return (
@@ -244,10 +244,10 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                             {label}
                         </Text2>
                     </div>
-                    <SidenavBarContext.Provider value={panelContextValue}>
+                    <SidenavBarContext.Provider value={subMenuContextValue}>
                         <SidenavLevelContext.Provider value={0}>
                             {/* The title names the list, and the list gives the count of its items. */}
-                            <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
+                            <div className={styles.subMenuRows} role="list" aria-labelledby={titleId}>
                                 {children}
                             </div>
                         </SidenavLevelContext.Provider>

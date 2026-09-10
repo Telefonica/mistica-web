@@ -17,7 +17,7 @@ import {
     SidenavHasOuterListItemContext,
     hasDescendantWithId,
 } from './sidenav-bar-context';
-import {SidenavDialogPanel} from './sidenav-bar-panel';
+import {SidenavDialogPanel} from './sidenav-bar-sub-menu';
 import {useIsReducedMotion, useRestWidth} from './sidenav-bar-motion';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
@@ -121,13 +121,12 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         collapsed,
         collapsedSettled,
         doublePanel,
-        panelOpenForItemId,
-        setPanelOpenForItemId,
-        closePanelForSelection,
+        subMenuOpenForItemId,
+        setSubMenuOpenForItemId,
+        selectItemAndCloseSubMenu,
         containerRef,
-        isInsidePanel,
+        isInsideSubMenu,
         selectedItemId,
-        onSelectedItemIdChange,
     } = useSidenavBarContext();
     const level = React.useContext(SidenavLevelContext);
     const itemIndex = React.useContext(SidenavItemIndexContext);
@@ -143,7 +142,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     const selected = isItemSelected || hasDescendantSelected;
 
     const hasChildren = React.Children.count(children) > 0;
-    const isPanelOpen = hasChildren && panelOpenForItemId === id;
+    const isSubMenuOpen = hasChildren && subMenuOpenForItemId === id;
     // The accent belongs to the selected item only, never to a parent of it.
     const showAccent = isItemSelected;
 
@@ -152,17 +151,17 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // The dialog panel renders in a portal, so the trigger points at it with `aria-controls`.
     const dialogPanelId = React.useId();
     const labelId = React.useId();
-    const shouldShowPanelMode = hasChildren && (collapsed || doublePanel);
-    const isOpen = hasChildren && !collapsed && !shouldShowPanelMode && open;
-    // In double panel mode the bar renders the panel as its second column; the dialog panel renders here.
-    const isDialogMode = shouldShowPanelMode && !doublePanel;
+    const isSubMenuMode = hasChildren && (collapsed || doublePanel);
+    const isOpen = hasChildren && !collapsed && !isSubMenuMode && open;
+    // In double panel mode the bar renders the sub menu as its second column; the dialog panel renders here.
+    const isDialogMode = isSubMenuMode && !doublePanel;
 
-    const isPanelOpenForAnotherItem = Boolean(panelOpenForItemId && panelOpenForItemId !== id);
+    const isSubMenuOpenForAnotherItem = Boolean(subMenuOpenForItemId && subMenuOpenForItemId !== id);
 
     // Never two highlighted rows: a closed parent flags a hidden selected descendant, an open parent
-    // leaves the background to the selected child, and an open panel takes it from every other parent.
+    // leaves the background to the selected child, and an open sub menu takes it from every other parent.
     const showBackground =
-        isItemSelected || isPanelOpen || (hasDescendantSelected && !isOpen && !isPanelOpenForAnotherItem);
+        isItemSelected || isSubMenuOpen || (hasDescendantSelected && !isOpen && !isSubMenuOpenForAnotherItem);
 
     // Keyed on the descendant id, not on a boolean, so that a selection change between two siblings
     // reopens a parent the user closed. It only opens, never closes.
@@ -175,11 +174,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const wrapNavCallback = (callback?: () => void | Promise<void>): (() => Promise<void>) => {
         return async () => {
-            // The close carries the new selection, so that this selection does not reopen the panel.
-            closePanelForSelection(id ?? null);
-            if (id && onSelectedItemIdChange) {
-                onSelectedItemIdChange(id);
-            }
+            selectItemAndCloseSubMenu(id ?? null);
             await callback?.();
         };
     };
@@ -201,8 +196,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         }
     })();
 
-    // The panel resets the level to 0 for the indentation, so `level` alone does not tell the first level.
-    const isFirstLevel = level === 0 && !isInsidePanel;
+    // The sub menu resets the level to 0 for the indentation, so `level` alone does not tell the first level.
+    const isFirstLevel = level === 0 && !isInsideSubMenu;
     const hasAsset = !!asset;
     React.useEffect(() => {
         if (process.env.NODE_ENV !== 'production' && isFirstLevel && !hasAsset) {
@@ -229,10 +224,10 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         ) : null;
 
     // The collapsed label stays in the DOM: a screen reader still reads it, and the fade needs it.
-    const isLabelCollapsed = collapsed && !isInsidePanel;
+    const isLabelCollapsed = collapsed && !isInsideSubMenu;
     // The label keeps the width of its text while the bar moves in either direction, and wraps only at
     // rest expanded. See `itemLabelKeepsWidth`.
-    const isLabelWidthKept = !isInsidePanel && (collapsed || collapsedSettled);
+    const isLabelWidthKept = !isInsideSubMenu && (collapsed || collapsedSettled);
     const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(isLabelWidthKept);
     const labelNode = (
         <div
@@ -287,15 +282,15 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
 
     const ariaCurrent = selected ? ('page' as const) : undefined;
 
-    const handleTogglePanel = () => {
-        setPanelOpenForItemId(isPanelOpen ? null : id);
+    const handleToggleSubMenu = () => {
+        setSubMenuOpenForItemId(isSubMenuOpen ? null : id);
     };
 
     const interactiveRow = (() => {
         if (hasChildren) {
             const handlePress = () => {
-                if (shouldShowPanelMode) {
-                    handleTogglePanel();
+                if (isSubMenuMode) {
+                    handleToggleSubMenu();
                 } else {
                     setOpen((prev) => !prev);
                 }
@@ -305,8 +300,8 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                 <Touchable
                     className={touchableClassName}
                     onPress={handlePress}
-                    aria-expanded={shouldShowPanelMode ? isPanelOpen : isOpen}
-                    aria-controls={isPanelOpen && isDialogMode ? dialogPanelId : undefined}
+                    aria-expanded={isSubMenuMode ? isSubMenuOpen : isOpen}
+                    aria-controls={isSubMenuOpen && isDialogMode ? dialogPanelId : undefined}
                     aria-label={label}
                     dataAttributes={{'parent-item': 'true'}}
                 >
@@ -339,7 +334,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
     // owner item drops its own, because the column shows its label as a title. `collapsedSettled` and not
     // `collapsed`: the tooltip wrapper replaces the row node, and a replaced row drops its transition.
     const showTooltip =
-        collapsedSettled && !isInsidePanel && (doublePanel ? !isPanelOpen : !panelOpenForItemId);
+        collapsedSettled && !isInsideSubMenu && (doublePanel ? !isSubMenuOpen : !subMenuOpenForItemId);
 
     const itemDataAttributes: DataAttributes = {testid: 'SidenavItem', ...dataAttributes};
     if (id) {
@@ -406,7 +401,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
                         </div>
                     </CSSTransition>
                 )}
-                {isPanelOpen && isDialogMode && (
+                {isSubMenuOpen && isDialogMode && (
                     <SidenavDialogPanel
                         id={dialogPanelId}
                         itemId={id}

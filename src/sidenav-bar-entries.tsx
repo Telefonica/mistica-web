@@ -48,7 +48,7 @@ const findParentOfItem = (
 ): SidenavItemType | undefined =>
     getFirstLevelItems(entries).find((item) => item.children?.some((child) => child.id === childId));
 
-/** Finds a first-level item by id. Only these items can open a panel. */
+/** Finds a first-level item by id. Only these items can open a sub menu. */
 const findFirstLevelItem = (
     entries: ReadonlyArray<SidenavEntry>,
     itemId: string
@@ -57,7 +57,7 @@ const findFirstLevelItem = (
 /**
  * Development-only validation of the entries. It walks the data instead of checking inside each
  * `SidenavItem` render: every item of the sidenav comes from this data, so one walk covers all of
- * them, it reports each problem once, and it does not see the re-renders of the panel.
+ * them, it reports each problem once, and it does not see the re-renders of the sub menu.
  */
 const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
     const seenIds = new Set<string>();

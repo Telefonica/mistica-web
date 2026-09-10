@@ -839,21 +839,21 @@ const renderDoublePanelSidenav = async (props: Record<string, unknown> = {}) => 
     return result;
 };
 
-// The list of the panel takes its name from the visible title, through `aria-labelledby`, so the query by
+// The list of the sub menu takes its name from the visible title, through `aria-labelledby`, so the query by
 // name also asserts that association.
-const getPanel = (parentLabel: string) => screen.queryByRole('list', {name: parentLabel});
+const getSubMenu = (parentLabel: string) => screen.queryByRole('list', {name: parentLabel});
 
 test('SidenavBar double panel opens with the label of the parent item and its children', async () => {
     await renderDoublePanelSidenav();
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    expect(getSubMenu('Projects')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    const panel = getPanel('Projects');
-    expect(panel).toBeInTheDocument();
-    expect(panel).toContainElement(screen.getByRole('button', {name: 'Active'}));
-    expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
+    const subMenu = getSubMenu('Projects');
+    expect(subMenu).toBeInTheDocument();
+    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Archived'}));
     expect(screen.getByRole('button', {name: 'Projects'})).toHaveAttribute('aria-expanded', 'true');
 });
 
@@ -888,7 +888,7 @@ test('SidenavBar double panel steps into the column and back to its parent with 
     // ArrowUp on the first item of the column steps back to its trigger, and the column stays open.
     fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowUp'});
     expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 });
 
 // One press of ArrowRight opens the column and steps into it, so the user reaches the first item without
@@ -911,7 +911,7 @@ test('SidenavBar double panel steps back into the open column with ArrowRight', 
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
-    const column = getPanel('Projects') as HTMLElement;
+    const column = getSubMenu('Projects') as HTMLElement;
     await waitFor(() => {
         expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
     });
@@ -935,10 +935,10 @@ test.each`
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    const panelList = getPanel('Projects') as HTMLElement;
+    const subMenuList = getSubMenu('Projects') as HTMLElement;
 
-    expect(getListItems(panelList)).toHaveLength(2);
-    expect(panelList).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(getListItems(subMenuList)).toHaveLength(2);
+    expect(subMenuList).toContainElement(screen.getByRole('button', {name: 'Active'}));
 });
 
 test('SidenavBar double panel closes when the user presses one of its children', async () => {
@@ -947,7 +947,7 @@ test('SidenavBar double panel closes when the user presses one of its children',
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Active'}));
 
-    await waitForRemoval(() => getPanel('Projects'));
+    await waitForRemoval(() => getSubMenu('Projects'));
 });
 
 test('SidenavBar double panel closes when the user presses the same parent item again', async () => {
@@ -956,18 +956,18 @@ test('SidenavBar double panel closes when the user presses the same parent item 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    await waitForRemoval(() => getPanel('Projects'));
+    await waitForRemoval(() => getSubMenu('Projects'));
 });
 
 test('SidenavBar double panel closes when the user presses outside of the bar', async () => {
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 
     fireEvent.click(document.body);
 
-    await waitForRemoval(() => getPanel('Projects'));
+    await waitForRemoval(() => getSubMenu('Projects'));
 });
 
 // The second column is a column of the bar, not a floating dialog, so a press that lands on the bar
@@ -978,7 +978,7 @@ test('SidenavBar double panel stays open when the user presses the background of
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByText('Workspace'));
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 });
 
 // The rail keeps its open column when the user collapses it. A real browser also needs the listener that
@@ -989,11 +989,11 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 });
 
 // A column that holds the current selection survives a press outside of the bar: the app selects a child
@@ -1001,11 +1001,11 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
 test('SidenavBar double panel stays open when the user presses outside of the bar and it holds the selection', async () => {
     await renderDoublePanelSidenav({selectedItemId: 'active'});
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 
     fireEvent.click(document.body);
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 });
 
 test('SidenavBar double panel closes when the user presses a first-level item without children', async () => {
@@ -1014,7 +1014,7 @@ test('SidenavBar double panel closes when the user presses a first-level item wi
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Home'}));
 
-    await waitForRemoval(() => getPanel('Projects'));
+    await waitForRemoval(() => getSubMenu('Projects'));
 });
 
 test('SidenavBar double panel refreshes when the user presses another parent item', async () => {
@@ -1023,20 +1023,20 @@ test('SidenavBar double panel refreshes when the user presses another parent ite
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    expect(getSubMenu('Projects')).not.toBeInTheDocument();
 
-    const panel = getPanel('Documents');
-    expect(panel).toBeInTheDocument();
-    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
+    const subMenu = getSubMenu('Documents');
+    expect(subMenu).toBeInTheDocument();
+    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Shared'}));
     expect(screen.queryByRole('button', {name: 'Archived'})).not.toBeInTheDocument();
 });
 
 test('SidenavBar double panel opens when the selection moves to one of its children', async () => {
     await renderDoublePanelSidenav({selectedItemId: 'archived'});
 
-    const panel = getPanel('Projects');
-    expect(panel).toBeInTheDocument();
-    expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
+    const subMenu = getSubMenu('Projects');
+    expect(subMenu).toBeInTheDocument();
+    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Archived'}));
 });
 
 test('SidenavBar double panel closes when the selection moves to a first-level item without children', async () => {
@@ -1056,11 +1056,11 @@ test('SidenavBar double panel closes when the selection moves to a first-level i
     const {rerender} = render(renderWithSelection('active'));
     await React.act(async () => {});
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 
     rerender(renderWithSelection('home'));
 
-    await waitForRemoval(() => getPanel('Projects'));
+    await waitForRemoval(() => getSubMenu('Projects'));
 });
 
 // A press inside the second column moves the selection and closes the column at the same time. The
@@ -1086,11 +1086,11 @@ test('SidenavBar double panel closes when the user presses one of its children, 
     render(<ControlledSidenav />);
     await React.act(async () => {});
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Archived'}));
 
-    await waitForRemoval(() => getPanel('Projects'));
+    await waitForRemoval(() => getSubMenu('Projects'));
 });
 
 // The press that selects a child of the app lands outside of the bar, so it is both a new selection and a
@@ -1117,16 +1117,16 @@ test('SidenavBar double panel moves to the parent of a child selected outside of
     render(<ControlledSidenav />);
     await React.act(async () => {});
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Select from the app'}));
     await React.act(async () => {});
 
-    expect(getPanel('Projects')).not.toBeInTheDocument();
+    expect(getSubMenu('Projects')).not.toBeInTheDocument();
 
-    const panel = getPanel('Documents');
-    expect(panel).toBeInTheDocument();
-    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
+    const subMenu = getSubMenu('Documents');
+    expect(subMenu).toBeInTheDocument();
+    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Shared'}));
 });
 
 // The tooltip of the collapsed rail wraps the row of the item, and the wrapper carries `aria-describedby`.
@@ -1143,7 +1143,7 @@ test('SidenavBar collapsed double panel keeps the tooltips of the other items wh
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(getSubMenu('Projects')).toBeInTheDocument();
     expect(hasTooltip('documents')).toBe(true);
     expect(hasTooltip('home')).toBe(true);
     // The column already shows the label of this item as its title.

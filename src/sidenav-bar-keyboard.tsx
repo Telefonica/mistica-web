@@ -20,7 +20,7 @@ import * as React from 'react';
  *   Escape                close the dialog panel (owned by the panel itself)
  *
  * The arrow keys and Tab travel two different sequences. The arrows keep to one level: the rail, or the
- * panel that the user stepped into. Tab reads the whole tree in the order of the spec, which the document
+ * sub menu that the user stepped into. Tab reads the whole tree in the order of the spec, which the document
  * does not carry: the floating panel lives in a portal, and the second column comes after the whole rail.
  */
 
@@ -41,7 +41,7 @@ const getItemFocusables = (root: HTMLElement | null): Array<HTMLElement> =>
 /**
  * The items of the rail alone. The second column stands inside the same landmark, and its rows come after
  * every row of the rail in the document, so they would otherwise land at the end of this sequence. The
- * panel of an item is a sequence of its own, and the keys below weave it in after its trigger.
+ * sub menu of an item is a sequence of its own, and the keys below weave it in after its trigger.
  */
 const getRailFocusables = (root: HTMLElement | null): Array<HTMLElement> => {
     if (!root) {
@@ -281,14 +281,15 @@ const useSidenavRailKeyboard = (
                     return;
                 }
                 // Tab reads the sequence of the spec: an item, then the children that it opened, then the
-                // next item. Neither panel stands there in the document — the floating one lives in a
-                // portal, and the column comes after the whole rail — so both directions move by hand.
+                // next item. Neither form of the sub menu stands there in the document — the floating one
+                // lives in a portal, and the column comes after the whole rail — so both directions move
+                // by hand.
                 case 'Tab': {
                     if (!event.shiftKey) {
-                        const panel = getOpenDialogPanel(active) ?? getOpenDoublePanel(active, container);
-                        if (panel) {
+                        const subMenu = getOpenDialogPanel(active) ?? getOpenDoublePanel(active, container);
+                        if (subMenu) {
                             event.preventDefault();
-                            getItemFocusables(panel)[0]?.focus();
+                            getItemFocusables(subMenu)[0]?.focus();
                         }
                         return;
                     }
@@ -297,9 +298,9 @@ const useSidenavRailKeyboard = (
                     if (!previous) {
                         return;
                     }
-                    const previousPanel =
+                    const previousSubMenu =
                         getOpenDialogPanel(previous) ?? getOpenDoublePanel(previous, container);
-                    const lastChild = getItemFocusables(previousPanel).pop();
+                    const lastChild = getItemFocusables(previousSubMenu).pop();
                     if (lastChild) {
                         event.preventDefault();
                         lastChild.focus();
@@ -334,7 +335,7 @@ type DialogPanelKeyboardArgs = {
  *
  * ArrowDown and Tab move between the items. ArrowLeft, and ArrowUp on the first item, close the panel and
  * return to the trigger: the user leaves the list the way they left an accordion, and the rail shows where
- * they stand. Escape closes the panel through the document listener of `sidenav-panel.tsx`, which unmounts
+ * they stand. Escape closes the panel through the document listener of `sidenav-bar-sub-menu.tsx`, which unmounts
  * the panel, and the restore below then returns the focus.
  */
 const useDialogPanelKeyboard = ({
@@ -455,7 +456,7 @@ const useDialogPanelKeyboard = ({
                     return;
                 }
                 default:
-                    // Escape closes the panel through the document listener of `sidenav-panel.tsx`, and the
+                    // Escape closes the panel through the document listener of `sidenav-bar-sub-menu.tsx`, and the
                     // restore effect above returns the focus to the trigger once the panel unmounts.
                     return;
             }

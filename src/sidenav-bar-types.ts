@@ -6,7 +6,7 @@ type SidenavAsset = ((props: IconProps) => JSX.Element) | React.ReactElement;
 
 /** Props shared by every navigation item, at any level. */
 type SidenavItemBaseProps = {
-    /** Unique identifier within the sidenav for selection tracking and panel state. */
+    /** Unique identifier within the sidenav for selection tracking and sub menu state. */
     id: string;
     /** Display text (truncated if too long). */
     label: string;
