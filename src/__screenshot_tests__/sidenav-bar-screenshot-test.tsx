@@ -46,20 +46,23 @@ test('SidenavBar collapsed with a selected first-level item', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// The slot of the logo clips a logo larger than itself, so it never paints over the header controls or
-// past the collapsed rail. Only a screenshot guards the clip.
-test.each([false, true])('SidenavBar clips an oversized logo. collapsed(%s)', async (collapsed) => {
-    await openStoryPage({
-        id: 'components-sidenavbar-bar--default',
-        device: 'DESKTOP',
-        args: {oversizedLogo: true, defaultCollapsed: collapsed},
-    });
+// The slot of the logo grows with a logo taller than itself, and clips a logo wider than itself, so the
+// logo never paints past the edge of the rail. Only a screenshot guards this.
+test.each([false, true])(
+    'SidenavBar grows for an oversized logo and clips its width. collapsed(%s)',
+    async (collapsed) => {
+        await openStoryPage({
+            id: 'components-sidenavbar-bar--default',
+            device: 'DESKTOP',
+            args: {logo: 'oversized', defaultCollapsed: collapsed},
+        });
 
-    const sidenavBar = await screen.findByRole('navigation');
-    const image = await sidenavBar.screenshot();
+        const sidenavBar = await screen.findByRole('navigation');
+        const image = await sidenavBar.screenshot();
 
-    expect(image).toMatchImageSnapshot();
-});
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 // A section title and an item label never truncate: a text that does not fit wraps over several lines, and
 // its row grows with it. Only a screenshot guards this, at every level of the tree: a section title, a
