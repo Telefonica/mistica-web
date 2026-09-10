@@ -35,7 +35,6 @@ overrides:
     # instead of merging them.
     - files:
           - 'src/sidenav-bar*.tsx'
-          - 'src/use-sidenav-bar-keyboard.tsx'
       rules:
           no-restricted-imports:
               - error

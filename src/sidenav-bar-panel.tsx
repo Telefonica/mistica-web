@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
 import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-bar-context';
-import {useDialogPanelKeyboard} from './use-sidenav-bar-keyboard';
+import {useDialogPanelKeyboard} from './sidenav-bar-keyboard';
 import {Portal} from './portal';
 import {Text2} from './text';
 import {listenResize} from './utils/dom';
