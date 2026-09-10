@@ -110,8 +110,11 @@ export const FooterSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
                     aria-label="Alto Garda activities"
                     sections={sections}
                     collapsed={collapsed}
-                    onCollapse={setCollapsed}
-                    renderCollapseAction={showDefaultCollapseAction ? undefined : () => null}
+                    // A sidenav that the user cannot toggle shows no collapse action, and it still follows
+                    // the collapsed prop on every render, so the footer slot stays the only control.
+                    {...(showDefaultCollapseAction
+                        ? {onCollapse: setCollapsed}
+                        : {collapsible: false as const})}
                     // The mobile sidenav is a top bar, and it never collapses, so a control that writes the
                     // collapsed state has no meaning there.
                     footerSlot={isTabletOrSmaller ? undefined : footerSlot}
@@ -198,7 +201,7 @@ export default {
         showDefaultCollapseAction: {
             control: {type: 'boolean'},
             description:
-                'Keeps the default collapse action of the header. When it is off, renderCollapseAction hides that action, and only the button of the footer slot collapses the sidenav.',
+                'Keeps the default collapse action of the header. When it is off, the sidenav takes collapsible false, which hides that action, and only the button of the footer slot collapses the sidenav.',
         },
         boxed: {
             control: {type: 'boolean'},

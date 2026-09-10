@@ -22,11 +22,18 @@ import {useDisableBodyScroll, useTheme} from './hooks';
 import {useSetModalState} from './modal-context-provider';
 import {NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as tokens from './text-tokens';
-import {isSidenavSection} from './sidenav-bar-types';
+import {isSidenavSection, getSidenavSectionTitle, renderSidenavSlot} from './sidenav-bar-types';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
-import type {SidenavEntry, SidenavItem, SidenavNestedItem, SidenavLogo} from './sidenav-bar-types';
+import type {
+    SidenavEntry,
+    SidenavItem,
+    SidenavNestedItem,
+    SidenavLogo,
+    SidenavSlot,
+    SidenavSlotRenderProps,
+} from './sidenav-bar-types';
 
 /*
  * The mobile sidenav follows the mobile Main Navigation Bar as closely as the spec asks:
@@ -42,7 +49,7 @@ import type {SidenavEntry, SidenavItem, SidenavNestedItem, SidenavLogo} from './
  *   - The footer slot flows at the end of the content of the panel.
  */
 
-// The top bar is not a rail, so the logo shows the imagotype at the size of the mobile navigation bar.
+// The top bar matches the mobile main navigation bar: the isotype of the skin at the same size.
 const MOBILE_LOGO_SIZE = 40;
 
 // Distance from the top bar to the first entry of the panel.
@@ -72,9 +79,9 @@ type SidenavMobileBarProps = {
     /** Logo of the top bar. */
     logo?: SidenavLogo;
     /** Content of the right side of the top bar. */
-    headerSlot?: React.ReactNode;
+    headerSlot?: SidenavSlot;
     /** Content of the end of the panel. */
-    footerSlot?: React.ReactNode;
+    footerSlot?: SidenavSlot;
     /** ID of the currently selected item. It marks the item for a screen reader, and paints nothing. */
     selectedItemId: string | null;
     /** Called when the user presses an item that navigates. */
@@ -119,15 +126,19 @@ const SidenavMobileBar = ({
         setModalState({isModalOpen: false});
     }, [setModalState]);
 
+    // The top bar is not a rail: it reports the expanded state, at rest, to every slot.
+    const slotRenderProps: SidenavSlotRenderProps = {collapsed: false, state: 'expanded'};
+    const headerSlotElement = renderSidenavSlot(headerSlot, slotRenderProps);
+    const footerSlotElement = renderSidenavSlot(footerSlot, slotRenderProps);
     const logoElement = (() => {
         if (logo === false) {
             return null;
         }
         if (typeof logo === 'function') {
-            return logo({collapsed: false});
+            return logo(slotRenderProps);
         }
         if (logo === undefined || logo === true) {
-            return <Logo size={MOBILE_LOGO_SIZE} type="imagotype" />;
+            return <Logo size={MOBILE_LOGO_SIZE} />;
         }
         return logo;
     })();
@@ -194,11 +205,14 @@ const SidenavMobileBar = ({
             );
         }
 
+        // A hidden title paints no heading, and it still names the list of the section.
+        const {text: title, isHeadingVisible} = getSidenavSectionTitle(entry.title);
+
         return (
-            <Stack space={SECTION_TITLE_SPACE} key={entry.title || `section-${entryIndex}`}>
-                {entry.title && <Title1>{entry.title}</Title1>}
+            <Stack space={SECTION_TITLE_SPACE} key={`${title}-${entryIndex}`}>
+                {isHeadingVisible && <Title1>{title}</Title1>}
                 <ResetResponsiveLayout>
-                    <RowList aria-label={entry.title}>{entry.items.map((item) => renderRow(item))}</RowList>
+                    <RowList aria-label={title}>{entry.items.map((item) => renderRow(item))}</RowList>
                 </ResetResponsiveLayout>
             </Stack>
         );
@@ -217,7 +231,7 @@ const SidenavMobileBar = ({
             dataAttributes={{testid: 'SidenavBar', ...dataAttributes}}
         >
             <NavigationBarSideMargins wide={false}>
-                <NavigationBarContentContainer right={headerSlot}>
+                <NavigationBarContentContainer right={headerSlotElement}>
                     <Touchable
                         className={sharedStyles.burgerMenuButton}
                         aria-live="polite"
@@ -268,7 +282,7 @@ const SidenavMobileBar = ({
                                 {(entries ?? []).map((entry, entryIndex) => renderEntry(entry, entryIndex))}
                             </Stack>
                         </Box>
-                        {footerSlot && <Box paddingY={FOOTER_SLOT_PADDING}>{footerSlot}</Box>}
+                        {footerSlotElement && <Box paddingY={FOOTER_SLOT_PADDING}>{footerSlotElement}</Box>}
                     </ResponsiveLayout>
                 }
                 secondLevel={

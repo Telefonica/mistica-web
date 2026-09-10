@@ -273,30 +273,6 @@ test('SidenavBar ignores a change of defaultCollapsed when the user can toggle i
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 });
 
-test('SidenavBar paints a custom collapse action that toggles the sidenav', async () => {
-    await renderSidenav({
-        renderCollapseAction: ({collapsed, onPress, 'aria-label': ariaLabel}) => (
-            <button onClick={onPress} aria-label={ariaLabel}>
-                {collapsed ? 'Show' : 'Hide'}
-            </button>
-        ),
-    });
-
-    // The custom control replaces the default icon button, it does not join it.
-    expect(
-        screen.getAllByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
-    ).toHaveLength(1);
-
-    const customAction = screen.getByRole('button', {name: COLLAPSE_LABEL});
-
-    expect(customAction).toHaveTextContent('Hide');
-
-    fireEvent.click(customAction);
-
-    expect(screen.getByRole('button', {name: EXPAND_LABEL})).toHaveTextContent('Show');
-    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
-});
-
 test('SidenavBar keeps the header slot when collapsed', async () => {
     await renderSidenav({headerSlot: <span>header slot</span>, defaultCollapsed: true});
 
@@ -312,6 +288,36 @@ test('SidenavBar closes the section title when collapsed and keeps the name of i
     const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
 
     expect(titleBox).toHaveClass(styles.sectionTitleCollapsed);
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
+});
+
+// `title={{text, hidden: true}}` paints no heading, and the list of the section keeps that text as its
+// name, in the same way as the collapsed state above.
+test('SidenavBar hides the heading of a section and keeps the name of its list', async () => {
+    const sections: Array<SidenavSection> = [
+        {
+            title: {text: 'Workspace', hidden: true},
+            items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+        },
+    ];
+    await renderSidenav({sections});
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
+
+    expect(titleBox).toHaveClass(styles.sectionTitleHidden);
+    expect(titleBox).not.toHaveClass(styles.sectionTitleCollapsed);
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
+});
+
+// A title in its string form paints the heading, so it never carries the class that closes the box.
+test('SidenavBar paints the heading of a section that declares a plain string title', async () => {
+    await renderSidenav();
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
+
+    expect(titleBox).not.toHaveClass(styles.sectionTitleHidden);
     expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
 });
 
@@ -413,6 +419,79 @@ test('SidenavBar moves the logo of that function when the user collapses the sid
     });
 
     expect(screen.getByRole('img', {name: 'Mark of the product'})).toBeInTheDocument();
+});
+
+// The matchMedia stub of the test setup answers true to `(prefers-reduced-motion)`, which turns motion
+// off. This answers false to that one query, and it leaves every other query to the stub. It replaces the
+// function instead of spying on it: the stub is a mock itself, and a spy on a mock reuses that same mock,
+// so a wrapper that calls the stub would call itself. It returns the function that restores the stub.
+const allowMotion = (): (() => void) => {
+    const matchMedia = window.matchMedia;
+    window.matchMedia = (query: string) =>
+        query.includes('prefers-reduced-motion') ? {...matchMedia(query), matches: false} : matchMedia(query);
+    return () => {
+        window.matchMedia = matchMedia;
+    };
+};
+
+const renderLogoByPhase = ({state}: {state: string}) => <img src="/brand.svg" alt={`Logo ${state}`} />;
+
+test('SidenavBar reports the phase of the motion to the logo, and settles it when the rail stops', async () => {
+    jest.useFakeTimers();
+    const restoreMotion = allowMotion();
+    try {
+        await renderSidenav({logo: renderLogoByPhase});
+        expect(screen.getByRole('img', {name: 'Logo expanded'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+        });
+        expect(screen.getByRole('img', {name: 'Logo collapsing'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            jest.advanceTimersByTime(styles.COLLAPSE_DURATION_MS);
+        });
+        expect(screen.getByRole('img', {name: 'Logo collapsed'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            fireEvent.click(screen.getByRole('button', {name: EXPAND_LABEL}));
+        });
+        expect(screen.getByRole('img', {name: 'Logo expanding'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            jest.advanceTimersByTime(styles.COLLAPSE_DURATION_MS);
+        });
+        expect(screen.getByRole('img', {name: 'Logo expanded'})).toBeInTheDocument();
+    } finally {
+        jest.useRealTimers();
+        restoreMotion();
+    }
+});
+
+test('SidenavBar skips the moving phases when motion is off', async () => {
+    await renderSidenav({logo: renderLogoByPhase});
+
+    await React.act(async () => {
+        fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+    });
+
+    expect(screen.getByRole('img', {name: 'Logo collapsed'})).toBeInTheDocument();
+});
+
+test('SidenavBar gives the collapse state to the functions that headerSlot and footerSlot carry', async () => {
+    await renderSidenav({
+        headerSlot: ({collapsed, state}) => <div>{`Header ${state} ${collapsed}`}</div>,
+        footerSlot: ({collapsed, state}) => <div>{`Footer ${state} ${collapsed}`}</div>,
+    });
+    expect(screen.getByText('Header expanded false')).toBeInTheDocument();
+    expect(screen.getByText('Footer expanded false')).toBeInTheDocument();
+
+    await React.act(async () => {
+        fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+    });
+
+    expect(screen.getByText('Header collapsed true')).toBeInTheDocument();
+    expect(screen.getByText('Footer collapsed true')).toBeInTheDocument();
 });
 
 test('SidenavBar supports controlled selection with selectedItemId prop', async () => {
@@ -1358,6 +1437,7 @@ test('SidenavBar collapse button reports its state through aria-expanded', async
 
 const keyboardSections: Array<SidenavSection> = [
     {
+        title: {text: 'General', hidden: true},
         items: [
             {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
             {id: 'search', label: 'Search', asset: IconHomeRegular, href: '/search'},
@@ -1458,7 +1538,7 @@ test('SidenavItem reports a first-level item without an asset, and it accepts a 
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavSectionComponent>
+            <SidenavSectionComponent title={{text: 'General', hidden: true}}>
                 <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
                     <SidenavItem id="active" label="Active" href="/active" />
                 </SidenavItem>

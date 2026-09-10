@@ -8,15 +8,12 @@ import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
 import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
 import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
-import IconChevronRightRegular from '../generated/mistica-icons/icon-chevron-right-regular';
 import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
 import IconCheckRegular from '../generated/mistica-icons/icon-check-regular';
 import {Placeholder} from '../placeholder';
 import Callout from '../callout';
 import Circle from '../circle';
 import Badge from '../badge';
-import {IconButton} from '../icon-button';
-import {ButtonLink} from '../button';
 import Box from '../box';
 import Stack from '../stack';
 import Inline from '../inline';
@@ -29,7 +26,7 @@ import {SidenavStoryPage} from './sidenav-bar-story-page';
 
 import type {Variant} from '../theme-variant-context';
 import type {SidenavEntry} from '../sidenav-bar-types';
-import type {SidenavCollapseActionRenderProps, SidenavLogoRenderProps} from '../sidenav-bar';
+import type {SidenavLogoRenderProps} from '../sidenav-bar';
 
 // A section title and an item label never truncate: they wrap over as many lines as their text needs, and
 // the row grows with them. The longLabels control swaps four entries for a text that does not fit, at each
@@ -42,6 +39,8 @@ const getDefaultSections = (
     longLabels: boolean
 ): Array<SidenavEntry> => [
     {
+        // No heading over these two items, and a screen reader still reads the name of their list.
+        title: {text: 'General', hidden: true},
         items: [
             {
                 id: 'home',
@@ -137,26 +136,6 @@ const getDefaultSections = (
     },
 ];
 
-const renderCustomCollapseAction = ({
-    collapsed,
-    onPress,
-    'aria-label': ariaLabel,
-}: SidenavCollapseActionRenderProps): React.ReactNode =>
-    collapsed ? (
-        <IconButton
-            Icon={IconChevronRightRegular}
-            type="neutral"
-            backgroundType="transparent"
-            small
-            onPress={onPress}
-            aria-label={ariaLabel}
-        />
-    ) : (
-        <ButtonLink small bleedY onPress={onPress} aria-label={ariaLabel}>
-            Hide
-        </ButtonLink>
-    );
-
 const productMark = (
     <Circle size={32} backgroundColor={skinVars.colors.brand}>
         <Text2 medium color={skinVars.colors.textPrimaryInverse}>
@@ -165,32 +144,69 @@ const productMark = (
     </Circle>
 );
 
-// A logo larger than its slot, in both directions. The slot clips it, so it never paints over the header.
-const oversizedLogo = (
-    <Circle size={96} backgroundColor={skinVars.colors.brand}>
-        <Text3 medium color={skinVars.colors.textPrimaryInverse}>
-            Too big
-        </Text3>
-    </Circle>
-);
+// A logo larger than its slot, in both directions and in both states. The slot grows in height, and it
+// clips the width, so the logo never paints past the edge of the rail. The collapsed rail takes a smaller
+// one, which the rail still clips. One box changes its size, over the time of the rail, so the circle
+// shrinks and grows with the rail instead of swapping. It reads the phase: it starts to shrink when the
+// rail starts to narrow, and it starts to grow when the rail starts to widen.
+const OVERSIZED_LOGO_RESIZE_MS = 350;
 
-const renderCustomLogo = ({collapsed}: SidenavLogoRenderProps): React.ReactNode =>
-    collapsed ? (
-        productMark
-    ) : (
+const renderOversizedLogo = ({state}: SidenavLogoRenderProps): React.ReactNode => {
+    const size = state === 'collapsed' || state === 'collapsing' ? 64 : 96;
+    return (
+        <div
+            style={{
+                width: size,
+                height: size,
+                transition: `width ${OVERSIZED_LOGO_RESIZE_MS}ms ease, height ${OVERSIZED_LOGO_RESIZE_MS}ms ease`,
+            }}
+        >
+            <Circle size="100%" backgroundColor={skinVars.colors.brand}>
+                <Text3 medium color={skinVars.colors.textPrimaryInverse}>
+                    Too big
+                </Text3>
+            </Circle>
+        </div>
+    );
+};
+
+// The rail moves for 350ms. The name of the product fades over that same time, and it reads the phase of
+// the motion, not the target state: it starts to fade when the rail starts to narrow, and it comes back as
+// soon as the rail starts to widen. A swap on the target state would pop at the first frame instead.
+const LOGO_NAME_FADE_MS = 350;
+
+const renderCustomLogo = ({state}: SidenavLogoRenderProps): React.ReactNode => {
+    const isNameVisible = state === 'expanded' || state === 'expanding';
+    return (
         <Inline space={8} alignItems="center">
             {productMark}
-            <Text3 medium>Console</Text3>
+            <span
+                style={{
+                    opacity: isNameVisible ? 1 : 0,
+                    transition: `opacity ${LOGO_NAME_FADE_MS}ms ease`,
+                }}
+                aria-hidden={!isNameVisible || undefined}
+            >
+                <Text3 medium>Console</Text3>
+            </span>
         </Inline>
     );
+};
+
+const logoByOption = {
+    default: true,
+    custom: renderCustomLogo,
+    oversized: renderOversizedLogo,
+    none: false,
+} as const;
+
+type LogoOption = keyof typeof logoByOption;
 
 type Args = {
     'aria-label': string;
     variant: Variant;
     selectedItemId: string;
-    logo: boolean;
-    customLogo: boolean;
-    oversizedLogo: boolean;
+    logo: LogoOption;
     headerSlot: boolean;
     footerSlot: boolean;
     fixedFooter: boolean;
@@ -200,7 +216,6 @@ type Args = {
     sectionDividerBottom: boolean;
     longLabels: boolean;
     collapsible: boolean;
-    customCollapseAction: boolean;
     defaultCollapsed: boolean;
     collapsed: boolean;
     doublePanel: boolean;
@@ -214,8 +229,6 @@ export const Default = ({
     variant,
     selectedItemId,
     logo,
-    customLogo,
-    oversizedLogo: isLogoOversized,
     headerSlot,
     footerSlot,
     fixedFooter,
@@ -225,7 +238,6 @@ export const Default = ({
     sectionDividerBottom,
     longLabels,
     collapsible,
-    customCollapseAction,
     defaultCollapsed,
     collapsed,
     doublePanel,
@@ -265,13 +277,7 @@ export const Default = ({
                     {...({
                         'aria-label': label,
                         variant,
-                        logo: !logo
-                            ? false
-                            : isLogoOversized
-                              ? oversizedLogo
-                              : customLogo
-                                ? renderCustomLogo
-                                : logo,
+                        logo: logoByOption[logo],
                         headerSlot: headerSlot ? headerSlotContent : undefined,
                         footerSlot: footerSlot ? <Placeholder height={76} /> : undefined,
                         fixedFooter,
@@ -281,9 +287,6 @@ export const Default = ({
                             ? {
                                   collapsible: true,
                                   defaultCollapsed,
-                                  renderCollapseAction: customCollapseAction
-                                      ? renderCustomCollapseAction
-                                      : undefined,
                                   onCollapse: (isCollapsed: boolean) =>
                                       setLastAction(isCollapsed ? 'Sidenav collapsed' : 'Sidenav expanded'),
                               }
@@ -387,18 +390,15 @@ export const Default = ({
                                             on the longLabels control to see it.
                                         </ListItem>
                                         <ListItem>
-                                            The header shows a collapse action by default. Turn on the
-                                            customCollapseAction control to paint that action with
-                                            renderCollapseAction, which receives the collapsed state, the
-                                            press handler, and the accessible name.
-                                        </ListItem>
-                                        <ListItem>
                                             The header shows the logo of the skin by default: the isotype on
                                             both the expanded sidenav and the collapsed rail. The logo prop
                                             also takes an element of your own, or a function that receives the
-                                            collapsed state and returns one logo for each state. Turn on the
-                                            customLogo control to see that function, and turn the logo control
-                                            off to hide the slot.
+                                            collapsed state and the phase of the motion (expanded, collapsing,
+                                            collapsed, expanding) and returns one logo for each state. The
+                                            logo control shows that function: custom fades the name of the
+                                            product with the rail, and oversized swaps two logos larger than
+                                            the slot when the rail rests. The headerSlot and footerSlot props
+                                            take that same function.
                                         </ListItem>
                                     </UnorderedList>
                                 </Text2>
@@ -430,9 +430,7 @@ export default {
         'aria-label': 'Main navigation',
         variant: 'default',
         selectedItemId: 'none',
-        logo: true,
-        customLogo: false,
-        oversizedLogo: false,
+        logo: 'default',
         headerSlot: true,
         footerSlot: true,
         fixedFooter: false,
@@ -442,7 +440,6 @@ export default {
         sectionDividerBottom: false,
         longLabels: false,
         collapsible: true,
-        customCollapseAction: false,
         defaultCollapsed: false,
         collapsed: false,
         doublePanel: false,
@@ -487,23 +484,13 @@ export default {
                 'Seeds the selected item. A press on an item also moves the selection, and the sidenav reports it through onSelectedItemIdChange.',
         },
         logo: {
-            control: {type: 'boolean'},
-            // The prop takes an element or a boolean, and Storybook drops a control value that does not
-            // match the type it reads from that union. The story declares the type of its own arg instead.
-            // The description comes from the JSDoc of the prop.
-            type: {name: 'boolean'},
-        },
-        customLogo: {
-            control: {type: 'boolean'},
+            options: Object.keys(logoByOption),
+            control: {type: 'select'},
+            // The prop takes an element, a boolean or a function, and Storybook drops a control value that
+            // does not match the type it reads from that union. The story declares the type of its own arg.
+            type: {name: 'string'},
             description:
-                'Puts a logo of your own in the slot with a function of the collapsed state: the mark of a product alone on the rail, and the mark with the name of the product on the expanded sidenav.',
-            if: {arg: 'logo', truthy: true},
-        },
-        oversizedLogo: {
-            control: {type: 'boolean'},
-            description:
-                'Puts a logo larger than its slot, to show that the slot clips it in both states. It wins over customLogo.',
-            if: {arg: 'logo', truthy: true},
+                'default shows the isotype of the skin. custom is a function of the collapse state: the mark of a product with its name, and the name fades with the rail instead of popping at the first frame. oversized is a function too: a logo larger than the slot, which grows in height and clips the width, and the logo shrinks and grows with the rail. none hides the slot.',
         },
         headerSlot: {
             control: {type: 'boolean'},
@@ -550,12 +537,6 @@ export default {
         collapsible: {
             control: {type: 'boolean'},
             description: 'Whether the user can toggle the collapsed state.',
-        },
-        customCollapseAction: {
-            control: {type: 'boolean'},
-            description:
-                'Paints the collapse action with renderCollapseAction: a text link on the expanded sidenav, and an icon on the collapsed rail.',
-            if: {arg: 'collapsible', truthy: true},
         },
         defaultCollapsed: {
             control: {type: 'boolean'},

@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as styles from './sidenav-bar.css';
 import {SidenavItem} from './sidenav-bar-item';
 import {SidenavSection} from './sidenav-bar-section';
-import {isSidenavSection} from './sidenav-bar-types';
+import {isSidenavSection, getSidenavSectionTitle} from './sidenav-bar-types';
 import {SidenavItemIndexContext, SidenavHasOuterListItemContext} from './sidenav-bar-context';
 
 import type {SidenavEntry, SidenavItem as SidenavItemType, SidenavNestedItem} from './sidenav-bar-types';
@@ -14,7 +14,7 @@ const renderSidenavItemFromData = (item: SidenavItemType | SidenavNestedItem): R
         id: item.id,
         label: item.label,
         asset: item.asset,
-        showIconWhenExpanded: item.showIconWhenExpanded,
+        showAssetWhenExpanded: item.showAssetWhenExpanded,
         rightSlot: item.rightSlot,
         defaultOpen: item.defaultOpen,
         newTab: item.newTab,
@@ -119,7 +119,7 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
             const isFirstEntry = entryIndex === 0;
             const isLastEntry = entryIndex === entries.length - 1;
             return (
-                <div key={entry.title || `section-${entryIndex}`} role="listitem">
+                <div key={`${getSidenavSectionTitle(entry.title).text}-${entryIndex}`} role="listitem">
                     <SidenavSection
                         title={entry.title}
                         dividerTop={entry.dividerTop && !isFirstEntry && !sharesDividerWithPrevious}

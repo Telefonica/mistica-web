@@ -344,7 +344,7 @@ export const headerBase = style({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: 32,
+    gap: 24,
     flexShrink: 0,
     paddingTop: 24,
     // Above the background of the body and above the painted scroll spacer, which follow it. Without a
@@ -386,7 +386,10 @@ export const logo = style({
     display: 'flex',
     alignItems: 'center',
     flexShrink: 0,
-    height: LOGO_SIZE,
+    // The spot grows with a logo of the consumer that is taller than the default isotype. The minimum
+    // keeps the 32px band of the spec, so the header rhythm does not change with the default logo.
+    height: 'auto',
+    minHeight: LOGO_SIZE,
     // The clamp below is a `max-width`, and not a `width`, so that it interpolates: `auto` has no value to
     // animate from.
     maxWidth: '100%',
@@ -395,6 +398,20 @@ export const logo = style({
     overflow: 'hidden',
     transition: `max-width ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} 50ms`,
     ...reducedMotion,
+});
+
+// The child keeps its own width while the clamp narrows the box. A flex item shrinks to its minimum
+// otherwise, and a text inside it then re-wraps letter by letter, which makes the spot grow with every
+// line. This way the edge of the box cuts the child, which stands still (see `itemLabelFrozenWidth`).
+globalStyle(`${logo} > *`, {
+    flexShrink: 0,
+});
+
+// The svg of the default logo draws a few pixels taller than the size that it receives, and the amount
+// depends on the skin. The default spot holds the 32px of the spec, so the header keeps its rhythm in
+// every skin.
+export const logoDefault = style({
+    height: LOGO_SIZE,
 });
 
 export const logoCollapsed = style({
@@ -563,15 +580,20 @@ export const section = style({
     flexDirection: 'column',
 });
 
-// The title fades with the labels of the items below it, and its box closes at the same time, so the
-// items move up while the rail narrows. A grid row goes from `1fr` to `0fr` with a transition, which a
-// height in `auto` cannot do (the same pattern as the panel of the Accordion). The CI Chromium predates
-// that interpolation and snaps the row, which its screenshots accept.
+// The box of the title closes while the rail narrows, so the items move up with it. A grid row goes from
+// `1fr` to `0fr` with a transition, which a height in `auto` cannot do (the same pattern as the panel of the
+// Accordion). The CI Chromium predates that interpolation and snaps the row, which its screenshots accept.
+// The text fades apart from the fold, so the fade shows instead of the clip of the row: it fades out over
+// the first half of a collapse, before the row cuts it, and it fades in over the second half of an
+// expansion, once the row has room for it. A transition runs with the timing of the state that it goes
+// to, so this rule times the expansion and `sectionTitleCollapsed` times the collapse.
+const TITLE_FADE_DURATION = `calc(${collapseDurationVar} / 2)`;
+
 export const sectionTitle = style({
     display: 'grid',
     gridTemplateRows: '1fr',
     marginBottom: 8,
-    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, margin-bottom ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING}`,
+    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, margin-bottom ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${TITLE_FADE_DURATION} ${COLLAPSE_EASING} ${TITLE_FADE_DURATION}`,
     ...reducedMotion,
 });
 
@@ -595,6 +617,19 @@ export const sectionTitleCollapsed = style({
     gridTemplateRows: '0fr',
     marginBottom: 0,
     opacity: 0,
+    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, margin-bottom ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${TITLE_FADE_DURATION} ${COLLAPSE_EASING}`,
+    ...reducedMotion,
+});
+
+// A title that the consumer hides (`title={{text, hidden: true}}`) never paints, in any state, and it
+// takes no space. It stays in the document because the list of the section takes its name from it, as in
+// the collapsed state above. No `display: none`: that drops the element from the accessibility tree, and
+// the name of the list would go with it.
+export const sectionTitleHidden = style({
+    gridTemplateRows: '0fr',
+    marginBottom: 0,
+    opacity: 0,
+    transition: 'none',
 });
 
 // While the sidenav moves, the title keeps the width that it had at rest (an inline `width`, see

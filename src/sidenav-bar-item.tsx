@@ -42,7 +42,7 @@ type SidenavItemBaseProps = {
      */
     asset?: ((props: IconProps) => JSX.Element) | React.ReactElement;
     /** Show asset when expanded (not collapsed). Only a first-level item reads it. @default true */
-    showIconWhenExpanded?: boolean;
+    showAssetWhenExpanded?: boolean;
     /** Custom content on the right side (e.g., Badge). */
     rightSlot?: React.ReactNode;
     /** Initial expanded state for items with children. @default false */
@@ -115,7 +115,7 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         children,
         defaultOpen,
         dataAttributes,
-        showIconWhenExpanded = true,
+        showAssetWhenExpanded = true,
     } = props as any;
     const {
         collapsed,
@@ -224,12 +224,12 @@ const SidenavItem = (props: SidenavItemProps): JSX.Element => {
         if (process.env.NODE_ENV !== 'production' && isFirstLevel && !hasAsset) {
             console.error(
                 `SidenavItem "${label}" is a first-level item without an asset, so the collapsed sidenav shows nothing of it. ` +
-                    `Pass an asset, and hide it with showIconWhenExpanded if you do not want it next to the label.`
+                    `Pass an asset, and hide it with showAssetWhenExpanded if you do not want it next to the label.`
             );
         }
     }, [isFirstLevel, hasAsset, label]);
-    // The collapsed rail never shows a nested item, so `showIconWhenExpanded` has no meaning there.
-    const shouldShowAsset = asset && (collapsed || showIconWhenExpanded || !isFirstLevel);
+    // The collapsed rail never shows a nested item, so `showAssetWhenExpanded` has no meaning there.
+    const shouldShowAsset = asset && (collapsed || showAssetWhenExpanded || !isFirstLevel);
     let assetContent: React.ReactNode = null;
     if (typeof asset === 'function') {
         const Asset = asset;

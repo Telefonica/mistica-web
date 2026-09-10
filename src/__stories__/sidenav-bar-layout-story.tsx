@@ -133,6 +133,8 @@ const Content = ({title, description, selectedItemId}: ContentProps): React.JSX.
 
 const sections: Array<SidenavSection> = [
     {
+        // No heading over these items, and a screen reader still reads the name of their list.
+        title: {text: 'General', hidden: true},
         items: [
             {
                 id: 'home',

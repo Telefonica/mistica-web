@@ -119,7 +119,14 @@ export {SidenavLayout} from './sidenav-bar-layout';
 export type {SidenavBarProps, SidenavSectionProps} from './sidenav-bar';
 export type {SidenavLayoutProps} from './sidenav-bar-layout';
 export type {SidenavItemProps} from './sidenav-bar-item';
-export type {SidenavEntry, SidenavNestedItem} from './sidenav-bar-types';
+export type {
+    SidenavEntry,
+    SidenavNestedItem,
+    SidenavSectionTitle,
+    SidenavSlot,
+    SidenavSlotRenderProps,
+    SidenavCollapseState,
+} from './sidenav-bar-types';
 
 // Sheets
 export {default as SheetRoot, showSheet} from './sheet-root';

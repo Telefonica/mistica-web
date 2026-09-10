@@ -39,28 +39,22 @@ import {
     hasDescendantWithId,
 } from './sidenav-bar-context';
 import {shouldShowBoxedBorder} from './boxed';
+import {renderSidenavSlot} from './sidenav-bar-types';
 import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 import type {SidenavSectionProps} from './sidenav-bar-section';
-import type {SidenavEntry, SidenavNestedItem, SidenavLogo, SidenavLogoRenderProps} from './sidenav-bar-types';
-
-/**
- * Props of the collapse action of the header. A consumer that paints its own action spreads them onto its
- * own control, which then keeps the behavior and the accessible name of the default action.
- */
-type SidenavCollapseActionRenderProps = {
-    /** Current collapsed state, which gives the direction of the action. */
-    collapsed: boolean;
-    /** Toggles the collapsed state. */
-    onPress: () => void;
-    /** Accessible name of the action, which follows the collapsed state. */
-    'aria-label': string;
-    /** Disclosure state of the sidenav: true while expanded, false while collapsed. */
-    'aria-expanded': boolean;
-};
+import type {
+    SidenavEntry,
+    SidenavNestedItem,
+    SidenavLogo,
+    SidenavLogoRenderProps,
+    SidenavSlot,
+    SidenavSlotRenderProps,
+    SidenavCollapseState,
+} from './sidenav-bar-types';
 
 type SidenavBarBaseProps = {
     /** First-level entries of the body. Each entry is either a section with items, or a stand-alone
@@ -82,12 +76,15 @@ type SidenavBarBaseProps = {
     /** Logo of the header. Defaults to the isotype of the skin at 32px, in both the expanded and the
      * collapsed state. It takes true for that same default, false to hide the logo, an element of your
      * own, or a function that receives the collapsed state and returns one logo for each state. The
-     * collapsed rail clamps the width of the logo to 32px. The mobile top bar is not a rail, so it shows
-     * the imagotype at 40px, and it reports a collapsed state of false.
+     * collapsed rail clamps the width of the logo to 32px, and the spot is at least 32px tall: a taller
+     * logo of your own makes the spot grow. The mobile top bar matches the main navigation
+     * bar: it shows the isotype at 40px, and it reports a collapsed state of false.
      * @see SidenavLogoRenderProps */
     logo?: SidenavLogo;
-    /** Custom content below logo/collapse in header. */
-    headerSlot?: React.ReactNode;
+    /** Custom content below logo/collapse in header. It takes an element, or a function that receives the
+     * collapse state and returns the content for that state.
+     * @see SidenavSlotRenderProps */
+    headerSlot?: SidenavSlot;
     /** Custom background color of the whole sidenav: header, body, footer and second column. Use an
      * opaque color: the header and the footer are sticky over the scrolling body, so a translucent color
      * lets the body content show through them. */
@@ -108,8 +105,7 @@ type SidenavBarBaseProps = {
  *   or uncontrolled through `defaultCollapsed` (optional `onCollapse`), never both.
  * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed, and it takes
  *   the static `collapsed` prop (not `defaultCollapsed`), which drives the collapsed state of every render
- *   instead of seeding it once. That sidenav shows no collapse action either, so `renderCollapseAction` is
- *   not allowed there.
+ *   instead of seeding it once. That sidenav shows no collapse action either.
  * - `fixedFooter` is only allowed when `footerSlot` is provided.
  */
 type SidenavBarProps = SidenavBarBaseProps &
@@ -133,8 +129,6 @@ type SidenavBarProps = SidenavBarBaseProps &
               onCollapse: (collapsed: boolean) => void;
               /** Whether user can toggle collapsed state. @default true */
               collapsible?: true;
-              /** Paints a custom collapse action in the header, instead of the default icon button. */
-              renderCollapseAction?: (props: SidenavCollapseActionRenderProps) => React.ReactNode;
           }
         | {
               /** Initial collapsed state (uncontrolled). @default false */
@@ -143,8 +137,6 @@ type SidenavBarProps = SidenavBarBaseProps &
               onCollapse?: (collapsed: boolean) => void;
               /** Whether user can toggle collapsed state. @default true */
               collapsible?: true;
-              /** Paints a custom collapse action in the header, instead of the default icon button. */
-              renderCollapseAction?: (props: SidenavCollapseActionRenderProps) => React.ReactNode;
           }
         | {
               /** Collapsed state. The user cannot toggle it, so the sidenav mirrors this prop on every
@@ -157,8 +149,10 @@ type SidenavBarProps = SidenavBarBaseProps &
     > &
     ExclusifyUnion<
         | {
-              /** Custom content in footer region (at bottom of sidenav). */
-              footerSlot: React.ReactNode;
+              /** Custom content in footer region (at bottom of sidenav). It takes an element, or a function
+               * that receives the collapse state and returns the content for that state.
+               * @see SidenavSlotRenderProps */
+              footerSlot: SidenavSlot;
               /** Keep footer fixed when scrolling. @default false */
               fixedFooter?: boolean;
           }
@@ -178,7 +172,6 @@ const SidenavBar = ({
     collapsed: collapsedProp,
     defaultCollapsed = false,
     onCollapse,
-    renderCollapseAction,
     doublePanel = false,
     width = DEFAULT_WIDTH,
     logo,
@@ -239,6 +232,13 @@ const SidenavBar = ({
         const timeoutId = setTimeout(() => setCollapsedSettled(collapsed), COLLAPSE_DURATION_MS);
         return () => clearTimeout(timeoutId);
     }, [collapsed, isMotionOff]);
+    const collapseState: SidenavCollapseState = collapsed
+        ? collapsedSettled
+            ? 'collapsed'
+            : 'collapsing'
+        : collapsedSettled
+          ? 'expanding'
+          : 'expanded';
 
     // A press on an item of the sidenav closes the second column and moves the selection at the same
     // time. The press records its selection here, so the adjustment below knows the user already
@@ -478,14 +478,14 @@ const SidenavBar = ({
         );
     }
 
-    const isLogoCollapsed = collapsed;
+    const slotRenderProps: SidenavSlotRenderProps = {collapsed, state: collapseState};
     const isDefaultLogo = logo === undefined || logo === true;
     const logoElement = (() => {
         if (logo === false) {
             return null;
         }
         if (typeof logo === 'function') {
-            return logo({collapsed: isLogoCollapsed});
+            return logo(slotRenderProps);
         }
         if (isDefaultLogo) {
             return <Logo size={LOGO_SIZE} type="isotype" />;
@@ -498,33 +498,26 @@ const SidenavBar = ({
             return null;
         }
 
-        const collapseActionProps: SidenavCollapseActionRenderProps = {
-            collapsed,
-            onPress: toggleCollapsed,
-            'aria-label': collapsed
-                ? texts.sidenavExpand || t(tokens.sidenavExpand)
-                : texts.sidenavCollapse || t(tokens.sidenavCollapse),
-            'aria-expanded': !collapsed,
-        };
-
-        if (renderCollapseAction) {
-            return renderCollapseAction(collapseActionProps);
-        }
-
         return (
             <IconButton
                 Icon={collapsed ? IconPanelExpandRegular : IconPanelCollapseRegular}
                 type="neutral"
                 backgroundType="transparent"
                 small
-                onPress={collapseActionProps.onPress}
-                aria-label={collapseActionProps['aria-label']}
-                aria-expanded={collapseActionProps['aria-expanded']}
+                onPress={toggleCollapsed}
+                aria-label={
+                    collapsed
+                        ? texts.sidenavExpand || t(tokens.sidenavExpand)
+                        : texts.sidenavCollapse || t(tokens.sidenavCollapse)
+                }
+                aria-expanded={!collapsed}
             />
         );
     })();
 
-    const hasHeader = Boolean(logoElement || collapseActionElement || headerSlot);
+    const headerSlotElement = renderSidenavSlot(headerSlot, slotRenderProps);
+    const footerSlotElement = renderSidenavSlot(footerSlot, slotRenderProps);
+    const hasHeader = Boolean(logoElement || collapseActionElement || headerSlotElement);
     const hasBoxedBorder =
         boxed && shouldShowBoxedBorder(normalizedVariant, pageVariant, componentProperties.showBoxedBorder);
 
@@ -603,6 +596,7 @@ const SidenavBar = ({
                                     {logoElement && (
                                         <div
                                             className={classnames(styles.logo, {
+                                                [styles.logoDefault]: isDefaultLogo,
                                                 [styles.logoCollapsed]: collapsed,
                                             })}
                                             // Only the default brand mark leaves the reading order. A logo of
@@ -614,13 +608,13 @@ const SidenavBar = ({
                                     )}
                                     {collapseActionElement}
                                 </div>
-                                {headerSlot && (
+                                {headerSlotElement && (
                                     <div
                                         className={classnames(styles.headerSlot, {
                                             [styles.headerSlotCollapsed]: collapsed,
                                         })}
                                     >
-                                        {headerSlot}
+                                        {headerSlotElement}
                                     </div>
                                 )}
                             </div>
@@ -692,7 +686,7 @@ const SidenavBar = ({
                                         )}
                                         style={backgroundStyle}
                                     >
-                                        {footerSlot}
+                                        {footerSlotElement}
                                     </div>
                                 </>
                             )}
@@ -727,7 +721,7 @@ const SidenavBar = ({
                                 )}
                                 style={backgroundStyle}
                             >
-                                {footerSlot}
+                                {footerSlotElement}
                             </div>
                         )}
                     </div>
@@ -763,4 +757,4 @@ const SidenavBar = ({
 export default SidenavBar;
 export {SidenavBar, SidenavSection, SidenavItem};
 export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, hasDescendantWithId};
-export type {SidenavBarProps, SidenavSectionProps, SidenavCollapseActionRenderProps, SidenavLogoRenderProps};
+export type {SidenavBarProps, SidenavSectionProps, SidenavLogoRenderProps};

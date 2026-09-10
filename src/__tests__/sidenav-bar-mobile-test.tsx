@@ -97,6 +97,14 @@ test('SidenavBar mobile puts the header slot in the top bar', async () => {
     expect(screen.getByRole('button', {name: 'Header action'})).toBeInTheDocument();
 });
 
+test('SidenavBar mobile reports the expanded state, at rest, to the function that headerSlot carries', async () => {
+    await renderSidenav({
+        headerSlot: ({collapsed, state}) => <button type="button">{`Header ${state} ${collapsed}`}</button>,
+    });
+
+    expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
+});
+
 test('SidenavBar mobile opens the panel with one row per first-level item', async () => {
     await renderSidenav();
     await openMenu();
@@ -105,6 +113,21 @@ test('SidenavBar mobile opens the panel with one row per first-level item', asyn
     expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('href', '/home');
     expect(screen.getByRole('button', {name: 'Projects'})).toBeInTheDocument();
     expect(screen.getByRole('heading', {name: 'Workspace'})).toBeInTheDocument();
+});
+
+// A hidden title paints no heading on mobile either, and the list of the section keeps its name.
+test('SidenavBar mobile hides the heading of a section and keeps the name of its list', async () => {
+    const sections: Array<SidenavEntry> = [
+        {
+            title: {text: 'Workspace', hidden: true},
+            items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+        },
+    ];
+    await renderSidenav({sections});
+    await openMenu();
+
+    expect(screen.queryByRole('heading', {name: 'Workspace'})).not.toBeInTheDocument();
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
 });
 
 // The mobile panel builds its rows from `Row`, so it renders none of the items of the desktop rail.

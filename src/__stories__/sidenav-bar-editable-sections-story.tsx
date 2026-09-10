@@ -17,7 +17,7 @@ import {Text2, Text3, Text6} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavEntry, SidenavItem} from '../sidenav-bar-types';
+import type {SidenavEntry, SidenavItem, SidenavSectionTitle} from '../sidenav-bar-types';
 
 const ICONS = {
     home: IconHomeRegular,
@@ -48,7 +48,7 @@ type EditableItem = {
 };
 
 type EditableSection = {
-    title?: string;
+    title: SidenavSectionTitle;
     dividerTop?: boolean;
     dividerBottom?: boolean;
     items: ReadonlyArray<EditableItem>;
@@ -80,6 +80,9 @@ const DEFAULT_SECTIONS: Array<EditableEntry> = [
         href: '#reports',
     },
     {
+        // The heading stays out of sight, and a screen reader still reads this text as the name of the
+        // list of the section.
+        title: {text: 'General', hidden: true},
         dividerTop: false,
         dividerBottom: true,
         items: [
@@ -165,7 +168,13 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                             declares dividerTop and dividerBottom, so you can switch each divider on and off
                             in the control. A stand-alone item takes no dividers. Two consecutive sections
                             share one divider when the first ends with one and the second starts with one, as
-                            the untitled section and &quot;Workspace&quot; show.
+                            the section with the hidden title and &quot;Workspace&quot; show.
+                        </Text3>
+                        <Text3 regular>
+                            Every section declares a title, because the list of the section takes its
+                            accessible name from it. A string paints a visible heading. The object form{' '}
+                            {'{text, hidden: true}'} paints no heading, and a screen reader still reads the
+                            name, as the section above &quot;Workspace&quot; shows.
                         </Text3>
                         <Text3 regular>
                             Give an icon to every first-level item. The collapsed rail shows the icon instead
@@ -196,7 +205,11 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                                             defaultOpen, a boolean, opens the item on the first render.
                                         </ListItem>
                                         <ListItem>items, an array, the items of a section.</ListItem>
-                                        <ListItem>title, a string, the heading of a section.</ListItem>
+                                        <ListItem>
+                                            title, mandatory on a section. Give a string for a visible
+                                            heading, or {'{"text": "...", "hidden": true}'} to name the list
+                                            of the section for a screen reader only.
+                                        </ListItem>
                                         <ListItem>
                                             dividerTop, a boolean, the divider above a section.
                                         </ListItem>

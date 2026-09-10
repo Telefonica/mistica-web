@@ -19,6 +19,7 @@ import {Text2, Text3, Text5, Text6} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import {ThemeVariant} from '../theme-variant-context';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
+import {getSidenavSectionTitle} from '../sidenav-bar-types';
 
 import type {SidenavSection, SidenavItem, SidenavNestedItem} from '../sidenav-bar-types';
 import type {NonDeprecatedVariant} from '../theme-variant-context';
@@ -97,6 +98,8 @@ export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: 
 
     const sections: Array<SidenavSection> = [
         {
+            // No heading over these two items, and a screen reader still reads the name of their list.
+            title: {text: 'General', hidden: true},
             items: [
                 {
                     id: 'overview',
@@ -282,8 +285,13 @@ export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: 
 
                         <Stack space={16}>
                             {sections.map((section, index) => (
-                                <Stack space={8} key={section.title ?? `section-${index}`}>
-                                    <Text2 medium>{section.title ?? 'General'}</Text2>
+                                <Stack
+                                    space={8}
+                                    key={getSidenavSectionTitle(section.title).text ?? `section-${index}`}
+                                >
+                                    <Text2 medium>
+                                        {getSidenavSectionTitle(section.title).text ?? 'General'}
+                                    </Text2>
                                     <Inline space={8} verticalSpace={8} wrap>
                                         {collectSelectableItems(section.items).map((button) => (
                                             <Chip

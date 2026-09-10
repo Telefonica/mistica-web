@@ -27,6 +27,8 @@ export const DoublePanel = ({collapsed, boxed, divider, width}: Args): React.JSX
 
     const sections: Array<SidenavSection> = [
         {
+            // No heading over this item, and a screen reader still reads the name of its list.
+            title: {text: 'General', hidden: true},
             items: [
                 {
                     id: 'home',

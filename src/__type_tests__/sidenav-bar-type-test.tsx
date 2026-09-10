@@ -11,7 +11,7 @@ const firstLevelItemWithHiddenAsset: SidenavItem = {
     id: 'home',
     label: 'Home',
     asset: IconHomeRegular,
-    showIconWhenExpanded: false,
+    showAssetWhenExpanded: false,
     href: '/',
 };
 
@@ -33,8 +33,8 @@ const nestedItemWithHiddenAsset: SidenavNestedItem = {
     id: 'active',
     label: 'Active',
     asset: IconHomeRegular,
-    // @ts-expect-error - only a first-level item reads showIconWhenExpanded
-    showIconWhenExpanded: false,
+    // @ts-expect-error - only a first-level item reads showAssetWhenExpanded
+    showAssetWhenExpanded: false,
     href: '/active',
 };
 
