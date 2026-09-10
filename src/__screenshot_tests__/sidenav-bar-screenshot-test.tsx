@@ -1,9 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
 
-// Every test of the rail asks for a desktop device. A tablet takes the mobile treatment, and the default
-// device of `openStoryPage` is a tablet, so the rail needs the request. The mobile tests live at the end of
-// this file.
-
 test('SidenavBar', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
@@ -16,9 +12,7 @@ test('SidenavBar', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// The collapsed rail keeps the 32px gap between the collapse action and the header slot, which the spec
-// gives for both states. Only a screenshot guards that gap: the CSS class carries it.
-test('SidenavBar collapsed with a header slot', async () => {
+test('SidenavBar collapsed keeps the 32px gap above the header slot', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -31,9 +25,7 @@ test('SidenavBar collapsed with a header slot', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// The collapsed rail keeps the accent bar of a selected first-level item, beside its selected background.
-// Only a screenshot guards the bar: it is a style-only mark, with no semantic query.
-test('SidenavBar collapsed with a selected first-level item', async () => {
+test('SidenavBar collapsed keeps the accent bar of a selected first-level item', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -46,8 +38,6 @@ test('SidenavBar collapsed with a selected first-level item', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// The slot of the logo grows with a logo taller than itself, and clips a logo wider than itself, so the
-// logo never paints past the edge of the rail. Only a screenshot guards this.
 test.each([false, true])(
     'SidenavBar grows for an oversized logo and clips its width. collapsed(%s)',
     async (collapsed) => {
@@ -64,10 +54,7 @@ test.each([false, true])(
     }
 );
 
-// A section title and an item label never truncate: a text that does not fit wraps over several lines, and
-// its row grows with it. Only a screenshot guards this, at every level of the tree: a section title, a
-// stand-alone item, an item with a right slot, and a nested item.
-test('SidenavBar with labels that wrap', async () => {
+test('SidenavBar wraps a long label at every level and grows its row', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -80,9 +67,7 @@ test('SidenavBar with labels that wrap', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// The collapsed rail holds each row at one line: the label keeps the width of its text and the rail clips
-// it, so a long label never wraps there and never grows the rail.
-test('SidenavBar collapsed with labels that wrap', async () => {
+test('SidenavBar collapsed clips a long label at one line', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -95,14 +80,13 @@ test('SidenavBar collapsed with labels that wrap', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// The background tokens of the header and the footer differ from the ones of the body only in dark mode,
-// where `background` and `backgroundContainer` carry two different blacks. A light screenshot passes with
-// the wrong token, so these two cases guard the tokens of the spec.
+// Only dark mode tells the header and footer tokens apart from the body token: `background` and
+// `backgroundContainer` carry two different blacks there. A light screenshot passes with the wrong token.
 test.each`
     boxed
     ${false}
     ${true}
-`('SidenavBar in dark mode. boxed($boxed)', async ({boxed}) => {
+`('SidenavBar in dark mode paints header and footer tokens. boxed($boxed)', async ({boxed}) => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -116,10 +100,8 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-// One colour of the consumer replaces the token of the variant on the header, on the body and on the
-// footer. Only a screenshot proves that the three bands take it, and that no seam stays behind. The story
-// encodes the colour as Storybook does, because the argument parser drops a raw "#".
-test('SidenavBar with a custom background', async () => {
+// The story encodes the colour as Storybook does, because the argument parser drops a raw "#".
+test('SidenavBar with a custom background on the three bands and no seam', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--default',
         device: 'DESKTOP',
@@ -132,9 +114,8 @@ test('SidenavBar with a custom background', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-// Each variant paints its own tokens on the three bands, on the labels, on the assets, on the chevrons, on
-// the section titles, on the selected background and on the selected indicator. The controlled story opens
-// with a selected item, so one screenshot per variant guards the whole set.
+// The controlled story opens with a selected item, so one screenshot per variant also guards the
+// selected background and the selected indicator.
 test.each`
     variant
     ${'default'}
@@ -200,11 +181,10 @@ test.each`
     }
 );
 
-// The separator of the two columns crosses the edge of a boxed sidenav, so it reaches the top and the
-// bottom of the box. In dark mode the border token carries the background colour of the sidenav, so the
-// edge itself is invisible and the box reads by its background: a separator that stopped at that edge
-// left a 1px gap. Only a dark screenshot guards that pixel.
-test('SidenavBar double panel boxed in dark mode', async () => {
+// In dark mode the border token carries the background colour of the sidenav, so the edge of the box is
+// invisible and the box reads by its background. A separator that stopped at that edge left a 1px gap,
+// and only a dark screenshot catches that pixel.
+test('SidenavBar double panel boxed in dark mode runs the separator to the edge of the box', async () => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--double-panel',
         device: 'DESKTOP',
@@ -255,15 +235,14 @@ test('SidenavBar mobile second level', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-// The variant paints the top bar alone. The panel always renders in the default variant, so one screenshot
-// per variant guards the tokens of the bar, and the panel of the burger stays out of the frame.
+// The panel always renders in the default variant, so the screenshot frames the top bar alone.
 test.each`
     variant
     ${'brand'}
     ${'alternative'}
     ${'negative'}
     ${'media'}
-`('SidenavBar mobile variant($variant)', async ({variant}) => {
+`('SidenavBar mobile top bar variant($variant)', async ({variant}) => {
     await openStoryPage({
         id: 'components-sidenavbar-bar--controlled-selection',
         device: 'MOBILE_IOS',
