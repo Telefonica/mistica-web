@@ -174,13 +174,16 @@ test('Selectable custom boxed row', async () => {
         device: 'MOBILE_IOS',
     });
 
+    const list = await screen.findByTestId('selectable-boxed-row-list');
+    const unselectedImage = await list.screenshot();
+    expect(unselectedImage).toMatchImageSnapshot();
+
     const buttons = await screen.findAllByRole('button', {name: 'Select row'});
     await buttons[0].click();
     await buttons[1].click();
 
-    const list = await screen.findByTestId('selectable-boxed-row-list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    const selectedImage = await list.screenshot();
+    expect(selectedImage).toMatchImageSnapshot();
 });
 
 test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (control) => {
