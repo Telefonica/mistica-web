@@ -209,7 +209,6 @@ export const InternalToggleIconButton = React.forwardRef<
             dataAttributes={{
                 testid: 'ToggleIconButton',
                 ...dataAttributes,
-                checked: checked ?? checkedState,
             }}
             onPress={handleChange}
         />
