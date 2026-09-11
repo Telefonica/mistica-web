@@ -524,7 +524,7 @@ const SelectableBoxedRows = () => {
         <BoxedRowList>
             <BoxedRow
                 title="Toggle icon button"
-                description="Select this row with the icon button"
+                description="Toggle the icon without selecting the row"
                 iconButton={{
                     checkedProps: {
                         Icon: IconHeartFilled,
@@ -543,7 +543,7 @@ const SelectableBoxedRows = () => {
             <BoxedRow
                 selected={selected}
                 title="Custom render"
-                description="Select this row with the icon button"
+                description="Select the row with the selected prop"
                 right={
                     <IconButton
                         Icon={selected ? IconHeartFilled : IconHeartRegular}

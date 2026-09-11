@@ -392,41 +392,6 @@ const useControlState = ({
     return [isControlledByParent ? !!value : isChecked, toggle];
 };
 
-const SelectableToggleIconButton = ({
-    checked,
-    defaultChecked,
-    onChange,
-    onSelectedChange,
-    ...props
-}: ToggleIconButtonProps & {
-    onSelectedChange?: (selected: boolean) => void;
-}) => {
-    React.useEffect(() => {
-        onSelectedChange?.(checked ?? !!defaultChecked);
-    }, [checked, defaultChecked, onSelectedChange]);
-
-    const handleChange = (selected: boolean) => {
-        const result = onChange?.(selected);
-
-        if (checked !== undefined) {
-            return result;
-        }
-        if (result) {
-            return result.then(() => onSelectedChange?.(selected));
-        }
-        onSelectedChange?.(selected);
-    };
-
-    return (
-        <ToggleIconButton
-            {...props}
-            checked={checked}
-            defaultChecked={defaultChecked}
-            onChange={handleChange}
-        />
-    );
-};
-
 const hasControlProps = (
     obj: any
 ): obj is
@@ -795,11 +760,7 @@ const RowContent = React.forwardRef<
                       {props.iconButton.Icon ? (
                           <IconButton {...props.iconButton} disabled={props.disabled} />
                       ) : (
-                          <SelectableToggleIconButton
-                              {...props.iconButton}
-                              disabled={props.disabled}
-                              onSelectedChange={onSelectedChange}
-                          />
+                          <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
                       )}
                   </div>
               )
@@ -816,11 +777,10 @@ const RowContent = React.forwardRef<
                                           role={role}
                                       />
                                   ) : (
-                                      <SelectableToggleIconButton
+                                      <ToggleIconButton
                                           {...props.iconButton}
                                           disabled={props.disabled}
                                           role={role}
-                                          onSelectedChange={onSelectedChange}
                                       />
                                   )}
                               </Stack>
