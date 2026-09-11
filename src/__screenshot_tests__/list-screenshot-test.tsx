@@ -175,6 +175,7 @@ test('Selectable custom boxed row', async () => {
     });
 
     const buttons = await screen.findAllByRole('button', {name: 'Select row'});
+    await buttons[0].click();
     await buttons[1].click();
 
     const list = await screen.findByTestId('selectable-boxed-row-list');
