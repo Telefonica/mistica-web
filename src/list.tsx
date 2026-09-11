@@ -446,361 +446,373 @@ const getNodeText = (node: HTMLElement | null): string => {
     return raw;
 };
 
-const RowContent = React.forwardRef<TouchableElement, RowContentProps & {hasDivider: boolean}>(
-    (props, ref) => {
-        const titleId = React.useId();
-        const outsideVariant = useThemeVariant();
-        const isOverBrand =
-            outsideVariant === 'brand' || outsideVariant === 'media' || outsideVariant === 'negative';
-        const {
-            asset,
-            headline,
-            title,
-            titleAs,
-            titleLinesMax,
-            subtitle,
-            subtitleLinesMax,
-            description,
-            descriptionLinesMax,
-            detail,
-            danger,
-            badge,
-            role,
-            touchableRole,
-            slot,
-            withChevron,
-            dataAttributes,
-            right,
-            'aria-label': ariaLabelProp,
-            tabIndex,
-            atomicReading,
-            hasDivider,
-        } = props;
+const RowContent = React.forwardRef<
+    TouchableElement,
+    RowContentProps & {hasDivider: boolean; onSelectedChange?: (selected: boolean) => void}
+>((props, ref) => {
+    const titleId = React.useId();
+    const outsideVariant = useThemeVariant();
+    const isOverBrand =
+        outsideVariant === 'brand' || outsideVariant === 'media' || outsideVariant === 'negative';
+    const {
+        asset,
+        headline,
+        title,
+        titleAs,
+        titleLinesMax,
+        subtitle,
+        subtitleLinesMax,
+        description,
+        descriptionLinesMax,
+        detail,
+        danger,
+        badge,
+        role,
+        touchableRole,
+        slot,
+        withChevron,
+        dataAttributes,
+        right,
+        'aria-label': ariaLabelProp,
+        tabIndex,
+        atomicReading,
+        hasDivider,
+        onSelectedChange,
+    } = props;
 
-        const [headlineText, setHeadlineText] = React.useState<string>('');
-        const [slotText, setSlotText] = React.useState<string>('');
-        const [rightText, setRightText] = React.useState<string>('');
-        const assetText = getAssetText(asset);
-        const [dividerOffset, setDividerOffset] = React.useState(0);
-        const measureDividerOffset = React.useCallback(
-            (dualActionContainerElement: HTMLDivElement | null) => {
-                if (!dualActionContainerElement || !hasDivider) {
-                    return;
-                }
+    const [headlineText, setHeadlineText] = React.useState<string>('');
+    const [slotText, setSlotText] = React.useState<string>('');
+    const [rightText, setRightText] = React.useState<string>('');
+    const assetText = getAssetText(asset);
+    const [dividerOffset, setDividerOffset] = React.useState(0);
+    const measureDividerOffset = React.useCallback(
+        (dualActionContainerElement: HTMLDivElement | null) => {
+            if (!dualActionContainerElement || !hasDivider) {
+                return;
+            }
 
-                const innerContentElement = dualActionContainerElement.querySelector<HTMLElement>(
-                    `.${styles.innerContent}`
-                );
-
-                if (!innerContentElement) {
-                    return;
-                }
-
-                const containerLeft = dualActionContainerElement.getBoundingClientRect().left;
-                const contentLeft = innerContentElement.getBoundingClientRect().left;
-
-                setDividerOffset(contentLeft - containerLeft);
-            },
-            [hasDivider]
-        );
-
-        // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-        const computedAriaLabel = [
-            title,
-            assetText,
-            headlineText,
-            subtitle,
-            description,
-            slotText,
-            detail,
-            rightText,
-        ]
-            .filter(Boolean)
-            .join(' ');
-
-        const isInteractive = !!props.onPress || !!props.href || !!props.to;
-        const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
-
-        const radioContext = useRadioContext();
-        const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
-        const hasHoverDefault = !disabled && !isOverBrand;
-        const hasHoverInverse = !disabled && isOverBrand;
-        const hasControl = hasControlProps(props);
-        const hasChevron = hasControl ? false : withChevron ?? isInteractive;
-
-        const interactiveProps = {
-            href: props.href,
-            newTab: props.newTab,
-            loadOnTop: props.loadOnTop,
-
-            to: props.to,
-            fullPageOnWebView: props.fullPageOnWebView,
-            replace: props.replace,
-
-            onNavigate: props.onNavigate,
-            onPress: props.onPress,
-            trackingEvent: props.trackingEvent,
-
-            'aria-label': ariaLabel,
-            'aria-labelledby': props['aria-labelledby'],
-            'aria-description': props['aria-description'],
-            'aria-describedby': props['aria-describedby'],
-            'aria-current': props['aria-current'],
-        } as TouchableProps;
-
-        const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
-
-        const renderContent = (contentProps?: {
-            control?: React.ReactNode;
-            labelId?: string;
-            role?: string;
-            withDivider?: boolean;
-        }) => (
-            <Content
-                asset={asset}
-                headline={headline}
-                headlineRef={(node) => {
-                    if (node) {
-                        setHeadlineText(getNodeText(node));
-                    }
-                }}
-                title={title}
-                titleAs={titleAs}
-                subtitle={subtitle}
-                description={description}
-                badge={badge}
-                titleLinesMax={titleLinesMax}
-                subtitleLinesMax={subtitleLinesMax}
-                descriptionLinesMax={descriptionLinesMax}
-                detail={detail}
-                danger={danger}
-                right={right}
-                rightRef={(node) => {
-                    if (node) {
-                        setRightText(getNodeText(node));
-                    }
-                }}
-                control={contentProps?.control}
-                role={contentProps?.role}
-                slot={slot}
-                slotRef={(node) => {
-                    if (node) {
-                        setSlotText(getNodeText(node));
-                    }
-                }}
-                labelId={contentProps?.labelId}
-                disabled={disabled}
-                withChevron={hasChevron}
-                withDivider={contentProps?.withDivider ?? hasDivider}
-            />
-        );
-
-        if (isInteractive && !hasControl) {
-            return (
-                <BaseTouchable
-                    ref={ref}
-                    className={classNames(styles.rowContent, {
-                        [styles.touchableBackground]: hasHoverDefault,
-                        [styles.touchableBackgroundBrand]: hasHoverInverse,
-                        [styles.pointer]: !disabled,
-                    })}
-                    {...interactiveProps}
-                    role={touchableRole}
-                    dataAttributes={dataAttributes}
-                    disabled={disabled}
-                    tabIndex={tabIndex}
-                >
-                    <div
-                        className={styles.rowContentPadding}
-                        aria-hidden={
-                            !!props.to || !!props.href || props.touchableRole === 'link' || undefined
-                        }
-                        data-testid="content-container"
-                    >
-                        {renderContent({role})}
-                    </div>
-                </BaseTouchable>
+            const innerContentElement = dualActionContainerElement.querySelector<HTMLElement>(
+                `.${styles.innerContent}`
             );
+
+            if (!innerContentElement) {
+                return;
+            }
+
+            const containerLeft = dualActionContainerElement.getBoundingClientRect().left;
+            const contentLeft = innerContentElement.getBoundingClientRect().left;
+
+            setDividerOffset(contentLeft - containerLeft);
+        },
+        [hasDivider]
+    );
+
+    // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
+    const computedAriaLabel = [
+        title,
+        assetText,
+        headlineText,
+        subtitle,
+        description,
+        slotText,
+        detail,
+        rightText,
+    ]
+        .filter(Boolean)
+        .join(' ');
+
+    const isInteractive = !!props.onPress || !!props.href || !!props.to;
+    const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
+
+    const radioContext = useRadioContext();
+    const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
+    const hasHoverDefault = !disabled && !isOverBrand;
+    const hasHoverInverse = !disabled && isOverBrand;
+    const hasControl = hasControlProps(props);
+    const hasChevron = hasControl ? false : withChevron ?? isInteractive;
+
+    const interactiveProps = {
+        href: props.href,
+        newTab: props.newTab,
+        loadOnTop: props.loadOnTop,
+
+        to: props.to,
+        fullPageOnWebView: props.fullPageOnWebView,
+        replace: props.replace,
+
+        onNavigate: props.onNavigate,
+        onPress: props.onPress,
+        trackingEvent: props.trackingEvent,
+
+        'aria-label': ariaLabel,
+        'aria-labelledby': props['aria-labelledby'],
+        'aria-description': props['aria-description'],
+        'aria-describedby': props['aria-describedby'],
+        'aria-current': props['aria-current'],
+    } as TouchableProps;
+
+    const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+    const isControlSelected =
+        props.switch || props.checkbox
+            ? isChecked
+            : props.radioValue !== undefined
+              ? radioContext.selectedValue === props.radioValue
+              : undefined;
+
+    React.useEffect(() => {
+        if (isControlSelected !== undefined) {
+            onSelectedChange?.(isControlSelected);
         }
+    }, [onSelectedChange, isControlSelected]);
 
-        const renderRowWithDoubleInteraction = (control: React.ReactNode) => (
-            <div
-                className={styles.dualActionContainer}
-                ref={combineRefs(ref, measureDividerOffset)}
-                {...getPrefixedDataAttributes(dataAttributes)}
-            >
-                <div className={styles.dualActionBody}>
-                    <BaseTouchable
-                        disabled={disabled}
-                        {...interactiveProps}
-                        role={touchableRole}
-                        className={classNames(styles.dualActionLeft, {
-                            [styles.touchableBackground]: hasHoverDefault,
-                            [styles.touchableBackgroundBrand]: hasHoverInverse,
-                        })}
-                        tabIndex={tabIndex}
-                    >
-                        {renderContent({labelId: titleId, role, withDivider: false})}
-                    </BaseTouchable>
-                    <div className={styles.dualActionDivider} />
-                    {control}
-                </div>
-                {hasDivider && (
-                    <div
-                        className={styles.rowDividerDualAction}
-                        data-testid="row-divider-dual-action"
-                        style={{paddingLeft: dividerOffset}}
-                    >
-                        <Divider />
-                    </div>
-                )}
-            </div>
-        );
+    const renderContent = (contentProps?: {
+        control?: React.ReactNode;
+        labelId?: string;
+        role?: string;
+        withDivider?: boolean;
+    }) => (
+        <Content
+            asset={asset}
+            headline={headline}
+            headlineRef={(node) => {
+                if (node) {
+                    setHeadlineText(getNodeText(node));
+                }
+            }}
+            title={title}
+            titleAs={titleAs}
+            subtitle={subtitle}
+            description={description}
+            badge={badge}
+            titleLinesMax={titleLinesMax}
+            subtitleLinesMax={subtitleLinesMax}
+            descriptionLinesMax={descriptionLinesMax}
+            detail={detail}
+            danger={danger}
+            right={right}
+            rightRef={(node) => {
+                if (node) {
+                    setRightText(getNodeText(node));
+                }
+            }}
+            control={contentProps?.control}
+            role={contentProps?.role}
+            slot={slot}
+            slotRef={(node) => {
+                if (node) {
+                    setSlotText(getNodeText(node));
+                }
+            }}
+            labelId={contentProps?.labelId}
+            disabled={disabled}
+            withChevron={hasChevron}
+            withDivider={contentProps?.withDivider ?? hasDivider}
+        />
+    );
 
-        const renderRowWithSingleControl = (content: React.ReactNode, isContentInsideControl?: boolean) => (
-            <div
-                className={classNames(styles.rowContent, {
-                    [styles.touchableBackground]: hasHoverDefault && isContentInsideControl,
-                    [styles.touchableBackgroundBrand]: hasHoverInverse && isContentInsideControl,
-                    [styles.pointer]: !disabled && isContentInsideControl,
-                })}
-                ref={ref as React.Ref<HTMLDivElement>}
-                {...getPrefixedDataAttributes(dataAttributes)}
-            >
-                {content}
-            </div>
-        );
-
-        const renderDualActionRight = ({controlElement}: {controlElement: React.ReactNode}) => (
-            <div className={styles.dualActionRight}>{controlElement}</div>
-        );
-
-        if (props.switch || props.checkbox) {
-            const Control = props.switch ? Switch : Checkbox;
-            const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
-
-            return isInteractive
-                ? renderRowWithDoubleInteraction(
-                      <Control
-                          disabled={disabled}
-                          name={name}
-                          checked={isChecked}
-                          aria-label={ariaLabel}
-                          aria-labelledby={titleId}
-                          onChange={toggle}
-                          render={renderDualActionRight}
-                      />
-                  )
-                : renderRowWithSingleControl(
-                      <Control
-                          disabled={disabled}
-                          name={name}
-                          checked={isChecked}
-                          aria-label={ariaLabel}
-                          aria-labelledby={titleId}
-                          onChange={toggle}
-                          render={({controlElement, labelId}) => (
-                              <div className={styles.rowContentPadding} role={role}>
-                                  {renderContent({
-                                      labelId,
-                                      control: <Stack space="around">{controlElement}</Stack>,
-                                  })}
-                              </div>
-                          )}
-                      />,
-                      true
-                  );
-        }
-
-        if (props.radioValue) {
-            return isInteractive
-                ? renderRowWithDoubleInteraction(
-                      <RadioButton
-                          value={props.radioValue}
-                          aria-label={ariaLabel}
-                          aria-labelledby={titleId}
-                          render={renderDualActionRight}
-                      />
-                  )
-                : renderRowWithSingleControl(
-                      <RadioButton
-                          value={props.radioValue}
-                          aria-label={ariaLabel}
-                          aria-labelledby={titleId}
-                          render={({controlElement}) => (
-                              <div className={styles.rowContentPadding} role={role}>
-                                  {renderContent({
-                                      labelId: titleId,
-                                      control: <Stack space="around">{controlElement}</Stack>,
-                                  })}
-                              </div>
-                          )}
-                      />,
-                      true
-                  );
-        }
-
-        if (props.iconButton) {
-            return isInteractive
-                ? renderRowWithDoubleInteraction(
-                      <div className={styles.dualActionRightIconButton}>
-                          {props.iconButton.Icon ? (
-                              <IconButton {...props.iconButton} disabled={props.disabled} />
-                          ) : (
-                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
-                          )}
-                      </div>
-                  )
-                : renderRowWithSingleControl(
-                      <div className={styles.rowContentPadding}>
-                          {renderContent({
-                              labelId: titleId,
-                              control: (
-                                  <Stack space="around">
-                                      {props.iconButton.Icon ? (
-                                          <IconButton
-                                              {...props.iconButton}
-                                              disabled={props.disabled}
-                                              role={role}
-                                          />
-                                      ) : (
-                                          <ToggleIconButton
-                                              {...props.iconButton}
-                                              disabled={props.disabled}
-                                              role={role}
-                                          />
-                                      )}
-                                  </Stack>
-                              ),
-                          })}
-                      </div>
-                  );
-        }
-
-        const shouldRenderScreenReaderOnly = !!ariaLabelProp || atomicReading;
-
+    if (isInteractive && !hasControl) {
         return (
-            <div role={role}>
+            <BaseTouchable
+                ref={ref}
+                className={classNames(styles.rowContent, {
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundBrand]: hasHoverInverse,
+                    [styles.pointer]: !disabled,
+                })}
+                {...interactiveProps}
+                role={touchableRole}
+                dataAttributes={dataAttributes}
+                disabled={disabled}
+                tabIndex={tabIndex}
+            >
                 <div
-                    className={classNames(styles.rowContent, styles.rowContentPadding)}
-                    // role="text" makes VoiceOver read the whole div as a single text block. This is needed for VoiceOver rectangle to
-                    // cover the whole row, otherwise it only covers the text inside ScreenReaderOnly
-                    role={shouldRenderScreenReaderOnly ? 'text' : undefined}
-                    {...getPrefixedDataAttributes(dataAttributes)}
-                    ref={ref as React.Ref<HTMLDivElement>}
-                    tabIndex={tabIndex}
+                    className={styles.rowContentPadding}
+                    aria-hidden={!!props.to || !!props.href || props.touchableRole === 'link' || undefined}
+                    data-testid="content-container"
                 >
-                    <div aria-hidden={shouldRenderScreenReaderOnly}>{renderContent({role})}</div>
-                    {shouldRenderScreenReaderOnly && (
-                        <ScreenReaderOnly>
-                            <span>{ariaLabelProp ?? computedAriaLabel}</span>
-                        </ScreenReaderOnly>
-                    )}
+                    {renderContent({role})}
                 </div>
-            </div>
+            </BaseTouchable>
         );
     }
-);
+
+    const renderRowWithDoubleInteraction = (control: React.ReactNode) => (
+        <div
+            className={styles.dualActionContainer}
+            ref={combineRefs(ref, measureDividerOffset)}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
+            <div className={styles.dualActionBody}>
+                <BaseTouchable
+                    disabled={disabled}
+                    {...interactiveProps}
+                    role={touchableRole}
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundBrand]: hasHoverInverse,
+                    })}
+                    tabIndex={tabIndex}
+                >
+                    {renderContent({labelId: titleId, role, withDivider: false})}
+                </BaseTouchable>
+                <div className={styles.dualActionDivider} />
+                {control}
+            </div>
+            {hasDivider && (
+                <div
+                    className={styles.rowDividerDualAction}
+                    data-testid="row-divider-dual-action"
+                    style={{paddingLeft: dividerOffset}}
+                >
+                    <Divider />
+                </div>
+            )}
+        </div>
+    );
+
+    const renderRowWithSingleControl = (content: React.ReactNode, isContentInsideControl?: boolean) => (
+        <div
+            className={classNames(styles.rowContent, {
+                [styles.touchableBackground]: hasHoverDefault && isContentInsideControl,
+                [styles.touchableBackgroundBrand]: hasHoverInverse && isContentInsideControl,
+                [styles.pointer]: !disabled && isContentInsideControl,
+            })}
+            ref={ref as React.Ref<HTMLDivElement>}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
+            {content}
+        </div>
+    );
+
+    const renderDualActionRight = ({controlElement}: {controlElement: React.ReactNode}) => (
+        <div className={styles.dualActionRight}>{controlElement}</div>
+    );
+
+    if (props.switch || props.checkbox) {
+        const Control = props.switch ? Switch : Checkbox;
+        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+
+        return isInteractive
+            ? renderRowWithDoubleInteraction(
+                  <Control
+                      disabled={disabled}
+                      name={name}
+                      checked={isChecked}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      onChange={toggle}
+                      render={renderDualActionRight}
+                  />
+              )
+            : renderRowWithSingleControl(
+                  <Control
+                      disabled={disabled}
+                      name={name}
+                      checked={isChecked}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      onChange={toggle}
+                      render={({controlElement, labelId}) => (
+                          <div className={styles.rowContentPadding} role={role}>
+                              {renderContent({
+                                  labelId,
+                                  control: <Stack space="around">{controlElement}</Stack>,
+                              })}
+                          </div>
+                      )}
+                  />,
+                  true
+              );
+    }
+
+    if (props.radioValue) {
+        return isInteractive
+            ? renderRowWithDoubleInteraction(
+                  <RadioButton
+                      value={props.radioValue}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      render={renderDualActionRight}
+                  />
+              )
+            : renderRowWithSingleControl(
+                  <RadioButton
+                      value={props.radioValue}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      render={({controlElement}) => (
+                          <div className={styles.rowContentPadding} role={role}>
+                              {renderContent({
+                                  labelId: titleId,
+                                  control: <Stack space="around">{controlElement}</Stack>,
+                              })}
+                          </div>
+                      )}
+                  />,
+                  true
+              );
+    }
+
+    if (props.iconButton) {
+        return isInteractive
+            ? renderRowWithDoubleInteraction(
+                  <div className={styles.dualActionRightIconButton}>
+                      {props.iconButton.Icon ? (
+                          <IconButton {...props.iconButton} disabled={props.disabled} />
+                      ) : (
+                          <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                      )}
+                  </div>
+              )
+            : renderRowWithSingleControl(
+                  <div className={styles.rowContentPadding}>
+                      {renderContent({
+                          labelId: titleId,
+                          control: (
+                              <Stack space="around">
+                                  {props.iconButton.Icon ? (
+                                      <IconButton
+                                          {...props.iconButton}
+                                          disabled={props.disabled}
+                                          role={role}
+                                      />
+                                  ) : (
+                                      <ToggleIconButton
+                                          {...props.iconButton}
+                                          disabled={props.disabled}
+                                          role={role}
+                                      />
+                                  )}
+                              </Stack>
+                          ),
+                      })}
+                  </div>
+              );
+    }
+
+    const shouldRenderScreenReaderOnly = !!ariaLabelProp || atomicReading;
+
+    return (
+        <div role={role}>
+            <div
+                className={classNames(styles.rowContent, styles.rowContentPadding)}
+                // role="text" makes VoiceOver read the whole div as a single text block. This is needed for VoiceOver rectangle to
+                // cover the whole row, otherwise it only covers the text inside ScreenReaderOnly
+                role={shouldRenderScreenReaderOnly ? 'text' : undefined}
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref as React.Ref<HTMLDivElement>}
+                tabIndex={tabIndex}
+            >
+                <div aria-hidden={shouldRenderScreenReaderOnly}>{renderContent({role})}</div>
+                {shouldRenderScreenReaderOnly && (
+                    <ScreenReaderOnly>
+                        <span>{ariaLabelProp ?? computedAriaLabel}</span>
+                    </ScreenReaderOnly>
+                )}
+            </div>
+        </div>
+    );
+});
 
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
@@ -851,7 +863,9 @@ export const RowList = ({
 };
 
 // danger + variant="brand" is not allowed
-type CommonBoxedRowProps =
+type CommonBoxedRowProps = {
+    selected?: boolean;
+} & (
     | {
           variant?: 'default';
           danger: true;
@@ -863,7 +877,8 @@ type CommonBoxedRowProps =
     | {
           variant?: 'default';
           danger: boolean;
-      };
+      }
+);
 
 type BoxedRowProps = ExclusifyUnion<
     | BasicRowContentProps
@@ -877,17 +892,28 @@ type BoxedRowProps = ExclusifyUnion<
 > &
     CommonBoxedRowProps;
 
-export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
-    <InternalBoxed
-        overflow="visible"
-        className={styles.boxed}
-        variant={props.variant ?? 'default'}
-        ref={ref}
-        dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
-    >
-        <RowContent {...props} hasDivider={false} />
-    </InternalBoxed>
-));
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => {
+    const {selected, ...rowProps} = props;
+    const outsideVariant = useThemeVariant();
+    const [controlSelected, setControlSelected] = React.useState(false);
+    const isSelected = selected ?? controlSelected;
+
+    return (
+        <InternalBoxed
+            overflow="visible"
+            className={classNames(
+                styles.boxed,
+                styles.selectionOutline,
+                isSelected && styles.selectionOutlineColor[outsideVariant]
+            )}
+            variant={rowProps.variant ?? 'default'}
+            ref={ref}
+            dataAttributes={{testid: 'BoxedRow', ...dataAttributes}}
+        >
+            <RowContent {...rowProps} hasDivider={false} onSelectedChange={setControlSelected} />
+        </InternalBoxed>
+    );
+});
 
 type BoxedRowListProps = {
     children: React.ReactNode;
