@@ -700,7 +700,12 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
-                size: {desktop: 16, mobile: 14},
+                size: {desktop: 16, mobile: 16},
+                weight: 'medium',
+            },
+            chipLabelSmall: {
+                lineHeight: {desktop: 24, mobile: 20},
+                size: {desktop: 14, mobile: 14},
                 weight: 'medium',
             },
             drawerTitle: {
