@@ -1246,10 +1246,10 @@
         --mistica-color-textLinkDangerMedia: var(--mistica-cyber-red50);
         --mistica-color-textLinkSnackbar: var(--mistica-cyber-brand30);
         --mistica-color-textLinkNeutral: var(--mistica-cyber-grey900);
-        --mistica-color-textLinkNeutralBrand: var(--mistica-cyber-white);
-        --mistica-color-textLinkNeutralNegative: var(--mistica-cyber-white);
+        --mistica-color-textLinkNeutralBrand: var(--mistica-cyber-grey900);
+        --mistica-color-textLinkNeutralNegative: var(--mistica-cyber-grey900);
         --mistica-color-textLinkNeutralAlternative: var(--mistica-cyber-grey900);
-        --mistica-color-textLinkNeutralMedia: var(--mistica-cyber-white);
+        --mistica-color-textLinkNeutralMedia: var(--mistica-cyber-grey900);
         --mistica-color-textActivated: var(--mistica-cyber-brand70);
         --mistica-color-textBrand: var(--mistica-cyber-brand70);
         --mistica-color-inputBorder: var(--mistica-cyber-grey400);
