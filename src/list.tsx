@@ -552,7 +552,7 @@ const RowContent = React.forwardRef<
     } as TouchableProps;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
-    const selectedControl =
+    const isControlSelected =
         props.switch || props.checkbox
             ? isChecked
             : props.radioValue !== undefined
@@ -560,10 +560,10 @@ const RowContent = React.forwardRef<
               : undefined;
 
     React.useEffect(() => {
-        if (selectedControl !== undefined) {
-            onSelectedChange?.(selectedControl);
+        if (isControlSelected !== undefined) {
+            onSelectedChange?.(isControlSelected);
         }
-    }, [onSelectedChange, selectedControl]);
+    }, [onSelectedChange, isControlSelected]);
 
     const renderContent = (contentProps?: {
         control?: React.ReactNode;
