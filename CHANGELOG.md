@@ -1,3 +1,15 @@
+# [17.3.0](https://github.com/Telefonica/mistica-web/compare/v17.2.0...v17.3.0) (2026-09-04)
+
+
+### Bug Fixes
+
+* **Logo:** improve movistar logo position ([#1718](https://github.com/Telefonica/mistica-web/issues/1718)) ([95a8692](https://github.com/Telefonica/mistica-web/commit/95a8692a73a8a4953831cf854d20c327737e96bd))
+
+
+### Features
+
+* support community skins generation ([#1663](https://github.com/Telefonica/mistica-web/issues/1663)) ([043e6d6](https://github.com/Telefonica/mistica-web/commit/043e6d61d9e6f2363052c8c7249be7aee90eb213)), closes [#1588](https://github.com/Telefonica/mistica-web/issues/1588)
+
 # [17.2.0](https://github.com/Telefonica/mistica-web/compare/v17.1.0...v17.2.0) (2026-08-28)
 
 
