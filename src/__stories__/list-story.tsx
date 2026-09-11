@@ -107,6 +107,7 @@ const Template: StoryComponent<
         let controlProps: any = {};
         const onPress = () => alert('Pressed');
         const defaultControlValue = boxed ? index % 2 === 0 : true;
+        
         switch (control) {
             case 'chevron':
                 controlProps = {href: 'https://example.org', newTab: true};
