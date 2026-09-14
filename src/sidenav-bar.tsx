@@ -21,14 +21,7 @@ import IconPanelExpandRegular from './generated/mistica-icons/icon-panel-expand-
 import IconPanelCollapseRegular from './generated/mistica-icons/icon-panel-collapse-regular';
 import {SidenavItem} from './sidenav-bar-item';
 import {SidenavSection} from './sidenav-bar-section';
-import {
-    renderSidenavItemFromData,
-    findParentOfItem,
-    findFirstLevelItem,
-    renderSidenavEntries,
-    validateSidenavEntries,
-} from './sidenav-bar-entries';
-import {SidenavDoublePanel} from './sidenav-bar-sub-menu';
+import {SidenavDoublePanel} from './sidenav-bar-panel';
 import {SidenavMobileBar} from './sidenav-bar-mobile';
 import {useIsReducedMotion} from './sidenav-bar-motion';
 import {useSidenavRailKeyboard} from './sidenav-bar-keyboard';
@@ -36,10 +29,17 @@ import {
     SidenavBarContext,
     useSidenavBarContext,
     SidenavLevelContext,
+    SidenavItemIndexContext,
+    SidenavHasOuterListItemContext,
     hasDescendantWithId,
 } from './sidenav-bar-context';
 import {shouldShowBoxedBorder} from './boxed';
-import {renderSidenavSlot} from './sidenav-bar-types';
+import {
+    isSidenavSection,
+    getFirstLevelItems,
+    getSidenavSectionTitle,
+    renderSidenavSlot,
+} from './sidenav-bar-data';
 import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
@@ -48,6 +48,7 @@ import type {DataAttributes} from './utils/types';
 import type {SidenavSectionProps} from './sidenav-bar-section';
 import type {
     SidenavEntry,
+    SidenavFirstLevelItem,
     SidenavNestedItem,
     SidenavLogo,
     SidenavLogoRenderProps,
@@ -57,13 +58,14 @@ import type {
 } from './sidenav-bar-types';
 
 type SidenavBarBaseProps = {
-    /** First-level entries of the body. Each entry is either a section with items, or a stand-alone
-     * item that needs no section.
+    /**
+     * First-level entries of the body. Each entry is either a section with items, or a stand-alone item
+     * that needs no section.
      * @see SidenavEntry
      * @see SidenavSection
-     * @see SidenavItem
+     * @see SidenavFirstLevelItem
      */
-    sections?: ReadonlyArray<SidenavEntry>;
+    entries?: ReadonlyArray<SidenavEntry>;
     /** Accessible name of the navigation landmark. Defaults to a localized "Main navigation". */
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
@@ -162,8 +164,131 @@ type SidenavBarProps = SidenavBarBaseProps &
           }
     >;
 
+const renderSidenavItemFromData = (item: SidenavFirstLevelItem | SidenavNestedItem): React.ReactElement => {
+    const children = item.children?.map((child) => renderSidenavItemFromData(child));
+    const baseProps = {
+        id: item.id,
+        label: item.label,
+        asset: item.asset,
+        showAssetWhenExpanded: item.showAssetWhenExpanded,
+        rightSlot: item.rightSlot,
+        defaultOpen: item.defaultOpen,
+        newTab: item.newTab,
+        onNavigate: item.onNavigate,
+        children,
+    };
+
+    if (item.href !== undefined) {
+        return <SidenavItem key={item.id} {...(baseProps as any)} href={item.href} />;
+    }
+    if (item.to !== undefined) {
+        return <SidenavItem key={item.id} {...(baseProps as any)} to={item.to} />;
+    }
+    if (item.onPress !== undefined) {
+        return <SidenavItem key={item.id} {...(baseProps as any)} onPress={item.onPress} />;
+    }
+    return <SidenavItem key={item.id} {...(baseProps as any)} />;
+};
+
+/**
+ * Finds the first-level item that owns the given child id. The sidenav supports a single nesting
+ * level, so the parent of an item is always a first-level item.
+ */
+const findParentOfItem = (
+    entries: ReadonlyArray<SidenavEntry>,
+    childId: string
+): SidenavFirstLevelItem | undefined =>
+    getFirstLevelItems(entries).find((item) => item.children?.some((child) => child.id === childId));
+
+/** Finds a first-level item by id. Only these items can open a panel. */
+const findFirstLevelItem = (
+    entries: ReadonlyArray<SidenavEntry>,
+    itemId: string
+): SidenavFirstLevelItem | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
+
+/**
+ * Development-only validation of the entries. It walks the data instead of checking inside each
+ * `SidenavItem` render: every item of the sidenav comes from this data, so one walk covers all of
+ * them, it reports each problem once, and it does not see the re-renders of the panel.
+ */
+const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
+    const seenIds = new Set<string>();
+    const duplicateIds = new Set<string>();
+
+    const visitItem = (item: SidenavFirstLevelItem | SidenavNestedItem, level: number): void => {
+        if (seenIds.has(item.id)) {
+            duplicateIds.add(item.id);
+        } else {
+            seenIds.add(item.id);
+        }
+        if (level > 0 && item.children?.length) {
+            console.error(
+                `SidenavItem "${item.label}" at level ${level} cannot have children. ` +
+                    `SidenavItem supports maximum 2 levels of nesting. ` +
+                    `Only level 0 items can have children.`
+            );
+        }
+        item.children?.forEach((child) => visitItem(child, level + 1));
+    };
+
+    getFirstLevelItems(entries).forEach((item) => visitItem(item, 0));
+
+    if (duplicateIds.size > 0) {
+        console.error(
+            `SidenavBar: duplicate item IDs found: ${Array.from(duplicateIds).join(', ')}. ` +
+                `All SidenavItem ids must be unique within a SidenavBar.`
+        );
+    }
+};
+
+/** Wraps an item with its position among the first-level entries, which gives the delay of its label fade. */
+const withItemIndex = (item: SidenavFirstLevelItem, index: number): React.ReactElement => (
+    <SidenavItemIndexContext.Provider key={item.id} value={index}>
+        {renderSidenavItemFromData(item)}
+    </SidenavItemIndexContext.Provider>
+);
+
+const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> => {
+    // The position runs over the whole body, not over one section, so the fade travels down the sidenav.
+    let itemIndex = 0;
+
+    // Every entry of the first level is one item of the body list, a section as much as a stand-alone
+    // item. A section holds a list of its own, and a stand-alone item holds a single row.
+    return entries.map((entry, entryIndex) => {
+        if (isSidenavSection(entry)) {
+            const previousEntry = entries[entryIndex - 1];
+            const sharesDividerWithPrevious =
+                !!entry.dividerTop &&
+                !!previousEntry &&
+                isSidenavSection(previousEntry) &&
+                !!previousEntry.dividerBottom;
+            const isFirstEntry = entryIndex === 0;
+            const isLastEntry = entryIndex === entries.length - 1;
+            return (
+                <div key={`${getSidenavSectionTitle(entry.title).text}-${entryIndex}`} role="listitem">
+                    <SidenavSection
+                        title={entry.title}
+                        dividerTop={entry.dividerTop && !isFirstEntry && !sharesDividerWithPrevious}
+                        dividerBottom={entry.dividerBottom && !isLastEntry}
+                    >
+                        {entry.items.map((item) => withItemIndex(item, itemIndex++))}
+                    </SidenavSection>
+                </div>
+            );
+        }
+
+        return (
+            <div key={entry.id} className={styles.standaloneItem} role="listitem">
+                <SidenavHasOuterListItemContext.Provider value>
+                    {withItemIndex(entry as SidenavFirstLevelItem, itemIndex++)}
+                </SidenavHasOuterListItemContext.Provider>
+            </div>
+        );
+    });
+};
+
 const SidenavBar = ({
-    sections,
+    entries,
     'aria-label': ariaLabelProp,
     variant = 'default',
     boxed = false,
@@ -193,9 +318,9 @@ const SidenavBar = ({
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
-    const [subMenuOpenForItemId, setSubMenuOpenForItemId] = React.useState<string | null>(() =>
-        doublePanel && sections && selectedItemId
-            ? findParentOfItem(sections, selectedItemId)?.id ?? null
+    const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(() =>
+        doublePanel && entries && selectedItemId
+            ? findParentOfItem(entries, selectedItemId)?.id ?? null
             : null
     );
 
@@ -240,17 +365,17 @@ const SidenavBar = ({
           ? 'expanding'
           : 'expanded';
 
-    // A press on an item of the sidenav closes the sub menu and moves the selection at the same time.
+    // A press on an item of the sidenav closes the panel and moves the selection at the same time.
     // The press records its selection here, so the adjustment below knows the user already dismissed
     // the second column for that selection, and does not reopen it.
     const [dismissedSelection, setDismissedSelection] = React.useState<string | null>(null);
 
-    const selectItemAndCloseSubMenu = React.useCallback(
+    const selectItemAndClosePanel = React.useCallback(
         (itemId: string | null) => {
             if (doublePanel) {
                 setDismissedSelection(itemId);
             }
-            setSubMenuOpenForItemId(null);
+            setPanelOpenForItemId(null);
             if (itemId) {
                 onSelectedItemIdChange?.(itemId);
             }
@@ -262,7 +387,7 @@ const SidenavBar = ({
     // breadcrumb, a card, a button of the app):
     //   - a second-level item opens the column on its parent, so that the new selection stays visible;
     //   - a first-level item without children closes the column, because it has nothing to show there;
-    //   - a press inside the sidenav closes the column through `selectItemAndCloseSubMenu`, and that press
+    //   - a press inside the sidenav closes the column through `selectItemAndClosePanel`, and that press
     //     wins over the selection it carries.
     // The adjustment runs during the render, where the entries and the previous selection are both in
     // scope, so it needs no effect and no refs. React applies the state it sets before it paints.
@@ -272,14 +397,14 @@ const SidenavBar = ({
         if (dismissedSelection !== null) {
             setDismissedSelection(null);
         }
-        if (doublePanel && sections && selectedItemId && dismissedSelection !== selectedItemId) {
-            const parent = findParentOfItem(sections, selectedItemId);
+        if (doublePanel && entries && selectedItemId && dismissedSelection !== selectedItemId) {
+            const parent = findParentOfItem(entries, selectedItemId);
             if (parent) {
-                setSubMenuOpenForItemId(parent.id);
+                setPanelOpenForItemId(parent.id);
             } else {
-                const firstLevelItem = findFirstLevelItem(sections, selectedItemId);
+                const firstLevelItem = findFirstLevelItem(entries, selectedItemId);
                 if (firstLevelItem && !firstLevelItem.children?.length) {
-                    setSubMenuOpenForItemId(null);
+                    setPanelOpenForItemId(null);
                 }
             }
         }
@@ -291,23 +416,23 @@ const SidenavBar = ({
     if (doublePanel !== previousDoublePanel) {
         setPreviousDoublePanel(doublePanel);
         if (!doublePanel) {
-            setSubMenuOpenForItemId(null);
+            setPanelOpenForItemId(null);
         }
     }
 
     // A change of the entries invalidates the open column, whose parent item may not exist anymore.
-    const [previousSectionsLength, setPreviousSectionsLength] = React.useState(sections?.length ?? 0);
-    if ((sections?.length ?? 0) !== previousSectionsLength) {
-        setPreviousSectionsLength(sections?.length ?? 0);
-        setSubMenuOpenForItemId(null);
+    const [previousEntriesLength, setPreviousEntriesLength] = React.useState(entries?.length ?? 0);
+    if ((entries?.length ?? 0) !== previousEntriesLength) {
+        setPreviousEntriesLength(entries?.length ?? 0);
+        setPanelOpenForItemId(null);
     }
 
     // Only a press outside of the whole bar, or Escape, dismisses the second column: a press inside the
     // bar that lands on no item keeps it open, and a press on an item closes it through
-    // `selectItemAndCloseSubMenu`. A press that also carries a new selection does not race the close: the
+    // `selectItemAndClosePanel`. A press that also carries a new selection does not race the close: the
     // adjustment above reopens the column for that selection in the same batch of updates.
     React.useEffect(() => {
-        if (!doublePanel || !subMenuOpenForItemId) {
+        if (!doublePanel || !panelOpenForItemId) {
             return;
         }
 
@@ -320,12 +445,12 @@ const SidenavBar = ({
             // node as a press outside of the bar: the collapse action swaps its icon, and a parent item
             // swaps its whole row, so both of them closed the column that they should have left alone.
             if (event.composedPath().includes(container)) return;
-            setSubMenuOpenForItemId(null);
+            setPanelOpenForItemId(null);
         };
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setSubMenuOpenForItemId(null);
+                setPanelOpenForItemId(null);
             }
         };
 
@@ -335,7 +460,7 @@ const SidenavBar = ({
             document.removeEventListener('click', handlePressOutside);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [doublePanel, subMenuOpenForItemId]);
+    }, [doublePanel, panelOpenForItemId]);
 
     const backgroundStyle = background ? {backgroundColor: background} : undefined;
 
@@ -359,7 +484,7 @@ const SidenavBar = ({
     React.useEffect(() => {
         const column = doublePanelRef.current;
         const container = containerRef.current;
-        if (!subMenuOpenForItemId || !column || !container) {
+        if (!panelOpenForItemId || !column || !container) {
             return;
         }
         const active = document.activeElement;
@@ -371,7 +496,7 @@ const SidenavBar = ({
                 '[data-sidenav-item-id] a[href], [data-sidenav-item-id] button:not([disabled])'
             )
             ?.focus();
-    }, [subMenuOpenForItemId]);
+    }, [panelOpenForItemId]);
 
     React.useEffect(() => {
         if (!bodyRef.current) return;
@@ -432,11 +557,11 @@ const SidenavBar = ({
             collapsible,
             doublePanel,
             toggleCollapsed,
-            subMenuOpenForItemId,
-            setSubMenuOpenForItemId,
-            selectItemAndCloseSubMenu,
+            panelOpenForItemId,
+            setPanelOpenForItemId,
+            selectItemAndClosePanel,
             containerRef,
-            isInsideSubMenu: false,
+            isInsidePanel: false,
             selectedItemId: selectedItemId ?? null,
         }),
         [
@@ -445,8 +570,8 @@ const SidenavBar = ({
             collapsible,
             doublePanel,
             toggleCollapsed,
-            subMenuOpenForItemId,
-            selectItemAndCloseSubMenu,
+            panelOpenForItemId,
+            selectItemAndClosePanel,
             containerRef,
             selectedItemId,
         ]
@@ -456,8 +581,8 @@ const SidenavBar = ({
 
     const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 
-    if (process.env.NODE_ENV !== 'production' && sections) {
-        validateSidenavEntries(sections);
+    if (process.env.NODE_ENV !== 'production' && entries) {
+        validateSidenavEntries(entries);
     }
 
     const normalizedVariant = normalizeVariant(variant);
@@ -466,7 +591,7 @@ const SidenavBar = ({
     if (isTabletOrSmaller) {
         return (
             <SidenavMobileBar
-                entries={sections}
+                entries={entries}
                 aria-label={ariaLabel}
                 variant={normalizedVariant}
                 logo={logo}
@@ -525,18 +650,17 @@ const SidenavBar = ({
     // The second column belongs to the sidenav, not to the item that opens it, so that it can span the
     // whole height of the sidenav and push the content of the layout.
     const doublePanelItem =
-        doublePanel && subMenuOpenForItemId && sections
-            ? findFirstLevelItem(sections, subMenuOpenForItemId)
+        doublePanel && panelOpenForItemId && entries
+            ? findFirstLevelItem(entries, panelOpenForItemId)
             : undefined;
     const doublePanelChildren = doublePanelItem?.children;
     const isDoublePanelOpen = Boolean(doublePanelChildren?.length);
 
-    // The update runs during the render, as the selection adjustment above does, so React re-renders with the
-    // new content before it paints. The comparison keeps that update out of the renders that change nothing.
+    // This sets state during the render, as the block above does. React then paints once, with the new
+    // content. The comparison skips the update when the content did not change, which would loop.
     if (
-        isDoublePanelOpen &&
         doublePanelItem &&
-        doublePanelChildren &&
+        doublePanelChildren?.length &&
         (doublePanelContent?.label !== doublePanelItem.label ||
             doublePanelContent?.children !== doublePanelChildren)
     ) {
@@ -661,10 +785,10 @@ const SidenavBar = ({
                                     />
                                 )}
                             </div>
-                            {sections && (
+                            {entries && (
                                 // The body is the list of the first level. Each entry is one of its items.
                                 <div className={styles.bodyContent} role="list">
-                                    {renderSidenavEntries(sections)}
+                                    {renderSidenavEntries(entries)}
                                 </div>
                             )}
                             {footerSlot && !fixedFooter && (

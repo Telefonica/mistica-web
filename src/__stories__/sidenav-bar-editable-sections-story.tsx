@@ -17,7 +17,7 @@ import {Text2, Text3, Text6} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
 
-import type {SidenavEntry, SidenavItem, SidenavSectionTitle} from '../sidenav-bar-types';
+import type {SidenavEntry, SidenavFirstLevelItem, SidenavSectionTitle} from '../sidenav-bar-types';
 
 const ICONS = {
     home: IconHomeRegular,
@@ -34,8 +34,8 @@ const ICON_NAMES = Object.keys(ICONS);
 type IconName = keyof typeof ICONS;
 
 /**
- * JSON form of a `SidenavItem`. The Controls panel holds no React component, so the item takes an `icon`
- * name instead of an `asset`, and the story maps that name to the icon of the design system.
+ * JSON form of a `SidenavFirstLevelItem`. The Controls panel holds no React component, so the item takes
+ * an `icon` name instead of an `asset`, and the story maps that name to the icon of the design system.
  */
 type EditableItem = {
     id: string;
@@ -56,17 +56,17 @@ type EditableSection = {
 
 type EditableEntry = EditableSection | EditableItem;
 
-const toSidenavItem = ({icon, children, ...item}: EditableItem): SidenavItem =>
+const toSidenavItem = ({icon, children, ...item}: EditableItem): SidenavFirstLevelItem =>
     ({
         ...item,
         asset: icon ? ICONS[icon] : undefined,
         children: children?.map(toSidenavItem),
-    }) as SidenavItem;
+    }) as SidenavFirstLevelItem;
 
 const toSidenavEntry = (entry: EditableEntry): SidenavEntry =>
     'items' in entry ? {...entry, items: entry.items.map(toSidenavItem)} : toSidenavItem(entry);
 
-const DEFAULT_SECTIONS: Array<EditableEntry> = [
+const DEFAULT_ENTRIES: Array<EditableEntry> = [
     {
         id: 'dashboard',
         label: 'Dashboard (stand-alone item)',
@@ -148,20 +148,20 @@ const DEFAULT_SECTIONS: Array<EditableEntry> = [
 ];
 
 type Args = {
-    sections: Array<EditableEntry>;
+    entries: Array<EditableEntry>;
 };
 
-export const EditableSections = ({sections}: Args): React.JSX.Element => {
-    const entries = React.useMemo(() => sections.map(toSidenavEntry), [sections]);
+export const EditableSections = ({entries}: Args): React.JSX.Element => {
+    const sidenavEntries = React.useMemo(() => entries.map(toSidenavEntry), [entries]);
 
     return (
-        <SidenavStoryPage sidenav={<SidenavBar sections={entries} aria-label="Sidenav" />}>
+        <SidenavStoryPage sidenav={<SidenavBar entries={sidenavEntries} aria-label="Sidenav" />}>
             <Box padding={32}>
                 <Stack space={24}>
                     <Stack space={8}>
                         <Text6 as="h1">Editable sections</Text6>
                         <Text3 regular>
-                            Edit the sections control to test the component with another navigation structure.
+                            Edit the entries control to test the component with another navigation structure.
                         </Text3>
                         <Text3 regular>
                             The first level takes sections and stand-alone items, in any order. Every section
@@ -241,7 +241,7 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                                 </Text2>
                                 <Text2 regular>
                                     For these properties, open the SidenavBar story, which declares the
-                                    sections in JSX.
+                                    entries in JSX.
                                 </Text2>
                             </Stack>
                         </Box>
@@ -251,7 +251,7 @@ export const EditableSections = ({sections}: Args): React.JSX.Element => {
                         <Box padding={24}>
                             <Text2 as="div" regular>
                                 <pre style={{margin: 0, overflow: 'auto'}}>
-                                    {JSON.stringify(sections, null, 2)}
+                                    {JSON.stringify(entries, null, 2)}
                                 </pre>
                             </Text2>
                         </Box>
@@ -268,15 +268,15 @@ export default {
     title: 'Components/SidenavBar/Bar',
     parameters: {
         fullScreen: true,
-        // This playground is only about editing the `sections` data, so restrict the Controls panel
+        // This playground is only about editing the `entries` data, so restrict the Controls panel
         // to that single control instead of every inferred SidenavBar prop.
-        controls: {include: ['sections'], expanded: true},
+        controls: {include: ['entries'], expanded: true},
     },
     args: {
-        sections: DEFAULT_SECTIONS,
+        entries: DEFAULT_ENTRIES,
     },
     argTypes: {
-        sections: {
+        entries: {
             control: {type: 'object'},
             description: `Edit JSON with: id, label, icon (${ICON_NAMES.join(
                 ' | '

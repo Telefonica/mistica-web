@@ -904,11 +904,11 @@ export const nestedListRows = style({
     flexDirection: 'column',
 });
 
-// Sub menu (dialog panel and double panel column) -------------------------------
+// Panel (the dialog panel and the second column) -------------------------------
 
-// The rows of a sub menu, under the group that names it. It repeats the column of that group, for the
+// The rows of a panel, under the group that names it. It repeats the column of that group, for the
 // same reason as `nestedListRows`.
-export const subMenuRows = style({
+export const panelRows = style({
     display: 'flex',
     flexDirection: 'column',
 });

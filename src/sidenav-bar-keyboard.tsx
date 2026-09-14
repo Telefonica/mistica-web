@@ -20,7 +20,7 @@ import * as React from 'react';
  *   Escape                close the dialog panel (owned by the panel itself)
  *
  * The arrow keys and Tab travel two different sequences. The arrows keep to one level: the rail, or the
- * sub menu that the user stepped into. Tab reads the whole tree in the order of the spec, which the document
+ * panel that the user stepped into. Tab reads the whole tree in the order of the spec, which the document
  * does not carry: the floating panel lives in a portal, and the second column comes after the whole rail.
  */
 
@@ -41,7 +41,7 @@ const getItemFocusables = (root: HTMLElement | null): Array<HTMLElement> =>
 /**
  * The items of the rail alone. The second column stands inside the same landmark, and its rows come after
  * every row of the rail in the document, so they would otherwise land at the end of this sequence. The
- * sub menu of an item is a sequence of its own, and the keys below weave it in after its trigger.
+ * panel of an item is a sequence of its own, and the keys below weave it in after its trigger.
  */
 const getRailFocusables = (root: HTMLElement | null): Array<HTMLElement> => {
     if (!root) {
@@ -281,15 +281,15 @@ const useSidenavRailKeyboard = (
                     return;
                 }
                 // Tab reads the sequence of the spec: an item, then the children that it opened, then the
-                // next item. Neither form of the sub menu stands there in the document — the floating one
+                // next item. Neither form of the panel stands there in the document — the floating one
                 // lives in a portal, and the column comes after the whole rail — so both directions move
                 // by hand.
                 case 'Tab': {
                     if (!event.shiftKey) {
-                        const subMenu = getOpenDialogPanel(active) ?? getOpenDoublePanel(active, container);
-                        if (subMenu) {
+                        const panel = getOpenDialogPanel(active) ?? getOpenDoublePanel(active, container);
+                        if (panel) {
                             event.preventDefault();
-                            getItemFocusables(subMenu)[0]?.focus();
+                            getItemFocusables(panel)[0]?.focus();
                         }
                         return;
                     }
@@ -298,9 +298,9 @@ const useSidenavRailKeyboard = (
                     if (!previous) {
                         return;
                     }
-                    const previousSubMenu =
+                    const previousPanel =
                         getOpenDialogPanel(previous) ?? getOpenDoublePanel(previous, container);
-                    const lastChild = getItemFocusables(previousSubMenu).pop();
+                    const lastChild = getItemFocusables(previousPanel).pop();
                     if (lastChild) {
                         event.preventDefault();
                         lastChild.focus();
@@ -335,7 +335,7 @@ type DialogPanelKeyboardArgs = {
  *
  * ArrowDown and Tab move between the items. ArrowLeft, and ArrowUp on the first item, close the panel and
  * return to the trigger: the user leaves the list the way they left an accordion, and the rail shows where
- * they stand. Escape closes the panel through the document listener of `sidenav-bar-sub-menu.tsx`, which unmounts
+ * they stand. Escape closes the panel through the document listener of `sidenav-bar-panel.tsx`, which unmounts
  * the panel, and the restore below then returns the focus.
  */
 const useDialogPanelKeyboard = ({
@@ -456,7 +456,7 @@ const useDialogPanelKeyboard = ({
                     return;
                 }
                 default:
-                    // Escape closes the panel through the document listener of `sidenav-bar-sub-menu.tsx`, and the
+                    // Escape closes the panel through the document listener of `sidenav-bar-panel.tsx`, and the
                     // restore effect above returns the focus to the trigger once the panel unmounts.
                     return;
             }

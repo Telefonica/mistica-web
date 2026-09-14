@@ -22,13 +22,18 @@ import {useDisableBodyScroll, useTheme} from './hooks';
 import {useSetModalState} from './modal-context-provider';
 import {NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as tokens from './text-tokens';
-import {isSidenavSection, getSidenavSectionTitle, renderSidenavSlot} from './sidenav-bar-types';
+import {
+    isSidenavSection,
+    getFirstLevelItems,
+    getSidenavSectionTitle,
+    renderSidenavSlot,
+} from './sidenav-bar-data';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
 import type {
     SidenavEntry,
-    SidenavItem,
+    SidenavFirstLevelItem,
     SidenavNestedItem,
     SidenavLogo,
     SidenavSlot,
@@ -82,10 +87,6 @@ type SidenavMobileBarProps = {
     dataAttributes?: DataAttributes;
 };
 
-/** The items of the first level, in order: the items of every section, and every stand-alone item. */
-const getFirstLevelItems = (entries: ReadonlyArray<SidenavEntry>): Array<SidenavItem> =>
-    entries.flatMap((entry) => (isSidenavSection(entry) ? [...entry.items] : [entry as SidenavItem]));
-
 const SidenavMobileBar = ({
     entries,
     'aria-label': ariaLabel,
@@ -136,7 +137,7 @@ const SidenavMobileBar = ({
         return logo;
     })();
 
-    const renderRow = (item: SidenavItem | SidenavNestedItem): JSX.Element => {
+    const renderRow = (item: SidenavFirstLevelItem | SidenavNestedItem): JSX.Element => {
         const commonProps = {
             title: item.label,
             right: item.rightSlot,
@@ -192,8 +193,8 @@ const SidenavMobileBar = ({
     const renderEntry = (entry: SidenavEntry, entryIndex: number): JSX.Element => {
         if (!isSidenavSection(entry)) {
             return (
-                <ResetResponsiveLayout key={(entry as SidenavItem).id}>
-                    <RowList>{renderRow(entry as SidenavItem)}</RowList>
+                <ResetResponsiveLayout key={(entry as SidenavFirstLevelItem).id}>
+                    <RowList>{renderRow(entry as SidenavFirstLevelItem)}</RowList>
                 </ResetResponsiveLayout>
             );
         }

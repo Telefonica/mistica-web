@@ -14,21 +14,18 @@ type SidenavBarContextValue = {
     collapsible: boolean;
     doublePanel: boolean;
     toggleCollapsed: () => void;
+    /** The first-level item whose children show in the panel. One panel opens at a time. */
+    panelOpenForItemId: string | null;
+    setPanelOpenForItemId: (id: string | null) => void;
     /**
-     * The first-level item whose children show in the sub menu: the second column in double panel mode,
-     * or the dialog panel of the collapsed rail. Only one of the two forms shows at a time.
-     */
-    subMenuOpenForItemId: string | null;
-    setSubMenuOpenForItemId: (id: string | null) => void;
-    /**
-     * The press of an item that navigates: it closes the open sub menu, then it reports the item as the
+     * The press of an item that navigates: it closes the open panel, then it reports the item as the
      * new selection. One call does both, because the selection alone would reopen the second column that
      * the press just closed. The item passes `null` when it has no id.
      */
-    selectItemAndCloseSubMenu: (itemId: string | null) => void;
+    selectItemAndClosePanel: (itemId: string | null) => void;
     containerRef: React.RefObject<HTMLElement | null>;
-    /** True for an item that renders inside the sub menu (the second column or the dialog panel). */
-    isInsideSubMenu: boolean;
+    /** True for an item that renders inside the panel (the second column or the dialog panel). */
+    isInsidePanel: boolean;
     selectedItemId: string | null;
 };
 
@@ -38,11 +35,11 @@ const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     collapsible: true,
     doublePanel: false,
     toggleCollapsed: () => {},
-    subMenuOpenForItemId: null,
-    setSubMenuOpenForItemId: () => {},
-    selectItemAndCloseSubMenu: () => {},
+    panelOpenForItemId: null,
+    setPanelOpenForItemId: () => {},
+    selectItemAndClosePanel: () => {},
     containerRef: React.createRef(),
-    isInsideSubMenu: false,
+    isInsidePanel: false,
     selectedItemId: null,
 });
 

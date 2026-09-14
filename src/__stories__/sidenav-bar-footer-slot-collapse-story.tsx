@@ -27,7 +27,7 @@ type Args = {
     boxed: boolean;
 };
 
-const sections: Array<SidenavEntry> = [
+const entries: Array<SidenavEntry> = [
     {
         id: 'overview',
         label: 'Overview',
@@ -108,7 +108,7 @@ export const FooterSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
             sidenav={
                 <SidenavBar
                     aria-label="Alto Garda activities"
-                    sections={sections}
+                    entries={entries}
                     collapsed={collapsed}
                     // A sidenav that the user cannot toggle shows no collapse action, and it still follows
                     // the collapsed prop on every render, so the footer slot stays the only control.

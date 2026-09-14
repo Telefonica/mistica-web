@@ -3,7 +3,7 @@ import {SidenavBar, IconHomeRegular, IconFolderRegular, IconSettingsRegular} fro
 
 import type {SidenavEntry} from '../../sidenav-bar-types';
 
-const sections: ReadonlyArray<SidenavEntry> = [
+const entries: ReadonlyArray<SidenavEntry> = [
     {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
     {
         title: 'Workspace',
@@ -27,7 +27,7 @@ const sections: ReadonlyArray<SidenavEntry> = [
 const SidenavBarCollapsedTest = (): JSX.Element => (
     <SidenavBar
         aria-label="Main navigation"
-        sections={sections}
+        entries={entries}
         selectedItemId="home"
         defaultCollapsed
         logo={<span>LOGO</span>}

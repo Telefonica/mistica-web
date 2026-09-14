@@ -4366,7 +4366,7 @@ const sidenavBarSnippets: Array<Snippet> = [
             onCollapse={(collapsed) => setState('sidenavCollapsed', collapsed)}
             selectedItemId={getState('sidenavSelectedItem', 'home')}
             onSelectedItemIdChange={(id) => setState('sidenavSelectedItem', id)}
-            sections={[
+            entries={[
                 {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
                 {
                     // A hidden title paints no heading, and a screen reader still reads it as the
@@ -4505,7 +4505,7 @@ const sidenavBarSnippets: Array<Snippet> = [
             defaultCollapsed={false}
             selectedItemId={getState('sidenavPanelSelectedItem', 'dashboard')}
             onSelectedItemIdChange={(id) => setState('sidenavPanelSelectedItem', id)}
-            sections={[
+            entries={[
                 {id: 'dashboard', label: 'Dashboard', asset: IconAppsRegular, href: '#dashboard'},
                 {
                     title: 'Catalog',

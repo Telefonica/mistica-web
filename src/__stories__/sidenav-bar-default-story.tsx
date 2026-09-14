@@ -28,7 +28,7 @@ import type {Variant} from '../theme-variant-context';
 import type {SidenavEntry} from '../sidenav-bar-types';
 import type {SidenavLogoRenderProps} from '../sidenav-bar';
 
-const getDefaultSections = (
+const getDefaultEntries = (
     onAction: (action: string) => void,
     sectionDividerTop: boolean,
     sectionDividerBottom: boolean,
@@ -253,7 +253,7 @@ export const Default = ({
     }, [selectedIdFromControl]);
     const background = colorsEnabled ? backgroundColor : undefined;
 
-    const sections: Array<SidenavEntry> = getDefaultSections(
+    const entries: Array<SidenavEntry> = getDefaultEntries(
         setLastAction,
         sectionDividerTop,
         sectionDividerBottom,
@@ -289,7 +289,7 @@ export const Default = ({
                             : {collapsible: false, collapsed}),
                         doublePanel,
                         width,
-                        sections,
+                        entries,
                         background,
                         selectedItemId: selectedId,
                         onSelectedItemIdChange: (id: string | null) => {
@@ -332,8 +332,9 @@ export const Default = ({
                                             onPress runs a custom action. See &quot;Search (onPress)&quot;.
                                         </ListItem>
                                         <ListItem>
-                                            children makes the item expandable. See &quot;Projects&quot; and
-                                            &quot;Teams&quot;. Such an item takes neither href nor onPress.
+                                            children makes the item a parent of nested items. See
+                                            &quot;Projects&quot; and &quot;Teams&quot;. Such an item takes
+                                            neither href nor onPress.
                                         </ListItem>
                                         <ListItem>
                                             rightSlot adds custom content on the right side. See the badge of
@@ -445,7 +446,7 @@ export default {
     },
     argTypes: {
         // The items stay out of the panel: an object of that shape does not edit well in a control.
-        sections: {
+        entries: {
             table: {disable: true},
         },
         // The story takes this color from the Colors controls, so its own row would never take effect.

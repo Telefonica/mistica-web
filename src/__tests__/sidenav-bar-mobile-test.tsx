@@ -65,7 +65,7 @@ const theme = makeTheme({i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode
 const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}) => {
     const result = render(
         <ThemeContextProvider theme={theme}>
-            <SidenavBar aria-label="Main navigation" sections={entries} {...props} />
+            <SidenavBar aria-label="Main navigation" entries={entries} {...props} />
         </ThemeContextProvider>
     );
 
@@ -117,13 +117,13 @@ test('SidenavBar mobile opens the panel with one row per first-level item', asyn
 
 // A hidden title paints no heading on mobile either, and the list of the section keeps its name.
 test('SidenavBar mobile hides the heading of a section and keeps the name of its list', async () => {
-    const sections: Array<SidenavEntry> = [
+    const entries: Array<SidenavEntry> = [
         {
             title: {text: 'Workspace', hidden: true},
             items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
         },
     ];
-    await renderSidenav({sections});
+    await renderSidenav({entries});
     await openMenu();
 
     expect(screen.queryByRole('heading', {name: 'Workspace'})).not.toBeInTheDocument();

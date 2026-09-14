@@ -131,7 +131,7 @@ const Content = ({title, description, selectedItemId}: ContentProps): React.JSX.
     </div>
 );
 
-const sections: Array<SidenavSection> = [
+const entries: Array<SidenavSection> = [
     {
         // No heading over these items, and a screen reader still reads the name of their list.
         title: {text: 'General', hidden: true},
@@ -252,7 +252,7 @@ export const WholeViewport = (args: Args): React.JSX.Element => {
                               }
                             : {collapsible: false})}
                         width={sidenavWidth as any}
-                        sections={sections}
+                        entries={entries}
                         doublePanel={args.doublePanel}
                         selectedItemId={selectedItemId}
                         onSelectedItemIdChange={setSelectedItemId}
@@ -303,7 +303,7 @@ export const Centered = (args: Args): React.JSX.Element => {
                               }
                             : {collapsible: false})}
                         width={sidenavWidth as any}
-                        sections={sections}
+                        entries={entries}
                         doublePanel={args.doublePanel}
                         selectedItemId={selectedItemId}
                         onSelectedItemIdChange={setSelectedItemId}
@@ -362,7 +362,7 @@ export const WithTopHeader = (args: TopHeaderArgs): React.JSX.Element => {
                               }
                             : {collapsible: false})}
                         width={sidenavWidth as any}
-                        sections={sections}
+                        entries={entries}
                         doublePanel={args.doublePanel}
                         selectedItemId={selectedItemId}
                         onSelectedItemIdChange={setSelectedItemId}

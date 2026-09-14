@@ -7,7 +7,7 @@ import type {SidenavEntry} from '../../sidenav-bar-types';
 // the selected states, and the hydrated screen changes nothing: the auto-expand of the parent finds the
 // group already open. A closed parent would instead open after the hydration, which the visual check of
 // `openSSRPage` reads as a mismatch.
-const sections: ReadonlyArray<SidenavEntry> = [
+const entries: ReadonlyArray<SidenavEntry> = [
     {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
     {
         title: 'Workspace',
@@ -32,7 +32,7 @@ const sections: ReadonlyArray<SidenavEntry> = [
 const SidenavBarTest = (): JSX.Element => (
     <SidenavBar
         aria-label="Main navigation"
-        sections={sections}
+        entries={entries}
         selectedItemId="active"
         logo={<span>LOGO</span>}
     />

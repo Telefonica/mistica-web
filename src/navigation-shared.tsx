@@ -19,6 +19,7 @@ import * as styles from './navigation-shared.css';
 import type {BoxProps} from './box';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {DataAttributes, HeadingType} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 /*
  * The parts that every navigation surface shares. `NavigationBar`, `MainNavigationBar` and
@@ -166,6 +167,10 @@ export const NavigationBarSideMargins = ({
     );
 };
 
+type InteractiveProps = ExclusifyUnion<{href: string} | {to: string} | {onPress: () => void}>;
+
+type MaybeInteractiveProps = ExclusifyUnion<{href?: string} | {to?: string} | {onPress?: () => void}>;
+
 interface NavigationBarCommonProps {
     variant?: Variant;
     onBack?: () => void;
@@ -247,4 +252,11 @@ export const NavigationBar = ({
     );
 };
 
-export type {HeaderProps, NavigationBarContentContainerProps, WideConfig, NavigationBarProps};
+export type {
+    HeaderProps,
+    NavigationBarContentContainerProps,
+    WideConfig,
+    NavigationBarProps,
+    InteractiveProps,
+    MaybeInteractiveProps,
+};
