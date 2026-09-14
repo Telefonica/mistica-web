@@ -1,7 +1,9 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+
+import type {StyleRule} from '@vanilla-extract/css';
 
 export const disabled = style({
     opacity: 0.5,
@@ -11,7 +13,40 @@ export const row = style({
     width: '100%',
 });
 
+const selectionOutlineWidth = 2;
+const selectionOutlineOffset = 2;
+
+export const selectionOutline = style({
+    position: 'relative',
+    borderRadius: vars.borderRadii.container,
+    selectors: {
+        '&::after': {
+            content: '',
+            position: 'absolute',
+            inset: -(selectionOutlineWidth + selectionOutlineOffset),
+            border: `${selectionOutlineWidth}px solid transparent`,
+            borderRadius: `calc(${vars.borderRadii.container} + 3px)`,
+            pointerEvents: 'none',
+            transition: 'border-color 0.08s ease-in-out',
+        },
+    },
+});
+
 export const boxed = style({});
+
+const selectedOutlineStyles = (outlineColor: string): StyleRule => ({
+    selectors: {
+        '&::after': {borderColor: outlineColor},
+    },
+});
+
+export const selectionOutlineColor = styleVariants({
+    default: selectedOutlineStyles(vars.colors.controlActivated),
+    alternative: selectedOutlineStyles(vars.colors.controlActivated),
+    brand: selectedOutlineStyles(vars.colors.controlActivatedBrand),
+    media: selectedOutlineStyles(vars.colors.controlActivatedBrand),
+    negative: selectedOutlineStyles(vars.colors.controlActivatedNegative),
+});
 
 export const touchableBackground = style({
     transition: 'background-color 0.1s ease-in-out',
