@@ -64,21 +64,11 @@ export const CONTENT_DURATION_MS = 400;
 const COLLAPSE_EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';
 const CONTENT_EASING = 'ease';
 
-// The labels fade out one after the other. The first one waits 80ms, and each of the next ones waits
-// 40ms more, up to the last delay of the spec: a list of thirty items would otherwise end its stagger
-// more than a second after the rail stopped.
-export const LABEL_DELAY_BASE_MS = 80;
-export const LABEL_DELAY_STEP_MS = 40;
-export const LABEL_DELAY_MAX_MS = 160;
-
 // `SidenavBar` fills both durations on its root element, and every rule below reads them from there.
 // An acceptance run receives 0ms, so a test that presses a control and reads the result at once never
 // catches a frame of the movement.
 export const collapseDurationVar = createVar();
 export const contentDurationVar = createVar();
-
-// Delay of the fade of one label, which follows the position of its item (see `LABEL_DELAY_BASE_MS`).
-export const itemLabelDelayVar = createVar();
 
 // Every animated rule of this file carries this block: the spec asks for an instant change when the
 // user turns motion down in the operating system.
@@ -738,7 +728,7 @@ export const itemTouchableSelected = styleVariants(itemColors, (colors) => ({
 
 // The accent stays on the collapsed rail: a selected first-level item keeps its bar in both states. Only
 // a parent whose descendant is selected marks the selection with the background alone, because the bar
-// belongs to the selected child (see `showAccent` in `sidenav-bar-item.tsx`).
+// belongs to the selected child (see `showAccent` in `sidenav-bar-first-level-item.tsx`).
 export const itemAccent = style({
     position: 'absolute',
     left: 0,
@@ -775,7 +765,7 @@ export const itemLabel = style({
     minWidth: 0,
     display: 'grid',
     gridTemplateRows: '1fr',
-    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 
@@ -816,7 +806,7 @@ export const itemRightSlot = style({
     display: 'flex',
     alignItems: 'center',
     flexShrink: 0,
-    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}, visibility ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING}, visibility ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 
@@ -831,7 +821,7 @@ export const itemChevron = style({
     flexShrink: 0,
     width: 16,
     height: 16,
-    transition: `transform ${contentDurationVar} ${CONTENT_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}, visibility ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    transition: `transform ${contentDurationVar} ${CONTENT_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING}, visibility ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
-import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-bar-context';
+import {useSidenavBarContext, SidenavBarContext} from './sidenav-bar-context';
 import {useDialogPanelKeyboard} from './sidenav-bar-keyboard';
 import {Portal} from './portal';
 import {Text2} from './text';
@@ -185,12 +185,10 @@ const SidenavDialogPanel = ({
                         </Text2>
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
-                        <SidenavLevelContext.Provider value={0}>
-                            {/* The title names the list, and the list gives the count of its items. */}
-                            <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
-                                {children}
-                            </div>
-                        </SidenavLevelContext.Provider>
+                        {/* The title names the list, and the list gives the count of its items. */}
+                        <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
+                            {children}
+                        </div>
                     </SidenavBarContext.Provider>
                 </ThemeVariant>
             </div>
@@ -251,12 +249,10 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                         </Text2>
                     </div>
                     <SidenavBarContext.Provider value={panelContextValue}>
-                        <SidenavLevelContext.Provider value={0}>
-                            {/* The title names the list, and the list gives the count of its items. */}
-                            <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
-                                {children}
-                            </div>
-                        </SidenavLevelContext.Provider>
+                        {/* The title names the list, and the list gives the count of its items. */}
+                        <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
+                            {children}
+                        </div>
                     </SidenavBarContext.Provider>
                 </div>
             </div>

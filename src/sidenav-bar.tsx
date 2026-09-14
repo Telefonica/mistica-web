@@ -19,20 +19,14 @@ import {IconButton} from './icon-button';
 import {Logo} from './logo';
 import IconPanelExpandRegular from './generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from './generated/mistica-icons/icon-panel-collapse-regular';
-import {SidenavItem} from './sidenav-bar-item';
+import {SidenavFirstLevelItem} from './sidenav-bar-first-level-item';
+import {SidenavNestedItem} from './sidenav-bar-nested-item';
 import {SidenavSection} from './sidenav-bar-section';
 import {SidenavDoublePanel} from './sidenav-bar-panel';
 import {SidenavMobileBar} from './sidenav-bar-mobile';
 import {useIsReducedMotion} from './sidenav-bar-motion';
 import {useSidenavRailKeyboard} from './sidenav-bar-keyboard';
-import {
-    SidenavBarContext,
-    useSidenavBarContext,
-    SidenavLevelContext,
-    SidenavItemIndexContext,
-    SidenavHasOuterListItemContext,
-    hasDescendantWithId,
-} from './sidenav-bar-context';
+import {SidenavBarContext, useSidenavBarContext} from './sidenav-bar-context';
 import {shouldShowBoxedBorder} from './boxed';
 import {
     isSidenavSection,
@@ -45,11 +39,10 @@ import * as tokens from './text-tokens';
 import type {Variant} from './theme-variant-context';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
-import type {SidenavSectionProps} from './sidenav-bar-section';
 import type {
     SidenavEntry,
-    SidenavFirstLevelItem,
-    SidenavNestedItem,
+    SidenavFirstLevelItem as SidenavFirstLevelItemData,
+    SidenavNestedItem as SidenavNestedItemData,
     SidenavLogo,
     SidenavLogoRenderProps,
     SidenavSlot,
@@ -164,31 +157,44 @@ type SidenavBarProps = SidenavBarBaseProps &
           }
     >;
 
-const renderSidenavItemFromData = (item: SidenavFirstLevelItem | SidenavNestedItem): React.ReactElement => {
-    const children = item.children?.map((child) => renderSidenavItemFromData(child));
-    const baseProps = {
-        id: item.id,
-        label: item.label,
-        asset: item.asset,
-        showAssetWhenExpanded: item.showAssetWhenExpanded,
-        rightSlot: item.rightSlot,
-        defaultOpen: item.defaultOpen,
-        newTab: item.newTab,
-        onNavigate: item.onNavigate,
-        children,
-    };
+const renderNestedItem = (item: SidenavNestedItemData): React.ReactElement => (
+    <SidenavNestedItem
+        key={item.id}
+        id={item.id}
+        label={item.label}
+        asset={item.asset}
+        rightSlot={item.rightSlot}
+        href={item.href}
+        to={item.to}
+        onPress={item.onPress}
+        newTab={item.newTab}
+        onNavigate={item.onNavigate}
+    />
+);
 
-    if (item.href !== undefined) {
-        return <SidenavItem key={item.id} {...(baseProps as any)} href={item.href} />;
-    }
-    if (item.to !== undefined) {
-        return <SidenavItem key={item.id} {...(baseProps as any)} to={item.to} />;
-    }
-    if (item.onPress !== undefined) {
-        return <SidenavItem key={item.id} {...(baseProps as any)} onPress={item.onPress} />;
-    }
-    return <SidenavItem key={item.id} {...(baseProps as any)} />;
-};
+const renderFirstLevelItem = (
+    item: SidenavFirstLevelItemData,
+    {standalone}: {standalone?: boolean} = {}
+): React.ReactElement => (
+    <SidenavFirstLevelItem
+        key={item.id}
+        id={item.id}
+        label={item.label}
+        asset={item.asset}
+        showAssetWhenExpanded={item.showAssetWhenExpanded}
+        rightSlot={item.rightSlot}
+        standalone={standalone}
+        defaultOpen={item.defaultOpen}
+        childIds={item.children?.map((child) => child.id)}
+        href={item.href}
+        to={item.to}
+        onPress={item.onPress}
+        newTab={item.newTab}
+        onNavigate={item.onNavigate}
+    >
+        {item.children?.map((child) => renderNestedItem(child))}
+    </SidenavFirstLevelItem>
+);
 
 /**
  * Finds the first-level item that owns the given child id. The sidenav supports a single nesting
@@ -197,14 +203,14 @@ const renderSidenavItemFromData = (item: SidenavFirstLevelItem | SidenavNestedIt
 const findParentOfItem = (
     entries: ReadonlyArray<SidenavEntry>,
     childId: string
-): SidenavFirstLevelItem | undefined =>
+): SidenavFirstLevelItemData | undefined =>
     getFirstLevelItems(entries).find((item) => item.children?.some((child) => child.id === childId));
 
 /** Finds a first-level item by id. Only these items can open a panel. */
 const findFirstLevelItem = (
     entries: ReadonlyArray<SidenavEntry>,
     itemId: string
-): SidenavFirstLevelItem | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
+): SidenavFirstLevelItemData | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
 
 /**
  * Development-only validation of the entries. It walks the data instead of checking inside each
@@ -215,7 +221,7 @@ const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
     const seenIds = new Set<string>();
     const duplicateIds = new Set<string>();
 
-    const visitItem = (item: SidenavFirstLevelItem | SidenavNestedItem, level: number): void => {
+    const visitItem = (item: SidenavFirstLevelItemData | SidenavNestedItemData, level: number): void => {
         if (seenIds.has(item.id)) {
             duplicateIds.add(item.id);
         } else {
@@ -241,17 +247,7 @@ const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
     }
 };
 
-/** Wraps an item with its position among the first-level entries, which gives the delay of its label fade. */
-const withItemIndex = (item: SidenavFirstLevelItem, index: number): React.ReactElement => (
-    <SidenavItemIndexContext.Provider key={item.id} value={index}>
-        {renderSidenavItemFromData(item)}
-    </SidenavItemIndexContext.Provider>
-);
-
 const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> => {
-    // The position runs over the whole body, not over one section, so the fade travels down the sidenav.
-    let itemIndex = 0;
-
     // Every entry of the first level is one item of the body list, a section as much as a stand-alone
     // item. A section holds a list of its own, and a stand-alone item holds a single row.
     return entries.map((entry, entryIndex) => {
@@ -271,7 +267,7 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
                         dividerTop={entry.dividerTop && !isFirstEntry && !sharesDividerWithPrevious}
                         dividerBottom={entry.dividerBottom && !isLastEntry}
                     >
-                        {entry.items.map((item) => withItemIndex(item, itemIndex++))}
+                        {entry.items.map((item) => renderFirstLevelItem(item))}
                     </SidenavSection>
                 </div>
             );
@@ -279,9 +275,7 @@ const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React
 
         return (
             <div key={entry.id} className={styles.standaloneItem} role="listitem">
-                <SidenavHasOuterListItemContext.Provider value>
-                    {withItemIndex(entry as SidenavFirstLevelItem, itemIndex++)}
-                </SidenavHasOuterListItemContext.Provider>
+                {renderFirstLevelItem(entry as SidenavFirstLevelItemData, {standalone: true})}
             </div>
         );
     });
@@ -343,7 +337,7 @@ const SidenavBar = ({
     const [doublePanelContent, setDoublePanelContent] = React.useState<{
         itemId: string;
         label: string;
-        children: ReadonlyArray<SidenavNestedItem>;
+        children: ReadonlyArray<SidenavNestedItemData>;
     } | null>(null);
 
     // See `collapsedSettled` in `sidenav-bar-context.tsx` for why the sidenav reports the collapsed state
@@ -869,7 +863,7 @@ const SidenavBar = ({
                                 variant={normalizedVariant}
                                 backgroundColor={background}
                             >
-                                {doublePanelContent.children.map((child) => renderSidenavItemFromData(child))}
+                                {doublePanelContent.children.map((child) => renderNestedItem(child))}
                             </SidenavDoublePanel>
                         </CSSTransition>
                     )}
@@ -880,6 +874,6 @@ const SidenavBar = ({
 };
 
 export default SidenavBar;
-export {SidenavBar, SidenavSection, SidenavItem};
-export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, hasDescendantWithId};
-export type {SidenavBarProps, SidenavSectionProps, SidenavLogoRenderProps};
+export {SidenavBar};
+export {SidenavBarContext, useSidenavBarContext};
+export type {SidenavBarProps, SidenavLogoRenderProps};

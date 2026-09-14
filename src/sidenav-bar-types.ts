@@ -206,6 +206,7 @@ type SidenavLogo = React.ReactElement | boolean | ((props: SidenavLogoRenderProp
 type SidenavSlot = React.ReactNode | ((props: SidenavSlotRenderProps) => React.ReactNode);
 
 export type {
+    SidenavAsset,
     SidenavFirstLevelItem,
     SidenavNestedItem,
     SidenavSection,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {SidenavBar, SidenavLayout, SidenavSection as SidenavSectionComponent, SidenavItem} from '..';
+import {SidenavBar, SidenavLayout} from '..';
 import * as styles from '../sidenav-bar.css';
 import * as layoutStyles from '../sidenav-bar-layout.css';
 import {ThemeVariant} from '../theme-variant-context';
@@ -11,6 +11,7 @@ import {sidenavCollapse, sidenavExpand} from '../text-tokens';
 import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
 import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 
+import type {SidenavFirstLevelItem} from '..';
 import type {Variant} from '../theme-variant-context';
 import type {Skin} from '../skins/types';
 import type {SidenavEntry, SidenavSection} from '../sidenav-bar-types';
@@ -1531,26 +1532,37 @@ test('SidenavBar moves the focus to the parent with ArrowLeft from a child', asy
     expect(screen.getByRole('button', {name: 'Teams'})).toHaveFocus();
 });
 
-// `SidenavBar` takes its items from `entries`, whose type requires the asset. The JSX components render
-// on their own here, because the type cannot know the level of a `SidenavItem` element.
-test('SidenavItem reports a first-level item without an asset, and it accepts a nested one', async () => {
+// The type requires the asset of a first-level item, so only a consumer without TypeScript reaches this
+// report. The entry below drops the asset through a cast, which is what that consumer does at run time.
+test('SidenavBar reports a first-level item without an asset, and it accepts a nested one', async () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavSectionComponent title={{text: 'General', hidden: true}}>
-                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem id="active" label="Active" href="/active" />
-                </SidenavItem>
-                <SidenavItem id="home" label="Home" href="/home" />
-            </SidenavSectionComponent>
+            <SidenavBar
+                entries={[
+                    {
+                        title: {text: 'General', hidden: true},
+                        items: [
+                            {
+                                id: 'projects',
+                                label: 'Projects',
+                                asset: IconFolderRegular,
+                                defaultOpen: true,
+                                children: [{id: 'active', label: 'Active', href: '/active'}],
+                            },
+                            {id: 'home', label: 'Home', href: '/home'} as SidenavFirstLevelItem,
+                        ],
+                    },
+                ]}
+            />
         </ThemeContextProvider>
     );
     await React.act(async () => {});
 
     const messages = consoleError.mock.calls.map(([message]) => String(message));
     expect(messages.filter((message) => message.includes('is a first-level item without an asset'))).toEqual([
-        expect.stringContaining('SidenavItem "Home"'),
+        expect.stringContaining('SidenavBar item "Home"'),
     ]);
     consoleError.mockRestore();
 });

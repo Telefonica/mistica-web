@@ -45,54 +45,5 @@ const SidenavBarContext = React.createContext<SidenavBarContextValue>({
 
 const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(SidenavBarContext);
 
-/** Nesting level of the items. Level 0 is the top level. */
-const SidenavLevelContext = React.createContext<number>(0);
-
-/**
- * Position of an item among the first-level entries of the body, which gives the delay of its label
- * fade. A nested item inherits the position of its parent, which never shows on screen: the collapsed
- * rail closes every group.
- */
-const SidenavItemIndexContext = React.createContext<number>(0);
-
-/**
- * Tells an item that its list item already exists, so it renders none of its own. A stand-alone entry of
- * the first level carries the rail of the items on a wrapper of its own, and that wrapper is the list
- * item of the body list. Two nested list items would report one entry instead of two.
- */
-const SidenavHasOuterListItemContext = React.createContext<boolean>(false);
-
-/** Check if any descendant SidenavItem has the given ID */
-const hasDescendantWithId = (children: React.ReactNode, targetId: string | null): boolean => {
-    if (!targetId) return false;
-
-    let found = false;
-    const search = (node: React.ReactNode): void => {
-        React.Children.forEach(node, (child) => {
-            if (found) return;
-            if (React.isValidElement(child)) {
-                const props = child.props as {id?: string; children?: React.ReactNode};
-                if (props.id === targetId) {
-                    found = true;
-                    return;
-                }
-                if (props.children) {
-                    search(props.children);
-                }
-            }
-        });
-    };
-
-    search(children);
-    return found;
-};
-
-export {
-    SidenavBarContext,
-    useSidenavBarContext,
-    SidenavLevelContext,
-    SidenavItemIndexContext,
-    SidenavHasOuterListItemContext,
-    hasDescendantWithId,
-};
+export {SidenavBarContext, useSidenavBarContext};
 export type {SidenavBarContextValue};
