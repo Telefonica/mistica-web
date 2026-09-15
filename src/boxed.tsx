@@ -36,16 +36,28 @@ type InternalProps = {
     overflow?: 'hidden' | 'visible';
 };
 
+/**
+ * The single point that decides whether a boxed surface paints its border. Components that own their own
+ * box, like `SidenavBar`, share this rule instead of repeating it.
+ *
+ * @param internalVariant the variant of the box itself
+ * @param externalVariant the variant of the page behind the box
+ */
+export const shouldShowBoxedBorder = (
+    internalVariant: Variant,
+    externalVariant: Variant,
+    showBoxedBorder: ComponentPropertiesConfig['showBoxedBorder']
+): boolean =>
+    internalVariant === 'default' &&
+    (externalVariant === 'default' || externalVariant === 'alternative') &&
+    showBoxedBorder[externalVariant];
+
 const getBorderStyle = (
     internalVariant: Variant,
     externalVariant: Variant,
     showBoxedBorder: ComponentPropertiesConfig['showBoxedBorder']
 ) => {
-    if (
-        internalVariant === 'default' &&
-        (externalVariant === 'default' || externalVariant === 'alternative') &&
-        showBoxedBorder[externalVariant]
-    ) {
+    if (shouldShowBoxedBorder(internalVariant, externalVariant, showBoxedBorder)) {
         return styles.boxBorder;
     }
     return styles.noBorder;
