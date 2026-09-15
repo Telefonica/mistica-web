@@ -51,7 +51,12 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     tabsLabel: {weight: 'medium', size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
     chipLabel: {
         lineHeight: {desktop: 24, mobile: 20},
-        size: {desktop: 16, mobile: 14},
+        size: {desktop: 16, mobile: 16},
+        weight: 'medium',
+    },
+    chipLabelSmall: {
+        lineHeight: {desktop: 24, mobile: 20},
+        size: {desktop: 14, mobile: 14},
         weight: 'medium',
     },
     inputHelperText: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
