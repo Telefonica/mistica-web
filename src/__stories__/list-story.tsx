@@ -17,6 +17,9 @@ import {
     IconTrashCanRegular,
     IconPauseFilled,
     IconPlayFilled,
+    IconHeartFilled,
+    IconHeartRegular,
+    IconButton,
     ResponsiveLayout,
     NegativeBox,
     Title2,
@@ -103,6 +106,8 @@ const Template: StoryComponent<
     const getControlProps = (index: number) => {
         let controlProps: any = {};
         const onPress = () => alert('Pressed');
+        const defaultControlValue = boxed ? index % 2 === 0 : true;
+
         switch (control) {
             case 'chevron':
                 controlProps = {href: 'https://example.org', newTab: true};
@@ -113,7 +118,7 @@ const Template: StoryComponent<
             case 'switch':
                 controlProps = {
                     switch: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                 };
@@ -121,7 +126,7 @@ const Template: StoryComponent<
             case 'switch and onPress':
                 controlProps = {
                     switch: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                     onPress,
@@ -130,7 +135,7 @@ const Template: StoryComponent<
             case 'checkbox':
                 controlProps = {
                     checkbox: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                 };
@@ -138,7 +143,7 @@ const Template: StoryComponent<
             case 'checkbox and onPress':
                 controlProps = {
                     checkbox: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                     onPress,
@@ -147,7 +152,7 @@ const Template: StoryComponent<
             case 'checkbox with custom element':
                 controlProps = {
                     checkbox: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                     right: () => (
@@ -496,7 +501,7 @@ RowListStory.argTypes = {
 };
 
 export const BoxedRowListStory: StoryComponent<Args & {variant: 'default' | 'brand'}> = (args) => (
-    <Template boxed {...args} />
+    <Template key={args.control} boxed {...args} />
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = {...defaultArgs, variant: 'default'};
@@ -507,6 +512,70 @@ BoxedRowListStory.argTypes = {
         control: {type: 'select'},
     },
     danger: {if: {arg: 'variant', eq: 'default'}},
+};
+
+type SelectableBoxedRowsArgs = {
+    variantOutside: Variant;
+};
+
+const SelectableBoxedRows = () => {
+    const [selected, setSelected] = React.useState(false);
+
+    return (
+        <BoxedRowList>
+            <BoxedRow
+                title="Toggle icon button"
+                description="Toggle the icon without selecting the row"
+                iconButton={{
+                    checkedProps: {
+                        Icon: IconHeartFilled,
+                        'aria-label': 'Unselect row',
+                        backgroundType: 'solid',
+                        type: 'brand',
+                    },
+                    uncheckedProps: {
+                        Icon: IconHeartRegular,
+                        'aria-label': 'Select row',
+                        backgroundType: 'transparent',
+                        type: 'brand',
+                    },
+                }}
+            />
+            <BoxedRow
+                selected={selected}
+                title="Custom render"
+                description="Select the row with the selected prop"
+                right={
+                    <IconButton
+                        Icon={selected ? IconHeartFilled : IconHeartRegular}
+                        aria-label={selected ? 'Unselect row' : 'Select row'}
+                        backgroundType={selected ? 'solid' : 'transparent'}
+                        type="brand"
+                        onPress={() => setSelected(!selected)}
+                    />
+                }
+            />
+        </BoxedRowList>
+    );
+};
+
+export const SelectableBoxedRowsStory: StoryComponent<SelectableBoxedRowsArgs> = ({variantOutside}) => {
+    return (
+        <ResponsiveLayout variant={variantOutside} fullWidth>
+            <Box padding={16} dataAttributes={{testid: 'selectable-boxed-row-list'}}>
+                <SelectableBoxedRows />
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+SelectableBoxedRowsStory.storyName = 'Selectable BoxedRows';
+SelectableBoxedRowsStory.args = {variantOutside: 'default'};
+SelectableBoxedRowsStory.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
 };
 
 type UnorderedListArgs = {
