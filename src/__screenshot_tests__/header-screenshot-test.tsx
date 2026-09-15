@@ -131,3 +131,25 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each`
+    device          | titleTextPreset
+    ${'MOBILE_IOS'} | ${'title1'}
+    ${'MOBILE_IOS'} | ${'title2'}
+    ${'DESKTOP'}    | ${'title1'}
+    ${'DESKTOP'}    | ${'title2'}
+`(
+    'Header in $device titleTextPreset=$titleTextPreset',
+    async ({device, titleTextPreset}: {device: Device; titleTextPreset: string}) => {
+        await openStoryPage({
+            id: 'components-headers-header--default',
+            device,
+            args: {titleTextPreset},
+        });
+
+        const story = await screen.findByTestId('header-layout');
+
+        const image = await story.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);

@@ -440,6 +440,9 @@
     --mistica-font-size-chipLabel: 0.875rem;
     --mistica-line-height-chipLabel: 1.25rem;
     --mistica-font-weight-chipLabel: 500;
+    --mistica-font-size-headerPretitle: 1rem;
+    --mistica-line-height-headerPretitle: 1.375rem;
+    --mistica-font-weight-headerPretitle: 400;
     --mistica-font-size-cardPretitleSnap: 0.875rem;
     --mistica-line-height-cardPretitleSnap: 1.25rem;
     --mistica-font-size-cardTitleSnap: 0.875rem;
@@ -1508,6 +1511,8 @@
 
         --mistica-font-size-chipLabel: 1.125rem;
         --mistica-line-height-chipLabel: 1.5rem;
+        --mistica-font-size-headerPretitle: 1.125rem;
+        --mistica-line-height-headerPretitle: 1.5rem;
         --mistica-font-size-cardPretitleSnap: 0.875rem;
         --mistica-line-height-cardPretitleSnap: 1.25rem;
         --mistica-font-size-cardTitleSnap: 0.875rem;

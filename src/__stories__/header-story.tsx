@@ -30,6 +30,7 @@ type Args = {
     truncatePretitle: boolean;
     title: string;
     titleAs: HeadingType;
+    titleTextPreset?: 'none' | 'title1' | 'title2' | 'title3' | 'title4';
     description: string;
     small: boolean;
     variant: 'default' | 'brand';
@@ -53,6 +54,7 @@ export const Default: StoryComponent<Args> = ({
     truncatePretitle,
     title,
     titleAs,
+    titleTextPreset,
     description,
     small,
     slot,
@@ -82,6 +84,7 @@ export const Default: StoryComponent<Args> = ({
                             pretitle={truncatePretitle ? {text: pretitle, truncate: true} : pretitle}
                             title={title}
                             titleAs={titleAs}
+                            titleTextPreset={titleTextPreset === 'none' ? undefined : titleTextPreset}
                             description={description}
                             small={small}
                         />
@@ -111,6 +114,7 @@ Default.args = {
     pretitleAs: 'span',
     title: 'December bill is now available',
     titleAs: 'h2',
+    titleTextPreset: 'none',
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
@@ -139,6 +143,11 @@ Default.argTypes = {
     titleAs: {
         if: {arg: 'header'},
         options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleTextPreset: {
+        if: {arg: 'header'},
+        options: ['none', 'title1', 'title2', 'title3', 'title4'],
         control: {type: 'select'},
     },
     description: {if: {arg: 'header'}},
