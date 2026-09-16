@@ -50,6 +50,61 @@ test('BoxedRowList has a list role by default', () => {
     expect(items).toHaveLength(2);
 });
 
+test('BoxedRow updates its selected state from custom right content', async () => {
+    const CustomBoxedRow = () => {
+        const [selected, setSelected] = React.useState(false);
+
+        return (
+            <BoxedRow
+                selected={selected}
+                title="Title"
+                right={
+                    <button onClick={() => setSelected(!selected)}>
+                        {selected ? 'Selected' : 'Unselected'}
+                    </button>
+                }
+            />
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <CustomBoxedRow />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Unselected')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Unselected'}));
+
+    expect(screen.getByText('Selected')).toBeInTheDocument();
+});
+
+test('BoxedRow follows checkbox state with an onPress action', async () => {
+    const onPress = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" onPress={onPress} checkbox={{defaultValue: false}} />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const checkbox = screen.getByRole('checkbox', {name: 'Title'});
+
+    await userEvent.click(checkbox);
+
+    expect(checkbox).toBeChecked();
+    expect(onPress).not.toHaveBeenCalled();
+
+    await userEvent.click(checkbox);
+
+    expect(checkbox).not.toBeChecked();
+});
+
 test('Row which navigates', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
