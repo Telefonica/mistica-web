@@ -1,47 +1,59 @@
-# Mistica Web
+# Mística Web
 
-React component library for Telefonica's Design System.
+React component library for Telefónica's design system. Package manager: `yarn`.
 
-**Package manager**: `yarn`
+## Commands
 
-**Tooling**: yarn storybook (components live doc), yarn playroom (prototyping tool)
+- `yarn storybook` (port 6006) runs the live docs. `yarn playroom` runs the prototyping tool.
+- `yarn ts-check`, `yarn lint`, `yarn circular-dependencies`, and `yarn test` must pass. Cycle until all four
+  are green: a fix for one check often breaks another.
+- `yarn browse <story-id> --click <selector> --measure <selector> --shot <selector>` drives a story in the
+  browser that CI uses, and reports runtime errors. Read
+  [run-in-browser](./agents/skills/run-in-browser/SKILL.md) before you use it.
 
-**Critical rules**:
+## Code
 
-- NEVER import `@vanilla-extract/css` in `.tsx` files (only in `.css.ts`)
-- NEVER import `**/sprinkles.css` in `.tsx` files
-- Always namespace React hooks: `React.useState`, `React.useEffect`
-- Wrap unit tests with `ThemeContextProvider` + `makeTheme()`
-- Prefer semantic queries (`getByRole`, `getByLabelText`) over `getByTestId`
-- Write a comment only when it conveys something that the code and its semantics cannot: a corner case, a
-  non-obvious decision, a workaround. Never narrate what the code already says. Keep docblocks on public
-  APIs; drop docblocks that only repeat the name of an internal type or function.
+- Import `@vanilla-extract/css` and `sprinkles.css` in `.css.ts` files only. A `.tsx` file imports the
+  classes.
+- Namespace React hooks: `React.useState`, not `useState`.
+- `type` over `interface`, `export type` for types, `'use client';` at the top of a client component.
+- Comment only what the code cannot say: a corner case, a non-obvious decision, a workaround. Do not narrate
+  the code.
+- A todo is one line: `// todo <issue url> <short text>`.
+- Unit tests wrap the render in `ThemeContextProvider` with `makeTheme()`, and query by role or label, not by
+  test id.
 
-**Conventions**: `type` over `interface`, `export type` for types, `'use client';` for client components
+## Keep components simple
 
-**Components**:
+Build the most direct solution that meets the spec today. A reviewer rejects each of these unless the PR
+states a present-day reason:
 
-- If you create a new component always create a snippet for playroom;
-- If you add props to a component always update stories accordingly and add the new props to args and
-  argTypes;
-- storybook should use as much mística components as possible to showcase. i.e:
-  - if a button is needed to control/showcase things, use a mística button itself.
-  - if a text is needed, use a mística text component instead of a native html element, like
-    `<Text2 regular>text</Text2>`
-- make sure `yarn ts-check`, `yarn lint` and `yarn circular-dependencies` pass when modifying them. You
-  probably need to cycle several time to really make sure you've fixed everything
-- Before you claim a component works or matches its spec, drive it in the browser that CI uses:
-  `yarn browse <story-id> --click <selector> --measure <selector> --shot <selector>`. It reports runtime
-  errors too. Read [agents/skills/run-in-browser](./agents/skills/run-in-browser/SKILL.md) before you use it.
+- A context between the parts of one component. Pass props, even two levels deep. A context needs user JSX
+  between the parts (`Accordion` → `AccordionItem`).
+- Recursion when the spec fixes the depth. Render each level explicitly.
+- A leaf that decides role, border, or divider from shared state. The parent computes it and passes a prop.
+- A validation pass over data that the render already walks. Validate while you render.
+- A `utils` module for one caller. Keep the function in the file that uses it.
+- A hook, config, or tool that the feature does not need. Ship it in a separate PR.
+- Generated assets (icons, tokens, skins) or tooling in a feature PR. One concern per PR.
+- Names from the implementation. Name things after the spec: `entries`, `sub menu`.
 
----
+## Change a component
 
-## Conventions
+1. Load the spec with [read-component-specs](./agents/skills/read-component-specs/SKILL.md): the issue, the
+   markdown spec, then Figma.
+2. Write the code and the unit tests.
+3. Update the story. A new prop goes to `args` and `argTypes`. Demo UI uses Mística components, such as
+   `Button` and `Text2`, not raw HTML.
+4. A new component also gets a playroom snippet.
+5. Run the four checks.
+6. Before you claim that it works or matches the spec, drive the story with `yarn browse`.
 
-- Read [CONTRIBUTING](./CONTRIBUTING.md) before creating a PR or contributing to Mistica repo;
-- The skills for agents live in [agents/skills/](./agents/README.md). Every tool-specific path is a symlink
-  into that directory;
-- Always add the `AI` label to PRs where the code was written by an AI agent.
-- AI-derived local context (spec caches, working notes) stays a git-ignored, uncommitted cache: the canonical
-  source always lives elsewhere. Prefer the tool's own memory when it has one, and always also write the file,
-  so a tool without memory keeps a readable fallback.
+## Pull requests
+
+- Read [CONTRIBUTING](./CONTRIBUTING.md) before you open a PR: title format, `Ref:` line, reviewers, and the
+  `AI` label.
+- Spec caches and working notes stay a git-ignored cache. Use the tool's own memory when it has one, and also
+  write the file so a tool without memory can read it.
+
+Skills live in [agents/skills](./agents/README.md). Every tool-specific path is a symlink into that directory.
