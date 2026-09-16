@@ -133,18 +133,18 @@ test.each(DEVICES)('Header with bleed', async (device) => {
 });
 
 test.each`
-    device          | titleTextPreset
+    device          | titleSize
     ${'MOBILE_IOS'} | ${'title1'}
     ${'MOBILE_IOS'} | ${'title2'}
     ${'DESKTOP'}    | ${'title1'}
     ${'DESKTOP'}    | ${'title2'}
 `(
-    'Header in $device titleTextPreset=$titleTextPreset',
-    async ({device, titleTextPreset}: {device: Device; titleTextPreset: string}) => {
+    'Header in $device titleSize=$titleSize',
+    async ({device, titleSize}: {device: Device; titleSize: string}) => {
         await openStoryPage({
             id: 'components-headers-header--default',
             device,
-            args: {titleTextPreset},
+            args: {titleSize},
         });
 
         const story = await screen.findByTestId('header-layout');

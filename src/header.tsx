@@ -31,7 +31,7 @@ type OverridableTextProps = {
 
 type RichText = string | ({text: string} & OverridableTextProps);
 
-type TitlePresetsType = 'title1' | 'title2' | 'title3' | 'title4';
+type TitleSizes = 'title1' | 'title2' | 'title3' | 'title4';
 
 type HeaderProps = {
     headline?: React.ReactNode;
@@ -39,7 +39,7 @@ type HeaderProps = {
     pretitleAs?: HeadingType;
     title?: string;
     titleAs?: HeadingType;
-    titleTextPreset?: TitlePresetsType;
+    titleSize?: TitleSizes;
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
@@ -51,7 +51,7 @@ export const Header = ({
     pretitleAs,
     title,
     titleAs = 'h2',
-    titleTextPreset,
+    titleSize,
     description,
     dataAttributes,
     small = false,
@@ -100,7 +100,7 @@ export const Header = ({
             title4: Title4,
         } as const;
 
-        const TitleComponent = titleTextPreset ? titleComponents[titleTextPreset] : small ? Title3 : Title4;
+        const TitleComponent = titleSize ? titleComponents[titleSize] : small ? Title3 : Title4;
 
         return <TitleComponent {...baseTitleProps} />;
     };
