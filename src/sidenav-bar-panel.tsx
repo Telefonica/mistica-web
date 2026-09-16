@@ -2,14 +2,21 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import * as styles from './sidenav-bar.css';
-import {useSidenavBarContext, SidenavBarContext, SidenavLevelContext} from './sidenav-bar-context';
-import {useDialogPanelKeyboard} from './sidenav-bar-keyboard';
+import {useSidenavBarContext} from './sidenav-bar-context';
+import {useDialogPanelKeyboard, getItemFocusables} from './sidenav-bar-keyboard';
 import {Portal} from './portal';
 import {Text2} from './text';
 import {listenResize} from './utils/dom';
+import {combineRefs} from './utils/common';
 import {ThemeVariant} from './theme-variant-context';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';
+
+/*
+ * A panel holds the children of a parent item away from its row: `SidenavDialogPanel` floats over the
+ * collapsed rail, and `SidenavDoublePanel` is the second column. The expanded rail opens the children in
+ * place instead, so that form is not a panel.
+ */
 
 /** Minimum distance kept between the panel and the viewport edges. */
 const VIEWPORT_MARGIN = 8;
@@ -22,7 +29,7 @@ const VIEWPORT_MARGIN = 8;
  * a press outside of the whole bar dismisses it. `SidenavBar` owns that rule.
  */
 const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): void => {
-    const {setSubMenuOpenForItemId} = useSidenavBarContext();
+    const {setPanelOpenForItemId} = useSidenavBarContext();
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -42,13 +49,13 @@ const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): vo
                 (node) => node instanceof Element && node.matches('[data-parent-item="true"]')
             );
             if (!isParentItem) {
-                setSubMenuOpenForItemId(null);
+                setPanelOpenForItemId(null);
             }
         };
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setSubMenuOpenForItemId(null);
+                setPanelOpenForItemId(null);
             }
         };
 
@@ -59,7 +66,7 @@ const useClosePanelOnOutsideInteraction = (panelElement: HTMLElement | null): vo
             document.removeEventListener('click', handleClickOutside);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [panelElement, setSubMenuOpenForItemId]);
+    }, [panelElement, setPanelOpenForItemId]);
 };
 
 type SidenavDialogPanelProps = {
@@ -81,7 +88,7 @@ const SidenavDialogPanel = ({
     containerRef,
     children,
 }: SidenavDialogPanelProps): JSX.Element => {
-    const contextValue = useSidenavBarContext();
+    const {setPanelOpenForItemId} = useSidenavBarContext();
     // `Portal` creates its host element in an effect, so the panel node appears one render after the
     // panel mounts. Keeping the node in state (instead of in a ref) re-runs the effects that measure
     // it as soon as it exists.
@@ -99,7 +106,7 @@ const SidenavDialogPanel = ({
         containerRef,
         itemId,
         isPositioned: panelPosition !== null,
-        onClose: () => contextValue.setSubMenuOpenForItemId(null),
+        onClose: () => setPanelOpenForItemId(null),
     });
 
     // The panel opens aligned with its trigger, but a trigger close to the bottom edge pushes the
@@ -134,11 +141,6 @@ const SidenavDialogPanel = ({
             window.removeEventListener('resize', updatePosition);
         };
     }, [itemId, containerRef, panelElement]);
-
-    const subMenuContextValue = {
-        ...contextValue,
-        isInsideSubMenu: true,
-    };
 
     return (
         <Portal>
@@ -178,14 +180,10 @@ const SidenavDialogPanel = ({
                             {label}
                         </Text2>
                     </div>
-                    <SidenavBarContext.Provider value={subMenuContextValue}>
-                        <SidenavLevelContext.Provider value={0}>
-                            {/* The title names the list, and the list gives the count of its items. */}
-                            <div className={styles.subMenuRows} role="list" aria-labelledby={titleId}>
-                                {children}
-                            </div>
-                        </SidenavLevelContext.Provider>
-                    </SidenavBarContext.Provider>
+                    {/* The title names the list, and the list gives the count of its items. */}
+                    <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
+                        {children}
+                    </div>
                 </ThemeVariant>
             </div>
         </Portal>
@@ -210,21 +208,35 @@ type SidenavDoublePanelProps = {
  */
 const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelProps>(
     ({itemId, label, variant, backgroundColor, children}, ref) => {
-        const contextValue = useSidenavBarContext();
+        const {containerRef} = useSidenavBarContext();
+        // The bar owns the forwarded ref for its transition; this one lets the column read its own node.
+        const columnRef = React.useRef<HTMLDivElement>(null);
         // The visible title names the list, so the name a screen reader speaks is always the text the
         // user sees. The column itself carries no role and no name: the named list is the whole structure.
         const titleId = React.useId();
 
-        const subMenuContextValue = {
-            ...contextValue,
-            // The children of the sub menu always show their label and never a tooltip, even when the
-            // sidenav is collapsed, and a press on one of them closes the sub menu.
-            isInsideSubMenu: true,
-        };
+        // The first item takes the focus when the column opens (the bar mounts it then), and again when
+        // the column moves to another parent, so a screen reader announces the named list that the user
+        // entered. It only takes a focus that already belongs to the sidenav, or one that fell to the
+        // body when the collapsed rail replaced the trigger row. An app that moves the selection from
+        // elsewhere on the page opens this column too, and it must not drag the user out of the place
+        // they were reading.
+        React.useEffect(() => {
+            const column = columnRef.current;
+            const container = containerRef.current;
+            if (!column || !container) {
+                return;
+            }
+            const active = document.activeElement;
+            if (active && active !== document.body && !container.contains(active)) {
+                return;
+            }
+            getItemFocusables(column)[0]?.focus();
+        }, [itemId, containerRef]);
 
         return (
             <div
-                ref={ref}
+                ref={combineRefs(ref, columnRef)}
                 className={classnames(styles.doublePanelColumn, styles.regionBackground[variant])}
                 style={backgroundColor ? {backgroundColor} : undefined}
                 // Marks the column with the id of the item that owns it, so the keyboard of the rail finds
@@ -244,14 +256,10 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
                             {label}
                         </Text2>
                     </div>
-                    <SidenavBarContext.Provider value={subMenuContextValue}>
-                        <SidenavLevelContext.Provider value={0}>
-                            {/* The title names the list, and the list gives the count of its items. */}
-                            <div className={styles.subMenuRows} role="list" aria-labelledby={titleId}>
-                                {children}
-                            </div>
-                        </SidenavLevelContext.Provider>
-                    </SidenavBarContext.Provider>
+                    {/* The title names the list, and the list gives the count of its items. */}
+                    <div className={styles.panelRows} role="list" aria-labelledby={titleId}>
+                        {children}
+                    </div>
                 </div>
             </div>
         );
@@ -259,4 +267,3 @@ const SidenavDoublePanel = React.forwardRef<HTMLDivElement, SidenavDoublePanelPr
 );
 
 export {SidenavDialogPanel, SidenavDoublePanel};
-export type {SidenavDialogPanelProps, SidenavDoublePanelProps};

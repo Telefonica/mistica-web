@@ -3,7 +3,7 @@ import {SidenavBar, IconHomeRegular, IconFolderRegular, IconSettingsRegular} fro
 
 import type {SidenavEntry} from '../../sidenav-bar-types';
 
-const sections: ReadonlyArray<SidenavEntry> = [
+const entries: ReadonlyArray<SidenavEntry> = [
     {id: 'home', label: 'Home', asset: IconHomeRegular, href: '#home'},
     {
         title: 'Workspace',
@@ -23,11 +23,11 @@ const sections: ReadonlyArray<SidenavEntry> = [
 ];
 
 // The collapsed rail exercises the other server path: the labels keep their box but fade out, and every
-// item wraps itself in a tooltip because `collapsedSettled` starts at the collapsed value.
+// item wraps itself in a tooltip because the collapse state starts at rest collapsed.
 const SidenavBarCollapsedTest = (): JSX.Element => (
     <SidenavBar
         aria-label="Main navigation"
-        sections={sections}
+        entries={entries}
         selectedItemId="home"
         defaultCollapsed
         logo={<span>LOGO</span>}

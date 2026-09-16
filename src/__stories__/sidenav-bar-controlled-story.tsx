@@ -19,9 +19,9 @@ import {Text2, Text3, Text5, Text6} from '../text';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import {ThemeVariant} from '../theme-variant-context';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
-import {getSidenavSectionTitle} from '../sidenav-bar-types';
+import {getSidenavSectionTitle} from '../sidenav-bar-data';
 
-import type {SidenavSection, SidenavItem, SidenavNestedItem} from '../sidenav-bar-types';
+import type {SidenavSection, SidenavFirstLevelItem, SidenavNestedItem} from '../sidenav-bar-types';
 import type {NonDeprecatedVariant} from '../theme-variant-context';
 
 type Args = {
@@ -80,7 +80,7 @@ const pageBackgroundColor: Record<NonDeprecatedVariant, string> = {
 type SelectionButton = {id: string; label: string};
 
 const collectSelectableItems = (
-    items: ReadonlyArray<SidenavItem | SidenavNestedItem>
+    items: ReadonlyArray<SidenavFirstLevelItem | SidenavNestedItem>
 ): Array<SelectionButton> => {
     const result: Array<SelectionButton> = [];
     items.forEach((item) => {
@@ -96,7 +96,7 @@ const collectSelectableItems = (
 export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: Args): React.JSX.Element => {
     const [selectedId, setSelectedId] = React.useState<string | null>('overview');
 
-    const sections: Array<SidenavSection> = [
+    const entries: Array<SidenavSection> = [
         {
             // No heading over these two items, and a screen reader still reads the name of their list.
             title: {text: 'General', hidden: true},
@@ -255,7 +255,7 @@ export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: 
                         variant={variant}
                         selectedItemId={selectedId}
                         onSelectedItemIdChange={setSelectedId}
-                        sections={sections}
+                        entries={entries}
                         doublePanel={doublePanel}
                         {...(boxed ? {boxed: true as const} : {boxed: false as const})}
                     />
@@ -284,7 +284,7 @@ export const ControlledSelection = ({variant, pageVariant, doublePanel, boxed}: 
                         </Boxed>
 
                         <Stack space={16}>
-                            {sections.map((section, index) => (
+                            {entries.map((section, index) => (
                                 <Stack
                                     space={8}
                                     key={getSidenavSectionTitle(section.title).text ?? `section-${index}`}

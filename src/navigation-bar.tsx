@@ -37,12 +37,11 @@ import {DOWN, ESC, UP} from './utils/keys';
 import {debounce, isEqual} from './utils/helpers';
 import NegativeBox from './negative-box';
 
-import type {WideConfig} from './navigation-shared';
+import type {WideConfig, InteractiveProps, MaybeInteractiveProps} from './navigation-shared';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {IconProps} from './utils/types';
-import type {InteractiveProps, MaybeInteractiveProps} from './navigation-types';
 
 // `NavigationBar` builds the simplest bar of the family, and the second level of both burger menus paints
 // its back bar with it, so it lives in the shared module. The package still publishes it from here.
@@ -234,7 +233,7 @@ const MainNavigationBarBurgerMenu = ({
             open={open}
             id={id}
             topOffset={NAVBAR_HEIGHT_MOBILE + topSlotHeight}
-            secondLevelOpen={isSubMenuOpen}
+            showSecondLevel={isSubMenuOpen}
             onExited={() => {
                 setIsSubMenuOpen(false);
                 setOpenedSection(-1);

@@ -13,57 +13,52 @@ import {
 import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
-import {isRunningAcceptanceTest} from './utils/platform';
 import {useScreenSize, useTheme} from './hooks';
 import {IconButton} from './icon-button';
 import {Logo} from './logo';
 import IconPanelExpandRegular from './generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from './generated/mistica-icons/icon-panel-collapse-regular';
-import {SidenavItem} from './sidenav-bar-item';
+import {SidenavFirstLevelItem} from './sidenav-bar-first-level-item';
+import {SidenavNestedItem} from './sidenav-bar-nested-item';
 import {SidenavSection} from './sidenav-bar-section';
-import {
-    renderSidenavItemFromData,
-    findParentOfItem,
-    findFirstLevelItem,
-    renderSidenavEntries,
-    validateSidenavEntries,
-} from './sidenav-bar-entries';
-import {SidenavDoublePanel} from './sidenav-bar-sub-menu';
-import {SidenavMobileBar} from './sidenav-bar-mobile';
-import {useIsReducedMotion} from './sidenav-bar-motion';
+import {SidenavDoublePanel} from './sidenav-bar-panel';
+import {SidenavBarMobile} from './sidenav-bar-mobile';
+import {useIsMotionOff} from './sidenav-bar-motion';
 import {useSidenavRailKeyboard} from './sidenav-bar-keyboard';
-import {
-    SidenavBarContext,
-    useSidenavBarContext,
-    SidenavLevelContext,
-    hasDescendantWithId,
-} from './sidenav-bar-context';
+import {SidenavBarContext} from './sidenav-bar-context';
 import {shouldShowBoxedBorder} from './boxed';
-import {renderSidenavSlot} from './sidenav-bar-types';
+import {
+    isSidenavSection,
+    getFirstLevelItems,
+    getSidenavSectionTitle,
+    renderSidenavSlot,
+    renderSidenavLogo,
+} from './sidenav-bar-data';
 import * as tokens from './text-tokens';
+import {isSidenavMoving} from './sidenav-bar-types';
 
 import type {Variant} from './theme-variant-context';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
-import type {SidenavSectionProps} from './sidenav-bar-section';
 import type {
     SidenavEntry,
-    SidenavNestedItem,
+    SidenavFirstLevelItem as SidenavFirstLevelItemData,
+    SidenavNestedItem as SidenavNestedItemData,
     SidenavLogo,
-    SidenavLogoRenderProps,
     SidenavSlot,
     SidenavSlotRenderProps,
     SidenavCollapseState,
 } from './sidenav-bar-types';
 
 type SidenavBarBaseProps = {
-    /** First-level entries of the body. Each entry is either a section with items, or a stand-alone
-     * item that needs no section.
+    /**
+     * First-level entries of the body. Each entry is either a section with items, or a stand-alone item
+     * that needs no section.
      * @see SidenavEntry
      * @see SidenavSection
-     * @see SidenavItem
+     * @see SidenavFirstLevelItem
      */
-    sections?: ReadonlyArray<SidenavEntry>;
+    entries?: ReadonlyArray<SidenavEntry>;
     /** Accessible name of the navigation landmark. Defaults to a localized "Main navigation". */
     'aria-label'?: string;
     /** Color variant (default, brand, alternative, negative, media). @default 'default' */
@@ -103,9 +98,11 @@ type SidenavBarBaseProps = {
  *   `divider` is only accepted when `boxed` is false.
  * - The collapsed state is either controlled through `collapsed` (requires `onCollapse`)
  *   or uncontrolled through `defaultCollapsed` (optional `onCollapse`), never both.
- * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed, and it takes
- *   the static `collapsed` prop (not `defaultCollapsed`), which drives the collapsed state of every render
- *   instead of seeding it once. That sidenav shows no collapse action either.
+ * - `showCollapseButton: false` removes the built-in collapse button, which is the only control that
+ *   toggles the state from inside. Without it, the sidenav never changes the state by itself, so
+ *   `onCollapse` has no event to report and `defaultCollapsed` has no state to seed: both are not
+ *   allowed. That sidenav takes `collapsed` alone, and mirrors it on every render, so a control of your
+ *   own (for example in a slot) still collapses it through that prop.
  * - `fixedFooter` is only allowed when `footerSlot` is provided.
  */
 type SidenavBarProps = SidenavBarBaseProps &
@@ -127,24 +124,24 @@ type SidenavBarProps = SidenavBarBaseProps &
               collapsed: boolean;
               /** Handler for collapsed state changes (required for controlled mode). */
               onCollapse: (collapsed: boolean) => void;
-              /** Whether user can toggle collapsed state. @default true */
-              collapsible?: true;
+              /** Renders the built-in collapse button, which lets the user toggle the state. @default true */
+              showCollapseButton?: true;
           }
         | {
               /** Initial collapsed state (uncontrolled). @default false */
               defaultCollapsed?: boolean;
               /** Optional handler for collapsed state changes (for logging/effects). */
               onCollapse?: (collapsed: boolean) => void;
-              /** Whether user can toggle collapsed state. @default true */
-              collapsible?: true;
+              /** Renders the built-in collapse button, which lets the user toggle the state. @default true */
+              showCollapseButton?: true;
           }
         | {
-              /** Collapsed state. The user cannot toggle it, so the sidenav mirrors this prop on every
-               * render. Unlike `defaultCollapsed`, it is not a seed: a later change of it moves the
-               * sidenav. @default false */
+              /** Collapsed state. There is no built-in button to toggle it, so the sidenav mirrors this
+               * prop on every render. Unlike `defaultCollapsed`, it is not a seed: a later change of it
+               * moves the sidenav. @default false */
               collapsed?: boolean;
-              /** User cannot toggle collapsed state. */
-              collapsible: false;
+              /** Hides the built-in collapse button. Only a change of `collapsed` moves the sidenav. */
+              showCollapseButton: false;
           }
     > &
     ExclusifyUnion<
@@ -162,13 +159,137 @@ type SidenavBarProps = SidenavBarBaseProps &
           }
     >;
 
+const renderNestedItem = (item: SidenavNestedItemData): React.ReactElement => (
+    <SidenavNestedItem
+        key={item.id}
+        id={item.id}
+        label={item.label}
+        asset={item.asset}
+        rightSlot={item.rightSlot}
+        href={item.href}
+        to={item.to}
+        onPress={item.onPress}
+        newTab={item.newTab}
+        onNavigate={item.onNavigate}
+    />
+);
+
+const renderFirstLevelItem = (
+    item: SidenavFirstLevelItemData,
+    {standalone}: {standalone?: boolean} = {}
+): React.ReactElement => (
+    <SidenavFirstLevelItem
+        key={item.id}
+        id={item.id}
+        label={item.label}
+        asset={item.asset}
+        showAssetWhenExpanded={item.showAssetWhenExpanded}
+        rightSlot={item.rightSlot}
+        standalone={standalone}
+        defaultOpen={item.defaultOpen}
+        childIds={item.children?.map((child) => child.id)}
+        href={item.href}
+        to={item.to}
+        onPress={item.onPress}
+        newTab={item.newTab}
+        onNavigate={item.onNavigate}
+    >
+        {item.children?.map((child) => renderNestedItem(child))}
+    </SidenavFirstLevelItem>
+);
+
+/**
+ * Finds the first-level item that owns the given child id. The sidenav supports a single nesting
+ * level, so the parent of an item is always a first-level item.
+ */
+const findParentOfItem = (
+    entries: ReadonlyArray<SidenavEntry>,
+    childId: string
+): SidenavFirstLevelItemData | undefined =>
+    getFirstLevelItems(entries).find((item) => item.children?.some((child) => child.id === childId));
+
+/** Finds a first-level item by id. Only these items can open a panel. */
+const findFirstLevelItem = (
+    entries: ReadonlyArray<SidenavEntry>,
+    itemId: string
+): SidenavFirstLevelItemData | undefined => getFirstLevelItems(entries).find((item) => item.id === itemId);
+
+/**
+ * Development-only validation of the entries. It walks the data instead of checking inside each
+ * `SidenavItem` render: every item of the sidenav comes from this data, so one walk covers all of
+ * them, it reports each problem once, and it does not see the re-renders of the panel.
+ */
+const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
+    const seenIds = new Set<string>();
+    const duplicateIds = new Set<string>();
+
+    const visitItem = (item: SidenavFirstLevelItemData | SidenavNestedItemData, level: number): void => {
+        if (seenIds.has(item.id)) {
+            duplicateIds.add(item.id);
+        } else {
+            seenIds.add(item.id);
+        }
+        if (level > 0 && item.children?.length) {
+            console.error(
+                `SidenavItem "${item.label}" at level ${level} cannot have children. ` +
+                    `SidenavItem supports maximum 2 levels of nesting. ` +
+                    `Only level 0 items can have children.`
+            );
+        }
+        item.children?.forEach((child) => visitItem(child, level + 1));
+    };
+
+    getFirstLevelItems(entries).forEach((item) => visitItem(item, 0));
+
+    if (duplicateIds.size > 0) {
+        console.error(
+            `SidenavBar: duplicate item IDs found: ${Array.from(duplicateIds).join(', ')}. ` +
+                `All SidenavItem ids must be unique within a SidenavBar.`
+        );
+    }
+};
+
+const renderSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): Array<React.ReactElement> => {
+    // Every entry of the first level is one item of the body list, a section as much as a stand-alone
+    // item. A section holds a list of its own, and a stand-alone item holds a single row.
+    return entries.map((entry, entryIndex) => {
+        if (isSidenavSection(entry)) {
+            const previousEntry = entries[entryIndex - 1];
+            const sharesDividerWithPrevious =
+                !!entry.dividerTop &&
+                !!previousEntry &&
+                isSidenavSection(previousEntry) &&
+                !!previousEntry.dividerBottom;
+            const isFirstEntry = entryIndex === 0;
+            const isLastEntry = entryIndex === entries.length - 1;
+            return (
+                <div key={`${getSidenavSectionTitle(entry.title).text}-${entryIndex}`} role="listitem">
+                    <SidenavSection
+                        title={entry.title}
+                        dividerTop={entry.dividerTop && !isFirstEntry && !sharesDividerWithPrevious}
+                        dividerBottom={entry.dividerBottom && !isLastEntry}
+                    >
+                        {entry.items.map((item) => renderFirstLevelItem(item))}
+                    </SidenavSection>
+                </div>
+            );
+        }
+
+        return (
+            <div key={entry.id} className={styles.standaloneItem} role="listitem">
+                {renderFirstLevelItem(entry as SidenavFirstLevelItemData, {standalone: true})}
+            </div>
+        );
+    });
+};
+
 const SidenavBar = ({
-    sections,
+    entries,
     'aria-label': ariaLabelProp,
     variant = 'default',
     boxed = false,
     divider = true,
-    collapsible = true,
+    showCollapseButton = true,
     collapsed: collapsedProp,
     defaultCollapsed = false,
     onCollapse,
@@ -184,31 +305,24 @@ const SidenavBar = ({
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {componentProperties, platformOverrides, texts, t} = useTheme();
+    const {componentProperties, texts, t} = useTheme();
     const ariaLabel = ariaLabelProp ?? (texts.sidenavLandmark || t(tokens.sidenavLandmark));
-    const isReducedMotion = useIsReducedMotion();
-    // Acceptance runs and reduced motion both force zero-duration motion, so no half-animated node is
-    // left in the DOM after the state that removed it.
-    const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
+    const isMotionOff = useIsMotionOff();
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
-    const [subMenuOpenForItemId, setSubMenuOpenForItemId] = React.useState<string | null>(() =>
-        doublePanel && sections && selectedItemId
-            ? findParentOfItem(sections, selectedItemId)?.id ?? null
+    const [panelOpenForItemId, setPanelOpenForItemId] = React.useState<string | null>(() =>
+        doublePanel && entries && selectedItemId
+            ? findParentOfItem(entries, selectedItemId)?.id ?? null
             : null
     );
 
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
-    // The collapsed state is read on every render when the sidenav is controlled (`collapsed` set) or
-    // cannot be toggled. A toggleable, uncontrolled sidenav instead owns its state, which `defaultCollapsed`
-    // seeds once. A non-toggleable sidenav that omits `collapsed` falls back to that same default (false).
-    const collapsed = isCollapsedControlled
-        ? Boolean(collapsedProp)
-        : collapsible
-          ? uncontrolledCollapsed
-          : defaultCollapsed;
+    // A controlled sidenav (`collapsed` set) reads the prop on every render. An uncontrolled one owns its
+    // state, which `defaultCollapsed` seeds once. Without the built-in button nothing toggles that state,
+    // so a sidenav that hides the button and omits `collapsed` keeps the seed, which the types pin to false.
+    const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
     const containerRef = React.useRef<HTMLElement>(null);
 
     // The second column slides away instead of disappearing, so it still renders while it closes, when the
@@ -218,11 +332,11 @@ const SidenavBar = ({
     const [doublePanelContent, setDoublePanelContent] = React.useState<{
         itemId: string;
         label: string;
-        children: ReadonlyArray<SidenavNestedItem>;
+        children: ReadonlyArray<SidenavNestedItemData>;
     } | null>(null);
 
-    // See `collapsedSettled` in `sidenav-bar-context.tsx` for why the sidenav reports the collapsed state
-    // twice. A user who turned motion down sees no movement, so the settled state follows at once there.
+    // The settled state follows `collapsed` once the rail rests. A user who turned motion down sees no
+    // movement, so it follows at once there.
     const [collapsedSettled, setCollapsedSettled] = React.useState(collapsed);
     React.useEffect(() => {
         if (isMotionOff) {
@@ -240,17 +354,17 @@ const SidenavBar = ({
           ? 'expanding'
           : 'expanded';
 
-    // A press on an item of the sidenav closes the sub menu and moves the selection at the same time.
+    // A press on an item of the sidenav closes the panel and moves the selection at the same time.
     // The press records its selection here, so the adjustment below knows the user already dismissed
     // the second column for that selection, and does not reopen it.
     const [dismissedSelection, setDismissedSelection] = React.useState<string | null>(null);
 
-    const selectItemAndCloseSubMenu = React.useCallback(
+    const selectItemAndClosePanel = React.useCallback(
         (itemId: string | null) => {
             if (doublePanel) {
                 setDismissedSelection(itemId);
             }
-            setSubMenuOpenForItemId(null);
+            setPanelOpenForItemId(null);
             if (itemId) {
                 onSelectedItemIdChange?.(itemId);
             }
@@ -262,7 +376,7 @@ const SidenavBar = ({
     // breadcrumb, a card, a button of the app):
     //   - a second-level item opens the column on its parent, so that the new selection stays visible;
     //   - a first-level item without children closes the column, because it has nothing to show there;
-    //   - a press inside the sidenav closes the column through `selectItemAndCloseSubMenu`, and that press
+    //   - a press inside the sidenav closes the column through `selectItemAndClosePanel`, and that press
     //     wins over the selection it carries.
     // The adjustment runs during the render, where the entries and the previous selection are both in
     // scope, so it needs no effect and no refs. React applies the state it sets before it paints.
@@ -272,14 +386,14 @@ const SidenavBar = ({
         if (dismissedSelection !== null) {
             setDismissedSelection(null);
         }
-        if (doublePanel && sections && selectedItemId && dismissedSelection !== selectedItemId) {
-            const parent = findParentOfItem(sections, selectedItemId);
+        if (doublePanel && entries && selectedItemId && dismissedSelection !== selectedItemId) {
+            const parent = findParentOfItem(entries, selectedItemId);
             if (parent) {
-                setSubMenuOpenForItemId(parent.id);
+                setPanelOpenForItemId(parent.id);
             } else {
-                const firstLevelItem = findFirstLevelItem(sections, selectedItemId);
+                const firstLevelItem = findFirstLevelItem(entries, selectedItemId);
                 if (firstLevelItem && !firstLevelItem.children?.length) {
-                    setSubMenuOpenForItemId(null);
+                    setPanelOpenForItemId(null);
                 }
             }
         }
@@ -291,23 +405,23 @@ const SidenavBar = ({
     if (doublePanel !== previousDoublePanel) {
         setPreviousDoublePanel(doublePanel);
         if (!doublePanel) {
-            setSubMenuOpenForItemId(null);
+            setPanelOpenForItemId(null);
         }
     }
 
     // A change of the entries invalidates the open column, whose parent item may not exist anymore.
-    const [previousSectionsLength, setPreviousSectionsLength] = React.useState(sections?.length ?? 0);
-    if ((sections?.length ?? 0) !== previousSectionsLength) {
-        setPreviousSectionsLength(sections?.length ?? 0);
-        setSubMenuOpenForItemId(null);
+    const [previousEntriesLength, setPreviousEntriesLength] = React.useState(entries?.length ?? 0);
+    if ((entries?.length ?? 0) !== previousEntriesLength) {
+        setPreviousEntriesLength(entries?.length ?? 0);
+        setPanelOpenForItemId(null);
     }
 
     // Only a press outside of the whole bar, or Escape, dismisses the second column: a press inside the
     // bar that lands on no item keeps it open, and a press on an item closes it through
-    // `selectItemAndCloseSubMenu`. A press that also carries a new selection does not race the close: the
+    // `selectItemAndClosePanel`. A press that also carries a new selection does not race the close: the
     // adjustment above reopens the column for that selection in the same batch of updates.
     React.useEffect(() => {
-        if (!doublePanel || !subMenuOpenForItemId) {
+        if (!doublePanel || !panelOpenForItemId) {
             return;
         }
 
@@ -320,12 +434,12 @@ const SidenavBar = ({
             // node as a press outside of the bar: the collapse action swaps its icon, and a parent item
             // swaps its whole row, so both of them closed the column that they should have left alone.
             if (event.composedPath().includes(container)) return;
-            setSubMenuOpenForItemId(null);
+            setPanelOpenForItemId(null);
         };
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setSubMenuOpenForItemId(null);
+                setPanelOpenForItemId(null);
             }
         };
 
@@ -335,7 +449,7 @@ const SidenavBar = ({
             document.removeEventListener('click', handlePressOutside);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [doublePanel, subMenuOpenForItemId]);
+    }, [doublePanel, panelOpenForItemId]);
 
     const backgroundStyle = background ? {backgroundColor: background} : undefined;
 
@@ -348,30 +462,6 @@ const SidenavBar = ({
     const headerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
     const footerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
     const bodyRef = React.useRef<HTMLDivElement>(null);
-
-    // The first item of the second column takes the focus when the column opens, and again when the column
-    // moves to another parent, so a screen reader announces the named list that the user entered. The
-    // dialog panel of the collapsed rail takes its own focus, and this effect leaves it alone: no column
-    // stands there.
-    // It only takes a focus that already belongs to the sidenav, or one that fell to the body when the
-    // collapsed rail replaced the trigger row. An app that moves the selection from elsewhere on the page
-    // opens this column too, and it must not drag the user out of the place they were reading.
-    React.useEffect(() => {
-        const column = doublePanelRef.current;
-        const container = containerRef.current;
-        if (!subMenuOpenForItemId || !column || !container) {
-            return;
-        }
-        const active = document.activeElement;
-        if (active && active !== document.body && !container.contains(active)) {
-            return;
-        }
-        column
-            .querySelector<HTMLElement>(
-                '[data-sidenav-item-id] a[href], [data-sidenav-item-id] button:not([disabled])'
-            )
-            ?.focus();
-    }, [subMenuOpenForItemId]);
 
     React.useEffect(() => {
         if (!bodyRef.current) return;
@@ -408,7 +498,7 @@ const SidenavBar = ({
     }, []);
 
     // The rail is travelling between its two widths. See `columnsWhileMoving`.
-    const isMoving = collapsed !== collapsedSettled;
+    const isMoving = isSidenavMoving(collapseState);
 
     const toggleCollapsed = React.useCallback(() => {
         // The collapse action keeps the focus while the rail moves, so the pointer rule of
@@ -428,25 +518,22 @@ const SidenavBar = ({
     const contextValue = React.useMemo(
         () => ({
             collapsed,
-            collapsedSettled,
-            collapsible,
+            collapseState,
+            isMotionOff,
             doublePanel,
-            toggleCollapsed,
-            subMenuOpenForItemId,
-            setSubMenuOpenForItemId,
-            selectItemAndCloseSubMenu,
+            panelOpenForItemId,
+            setPanelOpenForItemId,
+            selectItemAndClosePanel,
             containerRef,
-            isInsideSubMenu: false,
             selectedItemId: selectedItemId ?? null,
         }),
         [
             collapsed,
-            collapsedSettled,
-            collapsible,
+            collapseState,
+            isMotionOff,
             doublePanel,
-            toggleCollapsed,
-            subMenuOpenForItemId,
-            selectItemAndCloseSubMenu,
+            panelOpenForItemId,
+            selectItemAndClosePanel,
             containerRef,
             selectedItemId,
         ]
@@ -456,8 +543,8 @@ const SidenavBar = ({
 
     const currentWidth = collapsed ? COLLAPSED_WIDTH : width;
 
-    if (process.env.NODE_ENV !== 'production' && sections) {
-        validateSidenavEntries(sections);
+    if (process.env.NODE_ENV !== 'production' && entries) {
+        validateSidenavEntries(entries);
     }
 
     const normalizedVariant = normalizeVariant(variant);
@@ -465,8 +552,8 @@ const SidenavBar = ({
     // A tablet has no room for the rail either, so both breakpoints take the mobile treatment.
     if (isTabletOrSmaller) {
         return (
-            <SidenavMobileBar
-                entries={sections}
+            <SidenavBarMobile
+                entries={entries}
                 aria-label={ariaLabel}
                 variant={normalizedVariant}
                 logo={logo}
@@ -481,21 +568,10 @@ const SidenavBar = ({
 
     const slotRenderProps: SidenavSlotRenderProps = {collapsed, state: collapseState};
     const isDefaultLogo = logo === undefined || logo === true;
-    const logoElement = (() => {
-        if (logo === false) {
-            return null;
-        }
-        if (typeof logo === 'function') {
-            return logo(slotRenderProps);
-        }
-        if (isDefaultLogo) {
-            return <Logo size={LOGO_SIZE} type="isotype" />;
-        }
-        return logo;
-    })();
+    const logoElement = renderSidenavLogo(logo, slotRenderProps, <Logo size={LOGO_SIZE} type="isotype" />);
 
     const collapseActionElement = (() => {
-        if (!collapsible) {
+        if (!showCollapseButton) {
             return null;
         }
 
@@ -519,24 +595,24 @@ const SidenavBar = ({
     const headerSlotElement = renderSidenavSlot(headerSlot, slotRenderProps);
     const footerSlotElement = renderSidenavSlot(footerSlot, slotRenderProps);
     const hasHeader = Boolean(logoElement || collapseActionElement || headerSlotElement);
+    // todo https://github.com/Telefonica/mistica-design/issues/2827 review Boxed border rendering logic
     const hasBoxedBorder =
         boxed && shouldShowBoxedBorder(normalizedVariant, pageVariant, componentProperties.showBoxedBorder);
 
     // The second column belongs to the sidenav, not to the item that opens it, so that it can span the
     // whole height of the sidenav and push the content of the layout.
     const doublePanelItem =
-        doublePanel && subMenuOpenForItemId && sections
-            ? findFirstLevelItem(sections, subMenuOpenForItemId)
+        doublePanel && panelOpenForItemId && entries
+            ? findFirstLevelItem(entries, panelOpenForItemId)
             : undefined;
     const doublePanelChildren = doublePanelItem?.children;
     const isDoublePanelOpen = Boolean(doublePanelChildren?.length);
 
-    // The update runs during the render, as the selection adjustment above does, so React re-renders with the
-    // new content before it paints. The comparison keeps that update out of the renders that change nothing.
+    // This sets state during the render, as the block above does. React then paints once, with the new
+    // content. The comparison skips the update when the content did not change, which would loop.
     if (
-        isDoublePanelOpen &&
         doublePanelItem &&
-        doublePanelChildren &&
+        doublePanelChildren?.length &&
         (doublePanelContent?.label !== doublePanelItem.label ||
             doublePanelContent?.children !== doublePanelChildren)
     ) {
@@ -661,10 +737,10 @@ const SidenavBar = ({
                                     />
                                 )}
                             </div>
-                            {sections && (
+                            {entries && (
                                 // The body is the list of the first level. Each entry is one of its items.
                                 <div className={styles.bodyContent} role="list">
-                                    {renderSidenavEntries(sections)}
+                                    {renderSidenavEntries(entries)}
                                 </div>
                             )}
                             {footerSlot && !fixedFooter && (
@@ -745,7 +821,7 @@ const SidenavBar = ({
                                 variant={normalizedVariant}
                                 backgroundColor={background}
                             >
-                                {doublePanelContent.children.map((child) => renderSidenavItemFromData(child))}
+                                {doublePanelContent.children.map((child) => renderNestedItem(child))}
                             </SidenavDoublePanel>
                         </CSSTransition>
                     )}
@@ -756,6 +832,5 @@ const SidenavBar = ({
 };
 
 export default SidenavBar;
-export {SidenavBar, SidenavSection, SidenavItem};
-export {SidenavBarContext, useSidenavBarContext, SidenavLevelContext, hasDescendantWithId};
-export type {SidenavBarProps, SidenavSectionProps, SidenavLogoRenderProps};
+export {SidenavBar};
+export type {SidenavBarProps};

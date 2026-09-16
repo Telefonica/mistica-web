@@ -27,7 +27,7 @@ type Args = {
     boxed: boolean;
 };
 
-const sections: Array<SidenavEntry> = [
+const entries: Array<SidenavEntry> = [
     {
         id: 'overview',
         label: 'Overview',
@@ -108,13 +108,13 @@ export const FooterSlotCollapseControl = ({showDefaultCollapseAction, boxed}: Ar
             sidenav={
                 <SidenavBar
                     aria-label="Alto Garda activities"
-                    sections={sections}
+                    entries={entries}
                     collapsed={collapsed}
-                    // A sidenav that the user cannot toggle shows no collapse action, and it still follows
-                    // the collapsed prop on every render, so the footer slot stays the only control.
+                    // Without the built-in button the sidenav still follows the collapsed prop on every
+                    // render, so the footer slot stays the only control.
                     {...(showDefaultCollapseAction
                         ? {onCollapse: setCollapsed}
-                        : {collapsible: false as const})}
+                        : {showCollapseButton: false as const})}
                     // The mobile sidenav is a top bar, and it never collapses, so a control that writes the
                     // collapsed state has no meaning there.
                     footerSlot={isTabletOrSmaller ? undefined : footerSlot}
@@ -201,7 +201,7 @@ export default {
         showDefaultCollapseAction: {
             control: {type: 'boolean'},
             description:
-                'Keeps the default collapse action of the header. When it is off, the sidenav takes collapsible false, which hides that action, and only the button of the footer slot collapses the sidenav.',
+                'Keeps the default collapse action of the header. When it is off, the sidenav takes showCollapseButton false, which hides that action, and only the button of the footer slot collapses the sidenav.',
         },
         boxed: {
             control: {type: 'boolean'},

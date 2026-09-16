@@ -7,11 +7,10 @@ import type {NonDeprecatedVariant} from './theme-variant-context';
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
 const BOXED_INSET = 8;
-// Per-level nesting step applied as the item row's left padding. It combines with the item content
-// box's own 8px left margin (which clears the selected indicator on the rail) so a nested item's
-// content box lands 24px from the section rail — the total nesting indent the Figma spec calls for
-// (16 + 8). Using the full 24 here would double-count the 8px margin and over-indent children.
-export const NESTING_INDENT = 16;
+// Left padding of a nested row. It adds to the 8px left margin of the row (which clears the selected
+// indicator on the rail), so the content of a nested row lands 24px from the rail, as the Figma spec asks
+// (16 + 8). The full 24 here would count the 8px margin twice.
+const NESTING_INDENT = 16;
 export const LOGO_SIZE = 32;
 // Horizontal inset of the items rail on each side of a section (see `sectionContent`). The selected
 // indicator of an item sits on that inset, at the left edge of the rail.
@@ -64,21 +63,11 @@ export const CONTENT_DURATION_MS = 400;
 const COLLAPSE_EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';
 const CONTENT_EASING = 'ease';
 
-// The labels fade out one after the other. The first one waits 80ms, and each of the next ones waits
-// 40ms more, up to the last delay of the spec: a list of thirty items would otherwise end its stagger
-// more than a second after the rail stopped.
-export const LABEL_DELAY_BASE_MS = 80;
-export const LABEL_DELAY_STEP_MS = 40;
-export const LABEL_DELAY_MAX_MS = 160;
-
 // `SidenavBar` fills both durations on its root element, and every rule below reads them from there.
 // An acceptance run receives 0ms, so a test that presses a control and reads the result at once never
 // catches a frame of the movement.
 export const collapseDurationVar = createVar();
 export const contentDurationVar = createVar();
-
-// Delay of the fade of one label, which follows the position of its item (see `LABEL_DELAY_BASE_MS`).
-export const itemLabelDelayVar = createVar();
 
 // Every animated rule of this file carries this block: the spec asks for an instant change when the
 // user turns motion down in the operating system.
@@ -307,6 +296,7 @@ export const boxed = style({
 // hidden` clips a negatively-offset outline.
 // `shouldShowBoxedBorder` decides when this class applies: the border only reads over a default or an
 // alternative page, and a skin can switch it off.
+// todo https://github.com/Telefonica/mistica-design/issues/2827 review Boxed border rendering logic
 export const boxedBorder = style({
     '::before': {
         content: '',
@@ -668,14 +658,11 @@ globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${scrollSpacerDivider}`, {
 
 // Item ------------------------------------------------------------------------
 
-export const itemIndentVar = createVar();
-
 export const itemRow = style({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     gap: 6,
-    paddingLeft: itemIndentVar,
 });
 
 // The row of an item takes the same box in both states: `ITEM_ROW_INSET` on each side of the items rail.
@@ -738,7 +725,7 @@ export const itemTouchableSelected = styleVariants(itemColors, (colors) => ({
 
 // The accent stays on the collapsed rail: a selected first-level item keeps its bar in both states. Only
 // a parent whose descendant is selected marks the selection with the background alone, because the bar
-// belongs to the selected child (see `showAccent` in `sidenav-bar-item.tsx`).
+// belongs to the selected child (see `showAccent` in `sidenav-bar-first-level-item.tsx`).
 export const itemAccent = style({
     position: 'absolute',
     left: 0,
@@ -775,7 +762,7 @@ export const itemLabel = style({
     minWidth: 0,
     display: 'grid',
     gridTemplateRows: '1fr',
-    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    transition: `grid-template-rows ${collapseDurationVar} ${COLLAPSE_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 
@@ -816,7 +803,7 @@ export const itemRightSlot = style({
     display: 'flex',
     alignItems: 'center',
     flexShrink: 0,
-    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}, visibility ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    transition: `opacity ${collapseDurationVar} ${COLLAPSE_EASING}, visibility ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 
@@ -831,7 +818,7 @@ export const itemChevron = style({
     flexShrink: 0,
     width: 16,
     height: 16,
-    transition: `transform ${contentDurationVar} ${CONTENT_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}, visibility ${collapseDurationVar} ${COLLAPSE_EASING} ${itemLabelDelayVar}`,
+    transition: `transform ${contentDurationVar} ${CONTENT_EASING}, opacity ${collapseDurationVar} ${COLLAPSE_EASING}, visibility ${collapseDurationVar} ${COLLAPSE_EASING}`,
     ...reducedMotion,
 });
 
@@ -904,11 +891,17 @@ export const nestedListRows = style({
     flexDirection: 'column',
 });
 
-// Sub menu (dialog panel and double panel column) -------------------------------
+// The rows of a panel list the children at the edge, like a first-level row, so only the accordion
+// rows take the indent.
+globalStyle(`${nestedListRows} ${itemRow}`, {
+    paddingLeft: NESTING_INDENT,
+});
 
-// The rows of a sub menu, under the group that names it. It repeats the column of that group, for the
+// Panel (the dialog panel and the second column) -------------------------------
+
+// The rows of a panel, under the group that names it. It repeats the column of that group, for the
 // same reason as `nestedListRows`.
-export const subMenuRows = style({
+export const panelRows = style({
     display: 'flex',
     flexDirection: 'column',
 });

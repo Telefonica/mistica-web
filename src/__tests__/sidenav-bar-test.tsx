@@ -2,7 +2,7 @@ import * as React from 'react';
 import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {SidenavBar, SidenavLayout, SidenavSection as SidenavSectionComponent, SidenavItem} from '..';
+import {SidenavBar, SidenavLayout} from '..';
 import * as styles from '../sidenav-bar.css';
 import * as layoutStyles from '../sidenav-bar-layout.css';
 import {ThemeVariant} from '../theme-variant-context';
@@ -11,6 +11,7 @@ import {sidenavCollapse, sidenavExpand} from '../text-tokens';
 import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
 import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 
+import type {SidenavFirstLevelItem} from '..';
 import type {Variant} from '../theme-variant-context';
 import type {Skin} from '../skins/types';
 import type {SidenavEntry, SidenavSection} from '../sidenav-bar-types';
@@ -41,7 +42,7 @@ const waitForRemoval = (queryElement: () => HTMLElement | null): Promise<void> =
         {timeout: 5000}
     );
 
-const defaultSections: Array<SidenavSection> = [
+const defaultEntries: Array<SidenavSection> = [
     {
         title: 'Workspace',
         items: [
@@ -60,7 +61,7 @@ const defaultSections: Array<SidenavSection> = [
 const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}) => {
     const result = render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavBar aria-label="Main navigation" sections={defaultSections} {...props} />
+            <SidenavBar aria-label="Main navigation" entries={defaultEntries} {...props} />
         </ThemeContextProvider>
     );
 
@@ -103,7 +104,7 @@ test('SidenavLayout offsets the sticky rail by topOffset', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavLayout
                 topOffset={64}
-                sidenav={<SidenavBar aria-label="Main navigation" sections={defaultSections} />}
+                sidenav={<SidenavBar aria-label="Main navigation" entries={defaultEntries} />}
             >
                 content
             </SidenavLayout>
@@ -121,7 +122,7 @@ test('SidenavLayout offsets the sticky rail by topOffset', async () => {
 test('SidenavLayout leaves the rail at the top of the viewport without topOffset', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavLayout sidenav={<SidenavBar aria-label="Main navigation" sections={defaultSections} />}>
+            <SidenavLayout sidenav={<SidenavBar aria-label="Main navigation" entries={defaultEntries} />}>
                 content
             </SidenavLayout>
         </ThemeContextProvider>
@@ -146,7 +147,7 @@ test('SidenavBar renders nested children of an open item', async () => {
 });
 
 test('SidenavBar auto-expands a parent when one of its children is selected', async () => {
-    const sections: Array<SidenavSection> = [
+    const entries: Array<SidenavSection> = [
         {
             title: 'Workspace',
             items: [
@@ -162,7 +163,7 @@ test('SidenavBar auto-expands a parent when one of its children is selected', as
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavBar aria-label="Main navigation" sections={sections} selectedItemId="active" />
+            <SidenavBar aria-label="Main navigation" entries={entries} selectedItemId="active" />
         </ThemeContextProvider>
     );
 
@@ -173,7 +174,7 @@ test('SidenavBar auto-expands a parent when one of its children is selected', as
 });
 
 test('SidenavBar reopens a closed parent when the selection moves to a sibling child', async () => {
-    const sections: Array<SidenavSection> = [
+    const entries: Array<SidenavSection> = [
         {
             title: 'Workspace',
             items: [
@@ -192,7 +193,7 @@ test('SidenavBar reopens a closed parent when the selection moves to a sibling c
 
     const {rerender} = render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavBar aria-label="Main navigation" sections={sections} selectedItemId="active" />
+            <SidenavBar aria-label="Main navigation" entries={entries} selectedItemId="active" />
         </ThemeContextProvider>
     );
 
@@ -206,7 +207,7 @@ test('SidenavBar reopens a closed parent when the selection moves to a sibling c
 
     rerender(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavBar aria-label="Main navigation" sections={sections} selectedItemId="archived" />
+            <SidenavBar aria-label="Main navigation" entries={entries} selectedItemId="archived" />
         </ThemeContextProvider>
     );
 
@@ -224,8 +225,8 @@ test('SidenavBar collapse button toggles the accessible label', async () => {
     expect(screen.getByRole('button', {name: EXPAND_LABEL})).toBeInTheDocument();
 });
 
-test('SidenavBar hides the collapse button when collapsible is false', async () => {
-    await renderSidenav({collapsible: false});
+test('SidenavBar hides the collapse button when showCollapseButton is false', async () => {
+    await renderSidenav({showCollapseButton: false});
 
     expect(
         screen.queryByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
@@ -247,17 +248,17 @@ const hasStyle = (row: HTMLElement, className: string): boolean =>
 
 const renderCollapsible = (props: React.ComponentProps<typeof SidenavBar>) => (
     <ThemeContextProvider theme={makeTheme()}>
-        <SidenavBar aria-label="Main navigation" sections={defaultSections} {...props} />
+        <SidenavBar aria-label="Main navigation" entries={defaultEntries} {...props} />
     </ThemeContextProvider>
 );
 
-test('SidenavBar follows a change of collapsed when collapsible is false', async () => {
-    const {rerender} = render(renderCollapsible({collapsible: false, collapsed: false}));
+test('SidenavBar follows a change of collapsed when showCollapseButton is false', async () => {
+    const {rerender} = render(renderCollapsible({showCollapseButton: false, collapsed: false}));
     await React.act(async () => {});
 
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 
-    rerender(renderCollapsible({collapsible: false, collapsed: true}));
+    rerender(renderCollapsible({showCollapseButton: false, collapsed: true}));
     await React.act(async () => {});
 
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
@@ -294,13 +295,13 @@ test('SidenavBar closes the section title when collapsed and keeps the name of i
 // `title={{text, hidden: true}}` paints no heading, and the list of the section keeps that text as its
 // name, in the same way as the collapsed state above.
 test('SidenavBar hides the heading of a section and keeps the name of its list', async () => {
-    const sections: Array<SidenavSection> = [
+    const entries: Array<SidenavSection> = [
         {
             title: {text: 'Workspace', hidden: true},
             items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
         },
     ];
-    await renderSidenav({sections});
+    await renderSidenav({entries});
 
     // eslint-disable-next-line testing-library/no-node-access
     const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
@@ -497,7 +498,7 @@ test('SidenavBar gives the collapse state to the functions that headerSlot and f
 test('SidenavBar supports controlled selection with selectedItemId prop', async () => {
     const onSelectedItemIdChange = jest.fn();
 
-    const sections: Array<SidenavSection> = [
+    const entries: Array<SidenavSection> = [
         {
             title: 'Workspace',
             items: [
@@ -512,7 +513,7 @@ test('SidenavBar supports controlled selection with selectedItemId prop', async 
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavBar
                 aria-label="Main navigation"
-                sections={sections}
+                entries={entries}
                 selectedItemId="home"
                 onSelectedItemIdChange={onSelectedItemIdChange}
             />
@@ -530,7 +531,7 @@ test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', 
     const onSelectedItemIdChange = jest.fn();
     const onPress = jest.fn();
 
-    const sections: Array<SidenavSection> = [
+    const entries: Array<SidenavSection> = [
         {
             title: 'Workspace',
             items: [
@@ -544,7 +545,7 @@ test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', 
         <ThemeContextProvider theme={makeTheme()}>
             <SidenavBar
                 aria-label="Main navigation"
-                sections={sections}
+                entries={entries}
                 selectedItemId="home"
                 onSelectedItemIdChange={onSelectedItemIdChange}
             />
@@ -575,7 +576,7 @@ const mixedFirstLevel: Array<SidenavEntry> = [
 ];
 
 test('SidenavBar renders stand-alone items at the first level, outside any section', async () => {
-    await renderSidenav({sections: mixedFirstLevel});
+    await renderSidenav({entries: mixedFirstLevel});
 
     expect(screen.getByRole('link', {name: 'Standalone top'})).toHaveAttribute('href', '/standalone-top');
     expect(screen.getByRole('link', {name: 'Standalone bottom'})).toHaveAttribute(
@@ -608,7 +609,7 @@ const getOwnListItem = (element: HTMLElement): HTMLElement =>
     element.closest('[role="listitem"]') as HTMLElement;
 
 test('SidenavBar builds one list for the first level, with one item per entry', async () => {
-    await renderSidenav({sections: mixedFirstLevel});
+    await renderSidenav({entries: mixedFirstLevel});
 
     const nav = screen.getByRole('navigation', {name: 'Main navigation'});
     const [bodyList] = within(nav).getAllByRole('list');
@@ -621,7 +622,7 @@ test('SidenavBar builds one list for the first level, with one item per entry', 
 });
 
 test('SidenavBar gives each section a list of its own, named by its title', async () => {
-    await renderSidenav({sections: mixedFirstLevel});
+    await renderSidenav({entries: mixedFirstLevel});
 
     const sectionList = screen.getByRole('list', {name: 'Workspace'});
 
@@ -632,7 +633,7 @@ test('SidenavBar gives each section a list of its own, named by its title', asyn
 // A stand-alone entry carries the rail of the items on a wrapper of its own, and that wrapper is its list
 // item. The item inside renders none: two nested list items would report one entry instead of two.
 test('SidenavBar gives a stand-alone entry a single list item', async () => {
-    await renderSidenav({sections: mixedFirstLevel});
+    await renderSidenav({entries: mixedFirstLevel});
 
     const entry = getOwnListItem(screen.getByRole('link', {name: 'Standalone top'}));
 
@@ -656,7 +657,7 @@ test('SidenavBar keeps a parent item and its children in the same list item', as
 // entries themselves carry no margin of their own.
 test('SidenavBar keeps every entry of the first level 8px from its neighbours and from the two ends', async () => {
     await renderSidenav({
-        sections: [
+        entries: [
             {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
             {id: 'second', label: 'Second', asset: IconHomeRegular, href: '/second'},
             {
@@ -683,7 +684,7 @@ test('SidenavBar keeps every entry of the first level 8px from its neighbours an
 // gap of the body list already gives the 16px to the neighbour, so a line reads 16px on each side.
 test('SidenavBar gives each section divider its 16px on the side of the items only', async () => {
     await renderSidenav({
-        sections: [
+        entries: [
             {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
             {
                 title: 'Workspace',
@@ -710,7 +711,7 @@ test('SidenavBar gives each section divider its 16px on the side of the items on
 // A line parts two entries, so the body draws none at its own two ends, whatever the sections ask for.
 test('SidenavBar draws no divider above the first entry nor below the last one', async () => {
     await renderSidenav({
-        sections: [
+        entries: [
             {
                 title: 'First',
                 dividerTop: true,
@@ -748,7 +749,7 @@ test('SidenavBar draws no divider above the first entry nor below the last one',
 // section drops its top divider, so one line parts the two sections, with 16px on each side.
 test('SidenavBar shares one divider between a section with a bottom divider and a section with a top divider', async () => {
     await renderSidenav({
-        sections: [
+        entries: [
             {
                 title: 'First',
                 dividerBottom: true,
@@ -778,8 +779,8 @@ test('SidenavBar shares one divider between a section with a bottom divider and 
     expect(entries.map(countDividers)).toEqual([1, 1, 0]);
 });
 
-test('SidenavBar keeps the declared order of sections and stand-alone items', async () => {
-    await renderSidenav({sections: mixedFirstLevel});
+test('SidenavBar keeps the declared order of entries and stand-alone items', async () => {
+    await renderSidenav({entries: mixedFirstLevel});
 
     const labels = screen
         .getAllByRole('link')
@@ -790,13 +791,13 @@ test('SidenavBar keeps the declared order of sections and stand-alone items', as
 });
 
 test('SidenavBar selects a stand-alone item at the first level', async () => {
-    await renderSidenav({sections: mixedFirstLevel, selectedItemId: 'standalone-top'});
+    await renderSidenav({entries: mixedFirstLevel, selectedItemId: 'standalone-top'});
 
     expect(screen.getByRole('link', {name: 'Standalone top'})).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('link', {name: 'Home'})).not.toHaveAttribute('aria-current');
 });
 
-const doublePanelSections: Array<SidenavSection> = [
+const doublePanelEntries: Array<SidenavSection> = [
     {
         title: 'Workspace',
         items: [
@@ -826,7 +827,7 @@ const renderDoublePanelSidenav = async (props: Record<string, unknown> = {}) => 
             <SidenavBar
                 {...({
                     'aria-label': 'Main navigation',
-                    sections: doublePanelSections,
+                    entries: doublePanelEntries,
                     doublePanel: true,
                     ...props,
                 } as any)}
@@ -839,21 +840,21 @@ const renderDoublePanelSidenav = async (props: Record<string, unknown> = {}) => 
     return result;
 };
 
-// The list of the sub menu takes its name from the visible title, through `aria-labelledby`, so the query by
+// The list of the panel takes its name from the visible title, through `aria-labelledby`, so the query by
 // name also asserts that association.
-const getSubMenu = (parentLabel: string) => screen.queryByRole('list', {name: parentLabel});
+const getPanel = (parentLabel: string) => screen.queryByRole('list', {name: parentLabel});
 
 test('SidenavBar double panel opens with the label of the parent item and its children', async () => {
     await renderDoublePanelSidenav();
 
-    expect(getSubMenu('Projects')).not.toBeInTheDocument();
+    expect(getPanel('Projects')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    const subMenu = getSubMenu('Projects');
-    expect(subMenu).toBeInTheDocument();
-    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Active'}));
-    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Archived'}));
+    const panel = getPanel('Projects');
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
     expect(screen.getByRole('button', {name: 'Projects'})).toHaveAttribute('aria-expanded', 'true');
 });
 
@@ -888,7 +889,7 @@ test('SidenavBar double panel steps into the column and back to its parent with 
     // ArrowUp on the first item of the column steps back to its trigger, and the column stays open.
     fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowUp'});
     expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
 
 // One press of ArrowRight opens the column and steps into it, so the user reaches the first item without
@@ -911,7 +912,7 @@ test('SidenavBar double panel steps back into the open column with ArrowRight', 
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
-    const column = getSubMenu('Projects') as HTMLElement;
+    const column = getPanel('Projects') as HTMLElement;
     await waitFor(() => {
         expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
     });
@@ -935,10 +936,10 @@ test.each`
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    const subMenuList = getSubMenu('Projects') as HTMLElement;
+    const panelList = getPanel('Projects') as HTMLElement;
 
-    expect(getListItems(subMenuList)).toHaveLength(2);
-    expect(subMenuList).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(getListItems(panelList)).toHaveLength(2);
+    expect(panelList).toContainElement(screen.getByRole('button', {name: 'Active'}));
 });
 
 test('SidenavBar double panel closes when the user presses one of its children', async () => {
@@ -947,7 +948,7 @@ test('SidenavBar double panel closes when the user presses one of its children',
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Active'}));
 
-    await waitForRemoval(() => getSubMenu('Projects'));
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 test('SidenavBar double panel closes when the user presses the same parent item again', async () => {
@@ -956,18 +957,18 @@ test('SidenavBar double panel closes when the user presses the same parent item 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    await waitForRemoval(() => getSubMenu('Projects'));
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 test('SidenavBar double panel closes when the user presses outside of the bar', async () => {
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 
     fireEvent.click(document.body);
 
-    await waitForRemoval(() => getSubMenu('Projects'));
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 // The second column is a column of the bar, not a floating dialog, so a press that lands on the bar
@@ -978,7 +979,7 @@ test('SidenavBar double panel stays open when the user presses the background of
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByText('Workspace'));
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
 
 // The rail keeps its open column when the user collapses it. A real browser also needs the listener that
@@ -989,11 +990,11 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
     await renderDoublePanelSidenav();
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
 
 // A column that holds the current selection survives a press outside of the bar: the app selects a child
@@ -1001,11 +1002,11 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
 test('SidenavBar double panel stays open when the user presses outside of the bar and it holds the selection', async () => {
     await renderDoublePanelSidenav({selectedItemId: 'active'});
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 
     fireEvent.click(document.body);
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
 
 test('SidenavBar double panel closes when the user presses a first-level item without children', async () => {
@@ -1014,7 +1015,7 @@ test('SidenavBar double panel closes when the user presses a first-level item wi
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Home'}));
 
-    await waitForRemoval(() => getSubMenu('Projects'));
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 test('SidenavBar double panel refreshes when the user presses another parent item', async () => {
@@ -1023,20 +1024,20 @@ test('SidenavBar double panel refreshes when the user presses another parent ite
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
     fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
 
-    expect(getSubMenu('Projects')).not.toBeInTheDocument();
+    expect(getPanel('Projects')).not.toBeInTheDocument();
 
-    const subMenu = getSubMenu('Documents');
-    expect(subMenu).toBeInTheDocument();
-    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Shared'}));
+    const panel = getPanel('Documents');
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
     expect(screen.queryByRole('button', {name: 'Archived'})).not.toBeInTheDocument();
 });
 
 test('SidenavBar double panel opens when the selection moves to one of its children', async () => {
     await renderDoublePanelSidenav({selectedItemId: 'archived'});
 
-    const subMenu = getSubMenu('Projects');
-    expect(subMenu).toBeInTheDocument();
-    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Archived'}));
+    const panel = getPanel('Projects');
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
 });
 
 test('SidenavBar double panel closes when the selection moves to a first-level item without children', async () => {
@@ -1045,7 +1046,7 @@ test('SidenavBar double panel closes when the selection moves to a first-level i
             <SidenavBar
                 {...({
                     'aria-label': 'Main navigation',
-                    sections: doublePanelSections,
+                    entries: doublePanelEntries,
                     doublePanel: true,
                     selectedItemId,
                 } as any)}
@@ -1056,11 +1057,11 @@ test('SidenavBar double panel closes when the selection moves to a first-level i
     const {rerender} = render(renderWithSelection('active'));
     await React.act(async () => {});
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 
     rerender(renderWithSelection('home'));
 
-    await waitForRemoval(() => getSubMenu('Projects'));
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 // A press inside the second column moves the selection and closes the column at the same time. The
@@ -1073,7 +1074,7 @@ test('SidenavBar double panel closes when the user presses one of its children, 
                 <SidenavBar
                     {...({
                         'aria-label': 'Main navigation',
-                        sections: doublePanelSections,
+                        entries: doublePanelEntries,
                         doublePanel: true,
                         selectedItemId,
                         onSelectedItemIdChange: setSelectedItemId,
@@ -1086,11 +1087,11 @@ test('SidenavBar double panel closes when the user presses one of its children, 
     render(<ControlledSidenav />);
     await React.act(async () => {});
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Archived'}));
 
-    await waitForRemoval(() => getSubMenu('Projects'));
+    await waitForRemoval(() => getPanel('Projects'));
 });
 
 // The press that selects a child of the app lands outside of the bar, so it is both a new selection and a
@@ -1103,7 +1104,7 @@ test('SidenavBar double panel moves to the parent of a child selected outside of
                 <SidenavBar
                     {...({
                         'aria-label': 'Main navigation',
-                        sections: doublePanelSections,
+                        entries: doublePanelEntries,
                         doublePanel: true,
                         selectedItemId,
                         onSelectedItemIdChange: setSelectedItemId,
@@ -1117,16 +1118,16 @@ test('SidenavBar double panel moves to the parent of a child selected outside of
     render(<ControlledSidenav />);
     await React.act(async () => {});
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', {name: 'Select from the app'}));
     await React.act(async () => {});
 
-    expect(getSubMenu('Projects')).not.toBeInTheDocument();
+    expect(getPanel('Projects')).not.toBeInTheDocument();
 
-    const subMenu = getSubMenu('Documents');
-    expect(subMenu).toBeInTheDocument();
-    expect(subMenu).toContainElement(screen.getByRole('button', {name: 'Shared'}));
+    const panel = getPanel('Documents');
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
 });
 
 // The tooltip of the collapsed rail wraps the row of the item, and the wrapper carries `aria-describedby`.
@@ -1143,7 +1144,7 @@ test('SidenavBar collapsed double panel keeps the tooltips of the other items wh
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    expect(getSubMenu('Projects')).toBeInTheDocument();
+    expect(getPanel('Projects')).toBeInTheDocument();
     expect(hasTooltip('documents')).toBe(true);
     expect(hasTooltip('home')).toBe(true);
     // The column already shows the label of this item as its title.
@@ -1343,7 +1344,7 @@ test('SidenavBar expands the children inline when doublePanel is false', async (
 });
 
 test('SidenavBar renders a stand-alone item with children at the first level', async () => {
-    const sections: Array<SidenavEntry> = [
+    const entries: Array<SidenavEntry> = [
         {
             id: 'standalone-parent',
             label: 'Standalone parent',
@@ -1353,7 +1354,7 @@ test('SidenavBar renders a stand-alone item with children at the first level', a
         },
     ];
 
-    await renderSidenav({sections});
+    await renderSidenav({entries});
 
     expect(screen.getByRole('button', {name: 'Standalone parent'})).toBeInTheDocument();
     expect(screen.getByRole('link', {name: 'Child'})).toHaveAttribute('href', '/child');
@@ -1371,7 +1372,7 @@ const renderBoxedSidenav = async ({
     render(
         <ThemeContextProvider theme={makeTheme({skin})}>
             <ThemeVariant variant={pageVariant ?? 'default'}>
-                <SidenavBar aria-label="Main navigation" sections={defaultSections} variant={variant} boxed />
+                <SidenavBar aria-label="Main navigation" entries={defaultEntries} variant={variant} boxed />
             </ThemeVariant>
         </ThemeContextProvider>
     );
@@ -1435,7 +1436,7 @@ test('SidenavBar collapse button reports its state through aria-expanded', async
     expect(screen.getByRole('button', {name: EXPAND_LABEL})).toHaveAttribute('aria-expanded', 'false');
 });
 
-const keyboardSections: Array<SidenavSection> = [
+const keyboardEntries: Array<SidenavSection> = [
     {
         title: {text: 'General', hidden: true},
         items: [
@@ -1454,7 +1455,7 @@ const keyboardSections: Array<SidenavSection> = [
 const renderKeyboardSidenav = async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavBar aria-label="Main navigation" sections={keyboardSections} />
+            <SidenavBar aria-label="Main navigation" entries={keyboardEntries} />
         </ThemeContextProvider>
     );
     await React.act(async () => {});
@@ -1531,26 +1532,37 @@ test('SidenavBar moves the focus to the parent with ArrowLeft from a child', asy
     expect(screen.getByRole('button', {name: 'Teams'})).toHaveFocus();
 });
 
-// `SidenavBar` takes its items from `sections`, whose type requires the asset. The JSX components render
-// on their own here, because the type cannot know the level of a `SidenavItem` element.
-test('SidenavItem reports a first-level item without an asset, and it accepts a nested one', async () => {
+// The type requires the asset of a first-level item, so only a consumer without TypeScript reaches this
+// report. The entry below drops the asset through a cast, which is what that consumer does at run time.
+test('SidenavBar reports a first-level item without an asset, and it accepts a nested one', async () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SidenavSectionComponent title={{text: 'General', hidden: true}}>
-                <SidenavItem id="projects" label="Projects" asset={IconFolderRegular} defaultOpen>
-                    <SidenavItem id="active" label="Active" href="/active" />
-                </SidenavItem>
-                <SidenavItem id="home" label="Home" href="/home" />
-            </SidenavSectionComponent>
+            <SidenavBar
+                entries={[
+                    {
+                        title: {text: 'General', hidden: true},
+                        items: [
+                            {
+                                id: 'projects',
+                                label: 'Projects',
+                                asset: IconFolderRegular,
+                                defaultOpen: true,
+                                children: [{id: 'active', label: 'Active', href: '/active'}],
+                            },
+                            {id: 'home', label: 'Home', href: '/home'} as SidenavFirstLevelItem,
+                        ],
+                    },
+                ]}
+            />
         </ThemeContextProvider>
     );
     await React.act(async () => {});
 
     const messages = consoleError.mock.calls.map(([message]) => String(message));
     expect(messages.filter((message) => message.includes('is a first-level item without an asset'))).toEqual([
-        expect.stringContaining('SidenavItem "Home"'),
+        expect.stringContaining('SidenavBar item "Home"'),
     ]);
     consoleError.mockRestore();
 });

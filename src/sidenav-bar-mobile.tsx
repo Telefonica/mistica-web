@@ -22,13 +22,19 @@ import {useDisableBodyScroll, useTheme} from './hooks';
 import {useSetModalState} from './modal-context-provider';
 import {NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as tokens from './text-tokens';
-import {isSidenavSection, getSidenavSectionTitle, renderSidenavSlot} from './sidenav-bar-types';
+import {
+    isSidenavSection,
+    getFirstLevelItems,
+    getSidenavSectionTitle,
+    renderSidenavSlot,
+    renderSidenavLogo,
+} from './sidenav-bar-data';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
 import type {
     SidenavEntry,
-    SidenavItem,
+    SidenavFirstLevelItem,
     SidenavNestedItem,
     SidenavLogo,
     SidenavSlot,
@@ -62,7 +68,7 @@ const BACK_BAR_SPACE = 16;
 // not the group of the main navigation bar: a page that holds both components traps each one on its own.
 const SIDENAV_FOCUS_TRAP_GROUP = 'sidenav-burger-menu-lock';
 
-type SidenavMobileBarProps = {
+type SidenavBarMobileProps = {
     /** First-level entries of the panel. */
     entries?: ReadonlyArray<SidenavEntry>;
     /** Accessible name of the navigation landmark. */
@@ -82,11 +88,7 @@ type SidenavMobileBarProps = {
     dataAttributes?: DataAttributes;
 };
 
-/** The items of the first level, in order: the items of every section, and every stand-alone item. */
-const getFirstLevelItems = (entries: ReadonlyArray<SidenavEntry>): Array<SidenavItem> =>
-    entries.flatMap((entry) => (isSidenavSection(entry) ? [...entry.items] : [entry as SidenavItem]));
-
-const SidenavMobileBar = ({
+const SidenavBarMobile = ({
     entries,
     'aria-label': ariaLabel,
     variant,
@@ -96,15 +98,13 @@ const SidenavMobileBar = ({
     selectedItemId,
     onSelectedItemIdChange,
     dataAttributes,
-}: SidenavMobileBarProps): JSX.Element => {
+}: SidenavBarMobileProps): JSX.Element => {
     const {texts, t} = useTheme();
     const menuId = React.useId();
     const setModalState = useSetModalState();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [disableFocusTrap, setDisableFocusTrap] = React.useState(true);
-    // Id of the parent item whose children the second level shows. The sidenav holds two levels, so one id
-    // describes the whole state of the panel.
-    const [openedItemId, setOpenedItemId] = React.useState<string | null>(null);
+    const [openedFirstLevelItemId, setOpenedFirstLevelItemId] = React.useState<string | null>(null);
     const [isSecondLevelOpen, setIsSecondLevelOpen] = React.useState(false);
 
     useDisableBodyScroll(isMenuOpen);
@@ -123,20 +123,9 @@ const SidenavMobileBar = ({
     const slotRenderProps: SidenavSlotRenderProps = {collapsed: false, state: 'expanded'};
     const headerSlotElement = renderSidenavSlot(headerSlot, slotRenderProps);
     const footerSlotElement = renderSidenavSlot(footerSlot, slotRenderProps);
-    const logoElement = (() => {
-        if (logo === false) {
-            return null;
-        }
-        if (typeof logo === 'function') {
-            return logo(slotRenderProps);
-        }
-        if (logo === undefined || logo === true) {
-            return <Logo size={MOBILE_LOGO_SIZE} />;
-        }
-        return logo;
-    })();
+    const logoElement = renderSidenavLogo(logo, slotRenderProps, <Logo size={MOBILE_LOGO_SIZE} />);
 
-    const renderRow = (item: SidenavItem | SidenavNestedItem): JSX.Element => {
+    const renderRow = (item: SidenavFirstLevelItem | SidenavNestedItem): JSX.Element => {
         const commonProps = {
             title: item.label,
             right: item.rightSlot,
@@ -149,7 +138,7 @@ const SidenavMobileBar = ({
                     key={item.id}
                     {...commonProps}
                     onPress={() => {
-                        setOpenedItemId(item.id);
+                        setOpenedFirstLevelItemId(item.id);
                         setIsSecondLevelOpen(true);
                     }}
                 />
@@ -158,8 +147,11 @@ const SidenavMobileBar = ({
 
         const navigate = async (callback?: () => void | Promise<void>) => {
             onSelectedItemIdChange?.(item.id);
-            await callback?.();
-            closeMenu();
+            try {
+                await callback?.();
+            } finally {
+                closeMenu();
+            }
         };
 
         if (item.href !== undefined) {
@@ -192,8 +184,8 @@ const SidenavMobileBar = ({
     const renderEntry = (entry: SidenavEntry, entryIndex: number): JSX.Element => {
         if (!isSidenavSection(entry)) {
             return (
-                <ResetResponsiveLayout key={(entry as SidenavItem).id}>
-                    <RowList>{renderRow(entry as SidenavItem)}</RowList>
+                <ResetResponsiveLayout key={(entry as SidenavFirstLevelItem).id}>
+                    <RowList>{renderRow(entry as SidenavFirstLevelItem)}</RowList>
                 </ResetResponsiveLayout>
             );
         }
@@ -211,8 +203,8 @@ const SidenavMobileBar = ({
         );
     };
 
-    const openedItem = openedItemId
-        ? getFirstLevelItems(entries ?? []).find((item) => item.id === openedItemId)
+    const openedFirstLevelItem = openedFirstLevelItemId
+        ? getFirstLevelItems(entries ?? []).find((item) => item.id === openedFirstLevelItemId)
         : undefined;
 
     const topBar = (
@@ -260,10 +252,10 @@ const SidenavMobileBar = ({
                 id={menuId}
                 aria-label={ariaLabel}
                 topOffset={NAVBAR_HEIGHT_MOBILE}
-                secondLevelOpen={isSecondLevelOpen}
+                showSecondLevel={isSecondLevelOpen}
                 onExited={() => {
                     setIsSecondLevelOpen(false);
-                    setOpenedItemId(null);
+                    setOpenedFirstLevelItemId(null);
                 }}
                 focusTrapGroup={SIDENAV_FOCUS_TRAP_GROUP}
                 disableFocusTrap={disableFocusTrap}
@@ -279,7 +271,7 @@ const SidenavMobileBar = ({
                     </ResponsiveLayout>
                 }
                 secondLevel={
-                    openedItem ? (
+                    openedFirstLevelItem ? (
                         <ResponsiveLayout>
                             <Stack space={ENTRY_SPACE}>
                                 <Stack space={BACK_BAR_SPACE}>
@@ -289,11 +281,13 @@ const SidenavMobileBar = ({
                                         topFixed={false}
                                         withBorder={false}
                                     />
-                                    <Title3>{openedItem.label}</Title3>
+                                    <Title3>{openedFirstLevelItem.label}</Title3>
                                 </Stack>
                                 <ResetResponsiveLayout>
-                                    <RowList aria-label={openedItem.label}>
-                                        {(openedItem.children ?? []).map((child) => renderRow(child))}
+                                    <RowList aria-label={openedFirstLevelItem.label}>
+                                        {(openedFirstLevelItem.children ?? []).map((child) =>
+                                            renderRow(child)
+                                        )}
                                     </RowList>
                                 </ResetResponsiveLayout>
                             </Stack>
@@ -305,5 +299,4 @@ const SidenavMobileBar = ({
     );
 };
 
-export {SidenavMobileBar};
-export type {SidenavMobileBarProps};
+export {SidenavBarMobile};

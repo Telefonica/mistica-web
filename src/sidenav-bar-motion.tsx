@@ -1,21 +1,25 @@
 'use client';
 import * as React from 'react';
-import {useIsomorphicLayoutEffect} from './hooks';
+import {useIsomorphicLayoutEffect, useTheme} from './hooks';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion)';
 
 /**
- * Whether the user asked the operating system for less motion.
+ * Whether the sidenav must move with zero duration: the user asked the operating system for less motion,
+ * or an acceptance test runs, where no half-animated node may stay in the DOM after the state that
+ * removed it.
  *
- * Every animated rule of the sidenav already drops its transition through this same media query, so the
+ * Every animated rule of the sidenav already drops its transition through the same media query, so the
  * screen answers on its own. This hook gives the answer to the parts that run in JavaScript instead: the
  * timeouts that keep a box in the document until it finished closing, and the delay after which the
  * sidenav reports that its rail stopped.
  *
- * It reports `false` on the server and for the first render, where no media query exists. A toggle of the
- * sidenav always comes later than that, so the value is settled by the time anything reads it.
+ * The media query reports `false` on the server and for the first render, where it does not exist. A
+ * toggle of the sidenav always comes later than that, so the value is settled by the time anything reads it.
  */
-const useIsReducedMotion = (): boolean => {
+const useIsMotionOff = (): boolean => {
+    const {platformOverrides} = useTheme();
     const [isReducedMotion, setIsReducedMotion] = React.useState(false);
 
     React.useEffect(() => {
@@ -30,7 +34,7 @@ const useIsReducedMotion = (): boolean => {
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
-    return isReducedMotion;
+    return isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
 };
 
 /**
@@ -63,4 +67,4 @@ const useRestWidth = (
     return {ref, frozenWidth};
 };
 
-export {useIsReducedMotion, useRestWidth};
+export {useIsMotionOff, useRestWidth};

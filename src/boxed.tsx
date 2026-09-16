@@ -43,6 +43,7 @@ type InternalProps = {
  * @param internalVariant the variant of the box itself
  * @param externalVariant the variant of the page behind the box
  */
+// todo https://github.com/Telefonica/mistica-design/issues/2827 review boxed border rendering logic
 export const shouldShowBoxedBorder = (
     internalVariant: Variant,
     externalVariant: Variant,

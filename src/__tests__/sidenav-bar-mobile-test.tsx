@@ -65,7 +65,7 @@ const theme = makeTheme({i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode
 const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}) => {
     const result = render(
         <ThemeContextProvider theme={theme}>
-            <SidenavBar aria-label="Main navigation" sections={entries} {...props} />
+            <SidenavBar aria-label="Main navigation" entries={entries} {...props} />
         </ThemeContextProvider>
     );
 
@@ -105,6 +105,28 @@ test('SidenavBar mobile reports the expanded state, at rest, to the function tha
     expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
 });
 
+// The collapse state belongs to the desktop rail. The mobile branch never receives it, so a collapsed
+// bar renders the same top bar and panel as an expanded one, and it offers no button to toggle it.
+test('SidenavBar mobile ignores the collapsed state', async () => {
+    await renderSidenav({
+        collapsed: true,
+        onCollapse: jest.fn(),
+        logo: ({collapsed}) => <img src="/brand.svg" alt={`Logo ${collapsed}`} />,
+        headerSlot: ({collapsed, state}) => <button type="button">{`Header ${state} ${collapsed}`}</button>,
+        footerSlot: ({collapsed, state}) => <button type="button">{`Footer ${state} ${collapsed}`}</button>,
+    });
+
+    expect(screen.getByRole('img', {name: 'Logo false'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Expand navigation'})).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Collapse navigation'})).not.toBeInTheDocument();
+
+    await openMenu();
+
+    expect(screen.getByRole('button', {name: 'Footer expanded false'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Home'})).toBeInTheDocument();
+});
+
 test('SidenavBar mobile opens the panel with one row per first-level item', async () => {
     await renderSidenav();
     await openMenu();
@@ -117,13 +139,13 @@ test('SidenavBar mobile opens the panel with one row per first-level item', asyn
 
 // A hidden title paints no heading on mobile either, and the list of the section keeps its name.
 test('SidenavBar mobile hides the heading of a section and keeps the name of its list', async () => {
-    const sections: Array<SidenavEntry> = [
+    const entries: Array<SidenavEntry> = [
         {
             title: {text: 'Workspace', hidden: true},
             items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
         },
     ];
-    await renderSidenav({sections});
+    await renderSidenav({entries});
     await openMenu();
 
     expect(screen.queryByRole('heading', {name: 'Workspace'})).not.toBeInTheDocument();

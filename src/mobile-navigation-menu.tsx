@@ -55,8 +55,8 @@ type MobileNavigationMenuProps = {
     firstLevel: React.ReactNode;
     /** Content of the second pane. */
     secondLevel?: React.ReactNode;
-    /** True while the second pane must show. The panel slides both panes on every change of this prop. */
-    secondLevelOpen?: boolean;
+    /** True if the second pane must show. The panel slides both panes on every change of this prop. */
+    showSecondLevel?: boolean;
     /** Called once the panel finished its exit, so the consumer resets its own state. */
     onExited?: () => void;
     /** Accessible name of the navigation landmark. */
@@ -73,7 +73,7 @@ const MobileNavigationMenu = ({
     topOffset,
     firstLevel,
     secondLevel,
-    secondLevelOpen = false,
+    showSecondLevel = false,
     onExited,
     'aria-label': ariaLabel,
     focusTrapGroup,
@@ -91,8 +91,7 @@ const MobileNavigationMenu = ({
     React.useEffect(() => {
         let id: NodeJS.Timeout;
 
-        // menu starts opening or closing
-        if (secondLevelOpen) {
+        if (showSecondLevel) {
             dispatch('open');
             id = setTimeout(() => dispatch('finishOpen'), menuAnimationDuration);
         } else {
@@ -101,7 +100,7 @@ const MobileNavigationMenu = ({
         }
 
         return () => clearTimeout(id);
-    }, [secondLevelOpen, menuAnimationDuration]);
+    }, [showSecondLevel, menuAnimationDuration]);
 
     React.useEffect(() => {
         // Make screen reader focus on back button when opening any section's menu
@@ -142,7 +141,7 @@ const MobileNavigationMenu = ({
                             <div
                                 className={styles.burgerMenuContentContainer}
                                 style={{
-                                    transform: `translate(${secondLevelOpen ? '-100vw' : '0'})`,
+                                    transform: `translate(${showSecondLevel ? '-100vw' : '0'})`,
                                 }}
                             >
                                 {secondLevelStatus !== 'opened' && firstLevel}
@@ -152,7 +151,7 @@ const MobileNavigationMenu = ({
                                 className={styles.burgerMenuContentContainer}
                                 ref={secondLevelRef}
                                 style={{
-                                    transform: `translate(${secondLevelOpen ? '0' : '100vw'})`,
+                                    transform: `translate(${showSecondLevel ? '0' : '100vw'})`,
                                 }}
                             >
                                 {secondLevelStatus !== 'closed' && secondLevel}

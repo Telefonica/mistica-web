@@ -5,6 +5,14 @@ extends:
 plugins:
     - mistica-local-rules
 overrides:
+    # import/no-restricted-paths is silent without a resolver that knows ts. Scoped: repo wide it breaks other rules.
+    - files:
+          - 'src/sidenav-bar*.tsx'
+          - 'src/navigation-bar.tsx'
+      settings:
+          import/resolver:
+              node:
+                  extensions: ['.js', '.ts', '.tsx']
     - files:
           - '*.js'
       parser: espree
@@ -29,28 +37,23 @@ overrides:
                           - '@vanilla-extract/css'
                           - '**/sprinkles.css'
                       message: This package should only be imported in css files
-    # SidenavBar shares the top bar and the burger menu with the navigation bars. Every shared part lives in
-    # navigation-shared and in mobile-navigation-menu, so the sidenav never reads the internals of
-    # navigation-bar. This override repeats the patterns above, because eslint replaces the options of a rule
-    # instead of merging them.
-    - files:
-          - 'src/sidenav-bar*.tsx'
-      rules:
-          no-restricted-imports:
-              - error
-              - patterns:
-                    - group:
-                          - '@vanilla-extract/css'
-                          - '**/sprinkles.css'
-                      message: This package should only be imported in css files
-                    - group:
-                          - '**/navigation-bar'
-                          - '**/navigation-bar.css'
-                      message: Import the shared parts from navigation-shared or mobile-navigation-menu
 rules:
     import/extensions:
         - error
         - js: never
           json: always
           css: always
+    # Sidenav and navigation bar only share code through navigation-shared and mobile-navigation-menu
+    import/no-restricted-paths:
+        - error
+        - zones:
+              - target: './src/sidenav-bar*.tsx'
+                from: './src/navigation-bar.tsx'
+                message: Import the shared parts from navigation-shared or mobile-navigation-menu
+              - target: './src/sidenav-bar*.tsx'
+                from: './src/navigation-bar.css.ts'
+                message: Import the shared parts from navigation-shared or mobile-navigation-menu
+              - target: './src/navigation-bar.tsx'
+                from: './src/sidenav-bar*.tsx'
+                message: The navigation bar must not depend on the sidenav
     mistica-local-rules/use-client: error
