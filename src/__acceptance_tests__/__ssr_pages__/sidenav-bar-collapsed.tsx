@@ -23,7 +23,7 @@ const entries: ReadonlyArray<SidenavEntry> = [
 ];
 
 // The collapsed rail exercises the other server path: the labels keep their box but fade out, and every
-// item wraps itself in a tooltip because `collapsedSettled` starts at the collapsed value.
+// item wraps itself in a tooltip because the collapse state starts at rest collapsed.
 const SidenavBarCollapsedTest = (): JSX.Element => (
     <SidenavBar
         aria-label="Main navigation"

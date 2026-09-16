@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import {NESTING_INDENT} from './sidenav-bar.css';
 import {useSidenavBarContext} from './sidenav-bar-context';
 import {SidenavRow, useSidenavNavigation} from './sidenav-bar-row';
 
@@ -38,12 +37,9 @@ const SidenavNestedItem = ({
     dataAttributes,
     ...navigationProps
 }: SidenavNestedItemProps): JSX.Element => {
-    const {selectedItemId, isInsidePanel} = useSidenavBarContext();
+    const {selectedItemId} = useSidenavBarContext();
     const navigation = useSidenavNavigation(id, navigationProps);
     const selected = selectedItemId === id;
-
-    // A panel lists the children as its own rows, so they start at the edge like a first-level row.
-    const indent = isInsidePanel ? 0 : NESTING_INDENT;
 
     return (
         <div role="listitem">
@@ -52,7 +48,6 @@ const SidenavNestedItem = ({
                 label={label}
                 asset={asset}
                 rightSlot={rightSlot}
-                indent={indent}
                 showBackground={selected}
                 showAccent={selected}
                 current={selected}
@@ -64,4 +59,3 @@ const SidenavNestedItem = ({
 };
 
 export {SidenavNestedItem};
-export type {SidenavNestedItemProps};

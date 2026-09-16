@@ -225,8 +225,8 @@ test('SidenavBar collapse button toggles the accessible label', async () => {
     expect(screen.getByRole('button', {name: EXPAND_LABEL})).toBeInTheDocument();
 });
 
-test('SidenavBar hides the collapse button when collapsible is false', async () => {
-    await renderSidenav({collapsible: false});
+test('SidenavBar hides the collapse button when showCollapseButton is false', async () => {
+    await renderSidenav({showCollapseButton: false});
 
     expect(
         screen.queryByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
@@ -252,13 +252,13 @@ const renderCollapsible = (props: React.ComponentProps<typeof SidenavBar>) => (
     </ThemeContextProvider>
 );
 
-test('SidenavBar follows a change of collapsed when collapsible is false', async () => {
-    const {rerender} = render(renderCollapsible({collapsible: false, collapsed: false}));
+test('SidenavBar follows a change of collapsed when showCollapseButton is false', async () => {
+    const {rerender} = render(renderCollapsible({showCollapseButton: false, collapsed: false}));
     await React.act(async () => {});
 
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 
-    rerender(renderCollapsible({collapsible: false, collapsed: true}));
+    rerender(renderCollapsible({showCollapseButton: false, collapsed: true}));
     await React.act(async () => {});
 
     expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);

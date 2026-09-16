@@ -181,6 +181,9 @@ type SidenavEntry = ExclusifyUnion<SidenavSection | SidenavFirstLevelItem>;
  */
 type SidenavCollapseState = 'expanded' | 'collapsing' | 'collapsed' | 'expanding';
 
+const isSidenavMoving = (state: SidenavCollapseState): boolean =>
+    state === 'collapsing' || state === 'expanding';
+
 /**
  * Props of the slots that render per state: the logo, the header slot, the footer slot, and the collapse
  * action. `collapsed` flips at the first frame of the motion, and `state` tells the phase, so a slot can
@@ -218,3 +221,4 @@ export type {
     SidenavSlotRenderProps,
     SidenavCollapseState,
 };
+export {isSidenavMoving};

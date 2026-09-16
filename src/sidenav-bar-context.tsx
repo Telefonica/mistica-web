@@ -1,19 +1,16 @@
 'use client';
 import * as React from 'react';
 
+import type {SidenavCollapseState} from './sidenav-bar-types';
+
 type SidenavBarContextValue = {
+    /** Target collapsed state. It flips at the first frame of the motion. */
     collapsed: boolean;
-    /**
-     * The collapsed state, reported only once the movement of the rail ended. It drives the parts of the
-     * row of an item that appear and disappear instead of moving, and above all the tooltip of the
-     * collapsed rail: that tooltip wraps the row, so its arrival replaces the row in the DOM, and a
-     * replaced node starts at its final style instead of animating. Reading the settled state keeps the
-     * row untouched for the whole movement, and changes it when nothing moves any more.
-     */
-    collapsedSettled: boolean;
-    collapsible: boolean;
+    /** Phase of the collapse motion, for the parts of a row that must wait until the rail rests. */
+    collapseState: SidenavCollapseState;
+    /** True when every movement of the sidenav takes zero time. See `useIsMotionOff`. */
+    isMotionOff: boolean;
     doublePanel: boolean;
-    toggleCollapsed: () => void;
     /** The first-level item whose children show in the panel. One panel opens at a time. */
     panelOpenForItemId: string | null;
     setPanelOpenForItemId: (id: string | null) => void;
@@ -24,26 +21,21 @@ type SidenavBarContextValue = {
      */
     selectItemAndClosePanel: (itemId: string | null) => void;
     containerRef: React.RefObject<HTMLElement | null>;
-    /** True for an item that renders inside the panel (the second column or the dialog panel). */
-    isInsidePanel: boolean;
     selectedItemId: string | null;
 };
 
 const SidenavBarContext = React.createContext<SidenavBarContextValue>({
     collapsed: false,
-    collapsedSettled: false,
-    collapsible: true,
+    collapseState: 'expanded',
+    isMotionOff: false,
     doublePanel: false,
-    toggleCollapsed: () => {},
     panelOpenForItemId: null,
     setPanelOpenForItemId: () => {},
     selectItemAndClosePanel: () => {},
     containerRef: React.createRef(),
-    isInsidePanel: false,
     selectedItemId: null,
 });
 
 const useSidenavBarContext = (): SidenavBarContextValue => React.useContext(SidenavBarContext);
 
 export {SidenavBarContext, useSidenavBarContext};
-export type {SidenavBarContextValue};

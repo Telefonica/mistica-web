@@ -25,8 +25,7 @@ import {vars as skinVars} from '../skins/skin-contract.css';
 import {SidenavStoryPage} from './sidenav-bar-story-page';
 
 import type {Variant} from '../theme-variant-context';
-import type {SidenavEntry} from '../sidenav-bar-types';
-import type {SidenavLogoRenderProps} from '../sidenav-bar';
+import type {SidenavEntry, SidenavLogoRenderProps} from '../sidenav-bar-types';
 
 const getDefaultEntries = (
     onAction: (action: string) => void,
@@ -211,7 +210,7 @@ type Args = {
     sectionDividerTop: boolean;
     sectionDividerBottom: boolean;
     longLabels: boolean;
-    collapsible: boolean;
+    showCollapseButton: boolean;
     defaultCollapsed: boolean;
     collapsed: boolean;
     doublePanel: boolean;
@@ -233,7 +232,7 @@ export const Default = ({
     sectionDividerTop,
     sectionDividerBottom,
     longLabels,
-    collapsible,
+    showCollapseButton,
     defaultCollapsed,
     collapsed,
     doublePanel,
@@ -279,14 +278,14 @@ export const Default = ({
                         fixedFooter,
                         boxed,
                         divider,
-                        ...(collapsible
+                        ...(showCollapseButton
                             ? {
-                                  collapsible: true,
+                                  showCollapseButton: true,
                                   defaultCollapsed,
                                   onCollapse: (isCollapsed: boolean) =>
                                       setLastAction(isCollapsed ? 'Sidenav collapsed' : 'Sidenav expanded'),
                               }
-                            : {collapsible: false, collapsed}),
+                            : {showCollapseButton: false, collapsed}),
                         doublePanel,
                         width,
                         entries,
@@ -436,7 +435,7 @@ export default {
         sectionDividerTop: true,
         sectionDividerBottom: false,
         longLabels: false,
-        collapsible: true,
+        showCollapseButton: true,
         defaultCollapsed: false,
         collapsed: false,
         doublePanel: false,
@@ -531,21 +530,22 @@ export default {
             description:
                 'Gives a long text to one section title, to one stand-alone item, to one item with a right slot and to one nested item. Such a text wraps over several lines, and the row grows with it. It never truncates. The stand-alone item carries a single word, which breaks inside the word.',
         },
-        collapsible: {
+        showCollapseButton: {
             control: {type: 'boolean'},
-            description: 'Whether the user can toggle the collapsed state.',
+            description:
+                'Renders the built-in collapse button. Without it, the sidenav never toggles by itself, so it takes collapsed alone and neither defaultCollapsed nor onCollapse.',
         },
         defaultCollapsed: {
             control: {type: 'boolean'},
-            if: {arg: 'collapsible', truthy: true},
+            if: {arg: 'showCollapseButton', truthy: true},
             description:
                 'Initial collapsed state (uncontrolled). It seeds the state once, so a later change of this control does not move the sidenav.',
         },
         collapsed: {
             control: {type: 'boolean'},
-            if: {arg: 'collapsible', truthy: false},
+            if: {arg: 'showCollapseButton', truthy: false},
             description:
-                'Collapsed state of a non-toggleable sidenav, which mirrors this prop on every render. Unlike defaultCollapsed, it is not a seed: a later change of it moves the sidenav.',
+                'Collapsed state of a sidenav without the built-in button, which mirrors this prop on every render. Unlike defaultCollapsed, it is not a seed: a later change of it moves the sidenav.',
         },
         doublePanel: {
             control: {type: 'boolean'},

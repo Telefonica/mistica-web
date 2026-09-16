@@ -233,7 +233,7 @@ const MainNavigationBarBurgerMenu = ({
             open={open}
             id={id}
             topOffset={NAVBAR_HEIGHT_MOBILE + topSlotHeight}
-            secondLevelOpen={isSubMenuOpen}
+            showSecondLevel={isSubMenuOpen}
             onExited={() => {
                 setIsSubMenuOpen(false);
                 setOpenedSection(-1);

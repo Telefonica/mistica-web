@@ -39,7 +39,7 @@ const SidenavSection = ({
     children,
     dataAttributes,
 }: SidenavSectionProps): JSX.Element => {
-    const {collapsed, collapsedSettled} = useSidenavBarContext();
+    const {collapsed, collapseState} = useSidenavBarContext();
     const variant = useThemeVariant();
     const {text: titleText, isHeadingVisible} = getSidenavSectionTitle(title);
     // The title names the list of the section, so the name a screen reader speaks is always the text of
@@ -49,7 +49,7 @@ const SidenavSection = ({
     // The title holds the width that it had at rest while the sidenav moves, in both directions, so its
     // lines stay where they are while its box folds. See `sectionTitleKeepsWidth` for the fallback. A
     // hidden heading never moves, so it needs no measurement.
-    const isTitleWidthKept = isHeadingVisible && (collapsed || collapsedSettled);
+    const isTitleWidthKept = isHeadingVisible && collapseState !== 'expanded';
     const {ref: titleRef, frozenWidth: titleWidth} = useRestWidth(isTitleWidthKept);
 
     return (
@@ -96,4 +96,3 @@ const SidenavSection = ({
 };
 
 export {SidenavSection};
-export type {SidenavSectionProps};

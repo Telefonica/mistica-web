@@ -105,6 +105,28 @@ test('SidenavBar mobile reports the expanded state, at rest, to the function tha
     expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
 });
 
+// The collapse state belongs to the desktop rail. The mobile branch never receives it, so a collapsed
+// bar renders the same top bar and panel as an expanded one, and it offers no button to toggle it.
+test('SidenavBar mobile ignores the collapsed state', async () => {
+    await renderSidenav({
+        collapsed: true,
+        onCollapse: jest.fn(),
+        logo: ({collapsed}) => <img src="/brand.svg" alt={`Logo ${collapsed}`} />,
+        headerSlot: ({collapsed, state}) => <button type="button">{`Header ${state} ${collapsed}`}</button>,
+        footerSlot: ({collapsed, state}) => <button type="button">{`Footer ${state} ${collapsed}`}</button>,
+    });
+
+    expect(screen.getByRole('img', {name: 'Logo false'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Expand navigation'})).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Collapse navigation'})).not.toBeInTheDocument();
+
+    await openMenu();
+
+    expect(screen.getByRole('button', {name: 'Footer expanded false'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Home'})).toBeInTheDocument();
+});
+
 test('SidenavBar mobile opens the panel with one row per first-level item', async () => {
     await renderSidenav();
     await openMenu();

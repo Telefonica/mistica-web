@@ -13,7 +13,6 @@ import {
 import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
-import {isRunningAcceptanceTest} from './utils/platform';
 import {useScreenSize, useTheme} from './hooks';
 import {IconButton} from './icon-button';
 import {Logo} from './logo';
@@ -23,18 +22,20 @@ import {SidenavFirstLevelItem} from './sidenav-bar-first-level-item';
 import {SidenavNestedItem} from './sidenav-bar-nested-item';
 import {SidenavSection} from './sidenav-bar-section';
 import {SidenavDoublePanel} from './sidenav-bar-panel';
-import {SidenavMobileBar} from './sidenav-bar-mobile';
-import {useIsReducedMotion} from './sidenav-bar-motion';
+import {SidenavBarMobile} from './sidenav-bar-mobile';
+import {useIsMotionOff} from './sidenav-bar-motion';
 import {useSidenavRailKeyboard} from './sidenav-bar-keyboard';
-import {SidenavBarContext, useSidenavBarContext} from './sidenav-bar-context';
+import {SidenavBarContext} from './sidenav-bar-context';
 import {shouldShowBoxedBorder} from './boxed';
 import {
     isSidenavSection,
     getFirstLevelItems,
     getSidenavSectionTitle,
     renderSidenavSlot,
+    renderSidenavLogo,
 } from './sidenav-bar-data';
 import * as tokens from './text-tokens';
+import {isSidenavMoving} from './sidenav-bar-types';
 
 import type {Variant} from './theme-variant-context';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -44,7 +45,6 @@ import type {
     SidenavFirstLevelItem as SidenavFirstLevelItemData,
     SidenavNestedItem as SidenavNestedItemData,
     SidenavLogo,
-    SidenavLogoRenderProps,
     SidenavSlot,
     SidenavSlotRenderProps,
     SidenavCollapseState,
@@ -98,9 +98,11 @@ type SidenavBarBaseProps = {
  *   `divider` is only accepted when `boxed` is false.
  * - The collapsed state is either controlled through `collapsed` (requires `onCollapse`)
  *   or uncontrolled through `defaultCollapsed` (optional `onCollapse`), never both.
- * - When `collapsible: false`, the sidenav cannot be toggled, so `onCollapse` is not allowed, and it takes
- *   the static `collapsed` prop (not `defaultCollapsed`), which drives the collapsed state of every render
- *   instead of seeding it once. That sidenav shows no collapse action either.
+ * - `showCollapseButton: false` removes the built-in collapse button, which is the only control that
+ *   toggles the state from inside. Without it, the sidenav never changes the state by itself, so
+ *   `onCollapse` has no event to report and `defaultCollapsed` has no state to seed: both are not
+ *   allowed. That sidenav takes `collapsed` alone, and mirrors it on every render, so a control of your
+ *   own (for example in a slot) still collapses it through that prop.
  * - `fixedFooter` is only allowed when `footerSlot` is provided.
  */
 type SidenavBarProps = SidenavBarBaseProps &
@@ -122,24 +124,24 @@ type SidenavBarProps = SidenavBarBaseProps &
               collapsed: boolean;
               /** Handler for collapsed state changes (required for controlled mode). */
               onCollapse: (collapsed: boolean) => void;
-              /** Whether user can toggle collapsed state. @default true */
-              collapsible?: true;
+              /** Renders the built-in collapse button, which lets the user toggle the state. @default true */
+              showCollapseButton?: true;
           }
         | {
               /** Initial collapsed state (uncontrolled). @default false */
               defaultCollapsed?: boolean;
               /** Optional handler for collapsed state changes (for logging/effects). */
               onCollapse?: (collapsed: boolean) => void;
-              /** Whether user can toggle collapsed state. @default true */
-              collapsible?: true;
+              /** Renders the built-in collapse button, which lets the user toggle the state. @default true */
+              showCollapseButton?: true;
           }
         | {
-              /** Collapsed state. The user cannot toggle it, so the sidenav mirrors this prop on every
-               * render. Unlike `defaultCollapsed`, it is not a seed: a later change of it moves the
-               * sidenav. @default false */
+              /** Collapsed state. There is no built-in button to toggle it, so the sidenav mirrors this
+               * prop on every render. Unlike `defaultCollapsed`, it is not a seed: a later change of it
+               * moves the sidenav. @default false */
               collapsed?: boolean;
-              /** User cannot toggle collapsed state. */
-              collapsible: false;
+              /** Hides the built-in collapse button. Only a change of `collapsed` moves the sidenav. */
+              showCollapseButton: false;
           }
     > &
     ExclusifyUnion<
@@ -287,7 +289,7 @@ const SidenavBar = ({
     variant = 'default',
     boxed = false,
     divider = true,
-    collapsible = true,
+    showCollapseButton = true,
     collapsed: collapsedProp,
     defaultCollapsed = false,
     onCollapse,
@@ -303,12 +305,9 @@ const SidenavBar = ({
     dataAttributes,
 }: SidenavBarProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {componentProperties, platformOverrides, texts, t} = useTheme();
+    const {componentProperties, texts, t} = useTheme();
     const ariaLabel = ariaLabelProp ?? (texts.sidenavLandmark || t(tokens.sidenavLandmark));
-    const isReducedMotion = useIsReducedMotion();
-    // Acceptance runs and reduced motion both force zero-duration motion, so no half-animated node is
-    // left in the DOM after the state that removed it.
-    const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
+    const isMotionOff = useIsMotionOff();
     // Read before the `ThemeVariant` of the returned tree, so this is the variant of the page that holds the
     // sidenav, and not the variant of the sidenav itself.
     const pageVariant = normalizeVariant(useThemeVariant());
@@ -320,14 +319,10 @@ const SidenavBar = ({
 
     const isCollapsedControlled = collapsedProp !== undefined;
     const [uncontrolledCollapsed, setUncontrolledCollapsed] = React.useState(defaultCollapsed);
-    // The collapsed state is read on every render when the sidenav is controlled (`collapsed` set) or
-    // cannot be toggled. A toggleable, uncontrolled sidenav instead owns its state, which `defaultCollapsed`
-    // seeds once. A non-toggleable sidenav that omits `collapsed` falls back to that same default (false).
-    const collapsed = isCollapsedControlled
-        ? Boolean(collapsedProp)
-        : collapsible
-          ? uncontrolledCollapsed
-          : defaultCollapsed;
+    // A controlled sidenav (`collapsed` set) reads the prop on every render. An uncontrolled one owns its
+    // state, which `defaultCollapsed` seeds once. Without the built-in button nothing toggles that state,
+    // so a sidenav that hides the button and omits `collapsed` keeps the seed, which the types pin to false.
+    const collapsed = isCollapsedControlled ? Boolean(collapsedProp) : uncontrolledCollapsed;
     const containerRef = React.useRef<HTMLElement>(null);
 
     // The second column slides away instead of disappearing, so it still renders while it closes, when the
@@ -340,8 +335,8 @@ const SidenavBar = ({
         children: ReadonlyArray<SidenavNestedItemData>;
     } | null>(null);
 
-    // See `collapsedSettled` in `sidenav-bar-context.tsx` for why the sidenav reports the collapsed state
-    // twice. A user who turned motion down sees no movement, so the settled state follows at once there.
+    // The settled state follows `collapsed` once the rail rests. A user who turned motion down sees no
+    // movement, so it follows at once there.
     const [collapsedSettled, setCollapsedSettled] = React.useState(collapsed);
     React.useEffect(() => {
         if (isMotionOff) {
@@ -468,30 +463,6 @@ const SidenavBar = ({
     const footerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
     const bodyRef = React.useRef<HTMLDivElement>(null);
 
-    // The first item of the second column takes the focus when the column opens, and again when the column
-    // moves to another parent, so a screen reader announces the named list that the user entered. The
-    // dialog panel of the collapsed rail takes its own focus, and this effect leaves it alone: no column
-    // stands there.
-    // It only takes a focus that already belongs to the sidenav, or one that fell to the body when the
-    // collapsed rail replaced the trigger row. An app that moves the selection from elsewhere on the page
-    // opens this column too, and it must not drag the user out of the place they were reading.
-    React.useEffect(() => {
-        const column = doublePanelRef.current;
-        const container = containerRef.current;
-        if (!panelOpenForItemId || !column || !container) {
-            return;
-        }
-        const active = document.activeElement;
-        if (active && active !== document.body && !container.contains(active)) {
-            return;
-        }
-        column
-            .querySelector<HTMLElement>(
-                '[data-sidenav-item-id] a[href], [data-sidenav-item-id] button:not([disabled])'
-            )
-            ?.focus();
-    }, [panelOpenForItemId]);
-
     React.useEffect(() => {
         if (!bodyRef.current) return;
 
@@ -527,7 +498,7 @@ const SidenavBar = ({
     }, []);
 
     // The rail is travelling between its two widths. See `columnsWhileMoving`.
-    const isMoving = collapsed !== collapsedSettled;
+    const isMoving = isSidenavMoving(collapseState);
 
     const toggleCollapsed = React.useCallback(() => {
         // The collapse action keeps the focus while the rail moves, so the pointer rule of
@@ -547,23 +518,20 @@ const SidenavBar = ({
     const contextValue = React.useMemo(
         () => ({
             collapsed,
-            collapsedSettled,
-            collapsible,
+            collapseState,
+            isMotionOff,
             doublePanel,
-            toggleCollapsed,
             panelOpenForItemId,
             setPanelOpenForItemId,
             selectItemAndClosePanel,
             containerRef,
-            isInsidePanel: false,
             selectedItemId: selectedItemId ?? null,
         }),
         [
             collapsed,
-            collapsedSettled,
-            collapsible,
+            collapseState,
+            isMotionOff,
             doublePanel,
-            toggleCollapsed,
             panelOpenForItemId,
             selectItemAndClosePanel,
             containerRef,
@@ -584,7 +552,7 @@ const SidenavBar = ({
     // A tablet has no room for the rail either, so both breakpoints take the mobile treatment.
     if (isTabletOrSmaller) {
         return (
-            <SidenavMobileBar
+            <SidenavBarMobile
                 entries={entries}
                 aria-label={ariaLabel}
                 variant={normalizedVariant}
@@ -600,21 +568,10 @@ const SidenavBar = ({
 
     const slotRenderProps: SidenavSlotRenderProps = {collapsed, state: collapseState};
     const isDefaultLogo = logo === undefined || logo === true;
-    const logoElement = (() => {
-        if (logo === false) {
-            return null;
-        }
-        if (typeof logo === 'function') {
-            return logo(slotRenderProps);
-        }
-        if (isDefaultLogo) {
-            return <Logo size={LOGO_SIZE} type="isotype" />;
-        }
-        return logo;
-    })();
+    const logoElement = renderSidenavLogo(logo, slotRenderProps, <Logo size={LOGO_SIZE} type="isotype" />);
 
     const collapseActionElement = (() => {
-        if (!collapsible) {
+        if (!showCollapseButton) {
             return null;
         }
 
@@ -638,6 +595,7 @@ const SidenavBar = ({
     const headerSlotElement = renderSidenavSlot(headerSlot, slotRenderProps);
     const footerSlotElement = renderSidenavSlot(footerSlot, slotRenderProps);
     const hasHeader = Boolean(logoElement || collapseActionElement || headerSlotElement);
+    // todo https://github.com/Telefonica/mistica-design/issues/2827 review Boxed border rendering logic
     const hasBoxedBorder =
         boxed && shouldShowBoxedBorder(normalizedVariant, pageVariant, componentProperties.showBoxedBorder);
 
@@ -875,5 +833,4 @@ const SidenavBar = ({
 
 export default SidenavBar;
 export {SidenavBar};
-export {SidenavBarContext, useSidenavBarContext};
-export type {SidenavBarProps, SidenavLogoRenderProps};
+export type {SidenavBarProps};

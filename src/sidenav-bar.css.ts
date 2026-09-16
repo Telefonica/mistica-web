@@ -7,11 +7,10 @@ import type {NonDeprecatedVariant} from './theme-variant-context';
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
 const BOXED_INSET = 8;
-// Per-level nesting step applied as the item row's left padding. It combines with the item content
-// box's own 8px left margin (which clears the selected indicator on the rail) so a nested item's
-// content box lands 24px from the section rail — the total nesting indent the Figma spec calls for
-// (16 + 8). Using the full 24 here would double-count the 8px margin and over-indent children.
-export const NESTING_INDENT = 16;
+// Left padding of a nested row. It adds to the 8px left margin of the row (which clears the selected
+// indicator on the rail), so the content of a nested row lands 24px from the rail, as the Figma spec asks
+// (16 + 8). The full 24 here would count the 8px margin twice.
+const NESTING_INDENT = 16;
 export const LOGO_SIZE = 32;
 // Horizontal inset of the items rail on each side of a section (see `sectionContent`). The selected
 // indicator of an item sits on that inset, at the left edge of the rail.
@@ -297,6 +296,7 @@ export const boxed = style({
 // hidden` clips a negatively-offset outline.
 // `shouldShowBoxedBorder` decides when this class applies: the border only reads over a default or an
 // alternative page, and a skin can switch it off.
+// todo https://github.com/Telefonica/mistica-design/issues/2827 review Boxed border rendering logic
 export const boxedBorder = style({
     '::before': {
         content: '',
@@ -658,14 +658,11 @@ globalStyle(`${boxed} ${scrollDivider}, ${boxed} ${scrollSpacerDivider}`, {
 
 // Item ------------------------------------------------------------------------
 
-export const itemIndentVar = createVar();
-
 export const itemRow = style({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     gap: 6,
-    paddingLeft: itemIndentVar,
 });
 
 // The row of an item takes the same box in both states: `ITEM_ROW_INSET` on each side of the items rail.
@@ -892,6 +889,12 @@ globalStyle(
 export const nestedListRows = style({
     display: 'flex',
     flexDirection: 'column',
+});
+
+// The rows of a panel list the children at the edge, like a first-level row, so only the accordion
+// rows take the indent.
+globalStyle(`${nestedListRows} ${itemRow}`, {
+    paddingLeft: NESTING_INDENT,
 });
 
 // Panel (the dialog panel and the second column) -------------------------------

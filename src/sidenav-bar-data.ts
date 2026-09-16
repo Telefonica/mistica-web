@@ -1,6 +1,7 @@
 import type {
     SidenavEntry,
     SidenavFirstLevelItem,
+    SidenavLogo,
     SidenavSection,
     SidenavSectionTitle,
     SidenavSlot,
@@ -27,4 +28,22 @@ const getSidenavSectionTitle = (title: SidenavSectionTitle): {text: string; isHe
 const renderSidenavSlot = (slot: SidenavSlot, props: SidenavSlotRenderProps): React.ReactNode =>
     typeof slot === 'function' ? slot(props) : slot;
 
-export {isSidenavSection, getFirstLevelItems, getSidenavSectionTitle, renderSidenavSlot};
+/** Resolves the four forms of the logo prop. `defaultLogo` is the logo of the skin, sized by the caller. */
+const renderSidenavLogo = (
+    logo: SidenavLogo | undefined,
+    props: SidenavSlotRenderProps,
+    defaultLogo: React.ReactNode
+): React.ReactNode => {
+    if (logo === false) {
+        return null;
+    }
+    if (typeof logo === 'function') {
+        return logo(props);
+    }
+    if (logo === undefined || logo === true) {
+        return defaultLogo;
+    }
+    return logo;
+};
+
+export {isSidenavSection, getFirstLevelItems, getSidenavSectionTitle, renderSidenavSlot, renderSidenavLogo};

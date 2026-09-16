@@ -5,7 +5,6 @@ import * as styles from './sidenav-bar.css';
 import {useSidenavBarContext} from './sidenav-bar-context';
 import {useRestWidth} from './sidenav-bar-motion';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {applyCssVars} from './utils/css';
 import {useThemeVariant} from './theme-variant-context';
 import Touchable from './touchable';
 import Tooltip from './tooltip';
@@ -37,8 +36,6 @@ type SidenavRowProps = {
     /** Hide the asset without removing it from the data. The collapsed rail always shows it. */
     showAsset?: boolean;
     rightSlot?: React.ReactNode;
-    /** Indent of the row in pixels. The first level takes 0, and a nested row takes one step. */
-    indent: number;
     /** Paint the selected background. A parent takes it for a hidden selected descendant. */
     showBackground?: boolean;
     /** Paint the accent bar. Only the selected item itself takes it, never a parent of it. */
@@ -46,7 +43,13 @@ type SidenavRowProps = {
     /** Id written on the label, so a nested list can take its name from it. */
     labelId?: string;
     /** Render the chevron of a parent item, rotated when its children are open. */
-    chevron?: {rotated: boolean};
+    chevron?: {rotated: boolean; direction: 'down' | 'right'};
+    /** Paint the row as the collapsed rail: the asset alone, and the label faded but in the DOM. */
+    collapsed?: boolean;
+    /** Freeze the label at the width of its text, so it does not wrap while the bar moves. */
+    keepLabelWidth?: boolean;
+    /** Show the label as a tooltip on the right, for the collapsed rail. */
+    tooltip?: boolean;
     /** Present when the row navigates. Mutually exclusive with `toggle`. */
     navigation?: SidenavRowNavigationProps;
     /** Present when the row opens and closes its children. Mutually exclusive with `navigation`. */
@@ -67,18 +70,18 @@ const SidenavRow = ({
     asset,
     showAsset = true,
     rightSlot,
-    indent,
     showBackground = false,
     showAccent = false,
     labelId,
     chevron,
+    collapsed = false,
+    keepLabelWidth = false,
+    tooltip = false,
     navigation,
     toggle,
     current = false,
     dataAttributes,
 }: SidenavRowProps): JSX.Element => {
-    const {collapsed, collapsedSettled, doublePanel, panelOpenForItemId, isInsidePanel} =
-        useSidenavBarContext();
     // Read from context, not from `SidenavBar`: the floating panel restores the default variant.
     const variant = useThemeVariant();
 
@@ -97,19 +100,15 @@ const SidenavRow = ({
         ) : null;
 
     // The collapsed label stays in the DOM: a screen reader still reads it, and the fade needs it.
-    const isLabelCollapsed = collapsed && !isInsidePanel;
-    // The label keeps the width of its text while the bar moves in either direction, and wraps only at
-    // rest expanded. See `itemLabelKeepsWidth`.
-    const isLabelWidthKept = !isInsidePanel && (collapsed || collapsedSettled);
-    const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(isLabelWidthKept);
+    const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(keepLabelWidth);
     const labelNode = (
         <div
             ref={labelRef}
             id={labelId}
             className={classnames(styles.itemLabel, {
-                [styles.itemLabelCollapsed]: isLabelCollapsed,
+                [styles.itemLabelCollapsed]: collapsed,
                 [styles.itemLabelFrozenWidth]: labelWidth !== undefined,
-                [styles.itemLabelKeepsWidth]: isLabelWidthKept && labelWidth === undefined,
+                [styles.itemLabelKeepsWidth]: keepLabelWidth && labelWidth === undefined,
             })}
             style={labelWidth !== undefined ? {width: labelWidth} : undefined}
         >
@@ -123,7 +122,7 @@ const SidenavRow = ({
 
     const touchableClassName = classnames(styles.itemTouchable, styles.itemTouchableVariant[variant], {
         [styles.itemTouchableSelected[variant]]: showBackground,
-        [styles.itemTouchableCollapsed]: isLabelCollapsed,
+        [styles.itemTouchableCollapsed]: collapsed,
     });
 
     const rowContent = (
@@ -133,7 +132,7 @@ const SidenavRow = ({
             {rightSlot && (
                 <span
                     className={classnames(styles.itemRightSlot, {
-                        [styles.itemRightSlotCollapsed]: isLabelCollapsed,
+                        [styles.itemRightSlotCollapsed]: collapsed,
                     })}
                 >
                     {rightSlot}
@@ -143,11 +142,11 @@ const SidenavRow = ({
                 <span
                     className={classnames(styles.itemChevron, styles.itemChevronVariant[variant], {
                         [styles.itemChevronRotated]: chevron.rotated,
-                        [styles.itemChevronCollapsed]: isLabelCollapsed,
+                        [styles.itemChevronCollapsed]: collapsed,
                     })}
                     aria-hidden="true"
                 >
-                    <IconChevron size={16} color="currentColor" direction={doublePanel ? 'right' : 'down'} />
+                    <IconChevron size={16} color="currentColor" direction={chevron.direction} />
                 </span>
             )}
         </>
@@ -191,28 +190,17 @@ const SidenavRow = ({
         );
     })();
 
-    // The rail drops every tooltip while the dialog panel floats over it. Beside a second column only the
-    // owner item drops its own, because the column shows its label as a title. `collapsedSettled` and not
-    // `collapsed`: the tooltip wrapper replaces the row node, and a replaced row drops its transition.
-    const isOwnPanelOpen = !!id && panelOpenForItemId === id;
-    const showTooltip =
-        collapsedSettled && !isInsidePanel && (doublePanel ? !isOwnPanelOpen : !panelOpenForItemId);
-
     const rowDataAttributes: DataAttributes = {testid: 'SidenavItem', ...dataAttributes};
     if (id) {
         rowDataAttributes['sidenav-item-id'] = id;
     }
 
     return (
-        <div
-            className={styles.itemRow}
-            style={applyCssVars({[styles.itemIndentVar]: `${indent}px`})}
-            {...getPrefixedDataAttributes(rowDataAttributes)}
-        >
+        <div className={styles.itemRow} {...getPrefixedDataAttributes(rowDataAttributes)}>
             {showAccent && (
                 <div className={classnames(styles.itemAccent, styles.itemAccentVariant[variant])} />
             )}
-            {showTooltip ? (
+            {tooltip ? (
                 <Tooltip
                     position="right"
                     description={label}
@@ -264,4 +252,3 @@ const useSidenavNavigation = (
 };
 
 export {SidenavRow, useSidenavNavigation};
-export type {SidenavRowProps, SidenavRowNavigationProps, SidenavRowToggleProps};

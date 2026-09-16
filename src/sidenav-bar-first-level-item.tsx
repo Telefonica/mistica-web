@@ -6,9 +6,6 @@ import {CONTENT_DURATION_MS} from './sidenav-bar.css';
 import {useSidenavBarContext} from './sidenav-bar-context';
 import {SidenavDialogPanel} from './sidenav-bar-panel';
 import {SidenavRow, useSidenavNavigation} from './sidenav-bar-row';
-import {useIsReducedMotion} from './sidenav-bar-motion';
-import {isRunningAcceptanceTest} from './utils/platform';
-import {useTheme} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 import type {SidenavAsset} from './sidenav-bar-types';
@@ -63,11 +60,16 @@ const SidenavFirstLevelItem = ({
     dataAttributes,
     ...navigationProps
 }: SidenavFirstLevelItemProps): JSX.Element => {
-    const {collapsed, doublePanel, panelOpenForItemId, setPanelOpenForItemId, containerRef, selectedItemId} =
-        useSidenavBarContext();
-    const {platformOverrides} = useTheme();
-    const isReducedMotion = useIsReducedMotion();
-    const isMotionOff = isRunningAcceptanceTest(platformOverrides) || isReducedMotion;
+    const {
+        collapsed,
+        collapseState,
+        isMotionOff,
+        doublePanel,
+        panelOpenForItemId,
+        setPanelOpenForItemId,
+        containerRef,
+        selectedItemId,
+    } = useSidenavBarContext();
     const navigation = useSidenavNavigation(id, navigationProps);
 
     const hasChildren = React.Children.count(children) > 0;
@@ -85,7 +87,7 @@ const SidenavFirstLevelItem = ({
     const isOpen = hasChildren && !collapsed && !isPanelMode && open;
     // In double panel mode the bar renders the panel as its second column; the dialog panel renders here.
     const isDialogMode = isPanelMode && !doublePanel;
-    const isPanelOpenForAnotherItem = Boolean(panelOpenForItemId && panelOpenForItemId !== id);
+    const isPanelOpenForAnotherItem = panelOpenForItemId && panelOpenForItemId !== id;
 
     // Never two highlighted rows: a closed parent flags a hidden selected descendant, an open parent
     // leaves the background to the selected child, and an open panel takes it from every other parent.
@@ -110,6 +112,13 @@ const SidenavFirstLevelItem = ({
         }
     }, [asset, label]);
 
+    // The rail drops every tooltip while the dialog panel floats over it. Beside a second column only the
+    // owner item drops its own, because the column shows its label as a title. The tooltip arrives once the
+    // rail rests collapsed and leaves once it rests expanded: its wrapper replaces the row node, and a
+    // replaced row drops its transition.
+    const isRestingCollapsed = collapseState === 'collapsed' || collapseState === 'expanding';
+    const showTooltip = isRestingCollapsed && (doublePanel ? !isPanelOpen : !panelOpenForItemId);
+
     const handlePress = () => {
         if (isPanelMode) {
             setPanelOpenForItemId(isPanelOpen ? null : id);
@@ -126,13 +135,17 @@ const SidenavFirstLevelItem = ({
             // The collapsed rail shows the asset alone, so it keeps it whatever the prop says.
             showAsset={collapsed || showAssetWhenExpanded}
             rightSlot={rightSlot}
-            indent={0}
             labelId={labelId}
             showBackground={showBackground}
             // The accent belongs to the selected item only, never to a parent of it.
             showAccent={isItemSelected}
             current={isItemSelected || hasDescendantSelected}
-            chevron={hasChildren ? {rotated: isOpen} : undefined}
+            chevron={hasChildren ? {rotated: isOpen, direction: doublePanel ? 'right' : 'down'} : undefined}
+            collapsed={collapsed}
+            // The label keeps the width of its text while the bar moves in either direction, and wraps
+            // only at rest expanded. See `itemLabelKeepsWidth`.
+            keepLabelWidth={collapseState !== 'expanded'}
+            tooltip={showTooltip}
             navigation={hasChildren ? undefined : navigation}
             toggle={
                 hasChildren
@@ -185,4 +198,3 @@ const SidenavFirstLevelItem = ({
 };
 
 export {SidenavFirstLevelItem};
-export type {SidenavFirstLevelItemProps};

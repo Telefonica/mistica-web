@@ -17,7 +17,7 @@ type Args = {
     useCustomWidth: boolean;
     sidenavWidth: number;
     divider: boolean;
-    collapsible: boolean;
+    showCollapseButton: boolean;
     collapsed: boolean;
     boxed: boolean;
     doublePanel: boolean;
@@ -44,9 +44,9 @@ export default {
             description: 'Show right divider on the sidenav (only when boxed is disabled)',
             if: {arg: 'boxed', truthy: false},
         },
-        collapsible: {
+        showCollapseButton: {
             control: {type: 'boolean'},
-            description: 'Whether the sidenav can be collapsed',
+            description: 'Renders the built-in collapse button, which lets the user toggle the sidenav.',
         },
         collapsed: {
             control: {type: 'boolean'},
@@ -66,7 +66,7 @@ export default {
         useCustomWidth: false,
         sidenavWidth: 240,
         divider: true,
-        collapsible: false,
+        showCollapseButton: false,
         collapsed: false,
         boxed: false,
         doublePanel: false,
@@ -244,13 +244,13 @@ export const WholeViewport = (args: Args): React.JSX.Element => {
                 sidenav={
                     <SidenavBar
                         aria-label="Main navigation"
-                        {...(args.collapsible
+                        {...(args.showCollapseButton
                             ? {
-                                  collapsible: true,
+                                  showCollapseButton: true,
                                   collapsed: internalCollapsed,
                                   onCollapse: setInternalCollapsed,
                               }
-                            : {collapsible: false})}
+                            : {showCollapseButton: false})}
                         width={sidenavWidth as any}
                         entries={entries}
                         doublePanel={args.doublePanel}
@@ -295,13 +295,13 @@ export const Centered = (args: Args): React.JSX.Element => {
                 sidenav={
                     <SidenavBar
                         aria-label="Main navigation"
-                        {...(args.collapsible
+                        {...(args.showCollapseButton
                             ? {
-                                  collapsible: true,
+                                  showCollapseButton: true,
                                   collapsed: internalCollapsed,
                                   onCollapse: setInternalCollapsed,
                               }
-                            : {collapsible: false})}
+                            : {showCollapseButton: false})}
                         width={sidenavWidth as any}
                         entries={entries}
                         doublePanel={args.doublePanel}
@@ -354,13 +354,13 @@ export const WithTopHeader = (args: TopHeaderArgs): React.JSX.Element => {
                 sidenav={
                     <SidenavBar
                         aria-label="Main navigation"
-                        {...(args.collapsible
+                        {...(args.showCollapseButton
                             ? {
-                                  collapsible: true,
+                                  showCollapseButton: true,
                                   collapsed: internalCollapsed,
                                   onCollapse: setInternalCollapsed,
                               }
-                            : {collapsible: false})}
+                            : {showCollapseButton: false})}
                         width={sidenavWidth as any}
                         entries={entries}
                         doublePanel={args.doublePanel}
