@@ -27,7 +27,20 @@ const IconChipSimCardLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.934 9.098a2.7 2.7 0 0 1 2.7 2.7v4.491a2.7 2.7 0 0 1-2.7 2.7h-3.875a2.7 2.7 0 0 1-2.7-2.7v-4.491a2.7 2.7 0 0 1 2.7-2.7zm-5.576 5.73v1.461a1.7 1.7 0 0 0 1.7 1.7h3.876a1.7 1.7 0 0 0 1.7-1.7v-1.462zm5.46-1h1.816v-2.03a1.7 1.7 0 0 0-1.7-1.7h-.117zm-3.76-3.73a1.7 1.7 0 0 0-1.7 1.7v2.03h1.79v-3.73zm1.09 3.73h1.67v-3.73h-1.67z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M15.574 2.005c1.889.098 3.553 1.693 3.553 3.716v12.535c0 2.14-1.756 3.723-3.718 3.724h.001l-6.706.021c-2.218 0-3.83-1.684-3.83-3.792V7.774c0-1.036.475-1.957 1.152-2.598l.007-.006L8.404 3a3.57 3.57 0 0 1 2.47-.98l4.514-.022h.003zM10.878 3.02h-.004a2.57 2.57 0 0 0-1.787.712l-.008.007-2.366 2.162v.001c-.506.48-.84 1.148-.84 1.872l.001 10.435c0 1.562 1.169 2.79 2.828 2.791l6.705-.02c1.438 0 2.72-1.163 2.72-2.724V5.72c0-1.51-1.3-2.72-2.736-2.721z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

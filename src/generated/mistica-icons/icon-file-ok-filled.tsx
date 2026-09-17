@@ -27,7 +27,20 @@ const IconFileOkFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.256 2a3.75 3.75 0 0 1 3.75 3.75v3.282a6 6 0 0 0-.256-.006h-1.5A6.25 6.25 0 0 0 9 15.276v1.5A6.24 6.24 0 0 0 11.82 22H5.75a3.75 3.75 0 0 1-3.745-3.556L2 18.25V9.67h3.553c2.102 0 3.675-1.793 3.676-3.746V2zm-7.2 15.311a.75.75 0 0 0 0 1.5h1.196a.75.75 0 0 0 0-1.5zm0-3a.75.75 0 0 0 0 1.5h1.196a.75.75 0 0 0 0-1.5zm0-3a.75.75 0 0 0 0 1.5h1.196a.75.75 0 0 0 0-1.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.75 9.996c2.9 0 5.25 2.35 5.25 5.25v1.5c0 2.9-2.35 5.25-5.25 5.25h-1.5a5.25 5.25 0 0 1-5.25-5.25v-1.5c0-2.9 2.35-5.25 5.25-5.25zm2 3.69a.75.75 0 0 0-1.06.06l-2.566 2.874-.814-.914a.75.75 0 0 0-1.12 1l1.375 1.54a.75.75 0 0 0 1.12 0l3.125-3.5a.75.75 0 0 0-.06-1.06M8.24 5.97l-.014.276a2.72 2.72 0 0 1-2.712 2.43H2L8.24 2z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

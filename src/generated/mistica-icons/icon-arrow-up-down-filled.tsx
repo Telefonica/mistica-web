@@ -27,7 +27,16 @@ const IconArrowUpDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.227 6.458a1 1 0 0 1-1.399 1.43L8.263 5.374v11.128a1 1 0 0 1-2 0V5.375L3.698 7.887a1 1 0 0 1-1.399-1.43l4.265-4.175a1 1 0 0 1 .2-.152q.015-.01.031-.018l.047-.022.04-.018.057-.02q.016-.008.033-.012a1 1 0 0 1 .99.242zm9.491 9.67a1 1 0 0 1-.016 1.415l-4.264 4.175a1 1 0 0 1-1.433-.035l-4.23-4.14a1 1 0 0 1 1.398-1.43l2.563 2.509V7.497a1 1 0 0 1 2 0v11.13l2.568-2.514a1 1 0 0 1 1.414.015"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

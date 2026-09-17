@@ -27,7 +27,16 @@ const IconEyeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 4.944c3.117 0 6.09 1.382 8.407 3.699C21.342 9.578 22 10.645 22 12s-.658 2.422-1.593 3.356c-2.317 2.317-5.29 3.7-8.407 3.7s-6.09-1.382-8.407-3.699c-.88-.88-1.51-1.91-1.585-3.114L2 12c0-1.308.654-2.418 1.593-3.357C5.91 6.326 8.883 4.944 12 4.944m-.336 4.622a2.097 2.097 0 0 0-2.097 2.097v.674c0 1.158.939 2.097 2.097 2.097h.673c1.158 0 2.097-.94 2.097-2.097v-.674a2.097 2.097 0 0 0-2.097-2.097z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

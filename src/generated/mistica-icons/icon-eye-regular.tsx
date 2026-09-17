@@ -27,7 +27,20 @@ const IconEyeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.663 9.566a2.097 2.097 0 0 0-2.097 2.097v.673c0 1.158.94 2.097 2.097 2.097h.673a2.097 2.097 0 0 0 2.097-2.097v-.673a2.097 2.097 0 0 0-2.097-2.097z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M2 12c0-1.308.654-2.418 1.593-3.357 2.316-2.317 5.288-3.699 8.406-3.699 3.117 0 6.091 1.382 8.407 3.699C21.341 9.578 22 10.645 22 12s-.658 2.422-1.593 3.357c-2.316 2.316-5.29 3.698-8.407 3.698s-6.09-1.382-8.406-3.698C2.653 14.417 2 13.308 2 12m2.654-2.297c-.78.78-1.154 1.53-1.154 2.297s.375 1.517 1.154 2.296c2.078 2.078 4.682 3.26 7.345 3.26s5.269-1.182 7.347-3.26c.783-.783 1.153-1.49 1.153-2.296s-.37-1.513-1.153-2.297c-2.078-2.077-4.684-3.259-7.347-3.259s-5.267 1.181-7.345 3.26"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
