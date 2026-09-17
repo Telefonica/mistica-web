@@ -161,6 +161,25 @@ Common props: `color`, `truncate`, `textAlign`, `as` (HTML tag), `wordBreak`, `d
 All cards support touchable props (`onPress`, `href`, `to`), buttons (`buttonPrimary`, `buttonSecondary`,
 `buttonLink`), and content props (`headline`, `pretitle`, `title`, `subtitle`, `description`, `slot`).
 
+### Card selection
+
+Place existing `Checkbox`, `Switch`, or `RadioButton` components in `slot` or `footerSlot`. The card
+automatically reflects their checked state in its outline, including controlled values and RadioGroup changes.
+If there are multiple controls, the outline is selected when any is checked.
+
+```tsx
+<DataCard title="Notifications" slot={<Switch name="notifications">Enable notifications</Switch>} />
+<DataCard title="Option" slot={<Checkbox name="option">Select option</Checkbox>} />
+```
+
+`selected` is the only additional card prop. It takes precedence over the controls' state and lets custom
+controls explicitly select the card. A `ToggleIconButton`, such as a lock action, does not select the card
+automatically.
+
+```tsx
+<DataCard title="Favorite" selected={favorite} slot={customFavoriteControl} />
+```
+
 ### DataCard
 
 General-purpose card for data display. Supports `size`: `'default'`, `'snap'`, `'display'`.

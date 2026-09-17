@@ -6,6 +6,7 @@ https://github.com/storybookjs/storybook/issues/11980
 
 'use client';
 import * as React from 'react';
+import {useCardSelection} from './card-selection-context';
 import {debounce} from './utils/helpers';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
@@ -67,6 +68,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
     const isChecked = value ?? checkedState;
+    useCardSelection(isChecked);
 
     const notifyChange = React.useMemo(() => {
         if (process.env.NODE_ENV === 'test') {

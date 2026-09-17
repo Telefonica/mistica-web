@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import {useCardSelection} from './card-selection-context';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/keys';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
@@ -80,6 +81,7 @@ const RadioButton = ({
     const labelId = ariaLabelledby || reactId;
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
+    useCardSelection(checked);
     const {isIos} = useTheme();
     const themeVariant = useThemeVariant();
 

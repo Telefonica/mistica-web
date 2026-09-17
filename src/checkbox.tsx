@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import {useCardSelection} from './card-selection-context';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
@@ -118,6 +119,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
     });
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
+    useCardSelection(value ?? checkedState);
 
     const handleChange = () => {
         if (value === undefined) {

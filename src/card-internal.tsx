@@ -6,8 +6,9 @@ import * as mediaStyles from './image.css';
 import * as tokens from './text-tokens';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant, useRawThemeVariant} from './theme-variant-context';
 import Tag from './tag';
+import {CardSelectionContext} from './card-selection-context';
 import Stack from './stack';
 import Image from './image';
 import Video from './video';
@@ -67,6 +68,8 @@ type ContainerProps = {
     type: CardType;
     size: CardSize;
     variant?: Variant;
+    selected?: boolean;
+    selectionVariant?: Variant;
     width?: string | number;
     height?: string | number;
     /** Gradient overlay color for cover cards. If not set it uses the theme color */
@@ -198,7 +201,7 @@ type TouchableProps = {
 >;
 
 type TouchableCard<T> = T & TouchableProps;
-export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T> & {selected?: boolean};
 
 type PrivateContainerProps = {
     children?: React.ReactNode;
@@ -219,6 +222,8 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
             dataAttributes,
             backgroundColor,
             variant,
+            selected,
+            selectionVariant = 'default',
         },
         ref
     ): JSX.Element => {
@@ -249,6 +254,11 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 }}
             >
                 <div
+                    className={classnames(
+                        selected !== undefined && styles.selectionOutline,
+                        isNaked && styles.nakedSelectionOutline,
+                        selected && styles.selectionOutlineColor[selectionVariant]
+                    )}
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -1287,6 +1297,16 @@ const replaceRgbaWithColor = (stringWithRgbaColors: string, newColor: string): s
     return stringWithRgbaColors.replace(RGBA_REGEX, (_, alpha) => applyAlpha(newColor, parseFloat(alpha)));
 };
 
+export const getSelectionOutlineVariant = (outsideVariant: Variant, cardVariant: Variant): Variant => {
+    if (outsideVariant === 'brand' || outsideVariant === 'inverse' || outsideVariant === 'media') {
+        return cardVariant === 'default' ? outsideVariant : cardVariant;
+    }
+    if (outsideVariant === 'negative' && cardVariant === 'default') {
+        return 'negative';
+    }
+    return cardVariant === 'negative' ? 'negative' : 'default';
+};
+
 export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
     (
         {
@@ -1320,7 +1340,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             width,
             height,
             aspectRatio,
-            slot,
+            slot: slotProp,
             slotAlignment = 'content',
             buttonPrimary,
             buttonSecondary,
@@ -1328,10 +1348,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             showFooter: showFooterProp,
             footerBackgroundColor,
             footerVariant,
-            footerSlot,
+            footerSlot: footerSlotProp,
             footerDivider,
-            topActions,
-            onClose,
+            topActions: topActionsProp,
+            onClose: onCloseProp,
             closeButtonLabel,
             'aria-label': ariaLabelProp,
             'aria-labelledby': ariaLabeledByProp,
@@ -1341,12 +1361,28 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoLoop,
             videoAutoPlay,
             videoDataAttributes,
+            selected,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
+        const [controls, setControls] = React.useState<Record<string, boolean>>({});
+        const controlValues = Object.values(controls);
+        const isControlSelected = controlValues.length ? controlValues.some(Boolean) : undefined;
+        const isSelected = selected ?? isControlSelected;
+        const isSelectionMode = isSelected !== undefined;
+        const topActions = isSelectionMode ? undefined : topActionsProp;
+        const onClose = isSelectionMode ? undefined : onCloseProp;
+        const slot = slotProp && (
+            <CardSelectionContext.Provider value={setControls}>{slotProp}</CardSelectionContext.Provider>
+        );
+        const footerSlot = footerSlotProp && (
+            <CardSelectionContext.Provider value={setControls}>
+                {footerSlotProp}
+            </CardSelectionContext.Provider>
+        );
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
@@ -1379,7 +1415,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
         const {video, videoAction} = useVideoWithControls({
-            src: shouldShowVideo ? videoSrc : undefined,
+            src: shouldShowVideo && !isSelectionMode ? videoSrc : undefined,
             poster: imageSrc,
             ref: videoRef,
             autoHeight:
@@ -1392,6 +1428,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         });
 
         const externalVariant = useThemeVariant();
+        const rawExternalVariant = useRawThemeVariant();
         const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;
         const variant =
             (variantProp && normalizeVariant(variantProp)) ||
@@ -1403,7 +1440,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
         const shouldShowFooter =
-            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && isTouchable);
+            (showFooterProp && (hasButtons || !!footerSlot)) ||
+            (hasButtons && (isTouchable || isSelectionMode));
 
         const showButtonsInBody = !shouldShowFooter && hasButtons;
 
@@ -1474,6 +1512,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 dataAttributes={dataAttributes}
                 ref={ref}
                 variant={variant}
+                selected={isSelected}
+                selectionVariant={getSelectionOutlineVariant(rawExternalVariant, variantProp || 'default')}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}

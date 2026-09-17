@@ -30,5 +30,6 @@ export const ThemeVariant = ({variant, children}: ThemeVariantProps): JSX.Elemen
     <ThemeVariantContext.Provider value={variant ?? 'default'}>{children}</ThemeVariantContext.Provider>
 );
 
-export const useThemeVariant = (): NonDeprecatedVariant =>
-    normalizeVariant(React.useContext(ThemeVariantContext));
+export const useRawThemeVariant = (): Variant => React.useContext(ThemeVariantContext);
+
+export const useThemeVariant = (): NonDeprecatedVariant => normalizeVariant(useRawThemeVariant());
