@@ -200,7 +200,7 @@ export const EditableSections = ({entries}: Args): React.JSX.Element => {
                                         </ListItem>
                                         <ListItem>href, a string, the URL of the link.</ListItem>
                                         <ListItem>to, a string, the route of the link.</ListItem>
-                                        <ListItem>children, an array of nested items.</ListItem>
+                                        <ListItem>children, an array of second-level items.</ListItem>
                                         <ListItem>
                                             defaultOpen, a boolean, opens the item on the first render.
                                         </ListItem>

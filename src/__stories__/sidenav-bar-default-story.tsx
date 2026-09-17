@@ -331,7 +331,7 @@ export const Default = ({
                                             onPress runs a custom action. See &quot;Search (onPress)&quot;.
                                         </ListItem>
                                         <ListItem>
-                                            children makes the item a parent of nested items. See
+                                            children makes the item a parent of second-level items. See
                                             &quot;Projects&quot; and &quot;Teams&quot;. Such an item takes
                                             neither href nor onPress.
                                         </ListItem>
@@ -528,7 +528,7 @@ export default {
         longLabels: {
             control: {type: 'boolean'},
             description:
-                'Gives a long text to one section title, to one stand-alone item, to one item with a right slot and to one nested item. Such a text wraps over several lines, and the row grows with it. It never truncates. The stand-alone item carries a single word, which breaks inside the word.',
+                'Gives a long text to one section title, to one stand-alone item, to one item with a right slot and to one second-level item. Such a text wraps over several lines, and the row grows with it. It never truncates. The stand-alone item carries a single word, which breaks inside the word.',
         },
         showCollapseButton: {
             control: {type: 'boolean'},

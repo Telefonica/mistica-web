@@ -19,7 +19,7 @@ import {Logo} from './logo';
 import IconPanelExpandRegular from './generated/mistica-icons/icon-panel-expand-regular';
 import IconPanelCollapseRegular from './generated/mistica-icons/icon-panel-collapse-regular';
 import {SidenavFirstLevelItem} from './sidenav-bar-first-level-item';
-import {SidenavNestedItem} from './sidenav-bar-nested-item';
+import {renderSidenavSecondLevelItem} from './sidenav-bar-second-level-item';
 import {SidenavSection} from './sidenav-bar-section';
 import {SidenavDoublePanel} from './sidenav-bar-panel';
 import {SidenavBarMobile} from './sidenav-bar-mobile';
@@ -43,7 +43,7 @@ import type {DataAttributes} from './utils/types';
 import type {
     SidenavEntry,
     SidenavFirstLevelItem as SidenavFirstLevelItemData,
-    SidenavNestedItem as SidenavNestedItemData,
+    SidenavSecondLevelItem as SidenavSecondLevelItemData,
     SidenavLogo,
     SidenavSlot,
     SidenavSlotRenderProps,
@@ -159,21 +159,6 @@ type SidenavBarProps = SidenavBarBaseProps &
           }
     >;
 
-const renderNestedItem = (item: SidenavNestedItemData): React.ReactElement => (
-    <SidenavNestedItem
-        key={item.id}
-        id={item.id}
-        label={item.label}
-        asset={item.asset}
-        rightSlot={item.rightSlot}
-        href={item.href}
-        to={item.to}
-        onPress={item.onPress}
-        newTab={item.newTab}
-        onNavigate={item.onNavigate}
-    />
-);
-
 const renderFirstLevelItem = (
     item: SidenavFirstLevelItemData,
     {standalone}: {standalone?: boolean} = {}
@@ -187,15 +172,13 @@ const renderFirstLevelItem = (
         rightSlot={item.rightSlot}
         standalone={standalone}
         defaultOpen={item.defaultOpen}
-        childIds={item.children?.map((child) => child.id)}
+        secondLevelItems={item.children}
         href={item.href}
         to={item.to}
         onPress={item.onPress}
         newTab={item.newTab}
         onNavigate={item.onNavigate}
-    >
-        {item.children?.map((child) => renderNestedItem(child))}
-    </SidenavFirstLevelItem>
+    />
 );
 
 /**
@@ -223,7 +206,7 @@ const validateSidenavEntries = (entries: ReadonlyArray<SidenavEntry>): void => {
     const seenIds = new Set<string>();
     const duplicateIds = new Set<string>();
 
-    const visitItem = (item: SidenavFirstLevelItemData | SidenavNestedItemData, level: number): void => {
+    const visitItem = (item: SidenavFirstLevelItemData | SidenavSecondLevelItemData, level: number): void => {
         if (seenIds.has(item.id)) {
             duplicateIds.add(item.id);
         } else {
@@ -332,7 +315,7 @@ const SidenavBar = ({
     const [doublePanelContent, setDoublePanelContent] = React.useState<{
         itemId: string;
         label: string;
-        children: ReadonlyArray<SidenavNestedItemData>;
+        children: ReadonlyArray<SidenavSecondLevelItemData>;
     } | null>(null);
 
     // The settled state follows `collapsed` once the rail rests. A user who turned motion down sees no
@@ -821,7 +804,9 @@ const SidenavBar = ({
                                 variant={normalizedVariant}
                                 backgroundColor={background}
                             >
-                                {doublePanelContent.children.map((child) => renderNestedItem(child))}
+                                {doublePanelContent.children.map((child) =>
+                                    renderSidenavSecondLevelItem(child, {placement: 'panel'})
+                                )}
                             </SidenavDoublePanel>
                         </CSSTransition>
                     )}

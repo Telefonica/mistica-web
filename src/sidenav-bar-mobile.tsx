@@ -35,7 +35,7 @@ import type {DataAttributes} from './utils/types';
 import type {
     SidenavEntry,
     SidenavFirstLevelItem,
-    SidenavNestedItem,
+    SidenavSecondLevelItem,
     SidenavLogo,
     SidenavSlot,
     SidenavSlotRenderProps,
@@ -125,7 +125,7 @@ const SidenavBarMobile = ({
     const footerSlotElement = renderSidenavSlot(footerSlot, slotRenderProps);
     const logoElement = renderSidenavLogo(logo, slotRenderProps, <Logo size={MOBILE_LOGO_SIZE} />);
 
-    const renderRow = (item: SidenavFirstLevelItem | SidenavNestedItem): JSX.Element => {
+    const renderRow = (item: SidenavFirstLevelItem | SidenavSecondLevelItem): JSX.Element => {
         const commonProps = {
             title: item.label,
             right: item.rightSlot,

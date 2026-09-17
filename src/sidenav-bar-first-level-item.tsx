@@ -6,9 +6,10 @@ import {CONTENT_DURATION_MS} from './sidenav-bar.css';
 import {useSidenavBarContext} from './sidenav-bar-context';
 import {SidenavDialogPanel} from './sidenav-bar-panel';
 import {SidenavRow, useSidenavNavigation} from './sidenav-bar-row';
+import {renderSidenavSecondLevelItem} from './sidenav-bar-second-level-item';
 
 import type {DataAttributes} from './utils/types';
-import type {SidenavAsset} from './sidenav-bar-types';
+import type {SidenavAsset, SidenavSecondLevelItem as SidenavSecondLevelItemData} from './sidenav-bar-types';
 
 type SidenavFirstLevelItemProps = {
     /** Unique identifier for selection tracking. */
@@ -26,10 +27,11 @@ type SidenavFirstLevelItemProps = {
      * entry carries that list item on a wrapper of its own, so this item renders none.
      */
     standalone?: boolean;
-    /** Rendered `SidenavNestedItem` elements. An item with children cannot navigate. */
-    children?: React.ReactNode;
-    /** Ids of the children, which tell the item whether the current selection hides inside it. */
-    childIds?: ReadonlyArray<string>;
+    /**
+     * Second-level items. An item with second-level items cannot navigate: it lists them in place, in a dialog
+     * panel over the collapsed rail, or in the second column, which the bar renders.
+     */
+    secondLevelItems?: ReadonlyArray<SidenavSecondLevelItemData>;
     /** Initial open state of the children. @default false */
     defaultOpen?: boolean;
     onPress?: () => void;
@@ -54,8 +56,7 @@ const SidenavFirstLevelItem = ({
     showAssetWhenExpanded = true,
     rightSlot,
     standalone = false,
-    children,
-    childIds,
+    secondLevelItems,
     defaultOpen,
     dataAttributes,
     ...navigationProps
@@ -72,15 +73,16 @@ const SidenavFirstLevelItem = ({
     } = useSidenavBarContext();
     const navigation = useSidenavNavigation(id, navigationProps);
 
-    const hasChildren = React.Children.count(children) > 0;
+    const hasChildren = !!secondLevelItems?.length;
     const isItemSelected = selectedItemId === id;
-    const hasDescendantSelected = !!selectedItemId && !!childIds?.includes(selectedItemId);
+    const hasDescendantSelected =
+        !!selectedItemId && !!secondLevelItems?.some((item) => item.id === selectedItemId);
 
     const [open, setOpen] = React.useState(Boolean(defaultOpen));
     // The dialog panel renders in a portal, so the trigger points at it with `aria-controls`.
     const dialogPanelId = React.useId();
     const labelId = React.useId();
-    const nestedListRef = React.useRef<HTMLDivElement>(null);
+    const accordionRef = React.useRef<HTMLDivElement>(null);
 
     const isPanelOpen = hasChildren && panelOpenForItemId === id;
     const isPanelMode = hasChildren && (collapsed || doublePanel);
@@ -141,10 +143,7 @@ const SidenavFirstLevelItem = ({
             showAccent={isItemSelected}
             current={isItemSelected || hasDescendantSelected}
             chevron={hasChildren ? {rotated: isOpen, direction: doublePanel ? 'right' : 'down'} : undefined}
-            collapsed={collapsed}
-            // The label keeps the width of its text while the bar moves in either direction, and wraps
-            // only at rest expanded. See `itemLabelKeepsWidth`.
-            keepLabelWidth={collapseState !== 'expanded'}
+            placement="rail"
             tooltip={showTooltip}
             navigation={hasChildren ? undefined : navigation}
             toggle={
@@ -160,7 +159,7 @@ const SidenavFirstLevelItem = ({
         />
     );
 
-    // The row and its nested list share one list item. A stand-alone first-level entry already sits in
+    // The row and its accordion share one list item. A stand-alone first-level entry already sits in
     // a list item of the body list, so this one steps aside there.
     return (
         <div role={standalone ? undefined : 'listitem'}>
@@ -169,20 +168,22 @@ const SidenavFirstLevelItem = ({
                 <CSSTransition
                     in={isOpen}
                     timeout={isMotionOff ? 0 : CONTENT_DURATION_MS}
-                    nodeRef={nestedListRef}
-                    classNames={styles.nestedListTransitionClasses}
+                    nodeRef={accordionRef}
+                    classNames={styles.accordionTransitionClasses}
                     mountOnEnter
                     unmountOnExit
                 >
                     <div
-                        className={styles.nestedListContainer}
-                        ref={nestedListRef}
+                        className={styles.accordionContainer}
+                        ref={accordionRef}
                         // ArrowLeft on a child reads it to move the focus back to the trigger.
-                        data-sidenav-nested-list-for={id}
+                        data-sidenav-accordion-for={id}
                     >
-                        <div className={styles.nestedList}>
-                            <div className={styles.nestedListRows} role="list" aria-labelledby={labelId}>
-                                {children}
+                        <div className={styles.accordion}>
+                            <div className={styles.accordionRows} role="list" aria-labelledby={labelId}>
+                                {secondLevelItems?.map((item) =>
+                                    renderSidenavSecondLevelItem(item, {placement: 'accordion'})
+                                )}
                             </div>
                         </div>
                     </div>
@@ -190,7 +191,9 @@ const SidenavFirstLevelItem = ({
             )}
             {isPanelOpen && isDialogMode && (
                 <SidenavDialogPanel id={dialogPanelId} itemId={id} label={label} containerRef={containerRef}>
-                    {children}
+                    {secondLevelItems?.map((item) =>
+                        renderSidenavSecondLevelItem(item, {placement: 'panel'})
+                    )}
                 </SidenavDialogPanel>
             )}
         </div>

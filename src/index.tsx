@@ -122,7 +122,7 @@ export type {
     SidenavEntry,
     SidenavSection,
     SidenavFirstLevelItem,
-    SidenavNestedItem,
+    SidenavSecondLevelItem,
     SidenavSectionTitle,
     SidenavSlot,
     SidenavSlotRenderProps,

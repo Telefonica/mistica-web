@@ -14,6 +14,13 @@ import IconChevron from './icons/icon-chevron';
 import type {DataAttributes} from './utils/types';
 import type {SidenavAsset} from './sidenav-bar-types';
 
+/**
+ * Where a row stands. The rail (a first-level row) and the accordion (a second-level row under its parent)
+ * move with the bar when it collapses. A panel (the dialog panel, or the second column) never moves with
+ * it, so a row of a panel always sees a bar at rest expanded.
+ */
+type SidenavRowPlacement = 'rail' | 'accordion' | 'panel';
+
 /** Props that make the row navigate. The item builds them with `useSidenavNavigation`. */
 type SidenavRowNavigationProps =
     | {onPress: () => Promise<void>}
@@ -40,14 +47,15 @@ type SidenavRowProps = {
     showBackground?: boolean;
     /** Paint the accent bar. Only the selected item itself takes it, never a parent of it. */
     showAccent?: boolean;
-    /** Id written on the label, so a nested list can take its name from it. */
+    /** Id written on the label, so the accordion list can take its name from it. */
     labelId?: string;
     /** Render the chevron of a parent item, rotated when its children are open. */
     chevron?: {rotated: boolean; direction: 'down' | 'right'};
-    /** Paint the row as the collapsed rail: the asset alone, and the label faded but in the DOM. */
-    collapsed?: boolean;
-    /** Freeze the label at the width of its text, so it does not wrap while the bar moves. */
-    keepLabelWidth?: boolean;
+    /**
+     * Where the row stands, which tells it whether the collapse motion of the bar reaches it. The context
+     * gives the phase of that motion, and it cannot tell the place.
+     */
+    placement: SidenavRowPlacement;
     /** Show the label as a tooltip on the right, for the collapsed rail. */
     tooltip?: boolean;
     /** Present when the row navigates. Mutually exclusive with `toggle`. */
@@ -62,7 +70,7 @@ type SidenavRowProps = {
 /**
  * The visible row of an item, at both levels: the accent, the asset, the label, the right slot, the
  * chevron, and the tooltip of the collapsed rail. It holds no state: `SidenavFirstLevelItem` and
- * `SidenavNestedItem` decide what the row shows, and this component paints it.
+ * `SidenavSecondLevelItem` decide what the row shows, and this component paints it.
  */
 const SidenavRow = ({
     id,
@@ -74,8 +82,7 @@ const SidenavRow = ({
     showAccent = false,
     labelId,
     chevron,
-    collapsed = false,
-    keepLabelWidth = false,
+    placement,
     tooltip = false,
     navigation,
     toggle,
@@ -84,6 +91,16 @@ const SidenavRow = ({
 }: SidenavRowProps): JSX.Element => {
     // Read from context, not from `SidenavBar`: the floating panel restores the default variant.
     const variant = useThemeVariant();
+
+    // The row paints the collapsed rail (the asset alone, and the label faded but in the DOM) when the
+    // bar is collapsed or collapsing, and it holds the width of its label whenever the bar does not rest
+    // expanded. A row of a panel never moves with the bar, so it sees a bar at rest expanded.
+    const {collapseState: barCollapseState} = useSidenavBarContext();
+    const collapseState = placement === 'panel' ? 'expanded' : barCollapseState;
+    const collapsed = collapseState === 'collapsed' || collapseState === 'collapsing';
+    // The label keeps the width of its text while the bar moves in either direction, and wraps only at
+    // rest expanded. See `itemLabelKeepsWidth`.
+    const labelWidthFixed = collapseState !== 'expanded';
 
     let assetContent: React.ReactNode = null;
     if (typeof asset === 'function') {
@@ -100,7 +117,7 @@ const SidenavRow = ({
         ) : null;
 
     // The collapsed label stays in the DOM: a screen reader still reads it, and the fade needs it.
-    const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(keepLabelWidth);
+    const {ref: labelRef, frozenWidth: labelWidth} = useRestWidth(labelWidthFixed);
     const labelNode = (
         <div
             ref={labelRef}
@@ -108,7 +125,7 @@ const SidenavRow = ({
             className={classnames(styles.itemLabel, {
                 [styles.itemLabelCollapsed]: collapsed,
                 [styles.itemLabelFrozenWidth]: labelWidth !== undefined,
-                [styles.itemLabelKeepsWidth]: keepLabelWidth && labelWidth === undefined,
+                [styles.itemLabelKeepsWidth]: labelWidthFixed && labelWidth === undefined,
             })}
             style={labelWidth !== undefined ? {width: labelWidth} : undefined}
         >
@@ -252,3 +269,4 @@ const useSidenavNavigation = (
 };
 
 export {SidenavRow, useSidenavNavigation};
+export type {SidenavRowPlacement};

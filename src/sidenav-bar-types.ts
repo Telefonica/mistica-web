@@ -15,12 +15,12 @@ type SidenavItemBaseProps = {
 };
 
 /**
- * Parent item: it owns the nested items of the second level, it only opens and closes them, and it cannot
+ * Parent item: it owns the items of the second level, it only opens and closes them, and it cannot
  * navigate (`href`, `to`, and `onPress` are not allowed).
  */
 type SidenavParentItemProps = {
-    /** Nested items (max 1 level, level 0 items only). A parent item cannot navigate. */
-    children: ReadonlyArray<SidenavNestedItem>;
+    /** Second-level items (max 1 level, level 0 items only). A parent item cannot navigate. */
+    children: ReadonlyArray<SidenavSecondLevelItem>;
     /** Initial open state of the children. @default false */
     defaultOpen?: boolean;
 };
@@ -42,7 +42,7 @@ type SidenavNavigableItemProps = InteractiveProps & {
  * Supports 2-level nesting:
  * - **Level 0 items** can have children. They always carry an `asset`, because the collapsed rail shows
  *   nothing else of them.
- * - **Level 1 items** (children) cannot have children (leaf nodes). See `SidenavNestedItem`.
+ * - **Level 1 items** (children) cannot have children (leaf nodes). See `SidenavSecondLevelItem`.
  *
  * Each item is exactly one of:
  * - **Parent** — has `children` and only opens/closes them. It cannot navigate, so
@@ -75,16 +75,16 @@ type SidenavFirstLevelItem = SidenavItemBaseProps & {
 } & ExclusifyUnion<SidenavParentItemProps | SidenavNavigableItemProps>;
 
 /**
- * Nested item data: a child of a parent item. It is always navigable, and it cannot have children of its
+ * Second-level item data: a child of a parent item. It is always navigable, and it cannot have children of its
  * own. See `SidenavFirstLevelItem`.
  *
- * The collapsed rail never shows a nested item, so the asset is optional and `showAssetWhenExpanded` has
+ * The collapsed rail never shows a second-level item, so the asset is optional and `showAssetWhenExpanded` has
  * no meaning. The `undefined` members let a consumer read both item types through one union.
  *
  * @example
  * {id: 'active', label: 'Active', href: '/projects/active'}
  */
-type SidenavNestedItem = SidenavItemBaseProps &
+type SidenavSecondLevelItem = SidenavItemBaseProps &
     SidenavNavigableItemProps & {
         /** Icon component or element. */
         asset?: SidenavAsset;
@@ -211,7 +211,7 @@ type SidenavSlot = React.ReactNode | ((props: SidenavSlotRenderProps) => React.R
 export type {
     SidenavAsset,
     SidenavFirstLevelItem,
-    SidenavNestedItem,
+    SidenavSecondLevelItem,
     SidenavSection,
     SidenavSectionTitle,
     SidenavEntry,

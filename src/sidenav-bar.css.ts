@@ -7,10 +7,10 @@ import type {NonDeprecatedVariant} from './theme-variant-context';
 export const DEFAULT_WIDTH = 240;
 export const COLLAPSED_WIDTH = 72;
 const BOXED_INSET = 8;
-// Left padding of a nested row. It adds to the 8px left margin of the row (which clears the selected
-// indicator on the rail), so the content of a nested row lands 24px from the rail, as the Figma spec asks
+// Left padding of a second-level row. It adds to the 8px left margin of the row (which clears the selected
+// indicator on the rail), so the content of a second-level row lands 24px from the rail, as the Figma spec asks
 // (16 + 8). The full 24 here would count the 8px margin twice.
-const NESTING_INDENT = 16;
+const SECOND_LEVEL_INDENT = 16;
 export const LOGO_SIZE = 32;
 // Horizontal inset of the items rail on each side of a section (see `sectionContent`). The selected
 // indicator of an item sits on that inset, at the left edge of the rail.
@@ -840,13 +840,13 @@ export const itemChevronVariant = styleVariants(itemColors, (colors) => ({color:
 
 // The children of a parent item grow and shrink as one group. A grid row of `0fr` collapses the group
 // without a measured height, which is the pattern that `Accordion` uses (see `accordion.css.ts`).
-export const nestedListContainer = style({
+export const accordionContainer = style({
     display: 'grid',
 });
 
 // The group also fades while it folds: the fold clips its rows, and a selected row would otherwise leave
 // at full opacity, with its accent and its background.
-export const nestedListTransitionClasses = {
+export const accordionTransitionClasses = {
     enter: style({
         gridTemplateRows: '0fr',
         opacity: 0,
@@ -869,38 +869,38 @@ export const nestedListTransitionClasses = {
     }),
 };
 
-export const nestedList = style({
+export const accordion = style({
     display: 'flex',
     flexDirection: 'column',
 });
 
-// nestedListContainer   display: grid  ← the only grid; its row animates 0fr ↔ 1fr
-// └─ nestedList         flex column    ← clips its rows while the track moves
-//    └─ nestedListRows  flex column, role="list"
+// accordionContainer   display: grid  ← the only grid; its row animates 0fr ↔ 1fr
+// └─ accordion         flex column    ← clips its rows while the track moves
+//    └─ accordionRows  flex column, role="list"
 //       └─ item rows
 // the selection would be clipped (borders) when not animating. this fixes it.
 globalStyle(
-    `:is(${nestedListTransitionClasses.enter}, ${nestedListTransitionClasses.enterActive}, ${nestedListTransitionClasses.exit}, ${nestedListTransitionClasses.exitActive}) > ${nestedList}`,
+    `:is(${accordionTransitionClasses.enter}, ${accordionTransitionClasses.enterActive}, ${accordionTransitionClasses.exit}, ${accordionTransitionClasses.exitActive}) > ${accordion}`,
     {overflow: 'hidden'}
 );
 
 // One node carries one role, so the group of the children and the list of their rows are two nodes. This
 // one repeats the column of the group above it, and the rows keep the box that they had.
-export const nestedListRows = style({
+export const accordionRows = style({
     display: 'flex',
     flexDirection: 'column',
 });
 
 // The rows of a panel list the children at the edge, like a first-level row, so only the accordion
 // rows take the indent.
-globalStyle(`${nestedListRows} ${itemRow}`, {
-    paddingLeft: NESTING_INDENT,
+globalStyle(`${accordionRows} ${itemRow}`, {
+    paddingLeft: SECOND_LEVEL_INDENT,
 });
 
 // Panel (the dialog panel and the second column) -------------------------------
 
 // The rows of a panel, under the group that names it. It repeats the column of that group, for the
-// same reason as `nestedListRows`.
+// same reason as `accordionRows`.
 export const panelRows = style({
     display: 'flex',
     flexDirection: 'column',
@@ -939,11 +939,18 @@ export const doublePanelColumn = style({
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
+    // The content hangs from the right edge of the column, so it slides out from under the main column
+    // while the column opens, and slides back under it while the column closes. Anchored to the left edge,
+    // the content stood still and the edge wiped it instead, in one direction only: on opening, the focus
+    // of the first item scrolled the narrow column, which dragged the content by accident.
+    alignItems: 'flex-end',
     width: sidenavPanelWidthVar,
     height: '100%',
     flexShrink: 0,
-    overflowX: 'hidden',
-    overflowY: 'auto',
+    // The column only clips. The content scrolls (see `doublePanelContent`), so a classic scrollbar
+    // takes its room inside the content instead of pushing the content, which hangs from the right edge,
+    // out of the left edge of the column.
+    overflow: 'hidden',
 });
 
 // The column slides out of the main column and slides back into it, with the movement of the rail. Its
@@ -978,13 +985,16 @@ export const doublePanelTransitionClasses = {
 
 // The paddings of the column belong to this box, so the column itself can reach a width of zero. Its
 // horizontal inset is the inset of the items rail, so the children of the column land on the same rail as
-// the items of the main column.
+// the items of the main column. It scrolls up and down on its own, never sideways.
 export const doublePanelContent = style({
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     width: sidenavPanelWidthVar,
+    height: '100%',
     flexShrink: 0,
+    overflowX: 'hidden',
+    overflowY: 'auto',
     paddingTop: 24,
     paddingBottom: 24,
     paddingLeft: RAIL_INSET,

@@ -140,7 +140,7 @@ test('SidenavBar marks the selected item with aria-current="page"', async () => 
     expect(screen.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');
 });
 
-test('SidenavBar renders nested children of an open item', async () => {
+test('SidenavBar renders second-level items of an open item', async () => {
     await renderSidenav();
 
     expect(screen.getByRole('link', {name: 'Active'})).toHaveAttribute('href', '/active');
@@ -334,6 +334,22 @@ test('SidenavBar keeps the label of an item in the document when collapsed', asy
     screen.queryAllByTestId('ScreenReaderOnly').forEach((element) => {
         expect(element).not.toContainElement(label);
     });
+});
+
+// The rows of an open group follow the rail while it collapses, like the row of their parent: each label
+// keeps its width and folds. Without this, the labels re-wrap as the rail narrows, the rows grow, and the
+// group bounces while it folds.
+test('SidenavBar folds the labels of an open group with the rail when it collapses', async () => {
+    await renderSidenav();
+
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
+
+    fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+
+    // The group leaves the document once it folded, so its rows still stand here, on the collapsed rail.
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(true);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(true);
 });
 
 test('SidenavBar turns the chevron of a parent item that the user opens', async () => {
@@ -1208,6 +1224,18 @@ test('SidenavBar collapsed opens the dialog panel with the focus on its first it
     expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
 });
 
+// The dialog panel floats over the collapsed rail, so its rows never take the treatment of that rail: the
+// labels stay readable, and they take their width from the panel.
+test('SidenavBar collapsed keeps the labels of the dialog panel readable', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
+
+    const panel = await openDialogPanel('Projects');
+
+    expect(panel).toContainElement(queryItemRow('active'));
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
+});
+
 // Tab reads the sequence of the spec: the trigger, the children of its panel, then the item that follows
 // the trigger on the rail. The panel lives in a portal, at the end of the document, so nothing of that
 // sequence comes from the document itself.
@@ -1337,10 +1365,10 @@ test('SidenavBar expands the children inline when doublePanel is false', async (
 
     fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    // The label of the trigger names the nested list, and it stands outside of it.
-    const nestedList = screen.getByRole('list', {name: 'Projects'});
-    expect(nestedList).toContainElement(screen.getByRole('button', {name: 'Active'}));
-    expect(nestedList).not.toHaveTextContent('Projects');
+    // The label of the trigger names the accordion, and it stands outside of it.
+    const accordion = screen.getByRole('list', {name: 'Projects'});
+    expect(accordion).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(accordion).not.toHaveTextContent('Projects');
 });
 
 test('SidenavBar renders a stand-alone item with children at the first level', async () => {
@@ -1534,7 +1562,7 @@ test('SidenavBar moves the focus to the parent with ArrowLeft from a child', asy
 
 // The type requires the asset of a first-level item, so only a consumer without TypeScript reaches this
 // report. The entry below drops the asset through a cast, which is what that consumer does at run time.
-test('SidenavBar reports a first-level item without an asset, and it accepts a nested one', async () => {
+test('SidenavBar reports a first-level item without an asset, and it accepts a second-level one', async () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     render(

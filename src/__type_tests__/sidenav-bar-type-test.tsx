@@ -3,7 +3,7 @@ import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
 import type {
     SidenavEntry,
     SidenavFirstLevelItem,
-    SidenavNestedItem,
+    SidenavSecondLevelItem,
     SidenavSection,
 } from '../sidenav-bar-types';
 import type {SidenavBarProps} from '../sidenav-bar';
@@ -23,18 +23,18 @@ const firstLevelItemWithHiddenAsset: SidenavFirstLevelItem = {
 // @ts-expect-error - a first-level item needs an asset
 const firstLevelItemWithoutAsset: SidenavFirstLevelItem = {id: 'home', label: 'Home', href: '/'};
 
-// OK - a nested item can omit the asset
-const nestedItem: SidenavNestedItem = {id: 'active', label: 'Active', href: '/active'};
+// OK - a second-level item can omit the asset
+const secondLevelItem: SidenavSecondLevelItem = {id: 'active', label: 'Active', href: '/active'};
 
-// OK - a nested item can carry an asset
-const nestedItemWithAsset: SidenavNestedItem = {
+// OK - a second-level item can carry an asset
+const secondLevelItemWithAsset: SidenavSecondLevelItem = {
     id: 'active',
     label: 'Active',
     asset: IconHomeRegular,
     href: '/active',
 };
 
-const nestedItemWithHiddenAsset: SidenavNestedItem = {
+const secondLevelItemWithHiddenAsset: SidenavSecondLevelItem = {
     id: 'active',
     label: 'Active',
     asset: IconHomeRegular,
@@ -43,15 +43,19 @@ const nestedItemWithHiddenAsset: SidenavNestedItem = {
     href: '/active',
 };
 
-// @ts-expect-error - a nested item cannot have children
-const nestedItemWithChildren: SidenavNestedItem = {id: 'active', label: 'Active', children: [nestedItem]};
+const secondLevelItemWithChildren: SidenavSecondLevelItem = {
+    id: 'active',
+    label: 'Active',
+    // @ts-expect-error - a second-level item cannot have children
+    children: [secondLevelItem],
+};
 
-// OK - a first-level parent item with nested children
+// OK - a first-level parent item with second-level items
 const parentItem: SidenavFirstLevelItem = {
     id: 'projects',
     label: 'Projects',
     asset: IconHomeRegular,
-    children: [nestedItem, nestedItemWithAsset],
+    children: [secondLevelItem, secondLevelItemWithAsset],
 };
 
 // @ts-expect-error - an item that has no children needs exactly one of href, to, and onPress
@@ -75,12 +79,12 @@ const parentItemThatNavigates: SidenavFirstLevelItem = {
     id: 'projects',
     label: 'Projects',
     asset: IconHomeRegular,
-    children: [nestedItem],
+    children: [secondLevelItem],
     href: '/projects',
 };
 
-// @ts-expect-error - a nested item always navigates
-const nestedItemWithoutNavigation: SidenavNestedItem = {id: 'active', label: 'Active'};
+// @ts-expect-error - a second-level item always navigates
+const secondLevelItemWithoutNavigation: SidenavSecondLevelItem = {id: 'active', label: 'Active'};
 
 const section: SidenavSection = {
     title: 'Workspace',
@@ -108,12 +112,12 @@ const barWithBackgroundPerRegion: SidenavBarProps = {background: {header: '#ff00
 
 export {
     firstLevelItemWithoutAsset,
-    nestedItemWithHiddenAsset,
-    nestedItemWithChildren,
+    secondLevelItemWithHiddenAsset,
+    secondLevelItemWithChildren,
     itemWithoutChildrenAndWithoutNavigation,
     itemWithTwoNavigationProps,
     parentItemThatNavigates,
-    nestedItemWithoutNavigation,
+    secondLevelItemWithoutNavigation,
     entries,
     barWithBackground,
     barWithBackgroundPerRegion,

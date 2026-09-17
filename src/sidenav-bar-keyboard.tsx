@@ -78,19 +78,19 @@ const getOpenDoublePanel = (trigger: HTMLElement, container: HTMLElement): HTMLE
     );
 };
 
-const getOpenNestedList = (trigger: HTMLElement, container: HTMLElement): HTMLElement | null => {
+const getOpenAccordion = (trigger: HTMLElement, container: HTMLElement): HTMLElement | null => {
     const itemId = trigger.closest('[data-sidenav-item-id]')?.getAttribute('data-sidenav-item-id');
     if (!itemId) {
         return null;
     }
     return container.querySelector<HTMLElement>(
-        `[data-sidenav-nested-list-for="${escapeAttributeValue(itemId)}"]`
+        `[data-sidenav-accordion-for="${escapeAttributeValue(itemId)}"]`
     );
 };
 
 const getParentTrigger = (child: HTMLElement, container: HTMLElement): HTMLElement | null => {
-    const nestedList = child.closest('[data-sidenav-nested-list-for]');
-    const parentId = nestedList?.getAttribute('data-sidenav-nested-list-for');
+    const accordion = child.closest('[data-sidenav-accordion-for]');
+    const parentId = accordion?.getAttribute('data-sidenav-accordion-for');
     if (!parentId) {
         return null;
     }
@@ -217,10 +217,10 @@ const useSidenavRailKeyboard = (
                         getItemFocusables(column)[0]?.focus();
                         return;
                     }
-                    const nestedList = getOpenNestedList(active, container);
-                    if (nestedList) {
+                    const accordion = getOpenAccordion(active, container);
+                    if (accordion) {
                         event.preventDefault();
-                        getItemFocusables(nestedList)[0]?.focus();
+                        getItemFocusables(accordion)[0]?.focus();
                     }
                     return;
                 }
