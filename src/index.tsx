@@ -114,6 +114,20 @@ export {Grid, GridItem} from './grid';
 export {default as Drawer} from './drawer';
 export {default as Timeline, TimelineItem} from './timeline';
 export {default as SkipLink, SkipLinkNav} from './skip-link';
+export {SidenavBar} from './sidenav-bar';
+export {SidenavLayout} from './sidenav-bar-layout';
+export type {SidenavBarProps} from './sidenav-bar';
+export type {SidenavLayoutProps} from './sidenav-bar-layout';
+export type {
+    SidenavEntry,
+    SidenavSection,
+    SidenavFirstLevelItem,
+    SidenavSecondLevelItem,
+    SidenavSectionTitle,
+    SidenavSlot,
+    SidenavSlotRenderProps,
+    SidenavCollapseState,
+} from './sidenav-bar-types';
 
 // Sheets
 export {default as SheetRoot, showSheet} from './sheet-root';
