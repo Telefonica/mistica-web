@@ -5,6 +5,14 @@ extends:
 plugins:
     - mistica-local-rules
 overrides:
+    # import/no-restricted-paths is silent without a resolver that knows ts. Scoped: repo wide it breaks other rules.
+    - files:
+          - 'src/sidenav-bar*.tsx'
+          - 'src/navigation-bar.tsx'
+      settings:
+          import/resolver:
+              node:
+                  extensions: ['.js', '.ts', '.tsx']
     - files:
           - '*.js'
       parser: espree
@@ -35,4 +43,17 @@ rules:
         - js: never
           json: always
           css: always
+    # Sidenav and navigation bar only share code through navigation-shared and mobile-navigation-menu
+    import/no-restricted-paths:
+        - error
+        - zones:
+              - target: './src/sidenav-bar*.tsx'
+                from: './src/navigation-bar.tsx'
+                message: Import the shared parts from navigation-shared or mobile-navigation-menu
+              - target: './src/sidenav-bar*.tsx'
+                from: './src/navigation-bar.css.ts'
+                message: Import the shared parts from navigation-shared or mobile-navigation-menu
+              - target: './src/navigation-bar.tsx'
+                from: './src/sidenav-bar*.tsx'
+                message: The navigation bar must not depend on the sidenav
     mistica-local-rules/use-client: error

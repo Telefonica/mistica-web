@@ -86,6 +86,7 @@ export const boxed = style({
 
 export const overflowHidden = sprinkles({overflow: 'hidden'});
 
+// todo https://github.com/Telefonica/mistica-design/issues/2827 use a border token per variant
 export const boxBorder = sprinkles({
     border: 'regular',
 });
