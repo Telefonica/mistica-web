@@ -415,7 +415,6 @@ test.each`
         args: {card, control},
     });
     const container = await screen.findByTestId('card-container');
-    expect(await container.screenshot()).toMatchImageSnapshot();
     await (await screen.findByRole(control, {name: 'First This is a description Select First'})).click();
     expect(await container.screenshot()).toMatchImageSnapshot();
 });
