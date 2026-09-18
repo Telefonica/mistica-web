@@ -27,7 +27,16 @@ const IconCreditCardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M22 15.517a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 15.517V11.88h20zM18.25 4.733A3.75 3.75 0 0 1 22 8.484v.596H2v-.596a3.75 3.75 0 0 1 3.75-3.75z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 import {useIconGradient} from '../../utils/icon-gradient';
@@ -23,15 +24,28 @@ const IconMessageFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M18 3.5A3.5 3.5 0 0 1 21.5 7v8a3.5 3.5 0 0 1-3.5 3.5h-4.862l-4.881 2.929A.5.5 0 0 1 7.5 21v-2.5H6A3.5 3.5 0 0 1 2.5 15V7A3.5 3.5 0 0 1 6 3.5zM8 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"
-                />
-            </svg>
-        );
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v9.443a2.307 2.307 0 0 0 3.846 1.718l2.51-2.172h5.394a8.25 8.25 0 0 0 8.25-8.25v-.739A8.25 8.25 0 0 0 13.75 2zM8.543 6.33h6.916a.75.75 0 0 1 0 1.5H8.543a.75.75 0 1 1 0-1.5m-.75 4.25a.75.75 0 0 1 .75-.75h6.916a.75.75 0 1 1 0 1.5H8.543a.75.75 0 0 1-.75-.75m.75 2.75h6.916a.75.75 0 1 1 0 1.5H8.543a.75.75 0 0 1 0-1.5"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18 3.5A3.5 3.5 0 0 1 21.5 7v8a3.5 3.5 0 0 1-3.5 3.5h-4.862l-4.881 2.929A.5.5 0 0 1 7.5 21v-2.5H6A3.5 3.5 0 0 1 2.5 15V7A3.5 3.5 0 0 1 6 3.5zM8 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"
+                    />
+                </svg>
+            );
+        }
     };
 
     const svgContent = getSvgContent();

@@ -27,7 +27,16 @@ const IconBookRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.147 3.928q1.13.001 2.215.166a.75.75 0 0 1 .638.741v12.677a.75.75 0 0 1-.862.741 13 13 0 0 0-1.992-.148c-2.473 0-4.785.68-6.761 1.861a.75.75 0 0 1-.77 0 13.13 13.13 0 0 0-6.761-1.861q-1.018 0-1.992.148A.75.75 0 0 1 2 17.512V4.835a.75.75 0 0 1 .638-.741q1.085-.165 2.216-.166c2.593 0 5.03.673 7.146 1.852a14.63 14.63 0 0 1 7.147-1.852m-14.293 1.5q-.687 0-1.354.07v11.17q.669-.061 1.354-.063c2.292 0 4.462.525 6.396 1.462V7.078a13.1 13.1 0 0 0-6.396-1.65m14.293 0a13.14 13.14 0 0 0-6.397 1.65v10.989a14.64 14.64 0 0 1 7.75-1.399V5.498q-.667-.07-1.354-.07"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

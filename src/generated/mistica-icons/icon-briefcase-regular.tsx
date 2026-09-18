@@ -27,7 +27,16 @@ const IconBriefcaseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.23 7.27v.148h1.02a3.75 3.75 0 0 1 3.75 3.75v7.081A3.75 3.75 0 0 1 18.25 22h-.003L5.75 21.95h-.002A3.75 3.75 0 0 1 2 18.2v-7.032a3.75 3.75 0 0 1 3.75-3.75h1.02V7.27C6.77 4.34 9.297 2 12.086 2c2.826 0 5.143 2.376 5.144 5.269m-8.96.148h7.46V7.27c0-2.098-1.678-3.769-3.643-3.769-2.002 0-3.817 1.708-3.818 3.77zm-4.77 3.75v.992a18.7 18.7 0 0 0 7.486 2.073v-.316a.85.85 0 0 1 .845-.854h.338a.85.85 0 0 1 .844.854v.33c2.604-.126 5.166-.8 7.487-2.016v-1.063a2.25 2.25 0 0 0-2.25-2.25H5.75a2.25 2.25 0 0 0-2.25 2.25m7.486 4.568A20.2 20.2 0 0 1 3.5 13.834V18.2a2.25 2.25 0 0 0 2.25 2.25h.003l12.497.05h.001a2.25 2.25 0 0 0 2.249-2.25v-4.343a19.6 19.6 0 0 1-7.487 1.841v.377a.85.85 0 0 1-.844.854h-.338a.85.85 0 0 1-.845-.854z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
