@@ -6,23 +6,74 @@ on:
                 description: 'CLI args'
                 required: false
                 default: ''
-
-permissions:
-    contents: write
-    issues: write
-    pull-requests: write
+            dryRun:
+                description: 'Dry-run first: shows the next version, then waits for a second approval before publishing'
+                required: false
+                type: boolean
+                default: false
 
 jobs:
-    release:
-        name: Release
+    validate:
+        name: Validate release
+        if: inputs.dryRun
         runs-on: ubuntu-latest
-        # Requires manual approval to run - protects NPM_PUBLISH_TOKEN secret
+        # Requires manual approval to run - the dry-run needs GH_TOKEN_MISTICA and NPM_PUBLISH_TOKEN
         environment: production
+        permissions:
+            contents: read
         steps:
-            # persist-credentials: false - git remote configured manually in Release step with GH_TOKEN_MISTICA
             - uses: actions/checkout@v6
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
+                  persist-credentials: false
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - name: Validate CLI args
+              id: validate-args
+              uses: './.github/actions/validate-cli-args'
+              with:
+                  cli-args: ${{ inputs.cliArgs }}
+
+            - name: Dry-run semantic-release
+              # bash with pipefail: a semantic-release failure must fail the step even through the tee pipe
+              shell: bash
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
+                  NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+              run: |
+                  npx semantic-release --dry-run ${{ steps.validate-args.outputs.safe-args }} 2>&1 | tee dry-run.log
+
+                  NEXT_VERSION=$(sed -E 's/\x1b\[[0-9;]*m//g' dry-run.log | sed -nE 's/.*The next release version is ([^ ]+).*/\1/p' | tail -1)
+
+                  if [ -n "$NEXT_VERSION" ]; then
+                    echo "## Next release: \`$NEXT_VERSION\`" >> $GITHUB_STEP_SUMMARY
+                    echo "Approve the **Release** job to publish it. Reject it if the version is not the one you expect." >> $GITHUB_STEP_SUMMARY
+                  else
+                    echo "## No release" >> $GITHUB_STEP_SUMMARY
+                    echo "semantic-release found no relevant changes. Read the log of the dry-run step for details." >> $GITHUB_STEP_SUMMARY
+                  fi
+
+    release:
+        name: Release
+        needs: validate
+        # Runs when the dry-run passed or was not requested; a failed dry-run blocks the release
+        if: ${{ !cancelled() && needs.validate.result != 'failure' }}
+        runs-on: ubuntu-latest
+        # Requires manual approval to run - protects GH_TOKEN_MISTICA and NPM_PUBLISH_TOKEN secrets
+        environment: production
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  # persist-credentials: false - git remote configured manually in Release step with GH_TOKEN_MISTICA
                   persist-credentials: false
 
             - name: Install dependencies
@@ -39,40 +90,11 @@ jobs:
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
-            - name: Validate cli args
-              id: validate
-              env:
-                  CLI_ARGS_INPUT: ${{ github.event.inputs.cliArgs }}
-              run: |
-                  if [ -z "$CLI_ARGS_INPUT" ]; then
-                    echo "safe_args=" >> $GITHUB_OUTPUT
-                    exit 0
-                  fi
-
-                  # Build allowlist from semantic-release help
-                  ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
-
-                  # Validate tokens: flags must be in allowlist, values must follow flags
-                  PREV_WAS_FLAG=false
-                  for TOKEN in $CLI_ARGS_INPUT; do
-                    if echo "$TOKEN" | grep -qE '^-'; then
-                      if ! echo "$TOKEN" | grep -qE "^($ALLOWED_FLAGS)$"; then
-                        echo "Error: Invalid flag: $TOKEN"
-                        exit 1
-                      fi
-                      PREV_WAS_FLAG=true
-                    else
-                      if [ "$PREV_WAS_FLAG" != "true" ]; then
-                        echo "Error: Value must follow a flag: $TOKEN"
-                        exit 1
-                      fi
-                      PREV_WAS_FLAG=false
-                    fi
-                  done
-
-                  # Preventive escaping
-                  SAFE_ARGS=$(printf "%q" "$CLI_ARGS_INPUT")
-                  echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
+            - name: Validate CLI args
+              id: validate-args
+              uses: './.github/actions/validate-cli-args'
+              with:
+                  cli-args: ${{ inputs.cliArgs }}
 
             - name: Release
               env:
@@ -81,4 +103,4 @@ jobs:
               run: |
                   # Configure git remote with token for push
                   git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-                  npx semantic-release ${{ steps.validate.outputs.safe_args }}
+                  npx semantic-release ${{ steps.validate-args.outputs.safe-args }}
