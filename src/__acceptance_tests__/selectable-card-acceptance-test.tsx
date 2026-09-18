@@ -18,7 +18,7 @@ test.each(['checkbox', 'switch', 'radio'])('outline follows the %s in the card s
         device: 'DESKTOP',
         args: {control},
     });
-    const first = await screen.findByRole(control, {name: 'Select First'});
+    const first = await screen.findByRole(control, {name: 'First This is a description Select First'});
     const unselected = await getOutline();
     await first.focus();
     await page.keyboard.press('Space');
@@ -28,7 +28,9 @@ test.each(['checkbox', 'switch', 'radio'])('outline follows the %s in the card s
     expect(selected.inset).toBe('-4px');
     expect(await first.evaluate((element) => element === document.activeElement)).toBe(true);
     if (control === 'radio') {
-        await (await screen.findByRole(control, {name: 'Select Second'})).click();
+        await (
+            await screen.findByRole(control, {name: 'Second This is a description Select Second'})
+        ).click();
     } else {
         await page.keyboard.press('Space');
     }
@@ -41,10 +43,10 @@ test('selected prop overrides the checkbox in the slot', async () => {
         device: 'DESKTOP',
         args: {selected: false},
     });
-    const checkbox = await screen.findByRole('checkbox', {name: 'Select First'});
+    const checkbox = await screen.findByRole('checkbox', {name: 'First This is a description Select First'});
     const unselected = await getOutline();
     await checkbox.click();
-    expect(await checkbox.evaluate((element) => element.getAttribute('aria-checked'))).toBe('true');
+    expect(await checkbox.evaluate((element) => element.getAttribute('aria-checked'))).toBe('false');
     expect((await getOutline()).color).toBe(unselected.color);
 });
 
@@ -57,3 +59,22 @@ test('custom controls only select the card through selected', async () => {
     await (await screen.findByRole('button', {name: 'Add favorite'})).click();
     expect((await getOutline(1)).color).not.toBe(unselected.color);
 });
+
+test.each(['data', 'media', 'cover', 'naked', 'advanced'])(
+    'card body selects %s and owns keyboard focus',
+    async (card) => {
+        const page = await openStoryPage({
+            id: 'components-cards-selection--selection',
+            device: 'DESKTOP',
+            args: {card},
+        });
+        const surface = await screen.findByRole('checkbox', {
+            name: 'First This is a description Select First',
+        });
+        await (await screen.findByText('First', {exact: true})).click();
+        expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe('true');
+        expect(await surface.evaluate((element) => element === document.activeElement)).toBe(true);
+        await page.keyboard.press('Space');
+        expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe('false');
+    }
+);

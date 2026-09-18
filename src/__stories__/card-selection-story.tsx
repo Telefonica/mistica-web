@@ -4,6 +4,7 @@ import {
     MediaCard,
     CoverCard,
     NakedCard,
+    CommunityAdvancedDataCard,
     Checkbox,
     Switch,
     RadioButton,
@@ -24,7 +25,7 @@ import type {Variant} from '../theme-variant-context';
 export default {title: 'Components/Cards/Selection'};
 
 type SelectionArgs = {
-    card: 'data' | 'media' | 'cover' | 'naked';
+    card: 'data' | 'media' | 'cover' | 'naked' | 'advanced';
     control: 'checkbox' | 'switch' | 'radio';
     selected?: boolean;
     variant: Variant;
@@ -38,30 +39,44 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     variant,
     variantOutside,
 }) => {
-    const Card = {data: DataCard, media: MediaCard, cover: CoverCard, naked: NakedCard}[card];
+    const Card = {data: DataCard, media: MediaCard, cover: CoverCard, naked: NakedCard, advanced: DataCard}[
+        card
+    ];
     const cards = (
         <Stack space={24}>
-            {['First', 'Second'].map((title) => (
-                <Card
-                    key={`${title}-${control}`}
-                    title={title}
-                    description="This is a description"
-                    imageSrc={card === 'data' ? undefined : beachImg}
-                    variant={
-                        card === 'naked' || (card === 'cover' && variant === 'default') ? undefined : variant
-                    }
-                    selected={selected}
-                    slot={
-                        control === 'radio' ? (
-                            <RadioButton value={title}>Select {title}</RadioButton>
-                        ) : control === 'switch' ? (
-                            <Switch name={title}>Select {title}</Switch>
-                        ) : (
-                            <Checkbox name={title}>Select {title}</Checkbox>
-                        )
-                    }
-                />
-            ))}
+            {['First', 'Second'].map((title) => {
+                const controlElement =
+                    control === 'radio' ? (
+                        <RadioButton value={title}>Select {title}</RadioButton>
+                    ) : control === 'switch' ? (
+                        <Switch name={title}>Select {title}</Switch>
+                    ) : (
+                        <Checkbox name={title}>Select {title}</Checkbox>
+                    );
+                return card === 'advanced' ? (
+                    <CommunityAdvancedDataCard
+                        key={`${title}-${control}`}
+                        title={title}
+                        description="This is a description"
+                        selected={selected}
+                        slot={[controlElement]}
+                    />
+                ) : (
+                    <Card
+                        key={`${title}-${control}`}
+                        title={title}
+                        description="This is a description"
+                        imageSrc={card === 'data' ? undefined : beachImg}
+                        variant={
+                            card === 'naked' || (card === 'cover' && variant === 'default')
+                                ? undefined
+                                : variant
+                        }
+                        selected={selected}
+                        slot={controlElement}
+                    />
+                );
+            })}
         </Stack>
     );
     return (
@@ -85,7 +100,7 @@ Selection.args = {
     variantOutside: 'default',
 };
 Selection.argTypes = {
-    card: {options: ['data', 'media', 'cover', 'naked'], control: {type: 'select'}},
+    card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},
     selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},
     variant: {options: ['default', 'brand', 'inverse', 'negative', 'media'], control: {type: 'select'}},

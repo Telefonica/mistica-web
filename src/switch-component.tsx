@@ -68,7 +68,6 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
     const isChecked = value ?? checkedState;
-    useCardSelection(isChecked);
 
     const notifyChange = React.useMemo(() => {
         if (process.env.NODE_ENV === 'test') {
@@ -96,6 +95,15 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             handleChange();
         }
     };
+
+    const cardSelection = useCardSelection(isChecked, {
+        role: 'switch',
+        disabled,
+        onPress: handleChange,
+        onKeyDown: handleKeyDown,
+    });
+    const promoted = cardSelection?.promoteControl;
+    const role = promoted ? undefined : 'switch';
 
     const barVariant = isIos
         ? isChecked
@@ -144,18 +152,25 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
 
     return (
         // When the switch is disabled, it shouldn't be focusable
-        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- The semantic role moves between the control and the card surface.
         <span
-            role="switch"
-            aria-checked={value ?? checkedState}
+            role={role}
+            aria-hidden={promoted || undefined}
+            aria-checked={promoted ? undefined : value ?? checkedState}
             onClick={(e) => {
+                if (promoted && !cardSelection?.isFooter) {
+                    return;
+                }
                 e.stopPropagation();
                 if (!disabled) {
+                    if (promoted) {
+                        cardSelection?.surfaceRef?.current?.focus();
+                    }
                     handleChange();
                 }
             }}
-            onKeyDown={disabled ? undefined : handleKeyDown}
-            tabIndex={disabled ? undefined : 0}
+            onKeyDown={disabled || promoted ? undefined : handleKeyDown}
+            tabIndex={disabled || promoted ? undefined : 0}
             ref={focusableRef}
             className={
                 props.render

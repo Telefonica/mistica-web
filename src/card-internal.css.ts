@@ -299,3 +299,12 @@ export const selectionOutlineColor = styleVariants({
     media: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedBrand}}},
     negative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedNegative}}},
 });
+
+export const selectionSurface = style({
+    borderRadius: skinVars.borderRadii.container,
+    cursor: 'pointer',
+    outlineOffset: 0,
+    selectors: {
+        '&[aria-disabled="true"]': {cursor: 'default'},
+    },
+});

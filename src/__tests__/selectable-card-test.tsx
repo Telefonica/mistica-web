@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {DataCard} from '../card-data';
 import {MediaCard} from '../card-media';
 import {CoverCard} from '../card-cover';
+import AdvancedDataCard from '../community/advanced-data-card';
 import {NakedCard} from '../card-naked';
 import Checkbox from '../checkbox';
 import Switch from '../switch-component';
@@ -14,17 +15,18 @@ import {makeTheme} from './test-utils';
 import {getSelectionOutlineVariant} from '../card-internal';
 import {CardSelectionContext} from '../card-selection-context';
 
+import type {CardSelectionControl} from '../card-selection-context';
 import type {Variant} from '../theme-variant-context';
 
 const renderWithTheme = (children: React.ReactNode) =>
     render(<ThemeContextProvider theme={makeTheme()}>{children}</ThemeContextProvider>);
 
 const SelectionObserver = ({children}: {children: React.ReactNode}) => {
-    const [controls, setControls] = React.useState<Record<string, boolean>>({});
+    const [controls, setControls] = React.useState<Record<string, CardSelectionControl>>({});
     return (
-        <CardSelectionContext.Provider value={setControls}>
+        <CardSelectionContext.Provider value={{setControls}}>
             <output aria-label="Selection">
-                {Object.values(controls).some(Boolean) ? 'Selected' : 'Unselected'}
+                {Object.values(controls).some((control) => control.checked) ? 'Selected' : 'Unselected'}
             </output>
             {children}
         </CardSelectionContext.Provider>
@@ -121,7 +123,9 @@ describe.each([
                     buttonPrimary={<ButtonPrimary onPress={onAction}>Action</ButtonPrimary>}
                 />
             );
-            const checkbox = await screen.findByRole('checkbox', {name: 'Option'});
+            const checkbox = await screen.findByRole('checkbox', {
+                name: slot === 'slot' ? 'Card Option' : 'Card',
+            });
             expect(screen.getAllByRole('button')).toEqual([screen.getByRole('button', {name: 'Action'})]);
             await userEvent.click(checkbox);
             expect(checkbox).toHaveAttribute('aria-checked', 'true');
@@ -129,6 +133,8 @@ describe.each([
             await userEvent.click(screen.getByRole('button', {name: 'Action'}));
             expect(onAction).toHaveBeenCalledTimes(1);
             expect(checkbox).toHaveAttribute('aria-checked', 'true');
+            await userEvent.click(screen.getByText('Option'));
+            expect(checkbox).toHaveAttribute('aria-checked', 'false');
         }
     );
 });
@@ -156,4 +162,153 @@ const outlineVariants: Array<[Variant, Variant, Variant]> = [
 
 test.each(outlineVariants)('outline over %s with %s card uses %s', (outside, variant, outline) => {
     expect(getSelectionOutlineVariant(outside, variant)).toBe(outline);
+});
+
+const AdvancedSelectionCard = ({slot, title, onPress, selected}: React.ComponentProps<typeof DataCard>) => (
+    <AdvancedDataCard
+        title={title}
+        onPress={onPress}
+        selected={selected}
+        slot={slot ? [<React.Fragment key="slot">{slot}</React.Fragment>] : undefined}
+    />
+);
+
+const selectionCards = [DataCard, MediaCard, CoverCard, NakedCard, AdvancedSelectionCard];
+
+describe.each(selectionCards)('card surface selection (%#)', (Card) => {
+    test.each([
+        ['checkbox', Checkbox],
+        ['switch', Switch],
+    ] as const)('the surface owns the %s interaction and replaces navigation', async (role, Control) => {
+        const onPress = jest.fn();
+        const onChange = jest.fn();
+        const control = (
+            <Control name="option" onChange={onChange}>
+                Option
+            </Control>
+        );
+        renderWithTheme(<Card title="Choose this card" onPress={onPress} slot={control} />);
+        const surface = screen.getByRole(role, {name: 'Choose this card Option'});
+        expect(screen.getAllByRole(role)).toHaveLength(1);
+        await userEvent.click(screen.getByText('Choose this card'));
+        expect(surface).toHaveAttribute('aria-checked', 'true');
+        expect(surface).toHaveFocus();
+        expect(onChange).toHaveBeenCalledTimes(1);
+        await userEvent.keyboard(' ');
+        expect(surface).toHaveAttribute('aria-checked', 'false');
+        expect(onPress).not.toHaveBeenCalled();
+        await userEvent.click(screen.getByText('Option'));
+        expect(surface).toHaveAttribute('aria-checked', 'true');
+        expect(onChange).toHaveBeenCalledTimes(3);
+    });
+
+    test('disabled controls cannot be activated from the surface', async () => {
+        const onChange = jest.fn();
+        const control = (
+            <Checkbox name="option" disabled onChange={onChange}>
+                Option
+            </Checkbox>
+        );
+        renderWithTheme(<Card title="Disabled" slot={control} />);
+        await userEvent.click(screen.getByText('Disabled'));
+        expect(screen.getByRole('checkbox')).toHaveAttribute('aria-disabled', 'true');
+        expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'false');
+        expect(onChange).not.toHaveBeenCalled();
+    });
+
+    test('radio arrows move selection and focus between card surfaces', async () => {
+        renderWithTheme(
+            <RadioGroup name="options">
+                {['First', 'Second'].map((title) => {
+                    const control = <RadioButton value={title}>Option</RadioButton>;
+                    return <Card key={title} title={title} slot={control} />;
+                })}
+            </RadioGroup>
+        );
+        const first = screen.getByRole('radio', {name: 'First Option'});
+        const second = screen.getByRole('radio', {name: 'Second Option'});
+        await userEvent.tab();
+        expect(first).toHaveFocus();
+        await userEvent.keyboard(' ');
+        expect(first).toHaveAttribute('aria-checked', 'true');
+        await userEvent.keyboard('{ArrowRight}');
+        expect(second).toHaveFocus();
+        expect(first).toHaveAttribute('aria-checked', 'false');
+        expect(second).toHaveAttribute('aria-checked', 'true');
+        await userEvent.keyboard('{ArrowLeft}');
+        expect(first).toHaveFocus();
+    });
+
+    test('custom checkbox render keeps automatic selection', async () => {
+        const control = (
+            <Checkbox
+                name="custom"
+                aria-label="Choose"
+                render={({checked}) => <span>{checked ? 'Chosen' : 'Choose'}</span>}
+            />
+        );
+        renderWithTheme(<Card title="Custom" slot={control} />);
+        await userEvent.click(screen.getByText('Custom'));
+        expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
+        expect(screen.getByText('Chosen')).toBeInTheDocument();
+    });
+});
+
+test('advanced card footer actions do not change selection', async () => {
+    const onAction = jest.fn();
+    renderWithTheme(
+        <AdvancedDataCard
+            title="Advanced"
+            slot={[
+                <Checkbox key="option" name="option">
+                    Option
+                </Checkbox>,
+            ]}
+            button={<ButtonPrimary onPress={onAction}>Action</ButtonPrimary>}
+        />
+    );
+    await userEvent.click(screen.getByText('Advanced'));
+    await userEvent.click(screen.getByRole('button', {name: 'Action'}));
+    expect(onAction).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
+});
+
+test('removing a second control preserves the remaining uncontrolled selection', async () => {
+    const Example = () => {
+        const [multiple, setMultiple] = React.useState(true);
+        return (
+            <>
+                <button onClick={() => setMultiple(false)}>Remove second</button>
+                <DataCard
+                    title="Card"
+                    slot={
+                        <>
+                            <Checkbox name="first">First</Checkbox>
+                            {multiple && <Checkbox name="second">Second</Checkbox>}
+                        </>
+                    }
+                />
+            </>
+        );
+    };
+    renderWithTheme(<Example />);
+    await userEvent.click(screen.getByRole('checkbox', {name: 'First'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Remove second'}));
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
+});
+
+test('selection replaces the segregated primary card action', async () => {
+    const onPress = jest.fn();
+    renderWithTheme(
+        <DataCard
+            title="Select this card"
+            onPress={onPress}
+            segregateTouchableContent
+            slot={<Checkbox name="option">Option</Checkbox>}
+        />
+    );
+    await userEvent.click(screen.getByText('Select this card'));
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
+    expect(onPress).not.toHaveBeenCalled();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });

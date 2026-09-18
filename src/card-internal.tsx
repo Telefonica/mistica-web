@@ -8,7 +8,8 @@ import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
 import {ThemeVariant, normalizeVariant, useThemeVariant, useRawThemeVariant} from './theme-variant-context';
 import Tag from './tag';
-import {CardSelectionContext} from './card-selection-context';
+import {CardSelectionContext, useSelectableCard} from './card-selection-context';
+import {CardSelectionSurface} from './card-selection-surface';
 import Stack from './stack';
 import Image from './image';
 import Video from './video';
@@ -1200,6 +1201,7 @@ const TextContent = ({
 };
 
 type CardTouchableProps = {
+    selection: ReturnType<typeof useSelectableCard>;
     children: React.ReactNode;
     isTouchable: boolean;
     touchableAriaLabel?: string;
@@ -1215,6 +1217,7 @@ type CardTouchableProps = {
 };
 
 const CardTouchable = ({
+    selection,
     children,
     isTouchable,
     touchableAriaLabel,
@@ -1248,6 +1251,23 @@ const CardTouchable = ({
             {children}
         </div>
     );
+
+    if (selection.isSelectionMode) {
+        return (
+            <CardSelectionSurface
+                maybe
+                selection={selection}
+                aria-label={selection.control ? touchableAriaLabel : undefined}
+                aria-labelledby={ariaLabeledByProp}
+                aria-description={ariaDescriptionProp}
+                aria-describedby={ariaDescribedByProp}
+                className={classnames(styles.touchable, styles.touchableContainer)}
+                style={selection.control ? contentRadiusStyle : undefined}
+            >
+                {content}
+            </CardSelectionSurface>
+        );
+    }
 
     if (isTouchable && segregateTouchableContent) {
         return hasTouchableInContent ? (
@@ -1368,26 +1388,28 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         },
         ref
     ): JSX.Element => {
-        const [controls, setControls] = React.useState<Record<string, boolean>>({});
-        const controlValues = Object.values(controls);
-        const isControlSelected = controlValues.length ? controlValues.some(Boolean) : undefined;
-        const isSelected = selected ?? isControlSelected;
-        const isSelectionMode = isSelected !== undefined;
+        const selection = useSelectableCard(selected);
+        const {isSelected, isSelectionMode} = selection;
         const topActions = isSelectionMode ? undefined : topActionsProp;
         const onClose = isSelectionMode ? undefined : onCloseProp;
         const slot = slotProp && (
-            <CardSelectionContext.Provider value={setControls}>{slotProp}</CardSelectionContext.Provider>
+            <CardSelectionContext.Provider value={selection.context}>
+                {slotProp}
+            </CardSelectionContext.Provider>
         );
         const footerSlot = footerSlotProp && (
-            <CardSelectionContext.Provider value={setControls}>
+            <CardSelectionContext.Provider value={{...selection.context, isFooter: true}}>
                 {footerSlotProp}
             </CardSelectionContext.Provider>
         );
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
-        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const isTouchable =
+            !!selection.control ||
+            (!isSelectionMode && !!(touchableProps.href || touchableProps.to || touchableProps.onPress));
         const hasTouchableInContent = !!(
+            !isSelectionMode &&
             segregateTouchableContent &&
             !touchableAriaLabelProp &&
             (title || pretitle || headline || subtitle || description)
@@ -1555,13 +1577,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 )}
 
                 <CardTouchable
+                    selection={selection}
                     isTouchable={isTouchable}
                     touchableAriaLabel={touchableAriaLabel}
                     ariaLabeledByProp={ariaLabeledByProp}
                     ariaDescriptionProp={ariaDescriptionProp}
                     ariaDescribedByProp={ariaDescribedByProp}
-                    touchableProps={touchableProps}
-                    segregateTouchableContent={segregateTouchableContent}
+                    touchableProps={isSelectionMode ? {} : touchableProps}
+                    segregateTouchableContent={isSelectionMode ? false : segregateTouchableContent}
                     hasTouchableInContent={hasTouchableInContent}
                     overlayClassname={overlayStyle}
                     contentStyle={{
@@ -1598,7 +1621,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         />
                     )}
                     <div
-                        aria-hidden={isTouchable && !segregateTouchableContent}
+                        aria-hidden={isTouchable && !selection.control && !segregateTouchableContent}
                         data-testid="body"
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]:
