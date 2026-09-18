@@ -38,3 +38,6 @@ import {AdvancedDataCard} from '../advanced-data-card';
 <AdvancedDataCard title="title" onPress={() => {}} to="/" />;
 // @ts-expect-error href and to can't be used together
 <AdvancedDataCard title="title" href="/" to="/" />;
+
+<AdvancedDataCard title="Selected" selected />;
+<AdvancedDataCard title="Unselected" selected={false} />;

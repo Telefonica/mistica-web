@@ -269,3 +269,42 @@ export const stretchedLink = style({
         cursor: 'pointer',
     },
 });
+
+const selectionOutlineWidth = 2;
+const selectionOutlineOffset = 2;
+
+export const selectionOutline = style({
+    selectors: {
+        '&::after': {
+            content: '',
+            position: 'absolute',
+            inset: -(selectionOutlineWidth + selectionOutlineOffset),
+            border: `${selectionOutlineWidth}px solid transparent`,
+            borderRadius: `calc(${skinVars.borderRadii.container} + 3px)`,
+            pointerEvents: 'none',
+            transition: 'border-color 0.08s ease-in-out',
+        },
+    },
+});
+
+export const nakedSelectionOutline = style({
+    selectors: {'&::after': {borderRadius: 0}},
+});
+
+export const selectionOutlineColor = styleVariants({
+    default: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
+    alternative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
+    brand: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedBrand}}},
+    inverse: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedInverse}}},
+    media: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedBrand}}},
+    negative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedNegative}}},
+});
+
+export const selectionSurface = style({
+    borderRadius: skinVars.borderRadii.container,
+    cursor: 'pointer',
+    outlineOffset: 0,
+    selectors: {
+        '&[aria-disabled="true"]': {cursor: 'default'},
+    },
+});

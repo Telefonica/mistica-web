@@ -400,3 +400,44 @@ test('DataCard with segregateTouchableContent', async () => {
     const card = await screen.findByTestId(TEST_IDS.data);
     expect(await card.screenshot()).toMatchImageSnapshot();
 });
+
+test.each`
+    card          | control
+    ${'data'}     | ${'checkbox'}
+    ${'media'}    | ${'switch'}
+    ${'cover'}    | ${'radio'}
+    ${'naked'}    | ${'checkbox'}
+    ${'advanced'} | ${'checkbox'}
+`('Selectable $card cards with $control in slot', async ({card, control}) => {
+    await openStoryPage({
+        id: 'components-cards-selection--selection',
+        device: 'MOBILE_IOS',
+        args: {card, control},
+    });
+    const container = await screen.findByTestId('card-container');
+    await (await screen.findByRole(control, {name: 'First This is a description Select First'})).click();
+    expect(await container.screenshot()).toMatchImageSnapshot();
+});
+
+test('Custom card selection and lock action', async () => {
+    await openStoryPage({id: 'components-cards-selection--custom-selection', device: 'MOBILE_IOS'});
+    const container = await screen.findByTestId('card-container');
+    expect(await container.screenshot()).toMatchImageSnapshot();
+    await (await screen.findByRole('button', {name: 'Select card'})).click();
+    await (await screen.findByRole('button', {name: 'Add favorite'})).click();
+    await (await screen.findByRole('button', {name: 'Lock'})).click();
+    expect(await container.screenshot()).toMatchImageSnapshot();
+});
+
+test.each(['data', 'advanced'])('Selectable %s card with keyboard focus', async (card) => {
+    const page = await openStoryPage({
+        id: 'components-cards-selection--selection',
+        device: 'DESKTOP',
+        args: {card},
+    });
+    const surface = await screen.findByRole('checkbox', {name: 'First This is a description Select First'});
+    await surface.focus();
+    await page.keyboard.press('Space');
+    const container = await screen.findByTestId('card-container');
+    expect(await container.screenshot()).toMatchImageSnapshot();
+});

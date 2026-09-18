@@ -6,8 +6,10 @@ import * as mediaStyles from './image.css';
 import * as tokens from './text-tokens';
 import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
-import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, normalizeVariant, useThemeVariant, useRawThemeVariant} from './theme-variant-context';
 import Tag from './tag';
+import {CardSelectionContext, useSelectableCard} from './card-selection-context';
+import {CardSelectionSurface} from './card-selection-surface';
 import Stack from './stack';
 import Image from './image';
 import Video from './video';
@@ -67,6 +69,8 @@ type ContainerProps = {
     type: CardType;
     size: CardSize;
     variant?: Variant;
+    selected?: boolean;
+    selectionVariant?: Variant;
     width?: string | number;
     height?: string | number;
     /** Gradient overlay color for cover cards. If not set it uses the theme color */
@@ -198,7 +202,7 @@ type TouchableProps = {
 >;
 
 type TouchableCard<T> = T & TouchableProps;
-export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T> & {selected?: boolean};
 
 type PrivateContainerProps = {
     children?: React.ReactNode;
@@ -219,6 +223,8 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
             dataAttributes,
             backgroundColor,
             variant,
+            selected,
+            selectionVariant = 'default',
         },
         ref
     ): JSX.Element => {
@@ -249,6 +255,11 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 }}
             >
                 <div
+                    className={classnames(
+                        selected !== undefined && styles.selectionOutline,
+                        isNaked && styles.nakedSelectionOutline,
+                        selected && styles.selectionOutlineColor[selectionVariant]
+                    )}
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -1190,6 +1201,7 @@ const TextContent = ({
 };
 
 type CardTouchableProps = {
+    selection: ReturnType<typeof useSelectableCard>;
     children: React.ReactNode;
     isTouchable: boolean;
     touchableAriaLabel?: string;
@@ -1205,6 +1217,7 @@ type CardTouchableProps = {
 };
 
 const CardTouchable = ({
+    selection,
     children,
     isTouchable,
     touchableAriaLabel,
@@ -1238,6 +1251,23 @@ const CardTouchable = ({
             {children}
         </div>
     );
+
+    if (selection.isSelectionMode) {
+        return (
+            <CardSelectionSurface
+                maybe
+                selection={selection}
+                aria-label={selection.control ? touchableAriaLabel : undefined}
+                aria-labelledby={ariaLabeledByProp}
+                aria-description={ariaDescriptionProp}
+                aria-describedby={ariaDescribedByProp}
+                className={classnames(styles.touchable, styles.touchableContainer)}
+                style={selection.control ? contentRadiusStyle : undefined}
+            >
+                {content}
+            </CardSelectionSurface>
+        );
+    }
 
     if (isTouchable && segregateTouchableContent) {
         return hasTouchableInContent ? (
@@ -1287,6 +1317,16 @@ const replaceRgbaWithColor = (stringWithRgbaColors: string, newColor: string): s
     return stringWithRgbaColors.replace(RGBA_REGEX, (_, alpha) => applyAlpha(newColor, parseFloat(alpha)));
 };
 
+export const getSelectionOutlineVariant = (outsideVariant: Variant, cardVariant: Variant): Variant => {
+    if (outsideVariant === 'brand' || outsideVariant === 'inverse' || outsideVariant === 'media') {
+        return cardVariant === 'default' ? outsideVariant : cardVariant;
+    }
+    if (outsideVariant === 'negative' && cardVariant === 'default') {
+        return 'negative';
+    }
+    return cardVariant === 'negative' ? 'negative' : 'default';
+};
+
 export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
     (
         {
@@ -1320,7 +1360,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             width,
             height,
             aspectRatio,
-            slot,
+            slot: slotProp,
             slotAlignment = 'content',
             buttonPrimary,
             buttonSecondary,
@@ -1328,10 +1368,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             showFooter: showFooterProp,
             footerBackgroundColor,
             footerVariant,
-            footerSlot,
+            footerSlot: footerSlotProp,
             footerDivider,
-            topActions,
-            onClose,
+            topActions: topActionsProp,
+            onClose: onCloseProp,
             closeButtonLabel,
             'aria-label': ariaLabelProp,
             'aria-labelledby': ariaLabeledByProp,
@@ -1341,17 +1381,35 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoLoop,
             videoAutoPlay,
             videoDataAttributes,
+            selected,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
+        const selection = useSelectableCard(selected);
+        const {isSelected, isSelectionMode} = selection;
+        const topActions = isSelectionMode ? undefined : topActionsProp;
+        const onClose = isSelectionMode ? undefined : onCloseProp;
+        const slot = slotProp && (
+            <CardSelectionContext.Provider value={selection.context}>
+                {slotProp}
+            </CardSelectionContext.Provider>
+        );
+        const footerSlot = footerSlotProp && (
+            <CardSelectionContext.Provider value={{...selection.context, isFooter: true}}>
+                {footerSlotProp}
+            </CardSelectionContext.Provider>
+        );
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
-        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const isTouchable =
+            !!selection.control ||
+            (!isSelectionMode && !!(touchableProps.href || touchableProps.to || touchableProps.onPress));
         const hasTouchableInContent = !!(
+            !isSelectionMode &&
             segregateTouchableContent &&
             !touchableAriaLabelProp &&
             (title || pretitle || headline || subtitle || description)
@@ -1379,7 +1437,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
         const {video, videoAction} = useVideoWithControls({
-            src: shouldShowVideo ? videoSrc : undefined,
+            src: shouldShowVideo && !isSelectionMode ? videoSrc : undefined,
             poster: imageSrc,
             ref: videoRef,
             autoHeight:
@@ -1392,6 +1450,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         });
 
         const externalVariant = useThemeVariant();
+        const rawExternalVariant = useRawThemeVariant();
         const backgroundVariant = variantProp ? normalizeVariant(variantProp) : externalVariant;
         const variant =
             (variantProp && normalizeVariant(variantProp)) ||
@@ -1403,7 +1462,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         // If the card has actions and an onClose handler, the footer will always be shown
         // If the footer has no content, it will not be shown
         const shouldShowFooter =
-            (showFooterProp && (hasButtons || !!footerSlot)) || (hasButtons && isTouchable);
+            (showFooterProp && (hasButtons || !!footerSlot)) ||
+            (hasButtons && (isTouchable || isSelectionMode));
 
         const showButtonsInBody = !shouldShowFooter && hasButtons;
 
@@ -1474,6 +1534,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 dataAttributes={dataAttributes}
                 ref={ref}
                 variant={variant}
+                selected={isSelected}
+                selectionVariant={getSelectionOutlineVariant(rawExternalVariant, variantProp || 'default')}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
@@ -1515,13 +1577,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 )}
 
                 <CardTouchable
+                    selection={selection}
                     isTouchable={isTouchable}
                     touchableAriaLabel={touchableAriaLabel}
                     ariaLabeledByProp={ariaLabeledByProp}
                     ariaDescriptionProp={ariaDescriptionProp}
                     ariaDescribedByProp={ariaDescribedByProp}
-                    touchableProps={touchableProps}
-                    segregateTouchableContent={segregateTouchableContent}
+                    touchableProps={isSelectionMode ? {} : touchableProps}
+                    segregateTouchableContent={isSelectionMode ? false : segregateTouchableContent}
                     hasTouchableInContent={hasTouchableInContent}
                     overlayClassname={overlayStyle}
                     contentStyle={{
@@ -1558,7 +1621,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         />
                     )}
                     <div
-                        aria-hidden={isTouchable && !segregateTouchableContent}
+                        aria-hidden={isTouchable && !selection.control && !segregateTouchableContent}
                         data-testid="body"
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]:

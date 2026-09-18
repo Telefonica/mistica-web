@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import {useCardSelection} from './card-selection-context';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/keys';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
@@ -94,11 +95,6 @@ const RadioButton = ({
           ? 0
           : -1;
 
-    React.useEffect(() => {
-        const firstRadio = document.getElementById(groupId)?.querySelector('[role=radio]');
-        setIsFirstRadio(firstRadio === ref.current);
-    }, [groupId]);
-
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.key) {
             case SPACE:
@@ -122,6 +118,22 @@ const RadioButton = ({
             // do nothing
         }
     };
+
+    const cardSelection = useCardSelection(checked, {
+        role: 'radio',
+        disabled,
+        tabIndex,
+        value,
+        onPress: () => select(value),
+        onKeyDown: handleKeyDown,
+    });
+    const promoted = cardSelection?.promoteControl;
+    const role = promoted ? undefined : 'radio';
+
+    React.useEffect(() => {
+        const firstRadio = document.getElementById(groupId)?.querySelector('[role=radio]');
+        setIsFirstRadio(firstRadio === ref.current || firstRadio === cardSelection?.surfaceRef?.current);
+    }, [groupId, cardSelection?.promoteControl, cardSelection?.surfaceRef]);
 
     const outerCircleVariant = isIos ? (checked ? 'checkedIos' : 'ios') : checked ? 'checked' : 'default';
     const innerCircleVariant = checked ? 'checked' : 'default';
@@ -154,23 +166,31 @@ const RadioButton = ({
     );
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- The semantic role moves between the control and the card surface.
         <span
             ref={ref}
             id={id}
-            tabIndex={tabIndex}
-            role="radio"
+            tabIndex={promoted ? undefined : tabIndex}
+            role={role}
             data-value={value}
-            aria-checked={checked}
+            aria-hidden={promoted || undefined}
+            aria-checked={promoted ? undefined : checked}
             aria-disabled={disabled}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             onClick={(e) => {
+                if (promoted && !cardSelection?.isFooter) {
+                    return;
+                }
                 e.stopPropagation();
                 if (!disabled) {
+                    if (promoted) {
+                        cardSelection?.surfaceRef?.current?.focus();
+                    }
                     select(value);
                 }
             }}
-            onKeyDown={disabled ? undefined : handleKeyDown}
+            onKeyDown={disabled || promoted ? undefined : handleKeyDown}
             className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
             {...getPrefixedDataAttributes({testid: 'RadioButton', ...dataAttributes})}
         >

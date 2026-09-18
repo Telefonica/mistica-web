@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import {useCardSelection} from './card-selection-context';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
@@ -136,6 +137,14 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
         }
     };
 
+    const cardSelection = useCardSelection(value ?? checkedState, {
+        role: 'checkbox',
+        disabled,
+        onPress: handleChange,
+        onKeyDown: handleKeyDown,
+    });
+    const promoted = cardSelection?.promoteControl;
+
     const iconCheckbox = <IconCheckbox disabled={disabled} isChecked={value ?? checkedState} />;
 
     return (
@@ -143,16 +152,23 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             id={props.id}
-            role={props.role || 'checkbox'}
-            aria-checked={value ?? checkedState}
-            onKeyDown={disabled ? undefined : handleKeyDown}
+            role={promoted ? undefined : props.role || 'checkbox'}
+            aria-hidden={promoted || undefined}
+            aria-checked={promoted ? undefined : value ?? checkedState}
+            onKeyDown={disabled || promoted ? undefined : handleKeyDown}
             onClick={(e) => {
+                if (promoted && !cardSelection?.isFooter) {
+                    return;
+                }
                 e.stopPropagation();
                 if (!disabled) {
+                    if (promoted) {
+                        cardSelection?.surfaceRef?.current?.focus();
+                    }
                     handleChange();
                 }
             }}
-            tabIndex={disabled ? undefined : 0}
+            tabIndex={disabled || promoted ? undefined : 0}
             ref={combineRefs(ref, focusableRef)}
             className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}

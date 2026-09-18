@@ -10,7 +10,6 @@ import Divider from '../divider';
 import {Text2, Text, useTextPresetSizes} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
-import Touchable from '../touchable';
 import classNames from 'classnames';
 import {useInnerText, useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
@@ -18,7 +17,11 @@ import Inline from '../inline';
 import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
-import {TopActions} from '../card-internal';
+import {TopActions, getSelectionOutlineVariant} from '../card-internal';
+import {CardSelectionContext, useSelectableCard} from '../card-selection-context';
+import {CardSelectionSurface} from '../card-selection-surface';
+import {useRawThemeVariant} from '../theme-variant-context';
+import * as cardStyles from '../card-internal.css';
 
 import type {CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
@@ -266,6 +269,7 @@ type AllowedSlot =
     | typeof ValueBlock;
 
 type AdvancedDataCardProps = MaybeTouchableCard<{
+    selected?: boolean;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -295,6 +299,7 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
+            selected,
             stackingGroup,
             headline,
             pretitle,
@@ -326,14 +331,18 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         },
         ref
     ) => {
-        const isTouchable = !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
-
+        const selection = useSelectableCard(selected);
+        const outsideVariant = useRawThemeVariant();
+        const isTouchable =
+            !!selection.control ||
+            (!selection.isSelectionMode &&
+                (!!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to));
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const hasSlots = !!slot?.length;
 
-        const topActionsCount = (actions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsCount = selection.isSelectionMode ? 0 : (actions?.length || 0) + (onClose ? 1 : 0);
 
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const {text: slotText, ref: slotRef} = useInnerText();
@@ -349,14 +358,22 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
         return (
             <section
-                className={styles.container}
+                className={classNames(
+                    styles.container,
+                    selection.isSelectionMode && cardStyles.selectionOutline,
+                    selection.isSelected &&
+                        cardStyles.selectionOutlineColor[
+                            getSelectionOutlineVariant(outsideVariant, 'default')
+                        ]
+                )}
                 {...getPrefixedDataAttributes({testid: 'AdvancedDataCard', ...dataAttributes})}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabel}
             >
                 <Boxed className={styles.dataCard} width="100%" height="100%" minHeight={styles.MIN_HEIGHT}>
-                    <Touchable
+                    <CardSelectionSurface
                         maybe
+                        selection={selection}
                         {...touchableProps}
                         aria-label={isTouchable ? ariaLabel : undefined}
                         className={styles.touchable}
@@ -368,7 +385,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 styles.cardContentStyle,
                                 !hasFooter && !hasSlots ? styles.minHeight : ''
                             )}
-                            aria-hidden={isTouchable}
+                            aria-hidden={isTouchable && !selection.control}
                         >
                             <Box paddingTop={8}>
                                 <Inline space={0}>
@@ -403,11 +420,19 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasSlots && (
-                            <div className={styles.slot} ref={slotRef} aria-hidden={isTouchable}>
+                            <div
+                                className={styles.slot}
+                                ref={slotRef}
+                                aria-hidden={isTouchable && !selection.control}
+                            >
                                 {slot.map((item, index) => {
                                     return (
                                         <div key={index}>
-                                            <div className={styles.paddingX}>{item}</div>
+                                            <div className={styles.paddingX}>
+                                                <CardSelectionContext.Provider value={selection.context}>
+                                                    {item}
+                                                </CardSelectionContext.Provider>
+                                            </div>
 
                                             {index + 1 !== slot.length && (
                                                 <Box paddingY={slotDividerPadding}>
@@ -419,10 +444,10 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 })}
                             </div>
                         )}
-                    </Touchable>
+                    </CardSelectionSurface>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <TopActions actions={actions} onClose={onClose} />
+                {!selection.isSelectionMode && <TopActions actions={actions} onClose={onClose} />}
             </section>
         );
     }

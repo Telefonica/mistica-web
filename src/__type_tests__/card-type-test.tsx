@@ -47,3 +47,16 @@ import {MediaCard} from '../card-media';
 
 // @ts-expect-error CoverCard expects no children
 <CoverCard title="title">hello</CoverCard>;
+
+<DataCard title="Selected card" selected />;
+<MediaCard title="Selected card" selected={false} />;
+<CoverCard title="Selected card" selected />;
+<NakedCard title="Selected card" selected />;
+// @ts-expect-error selection controls are composed through existing slots
+<DataCard title="Card" checkbox={{}} />;
+// @ts-expect-error selection controls are composed through existing slots
+<MediaCard title="Card" switch={{}} />;
+// @ts-expect-error selection controls are composed through existing slots
+<CoverCard title="Card" radioValue="option" />;
+// @ts-expect-error cards do not own a selector
+<NakedCard title="Card" hideSelector />;
