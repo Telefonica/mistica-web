@@ -6,10 +6,41 @@ const {basename} = require('path');
 const glob = require('glob');
 const {commentPullRequest} = require('../utils/github');
 
+const fs = require('fs');
+
+/** @param {string} content */
+const writeStepSummary = (content) => {
+    const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+    if (summaryPath) {
+        fs.appendFileSync(summaryPath, content + '\n');
+    }
+};
+
 const main = async () => {
-    const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB);
+    const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB || '');
+    const isForkPr = core.getInput('fork-pr') === 'true';
 
     core.info('Upload failed screenshot test diffs');
+
+    if (isForkPr) {
+        if (filenames.length) {
+            const runUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            const lines = [
+                '## ❌ Screenshot test failures',
+                '',
+                'Screenshot diffs are available as artifacts in this workflow run.',
+                `[Download from the Actions run](${runUrl})`,
+                '',
+                '### Failed diffs',
+                ...filenames.map((f) => `- \`${basename(f)}\``),
+            ];
+            writeStepSummary(lines.join('\n'));
+            core.setFailed('Screenshot test failures detected');
+        } else {
+            writeStepSummary('## ✔️ All screenshot tests passing');
+        }
+        return;
+    }
 
     const uploads = [];
 

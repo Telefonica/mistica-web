@@ -27,16 +27,7 @@ const IconEmailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10.876 11.491c.064.045.93.636 1.896.006l8.855-5.393a1.69 1.69 0 0 0-1.505-1.061L3.901 5.04c-.485 0-.9.168-1.202.487-.168.177-.28.381-.358.583zm10.543 6.793c.457-.55.418-1.222.392-1.437l.014-9.465-8.409 5.123a2.8 2.8 0 0 1-1.563.485 3.04 3.04 0 0 1-1.658-.51L2.17 7.42v9.468c0 .68.196 1.213.577 1.585.49.476 1.09.482 1.151.48H4.95c2.016.004 6.487.01 10.024.01 2.364 0 4.31-.002 4.829-.01.888-.018 1.37-.373 1.616-.67"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,6 +37,15 @@ const IconEmailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     <path
                         fill={fillColor}
                         d="M12 12.287a.53.53 0 0 0 .294-.088L22 5.962v12.272a.754.754 0 0 1-.74.766H2.74a.754.754 0 0 1-.74-.766V5.962l9.706 6.237a.53.53 0 0 0 .294.088"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.876 11.491c.064.045.93.636 1.896.006l8.855-5.393a1.69 1.69 0 0 0-1.505-1.061L3.901 5.04c-.485 0-.9.168-1.202.487-.168.177-.28.381-.358.583zm10.543 6.793c.457-.55.418-1.222.392-1.437l.014-9.465-8.409 5.123a2.8 2.8 0 0 1-1.563.485 3.04 3.04 0 0 1-1.658-.51L2.17 7.42v9.468c0 .68.196 1.213.577 1.585.49.476 1.09.482 1.151.48H4.95c2.016.004 6.487.01 10.024.01 2.364 0 4.31-.002 4.829-.01.888-.018 1.37-.373 1.616-.67"
                     />
                 </svg>
             );

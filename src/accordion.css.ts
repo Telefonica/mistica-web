@@ -119,3 +119,8 @@ export const panel = style({
 export const accordionItem = sprinkles({
     width: '100%',
 });
+
+export const accordionContentPadding = style({
+    paddingLeft: vars.spacing.boxedDefaultPadding.left,
+    paddingRight: vars.spacing.boxedDefaultPadding.right,
+});

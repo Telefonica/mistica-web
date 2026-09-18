@@ -27,21 +27,21 @@ const IconBarChartLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-1.5 2A1.5 1.5 0 0 1 17 2.5h1A1.5 1.5 0 0 1 19.5 4v15a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zM9 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 9.5 8v11a1.5 1.5 0 0 0 1.5 1.5h1a1.5 1.5 0 0 0 1.5-1.5V8A1.5 1.5 0 0 0 12 6.5zM3 12a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 3.5 12v7A1.5 1.5 0 0 0 5 20.5h1A1.5 1.5 0 0 0 7.5 19v-7A1.5 1.5 0 0 0 6 10.5z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M16.063 22H20.5V2h-4.437zm2.957-1.566h-1.476V3.566h1.476zM14.218 22H9.782V8.667h4.436zm-1.48-1.566V10.233h-1.476v10.2zM7.937 22H3.5v-7.646h4.437zm-1.48-1.566v-4.508H4.98v4.508z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17 2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-1.5 2A1.5 1.5 0 0 1 17 2.5h1A1.5 1.5 0 0 1 19.5 4v15a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zM9 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 9.5 8v11a1.5 1.5 0 0 0 1.5 1.5h1a1.5 1.5 0 0 0 1.5-1.5V8A1.5 1.5 0 0 0 12 6.5zM3 12a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1.5A1.5 1.5 0 0 0 3.5 12v7A1.5 1.5 0 0 0 5 20.5h1A1.5 1.5 0 0 0 7.5 19v-7A1.5 1.5 0 0 0 6 10.5z"
                     />
                 </svg>
             );

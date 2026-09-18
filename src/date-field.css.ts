@@ -9,6 +9,6 @@ export const iconContainer = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    right: `calc(${fieldRightPadding}px + (${iconButtonSize} - ${iconSize.default}) / 2)`,
+    right: `calc(${fieldRightPadding} + (${iconButtonSize} - ${iconSize.default}) / 2)`,
     marginRight: -12,
 });

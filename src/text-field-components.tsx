@@ -14,14 +14,15 @@ import {applyCssVars, pxToRem} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
-export const useApplyCssVars = (): Record<string, string> => {
+export const useApplyCssVars = (small?: boolean): Record<string, string> => {
     const {textPresets} = useTheme();
+    const inputValuePreset = small ? textPresets.text2 : textPresets.inputValue;
 
     return applyCssVars({
-        [fieldVars.mobileFontSize]: pxToRem(textPresets.inputValue.size.mobile),
-        [fieldVars.desktopFontSize]: pxToRem(textPresets.inputValue.size.desktop),
-        [fieldVars.mobileLineHeight]: pxToRem(textPresets.inputValue.lineHeight.mobile),
-        [fieldVars.desktopLineHeight]: pxToRem(textPresets.inputValue.lineHeight.desktop),
+        [fieldVars.mobileFontSize]: pxToRem(inputValuePreset.size.mobile),
+        [fieldVars.desktopFontSize]: pxToRem(inputValuePreset.size.desktop),
+        [fieldVars.mobileLineHeight]: pxToRem(inputValuePreset.lineHeight.mobile),
+        [fieldVars.desktopLineHeight]: pxToRem(inputValuePreset.lineHeight.desktop),
 
         [fieldVars.shrinkedLabelMobileFontSize]: pxToRem(textPresets.inputLabel.size.mobile),
         [fieldVars.shrinkedLabelDesktopFontSize]: pxToRem(textPresets.inputLabel.size.desktop),
@@ -33,8 +34,8 @@ export const useApplyCssVars = (): Record<string, string> => {
         [fieldVars.helperTextMobileLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.mobile),
         [fieldVars.helperTextDesktopLineHeight]: pxToRem(textPresets.inputHelperText.lineHeight.desktop),
 
-        [fieldVars.labelScaleMobile]: `calc(${textPresets.inputLabel.size.mobile} / ${textPresets.inputValue.size.mobile})`,
-        [fieldVars.labelScaleDesktop]: `calc(${textPresets.inputLabel.size.desktop} / ${textPresets.inputValue.size.desktop})`,
+        [fieldVars.labelScaleMobile]: `calc(${textPresets.inputLabel.size.mobile} / ${inputValuePreset.size.mobile})`,
+        [fieldVars.labelScaleDesktop]: `calc(${textPresets.inputLabel.size.desktop} / ${inputValuePreset.size.desktop})`,
     });
 };
 
@@ -185,6 +186,7 @@ type FieldContainerProps = {
     readOnly?: boolean;
     dataAttributes?: DataAttributes;
     focus?: boolean;
+    small?: boolean;
 };
 
 export const FieldContainer = ({
@@ -198,8 +200,9 @@ export const FieldContainer = ({
     readOnly,
     dataAttributes,
     focus,
+    small,
 }: FieldContainerProps): JSX.Element => {
-    const cssVarStyles = useApplyCssVars();
+    const cssVarStyles = useApplyCssVars(small);
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div

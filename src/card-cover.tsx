@@ -30,6 +30,7 @@ type CoverCardProps = {
     width?: number | string;
     height?: number | string;
     asset?: React.ReactElement;
+    imageAlt?: string;
     imageSrc?: string;
     imageSrcSet?: string;
     videoSrc?: VideoSource;

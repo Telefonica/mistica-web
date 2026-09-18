@@ -34,7 +34,7 @@ export const snackbarOpen = style({
 export const wrapper = style([
     sprinkles({
         position: 'fixed',
-        borderRadius: vars.borderRadii.popup,
+        borderRadius: vars.borderRadii.snackbar,
     }),
     {
         maxWidth: 800,

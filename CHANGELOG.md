@@ -1,3 +1,75 @@
+# [17.4.0](https://github.com/Telefonica/mistica-web/compare/v17.3.0...v17.4.0) (2026-09-18)
+
+
+### Bug Fixes
+
+* **switch:** children positioning ([#1717](https://github.com/Telefonica/mistica-web/issues/1717)) ([0bcedb7](https://github.com/Telefonica/mistica-web/commit/0bcedb795079901c4d59226b095556512f24488d)), closes [#1716](https://github.com/Telefonica/mistica-web/issues/1716)
+
+
+### Features
+
+* **BoxedRowList:** add border option for selected state ([#1721](https://github.com/Telefonica/mistica-web/issues/1721)) ([3df0fa5](https://github.com/Telefonica/mistica-web/commit/3df0fa51a9db58bc021cdc850308a1246445de99))
+* **callout:** updates container tokens for callout ([#1719](https://github.com/Telefonica/mistica-web/issues/1719)) ([52d4dfe](https://github.com/Telefonica/mistica-web/commit/52d4dfe2fea1148cecea33860d7f7f6b21e59c42))
+* **SidenavBar:** full specs implementation ([#1673](https://github.com/Telefonica/mistica-web/issues/1673)) ([b2751ae](https://github.com/Telefonica/mistica-web/commit/b2751aeb6315249f1ac2c12454ffad61b8f41564))
+* **skins:** buttonLink neutral fixes ([#1713](https://github.com/Telefonica/mistica-web/issues/1713)) ([7440a95](https://github.com/Telefonica/mistica-web/commit/7440a95acac404eba59e1ba531c1f88f5b88fd55)), closes [#1710](https://github.com/Telefonica/mistica-web/issues/1710) [mistica-design#2818](https://github.com/mistica-design/issues/2818)
+* **Skin:** updates vivo-evo skin to use new responsiveLayoutMargin values ([#1722](https://github.com/Telefonica/mistica-web/issues/1722)) ([f4db030](https://github.com/Telefonica/mistica-web/commit/f4db03021ba4619fa03cfa93d23641efb000ecdf))
+
+# [17.3.0](https://github.com/Telefonica/mistica-web/compare/v17.2.0...v17.3.0) (2026-09-04)
+
+
+### Bug Fixes
+
+* **Logo:** improve movistar logo position ([#1718](https://github.com/Telefonica/mistica-web/issues/1718)) ([95a8692](https://github.com/Telefonica/mistica-web/commit/95a8692a73a8a4953831cf854d20c327737e96bd))
+
+
+### Features
+
+* support community skins generation ([#1663](https://github.com/Telefonica/mistica-web/issues/1663)) ([043e6d6](https://github.com/Telefonica/mistica-web/commit/043e6d61d9e6f2363052c8c7249be7aee90eb213)), closes [#1588](https://github.com/Telefonica/mistica-web/issues/1588)
+
+# [17.2.0](https://github.com/Telefonica/mistica-web/compare/v17.1.0...v17.2.0) (2026-08-28)
+
+
+### Bug Fixes
+
+* **mistica-figma skill:** add overlay component placement rules ([#1702](https://github.com/Telefonica/mistica-web/issues/1702)) ([7f6a81c](https://github.com/Telefonica/mistica-web/commit/7f6a81c492c6505b50a27a8eecfb94dcdb16b056)), closes [#1700](https://github.com/Telefonica/mistica-web/issues/1700) [#1700](https://github.com/Telefonica/mistica-web/issues/1700)
+* **Mosaic:** fix carousel page height consistency on mobile ([#1696](https://github.com/Telefonica/mistica-web/issues/1696)) ([d0024f6](https://github.com/Telefonica/mistica-web/commit/d0024f62b807f94257aa05cd4dd9d64f9b7633ab))
+* **Stepper:** Completed step token color ([#1699](https://github.com/Telefonica/mistica-web/issues/1699)) ([8b33153](https://github.com/Telefonica/mistica-web/commit/8b33153211eb9c5a668a6e085e8f20d0f49d8692))
+
+
+### Features
+
+* **Accordion:** add small prop and boxedDefaultPadding token ([#1697](https://github.com/Telefonica/mistica-web/issues/1697)) ([3152b73](https://github.com/Telefonica/mistica-web/commit/3152b73403693df666defab9eebfd093439c8b6b))
+* **Menu, IconButton:** Use danger backgrounds with danger types ([#1505](https://github.com/Telefonica/mistica-web/issues/1505)) ([ae29142](https://github.com/Telefonica/mistica-web/commit/ae291429eabbf654f4f36e25210f4cd744219237))
+* **Menu:** Add asset property ([#1698](https://github.com/Telefonica/mistica-web/issues/1698)) ([1113c69](https://github.com/Telefonica/mistica-web/commit/1113c69c29a8326cc80f55c8534f258eeacdb293))
+* **skins and icons:** import latest mistica icons and skins changes ([#1708](https://github.com/Telefonica/mistica-web/issues/1708)) ([1131dd9](https://github.com/Telefonica/mistica-web/commit/1131dd9baa97fbe8c4c62f79422082d13b960696))
+* **Snackbar:** update border radius token and adapt component ([#1693](https://github.com/Telefonica/mistica-web/issues/1693)) ([51d2c4d](https://github.com/Telefonica/mistica-web/commit/51d2c4dc144f3230a4f3e3d4d283af3ed315f518))
+* **TextField:** adds new input padding values and prop small to input field variants  ([#1695](https://github.com/Telefonica/mistica-web/issues/1695)) ([c068c16](https://github.com/Telefonica/mistica-web/commit/c068c16d95fb4d5095f12872664956c53266da28))
+* **Title:** update title size and lineHeight tokens for vivo evolution skin ([#1706](https://github.com/Telefonica/mistica-web/issues/1706)) ([3461916](https://github.com/Telefonica/mistica-web/commit/3461916e9c3b00a5eb61f94c1e56f31de70f5a9d))
+
+# [17.1.0](https://github.com/Telefonica/mistica-web/compare/v17.0.0...v17.1.0) (2026-08-14)
+
+
+### Bug Fixes
+
+* **Chip:** improve icon container alignment ([#1694](https://github.com/Telefonica/mistica-web/issues/1694)) ([988a4ab](https://github.com/Telefonica/mistica-web/commit/988a4ab77aadd3a563983c3a1fc2b2f5c13b3a8a))
+* **CoverCard:** add support for image alt text ([#1661](https://github.com/Telefonica/mistica-web/issues/1661)) ([39f3a3c](https://github.com/Telefonica/mistica-web/commit/39f3a3c3703a81eeb5081b9dbcd3bf73456e8a36))
+* **Icons:** update skins in icons ([#1664](https://github.com/Telefonica/mistica-web/issues/1664)) ([bcb625a](https://github.com/Telefonica/mistica-web/commit/bcb625a5ddff62d47eb798d7f27a455974b7d1a2))
+* **Inline:** Problem with alignItems center ([#1581](https://github.com/Telefonica/mistica-web/issues/1581)) ([bd0a07d](https://github.com/Telefonica/mistica-web/commit/bd0a07d0c922277c36d524d501c86da421816d67))
+* **SearchField:** prevent layout shift when clear button appears ([#1690](https://github.com/Telefonica/mistica-web/issues/1690)) ([094be23](https://github.com/Telefonica/mistica-web/commit/094be231588203316fd0a0b29550f980154167c1)), closes [#1635](https://github.com/Telefonica/mistica-web/issues/1635)
+
+
+### Features
+
+* **ButtonLink:** added ButtonLinkNeutral ([#1672](https://github.com/Telefonica/mistica-web/issues/1672)) ([3ed17e8](https://github.com/Telefonica/mistica-web/commit/3ed17e81085639c16084ababda66e759e67af50e))
+* **Callout:** add small prop ([#1683](https://github.com/Telefonica/mistica-web/issues/1683)) ([1fd0673](https://github.com/Telefonica/mistica-web/commit/1fd0673aad611c19eb35066b1e94fbde5a0b1fbf))
+* **Icons:** Include vivo-evolution icons ([#1675](https://github.com/Telefonica/mistica-web/issues/1675)) ([bf5e847](https://github.com/Telefonica/mistica-web/commit/bf5e8470d4e5d44939875b93729443769abd0abf))
+* **List:** add small prop, boxedDefaultPadding token and update divider alignment ([#1677](https://github.com/Telefonica/mistica-web/issues/1677)) ([c4ca192](https://github.com/Telefonica/mistica-web/commit/c4ca19217a87d2a5f7075ee02d4be5afea3d0b4b))
+* **Logo:** include background to esimflag logo ([#1342](https://github.com/Telefonica/mistica-web/issues/1342)) ([b52009d](https://github.com/Telefonica/mistica-web/commit/b52009db85f8042a08e831d38e965ff53183d687))
+* responsive layout margin for sheets ([#1669](https://github.com/Telefonica/mistica-web/issues/1669)) ([46bfeb8](https://github.com/Telefonica/mistica-web/commit/46bfeb8fd402a82917d83fdf472431861549c33c))
+* **skin:** support responsiveLayoutMargin design tokens  ([#1662](https://github.com/Telefonica/mistica-web/issues/1662)) ([2eb1cd3](https://github.com/Telefonica/mistica-web/commit/2eb1cd3820336aae7a046757931289a17b23022a))
+* **skin:** support showBoxedBorder component property token ([#1671](https://github.com/Telefonica/mistica-web/issues/1671)) ([2b67453](https://github.com/Telefonica/mistica-web/commit/2b67453696929948d4328c38498e6661df552c30))
+* **skin:** update design tokens ([#1684](https://github.com/Telefonica/mistica-web/issues/1684)) ([d12f019](https://github.com/Telefonica/mistica-web/commit/d12f019b4aea67e0011437b7cac24c33aaf044fc))
+
 # [17.0.0](https://github.com/Telefonica/mistica-web/compare/v16.71.0...v17.0.0) (2026-07-15)
 
 

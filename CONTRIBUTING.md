@@ -5,6 +5,7 @@ Thank you for your interest in Mística. You can contribute to this project in s
 <!-- TOC depthFrom:2 -->
 
 - [Pull Requests](#pull-requests)
+  - [Fork PRs — preview deployment](#fork-prs--preview-deployment)
 - [Bug reports](#bug-reports)
 - [Feature requests (no UI/UX changes)](#feature-requests-no-uiux-changes)
 - [Documentation and help requests](#documentation-and-help-requests)
@@ -53,6 +54,23 @@ Concise summary of the problem and fix, ending with `Ref: <ISSUE-ID>`;
 ### Reviewers
 
 Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every PR.
+
+### Fork PRs — preview deployment
+
+PRs opened from a fork cannot access repository secrets, so CI and the preview deployment do not run
+automatically. The process requires a maintainer to explicitly approve each step:
+
+1. A maintainer approves the CI run on the PR so the standard checks execute against the fork's code.
+2. A maintainer reviews the PR and adds the `safe-to-deploy` label. This captures the exact commit SHA at that
+   moment and triggers the deployment workflow.
+3. The triggered workflow post a link to the workflow run, which a maintainer has to approve. This approval
+   gate is required before any secrets are exposed.
+4. Once approved, the preview is deployed against the pinned commit SHA. The deployment URL is printed in the
+   workflow run logs.
+
+> [!IMPORTANT] If you push new commits to your branch after the `safe-to-deploy` label is added, the
+> deployment will fail with a SHA mismatch. A maintainer must remove the label and add it again to re-trigger
+> the deployment for the new commits.
 
 ## Bug reports
 

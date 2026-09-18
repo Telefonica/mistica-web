@@ -284,6 +284,35 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             }
                         />
 
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
+                            title="Title"
+                            pretitle="Pretitle"
+                            description="Description"
+                            onClose={() => {}}
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
+                                <ButtonPrimary
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonPrimary
+                                </ButtonPrimary>
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    type="neutral"
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonLink neutral
+                                </ButtonLink>
+                            }
+                        />
+
                         {/** Carousel page bullets */}
                         <PageBullets currentIndex={2} numPages={10} />
 

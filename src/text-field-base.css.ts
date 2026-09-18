@@ -1,5 +1,5 @@
 import {createVar, globalStyle, style} from '@vanilla-extract/css';
-import {iconContainerSize} from './icon-button.css';
+import {bleedArea, iconContainerSize} from './icon-button.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars, vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
@@ -10,8 +10,8 @@ const borderSize = 1;
 // We need to substract border size from padding because the container has boxSizing: border-box
 export const fieldTopPadding = `calc(${vars.spacing.inputPadding.top} - ${borderSize}px)`;
 export const fieldBottomPadding = `calc(${vars.spacing.inputPadding.bottom} - ${borderSize}px)`;
-export const fieldLeftPadding = 12 - borderSize;
-export const fieldRightPadding = 16 - borderSize;
+export const fieldLeftPadding = `calc(${vars.spacing.inputPadding.left} - ${borderSize}px)`;
+export const fieldRightPadding = `calc(${vars.spacing.inputPadding.right} - ${borderSize}px)`;
 
 export const fieldElementsGap = 12;
 export const fieldEndIconGap = 4;
@@ -330,6 +330,12 @@ export const endIconContainer = style([
         alignSelf: 'center',
     },
 ]);
+
+export const endIconPlaceholder = style({
+    flexShrink: 0,
+    width: `calc(${iconContainerSize.small} - ${bleedArea.small})`,
+    height: iconContainerSize.small,
+});
 
 export const startIcon = style([
     sprinkles({

@@ -66,7 +66,7 @@ export const Default: StoryComponent = () => {
                             <ButtonPrimary fake>{shortText}</ButtonPrimary>
                             <ButtonPrimary fake>{shortText}</ButtonPrimary>
                         </Inline>{' '}
-                        Inline text
+                        <Text3 regular>Inline text</Text3>
                     </>
                 </Stack>
 

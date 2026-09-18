@@ -168,6 +168,24 @@ test.each(controlsWithOnPress)('Click control with onPress - %s', async (control
     expect(image).toMatchImageSnapshot();
 });
 
+test('Selectable custom boxed row', async () => {
+    await openStoryPage({
+        id: 'components-lists--selectable-boxed-rows-story',
+        device: 'MOBILE_IOS',
+    });
+
+    const list = await screen.findByTestId('selectable-boxed-row-list');
+    const unselectedImage = await list.screenshot();
+    expect(unselectedImage).toMatchImageSnapshot();
+
+    const buttons = await screen.findAllByRole('button', {name: 'Select row'});
+    await buttons[0].click();
+    await buttons[1].click();
+
+    const selectedImage = await list.screenshot();
+    expect(selectedImage).toMatchImageSnapshot();
+});
+
 test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (control) => {
     await openStoryPage({
         id: 'components-lists--boxed-row-list-story',
@@ -354,6 +372,40 @@ test.each(devices)('OrderedList without marker', async (device) => {
 
     const list = await screen.findByLabelText('Ordered List');
 
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('Row list small', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device,
+        args: {
+            small: true,
+            headline: 'Headline',
+            subtitle: 'Subtitle',
+            detail: 'Detail',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('Boxed row list small', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device,
+        args: {
+            small: true,
+            headline: 'Headline',
+            subtitle: 'Subtitle',
+            detail: 'Detail',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });

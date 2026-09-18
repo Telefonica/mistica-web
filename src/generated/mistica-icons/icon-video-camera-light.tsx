@@ -27,7 +27,16 @@ const IconVideoCameraLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
+        if (skinName.match(/^o2/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.554 6.062a.71.71 0 0 0-.806.16l-4.672 4.857V7.2c0-.66-.498-1.198-1.11-1.198H3.11C2.498 6.002 2 6.539 2 7.2v9.598c0 .66.498 1.198 1.11 1.198h11.856c.612 0 1.11-.538 1.11-1.198v-3.88l4.672 4.858a.71.71 0 0 0 .801.164.8.8 0 0 0 .45-.738V6.794a.78.78 0 0 0-.445-.732m-6.957 10.33H3.48V7.599h11.117zm2.736-4.397 3.192-3.317v6.634z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -37,15 +46,6 @@ const IconVideoCameraLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     <path
                         fill={fillColor}
                         d="M21.301 7.247a.46.46 0 0 1 .467.006h.003a.48.48 0 0 1 .229.415v8.707a.48.48 0 0 1-.241.421.4.4 0 0 1-.226.062.44.44 0 0 1-.241-.068l-3.968-2.284v2.136c0 1.451-1.148 2.63-2.561 2.63H4.56C3.148 19.273 2 18.094 2 16.643V7.358c0-1.451 1.148-2.63 2.561-2.63H14.76c1.413 0 2.56 1.179 2.56 2.63v2.18zm-6.538 11.41c1.079 0 1.958-.904 1.958-2.012V7.358c0-1.108-.88-2.012-1.958-2.012H4.56c-1.079 0-1.958.904-1.958 2.012v9.287c0 1.108.88 2.012 1.958 2.012zm2.57-4.854 4.065 2.34v-8.24l-4.065 2.34z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21.554 6.062a.71.71 0 0 0-.806.16l-4.672 4.857V7.2c0-.66-.498-1.198-1.11-1.198H3.11C2.498 6.002 2 6.539 2 7.2v9.598c0 .66.498 1.198 1.11 1.198h11.856c.612 0 1.11-.538 1.11-1.198v-3.88l4.672 4.858a.71.71 0 0 0 .801.164.8.8 0 0 0 .45-.738V6.794a.78.78 0 0 0-.445-.732m-6.957 10.33H3.48V7.599h11.117zm2.736-4.397 3.192-3.317v6.634z"
                     />
                 </svg>
             );

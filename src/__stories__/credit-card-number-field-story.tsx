@@ -26,6 +26,7 @@ interface CreditCardNumberFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: CreditCardNumberFieldBaseArgs = {
@@ -39,6 +40,7 @@ const defaultBaseArgs: CreditCardNumberFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 };
 
 interface CreditCardNumberFieldControlledArgs extends CreditCardNumberFieldBaseArgs {

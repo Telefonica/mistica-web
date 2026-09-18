@@ -98,8 +98,10 @@ const getAllIconNames = (svgIconsInfo) => {
     return uniq(allIconNames).sort();
 };
 
+const prettierConfigPromise = prettier.resolveConfig(__filename);
+
 const format = async (/** @type {string} */ src) =>
-    prettier.format(src, {...(await prettier.resolveConfig('.')), parser: 'babel-ts'});
+    prettier.format(src, {...(await prettierConfigPromise), parser: 'babel-ts'});
 
 /**
  * @param {string} svgFilename

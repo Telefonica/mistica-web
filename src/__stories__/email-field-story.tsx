@@ -26,6 +26,7 @@ interface EmailFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: EmailFieldBaseArgs = {
@@ -39,6 +40,7 @@ const defaultBaseArgs: EmailFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 };
 
 interface EmailFieldControlledArgs extends EmailFieldBaseArgs {

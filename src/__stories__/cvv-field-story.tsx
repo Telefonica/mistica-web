@@ -26,6 +26,7 @@ interface CvvFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: CvvFieldBaseArgs = {
@@ -39,6 +40,7 @@ const defaultBaseArgs: CvvFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 } as const;
 
 interface CvvFieldControlledArgs extends CvvFieldBaseArgs {

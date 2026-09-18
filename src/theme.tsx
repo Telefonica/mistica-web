@@ -5,6 +5,7 @@ import type {Locale} from './utils/locale';
 import type {
     BorderRadiiConfig,
     Colors,
+    ComponentPropertiesConfig,
     Skin,
     SkinName,
     SpacingConfig,
@@ -173,6 +174,7 @@ export type Theme = {
     textPresets: TextPresetsConfig;
     spacing: SpacingConfig;
     themeVariants: ThemeVariantsConfig;
+    componentProperties: ComponentPropertiesConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;

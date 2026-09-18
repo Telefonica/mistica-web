@@ -27,21 +27,21 @@ const IconCloseLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="m12.569 12 5.31-5.319a.384.384 0 0 0 .017-.543l-.017-.017a.384.384 0 0 0-.543-.017q-.01.008-.017.017L12 11.431l-5.319-5.31a.384.384 0 0 0-.543-.017l-.017.017a.384.384 0 0 0-.017.543q.008.01.017.017L11.431 12l-5.31 5.319a.383.383 0 0 0-.017.543l.017.017a.38.38 0 0 0 .28.12.38.38 0 0 0 .28-.12L12 12.569l5.319 5.31a.383.383 0 0 0 .543.017l.017-.017a.384.384 0 0 0 .017-.543l-.017-.017z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M6.345 5.23a.788.788 0 1 0-1.114 1.115L10.885 12l-5.654 5.655a.788.788 0 0 0 1.114 1.114L12 13.115l5.655 5.654a.788.788 0 0 0 1.114-1.114L13.115 12l5.654-5.655a.788.788 0 0 0-1.114-1.114L12 10.885z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m12.569 12 5.31-5.319a.384.384 0 0 0 .017-.543l-.017-.017a.384.384 0 0 0-.543-.017q-.01.008-.017.017L12 11.431l-5.319-5.31a.384.384 0 0 0-.543-.017l-.017.017a.384.384 0 0 0-.017.543q.008.01.017.017L11.431 12l-5.31 5.319a.383.383 0 0 0-.017.543l.017.017a.38.38 0 0 0 .28.12.38.38 0 0 0 .28-.12L12 12.569l5.319 5.31a.383.383 0 0 0 .543.017l.017-.017a.384.384 0 0 0 .017-.543l-.017-.017z"
                     />
                 </svg>
             );

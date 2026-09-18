@@ -55,3 +55,16 @@ test('renders an accesible and closable Callout with custom close button label',
 
     expect(handleCloseSpy).toHaveBeenCalledTimes(1);
 });
+
+test('renders a small Callout', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Callout aria-label="some label" title="some title" description="some description" small />
+        </ThemeContextProvider>
+    );
+
+    const callout = screen.getByRole('region', {name: 'some label'});
+    expect(callout).toBeInTheDocument();
+    expect(screen.getByTestId('title')).toHaveTextContent('some title');
+    expect(screen.getByTestId('description')).toHaveTextContent('some description');
+});

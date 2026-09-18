@@ -27,16 +27,7 @@ const IconChatFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18.987 2.73H5.007A2.82 2.82 0 0 0 2.18 5.542v9.65c0 1.383.925 2.507 2.188 2.759v2.35c0 .51.482.975 1.008.975.518 0 .77-.336.855-.448l2.207-2.824h10.549a2.82 2.82 0 0 0 2.823-2.812V5.539a2.82 2.82 0 0 0-2.823-2.81m-1.031 6.036H6.023a.56.56 0 0 1-.56-.56c0-.308.252-.56.56-.56h11.933c.308 0 .56.252.56.56s-.252.56-.56.56m-11.933 4.37a.56.56 0 0 1-.56-.56c0-.309.252-.56.56-.56h8.11a.561.561 0 0 1 0 1.12z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,6 +37,15 @@ const IconChatFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     <path
                         fill={fillColor}
                         d="M12.37 18.374c1.664-.187 2.963-1.267 2.963-3h-3.328c-2.452 0-4.448-2.02-4.448-4.502V7.123H5.333C3.493 7.123 2 8.635 2 10.498V15c0 1.733 1.3 3.187 2.963 3.374v2.252c0 .148.09.288.228.345q.072.03.142.029c.095 0 .19-.038.261-.11l2.518-2.516z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.987 2.73H5.007A2.82 2.82 0 0 0 2.18 5.542v9.65c0 1.383.925 2.507 2.188 2.759v2.35c0 .51.482.975 1.008.975.518 0 .77-.336.855-.448l2.207-2.824h10.549a2.82 2.82 0 0 0 2.823-2.812V5.539a2.82 2.82 0 0 0-2.823-2.81m-1.031 6.036H6.023a.56.56 0 0 1-.56-.56c0-.308.252-.56.56-.56h11.933c.308 0 .56.252.56.56s-.252.56-.56.56m-11.933 4.37a.56.56 0 0 1-.56-.56c0-.309.252-.56.56-.56h8.11a.561.561 0 0 1 0 1.12z"
                     />
                 </svg>
             );

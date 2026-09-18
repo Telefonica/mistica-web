@@ -47,7 +47,7 @@ const currentNumberTextKeyframes = keyframes({
         color: skinVars.colors.textSecondary,
     },
     '100%': {
-        color: skinVars.colors.textPrimaryInverse,
+        color: skinVars.colors.textPrimaryNegative,
     },
 });
 

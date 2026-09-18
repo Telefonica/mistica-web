@@ -104,7 +104,7 @@ const Stepper = ({
                                         weight={textPresets.indicator.weight}
                                         color={
                                             isCurrent
-                                                ? vars.colors.textPrimaryInverse
+                                                ? vars.colors.textPrimaryNegative
                                                 : vars.colors.textSecondary
                                         }
                                         aria-hidden="true"

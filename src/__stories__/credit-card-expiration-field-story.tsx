@@ -25,6 +25,7 @@ interface CreditCardExpirationFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: CreditCardExpirationFieldBaseArgs = {
@@ -37,6 +38,7 @@ const defaultBaseArgs: CreditCardExpirationFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 };
 
 interface CreditCardExpirationFieldControlledArgs extends CreditCardExpirationFieldBaseArgs {

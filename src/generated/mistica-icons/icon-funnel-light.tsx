@@ -27,21 +27,21 @@ const IconFunnelLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo-new/i)) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 22c-.93 0-1.689-.749-1.689-1.668v-4.9L3.046 2.554A.376.376 0 0 1 3.372 2h17.256a.376.376 0 0 1 .326.555L13.689 15.43v4.9c0 .92-.758 1.669-1.689 1.669m-.984-6.853a.35.35 0 0 1 .048.18v5.005c0 .507.418.924.936.924a.93.93 0 0 0 .936-.924v-5.005a.35.35 0 0 1 .048-.18l7.005-12.408H4.011z"
-                    />
-                </svg>
-            );
-        } else if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
                         d="M9.87 19.776c0 1.228.957 2.224 2.126 2.224s2.126-.996 2.126-2.224v-4.443l6.295-12.242a.77.77 0 0 0-.018-.73.7.7 0 0 0-.607-.361H4.21c-.25 0-.48.138-.607.36a.76.76 0 0 0-.018.73L9.87 15.334zm1.333-4.978-5.81-11.32H18.6l-5.81 11.319a.73.73 0 0 0-.087.35v4.633c0 .408-.317.74-.707.74s-.707-.332-.707-.74v-4.633a.8.8 0 0 0-.086-.35"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 22c-.93 0-1.689-.749-1.689-1.668v-4.9L3.046 2.554A.376.376 0 0 1 3.372 2h17.256a.376.376 0 0 1 .326.555L13.689 15.43v4.9c0 .92-.758 1.669-1.689 1.669m-.984-6.853a.35.35 0 0 1 .048.18v5.005c0 .507.418.924.936.924a.93.93 0 0 0 .936-.924v-5.005a.35.35 0 0 1 .048-.18l7.005-12.408H4.011z"
                     />
                 </svg>
             );

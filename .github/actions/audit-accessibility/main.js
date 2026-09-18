@@ -147,6 +147,40 @@ const generateReportForConsole = async (results) => {
 /**
  * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
  */
+const generateReportForStepSummary = (results) => {
+    const problemsCount = results.reduce((acc, [, , result]) => acc + result.violations.length, 0);
+
+    const lines = ['## Accessibility report', ''];
+
+    if (problemsCount > 0) {
+        lines.push(`❌ **${problemsCount}** problems detected`, '');
+        for (const [story, skin, result] of results) {
+            if (result.violations.length) {
+                lines.push(`### ${story} [${skin}] (${result.violations.length} violations)`);
+                for (const violation of result.violations) {
+                    lines.push(
+                        `- **${violation.id}**: ${violation.description} (${violation.nodes.length} node(s))`
+                    );
+                }
+                lines.push('');
+            }
+        }
+        core.setFailed('Accessibility problems detected');
+    } else {
+        lines.push('✔️ No issues found');
+    }
+
+    lines.push('', 'ℹ️ You can run this locally by executing `yarn audit-accessibility`.');
+
+    const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+    if (summaryPath) {
+        fs.appendFileSync(summaryPath, lines.join('\n') + '\n');
+    }
+};
+
+/**
+ * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
+ */
 const generateReportForGithub = async (results) => {
     const files = await writeReportsToDisk(results);
 
@@ -297,7 +331,12 @@ const main = async () => {
     console.log('total time:', Date.now() - t, 'ms');
 
     if (process.env.CI) {
-        await generateReportForGithub(results);
+        const isForkPr = core.getInput('fork-pr') === 'true';
+        if (isForkPr) {
+            generateReportForStepSummary(results);
+        } else {
+            await generateReportForGithub(results);
+        }
     } else {
         await generateReportForConsole(results);
     }

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import TextField from './text-field';
 import * as styles from './autocomplete.css';
-import {Text3} from './text';
+import {Text2, Text3} from './text';
 import {combineRefs} from './utils/common';
 import {DOWN, ENTER, ESC, TAB, UP} from './utils/keys';
 import {cancelEvent} from './utils/dom';
@@ -40,6 +40,8 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
         const {texts, t} = useTheme();
 
         const options = getSuggestions(rest.value);
+
+        const MenuText = rest.small ? Text2 : Text3;
 
         React.useLayoutEffect(() => {
             if (showOptions) {
@@ -211,7 +213,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                                 hideOptionsList();
                             }}
                         >
-                            <Text3 regular>{option}</Text3>
+                            <MenuText regular>{option}</MenuText>
                         </li>
                     ))}
                 </ul>
@@ -222,11 +224,11 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                     >
                         {options.length === 0 && showOptions && (
                             <div className={styles.optionBaseItem}>
-                                <Text3 regular color={vars.colors.textSecondary} id={statusId}>
+                                <MenuText regular color={vars.colors.textSecondary} id={statusId}>
                                     {suggestionEmptyCase ||
                                         texts.autocompleteEmptyCase ||
                                         t(tokens.autocompleteEmptyCase)}
-                                </Text3>
+                                </MenuText>
                             </div>
                         )}
                     </div>

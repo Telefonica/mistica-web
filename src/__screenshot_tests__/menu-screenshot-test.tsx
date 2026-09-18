@@ -106,3 +106,17 @@ test('Menu with item description', async () => {
     await (await screen.findByRole('button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
+
+test('Menu with asset', async () => {
+    const page = await openStoryPage({
+        id: 'components-menu--default',
+        device: 'MOBILE_IOS',
+        viewport,
+        args: {
+            asset: true,
+        },
+    });
+
+    await (await screen.findByRole('button')).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

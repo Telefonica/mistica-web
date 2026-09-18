@@ -454,6 +454,42 @@ const dangerLinkOverNegativeDark: ComplexStyleRule = [
     interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkDangerBackgroundNegativePressed}}),
 ];
 
+const neutralLink: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkNeutral,
+        background: 'transparent',
+    }),
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkNeutralBackgroundPressed}}),
+];
+
+const neutralLinkOverBrand: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkNeutralBrand,
+        background: vars.colors.buttonLinkNeutralBackgroundBrand,
+    }),
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkNeutralBackgroundBrandPressed}}),
+];
+
+const neutralLinkOverNegative: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkNeutralNegative,
+        background: vars.colors.buttonLinkNeutralBackgroundNegative,
+    }),
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkNeutralBackgroundNegativePressed}}),
+];
+
+const neutralLinkMedia: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textLinkNeutralMedia,
+        background: vars.colors.buttonLinkNeutralBackgroundMedia,
+    }),
+    interactiveStyles({active: {backgroundColor: vars.colors.buttonLinkNeutralBackgroundMediaPressed}}),
+];
+
 export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
@@ -461,6 +497,7 @@ export const buttonVariants = styleVariants({
     link: defaultLink,
     linkDanger: dangerLink,
     linkDangerDark: dangerLink,
+    linkNeutral: neutralLink,
 });
 
 export const overBrandButtonVariants = styleVariants({
@@ -470,6 +507,7 @@ export const overBrandButtonVariants = styleVariants({
     link: defaultLinkOverBrand,
     linkDanger: dangerLinkOverBrand,
     linkDangerDark: dangerLinkOverBrandDark,
+    linkNeutral: neutralLinkOverBrand,
 });
 
 export const overNegativeButtonVariants = styleVariants({
@@ -479,6 +517,7 @@ export const overNegativeButtonVariants = styleVariants({
     link: defaultLinkOverNegative,
     linkDanger: dangerLinkOverNegative,
     linkDangerDark: dangerLinkOverNegativeDark,
+    linkNeutral: neutralLinkOverNegative,
 });
 
 export const overMediaButtonVariants = styleVariants({
@@ -488,4 +527,5 @@ export const overMediaButtonVariants = styleVariants({
     link: defaultLinkMedia,
     linkDanger: dangerLinkMedia,
     linkDangerDark: dangerLinkMedia,
+    linkNeutral: neutralLinkMedia,
 });

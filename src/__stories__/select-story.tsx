@@ -25,6 +25,7 @@ type Args = {
     optional: boolean;
     showOptionalLabel: boolean;
     variantOutside: Variant;
+    small: boolean;
 };
 
 const defaultArgs = {
@@ -36,6 +37,7 @@ const defaultArgs = {
     optional: false,
     showOptionalLabel: true,
     variantOutside: 'default',
+    small: false,
 } as const;
 
 export const Controlled: StoryComponent<Args> = ({
@@ -47,6 +49,7 @@ export const Controlled: StoryComponent<Args> = ({
     optional,
     showOptionalLabel,
     variantOutside,
+    small,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
@@ -69,6 +72,7 @@ export const Controlled: StoryComponent<Args> = ({
                         label={label}
                         helperText={helperText}
                         options={fruitOptions}
+                        small={small}
                     />
                 </div>
             </Box>
@@ -88,6 +92,7 @@ export const Uncontrolled: StoryComponent<Args> = ({
     optional,
     showOptionalLabel,
     variantOutside,
+    small,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
@@ -106,6 +111,7 @@ export const Uncontrolled: StoryComponent<Args> = ({
                         label={label}
                         helperText={helperText}
                         options={fruitOptions}
+                        small={small}
                     />
                 </div>
             </Box>

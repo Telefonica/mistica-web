@@ -22,7 +22,9 @@ const renderItem = (item: MosaicItem, gridMode: MosaicItemGridMode) => {
 
 const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
     return (
-        <div className={items.length === 1 ? styles.singleItemRowContainer : styles.squareContainer}>
+        <div
+            className={`${items.length === 1 ? styles.singleItemRowContainer : styles.squareContainer} ${styles.horizontalMosaicPageContainer}`}
+        >
             <Grid gap={GRID_GAP} rows={2} columns={2} height="100%">
                 {items.length === 3 ? (
                     <>
@@ -85,7 +87,7 @@ export const HorizontalMosaic = ({
             aria-labelledby={ariaLabelledby}
             dataAttributes={{...dataAttributes, testid: 'horizontal-mosaic'}}
             items={pages.map((items, index) => (
-                <Grid>
+                <Grid height="100%">
                     <HorizontalMosaicPage items={items} isEven={index % 2 === 0} key={index} />
                 </Grid>
             ))}

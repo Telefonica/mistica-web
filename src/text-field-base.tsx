@@ -5,7 +5,7 @@ import {useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import {InternalIconButton, InternalToggleIconButton} from './icon-button';
 import {iconSize} from './icon-button.css';
 import {vars} from './skins/skin-contract.css';
-import {Text3} from './text';
+import {Text2, Text3} from './text';
 import * as styles from './text-field-base.css';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import {fieldVars} from './text-field-base.css';
@@ -137,6 +137,7 @@ export interface CommonFormFieldProps<T = HTMLInputElement> {
     readOnly?: boolean;
     preventCopy?: boolean;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 }
 
 interface TextFieldBaseProps {
@@ -160,6 +161,7 @@ interface TextFieldBaseProps {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     endIconOverlay?: React.ReactNode;
+    endIconSpaceReserved?: boolean;
     style?: React.CSSProperties;
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
@@ -185,6 +187,7 @@ interface TextFieldBaseProps {
     max?: string;
     role?: string;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 }
 
 const preventCopyHandler = (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -208,6 +211,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             startIcon,
             endIcon,
             endIconOverlay,
+            endIconSpaceReserved,
             shrinkLabel,
             multiline = false,
             focus,
@@ -220,6 +224,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             preventCopy,
             showOptionalLabel = true,
             required,
+            small,
             ...rest
         },
         ref
@@ -307,6 +312,10 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
         const startIconWidth = `calc(${iconSize.small} + ${styles.fieldElementsGap}px)`;
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
+        const hasEndIcon = !!endIcon;
+        const reservesRightSpace = hasEndIcon || endIconSpaceReserved;
+
+        const ValueText = small ? Text2 : Text3;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked
@@ -315,11 +324,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 : fieldVars.labelScaleDesktop
             : 1;
         const labelStyle = {
-            left: `calc(${styles.fieldLeftPadding}px + ${startIcon ? startIconWidth : '0px'})`,
+            left: `calc(${styles.fieldLeftPadding} + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
             // Let's keep the original width.
-            width: `calc((100% - ${styles.fieldLeftPadding}px - ${startIcon ? startIconWidth : '0px'} - ${
-                endIcon || endIconOverlay ? endIconWidth : `${styles.fieldRightPadding}px`
+            width: `calc((100% - ${styles.fieldLeftPadding} - ${startIcon ? startIconWidth : '0px'} - ${
+                endIcon || endIconOverlay ? endIconWidth : styles.fieldRightPadding
             }) / ${scale})`,
         };
 
@@ -354,6 +363,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 readOnly={rest.readOnly}
                 dataAttributes={dataAttributes}
                 focus={focus}
+                small={small}
             >
                 <ThemeVariant variant="default">
                     {startIcon && (
@@ -373,9 +383,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 opacity: inputState === 'default' ? 0 : 1,
                             }}
                         >
-                            <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
+                            <ValueText color={vars.colors.textSecondary} regular wordBreak={false}>
                                 {prefix}
-                            </Text3>
+                            </ValueText>
                         </div>
                     )}
                     {label && (
@@ -399,7 +409,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 ...(required && {'aria-required': true}),
                                 ...(error && {'aria-invalid': true}),
                                 style: {
-                                    paddingRight: endIcon
+                                    paddingRight: reservesRightSpace
                                         ? 0
                                         : endIconOverlay
                                           ? endIconWidth
@@ -407,7 +417,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     paddingLeft: prefix
                                         ? 0
                                         : startIcon
-                                          ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
+                                          ? `calc(${startIconWidth} + ${styles.fieldLeftPadding})`
                                           : styles.fieldLeftPadding,
                                     ...props.style,
                                     fontFamily,
@@ -472,9 +482,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {endIcon && (
-                        <div className={styles.endIconContainer} data-testid="endIcon">
-                            {endIcon}
+                    {reservesRightSpace && (
+                        <div
+                            className={styles.endIconContainer}
+                            data-testid={hasEndIcon ? 'endIcon' : undefined}
+                            aria-hidden={hasEndIcon ? undefined : true}
+                        >
+                            {endIcon || <div className={styles.endIconPlaceholder} />}
                         </div>
                     )}
                     {endIconOverlay}
@@ -505,6 +519,8 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
         const reactId = React.useId();
         const id = idProp || reactId;
         const autoSuggestId = React.useId();
+
+        const MenuText = props.small ? Text2 : Text3;
 
         const suggestionEmptyCaseText =
             typeof withSuggestionsEmptyCase === 'string'
@@ -579,7 +595,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                                 [styles.menuItemSelected]: isHighlighted,
                             })}
                         >
-                            <Text3 regular>{suggestion}</Text3>
+                            <MenuText regular>{suggestion}</MenuText>
                         </div>
                     )}
                     renderSuggestionsContainer={(options) => {
@@ -593,9 +609,9 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                         const children =
                             suggestions.length === 0 && withSuggestionsEmptyCase ? (
                                 <div role="status" className={classNames(styles.menuItemBase)}>
-                                    <Text3 regular color={vars.colors.textSecondary}>
+                                    <MenuText regular color={vars.colors.textSecondary}>
                                         {suggestionEmptyCaseText}
-                                    </Text3>
+                                    </MenuText>
                                 </div>
                             ) : (
                                 options.children

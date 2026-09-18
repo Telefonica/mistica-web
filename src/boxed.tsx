@@ -6,8 +6,10 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
 import {applyCssVars} from './utils/css';
+import {useTheme} from './hooks';
 
 import type {Variant} from './theme-variant-context';
+import type {ComponentPropertiesConfig} from './skins/types';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
@@ -34,11 +36,29 @@ type InternalProps = {
     overflow?: 'hidden' | 'visible';
 };
 
-const getBorderStyle = (internalVariant: Variant, externalVariant: Variant) => {
-    if (
-        internalVariant === 'default' &&
-        (externalVariant === 'default' || externalVariant === 'alternative')
-    ) {
+/**
+ * The single point that decides whether a boxed surface paints its border. Components that own their own
+ * box, like `SidenavBar`, share this rule instead of repeating it.
+ *
+ * @param internalVariant the variant of the box itself
+ * @param externalVariant the variant of the page behind the box
+ */
+// todo https://github.com/Telefonica/mistica-design/issues/2827 review boxed border rendering logic
+export const shouldShowBoxedBorder = (
+    internalVariant: Variant,
+    externalVariant: Variant,
+    showBoxedBorder: ComponentPropertiesConfig['showBoxedBorder']
+): boolean =>
+    internalVariant === 'default' &&
+    (externalVariant === 'default' || externalVariant === 'alternative') &&
+    showBoxedBorder[externalVariant];
+
+const getBorderStyle = (
+    internalVariant: Variant,
+    externalVariant: Variant,
+    showBoxedBorder: ComponentPropertiesConfig['showBoxedBorder']
+) => {
+    if (shouldShowBoxedBorder(internalVariant, externalVariant, showBoxedBorder)) {
         return styles.boxBorder;
     }
     return styles.noBorder;
@@ -95,6 +115,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
     ) => {
         const externalVariant = normalizeVariant(useThemeVariant());
         const internalVariant = normalizeVariant(variant ?? 'default');
+        const {componentProperties} = useTheme();
 
         return (
             <div
@@ -128,7 +149,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 className={classnames(
                     className,
                     styles.boxed,
-                    getBorderStyle(internalVariant, externalVariant),
+                    getBorderStyle(internalVariant, externalVariant, componentProperties.showBoxedBorder),
                     {
                         [styles.desktopOnly]: desktopOnly,
                         [styles.overflowHidden]: overflow !== 'visible',
