@@ -43,8 +43,10 @@ jobs:
                   # Build allowlist from semantic-release help
                   ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
 
-                  # Validate tokens: flags must be in allowlist, values must follow flags
+                  # Validate tokens: flags must be in allowlist, values must follow flags.
+                  # Each token is escaped on its own, so `--branches next` stays two words for the shell.
                   PREV_WAS_FLAG=false
+                  SAFE_ARGS=""
                   for TOKEN in $CLI_ARGS_INPUT; do
                     if echo "$TOKEN" | grep -qE '^-'; then
                       if ! echo "$TOKEN" | grep -qE "^($ALLOWED_FLAGS)$"; then
@@ -59,10 +61,9 @@ jobs:
                       fi
                       PREV_WAS_FLAG=false
                     fi
+                    SAFE_ARGS="$SAFE_ARGS $(printf "%q" "$TOKEN")"
                   done
 
-                  # Preventive escaping
-                  SAFE_ARGS=$(printf "%q" "$CLI_ARGS_INPUT")
                   echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
 
             - name: Dry-run semantic-release
