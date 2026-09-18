@@ -121,6 +121,8 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             backgroundContainerNegative: applyAlpha(palette.vivoNeutral950, 0.4),
             backgroundContainerBrandOverBrand: palette.vivoPurple650,
             backgroundContainerAlternative: palette.vivoNeutral25,
+            backgroundContainerAlternativeOverAlternative: palette.vivoNeutral150,
+            backgroundContainerAlternativeOverBrand: palette.vivoPurple800,
             backgroundOverlay: applyAlpha(palette.vivoNeutral975, 0.6),
             backgroundSkeleton: palette.vivoNeutral200,
             backgroundSkeletonInverse: palette.vivoPurple900,
@@ -428,6 +430,8 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             backgroundContainerNegative: palette.vivoNeutral900,
             backgroundContainerBrandOverBrand: palette.vivoNeutral900,
             backgroundContainerAlternative: palette.vivoNeutral900,
+            backgroundContainerAlternativeOverAlternative: palette.vivoNeutral150,
+            backgroundContainerAlternativeOverBrand: palette.vivoPurple800,
             backgroundOverlay: applyAlpha(palette.vivoNeutral900, 0.8),
             backgroundSkeleton: palette.vivoNeutral800,
             backgroundSkeletonInverse: palette.vivoNeutral800,
@@ -840,7 +844,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 40},
             },
             boxedDefaultPadding: {left: {mobile: 16, desktop: 24}, right: {mobile: 16, desktop: 24}},
-            responsiveLayoutMargin: {mobile: 8, desktop: 48},
+            responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };
     return skin;
