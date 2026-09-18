@@ -6,19 +6,21 @@ on:
                 description: 'CLI args'
                 required: false
                 default: ''
+            dryRun:
+                description: 'Dry-run first: shows the next version, then waits for a second approval before publishing'
+                required: false
+                type: boolean
+                default: false
 
 jobs:
     validate:
         name: Validate release
+        if: inputs.dryRun
         runs-on: ubuntu-latest
-        # Only the scope needed by the `git push --dry-run` check of semantic-release. The token dies with the job.
+        # Requires manual approval to run - the dry-run needs GH_TOKEN_MISTICA and NPM_PUBLISH_TOKEN
+        environment: production
         permissions:
-            contents: write
-        # No environment on purpose: this job runs before the approval and must not touch the release secrets.
-        # The next version is written to the job summary, so the approver reads it before approving the release job.
-        outputs:
-            safe_args: ${{ steps.validate-args.outputs.safe_args }}
-            next_version: ${{ steps.dry-run.outputs.next_version }}
+            contents: read
         steps:
             - uses: actions/checkout@v6
               with:
@@ -32,56 +34,20 @@ jobs:
 
             - name: Validate CLI args
               id: validate-args
-              env:
-                  CLI_ARGS_INPUT: ${{ github.event.inputs.cliArgs }}
-              run: |
-                  if [ -z "$CLI_ARGS_INPUT" ]; then
-                    echo "safe_args=" >> $GITHUB_OUTPUT
-                    exit 0
-                  fi
-
-                  # Build allowlist from semantic-release help
-                  ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
-
-                  # Validate tokens: flags must be in allowlist, values must follow flags.
-                  # Each token is escaped on its own, so `--branches next` stays two words for the shell.
-                  PREV_WAS_FLAG=false
-                  SAFE_ARGS=""
-                  for TOKEN in $CLI_ARGS_INPUT; do
-                    if echo "$TOKEN" | grep -qE '^-'; then
-                      if ! echo "$TOKEN" | grep -qE "^($ALLOWED_FLAGS)$"; then
-                        echo "Error: Invalid flag: $TOKEN"
-                        exit 1
-                      fi
-                      PREV_WAS_FLAG=true
-                    else
-                      if [ "$PREV_WAS_FLAG" != "true" ]; then
-                        echo "Error: Value must follow a flag: $TOKEN"
-                        exit 1
-                      fi
-                      PREV_WAS_FLAG=false
-                    fi
-                    SAFE_ARGS="$SAFE_ARGS $(printf "%q" "$TOKEN")"
-                  done
-
-                  echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
+              uses: './.github/actions/validate-cli-args'
+              with:
+                  cli-args: ${{ inputs.cliArgs }}
 
             - name: Dry-run semantic-release
-              id: dry-run
               # bash with pipefail: a semantic-release failure must fail the step even through the tee pipe
               shell: bash
               env:
-                  # The default token is enough for a dry-run: it has write access for the push check and the GitHub plugin skips the permission check inside Actions
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
+                  NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
               run: |
-                  # A private package makes the npm plugin skip the registry auth, so the dry-run needs no npm token.
-                  # This edit lives only in this throwaway checkout; the release job checks out the code again.
-                  npm pkg set private=true --json
-
-                  npx semantic-release --dry-run ${{ steps.validate-args.outputs.safe_args }} 2>&1 | tee dry-run.log
+                  npx semantic-release --dry-run ${{ steps.validate-args.outputs.safe-args }} 2>&1 | tee dry-run.log
 
                   NEXT_VERSION=$(sed -E 's/\x1b\[[0-9;]*m//g' dry-run.log | sed -nE 's/.*The next release version is ([^ ]+).*/\1/p' | tail -1)
-                  echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
                   if [ -n "$NEXT_VERSION" ]; then
                     echo "## Next release: \`$NEXT_VERSION\`" >> $GITHUB_STEP_SUMMARY
@@ -94,13 +60,15 @@ jobs:
     release:
         name: Release
         needs: validate
+        # Runs when the dry-run passed or was not requested; a failed dry-run blocks the release
+        if: ${{ !cancelled() && needs.validate.result != 'failure' }}
         runs-on: ubuntu-latest
+        # Requires manual approval to run - protects GH_TOKEN_MISTICA and NPM_PUBLISH_TOKEN secrets
+        environment: production
         permissions:
             contents: write
             issues: write
             pull-requests: write
-        # Requires manual approval to run - protects GH_TOKEN_MISTICA and NPM_PUBLISH_TOKEN secrets
-        environment: production
         steps:
             - uses: actions/checkout@v6
               with:
@@ -122,6 +90,12 @@ jobs:
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
+            - name: Validate CLI args
+              id: validate-args
+              uses: './.github/actions/validate-cli-args'
+              with:
+                  cli-args: ${{ inputs.cliArgs }}
+
             - name: Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN_MISTICA }}
@@ -129,4 +103,4 @@ jobs:
               run: |
                   # Configure git remote with token for push
                   git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-                  npx semantic-release ${{ needs.validate.outputs.safe_args }}
+                  npx semantic-release ${{ steps.validate-args.outputs.safe-args }}

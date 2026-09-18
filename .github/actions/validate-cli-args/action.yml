@@ -1,0 +1,49 @@
+name: 'Validate semantic-release CLI args'
+description: 'Checks the flags against the semantic-release help and escapes each token for the shell'
+inputs:
+    cli-args:
+        description: 'Raw CLI args from the workflow dispatch'
+        required: false
+        default: ''
+outputs:
+    safe-args:
+        description: 'Validated and escaped args, ready for the semantic-release command line'
+        value: ${{ steps.validate.outputs.safe_args }}
+runs:
+    using: 'composite'
+    steps:
+        - id: validate
+          shell: bash
+          env:
+              CLI_ARGS_INPUT: ${{ inputs.cli-args }}
+          run: |
+              if [ -z "$CLI_ARGS_INPUT" ]; then
+                echo "safe_args=" >> $GITHUB_OUTPUT
+                exit 0
+              fi
+
+              # Build allowlist from semantic-release help
+              ALLOWED_FLAGS=$(npx semantic-release -h | grep -oE '(-[a-z]|--[a-z-]+)' | sort -u | tr '\n' '|' | sed 's/|$//')
+
+              # Validate tokens: flags must be in allowlist, values must follow flags.
+              # Each token is escaped on its own, so `--branches next` stays two words for the shell.
+              PREV_WAS_FLAG=false
+              SAFE_ARGS=""
+              for TOKEN in $CLI_ARGS_INPUT; do
+                if echo "$TOKEN" | grep -qE '^-'; then
+                  if ! echo "$TOKEN" | grep -qE "^($ALLOWED_FLAGS)$"; then
+                    echo "Error: Invalid flag: $TOKEN"
+                    exit 1
+                  fi
+                  PREV_WAS_FLAG=true
+                else
+                  if [ "$PREV_WAS_FLAG" != "true" ]; then
+                    echo "Error: Value must follow a flag: $TOKEN"
+                    exit 1
+                  fi
+                  PREV_WAS_FLAG=false
+                fi
+                SAFE_ARGS="$SAFE_ARGS $(printf "%q" "$TOKEN")"
+              done
+
+              echo "safe_args=$SAFE_ARGS" >> $GITHUB_OUTPUT
