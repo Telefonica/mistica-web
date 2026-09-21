@@ -10,6 +10,8 @@ import {
     RadioButton,
     RadioGroup,
     Stack,
+    Inline,
+    Text3,
     ButtonPrimary,
     ToggleIconButton,
     IconHeartRegular,
@@ -28,6 +30,7 @@ type SelectionArgs = {
     card: 'data' | 'media' | 'cover' | 'naked' | 'advanced';
     control: 'checkbox' | 'switch' | 'radio';
     selected?: boolean;
+    customRender: boolean;
     variant: Variant;
     variantOutside: Variant;
 };
@@ -36,22 +39,40 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     card,
     control,
     selected,
+    customRender,
     variant,
     variantOutside,
 }) => {
     const Card = {data: DataCard, media: MediaCard, cover: CoverCard, naked: NakedCard, advanced: DataCard}[
         card
     ];
+    const renderControl = customRender
+        ? ({controlElement}: {controlElement: React.ReactElement}) => (
+              <Inline space={8} alignItems="center">
+                  {controlElement}
+                  <Text3 regular>Custom control</Text3>
+              </Inline>
+          )
+        : undefined;
     const cards = (
         <Stack space={24}>
             {['First', 'Second'].map((title) => {
                 const controlElement =
                     control === 'radio' ? (
-                        <RadioButton value={title}>Select {title}</RadioButton>
+                        <RadioButton
+                            value={title}
+                            {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
+                        />
                     ) : control === 'switch' ? (
-                        <Switch name={title}>Select {title}</Switch>
+                        <Switch
+                            name={title}
+                            {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
+                        />
                     ) : (
-                        <Checkbox name={title}>Select {title}</Checkbox>
+                        <Checkbox
+                            name={title}
+                            {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
+                        />
                     );
                 return card === 'advanced' ? (
                     <CommunityAdvancedDataCard
@@ -59,7 +80,8 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                         title={title}
                         description="This is a description"
                         selected={selected}
-                        slot={[controlElement]}
+                        slot={customRender ? [controlElement] : undefined}
+                        actions={customRender ? undefined : [controlElement]}
                     />
                 ) : (
                     <Card
@@ -73,7 +95,8 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                                 : variant
                         }
                         selected={selected}
-                        slot={controlElement}
+                        slot={customRender ? controlElement : undefined}
+                        topActions={customRender ? undefined : [controlElement]}
                     />
                 );
             })}
@@ -94,12 +117,14 @@ export const Selection: StoryComponent<SelectionArgs> = ({
 
 Selection.args = {
     card: 'data',
+    customRender: false,
     control: 'checkbox',
     selected: undefined,
     variant: 'default',
     variantOutside: 'default',
 };
 Selection.argTypes = {
+    customRender: {control: 'boolean'},
     card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},
     selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},

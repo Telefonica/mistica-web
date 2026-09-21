@@ -164,11 +164,18 @@ test.each(outlineVariants)('outline over %s with %s card uses %s', (outside, var
     expect(getSelectionOutlineVariant(outside, variant)).toBe(outline);
 });
 
-const AdvancedSelectionCard = ({slot, title, onPress, selected}: React.ComponentProps<typeof DataCard>) => (
+const AdvancedSelectionCard = ({
+    slot,
+    title,
+    onPress,
+    selected,
+    topActions,
+}: React.ComponentProps<typeof DataCard>) => (
     <AdvancedDataCard
         title={title}
         onPress={onPress}
         selected={selected}
+        actions={topActions}
         slot={slot ? [<React.Fragment key="slot">{slot}</React.Fragment>] : undefined}
     />
 );
@@ -311,4 +318,62 @@ test('selection replaces the segregated primary card action', async () => {
     expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
     expect(onPress).not.toHaveBeenCalled();
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
+});
+
+describe.each(selectionCards)('top action selection (%#)', (Card) => {
+    test.each([
+        ['checkbox', Checkbox],
+        ['switch', Switch],
+    ] as const)('%s selects from the card and the top control', async (role, Control) => {
+        const onChange = jest.fn();
+        renderWithTheme(
+            <Card
+                title="Choose"
+                topActions={[
+                    <ButtonPrimary key="action" onPress={() => {}}>
+                        Other action
+                    </ButtonPrimary>,
+                    <Control key="control" name="option" onChange={onChange}>
+                        Option
+                    </Control>,
+                ]}
+            />
+        );
+        const surface = screen.getByRole(role, {name: 'Choose'});
+        expect(screen.queryByRole('button', {name: 'Other action'})).not.toBeInTheDocument();
+        await userEvent.click(surface);
+        expect(surface).toHaveAttribute('aria-checked', 'true');
+        await userEvent.click(screen.getByText('Option'));
+        expect(surface).toHaveAttribute('aria-checked', 'false');
+        expect(surface).toHaveFocus();
+        expect(onChange).toHaveBeenCalledTimes(2);
+    });
+
+    test('radio top actions share selection and keyboard navigation', async () => {
+        renderWithTheme(
+            <RadioGroup name="choices">
+                <Card
+                    title="First"
+                    topActions={[
+                        <RadioButton key="first" value="first">
+                            First option
+                        </RadioButton>,
+                    ]}
+                />
+                <Card
+                    title="Second"
+                    topActions={[
+                        <RadioButton key="second" value="second">
+                            Second option
+                        </RadioButton>,
+                    ]}
+                />
+            </RadioGroup>
+        );
+        await userEvent.click(screen.getByRole('radio', {name: 'First'}));
+        await userEvent.keyboard('{ArrowRight}');
+        expect(screen.getByRole('radio', {name: 'Second'})).toHaveAttribute('aria-checked', 'true');
+        expect(screen.getByRole('radio', {name: 'Second'})).toHaveFocus();
+        expect(screen.getByRole('radio', {name: 'First'})).toHaveAttribute('aria-checked', 'false');
+    });
 });

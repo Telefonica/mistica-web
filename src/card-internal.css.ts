@@ -308,3 +308,7 @@ export const selectionSurface = style({
         '&[aria-disabled="true"]': {cursor: 'default'},
     },
 });
+
+export const topAction = style({
+    selectors: {'&:not([hidden])': {display: 'flex', alignItems: 'center'}},
+});

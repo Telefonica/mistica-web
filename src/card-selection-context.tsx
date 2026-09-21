@@ -4,6 +4,7 @@ import * as React from 'react';
 export type CardSelectionControl = {
     checked: boolean;
     surface?: boolean;
+    topActionIndex?: number;
     role?: 'checkbox' | 'switch' | 'radio';
     disabled?: boolean;
     tabIndex?: number;
@@ -18,7 +19,8 @@ type SelectionContext = {
     setControls: React.Dispatch<React.SetStateAction<Controls>>;
     surfaceRef?: React.RefObject<HTMLDivElement | null>;
     promoteControl?: boolean;
-    isFooter?: boolean;
+    isOutsideSurface?: boolean;
+    topActionIndex?: number;
 };
 
 export const CardSelectionContext = React.createContext<SelectionContext | undefined>(undefined);
@@ -28,6 +30,7 @@ type CardSelection = {
     control?: CardSelectionControl;
     isSelected?: boolean;
     isSelectionMode: boolean;
+    topActionIndexes: Array<number>;
 };
 
 export const useSelectableCard = (selected?: boolean): CardSelection => {
@@ -38,7 +41,15 @@ export const useSelectableCard = (selected?: boolean): CardSelection => {
     const isSelected = selected ?? (values.length ? values.some((control) => control.checked) : undefined);
     const promoteControl = !!control;
     const context = React.useMemo(() => ({setControls, surfaceRef, promoteControl}), [promoteControl]);
-    return {context, control, isSelected, isSelectionMode: isSelected !== undefined};
+    return {
+        context,
+        control,
+        isSelected,
+        isSelectionMode: isSelected !== undefined,
+        topActionIndexes: values.flatMap(({topActionIndex}) =>
+            topActionIndex === undefined ? [] : [topActionIndex]
+        ),
+    };
 };
 
 export const useCardSelection = (
@@ -51,6 +62,7 @@ export const useCardSelection = (
     const interactionRef = React.useRef(interaction);
     interactionRef.current = interaction;
     const surface = !!context?.surfaceRef;
+    const topActionIndex = context?.topActionIndex;
     const {role, disabled, tabIndex, value} = interaction || {};
 
     React.useEffect(() => {
@@ -62,6 +74,7 @@ export const useCardSelection = (
             [id]: {
                 checked,
                 surface,
+                topActionIndex,
                 role,
                 disabled,
                 tabIndex,
@@ -77,6 +90,6 @@ export const useCardSelection = (
                 return nextControls;
             });
         };
-    }, [checked, id, setControls, role, disabled, tabIndex, value, surface]);
+    }, [checked, id, setControls, role, disabled, tabIndex, value, surface, topActionIndex]);
     return context;
 };

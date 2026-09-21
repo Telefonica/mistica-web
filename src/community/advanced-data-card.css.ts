@@ -269,3 +269,21 @@ export const flexColumn = style({
     display: 'flex',
     flexDirection: 'column',
 });
+
+export const selectionTouchable = style({
+    borderRadius: `calc(${skinVars.borderRadii.container} - 1px)`,
+    // Chromium 93 draws square native outlines, which are clipped by the rounded Boxed container.
+    ':focus-visible': {outline: 'none'},
+    selectors: {
+        '&:focus-visible::before': {
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            border: '1.5px solid',
+            borderColor: skinVars.colors.controlActivated,
+            borderRadius: 'inherit',
+            pointerEvents: 'none',
+            zIndex: 2,
+        },
+    },
+});

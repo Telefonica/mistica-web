@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useCardSelection} from './card-selection-context';
+import {screenReaderOnly} from './screen-reader-only.css';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/keys';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
@@ -179,7 +180,7 @@ const RadioButton = ({
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             onClick={(e) => {
-                if (promoted && !cardSelection?.isFooter) {
+                if (promoted && !cardSelection?.isOutsideSurface) {
                     return;
                 }
                 e.stopPropagation();
@@ -194,7 +195,12 @@ const RadioButton = ({
             className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
             {...getPrefixedDataAttributes({testid: 'RadioButton', ...dataAttributes})}
         >
-            {rest.render ? (
+            {promoted && cardSelection.topActionIndex !== undefined && !rest.render ? (
+                <>
+                    {radio}
+                    <span className={screenReaderOnly}>{rest.children}</span>
+                </>
+            ) : rest.render ? (
                 rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
             ) : (
                 <Inline space={16}>

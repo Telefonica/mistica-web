@@ -7,6 +7,7 @@ https://github.com/storybookjs/storybook/issues/11980
 'use client';
 import * as React from 'react';
 import {useCardSelection} from './card-selection-context';
+import {screenReaderOnly} from './screen-reader-only.css';
 import {debounce} from './utils/helpers';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
@@ -158,7 +159,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-hidden={promoted || undefined}
             aria-checked={promoted ? undefined : value ?? checkedState}
             onClick={(e) => {
-                if (promoted && !cardSelection?.isFooter) {
+                if (promoted && !cardSelection?.isOutsideSurface) {
                     return;
                 }
                 e.stopPropagation();
@@ -186,7 +187,12 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-labelledby={props['aria-label'] ? undefined : labelId}
             {...getPrefixedDataAttributes({testid: 'Switch', ...props.dataAttributes})}
         >
-            {props.render ? (
+            {promoted && cardSelection.topActionIndex !== undefined && !props.render ? (
+                <>
+                    {switchEl}
+                    <span className={screenReaderOnly}>{props.children}</span>
+                </>
+            ) : props.render ? (
                 <>
                     {props.render({
                         controlElement: switchEl,

@@ -408,14 +408,14 @@ test.each`
     ${'cover'}    | ${'radio'}
     ${'naked'}    | ${'checkbox'}
     ${'advanced'} | ${'checkbox'}
-`('Selectable $card cards with $control in slot', async ({card, control}) => {
+`('Selectable $card cards with $control in top actions', async ({card, control}) => {
     await openStoryPage({
         id: 'components-cards-selection--selection',
         device: 'MOBILE_IOS',
         args: {card, control},
     });
     const container = await screen.findByTestId('card-container');
-    await (await screen.findByRole(control, {name: 'First This is a description Select First'})).click();
+    await (await screen.findByRole(control, {name: 'First This is a description'})).click();
     expect(await container.screenshot()).toMatchImageSnapshot();
 });
 
@@ -435,9 +435,20 @@ test.each(['data', 'advanced'])('Selectable %s card with keyboard focus', async 
         device: 'DESKTOP',
         args: {card},
     });
-    const surface = await screen.findByRole('checkbox', {name: 'First This is a description Select First'});
+    const surface = await screen.findByRole('checkbox', {name: 'First This is a description'});
     await surface.focus();
     await page.keyboard.press('Space');
+    const container = await screen.findByTestId('card-container');
+    expect(await container.screenshot()).toMatchImageSnapshot();
+});
+
+test('Selectable card with custom render in slot', async () => {
+    await openStoryPage({
+        id: 'components-cards-selection--selection',
+        device: 'MOBILE_IOS',
+        args: {customRender: true},
+    });
+    await (await screen.findByRole('checkbox', {name: 'First This is a description Custom control'})).click();
     const container = await screen.findByTestId('card-container');
     expect(await container.screenshot()).toMatchImageSnapshot();
 });

@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useCardSelection} from './card-selection-context';
+import {screenReaderOnly} from './screen-reader-only.css';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
@@ -157,7 +158,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             aria-checked={promoted ? undefined : value ?? checkedState}
             onKeyDown={disabled || promoted ? undefined : handleKeyDown}
             onClick={(e) => {
-                if (promoted && !cardSelection?.isFooter) {
+                if (promoted && !cardSelection?.isOutsideSurface) {
                     return;
                 }
                 e.stopPropagation();
@@ -176,7 +177,12 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             aria-disabled={disabled}
             {...getPrefixedDataAttributes({testid: 'Checkbox', ...props.dataAttributes})}
         >
-            {props.render ? (
+            {promoted && cardSelection.topActionIndex !== undefined && !props.render ? (
+                <>
+                    {iconCheckbox}
+                    <span className={screenReaderOnly}>{props.children}</span>
+                </>
+            ) : props.render ? (
                 props.render({
                     controlElement: iconCheckbox,
                     labelId,

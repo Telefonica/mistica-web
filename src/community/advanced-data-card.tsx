@@ -342,7 +342,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const hasSlots = !!slot?.length;
 
-        const topActionsCount = selection.isSelectionMode ? 0 : (actions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsCount = selection.isSelectionMode
+            ? selection.topActionIndexes.length
+            : (actions?.length || 0) + (onClose ? 1 : 0);
 
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const {text: slotText, ref: slotRef} = useInnerText();
@@ -376,7 +378,10 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         selection={selection}
                         {...touchableProps}
                         aria-label={isTouchable ? ariaLabel : undefined}
-                        className={styles.touchable}
+                        className={classNames(
+                            styles.touchable,
+                            selection.control && styles.selectionTouchable
+                        )}
                     >
                         {isTouchable && <div className={styles.touchableCardHoverOverlay} />}
 
@@ -447,7 +452,12 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </CardSelectionSurface>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                {!selection.isSelectionMode && <TopActions actions={actions} onClose={onClose} />}
+                <TopActions
+                    actions={actions}
+                    onClose={onClose}
+                    selection={selection}
+                    variant={selection.isSelectionMode ? 'default' : undefined}
+                />
             </section>
         );
     }
