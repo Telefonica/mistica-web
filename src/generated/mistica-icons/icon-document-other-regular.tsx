@@ -27,7 +27,20 @@ const IconDocumentOtherRegular = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.999 17.505a1 1 0 1 1 0-2 1 1 0 0 1 0 2m-4-1a1 1 0 1 0 2 0 1 1 0 0 0-2 0m-3 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M15.752 1.996a3.75 3.75 0 0 1 3.75 3.75v12.508a3.75 3.75 0 0 1-3.75 3.75H8.246a3.75 3.75 0 0 1-3.75-3.75v-9.33a.75.75 0 0 1 .2-.51l5.735-6.179a.75.75 0 0 1 .55-.24zm2.25 3.75a2.25 2.25 0 0 0-2.25-2.25H11.73v2.43a3.75 3.75 0 0 1-3.75 3.75H5.996v8.577a2.25 2.25 0 0 0 2.25 2.25h7.506a2.25 2.25 0 0 0 2.25-2.25zM6.965 8.176H7.98a2.25 2.25 0 0 0 2.25-2.25v-1.27z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

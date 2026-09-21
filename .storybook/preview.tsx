@@ -99,24 +99,24 @@ const MisticaThemeProvider = ({
     const [colorScheme, setColorScheme] = React.useState(getColorScheme(searchParams));
     const isStoryOnNewTab = window.frameElement === null;
 
+    const handlePlatformSelected = React.useCallback((value: string) => {
+        setPlatform(getPlatformByValue(value));
+    }, []);
+
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('skin-selected', setSkin);
         channel.on('color-scheme-selected', setColorScheme);
-        channel.on('platform-selected', (value) => {
-            setPlatform(getPlatformByValue(value));
-        });
+        channel.on('platform-selected', handlePlatformSelected);
 
         channel.emit('story-mounted');
 
         return () => {
             channel.off('skin-selected', setSkin);
             channel.off('color-scheme-selected', setColorScheme);
-            channel.off('platform-selected', (value) => {
-                setPlatform(getPlatformByValue(value));
-            });
+            channel.off('platform-selected', handlePlatformSelected);
         };
-    }, []);
+    }, [handlePlatformSelected]);
 
     return (
         <React.StrictMode>
@@ -159,11 +159,7 @@ const Styles = () => {
     }, []);
     const fontSizeStyle = `html {font-size: ${fontSize}px}`;
     const bodyBackground = `body {background: ${skinVars.colors.background}}`;
-    return (
-        <style>
-            {fontSizeStyle} {bodyBackground}
-        </style>
-    );
+    return <style>{`${fontSizeStyle} ${bodyBackground}`}</style>;
 };
 
 const withLayoutDecorator: Decorator = (Story, context) => {

@@ -2646,6 +2646,23 @@ const iconMetadata: {[key: string]: {keywords: Array<string>; category: Array<st
             'Nukleinsäure',
         ],
     },
+    'document-information': {
+        category: ['Files'],
+        keywords: [
+            'record',
+            'dossier',
+            'archive',
+            'papel',
+            'informe',
+            'registro',
+            'registro',
+            'documento',
+            'arquivo',
+            'Bericht',
+            'Akte',
+            'Archiv',
+        ],
+    },
     'document-other': {
         category: ['Files'],
         keywords: [
@@ -4100,6 +4117,23 @@ const iconMetadata: {[key: string]: {keywords: Array<string>; category: Array<st
             'Internet-Pen-Laufwerk',
         ],
     },
+    'internet-roaming': {
+        category: ['Telco and comms'],
+        keywords: [
+            'web browsing',
+            'online surfing',
+            'digital travel',
+            'navegación en internet',
+            'surfear en línea',
+            'viaje digital',
+            'navegação na internet',
+            'surfar online',
+            'viagem digital',
+            'Internet-Browsen',
+            'Online-Surfen',
+            'digitale Reise',
+        ],
+    },
     intranet: {
         category: ['Telco and comms'],
         keywords: [
@@ -4741,6 +4775,23 @@ const iconMetadata: {[key: string]: {keywords: Array<string>; category: Array<st
             'móvil euro',
             'celular europeu',
             'Euro-Smartphone',
+        ],
+    },
+    'mobile-information': {
+        category: ['Home and devices'],
+        keywords: [
+            'portable data',
+            'wireless info',
+            'handheld knowledge',
+            'datos móviles',
+            'información inalámbrica',
+            'conocimiento portátil',
+            'dados móveis',
+            'informação sem fio',
+            'conhecimento portátil',
+            'mobile Daten',
+            'drahtlose Info',
+            'Handheld-Wissen',
         ],
     },
     'mobile-pause': {

@@ -27,7 +27,24 @@ const IconAuthenticationSuccessFilled = ({color, size = 24, ...rest}: IconProps)
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.031 14.628a6 6 0 0 0-.031.62v1.5A6.24 6.24 0 0 0 11.862 22H2.75a.75.75 0 0 1-.75-.75v-2.872a3.75 3.75 0 0 1 3.751-3.75z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.75 10c2.9 0 5.25 2.35 5.25 5.25v1.5A5.25 5.25 0 0 1 16.75 22h-1.5A5.25 5.25 0 0 1 10 16.75v-1.5c0-2.9 2.35-5.25 5.25-5.25zm2 3.69a.75.75 0 0 0-1.06.06l-2.566 2.874-.814-.914a.75.75 0 0 0-1.12 1l1.375 1.54a.75.75 0 0 0 1.12 0l3.125-3.5a.75.75 0 0 0-.06-1.06"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.67 2a4.35 4.35 0 0 1 4.35 4.35v1.79q0 .445-.087.865a6.25 6.25 0 0 0-5.292 3.486h-.764a4.35 4.35 0 0 1-4.35-4.35V6.35A4.35 4.35 0 0 1 8.877 2z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

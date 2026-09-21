@@ -27,7 +27,20 @@ const IconLockClosedLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.673 13.93a1.8 1.8 0 0 0-1.8 1.8v.562a1.8 1.8 0 0 0 1.8 1.8h.655a1.8 1.8 0 0 0 1.8-1.8v-.562a1.8 1.8 0 0 0-1.8-1.8zm-.8 1.8a.8.8 0 0 1 .8-.8h.655a.8.8 0 0 1 .8.8v.562a.8.8 0 0 1-.8.8h-.655a.8.8 0 0 1-.8-.8z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M8.02 7.019v1.627l.148-.003h7.663a3.5 3.5 0 0 1 3.5 3.5v6.358a3.5 3.5 0 0 1-3.5 3.5H8.168a3.5 3.5 0 0 1-3.5-3.5v-6.358c0-1.53.983-2.832 2.352-3.307V7.019c0-2.786 2.41-5.02 5.067-5.02 2.117 0 4.02 1.489 4.75 3.753a.5.5 0 0 1-.952.307C15.269 4.148 13.711 3 12.087 3 9.954 3 8.02 4.814 8.02 7.02m.148 2.624a2.5 2.5 0 0 0-2.5 2.5v6.358a2.5 2.5 0 0 0 2.5 2.5h7.663a2.5 2.5 0 0 0 2.5-2.5v-6.358a2.5 2.5 0 0 0-2.5-2.5z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

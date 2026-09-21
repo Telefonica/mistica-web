@@ -30,6 +30,8 @@ export type Colors = {
     backgroundContainerNegative: string;
     backgroundContainerBrandOverBrand: string;
     backgroundContainerAlternative: string;
+    backgroundContainerAlternativeOverAlternative: string;
+    backgroundContainerAlternativeOverBrand: string;
     backgroundOverlay: string;
     backgroundSkeleton: string;
     backgroundSkeletonInverse: string;

@@ -27,7 +27,32 @@ const IconAntennaFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M5.805 3.705a6.16 6.16 0 0 0 0 8.71 1 1 0 1 1-1.414 1.414 8.16 8.16 0 0 1 0-11.538 1 1 0 0 1 1.414 1.414"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M8.738 5.326a3.99 3.99 0 0 0 0 5.641 1 1 0 1 1-1.414 1.414 5.99 5.99 0 0 1 0-8.469 1 1 0 1 1 1.414 1.414"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M9.001 8.317a3 3 0 1 1 4.402 2.653l4.831 9.582a1 1 0 0 1-1.454 1.278l-4.779-3.236-4.779 3.236a1 1 0 0 1-1.453-1.278l4.83-9.582a3 3 0 0 1-1.598-2.653m4.784 9.069.93.63-.473-.94zm-.451-2.11L12 12.633l-1.332 2.643 1.332.902zm-3.573 1.8-.474.94.931-.63z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M15.263 10.967a3.99 3.99 0 0 0 0-5.64 1 1 0 1 1 1.414-1.415 5.99 5.99 0 0 1 0 8.47 1 1 0 0 1-1.414-1.415"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.195 12.415a6.16 6.16 0 0 0 0-8.71 1 1 0 0 1 1.414-1.414 8.16 8.16 0 0 1 0 11.538 1 1 0 0 1-1.414-1.415"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

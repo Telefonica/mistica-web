@@ -27,7 +27,20 @@ const IconChipDeviceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.677 2.002a3.75 3.75 0 0 1 3.75 3.75v3.693q-.426.228-.785.562l-1.448 1.35a3.75 3.75 0 0 0-1.192 2.742v5.149c0 1.087.463 2.065 1.202 2.75H5.752a3.75 3.75 0 0 1-3.75-3.75V5.752a3.75 3.75 0 0 1 3.75-3.75zm-4.21 2.991a.75.75 0 1 0 0 1.5h3.5a.75.75 0 0 0 0-1.5zm10.885 11.233c.22 0 .4.18.4.4v.7a.4.4 0 0 1-.4.4h-.7a.4.4 0 0 1-.4-.4v-.7c0-.22.18-.4.4-.4z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M19.548 9.999a2.45 2.45 0 0 1 2.45 2.45v7.099a2.45 2.45 0 0 1-2.45 2.45h-5.096a2.45 2.45 0 0 1-2.45-2.45v-5.58c0-.68.282-1.328.78-1.791l1.628-1.52A2.45 2.45 0 0 1 16.081 10zm-3.446 4.727a1.35 1.35 0 0 0-1.35 1.35v1.8c0 .745.604 1.35 1.35 1.35h1.8a1.35 1.35 0 0 0 1.35-1.35v-1.8a1.35 1.35 0 0 0-1.35-1.35z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

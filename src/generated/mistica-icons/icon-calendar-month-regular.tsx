@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 import {useIconGradient} from '../../utils/icon-gradient';
@@ -23,19 +24,36 @@ const IconCalendarMonthRegular = ({color, size = 24, ...rest}: IconProps): JSX.E
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M8 12.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75m4 0a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75m4 0a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75"
-                />
-                <path
-                    fill={fillColor}
-                    d="M16 1.25a.75.75 0 0 1 .75.75v1.25H18A2.75 2.75 0 0 1 20.75 6v12A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25h1.25V2a.75.75 0 0 1 1.5 0v1.25h6.5V2a.75.75 0 0 1 .75-.75M4.75 18A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V9.75H4.75zM6 4.75A1.25 1.25 0 0 0 4.75 6v2.25h14.5V6A1.25 1.25 0 0 0 18 4.75z"
-                />
-            </svg>
-        );
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.5 12.146a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75m3.5 0a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75m3.5 0a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M15.852 2.001a.75.75 0 0 1 .75.75v.503h1.648A3.75 3.75 0 0 1 22 7.004v11.245a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 18.249V7.004a3.75 3.75 0 0 1 3.75-3.75h1.648V2.75a.75.75 0 1 1 1.5 0v.503h6.204V2.75a.75.75 0 0 1 .75-.75M3.5 18.249a2.25 2.25 0 0 0 2.25 2.25h12.5a2.25 2.25 0 0 0 2.25-2.25V9.292h-17zM5.75 4.754a2.25 2.25 0 0 0-2.25 2.25v.788h17v-.788a2.25 2.25 0 0 0-2.25-2.25h-1.648v.997a.75.75 0 0 1-1.5 0v-.997H8.898v.997a.75.75 0 0 1-1.5 0v-.997z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8 12.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75m4 0a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75m4 0a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16 1.25a.75.75 0 0 1 .75.75v1.25H18A2.75 2.75 0 0 1 20.75 6v12A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25h1.25V2a.75.75 0 0 1 1.5 0v1.25h6.5V2a.75.75 0 0 1 .75-.75M4.75 18A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V9.75H4.75zM6 4.75A1.25 1.25 0 0 0 4.75 6v2.25h14.5V6A1.25 1.25 0 0 0 18 4.75z"
+                    />
+                </svg>
+            );
+        }
     };
 
     const svgContent = getSvgContent();

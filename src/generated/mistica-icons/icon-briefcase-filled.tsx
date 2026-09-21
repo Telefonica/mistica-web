@@ -27,7 +27,20 @@ const IconBriefcaseFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M6.77 7.418V7.27c0-2.93 2.528-5.269 5.317-5.269 2.826 0 5.143 2.376 5.144 5.269v.148h1.019a3.75 3.75 0 0 1 3.75 3.75v.179c-2.693 1.775-5.809 2.746-8.987 2.9v-.333a.85.85 0 0 0-.844-.854h-.338a.85.85 0 0 0-.845.854v.32A18.7 18.7 0 0 1 2 11.29v-.122a3.75 3.75 0 0 1 3.75-3.75zm1.5 0h7.461V7.27c-.001-2.098-1.68-3.769-3.644-3.769-2.002 0-3.817 1.708-3.817 3.77z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M2 13.047a20.2 20.2 0 0 0 8.986 2.689v.385a.85.85 0 0 0 .845.855h.338a.85.85 0 0 0 .844-.855v-.373c3.146-.14 6.24-1.02 8.987-2.634v5.135A3.75 3.75 0 0 1 18.25 22h-.003L5.75 21.95h-.002A3.75 3.75 0 0 1 2 18.2z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

@@ -27,7 +27,17 @@ const IconMobileDeviceRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path fill={fillColor} d="M13.752 4.992a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 1 1 0-1.5z" />
+                    <path
+                        fill={fillColor}
+                        d="M14.463 2.002a3.75 3.75 0 0 1 3.75 3.75v12.496a3.75 3.75 0 0 1-3.75 3.75H9.537a3.75 3.75 0 0 1-3.75-3.75l.001-12.496a3.75 3.75 0 0 1 3.75-3.75zm-4.925 1.5a2.25 2.25 0 0 0-2.25 2.25v12.496a2.25 2.25 0 0 0 2.25 2.25h4.925a2.25 2.25 0 0 0 2.25-2.25V5.752a2.25 2.25 0 0 0-2.25-2.25z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
