@@ -27,7 +27,24 @@ const IconChangePlanLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.622 16.199a.5.5 0 1 1 .707.707l-1.621 1.621h6.29a.5.5 0 0 1 0 1H13.71l1.619 1.62a.501.501 0 0 1-.707.708l-2.475-2.474a.5.5 0 0 1-.083-.114.496.496 0 0 1 .083-.593z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M13.296 1.999c1.992 0 3.7 1.711 3.7 3.69v2.816a.5.5 0 0 1-1 0V5.688c0-1.424-1.258-2.689-2.7-2.69l-4.314.01v3.039c0 2.035-1.717 3.363-3.647 3.363H3.002v8.838A2.76 2.76 0 0 0 5.768 21h4.73a.5.5 0 0 1 0 1h-4.73c-2.186 0-3.766-1.791-3.766-3.752V8.91a.5.5 0 0 1 .133-.341l5.98-6.401a.5.5 0 0 1 .264-.148l.101-.01zm-9.643 6.41h1.682c1.503 0 2.647-.996 2.647-2.362V3.776z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.5 17.574a.5.5 0 1 1 0 1H5.805a.5.5 0 0 1 0-1zm8.17-7.427a.5.5 0 0 1 .708 0l2.474 2.475a.5.5 0 0 1 0 .707l-2.474 2.474a.5.5 0 0 1-.707-.707l1.62-1.62h-6.293a.5.5 0 1 1 0-1h6.292l-1.62-1.62a.5.5 0 0 1 0-.709m-8.17 4.427a.5.5 0 1 1 0 1H5.805a.5.5 0 0 1 0-1zm0-3a.5.5 0 1 1 0 1H5.805a.5.5 0 0 1 0-1z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

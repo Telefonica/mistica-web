@@ -27,7 +27,20 @@ const IconIdCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M16.615 13.115a2.255 2.255 0 0 1 2.255 2.255v.02l-.01.37a.75.75 0 0 1-1.5-.04l.01-.357a.754.754 0 0 0-.755-.748H13.96a.755.755 0 0 0-.755.755v.02l-.01.37a.75.75 0 0 1-1.5-.04l.01-.37h.002a2.254 2.254 0 0 1 2.253-2.235zm-7.068-.184a.75.75 0 1 1 0 1.5h-4a.75.75 0 0 1 0-1.5zm6.025-5.42a2.05 2.05 0 0 1 2.05 2.05v.581a2.05 2.05 0 0 1-2.05 2.05h-.58a2.05 2.05 0 0 1-2.05-2.05v-.581a2.05 2.05 0 0 1 2.05-2.05zm-.58 1.5a.55.55 0 0 0-.55.55v.581c0 .304.245.55.55.55h.58a.55.55 0 0 0 .55-.55v-.581a.55.55 0 0 0-.55-.55zm-5.445.559a.75.75 0 1 1 0 1.5h-4a.75.75 0 0 1 0-1.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.25 4.734A3.75 3.75 0 0 1 22 8.484v7.033a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 15.516V8.483a3.75 3.75 0 0 1 3.75-3.75zm-12.5 1.5a2.25 2.25 0 0 0-2.25 2.25v7.032a2.25 2.25 0 0 0 2.25 2.25h12.5a2.25 2.25 0 0 0 2.25-2.25V8.484a2.25 2.25 0 0 0-2.25-2.25z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

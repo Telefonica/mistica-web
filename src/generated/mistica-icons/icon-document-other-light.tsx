@@ -27,7 +27,20 @@ const IconDocumentOtherLight = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.01 15.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5m-3.01 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5m-3.004 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.883 2.01a.5.5 0 0 0-.262.147L4.633 8.5a.5.5 0 0 0-.136.343v9.465C4.497 20.39 6.265 22 8.242 22h7.595c1.929 0 3.561-1.613 3.662-3.544l.004-.188V5.76c0-2.173-1.8-3.76-3.775-3.76h-4.743zm4.845.99c1.461 0 2.775 1.176 2.775 2.76v12.508l-.014.274c-.142 1.357-1.32 2.46-2.652 2.46L8.242 21c-1.46 0-2.745-1.198-2.745-2.692V9.352l2.154.041h.01c1.128 0 2.096-.302 2.785-.943.694-.646 1.039-1.575 1.039-2.687V3zm-5.243 2.763c0 .903-.275 1.54-.72 1.955-.451.42-1.144.673-2.1.674l-1.528-.028 4.348-4.607z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

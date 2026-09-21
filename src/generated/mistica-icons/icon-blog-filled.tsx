@@ -27,7 +27,21 @@ const IconBlogFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m20.504 15.665-3.492 4.809-.011.014a2.83 2.83 0 0 1-1.378.965l-.003.001-1.271.412c-.323.107-1.011.297-1.62-.145-.606-.44-.641-1.15-.64-1.491l-.001-1.344.005-.157a2.8 2.8 0 0 1 .486-1.452l.01-.014 3.481-4.794z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M13.256 2a3.75 3.75 0 0 1 3.75 3.748v3.996a3.6 3.6 0 0 0-.735.751l-4.49 6.185q-.014.017-.025.035a3.8 3.8 0 0 0-.662 1.962l-.006.21v1.347c0 .29.013 1.074.515 1.762H5.75a3.75 3.75 0 0 1-3.745-3.555L2 18.248v-8.58h3.553c2.103 0 3.675-1.792 3.676-3.745V2zm-7.2 15.316a.75.75 0 0 0 0 1.5H9.24a.75.75 0 0 0 0-1.5zm0-3a.75.75 0 0 0 0 1.5H9.24a.75.75 0 0 0 0-1.5zm0-3a.75.75 0 0 0 0 1.5H9.24a.75.75 0 0 0 0-1.5zm11.025-.238c.862-1.187 2.532-1.418 3.7-.57l.12.088c1.168.848 1.464 2.507.602 3.694l-.118.162-4.433-3.197z"
+                    />
+                    <path fill={fillColor} d="m8.24 5.968-.014.276a2.72 2.72 0 0 1-2.712 2.43H2L8.24 2z" />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

@@ -27,7 +27,16 @@ const IconLockClosedFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.087 2.001c2.208 0 4.104 1.452 4.828 3.457a.75.75 0 0 1-1.411.51C14.979 4.515 13.619 3.5 12.087 3.5c-2.002 0-3.817 1.709-3.817 3.77v.87h7.561a3.75 3.75 0 0 1 3.75 3.75v6.358a3.75 3.75 0 0 1-3.75 3.75H8.17a3.75 3.75 0 0 1-3.75-3.75v-6.357a3.75 3.75 0 0 1 2.35-3.48V7.27C6.772 4.34 9.3 2 12.088 2m-.414 11.679a2.05 2.05 0 0 0-2.05 2.05v.562a2.05 2.05 0 0 0 2.05 2.05h.655a2.05 2.05 0 0 0 2.05-2.05v-.563a2.05 2.05 0 0 0-2.05-2.05z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
