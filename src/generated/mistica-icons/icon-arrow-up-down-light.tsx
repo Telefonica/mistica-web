@@ -27,7 +27,16 @@ const IconArrowUpDownLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.353 6.895a.5.5 0 0 1-.707.707L7.754 3.71V17a.5.5 0 0 1-1 0V3.705L2.855 7.602a.5.5 0 1 1-.707-.707l4.75-4.749q.014-.014.031-.026l.014-.012L7 2.07l.018-.01.058-.028.039-.012q.022-.007.046-.012l.038-.004q.025-.003.052-.004l.033.003c.14.008.265.072.35.172zm9.498 9.503a.5.5 0 0 1 0 .707l-4.749 4.75-.031.024-.014.012-.056.038-.019.011-.058.027q-.018.007-.038.012l-.046.012a.5.5 0 0 1-.477-.17l-4.717-4.716a.5.5 0 0 1 .707-.707l3.893 3.893V7a.5.5 0 0 1 1 0v13.296l3.898-3.899a.5.5 0 0 1 .707 0"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

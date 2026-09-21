@@ -27,7 +27,16 @@ const IconBookLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.308 3.914c.765 0 1.543.075 2.265.185a.5.5 0 0 1 .425.494l.017 13.186a.5.5 0 0 1-.576.494 15 15 0 0 0-2.1-.18c-2.76-.025-5.01.677-7.081 1.922a.5.5 0 0 1-.516 0c-2.07-1.245-4.322-1.947-7.08-1.922-.706.007-1.415.076-2.101.18a.5.5 0 0 1-.564-.387l-.012-.107.017-13.186a.5.5 0 0 1 .425-.494c.722-.11 1.5-.185 2.265-.185 2.68 0 5.139.61 7.308 1.851 2.17-1.24 4.628-1.851 7.308-1.851m-14.616 1c-.56 0-1.133.045-1.691.116l-.016 12.176a15 15 0 0 1 1.666-.113c2.622-.024 4.832.571 6.848 1.638V6.63C9.497 5.485 7.214 4.913 4.692 4.913m14.616 0c-2.522 0-4.805.572-6.808 1.716v12.1c2.016-1.066 4.226-1.66 6.849-1.637.562.005 1.12.047 1.665.113L20.998 5.03a14 14 0 0 0-1.69-.116"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 import {useIconGradient} from '../../utils/icon-gradient';
@@ -23,19 +24,36 @@ const IconMessageRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M14 12.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm2-4a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
-                />
-                <path
-                    fill={fillColor}
-                    d="M18 3.25A3.75 3.75 0 0 1 21.75 7v8A3.75 3.75 0 0 1 18 18.75h-4.792l-4.822 2.894A.75.75 0 0 1 7.25 21v-2.25H6A3.75 3.75 0 0 1 2.25 15V7A3.75 3.75 0 0 1 6 3.25zM6 4.75A2.25 2.25 0 0 0 3.75 7v8A2.25 2.25 0 0 0 6 17.25h2a.75.75 0 0 1 .75.75v1.675l3.864-2.319.09-.046a.8.8 0 0 1 .296-.06h5A2.25 2.25 0 0 0 20.25 15V7A2.25 2.25 0 0 0 18 4.75z"
-                />
-            </svg>
-        );
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.543 6.863a.75.75 0 1 0 0 1.5h6.916a.75.75 0 0 0 0-1.5zm-.75 3.75a.75.75 0 0 1 .75-.75h6.916a.75.75 0 0 1 0 1.5H8.543a.75.75 0 0 1-.75-.75m.75 2.25a.75.75 0 0 0 0 1.5h6.916a.75.75 0 0 0 0-1.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v9.443a2.307 2.307 0 0 0 3.846 1.718l2.51-2.172h5.394a8.25 8.25 0 0 0 8.25-8.25v-.739A8.25 8.25 0 0 0 13.75 2zM3.5 10.25a6.75 6.75 0 0 1 6.75-6.75h3.5a6.75 6.75 0 0 1 6.75 6.75v.739a6.75 6.75 0 0 1-6.75 6.75H8.077a.75.75 0 0 0-.491.183l-2.727 2.36-.012.01a.807.807 0 0 1-1.347-.599z"
+                    />
+                </svg>
+            );
+        } else {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14 12.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm2-4a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18 3.25A3.75 3.75 0 0 1 21.75 7v8A3.75 3.75 0 0 1 18 18.75h-4.792l-4.822 2.894A.75.75 0 0 1 7.25 21v-2.25H6A3.75 3.75 0 0 1 2.25 15V7A3.75 3.75 0 0 1 6 3.25zM6 4.75A2.25 2.25 0 0 0 3.75 7v8A2.25 2.25 0 0 0 6 17.25h2a.75.75 0 0 1 .75.75v1.675l3.864-2.319.09-.046a.8.8 0 0 1 .296-.06h5A2.25 2.25 0 0 0 20.25 15V7A2.25 2.25 0 0 0 18 4.75z"
+                    />
+                </svg>
+            );
+        }
     };
 
     const svgContent = getSvgContent();

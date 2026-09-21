@@ -27,7 +27,20 @@ const IconHomeWifiLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.1 20.199a.9.9 0 1 1-.002 1.8.9.9 0 0 1 .002-1.8m.425-8.947a.5.5 0 0 1-.056.999c-5.006-.289-9.35 3.991-9.247 9.238a.5.5 0 0 1-1 .02c-.114-5.797 4.684-10.58 10.303-10.257m-.026 4.519a.5.5 0 1 1 0 1 4.726 4.726 0 0 0-4.726 4.727.5.5 0 0 1-1 0 5.727 5.727 0 0 1 5.726-5.727"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12.005 2c1.014 0 1.833.555 2.5 1.114l.276.239.002.001 5.372 4.769a.5.5 0 0 1-.664.748l-5.37-4.767-.27-.232C13.23 3.353 12.655 3 12.006 3c-.742 0-1.402.463-2.128 1.101l-6.06 5.387h.001a2.67 2.67 0 0 0-.817 1.931v6.902c0 1.42 1.225 2.675 2.744 2.675h2.757a.5.5 0 0 1 0 1H5.745c-2.062 0-3.744-1.692-3.744-3.675v-6.902c0-1.025.429-2.003 1.136-2.662l.009-.008 6.067-5.395.002-.002C9.93 2.722 10.848 2 12.005 2"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

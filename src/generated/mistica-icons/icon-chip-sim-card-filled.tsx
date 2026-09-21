@@ -27,7 +27,16 @@ const IconChipSimCardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.38 2a3.75 3.75 0 0 1 3.75 3.75v12.5A3.75 3.75 0 0 1 15.38 22H8.62a3.75 3.75 0 0 1-3.75-3.75V7.872c0-1.093.5-2.056 1.205-2.724l.01-.009 2.311-2.113A3.74 3.74 0 0 1 10.983 2zM7.343 16.244a2.75 2.75 0 0 0 2.75 2.75h3.815a2.75 2.75 0 0 0 2.75-2.75v-1.168H7.343zm2.126-7.075a2.75 2.75 0 0 0-2.126 2.677v1.73h2.126zm5.035 4.407h2.154v-1.73a2.75 2.75 0 0 0-2.154-2.683zm-3.535 0h2.035v-4.48h-2.035z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

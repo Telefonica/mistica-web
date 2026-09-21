@@ -1,3 +1,19 @@
+# [17.4.0](https://github.com/Telefonica/mistica-web/compare/v17.3.0...v17.4.0) (2026-09-18)
+
+
+### Bug Fixes
+
+* **switch:** children positioning ([#1717](https://github.com/Telefonica/mistica-web/issues/1717)) ([0bcedb7](https://github.com/Telefonica/mistica-web/commit/0bcedb795079901c4d59226b095556512f24488d)), closes [#1716](https://github.com/Telefonica/mistica-web/issues/1716)
+
+
+### Features
+
+* **BoxedRowList:** add border option for selected state ([#1721](https://github.com/Telefonica/mistica-web/issues/1721)) ([3df0fa5](https://github.com/Telefonica/mistica-web/commit/3df0fa51a9db58bc021cdc850308a1246445de99))
+* **callout:** updates container tokens for callout ([#1719](https://github.com/Telefonica/mistica-web/issues/1719)) ([52d4dfe](https://github.com/Telefonica/mistica-web/commit/52d4dfe2fea1148cecea33860d7f7f6b21e59c42))
+* **SidenavBar:** full specs implementation ([#1673](https://github.com/Telefonica/mistica-web/issues/1673)) ([b2751ae](https://github.com/Telefonica/mistica-web/commit/b2751aeb6315249f1ac2c12454ffad61b8f41564))
+* **skins:** buttonLink neutral fixes ([#1713](https://github.com/Telefonica/mistica-web/issues/1713)) ([7440a95](https://github.com/Telefonica/mistica-web/commit/7440a95acac404eba59e1ba531c1f88f5b88fd55)), closes [#1710](https://github.com/Telefonica/mistica-web/issues/1710) [mistica-design#2818](https://github.com/mistica-design/issues/2818)
+* **Skin:** updates vivo-evo skin to use new responsiveLayoutMargin values ([#1722](https://github.com/Telefonica/mistica-web/issues/1722)) ([f4db030](https://github.com/Telefonica/mistica-web/commit/f4db03021ba4619fa03cfa93d23641efb000ecdf))
+
 # [17.3.0](https://github.com/Telefonica/mistica-web/compare/v17.2.0...v17.3.0) (2026-09-04)
 
 

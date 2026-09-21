@@ -27,7 +27,20 @@ const IconChipDeviceRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.677 2.002a3.75 3.75 0 0 1 3.75 3.75v2.49a.75.75 0 0 1-1.5 0v-2.49a2.25 2.25 0 0 0-2.25-2.25H5.752a2.25 2.25 0 0 0-2.25 2.25v12.496a2.25 2.25 0 0 0 2.25 2.25h4.495a.75.75 0 0 1 0 1.5H5.752a3.75 3.75 0 0 1-3.75-3.75V5.752a3.75 3.75 0 0 1 3.75-3.75zm7.071 12.488c.966 0 1.75.783 1.75 1.75v1.5a1.75 1.75 0 0 1-1.75 1.75h-1.5a1.75 1.75 0 0 1-1.75-1.75v-1.5c0-.967.784-1.75 1.75-1.75zm-1.5 1.5a.25.25 0 0 0-.25.25v1.5c0 .137.112.25.25.25h1.5a.25.25 0 0 0 .25-.25v-1.5a.25.25 0 0 0-.25-.25z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M19.248 9.999a2.75 2.75 0 0 1 2.75 2.75v6.499a2.75 2.75 0 0 1-2.75 2.75h-4.496a2.75 2.75 0 0 1-2.75-2.75v-5.15c0-.762.316-1.49.874-2.01l1.447-1.35a2.75 2.75 0 0 1 1.876-.739zm-3.049 1.5c-.316 0-.62.12-.852.336l-1.448 1.35a1.25 1.25 0 0 0-.397.914v5.149c0 .69.56 1.25 1.25 1.25h4.496c.69 0 1.25-.56 1.25-1.25v-6.499c0-.69-.56-1.25-1.25-1.25zM9.967 4.993a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 1 1 0-1.5z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
