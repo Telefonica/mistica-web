@@ -18,6 +18,11 @@ const FadeOut = ({
     children,
     className = '',
     duration = defaultDuration,
+    /**
+     * The wait time before the fade-in animation starts.
+     * Use a CSS time value, for example '0.3s' or '300ms'.
+     * The default value is '0' (no wait time).
+     */
     delay = '0',
     dataAttributes,
 }: Props): JSX.Element => {
