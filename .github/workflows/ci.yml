@@ -122,6 +122,15 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Disallow breaking change marker (!)
+              env:
+                  PR_TITLE: ${{ github.event.pull_request.title }}
+              run: |
+                  if echo "$PR_TITLE" | grep -qP '^[a-z]+(\([^)]*\))?!:'; then
+                    echo "Error: PR titles must not use '!' to indicate breaking changes. Use a BREAKING CHANGE footer in the PR description instead."
+                    exit 1
+                  fi
+
     ci-required-checks:
         name: CI required checks passed
         runs-on: ubuntu-latest
