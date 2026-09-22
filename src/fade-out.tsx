@@ -17,6 +17,11 @@ type Props = {
 const FadeOut = ({
     children,
     className = '',
+    /**
+     * The length of the fade-in animation.
+     * Use a CSS time value, for example '0.3s' or '300ms'.
+     * The default value is '0.3s'.
+     */
     duration = defaultDuration,
     /**
      * The wait time before the fade-in animation starts.
