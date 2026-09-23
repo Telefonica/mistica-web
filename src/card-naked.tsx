@@ -9,7 +9,7 @@ import type {MaybeTouchableCard} from './card-internal';
 type NakedCardProps = Omit<MediaCardProps, 'footerBackgroundColor' | 'variant' | 'footerVariant'>;
 
 export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<NakedCardProps>>(
-    ({size = 'default', slot, topActions, buttonPrimary, dataAttributes, ...rest}, ref) => {
+    ({size = 'default', slot, buttonPrimary, dataAttributes, ...rest}, ref) => {
         const variant = useRawThemeVariant();
         return (
             <InternalCard
@@ -21,7 +21,6 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Nak
                 type="naked"
                 size={size}
                 slot={slot}
-                topActions={topActions}
                 buttonPrimary={buttonPrimary}
                 ref={ref}
                 {...rest}

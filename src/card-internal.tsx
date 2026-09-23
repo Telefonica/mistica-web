@@ -8,8 +8,8 @@ import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
 import {ThemeVariant, normalizeVariant, useThemeVariant, useRawThemeVariant} from './theme-variant-context';
 import Tag from './tag';
-import {CardSelectionContext, useSelectableCard} from './card-selection-context';
-import {CardSelectionSurface} from './card-selection-surface';
+import {useSelectableCard} from './card-selection-context';
+import {CardSelectionSurface, CardSelector} from './card-selection-surface';
 import Stack from './stack';
 import Image from './image';
 import Video from './video';
@@ -32,6 +32,7 @@ import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
 import {applyAlpha} from './utils/color';
 
+import type {CardSelectionProps} from './card-selection-context';
 import type {
     DataAttributes,
     HeadingType,
@@ -202,7 +203,9 @@ type TouchableProps = {
 >;
 
 type TouchableCard<T> = T & TouchableProps;
-export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T> & {selected?: boolean};
+export type MaybeTouchableCard<T> = ExclusifyUnion<
+    TouchableCard<T> | T | (Omit<T, 'topActions' | 'onClose'> & CardSelectionProps)
+> & {selected?: boolean};
 
 type PrivateContainerProps = {
     children?: React.ReactNode;
@@ -593,7 +596,7 @@ export type CardAction = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
-export type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
+export type TopActionsArray = ReadonlyArray<CardAction>;
 
 export const CardActionIconButton = (props: CardAction): JSX.Element => {
     const variant = useThemeVariant();
@@ -632,11 +635,10 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
 };
 
 type PrivateTopActionsProps = {
-    actions?: TopActionsArray;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     testid?: string;
     variant?: Variant;
     containerStyles?: React.CSSProperties;
-    selection?: ReturnType<typeof useSelectableCard>;
 };
 
 export const TopActions = ({
@@ -646,12 +648,11 @@ export const TopActions = ({
     actions: actionsProp,
     variant,
     containerStyles = {},
-    selection,
 }: Omit<TopActionsProps, 'topActions'> & PrivateTopActionsProps): JSX.Element => {
     const {texts, t} = useTheme();
     const actions = actionsProp ? [...actionsProp] : [];
 
-    if (onClose && !selection?.isSelectionMode) {
+    if (onClose) {
         actions.push({
             label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
             onPress: onClose,
@@ -668,27 +669,9 @@ export const TopActions = ({
             <div className={styles.topActionsContainer} style={containerStyles} data-testid={testid}>
                 {actions.map((action, index) => {
                     if ('Icon' in action || 'checkedProps' in action) {
-                        return selection?.isSelectionMode ? null : (
-                            <CardActionIconButton key={index} {...action} />
-                        );
+                        return <CardActionIconButton key={index} {...action} />;
                     }
-                    return selection ? (
-                        <CardSelectionContext.Provider
-                            key={index}
-                            value={{...selection.context, isOutsideSurface: true, topActionIndex: index}}
-                        >
-                            <div
-                                className={styles.topAction}
-                                hidden={
-                                    selection.isSelectionMode && !selection.topActionIndexes.includes(index)
-                                }
-                            >
-                                {action}
-                            </div>
-                        </CardSelectionContext.Provider>
-                    ) : (
-                        action
-                    );
+                    return action;
                 })}
             </div>
         </ThemeVariant>
@@ -1402,25 +1385,21 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoAutoPlay,
             videoDataAttributes,
             selected,
+            checkbox,
+            switch: switchProps,
+            radioValue,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
-        const selection = useSelectableCard(selected);
+        const hasSelector = !!checkbox || !!switchProps || radioValue !== undefined;
+        const selection = useSelectableCard(selected, hasSelector);
         const {isSelected, isSelectionMode} = selection;
         const onClose = isSelectionMode ? undefined : onCloseProp;
-        const slot = slotProp && (
-            <CardSelectionContext.Provider value={selection.context}>
-                {slotProp}
-            </CardSelectionContext.Provider>
-        );
-        const footerSlot = footerSlotProp && (
-            <CardSelectionContext.Provider value={{...selection.context, isOutsideSurface: true}}>
-                {footerSlotProp}
-            </CardSelectionContext.Provider>
-        );
+        const slot = slotProp;
+        const footerSlot = footerSlotProp;
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
@@ -1487,8 +1466,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
         const showButtonsInBody = !shouldShowFooter && hasButtons;
 
         const topActionsLengthWithoutVideo =
-            (isSelectionMode ? selection.topActionIndexes.length : topActions?.length || 0) +
-            (onClose ? 1 : 0);
+            (isSelectionMode ? (hasSelector ? 1 : 0) : topActions?.length || 0) + (onClose ? 1 : 0);
         const topActionsLength = videoAction
             ? topActionsLengthWithoutVideo + 1
             : topActionsLengthWithoutVideo;
@@ -1770,11 +1748,21 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         overlayColor={footerOverlayBackground}
                     />
                 )}
-                <TopActions
+                <CardSelector
                     selection={selection}
+                    checkbox={checkbox}
+                    switch={switchProps}
+                    radioValue={radioValue}
+                    variant={
+                        hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
+                            ? 'media'
+                            : variant
+                    }
+                />
+                <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
-                    actions={topActions}
+                    actions={isSelectionMode ? undefined : topActions}
                     variant={
                         hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
                             ? 'media'

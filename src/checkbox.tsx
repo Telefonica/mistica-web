@@ -158,9 +158,6 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             aria-checked={promoted ? undefined : value ?? checkedState}
             onKeyDown={disabled || promoted ? undefined : handleKeyDown}
             onClick={(e) => {
-                if (promoted && !cardSelection?.isOutsideSurface) {
-                    return;
-                }
                 e.stopPropagation();
                 if (!disabled) {
                     if (promoted) {
@@ -177,7 +174,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
             aria-disabled={disabled}
             {...getPrefixedDataAttributes({testid: 'Checkbox', ...props.dataAttributes})}
         >
-            {promoted && cardSelection.topActionIndex !== undefined && !props.render ? (
+            {promoted && !props.render ? (
                 <>
                     {iconCheckbox}
                     <span className={screenReaderOnly}>{props.children}</span>

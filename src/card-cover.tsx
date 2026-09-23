@@ -38,7 +38,7 @@ type CoverCardProps = {
     videoLoop?: boolean;
     videoAutoPlay?: boolean;
     videoDataAttributes?: DataAttributes;
-    topActions?: ReadonlyArray<CardAction | React.ReactElement>;
+    topActions?: ReadonlyArray<CardAction>;
     buttonPrimary?: CardActionButtonPrimary;
     buttonSecondary?: CardActionButtonSecondary;
     buttonLink?: CardActionButtonLink;

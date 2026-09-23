@@ -18,11 +18,12 @@ import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
 import {TopActions, getSelectionOutlineVariant} from '../card-internal';
-import {CardSelectionContext, useSelectableCard} from '../card-selection-context';
-import {CardSelectionSurface} from '../card-selection-surface';
+import {useSelectableCard} from '../card-selection-context';
+import {CardSelectionSurface, CardSelector} from '../card-selection-surface';
 import {useRawThemeVariant} from '../theme-variant-context';
 import * as cardStyles from '../card-internal.css';
 
+import type {CardSelectionProps} from '../card-selection-context';
 import type {CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
@@ -58,7 +59,9 @@ type TouchableProps = {
       }
 >;
 type TouchableCard<T> = T & TouchableProps;
-type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+type MaybeTouchableCard<T> = ExclusifyUnion<
+    TouchableCard<T> | T | (Omit<T, 'actions' | 'onClose'> & CardSelectionProps)
+>;
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -291,7 +294,7 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
-    actions?: ReadonlyArray<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction>;
     'aria-label'?: string;
     onClose?: () => void;
 }>;
@@ -300,6 +303,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
     (
         {
             selected,
+            checkbox,
+            switch: switchProps,
+            radioValue,
             stackingGroup,
             headline,
             pretitle,
@@ -331,7 +337,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         },
         ref
     ) => {
-        const selection = useSelectableCard(selected);
+        const hasSelector = !!checkbox || !!switchProps || radioValue !== undefined;
+        const selection = useSelectableCard(selected, hasSelector);
         const outsideVariant = useRawThemeVariant();
         const isTouchable =
             !!selection.control ||
@@ -343,7 +350,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const hasSlots = !!slot?.length;
 
         const topActionsCount = selection.isSelectionMode
-            ? selection.topActionIndexes.length
+            ? hasSelector
+                ? 1
+                : 0
             : (actions?.length || 0) + (onClose ? 1 : 0);
 
         const {text: headlineText, ref: headlineRef} = useInnerText();
@@ -433,11 +442,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 {slot.map((item, index) => {
                                     return (
                                         <div key={index}>
-                                            <div className={styles.paddingX}>
-                                                <CardSelectionContext.Provider value={selection.context}>
-                                                    {item}
-                                                </CardSelectionContext.Provider>
-                                            </div>
+                                            <div className={styles.paddingX}>{item}</div>
 
                                             {index + 1 !== slot.length && (
                                                 <Box paddingY={slotDividerPadding}>
@@ -452,10 +457,15 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </CardSelectionSurface>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <TopActions
-                    actions={actions}
-                    onClose={onClose}
+                <CardSelector
                     selection={selection}
+                    checkbox={checkbox}
+                    switch={switchProps}
+                    radioValue={radioValue}
+                />
+                <TopActions
+                    actions={selection.isSelectionMode ? undefined : actions}
+                    onClose={selection.isSelectionMode ? undefined : onClose}
                     variant={selection.isSelectionMode ? 'default' : undefined}
                 />
             </section>

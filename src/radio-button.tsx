@@ -180,9 +180,6 @@ const RadioButton = ({
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             onClick={(e) => {
-                if (promoted && !cardSelection?.isOutsideSurface) {
-                    return;
-                }
                 e.stopPropagation();
                 if (!disabled) {
                     if (promoted) {
@@ -195,7 +192,7 @@ const RadioButton = ({
             className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
             {...getPrefixedDataAttributes({testid: 'RadioButton', ...dataAttributes})}
         >
-            {promoted && cardSelection.topActionIndex !== undefined && !rest.render ? (
+            {promoted && !rest.render ? (
                 <>
                     {radio}
                     <span className={screenReaderOnly}>{rest.children}</span>

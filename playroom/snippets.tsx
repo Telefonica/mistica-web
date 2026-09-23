@@ -1270,6 +1270,17 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
+        name: 'Selectable DataCard',
+        code: `
+        <DataCard
+            title="Selectable card"
+            description="Press the card to select it"
+            checkbox={{name: "card", defaultValue: false}}
+            buttonPrimary={<ButtonPrimary small onPress={() => {}}>Action</ButtonPrimary>}
+        />`,
+    },
+    {
+        group: 'Cards',
         name: 'DataCard',
         code: `
         <DataCard

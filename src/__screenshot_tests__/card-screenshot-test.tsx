@@ -408,7 +408,7 @@ test.each`
     ${'cover'}    | ${'radio'}
     ${'naked'}    | ${'checkbox'}
     ${'advanced'} | ${'checkbox'}
-`('Selectable $card cards with $control in top actions', async ({card, control}) => {
+`('Selectable $card cards with $control selector', async ({card, control}) => {
     await openStoryPage({
         id: 'components-cards-selection--selection',
         device: 'MOBILE_IOS',
@@ -448,7 +448,8 @@ test('Selectable card with custom render in slot', async () => {
         device: 'MOBILE_IOS',
         args: {customRender: true},
     });
-    await (await screen.findByRole('checkbox', {name: 'First This is a description Custom control'})).click();
+    const [control] = await screen.findAllByRole('checkbox', {name: 'Custom control'});
+    await control.click();
     const container = await screen.findByTestId('card-container');
     expect(await container.screenshot()).toMatchImageSnapshot();
 });

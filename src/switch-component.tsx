@@ -159,9 +159,6 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-hidden={promoted || undefined}
             aria-checked={promoted ? undefined : value ?? checkedState}
             onClick={(e) => {
-                if (promoted && !cardSelection?.isOutsideSurface) {
-                    return;
-                }
                 e.stopPropagation();
                 if (!disabled) {
                     if (promoted) {
@@ -187,7 +184,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-labelledby={props['aria-label'] ? undefined : labelId}
             {...getPrefixedDataAttributes({testid: 'Switch', ...props.dataAttributes})}
         >
-            {promoted && cardSelection.topActionIndex !== undefined && !props.render ? (
+            {promoted && !props.render ? (
                 <>
                     {switchEl}
                     <span className={screenReaderOnly}>{props.children}</span>

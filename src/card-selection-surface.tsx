@@ -2,10 +2,16 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import Touchable from './touchable';
+import Checkbox from './checkbox';
+import Switch from './switch-component';
+import RadioButton from './radio-button';
+import {CardSelectionContext} from './card-selection-context';
+import {ThemeVariant} from './theme-variant-context';
 import * as styles from './card-internal.css';
 import * as touchableStyles from './touchable.css';
 
-import type {useSelectableCard} from './card-selection-context';
+import type {CardSelectionProps, useSelectableCard} from './card-selection-context';
+import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 
 type Props = TouchableProps & {selection: ReturnType<typeof useSelectableCard>};
@@ -49,5 +55,44 @@ export const CardSelectionSurface = ({selection, ...props}: Props): JSX.Element 
         >
             {props.children}
         </div>
+    );
+};
+
+export const CardSelector = ({
+    selection,
+    checkbox,
+    switch: switchProps,
+    radioValue,
+    variant,
+}: {checkbox?: CardSelectionProps['checkbox']; switch?: CardSelectionProps['switch']; radioValue?: string} & {
+    selection: ReturnType<typeof useSelectableCard>;
+    variant?: Variant;
+}): JSX.Element | null => {
+    const id = React.useId();
+    const config = checkbox || switchProps;
+    if (!config && radioValue === undefined) {
+        return null;
+    }
+    const Control = switchProps ? Switch : Checkbox;
+    return (
+        <ThemeVariant variant={variant}>
+            <div className={styles.topActionsContainer} data-testid="cardSelector">
+                <CardSelectionContext.Provider value={selection.context}>
+                    {config ? (
+                        <Control
+                            name={config.name || id}
+                            checked={config.value}
+                            defaultChecked={config.defaultValue}
+                            onChange={config.onChange}
+                            disabled={config.disabled}
+                            aria-label=""
+                            children=""
+                        />
+                    ) : (
+                        <RadioButton value={radioValue ?? ''} />
+                    )}
+                </CardSelectionContext.Provider>
+            </div>
+        </ThemeVariant>
     );
 };

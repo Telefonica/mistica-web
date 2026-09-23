@@ -22,6 +22,7 @@ import {
 import {ThemeVariantWrapper} from './card-common';
 import beachImg from './images/beach.jpg';
 
+import type {CardSelectionProps} from '../card-selection-context';
 import type {Variant} from '../theme-variant-context';
 
 export default {title: 'Components/Cards/Selection'};
@@ -30,6 +31,9 @@ type SelectionArgs = {
     card: 'data' | 'media' | 'cover' | 'naked' | 'advanced';
     control: 'checkbox' | 'switch' | 'radio';
     selected?: boolean;
+    checkbox?: CardSelectionProps['checkbox'];
+    switch?: CardSelectionProps['switch'];
+    radioValue?: string;
     customRender: boolean;
     variant: Variant;
     variantOutside: Variant;
@@ -39,10 +43,15 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     card,
     control,
     selected,
+    checkbox,
+    switch: switchProps,
+    radioValue: radioValueProp,
     customRender,
     variant,
     variantOutside,
 }) => {
+    const [customValues, setCustomValues] = React.useState<Record<string, boolean>>({});
+    const [radioValue, setRadioValue] = React.useState('');
     const Card = {data: DataCard, media: MediaCard, cover: CoverCard, naked: NakedCard, advanced: DataCard}[
         card
     ];
@@ -66,22 +75,40 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                     ) : control === 'switch' ? (
                         <Switch
                             name={title}
+                            checked={!!customValues[title]}
+                            onChange={(value) => setCustomValues({...customValues, [title]: value})}
                             {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
                         />
                     ) : (
                         <Checkbox
                             name={title}
+                            checked={!!customValues[title]}
+                            onChange={(value) => setCustomValues({...customValues, [title]: value})}
                             {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
                         />
                     );
+                const selectionProps = customRender
+                    ? {}
+                    : control === 'radio'
+                      ? {radioValue: radioValueProp ?? title}
+                      : control === 'switch'
+                        ? {switch: switchProps ?? {name: title}}
+                        : {checkbox: checkbox ?? {name: title}};
+                const selectedValue =
+                    selected ??
+                    (customRender
+                        ? control === 'radio'
+                            ? radioValue === title
+                            : !!customValues[title]
+                        : undefined);
                 return card === 'advanced' ? (
                     <CommunityAdvancedDataCard
                         key={`${title}-${control}`}
                         title={title}
                         description="This is a description"
-                        selected={selected}
+                        selected={selectedValue}
                         slot={customRender ? [controlElement] : undefined}
-                        actions={customRender ? undefined : [controlElement]}
+                        {...selectionProps}
                     />
                 ) : (
                     <Card
@@ -94,9 +121,9 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                                 ? undefined
                                 : variant
                         }
-                        selected={selected}
+                        selected={selectedValue}
                         slot={customRender ? controlElement : undefined}
-                        topActions={customRender ? undefined : [controlElement]}
+                        {...selectionProps}
                     />
                 );
             })}
@@ -105,7 +132,9 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     return (
         <ThemeVariantWrapper variant={variantOutside}>
             {control === 'radio' ? (
-                <RadioGroup name="cards">{cards}</RadioGroup>
+                <RadioGroup name="cards" value={radioValue} onChange={setRadioValue}>
+                    {cards}
+                </RadioGroup>
             ) : (
                 <div role="group" aria-label="Cards">
                     {cards}
@@ -120,10 +149,16 @@ Selection.args = {
     customRender: false,
     control: 'checkbox',
     selected: undefined,
+    checkbox: undefined,
+    switch: undefined,
+    radioValue: undefined,
     variant: 'default',
     variantOutside: 'default',
 };
 Selection.argTypes = {
+    checkbox: {control: 'object'},
+    switch: {control: 'object'},
+    radioValue: {control: 'text'},
     customRender: {control: 'boolean'},
     card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},
@@ -170,3 +205,9 @@ export const CustomSelection = (): JSX.Element => {
         </ThemeVariantWrapper>
     );
 };
+
+export const IndependentSlot = (): JSX.Element => (
+    <ThemeVariantWrapper>
+        <DataCard title="Independent slot" slot={<Checkbox name="option">Independent option</Checkbox>} />
+    </ThemeVariantWrapper>
+);

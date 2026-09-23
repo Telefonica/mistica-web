@@ -74,7 +74,7 @@ export type MediaCardProps = {
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
-    ({size = 'default', slot, topActions, buttonPrimary, dataAttributes, ...rest}, ref) => {
+    ({size = 'default', slot, buttonPrimary, dataAttributes, ...rest}, ref) => {
         return (
             <InternalCard
                 type="media"
@@ -85,7 +85,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                     ...dataAttributes,
                 }}
                 slot={slot}
-                topActions={topActions}
                 buttonPrimary={buttonPrimary}
                 ref={ref}
                 {...rest}

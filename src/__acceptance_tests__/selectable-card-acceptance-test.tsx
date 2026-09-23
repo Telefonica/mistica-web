@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, waitFor} from '../test-utils';
 
 const getOutline = async (index = 0) => {
     const cards = await screen.findAllByTestId('DataCard');
@@ -12,7 +12,7 @@ const getOutline = async (index = 0) => {
     });
 };
 
-test.each(['checkbox', 'switch', 'radio'])('outline follows the %s in top actions', async (control) => {
+test.each(['checkbox', 'switch', 'radio'])('outline follows the %s prop', async (control) => {
     const page = await openStoryPage({
         id: 'components-cards-selection--selection',
         device: 'DESKTOP',
@@ -35,7 +35,7 @@ test.each(['checkbox', 'switch', 'radio'])('outline follows the %s in top action
     expect((await getOutline()).color).toBe(unselected.color);
 });
 
-test('selected prop overrides the checkbox in top actions', async () => {
+test('selected prop overrides the checkbox prop', async () => {
     await openStoryPage({
         id: 'components-cards-selection--selection',
         device: 'DESKTOP',
@@ -94,7 +94,7 @@ test.each(['data', 'media', 'cover', 'naked', 'advanced'])(
                     .closest(
                         '[data-testid="DataCard"], [data-testid="MediaCard"], [data-testid="CoverCard"], [data-testid="NakedCard"], [data-testid="AdvancedDataCard"]'
                     )
-                    ?.querySelector<HTMLElement>('[data-testid="topActions"]');
+                    ?.querySelector<HTMLElement>('[data-testid="cardSelector"]');
                 if (!selector?.offsetParent) {
                     throw new Error('Selection indicator not found');
                 }
@@ -108,6 +108,13 @@ test.each(['data', 'media', 'cover', 'naked', 'advanced'])(
             });
             expect(position.top).toBeCloseTo(16);
             expect(position.right).toBeCloseTo(16);
+            const [selector] = await screen.findAllByTestId('cardSelector');
+            await selector.click();
+            await waitFor(async () => {
+                expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe(
+                    'true'
+                );
+            });
         }
     }
 );
@@ -118,11 +125,12 @@ test.each(['checkbox', 'switch', 'radio'])('custom %s render stays in the slot',
         device: 'DESKTOP',
         args: {control, customRender: true},
     });
-    const surface = await screen.findByRole(control, {name: 'First This is a description Custom control'});
+    const [surface] = await screen.findAllByRole(control, {name: 'Custom control'});
     expect(
         await surface.evaluate((element) => {
-            const selector = element.querySelector('[aria-hidden="true"]');
-            const description = Array.from(element.querySelectorAll('p')).find(
+            const selector = element;
+            const card = element.closest('section');
+            const description = Array.from(card?.querySelectorAll('p') || []).find(
                 (paragraph) => paragraph.textContent === 'This is a description'
             );
             if (!selector || !description) {
@@ -131,4 +139,12 @@ test.each(['checkbox', 'switch', 'radio'])('custom %s render stays in the slot',
             return selector.getBoundingClientRect().top >= description.getBoundingClientRect().bottom;
         })
     ).toBe(true);
+});
+
+test('checking a slot control does not add a selection outline', async () => {
+    await openStoryPage({id: 'components-cards-selection--independent-slot', device: 'DESKTOP'});
+    const outline = await getOutline();
+    await (await screen.findByRole('checkbox', {name: 'Independent option'})).click();
+    expect(await getOutline()).toEqual(outline);
+    expect(outline.width).toBe('0px');
 });
