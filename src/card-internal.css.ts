@@ -286,10 +286,6 @@ export const selectionOutline = style({
     },
 });
 
-export const nakedSelectionOutline = style({
-    selectors: {'&::after': {borderRadius: 0}},
-});
-
 export const selectionOutlineColor = styleVariants({
     default: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
     alternative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},

@@ -260,7 +260,6 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 <div
                     className={classnames({
                         [styles.selectionOutline]: !!selected,
-                        [styles.nakedSelectionOutline]: !!selected && isNaked,
                         [styles.selectionOutlineColor[selectionOutlineVariant]]: !!selected,
                     })}
                     style={{
