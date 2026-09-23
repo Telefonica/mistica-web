@@ -27,30 +27,30 @@ export type CardSelectionControl = {
 
 type SelectionContext = {
     setControl: React.Dispatch<React.SetStateAction<CardSelectionControl | undefined>>;
-    surfaceRef?: React.RefObject<HTMLDivElement | null>;
+    interactionRef?: React.RefObject<HTMLDivElement | null>;
     promoteControl?: boolean;
 };
 
 export const CardSelectionContext = React.createContext<SelectionContext | undefined>(undefined);
 
 type CardSelection = {
-    context: SelectionContext & {surfaceRef: React.RefObject<HTMLDivElement | null>};
+    context: SelectionContext & {interactionRef: React.RefObject<HTMLDivElement | null>};
     control?: CardSelectionControl;
-    isSelected?: boolean;
+    isSelected: boolean;
     isSelectionMode: boolean;
 };
 
 export const useSelectableCard = (selected?: boolean, hasSelector = false): CardSelection => {
     const [control, setControl] = React.useState<CardSelectionControl>();
-    const surfaceRef = React.useRef<HTMLDivElement>(null);
-    const isSelected = selected ?? (hasSelector ? control?.checked ?? false : undefined);
+    const interactionRef = React.useRef<HTMLDivElement>(null);
+    const isSelected = selected ?? (hasSelector ? control?.checked ?? false : false);
     const promoteControl = !!control;
-    const context = React.useMemo(() => ({setControl, surfaceRef, promoteControl}), [promoteControl]);
+    const context = React.useMemo(() => ({setControl, interactionRef, promoteControl}), [promoteControl]);
     return {
         context,
         control: hasSelector ? control : undefined,
         isSelected,
-        isSelectionMode: isSelected !== undefined,
+        isSelectionMode: hasSelector || selected !== undefined,
     };
 };
 

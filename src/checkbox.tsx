@@ -161,7 +161,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
                 e.stopPropagation();
                 if (!disabled) {
                     if (promoted) {
-                        cardSelection?.surfaceRef?.current?.focus();
+                        cardSelection?.interactionRef?.current?.focus();
                     }
                     handleChange();
                 }

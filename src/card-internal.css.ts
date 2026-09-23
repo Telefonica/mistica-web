@@ -282,7 +282,6 @@ export const selectionOutline = style({
             border: `${selectionOutlineWidth}px solid transparent`,
             borderRadius: `calc(${skinVars.borderRadii.container} + 3px)`,
             pointerEvents: 'none',
-            transition: 'border-color 0.08s ease-in-out',
         },
     },
 });

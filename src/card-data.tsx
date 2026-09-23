@@ -7,7 +7,7 @@ import type {
     SlotAlignment,
     CardAspectRatio,
     TopActionsArray,
-    MaybeTouchableCard,
+    CardInteractionProps,
     CardActionButtonLink,
     CardActionButtonPrimary,
     CardActionButtonSecondary,
@@ -55,7 +55,7 @@ type DataCardProps = {
     footerDivider?: boolean;
 };
 
-export const DataCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<DataCardProps>>(
+export const DataCard = React.forwardRef<HTMLDivElement, CardInteractionProps<DataCardProps>>(
     ({dataAttributes, size = 'default', buttonPrimary, slot, variant, ...rest}, ref) => {
         return (
             <InternalCard

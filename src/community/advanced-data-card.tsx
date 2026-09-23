@@ -59,7 +59,7 @@ type TouchableProps = {
       }
 >;
 type TouchableCard<T> = T & TouchableProps;
-type MaybeTouchableCard<T> = ExclusifyUnion<
+type CardInteractionProps<T> = ExclusifyUnion<
     TouchableCard<T> | T | (Omit<T, 'actions' | 'onClose'> & CardSelectionProps)
 >;
 
@@ -271,7 +271,7 @@ type AllowedSlot =
     | typeof SimpleBlock
     | typeof ValueBlock;
 
-type AdvancedDataCardProps = MaybeTouchableCard<{
+type AdvancedDataCardProps = CardInteractionProps<{
     selected?: boolean;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
@@ -371,7 +371,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             <section
                 className={classNames(
                     styles.container,
-                    selection.isSelectionMode && cardStyles.selectionOutline,
+                    selection.isSelected && cardStyles.selectionOutline,
                     selection.isSelected &&
                         cardStyles.selectionOutlineColor[
                             getSelectionOutlineVariant(outsideVariant, 'default')

@@ -133,8 +133,8 @@ const RadioButton = ({
 
     React.useEffect(() => {
         const firstRadio = document.getElementById(groupId)?.querySelector('[role=radio]');
-        setIsFirstRadio(firstRadio === ref.current || firstRadio === cardSelection?.surfaceRef?.current);
-    }, [groupId, cardSelection?.promoteControl, cardSelection?.surfaceRef]);
+        setIsFirstRadio(firstRadio === ref.current || firstRadio === cardSelection?.interactionRef?.current);
+    }, [groupId, cardSelection?.promoteControl, cardSelection?.interactionRef]);
 
     const outerCircleVariant = isIos ? (checked ? 'checkedIos' : 'ios') : checked ? 'checked' : 'default';
     const innerCircleVariant = checked ? 'checked' : 'default';
@@ -183,7 +183,7 @@ const RadioButton = ({
                 e.stopPropagation();
                 if (!disabled) {
                     if (promoted) {
-                        cardSelection?.surfaceRef?.current?.focus();
+                        cardSelection?.interactionRef?.current?.focus();
                     }
                     select(value);
                 }

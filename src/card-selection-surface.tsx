@@ -27,7 +27,7 @@ export const CardSelectionSurface = ({selection, ...props}: Props): JSX.Element 
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- The semantic role moves between the control and the card surface.
         <div
-            ref={context.surfaceRef}
+            ref={context.interactionRef}
             className={classnames(
                 control ? styles.selectionSurface : touchableStyles.notTouchable,
                 props.className

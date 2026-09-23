@@ -71,7 +71,7 @@ type ContainerProps = {
     size: CardSize;
     variant?: Variant;
     selected?: boolean;
-    selectionVariant?: Variant;
+    selectionOutlineVariant?: Variant;
     width?: string | number;
     height?: string | number;
     /** Gradient overlay color for cover cards. If not set it uses the theme color */
@@ -203,7 +203,7 @@ type TouchableProps = {
 >;
 
 type TouchableCard<T> = T & TouchableProps;
-export type MaybeTouchableCard<T> = ExclusifyUnion<
+export type CardInteractionProps<T> = ExclusifyUnion<
     TouchableCard<T> | T | (Omit<T, 'topActions' | 'onClose'> & CardSelectionProps)
 > & {selected?: boolean};
 
@@ -227,7 +227,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
             backgroundColor,
             variant,
             selected,
-            selectionVariant = 'default',
+            selectionOutlineVariant = 'default',
         },
         ref
     ): JSX.Element => {
@@ -258,11 +258,11 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 }}
             >
                 <div
-                    className={classnames(
-                        selected !== undefined && styles.selectionOutline,
-                        isNaked && styles.nakedSelectionOutline,
-                        selected && styles.selectionOutlineColor[selectionVariant]
-                    )}
+                    className={classnames({
+                        [styles.selectionOutline]: !!selected,
+                        [styles.nakedSelectionOutline]: !!selected && isNaked,
+                        [styles.selectionOutlineColor[selectionOutlineVariant]]: !!selected,
+                    })}
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -1330,7 +1330,7 @@ export const getSelectionOutlineVariant = (outsideVariant: Variant, cardVariant:
     return cardVariant === 'negative' ? 'negative' : 'default';
 };
 
-export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
+export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProps<CardProps>>(
     (
         {
             type,
@@ -1534,7 +1534,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 ref={ref}
                 variant={variant}
                 selected={isSelected}
-                selectionVariant={getSelectionOutlineVariant(rawExternalVariant, variantProp || 'default')}
+                selectionOutlineVariant={getSelectionOutlineVariant(
+                    rawExternalVariant,
+                    variantProp || 'default'
+                )}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}

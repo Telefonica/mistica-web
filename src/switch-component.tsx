@@ -162,7 +162,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
                 e.stopPropagation();
                 if (!disabled) {
                     if (promoted) {
-                        cardSelection?.surfaceRef?.current?.focus();
+                        cardSelection?.interactionRef?.current?.focus();
                     }
                     handleChange();
                 }

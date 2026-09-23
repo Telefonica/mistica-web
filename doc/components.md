@@ -163,27 +163,35 @@ All cards support touchable props (`onPress`, `href`, `to`), buttons (`buttonPri
 
 ### Card selection
 
-Place existing `Checkbox`, `Switch`, or `RadioButton` components in `slot` or `footerSlot`. The card
-automatically reflects their checked state in its outline, including controlled values and RadioGroup changes.
-AdvancedDataCard supports the same behavior with its array of slots. When there is one standard control in the
-body slot, the card body becomes the interaction target. It exposes the control's role and checked state,
-supports Space, and preserves arrow navigation for radios. Selection replaces the card's primary navigation or
-onPress action. Footer actions remain independent.
+Use `checkbox`, `switch`, or `radioValue` to make a card selectable. The selector appears in the top-right
+corner, and the card body becomes the interaction target. It exposes the control's role and checked state,
+supports Space, and preserves arrow navigation for radios inside a `RadioGroup`. AdvancedDataCard supports the
+same selection props.
 
-If there are multiple controls, the outline is selected when any is checked and the controls keep their own
-interaction targets. A single control placed in footerSlot also activates the card when clicked, while footer
-actions remain independent.
+These props are mutually exclusive with each other and with `onPress`, `href`, `to`, top actions and dismiss.
+Footer actions remain independent.
 
 ```tsx
-<DataCard title="Notifications" slot={<Switch name="notifications">Enable notifications</Switch>} />
-<DataCard title="Option" slot={<Checkbox name="option">Select option</Checkbox>} />
+<DataCard title="Notifications" switch={{name: 'notifications', defaultValue: true}} />
+<DataCard title="Option" checkbox={{name: 'option'}} />
+<RadioGroup name="options" defaultValue="first">
+  <DataCard title="First option" radioValue="first" />
+  <DataCard title="Second option" radioValue="second" />
+</RadioGroup>
 ```
 
-`selected` is the only additional card prop. It takes precedence over the controls' state and lets custom
-controls explicitly select the card. A `ToggleIconButton`, such as a lock action, does not select the card
-automatically.
+Checkbox and switch configurations support `name`, `value`, `defaultValue`, `onChange` and `disabled`.
+Controls placed in `slot` or `footerSlot` remain independent and do not automatically select the card.
+
+Use `selected` to control the outline from a custom control or an external action. It takes precedence over
+the built-in selector's state. On its own, it does not make the card interactive or require `onPress`.
 
 ```tsx
+<DataCard
+  title="Custom selection"
+  selected={selected}
+  slot={<Checkbox name="custom-selection" checked={selected} onChange={setSelected}>Select card</Checkbox>}
+/>
 <DataCard title="Favorite" selected={favorite} slot={customFavoriteControl} />
 ```
 
