@@ -10,7 +10,7 @@ import {
     isValidCreditCardNumber,
 } from './utils/credit-card';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import IconCreditCardVisaRegular from './generated/mistica-icons/icon-credit-card-visa-regular';
+import IconCreditCardVisaRegular from '@telefonica/mistica-icons/icon-credit-card-visa-regular';
 import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
 import IconAmex from './icons/icon-amex';

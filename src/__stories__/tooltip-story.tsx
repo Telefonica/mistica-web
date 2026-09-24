@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular, Touchable} from '..';
+import {Tooltip, Placeholder, ResponsiveLayout, Touchable} from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 
 import type {Variant} from '../theme-variant-context';
 

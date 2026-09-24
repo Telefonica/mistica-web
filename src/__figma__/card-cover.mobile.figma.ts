@@ -117,7 +117,10 @@ export default {
             ${footerSlotCode ? figma.code`footerSlot={${footerSlotCode}}` : ''}
         />
     `,
-    imports: ['import {CoverCard, IconLightningRegular} from "@telefonica/mistica";'],
+    imports: [
+        'import {CoverCard} from "@telefonica/mistica";',
+        'import IconLightningRegular from "@telefonica/mistica-icons/icon-lightning-regular";',
+    ],
     id: 'card-cover-mobile',
     metadata: {nestable: false},
 };

@@ -84,6 +84,23 @@ const config = {
     widths: getWidths(),
     exampleCode,
     webpackConfig: () => ({
+        /**
+         * Read the icons from their source in the workspace, and give the icons the theme of the
+         * root package. The same pairs live in tsconfig.json, jest.base.config.js and
+         * .storybook/vite.config.mjs.
+         */
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js', '.json'],
+            alias: {
+                '@telefonica/mistica$': path.resolve(__dirname, 'src/index.tsx'),
+                '@telefonica/mistica/icon-runtime$': path.resolve(__dirname, 'src/icon-runtime.tsx'),
+                '@telefonica/mistica-icons/keywords$': path.resolve(
+                    __dirname,
+                    'packages/mistica-icons/src/generated/icons-keywords.tsx'
+                ),
+                '@telefonica/mistica-icons': path.resolve(__dirname, 'packages/mistica-icons/src/generated'),
+            },
+        },
         module: {
             rules: [
                 {
@@ -92,6 +109,7 @@ const config = {
                         path.resolve(__dirname, 'src'),
                         path.resolve(__dirname, 'playroom'),
                         path.resolve(__dirname, '.storybook'),
+                        path.resolve(__dirname, 'packages/mistica-icons/src'),
                     ],
                     use: [
                         {

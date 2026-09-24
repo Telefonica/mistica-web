@@ -82,6 +82,14 @@ export const compileSsrClient = ({build = true}: {build: boolean}): Promise<webp
         },
         resolve: {
             extensions: ['.tsx', '.ts', '.js', '.json', '.wasm', '.mjs', '*'],
+            /**
+             * The pages consume the built packages. @telefonica/mistica-icons resolves through the
+             * workspace symlink, but its icons import @telefonica/mistica/icon-runtime, and the root
+             * package has no self link in node_modules.
+             */
+            alias: {
+                '@telefonica/mistica': path.resolve(__dirname, '..', '..'),
+            },
         },
         plugins: [
             new webpack.DefinePlugin({

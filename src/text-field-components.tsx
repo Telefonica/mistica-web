@@ -7,7 +7,7 @@ import * as styles from './text-field-components.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
-import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
+import IconWarningRegular from '@telefonica/mistica-icons/icon-warning-regular';
 import ScreenReaderOnly from './screen-reader-only';
 import {fieldVars} from './text-field-base.css';
 import {applyCssVars, pxToRem} from './utils/css';

@@ -3,7 +3,7 @@ import type {StorybookConfig} from '@storybook/react-vite';
 const stories = [
     './welcome-story.tsx',
     '../src/__stories__/*-story.tsx',
-    '../src/icons/__stories__/*-story.tsx',
+    '../packages/mistica-icons/src/__stories__/*-story.tsx',
     '../src/community/__stories__/index-story.tsx',
     '../src/community/__stories__/**/*-story.tsx',
 ];

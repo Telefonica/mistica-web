@@ -2,12 +2,12 @@
 
 import * as React from 'react';
 import {SidenavBar} from '..';
-import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
-import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
-import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
-import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
-import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
-import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
+import IconSearchRegular from '@telefonica/mistica-icons/icon-search-regular';
+import IconFolderRegular from '@telefonica/mistica-icons/icon-folder-regular';
+import IconBellRegular from '@telefonica/mistica-icons/icon-bell-regular';
+import IconSettingsRegular from '@telefonica/mistica-icons/icon-settings-regular';
+import IconDocumentsRegular from '@telefonica/mistica-icons/icon-documents-regular';
 import Badge from '../badge';
 import Box from '../box';
 import Stack from '../stack';

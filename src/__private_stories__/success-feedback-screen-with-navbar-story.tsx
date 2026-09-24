@@ -4,7 +4,6 @@ import {
     Badge,
     ButtonPrimary,
     FixedToTop,
-    IconShoppingCartRegular,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
@@ -14,6 +13,7 @@ import {
     useScreenSize,
     useTheme,
 } from '..';
+import IconShoppingCartRegular from '@telefonica/mistica-icons/icon-shopping-cart-regular';
 
 export default {
     title: 'Private/FixedFooter',

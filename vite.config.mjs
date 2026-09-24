@@ -42,6 +42,8 @@ export default defineConfig({
             entry: [
                 path.resolve(__dirname, 'src', 'index.tsx'),
                 path.resolve(__dirname, 'src', 'community', 'index.tsx'),
+                // nothing inside src imports this module, so it needs its own entry
+                path.resolve(__dirname, 'src', 'icon-runtime.tsx'),
             ],
             formats: ['es'],
             cssFileName: 'style',
@@ -51,6 +53,11 @@ export default defineConfig({
         outDir: 'dist-es',
         // https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
         rollupOptions: {
+            /**
+             * The 52 icons that components render come from the icons workspace. Keep them external,
+             * so the build order between the two packages never matters.
+             */
+            external: [/^@telefonica\/mistica-icons\//],
             onLog(level, log, handler) {
                 if (log.cause && log.cause.message === `Can't resolve original location of error.`) {
                     return;

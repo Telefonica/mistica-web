@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {EmptyState, ButtonPrimary, IconBoxLight, skinVars, ButtonLink, Image} from '..';
+import {EmptyState, ButtonPrimary, skinVars, ButtonLink, Image} from '..';
+import IconBoxLight from '@telefonica/mistica-icons/icon-box-light';
 import avatars4Img from './images/avatars4.png';
 import emptyStateImg from './images/empty-state.png';
 

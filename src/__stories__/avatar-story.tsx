@@ -1,5 +1,8 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ResponsiveLayout, Box} from '..';
+import {Avatar, ResponsiveLayout, Box} from '..';
+import IconBrainRegular from '@telefonica/mistica-icons/icon-brain-regular';
+import IconFireRegular from '@telefonica/mistica-icons/icon-fire-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
 import avatarImg from './images/avatar.jpg';
 
 import type {Variant} from '../theme-variant-context';

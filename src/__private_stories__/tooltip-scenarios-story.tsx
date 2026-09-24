@@ -1,17 +1,7 @@
 import * as React from 'react';
-import {
-    Stack,
-    Text3,
-    Tooltip,
-    Placeholder,
-    IconShopRegular,
-    Title3,
-    Grid,
-    GridItem,
-    DataCard,
-    Circle,
-    IconAcademicRegular,
-} from '..';
+import {Stack, Text3, Tooltip, Placeholder, Title3, Grid, GridItem, DataCard, Circle} from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
+import IconAcademicRegular from '@telefonica/mistica-icons/icon-academic-regular';
 import {vars} from '../skins/skin-contract.css';
 
 export default {
