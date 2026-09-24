@@ -7,6 +7,7 @@ export {default as Touchable} from './touchable';
 export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
+export {default as FadeOut} from './fade-out';
 
 export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink, ButtonLinkDanger} from './button';
