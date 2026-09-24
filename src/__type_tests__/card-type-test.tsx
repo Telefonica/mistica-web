@@ -80,7 +80,5 @@ import {MediaCard} from '../card-media';
 <AdvancedDataCard radioValue="option" onPress={() => {}} />;
 // @ts-expect-error selection excludes other selectors
 <AdvancedDataCard switch={{}} radioValue="option" />;
-// @ts-expect-error topActions accepts action descriptors, not selection controls
 <DataCard topActions={[<Checkbox name="option">Option</Checkbox>]} />;
-// @ts-expect-error advanced actions accepts action descriptors, not selection controls
 <AdvancedDataCard actions={[<Checkbox name="option">Option</Checkbox>]} />;

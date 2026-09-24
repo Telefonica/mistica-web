@@ -6,8 +6,6 @@ https://github.com/storybookjs/storybook/issues/11980
 
 'use client';
 import * as React from 'react';
-import {useCardSelection} from './card-selection-context';
-import {screenReaderOnly} from './screen-reader-only.css';
 import {debounce} from './utils/helpers';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
@@ -97,15 +95,6 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
         }
     };
 
-    const cardSelection = useCardSelection(isChecked, {
-        role: 'switch',
-        disabled,
-        onPress: handleChange,
-        onKeyDown: handleKeyDown,
-    });
-    const promoted = cardSelection?.promoteControl;
-    const role = promoted ? undefined : 'switch';
-
     const barVariant = isIos
         ? isChecked
             ? 'checkedIos'
@@ -153,22 +142,18 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
 
     return (
         // When the switch is disabled, it shouldn't be focusable
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- The semantic role moves between the control and the card surface.
+        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
-            role={role}
-            aria-hidden={promoted || undefined}
-            aria-checked={promoted ? undefined : value ?? checkedState}
+            role="switch"
+            aria-checked={value ?? checkedState}
             onClick={(e) => {
                 e.stopPropagation();
                 if (!disabled) {
-                    if (promoted) {
-                        cardSelection?.interactionRef?.current?.focus();
-                    }
                     handleChange();
                 }
             }}
-            onKeyDown={disabled || promoted ? undefined : handleKeyDown}
-            tabIndex={disabled || promoted ? undefined : 0}
+            onKeyDown={disabled ? undefined : handleKeyDown}
+            tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
             className={
                 props.render
@@ -184,12 +169,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             aria-labelledby={props['aria-label'] ? undefined : labelId}
             {...getPrefixedDataAttributes({testid: 'Switch', ...props.dataAttributes})}
         >
-            {promoted && !props.render ? (
-                <>
-                    {switchEl}
-                    <span className={screenReaderOnly}>{props.children}</span>
-                </>
-            ) : props.render ? (
+            {props.render ? (
                 <>
                     {props.render({
                         controlElement: switchEl,

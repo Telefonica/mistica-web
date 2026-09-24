@@ -8,6 +8,7 @@ import {
     Circle,
     Tag,
     IconShopRegular,
+    CardActionIconButton,
     Text2,
     Stack,
     IconStarFilled,
@@ -18,29 +19,52 @@ export default {
     title: 'Private/Deprecated Card Stories/Utils/CardActionIconButton',
 };
 
-export const Default: StoryComponent = () => {
+const MyCustomCardActionComponent = () => {
     const [pressCount, setPressCount] = React.useState(0);
+
+    return (
+        <CardActionIconButton
+            Icon={IconShopRegular}
+            onPress={() => {
+                alert(`Custom card action component press: ${pressCount + 1}`);
+                setPressCount(pressCount + 1);
+            }}
+            label="Shop"
+        />
+    );
+};
+
+const MyCustomCardActionToggleComponent = () => {
     const [checked, setChecked] = React.useState(false);
+
+    return (
+        <CardActionIconButton
+            checkedProps={{Icon: IconStarFilled, label: 'checked'}}
+            uncheckedProps={{Icon: IconStarRegular, label: 'unchecked'}}
+            checked={checked}
+            onChange={(checkedValue) => setChecked(checkedValue)}
+        />
+    );
+};
+
+export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
-            <Text2 regular>Cards render their topActions as icon buttons:</Text2>
+            <Text2 regular>
+                You can use CardActionIconButton component to add top actions to most mistica cards:
+            </Text2>
             <DataCard
                 topActions={[
-                    {Icon: IconMobileDeviceRegular, label: 'Device', onPress: () => alert('icon press')},
-                    {
-                        Icon: IconShopRegular,
-                        label: 'Shop',
-                        onPress: () => {
-                            alert(`Custom card action component press: ${pressCount + 1}`);
-                            setPressCount(pressCount + 1);
-                        },
-                    },
-                    {
-                        checkedProps: {Icon: IconStarFilled, label: 'checked'},
-                        uncheckedProps: {Icon: IconStarRegular, label: 'unchecked'},
-                        checked,
-                        onChange: setChecked,
-                    },
+                    <CardActionIconButton
+                        key="1"
+                        Icon={IconMobileDeviceRegular}
+                        onPress={() => {
+                            alert('icon press');
+                        }}
+                        label="Device"
+                    />,
+                    <MyCustomCardActionComponent key="2" />,
+                    <MyCustomCardActionToggleComponent key="3" />,
                 ]}
                 asset={
                     <Circle backgroundColor={skinVars.colors.brandLow} size={40}>

@@ -1,4 +1,4 @@
-import {createVar, style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants, globalStyle} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import * as mq from '../media-queries.css';
 import {vars as skinVars} from '../skins/skin-contract.css';
@@ -256,6 +256,7 @@ export const topActionsWithoutIcon = style({
     marginRight: -17,
     marginTop: -1,
     width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,
+    flexShrink: 0,
 
     '@media': {
         [mq.desktopOrBigger]: {
@@ -272,18 +273,25 @@ export const flexColumn = style({
 
 export const selectionTouchable = style({
     borderRadius: `calc(${skinVars.borderRadii.container} - 1px)`,
-    // Chromium 93 draws square native outlines, which are clipped by the rounded Boxed container.
-    ':focus-visible': {outline: 'none'},
-    selectors: {
-        '&:focus-visible::before': {
-            content: '""',
-            position: 'absolute',
-            inset: 0,
-            border: '1.5px solid',
-            borderColor: skinVars.colors.controlActivated,
-            borderRadius: 'inherit',
-            pointerEvents: 'none',
-            zIndex: 2,
-        },
-    },
+});
+
+// Chromium 93 draws square native outlines, which are clipped by the rounded Boxed container.
+globalStyle(`${selectionTouchable} > div:focus-visible`, {outline: 'none'});
+globalStyle(`${selectionTouchable} > div:focus-visible::before`, {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    border: '1.5px solid',
+    borderColor: skinVars.colors.controlActivated,
+    borderRadius: 'inherit',
+    pointerEvents: 'none',
+    zIndex: 2,
+});
+
+const switchWidth = {default: 34 + 8, ios: 51};
+const controlSpacing = 16;
+
+export const switchSpace = styleVariants({
+    default: {width: switchWidth.default + controlSpacing},
+    ios: {width: switchWidth.ios + controlSpacing},
 });

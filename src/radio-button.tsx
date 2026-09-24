@@ -1,7 +1,5 @@
 'use client';
 import * as React from 'react';
-import {useCardSelection} from './card-selection-context';
-import {screenReaderOnly} from './screen-reader-only.css';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/keys';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
@@ -96,6 +94,11 @@ const RadioButton = ({
           ? 0
           : -1;
 
+    React.useEffect(() => {
+        const firstRadio = document.getElementById(groupId)?.querySelector('[role=radio]');
+        setIsFirstRadio(firstRadio === ref.current);
+    }, [groupId]);
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.key) {
             case SPACE:
@@ -119,22 +122,6 @@ const RadioButton = ({
             // do nothing
         }
     };
-
-    const cardSelection = useCardSelection(checked, {
-        role: 'radio',
-        disabled,
-        tabIndex,
-        value,
-        onPress: () => select(value),
-        onKeyDown: handleKeyDown,
-    });
-    const promoted = cardSelection?.promoteControl;
-    const role = promoted ? undefined : 'radio';
-
-    React.useEffect(() => {
-        const firstRadio = document.getElementById(groupId)?.querySelector('[role=radio]');
-        setIsFirstRadio(firstRadio === ref.current || firstRadio === cardSelection?.interactionRef?.current);
-    }, [groupId, cardSelection?.promoteControl, cardSelection?.interactionRef]);
 
     const outerCircleVariant = isIos ? (checked ? 'checkedIos' : 'ios') : checked ? 'checked' : 'default';
     const innerCircleVariant = checked ? 'checked' : 'default';
@@ -167,37 +154,27 @@ const RadioButton = ({
     );
 
     return (
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- The semantic role moves between the control and the card surface.
         <span
             ref={ref}
             id={id}
-            tabIndex={promoted ? undefined : tabIndex}
-            role={role}
+            tabIndex={tabIndex}
+            role="radio"
             data-value={value}
-            aria-hidden={promoted || undefined}
-            aria-checked={promoted ? undefined : checked}
+            aria-checked={checked}
             aria-disabled={disabled}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             onClick={(e) => {
                 e.stopPropagation();
                 if (!disabled) {
-                    if (promoted) {
-                        cardSelection?.interactionRef?.current?.focus();
-                    }
                     select(value);
                 }
             }}
-            onKeyDown={disabled || promoted ? undefined : handleKeyDown}
+            onKeyDown={disabled ? undefined : handleKeyDown}
             className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
             {...getPrefixedDataAttributes({testid: 'RadioButton', ...dataAttributes})}
         >
-            {promoted && !rest.render ? (
-                <>
-                    {radio}
-                    <span className={screenReaderOnly}>{rest.children}</span>
-                </>
-            ) : rest.render ? (
+            {rest.render ? (
                 rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
             ) : (
                 <Inline space={16}>

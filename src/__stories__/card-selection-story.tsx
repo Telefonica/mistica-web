@@ -22,7 +22,7 @@ import {
 import {ThemeVariantWrapper} from './card-common';
 import beachImg from './images/beach.jpg';
 
-import type {CardSelectionProps} from '../card-selection-context';
+import type {CardSelectionProps} from '../card-selection';
 import type {Variant} from '../theme-variant-context';
 
 export default {title: 'Components/Cards/Selection'};
@@ -209,5 +209,15 @@ export const CustomSelection = (): JSX.Element => {
 export const IndependentSlot = (): JSX.Element => (
     <ThemeVariantWrapper>
         <DataCard title="Independent slot" slot={<Checkbox name="option">Independent option</Checkbox>} />
+    </ThemeVariantWrapper>
+);
+
+export const AdvancedSwitch = (): JSX.Element => (
+    <ThemeVariantWrapper>
+        <CommunityAdvancedDataCard
+            title="AdvancedDataCard con Switch"
+            description="Pulsa la card o el control para cambiar la selección."
+            switch={{name: 'advanced-switch'}}
+        />
     </ThemeVariantWrapper>
 );

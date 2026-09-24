@@ -202,3 +202,22 @@ describe.each(selectionCards)('explicit card selection (%#)', (Card) => {
         expect(screen.getByRole('checkbox', {name: 'Custom option'})).toHaveAttribute('aria-checked', 'true');
     });
 });
+
+test('advanced card custom actions remain independent', async () => {
+    renderWithTheme(
+        <AdvancedDataCard
+            title="Independent action"
+            actions={[
+                <Checkbox key="option" name="option">
+                    Option
+                </Checkbox>,
+            ]}
+        />
+    );
+    const control = screen.getByRole('checkbox', {name: 'Option'});
+    await userEvent.click(screen.getByText('Independent action'));
+    expect(control).toHaveAttribute('aria-checked', 'false');
+    await userEvent.click(control);
+    expect(control).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getAllByRole('checkbox')).toHaveLength(1);
+});

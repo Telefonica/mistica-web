@@ -8,8 +8,8 @@ import {Text} from './text';
 import {useInnerText, useTheme} from './hooks';
 import {ThemeVariant, normalizeVariant, useThemeVariant, useRawThemeVariant} from './theme-variant-context';
 import Tag from './tag';
-import {useSelectableCard} from './card-selection-context';
-import {CardSelectionSurface, CardSelector} from './card-selection-surface';
+import {useSelectableCard} from './card-selection';
+import {CardSelectionSurface} from './card-selection-surface';
 import Stack from './stack';
 import Image from './image';
 import Video from './video';
@@ -32,7 +32,7 @@ import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
 import {applyAlpha} from './utils/color';
 
-import type {CardSelectionProps} from './card-selection-context';
+import type {CardSelectionProps} from './card-selection';
 import type {
     DataAttributes,
     HeadingType,
@@ -595,7 +595,7 @@ export type CardAction = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
-export type TopActionsArray = ReadonlyArray<CardAction>;
+export type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
 
 export const CardActionIconButton = (props: CardAction): JSX.Element => {
     const variant = useThemeVariant();
@@ -1204,6 +1204,7 @@ const TextContent = ({
 
 type CardTouchableProps = {
     selection: ReturnType<typeof useSelectableCard>;
+    selectorVariant: Variant;
     children: React.ReactNode;
     isTouchable: boolean;
     touchableAriaLabel?: string;
@@ -1220,6 +1221,7 @@ type CardTouchableProps = {
 
 const CardTouchable = ({
     selection,
+    selectorVariant,
     children,
     isTouchable,
     touchableAriaLabel,
@@ -1259,12 +1261,13 @@ const CardTouchable = ({
             <CardSelectionSurface
                 maybe
                 selection={selection}
-                aria-label={selection.control ? touchableAriaLabel : undefined}
+                variant={selectorVariant}
+                aria-label={selection.hasSelector ? touchableAriaLabel : undefined}
                 aria-labelledby={ariaLabeledByProp}
                 aria-description={ariaDescriptionProp}
                 aria-describedby={ariaDescribedByProp}
                 className={classnames(styles.touchable, styles.touchableContainer)}
-                style={selection.control ? contentRadiusStyle : undefined}
+                style={selection.hasSelector ? contentRadiusStyle : undefined}
             >
                 {content}
             </CardSelectionSurface>
@@ -1394,7 +1397,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
         ref
     ): JSX.Element => {
         const hasSelector = !!checkbox || !!switchProps || radioValue !== undefined;
-        const selection = useSelectableCard(selected, hasSelector);
+        const selection = useSelectableCard(selected, {checkbox, switch: switchProps, radioValue});
         const {isSelected, isSelectionMode} = selection;
         const onClose = isSelectionMode ? undefined : onCloseProp;
         const slot = slotProp;
@@ -1403,7 +1406,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
         const isTouchable =
-            !!selection.control ||
+            hasSelector ||
             (!isSelectionMode && !!(touchableProps.href || touchableProps.to || touchableProps.onPress));
         const hasTouchableInContent = !!(
             !isSelectionMode &&
@@ -1579,6 +1582,11 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
 
                 <CardTouchable
                     selection={selection}
+                    selectorVariant={
+                        hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
+                            ? 'media'
+                            : variant
+                    }
                     isTouchable={isTouchable}
                     touchableAriaLabel={touchableAriaLabel}
                     ariaLabeledByProp={ariaLabeledByProp}
@@ -1622,7 +1630,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
                         />
                     )}
                     <div
-                        aria-hidden={isTouchable && !selection.control && !segregateTouchableContent}
+                        aria-hidden={isTouchable && !selection.hasSelector && !segregateTouchableContent}
                         data-testid="body"
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]:
@@ -1750,17 +1758,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
                         overlayColor={footerOverlayBackground}
                     />
                 )}
-                <CardSelector
-                    selection={selection}
-                    checkbox={checkbox}
-                    switch={switchProps}
-                    radioValue={radioValue}
-                    variant={
-                        hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
-                            ? 'media'
-                            : variant
-                    }
-                />
                 <TopActions
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}

@@ -18,12 +18,12 @@ import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
 import {TopActions, getSelectionOutlineVariant} from '../card-internal';
-import {useSelectableCard} from '../card-selection-context';
-import {CardSelectionSurface, CardSelector} from '../card-selection-surface';
+import {useSelectableCard} from '../card-selection';
+import {CardSelectionSurface} from '../card-selection-surface';
 import {useRawThemeVariant} from '../theme-variant-context';
 import * as cardStyles from '../card-internal.css';
 
-import type {CardSelectionProps} from '../card-selection-context';
+import type {CardSelectionProps} from '../card-selection';
 import type {CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
@@ -294,7 +294,7 @@ type AdvancedDataCardProps = CardInteractionProps<{
     footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
-    actions?: ReadonlyArray<CardAction>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     'aria-label'?: string;
     onClose?: () => void;
 }>;
@@ -330,30 +330,29 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             buttonLink,
 
             dataAttributes,
-            actions,
+            actions: actionsProp,
             'aria-label': ariaLabelProp,
-            onClose,
+            onClose: onCloseProp,
             ...touchableProps
         },
         ref
     ) => {
         const hasSelector = !!checkbox || !!switchProps || radioValue !== undefined;
-        const selection = useSelectableCard(selected, hasSelector);
+        const selection = useSelectableCard(selected, {checkbox, switch: switchProps, radioValue});
+        const actions = selection.isSelectionMode ? undefined : actionsProp;
+        const onClose = selection.isSelectionMode ? undefined : onCloseProp;
         const outsideVariant = useRawThemeVariant();
+        const {isIos} = useTheme();
         const isTouchable =
-            !!selection.control ||
-            (!selection.isSelectionMode &&
+            hasSelector ||
+            (selected === undefined &&
                 (!!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to));
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const hasSlots = !!slot?.length;
 
-        const topActionsCount = selection.isSelectionMode
-            ? hasSelector
-                ? 1
-                : 0
-            : (actions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsCount = hasSelector ? 1 : (actions?.length || 0) + (onClose ? 1 : 0);
 
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const {text: slotText, ref: slotRef} = useInnerText();
@@ -389,7 +388,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         aria-label={isTouchable ? ariaLabel : undefined}
                         className={classNames(
                             styles.touchable,
-                            selection.control && styles.selectionTouchable
+                            selection.hasSelector && styles.selectionTouchable
                         )}
                     >
                         {isTouchable && <div className={styles.touchableCardHoverOverlay} />}
@@ -399,7 +398,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 styles.cardContentStyle,
                                 !hasFooter && !hasSlots ? styles.minHeight : ''
                             )}
-                            aria-hidden={isTouchable && !selection.control}
+                            aria-hidden={isTouchable && !selection.hasSelector}
                         >
                             <Box paddingTop={8}>
                                 <Inline space={0}>
@@ -426,7 +425,10 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             style={applyCssVars({
                                                 [styles.vars.topActionsCount]: String(topActionsCount),
                                             })}
-                                            className={styles.topActionsWithoutIcon}
+                                            className={classNames(
+                                                styles.topActionsWithoutIcon,
+                                                switchProps && styles.switchSpace[isIos ? 'ios' : 'default']
+                                            )}
                                         />
                                     )}
                                 </Inline>
@@ -437,7 +439,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                             <div
                                 className={styles.slot}
                                 ref={slotRef}
-                                aria-hidden={isTouchable && !selection.control}
+                                aria-hidden={isTouchable && !selection.hasSelector}
                             >
                                 {slot.map((item, index) => {
                                     return (
@@ -457,15 +459,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </CardSelectionSurface>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <CardSelector
-                    selection={selection}
-                    checkbox={checkbox}
-                    switch={switchProps}
-                    radioValue={radioValue}
-                />
                 <TopActions
-                    actions={selection.isSelectionMode ? undefined : actions}
-                    onClose={selection.isSelectionMode ? undefined : onClose}
+                    actions={actions}
+                    onClose={onClose}
                     variant={selection.isSelectionMode ? 'default' : undefined}
                 />
             </section>

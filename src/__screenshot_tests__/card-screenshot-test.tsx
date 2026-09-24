@@ -453,3 +453,22 @@ test('Selectable card with custom render in slot', async () => {
     const container = await screen.findByTestId('card-container');
     expect(await container.screenshot()).toMatchImageSnapshot();
 });
+
+test.each`
+    skin                   | device
+    ${BLAU_SKIN}           | ${'MOBILE_ANDROID'}
+    ${BLAU_SKIN}           | ${'MOBILE_IOS'}
+    ${VIVO_SKIN}           | ${'MOBILE_ANDROID'}
+    ${VIVO_SKIN}           | ${'MOBILE_IOS'}
+    ${VIVO_EVOLUTION_SKIN} | ${'MOBILE_ANDROID'}
+    ${VIVO_EVOLUTION_SKIN} | ${'MOBILE_IOS'}
+`('Selectable advanced card with switch - $skin - $device', async ({skin, device}) => {
+    await openStoryPage({
+        id: 'components-cards-selection--advanced-switch',
+        skin,
+        device,
+        viewport: {width: 360, height: 640, deviceScaleFactor: 2},
+    });
+    const card = await screen.findByTestId('AdvancedDataCard');
+    expect(await card.screenshot()).toMatchImageSnapshot();
+});
