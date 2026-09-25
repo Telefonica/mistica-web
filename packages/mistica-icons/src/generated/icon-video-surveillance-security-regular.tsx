@@ -6,9 +6,9 @@
  */
 
 import * as React from 'react';
-import {useTheme, useThemeVariant, vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica';
 
-import type {IconProps} from '@telefonica/mistica/icon-runtime';
+import type {IconProps} from '@telefonica/mistica';
 
 const IconVideoSurveillanceSecurityRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();

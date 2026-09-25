@@ -3,8 +3,8 @@
  *
  * The root package is the published library, and Yarn does not link a workspace to itself. Without
  * this link, nothing inside the repository can reach the package by its own name. That matters since
- * issue 1643, because the built icons of @telefonica/mistica-icons import
- * @telefonica/mistica/icon-runtime, and Node resolves that name in node_modules:
+ * issue https://github.com/Telefonica/mistica-web/issues/1643, because the built icons of @telefonica/mistica-icons import @telefonica/mistica, and
+ * Node resolves that name in node_modules:
  *
  * - the global setup of the SSR tests renders the pages with plain Node requires;
  * - the size stats app of scripts/size-stats builds the library as a consumer would.

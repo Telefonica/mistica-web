@@ -196,6 +196,12 @@ export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
 
+/**
+ * The icons of @telefonica/mistica-icons need this hook, and they reach it through this barrel,
+ * because a federated host shares this package by its name. See doc/module-federation.md.
+ */
+export {useIconGradient} from './utils/icon-gradient';
+
 export {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
 export type {Skin, KnownSkinName, SkinName} from './skins/types';

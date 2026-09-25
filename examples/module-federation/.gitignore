@@ -1,0 +1,5 @@
+node_modules
+dist
+
+# For this example we're ignoring the whole .yarn folder. Configure as needed in your project
+.yarn

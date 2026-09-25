@@ -42,8 +42,6 @@ export default defineConfig({
             entry: [
                 path.resolve(__dirname, 'src', 'index.tsx'),
                 path.resolve(__dirname, 'src', 'community', 'index.tsx'),
-                // nothing inside src imports this module, so it needs its own entry
-                path.resolve(__dirname, 'src', 'icon-runtime.tsx'),
             ],
             formats: ['es'],
             cssFileName: 'style',

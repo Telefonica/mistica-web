@@ -93,7 +93,6 @@ const config = {
             extensions: ['.tsx', '.ts', '.js', '.json'],
             alias: {
                 '@telefonica/mistica$': path.resolve(__dirname, 'src/index.tsx'),
-                '@telefonica/mistica/icon-runtime$': path.resolve(__dirname, 'src/icon-runtime.tsx'),
                 '@telefonica/mistica-icons/keywords$': path.resolve(
                     __dirname,
                     'packages/mistica-icons/src/generated/icons-keywords.tsx'

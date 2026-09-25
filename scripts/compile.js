@@ -23,14 +23,6 @@ const compile = () => {
     run(`echo "export * from './dist-es/community';" > community.js`);
     run(`yarn swc community.js -o community.js --source-maps=false -C module.type=commonjs`);
 
-    /*
-     * src/icon-runtime.tsx is an entry of the vite build, so dist-es/icon-runtime.js,
-     * dist/icon-runtime.js and dist/icon-runtime.d.ts exist. @telefonica/mistica-icons reads those
-     * files, each world its own. There is no shim at the root of the package, and no "exports" map:
-     * a shim can only point at one of the two builds, and a map would break every extensionless deep
-     * import of every consumer.
-     */
-
     // @telefonica/mistica-icons comes from the same repository and from the same release
     buildIcons();
 

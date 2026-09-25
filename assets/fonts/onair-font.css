@@ -3,7 +3,7 @@
     font-family: 'On Air';
     font-style: normal;
     font-weight: 400;
-    src: url('./fonts/OnAir-Regular.woff2') format('woff2');
+    src: url('./OnAir-Regular.woff2') format('woff2');
 }
 
 /* Light */
@@ -11,7 +11,7 @@
     font-family: 'On Air';
     font-style: normal;
     font-weight: 300;
-    src: url('./fonts/OnAir-Light.woff2') format('woff2');
+    src: url('./OnAir-Light.woff2') format('woff2');
 }
 
 /* Medium */
@@ -19,7 +19,7 @@
     font-family: 'On Air';
     font-style: normal;
     font-weight: 500;
-    src: url('./fonts/OnAir-Medium.woff2') format('woff2');
+    src: url('./OnAir-Medium.woff2') format('woff2');
 }
 
 /* Bold */
@@ -27,5 +27,5 @@
     font-family: 'On Air';
     font-style: normal;
     font-weight: 700;
-    src: url('./fonts/OnAir-Bold.woff2') format('woff2');
+    src: url('./OnAir-Bold.woff2') format('woff2');
 }
