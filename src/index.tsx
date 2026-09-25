@@ -1967,6 +1967,9 @@ export {default as IconSdFilled} from './generated/mistica-icons/icon-sd-filled'
 export {default as IconSdLight} from './generated/mistica-icons/icon-sd-light';
 export {default as IconSdRegular} from './generated/mistica-icons/icon-sd-regular';
 export {default as IconSeaLight} from './generated/mistica-icons/icon-sea-light';
+export {default as IconSearchAiFilled} from './generated/mistica-icons/icon-search-ai-filled';
+export {default as IconSearchAiLight} from './generated/mistica-icons/icon-search-ai-light';
+export {default as IconSearchAiRegular} from './generated/mistica-icons/icon-search-ai-regular';
 export {default as IconSearchCloudFilled} from './generated/mistica-icons/icon-search-cloud-filled';
 export {default as IconSearchCloudLight} from './generated/mistica-icons/icon-search-cloud-light';
 export {default as IconSearchCloudRegular} from './generated/mistica-icons/icon-search-cloud-regular';
