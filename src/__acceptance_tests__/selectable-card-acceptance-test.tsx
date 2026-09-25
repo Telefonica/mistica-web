@@ -35,19 +35,6 @@ test.each(['checkbox', 'switch', 'radio'])('outline follows the %s prop', async 
     expect((await getOutline()).color).toBe(unselected.color);
 });
 
-test('selected prop overrides the checkbox prop', async () => {
-    await openStoryPage({
-        id: 'components-cards-selection--selection',
-        device: 'DESKTOP',
-        args: {selected: false},
-    });
-    const checkbox = await screen.findByRole('checkbox', {name: 'First This is a description'});
-    const unselected = await getOutline();
-    await checkbox.click();
-    expect(await checkbox.evaluate((element) => element.getAttribute('aria-checked'))).toBe('false');
-    expect((await getOutline()).color).toBe(unselected.color);
-});
-
 test('custom controls only select the card through selected', async () => {
     await openStoryPage({id: 'components-cards-selection--custom-selection', device: 'DESKTOP'});
     const unlocked = await getOutline(2);

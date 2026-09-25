@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {InternalCard} from './card-internal';
-import {useRawThemeVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {MediaCardProps} from './card-media';
 import type {CardInteractionProps} from './card-internal';
@@ -10,7 +10,7 @@ type NakedCardProps = Omit<MediaCardProps, 'footerBackgroundColor' | 'variant' |
 
 export const NakedCard = React.forwardRef<HTMLDivElement, CardInteractionProps<NakedCardProps>>(
     ({size = 'default', slot, buttonPrimary, dataAttributes, ...rest}, ref) => {
-        const variant = useRawThemeVariant();
+        const variant = useThemeVariant();
         return (
             <InternalCard
                 dataAttributes={{

@@ -290,7 +290,6 @@ export const selectionOutlineColor = styleVariants({
     default: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
     alternative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
     brand: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedBrand}}},
-    inverse: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedInverse}}},
     media: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedBrand}}},
     negative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedNegative}}},
 });

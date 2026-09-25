@@ -168,8 +168,8 @@ corner, and the card body becomes the interaction target. It exposes the control
 supports Space, and preserves arrow navigation for radios inside a `RadioGroup`. AdvancedDataCard supports the
 same selection props.
 
-These props are mutually exclusive with each other and with `onPress`, `href`, `to`, top actions and dismiss.
-Footer actions remain independent.
+These props are mutually exclusive with each other and with `selected`, `onPress`, `href`, `to`, top actions
+and dismiss. Footer actions remain independent.
 
 ```tsx
 <DataCard title="Notifications" switch={{name: 'notifications', defaultValue: true}} />
@@ -183,8 +183,9 @@ Footer actions remain independent.
 Checkbox and switch configurations support `name`, `value`, `defaultValue`, `onChange` and `disabled`.
 Controls placed in `slot` or `footerSlot` remain independent and do not automatically select the card.
 
-Use `selected` to control the outline from a custom control or an external action. It takes precedence over
-the built-in selector's state. On its own, it does not make the card interactive or require `onPress`.
+Use `selected` to control the outline from a custom control or an external action. It cannot be combined with
+the built-in selector props. It does not change the card's existing interaction, actions or video behavior,
+and can be used with or without `onPress`. The outline uses the card variant.
 
 ```tsx
 <DataCard

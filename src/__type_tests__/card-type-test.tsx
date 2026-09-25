@@ -82,3 +82,20 @@ import {MediaCard} from '../card-media';
 <AdvancedDataCard switch={{}} radioValue="option" />;
 <DataCard topActions={[<Checkbox name="option">Option</Checkbox>]} />;
 <AdvancedDataCard actions={[<Checkbox name="option">Option</Checkbox>]} />;
+
+// @ts-expect-error selected and checkbox cannot have competing states
+<DataCard checkbox={{value: true}} selected={false} />;
+// @ts-expect-error selected and switch cannot have competing states
+<MediaCard switch={{}} selected />;
+// @ts-expect-error selected and radioValue are mutually exclusive
+<CoverCard radioValue="option" selected />;
+// @ts-expect-error selected and checkbox are mutually exclusive
+<NakedCard checkbox={{}} selected />;
+// @ts-expect-error selected and checkbox are mutually exclusive
+<AdvancedDataCard checkbox={{}} selected />;
+// @ts-expect-error selected and switch are mutually exclusive
+<AdvancedDataCard switch={{}} selected />;
+// @ts-expect-error selected and radioValue are mutually exclusive
+<AdvancedDataCard radioValue="option" selected />;
+<DataCard selected onPress={() => {}} topActions={[]} />;
+<AdvancedDataCard selected onPress={() => {}} actions={[]} />;

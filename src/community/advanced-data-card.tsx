@@ -17,14 +17,11 @@ import Inline from '../inline';
 import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
-import {TopActions, getSelectionOutlineVariant} from '../card-internal';
-import {useSelectableCard} from '../card-selection';
-import {CardSelectionSurface} from '../card-selection-surface';
-import {useRawThemeVariant} from '../theme-variant-context';
+import {TopActions, useControlState, CardWithControl} from '../card-internal';
+import {useRadioContext} from '../radio-button';
 import * as cardStyles from '../card-internal.css';
 
-import type {CardSelectionProps} from '../card-selection';
-import type {CardAction} from '../card-internal';
+import type {CardSelectionProps, CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type StackingGroup from '../stacking-group';
@@ -60,7 +57,9 @@ type TouchableProps = {
 >;
 type TouchableCard<T> = T & TouchableProps;
 type CardInteractionProps<T> = ExclusifyUnion<
-    TouchableCard<T> | T | (Omit<T, 'actions' | 'onClose'> & CardSelectionProps)
+    | (TouchableCard<T> & {selected?: boolean})
+    | (T & {selected?: boolean})
+    | (Omit<T, 'actions' | 'onClose'> & CardSelectionProps)
 >;
 
 type CardContentProps = {
@@ -272,7 +271,6 @@ type AllowedSlot =
     | typeof ValueBlock;
 
 type AdvancedDataCardProps = CardInteractionProps<{
-    selected?: boolean;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -330,23 +328,25 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             buttonLink,
 
             dataAttributes,
-            actions: actionsProp,
+            actions,
             'aria-label': ariaLabelProp,
-            onClose: onCloseProp,
+            onClose,
             ...touchableProps
         },
         ref
     ) => {
-        const hasSelector = !!checkbox || !!switchProps || radioValue !== undefined;
-        const selection = useSelectableCard(selected, {checkbox, switch: switchProps, radioValue});
-        const actions = selection.isSelectionMode ? undefined : actionsProp;
-        const onClose = selection.isSelectionMode ? undefined : onCloseProp;
-        const outsideVariant = useRawThemeVariant();
+        const [isChecked, toggle] = useControlState(switchProps || checkbox || {});
+        const radioContext = useRadioContext();
+        const hasSelector = !!switchProps || !!checkbox || radioValue !== undefined;
+        const isSelected =
+            switchProps || checkbox
+                ? isChecked
+                : radioValue !== undefined
+                  ? radioContext.selectedValue === radioValue
+                  : selected;
         const {isIos} = useTheme();
         const isTouchable =
-            hasSelector ||
-            (selected === undefined &&
-                (!!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to));
+            hasSelector || !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
@@ -370,26 +370,24 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             <section
                 className={classNames(
                     styles.container,
-                    selection.isSelected && cardStyles.selectionOutline,
-                    selection.isSelected &&
-                        cardStyles.selectionOutlineColor[
-                            getSelectionOutlineVariant(outsideVariant, 'default')
-                        ]
+                    isSelected && cardStyles.selectionOutline,
+                    isSelected && cardStyles.selectionOutlineColor.default
                 )}
                 {...getPrefixedDataAttributes({testid: 'AdvancedDataCard', ...dataAttributes})}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabel}
             >
                 <Boxed className={styles.dataCard} width="100%" height="100%" minHeight={styles.MIN_HEIGHT}>
-                    <CardSelectionSurface
+                    <CardWithControl
                         maybe
-                        selection={selection}
+                        checkbox={checkbox}
+                        switch={switchProps}
+                        radioValue={radioValue}
+                        checked={isChecked}
+                        onChange={toggle}
                         {...touchableProps}
                         aria-label={isTouchable ? ariaLabel : undefined}
-                        className={classNames(
-                            styles.touchable,
-                            selection.hasSelector && styles.selectionTouchable
-                        )}
+                        className={classNames(styles.touchable, hasSelector && styles.selectionTouchable)}
                     >
                         {isTouchable && <div className={styles.touchableCardHoverOverlay} />}
 
@@ -398,7 +396,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 styles.cardContentStyle,
                                 !hasFooter && !hasSlots ? styles.minHeight : ''
                             )}
-                            aria-hidden={isTouchable && !selection.hasSelector}
+                            aria-hidden={isTouchable && !hasSelector}
                         >
                             <Box paddingTop={8}>
                                 <Inline space={0}>
@@ -439,7 +437,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                             <div
                                 className={styles.slot}
                                 ref={slotRef}
-                                aria-hidden={isTouchable && !selection.hasSelector}
+                                aria-hidden={isTouchable && !hasSelector}
                             >
                                 {slot.map((item, index) => {
                                     return (
@@ -456,14 +454,10 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 })}
                             </div>
                         )}
-                    </CardSelectionSurface>
+                    </CardWithControl>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <TopActions
-                    actions={actions}
-                    onClose={onClose}
-                    variant={selection.isSelectionMode ? 'default' : undefined}
-                />
+                <TopActions actions={actions} onClose={onClose} />
             </section>
         );
     }

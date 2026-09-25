@@ -12,37 +12,9 @@ import {RadioGroup} from '../radio-button';
 import ThemeContextProvider from '../theme-context-provider';
 import {ButtonPrimary} from '../button';
 import {makeTheme} from './test-utils';
-import {getSelectionOutlineVariant} from '../card-internal';
-
-import type {Variant} from '../theme-variant-context';
 
 const renderWithTheme = (children: React.ReactNode) =>
     render(<ThemeContextProvider theme={makeTheme()}>{children}</ThemeContextProvider>);
-
-const outlineVariants: Array<[Variant, Variant, Variant]> = [
-    ['default', 'default', 'default'],
-    ['default', 'brand', 'default'],
-    ['default', 'inverse', 'default'],
-    ['brand', 'default', 'brand'],
-    ['brand', 'brand', 'brand'],
-    ['brand', 'inverse', 'inverse'],
-    ['brand', 'negative', 'negative'],
-    ['inverse', 'default', 'inverse'],
-    ['inverse', 'brand', 'brand'],
-    ['inverse', 'inverse', 'inverse'],
-    ['inverse', 'negative', 'negative'],
-    ['negative', 'default', 'negative'],
-    ['negative', 'brand', 'default'],
-    ['negative', 'inverse', 'default'],
-    ['negative', 'negative', 'negative'],
-    ['alternative', 'default', 'default'],
-    ['alternative', 'brand', 'default'],
-    ['alternative', 'inverse', 'default'],
-];
-
-test.each(outlineVariants)('outline over %s with %s card uses %s', (outside, variant, outline) => {
-    expect(getSelectionOutlineVariant(outside, variant)).toBe(outline);
-});
 
 const AdvancedSelectionCard = ({
     slot,
@@ -59,11 +31,10 @@ const AdvancedSelectionCard = ({
           ? {switch: switchProps}
           : radioValue !== undefined
             ? {radioValue}
-            : {};
+            : {selected};
     return (
         <AdvancedDataCard
             title={title}
-            selected={selected}
             {...selectionProps}
             button={buttonPrimary}
             slot={slot ? [<React.Fragment key="slot">{slot}</React.Fragment>] : undefined}
@@ -95,18 +66,16 @@ describe.each(selectionCards)('explicit card selection (%#)', (Card) => {
         }
     );
 
-    test('supports controlled selection and selected override', async () => {
+    test('supports controlled selection', async () => {
         const onChange = jest.fn();
-        const {rerender} = renderWithTheme(
-            <Card title="Controlled" checkbox={{value: true, onChange}} selected={false} />
-        );
+        const {rerender} = renderWithTheme(<Card title="Controlled" checkbox={{value: false, onChange}} />);
         const surface = screen.getByRole('checkbox', {name: 'Controlled'});
         expect(surface).toHaveAttribute('aria-checked', 'false');
         await userEvent.click(surface);
-        expect(onChange).toHaveBeenCalledWith(false);
+        expect(onChange).toHaveBeenCalledWith(true);
         rerender(
             <ThemeContextProvider theme={makeTheme()}>
-                <Card title="Controlled" checkbox={{value: false}} selected />
+                <Card title="Controlled" checkbox={{value: true}} />
             </ThemeContextProvider>
         );
         expect(surface).toHaveAttribute('aria-checked', 'true');
@@ -221,3 +190,17 @@ test('advanced card custom actions remain independent', async () => {
     expect(control).toHaveAttribute('aria-checked', 'true');
     expect(screen.getAllByRole('checkbox')).toHaveLength(1);
 });
+
+test.each([DataCard, MediaCard, CoverCard, NakedCard, AdvancedDataCard])(
+    'selected preserves card navigation and top actions (%#)',
+    async (Card) => {
+        const onPress = jest.fn();
+        const onClose = jest.fn();
+        renderWithTheme(<Card title="Selected action" selected onPress={onPress} onClose={onClose} />);
+        await userEvent.click(screen.getByRole('button', {name: 'Selected action'}));
+        expect(onPress).toHaveBeenCalledTimes(1);
+        await userEvent.click(screen.getByRole('button', {name: 'Cerrar'}));
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onPress).toHaveBeenCalledTimes(1);
+    }
+);

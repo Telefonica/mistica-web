@@ -256,7 +256,6 @@ export const topActionsWithoutIcon = style({
     marginRight: -17,
     marginTop: -1,
     width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,
-    flexShrink: 0,
 
     '@media': {
         [mq.desktopOrBigger]: {
@@ -275,7 +274,7 @@ export const selectionTouchable = style({
     borderRadius: `calc(${skinVars.borderRadii.container} - 1px)`,
 });
 
-// Chromium 93 draws square native outlines, which are clipped by the rounded Boxed container.
+// Draw the focus ring inside Boxed to prevent its overflow from clipping the native outline.
 globalStyle(`${selectionTouchable} > div:focus-visible`, {outline: 'none'});
 globalStyle(`${selectionTouchable} > div:focus-visible::before`, {
     content: '""',
@@ -288,10 +287,10 @@ globalStyle(`${selectionTouchable} > div:focus-visible::before`, {
     zIndex: 2,
 });
 
-const switchWidth = {default: 34 + 8, ios: 51};
+const switchWidth = {default: 42, ios: 51};
 const controlSpacing = 16;
 
 export const switchSpace = styleVariants({
-    default: {width: switchWidth.default + controlSpacing},
-    ios: {width: switchWidth.ios + controlSpacing},
+    default: {width: switchWidth.default + controlSpacing, flexShrink: 0},
+    ios: {width: switchWidth.ios + controlSpacing, flexShrink: 0},
 });

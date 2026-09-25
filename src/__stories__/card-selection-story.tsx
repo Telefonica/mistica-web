@@ -22,7 +22,7 @@ import {
 import {ThemeVariantWrapper} from './card-common';
 import beachImg from './images/beach.jpg';
 
-import type {CardSelectionProps} from '../card-selection';
+import type {CardSelectionProps} from '../card-internal';
 import type {Variant} from '../theme-variant-context';
 
 export default {title: 'Components/Cards/Selection'};
@@ -87,13 +87,6 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                             {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
                         />
                     );
-                const selectionProps = customRender
-                    ? {}
-                    : control === 'radio'
-                      ? {radioValue: radioValueProp ?? title}
-                      : control === 'switch'
-                        ? {switch: switchProps ?? {name: title}}
-                        : {checkbox: checkbox ?? {name: title}};
                 const selectedValue =
                     selected ??
                     (customRender
@@ -101,12 +94,19 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                             ? radioValue === title
                             : !!customValues[title]
                         : undefined);
+                const selectionProps =
+                    customRender || selected !== undefined
+                        ? {selected: selectedValue}
+                        : control === 'radio'
+                          ? {radioValue: radioValueProp ?? title}
+                          : control === 'switch'
+                            ? {switch: switchProps ?? {name: title}}
+                            : {checkbox: checkbox ?? {name: title}};
                 return card === 'advanced' ? (
                     <CommunityAdvancedDataCard
                         key={`${title}-${control}`}
                         title={title}
                         description="This is a description"
-                        selected={selectedValue}
                         slot={customRender ? [controlElement] : undefined}
                         {...selectionProps}
                     />
@@ -121,7 +121,6 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                                 ? undefined
                                 : variant
                         }
-                        selected={selectedValue}
                         slot={customRender ? controlElement : undefined}
                         {...selectionProps}
                     />
