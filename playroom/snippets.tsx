@@ -4599,6 +4599,30 @@ export default [
         name: 'Animation',
         code: '<Animation animationUrl="https://raw.githubusercontent.com/Telefonica/mistica-icons/refs/heads/production/animated-icons/Vivo/success.json" />',
     },
+    {
+        group: 'Animation',
+        name: 'SlideSwap',
+        code: `
+        <Stack space={16}>
+          <SlideSwap
+            showSwappedContent={getState("swapped", false)}
+            swappedContent={
+              <Inline space={8} alignItems="center">
+                <Spinner size={20} delay="0s" />
+                <Text3 regular>Sending…</Text3>
+              </Inline>
+            }
+          >
+            <Text3 regular>Send</Text3>
+          </SlideSwap>
+          <ButtonPrimary
+            small
+            onPress={() => setState("swapped", !getState("swapped", false))}
+          >
+            Toggle
+          </ButtonPrimary>
+        </Stack>`,
+    },
     ...headerSnippets,
     ...accordionSnippets,
     ...listSnippets,
