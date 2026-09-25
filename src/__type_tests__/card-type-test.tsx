@@ -3,6 +3,8 @@ import {ButtonPrimary} from '../button';
 import {DataCard} from '../card-data';
 import {CoverCard} from '../card-cover';
 import {NakedCard} from '../card-naked';
+import AdvancedDataCard from '../community/advanced-data-card';
+import Checkbox from '../checkbox';
 import {MediaCard} from '../card-media';
 
 <NakedCard imageSrc="/something.png" title="title" />;
@@ -47,3 +49,53 @@ import {MediaCard} from '../card-media';
 
 // @ts-expect-error CoverCard expects no children
 <CoverCard title="title">hello</CoverCard>;
+
+<DataCard title="Selected card" selected />;
+<MediaCard title="Selected card" selected={false} />;
+<CoverCard title="Selected card" selected />;
+<NakedCard title="Selected card" selected />;
+<DataCard title="Card" checkbox={{}} />;
+<MediaCard title="Card" switch={{}} />;
+<CoverCard title="Card" radioValue="option" />;
+// @ts-expect-error cards do not own a selector
+<NakedCard title="Card" hideSelector />;
+
+// @ts-expect-error selection excludes a primary action
+<DataCard checkbox={{}} onPress={() => {}} />;
+// @ts-expect-error selection excludes navigation
+<MediaCard switch={{}} href="/" />;
+// @ts-expect-error selection excludes router navigation
+<CoverCard radioValue="option" to="/" />;
+// @ts-expect-error selection excludes top actions
+<NakedCard checkbox={{}} topActions={[]} />;
+// @ts-expect-error selection excludes dismiss
+<DataCard checkbox={{}} onClose={() => {}} />;
+// @ts-expect-error only one selector is allowed
+<DataCard checkbox={{}} switch={{}} />;
+
+<AdvancedDataCard title="Card" checkbox={{defaultValue: true}} />;
+// @ts-expect-error selection excludes advanced card actions
+<AdvancedDataCard checkbox={{}} actions={[]} />;
+// @ts-expect-error selection excludes advanced card navigation
+<AdvancedDataCard radioValue="option" onPress={() => {}} />;
+// @ts-expect-error selection excludes other selectors
+<AdvancedDataCard switch={{}} radioValue="option" />;
+<DataCard topActions={[<Checkbox name="option">Option</Checkbox>]} />;
+<AdvancedDataCard actions={[<Checkbox name="option">Option</Checkbox>]} />;
+
+// @ts-expect-error selected and checkbox cannot have competing states
+<DataCard checkbox={{value: true}} selected={false} />;
+// @ts-expect-error selected and switch cannot have competing states
+<MediaCard switch={{}} selected />;
+// @ts-expect-error selected and radioValue are mutually exclusive
+<CoverCard radioValue="option" selected />;
+// @ts-expect-error selected and checkbox are mutually exclusive
+<NakedCard checkbox={{}} selected />;
+// @ts-expect-error selected and checkbox are mutually exclusive
+<AdvancedDataCard checkbox={{}} selected />;
+// @ts-expect-error selected and switch are mutually exclusive
+<AdvancedDataCard switch={{}} selected />;
+// @ts-expect-error selected and radioValue are mutually exclusive
+<AdvancedDataCard radioValue="option" selected />;
+<DataCard selected onPress={() => {}} topActions={[]} />;
+<AdvancedDataCard selected onPress={() => {}} actions={[]} />;

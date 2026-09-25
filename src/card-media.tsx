@@ -10,7 +10,7 @@ import type {
     CardActionButtonSecondary,
     CardAspectRatio,
     CardSize,
-    MaybeTouchableCard,
+    CardInteractionProps,
     MediaAspectRatio,
     SlotAlignment,
     TopActionsArray,
@@ -73,8 +73,8 @@ export type MediaCardProps = {
     footerDivider?: boolean;
 };
 
-export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<MediaCardProps>>(
-    ({size = 'default', slot, topActions, buttonPrimary, dataAttributes, ...rest}, ref) => {
+export const MediaCard = React.forwardRef<HTMLDivElement, CardInteractionProps<MediaCardProps>>(
+    ({size = 'default', slot, buttonPrimary, dataAttributes, ...rest}, ref) => {
         return (
             <InternalCard
                 type="media"
@@ -85,7 +85,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<Med
                     ...dataAttributes,
                 }}
                 slot={slot}
-                topActions={topActions}
                 buttonPrimary={buttonPrimary}
                 ref={ref}
                 {...rest}

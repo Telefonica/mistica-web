@@ -19,7 +19,10 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {InternalBoxed} from './boxed';
-import {BaseTouchable} from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
+import Checkbox from './checkbox';
+import Switch from './switch-component';
+import RadioButton, {useRadioContext} from './radio-button';
 import {AspectRatioContainer, aspectRatioToNumber} from './utils/aspect-ratio-support';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {IconButton, ToggleIconButton} from './icon-button';
@@ -42,7 +45,99 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {NonDeprecatedVariant, Variant} from './theme-variant-context';
 import type {VideoElement, VideoSource, AspectRatio as VideoAspectRatio} from './video';
 import type {AspectRatio as ImageAspectRatio} from './image';
-import type {PressHandler, TouchableElement} from './touchable';
+import type {PressHandler, TouchableElement, TouchableProps as BaseTouchableProps} from './touchable';
+
+type ControlProps = {
+    name?: string;
+    value?: boolean;
+    defaultValue?: boolean;
+    onChange?: (checked: boolean) => void;
+    disabled?: boolean;
+};
+
+export type CardSelectionProps = ExclusifyUnion<
+    {checkbox: ControlProps} | {switch: ControlProps} | {radioValue: string}
+>;
+
+export const useControlState = ({
+    value,
+    defaultValue,
+    onChange,
+}: {
+    value?: boolean;
+    defaultValue?: boolean;
+    onChange?: (isChecked: boolean) => void;
+}): [boolean, () => void] => {
+    const isControlledByParent = value !== undefined;
+    const [isChecked, setIsChecked] = React.useState<boolean>(!!defaultValue);
+
+    const toggle = () => {
+        if (!isControlledByParent) {
+            setIsChecked(!isChecked);
+        }
+        onChange?.(isControlledByParent ? !value : !isChecked);
+    };
+
+    return [isControlledByParent ? !!value : isChecked, toggle];
+};
+
+type CardControlProps = {
+    checkbox?: ControlProps;
+    switch?: ControlProps;
+    radioValue?: string;
+    checked: boolean;
+    onChange: () => void;
+};
+
+export const CardWithControl = ({
+    checkbox,
+    switch: switchProps,
+    radioValue,
+    checked,
+    onChange,
+    ...props
+}: BaseTouchableProps & CardControlProps): JSX.Element => {
+    const id = React.useId();
+    const render = ({controlElement}: {controlElement: React.ReactElement}) => (
+        <>
+            {props.children}
+            <div className={styles.topActionsContainer} data-testid="cardSelector" aria-hidden>
+                {controlElement}
+            </div>
+        </>
+    );
+    const renderWithControl = (control: React.ReactNode) => (
+        <div className={classnames(styles.selectionControl, props.className)} style={props.style}>
+            {control}
+        </div>
+    );
+
+    if (switchProps || checkbox) {
+        const Control = switchProps ? Switch : Checkbox;
+        return renderWithControl(
+            <Control
+                name={switchProps?.name ?? checkbox?.name ?? id}
+                checked={checked}
+                onChange={onChange}
+                disabled={switchProps?.disabled ?? checkbox?.disabled}
+                aria-label={props['aria-label']}
+                aria-labelledby={props['aria-labelledby']}
+                render={render}
+            />
+        );
+    }
+    if (radioValue !== undefined) {
+        return renderWithControl(
+            <RadioButton
+                value={radioValue}
+                aria-label={props['aria-label']}
+                aria-labelledby={props['aria-labelledby']}
+                render={render}
+            />
+        );
+    }
+    return <Touchable {...props} />;
+};
 
 export type CardAspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto' | number;
 export type MediaAspectRatio = ImageAspectRatio | VideoAspectRatio | 'auto' | number;
@@ -67,6 +162,7 @@ type ContainerProps = {
     type: CardType;
     size: CardSize;
     variant?: Variant;
+    selected?: boolean;
     width?: string | number;
     height?: string | number;
     /** Gradient overlay color for cover cards. If not set it uses the theme color */
@@ -198,7 +294,11 @@ type TouchableProps = {
 >;
 
 type TouchableCard<T> = T & TouchableProps;
-export type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+export type CardInteractionProps<T> = ExclusifyUnion<
+    | (TouchableCard<T> & {selected?: boolean})
+    | (T & {selected?: boolean})
+    | (Omit<T, 'topActions' | 'onClose' | 'selected'> & CardSelectionProps)
+>;
 
 type PrivateContainerProps = {
     children?: React.ReactNode;
@@ -219,6 +319,7 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
             dataAttributes,
             backgroundColor,
             variant,
+            selected,
         },
         ref
     ): JSX.Element => {
@@ -249,6 +350,10 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps & MediaProps &
                 }}
             >
                 <div
+                    className={classnames({
+                        [styles.selectionOutline]: !!selected,
+                        [styles.selectionOutlineColor[normalizeVariant(variant || 'default')]]: !!selected,
+                    })}
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -1189,7 +1294,7 @@ const TextContent = ({
     );
 };
 
-type CardTouchableProps = {
+type CardTouchableProps = CardControlProps & {
     children: React.ReactNode;
     isTouchable: boolean;
     touchableAriaLabel?: string;
@@ -1205,6 +1310,11 @@ type CardTouchableProps = {
 };
 
 const CardTouchable = ({
+    checkbox,
+    switch: switchProps,
+    radioValue,
+    checked,
+    onChange,
     children,
     isTouchable,
     touchableAriaLabel,
@@ -1238,6 +1348,27 @@ const CardTouchable = ({
             {children}
         </div>
     );
+
+    if (checkbox || switchProps || radioValue !== undefined) {
+        return (
+            <CardWithControl
+                maybe
+                checkbox={checkbox}
+                switch={switchProps}
+                radioValue={radioValue}
+                checked={checked}
+                onChange={onChange}
+                aria-label={touchableAriaLabel}
+                aria-labelledby={ariaLabeledByProp}
+                aria-description={ariaDescriptionProp}
+                aria-describedby={ariaDescribedByProp}
+                className={classnames(styles.touchable, styles.touchableContainer)}
+                style={contentRadiusStyle}
+            >
+                {content}
+            </CardWithControl>
+        );
+    }
 
     if (isTouchable && segregateTouchableContent) {
         return hasTouchableInContent ? (
@@ -1287,7 +1418,7 @@ const replaceRgbaWithColor = (stringWithRgbaColors: string, newColor: string): s
     return stringWithRgbaColors.replace(RGBA_REGEX, (_, alpha) => applyAlpha(newColor, parseFloat(alpha)));
 };
 
-export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CardProps>>(
+export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProps<CardProps>>(
     (
         {
             type,
@@ -1341,17 +1472,32 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
             videoLoop,
             videoAutoPlay,
             videoDataAttributes,
+            selected,
+            checkbox,
+            switch: switchProps,
+            radioValue,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
             ...touchableProps
         },
         ref
     ): JSX.Element => {
+        const [isChecked, toggle] = useControlState(switchProps || checkbox || {});
+        const radioContext = useRadioContext();
+        const hasSelector = !!switchProps || !!checkbox || radioValue !== undefined;
+        const isSelected =
+            switchProps || checkbox
+                ? isChecked
+                : radioValue !== undefined
+                  ? radioContext.selectedValue === radioValue
+                  : selected;
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
-        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const isTouchable =
+            hasSelector || !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasTouchableInContent = !!(
+            !hasSelector &&
             segregateTouchableContent &&
             !touchableAriaLabelProp &&
             (title || pretitle || headline || subtitle || description)
@@ -1379,7 +1525,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         const shouldShowVideo = hasMediaVideo || hasBackgroundVideo;
         const {video, videoAction} = useVideoWithControls({
-            src: shouldShowVideo ? videoSrc : undefined,
+            src: shouldShowVideo && !hasSelector ? videoSrc : undefined,
             poster: imageSrc,
             ref: videoRef,
             autoHeight:
@@ -1407,7 +1553,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
 
         const showButtonsInBody = !shouldShowFooter && hasButtons;
 
-        const topActionsLengthWithoutVideo = (topActions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsLengthWithoutVideo = hasSelector ? 1 : (topActions?.length || 0) + (onClose ? 1 : 0);
         const topActionsLength = videoAction
             ? topActionsLengthWithoutVideo + 1
             : topActionsLengthWithoutVideo;
@@ -1474,6 +1620,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 dataAttributes={dataAttributes}
                 ref={ref}
                 variant={variant}
+                selected={isSelected}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
@@ -1515,13 +1662,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                 )}
 
                 <CardTouchable
+                    checkbox={checkbox}
+                    switch={switchProps}
+                    radioValue={radioValue}
+                    checked={isChecked}
+                    onChange={toggle}
                     isTouchable={isTouchable}
                     touchableAriaLabel={touchableAriaLabel}
                     ariaLabeledByProp={ariaLabeledByProp}
                     ariaDescriptionProp={ariaDescriptionProp}
                     ariaDescribedByProp={ariaDescribedByProp}
                     touchableProps={touchableProps}
-                    segregateTouchableContent={segregateTouchableContent}
+                    segregateTouchableContent={hasSelector ? false : segregateTouchableContent}
                     hasTouchableInContent={hasTouchableInContent}
                     overlayClassname={overlayStyle}
                     contentStyle={{
@@ -1558,7 +1710,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<
                         />
                     )}
                     <div
-                        aria-hidden={isTouchable && !segregateTouchableContent}
+                        aria-hidden={isTouchable && !hasSelector && !segregateTouchableContent}
                         data-testid="body"
                         className={classnames(styles.touchable, {
                             [styles.containerPaddingTopVariants[size]]:
