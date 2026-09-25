@@ -10,7 +10,6 @@ module.exports = {
      */
     moduleNameMapper: {
         '^@telefonica/mistica$': '<rootDir>/src/index.tsx',
-        '^@telefonica/mistica/icon-runtime$': '<rootDir>/src/icon-runtime.tsx',
         '^@telefonica/mistica-icons/keywords$':
             '<rootDir>/packages/mistica-icons/src/generated/icons-keywords.tsx',
         '^@telefonica/mistica-icons/(icon-.*)$': '<rootDir>/packages/mistica-icons/src/generated/$1.tsx',

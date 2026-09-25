@@ -18,10 +18,6 @@ export default defineConfig({
                 replacement: path.resolve(__dirname, '..', 'src', 'index.tsx'),
             },
             {
-                find: /^@telefonica\/mistica\/icon-runtime$/,
-                replacement: path.resolve(__dirname, '..', 'src', 'icon-runtime.tsx'),
-            },
-            {
                 find: /^@telefonica\/mistica-icons\/keywords$/,
                 replacement: path.join(ICONS_DIR, 'icons-keywords.tsx'),
             },

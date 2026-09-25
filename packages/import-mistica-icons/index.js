@@ -17,14 +17,12 @@ const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
 const PATH_OUTPUT = join(PATH_REPO_ROOT, 'packages', 'mistica-icons', 'src', 'generated');
 const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx');
 /**
- * The icons live in @telefonica/mistica-icons, and they read the theme of @telefonica/mistica at
- * run time. See src/icon-runtime.tsx for the reason.
- *
- * This specifier belongs to the sources only. The aliases of the repository map it to
- * src/icon-runtime.tsx, and scripts/build-icons.js points each build at the matching file of the
- * root package.
+ * The icons live in @telefonica/mistica-icons, and they read the theme of @telefonica/mistica by its
+ * bare name. A federated host shares that name, and the share scope intercepts that name only, so a
+ * deep path would give the icons of a remote a second theme context. skinVars keeps the local name
+ * vars, so the body of an icon stays short.
  */
-const RUNTIME_MODULE = '@telefonica/mistica/icon-runtime';
+const MISTICA_MODULE = '@telefonica/mistica';
 const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 
@@ -198,9 +196,9 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
      */
 
     import * as React from 'react';
-    import {${hasVariants ? 'useTheme, ' : ''}useThemeVariant, vars, useIconGradient} from '${RUNTIME_MODULE}';
+    import {${hasVariants ? 'useTheme, ' : ''}useThemeVariant, skinVars as vars, useIconGradient} from '${MISTICA_MODULE}';
 
-    import type {IconProps} from '${RUNTIME_MODULE}';
+    import type {IconProps} from '${MISTICA_MODULE}';
 
     const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
         const themeVariant = useThemeVariant();

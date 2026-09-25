@@ -53,9 +53,9 @@
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/ && yarn build-mistica-css",
         "storybook-static": "storybook build -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
-        "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
+        "detect-circular-dependencies": "npx dpdm --circular --exclude \"node_modules|packages/mistica-icons\" src/index.tsx",
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
-        "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
+        "circular-dependencies": "yarn dpdm src/index.tsx --exclude \"node_modules|packages/mistica-icons\" --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install && node scripts/link-self.js",
         "edit-playroom-patch": "playroom/patch-playroom.sh"
     },

@@ -49,13 +49,11 @@
         // "baseUrl": "./", // Base directory to resolve non-absolute module names.
         /**
          * The root package has no self link in node_modules, and the icons workspace reads the theme
-         * of this package through @telefonica/mistica/icon-runtime. Both directions therefore need a
-         * mapping here, and the same pairs live in .storybook/vite.config.mjs, playroom.config.js
-         * and jest.base.config.js.
+         * of this package by its name. Both directions therefore need a mapping here, and the same
+         * pairs live in .storybook/vite.config.mjs, playroom.config.js and jest.unit.config.js.
          */
         "paths": {
             "@telefonica/mistica": ["./src/index.tsx"],
-            "@telefonica/mistica/icon-runtime": ["./src/icon-runtime.tsx"],
             "@telefonica/mistica-icons/keywords": [
                 "./packages/mistica-icons/src/generated/icons-keywords.tsx"
             ],

@@ -27,7 +27,7 @@ const config: StorybookConfig = {
 
     framework: '@storybook/react-vite',
 
-    staticDirs: ['./css/fonts'],
+    staticDirs: ['../assets/fonts'],
 
     /** hide interactions tab */
     features: {

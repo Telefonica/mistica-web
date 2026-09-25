@@ -6,11 +6,11 @@ const fs = require('fs');
 const path = require('path');
 
 const PACKAGE_ROOT = path.join(__dirname, '..', 'packages', 'mistica-icons');
-const MIN_ICON_COUNT = 2000;
 
-const countIcons = (dir) =>
-    fs.readdirSync(dir).filter((name) => name.startsWith('icon-') && name.endsWith('.js')).length;
+const countIcons = (dir, extension) =>
+    fs.readdirSync(dir).filter((name) => name.startsWith('icon-') && name.endsWith(extension)).length;
 
+const sources = path.join(PACKAGE_ROOT, 'src', 'generated');
 const dist = path.join(PACKAGE_ROOT, 'dist-es');
 
 if (!fs.existsSync(dist)) {
@@ -19,11 +19,12 @@ if (!fs.existsSync(dist)) {
     process.exit(1);
 }
 
-const iconCount = countIcons(dist);
+const sourceCount = countIcons(sources, '.tsx');
+const iconCount = countIcons(dist, '.js');
 
-if (iconCount < MIN_ICON_COUNT) {
+if (iconCount < sourceCount) {
     console.error(
-        `\nCannot pack @telefonica/mistica-icons: ${dist} holds ${iconCount} icons, and the minimum is ${MIN_ICON_COUNT}.`
+        `\nCannot pack @telefonica/mistica-icons: ${dist} holds ${iconCount} icons, and the sources hold ${sourceCount}.`
     );
     console.error('Run "yarn build" in the root of the repository again.\n');
     process.exit(1);
