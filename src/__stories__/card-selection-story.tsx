@@ -34,8 +34,6 @@ type SelectionArgs = {
     checkbox?: CardSelectionProps['checkbox'];
     switch?: CardSelectionProps['switch'];
     radioValue?: string;
-    defaultChecked: boolean;
-    disabled: boolean;
     customRender: boolean;
     variant: Variant;
     variantOutside: Variant;
@@ -48,8 +46,6 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     checkbox,
     switch: switchProps,
     radioValue: radioValueProp,
-    defaultChecked,
-    disabled,
     customRender,
     variant,
     variantOutside,
@@ -104,11 +100,11 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                         : control === 'radio'
                           ? {radioValue: radioValueProp ?? title}
                           : control === 'switch'
-                            ? {switch: switchProps ?? {name: title, defaultValue: defaultChecked, disabled}}
-                            : {checkbox: checkbox ?? {name: title, defaultValue: defaultChecked, disabled}};
+                            ? {switch: switchProps ?? {name: title}}
+                            : {checkbox: checkbox ?? {name: title}};
                 return card === 'advanced' ? (
                     <CommunityAdvancedDataCard
-                        key={`${title}-${control}-${defaultChecked}`}
+                        key={`${title}-${control}-${control === 'switch' ? switchProps?.defaultValue : checkbox?.defaultValue}`}
                         title={title}
                         description="This is a description"
                         slot={customRender ? [controlElement] : undefined}
@@ -116,7 +112,7 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                     />
                 ) : (
                     <Card
-                        key={`${title}-${control}-${defaultChecked}`}
+                        key={`${title}-${control}-${control === 'switch' ? switchProps?.defaultValue : checkbox?.defaultValue}`}
                         title={title}
                         description="This is a description"
                         imageSrc={card === 'data' ? undefined : beachImg}
@@ -150,12 +146,10 @@ export const Selection: StoryComponent<SelectionArgs> = ({
 Selection.args = {
     card: 'data',
     customRender: false,
-    defaultChecked: false,
-    disabled: false,
     control: 'checkbox',
     selected: undefined,
-    checkbox: undefined,
-    switch: undefined,
+    checkbox: {name: 'card-checkbox', defaultValue: false, disabled: false},
+    switch: {name: 'card-switch', defaultValue: false, disabled: false},
     radioValue: undefined,
     variant: 'default',
     variantOutside: 'default',
@@ -165,17 +159,15 @@ Selection.argTypes = {
         control: 'object',
         if: {arg: 'control', eq: 'checkbox'},
         description:
-            'Optional override: {name, value, defaultValue, disabled}. Use defaultChecked and disabled for quick testing.',
+            'Edit name, defaultValue and disabled. Add value to test a controlled state; defaultValue sets the initial state.',
     },
     switch: {
         control: 'object',
         if: {arg: 'control', eq: 'switch'},
         description:
-            'Optional override: {name, value, defaultValue, disabled}. Use defaultChecked and disabled for quick testing.',
+            'Edit name, defaultValue and disabled. Add value to test a controlled state; defaultValue sets the initial state.',
     },
     radioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
-    defaultChecked: {control: 'boolean', if: {arg: 'control', neq: 'radio'}},
-    disabled: {control: 'boolean', if: {arg: 'control', neq: 'radio'}},
     customRender: {control: 'boolean'},
     card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},
