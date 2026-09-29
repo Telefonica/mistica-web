@@ -1,0 +1,70 @@
+diff --git a/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css b/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css
+index c31e2dfa13c906d125a9f91f190d2e67305f3985..8d5efb8bc777cb0eec5f8d8801c8c4845ed5f05f 100644
+--- a/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css
++++ b/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css
+@@ -1,5 +1,5 @@
+ .svaajg3 {
+-  border: 1px solid var(--_1oi8mvos);
++  border-radius: 12px;
+ }
+ .svaajg5 {
+   background-color: var(--_1oi8mvoq);
+diff --git a/dist/app/entries/preview.mjs b/dist/app/entries/preview.mjs
+index a1e05517fbdb6127979ef6547eeeb1588e2f0978..979bea9bc0d83de56ca51ce0d65b8c79cacb5256 100644
+--- a/dist/app/entries/preview.mjs
++++ b/dist/app/entries/preview.mjs
+@@ -23,52 +23,8 @@ var root = "_1oi8mvo10 _1oi8mvo11 _1oi8mvo12 _1oi8mvo13 _1oi8mvoz _1oi8mvo15 _1o
+ var rootEmbedded = "svaajg3 _1oi8mvo4e";
+ //#endregion
+ //#region src/components/Preview/Preview.tsx
+-const PreviewHeader = ({ editorHref, onHideHeader }) => /* @__PURE__ */ jsxs("div", {
+-	className: header,
+-	children: [/* @__PURE__ */ jsxs("div", {
+-		className: leftGroup,
+-		children: [/* @__PURE__ */ jsx(Logo, {
+-			size: 24,
+-			wordmark: true
+-		}), /* @__PURE__ */ jsx("span", {
+-			className: headerDescription,
+-			children: /* @__PURE__ */ jsx(Text, {
+-				tone: "secondary",
+-				size: "small",
+-				children: "View is the result of user-provided code"
+-			})
+-		})]
+-	}), /* @__PURE__ */ jsxs("div", {
+-		className: actions,
+-		children: [/* @__PURE__ */ jsx(Button, {
+-			as: "a",
+-			href: editorHref,
+-			target: "_blank",
+-			rel: "noreferrer",
+-			children: "Edit"
+-		}), /* @__PURE__ */ jsx(ButtonIcon, {
+-			label: "Dismiss",
+-			icon: /* @__PURE__ */ jsx(X, {}),
+-			onClick: onHideHeader
+-		})]
+-	})]
+-});
+-const PreviewFooter = ({ editorHref }) => /* @__PURE__ */ jsxs("div", {
+-	className: footer,
+-	children: [/* @__PURE__ */ jsx(Logo, {
+-		size: 24,
+-		wordmark: true
+-	}), /* @__PURE__ */ jsx("div", {
+-		className: actions,
+-		children: /* @__PURE__ */ jsx(Button, {
+-			as: "a",
+-			href: editorHref,
+-			target: "_blank",
+-			rel: "noreferrer",
+-			children: "Open"
+-		})
+-	})]
+-});
++const PreviewHeader = ({ editorHref, onHideHeader }) => null;
++const PreviewFooter = ({ editorHref }) => null;
+ var Preview_default = ({ title, code, themeName }) => {
+ 	useDocumentTitle({
+ 		title,
