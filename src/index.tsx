@@ -972,6 +972,9 @@ export {default as IconDisturbRegular} from './generated/mistica-icons/icon-dist
 export {default as IconDnaFilled} from './generated/mistica-icons/icon-dna-filled';
 export {default as IconDnaLight} from './generated/mistica-icons/icon-dna-light';
 export {default as IconDnaRegular} from './generated/mistica-icons/icon-dna-regular';
+export {default as IconDocumentInformationFilled} from './generated/mistica-icons/icon-document-information-filled';
+export {default as IconDocumentInformationLight} from './generated/mistica-icons/icon-document-information-light';
+export {default as IconDocumentInformationRegular} from './generated/mistica-icons/icon-document-information-regular';
 export {default as IconDocumentOtherFilled} from './generated/mistica-icons/icon-document-other-filled';
 export {default as IconDocumentOtherLight} from './generated/mistica-icons/icon-document-other-light';
 export {default as IconDocumentOtherRegular} from './generated/mistica-icons/icon-document-other-regular';
@@ -1393,6 +1396,9 @@ export {default as IconInternetPendriveFilled} from './generated/mistica-icons/i
 export {default as IconInternetPendriveLight} from './generated/mistica-icons/icon-internet-pendrive-light';
 export {default as IconInternetPendriveRegular} from './generated/mistica-icons/icon-internet-pendrive-regular';
 export {default as IconInternetRegular} from './generated/mistica-icons/icon-internet-regular';
+export {default as IconInternetRoamingFilled} from './generated/mistica-icons/icon-internet-roaming-filled';
+export {default as IconInternetRoamingLight} from './generated/mistica-icons/icon-internet-roaming-light';
+export {default as IconInternetRoamingRegular} from './generated/mistica-icons/icon-internet-roaming-regular';
 export {default as IconIntranetFilled} from './generated/mistica-icons/icon-intranet-filled';
 export {default as IconIntranetLight} from './generated/mistica-icons/icon-intranet-light';
 export {default as IconIntranetRegular} from './generated/mistica-icons/icon-intranet-regular';
@@ -1585,6 +1591,9 @@ export {default as IconMobileDeviceRegular} from './generated/mistica-icons/icon
 export {default as IconMobileEuroFilled} from './generated/mistica-icons/icon-mobile-euro-filled';
 export {default as IconMobileEuroLight} from './generated/mistica-icons/icon-mobile-euro-light';
 export {default as IconMobileEuroRegular} from './generated/mistica-icons/icon-mobile-euro-regular';
+export {default as IconMobileInformationFilled} from './generated/mistica-icons/icon-mobile-information-filled';
+export {default as IconMobileInformationLight} from './generated/mistica-icons/icon-mobile-information-light';
+export {default as IconMobileInformationRegular} from './generated/mistica-icons/icon-mobile-information-regular';
 export {default as IconMobilePauseFilled} from './generated/mistica-icons/icon-mobile-pause-filled';
 export {default as IconMobilePauseLight} from './generated/mistica-icons/icon-mobile-pause-light';
 export {default as IconMobilePauseRegular} from './generated/mistica-icons/icon-mobile-pause-regular';
@@ -1967,6 +1976,9 @@ export {default as IconSdFilled} from './generated/mistica-icons/icon-sd-filled'
 export {default as IconSdLight} from './generated/mistica-icons/icon-sd-light';
 export {default as IconSdRegular} from './generated/mistica-icons/icon-sd-regular';
 export {default as IconSeaLight} from './generated/mistica-icons/icon-sea-light';
+export {default as IconSearchAiFilled} from './generated/mistica-icons/icon-search-ai-filled';
+export {default as IconSearchAiLight} from './generated/mistica-icons/icon-search-ai-light';
+export {default as IconSearchAiRegular} from './generated/mistica-icons/icon-search-ai-regular';
 export {default as IconSearchCloudFilled} from './generated/mistica-icons/icon-search-cloud-filled';
 export {default as IconSearchCloudLight} from './generated/mistica-icons/icon-search-cloud-light';
 export {default as IconSearchCloudRegular} from './generated/mistica-icons/icon-search-cloud-regular';
