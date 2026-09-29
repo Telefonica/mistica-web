@@ -31,9 +31,12 @@ type SelectionArgs = {
     card: 'data' | 'media' | 'cover' | 'naked' | 'advanced';
     control: 'checkbox' | 'switch' | 'radio';
     selected?: boolean;
-    checkbox?: CardSelectionProps['checkbox'];
-    switch?: CardSelectionProps['switch'];
-    radioValue?: string;
+    firstCheckbox?: CardSelectionProps['checkbox'];
+    secondCheckbox?: CardSelectionProps['checkbox'];
+    firstSwitch?: CardSelectionProps['switch'];
+    secondSwitch?: CardSelectionProps['switch'];
+    firstRadioValue: string;
+    secondRadioValue: string;
     customRender: boolean;
     variant: Variant;
     variantOutside: Variant;
@@ -43,9 +46,12 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     card,
     control,
     selected,
-    checkbox,
-    switch: switchProps,
-    radioValue: radioValueProp,
+    firstCheckbox,
+    secondCheckbox,
+    firstSwitch,
+    secondSwitch,
+    firstRadioValue,
+    secondRadioValue,
     customRender,
     variant,
     variantOutside,
@@ -65,11 +71,24 @@ export const Selection: StoryComponent<SelectionArgs> = ({
         : undefined;
     const cards = (
         <Stack space={24}>
-            {['First', 'Second'].map((title) => {
+            {[
+                {
+                    title: 'First',
+                    checkbox: firstCheckbox,
+                    switchProps: firstSwitch,
+                    radioValueProp: firstRadioValue,
+                },
+                {
+                    title: 'Second',
+                    checkbox: secondCheckbox,
+                    switchProps: secondSwitch,
+                    radioValueProp: secondRadioValue,
+                },
+            ].map(({title, checkbox, switchProps, radioValueProp}) => {
                 const controlElement =
                     control === 'radio' ? (
                         <RadioButton
-                            value={title}
+                            value={radioValueProp}
                             {...(renderControl ? {render: renderControl} : {children: `Select ${title}`})}
                         />
                     ) : control === 'switch' ? (
@@ -91,7 +110,7 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                     selected ??
                     (customRender
                         ? control === 'radio'
-                            ? radioValue === title
+                            ? radioValue === radioValueProp
                             : !!customValues[title]
                         : undefined);
                 const selectionProps =
@@ -148,26 +167,42 @@ Selection.args = {
     customRender: false,
     control: 'checkbox',
     selected: undefined,
-    checkbox: {name: 'card-checkbox', defaultValue: false, disabled: false},
-    switch: {name: 'card-switch', defaultValue: false, disabled: false},
-    radioValue: undefined,
+    firstCheckbox: {name: 'first-checkbox', defaultValue: false, disabled: false},
+    secondCheckbox: {name: 'second-checkbox', defaultValue: false, disabled: false},
+    firstSwitch: {name: 'first-switch', defaultValue: false, disabled: false},
+    secondSwitch: {name: 'second-switch', defaultValue: false, disabled: false},
+    firstRadioValue: 'First',
+    secondRadioValue: 'Second',
     variant: 'default',
     variantOutside: 'default',
 };
 Selection.argTypes = {
-    checkbox: {
+    firstCheckbox: {
         control: 'object',
         if: {arg: 'control', eq: 'checkbox'},
         description:
             'Edit name, defaultValue and disabled. Add value to test a controlled state; defaultValue sets the initial state.',
     },
-    switch: {
+    secondCheckbox: {
+        control: 'object',
+        if: {arg: 'control', eq: 'checkbox'},
+        description:
+            'Edit name, defaultValue and disabled. Add value to test a controlled state; defaultValue sets the initial state.',
+    },
+    firstSwitch: {
         control: 'object',
         if: {arg: 'control', eq: 'switch'},
         description:
             'Edit name, defaultValue and disabled. Add value to test a controlled state; defaultValue sets the initial state.',
     },
-    radioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
+    secondSwitch: {
+        control: 'object',
+        if: {arg: 'control', eq: 'switch'},
+        description:
+            'Edit name, defaultValue and disabled. Add value to test a controlled state; defaultValue sets the initial state.',
+    },
+    firstRadioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
+    secondRadioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
     customRender: {control: 'boolean'},
     card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},
