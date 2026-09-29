@@ -699,7 +699,7 @@ export const getCyberSkin = (): Skin => {
         },
         borderRadii: {
             avatar: '50%',
-            bar: '0px',
+            bar: '999px',
             button: '32px',
             checkbox: '2px',
             container: '20px',
