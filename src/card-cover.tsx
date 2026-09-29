@@ -5,7 +5,7 @@ import type {Variant} from './theme-variant-context';
 import type {
     CardAspectRatio,
     SlotAlignment,
-    MaybeTouchableCard,
+    CardInteractionProps,
     CardActionButtonLink,
     CardActionButtonSecondary,
     CardActionButtonPrimary,
@@ -66,7 +66,7 @@ type CoverCardProps = {
     footerDivider?: boolean;
 };
 
-export const CoverCard = React.forwardRef<HTMLDivElement, MaybeTouchableCard<CoverCardProps>>(
+export const CoverCard = React.forwardRef<HTMLDivElement, CardInteractionProps<CoverCardProps>>(
     ({size = 'default', dataAttributes, ...rest}, ref) => {
         return (
             <InternalCard

@@ -49,6 +49,7 @@ export const Default: StoryComponent<NakedCardArgs> = ({
     mediaWidth,
     onClose,
     onPress,
+    selected,
     topActions,
     buttonPrimary,
     buttonSecondary,
@@ -105,6 +106,7 @@ export const Default: StoryComponent<NakedCardArgs> = ({
                 buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
+                selected={selected}
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
                 imageFit={imageFit || undefined}
