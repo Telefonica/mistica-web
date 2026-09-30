@@ -296,7 +296,7 @@ export const selectionOutlineColor = styleVariants({
 
 export const selectionControl = style({borderRadius: skinVars.borderRadii.container});
 
-globalStyle(`${selectionControl} > div`, {
+globalStyle(`${selectionControl} > *`, {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',

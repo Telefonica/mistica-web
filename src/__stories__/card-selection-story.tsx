@@ -19,10 +19,10 @@ import {
     IconLockClosedRegular,
     IconLockOpenRegular,
 } from '..';
-import {ThemeVariantWrapper} from './card-common';
+import {ThemeVariantWrapper, normalizeAspectRatio, commonArgTypes} from './card-common';
 import beachImg from './images/beach.jpg';
 
-import type {CardSelectionProps} from '../card-internal';
+import type {CardAspectRatio, CardSelectionProps} from '../card-internal';
 import type {Variant} from '../theme-variant-context';
 
 export default {title: 'Components/Cards/Selection'};
@@ -37,6 +37,7 @@ type SelectionArgs = {
     secondSwitch?: CardSelectionProps['switch'];
     firstRadioValue: string;
     secondRadioValue: string;
+    aspectRatio?: string | number;
     customRender: boolean;
     variant: Variant;
     variantOutside: Variant;
@@ -53,6 +54,7 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     firstRadioValue,
     secondRadioValue,
     customRender,
+    aspectRatio,
     variant,
     variantOutside,
 }) => {
@@ -134,6 +136,7 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                         key={`${title}-${control}-${control === 'switch' ? switchProps?.defaultValue : checkbox?.defaultValue}`}
                         title={title}
                         description="This is a description"
+                        aspectRatio={normalizeAspectRatio(aspectRatio) as CardAspectRatio}
                         imageSrc={card === 'data' ? undefined : beachImg}
                         variant={
                             card === 'naked' || (card === 'cover' && variant === 'default')
@@ -164,6 +167,7 @@ export const Selection: StoryComponent<SelectionArgs> = ({
 
 Selection.args = {
     card: 'data',
+    aspectRatio: undefined,
     customRender: false,
     control: 'checkbox',
     selected: undefined,
@@ -203,6 +207,7 @@ Selection.argTypes = {
     },
     firstRadioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
     secondRadioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
+    aspectRatio: commonArgTypes.aspectRatio,
     customRender: {control: 'boolean'},
     card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},
