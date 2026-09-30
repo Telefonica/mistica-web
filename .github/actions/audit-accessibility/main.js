@@ -250,6 +250,9 @@ const disabledRulesByStoryAndSkin = {
     'utilities-animations-fadein--default': {
         all: ['color-contrast'],
     },
+    'utilities-animations-fadeout--default': {
+        all: ['color-contrast'],
+    },
 
     'patterns-feedback-feedbackscreen--feedback-screen-story': {
         Blau: ['color-contrast'],
