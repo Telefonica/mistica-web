@@ -296,12 +296,15 @@ export const selectionOutlineColor = styleVariants({
 
 export const selectionControl = style({borderRadius: skinVars.borderRadii.container});
 
-globalStyle(`${selectionControl} > *`, {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
-    flexGrow: 1,
-    borderRadius: 'inherit',
-    outlineOffset: 0,
-});
+globalStyle(
+    `${selectionControl} > [role="checkbox"], ${selectionControl} > [role="switch"], ${selectionControl} > [role="radio"]`,
+    {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        flexGrow: 1,
+        borderRadius: 'inherit',
+        outlineOffset: 0,
+    }
+);
