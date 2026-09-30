@@ -1837,16 +1837,18 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
                         overlayColor={footerOverlayBackground}
                     />
                 )}
-                <TopActions
-                    onClose={onClose}
-                    closeButtonLabel={closeButtonLabel}
-                    actions={topActions}
-                    variant={
-                        hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
-                            ? 'media'
-                            : variant
-                    }
-                />
+                {!isSelectable && (
+                    <TopActions
+                        onClose={onClose}
+                        closeButtonLabel={closeButtonLabel}
+                        actions={topActions}
+                        variant={
+                            hasBackgroundImageOrVideo || (hasMedia && mediaPosition !== 'left')
+                                ? 'media'
+                                : variant
+                        }
+                    />
+                )}
             </Container>
         );
     }

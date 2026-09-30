@@ -472,3 +472,16 @@ test.each`
     const card = await screen.findByTestId('AdvancedDataCard');
     expect(await card.screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['data', 'media', 'cover', 'naked', 'advanced'])(
+    'Selectable %s cards hide top actions and close button',
+    async (card) => {
+        await openStoryPage({
+            id: 'components-cards-selection--selection',
+            device: 'MOBILE_IOS',
+            args: {card, topActions: true, onClose: true},
+        });
+        const container = await screen.findByTestId('card-container');
+        expect(await container.screenshot()).toMatchImageSnapshot();
+    }
+);

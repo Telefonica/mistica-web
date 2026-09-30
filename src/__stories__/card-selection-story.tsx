@@ -19,7 +19,7 @@ import {
     IconLockClosedRegular,
     IconLockOpenRegular,
 } from '..';
-import {ThemeVariantWrapper} from './card-common';
+import {ThemeVariantWrapper, getTopActions} from './card-common';
 import beachImg from './images/beach.jpg';
 
 import type {CardSelectionProps} from '../card-internal';
@@ -37,6 +37,8 @@ type SelectionArgs = {
     secondSwitch?: CardSelectionProps['switch'];
     firstRadioValue: string;
     secondRadioValue: string;
+    topActions: boolean;
+    onClose: boolean;
     customRender: boolean;
     variant: Variant;
     variantOutside: Variant;
@@ -53,6 +55,8 @@ export const Selection: StoryComponent<SelectionArgs> = ({
     firstRadioValue,
     secondRadioValue,
     customRender,
+    topActions,
+    onClose,
     variant,
     variantOutside,
 }) => {
@@ -121,15 +125,20 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                           : control === 'switch'
                             ? {switch: switchProps ?? {name: title}}
                             : {checkbox: checkbox ?? {name: title}};
+                const actionProps = {onClose: onClose ? () => {} : undefined};
                 return card === 'advanced' ? (
+                    // @ts-expect-error Exercise incompatible props passed from JavaScript or Playroom.
                     <CommunityAdvancedDataCard
                         key={`${title}-${control}-${control === 'switch' ? switchProps?.defaultValue : checkbox?.defaultValue}`}
                         title={title}
                         description="This is a description"
                         slot={customRender ? [controlElement] : undefined}
                         {...selectionProps}
+                        {...actionProps}
+                        actions={getTopActions(topActions)}
                     />
                 ) : (
+                    // @ts-expect-error Exercise incompatible props passed from JavaScript or Playroom.
                     <Card
                         key={`${title}-${control}-${control === 'switch' ? switchProps?.defaultValue : checkbox?.defaultValue}`}
                         title={title}
@@ -142,6 +151,8 @@ export const Selection: StoryComponent<SelectionArgs> = ({
                         }
                         slot={customRender ? controlElement : undefined}
                         {...selectionProps}
+                        {...actionProps}
+                        topActions={getTopActions(topActions)}
                     />
                 );
             })}
@@ -164,6 +175,8 @@ export const Selection: StoryComponent<SelectionArgs> = ({
 
 Selection.args = {
     card: 'data',
+    topActions: false,
+    onClose: false,
     customRender: false,
     control: 'checkbox',
     selected: undefined,
@@ -203,6 +216,8 @@ Selection.argTypes = {
     },
     firstRadioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
     secondRadioValue: {control: 'text', if: {arg: 'control', eq: 'radio'}},
+    topActions: {control: 'boolean'},
+    onClose: {control: 'boolean'},
     customRender: {control: 'boolean'},
     card: {options: ['data', 'media', 'cover', 'naked', 'advanced'], control: {type: 'select'}},
     control: {options: ['checkbox', 'switch', 'radio'], control: {type: 'select'}},

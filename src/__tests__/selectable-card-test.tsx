@@ -7,6 +7,7 @@ import {CoverCard} from '../card-cover';
 import AdvancedDataCard from '../community/advanced-data-card';
 import {NakedCard} from '../card-naked';
 import Checkbox from '../checkbox';
+import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
 import Switch from '../switch-component';
 import {RadioGroup} from '../radio-button';
 import ThemeContextProvider from '../theme-context-provider';
@@ -202,5 +203,30 @@ test.each([DataCard, MediaCard, CoverCard, NakedCard, AdvancedDataCard])(
         await userEvent.click(screen.getByRole('button', {name: 'Cerrar'}));
         expect(onClose).toHaveBeenCalledTimes(1);
         expect(onPress).toHaveBeenCalledTimes(1);
+    }
+);
+
+describe.each([DataCard, MediaCard, CoverCard, NakedCard, AdvancedDataCard])(
+    'selection hides incompatible actions (%#)',
+    (Card) => {
+        test.each(['checkbox', 'switch', 'radio'] as const)('%s hides top actions and onClose', (control) => {
+            const actions = [{Icon: IconStarRegular, label: 'Favorite', onPress: jest.fn()}];
+            const props = {
+                title: 'Choose card',
+                onClose: jest.fn(),
+                topActions: actions,
+                actions,
+                ...(control === 'radio' ? {radioValue: 'first'} : {[control]: {name: 'selection'}}),
+            };
+            renderWithTheme(
+                <RadioGroup name="cards" defaultValue="first">
+                    {/* @ts-expect-error Invalid combinations can still be passed from JavaScript or Playroom. */}
+                    <Card {...props} />
+                </RadioGroup>
+            );
+            expect(screen.getByRole(control, {name: 'Choose card'})).toBeInTheDocument();
+            expect(screen.queryByRole('button', {name: 'Favorite'})).not.toBeInTheDocument();
+            expect(screen.queryByRole('button', {name: 'Cerrar'})).not.toBeInTheDocument();
+        });
     }
 );
