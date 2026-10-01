@@ -135,3 +135,29 @@ test('checking a slot control does not add a selection outline', async () => {
     expect(await getOutline()).toEqual(outline);
     expect(outline.width).toBe('0px');
 });
+
+test.each(['checkbox', 'switch', 'radio'])('%s fills a cover card with aspect ratio', async (control) => {
+    const page = await openStoryPage({
+        id: 'components-cards-selection--selection',
+        device: 'MOBILE_IOS',
+        args: {card: 'cover', control, aspectRatio: '1 1'},
+    });
+    const surface = await screen.findByRole(control, {name: 'First This is a description'});
+    const bounds = await surface.evaluate((element) => {
+        const container = element.closest('section');
+        if (!container) {
+            throw new Error('Card container not found');
+        }
+        const card = container.getBoundingClientRect();
+        const control = element.getBoundingClientRect();
+        return {cardWidth: card.width, cardHeight: card.height, controlHeight: control.height};
+    });
+    expect(bounds.cardHeight).toBeCloseTo(bounds.cardWidth, 0);
+    expect(bounds.controlHeight).toBeCloseTo(bounds.cardHeight, 0);
+    const box = await surface.boundingBox();
+    if (!box) {
+        throw new Error('Card control bounds not found');
+    }
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height - 8);
+    expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe('true');
+});
