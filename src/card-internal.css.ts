@@ -1,4 +1,4 @@
-import {createVar, style, styleVariants, globalStyle} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -296,15 +296,12 @@ export const selectionOutlineColor = styleVariants({
 
 export const selectionControl = style({borderRadius: skinVars.borderRadii.container});
 
-globalStyle(
-    `${selectionControl} > [role="checkbox"], ${selectionControl} > [role="switch"], ${selectionControl} > [role="radio"]`,
-    {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
-        flexGrow: 1,
-        borderRadius: 'inherit',
-        outlineOffset: 0,
-    }
-);
+export const selectionControlContent = style({
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%',
+    flexGrow: 1,
+    borderRadius: 'inherit',
+    outlineOffset: 0,
+});
