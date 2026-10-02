@@ -2,8 +2,9 @@ import * as React from 'react';
 import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {SidenavBar, SidenavLayout} from '..';
+import {SidenavBar, SidenavLayout, Text2} from '..';
 import * as styles from '../sidenav-bar.css';
+import ScreenSizeContext from '../screen-size-context';
 import * as layoutStyles from '../sidenav-bar-layout.css';
 import {ThemeVariant} from '../theme-variant-context';
 import {getMovistarSkin} from '../skins/movistar';
@@ -20,14 +21,36 @@ import type {SidenavEntry, SidenavSection} from '../sidenav-bar-types';
 const COLLAPSE_LABEL = sidenavCollapse.es;
 const EXPAND_LABEL = sidenavExpand.es;
 
+type IntersectionCallback = (entries: Array<{isIntersecting: boolean}>) => void;
+
+const liveIntersectionCallbacks = new Set<IntersectionCallback>();
+
 class MockIntersectionObserver {
+    private callback: IntersectionCallback;
+
+    constructor(callback: IntersectionCallback) {
+        this.callback = callback;
+        liveIntersectionCallbacks.add(callback);
+    }
     observe = jest.fn();
     unobserve = jest.fn();
-    disconnect = jest.fn();
+    disconnect = jest.fn(() => {
+        liveIntersectionCallbacks.delete(this.callback);
+    });
 }
+
+const scrollBodyToTheMiddle = async () => {
+    await React.act(async () => {
+        liveIntersectionCallbacks.forEach((callback) => callback([{isIntersecting: false}]));
+    });
+};
 
 beforeAll(() => {
     window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
+});
+
+beforeEach(() => {
+    liveIntersectionCallbacks.clear();
 });
 
 // The group of a parent item and the second column both slide away instead of disappearing, so their node
@@ -1593,4 +1616,55 @@ test('SidenavBar reports a first-level item without an asset, and it accepts a s
         expect.stringContaining('SidenavBar item "Home"'),
     ]);
     consoleError.mockRestore();
+});
+
+// A trip to a narrow screen replaces the rail with the mobile treatment, which unmounts the body and its
+// sentinels. The dividers that a scroll had earned do not belong to the body that comes back.
+test('SidenavBar drops its scroll dividers when the screen goes narrow and back', async () => {
+    const screenSizeOf = (isTabletOrSmaller: boolean) => ({
+        isMobile: isTabletOrSmaller,
+        isTablet: false,
+        isTabletOrBigger: !isTabletOrSmaller,
+        isTabletOrSmaller,
+        isDesktopOrBigger: !isTabletOrSmaller,
+        isLargeDesktop: false,
+        isExtraLargeDesktop: false,
+    });
+
+    const sidenavOnScreen = (isTabletOrSmaller: boolean) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <ScreenSizeContext.Provider value={screenSizeOf(isTabletOrSmaller)}>
+                <SidenavBar
+                    aria-label="Main navigation"
+                    entries={defaultEntries}
+                    headerSlot={<Text2 regular>Header</Text2>}
+                    fixedFooter
+                    footerSlot={<Text2 regular>Footer</Text2>}
+                />
+            </ScreenSizeContext.Provider>
+        </ThemeContextProvider>
+    );
+
+    const {container, rerender} = render(sidenavOnScreen(false));
+    await React.act(async () => {});
+
+    const dividerBaseClass = styles.scrollSpacerDivider.split(' ').pop();
+    // eslint-disable-next-line testing-library/no-node-access
+    const countScrollDividers = () => container.querySelectorAll(`.${dividerBaseClass}`).length;
+
+    expect(countScrollDividers()).toBe(0);
+
+    await scrollBodyToTheMiddle();
+    expect(countScrollDividers()).toBe(2);
+
+    await React.act(async () => {
+        rerender(sidenavOnScreen(true));
+    });
+    await React.act(async () => {
+        rerender(sidenavOnScreen(false));
+    });
+
+    // The desktop body comes back at its own rest position, so neither divider paints until its observer
+    // reports a sentinel outside of the scrollport again.
+    expect(countScrollDividers()).toBe(0);
 });
