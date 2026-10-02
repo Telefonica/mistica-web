@@ -711,7 +711,7 @@ export const getO2Skin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             chipLabelSmall: {
-                lineHeight: {desktop: 24, mobile: 20},
+                lineHeight: {desktop: 20, mobile: 20},
                 size: {desktop: 14, mobile: 14},
                 weight: 'medium',
             },
