@@ -31,6 +31,10 @@ Deliver a **single fenced `jsx` code block** containing the complete, paste-read
 self-contained: select-all + paste into the Playroom editor is the only action the user needs to take. Do not
 split the output across multiple code blocks.
 
+Always accompany the code block with a link to the editor so the user can paste it straight away:
+https://mistica-web.vercel.app/playroom. If the user is working on a forced mobile or desktop view, link
+`/playroom-mobile` or `/playroom-desktop` instead.
+
 ## Pair with the `mistica-react` skill
 
 The JSX written here must be as faithful to the design system as production code. Invoke `mistica-react` via
@@ -176,5 +180,7 @@ Imperative dialog:
 - Every `setState` in an event handler is either wrapped in an arrow or receives the value as its first
   argument — no `setState('k', v)` sitting bare in a prop.
 - No `ThemeContextProvider` / `SheetRoot` wrapper added by hand.
+- The reply includes a link to the Playroom editor (https://mistica-web.vercel.app/playroom or its
+  mobile/desktop variant).
 - The full JSX is delivered as a single paste-ready fenced code block so the user can select-all and paste it
   directly into the Playroom editor.
