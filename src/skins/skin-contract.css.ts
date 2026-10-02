@@ -357,6 +357,7 @@ const textPresets: ToThemeTokens<TextPresetsConfig> = {
     text9: {weight: '', size: '', lineHeight: ''},
     text10: {weight: '', size: '', lineHeight: ''},
     chipLabel: {weight: '', size: '', lineHeight: ''},
+    chipLabelSmall: {weight: '', size: '', lineHeight: ''},
     inputHelperText: {size: '', lineHeight: ''},
     inputLabel: {size: '', lineHeight: ''},
     inputValue: {size: '', lineHeight: ''},

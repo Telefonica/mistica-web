@@ -714,6 +714,11 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 size: {desktop: 18, mobile: 14},
                 weight: 'medium',
             },
+            chipLabelSmall: {
+                lineHeight: {desktop: 22, mobile: 20},
+                size: {desktop: 16, mobile: 14},
+                weight: 'medium',
+            },
             drawerTitle: {
                 lineHeight: {desktop: 26, mobile: 26},
                 size: {desktop: 20, mobile: 20},
