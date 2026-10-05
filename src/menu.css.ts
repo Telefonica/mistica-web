@@ -4,10 +4,8 @@ import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
 const top = createVar();
-const bottom = createVar();
 const left = createVar();
 const width = createVar();
-const right = createVar();
 const maxHeight = createVar();
 const transformOrigin = createVar();
 
@@ -16,9 +14,7 @@ const MENU_MAX_WIDTH = 280;
 
 export const vars = {
     top,
-    bottom,
     left,
-    right,
     width,
     maxHeight,
     transformOrigin,
@@ -35,9 +31,7 @@ export const menuContainer = style([
     }),
     {
         top,
-        bottom,
         left,
-        right,
         width,
         minWidth: MENU_MIN_WIDTH,
         maxWidth: MENU_MAX_WIDTH,

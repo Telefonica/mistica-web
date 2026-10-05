@@ -291,6 +291,8 @@ export type MenuProps = {
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
     position?: 'left' | 'right';
+    placement?: 'top' | 'bottom' | 'left' | 'right';
+    alignment?: 'start' | 'middle' | 'end';
     dataAttributes?: DataAttributes;
 };
 
@@ -299,6 +301,8 @@ export const Menu = ({
     renderMenu,
     width,
     position = 'left',
+    placement = 'bottom',
+    alignment = position === 'left' ? 'start' : 'end',
     dataAttributes,
 }: MenuProps): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -309,11 +313,9 @@ export const Menu = ({
     const menuRef = React.useRef<HTMLDivElement | null>(null);
 
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        left?: number;
-        right?: number;
-        top: string;
-        bottom: string;
-        maxHeight?: number;
+        left: number;
+        top: number;
+        maxHeight: number;
         transformOrigin: string;
     } | null>(null);
 
@@ -326,44 +328,57 @@ export const Menu = ({
             return;
         }
 
-        const {top: topTarget, right: rightTarget, left: leftTarget, bottom: bottomTarget} = targetRect;
+        const availableSpace = {
+            top: targetRect.top - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
+            bottom: windowSize.height - targetRect.bottom - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
+            left: targetRect.left - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
+            right: windowSize.width - targetRect.right - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
+        };
+        const oppositePlacement = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
+        const isVertical = placement === 'top' || placement === 'bottom';
+        const menuSize = isVertical ? menu.scrollHeight : menu.offsetWidth;
+        const opposite = oppositePlacement[placement];
+        const finalPlacement =
+            availableSpace[placement] < menuSize && availableSpace[opposite] > availableSpace[placement]
+                ? opposite
+                : placement;
+        const maxHeight = Math.max(
+            0,
+            isVertical ? availableSpace[finalPlacement] : windowSize.height - 2 * MARGIN_THRESHOLD
+        );
+        const heightMenu = Math.min(menu.scrollHeight, maxHeight);
+        const widthMenu = menu.offsetWidth;
+        const targetStart = isVertical ? targetRect.left : targetRect.top;
+        const targetSize = isVertical ? targetRect.width : targetRect.height;
+        const alignmentSize = isVertical ? widthMenu : heightMenu;
+        const alignmentOffset = alignment === 'start' ? 0 : alignment === 'end' ? 1 : 0.5;
+        const alignedPosition = targetStart + (targetSize - alignmentSize) * alignmentOffset;
+        const shiftedPosition = Math.max(
+            MARGIN_THRESHOLD,
+            Math.min(
+                alignedPosition,
+                (isVertical ? windowSize.width : windowSize.height) - alignmentSize - MARGIN_THRESHOLD
+            )
+        );
+        const positions = {
+            top: {left: shiftedPosition, top: targetRect.top - MENU_OFFSET_FROM_TARGET - heightMenu},
+            bottom: {left: shiftedPosition, top: targetRect.bottom + MENU_OFFSET_FROM_TARGET},
+            left: {left: targetRect.left - MENU_OFFSET_FROM_TARGET - widthMenu, top: shiftedPosition},
+            right: {left: targetRect.right + MENU_OFFSET_FROM_TARGET, top: shiftedPosition},
+        };
+        const transformOrigins = {
+            top: 'center bottom',
+            bottom: 'center top',
+            left: 'right center',
+            right: 'left center',
+        };
 
-        const heightMenu = menu.scrollHeight;
-
-        const leftDirection = position === 'left' ? leftTarget : undefined;
-        const rightDirection = position === 'right' ? windowSize.width - rightTarget : undefined;
-
-        const topTargetWithOffset = topTarget - MENU_OFFSET_FROM_TARGET;
-        const bottomTargetWithOffset = bottomTarget + MENU_OFFSET_FROM_TARGET;
-
-        const availableSpaceOnBottom = windowSize.height - bottomTargetWithOffset - MARGIN_THRESHOLD;
-        const availableSpaceOnTop = topTargetWithOffset - MARGIN_THRESHOLD;
-        const menuFitsOnBottom = availableSpaceOnBottom > heightMenu;
-        const menuFitsOnTop = availableSpaceOnTop > heightMenu;
-
-        const isMenuOnBottom =
-            menuFitsOnBottom || (!menuFitsOnTop && availableSpaceOnBottom > availableSpaceOnTop);
-
-        if (isMenuOnBottom) {
-            setItemsComputedProps({
-                left: leftDirection,
-                right: rightDirection,
-                top: `${bottomTargetWithOffset}px`,
-                bottom: 'auto',
-                maxHeight: menuFitsOnBottom ? undefined : availableSpaceOnBottom,
-                transformOrigin: 'center top',
-            });
-        } else {
-            setItemsComputedProps({
-                left: leftDirection,
-                right: rightDirection,
-                top: 'auto',
-                bottom: `${windowSize.height - topTargetWithOffset}px`,
-                maxHeight: menuFitsOnTop ? undefined : availableSpaceOnTop,
-                transformOrigin: 'center bottom',
-            });
-        }
-    }, [position, isMenuOpen, menu, target, width, windowSize]);
+        setItemsComputedProps({
+            ...positions[finalPlacement],
+            maxHeight,
+            transformOrigin: transformOrigins[finalPlacement],
+        });
+    }, [placement, alignment, isMenuOpen, menu, target, width, windowSize]);
 
     const targetProps = React.useMemo(
         () => ({
@@ -504,29 +519,16 @@ export const Menu = ({
                         <div
                             style={{
                                 ...applyCssVars({
+                                    ...(width !== undefined && {
+                                        [styles.vars.width]: width ? `${width}px` : '',
+                                    }),
                                     ...(itemsComputedProps
                                         ? {
-                                              [styles.vars.top]: itemsComputedProps.top,
-                                              [styles.vars.bottom]: itemsComputedProps.bottom,
+                                              [styles.vars.top]: `${itemsComputedProps.top}px`,
+                                              [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
                                               [styles.vars.transformOrigin]:
                                                   itemsComputedProps.transformOrigin,
-
-                                              ...(itemsComputedProps.left !== undefined && {
-                                                  [styles.vars.left]: `${itemsComputedProps.left}px`,
-                                              }),
-
-                                              ...(itemsComputedProps.right !== undefined && {
-                                                  [styles.vars.right]: `${itemsComputedProps.right}px`,
-                                              }),
-
-                                              ...(itemsComputedProps.maxHeight !== undefined && {
-                                                  [styles.vars.maxHeight]:
-                                                      `${itemsComputedProps.maxHeight}px`,
-                                              }),
-
-                                              ...(width !== undefined && {
-                                                  [styles.vars.width]: width ? `${width}px` : '',
-                                              }),
                                           }
                                         : {}),
                                 }),
