@@ -21,6 +21,11 @@ type Props = {
     align?: 'left' | 'center' | 'right';
     /** transition duration in milliseconds */
     duration?: number;
+    /**
+     * Called once the swap transition ends (in both directions). Useful to unmount expensive content
+     * (like a Spinner) once it is hidden. Not called when `duration` is 0, as there is no transition.
+     */
+    onTransitionEnd?: () => void;
     className?: string;
     dataAttributes?: DataAttributes;
 };
@@ -39,6 +44,7 @@ const SlideSwap = ({
     direction = 'up',
     align = 'center',
     duration = DEFAULT_DURATION,
+    onTransitionEnd,
     className,
     dataAttributes,
 }: Props): JSX.Element => {
@@ -59,6 +65,12 @@ const SlideSwap = ({
             <div
                 aria-hidden={showSwappedContent ? undefined : true}
                 className={styles.swappedContent}
+                onTransitionEnd={(event) => {
+                    // ignore transitions from the content itself and fire only once per swap
+                    if (event.target === event.currentTarget && event.propertyName === 'opacity') {
+                        onTransitionEnd?.();
+                    }
+                }}
             >
                 {swappedContent}
             </div>

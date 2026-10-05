@@ -35,6 +35,7 @@ export default {
         children: {table: {disable: true}},
         swappedContent: {table: {disable: true}},
         showSwappedContent: {table: {disable: true}},
+        onTransitionEnd: {table: {disable: true}},
         className: {table: {disable: true}},
         dataAttributes: {table: {disable: true}},
     },
@@ -48,6 +49,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({direction, align, duration}) => {
     const [showSwappedContent, setShowSwappedContent] = React.useState(false);
+    const [transitionEndCount, setTransitionEndCount] = React.useState(0);
 
     return (
         <ResponsiveLayout fullWidth>
@@ -63,6 +65,7 @@ export const Default: StoryComponent<Args> = ({direction, align, duration}) => {
                         direction={direction}
                         align={align}
                         duration={duration}
+                        onTransitionEnd={() => setTransitionEndCount((count) => count + 1)}
                         swappedContent={
                             <Inline space={8} alignItems="center">
                                 <Spinner size={20} delay="0s" />
@@ -72,6 +75,10 @@ export const Default: StoryComponent<Args> = ({direction, align, duration}) => {
                     >
                         <Text3 regular>Send</Text3>
                     </SlideSwap>
+
+                    <Text2 regular color={skinVars.colors.textSecondary}>
+                        onTransitionEnd calls: {transitionEndCount}
+                    </Text2>
 
                     <Text2 regular color={skinVars.colors.textSecondary}>
                         Any content can be swapped, not only spinners:

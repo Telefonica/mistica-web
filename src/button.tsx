@@ -7,6 +7,7 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {flattenChildren} from './skins/utils';
+import SlideSwap from './slide-swap';
 import Spinner from './spinner';
 import {Text, Text3} from './text';
 import {useThemeVariant} from './theme-variant-context';
@@ -166,106 +167,89 @@ const renderButtonContent = ({
         defaultIconSize,
     });
 
-    const loadingButtonElement = renderButtonElement({
-        small,
-        content: loadingText,
-        defaultIconSize,
-    });
+    const textContent = (
+        <div className={styles.textContent}>
+            {StartIcon && (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginRight: styles.iconMargin,
+                    }}
+                    data-testid="startIcon"
+                >
+                    <StartIcon size={defaultIconSize} color="currentColor" />
+                </div>
+            )}
+            <div style={{display: 'flex', alignItems: 'baseline'}}>
+                {buttonElement}
+                {withChevron && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginLeft: styles.chevronMarginLeft,
+                        }}
+                    >
+                        <ButtonLinkChevron />
+                    </div>
+                )}
+            </div>
+            {EndIcon && !withChevron && (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginLeft: styles.iconMargin,
+                    }}
+                    data-testid="endIcon"
+                >
+                    <EndIcon size={defaultIconSize} color="currentColor" />
+                </div>
+            )}
+        </div>
+    );
+
+    const loadingContent = (
+        <div className={styles.loadingContent}>
+            {shouldRenderSpinner ? (
+                <Spinner
+                    aria-hidden={!!loadingText}
+                    aria-live={getPlatform(platformOverrides) === 'android' ? 'polite' : 'off'} // Android screen readers don't announce spinner presence unless aria-live is set to polite
+                    color="currentcolor"
+                    delay="0s"
+                    size={spinnerSizeRem}
+                />
+            ) : (
+                <div
+                    style={{
+                        display: 'inline-block',
+                        width: spinnerSizeRem,
+                        height: spinnerSizeRem,
+                    }}
+                />
+            )}
+            {loadingText ? (
+                <Box paddingLeft={8} dataAttributes={{testid: 'loadingText'}}>
+                    {renderButtonElement({small, content: loadingText, defaultIconSize})}
+                </Box>
+            ) : null}
+        </div>
+    );
 
     return (
-        <>
-            {/* text content */}
-            <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
-                {StartIcon && (
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            marginRight: styles.iconMargin,
-                        }}
-                        data-testid="startIcon"
-                    >
-                        <StartIcon size={defaultIconSize} color="currentColor" />
-                    </div>
-                )}
-                <div style={{display: 'flex', alignItems: 'baseline'}}>
-                    {buttonElement}
-                    {withChevron && (
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginLeft: styles.chevronMarginLeft,
-                            }}
-                        >
-                            <ButtonLinkChevron />
-                        </div>
-                    )}
-                </div>
-                {EndIcon && !withChevron && (
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            marginLeft: styles.iconMargin,
-                        }}
-                        data-testid="endIcon"
-                    >
-                        <EndIcon size={defaultIconSize} color="currentColor" />
-                    </div>
-                )}
-            </div>
-
-            {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
-            <div
-                className={styles.loadingFiller}
-                aria-hidden
-                style={
-                    loadingText
-                        ? {
-                              paddingLeft: spinnerSizeRem,
-                              paddingRight: `calc(${styles.iconMargin} + ${small ? styles.buttonPaddingLeft.small : styles.buttonPaddingLeft.default} + ${small ? styles.buttonPaddingRight.small : styles.buttonPaddingRight.default})`,
-                          }
-                        : undefined
+        <SlideSwap
+            className={styles.slideSwap}
+            showSwappedContent={showSpinner}
+            swappedContent={loadingContent}
+            onTransitionEnd={() => {
+                if (showSpinner !== shouldRenderSpinner) {
+                    setShouldRenderSpinner(showSpinner);
                 }
-            >
-                {loadingButtonElement}
-            </div>
-
-            {/* loading content */}
-            <div
-                aria-hidden={showSpinner ? undefined : true}
-                className={styles.loadingContent}
-                onTransitionEnd={() => {
-                    if (showSpinner !== shouldRenderSpinner) {
-                        setShouldRenderSpinner(showSpinner);
-                    }
-                }}
-            >
-                {shouldRenderSpinner ? (
-                    <Spinner
-                        aria-hidden={!!loadingText}
-                        aria-live={getPlatform(platformOverrides) === 'android' ? 'polite' : 'off'} // Android screen readers don't announce spinner presence unless aria-live is set to polite
-                        color="currentcolor"
-                        delay="0s"
-                        size={spinnerSizeRem}
-                    />
-                ) : (
-                    <div
-                        style={{
-                            display: 'inline-block',
-                            width: spinnerSizeRem,
-                            height: spinnerSizeRem,
-                        }}
-                    />
-                )}
-                {loadingText ? (
-                    <Box paddingLeft={8} dataAttributes={{testid: 'loadingText'}}>
-                        {loadingButtonElement}
-                    </Box>
-                ) : null}
-            </div>
-        </>
+            }}
+        >
+            {textContent}
+        </SlideSwap>
     );
 };
 
