@@ -44,10 +44,9 @@ type Args = {
     direction: 'up' | 'down';
     align: 'left' | 'center' | 'right';
     duration: number;
-    unmountSwappedContent: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({direction, align, duration, unmountSwappedContent}) => {
+export const Default: StoryComponent<Args> = ({direction, align, duration}) => {
     const [showSwappedContent, setShowSwappedContent] = React.useState(false);
 
     return (
@@ -64,7 +63,6 @@ export const Default: StoryComponent<Args> = ({direction, align, duration, unmou
                         direction={direction}
                         align={align}
                         duration={duration}
-                        unmountSwappedContent={unmountSwappedContent}
                         swappedContent={
                             <Inline space={8} alignItems="center">
                                 <Spinner size={20} delay="0s" />
@@ -113,5 +111,4 @@ Default.args = {
     direction: 'up',
     align: 'center',
     duration: 300,
-    unmountSwappedContent: false,
 };

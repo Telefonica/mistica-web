@@ -21,12 +21,6 @@ type Props = {
     align?: 'left' | 'center' | 'right';
     /** transition duration in milliseconds */
     duration?: number;
-    /**
-     * When true, `swappedContent` is mounted only while it is visible (and during the transition).
-     * Useful for expensive content like a Spinner, which is CPU intensive even when it isn't visible.
-     * Note that the container may resize when the content gets mounted.
-     */
-    unmountSwappedContent?: boolean;
     className?: string;
     dataAttributes?: DataAttributes;
 };
@@ -45,26 +39,9 @@ const SlideSwap = ({
     direction = 'up',
     align = 'center',
     duration = DEFAULT_DURATION,
-    unmountSwappedContent = false,
     className,
     dataAttributes,
 }: Props): JSX.Element => {
-    // This state is needed to not render the swapped content when hidden, but keeping it visible
-    // during the show/hide animation.
-    // * When showSwappedContent prop is true, state is changed immediately.
-    // * When showSwappedContent prop is false, state is changed after the transition ends.
-    const [isSwappedContentMounted, setIsSwappedContentMounted] = React.useState(showSwappedContent);
-
-    React.useEffect(() => {
-        if (showSwappedContent && !isSwappedContentMounted) {
-            setIsSwappedContentMounted(true);
-        }
-        // without transition there is no transitionend event, so unmount as soon as it gets hidden
-        if (!showSwappedContent && isSwappedContentMounted && duration === 0) {
-            setIsSwappedContentMounted(false);
-        }
-    }, [showSwappedContent, isSwappedContentMounted, duration]);
-
     return (
         <div
             {...getPrefixedDataAttributes({testid: 'SlideSwap', ...dataAttributes})}
@@ -82,13 +59,8 @@ const SlideSwap = ({
             <div
                 aria-hidden={showSwappedContent ? undefined : true}
                 className={styles.swappedContent}
-                onTransitionEnd={() => {
-                    if (!showSwappedContent && isSwappedContentMounted) {
-                        setIsSwappedContentMounted(false);
-                    }
-                }}
             >
-                {!unmountSwappedContent || isSwappedContentMounted ? swappedContent : null}
+                {swappedContent}
             </div>
         </div>
     );

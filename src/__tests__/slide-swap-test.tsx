@@ -1,19 +1,12 @@
 import * as React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {SlideSwap, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 
-const SlideSwapWrapper = ({
-    showSwappedContent,
-    unmountSwappedContent,
-}: {
-    showSwappedContent: boolean;
-    unmountSwappedContent?: boolean;
-}) => (
+const SlideSwapWrapper = ({showSwappedContent}: {showSwappedContent: boolean}) => (
     <ThemeContextProvider theme={makeTheme()}>
         <SlideSwap
             showSwappedContent={showSwappedContent}
-            unmountSwappedContent={unmountSwappedContent}
             swappedContent={<span role="status">swapped content</span>}
         >
             <span role="note">primary content</span>
@@ -38,25 +31,3 @@ test('SlideSwap hides the primary content from screen readers when swapped', () 
     expect(screen.getByText('primary content')).toBeInTheDocument();
 });
 
-test('SlideSwap with unmountSwappedContent does not render the swapped content when hidden', () => {
-    render(<SlideSwapWrapper showSwappedContent={false} unmountSwappedContent />);
-
-    expect(screen.getByText('primary content')).toBeInTheDocument();
-    expect(screen.queryByText('swapped content')).not.toBeInTheDocument();
-});
-
-test('SlideSwap with unmountSwappedContent keeps the swapped content mounted until the transition ends', () => {
-    const {rerender} = render(<SlideSwapWrapper showSwappedContent unmountSwappedContent />);
-
-    expect(screen.getByText('swapped content')).toBeInTheDocument();
-
-    rerender(<SlideSwapWrapper showSwappedContent={false} unmountSwappedContent />);
-
-    // still mounted while the hide transition runs
-    const swappedContent = screen.getByText('swapped content');
-    expect(swappedContent).toBeInTheDocument();
-
-    fireEvent.transitionEnd(swappedContent);
-
-    expect(screen.queryByText('swapped content')).not.toBeInTheDocument();
-});
