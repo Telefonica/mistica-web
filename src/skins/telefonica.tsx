@@ -707,7 +707,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 20, mobile: 18}},
             cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             chipLabel: {
-                lineHeight: {desktop: 24, mobile: 20},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 16, mobile: 16},
                 weight: 'medium',
             },
