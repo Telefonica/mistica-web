@@ -6,6 +6,7 @@ import ScreenSizeContext from './screen-size-context';
 import {listenResize} from './utils/dom';
 import {isClientSide} from './utils/environment';
 import {isEqual} from './utils/helpers';
+import {isFirefox} from './utils/platform';
 
 import type {Theme} from './theme';
 import type {ScreenSizeContextType} from './screen-size-context';
@@ -43,16 +44,19 @@ export const useDisableBodyScroll = (disable: boolean): void => {
                     // if the scrollbar is visible, we don't want to hide it because content will be resized
                     const overflowY = hasScrollbar ? 'scroll' : 'hidden';
 
+                    // Firefox correctly respects overflow:hidden on body without needing position:fixed.
+                    // Using position:fixed in Firefox breaks position:sticky elements (e.g. Sidenavbar).
+                    const fixedPositionStyles = isFirefox()
+                        ? []
+                        : ['position: fixed;', `top: ${-bodyScrollTop}px;`, 'left: 0px;', 'right: 0px;'];
+
                     document.body.style.cssText =
                         bodyStyles +
                         (bodyStyles.endsWith(';') ? '' : ';') +
                         [
                             'overflow: hidden;',
                             `overflow-y: ${overflowY};`,
-                            'position: fixed;',
-                            `top: ${-bodyScrollTop}px;`,
-                            'left: 0px;',
-                            'right: 0px;',
+                            ...fixedPositionStyles,
                             'overscroll-behavior-y: contain;', // disable overscroll
                         ].join('');
                 }
