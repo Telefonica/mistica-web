@@ -116,6 +116,7 @@ export const CardWithControl = ({
         const Control = switchProps ? Switch : Checkbox;
         return renderWithControl(
             <Control
+                className={styles.selectionControlContent}
                 name={switchProps?.name ?? checkbox?.name ?? id}
                 checked={checked}
                 onChange={onChange}
@@ -128,6 +129,7 @@ export const CardWithControl = ({
     }
     return renderWithControl(
         <RadioButton
+            className={styles.selectionControlContent}
             value={radioValue}
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-labelledby']}

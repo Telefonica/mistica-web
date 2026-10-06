@@ -472,3 +472,17 @@ test.each`
     const card = await screen.findByTestId('AdvancedDataCard');
     expect(await card.screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['checkbox', 'switch', 'radio'])(
+    'Selectable cover cards with %s and aspect ratio',
+    async (control) => {
+        await openStoryPage({
+            id: 'components-cards-selection--selection',
+            device: 'MOBILE_IOS',
+            args: {card: 'cover', control, aspectRatio: '1 1'},
+        });
+        await (await screen.findByRole(control, {name: 'First This is a description'})).click();
+        const container = await screen.findByTestId('card-container');
+        expect(await container.screenshot()).toMatchImageSnapshot();
+    }
+);

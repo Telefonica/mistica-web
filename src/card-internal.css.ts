@@ -1,4 +1,4 @@
-import {createVar, style, styleVariants, globalStyle} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -296,7 +296,7 @@ export const selectionOutlineColor = styleVariants({
 
 export const selectionControl = style({borderRadius: skinVars.borderRadii.container});
 
-globalStyle(`${selectionControl} > div`, {
+export const selectionControlContent = style({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
