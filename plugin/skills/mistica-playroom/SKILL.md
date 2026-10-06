@@ -105,10 +105,18 @@ their own data fetching and `lottie-react`.
 
 ## Reference examples
 
-When the `mistica-web` repo is available locally, `playroom/snippets.tsx` is the canonical corpus of
-Playroom-valid code: ~190 snippets grouped by component (`Cards`, `Forms`, `Headers`, `Sheet`, `Tabs`…), all
-of them already proven to render in the editor. Grep it for the component you need before improvising — it
-settles prop names, nesting and state patterns faster than reasoning from the component API.
+Take the component API (choice, props, variants, tokens) from `mistica-react`. Use the snippets below only as a
+secondary, targeted lookup for _how_ a given component is shaped in Playroom — mainly state and interaction
+patterns with `getState`/`setState`.
+
+`playroom/snippets.tsx` holds ~190 snippets grouped by component (`Cards`, `Forms`, `Headers`, `Sheet`,
+`Tabs`…), all proven to render in the editor. The file is large (~150 KB), so never read it whole: grep for the
+specific component you need.
+
+- **Local** (preferred when the repo is cloned): grep `playroom/snippets.tsx`.
+- **Fallback** (no local repo, and only if the Playroom pattern is unclear): fetch
+  `https://raw.githubusercontent.com/Telefonica/mistica-web/master/playroom/snippets.tsx` and extract just the
+  relevant component's snippets.
 
 ## Patterns
 
