@@ -81,9 +81,8 @@ export const Default: StoryComponent<MenuArgs> = ({
                     }}
                 >
                     <Menu
-                        position={horizontalPosition === 'right' ? 'right' : 'left'}
                         placement={placement}
-                        alignment={alignment}
+                        alignment={alignment ?? (horizontalPosition === 'right' ? 'end' : 'start')}
                         width={280}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
                             <Touchable

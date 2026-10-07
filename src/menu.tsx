@@ -272,6 +272,7 @@ export const MenuSection = ({children}: MenuSectionProps): JSX.Element => {
 
 const MARGIN_THRESHOLD = 12;
 const MENU_OFFSET_FROM_TARGET = 8;
+const OPPOSITE_PLACEMENT = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -290,11 +291,17 @@ export type MenuProps = {
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
-    position?: 'left' | 'right';
-    placement?: 'top' | 'bottom' | 'left' | 'right';
-    alignment?: 'start' | 'middle' | 'end';
     dataAttributes?: DataAttributes;
-};
+} & ExclusifyUnion<
+    | {
+          /** @deprecated Use placement and alignment instead. */
+          position?: 'left' | 'right';
+      }
+    | {
+          placement?: 'top' | 'bottom' | 'left' | 'right';
+          alignment?: 'start' | 'middle' | 'end';
+      }
+>;
 
 export const Menu = ({
     renderTarget,
@@ -334,14 +341,19 @@ export const Menu = ({
             left: targetRect.left - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
             right: windowSize.width - targetRect.right - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
         };
-        const oppositePlacement = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
-        const isVertical = placement === 'top' || placement === 'bottom';
-        const menuSize = isVertical ? menu.scrollHeight : menu.offsetWidth;
-        const opposite = oppositePlacement[placement];
-        const finalPlacement =
+        const menuSize = placement === 'top' || placement === 'bottom' ? menu.scrollHeight : menu.offsetWidth;
+        const opposite = OPPOSITE_PLACEMENT[placement];
+        let finalPlacement =
             availableSpace[placement] < menuSize && availableSpace[opposite] > availableSpace[placement]
                 ? opposite
                 : placement;
+        if (
+            (finalPlacement === 'left' || finalPlacement === 'right') &&
+            availableSpace[finalPlacement] < menu.offsetWidth
+        ) {
+            finalPlacement = availableSpace.bottom >= availableSpace.top ? 'bottom' : 'top';
+        }
+        const isVertical = finalPlacement === 'top' || finalPlacement === 'bottom';
         const maxHeight = Math.max(
             0,
             isVertical ? availableSpace[finalPlacement] : windowSize.height - 2 * MARGIN_THRESHOLD
@@ -519,6 +531,8 @@ export const Menu = ({
                         <div
                             style={{
                                 ...applyCssVars({
+                                    [styles.vars.maxWidth]:
+                                        `${Math.max(0, windowSize.width - 2 * MARGIN_THRESHOLD)}px`,
                                     ...(width !== undefined && {
                                         [styles.vars.width]: width ? `${width}px` : '',
                                     }),

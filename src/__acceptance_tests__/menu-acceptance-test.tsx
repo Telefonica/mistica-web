@@ -8,11 +8,11 @@ const viewport = {width: 1000, height: 800};
 const placements = ['top', 'bottom', 'left', 'right'] as const;
 const alignments = ['start', 'middle', 'end'] as const;
 
-const openMenu = async (args: StoryArgs = {}) => {
+const openMenu = async (args: StoryArgs = {}, testViewport = viewport) => {
     const page = await openStoryPage({
         id: 'components-menu--default',
         device: 'DESKTOP',
-        viewport,
+        viewport: testViewport,
         args: {
             horizontalPosition: 'center',
             verticalPosition: 'center',
@@ -127,11 +127,49 @@ test.each(placements)('Menu limits height and scrolls in %s', async (placement) 
     await screen.findByRole('button', {name: 'Open'});
 });
 
-test.each(['left', 'right'])('Menu preserves position=%s', async (horizontalPosition) => {
-    const {getBounds} = await openMenu({horizontalPosition, verticalPosition: 'top'});
-    const {target, menu} = await getBounds();
-    expectPlacement('bottom', target, menu);
-    expect(horizontalPosition === 'left' ? menu.left : menu.right).toBeCloseTo(
-        horizontalPosition === 'left' ? target.left : target.right
-    );
-});
+test.each(['left', 'right'])(
+    'Menu defaults to alignment matching horizontalPosition=%s',
+    async (horizontalPosition) => {
+        const {getBounds} = await openMenu({horizontalPosition, verticalPosition: 'top'});
+        const {target, menu} = await getBounds();
+        expectPlacement('bottom', target, menu);
+        expect(horizontalPosition === 'left' ? menu.left : menu.right).toBeCloseTo(
+            horizontalPosition === 'left' ? target.left : target.right
+        );
+    }
+);
+
+test.each(
+    ['left', 'right'].flatMap((placement) =>
+        ['top', 'bottom'].flatMap((verticalPosition) =>
+            [240, 360].map((width) => ({placement, verticalPosition, width}))
+        )
+    )
+)(
+    'Menu placement=$placement falls back vertically at $verticalPosition with viewport width=$width',
+    async ({placement, verticalPosition, width}) => {
+        const {menu, getBounds} = await openMenu(
+            {placement, verticalPosition, menuOptionsCount: 30, description: true},
+            {...viewport, width}
+        );
+        await waitFor(async () => {
+            const bounds = await getBounds();
+            expectPlacement(verticalPosition === 'top' ? 'bottom' : 'top', bounds.target, bounds.menu);
+            expect(bounds.menu.left).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
+            expect(bounds.menu.right).toBeLessThanOrEqual(width - VIEWPORT_MARGIN);
+            expect(bounds.menu.top).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
+            expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height - VIEWPORT_MARGIN);
+            expect(bounds.menu.width).toBe(Math.min(280, width - 2 * VIEWPORT_MARGIN));
+        });
+        expect(
+            await menu.evaluate((element) => {
+                const content = element.firstElementChild;
+                return content && content.scrollHeight > content.clientHeight;
+            })
+        ).toBe(true);
+        const lastOption = await screen.findByRole('menuitem', {name: 'Click to close the menu'});
+        await lastOption.evaluate((element) => element.scrollIntoView());
+        await lastOption.click();
+        await screen.findByRole('button', {name: 'Open'});
+    }
+);

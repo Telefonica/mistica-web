@@ -7,6 +7,7 @@ const top = createVar();
 const left = createVar();
 const width = createVar();
 const maxHeight = createVar();
+const maxWidth = createVar();
 const transformOrigin = createVar();
 
 const MENU_MIN_WIDTH = 136;
@@ -17,6 +18,7 @@ export const vars = {
     left,
     width,
     maxHeight,
+    maxWidth,
     transformOrigin,
 };
 
@@ -33,8 +35,8 @@ export const menuContainer = style([
         top,
         left,
         width,
-        minWidth: MENU_MIN_WIDTH,
-        maxWidth: MENU_MAX_WIDTH,
+        minWidth: `min(${MENU_MIN_WIDTH}px, ${maxWidth})`,
+        maxWidth: `min(${MENU_MAX_WIDTH}px, ${maxWidth})`,
         maxHeight,
         transformOrigin,
         listStyleType: 'none',
