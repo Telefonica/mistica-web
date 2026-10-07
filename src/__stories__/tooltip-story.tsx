@@ -14,6 +14,10 @@ export default {
             options: ['top', 'center', 'bottom'],
             control: {type: 'select'},
         },
+        alignment: {
+            options: ['start', 'middle', 'end'],
+            control: {type: 'select'},
+        },
         position: {
             options: ['top', 'bottom', 'left', 'right'],
             control: {type: 'select'},
@@ -30,6 +34,7 @@ type Args = {
     targetHorizontalPosition: 'left' | 'center' | 'right';
     targetVerticalPosition: 'top' | 'center' | 'bottom';
     position: 'top' | 'bottom' | 'left' | 'right';
+    alignment: 'start' | 'middle' | 'end';
     title: string;
     description: string;
     slot: boolean;
@@ -41,6 +46,7 @@ export const Default: StoryComponent<Args> = ({
     targetHorizontalPosition,
     targetVerticalPosition,
     position,
+    alignment,
     title,
     description,
     slot,
@@ -87,6 +93,7 @@ export const Default: StoryComponent<Args> = ({
             <div style={{width: '100vw', height: '100vh'}}>
                 <Tooltip
                     position={position}
+                    alignment={alignment}
                     target={
                         <div
                             style={{
@@ -123,6 +130,7 @@ Default.args = {
     targetHorizontalPosition: 'center',
     targetVerticalPosition: 'center',
     position: 'top',
+    alignment: 'middle',
     title: 'Title',
     description: 'A description',
     slot: false,
