@@ -42,7 +42,7 @@ const ARROW_SIZE = 20;
 const TOOLTIP_OFFSET_FROM_TARGET = 6;
 const TOOLTIP_BORDER_SIZE = 1;
 const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2 + TOOLTIP_BORDER_SIZE;
-const SPECULAR_POSITION = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
+const REFLECTED_POSITION = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -96,10 +96,10 @@ const getFinalPosition = (
     const width = dimensions.width;
     const height = contentHeight === undefined ? dimensions.height : contentHeight + 2 * TOOLTIP_BORDER_SIZE;
     const size = (position === 'top' || position === 'bottom' ? height : width) + TOOLTIP_PADDING_FROM_TARGET;
-    const specular = SPECULAR_POSITION[position];
+    const reflected = REFLECTED_POSITION[position];
     const candidateFinalPosition =
-        availableSpace[position] < size && availableSpace[specular] > availableSpace[position]
-            ? specular
+        availableSpace[position] < size && availableSpace[reflected] > availableSpace[position]
+            ? reflected
             : position;
 
     if (

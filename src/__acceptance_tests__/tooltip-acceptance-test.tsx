@@ -171,7 +171,7 @@ test.each(['Tooltip', 'Popover'])('%s flips when open content grows', async (com
         id: 'private-tooltip--growing-content',
         device: 'DESKTOP',
         viewport,
-        args: {component},
+        args: {component, open: true},
     });
     const target = await screen.findByRole('button', {name: 'Expand content'});
     const tooltip = await screen.findByRole('tooltip');
