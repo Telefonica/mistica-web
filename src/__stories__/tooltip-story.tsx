@@ -15,11 +15,11 @@ export default {
             control: {type: 'select'},
         },
         alignment: {
-            options: ['start', 'middle', 'end'],
+            options: ['default', 'start', 'middle', 'end'],
             control: {type: 'select'},
         },
         position: {
-            options: ['top', 'bottom', 'left', 'right'],
+            options: ['default', 'top', 'bottom', 'left', 'right'],
             control: {type: 'select'},
         },
         variantOutside: {
@@ -33,8 +33,8 @@ export default {
 type Args = {
     targetHorizontalPosition: 'left' | 'center' | 'right';
     targetVerticalPosition: 'top' | 'center' | 'bottom';
-    position: 'top' | 'bottom' | 'left' | 'right';
-    alignment: 'start' | 'middle' | 'end';
+    position: 'default' | 'top' | 'bottom' | 'left' | 'right';
+    alignment: 'default' | 'start' | 'middle' | 'end';
     title: string;
     description: string;
     slot: boolean;
@@ -92,8 +92,8 @@ export const Default: StoryComponent<Args> = ({
         <ResponsiveLayout fullWidth variant={variantOutside}>
             <div style={{width: '100vw', height: '100vh'}}>
                 <Tooltip
-                    position={position}
-                    alignment={alignment}
+                    position={position === 'default' ? undefined : position}
+                    alignment={alignment === 'default' ? undefined : alignment}
                     target={
                         <div
                             style={{
@@ -129,8 +129,8 @@ Default.storyName = 'Tooltip';
 Default.args = {
     targetHorizontalPosition: 'center',
     targetVerticalPosition: 'center',
-    position: 'top',
-    alignment: 'middle',
+    position: 'default',
+    alignment: 'default',
     title: 'Title',
     description: 'A description',
     slot: false,

@@ -1,4 +1,5 @@
 import {openStoryPage, screen, waitFor} from '../test-utils';
+import {VIVO_SKIN} from '../skins/constants';
 
 import type {StoryArgs} from '../test-utils';
 
@@ -164,3 +165,68 @@ describe.each(['Tooltip', 'Popover'])('%s positioning', (component) => {
         ).toBe(true);
     });
 });
+
+test.each(['Tooltip', 'Popover'])('%s flips when open content grows', async (component) => {
+    await openStoryPage({
+        id: 'private-tooltip--growing-content',
+        device: 'DESKTOP',
+        viewport,
+        args: {component},
+    });
+    const target = await screen.findByRole('button', {name: 'Expand content'});
+    const tooltip = await screen.findByRole('tooltip');
+    const targetBounds = await target.evaluate((element) => element.getBoundingClientRect().toJSON());
+    const getTooltipBounds = () =>
+        tooltip.evaluate((element) =>
+            element.firstElementChild?.firstElementChild?.getBoundingClientRect().toJSON()
+        );
+
+    await waitFor(async () => expectPosition('top', targetBounds, await getTooltipBounds()));
+    await target.click();
+    await waitFor(async () => {
+        expectPosition('bottom', targetBounds, await getTooltipBounds());
+        expect(
+            await tooltip.evaluate((element) => {
+                const content = element.firstElementChild?.firstElementChild?.firstElementChild;
+                return content?.scrollHeight === content?.clientHeight;
+            })
+        ).toBe(true);
+    });
+});
+
+test.each(['top', 'left'])('small Tooltip keeps its arrow clear of Vivo corners in %s', async (position) => {
+    await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'DESKTOP',
+        skin: VIVO_SKIN,
+        args: {position, alignment: 'start', title: '', description: 'A'},
+    });
+    await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
+    const tooltip = await screen.findByRole('tooltip');
+    await waitFor(async () => {
+        const bounds = await tooltip.evaluate((element, vertical) => {
+            const panel = element.firstElementChild?.firstElementChild as HTMLElement;
+            const arrow = panel.lastElementChild as HTMLElement;
+            return {
+                size: vertical ? panel.offsetWidth : panel.offsetHeight,
+                offset: vertical ? arrow.offsetLeft + panel.clientLeft : arrow.offsetTop + panel.clientTop,
+                radius: parseFloat(getComputedStyle(panel).borderTopLeftRadius),
+            };
+        }, position === 'top');
+        expect(bounds.size).toBeGreaterThanOrEqual(2 * bounds.radius + ARROW_SIZE);
+        expect(bounds.offset).toBeGreaterThanOrEqual(bounds.radius);
+        expect(bounds.offset + ARROW_SIZE).toBeLessThanOrEqual(bounds.size - bounds.radius);
+    });
+});
+
+test.each(['Tooltip', 'Popover'])(
+    '%s exposes its default position and alignment in Storybook',
+    async (component) => {
+        const {getBounds} = await openTooltip(component, {position: 'default', alignment: 'default'});
+        await waitFor(async () => {
+            const {target, tooltip} = await getBounds();
+            expectPosition('top', target, tooltip);
+            expect((tooltip.left + tooltip.right) / 2).toBeCloseTo((target.left + target.right) / 2, 0);
+        });
+    }
+);

@@ -177,3 +177,14 @@ test.each(
     await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['top', 'left'])('Tooltip - small content with Vivo corners in %s', async (position) => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'DESKTOP',
+        skin: VIVO_SKIN,
+        args: {position, alignment: 'start', title: '', description: 'A'},
+    });
+    await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

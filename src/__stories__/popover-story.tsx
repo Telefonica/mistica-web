@@ -20,8 +20,8 @@ export default {
 
 type PopoverArgs = {
     asset: 'icon' | 'image' | 'none';
-    position: 'top' | 'bottom' | 'left' | 'right';
-    alignment: 'start' | 'middle' | 'end';
+    position: 'default' | 'top' | 'bottom' | 'left' | 'right';
+    alignment: 'default' | 'start' | 'middle' | 'end';
     title: string;
     description: string;
     slot: boolean;
@@ -92,8 +92,8 @@ export const Default: StoryComponent<PopoverArgs> = ({
             <div style={{width: '100vw', height: '100vh'}}>
                 <Popover
                     asset={icon}
-                    position={position}
-                    alignment={alignment}
+                    position={position === 'default' ? undefined : position}
+                    alignment={alignment === 'default' ? undefined : alignment}
                     target={
                         <div
                             style={{
@@ -126,8 +126,8 @@ export const Default: StoryComponent<PopoverArgs> = ({
 Default.args = {
     targetHorizontalPosition: 'center',
     targetVerticalPosition: 'center',
-    position: 'top',
-    alignment: 'middle',
+    position: 'default',
+    alignment: 'default',
     title: 'Title',
     description: 'A description',
     slot: false,
@@ -145,11 +145,11 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     alignment: {
-        options: ['start', 'middle', 'end'],
+        options: ['default', 'start', 'middle', 'end'],
         control: {type: 'select'},
     },
     position: {
-        options: ['top', 'bottom', 'left', 'right'],
+        options: ['default', 'top', 'bottom', 'left', 'right'],
         control: {type: 'select'},
     },
     asset: {
