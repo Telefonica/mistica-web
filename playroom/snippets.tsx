@@ -4814,5 +4814,67 @@ export default [
             )}
         />`,
     },
+    {
+        group: 'Message',
+        name: 'Conversation',
+        code: `<Box padding={16}>
+  <Stack space={16}>
+    <Message asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="¿Confirmamos la visita del martes?" timestamp="16:45" />
+    {getState('messageSent', false) ? (
+      <Message type="outgoing" text="Sí, el martes está bien." timestamp="16:50" />
+    ) : (
+      <Message type="outgoing" text="Sí, el martes está bien." error onPress={() => setState('messageSent', true)} />
+    )}
+    <Message text="Te enviaré los detalles." boxed={false} senderName="Adriana" footer={<IconTimeRegular size={16} />} />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
+        name: 'Variants and positions',
+        code: `<Stack space={16}>
+  {['default', 'brand', 'alternative', 'negative', 'media'].map(variant => (
+    <ResponsiveLayout key={variant} variant={variant} fullWidth>
+      <Box padding={16}>
+        <Stack space={16}>
+          <Text2 medium>{variant}</Text2>
+          <Message senderName="Adriana" text="Mensaje recibido sobre este fondo." timestamp="13:32" />
+          <Message type="outgoing" text="Mensaje enviado." timestamp="13:33" />
+          <Stack space={4}>
+            <Message text="Primero" position="first" />
+            <Message text="En medio" position="middle" />
+            <Message text="Último" position="last" />
+          </Stack>
+          <Message type="outgoing" text="Error" error errorMessage="No se ha enviado" />
+        </Stack>
+      </Box>
+    </ResponsiveLayout>
+  ))}
+</Stack>`,
+    },
+    {
+        group: 'Message',
+        name: 'Slots and independent actions',
+        code: `<Box padding={16}>
+  <Stack space={24}>
+    <Message
+      asset={<Avatar size={40} initials="AP" />}
+      onAssetPress={() => alert({title: 'Perfil de Adriana'})}
+      assetLabel="Abrir perfil de Adriana"
+      senderName="Adriana"
+      text="Pulsa para ver los detalles"
+      onPress={() => alert({title: 'Detalles del mensaje'})}
+      timestamp="13:32"
+      sideActions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
+    />
+    <Message senderName="Adriana" timestamp="13:33" footer={<Text1 regular>Entregado</Text1>}
+      footerActions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}>
+      <Placeholder height={80} />
+    </Message>
+    <Message type="outgoing" text="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
+    <Message text="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
+  </Stack>
+</Box>`,
+    },
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

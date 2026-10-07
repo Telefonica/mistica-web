@@ -17,6 +17,8 @@ export {default as ButtonLayout} from './button-layout';
 export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
+export {default as Message} from './message';
+export type {MessageProps} from './message';
 export {default as Snackbar} from './snackbar';
 export {useSnackbar} from './snackbar-context';
 export {Portal} from './portal';
