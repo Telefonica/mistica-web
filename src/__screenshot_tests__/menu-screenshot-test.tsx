@@ -120,3 +120,20 @@ test('Menu with asset', async () => {
     await (await screen.findByRole('button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['top', 'bottom', 'left', 'right'])('Menu placement=%s', async (placement) => {
+    const page = await openStoryPage({
+        id: 'components-menu--default',
+        device: 'DESKTOP',
+        args: {
+            placement,
+            alignment: 'middle',
+            horizontalPosition: 'center',
+            verticalPosition: 'center',
+            menuOptionsCount: 3,
+        },
+    });
+
+    await (await screen.findByRole('button', {name: 'Open'})).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

@@ -270,8 +270,14 @@ export const MenuSection = ({children}: MenuSectionProps): JSX.Element => {
     );
 };
 
-const MARGIN_THRESHOLD = 12;
 const MENU_OFFSET_FROM_TARGET = 8;
+const REFLECTED_PLACEMENT = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
+const TRANSFORM_ORIGINS = {
+    top: 'center bottom',
+    bottom: 'center top',
+    left: 'right center',
+    right: 'left center',
+} as const;
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -286,19 +292,36 @@ type TargetRenderProps = {
 };
 
 export type MenuProps = {
+    /**
+     * Width in pixels. Values are clamped to the range 136–280.
+     * The final width never exceeds the viewport width, even if that
+     * means going below the 136px minimum.
+     *
+     * Examples: 100 → 136, 200 → 200, 500 → 280.
+     */
     width?: number;
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
-    position?: 'left' | 'right';
     dataAttributes?: DataAttributes;
-};
+} & ExclusifyUnion<
+    | {
+          /** @deprecated Use placement and alignment instead. */
+          position?: 'left' | 'right';
+      }
+    | {
+          placement?: 'top' | 'bottom' | 'left' | 'right';
+          alignment?: 'start' | 'middle' | 'end';
+      }
+>;
 
 export const Menu = ({
     renderTarget,
     renderMenu,
     width,
     position = 'left',
+    placement = 'bottom',
+    alignment = position === 'left' ? 'start' : 'end',
     dataAttributes,
 }: MenuProps): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -309,11 +332,9 @@ export const Menu = ({
     const menuRef = React.useRef<HTMLDivElement | null>(null);
 
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        left?: number;
-        right?: number;
-        top: string;
-        bottom: string;
-        maxHeight?: number;
+        left: number;
+        top: number;
+        maxHeight: number;
         transformOrigin: string;
     } | null>(null);
 
@@ -326,44 +347,52 @@ export const Menu = ({
             return;
         }
 
-        const {top: topTarget, right: rightTarget, left: leftTarget, bottom: bottomTarget} = targetRect;
-
-        const heightMenu = menu.scrollHeight;
-
-        const leftDirection = position === 'left' ? leftTarget : undefined;
-        const rightDirection = position === 'right' ? windowSize.width - rightTarget : undefined;
-
-        const topTargetWithOffset = topTarget - MENU_OFFSET_FROM_TARGET;
-        const bottomTargetWithOffset = bottomTarget + MENU_OFFSET_FROM_TARGET;
-
-        const availableSpaceOnBottom = windowSize.height - bottomTargetWithOffset - MARGIN_THRESHOLD;
-        const availableSpaceOnTop = topTargetWithOffset - MARGIN_THRESHOLD;
-        const menuFitsOnBottom = availableSpaceOnBottom > heightMenu;
-        const menuFitsOnTop = availableSpaceOnTop > heightMenu;
-
-        const isMenuOnBottom =
-            menuFitsOnBottom || (!menuFitsOnTop && availableSpaceOnBottom > availableSpaceOnTop);
-
-        if (isMenuOnBottom) {
-            setItemsComputedProps({
-                left: leftDirection,
-                right: rightDirection,
-                top: `${bottomTargetWithOffset}px`,
-                bottom: 'auto',
-                maxHeight: menuFitsOnBottom ? undefined : availableSpaceOnBottom,
-                transformOrigin: 'center top',
-            });
-        } else {
-            setItemsComputedProps({
-                left: leftDirection,
-                right: rightDirection,
-                top: 'auto',
-                bottom: `${windowSize.height - topTargetWithOffset}px`,
-                maxHeight: menuFitsOnTop ? undefined : availableSpaceOnTop,
-                transformOrigin: 'center bottom',
-            });
+        const availableSpace = {
+            top: targetRect.top - MENU_OFFSET_FROM_TARGET,
+            bottom: windowSize.height - targetRect.bottom - MENU_OFFSET_FROM_TARGET,
+            left: targetRect.left - MENU_OFFSET_FROM_TARGET,
+            right: windowSize.width - targetRect.right - MENU_OFFSET_FROM_TARGET,
+        };
+        const menuSize = placement === 'top' || placement === 'bottom' ? menu.scrollHeight : menu.offsetWidth;
+        const candidateReflectedPlacement = REFLECTED_PLACEMENT[placement];
+        let finalPlacement =
+            availableSpace[placement] < menuSize &&
+            availableSpace[candidateReflectedPlacement] > availableSpace[placement]
+                ? candidateReflectedPlacement
+                : placement;
+        if (
+            (finalPlacement === 'left' || finalPlacement === 'right') &&
+            availableSpace[finalPlacement] < menu.offsetWidth
+        ) {
+            finalPlacement = availableSpace.bottom >= availableSpace.top ? 'bottom' : 'top';
         }
-    }, [position, isMenuOpen, menu, target, width, windowSize]);
+
+        const isVertical = finalPlacement === 'top' || finalPlacement === 'bottom';
+        const maxHeight = Math.max(0, isVertical ? availableSpace[finalPlacement] : windowSize.height);
+        const heightMenu = Math.min(menu.scrollHeight, maxHeight);
+        const widthMenu = menu.offsetWidth;
+        const targetStart = isVertical ? targetRect.left : targetRect.top;
+        const targetSize = isVertical ? targetRect.width : targetRect.height;
+        const alignmentSize = isVertical ? widthMenu : heightMenu;
+        const alignmentOffset = alignment === 'start' ? 0 : alignment === 'end' ? 1 : 0.5;
+        const alignedPosition = targetStart + (targetSize - alignmentSize) * alignmentOffset;
+        const shiftedPosition = Math.max(
+            0,
+            Math.min(alignedPosition, (isVertical ? windowSize.width : windowSize.height) - alignmentSize)
+        );
+        const positions = {
+            top: {left: shiftedPosition, top: targetRect.top - MENU_OFFSET_FROM_TARGET - heightMenu},
+            bottom: {left: shiftedPosition, top: targetRect.bottom + MENU_OFFSET_FROM_TARGET},
+            left: {left: targetRect.left - MENU_OFFSET_FROM_TARGET - widthMenu, top: shiftedPosition},
+            right: {left: targetRect.right + MENU_OFFSET_FROM_TARGET, top: shiftedPosition},
+        };
+
+        setItemsComputedProps({
+            ...positions[finalPlacement],
+            maxHeight,
+            transformOrigin: TRANSFORM_ORIGINS[finalPlacement],
+        });
+    }, [placement, alignment, isMenuOpen, menu, target, width, windowSize]);
 
     const targetProps = React.useMemo(
         () => ({
@@ -504,29 +533,18 @@ export const Menu = ({
                         <div
                             style={{
                                 ...applyCssVars({
+                                    [styles.vars.maxWidth]:
+                                        `${Math.min(styles.MENU_MAX_WIDTH, Math.max(0, windowSize.width))}px`,
+                                    ...(width && {
+                                        [styles.vars.width]: `${width}px`,
+                                    }),
                                     ...(itemsComputedProps
                                         ? {
-                                              [styles.vars.top]: itemsComputedProps.top,
-                                              [styles.vars.bottom]: itemsComputedProps.bottom,
+                                              [styles.vars.top]: `${itemsComputedProps.top}px`,
+                                              [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
                                               [styles.vars.transformOrigin]:
                                                   itemsComputedProps.transformOrigin,
-
-                                              ...(itemsComputedProps.left !== undefined && {
-                                                  [styles.vars.left]: `${itemsComputedProps.left}px`,
-                                              }),
-
-                                              ...(itemsComputedProps.right !== undefined && {
-                                                  [styles.vars.right]: `${itemsComputedProps.right}px`,
-                                              }),
-
-                                              ...(itemsComputedProps.maxHeight !== undefined && {
-                                                  [styles.vars.maxHeight]:
-                                                      `${itemsComputedProps.maxHeight}px`,
-                                              }),
-
-                                              ...(width !== undefined && {
-                                                  [styles.vars.width]: width ? `${width}px` : '',
-                                              }),
                                           }
                                         : {}),
                                 }),

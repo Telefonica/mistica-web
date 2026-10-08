@@ -16,6 +16,8 @@ import {
 } from '..';
 import avatarImg from './images/avatar.jpg';
 
+import type {MenuProps} from '../menu';
+
 export default {
     title: 'Components/Menu',
     component: Menu,
@@ -23,8 +25,11 @@ export default {
 
 type MenuArgs = {
     menuOptionsCount: number;
-    horizontalPosition: 'right' | 'left';
-    verticalPosition: 'top' | 'bottom';
+    horizontalPosition: 'right' | 'left' | 'center';
+    verticalPosition: 'top' | 'bottom' | 'center';
+    placement: MenuProps['placement'] | 'default';
+    alignment: MenuProps['alignment'] | 'default';
+    width: MenuProps['width'];
     icon: boolean;
     asset: boolean;
     checkbox: boolean;
@@ -35,6 +40,9 @@ export const Default: StoryComponent<MenuArgs> = ({
     menuOptionsCount,
     horizontalPosition,
     verticalPosition,
+    placement,
+    alignment,
+    width,
     icon,
     asset,
     checkbox,
@@ -58,19 +66,30 @@ export const Default: StoryComponent<MenuArgs> = ({
                 minHeight: '600px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: verticalPosition === 'top' ? 'initial' : 'end',
+                justifyContent:
+                    verticalPosition === 'top' ? 'initial' : verticalPosition === 'bottom' ? 'end' : 'center',
             }}
         >
             <Stack space={16}>
                 <div
                     style={{
                         display: 'flex',
-                        justifyContent: horizontalPosition === 'left' ? 'initial' : 'end',
+                        justifyContent:
+                            horizontalPosition === 'left'
+                                ? 'initial'
+                                : horizontalPosition === 'right'
+                                  ? 'end'
+                                  : 'center',
                     }}
                 >
                     <Menu
-                        position={horizontalPosition}
-                        width={280}
+                        placement={placement === 'default' ? undefined : placement}
+                        alignment={
+                            alignment === 'default'
+                                ? undefined
+                                : alignment ?? (horizontalPosition === 'right' ? 'end' : 'start')
+                        }
+                        width={width}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
                             <Touchable
                                 ref={ref}
@@ -141,18 +160,30 @@ Default.args = {
     menuOptionsCount: 4,
     horizontalPosition: 'right',
     verticalPosition: 'top',
+    placement: 'bottom',
+    alignment: undefined,
+    width: 280,
     icon: false,
     asset: false,
     checkbox: true,
     description: false,
 };
 Default.argTypes = {
+    width: {control: {type: 'number'}},
+    placement: {
+        options: ['default', 'top', 'bottom', 'left', 'right'],
+        control: {type: 'select'},
+    },
+    alignment: {
+        options: ['default', 'start', 'middle', 'end'],
+        control: {type: 'select'},
+    },
     horizontalPosition: {
-        options: ['right', 'left'],
+        options: ['right', 'left', 'center'],
         control: {type: 'select'},
     },
     verticalPosition: {
-        options: ['top', 'bottom'],
+        options: ['top', 'bottom', 'center'],
         control: {type: 'select'},
     },
     menuOptionsCount: {
