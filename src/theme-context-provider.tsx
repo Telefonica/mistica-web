@@ -74,6 +74,7 @@ type Props = {
     as?: string;
     withoutStyles?: boolean;
     children?: React.ReactNode;
+    modes?: ['mobile' | 'desktop' | 'auto', 'compact' | 'comfortable'];
 };
 
 const useDefaultHrefDecorator = () => {
@@ -138,7 +139,14 @@ const makeRawColors = (colors: Colors): Colors =>
         })
     ) as Colors;
 
-const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
+const ThemeContextProvider = ({
+    theme,
+    children,
+    as,
+    withoutStyles = false,
+    modes = ['auto', 'comfortable'],
+}: Props): JSX.Element => {
+    console.log('dev<', modes);
     const themeScopeId = React.useId();
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
@@ -184,6 +192,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             i18n: {
                 ...theme.i18n,
             },
+            modes,
             platformOverrides,
             texts: {
                 ...theme.texts,

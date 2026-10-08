@@ -155,7 +155,10 @@ export const Text = ({
     'aria-live': ariaLive,
     dataAttributes,
 }: TextProps): JSX.Element | null => {
-    const {skinName} = useTheme();
+    const {
+        skinName,
+        modes: [, density],
+    } = useTheme();
     const variant = useThemeVariant();
     const lineClampValue = lineClamp(truncate);
 
@@ -190,11 +193,20 @@ export const Text = ({
         [styles.truncateToOneLine]: truncate === 1 || truncate === true,
     });
 
+    const finalMobileSize = mobileSize ? pxToRem(mobileSize) : 'inherit';
+    const finalMobileHeight = mobileLineHeight ? pxToRem(mobileLineHeight) : 'inherit';
+    console.log(density);
     const sizeVars = applyCssVars({
-        [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : 'inherit',
-        [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : 'inherit',
-        [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : 'inherit',
-        [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : 'inherit',
+        [styles.vars.mobileSize]: finalMobileSize,
+        [styles.vars.mobileLineHeight]: finalMobileHeight,
+        [styles.vars.desktopSize]:
+            density === 'compact' ? finalMobileSize : desktopSize ? pxToRem(desktopSize) : 'inherit',
+        [styles.vars.desktopLineHeight]:
+            density === 'compact'
+                ? finalMobileHeight
+                : desktopLineHeight
+                  ? pxToRem(desktopLineHeight)
+                  : 'inherit',
     });
     const textVars = truncate
         ? applyCssVars({

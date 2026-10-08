@@ -105,7 +105,9 @@ const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.Re
     <React.StrictMode>
         <ThemeOverriderContextProvider>
             {(overridenTheme) => (
-                <ThemeContextProvider theme={overridenTheme ?? theme}>
+                // auto = breakpoint mode (it could be auto (derived by canvas) or desktop or mobile
+                // compact || comfortable (default)
+                <ThemeContextProvider theme={overridenTheme ?? theme} modes={['auto', 'comfortable']}>
                     <SheetRoot />
                     <OverscrollColorProvider>
                         <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>

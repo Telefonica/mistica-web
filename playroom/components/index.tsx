@@ -331,7 +331,7 @@ const PreviewToolsComponent = ({
     }, [colorScheme, os, skinName]);
 
     const controls = (
-        <ThemeContextProvider theme={theme} as="div">
+        <ThemeContextProvider theme={theme} as="div" modes={['auto', 'compact']}>
             <PreviewToolsControls
                 ref={controlsRef}
                 skinName={skinName}

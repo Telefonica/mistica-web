@@ -162,6 +162,7 @@ export type Theme = {
         insideNovumNativeApp?: boolean;
         userAgent?: string;
     };
+    modes: ['mobile' | 'desktop' | 'auto', 'compact' | 'comfortable'];
     texts: Partial<Dictionary>;
     analytics: {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
