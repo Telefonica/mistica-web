@@ -27,8 +27,8 @@ type MenuArgs = {
     menuOptionsCount: number;
     horizontalPosition: 'right' | 'left' | 'center';
     verticalPosition: 'top' | 'bottom' | 'center';
-    placement: MenuProps['placement'];
-    alignment: MenuProps['alignment'];
+    placement: MenuProps['placement'] | 'default';
+    alignment: MenuProps['alignment'] | 'default';
     width: MenuProps['width'];
     icon: boolean;
     asset: boolean;
@@ -83,8 +83,12 @@ export const Default: StoryComponent<MenuArgs> = ({
                     }}
                 >
                     <Menu
-                        placement={placement}
-                        alignment={alignment ?? (horizontalPosition === 'right' ? 'end' : 'start')}
+                        placement={placement === 'default' ? undefined : placement}
+                        alignment={
+                            alignment === 'default'
+                                ? undefined
+                                : alignment ?? (horizontalPosition === 'right' ? 'end' : 'start')
+                        }
                         width={width}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
                             <Touchable
@@ -167,11 +171,11 @@ Default.args = {
 Default.argTypes = {
     width: {control: {type: 'number'}},
     placement: {
-        options: ['top', 'bottom', 'left', 'right'],
+        options: ['default', 'top', 'bottom', 'left', 'right'],
         control: {type: 'select'},
     },
     alignment: {
-        options: ['start', 'middle', 'end'],
+        options: ['default', 'start', 'middle', 'end'],
         control: {type: 'select'},
     },
     horizontalPosition: {

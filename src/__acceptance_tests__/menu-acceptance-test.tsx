@@ -49,6 +49,15 @@ const expectPlacement = (placement: string, target: DOMRect, menu: DOMRect) => {
     }
 };
 
+test('Menu uses bottom-start with default placement and alignment', async () => {
+    const {getBounds} = await openMenu({placement: 'default', alignment: 'default'});
+    await waitFor(async () => {
+        const {target, menu} = await getBounds();
+        expectPlacement('bottom', target, menu);
+        expect(menu.left).toBeCloseTo(target.left);
+    });
+});
+
 test.each([100, 200, 600])('Menu constrains width=%s to its size limits', async (width) => {
     const {getBounds} = await openMenu({width, placement: 'right'});
     await waitFor(async () => {

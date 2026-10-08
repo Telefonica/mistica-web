@@ -292,7 +292,13 @@ type TargetRenderProps = {
 };
 
 export type MenuProps = {
-    /** Width in pixels, constrained to 136–280px and the viewport width. */
+    /**
+     * Width in pixels. Values are clamped to the range 136–280.
+     * The final width never exceeds the viewport width, even if that
+     * means going below the 136px minimum.
+     *
+     * Examples: 100 → 136, 200 → 200, 500 → 280.
+     */
     width?: number;
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
