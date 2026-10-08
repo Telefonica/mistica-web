@@ -3,7 +3,6 @@ import {openStoryPage, screen, waitFor} from '../test-utils';
 import type {StoryArgs} from '../test-utils';
 
 const MENU_OFFSET = 8;
-const VIEWPORT_MARGIN = 12;
 const MENU_MIN_WIDTH = 136;
 const MENU_MAX_WIDTH = 280;
 const viewport = {width: 1000, height: 800};
@@ -64,9 +63,9 @@ test('Menu constrains explicit width to the viewport', async () => {
     const {getBounds} = await openMenu({width: 600}, {...viewport, width: viewportWidth});
     await waitFor(async () => {
         const {menu} = await getBounds();
-        expect(menu.width).toBe(viewportWidth - 2 * VIEWPORT_MARGIN);
-        expect(menu.left).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
-        expect(menu.right).toBeLessThanOrEqual(viewportWidth - VIEWPORT_MARGIN);
+        expect(menu.width).toBe(viewportWidth);
+        expect(menu.left).toBeGreaterThanOrEqual(0);
+        expect(menu.right).toBeLessThanOrEqual(viewportWidth);
     });
 });
 
@@ -130,10 +129,10 @@ test.each(placements.flatMap((placement) => alignments.map((alignment) => ({plac
             expectPlacement(placement, target, menu);
             if (alignment === 'start') {
                 expect(isVertical ? menu.right : menu.bottom).toBeCloseTo(
-                    (isVertical ? viewport.width : viewport.height) - VIEWPORT_MARGIN
+                    isVertical ? viewport.width : viewport.height
                 );
             } else {
-                expect(isVertical ? menu.left : menu.top).toBeCloseTo(VIEWPORT_MARGIN);
+                expect(isVertical ? menu.left : menu.top).toBeCloseTo(0);
             }
         });
     }
@@ -142,8 +141,8 @@ test.each(placements.flatMap((placement) => alignments.map((alignment) => ({plac
 test.each(placements)('Menu limits height and scrolls in %s', async (placement) => {
     const {menu, getBounds} = await openMenu({placement, menuOptionsCount: 30});
     const bounds = await getBounds();
-    expect(bounds.menu.top).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
-    expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height - VIEWPORT_MARGIN);
+    expect(bounds.menu.top).toBeGreaterThanOrEqual(0);
+    expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height);
     expect(
         await menu.evaluate((element) => {
             const content = element.firstElementChild;
@@ -184,11 +183,11 @@ test.each(
         await waitFor(async () => {
             const bounds = await getBounds();
             expectPlacement(verticalPosition === 'top' ? 'bottom' : 'top', bounds.target, bounds.menu);
-            expect(bounds.menu.left).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
-            expect(bounds.menu.right).toBeLessThanOrEqual(width - VIEWPORT_MARGIN);
-            expect(bounds.menu.top).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
-            expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height - VIEWPORT_MARGIN);
-            expect(bounds.menu.width).toBe(Math.min(280, width - 2 * VIEWPORT_MARGIN));
+            expect(bounds.menu.left).toBeGreaterThanOrEqual(0);
+            expect(bounds.menu.right).toBeLessThanOrEqual(width);
+            expect(bounds.menu.top).toBeGreaterThanOrEqual(0);
+            expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height);
+            expect(bounds.menu.width).toBe(Math.min(280, width));
         });
         expect(
             await menu.evaluate((element) => {
