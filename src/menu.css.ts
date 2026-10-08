@@ -11,7 +11,7 @@ const maxWidth = createVar();
 const transformOrigin = createVar();
 
 const MENU_MIN_WIDTH = 136;
-const MENU_MAX_WIDTH = 280;
+export const MENU_MAX_WIDTH = 280;
 
 export const vars = {
     top,

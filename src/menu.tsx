@@ -272,7 +272,13 @@ export const MenuSection = ({children}: MenuSectionProps): JSX.Element => {
 
 const MARGIN_THRESHOLD = 12;
 const MENU_OFFSET_FROM_TARGET = 8;
-const OPPOSITE_PLACEMENT = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
+const REFLECTED_PLACEMENT = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
+const TRANSFORM_ORIGINS = {
+    top: 'center bottom',
+    bottom: 'center top',
+    left: 'right center',
+    right: 'left center',
+} as const;
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -287,6 +293,7 @@ type TargetRenderProps = {
 };
 
 export type MenuProps = {
+    /** Width in pixels, constrained to 136–280px and the viewport width minus margins. */
     width?: number;
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
@@ -342,10 +349,11 @@ export const Menu = ({
             right: windowSize.width - targetRect.right - MENU_OFFSET_FROM_TARGET - MARGIN_THRESHOLD,
         };
         const menuSize = placement === 'top' || placement === 'bottom' ? menu.scrollHeight : menu.offsetWidth;
-        const opposite = OPPOSITE_PLACEMENT[placement];
+        const candidateReflectedPlacement = REFLECTED_PLACEMENT[placement];
         let finalPlacement =
-            availableSpace[placement] < menuSize && availableSpace[opposite] > availableSpace[placement]
-                ? opposite
+            availableSpace[placement] < menuSize &&
+            availableSpace[candidateReflectedPlacement] > availableSpace[placement]
+                ? candidateReflectedPlacement
                 : placement;
         if (
             (finalPlacement === 'left' || finalPlacement === 'right') &&
@@ -353,6 +361,7 @@ export const Menu = ({
         ) {
             finalPlacement = availableSpace.bottom >= availableSpace.top ? 'bottom' : 'top';
         }
+
         const isVertical = finalPlacement === 'top' || finalPlacement === 'bottom';
         const maxHeight = Math.max(
             0,
@@ -378,17 +387,11 @@ export const Menu = ({
             left: {left: targetRect.left - MENU_OFFSET_FROM_TARGET - widthMenu, top: shiftedPosition},
             right: {left: targetRect.right + MENU_OFFSET_FROM_TARGET, top: shiftedPosition},
         };
-        const transformOrigins = {
-            top: 'center bottom',
-            bottom: 'center top',
-            left: 'right center',
-            right: 'left center',
-        };
 
         setItemsComputedProps({
             ...positions[finalPlacement],
             maxHeight,
-            transformOrigin: transformOrigins[finalPlacement],
+            transformOrigin: TRANSFORM_ORIGINS[finalPlacement],
         });
     }, [placement, alignment, isMenuOpen, menu, target, width, windowSize]);
 
@@ -532,9 +535,9 @@ export const Menu = ({
                             style={{
                                 ...applyCssVars({
                                     [styles.vars.maxWidth]:
-                                        `${Math.max(0, windowSize.width - 2 * MARGIN_THRESHOLD)}px`,
-                                    ...(width !== undefined && {
-                                        [styles.vars.width]: width ? `${width}px` : '',
+                                        `${Math.min(styles.MENU_MAX_WIDTH, Math.max(0, windowSize.width - 2 * MARGIN_THRESHOLD))}px`,
+                                    ...(width && {
+                                        [styles.vars.width]: `${width}px`,
                                     }),
                                     ...(itemsComputedProps
                                         ? {

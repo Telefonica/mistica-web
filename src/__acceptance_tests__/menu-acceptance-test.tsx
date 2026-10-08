@@ -4,6 +4,8 @@ import type {StoryArgs} from '../test-utils';
 
 const MENU_OFFSET = 8;
 const VIEWPORT_MARGIN = 12;
+const MENU_MIN_WIDTH = 136;
+const MENU_MAX_WIDTH = 280;
 const viewport = {width: 1000, height: 800};
 const placements = ['top', 'bottom', 'left', 'right'] as const;
 const alignments = ['start', 'middle', 'end'] as const;
@@ -47,6 +49,33 @@ const expectPlacement = (placement: string, target: DOMRect, menu: DOMRect) => {
             break;
     }
 };
+
+test.each([100, 200, 600])('Menu constrains width=%s to its size limits', async (width) => {
+    const {getBounds} = await openMenu({width, placement: 'right'});
+    await waitFor(async () => {
+        const {target, menu} = await getBounds();
+        expect(menu.width).toBe(Math.min(MENU_MAX_WIDTH, Math.max(MENU_MIN_WIDTH, width)));
+        expectPlacement('right', target, menu);
+    });
+});
+
+test('Menu constrains explicit width to the viewport', async () => {
+    const viewportWidth = 240;
+    const {getBounds} = await openMenu({width: 600}, {...viewport, width: viewportWidth});
+    await waitFor(async () => {
+        const {menu} = await getBounds();
+        expect(menu.width).toBe(viewportWidth - 2 * VIEWPORT_MARGIN);
+        expect(menu.left).toBeGreaterThanOrEqual(VIEWPORT_MARGIN);
+        expect(menu.right).toBeLessThanOrEqual(viewportWidth - VIEWPORT_MARGIN);
+    });
+});
+
+test('Menu treats zero width as automatic width', async () => {
+    const {getBounds} = await openMenu({width: 0});
+    const {menu} = await getBounds();
+    expect(menu.width).toBeGreaterThanOrEqual(MENU_MIN_WIDTH);
+    expect(menu.width).toBeLessThanOrEqual(MENU_MAX_WIDTH);
+});
 
 test.each(placements.flatMap((placement) => alignments.map((alignment) => ({placement, alignment}))))(
     'Menu placement=$placement alignment=$alignment',

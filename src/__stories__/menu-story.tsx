@@ -29,6 +29,7 @@ type MenuArgs = {
     verticalPosition: 'top' | 'bottom' | 'center';
     placement: MenuProps['placement'];
     alignment: MenuProps['alignment'];
+    width: MenuProps['width'];
     icon: boolean;
     asset: boolean;
     checkbox: boolean;
@@ -41,6 +42,7 @@ export const Default: StoryComponent<MenuArgs> = ({
     verticalPosition,
     placement,
     alignment,
+    width,
     icon,
     asset,
     checkbox,
@@ -83,7 +85,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                     <Menu
                         placement={placement}
                         alignment={alignment ?? (horizontalPosition === 'right' ? 'end' : 'start')}
-                        width={280}
+                        width={width}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
                             <Touchable
                                 ref={ref}
@@ -156,12 +158,14 @@ Default.args = {
     verticalPosition: 'top',
     placement: 'bottom',
     alignment: undefined,
+    width: 280,
     icon: false,
     asset: false,
     checkbox: true,
     description: false,
 };
 Default.argTypes = {
+    width: {control: {type: 'number'}},
     placement: {
         options: ['top', 'bottom', 'left', 'right'],
         control: {type: 'select'},
