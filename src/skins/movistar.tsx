@@ -795,6 +795,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 24},
             },
             boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            boxedSmallPadding: {top: {mobile: 8, desktop: 8}, bottom: {mobile: 8, desktop: 8}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

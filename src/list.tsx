@@ -123,10 +123,11 @@ export const Content = ({
     const DetailComponent = small ? Text1 : Text2;
 
     return (
-        <div className={styles.content} id={labelId}>
+        <div className={classNames(styles.content, {[styles.contentSmall]: small})} id={labelId}>
             {asset && (
                 <div
                     className={classNames(styles.assetContainer, {
+                        [styles.assetContainerSmall]: small,
                         [styles.center]: centerY,
                         [styles.disabled]: disabled,
                     })}
@@ -159,7 +160,7 @@ export const Content = ({
                     </div>
                 </div>
             )}
-            <div className={styles.innerContent}>
+            <div className={classNames(styles.innerContent, {[styles.innerContentSmall]: small})}>
                 <div
                     className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                     style={{justifyContent: centerY ? 'center' : 'flex-start'}}
@@ -454,6 +455,7 @@ const RowContent = React.forwardRef<
     const outsideVariant = useThemeVariant();
     const isOverBrand =
         outsideVariant === 'brand' || outsideVariant === 'media' || outsideVariant === 'negative';
+    const {small} = React.useContext(ListContext);
     const {
         asset,
         headline,
@@ -756,7 +758,7 @@ const RowContent = React.forwardRef<
     if (props.iconButton) {
         return isInteractive
             ? renderRowWithDoubleInteraction(
-                  <div className={styles.dualActionRightIconButton}>
+                  <div className={classNames(styles.dualActionRightIconButton, {[styles.dualActionRightIconButtonSmall]: small})}>
                       {props.iconButton.Icon ? (
                           <IconButton {...props.iconButton} disabled={props.disabled} />
                       ) : (

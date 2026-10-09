@@ -140,6 +140,18 @@ export const innerContent = style({
 
 export const assetContainer = style([sprinkles({paddingRight: 16}), {gridColumn: 1, paddingBottom: 16}]);
 
+export const contentSmall = style({
+    paddingTop: vars.spacing.boxedSmallPadding.top,
+});
+
+export const innerContentSmall = style({
+    paddingBottom: vars.spacing.boxedSmallPadding.bottom,
+});
+
+export const assetContainerSmall = style({
+    paddingBottom: vars.spacing.boxedSmallPadding.bottom,
+});
+
 export const asset = sprinkles({
     display: 'flex',
     flexShrink: 0,
@@ -248,6 +260,11 @@ const dualActionRightBase = style([
 export const dualActionRight = style([dualActionRightBase, sprinkles({height: '100%'})]);
 
 export const dualActionRightIconButton = style([dualActionRightBase, {paddingTop: 16, paddingBottom: 16}]);
+
+export const dualActionRightIconButtonSmall = style({
+    paddingTop: vars.spacing.boxedSmallPadding.top,
+    paddingBottom: vars.spacing.boxedSmallPadding.bottom,
+});
 
 const ulVerticalGap = 8;
 const ulVerticalGapDesktop = 16;
