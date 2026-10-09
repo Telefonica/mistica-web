@@ -1,3 +1,17 @@
+# [17.7.0](https://github.com/Telefonica/mistica-web/compare/v17.6.0...v17.7.0) (2026-10-09)
+
+
+### Bug Fixes
+
+* **sidenav-bar:** reset scroll dividers when body unmounts ([#1748](https://github.com/Telefonica/mistica-web/issues/1748)) ([1ef9f40](https://github.com/Telefonica/mistica-web/commit/1ef9f40126225054609d045bfd0264e082e1c25d))
+
+
+### Features
+
+* **Menu:** support all 4 positions ([#1753](https://github.com/Telefonica/mistica-web/issues/1753)) ([6382790](https://github.com/Telefonica/mistica-web/commit/6382790f07ed5c669b6b7486290840557821d905))
+* **Skills:** add mistica-playroom skill ([#1749](https://github.com/Telefonica/mistica-web/issues/1749)) ([fc05110](https://github.com/Telefonica/mistica-web/commit/fc05110a2a9518702fb853d985c49c9a4f7829bf))
+* **Tooltip:** add alignment and update collision handling for Tooltip and Popover ([#1760](https://github.com/Telefonica/mistica-web/issues/1760)) ([b636cb7](https://github.com/Telefonica/mistica-web/commit/b636cb732bdc501efc707f12ac030deb2c5484e8))
+
 # [17.6.0](https://github.com/Telefonica/mistica-web/compare/v17.5.0...v17.6.0) (2026-10-02)
 
 
