@@ -22,6 +22,8 @@ import type {CardSize, TopActionsArray} from '../card-internal';
  * These are arguments for props that all cards have in common.
  */
 export type CommonCardArgs = {
+    selected?: boolean;
+
     // container
     size: CardSize;
     variant: Variant | '';
@@ -187,6 +189,7 @@ export const videoNameToUrl = {
 };
 
 export const defaultCommonCardArgs: CommonCardArgs = {
+    selected: undefined,
     size: 'default',
     variant: '',
     variantOutside: 'default',
@@ -224,6 +227,7 @@ export const defaultCommonCardArgs: CommonCardArgs = {
 };
 
 export const commonArgTypes = {
+    selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},
     size: {
         options: ['default', 'snap', 'display'],
         control: {

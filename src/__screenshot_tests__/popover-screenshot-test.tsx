@@ -43,3 +43,18 @@ test('Popover - inverse', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(
+    ['top', 'bottom', 'left', 'right'].flatMap((position) =>
+        ['start', 'end'].map((alignment) => ({position, alignment}))
+    )
+)('Popover - position=$position alignment=$alignment', async (args) => {
+    const page = await openStoryPage({
+        id: 'components-popover--default',
+        device: 'DESKTOP',
+        args,
+    });
+
+    await (await screen.findByRole('button', {name: 'Popover target'})).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

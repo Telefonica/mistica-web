@@ -8,7 +8,9 @@ import type {Variant} from '../theme-variant-context';
 export default {
     title: 'Components/Checkbox',
     parameters: {fullScreen: true},
+    args: {className: ''},
     argTypes: {
+        className: {control: 'text'},
         variantOutside: {
             options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
@@ -17,17 +19,24 @@ export default {
 };
 
 type Args = {
+    className?: string;
     disabled: boolean;
     variantOutside: Variant;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     const [checked, onChange] = React.useState(false);
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
-                    <Checkbox name="checkbox" checked={checked} onChange={onChange} disabled={disabled}>
+                    <Checkbox
+                        className={className}
+                        name="checkbox"
+                        checked={checked}
+                        onChange={onChange}
+                        disabled={disabled}
+                    >
                         checkbox content
                     </Checkbox>
                 </div>
@@ -42,12 +51,17 @@ Controlled.args = {
     variantOutside: 'default',
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
-                    <Checkbox name="checkbox" defaultChecked={false} disabled={disabled}>
+                    <Checkbox
+                        className={className}
+                        name="checkbox"
+                        defaultChecked={false}
+                        disabled={disabled}
+                    >
                         checkbox content
                     </Checkbox>
                 </div>
@@ -62,12 +76,13 @@ Uncontrolled.args = {
     variantOutside: 'default',
 };
 
-export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Checkbox
+                        className={className}
                         name="checkbox"
                         disabled={disabled}
                         render={({labelId, checked, disabled}) => (

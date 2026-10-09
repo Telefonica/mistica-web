@@ -1,3 +1,40 @@
+# [17.7.0](https://github.com/Telefonica/mistica-web/compare/v17.6.0...v17.7.0) (2026-10-09)
+
+
+### Bug Fixes
+
+* **sidenav-bar:** reset scroll dividers when body unmounts ([#1748](https://github.com/Telefonica/mistica-web/issues/1748)) ([1ef9f40](https://github.com/Telefonica/mistica-web/commit/1ef9f40126225054609d045bfd0264e082e1c25d))
+
+
+### Features
+
+* **Menu:** support all 4 positions ([#1753](https://github.com/Telefonica/mistica-web/issues/1753)) ([6382790](https://github.com/Telefonica/mistica-web/commit/6382790f07ed5c669b6b7486290840557821d905))
+* **Skills:** add mistica-playroom skill ([#1749](https://github.com/Telefonica/mistica-web/issues/1749)) ([fc05110](https://github.com/Telefonica/mistica-web/commit/fc05110a2a9518702fb853d985c49c9a4f7829bf))
+* **Tooltip:** add alignment and update collision handling for Tooltip and Popover ([#1760](https://github.com/Telefonica/mistica-web/issues/1760)) ([b636cb7](https://github.com/Telefonica/mistica-web/commit/b636cb732bdc501efc707f12ac030deb2c5484e8))
+
+# [17.6.0](https://github.com/Telefonica/mistica-web/compare/v17.5.0...v17.6.0) (2026-10-02)
+
+
+### Bug Fixes
+
+* **Card:** fix aspect ratio with selection controls ([#1744](https://github.com/Telefonica/mistica-web/issues/1744)) ([34cdd66](https://github.com/Telefonica/mistica-web/commit/34cdd6694e204e72b8256d3b2e12d248849795b3)), closes [#1741](https://github.com/Telefonica/mistica-web/issues/1741)
+* **icons:** export missing Vivo Evolution icons ([#1737](https://github.com/Telefonica/mistica-web/issues/1737)) ([2ecba34](https://github.com/Telefonica/mistica-web/commit/2ecba34081d3d11d67b5d3b82c5bf94cdfc0c280))
+
+
+### Features
+
+* **AiCard:** update AiCard text size to be Text2 instead of Text3 ([#1733](https://github.com/Telefonica/mistica-web/issues/1733)) ([58f1795](https://github.com/Telefonica/mistica-web/commit/58f1795741182cd5a5792a7fabe02c559db539b1))
+* **Card:** add selectable state ([#1729](https://github.com/Telefonica/mistica-web/issues/1729)) ([91d9a2c](https://github.com/Telefonica/mistica-web/commit/91d9a2cd921588b9bdef3f6ba46987708483cf4b))
+
+# [17.5.0](https://github.com/Telefonica/mistica-web/compare/v17.4.0...v17.5.0) (2026-09-25)
+
+
+### Features
+
+* **FadeOut:** include FadeOut animation component ([#1731](https://github.com/Telefonica/mistica-web/issues/1731)) ([48d211e](https://github.com/Telefonica/mistica-web/commit/48d211e6b695baf4e0336de525f8b7156949fc64))
+* **Header:** add new headerPretitle token and add an option to change header title preset ([#1720](https://github.com/Telefonica/mistica-web/issues/1720)) ([eb6642d](https://github.com/Telefonica/mistica-web/commit/eb6642df7743ae044d039569ac1cdef4a05cb066))
+* **icons:** update Vivo Evolution icons ([#1728](https://github.com/Telefonica/mistica-web/issues/1728)) ([6b39f05](https://github.com/Telefonica/mistica-web/commit/6b39f05526881f27fbb52d4b5af32fc84f757ee6))
+
 # [17.4.0](https://github.com/Telefonica/mistica-web/compare/v17.3.0...v17.4.0) (2026-09-18)
 
 

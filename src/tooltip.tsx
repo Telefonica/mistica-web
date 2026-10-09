@@ -6,7 +6,6 @@ import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
-import {getCssVarValue} from './utils/dom';
 import {ESC, TAB} from './utils/keys';
 import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
@@ -41,7 +40,9 @@ const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 100;
 const ARROW_SIZE = 20;
 const TOOLTIP_OFFSET_FROM_TARGET = 6;
-const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2 + 1;
+const TOOLTIP_BORDER_SIZE = 1;
+const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2 + TOOLTIP_BORDER_SIZE;
+const REFLECTED_POSITION = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -79,62 +80,36 @@ const getFinalPosition = (
     tooltip: HTMLElement | undefined | null,
     position: Position,
     windowHeight: number,
-    windowWidth: number
+    windowWidth: number,
+    contentHeight?: number
 ): Position | undefined => {
     if (!targetRect || !tooltip) {
         return undefined;
     }
-    const {top, bottom, left, right} = targetRect;
+    const availableSpace = {
+        top: targetRect.top,
+        bottom: windowHeight - targetRect.bottom,
+        left: targetRect.left,
+        right: windowWidth - targetRect.right,
+    };
+    const dimensions = getElementDimensionsWithoutPadding(tooltip);
+    const width = dimensions.width;
+    const height = contentHeight === undefined ? dimensions.height : contentHeight + 2 * TOOLTIP_BORDER_SIZE;
+    const size = (position === 'top' || position === 'bottom' ? height : width) + TOOLTIP_PADDING_FROM_TARGET;
+    const reflected = REFLECTED_POSITION[position];
+    const candidateFinalPosition =
+        availableSpace[position] < size && availableSpace[reflected] > availableSpace[position]
+            ? reflected
+            : position;
 
-    const availableSpaceOnBottom = windowHeight - bottom;
-    const availableSpaceOnRight = windowWidth - right;
-    const availableSpaceOnTop = top;
-    const availableSpaceOnLeft = left;
-
-    const {width, height} = getElementDimensionsWithoutPadding(tooltip);
-
-    const tooltipWidth = width + TOOLTIP_PADDING_FROM_TARGET;
-    const tooltipHeight = height + TOOLTIP_PADDING_FROM_TARGET;
-
-    const fitsHorizontal = tooltipWidth <= Math.max(availableSpaceOnLeft, availableSpaceOnRight);
-    const fitsVertical = tooltipHeight <= Math.max(availableSpaceOnBottom, availableSpaceOnTop);
-
-    if (!fitsVertical && !fitsHorizontal) {
-        return undefined;
+    if (
+        (candidateFinalPosition === 'left' || candidateFinalPosition === 'right') &&
+        availableSpace[candidateFinalPosition] < size
+    ) {
+        return availableSpace.bottom > availableSpace.top ? 'bottom' : 'top';
     }
 
-    switch (position) {
-        case 'left':
-            if (fitsHorizontal) {
-                return tooltipWidth <= availableSpaceOnLeft ? 'left' : 'right';
-            } else {
-                return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
-            }
-
-        case 'right':
-            if (fitsHorizontal) {
-                return tooltipWidth <= availableSpaceOnRight ? 'right' : 'left';
-            } else {
-                return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
-            }
-
-        case 'top':
-            if (fitsVertical) {
-                return tooltipHeight <= availableSpaceOnTop ? 'top' : 'bottom';
-            } else {
-                return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
-            }
-
-        case 'bottom':
-            if (fitsVertical) {
-                return tooltipHeight <= availableSpaceOnBottom ? 'bottom' : 'top';
-            } else {
-                return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
-            }
-
-        default:
-            return undefined;
-    }
+    return candidateFinalPosition;
 };
 
 type Props = {
@@ -145,6 +120,7 @@ type Props = {
     targetStyle?: React.CSSProperties;
     title?: string;
     position?: Position;
+    alignment?: 'start' | 'middle' | 'end';
     width?: number;
     delay?: boolean;
     dataAttributes?: DataAttributes;
@@ -157,6 +133,7 @@ type BaseTooltipProps = {
     target: React.ReactNode;
     targetStyle?: React.CSSProperties;
     position?: Position;
+    alignment?: 'start' | 'middle' | 'end';
     width?: number;
     delay?: boolean;
     dataAttributes?: DataAttributes;
@@ -174,6 +151,7 @@ export const BaseTooltip = ({
     targetStyle,
     width,
     position = 'top',
+    alignment = 'middle',
     dataAttributes,
     delay = true,
     centerContent,
@@ -183,7 +161,12 @@ export const BaseTooltip = ({
     hasPointerInteractionOnly = false,
     trackingEvent,
 }: BaseTooltipProps): JSX.Element => {
-    const {texts, t} = useTheme();
+    const {texts, t, borderRadii} = useTheme();
+    const arrowOffsetFromBorder = parseFloat(borderRadii.popup);
+    const minSize = Math.max(
+        styles.CONTENT_MIN_WIDTH,
+        2 * (arrowOffsetFromBorder + TOOLTIP_BORDER_SIZE) + ARROW_SIZE
+    );
     const tooltipId = React.useId();
     const {openTooltipId} = useTooltipState();
     const {openTooltip, closeTooltip} = useSetTooltipState();
@@ -194,6 +177,7 @@ export const BaseTooltip = ({
 
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
+    const contentRef = React.useRef<HTMLDivElement | null>(null);
     const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
     const isTouchable = isTouchableDevice();
     const tooltipEnterDelay = delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0;
@@ -208,7 +192,26 @@ export const BaseTooltip = ({
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
     const tooltipRect = useBoundingRect(tooltipRef, isTooltipOpen, true);
+    const contentRect = useBoundingRect(contentRef, isTooltipOpen, true);
     const windowSize = useWindowSize();
+    const currentPosition = getFinalPosition(
+        targetRect,
+        tooltip,
+        position,
+        windowSize.height,
+        windowSize.width,
+        contentRect?.height
+    );
+    const maxHeight = Math.max(
+        0,
+        (currentPosition === 'top'
+            ? targetRect?.top ?? windowSize.height
+            : currentPosition === 'bottom'
+              ? windowSize.height - (targetRect?.bottom ?? 0)
+              : windowSize.height) -
+            (currentPosition === 'top' || currentPosition === 'bottom' ? TOOLTIP_PADDING_FROM_TARGET : 0) -
+            2 * TOOLTIP_BORDER_SIZE
+    );
 
     const resetTooltipInteractions = React.useCallback(() => {
         setIsFocused(false);
@@ -227,15 +230,7 @@ export const BaseTooltip = ({
             return;
         }
 
-        const finalPosition = getFinalPosition(
-            targetRect,
-            tooltip,
-            position,
-            windowSize.height,
-            windowSize.width
-        );
-
-        if (!finalPosition || !targetRect) {
+        if (!currentPosition || !targetRect) {
             setTooltipComputedStyles(undefined);
             setArrowComputedStyles(undefined);
             resetTooltipInteractions();
@@ -250,22 +245,29 @@ export const BaseTooltip = ({
 
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
+        const alignmentRatio = alignment === 'start' ? 0 : alignment === 'end' ? 1 : 0.5;
+        const leftPropInPx = Math.max(
+            0,
+            Math.min(maxLeftOffset, left + (right - left - tooltipWidth) * alignmentRatio)
+        );
+        const topPropInPx = Math.max(
+            0,
+            Math.min(maxTopOffset, top + (bottom - top - tooltipHeight) * alignmentRatio)
+        );
 
-        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.popup)) ?? 8;
-
-        switch (finalPosition) {
+        switch (currentPosition) {
             case 'top':
                 tooltipStyles = {
-                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    left: leftPropInPx,
                     top: top - tooltipHeight - ARROW_SIZE / 2,
                     padding: `0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px`,
                 };
 
                 arrowStyles = {
                     left: Math.max(
-                        arrowOffsetFromViewport,
+                        leftPropInPx + arrowOffsetFromBorder,
                         Math.min(
-                            windowSize.width - arrowOffsetFromViewport - ARROW_SIZE,
+                            leftPropInPx + tooltipWidth - arrowOffsetFromBorder - ARROW_SIZE,
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
@@ -276,16 +278,16 @@ export const BaseTooltip = ({
 
             case 'bottom':
                 tooltipStyles = {
-                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    left: leftPropInPx,
                     top: bottom - TOOLTIP_OFFSET_FROM_TARGET,
                     padding: `${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px 0px`,
                 };
 
                 arrowStyles = {
                     left: Math.max(
-                        arrowOffsetFromViewport,
+                        leftPropInPx + arrowOffsetFromBorder,
                         Math.min(
-                            windowSize.width - arrowOffsetFromViewport - ARROW_SIZE,
+                            leftPropInPx + tooltipWidth - arrowOffsetFromBorder - ARROW_SIZE,
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
@@ -298,15 +300,15 @@ export const BaseTooltip = ({
             case 'left':
                 tooltipStyles = {
                     left: left - tooltipWidth - ARROW_SIZE / 2,
-                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    top: topPropInPx,
                     padding: `0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px`,
                 };
 
                 arrowStyles = {
                     top: Math.max(
-                        arrowOffsetFromViewport,
+                        topPropInPx + arrowOffsetFromBorder,
                         Math.min(
-                            windowSize.height - arrowOffsetFromViewport - ARROW_SIZE,
+                            topPropInPx + tooltipHeight - arrowOffsetFromBorder - ARROW_SIZE,
                             (top + bottom - ARROW_SIZE) / 2
                         )
                     ),
@@ -318,18 +320,17 @@ export const BaseTooltip = ({
                 break;
 
             case 'right':
-            default:
                 tooltipStyles = {
                     left: right - TOOLTIP_OFFSET_FROM_TARGET,
-                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    top: topPropInPx,
                     padding: `0px 0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px`,
                 };
 
                 arrowStyles = {
                     top: Math.max(
-                        arrowOffsetFromViewport,
+                        topPropInPx + arrowOffsetFromBorder,
                         Math.min(
-                            windowSize.height - arrowOffsetFromViewport - ARROW_SIZE,
+                            topPropInPx + tooltipHeight - arrowOffsetFromBorder - ARROW_SIZE,
                             (top + bottom - ARROW_SIZE) / 2
                         )
                     ),
@@ -339,6 +340,10 @@ export const BaseTooltip = ({
                 };
 
                 break;
+            default: {
+                const exhaustiveCheck: never = currentPosition;
+                throw new Error(`Invalid tooltip position: ${exhaustiveCheck}`);
+            }
         }
 
         /**
@@ -366,10 +371,12 @@ export const BaseTooltip = ({
         targetRect,
         tooltipRect,
         isTooltipOpen,
-        position,
+        currentPosition,
+        alignment,
         windowSize,
         tooltipComputedStyles,
         arrowComputedStyles,
+        arrowOffsetFromBorder,
         isTouchable,
         tooltipId,
         resetTooltipInteractions,
@@ -438,17 +445,8 @@ export const BaseTooltip = ({
         hasControlledValue,
     ]);
 
-    const currentPosition = getFinalPosition(
-        targetRect,
-        tooltip,
-        position,
-        windowSize.height,
-        windowSize.width
-    );
-
     // by default, center content only if tooltip has minimum possible width
-    const hasCenteredContent =
-        centerContent !== undefined ? centerContent : tooltipRect?.width === styles.CONTENT_MIN_WIDTH;
+    const hasCenteredContent = centerContent !== undefined ? centerContent : tooltipRect?.width === minSize;
 
     return (
         <>
@@ -568,17 +566,23 @@ export const BaseTooltip = ({
                                         className={styles.tooltip}
                                         style={{
                                             width,
+                                            minWidth: minSize,
+                                            minHeight:
+                                                currentPosition === 'left' || currentPosition === 'right'
+                                                    ? minSize
+                                                    : undefined,
                                             ...getBorderStyle(themeVariant),
                                             maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
                                         }}
                                     >
                                         <div
+                                            style={{maxHeight}}
                                             className={classNames(styles.contentContainer, {
                                                 [styles.tooltipCenter]: hasCenteredContent,
                                             })}
                                         >
                                             <ThemeVariant variant="default">
-                                                {content}
+                                                <div ref={contentRef}>{content}</div>
 
                                                 {onClose && (
                                                     <div className={styles.closeButtonIcon}>

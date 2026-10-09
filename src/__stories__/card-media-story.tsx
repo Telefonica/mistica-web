@@ -54,6 +54,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
     mediaWidth,
     onClose,
     onPress,
+    selected,
     topActions,
     buttonPrimary,
     buttonSecondary,
@@ -114,6 +115,7 @@ export const Default: StoryComponent<MediaCardArgs> = ({
                 buttonLink={getButtonLink(buttonLink)}
                 onClose={onClose ? () => {} : undefined}
                 onPress={onPress ? () => {} : undefined}
+                selected={selected}
                 aria-label={ariaLabel || undefined}
                 aria-description={ariaDescription || undefined}
                 imageFit={imageFit || undefined}

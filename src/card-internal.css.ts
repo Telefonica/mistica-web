@@ -269,3 +269,39 @@ export const stretchedLink = style({
         cursor: 'pointer',
     },
 });
+
+const selectionOutlineWidth = 2;
+const selectionOutlineOffset = 2;
+
+export const selectionOutline = style({
+    selectors: {
+        '&::after': {
+            content: '',
+            position: 'absolute',
+            inset: -(selectionOutlineWidth + selectionOutlineOffset),
+            border: `${selectionOutlineWidth}px solid transparent`,
+            borderRadius: `calc(${skinVars.borderRadii.container} + 3px)`,
+            pointerEvents: 'none',
+        },
+    },
+});
+
+export const selectionOutlineColor = styleVariants({
+    default: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
+    alternative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
+    brand: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedBrand}}},
+    media: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivated}}},
+    negative: {selectors: {'&::after': {borderColor: skinVars.colors.controlActivatedNegative}}},
+});
+
+export const selectionControl = style({borderRadius: skinVars.borderRadii.container});
+
+export const selectionControlContent = style({
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%',
+    flexGrow: 1,
+    borderRadius: 'inherit',
+    outlineOffset: 0,
+});

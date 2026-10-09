@@ -7,7 +7,9 @@ import type {Variant} from '../theme-variant-context';
 export default {
     title: 'Components/Radio Button',
     parameters: {fullScreen: true},
+    args: {className: ''},
     argTypes: {
+        className: {control: 'text'},
         variantOutside: {
             options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
@@ -16,11 +18,12 @@ export default {
 };
 
 type Args = {
+    className?: string;
     disabled: boolean;
     variantOutside: Variant;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     const [value, setValue] = React.useState('first');
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
@@ -28,10 +31,10 @@ export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => 
                 <div data-testid="radio-group-wrapper" style={{maxWidth: 'fit-content'}}>
                     <RadioGroup name="radio-group" disabled={disabled} onChange={setValue} value={value}>
                         <Stack space={16}>
-                            <RadioButton value="first">
+                            <RadioButton className={className} value="first">
                                 <Text3 regular>First option</Text3>
                             </RadioButton>
-                            <RadioButton value="second">
+                            <RadioButton className={className} value="second">
                                 <Text3 regular>Second option</Text3>
                             </RadioButton>
                         </Stack>
@@ -48,7 +51,7 @@ Controlled.args = {
     variantOutside: 'default',
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     const [value, setValue] = React.useState('first');
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
@@ -61,10 +64,10 @@ export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) =
                         defaultValue={value}
                     >
                         <Stack space={16}>
-                            <RadioButton value="first">
+                            <RadioButton className={className} value="first">
                                 <Text3 regular>First option</Text3>
                             </RadioButton>
-                            <RadioButton value="second">
+                            <RadioButton className={className} value="second">
                                 <Text3 regular>Second option</Text3>
                             </RadioButton>
                         </Stack>
@@ -81,7 +84,7 @@ Uncontrolled.args = {
     variantOutside: 'default',
 };
 
-export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     const [value, setValue] = React.useState('first');
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
@@ -95,6 +98,7 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
                     >
                         <Stack space={16}>
                             <RadioButton
+                                className={className}
                                 value="first"
                                 render={({labelId, disabled}) => (
                                     <div style={{opacity: disabled ? 0.5 : undefined}}>
@@ -114,6 +118,7 @@ export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) =
                                 )}
                             />
                             <RadioButton
+                                className={className}
                                 value="second"
                                 render={({labelId, disabled}) => (
                                     <div style={{opacity: disabled ? 0.5 : undefined}}>
