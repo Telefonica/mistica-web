@@ -758,7 +758,11 @@ const RowContent = React.forwardRef<
     if (props.iconButton) {
         return isInteractive
             ? renderRowWithDoubleInteraction(
-                  <div className={classNames(styles.dualActionRightIconButton, {[styles.dualActionRightIconButtonSmall]: small})}>
+                  <div
+                      className={classNames(styles.dualActionRightIconButton, {
+                          [styles.dualActionRightIconButtonSmall]: small,
+                      })}
+                  >
                       {props.iconButton.Icon ? (
                           <IconButton {...props.iconButton} disabled={props.disabled} />
                       ) : (
