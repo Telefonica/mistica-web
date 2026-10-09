@@ -120,6 +120,7 @@ export type SpacingConfig = {
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
     boxedDefaultPadding: PaddingXValues;
+    boxedSmallPadding: PaddingYValues;
     responsiveLayoutMargin: ResponsiveValue<number>;
 };
 
