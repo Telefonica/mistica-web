@@ -1,7 +1,12 @@
 'use client';
 import * as React from 'react';
 import {O2_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
-import {getAnimateDrawLineProps, getAnimateHopInProps, mergeProperties} from '../utils/animation';
+import {
+    getAnimateCircleScaleInProps,
+    getAnimateDrawLineProps,
+    getAnimateHopInProps,
+    mergeProperties,
+} from '../utils/animation';
 import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
 import {useThemeVariant} from '../theme-variant-context';
@@ -54,46 +59,59 @@ const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.El
     );
 };
 
-const IconSuccessVivo = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
+const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
-
-    const themeVariant = useThemeVariant();
-    const defaultColor =
-        themeVariant === 'brand' || themeVariant === 'media'
-            ? vars.colors.neutralHighBrand
-            : themeVariant === 'negative'
-              ? vars.colors.neutralHighNegative
-              : vars.colors.brand;
+    const gradientId = React.useId();
 
     return (
-        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
-            <g stroke={color ? undefined : defaultColor}>
-                <path
-                    vectorEffect="non-scaling-stroke"
-                    fill="none"
-                    stroke={color ? color : undefined}
-                    strokeWidth="2"
-                    strokeMiterlimit="10"
-                    d="M61.4,32c0,19.5-10,29.4-29.4,29.4C12.5,61.4,2.6,51.5,2.6,32S12.5,2.6,32,2.6S61.4,12.5,61.4,32z"
-                    transform="rotate(90 32 32)"
-                    {...(!skipAnimation && getAnimateDrawLineProps('202', '0.2s', platformOverrides))}
-                />
-                <polyline
-                    vectorEffect="non-scaling-stroke"
-                    fill="none"
-                    stroke={color ? color : undefined}
-                    strokeWidth="2"
-                    strokeMiterlimit="10"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    points="20,34.9 27.4,44.3 45.6,21"
-                    {...(!skipAnimation &&
-                        mergeProperties(
-                            getAnimateDrawLineProps('44', '0.6s', platformOverrides),
-                            getAnimateHopInProps('0.6s', platformOverrides)
-                        ))}
-                />
-            </g>
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" fill="none">
+            <circle
+                cx="32"
+                cy="32"
+                r="31"
+                stroke={`url(#${gradientId})`}
+                {...getAnimateCircleScaleInProps('31', platformOverrides)}
+            />
+            <polyline
+                fill="none"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                points="24,32.75 30,39 40.5,24.5"
+                {...getAnimateDrawLineProps('44', '0.4s', platformOverrides, '0.5 0 0.83 0.83')}
+            />
+            <defs>
+                <linearGradient
+                    id={gradientId}
+                    x1="6.66663"
+                    y1="6.66669"
+                    x2="58.3441"
+                    y2="7.98638"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stopColor="#E5B9FF" />
+                    <stop offset="1" stopColor="#FF6ACE" />
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+};
+
+const IconSuccessVivoEvolution = ({size = 48}: Props): JSX.Element => {
+    const themeVariant = useThemeVariant();
+    const isBrand = themeVariant === 'brand';
+
+    return (
+        <svg role="presentation" width={size} height={size} viewBox="0 0 48 48" fill="none">
+            <path
+                d="M0 18C0 8.05888 8.05888 0 18 0H30C39.9411 0 48 8.05888 48 18V30C48 39.9411 39.9411 48 30 48H18C8.05888 48 0 39.9411 0 30V18Z"
+                fill={isBrand ? vars.colors.backgroundBrandSecondary : vars.colors.successLow}
+            />
+            <path
+                d="M34.9092 15.5156C35.2803 15.1548 35.8734 15.1632 36.2344 15.5342C36.5952 15.9053 36.5869 16.4984 36.2158 16.8594L20.1572 32.4844C19.7933 32.8385 19.2135 32.8385 18.8496 32.4844L11.7842 25.6094C11.4132 25.2484 11.4048 24.6553 11.7656 24.2842C12.1266 23.9132 12.7197 23.9048 13.0908 24.2656L19.5039 30.5049L34.9092 15.5156Z"
+                fill={isBrand ? vars.colors.neutralLow : vars.colors.successHigh}
+            />
         </svg>
     );
 };
@@ -146,8 +164,9 @@ const IconSuccess = ({size, color, skipAnimation}: Props): JSX.Element => {
         case O2_SKIN:
             return <IconSuccessO2 size={size} color={color} skipAnimation={skipAnimation} />;
         case VIVO_SKIN:
-        case VIVO_EVOLUTION_SKIN:
             return <IconSuccessVivo size={size} color={color} skipAnimation={skipAnimation} />;
+        case VIVO_EVOLUTION_SKIN:
+            return <IconSuccessVivoEvolution size={size} color={color} skipAnimation={skipAnimation} />;
         default:
             return <IconSuccessDefault size={size} color={color} skipAnimation={skipAnimation} />;
     }

@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import {VIVO_EVOLUTION_SKIN, VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
 import IconSuccess from './icons/icon-success';
 import IconError from './icons/icon-error';
@@ -21,7 +20,7 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
-import IconSuccessVivoNew from './icons/icon-success-vivo-new';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -73,7 +72,7 @@ const renderFeedbackBody = (
             description
         );
     return (
-        <Stack space={24}>
+        <Stack space={40}>
             <div className={styles.assetContainer} data-testid="icon">
                 {asset}
             </div>
@@ -281,7 +280,7 @@ export const FeedbackScreen = ({
 
 export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {skinName, themeVariants} = useTheme();
+    const {themeVariants} = useTheme();
 
     return (
         <FeedbackScreen
@@ -293,13 +292,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
                     : 'default'
             }
             hapticFeedback="success"
-            asset={
-                skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
-                    <IconSuccessVivoNew size="100%" />
-                ) : (
-                    <IconSuccess size="100%" />
-                )
-            }
+            asset={<IconSuccess size="100%" />}
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
@@ -353,13 +346,19 @@ export const InfoFeedbackScreen = ({
     Icon = IconInfo,
     ...props
 }: InfoFeedbackScreenProps): JSX.Element => {
+    const themeVariant = useThemeVariant();
+
     return (
         <FeedbackScreen
             dataAttributes={{
                 testid: 'InfoFeedbackScreen',
                 ...dataAttributes,
             }}
-            asset={<Icon size="100%" color={vars.colors.brand} />}
+            asset={
+                <ThemeVariant variant={themeVariant}>
+                    <Icon size="100%" color={vars.colors.brand} />
+                </ThemeVariant>
+            }
             {...props}
         />
     );
@@ -377,14 +376,8 @@ export const SuccessFeedback = ({
     dataAttributes,
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
-    const {skinName, platformOverrides, themeVariants} = useTheme();
-
-    const asset =
-        skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
-            <IconSuccessVivoNew size="100%" />
-        ) : (
-            <IconSuccess size="100%" />
-        );
+    const {platformOverrides, themeVariants} = useTheme();
+    const asset = <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
         {asset, title, description, slot},
         areAnimationsSupported(platformOverrides)
