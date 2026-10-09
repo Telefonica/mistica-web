@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica-icons",
-    "version": "17.4.0",
+    "version": "18.0.0-beta.1",
     "license": "MIT",
     "description": "Icons of the Mística design system",
     "repository": {
@@ -41,7 +41,7 @@
         "dist-es/**"
     ],
     "peerDependencies": {
-        "@telefonica/mistica": "^17.4.0",
+        "@telefonica/mistica": "^18.0.0-beta.1",
         "react": "^18.0.0 || ^19.2.0",
         "react-dom": "^18.0.0 || ^19.2.0"
     },
