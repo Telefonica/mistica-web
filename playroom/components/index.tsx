@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     Select,
-    IconSettingsRegular,
     Overlay,
     useTheme,
     useScreenSize,
@@ -21,6 +20,7 @@ import {
     O2Logo,
     EsimflagLogo,
 } from '../../src';
+import IconSettingsRegular from '@telefonica/mistica-icons/icon-settings-regular';
 import {Movistar, Telefonica, Blau, Vivo, Vivo_Evolution, O2, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
@@ -36,6 +36,8 @@ import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src
 
 export * from '../../src';
 export * from '../../src/community';
+// the icons are a separate package now, and Playroom needs every name in its scope
+export * from '../../packages/mistica-icons/src/generated';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {SidenavBar, SidenavLayout} from '..';
-import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
-import IconSearchRegular from '../generated/mistica-icons/icon-search-regular';
-import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
-import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
-import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
+import IconSearchRegular from '@telefonica/mistica-icons/icon-search-regular';
+import IconFolderRegular from '@telefonica/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '@telefonica/mistica-icons/icon-documents-regular';
+import IconBellRegular from '@telefonica/mistica-icons/icon-bell-regular';
 import Box from '../box';
 import Stack from '../stack';
 import {Text2, Text3, Text6} from '../text';

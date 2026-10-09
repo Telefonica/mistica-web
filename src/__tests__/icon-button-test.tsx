@@ -3,10 +3,10 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
-import IconLightningRegular from '../generated/mistica-icons/icon-lightning-regular';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
 import {IconButton, ToggleIconButton} from '../icon-button';
-import IconPauseFilled from '../generated/mistica-icons/icon-pause-filled';
-import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
+import IconPauseFilled from '@telefonica/mistica-icons/icon-pause-filled';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
 
 import type {TouchableElement} from '../touchable';
 

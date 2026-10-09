@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useScreenSize, useTheme, skinVars, useDialog} from '../src';
 import curry from 'lodash/curry';
-import {iconCategories, iconKeywords} from '../src/generated/mistica-icons/icons-keywords';
+import {iconCategories, iconKeywords} from '@telefonica/mistica-icons/keywords';
 
 import type {AlertProps, ConfirmProps, ExtendedDialogProps} from '../src/dialog';
 import type {Colors} from '../src/skins/types';

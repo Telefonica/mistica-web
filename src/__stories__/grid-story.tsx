@@ -1,16 +1,6 @@
 import * as React from 'react';
-import {
-    Grid,
-    GridItem,
-    Stack,
-    Box,
-    DataCard,
-    Circle,
-    IconAcademicRegular,
-    skinVars,
-    ResponsiveLayout,
-    Title1,
-} from '..';
+import {Grid, GridItem, Stack, Box, DataCard, Circle, skinVars, ResponsiveLayout, Title1} from '..';
+import IconAcademicRegular from '@telefonica/mistica-icons/icon-academic-regular';
 
 export default {
     title: 'Layout/Grid',

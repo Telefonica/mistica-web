@@ -6,14 +6,14 @@ import {
     ButtonLink,
     Text2,
     ResponsiveLayout,
-    IconMobileDeviceRegular,
     skinVars,
     Circle,
     Tag,
     Carousel,
-    IconStarFilled,
-    IconStarRegular,
 } from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import {Placeholder} from '../placeholder';
 import avatarImg from '../__stories__/images/avatar.jpg';
 

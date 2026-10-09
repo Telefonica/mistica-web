@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {ResponsiveLayout, Placeholder, Timeline, TimelineItem, IconShopRegular} from '..';
+import {ResponsiveLayout, Placeholder, Timeline, TimelineItem} from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 
 import type {Variant} from '../theme-variant-context';
 

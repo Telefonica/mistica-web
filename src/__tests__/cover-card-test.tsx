@@ -5,9 +5,9 @@ import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, ButtonLink} from '../button';
-import IconMobileDeviceRegular from '../generated/mistica-icons/icon-mobile-device-regular';
-import IconStarFilled from '../generated/mistica-icons/icon-star-filled';
-import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import {useThemeVariant} from '../theme-variant-context';
 
 test('CoverCard tab order with video', async () => {

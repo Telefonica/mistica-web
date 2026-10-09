@@ -7,13 +7,13 @@ import {
     BoxedAccordion,
     BoxedAccordionItem,
     Circle,
-    IconThumbUpFilled,
-    IconMobileDeviceRegular,
     Image,
     Placeholder,
     ResponsiveLayout,
     skinVars,
 } from '..';
+import IconThumbUpFilled from '@telefonica/mistica-icons/icon-thumb-up-filled';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
 import avatarImg from './images/avatar.jpg';

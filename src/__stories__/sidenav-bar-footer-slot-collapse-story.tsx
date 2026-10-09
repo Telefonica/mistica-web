@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 import {SidenavBar} from '..';
-import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
-import IconDocumentsRegular from '../generated/mistica-icons/icon-documents-regular';
-import IconBellRegular from '../generated/mistica-icons/icon-bell-regular';
-import IconSettingsRegular from '../generated/mistica-icons/icon-settings-regular';
-import IconPanelCollapseRegular from '../generated/mistica-icons/icon-panel-collapse-regular';
-import IconPanelExpandRegular from '../generated/mistica-icons/icon-panel-expand-regular';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
+import IconFolderRegular from '@telefonica/mistica-icons/icon-folder-regular';
+import IconDocumentsRegular from '@telefonica/mistica-icons/icon-documents-regular';
+import IconBellRegular from '@telefonica/mistica-icons/icon-bell-regular';
+import IconSettingsRegular from '@telefonica/mistica-icons/icon-settings-regular';
+import IconPanelCollapseRegular from '@telefonica/mistica-icons/icon-panel-collapse-regular';
+import IconPanelExpandRegular from '@telefonica/mistica-icons/icon-panel-expand-regular';
 import Box from '../box';
 import Stack from '../stack';
 import {ButtonSecondary} from '../button';

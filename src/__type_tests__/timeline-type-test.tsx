@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {IconShopRegular, Placeholder, TimelineItem} from '..';
+import {Placeholder, TimelineItem} from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 
 <TimelineItem state="active">
     <Placeholder />
