@@ -126,6 +126,11 @@
     line-height: var(--mistica-line-height-chipLabel);
     font-weight: var(--mistica-font-weight-chipLabel);
 }
+.mistica-text-chipLabelSmall {
+    font-size: var(--mistica-font-size-chipLabelSmall);
+    line-height: var(--mistica-line-height-chipLabelSmall);
+    font-weight: var(--mistica-font-weight-chipLabelSmall);
+}
 .mistica-text-headerPretitle {
     font-size: var(--mistica-font-size-headerPretitle);
     line-height: var(--mistica-line-height-headerPretitle);
