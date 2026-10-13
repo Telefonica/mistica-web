@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {
+    Align,
+    ButtonPrimary,
+    Popover,
     Stack,
     Text3,
     Tooltip,
@@ -215,3 +218,33 @@ export const WithTargetStyles: StoryComponent = () => {
 };
 
 WithTargetStyles.storyName = 'With custom styles for target';
+
+const TARGET_AREA_HEIGHT = 240;
+const INITIAL_CONTENT_HEIGHT = 100;
+const EXPANDED_CONTENT_HEIGHT = 300;
+const TOOLTIP_WIDTH = 200;
+
+export const GrowingContent: StoryComponent<{component: 'Tooltip' | 'Popover'; open: boolean}> = ({
+    component,
+    open,
+}) => {
+    const [expanded, setExpanded] = React.useState(false);
+    const Component = component === 'Popover' ? Popover : Tooltip;
+    return (
+        <Align x="center" y="end" height={TARGET_AREA_HEIGHT}>
+            <Component
+                open={open}
+                position="top"
+                width={TOOLTIP_WIDTH}
+                target={<ButtonPrimary onPress={() => setExpanded(true)}>Expand content</ButtonPrimary>}
+                slot={<Placeholder height={expanded ? EXPANDED_CONTENT_HEIGHT : INITIAL_CONTENT_HEIGHT} />}
+            />
+        </Align>
+    );
+};
+
+GrowingContent.args = {component: 'Tooltip', open: false};
+GrowingContent.argTypes = {
+    component: {options: ['Tooltip', 'Popover'], control: {type: 'select'}},
+    open: {control: {type: 'boolean'}},
+};
