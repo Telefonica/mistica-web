@@ -40,7 +40,7 @@ export const primaryContent = style([
         opacity: 1,
         transform: 'translateY(0)',
         selectors: {
-            [`${isSwapped} &`]: {
+            [`${isSwapped} > &`]: {
                 opacity: 0,
                 transform: `translateY(calc(-1 * ${offset}))`,
             },
@@ -49,7 +49,7 @@ export const primaryContent = style([
             '(prefers-reduced-motion)': {
                 transform: 'none',
                 selectors: {
-                    [`${isSwapped} &`]: {
+                    [`${isSwapped} > &`]: {
                         transform: 'none',
                     },
                 },
@@ -64,7 +64,7 @@ export const swappedContent = style([
         opacity: 0,
         transform: `translateY(${offset})`,
         selectors: {
-            [`${isSwapped} &`]: {
+            [`${isSwapped} > &`]: {
                 opacity: 1,
                 transform: 'translateY(0)',
             },
@@ -73,7 +73,7 @@ export const swappedContent = style([
             '(prefers-reduced-motion)': {
                 transform: 'none',
                 selectors: {
-                    [`${isSwapped} &`]: {
+                    [`${isSwapped} > &`]: {
                         transform: 'none',
                     },
                 },
