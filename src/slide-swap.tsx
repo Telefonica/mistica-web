@@ -2,6 +2,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import * as styles from './slide-swap.css';
+import ScreenReaderOnly from './screen-reader-only';
 import {applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
@@ -26,6 +27,12 @@ type Props = {
      * (like a Spinner) once it is hidden. Not called when `duration` is 0, as there is no transition.
      */
     onTransitionEnd?: () => void;
+    /**
+     * Announces the text of the content that becomes visible to screen readers on every swap, using a
+     * polite live region. Nothing is announced on mount. Disabled by default, as not every swap is
+     * meaningful (e.g. decorative icons) and some consumers, like Button, handle their own announcements.
+     */
+    announceSwap?: boolean;
     className?: string;
     dataAttributes?: DataAttributes;
 };
@@ -45,9 +52,28 @@ const SlideSwap = ({
     align = 'center',
     duration = DEFAULT_DURATION,
     onTransitionEnd,
+    announceSwap = false,
     className,
     dataAttributes,
 }: Props): JSX.Element => {
+    const primaryContentRef = React.useRef<HTMLDivElement>(null);
+    const swappedContentRef = React.useRef<HTMLDivElement>(null);
+    const lastShowSwappedContentRef = React.useRef(showSwappedContent);
+    const [announcement, setAnnouncement] = React.useState('');
+
+    React.useEffect(() => {
+        // compare with the previous value instead of skipping the first run, so nothing is announced on
+        // mount even when effects run twice (React StrictMode)
+        if (lastShowSwappedContentRef.current === showSwappedContent) {
+            return;
+        }
+        lastShowSwappedContentRef.current = showSwappedContent;
+        if (announceSwap) {
+            const visibleContent = showSwappedContent ? swappedContentRef.current : primaryContentRef.current;
+            setAnnouncement(visibleContent?.textContent?.trim() ?? '');
+        }
+    }, [showSwappedContent, announceSwap]);
+
     return (
         <div
             {...getPrefixedDataAttributes({testid: 'SlideSwap', ...dataAttributes})}
@@ -59,10 +85,15 @@ const SlideSwap = ({
                 [styles.vars.offset]: direction === 'up' ? OFFSET : `-${OFFSET}`,
             })}
         >
-            <div aria-hidden={showSwappedContent ? true : undefined} className={styles.primaryContent}>
+            <div
+                ref={primaryContentRef}
+                aria-hidden={showSwappedContent ? true : undefined}
+                className={styles.primaryContent}
+            >
                 {children}
             </div>
             <div
+                ref={swappedContentRef}
                 aria-hidden={showSwappedContent ? undefined : true}
                 className={styles.swappedContent}
                 onTransitionEnd={(event) => {
@@ -74,6 +105,14 @@ const SlideSwap = ({
             >
                 {swappedContent}
             </div>
+            {announceSwap && (
+                // always mounted while enabled, so screen readers pick up its changes
+                <ScreenReaderOnly>
+                    <div role="status" aria-live="polite">
+                        {announcement}
+                    </div>
+                </ScreenReaderOnly>
+            )}
         </div>
     );
 };

@@ -65,3 +65,37 @@ test('SlideSwap calls onTransitionEnd once per swap, ignoring transitions from i
     fireTransitionEnd(swappedContentContainer, 'opacity');
     expect(onTransitionEnd).toHaveBeenCalledTimes(1);
 });
+
+const AnnouncingSlideSwap = ({showSwappedContent}: {showSwappedContent: boolean}) => (
+    <ThemeContextProvider theme={makeTheme()}>
+        <SlideSwap
+            announceSwap
+            showSwappedContent={showSwappedContent}
+            swappedContent={
+                <span>
+                    <b>Sending…</b>
+                </span>
+            }
+        >
+            <span>Send</span>
+        </SlideSwap>
+    </ThemeContextProvider>
+);
+
+test('SlideSwap does not render a live region when announceSwap is not set', () => {
+    render(<SlideSwapWrapper showSwappedContent={false} />);
+
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+});
+
+test('SlideSwap announces the visible content on every swap, but not on mount', () => {
+    const {rerender} = render(<AnnouncingSlideSwap showSwappedContent={false} />);
+
+    expect(screen.getByRole('status')).toHaveTextContent(/^$/);
+
+    rerender(<AnnouncingSlideSwap showSwappedContent />);
+    expect(screen.getByRole('status')).toHaveTextContent('Sending…');
+
+    rerender(<AnnouncingSlideSwap showSwappedContent={false} />);
+    expect(screen.getByRole('status')).toHaveTextContent('Send');
+});

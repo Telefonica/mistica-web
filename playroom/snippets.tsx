@@ -4616,6 +4616,7 @@ export default [
         code: `
         <Stack space={16}>
           <SlideSwap
+            announceSwap
             showSwappedContent={getState("swapped", false)}
             swappedContent={
               <Inline space={8} alignItems="center">

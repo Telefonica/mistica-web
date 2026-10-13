@@ -31,6 +31,9 @@ export default {
         duration: {
             control: {type: 'range', min: 0, max: 2000, step: 100},
         },
+        announceSwap: {
+            control: {type: 'boolean'},
+        },
         // these are driven by the story itself, not by the controls panel
         children: {table: {disable: true}},
         swappedContent: {table: {disable: true}},
@@ -45,9 +48,10 @@ type Args = {
     direction: 'up' | 'down';
     align: 'left' | 'center' | 'right';
     duration: number;
+    announceSwap: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({direction, align, duration}) => {
+export const Default: StoryComponent<Args> = ({direction, align, duration, announceSwap}) => {
     const [showSwappedContent, setShowSwappedContent] = React.useState(false);
     const [transitionEndCount, setTransitionEndCount] = React.useState(0);
 
@@ -65,6 +69,7 @@ export const Default: StoryComponent<Args> = ({direction, align, duration}) => {
                         direction={direction}
                         align={align}
                         duration={duration}
+                        announceSwap={announceSwap}
                         onTransitionEnd={() => setTransitionEndCount((count) => count + 1)}
                         swappedContent={
                             <Inline space={8} alignItems="center">
@@ -118,4 +123,5 @@ Default.args = {
     direction: 'up',
     align: 'center',
     duration: 300,
+    announceSwap: true,
 };
