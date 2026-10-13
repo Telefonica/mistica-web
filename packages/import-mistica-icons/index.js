@@ -17,12 +17,17 @@ const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
 const PATH_OUTPUT = join(PATH_REPO_ROOT, 'packages', 'mistica-icons', 'src', 'generated');
 const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx');
 /**
- * The icons live in @telefonica/mistica-icons, and they read the theme of @telefonica/mistica by its
- * bare name. A federated host shares that name, and the share scope intercepts that name only, so a
- * deep path would give the icons of a remote a second theme context. skinVars keeps the local name
- * vars, so the body of an icon stays short.
+ * The icons live in @telefonica/mistica-icons, and they read the theme of @telefonica/mistica from
+ * the narrow entry point below. The bare name of the barrel also works, but it closes a dependency
+ * cycle, because the barrel exports the components that render an icon. The entry point exports leaf
+ * modules only, so the load order between an icon and the barrel stops mattering.
+ *
+ * A federated host must share this path as well as the bare name of the barrel, or the icons of a
+ * remote read a second theme context. See doc/module-federation.md.
+ *
+ * skinVars keeps the local name vars, so the body of an icon stays short.
  */
-const MISTICA_MODULE = '@telefonica/mistica';
+const MISTICA_ICON_RUNTIME_MODULE = '@telefonica/mistica/icon-runtime';
 const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 
@@ -196,9 +201,9 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
      */
 
     import * as React from 'react';
-    import {${hasVariants ? 'useTheme, ' : ''}useThemeVariant, skinVars as vars, useIconGradient} from '${MISTICA_MODULE}';
+    import {${hasVariants ? 'useTheme, ' : ''}useThemeVariant, skinVars as vars, useIconGradient} from '${MISTICA_ICON_RUNTIME_MODULE}';
 
-    import type {IconProps} from '${MISTICA_MODULE}';
+    import type {IconProps} from '${MISTICA_ICON_RUNTIME_MODULE}';
 
     const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
         const themeVariant = useThemeVariant();

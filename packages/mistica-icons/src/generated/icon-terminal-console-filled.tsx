@@ -6,9 +6,9 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica';
+import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
-import type {IconProps} from '@telefonica/mistica';
+import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
 const IconTerminalConsoleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const themeVariant = useThemeVariant();

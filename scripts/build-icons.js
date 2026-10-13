@@ -20,7 +20,7 @@ const SWC = path.join(REPO_ROOT, 'node_modules', '.bin', 'swc');
 const PACKAGE_ROOT = path.join(__dirname, '..', 'packages', 'mistica-icons');
 const DIST_ES = path.join(PACKAGE_ROOT, 'dist-es');
 const DIST = path.join(PACKAGE_ROOT, 'dist');
-const MISTICA = '@telefonica/mistica';
+const MISTICA_ICON_RUNTIME = '@telefonica/mistica/icon-runtime';
 
 const run = (command, cwd) => {
     execSync(command, {stdio: 'inherit', cwd});
@@ -36,7 +36,7 @@ const pascalCase = (name) =>
 
 const iconDeclaration = (componentName) =>
     [
-        `import type {IconProps} from '${MISTICA}';`,
+        `import type {IconProps} from '${MISTICA_ICON_RUNTIME}';`,
         `declare const ${componentName}: (props: IconProps) => JSX.Element;`,
         `export default ${componentName};`,
         '',

@@ -54,6 +54,7 @@
          */
         "paths": {
             "@telefonica/mistica": ["./src/index.tsx"],
+            "@telefonica/mistica/icon-runtime": ["./src/icon-runtime.tsx"],
             "@telefonica/mistica-icons/keywords": [
                 "./packages/mistica-icons/src/generated/icons-keywords.tsx"
             ],

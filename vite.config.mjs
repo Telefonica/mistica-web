@@ -42,6 +42,8 @@ export default defineConfig({
             entry: [
                 path.resolve(__dirname, 'src', 'index.tsx'),
                 path.resolve(__dirname, 'src', 'community', 'index.tsx'),
+                // entry point of @telefonica/mistica/icon-runtime, see icon-runtime/package.json
+                path.resolve(__dirname, 'src', 'icon-runtime.tsx'),
             ],
             formats: ['es'],
             cssFileName: 'style',

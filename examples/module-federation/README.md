@@ -45,8 +45,8 @@ its Cross-Origin-Resource-Policy header"_. `webpack.shared.js` exports the two h
 | Configuration                                                        | Emitted  | The page downloads | Requests |
 | -------------------------------------------------------------------- | -------- | ------------------ | -------- |
 | `@telefonica/mistica@17.4.0`, one application, icons from the barrel | 10.06 MB | **9463.8 kB**      | 7        |
-| This branch, host **and** remote, icons out of `shared`              | 4.79 MB  | **1711.0 kB**      | 10       |
-| This branch, host and remote, icons shared by path prefix            | 5.35 MB  | 1758.9 kB          | 63       |
+| This branch, host **and** remote, icons out of `shared`              | 4.81 MB  | **1718.4 kB**      | 12       |
+| This branch, host and remote, icons shared by path prefix            | 5.37 MB  | 1766.6 kB          | 65       |
 
 The first row is the problem of the issue: the shared module keeps every export, so the barrel of 2207 icons
 reaches the page. The second row is this branch, and it carries a whole second application for 18% of the
@@ -62,7 +62,7 @@ together. A woff2 file carries its own compression, so gzip does not shrink it.
 ## Do not share the icons
 
 The third row is the warning. `'@telefonica/mistica-icons/': {}` shares each module under the prefix on its
-own, so the page makes 63 requests instead of 10, and it downloads slightly more. Each icon becomes one shared
+own, so the page makes 65 requests instead of 12, and it downloads slightly more. Each icon becomes one shared
 module, one chunk and one fallback copy, including the 52 icons that the components of Mística render
 themselves.
 

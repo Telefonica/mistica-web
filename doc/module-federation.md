@@ -43,12 +43,28 @@ new ModuleFederationPlugin({
     react: {singleton: true},
     'react-dom': {singleton: true},
     '@telefonica/mistica': {singleton: true},
+    '@telefonica/mistica/icon-runtime': {singleton: true},
   },
 });
 ```
 
 `@telefonica/mistica` needs `singleton: true`, because it holds React contexts. Two copies of the theme
 context break the theme, the dialogs and the snackbars.
+
+The second line needs `singleton: true` for the same reason. Each icon of `@telefonica/mistica-icons` reads
+the theme through `@telefonica/mistica/icon-runtime`, and a share key answers one request only, so the first
+line does not cover that path. A host that drops the second line gives each remote a private copy of the theme
+context, and the remote then throws _"To use @telefonica/mistica components you must instantiate
+`<ThemeContextProvider>`"_. Measured on [examples/module-federation](../examples/module-federation/README.md):
+the page renders with the line, and it renders nothing without it.
+
+**That line is not only for an application that imports an icon.** 52 components of Mística embed one, so a
+remote that renders a `Callout` or a `Dialog` and imports no icon at all fails in the same way. The same
+measurement proves it: a remote with no icon import of its own still throws without the line.
+
+The entry point exports four values and one type, all from leaf modules, so the line is cheap: the example
+page makes 12 requests with it. `'@telefonica/mistica/'`, with a trailing slash, also works and costs 14,
+because it shares every subpath of the package.
 
 Two more details belong to the host, and a page stays blank without them:
 
@@ -77,7 +93,7 @@ holds no state, so a second copy of one icon is safe, and it costs a few hundred
 The other configuration, a shared path prefix, also works, but it costs more than it saves:
 
 ```js
-// measured: the page makes 63 requests with this line, and 10 without it
+// measured: the page makes 65 requests with this line, and 12 without it
 shared: {
     '@telefonica/mistica': {singleton: true},
     '@telefonica/mistica-icons/': {},
@@ -97,10 +113,19 @@ path such as `@telefonica/mistica/dist-es/theme-context-provider`, the share sco
 identities. The provider of A then becomes invisible to B, and the components of B fall back to the default
 theme or throw.
 
-Each icon of `@telefonica/mistica-icons` imports `@telefonica/mistica` by its bare name, for this exact
-reason. The share scope intercepts that name, so an icon of a remote reads the theme of the host. An icon that
-reached the theme through a deep path would throw _"you must instantiate `<ThemeContextProvider>`"_, because a
-deep path never enters the share scope.
+Each icon of `@telefonica/mistica-icons` imports `@telefonica/mistica/icon-runtime`, which exports the theme
+hooks from the same modules as the barrel. Inside one build both specifiers answer with one module, so the
+context identity holds. A share scope is the exception: it keys on the specifier, so the host must share that
+path as well. See the configuration of a host above.
+
+`useIconGradient` travels the same path, and that entry point is its only public home. The hook belongs to the
+icons by domain, but it stays here on purpose: an icon that reached it by a relative path inside its own
+package would carry a private copy into each shared fallback, which costs 0.76 MB under the `SHARE_ICONS`
+measurement of the example.
+
+The icons cannot import the barrel itself. The barrel exports the components that render an icon, so the
+import closes a dependency cycle, and a module level read of an icon inside that cycle captures `undefined`.
+`yarn circular-dependencies` guards that rule.
 
 ## The component barrel stays a barrel
 
