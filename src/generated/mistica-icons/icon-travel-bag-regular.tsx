@@ -27,7 +27,20 @@ const IconTravelBagRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.624 13.79a2.75 2.75 0 1 1 2.75 4.762 2.75 2.75 0 0 1-2.75-4.763m2.457 1.755a1.25 1.25 0 1 0-2.164 1.251 1.25 1.25 0 0 0 2.164-1.251M8.875 9.368a1.75 1.75 0 0 1 2.39.64l1.005 1.74a1.75 1.75 0 0 1-.641 2.39l-2.856 1.65a1.75 1.75 0 0 1-2.39-.642l-1.004-1.739a1.75 1.75 0 0 1 .64-2.39zm1.09 1.39a.25.25 0 0 0-.34-.091L6.77 12.315a.25.25 0 0 0-.092.342l1.004 1.74c.069.119.222.16.341.09l2.856-1.648a.25.25 0 0 0 .09-.341z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M14.5 2.001a2.25 2.25 0 0 1 2.25 2.25v2.248h1.5a3.75 3.75 0 0 1 3.75 3.75v8a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 18.249v-8a3.75 3.75 0 0 1 3.75-3.75h1.5V4.251a2.25 2.25 0 0 1 2.25-2.25zM5.75 7.999a2.25 2.25 0 0 0-2.25 2.25v8a2.25 2.25 0 0 0 2.25 2.25h12.5a2.25 2.25 0 0 0 2.25-2.25v-8a2.25 2.25 0 0 0-2.25-2.25zM9.5 3.501a.75.75 0 0 0-.75.75v2.248h6.5V4.251a.75.75 0 0 0-.75-.75z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
