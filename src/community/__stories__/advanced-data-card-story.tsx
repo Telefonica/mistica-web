@@ -15,6 +15,7 @@ export default {
 };
 
 type Args = {
+    selected?: boolean;
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -33,6 +34,7 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({
+    selected,
     headlineType,
     headline,
     pretitle,
@@ -77,6 +79,7 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <AdvancedDataCard
+            selected={selected}
             dataAttributes={{testid: 'advanced-data-card'}}
             stackingGroup={
                 stackingGroup ? (
@@ -113,6 +116,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Advanced Data Card';
 Default.args = {
+    selected: undefined,
     headlineType: 'promo',
     headline: 'headline',
     pretitle: 'pretitle',
@@ -130,6 +134,7 @@ Default.args = {
     noSlotDivider: false,
 };
 Default.argTypes = {
+    selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'info'],
         control: {type: 'select'},

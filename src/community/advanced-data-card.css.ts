@@ -1,4 +1,4 @@
-import {createVar, style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants, globalStyle} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import * as mq from '../media-queries.css';
 import {vars as skinVars} from '../skins/skin-contract.css';
@@ -268,4 +268,29 @@ export const topActionsWithoutIcon = style({
 export const flexColumn = style({
     display: 'flex',
     flexDirection: 'column',
+});
+
+export const selectionTouchable = style({
+    borderRadius: `calc(${skinVars.borderRadii.container} - 1px)`,
+});
+
+// Draw the focus ring inside Boxed to prevent its overflow from clipping the native outline.
+globalStyle(`${selectionTouchable} > div:focus-visible`, {outline: 'none'});
+globalStyle(`${selectionTouchable} > div:focus-visible::before`, {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    border: '1.5px solid',
+    borderColor: skinVars.colors.controlActivated,
+    borderRadius: 'inherit',
+    pointerEvents: 'none',
+    zIndex: 2,
+});
+
+const switchWidth = {default: 42, ios: 51};
+const controlSpacing = 16;
+
+export const switchSpace = styleVariants({
+    default: {width: switchWidth.default + controlSpacing, flexShrink: 0},
+    ios: {width: switchWidth.ios + controlSpacing, flexShrink: 0},
 });

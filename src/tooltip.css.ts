@@ -53,6 +53,7 @@ export const contentContainer = style([
         overflow: 'hidden',
     }),
     {
+        overflowY: 'auto',
         minWidth: CONTENT_MIN_WIDTH - 2 * BORDER_SIZE, // border is not included in this container
     },
 ]);

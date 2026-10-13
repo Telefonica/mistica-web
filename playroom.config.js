@@ -82,6 +82,7 @@ const config = {
     frameComponent: './playroom/frame-component.tsx',
     scope: './playroom/use-scope.tsx',
     widths: getWidths(),
+    defaultEditorPosition: 'left',
     exampleCode,
     webpackConfig: () => ({
         module: {

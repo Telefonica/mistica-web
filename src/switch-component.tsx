@@ -6,6 +6,7 @@ https://github.com/storybookjs/storybook/issues/11980
 
 'use client';
 import * as React from 'react';
+import classnames from 'classnames';
 import {debounce} from './utils/helpers';
 import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
@@ -36,6 +37,7 @@ type PropsRender = {
     'aria-labelledby'?: string;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
+    className?: string;
 };
 
 type PropsChildren = {
@@ -49,6 +51,7 @@ type PropsChildren = {
     'aria-labelledby'?: string;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
+    className?: string;
 };
 
 const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
@@ -155,15 +158,16 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
             onKeyDown={disabled ? undefined : handleKeyDown}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={
+            className={classnames(
                 props.render
                     ? disabled
                         ? styles.containerDisabledFullWidth
                         : styles.containerFullWidth
                     : disabled
                       ? styles.containerDisabled
-                      : styles.container
-            }
+                      : styles.container,
+                props.className
+            )}
             aria-disabled={disabled}
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : labelId}
