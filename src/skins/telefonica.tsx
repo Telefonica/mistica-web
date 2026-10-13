@@ -716,6 +716,16 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
                 size: {desktop: 28, mobile: 20},
                 weight: 'regular',
             },
+            feedbackScreenDescription: {
+                lineHeight: {desktop: 24, mobile: 24},
+                size: {desktop: 18, mobile: 16},
+                weight: 'regular',
+            },
+            feedbackScreenTitle: {
+                lineHeight: {desktop: 40, mobile: 32},
+                size: {desktop: 32, mobile: 24},
+                weight: 'medium',
+            },
             headerPretitle: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 16},
