@@ -188,7 +188,13 @@ const Message = ({
                                             as="span"
                                             id={`${id}-timestamp`}
                                             aria-label={timestampLabel}
-                                            color={boxed ? vars.colors.textSecondary : undefined}
+                                            color={
+                                                boxed
+                                                    ? type === 'outgoing'
+                                                        ? vars.colors.textPrimary
+                                                        : vars.colors.textSecondary
+                                                    : undefined
+                                            }
                                         >
                                             {timestamp}
                                         </Text1>

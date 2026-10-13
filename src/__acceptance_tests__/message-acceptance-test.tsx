@@ -1,6 +1,17 @@
 import {openStoryPage, screen} from '../test-utils';
+import {getGlobalPage} from '@telefonica/acceptance-testing';
+import {AxePuppeteer} from '@axe-core/puppeteer';
 
 const story = 'components-message--default';
+
+test.each(['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const)(
+    'Message conversation has accessible contrast in %s',
+    async (skin) => {
+        await openStoryPage({id: 'components-message--conversation', device: 'MOBILE_IOS', skin});
+        const result = await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze();
+        expect(result.violations).toEqual([]);
+    }
+);
 
 test.each([
     {type: 'incoming', boxed: true},
