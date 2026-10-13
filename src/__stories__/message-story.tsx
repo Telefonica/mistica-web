@@ -11,6 +11,7 @@ import {
     IconCheckRegular,
     IconTimeRegular,
     Placeholder,
+    skinVars,
 } from '..';
 
 import type {Variant} from '../theme-variant-context';
@@ -91,7 +92,11 @@ export const Default: StoryComponent<Args> = (args) => {
                     : {}),
           };
     return (
-        <ResponsiveLayout variant={args.variantOutside} fullWidth>
+        <ResponsiveLayout
+            variant={args.variantOutside}
+            backgroundColor={args.variantOutside === 'media' ? skinVars.colors.backgroundNegative : undefined}
+            fullWidth
+        >
             <Box padding={16} dataAttributes={{testid: 'messages'}}>
                 <Message
                     {...content}
@@ -191,3 +196,25 @@ export const Conversation: StoryComponent = () => {
         </Box>
     );
 };
+
+export const ErrorExamples: StoryComponent = () => (
+    <ResponsiveLayout variant="alternative" fullWidth>
+        <Box padding={16} dataAttributes={{testid: 'messages'}}>
+            <Stack space={32}>
+                <Message
+                    type="outgoing"
+                    text="Lorem ipsum dolor sit amet et dolores voluptas."
+                    error
+                    errorMessage="Couldn't send. Tap to retry"
+                />
+                <Message
+                    type="outgoing"
+                    text="Lorem ipsum dolor sit amet et dolores voluptas."
+                    error
+                    errorMessage="Error message long text. Error long text. Error message long text. Error message long text."
+                />
+                <Message type="outgoing" text="Ok" error errorMessage="Failed. Tap to retry." />
+            </Stack>
+        </Box>
+    </ResponsiveLayout>
+);
