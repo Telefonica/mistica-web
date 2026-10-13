@@ -446,8 +446,15 @@ const SidenavBar = ({
     const footerDividerSentinelRef = React.useRef<HTMLDivElement>(null);
     const bodyRef = React.useRef<HTMLDivElement>(null);
 
+    // The mobile treatment replaces the whole rail, so a trip to a narrow screen unmounts the body and
+    // its sentinels. Both dividers go back to their rest state, and the observers of the new body decide
+    // again: a divider earned by a scroll before the trip does not belong to the body that comes back.
     React.useEffect(() => {
-        if (!bodyRef.current) return;
+        if (!bodyRef.current) {
+            setShowHeaderDivider(false);
+            setShowFooterDivider(false);
+            return;
+        }
 
         // The sentinels have no height, and at rest they sit exactly on the edge of the scrollport. A
         // fractional layout (a boxed sidenav measures 100vh minus its margins) can leave them half a
@@ -478,7 +485,7 @@ const SidenavBar = ({
             headerObserver.disconnect();
             footerObserver.disconnect();
         };
-    }, []);
+    }, [isTabletOrSmaller]);
 
     // The rail is travelling between its two widths. See `columnsWhileMoving`.
     const isMoving = isSidenavMoving(collapseState);
