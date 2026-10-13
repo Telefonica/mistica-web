@@ -4816,6 +4816,27 @@ export default [
     },
     {
         group: 'Message',
+        name: 'Conversation with avatars and groups',
+        code: `<Box padding={16}>
+  <Stack space={24}>
+    <Message asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Stack space={4}>
+      <Message position="first" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Tengo varias opciones." />
+      <Message position="middle" asset={<Box width={40} />} text="Podemos ir el martes o el miércoles." />
+      <Message position="last" asset={<Box width={40} />} text="También el jueves por la tarde." timestamp="16:46" />
+    </Stack>
+    <Stack space={4}>
+      <Message type="outgoing" position="first" asset={<Box width={40} />} text="El martes me viene bien." />
+      <Message type="outgoing" position="middle" asset={<Box width={40} />} text="Estaré en casa a partir de las cinco." />
+      <Message type="outgoing" position="last" asset={<Avatar size={40} initials="YO" />} text="¿Podéis venir a esa hora?" timestamp="16:47" />
+    </Stack>
+    <Message asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Sí, queda confirmado para el martes a las 17:00." timestamp="16:48" />
+    <Message type="outgoing" asset={<Avatar size={40} initials="YO" />} text="¡Perfecto, gracias!" timestamp="16:49" />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
         name: 'Conversation',
         code: `<Box padding={16}>
   <Stack space={16}>

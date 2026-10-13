@@ -6,6 +6,8 @@ const bubbleRadius = '4px';
 export const minimumBubbleSize = 48;
 export const bubblePaddingY = 12;
 const minimumErrorWidth = 120;
+const boxedErrorInset = 16;
+const minimumBoxedErrorWidth = minimumErrorWidth + boxedErrorInset;
 
 export const message = style({display: 'flex', width: 'fit-content', minWidth: 0});
 export const direction = styleVariants({
@@ -64,14 +66,22 @@ export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'cente
 export const side = style({display: 'flex', flexShrink: 0, alignSelf: 'flex-start', alignItems: 'center'});
 export const unboxedActions = style({marginLeft: -8});
 export const error = style({
-    display: 'flex',
+    boxSizing: 'border-box',
+    display: 'grid',
+    gridTemplateColumns: '16px minmax(0, 1fr)',
     alignItems: 'flex-start',
     gap: 4,
     marginTop: 4,
     minWidth: minimumErrorWidth,
     overflowWrap: 'anywhere',
 });
-export const boxedError = style({marginLeft: 16});
+export const boxedError = style({paddingLeft: boxedErrorInset, minWidth: minimumBoxedErrorWidth});
+export const outgoingError = style({
+    marginLeft: `min(0px, calc(100% - ${minimumErrorWidth}px))`,
+    selectors: {
+        [`&${boxedError}`]: {marginLeft: `min(0px, calc(100% - ${minimumBoxedErrorWidth}px))`},
+    },
+});
 
 export const body = style({display: 'flex', flexDirection: 'column', gap: 4});
 export const inlineTimestamp = style({flexDirection: 'row', alignItems: 'baseline', gap: 8});

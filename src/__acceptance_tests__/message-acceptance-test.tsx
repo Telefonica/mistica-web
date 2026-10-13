@@ -2,6 +2,51 @@ import {openStoryPage, screen} from '../test-utils';
 
 const story = 'components-message--default';
 
+test.each([
+    {type: 'incoming', boxed: true},
+    {type: 'outgoing', boxed: true},
+    {type: 'outgoing', boxed: false},
+])('Short error messages stay within the mobile viewport: %o', async ({type, boxed}) => {
+    await openStoryPage({
+        id: story,
+        device: 'MOBILE_IOS',
+        skin: 'Blau',
+        args: {
+            type,
+            boxed,
+            text: 'Error',
+            senderName: '',
+            asset: false,
+            error: true,
+            errorMessage: 'No se ha enviado. Inténtalo de nuevo.',
+            variantOutside: 'alternative',
+        },
+    });
+    const error = await screen.findByRole('alert');
+    const bubble = await screen.findByTestId('MessageBubble');
+    const errorBounds = await error.boundingBox();
+    const bubbleBounds = await bubble.boundingBox();
+    if (!errorBounds || !bubbleBounds) {
+        throw new Error('Message error or bubble bounds not found');
+    }
+    const inset = await error.evaluate((element) => parseFloat(getComputedStyle(element).paddingLeft));
+    const minimumErrorContentWidth = 120;
+    expect(errorBounds.width - inset).toBeCloseTo(minimumErrorContentWidth, 0);
+    expect(inset).toBe(boxed ? 16 : 0);
+    expect(errorBounds.y - (bubbleBounds.y + bubbleBounds.height)).toBeCloseTo(4, 0);
+    if (type === 'outgoing') {
+        expect(errorBounds.x + errorBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
+    } else {
+        expect(errorBounds.x).toBeCloseTo(bubbleBounds.x, 0);
+    }
+    expect(
+        await error.evaluate(
+            () => document.documentElement.scrollWidth > document.documentElement.clientWidth
+        )
+    ).toBe(false);
+    expect(await error.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(false);
+});
+
 test('Message wraps within its maximum width on mobile with side actions', async () => {
     await openStoryPage({
         id: story,

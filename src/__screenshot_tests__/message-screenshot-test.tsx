@@ -2,6 +2,24 @@ import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
+test('Short outgoing error on Blau alternative', async () => {
+    await openStoryPage({
+        id: 'components-message--default',
+        device: 'MOBILE_IOS',
+        skin: 'Blau',
+        args: {
+            type: 'outgoing',
+            text: 'Error',
+            senderName: '',
+            asset: false,
+            error: true,
+            errorMessage: 'No se ha enviado. Inténtalo de nuevo.',
+            variantOutside: 'alternative',
+        },
+    });
+    expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
+});
+
 test.each(['MOBILE_IOS', 'DESKTOP'] as const)('Message conversation - %s', async (device: Device) => {
     await openStoryPage({id: 'components-message--conversation', device});
     const messages = await screen.findByTestId('messages');

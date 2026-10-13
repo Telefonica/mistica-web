@@ -205,7 +205,10 @@ const Message = ({
                     {error && (
                         <div className={styles.footer}>
                             <div
-                                className={classnames(styles.error, {[styles.boxedError]: boxed})}
+                                className={classnames(styles.error, {
+                                    [styles.boxedError]: boxed,
+                                    [styles.outgoingError]: type === 'outgoing',
+                                })}
                                 role="alert"
                                 id={`${id}-error`}
                             >
