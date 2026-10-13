@@ -21,6 +21,7 @@ type Props = {
     onClose?: () => void;
     closeButtonLabel?: string;
     position?: Position;
+    alignment?: 'start' | 'middle' | 'end';
     width?: number;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     open?: boolean;
