@@ -1906,6 +1906,7 @@ export {default as IconRecycleRegular} from './generated/mistica-icons/icon-recy
 export {default as IconRefreshFilled} from './generated/mistica-icons/icon-refresh-filled';
 export {default as IconRefreshLight} from './generated/mistica-icons/icon-refresh-light';
 export {default as IconRefreshRegular} from './generated/mistica-icons/icon-refresh-regular';
+export {default as IconReloadFilled} from './generated/mistica-icons/icon-reload-filled';
 export {default as IconReloadLight} from './generated/mistica-icons/icon-reload-light';
 export {default as IconReloadRegular} from './generated/mistica-icons/icon-reload-regular';
 export {default as IconRenovateDeviceChangeMobileFilled} from './generated/mistica-icons/icon-renovate-device-change-mobile-filled';
