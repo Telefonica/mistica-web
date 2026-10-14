@@ -27,7 +27,20 @@ const IconTimeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.25 12.227c0 .199.079.39.22.53l3.097 3.098a.75.75 0 0 0 1.06-1.06l-2.877-2.879V8.281a.75.75 0 0 0-1.5 0z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v3.5A8.25 8.25 0 0 0 10.25 22h3.5A8.25 8.25 0 0 0 22 13.75v-3.5A8.25 8.25 0 0 0 13.75 2zM3.5 10.25a6.75 6.75 0 0 1 6.75-6.75h3.5a6.75 6.75 0 0 1 6.75 6.75v3.5a6.75 6.75 0 0 1-6.75 6.75h-3.5a6.75 6.75 0 0 1-6.75-6.75z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
