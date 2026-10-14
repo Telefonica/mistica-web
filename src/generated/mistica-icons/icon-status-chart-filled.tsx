@@ -27,7 +27,20 @@ const IconStatusChartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.136 2.219c-.681-.306-1.317-.285-1.823.03a1.83 1.83 0 0 0-.791 1.132L13.6 8.62c-.082.324-.11.668-.001.991.126.374.398.607.692.723.262.103.528.11.718.1a4 4 0 0 0 .521-.072h.002l5.072-1.031.071-.018a1.82 1.82 0 0 0 1.227-1.202 2.08 2.08 0 0 0-.081-1.47c-.543-1.194-1.5-2.196-2.393-2.932-.896-.74-1.793-1.265-2.293-1.49"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M11.38 3.388C6.217 3.388 2 7.425 2 12.62a9.38 9.38 0 0 0 9.378 9.378c5.193 0 9.258-4.206 9.258-9.373 0-.4-.078-.763-.255-1.068a1.53 1.53 0 0 0-.705-.637c-.478-.215-.968-.155-1.217-.094l-5.479 1.055c-.466.074-.73.062-.867.033l-.042-.01a1 1 0 0 1-.006-.125c.002-.125.018-.256.04-.432l.016-.13.901-5.356c.162-.697.1-1.338-.265-1.822-.368-.487-.918-.652-1.377-.652"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

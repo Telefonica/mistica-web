@@ -27,7 +27,20 @@ const IconSharedMobileDataFilled = ({color, size = 24, ...rest}: IconProps): JSX
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.258 9a4.744 4.744 0 1 1 0 9.488h-4.996a4.74 4.74 0 0 1-4.173-2.485h2.618a2.73 2.73 0 0 0 1.555.485h4.996a2.744 2.744 0 1 0 0-5.488h-4.996c-.855 0-1.618.39-2.121 1.003H7.849A4.74 4.74 0 0 1 12.262 9z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M11.738 5.512A4.74 4.74 0 0 1 15.913 8h-2.616a2.73 2.73 0 0 0-1.559-.488H6.742a2.744 2.744 0 1 0 0 5.489h4.996A2.74 2.74 0 0 0 13.858 12h2.292a4.745 4.745 0 0 1-4.412 3H6.742a4.744 4.744 0 1 1 0-9.488z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
