@@ -18,9 +18,17 @@ export type GradientColorDescription = {
 
 export type ColorDescription = SolidColorDescription | GradientColorDescription;
 
-export type RadiusDescription = {
+export type UniformRadiusDescription = {
     value: string;
+    type?: 'borderRadius';
 };
+
+export type CornerRadiusDescription = Record<
+    'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft',
+    UniformRadiusDescription
+>;
+
+export type RadiusDescription = UniformRadiusDescription | CornerRadiusDescription;
 
 export type TextTokenValue = string | number | {mobile: number; desktop: number};
 

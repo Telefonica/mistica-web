@@ -26,21 +26,42 @@ const fromHexToRgb = (hexColor: string): [number, number, number] => {
     throw Error(`Bad hex color, ${hexColor}`);
 };
 
-export const buildRadius = (radiusDescription: RadiusDescription): string => {
-    if (radiusDescription.value.endsWith('%')) {
-        return radiusDescription.value;
+const radiusCorners = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'] as const;
+
+const buildRadiusValue = (description: unknown): string => {
+    if (!description || typeof description !== 'object' || !('value' in description)) {
+        throw new Error('Expected a radius token with a value');
     }
-    if (radiusDescription.value === 'circle') {
+    const {value} = description;
+    if (value === 'circle') {
         return '50%';
     }
-    if (radiusDescription.value.endsWith('px')) {
-        return radiusDescription.value;
-    }
-    if (/\d+/.test(radiusDescription.value)) {
-        return `${radiusDescription.value}px`;
+    if (typeof value === 'string' && /^(?:\d+(?:\.\d+)?|\.\d+)(?:px|%)?$/.test(value)) {
+        return /(?:px|%)$/.test(value) ? value : `${value}px`;
     }
 
-    throw new Error(`Unknown radius format: ${radiusDescription.value}`);
+    throw new Error(`Unknown radius format: ${value}`);
+};
+
+export const buildRadius = (radiusDescription: RadiusDescription): string => {
+    if (!radiusDescription || typeof radiusDescription !== 'object') {
+        throw new Error('Expected a radius token');
+    }
+    if ('value' in radiusDescription) {
+        if (radiusCorners.some((corner) => corner in radiusDescription)) {
+            throw new Error('A radius token cannot mix a uniform value with per-corner values');
+        }
+        return buildRadiusValue(radiusDescription);
+    }
+    return radiusCorners
+        .map((corner) => {
+            try {
+                return buildRadiusValue(radiusDescription[corner]);
+            } catch (error) {
+                throw new Error(`Invalid radius corner ${corner}`, {cause: error});
+            }
+        })
+        .join(' ');
 };
 
 const prefix = 'mistica-';

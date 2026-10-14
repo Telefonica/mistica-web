@@ -4,7 +4,8 @@
     "packageManager": "yarn@3.6.1",
     "scripts": {
         "generate": "node index.ts",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "test": "node --test *-test.ts"
     },
     "dependencies": {
         "@telefonica/prettier-config": "^2.0.0",
