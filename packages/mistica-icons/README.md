@@ -64,6 +64,7 @@ shared: {
     react: {singleton: true},
     'react-dom': {singleton: true},
     '@telefonica/mistica': {singleton: true},
+    '@telefonica/mistica/icon-runtime': {singleton: true},
 }
 ```
 

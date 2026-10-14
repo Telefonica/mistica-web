@@ -96,6 +96,7 @@ The other configuration, a shared path prefix, also works, but it costs more tha
 // measured: the page makes 65 requests with this line, and 12 without it
 shared: {
     '@telefonica/mistica': {singleton: true},
+    '@telefonica/mistica/icon-runtime': {singleton: true},
     '@telefonica/mistica-icons/': {},
 }
 ```
@@ -147,6 +148,7 @@ shared: {
         singleton: true,
         treeShaking: {mode: 'runtime-infer'},
     },
+    '@telefonica/mistica/icon-runtime': {singleton: true},
 }
 ```
 
