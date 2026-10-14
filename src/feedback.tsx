@@ -11,7 +11,7 @@ import {
     requestVibration as requestVibrationNative,
 } from '@tef-novum/webview-bridge';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {Text6, Text2, Text3} from './text';
+import {getTextSizesWithWeight, Text, Text2} from './text';
 import Box from './box';
 import {InternalBoxed} from './boxed';
 import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
@@ -59,7 +59,8 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 
 const renderFeedbackBody = (
     {asset, title, description, slot}: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'slot'>,
-    animateText: boolean
+    animateText: boolean,
+    textPresets: Pick<Theme['textPresets'], 'feedbackScreenDescription' | 'feedbackScreenTitle'>
 ) => {
     const normalizedDescription =
         description && Array.isArray(description) ? (
@@ -78,7 +79,9 @@ const renderFeedbackBody = (
             </div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
                 <div className={classnames(animateText && styles.feedbackTextAppearFast)} data-testid="title">
-                    <Text6 as="h1">{title}</Text6>
+                    <Text {...getTextSizesWithWeight({textPreset: textPresets.feedbackScreenTitle})} as="h1">
+                        {title}
+                    </Text>
                 </div>
 
                 {normalizedDescription && (
@@ -87,9 +90,14 @@ const renderFeedbackBody = (
                         data-testid="description"
                     >
                         {normalizedDescription && (
-                            <Text3 regular color={vars.colors.textSecondary}>
+                            <Text
+                                {...getTextSizesWithWeight({
+                                    textPreset: textPresets.feedbackScreenDescription,
+                                })}
+                                color={vars.colors.textSecondary}
+                            >
                                 {normalizedDescription}
-                            </Text3>
+                            </Text>
                         )}
                     </div>
                 )}
@@ -208,14 +216,15 @@ export const FeedbackScreen = ({
     dataAttributes,
 }: FeedbackScreenProps): JSX.Element => {
     useHapticFeedback(hapticFeedback);
-    const {platformOverrides, isDarkMode} = useTheme();
+    const {platformOverrides, isDarkMode, textPresets} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
 
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
         {asset, title, description, slot},
-        animateText && areAnimationsSupported(platformOverrides)
+        animateText && areAnimationsSupported(platformOverrides),
+        textPresets
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
@@ -376,11 +385,12 @@ export const SuccessFeedback = ({
     dataAttributes,
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
-    const {platformOverrides, themeVariants} = useTheme();
+    const {platformOverrides, themeVariants, textPresets} = useTheme();
     const asset = <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
         {asset, title, description, slot},
-        areAnimationsSupported(platformOverrides)
+        areAnimationsSupported(platformOverrides),
+        textPresets
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
         primaryButton,

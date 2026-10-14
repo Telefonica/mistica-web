@@ -66,6 +66,8 @@ export type TextPresetsConfig = {
     cardTitleDefault: TextSizeTokenConfig;
     cardTitleSnap: TextSizeTokenConfig;
     drawerTitle: TextTokenConfig;
+    feedbackScreenDescription: TextTokenConfig;
+    feedbackScreenTitle: TextTokenConfig;
     chipLabel: TextTokenConfig;
     chipLabelSmall: TextTokenConfig;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
