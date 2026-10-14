@@ -22,14 +22,17 @@ export const align = styleVariants({
     right: {justifyItems: 'end'},
 });
 
+// The hidden content uses `visibility: hidden` so its interactive elements can't be focused. Visibility
+// is transitioned too, so the content that leaves stays visible until its fade out ends. The visible
+// content uses `inherit` instead of `visible`, so a nested SlideSwap inside hidden content stays hidden
 const content = style({
     gridArea: 'content',
-    transitionProperty: 'opacity, transform',
+    transitionProperty: 'opacity, transform, visibility',
     transitionDuration: duration,
     transitionTimingFunction: transitionEasing,
     '@media': {
         '(prefers-reduced-motion)': {
-            transitionProperty: 'opacity',
+            transitionProperty: 'opacity, visibility',
         },
     },
 });
@@ -43,6 +46,7 @@ export const primaryContent = style([
             [`${isSwapped} > &`]: {
                 opacity: 0,
                 transform: `translateY(calc(-1 * ${offset}))`,
+                visibility: 'hidden',
             },
         },
         '@media': {
@@ -63,10 +67,12 @@ export const swappedContent = style([
     {
         opacity: 0,
         transform: `translateY(${offset})`,
+        visibility: 'hidden',
         selectors: {
             [`${isSwapped} > &`]: {
                 opacity: 1,
                 transform: 'translateY(0)',
+                visibility: 'inherit',
             },
         },
         '@media': {

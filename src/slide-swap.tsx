@@ -3,6 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import * as styles from './slide-swap.css';
 import ScreenReaderOnly from './screen-reader-only';
+import {useIsomorphicLayoutEffect} from './hooks';
 import {applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
@@ -60,6 +61,14 @@ const SlideSwap = ({
     const swappedContentRef = React.useRef<HTMLDivElement>(null);
     const lastShowSwappedContentRef = React.useRef(showSwappedContent);
     const [announcement, setAnnouncement] = React.useState('');
+
+    // aria-hidden doesn't prevent the hidden content from receiving focus. The styles hide it once its
+    // transition ends, and inert also blocks it while it fades out. The attribute is set through the DOM
+    // because React 18 doesn't support the `inert` prop
+    useIsomorphicLayoutEffect(() => {
+        primaryContentRef.current?.toggleAttribute('inert', showSwappedContent);
+        swappedContentRef.current?.toggleAttribute('inert', !showSwappedContent);
+    }, [showSwappedContent]);
 
     React.useEffect(() => {
         // compare with the previous value instead of skipping the first run, so nothing is announced on
