@@ -79,8 +79,10 @@ const Message = ({
     const variant = useThemeVariant();
     const id = React.useId();
     const {width: textWidth, ref: textRef} = useElementDimensions();
-    const {height: bubbleContentHeight, ref: bubbleRef} = useElementDimensions();
+    const {width: bubbleContentWidth, height: bubbleContentHeight, ref: bubbleRef} = useElementDimensions();
     const bubbleHeight = bubbleContentHeight + (boxed ? styles.bubblePaddingY * 2 : 0);
+    const bubbleWidth = bubbleContentWidth + (boxed ? styles.bubblePaddingX * 2 : 0);
+    const shortError = error && bubbleContentWidth > 0 && bubbleWidth < styles.minimumErrorWidth;
     const inlineTimestamp = boxed && textWidth > 0 && textWidth < styles.minimumBubbleSize;
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
     const errorText = errorMessage ?? t(tokens.messageError);
@@ -131,7 +133,8 @@ const Message = ({
                     }
                     className={classnames(
                         styles.touchable,
-                        styles.corners[`${type}-${error ? 'standalone' : position}`]
+                        styles.corners[`${type}-${error ? 'standalone' : position}`],
+                        {[styles.shortErrorLayout[type]]: shortError}
                     )}
                 >
                     <ThemeVariant variant={boxed ? 'default' : variant}>
@@ -144,6 +147,7 @@ const Message = ({
                                 [styles.outgoingBackground]: boxed && type === 'outgoing' && !error,
                                 [styles.errorBackground]: boxed && error,
                                 [styles.interactive]: boxed && isInteractive,
+                                [styles.shortErrorBubble]: shortError,
                             })}
                         >
                             <ScreenReaderOnly>
@@ -209,11 +213,11 @@ const Message = ({
                         </div>
                     )}
                     {error && (
-                        <div className={styles.footer}>
+                        <div className={classnames(styles.footer, {[styles.shortErrorFooter]: shortError})}>
                             <div
                                 className={classnames(styles.error, {
                                     [styles.boxedError]: boxed,
-                                    [styles.outgoingError]: type === 'outgoing',
+                                    [styles.outgoingError]: type === 'outgoing' && !shortError,
                                 })}
                                 role="alert"
                                 id={`${id}-error`}
@@ -227,7 +231,12 @@ const Message = ({
                     )}
                 </Touchable>
                 {!error && footerActions && (
-                    <div className={classnames(styles.actions, {[styles.unboxedActions]: !boxed})}>
+                    <div
+                        className={classnames(styles.actions, {
+                            [styles.unboxedActions]: !boxed,
+                            [styles.outgoingFooterActions]: type === 'outgoing',
+                        })}
+                    >
                         {renderActions()}
                     </div>
                 )}

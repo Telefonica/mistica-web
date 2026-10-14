@@ -42,3 +42,8 @@ test('Message dark mode', async () => {
     await openStoryPage({id: 'components-message--conversation', device: 'MOBILE_IOS', isDarkMode: true});
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });
+
+test('Message slots and actions', async () => {
+    await openStoryPage({id: 'components-message--slots-and-actions', device: 'MOBILE_IOS'});
+    expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
+});

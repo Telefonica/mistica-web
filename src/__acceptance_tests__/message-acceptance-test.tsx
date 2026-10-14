@@ -42,7 +42,7 @@ test.each([
     }
     const inset = await error.evaluate((element) => parseFloat(getComputedStyle(element).paddingLeft));
     const minimumErrorContentWidth = 120;
-    expect(errorBounds.width - inset).toBeCloseTo(minimumErrorContentWidth, 0);
+    expect(errorBounds.width - inset).toBeGreaterThanOrEqual(minimumErrorContentWidth);
     expect(inset).toBe(boxed ? 16 : 0);
     expect(errorBounds.y - (bubbleBounds.y + bubbleBounds.height)).toBeCloseTo(4, 0);
     if (type === 'outgoing') {
@@ -118,4 +118,42 @@ test('Outgoing assets align with the bubble when a footer is present', async () 
         throw new Error('Message bubble or avatar bounds not found');
     }
     expect(avatarBounds.y + avatarBounds.height).toBeCloseTo(bubbleBounds.y + bubbleBounds.height, 0);
+});
+
+test.each([true, false])(
+    'Outgoing footer actions align to the bubble right edge (boxed: %s)',
+    async (boxed) => {
+        await openStoryPage({
+            id: story,
+            device: 'MOBILE_IOS',
+            args: {type: 'outgoing', boxed, footer: true, actions: 'footer'},
+        });
+        const bubble = await screen.findByTestId('MessageBubble');
+        const action = await screen.findByRole('button', {name: 'Copy message'});
+        const bubbleBounds = await bubble.boundingBox();
+        const actionBounds = await action.evaluate((element) => {
+            const bounds = element.parentElement?.getBoundingClientRect();
+            return bounds ? {x: bounds.x, y: bounds.y, width: bounds.width} : null;
+        });
+        if (!bubbleBounds || !actionBounds) {
+            throw new Error('Message bubble or footer action bounds not found');
+        }
+        expect(actionBounds.x + actionBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
+        expect(actionBounds.y).toBeGreaterThanOrEqual(bubbleBounds.y + bubbleBounds.height);
+    }
+);
+
+test('Short error helper grows beyond its minimum width without wrapping unnecessarily', async () => {
+    await openStoryPage({id: 'components-message--error-examples', device: 'MOBILE_IOS'});
+    const helper = await screen.findByText('Failed. Tap to retry.');
+    const isSingleLine = await helper.evaluate((element) => {
+        const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+        return element.getBoundingClientRect().height <= lineHeight + 1;
+    });
+    expect(isSingleLine).toBe(true);
+    expect(
+        await helper.evaluate(
+            () => document.documentElement.scrollWidth > document.documentElement.clientWidth
+        )
+    ).toBe(false);
 });

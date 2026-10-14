@@ -5,7 +5,8 @@ import {vars} from './skins/skin-contract.css';
 const bubbleRadius = '4px';
 export const minimumBubbleSize = 48;
 export const bubblePaddingY = 12;
-const minimumErrorWidth = 120;
+export const bubblePaddingX = 16;
+export const minimumErrorWidth = 120;
 const boxedErrorInset = 16;
 const minimumBoxedErrorWidth = minimumErrorWidth + boxedErrorInset;
 
@@ -40,7 +41,7 @@ export const bubble = style({
 });
 export const boxed = style({
     boxSizing: 'border-box',
-    padding: `${bubblePaddingY}px 16px`,
+    padding: `${bubblePaddingY}px ${bubblePaddingX}px`,
     minWidth: minimumBubbleSize,
     minHeight: minimumBubbleSize,
 });
@@ -63,6 +64,7 @@ export const interactive = style({
 export const content = style({minWidth: 0, whiteSpace: 'pre-wrap'});
 export const timestamp = style({alignSelf: 'flex-end'});
 export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'center'});
+export const outgoingFooterActions = style({justifyContent: 'flex-end'});
 export const side = style({display: 'flex', flexShrink: 0, alignSelf: 'flex-start', alignItems: 'center'});
 export const unboxedActions = style({marginLeft: -8});
 export const error = style({
@@ -88,5 +90,11 @@ export const inlineTimestamp = style({flexDirection: 'row', alignItems: 'baselin
 export const text = style({display: 'inline-block', maxWidth: '100%'});
 
 export const footer = style({width: 0, minWidth: '100%', overflowWrap: 'anywhere'});
+export const shortErrorLayout = styleVariants({
+    incoming: {display: 'flex', flexDirection: 'column', alignItems: 'flex-start'},
+    outgoing: {display: 'flex', flexDirection: 'column', alignItems: 'flex-end'},
+});
+export const shortErrorBubble = style({width: 'fit-content', maxWidth: '100%'});
+export const shortErrorFooter = style({width: 'max-content', minWidth: 0, maxWidth: '100%'});
 
 export const sideDirection = styleVariants({incoming: {}, outgoing: {flexDirection: 'row-reverse'}});

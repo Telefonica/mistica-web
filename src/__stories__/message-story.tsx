@@ -6,7 +6,6 @@ import {
     ResponsiveLayout,
     Stack,
     Text1,
-    Text2,
     IconCopyRegular,
     IconCheckRegular,
     IconTimeRegular,
@@ -39,93 +38,11 @@ type Args = {
     footer: boolean;
     side: boolean;
     actions: 'none' | 'side' | 'footer';
+    actionsCount: 1 | 2;
     variantOutside: Variant;
 };
 
-export default {
-    title: 'Components/Message',
-    parameters: {fullScreen: true},
-    argTypes: {
-        type: {options: ['incoming', 'outgoing'], control: 'select'},
-        text: {control: 'text'},
-        senderName: {control: 'text'},
-        senderNameAs: {options: ['span', 'p', 'h2', 'h3', 'h4', 'h5', 'h6'], control: 'select'},
-        senderNameLabel: {control: 'text'},
-        timestamp: {control: 'text'},
-        timestampLabel: {control: 'text'},
-        asset: {control: 'boolean'},
-        interactiveAsset: {control: 'boolean', if: {arg: 'asset'}},
-        assetLabel: {control: 'text', if: {arg: 'interactiveAsset'}},
-        boxed: {control: 'boolean'},
-        maxWidth: {control: 'text'},
-        position: {options: ['standalone', 'first', 'middle', 'last'], control: 'select'},
-        error: {control: 'boolean'},
-        errorMessage: {control: 'text', if: {arg: 'error'}},
-        interaction: {options: ['none', 'onPress', 'href'], control: 'select'},
-        ariaLabel: {control: 'text'},
-        href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
-        contentSlot: {control: 'boolean', if: {arg: 'error', eq: false}},
-        footer: {control: 'boolean', if: {arg: 'error', eq: false}},
-        side: {control: 'boolean', if: {arg: 'error', eq: false}},
-        actions: {options: ['none', 'side', 'footer'], control: 'select', if: {arg: 'error', eq: false}},
-        variantOutside: {
-            options: ['default', 'brand', 'alternative', 'negative', 'media'],
-            control: 'select',
-        },
-    },
-};
-
-export const Default: StoryComponent<Args> = (args) => {
-    const actions = [
-        {Icon: IconCopyRegular, 'aria-label': 'Copy message', onPress: () => window.alert('Copied')},
-    ] as const;
-    const content = args.error
-        ? {error: true as const, errorMessage: args.errorMessage || undefined, text: args.text}
-        : {
-              ...(args.contentSlot ? {children: <Placeholder height={80} />} : {text: args.text}),
-              footer: args.footer ? <Text1 regular>Delivered</Text1> : undefined,
-              side: args.side ? <IconCheckRegular size={16} /> : undefined,
-              ...(args.actions === 'side'
-                  ? {sideActions: actions}
-                  : args.actions === 'footer'
-                    ? {footerActions: actions}
-                    : {}),
-          };
-    return (
-        <ResponsiveLayout
-            variant={args.variantOutside}
-            backgroundColor={args.variantOutside === 'media' ? skinVars.colors.backgroundNegative : undefined}
-            fullWidth
-        >
-            <Box padding={16} dataAttributes={{testid: 'messages'}}>
-                <Message
-                    {...content}
-                    type={args.type}
-                    senderName={args.senderName}
-                    senderNameAs={args.senderNameAs}
-                    senderNameLabel={args.senderNameLabel || undefined}
-                    timestamp={args.timestamp}
-                    timestampLabel={args.timestampLabel || undefined}
-                    asset={args.asset ? <Avatar size={40} initials="JD" /> : undefined}
-                    {...(args.interactiveAsset
-                        ? {onAssetPress: () => window.alert('Profile'), assetLabel: args.assetLabel}
-                        : {onAssetPress: undefined, assetLabel: undefined})}
-                    boxed={args.boxed}
-                    maxWidth={args.maxWidth}
-                    position={args.position}
-                    aria-label={args.ariaLabel || undefined}
-                    {...(args.interaction === 'onPress'
-                        ? {onPress: () => window.alert('Message')}
-                        : args.interaction === 'href'
-                          ? {href: args.href}
-                          : {})}
-                />
-            </Box>
-        </ResponsiveLayout>
-    );
-};
-
-Default.args = {
+const defaultArgs: Args = {
     type: 'incoming',
     text: 'Lorem ipsum dolor sit amet et dolores voluptas.',
     senderName: 'John Doe',
@@ -148,73 +65,292 @@ Default.args = {
     footer: false,
     side: false,
     actions: 'none',
+    actionsCount: 1,
     variantOutside: 'default',
 };
 
-export const Conversation: StoryComponent = () => {
-    const [failed, setFailed] = React.useState(true);
+export default {
+    title: 'Components/Message',
+    args: defaultArgs,
+    parameters: {fullScreen: true, controls: {expanded: false}},
+    argTypes: {
+        type: {options: ['incoming', 'outgoing'], control: 'select'},
+        text: {control: 'text'},
+        senderName: {control: 'text'},
+        senderNameAs: {
+            options: ['span', 'p', 'h2', 'h3', 'h4', 'h5', 'h6'],
+            control: 'select',
+            description: 'HTML element for the sender name. Changes semantics, not typography.',
+        },
+        senderNameLabel: {control: 'text'},
+        timestamp: {control: 'text'},
+        timestampLabel: {control: 'text'},
+        asset: {control: 'boolean'},
+        interactiveAsset: {control: 'boolean', if: {arg: 'asset'}},
+        assetLabel: {control: 'text', if: {arg: 'interactiveAsset'}},
+        boxed: {
+            control: 'boolean',
+            description: 'Show the bubble background and padding. False renders an unboxed message.',
+        },
+        maxWidth: {control: 'text'},
+        position: {
+            options: ['standalone', 'first', 'middle', 'last'],
+            control: 'select',
+            if: {arg: 'boxed'},
+        },
+        error: {control: 'boolean'},
+        errorMessage: {control: 'text', if: {arg: 'error'}},
+        interaction: {options: ['none', 'onPress', 'href'], control: 'select'},
+        ariaLabel: {control: 'text'},
+        href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
+        contentSlot: {control: 'boolean', if: {arg: 'error', eq: false}},
+        footer: {control: 'boolean', if: {arg: 'error', eq: false}},
+        side: {control: 'boolean', if: {arg: 'error', eq: false}},
+        actions: {
+            options: ['none', 'side', 'footer'],
+            control: {type: 'radio', labels: {none: 'None', side: 'Side actions', footer: 'Footer actions'}},
+            description: 'Renders sideActions or footerActions. Not available in the error state.',
+            if: {arg: 'error', eq: false},
+        },
+        actionsCount: {options: [1, 2], control: 'radio', if: {arg: 'error', eq: false}},
+        variantOutside: {
+            options: ['default', 'brand', 'alternative', 'negative', 'media'],
+            control: 'select',
+        },
+    },
+};
+
+const MessageExample = (args: Args) => {
+    const copyAction = {
+        Icon: IconCopyRegular,
+        'aria-label': 'Copy message',
+        onPress: () => window.alert('Copied'),
+    };
+    const reminderAction = {
+        Icon: IconTimeRegular,
+        'aria-label': 'Remind me later',
+        onPress: () => window.alert('Reminder set'),
+    };
+    const actions =
+        args.actionsCount === 2 ? ([copyAction, reminderAction] as const) : ([copyAction] as const);
+    const content = args.error
+        ? {error: true as const, errorMessage: args.errorMessage || undefined, text: args.text}
+        : {
+              ...(args.contentSlot ? {children: <Placeholder height={80} />} : {text: args.text}),
+              footer: args.footer ? <Text1 regular>Delivered</Text1> : undefined,
+              side: args.side ? <IconCheckRegular size={16} /> : undefined,
+              ...(args.actions === 'side'
+                  ? {sideActions: actions}
+                  : args.actions === 'footer'
+                    ? {footerActions: actions}
+                    : {}),
+          };
     return (
-        <Box padding={16} dataAttributes={{testid: 'messages'}}>
-            <Stack space={16}>
-                <Message
-                    asset={<Avatar size={40} initials="AP" />}
-                    senderName="Adriana"
-                    text="Good afternoon! Can we confirm the visit?"
-                    timestamp="16:45"
-                />
-                <Stack space={4}>
-                    <Message text="I found three options." position="first" />
-                    <Message text="Tuesday or Wednesday." position="middle" />
-                    <Message text="Thursday works too." position="last" />
-                </Stack>
-                {failed ? (
-                    <Message type="outgoing" text="Tuesday, please." error onPress={() => setFailed(false)} />
-                ) : (
-                    <Message type="outgoing" text="Tuesday, please." timestamp="16:50" />
-                )}
-                <Message type="outgoing" text="Hi!" timestamp="16:51" />
-                <Message
-                    text="I'll send the details."
-                    boxed={false}
-                    senderName="Adriana"
-                    footer={<IconTimeRegular size={16} />}
-                />
-                <Message
-                    senderName="Adriana"
-                    footer={<Text1 regular>Delivery details</Text1>}
-                    footerActions={[
-                        {
-                            Icon: IconCopyRegular,
-                            'aria-label': 'Copy details',
-                            onPress: () => window.alert('Copied'),
-                        },
-                    ]}
-                >
-                    <Text2 regular>Custom content</Text2>
-                </Message>
-            </Stack>
-        </Box>
+        <Message
+            {...content}
+            type={args.type}
+            senderName={args.senderName}
+            senderNameAs={args.senderNameAs}
+            senderNameLabel={args.senderNameLabel || undefined}
+            timestamp={args.timestamp}
+            timestampLabel={args.timestampLabel || undefined}
+            asset={args.asset ? <Avatar size={40} initials="JD" /> : undefined}
+            {...(args.interactiveAsset
+                ? {onAssetPress: () => window.alert('Profile'), assetLabel: args.assetLabel}
+                : {onAssetPress: undefined, assetLabel: undefined})}
+            boxed={args.boxed}
+            maxWidth={args.maxWidth}
+            position={args.position}
+            aria-label={args.ariaLabel || undefined}
+            {...(args.interaction === 'onPress'
+                ? {onPress: () => window.alert('Message')}
+                : args.interaction === 'href'
+                  ? {href: args.href}
+                  : {})}
+        />
     );
 };
 
-export const ErrorExamples: StoryComponent = () => (
-    <ResponsiveLayout variant="alternative" fullWidth>
+export const Default: StoryComponent<Args> = (args) => (
+    <ResponsiveLayout
+        variant={args.variantOutside}
+        backgroundColor={args.variantOutside === 'media' ? skinVars.colors.backgroundNegative : undefined}
+        fullWidth
+    >
+        <Box padding={16} dataAttributes={{testid: 'messages'}}>
+            <MessageExample {...args} />
+        </Box>
+    </ResponsiveLayout>
+);
+
+export const Conversation: StoryComponent<Args> = (args) => {
+    const [failed, setFailed] = React.useState(true);
+    const common = {boxed: args.boxed, maxWidth: args.maxWidth, senderNameAs: args.senderNameAs};
+    return (
+        <ResponsiveLayout
+            variant={args.variantOutside}
+            backgroundColor={args.variantOutside === 'media' ? skinVars.colors.backgroundNegative : undefined}
+            fullWidth
+        >
+            <Box padding={16} dataAttributes={{testid: 'messages'}}>
+                <Stack space={16}>
+                    <Message
+                        {...common}
+                        asset={args.asset ? <Avatar size={40} initials="AP" /> : undefined}
+                        senderName={args.senderName}
+                        text={args.text}
+                        timestamp={args.timestamp}
+                    />
+                    <Stack space={4}>
+                        <Message {...common} text="I found three options." position="first" />
+                        <Message {...common} text="Tuesday or Wednesday." position="middle" />
+                        <Message {...common} text="Thursday works too." position="last" />
+                    </Stack>
+                    {failed ? (
+                        <Message
+                            {...common}
+                            type="outgoing"
+                            text="Tuesday, please."
+                            error
+                            errorMessage={args.errorMessage || undefined}
+                            onPress={() => setFailed(false)}
+                        />
+                    ) : (
+                        <Message {...common} type="outgoing" text="Tuesday, please." timestamp="16:50" />
+                    )}
+                    <Message {...common} type="outgoing" text="Hi!" timestamp="16:51" />
+                    <Message
+                        text="I'll send the details."
+                        boxed={false}
+                        senderName={args.senderName}
+                        senderNameAs={args.senderNameAs}
+                        footer={<IconTimeRegular size={16} />}
+                    />
+                    <MessageExample {...args} asset={false} text="Custom content" timestamp="" />
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+Conversation.args = {
+    ...defaultArgs,
+    senderName: 'Adriana',
+    text: 'Good afternoon! Can we confirm the visit?',
+    timestamp: '16:45',
+    footer: true,
+    actions: 'footer',
+};
+Conversation.parameters = {
+    controls: {
+        include: [
+            'text',
+            'senderName',
+            'senderNameAs',
+            'timestamp',
+            'asset',
+            'boxed',
+            'maxWidth',
+            'variantOutside',
+            'contentSlot',
+            'footer',
+            'side',
+            'actions',
+            'actionsCount',
+        ],
+    },
+};
+
+type ErrorArgs = Args & {shortText: string; shortErrorMessage: string; longErrorMessage: string};
+export const ErrorExamples: StoryComponent<ErrorArgs> = (args) => (
+    <ResponsiveLayout
+        variant={args.variantOutside}
+        backgroundColor={args.variantOutside === 'media' ? skinVars.colors.backgroundNegative : undefined}
+        fullWidth
+    >
         <Box padding={16} dataAttributes={{testid: 'messages'}}>
             <Stack space={32}>
-                <Message
-                    type="outgoing"
-                    text="Lorem ipsum dolor sit amet et dolores voluptas."
-                    error
-                    errorMessage="Couldn't send. Tap to retry"
-                />
-                <Message
-                    type="outgoing"
-                    text="Lorem ipsum dolor sit amet et dolores voluptas."
-                    error
-                    errorMessage="Error message long text. Error long text. Error message long text. Error message long text."
-                />
-                <Message type="outgoing" text="Ok" error errorMessage="Failed. Tap to retry." />
+                <MessageExample {...args} error />
+                <MessageExample {...args} error errorMessage={args.longErrorMessage} />
+                <MessageExample {...args} error text={args.shortText} errorMessage={args.shortErrorMessage} />
             </Stack>
         </Box>
     </ResponsiveLayout>
 );
+ErrorExamples.args = {
+    ...defaultArgs,
+    type: 'outgoing',
+    error: true,
+    asset: false,
+    senderName: '',
+    variantOutside: 'alternative',
+    errorMessage: "Couldn't send. Tap to retry",
+    shortText: 'Ok',
+    shortErrorMessage: 'Failed. Tap to retry.',
+    longErrorMessage:
+        'Error message long text. Error long text. Error message long text. Error message long text.',
+};
+ErrorExamples.argTypes = {
+    shortText: {control: 'text'},
+    shortErrorMessage: {control: 'text'},
+    longErrorMessage: {control: 'text'},
+};
+ErrorExamples.parameters = {
+    controls: {
+        include: [
+            'type',
+            'text',
+            'errorMessage',
+            'shortText',
+            'shortErrorMessage',
+            'longErrorMessage',
+            'asset',
+            'boxed',
+            'maxWidth',
+            'variantOutside',
+        ],
+    },
+};
+
+export const SlotsAndActions: StoryComponent<Args> = (args) => (
+    <ResponsiveLayout
+        variant={args.variantOutside}
+        backgroundColor={args.variantOutside === 'media' ? skinVars.colors.backgroundNegative : undefined}
+        fullWidth
+    >
+        <Box padding={16} dataAttributes={{testid: 'messages'}}>
+            <Stack space={24}>
+                <MessageExample {...args} type="incoming" />
+                <MessageExample {...args} type="outgoing" />
+            </Stack>
+        </Box>
+    </ResponsiveLayout>
+);
+SlotsAndActions.args = {
+    ...defaultArgs,
+    contentSlot: true,
+    footer: true,
+    side: true,
+    actions: 'footer',
+    actionsCount: 2,
+};
+SlotsAndActions.parameters = {
+    controls: {
+        include: [
+            'text',
+            'senderName',
+            'senderNameAs',
+            'timestamp',
+            'asset',
+            'interactiveAsset',
+            'assetLabel',
+            'boxed',
+            'maxWidth',
+            'variantOutside',
+            'contentSlot',
+            'footer',
+            'side',
+            'actions',
+            'actionsCount',
+        ],
+    },
+};
