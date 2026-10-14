@@ -12,6 +12,10 @@ inputs:
     azure-account-key:
         description: 'Azure Account Key'
         required: true
+    fork-pr:
+        description: 'Set to true when running on a fork PR to skip Azure upload and PR comment'
+        required: false
+        default: 'false'
     glob:
         description: 'Glob to match diff image files'
         required: false

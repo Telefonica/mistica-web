@@ -5,12 +5,12 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label, useApplyCssVars} from './text-field-components';
-import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
+import IconChevronDownRegular from '@telefonica/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
 import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
-import {Text3} from './text';
+import {Text2, Text3} from './text';
 import * as styles from './select.css';
 import * as textStyles from './text-field-base.css';
 import {Portal} from './portal';
@@ -43,6 +43,7 @@ export type SelectProps = {
     native?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
+    small?: boolean;
 };
 
 const Select = ({
@@ -63,6 +64,7 @@ const Select = ({
     autoFocus = false,
     native,
     dataAttributes,
+    small,
 }: SelectProps): JSX.Element => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
@@ -95,7 +97,7 @@ const Select = ({
         register,
     } = useForm();
     const {platformOverrides} = useTheme();
-    const cssVarStyles = useApplyCssVars();
+    const cssVarStyles = useApplyCssVars(small);
 
     const shouldUseNative =
         native ||
@@ -225,11 +227,12 @@ const Select = ({
             input: inputRef.current,
             focusableElement: focusableRef.current,
             label,
+            required: !optional,
         });
         return () => {
             register(name, {input: null, focusableElement: null, label: ''});
         };
-    }, [name, register, focusableRef, inputRef, focusableElement, inputElement, label]);
+    }, [name, register, focusableRef, inputRef, focusableElement, inputElement, label, optional]);
 
     React.useEffect(() => {
         const updateTentativeValueState = (e: KeyboardEvent) => {
@@ -313,6 +316,8 @@ const Select = ({
 
     const selectedValue = valueState ?? value;
 
+    const MenuText = small ? Text2 : Text3;
+
     return (
         <ThemeVariant variant="default">
             {shouldUseNative || isServerSide ? (
@@ -322,6 +327,7 @@ const Select = ({
                     fieldRef={fieldRef}
                     fullWidth={fullWidth}
                     dataAttributes={{testid: 'Select', ...dataAttributes}}
+                    small={small}
                 >
                     {label && (
                         <Label
@@ -429,6 +435,7 @@ const Select = ({
                             inputRef={inputRef}
                             fieldRef={fieldRef}
                             dataAttributes={{testid: 'Select', ...dataAttributes}}
+                            small={small}
                         />
 
                         <div
@@ -497,7 +504,7 @@ const Select = ({
                                                 }
                                             }}
                                         >
-                                            <Text3 regular>{text}</Text3>
+                                            <MenuText regular>{text}</MenuText>
                                         </li>
                                     ))}
                                 </ul>

@@ -111,7 +111,7 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
                         reverse={reverse}
                         values={values}
                         width={fullWidth ? '100%' : width}
-                        extra={
+                        slot={
                             extraContent ? (
                                 <div
                                     style={{
@@ -148,6 +148,6 @@ MeterStory.args = {
     value6: 10,
     value7: 10,
     value8: 10,
-    extraContent: 'This is a small extra',
+    extraContent: 'This is a small slot',
     extraAlignment: 'center',
 };

@@ -81,7 +81,7 @@ const GridLayout = ({
     collapseBreakpoint = 'tablet',
     children,
 }: Props): JSX.Element => {
-    const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes, 'GridLayout');
+    const prefixedDataAttributes = getPrefixedDataAttributes({testid: 'GridLayout', ...dataAttributes});
 
     const spanStyles = (n: number) => ({
         className: classnames(styles.span, {

@@ -118,12 +118,34 @@ export const container = style([
     containerBase,
     {
         cursor: 'pointer',
+        display: 'inline-flex',
+        verticalAlign: 'bottom',
+        flexDirection: 'column',
+    },
+]);
+export const containerFullWidth = style([
+    containerBase,
+    {
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
     },
 ]);
 export const containerDisabled = style([
     containerBase,
     {
         cursor: 'default',
+        display: 'inline-flex',
+        verticalAlign: 'bottom',
+        flexDirection: 'column',
+    },
+]);
+export const containerDisabledFullWidth = style([
+    containerBase,
+    {
+        cursor: 'default',
+        display: 'flex',
+        flexDirection: 'column',
     },
 ]);
 

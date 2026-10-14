@@ -109,7 +109,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
                 inputRef={combineRefs(inputRef, fieldProps.inputRef, ref)}
                 onFocus={onFocus}
                 type="text"
-                dataAttributes={{'component-name': 'TextField', testid: 'TextField', ...dataAttributes}}
+                dataAttributes={{testid: 'TextField', ...dataAttributes}}
             />
         );
     }

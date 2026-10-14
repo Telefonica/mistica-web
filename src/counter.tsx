@@ -7,9 +7,9 @@ import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
 import {Text3} from './text';
 import {BaseTouchable} from './touchable';
-import IconSubtractRegular from './generated/mistica-icons/icon-subtract-regular';
-import IconAddMoreRegular from './generated/mistica-icons/icon-add-more-regular';
-import IconTrashCanRegular from './generated/mistica-icons/icon-trash-can-regular';
+import IconSubtractRegular from '@telefonica/mistica-icons/icon-subtract-regular';
+import IconAddMoreRegular from '@telefonica/mistica-icons/icon-add-more-regular';
+import IconTrashCanRegular from '@telefonica/mistica-icons/icon-trash-can-regular';
 import {useTheme} from './hooks';
 import classNames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
@@ -121,7 +121,7 @@ const Counter = ({
     return (
         <div
             className={classNames(styles.counter, {[styles.disabled]: disabled})}
-            {...getPrefixedDataAttributes(dataAttributes, 'Counter')}
+            {...getPrefixedDataAttributes({testid: 'Counter', ...dataAttributes})}
             style={{
                 border: `1px solid ${(variant === 'brand' || variant === 'media' || variant === 'negative') && !isDarkMode ? vars.colors.backgroundContainer : vars.colors.inputBorder}`,
             }}

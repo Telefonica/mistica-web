@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import IconTimeRegular from './generated/mistica-icons/icon-time-regular';
+import IconTimeRegular from '@telefonica/mistica-icons/icon-time-regular';
 import {useTheme} from './hooks';
 import * as dateStyles from './date-field.css';
 import {iconSize} from './icon-button.css';
@@ -91,7 +91,7 @@ const TimeField = ({
                     <IconTimeRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'TimeField', testid: 'TimeField', ...dataAttributes}}
+            dataAttributes={{testid: 'TimeField', ...dataAttributes}}
         />
     );
 };

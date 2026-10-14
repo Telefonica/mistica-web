@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {addons, types} from 'storybook/manager-api';
 import {IconButton, TooltipLinkList, WithTooltip} from 'storybook/internal/components';
-import {AVAILABLE_SKINS, getColors} from '../colors';
+import {AVAILABLE_SKINS, COMMUNITY_SKINS, getColors} from '../colors';
 import {createStorybookTheme} from '../storybook-manager-theme';
 
 import type {API} from 'storybook/manager-api';
@@ -23,7 +23,7 @@ const renderPrimaryColorDot = (skinName: Skin) => (
 
 const ThemeSelectorAddon = ({api}: {api: API}) => {
     const [currentSkin, setCurrentSkin] = React.useState<Skin>(
-        () => (api.getQueryParam('skin') as Skin) || 'Movistar-new'
+        () => (api.getQueryParam('skin') as Skin) || 'Movistar'
     );
 
     React.useEffect(() => {
@@ -55,23 +55,39 @@ const ThemeSelectorAddon = ({api}: {api: API}) => {
         };
     }, [api, currentSkin]);
 
+    const buildLink = (skin: Skin, onHide: () => void) => ({
+        id: skin,
+        title: skin,
+        right: renderPrimaryColorDot(skin),
+        onClick: () => {
+            setCurrentSkin(skin);
+            onHide();
+        },
+    });
+
     return (
         <WithTooltip
             placement="top"
             trigger="click"
             closeOnOutsideClick
             tooltip={({onHide}) => (
-                <TooltipLinkList
-                    links={AVAILABLE_SKINS.map((skin) => ({
-                        id: skin,
-                        title: skin,
-                        right: renderPrimaryColorDot(skin),
-                        onClick: () => {
-                            setCurrentSkin(skin);
-                            onHide();
-                        },
-                    }))}
-                />
+                <div>
+                    <TooltipLinkList links={AVAILABLE_SKINS.map((skin) => buildLink(skin, onHide))} />
+                    <div
+                        style={{
+                            padding: '8px 16px 4px',
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: 0.5,
+                            textTransform: 'uppercase',
+                            color: '#73828C',
+                            borderTop: '1px solid #E3E5E7',
+                        }}
+                    >
+                        Community skins
+                    </div>
+                    <TooltipLinkList links={COMMUNITY_SKINS.map((skin) => buildLink(skin, onHide))} />
+                </div>
             )}
         >
             <IconButton title="Change theme">

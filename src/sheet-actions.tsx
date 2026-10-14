@@ -51,11 +51,7 @@ const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
         });
 
         return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'ActionsSheet', ...dataAttributes}}
-            >
+            <Sheet onClose={onClose} ref={ref} dataAttributes={{testid: 'ActionsSheet', ...dataAttributes}}>
                 {({modalTitleId, closeModal}) => (
                     <SheetBody
                         title={title}

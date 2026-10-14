@@ -11,10 +11,11 @@ import type {HeadingType} from '../../utils/types';
 import type {TagType} from '../../tag';
 
 export default {
-    title: 'Community/AdvancedDataCard',
+    title: 'Community/Vivo/AdvancedDataCard',
 };
 
 type Args = {
+    selected?: boolean;
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -28,11 +29,12 @@ type Args = {
     footerText: string;
     actions: string;
     onClose: boolean;
-    extra: number;
-    noExtraDivider: boolean;
+    slot: number;
+    noSlotDivider: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
+    selected,
     headlineType,
     headline,
     pretitle,
@@ -46,8 +48,8 @@ export const Default: StoryComponent<Args> = ({
     footerText,
     actions,
     onClose,
-    extra,
-    noExtraDivider,
+    slot,
+    noSlotDivider,
 }) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary
@@ -77,6 +79,7 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <AdvancedDataCard
+            selected={selected}
             dataAttributes={{testid: 'advanced-data-card'}}
             stackingGroup={
                 stackingGroup ? (
@@ -103,16 +106,17 @@ export const Default: StoryComponent<Args> = ({
             footerText={footerText}
             onClose={onClose ? () => window.alert('closed!') : undefined}
             href={href}
-            extra={Array.from({length: extra}, (_, i) => (
+            slot={Array.from({length: slot}, (_, i) => (
                 <Placeholder key={i} height={56} />
             ))}
-            noExtraDivider={noExtraDivider}
+            noSlotDivider={noSlotDivider}
         />
     );
 };
 
 Default.storyName = 'Advanced Data Card';
 Default.args = {
+    selected: undefined,
     headlineType: 'promo',
     headline: 'headline',
     pretitle: 'pretitle',
@@ -126,10 +130,11 @@ Default.args = {
     footerText: '',
     actions: 'button and link',
     onClose: true,
-    extra: 0,
-    noExtraDivider: false,
+    slot: 0,
+    noSlotDivider: false,
 };
 Default.argTypes = {
+    selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'info'],
         control: {type: 'select'},

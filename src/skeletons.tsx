@@ -48,7 +48,7 @@ export const SkeletonLine = ({width = '100%', ariaLabel, dataAttributes}: Skelet
         <SkeletonAnimation
             width={width}
             ariaLabel={ariaLabel}
-            dataAttributes={{'component-name': 'SkeletonLine', ...dataAttributes}}
+            dataAttributes={{testid: 'SkeletonLine', ...dataAttributes}}
         >
             <SkeletonBase width="100%" />
         </SkeletonAnimation>
@@ -62,7 +62,7 @@ export const SkeletonText = ({ariaLabel, dataAttributes}: SkeletonTextProps): JS
         <SkeletonAnimation
             width="100%"
             ariaLabel={ariaLabel}
-            dataAttributes={{'component-name': 'SkeletonText', ...dataAttributes}}
+            dataAttributes={{testid: 'SkeletonText', ...dataAttributes}}
         >
             <Stack space={16}>
                 <SkeletonBase />
@@ -81,7 +81,7 @@ export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonC
             width={size}
             height={size}
             ariaLabel={ariaLabel}
-            dataAttributes={{'component-name': 'SkeletonCircle', ...dataAttributes}}
+            dataAttributes={{testid: 'SkeletonCircle', ...dataAttributes}}
         >
             <SkeletonBase height="100%" width="100%" radius="50%" />
         </SkeletonAnimation>
@@ -95,7 +95,7 @@ export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: Skeleto
         <SkeletonAnimation
             width={width}
             ariaLabel={ariaLabel}
-            dataAttributes={{'component-name': 'SkeletonRow', ...dataAttributes}}
+            dataAttributes={{testid: 'SkeletonRow', ...dataAttributes}}
         >
             <div className={styles.row}>
                 <SkeletonBase height={40} width={40} radius="50%" className={styles.circle} />
@@ -125,7 +125,7 @@ export const SkeletonRectangle = ({
             height={height}
             width={width}
             ariaLabel={ariaLabel}
-            dataAttributes={{'component-name': 'SkeletonRectangle', ...dataAttributes}}
+            dataAttributes={{testid: 'SkeletonRectangle', ...dataAttributes}}
         >
             <SkeletonBase height="100%" width="100%" noBorderRadius={noBorderRadius} />
         </SkeletonAnimation>

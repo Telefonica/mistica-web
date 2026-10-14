@@ -4,7 +4,7 @@ import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
-import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
+import IconCalendarRegular from '@telefonica/mistica-icons/icon-calendar-regular';
 import {getLocalYearMonthString} from './utils/time';
 import {useTheme} from './hooks';
 import * as dateStyles from './date-field.css';
@@ -99,7 +99,7 @@ const DateField = ({
                     <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'MonthField', testid: 'MonthField', ...dataAttributes}}
+            dataAttributes={{testid: 'MonthField', ...dataAttributes}}
         />
     );
 
@@ -115,7 +115,7 @@ const DateField = ({
                 optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
                 mode="year-month"
-                dataAttributes={{'component-name': 'MonthField', testid: 'MonthField', ...dataAttributes}}
+                dataAttributes={{testid: 'MonthField', ...dataAttributes}}
             />
         </React.Suspense>
     );

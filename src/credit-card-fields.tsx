@@ -18,6 +18,7 @@ type CreditCardFieldsProps = {
     cvvFieldName?: string;
     acceptedCards?: CardOptions;
     children?: void;
+    small?: boolean;
 };
 
 const CreditCardFields = ({
@@ -25,6 +26,7 @@ const CreditCardFields = ({
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',
     acceptedCards,
+    small,
 }: CreditCardFieldsProps): JSX.Element => {
     const {values} = useForm();
     const {texts, t} = useTheme();
@@ -36,17 +38,20 @@ const CreditCardFields = ({
                 acceptedCards={acceptedCards}
                 name={numberFieldName}
                 label={texts.formCreditCardNumberLabel || t(tokens.formCreditCardNumberLabel)}
+                small={small}
             />
             <DoubleField layout="60/40">
                 <CreditCardExpirationField
                     name={expirationFieldName}
                     label={texts.formCreditCardExpirationLabel || t(tokens.formCreditCardExpirationLabel)}
+                    small={small}
                 />
                 <CvvField
                     acceptedCards={acceptedCards}
                     name={cvvFieldName}
                     label={texts.formCreditCardCvvLabel || t(tokens.formCreditCardCvvLabel)}
                     maxLength={cvvLength}
+                    small={small}
                 />
             </DoubleField>
         </Stack>

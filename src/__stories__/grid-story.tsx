@@ -1,16 +1,6 @@
 import * as React from 'react';
-import {
-    Grid,
-    GridItem,
-    Stack,
-    Box,
-    SnapCard,
-    Circle,
-    IconAcademicRegular,
-    skinVars,
-    ResponsiveLayout,
-    Title1,
-} from '..';
+import {Grid, GridItem, Stack, Box, DataCard, Circle, skinVars, ResponsiveLayout, Title1} from '..';
+import IconAcademicRegular from '@telefonica/mistica-icons/icon-academic-regular';
 
 export default {
     title: 'Layout/Grid',
@@ -38,7 +28,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                     <Title1 id="example-1">Example 1</Title1>
                     <Grid as="ul" aria-labelledby="example-1" columns={3} rows={3} gap={gap}>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -49,7 +40,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -60,7 +52,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -71,7 +64,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li" columnSpan={2}>
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -82,7 +76,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -93,7 +88,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li" columnSpan="full">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -110,7 +106,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                     <Title1 id="example-2">Example 2</Title1>
                     <Grid as="ul" aria-labelledby="example-2" columns={3} rows={3} gap={gap}>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -121,7 +118,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li" rowSpan={2}>
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -132,7 +130,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li" rowSpan={3}>
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -143,7 +142,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -154,7 +154,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -165,7 +166,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li">
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -182,7 +184,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                     <Title1 id="example-3">Example 3</Title1>
                     <Grid as="ul" aria-labelledby="example-3" columns={3} rows={3} gap={gap}>
                         <GridItem as="li" columnSpan={2}>
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -193,7 +196,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li" rowSpan={3}>
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -204,7 +208,8 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                             />
                         </GridItem>
                         <GridItem as="li" rowSpan={2} columnSpan={2}>
-                            <SnapCard
+                            <DataCard
+                                size="snap"
                                 asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
@@ -238,7 +243,8 @@ export const AutoColumns: StoryComponent<AutoColumnsArgs> = ({gap, columnsMinSiz
         <Box paddingY={24}>
             <Grid columns={{minSize: columnsMinSize}} gap={gap}>
                 {Array.from({length: numItems}, (_, idx) => (
-                    <SnapCard
+                    <DataCard
+                        size="snap"
                         key={idx}
                         asset={
                             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>

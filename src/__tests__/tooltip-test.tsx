@@ -12,7 +12,7 @@ const TestTooltip = (props: Props) => (
         <Tooltip
             {...props}
             target={<span className="target">Press me!</span>}
-            extra={<div className="content">Content</div>}
+            slot={<div className="content">Content</div>}
             delay={false}
         />
     </ThemeContextProvider>
@@ -79,7 +79,7 @@ test('tooltip with controlled value', async () => {
                 <Tooltip
                     open={open}
                     target={<span className="target">Press me!</span>}
-                    extra={<div className="content">Content</div>}
+                    slot={<div className="content">Content</div>}
                     delay={false}
                 />
                 <ButtonPrimary onPress={() => setOpen(!open)}>Button</ButtonPrimary>

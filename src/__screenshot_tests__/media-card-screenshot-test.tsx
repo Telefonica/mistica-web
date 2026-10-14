@@ -47,7 +47,7 @@ test('MediaCard with body ', async () => {
         id: 'private-deprecated-card-stories-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
         },
     });
@@ -62,7 +62,7 @@ test('MediaCard with body closeable', async () => {
         id: 'private-deprecated-card-stories-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
             closable: true,
         },
@@ -78,7 +78,7 @@ test('MediaCard with top actions', async () => {
         id: 'private-deprecated-card-stories-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            extra: true,
+            slot: true,
             actions: 'button and link',
             topAction: true,
         },

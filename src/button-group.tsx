@@ -62,7 +62,7 @@ const ButtonGroup = ({
                     [styles.centerInMobile]: alignByBreakpoint.mobile === 'center',
                 }
             )}
-            {...getPrefixedDataAttributes(dataAttributes, 'ButtonGroup')}
+            {...getPrefixedDataAttributes({testid: 'ButtonGroup', ...dataAttributes})}
         >
             {(primaryButton || secondaryButton) && (
                 <div

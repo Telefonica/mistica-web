@@ -12,8 +12,6 @@ type Props = {
     children: React.ReactNode;
     fullWidth?: boolean;
     className?: string;
-    /** @deprecated Use variant = 'brand' instead */
-    isInverse?: boolean;
     variant?: Variant;
     backgroundColor?: string;
     dataAttributes?: DataAttributes;
@@ -21,7 +19,6 @@ type Props = {
 
 export const InternalResponsiveLayout = ({
     children,
-    isInverse = false,
     variant,
     backgroundColor,
     className,
@@ -32,7 +29,7 @@ export const InternalResponsiveLayout = ({
 }: Props & {shouldExpandWhenNested?: boolean | 'desktop'; innerDivClassName?: string}): JSX.Element => {
     // @deprecated @TODO https://jira.tid.es/browse/WEB-1611
     const outsideVariant: Variant = useThemeVariant();
-    const internalVariant: Variant | undefined = variant || (isInverse && 'brand') || undefined;
+    const internalVariant: Variant | undefined = variant;
 
     return (
         <ThemeVariant variant={internalVariant ?? outsideVariant}>

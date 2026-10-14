@@ -5,6 +5,7 @@ import type {Locale} from './utils/locale';
 import type {
     BorderRadiiConfig,
     Colors,
+    ComponentPropertiesConfig,
     Skin,
     SkinName,
     SpacingConfig,
@@ -146,8 +147,6 @@ export type ThemeConfig = Readonly<{
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;
-    /** @deprecated Better use default browser behavior for :focus-visible */
-    enableTabFocus?: boolean;
     preventCopyInFormFields?: boolean;
 }>;
 
@@ -175,6 +174,7 @@ export type Theme = {
     textPresets: TextPresetsConfig;
     spacing: SpacingConfig;
     themeVariants: ThemeVariantsConfig;
+    componentProperties: ComponentPropertiesConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;

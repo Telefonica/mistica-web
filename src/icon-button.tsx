@@ -92,7 +92,7 @@ export const RawIconButton = React.forwardRef<
             ref,
             trackingEvent,
             role,
-            dataAttributes: {'component-name': 'IconButton', testid: 'IconButton', ...dataAttributes},
+            dataAttributes: {testid: 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.button,
                 styles.iconButtonTokens[buttonTokensKey],
@@ -207,7 +207,6 @@ export const InternalToggleIconButton = React.forwardRef<
             {...props}
             {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
             dataAttributes={{
-                'component-name': 'ToggleIconButton',
                 testid: 'ToggleIconButton',
                 ...dataAttributes,
             }}

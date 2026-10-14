@@ -128,7 +128,7 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                             ) : undefined
                         }
                         link={linkText ? <ButtonLink href="#">{linkText}</ButtonLink> : undefined}
-                        extra={
+                        slot={
                             <Stack space={16}>
                                 <Text2 regular as="p">
                                     Your content goes here.

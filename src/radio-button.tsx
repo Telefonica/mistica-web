@@ -44,6 +44,7 @@ type PropsRender = {
     }) => React.ReactNode;
     children?: undefined;
     dataAttributes?: DataAttributes;
+    className?: string;
     'aria-label'?: string;
     'aria-labelledby'?: string;
 };
@@ -54,6 +55,7 @@ type PropsChildren = {
     children?: React.ReactNode;
     render?: undefined;
     dataAttributes?: DataAttributes;
+    className?: string;
     'aria-label'?: string;
     'aria-labelledby'?: string;
 };
@@ -62,6 +64,7 @@ const RadioButton = ({
     value,
     id,
     dataAttributes,
+    className,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
@@ -171,8 +174,11 @@ const RadioButton = ({
                 }
             }}
             onKeyDown={disabled ? undefined : handleKeyDown}
-            className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
-            {...getPrefixedDataAttributes(dataAttributes, 'RadioButton')}
+            className={classnames(
+                disabled ? styles.radioButtonContainerDisabled : styles.radioButton,
+                className
+            )}
+            {...getPrefixedDataAttributes({testid: 'RadioButton', ...dataAttributes})}
         >
             {rest.render ? (
                 rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
@@ -300,7 +306,7 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
             role="radiogroup"
             aria-label={props['aria-label']}
             aria-labelledby={props['aria-label'] ? undefined : props['aria-labelledby']}
-            {...getPrefixedDataAttributes(props.dataAttributes, 'RadioGroup')}
+            {...getPrefixedDataAttributes({testid: 'RadioGroup', ...props.dataAttributes})}
         >
             <RadioContext.Provider
                 value={{

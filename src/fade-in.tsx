@@ -23,7 +23,7 @@ const FadeIn = ({
 }: Props): JSX.Element => {
     return (
         <div
-            {...getPrefixedDataAttributes(dataAttributes, 'FadeIn')}
+            {...getPrefixedDataAttributes({testid: 'FadeIn', ...dataAttributes})}
             className={`${styles.wrapper} ${className}`}
             style={{
                 animationDelay: delay,

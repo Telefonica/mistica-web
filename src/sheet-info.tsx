@@ -14,7 +14,7 @@ import {ButtonPrimary} from './button';
 import Divider from './divider';
 
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps} from './utils/types';
+import type {DataAttributes} from './utils/types';
 
 type InfoSheetProps = {
     title?: string;
@@ -25,11 +25,6 @@ type InfoSheetProps = {
         title: string;
         description?: string;
         icon: ExclusifyUnion<
-            | {
-                  type: 'regular' | 'small';
-                  /** @deprecated use url instead */
-                  Icon: React.ComponentType<IconProps>;
-              }
             | {
                   type: 'regular' | 'small';
                   url: string;
@@ -49,11 +44,7 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
     ({title, subtitle, description, items, onClose, button, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
         return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'InfoSheet', ...dataAttributes}}
-            >
+            <Sheet onClose={onClose} ref={ref} dataAttributes={{testid: 'InfoSheet', ...dataAttributes}}>
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}
@@ -85,10 +76,6 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                                                         <Circle
                                                             size={8}
                                                             backgroundColor={skinVars.colors.textPrimary}
-                                                        />
-                                                    ) : item.icon.Icon ? (
-                                                        <item.icon.Icon
-                                                            size={item.icon.type === 'small' ? 16 : 24}
                                                         />
                                                     ) : (
                                                         <Image

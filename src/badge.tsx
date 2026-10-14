@@ -42,7 +42,10 @@ const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Elemen
         themeVariant === 'brand' || themeVariant === 'negative' || themeVariant === 'media' || !!children;
 
     return (
-        <div className={classes.container} {...getPrefixedDataAttributes(dataAttributes, 'Badge')}>
+        <div
+            className={classes.container}
+            {...getPrefixedDataAttributes({testid: 'Badge', ...dataAttributes})}
+        >
             {children}
             {value ? (
                 <div

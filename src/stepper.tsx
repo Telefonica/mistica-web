@@ -60,7 +60,7 @@ const Stepper = ({
             style={applyCssVars({
                 [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
             })}
-            {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
+            {...getPrefixedDataAttributes({testid: 'Stepper', ...dataAttributes})}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
             aria-description={ariaDescription}
@@ -104,7 +104,7 @@ const Stepper = ({
                                         weight={textPresets.indicator.weight}
                                         color={
                                             isCurrent
-                                                ? vars.colors.textPrimaryInverse
+                                                ? vars.colors.textPrimaryNegative
                                                 : vars.colors.textSecondary
                                         }
                                         aria-hidden="true"

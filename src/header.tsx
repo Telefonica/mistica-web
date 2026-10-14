@@ -5,11 +5,11 @@ import Stack from './stack';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useSetOverscrollColor} from './overscroll-color-context';
-import {Text7, Text6, Text3, Text2} from './text';
+import {Text7, Text6, Text, Text2, Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {Title3, Title4} from './title';
+import {Title1, Title2, Title3, Title4} from './title';
 import {
     type DataAttributes,
     type HeadingType,
@@ -17,6 +17,7 @@ import {
     type RendersNullableElement,
 } from './utils/types';
 import {isBiggerHeading} from './utils/headings';
+import {useTheme} from './hooks';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -30,12 +31,15 @@ type OverridableTextProps = {
 
 type RichText = string | ({text: string} & OverridableTextProps);
 
+type TitleSizes = 'title1' | 'title2' | 'title3' | 'title4';
+
 type HeaderProps = {
     headline?: React.ReactNode;
     pretitle?: RichText;
     pretitleAs?: HeadingType;
     title?: string;
     titleAs?: HeadingType;
+    titleSize?: TitleSizes;
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
@@ -47,45 +51,63 @@ export const Header = ({
     pretitleAs,
     title,
     titleAs = 'h2',
+    titleSize,
     description,
     dataAttributes,
     small = false,
 }: HeaderProps): JSX.Element => {
+    const {textPresets} = useTheme();
+
     const renderPretitle = () => {
         if (!pretitle) {
             return null;
         }
         const baseTextProps = {
-            regular: true,
             color: vars.colors.textPrimary,
             as: pretitleAs,
             dataAttributes: {testid: 'pretitle'},
+            desktopSize: textPresets.headerPretitle.size.desktop,
+            mobileSize: textPresets.headerPretitle.size.mobile,
+            desktopLineHeight: textPresets.headerPretitle.lineHeight.desktop,
+            mobileLineHeight: textPresets.headerPretitle.lineHeight.mobile,
+            weight: textPresets.headerPretitle.weight,
         } as const;
 
         if (typeof pretitle === 'string') {
-            return <Text3 {...baseTextProps}>{pretitle}</Text3>;
+            return <Text {...baseTextProps}>{pretitle}</Text>;
         }
         const {text, ...textProps} = pretitle;
         return (
-            <Text3 {...baseTextProps} {...textProps}>
+            <Text {...baseTextProps} {...textProps}>
                 {text}
-            </Text3>
+            </Text>
         );
+    };
+
+    const renderTitle = () => {
+        if (!title) return undefined;
+
+        const baseTitleProps = {
+            children: title,
+            as: titleAs,
+            dataAttributes: {testid: 'title'},
+        } as const;
+
+        const titleComponents = {
+            title1: Title1,
+            title2: Title2,
+            title3: Title3,
+            title4: Title4,
+        } as const;
+
+        const TitleComponent = titleSize ? titleComponents[titleSize] : small ? Title3 : Title4;
+
+        return <TitleComponent {...baseTitleProps} />;
     };
 
     const pretitleContent = renderPretitle();
 
-    const titleContent = title ? (
-        small ? (
-            <Title3 as={titleAs} dataAttributes={{testid: 'title'}}>
-                {title}
-            </Title3>
-        ) : (
-            <Title4 as={titleAs} dataAttributes={{testid: 'title'}}>
-                {title}
-            </Title4>
-        )
-    ) : undefined;
+    const titleContent = renderTitle();
 
     const headlineContent = headline ? (
         <div
@@ -193,8 +215,6 @@ export const MainSectionHeader = ({
 };
 
 type HeaderLayoutProps = {
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
     breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
     /**
@@ -202,8 +222,8 @@ type HeaderLayoutProps = {
      * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
      */
     header?: React.ReactNode;
-    extra?: React.ReactNode;
-    sideBySideExtraOnDesktop?: boolean;
+    slot?: React.ReactNode;
+    sideBySideSlotOnDesktop?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
     bleed?: boolean;
@@ -211,18 +231,17 @@ type HeaderLayoutProps = {
 };
 
 export const HeaderLayout = ({
-    isInverse = false,
     variant = 'default',
     breadcrumbs,
     header,
-    extra,
-    sideBySideExtraOnDesktop = false,
+    slot,
+    sideBySideSlotOnDesktop = false,
     dataAttributes,
     bleed = false,
     noPaddingY = false,
 }: HeaderLayoutProps): JSX.Element => {
-    const isBrandVariant = isInverse || variant === 'brand';
-    const isBleedActivated = bleed && isBrandVariant && extra;
+    const isBrandVariant = variant === 'brand';
+    const isBleedActivated = bleed && isBrandVariant && slot;
 
     const mainContent = (
         <div>
@@ -234,7 +253,7 @@ export const HeaderLayout = ({
     useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
 
     return (
-        <div {...getPrefixedDataAttributes(dataAttributes, 'HeaderLayout')}>
+        <div {...getPrefixedDataAttributes({testid: 'HeaderLayout', ...dataAttributes})}>
             <ResponsiveLayout variant={isBrandVariant ? 'brand' : undefined}>
                 <Box
                     paddingTop={
@@ -247,33 +266,33 @@ export const HeaderLayout = ({
                     }
                     paddingBottom={{
                         mobile: noPaddingY && !isBleedActivated ? 0 : 24,
-                        desktop: isBleedActivated && !sideBySideExtraOnDesktop ? 32 : noPaddingY ? 0 : 48,
+                        desktop: isBleedActivated && !sideBySideSlotOnDesktop ? 32 : noPaddingY ? 0 : 48,
                     }}
                 >
-                    {sideBySideExtraOnDesktop ? (
+                    {sideBySideSlotOnDesktop ? (
                         <GridLayout
                             template="6+6"
                             left={mainContent}
                             right={
                                 <div className={isBleedActivated ? styles.hideOnTabletOrSmaller : ''}>
-                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{extra}</Box>
+                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{slot}</Box>
                                 </div>
                             }
                         />
                     ) : (
                         <Stack space={header ? {mobile: 24, desktop: 32} : 0}>
                             {mainContent}
-                            {!isBleedActivated && extra}
+                            {!isBleedActivated && slot}
                         </Stack>
                     )}
                 </Box>
             </ResponsiveLayout>
             {isBleedActivated && (
                 <ResponsiveLayout
-                    className={sideBySideExtraOnDesktop ? styles.hideOnDesktop : ''}
+                    className={sideBySideSlotOnDesktop ? styles.hideOnDesktop : ''}
                     backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrandBottom} 40px, ${vars.colors.background} 0%)`}
                 >
-                    {extra}
+                    {slot}
                 </ResponsiveLayout>
             )}
         </div>
@@ -281,26 +300,22 @@ export const HeaderLayout = ({
 };
 
 type MainSectionHeaderLayoutProps = {
-    /** @deprecated use variant="brand" instead */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
     children: RendersElement<typeof MainSectionHeader>;
     dataAttributes?: DataAttributes;
 };
 
 export const MainSectionHeaderLayout = ({
-    isInverse = false,
     variant = 'default',
     children,
     dataAttributes,
 }: MainSectionHeaderLayoutProps): JSX.Element => {
-    const isBrandVariant = isInverse || variant === 'brand';
+    const isBrandVariant = variant === 'brand';
     useSetOverscrollColor(isBrandVariant ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
             variant={isBrandVariant ? 'brand' : undefined}
             dataAttributes={{
-                'component-name': 'MainSectionHeaderLayout',
                 testid: 'MainSectionHeaderLayout',
                 ...dataAttributes,
             }}

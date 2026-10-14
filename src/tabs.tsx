@@ -147,7 +147,7 @@ const Tabs = ({
                         }[externalVariant],
                     }),
                 }}
-                {...getPrefixedDataAttributes(dataAttributes, 'Tabs')}
+                {...getPrefixedDataAttributes({testid: 'Tabs', ...dataAttributes})}
                 aria-label={otherProps['aria-label']}
                 aria-labelledby={otherProps['aria-labelledby']}
                 aria-description={otherProps['aria-description']}
@@ -164,7 +164,7 @@ const Tabs = ({
                                             id={getTabId(index)}
                                             tabIndex={isSelected ? undefined : -1}
                                             ref={isSelected ? selectedTabRef : undefined}
-                                            dataAttributes={{'component-name': 'Tab'}}
+                                            dataAttributes={{testid: 'Tab'}}
                                             key={index}
                                             className={classnames(
                                                 styles.tabVariants[getTabVariant(tabs.length)],

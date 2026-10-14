@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
     Avatar,
     Badge,
-    IconShoppingCartRegular,
     Inline,
     MainNavigationBar,
     NavigationBarAction,
@@ -13,6 +12,7 @@ import {
     Text3,
     useScreenSize,
 } from '..';
+import IconShoppingCartRegular from '@telefonica/mistica-icons/icon-shopping-cart-regular';
 import avatarImg from './images/avatar.jpg';
 
 import type {PadSize} from '../box';
@@ -37,7 +37,7 @@ const sectionDefaultMenuItemsCount = {
 type Args = {
     variant: Variant;
     border: boolean;
-    burgerMenuExtra: boolean;
+    burgerMenuSlot: boolean;
     large: boolean;
     sections: boolean;
     menu: 'undefined' | 'default' | 'custom';
@@ -53,7 +53,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({
     variant,
     border,
-    burgerMenuExtra,
+    burgerMenuSlot,
     large,
     sections,
     menu,
@@ -96,7 +96,7 @@ export const Default: StoryComponent<Args> = ({
             variant={variant}
             large={large}
             withBorder={border}
-            burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
+            burgerMenuSlot={burgerMenuSlot ? <Placeholder /> : undefined}
             desktopLargeMenu={desktopLargeMenu}
             logo={customLogo ? <Placeholder width={40} height={40} /> : undefined}
             topSlot={topSlot ? <Placeholder height={24} /> : undefined}
@@ -154,7 +154,7 @@ Default.storyName = 'MainNavigationBar';
 Default.args = {
     variant: 'default',
     border: true,
-    burgerMenuExtra: false,
+    burgerMenuSlot: false,
     large: false,
     sections: true,
     menu: 'undefined',

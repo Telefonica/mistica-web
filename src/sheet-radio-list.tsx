@@ -43,11 +43,7 @@ const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetProps>(
         const {texts, t} = useTheme();
 
         return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'RadioListSheet', ...dataAttributes}}
-            >
+            <Sheet onClose={onClose} ref={ref} dataAttributes={{testid: 'RadioListSheet', ...dataAttributes}}>
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}

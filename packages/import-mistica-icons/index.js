@@ -14,11 +14,26 @@ const pascalCase = (s) => upperFirst(camelCase(s));
 const PATH_REPO_ROOT = join(__dirname, '..', '..');
 const PATH_CACHE = join(__dirname, 'node_modules', '.cache');
 const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
-const PATH_OUTPUT = join(PATH_REPO_ROOT, 'src', 'generated/mistica-icons');
-const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
+const PATH_OUTPUT = join(PATH_REPO_ROOT, 'packages', 'mistica-icons', 'src', 'generated');
+const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx');
+/**
+ * The icons live in @telefonica/mistica-icons, and they read the theme of @telefonica/mistica from
+ * the narrow entry point below. The bare name of the barrel also works, but it closes a dependency
+ * cycle, because the barrel exports the components that render an icon. The entry point exports leaf
+ * modules only, so the load order between an icon and the barrel stops mattering.
+ *
+ * A federated host must share this path as well as the bare name of the barrel, or the icons of a
+ * remote read a second theme context. See doc/module-federation.md.
+ *
+ * skinVars keeps the local name vars, so the body of an icon stays short.
+ */
+const MISTICA_ICON_RUNTIME_MODULE = '@telefonica/mistica/icon-runtime';
 const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 
+/**
+ * @type {string | string[]}
+ */
 const SKIN_BLACKLIST = [];
 
 const checkoutMisticaIconsRepo = () => {
@@ -83,6 +98,9 @@ const getSvgIconsInfo = () => {
  * @param {svgIconsInfo} svgIconsInfo
  */
 const getAllIconNames = (svgIconsInfo) => {
+    /**
+     * @type {string[]}
+     */
     const allIconNames = [];
     Object.entries(svgIconsInfo).forEach(([, icons]) => {
         for (const [name] of icons) {
@@ -92,8 +110,10 @@ const getAllIconNames = (svgIconsInfo) => {
     return uniq(allIconNames).sort();
 };
 
-const format = async (src) =>
-    prettier.format(src, {...(await prettier.resolveConfig('.')), parser: 'babel-ts'});
+const prettierConfigPromise = prettier.resolveConfig(__filename);
+
+const format = async (/** @type {string} */ src) =>
+    prettier.format(src, {...(await prettierConfigPromise), parser: 'babel-ts'});
 
 /**
  * @param {string} svgFilename
@@ -119,13 +139,17 @@ const getIconJsx = (svgFilename) => {
         .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
 
-/** Defines the skin check order, higher number means it's checked before */
-const SKIN_PRIORITY = {
+/** Higher specificity = checked first in the if/else chain;
+ * The skin with the LOWEST SPECIFICITY among those
+ * carrying the icon becomes the else FALLBACK for ALL OTHER SKINS.
+ * @type {{[skin: string]: number}}
+ */
+const SKIN_SPECIFICITY = {
+    // this is currently the default skin
     telefonica: 1,
     vivo: 2,
     o2: 3,
-    'o2-new': 4, // o2-new is checked before o2 because O2-new skin name would match with o2 regexp
-    blau: 5,
+    blau: 4,
 };
 
 /**
@@ -136,7 +160,7 @@ const SKIN_PRIORITY = {
 const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     // sort skins by priority, lower priority (more specific) first
     const skins = Object.keys(svgIconsInfo).sort(
-        (a, b) => (SKIN_PRIORITY[b] ?? 100) - (SKIN_PRIORITY[a] ?? 100)
+        (a, b) => (SKIN_SPECIFICITY[b] ?? 100) - (SKIN_SPECIFICITY[a] ?? 100)
     );
 
     const availableIcons = [];
@@ -161,7 +185,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
         let result = '';
         for (let i = 0; i < availableIcons.length; i++) {
             const [skin, filename] = availableIcons[i];
-            // using a match because we want "vivo" to match with "Vivo" and "Vivo-new"
+            // using a match because we want "vivo" to match with "Vivo" and "Vivo-evolution"
             const ifStr = i < availableIcons.length - 1 ? `if (skinName.match(/^${skin}/i))` : '';
             const elseStr = i > 0 ? 'else' : '';
             result += `${elseStr} ${ifStr} {return ${getIconJsx(filename)}}`;
@@ -176,28 +200,38 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
      * To update, execute "yarn start" inside "import-mistica-icons"
      */
 
-    import * as React from 'react';${
-        hasVariants
-            ? `
-    import {useTheme} from '../../hooks';`
-            : ''
-    }
-    import {useThemeVariant} from '../../theme-variant-context';
-    import {vars} from '../../skins/skin-contract.css';
+    import * as React from 'react';
+    import {${hasVariants ? 'useTheme, ' : ''}useThemeVariant, skinVars as vars, useIconGradient} from '${MISTICA_ICON_RUNTIME_MODULE}';
 
-    import type {IconProps} from '../../utils/types';
+    import type {IconProps} from '${MISTICA_ICON_RUNTIME_MODULE}';
 
     const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
         const themeVariant = useThemeVariant();
-        const fillColor =
-            color ??
-            (themeVariant === 'brand' || themeVariant === 'media'
+        const defaultColor =
+            themeVariant === 'brand' || themeVariant === 'media'
                 ? vars.colors.neutralHighBrand
                 : themeVariant === 'negative'
                     ? vars.colors.neutralHighNegative
-                    : vars.colors.neutralHigh);
+                    : vars.colors.neutralHigh;
+
+        const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
+
         ${hasVariants ? 'const {skinName} = useTheme();' : ''}
-        ${getVariants()}
+
+        const getSvgContent = () => {
+            ${getVariants()}
+        };
+
+        const svgContent = getSvgContent();
+        
+        if (gradientDef) {
+            return React.cloneElement(svgContent, {}, [
+                <defs key="gradient-defs">{gradientDef}</defs>,
+                ...React.Children.toArray(svgContent.props.children),
+            ]);
+        }
+
+        return svgContent;
     };
 
     export default ${componentName};
@@ -267,15 +301,26 @@ const main = async () => {
         fs.writeFileSync(join(PATH_OUTPUT, filename), source);
     }
 
+    const indexHeader = `/*
+ * This file was autogenerated. Don't edit this file!
+ *
+ * To update, execute "yarn start" inside "import-mistica-icons"
+ *
+ * This barrel serves the repository only: the Playroom scope and the icon catalog story.
+ * It is not part of the published package, and src/index.tsx must never import it.
+ */
+`;
+
     const index = components
         .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
-        .map(
-            ([componentName, importName]) =>
-                `export {default as ${componentName}} from './generated/mistica-icons/${importName}';`
-        )
+        .map(([componentName, importName]) => `export {default as ${componentName}} from './${importName}';`)
         .join('\n');
 
-    fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
+    fs.writeFileSync(
+        PATH_OUTPUT_INDEX_FILENAME,
+        `${indexHeader}${index}\nexport {iconKeywords, iconCategories} from './icons-keywords';\n`,
+        'utf8'
+    );
 
     console.log();
     console.log('Generating keywords for each icon.');
@@ -284,7 +329,8 @@ const main = async () => {
 
     console.log();
     console.log(`Done! (${allIconNames.length} components).`);
-    console.log(`Copy exports in `, yellow(PATH_OUTPUT_INDEX_FILENAME), ' to src/index.tsx');
+    console.log(`The barrel for the repository is in `, yellow(PATH_OUTPUT_INDEX_FILENAME));
+    console.log('The published package needs no barrel, so src/index.tsx stays untouched.');
     console.log();
 };
 

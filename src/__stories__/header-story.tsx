@@ -7,9 +7,9 @@ import {
     ResponsiveLayout,
     Placeholder,
     Callout,
-    IconInformationUserLight,
     Tag,
 } from '..';
+import IconInformationUserLight from '@telefonica/mistica-icons/icon-information-user-light';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
@@ -30,11 +30,12 @@ type Args = {
     truncatePretitle: boolean;
     title: string;
     titleAs: HeadingType;
+    titleSize?: 'none' | 'title1' | 'title2' | 'title3' | 'title4';
     description: string;
     small: boolean;
     variant: 'default' | 'brand';
-    extra: boolean;
-    sideBySideExtraOnDesktop: boolean;
+    slot: boolean;
+    sideBySideSlotOnDesktop: boolean;
     breadcrumbs: boolean;
     bleed: boolean;
     noPaddingY: boolean;
@@ -44,7 +45,7 @@ export const Default: StoryComponent<Args> = ({
     header,
     variant,
     bleed,
-    sideBySideExtraOnDesktop,
+    sideBySideSlotOnDesktop,
     breadcrumbs,
     headlineType,
     headline,
@@ -53,9 +54,10 @@ export const Default: StoryComponent<Args> = ({
     truncatePretitle,
     title,
     titleAs,
+    titleSize,
     description,
     small,
-    extra,
+    slot,
     noPaddingY,
 }) => {
     return (
@@ -64,7 +66,7 @@ export const Default: StoryComponent<Args> = ({
                 dataAttributes={{testid: 'header-layout'}}
                 variant={variant}
                 bleed={bleed}
-                sideBySideExtraOnDesktop={sideBySideExtraOnDesktop}
+                sideBySideSlotOnDesktop={sideBySideSlotOnDesktop}
                 noPaddingY={noPaddingY}
                 breadcrumbs={
                     breadcrumbs ? (
@@ -82,12 +84,13 @@ export const Default: StoryComponent<Args> = ({
                             pretitle={truncatePretitle ? {text: pretitle, truncate: true} : pretitle}
                             title={title}
                             titleAs={titleAs}
+                            titleSize={titleSize === 'none' ? undefined : titleSize}
                             description={description}
                             small={small}
                         />
                     ) : undefined
                 }
-                extra={extra ? <Placeholder /> : undefined}
+                slot={slot ? <Placeholder /> : undefined}
             />
             <ResponsiveLayout>
                 <Callout
@@ -111,14 +114,15 @@ Default.args = {
     pretitleAs: 'span',
     title: 'December bill is now available',
     titleAs: 'h2',
+    titleSize: 'none',
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
     variant: 'default',
     breadcrumbs: true,
     noPaddingY: false,
-    extra: true,
-    sideBySideExtraOnDesktop: true,
+    slot: true,
+    sideBySideSlotOnDesktop: true,
     bleed: false,
 };
 
@@ -141,10 +145,15 @@ Default.argTypes = {
         options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
         control: {type: 'select'},
     },
+    titleSize: {
+        if: {arg: 'header'},
+        options: ['none', 'title1', 'title2', 'title3', 'title4'],
+        control: {type: 'select'},
+    },
     description: {if: {arg: 'header'}},
     small: {if: {arg: 'header'}},
-    sideBySideExtraOnDesktop: {if: {arg: 'extra'}},
-    bleed: {if: {arg: 'extra'}},
+    sideBySideSlotOnDesktop: {if: {arg: 'slot'}},
+    bleed: {if: {arg: 'slot'}},
     variant: {
         options: ['default', 'brand'],
         control: {type: 'select'},

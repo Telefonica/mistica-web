@@ -1,6 +1,7 @@
 # Components Reference
 
-All components are imported from `@telefonica/mistica`.
+All components are imported from `@telefonica/mistica`. Before using any component, you should **always** read
+the definition .d.ts files located in `node_modules` so you have all the props and JSDoc context.
 
 ```tsx
 import {ButtonPrimary, Stack, Text2, ...} from '@telefonica/mistica';
@@ -81,6 +82,29 @@ Positions a primary and optional secondary button:
 />
 ```
 
+## Pagination
+
+Use `Pagination` to navigate through a finite number of pages. It can be uncontrolled with `defaultPage` or
+controlled with `currentPage` and `onChange`.
+
+```tsx
+<Pagination totalPages={20} defaultPage={1} />
+```
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Pagination totalPages={20} currentPage={page} onChange={setPage} />;
+```
+
+Common props:
+
+- `surroundingPageCount` -- number of pages shown around the current page. Defaults to `1`.
+- `hidePageList` -- hides page numbers and keeps only previous/next controls.
+- `hideNavigationControls` -- hides previous/next controls and keeps only page numbers.
+- `mode="iconOnly"` -- renders previous/next as icon buttons.
+- `navLeftLabel` / `navRightLabel` -- custom labels for previous/next controls.
+
 ## Text and Titles
 
 > 💡 **Centering text uses two complementary props:** [`<Align x="center">`](./layout.md#align) positions the
@@ -136,6 +160,41 @@ Common props: `color`, `truncate`, `textAlign`, `as` (HTML tag), `wordBreak`, `d
 
 All cards support touchable props (`onPress`, `href`, `to`), buttons (`buttonPrimary`, `buttonSecondary`,
 `buttonLink`), and content props (`headline`, `pretitle`, `title`, `subtitle`, `description`, `slot`).
+
+### Card selection
+
+Use `checkbox`, `switch`, or `radioValue` to make a card selectable. The selector appears in the top-right
+corner, and the card body becomes the interaction target. It exposes the control's role and checked state,
+supports Space, and preserves arrow navigation for radios inside a `RadioGroup`. AdvancedDataCard supports the
+same selection props.
+
+These props are mutually exclusive with each other and with `selected`, `onPress`, `href`, `to`, top actions
+and dismiss. Footer actions remain independent.
+
+```tsx
+<DataCard title="Notifications" switch={{name: 'notifications', defaultValue: true}} />
+<DataCard title="Option" checkbox={{name: 'option'}} />
+<RadioGroup name="options" defaultValue="first">
+  <DataCard title="First option" radioValue="first" />
+  <DataCard title="Second option" radioValue="second" />
+</RadioGroup>
+```
+
+Checkbox and switch configurations support `name`, `value`, `defaultValue`, `onChange` and `disabled`.
+Controls placed in `slot` or `footerSlot` remain independent and do not automatically select the card.
+
+Use `selected` to control the outline from a custom control or an external action. It cannot be combined with
+the built-in selector props. It does not change the card's existing interaction, actions or video behavior,
+and can be used with or without `onPress`. The outline uses the card variant.
+
+```tsx
+<DataCard
+  title="Custom selection"
+  selected={selected}
+  slot={<Checkbox name="custom-selection" checked={selected} onChange={setSelected}>Select card</Checkbox>}
+/>
+<DataCard title="Favorite" selected={favorite} slot={customFavoriteControl} />
+```
 
 ### DataCard
 
@@ -385,8 +444,8 @@ const [selectedIndex, setSelectedIndex] = React.useState(0);
       description="Page description text"
     />
   }
-  extra={<Placeholder />}
-  sideBySideExtraOnDesktop
+  slot={<Placeholder />}
+  sideBySideSlotOnDesktop
 />
 ```
 
@@ -444,7 +503,7 @@ dialog({
   title: 'Title',
   subtitle: 'Subtitle',
   message: 'Message',
-  extra: <Placeholder />,
+  slot: <Placeholder />,
   acceptText: 'Accept',
   cancelText: 'Cancel',
 });
@@ -720,13 +779,19 @@ const [isOpen, setIsOpen] = React.useState(false);
 
 ## Icons
 
+The icons live in a separate package, [@telefonica/mistica-icons](../packages/mistica-icons/README.md). Each
+icon has its own module, and there is no barrel, so an application loads the icons that it uses and nothing
+more.
+
 Mistica ships ~2000 icons following the pattern `Icon{Name}{Variant}`:
 
 - Variants: `Regular`, `Filled`, `Light`
+- Module path: the name of the component in kebab case, for example `icon-search-regular`
 - All accept `size` (number) and `color` (string) props
 
 ```tsx
-import {IconSearchRegular, IconHeartFilled, IconInfoLight} from '@telefonica/mistica';
+import IconSearchRegular from '@telefonica/mistica-icons/icon-search-regular';
+import IconHeartFilled from '@telefonica/mistica-icons/icon-heart-filled';
 
 <IconSearchRegular size={24} color={skinVars.colors.neutralHigh} />
 <IconHeartFilled size={24} color={skinVars.colors.error} />

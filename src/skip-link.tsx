@@ -17,7 +17,10 @@ type Props = {
 
 const SkipLink = ({targetId, children, 'aria-label': ariaLabel, dataAttributes}: Props): JSX.Element => {
     return (
-        <div className={styles.skipLinkContainer} {...getPrefixedDataAttributes(dataAttributes, 'SkipLink')}>
+        <div
+            className={styles.skipLinkContainer}
+            {...getPrefixedDataAttributes({testid: 'SkipLink', ...dataAttributes})}
+        >
             <ButtonLink aria-label={ariaLabel} href={`#${targetId}`} withChevron={false}>
                 {children}
             </ButtonLink>
@@ -39,7 +42,7 @@ export const SkipLinkNav = ({
     const {texts, t} = useTheme();
     const navLabel = ariaLabel || texts.skipLinkNavLabel || t(tokens.skipLinkNavLabel);
     return (
-        <nav aria-label={navLabel} {...getPrefixedDataAttributes(dataAttributes, 'SkipLinkNav')}>
+        <nav aria-label={navLabel} {...getPrefixedDataAttributes({testid: 'SkipLinkNav', ...dataAttributes})}>
             <ul className={styles.skipLinkList}>
                 {React.Children.map(children, (child) => (
                     <li>{child}</li>

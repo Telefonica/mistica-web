@@ -5,8 +5,8 @@ import Inline from './inline';
 import Box from './box';
 import {useTheme} from './hooks';
 import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
-import {Text2, Text3} from './text';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import {Text1, Text2, Text3} from './text';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
 import classNames from 'classnames';
 import ButtonGroup from './button-group';
@@ -30,6 +30,7 @@ type Props = {
         | string;
     titleAs?: HeadingType;
     description: string;
+    small?: boolean;
     onClose?: () => void;
     closeButtonLabel?: string;
     asset?: React.ReactElement;
@@ -46,6 +47,7 @@ const Callout = ({
     title,
     titleAs = 'h2',
     description,
+    small = false,
     asset,
     onClose,
     closeButtonLabel,
@@ -68,6 +70,9 @@ const Callout = ({
 
     const normalizedVariant = normalizeVariant(variant);
 
+    const TitleComponent = small ? Text2 : Text3;
+    const DescriptionComponent = small ? Text1 : Text2;
+
     return (
         <section
             className={classNames(
@@ -79,7 +84,7 @@ const Callout = ({
             })}
             aria-label={ariaLabel}
             role={role}
-            {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
+            {...getPrefixedDataAttributes({testid: 'Callout', ...dataAttributes})}
         >
             <ThemeVariant variant={variant}>
                 {asset && (
@@ -91,22 +96,22 @@ const Callout = ({
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
                             <Stack space={4}>
-                                <Text3
+                                <TitleComponent
                                     as={titleElementType}
                                     regular
                                     dataAttributes={{testid: 'title'}}
                                     aria-label={titleAriaLabel}
                                 >
                                     {titleText}
-                                </Text3>
-                                <Text2
+                                </TitleComponent>
+                                <DescriptionComponent
                                     as="p"
                                     regular
                                     color={vars.colors.textSecondary}
                                     dataAttributes={{testid: 'description'}}
                                 >
                                     {description}
-                                </Text2>
+                                </DescriptionComponent>
                             </Stack>
                             {onClose && (
                                 // Create empty div in order to fill space that iconButton occupies.

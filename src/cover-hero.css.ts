@@ -68,7 +68,7 @@ globalStyle(`${slideshowWithBullets} ${coverHero}:after`, {
     },
 });
 
-export const hasSideExtra = style({});
+export const hasSideSlot = style({});
 
 export const centered = style([
     sprinkles({
@@ -77,7 +77,7 @@ export const centered = style([
     {
         textAlign: 'center',
         selectors: {
-            [`${hasSideExtra}&`]: {
+            [`${hasSideSlot}&`]: {
                 '@media': {
                     [mq.tabletOrBigger]: {
                         textAlign: 'left',
@@ -117,7 +117,7 @@ export const sixColumns = style({
         [mq.tabletOrBigger]: {
             width: '75%',
             selectors: {
-                [`${centered}:not(${hasSideExtra}) &`]: {
+                [`${centered}:not(${hasSideSlot}) &`]: {
                     margin: '0 auto',
                 },
             },
@@ -125,7 +125,7 @@ export const sixColumns = style({
     },
 });
 
-export const sideExtra = sprinkles({position: 'relative'});
+export const sideSlot = sprinkles({position: 'relative'});
 
 export const flexColumn = sprinkles({
     display: 'flex',

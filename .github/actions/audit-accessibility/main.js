@@ -73,7 +73,20 @@ const audit = async (browser, url, disabledRules = []) => {
     const page = await browser.newPage();
     const ua = await browser.userAgent();
     await page.setUserAgent(`${ua} acceptance-test`);
-    await page.goto(url);
+    await page.goto(url, {waitUntil: 'networkidle0'});
+    // Wait until the story has actually mounted, otherwise axe may scan the Storybook
+    // loading shell instead of the rendered story, producing flaky page-level results.
+    await page
+        .waitForFunction(
+            () => {
+                const root = document.querySelector('#storybook-root');
+                return Boolean(root && root.children.length > 0);
+            },
+            {timeout: 5000}
+        )
+        .catch(() => {
+            // Some stories may legitimately render no content; continue with the audit.
+        });
     const result = await new AxePuppeteer(page)
         .disableRules([
             // ignored because some stories don't include an H1 header
@@ -129,6 +142,40 @@ const generateReportForConsole = async (results) => {
     }
 
     console.log(lines.join('\n'));
+};
+
+/**
+ * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
+ */
+const generateReportForStepSummary = (results) => {
+    const problemsCount = results.reduce((acc, [, , result]) => acc + result.violations.length, 0);
+
+    const lines = ['## Accessibility report', ''];
+
+    if (problemsCount > 0) {
+        lines.push(`❌ **${problemsCount}** problems detected`, '');
+        for (const [story, skin, result] of results) {
+            if (result.violations.length) {
+                lines.push(`### ${story} [${skin}] (${result.violations.length} violations)`);
+                for (const violation of result.violations) {
+                    lines.push(
+                        `- **${violation.id}**: ${violation.description} (${violation.nodes.length} node(s))`
+                    );
+                }
+                lines.push('');
+            }
+        }
+        core.setFailed('Accessibility problems detected');
+    } else {
+        lines.push('✔️ No issues found');
+    }
+
+    lines.push('', 'ℹ️ You can run this locally by executing `yarn audit-accessibility`.');
+
+    const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+    if (summaryPath) {
+        fs.appendFileSync(summaryPath, lines.join('\n') + '\n');
+    }
 };
 
 /**
@@ -200,6 +247,13 @@ const disabledRulesByStoryAndSkin = {
         all: ['color-contrast'],
     },
 
+    'utilities-animations-fadein--default': {
+        all: ['color-contrast'],
+    },
+    'utilities-animations-fadeout--default': {
+        all: ['color-contrast'],
+    },
+
     'patterns-feedback-feedbackscreen--feedback-screen-story': {
         Blau: ['color-contrast'],
     },
@@ -233,7 +287,7 @@ const main = async () => {
     }
 
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
-    const skins = ['Movistar-new', 'O2-new', 'Vivo-new', 'Blau'];
+    const skins = ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'];
 
     /**
      * @type Array<[story: string, skin: string]>
@@ -280,7 +334,12 @@ const main = async () => {
     console.log('total time:', Date.now() - t, 'ms');
 
     if (process.env.CI) {
-        await generateReportForGithub(results);
+        const isForkPr = core.getInput('fork-pr') === 'true';
+        if (isForkPr) {
+            generateReportForStepSummary(results);
+        } else {
+            await generateReportForGithub(results);
+        }
     } else {
         await generateReportForConsole(results);
     }

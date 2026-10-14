@@ -41,53 +41,56 @@ const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 export const Default: StoryComponent = () => {
     const {alert} = useDialog();
     return (
-        <Form
-            initialValues={{
-                email: 'john.doe@gmail.com',
-                decimal: '123',
-                country: '',
-                fruit: '',
-                'save-cc': true,
-            }}
-            onSubmit={fakeApiCall}
-            autoJump
-        >
-            <Stack space={16}>
-                <EmailField name="email" label="email" />
-                <PhoneNumberField name="phone" label="phone" />
-                <IbanField name="bankAccount" label="IBAN" />
-                <DecimalField name="decimal" label="Decimal" />
-                <IntegerField optional autoComplete="off" name="integer" label="Integer" />
-                <Select name="country" label="country" options={countryOptions} />
-                <Select autoFocus name="fruit" label="fruit (autofocus)" options={fruitOptions} />
-                <CreditCardFields />
-                <Switch name="save-cc">Save CC</Switch>
-                <Inline space={0}>
-                    <Checkbox name="t&c" aria-label="Accept Terms and Conditions">
-                        Accept&nbsp;
-                    </Checkbox>
-                    <Text3 regular>
-                        <TextLink onPress={() => alert({message: 'TOS'})}>Terms and Conditions</TextLink>
+        <div data-testid="form-wrapper">
+            <Form
+                initialValues={{
+                    email: 'john.doe@gmail.com',
+                    decimal: '123',
+                    country: '',
+                    fruit: '',
+                    'save-cc': true,
+                }}
+                onSubmit={fakeApiCall}
+                autoJump
+            >
+                <Stack space={16}>
+                    <EmailField name="email" label="email" />
+                    <PhoneNumberField name="phone" label="phone" />
+                    <IbanField name="bankAccount" label="IBAN" />
+                    <DecimalField name="decimal" label="Decimal" />
+                    <IntegerField optional autoComplete="off" name="integer" label="Integer" />
+                    <Select name="country" label="country" options={countryOptions} />
+                    <Select optional name="country2" label="country2" options={countryOptions} />
+                    <Select autoFocus name="fruit" label="fruit (autofocus)" options={fruitOptions} />
+                    <CreditCardFields />
+                    <Switch name="save-cc">Save CC</Switch>
+                    <Inline space={0}>
+                        <Checkbox name="t&c" aria-label="Accept Terms and Conditions">
+                            Accept&nbsp;
+                        </Checkbox>
+                        <Text3 regular>
+                            <TextLink onPress={() => alert({message: 'TOS'})}>Terms and Conditions</TextLink>
+                        </Text3>
+                    </Inline>
+                    <Text3 regular color={skinVars.colors.textSecondary} id="fruit-label">
+                        ¿What is your favourite fruit?
                     </Text3>
-                </Inline>
-                <Text3 regular color={skinVars.colors.textSecondary} id="fruit-label">
-                    ¿What is your favourite fruit?
-                </Text3>
-                <RadioGroup name="juicy-fruit" aria-labelledby="fruit-label" defaultValue="banana">
-                    <Stack space={16}>
-                        <RadioButton value="banana">Banana</RadioButton>
-                        <RadioButton value="apple">Apple</RadioButton>
-                    </Stack>
-                </RadioGroup>
-                <ButtonLayout
-                    primaryButton={
-                        <ButtonPrimary submit loadingText="Sending">
-                            Send
-                        </ButtonPrimary>
-                    }
-                />
-            </Stack>
-        </Form>
+                    <RadioGroup name="juicy-fruit" aria-labelledby="fruit-label" defaultValue="banana">
+                        <Stack space={16}>
+                            <RadioButton value="banana">Banana</RadioButton>
+                            <RadioButton value="apple">Apple</RadioButton>
+                        </Stack>
+                    </RadioGroup>
+                    <ButtonLayout
+                        primaryButton={
+                            <ButtonPrimary submit loadingText="Sending">
+                                Send
+                            </ButtonPrimary>
+                        }
+                    />
+                </Stack>
+            </Form>
+        </div>
     );
 };
 

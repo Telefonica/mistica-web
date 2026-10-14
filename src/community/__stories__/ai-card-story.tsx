@@ -2,11 +2,11 @@ import * as React from 'react';
 import AiCard from '../ai-card';
 import Box from '../../box';
 import ResponsiveLayout from '../../responsive-layout';
-import IconArtificialIntelligenceFilled from '../../generated/mistica-icons/icon-artificial-intelligence-filled';
+import IconArtificialIntelligenceFilled from '@telefonica/mistica-icons/icon-artificial-intelligence-filled';
 import {vars} from '../../skins/skin-contract.css';
 
 export default {
-    title: 'Community/AiCard',
+    title: 'Community/Vivo/AiCard',
     parameters: {fullScreen: true},
 };
 

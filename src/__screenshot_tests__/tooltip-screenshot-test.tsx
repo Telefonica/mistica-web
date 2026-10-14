@@ -1,4 +1,4 @@
-import {VIVO_NEW_SKIN} from '../skins/constants';
+import {VIVO_SKIN} from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
 
 const TARGET_HORIZONTAL_POSITIONS = ['left', 'center', 'right'];
@@ -24,7 +24,7 @@ test.each(getCases())(
         const page = await openStoryPage({
             id: 'components-tooltip--default',
             device: 'DESKTOP',
-            args: {position, targetHorizontalPosition, targetVerticalPosition, extra: true},
+            args: {position, targetHorizontalPosition, targetVerticalPosition, slot: true},
         });
 
         await page.click(await screen.findByTestId('target'));
@@ -38,7 +38,8 @@ test('Tooltip - appears properly on mobile', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
-        skin: 'Movistar', // TODO: investigate why the test is instable with Movistar-new skin
+        // todo https://github.com/Telefonica/mistica-web/issues/1621 Tooltip unstable on Movistar skin
+        skin: 'O2',
     });
 
     await page.click(await screen.findByTestId('target'));
@@ -51,7 +52,8 @@ test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
-        skin: 'Movistar', // TODO: investigate why the test is instable with Movistar-new skin
+        // todo https://github.com/Telefonica/mistica-web/issues/1621 Tooltip unstable on Movistar skin
+        skin: 'O2',
         args: {variantOutside: 'brand'},
     });
 
@@ -148,15 +150,41 @@ test('Tooltip - with targetStyle', async () => {
  * when using Vivo_new skin, the tooltip border radius is bigger than in other skins, so it's useful
  * to check that the tooltip's arrow is displayed properly in this scenario.
  */
-test('Tooltip - arrow appears properly in Vivo_New skin when target is close to viewport edges', async () => {
+test('Tooltip - arrow appears properly in Vivo skin when target is close to viewport edges', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         args: {targetHorizontalPosition: 'left', targetVerticalPosition: 'top'},
-        skin: VIVO_NEW_SKIN,
+        skin: VIVO_SKIN,
     });
 
     await page.click(await screen.findByTestId('target'));
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
+});
+
+test.each(
+    ['top', 'bottom', 'left', 'right'].flatMap((position) =>
+        ['start', 'end'].map((alignment) => ({position, alignment}))
+    )
+)('Tooltip - position=$position alignment=$alignment', async (args) => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'DESKTOP',
+        args,
+    });
+
+    await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test.each(['top', 'left'])('Tooltip - small content with Vivo corners in %s', async (position) => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'DESKTOP',
+        skin: VIVO_SKIN,
+        args: {position, alignment: 'start', title: '', description: 'A'},
+    });
+    await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });

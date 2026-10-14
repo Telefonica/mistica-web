@@ -5,7 +5,7 @@ import {useTheme} from './hooks';
 import Badge from './badge';
 import Box from './box';
 import Text, {getTextSizesWithWeight} from './text';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
@@ -84,7 +84,7 @@ const Chip = (props: ChipProps): JSX.Element => {
         </>
     );
 
-    const chipDataAttributes = {'component-name': 'Chip', testid: 'Chip', ...dataAttributes};
+    const chipDataAttributes = {testid: 'Chip', ...dataAttributes};
 
     if (onClose) {
         return (

@@ -10,17 +10,19 @@ import Divider from '../divider';
 import {Text2, Text, useTextPresetSizes} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
-import Touchable from '../touchable';
 import classNames from 'classnames';
+import Touchable from '../touchable';
 import {useInnerText, useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
 import {applyCssVars} from '../utils/css';
 import Tag from '../tag';
 import {isBiggerHeading} from '../utils/headings';
-import {TopActions} from '../card-internal';
+import {TopActions, useControlState, CardWithControl} from '../card-internal';
+import {useRadioContext} from '../radio-button';
+import * as cardStyles from '../card-internal.css';
 
-import type {CardAction} from '../card-internal';
+import type {CardSelectionProps, CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
 import type StackingGroup from '../stacking-group';
@@ -55,7 +57,11 @@ type TouchableProps = {
       }
 >;
 type TouchableCard<T> = T & TouchableProps;
-type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+type CardInteractionProps<T> = ExclusifyUnion<
+    | (TouchableCard<T> & {selected?: boolean})
+    | (T & {selected?: boolean})
+    | (Omit<T, 'actions' | 'onClose'> & CardSelectionProps)
+>;
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -256,7 +262,7 @@ const CardFooter = ({button, footerImage, footerText, footerTextLinesMax, button
     );
 };
 
-type AllowedExtra =
+type AllowedSlot =
     | typeof StackingGroup
     | typeof HighlightedValueBlock
     | typeof InformationBlock
@@ -265,7 +271,7 @@ type AllowedExtra =
     | typeof SimpleBlock
     | typeof ValueBlock;
 
-type AdvancedDataCardProps = MaybeTouchableCard<{
+type AdvancedDataCardProps = CardInteractionProps<{
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -278,9 +284,9 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: ReadonlyArray<RendersNullableElement<AllowedExtra>>;
-    extraDividerPadding?: 8 | 16 | 24;
-    noExtraDivider?: boolean;
+    slot?: ReadonlyArray<RendersNullableElement<AllowedSlot>>;
+    slotDividerPadding?: 8 | 16 | 24;
+    noSlotDivider?: boolean;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
@@ -295,6 +301,10 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
+            selected,
+            checkbox,
+            switch: switchProps,
+            radioValue,
             stackingGroup,
             headline,
             pretitle,
@@ -308,9 +318,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             description,
             descriptionLinesMax,
 
-            extra,
-            extraDividerPadding = 24,
-            noExtraDivider = false,
+            slot,
+            slotDividerPadding = 24,
+            noSlotDivider = false,
 
             button,
             footerImage,
@@ -326,100 +336,140 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         },
         ref
     ) => {
-        const isTouchable = !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
-
+        const {isChecked, toggleChecked} = useControlState(switchProps || checkbox);
+        const radioContext = useRadioContext();
+        const isSelectable = !!switchProps || !!checkbox || radioValue !== undefined;
+        const isSelected =
+            switchProps || checkbox
+                ? isChecked
+                : radioValue !== undefined
+                  ? radioContext.selectedValue === radioValue
+                  : selected;
+        const {isIos} = useTheme();
+        const isTouchable =
+            isSelectable || !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
-        const hasExtras = !!extra?.length;
+        const hasSlots = !!slot?.length;
 
-        const topActionsCount = (actions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsCount = isSelectable ? 1 : (actions?.length || 0) + (onClose ? 1 : 0);
 
         const {text: headlineText, ref: headlineRef} = useInnerText();
-        const {text: extraText, ref: extraRef} = useInnerText();
+        const {text: slotText, ref: slotRef} = useInnerText();
 
         const ariaLabel =
             ariaLabelProp ||
             (isBiggerHeading(titleAs, pretitleAs)
-                ? [title, headlineText, pretitle, subtitle, description, extraText]
-                : [pretitle, headlineText, title, subtitle, description, extraText]
+                ? [title, headlineText, pretitle, subtitle, description, slotText]
+                : [pretitle, headlineText, title, subtitle, description, slotText]
             )
                 .filter(Boolean)
                 .join(' ');
 
+        const content = (
+            <>
+                {isTouchable && <div className={styles.touchableCardHoverOverlay} />}
+
+                <div
+                    className={classNames(
+                        styles.cardContentStyle,
+                        !hasFooter && !hasSlots ? styles.minHeight : ''
+                    )}
+                    aria-hidden={isTouchable && !isSelectable}
+                >
+                    <Box paddingTop={8}>
+                        <Inline space={0}>
+                            <Stack space={8}>
+                                {stackingGroup}
+                                <CardContent
+                                    headline={headline}
+                                    headlineRef={headlineRef}
+                                    pretitle={pretitle}
+                                    pretitleAs={pretitleAs}
+                                    pretitleLinesMax={pretitleLinesMax}
+                                    title={title}
+                                    titleAs={titleAs}
+                                    titleLinesMax={titleLinesMax}
+                                    subtitle={subtitle}
+                                    subtitleLinesMax={subtitleLinesMax}
+                                    description={description}
+                                    descriptionLinesMax={descriptionLinesMax}
+                                />
+                            </Stack>
+                            {/** Hack to avoid content from rendering on top of the top action buttons */}
+                            {!stackingGroup && (
+                                <div
+                                    style={applyCssVars({
+                                        [styles.vars.topActionsCount]: String(topActionsCount),
+                                    })}
+                                    className={classNames(
+                                        styles.topActionsWithoutIcon,
+                                        switchProps && styles.switchSpace[isIos ? 'ios' : 'default']
+                                    )}
+                                />
+                            )}
+                        </Inline>
+                    </Box>
+                </div>
+                <div style={{flexGrow: 1}} />
+                {hasSlots && (
+                    <div className={styles.slot} ref={slotRef} aria-hidden={isTouchable && !isSelectable}>
+                        {slot.map((item, index) => {
+                            return (
+                                <div key={index}>
+                                    <div className={styles.paddingX}>{item}</div>
+
+                                    {index + 1 !== slot.length && (
+                                        <Box paddingY={slotDividerPadding}>
+                                            {!noSlotDivider && <Divider />}
+                                        </Box>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </>
+        );
+
         return (
             <section
-                className={styles.container}
-                {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
+                className={classNames(
+                    styles.container,
+                    isSelected && cardStyles.selectionOutline,
+                    isSelected && cardStyles.selectionOutlineColor.default
+                )}
+                {...getPrefixedDataAttributes({testid: 'AdvancedDataCard', ...dataAttributes})}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabel}
             >
                 <Boxed className={styles.dataCard} width="100%" height="100%" minHeight={styles.MIN_HEIGHT}>
-                    <Touchable
-                        maybe
-                        {...touchableProps}
-                        aria-label={isTouchable ? ariaLabel : undefined}
-                        className={styles.touchable}
-                    >
-                        {isTouchable && <div className={styles.touchableCardHoverOverlay} />}
-
-                        <div
-                            className={classNames(
-                                styles.cardContentStyle,
-                                !hasFooter && !hasExtras ? styles.minHeight : ''
-                            )}
-                            aria-hidden={isTouchable}
+                    {isSelectable ? (
+                        <CardWithControl
+                            maybe
+                            {...(checkbox
+                                ? {checkbox}
+                                : switchProps
+                                  ? {switch: switchProps}
+                                  : {radioValue: radioValue ?? ''})}
+                            checked={isChecked}
+                            onChange={toggleChecked}
+                            aria-label={ariaLabel}
+                            className={classNames(styles.touchable, styles.selectionTouchable)}
                         >
-                            <Box paddingTop={8}>
-                                <Inline space={0}>
-                                    <Stack space={8}>
-                                        {stackingGroup}
-                                        <CardContent
-                                            headline={headline}
-                                            headlineRef={headlineRef}
-                                            pretitle={pretitle}
-                                            pretitleAs={pretitleAs}
-                                            pretitleLinesMax={pretitleLinesMax}
-                                            title={title}
-                                            titleAs={titleAs}
-                                            titleLinesMax={titleLinesMax}
-                                            subtitle={subtitle}
-                                            subtitleLinesMax={subtitleLinesMax}
-                                            description={description}
-                                            descriptionLinesMax={descriptionLinesMax}
-                                        />
-                                    </Stack>
-                                    {/** Hack to avoid content from rendering on top of the top action buttons */}
-                                    {!stackingGroup && (
-                                        <div
-                                            style={applyCssVars({
-                                                [styles.vars.topActionsCount]: String(topActionsCount),
-                                            })}
-                                            className={styles.topActionsWithoutIcon}
-                                        />
-                                    )}
-                                </Inline>
-                            </Box>
-                        </div>
-                        <div style={{flexGrow: 1}} />
-                        {hasExtras && (
-                            <div className={styles.extra} ref={extraRef} aria-hidden={isTouchable}>
-                                {extra.map((item, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className={styles.paddingX}>{item}</div>
-
-                                            {index + 1 !== extra.length && (
-                                                <Box paddingY={extraDividerPadding}>
-                                                    {!noExtraDivider && <Divider />}
-                                                </Box>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </Touchable>
+                            {content}
+                        </CardWithControl>
+                    ) : (
+                        <Touchable
+                            maybe
+                            {...touchableProps}
+                            aria-label={isTouchable ? ariaLabel : undefined}
+                            className={styles.touchable}
+                        >
+                            {content}
+                        </Touchable>
+                    )}
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
                 <TopActions actions={actions} onClose={onClose} />

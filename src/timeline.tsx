@@ -4,7 +4,7 @@ import * as styles from './timeline.css';
 import classNames from 'classnames';
 import Circle from './circle';
 import {vars} from './skins/skin-contract.css';
-import IconCheckFilled from './generated/mistica-icons/icon-check-filled';
+import IconCheckFilled from '@telefonica/mistica-icons/icon-check-filled';
 import {Text1} from './text';
 import {useThemeVariant, ThemeVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
@@ -204,7 +204,7 @@ export const TimelineItem = ({
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
             aria-current={state === 'active' ? 'step' : undefined}
-            {...getPrefixedDataAttributes(dataAttributes, 'TimelineItem')}
+            {...getPrefixedDataAttributes({testid: 'TimelineItem', ...dataAttributes})}
         >
             <div className={styles.lineContainer}>
                 <div className={styles.asset} aria-hidden>
@@ -240,7 +240,7 @@ const Timeline = ({
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            {...getPrefixedDataAttributes(dataAttributes, 'Timeline')}
+            {...getPrefixedDataAttributes({testid: 'Timeline', ...dataAttributes})}
         >
             {children}
         </div>

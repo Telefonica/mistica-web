@@ -2,10 +2,9 @@
 import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import {VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import {VIVO_EVOLUTION_SKIN, VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
 import IconSuccess from './icons/icon-success';
-import IconSuccessVivo from './icons/icon-success-vivo';
 import IconError from './icons/icon-error';
 import IconInfo from './icons/icon-info';
 import {
@@ -60,12 +59,7 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 };
 
 const renderFeedbackBody = (
-    {
-        asset,
-        title,
-        description,
-        extra,
-    }: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'extra'>,
+    {asset, title, description, slot}: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'slot'>,
     animateText: boolean
 ) => {
     const normalizedDescription =
@@ -101,7 +95,7 @@ const renderFeedbackBody = (
                     </div>
                 )}
 
-                {extra && (
+                {slot && (
                     <div
                         className={classnames(
                             animateText &&
@@ -111,7 +105,7 @@ const renderFeedbackBody = (
                         )}
                         data-testid="slot"
                     >
-                        {extra}
+                        {slot}
                     </div>
                 )}
             </Stack>
@@ -143,7 +137,7 @@ const renderFeedback = ({
     dataAttributes?: DataAttributes;
 }) => (
     <InternalBoxed
-        borderRadius={vars.borderRadii.legacyDisplay}
+        borderRadius={vars.borderRadii.container}
         desktopOnly
         variant={isBrandVariant ? 'brand' : 'default'}
         dataAttributes={dataAttributes}
@@ -181,7 +175,7 @@ type FeedbackButtonsProps = ButtonGroupProps;
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
     description?: string | ReadonlyArray<string>;
-    extra?: React.ReactNode;
+    slot?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
     dataAttributes?: DataAttributes;
 }
@@ -195,24 +189,19 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
     asset?: React.ReactNode;
     animateText?: boolean;
-    /**
-     * @deprecated use variant="brand" instead
-     */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
 }
 
 export const FeedbackScreen = ({
     title,
     description,
-    extra,
+    slot,
     primaryButton,
     secondaryButton,
     link,
     hapticFeedback,
     asset,
     animateText = false,
-    isInverse = false,
     variant = 'default',
     unstable_inlineInDesktop,
     imageUrl,
@@ -226,7 +215,7 @@ export const FeedbackScreen = ({
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
-        {asset, title, description, extra},
+        {asset, title, description, slot},
         animateText && areAnimationsSupported(platformOverrides)
     );
 
@@ -238,7 +227,7 @@ export const FeedbackScreen = ({
         });
     }
 
-    const isBrandVariant = variant === 'brand' || isInverse;
+    const isBrandVariant = variant === 'brand';
 
     return (
         <div style={{position: 'relative'}}>
@@ -305,9 +294,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
             }
             hapticFeedback="success"
             asset={
-                skinName === VIVO_SKIN ? (
-                    <IconSuccessVivo size="100%" />
-                ) : skinName === VIVO_NEW_SKIN ? (
+                skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
                     <IconSuccessVivoNew size="100%" />
                 ) : (
                     <IconSuccess size="100%" />
@@ -317,7 +304,6 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
             dataAttributes={{
-                'component-name': 'SuccessFeedbackScreen',
                 testid: 'SuccessFeedbackScreen',
                 ...dataAttributes,
             }}
@@ -341,13 +327,12 @@ export const ErrorFeedbackScreen = ({
             asset={<IconError size="100%" />}
             animateText
             dataAttributes={{
-                'component-name': 'ErrorFeedbackScreen',
                 testid: 'ErrorFeedbackScreen',
                 ...dataAttributes,
             }}
-            extra={
+            slot={
                 <Stack space={16}>
-                    {otherProps.extra}
+                    {otherProps.slot}
                     {errorReference && (
                         <Text2 color={vars.colors.textSecondary} regular>
                             {errorReference}
@@ -371,7 +356,6 @@ export const InfoFeedbackScreen = ({
     return (
         <FeedbackScreen
             dataAttributes={{
-                'component-name': 'InfoFeedbackScreen',
                 testid: 'InfoFeedbackScreen',
                 ...dataAttributes,
             }}
@@ -384,7 +368,7 @@ export const InfoFeedbackScreen = ({
 export const SuccessFeedback = ({
     title,
     description,
-    extra,
+    slot,
     primaryButton,
     secondaryButton,
     link,
@@ -396,15 +380,13 @@ export const SuccessFeedback = ({
     const {skinName, platformOverrides, themeVariants} = useTheme();
 
     const asset =
-        skinName === VIVO_SKIN ? (
-            <IconSuccessVivo size="100%" />
-        ) : skinName === VIVO_NEW_SKIN ? (
+        skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
             <IconSuccessVivoNew size="100%" />
         ) : (
             <IconSuccess size="100%" />
         );
     const feedbackBody = renderFeedbackBody(
-        {asset, title, description, extra},
+        {asset, title, description, slot},
         areAnimationsSupported(platformOverrides)
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
@@ -427,6 +409,6 @@ export const SuccessFeedback = ({
         ),
         imageFit,
         imageUrl,
-        dataAttributes: {'component-name': 'SuccessFeedback', testid: 'SuccessFeedback', ...dataAttributes},
+        dataAttributes: {testid: 'SuccessFeedback', ...dataAttributes},
     });
 };

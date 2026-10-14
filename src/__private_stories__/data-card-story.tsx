@@ -6,14 +6,14 @@ import {
     ButtonLink,
     Text2,
     ResponsiveLayout,
-    IconMobileDeviceRegular,
     skinVars,
     Circle,
     Tag,
     Carousel,
-    IconStarFilled,
-    IconStarRegular,
 } from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import {Placeholder} from '../placeholder';
 import avatarImg from '../__stories__/images/avatar.jpg';
 
@@ -36,7 +36,7 @@ type DataCardArgs = {
     subtitle: string;
     description: string;
     ariaLabel: string;
-    extra: boolean;
+    slot: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     topAction: boolean;
@@ -56,7 +56,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     subtitle,
     description,
     ariaLabel,
-    extra,
+    slot,
     actions = 'button',
     closable,
     topAction,
@@ -109,12 +109,12 @@ export const Default: StoryComponent<DataCardArgs> = ({
             titleAs={titleAs}
             subtitle={subtitle}
             description={description}
-            extra={extra ? <Placeholder /> : undefined}
+            slot={slot ? <Placeholder /> : undefined}
             {...interactiveActions}
             aspectRatio={aspectRatioValue as CardAspectRatio}
             dataAttributes={{testid: 'data-card'}}
             aria-label={ariaLabel}
-            actions={
+            topActions={
                 topAction
                     ? [
                           {
@@ -154,7 +154,7 @@ Default.args = {
     titleAs: 'h3',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    extra: false,
+    slot: false,
     actions: 'button',
     ariaLabel: '',
     closable: false,

@@ -5,12 +5,12 @@
 @import url('../../css/mistica-common.css');
 
 /* Different skins */
-@import url('../../css/o2-new.css');
+@import url('../../css/o2.css');
 @import url('../../css/blau.css');
-@import url('../../css/vivo-new.css');
+@import url('../../css/vivo.css');
+@import url('../../css/vivo-evolution.css');
 @import url('../../css/movistar.css');
 @import url('../../css/telefonica.css');
-@import url('../../css/tu.css');
 @import url('../../css/esimflag.css');
 
 html {

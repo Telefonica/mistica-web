@@ -5,6 +5,8 @@ Thank you for your interest in Mística. You can contribute to this project in s
 <!-- TOC depthFrom:2 -->
 
 - [Pull Requests](#pull-requests)
+  - [PR Title — Angular commit convention](#pr-title--angular-commit-convention)
+  - [Fork PRs — preview deployment](#fork-prs--preview-deployment)
 - [Bug reports](#bug-reports)
 - [Feature requests (no UI/UX changes)](#feature-requests-no-uiux-changes)
 - [Documentation and help requests](#documentation-and-help-requests)
@@ -21,12 +23,66 @@ Don't hesitate to ask any questions and share your ideas
 We would love to accept your Pull Requests but please, before starting your development,
 [create an issue](https://github.com/Telefonica/mistica-web/issues/new/choose).
 
-- PR title must follow **conventional commits** format; the scope must be the affected **component name**
-  (e.g. `fix(TextField): ...`). If no component was affected but the change is internal you can use set
-  "Chore" as the component name. For allowed types check [lint action](./.github/workflows/lint-pr.yml).
-- PR description: concise summary of the problem and fix, ending with `Ref: <TICKET-ID>` (if there's a jira
-  ticket).
-- Always add reviewers `aweell`, `atabel`, `yceballost` and `Marcosld` to every PR.
+### PR Title — Angular commit convention
+
+PR title must follow the Angular commit convention format:
+
+```
+<type>(<scope>): <subject>
+```
+
+- **type**: the kind of change (see the allowed subset below).
+- **scope**: the affected **component name** (for example `TextField`, `Dialog`). For internal changes that do
+  not touch a component, use `Chore` as the scope.
+- **subject**: a concise, imperative description of the change.
+
+#### Allowed types (the supported subset)
+
+The allowlist is enforced by the `validate-pr-title` job in
+[`.github/workflows/ci.yml`](./.github/workflows/ci.yml#L109):
+
+- fix
+- feat
+- chore
+- revert
+
+#### Breaking changes
+
+To trigger a major version bump, add a `BREAKING CHANGE:` footer to the squash-merge commit body. See the
+[`conventional-changelog-angular`](https://conventional-changelog.js.org/presets/angular/#breaking-changes)
+docs for the full format.
+
+> [!IMPORTANT] The `!` shorthand is **not supported** — it will be treated as a regular `feat` and will not
+> trigger a major release.
+
+### PR Description
+
+Concise summary of the problem and fix, ending with `Ref: <ISSUE-ID>`.
+
+### Labels
+
+Add the `AI` label when the code was written by an AI agent.
+
+### Reviewers
+
+Always add the `@Telefonica/mistica-web-reviewers` team as a reviewer to every PR.
+
+### Fork PRs — preview deployment
+
+PRs opened from a fork cannot access repository secrets, so CI and the preview deployment do not run
+automatically. The process requires a maintainer to explicitly approve each step:
+
+1. A maintainer approves the CI run on the PR so the standard checks execute against the fork's code.
+2. A maintainer reviews the PR and adds the `safe-to-deploy` label. This captures the exact commit SHA at that
+   moment and triggers the deployment workflow.
+3. The triggered workflow post a link to the workflow run, which a maintainer has to approve. This approval
+   gate is required before any secrets are exposed.
+4. Once approved, the preview is deployed against the pinned commit SHA. The deployment URL is printed in the
+   workflow run logs.
+
+> [!IMPORTANT] If you push new commits to your branch after the `safe-to-deploy` label is added, the
+> deployment will fail with a SHA mismatch. A maintainer must remove the label and add it again to re-trigger
+> the deployment for the new commits.
 
 ## Bug reports
 

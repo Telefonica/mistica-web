@@ -4,11 +4,9 @@ import type {KnownSkinName} from '../skins/types';
 
 const SKINS: Array<KnownSkinName> = [
     'Movistar',
-    'Movistar-new',
     'O2',
-    'O2-new',
     'Vivo',
-    'Vivo-new',
+    'Vivo-evolution',
     'Telefonica',
     'Blau',
     'Esimflag',
@@ -20,7 +18,7 @@ const DARK_MODE_VALUES = [false, true];
 const getBrandLogoCases = () => {
     const cases = [];
     for (const skin of SKINS) {
-        if (skin !== 'Vivo-new') {
+        if (skin !== 'Vivo-evolution') {
             for (const type of LOGO_TYPES) {
                 for (const isInverse of INVERSE_VALUES) {
                     for (const isDarkMode of DARK_MODE_VALUES) {

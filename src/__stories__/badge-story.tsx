@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Badge, IconBellFilled, ResponsiveLayout, Box, Touchable} from '..';
+import {Badge, ResponsiveLayout, Box, Touchable} from '..';
+import IconBellFilled from '@telefonica/mistica-icons/icon-bell-filled';
 
 import type {Variant} from '../theme-variant-context';
 

@@ -3,8 +3,8 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
-import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
-import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
+import IconEyeOffRegular from '@telefonica/mistica-icons/icon-eye-off-regular';
+import IconEyeRegular from '@telefonica/mistica-icons/icon-eye-regular';
 import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -118,7 +118,7 @@ const PasswordField = ({
             }}
             autoComplete={autoComplete}
             endIcon={<PasswordAdornment focus={focus} isVisible={isVisible} setVisibility={setIsVisible} />}
-            dataAttributes={{'component-name': 'PasswordField', testid: 'PasswordField', ...dataAttributes}}
+            dataAttributes={{testid: 'PasswordField', ...dataAttributes}}
         />
     );
 };

@@ -1,3 +1,60 @@
+## Migration Guide from mistica 16.x to mistica 17.x
+
+Mistica 17 is a major release. Among other breaking changes, the `extra` prop family has been renamed to
+`slot` across all components.
+
+### Renamed props: `*Extra` → `*Slot`
+
+- The `extra` prop has been renamed to `slot` in `CoverHero`, `Hero`, `Popover`, `Tooltip`, `Meter`, `Dialog`,
+  `HeaderLayout`, `Row`/`RowList`, `FeedbackScreen`, and `AdvancedDataCard`.
+- In `DataCard`, `MediaCard`, and `NakedCard` the previously deprecated `extra` prop has been removed. Use
+  `slot` instead (already available in mistica 16).
+- `CoverHero`: `sideExtra` has been renamed to `sideSlot`.
+- `MainNavigationBar`: `burgerMenuExtra` has been renamed to `burgerMenuSlot`.
+- `HeaderLayout`: `sideBySideExtraOnDesktop` has been renamed to `sideBySideSlotOnDesktop`.
+- `DataCard`: the previously deprecated `extraAlignment` prop has been removed. Use `slotAlignment` instead.
+- `AdvancedDataCard`: `extraDividerPadding` has been renamed to `slotDividerPadding`, and `noExtraDivider` has
+  been renamed to `noSlotDivider`.
+
+### Removed deprecated props and hooks
+
+- `isInverse` prop across all components (`Boxed`, `DataCard`, `CoverCard`, `MediaCard`, `BoxedRow`,
+  `ResponsiveLayout`, `LoadingScreen`, `BoxedAccordionItem`, `FeedbackScreen`, `HeaderLayout`,
+  `MainSectionHeaderLayout`, and `ThemeVariant`). Use `variant="brand"` instead.
+- `Spinner.rolePresentation` prop. Use `aria-hidden` instead.
+- `Theme.enableTabFocus` prop. Rely on native `:focus-visible` behavior; the internal TabFocus mechanism has
+  been removed.
+- `NavigationBar.paddingX` prop. Use `wide` instead.
+- `RowList.ariaLabelledby` and `BoxedRowList.ariaLabelledby` props. Use `aria-labelledby` instead.
+- Sheet items no longer accept Icon components. Define icons using `url` and `urlDark` properties instead.
+- Card prop aliases: `button`, `actions`, `media`, `poster`, `imageUrl`, `backgroundImage`, `backgroundVideo`,
+  `backgroundVideoRef`, and `secondaryButton`. Use the new card API with `buttonPrimary`, `buttonSecondary`,
+  `imageSrc`, `imageSrcSet`, `videoSrc`, and related props.
+- `useIsInverseVariant` hook has been removed.
+- `useIsInverseOrMediaVariant` hook has been removed.
+- Sheet public exports have been removed: `ActionsSheet`, `InfoSheet`, `ActionsListSheet`, and
+  `RadioListSheet`. Use `showSheet()` instead.
+
+### Test attributes
+
+- The `data-component-name` attribute has been removed from all components. Use `data-testid` instead for
+  testing.
+
+### Design tokens
+
+- The `legacyDisplay` border radius token has been removed from the skin contract. Components previously using
+  it now use the `container` token instead. This may cause visual changes to `EmptyState` and feedback screens
+  depending on your skin.
+
+### Skin changes
+
+- The `vivo-new` skin has been merged into `vivo`, replacing the old vivo skin. If you were using `vivo-new`,
+  migrate to `vivo`.
+- A new `vivo-evolution` skin has been introduced as an evolution path from the previous vivo-new design.
+- The `O2-new` skin has replaced the old O2 skin. The old O2 design is no longer available.
+- The `movistar-new` skin has replaced the old Movistar skin. The old Movistar design is no longer available.
+- The `Tu` skin has been removed entirely. No replacement is available.
+
 ## Migration Guide for the New Cards Ecosystem (Starting from Mistica 16.xx.xx)
 
 The changes introduced in this version are backwards compatible; however, several components and props have

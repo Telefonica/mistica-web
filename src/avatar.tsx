@@ -3,7 +3,7 @@
 'use client';
 import * as React from 'react';
 import Badge from './badge';
-import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
+import IconUserAccountRegular from '@telefonica/mistica-icons/icon-user-account-regular';
 import {useThemeVariant} from './theme-variant-context';
 import * as classes from './avatar.css';
 import {vars} from './skins/skin-contract.css';
@@ -98,7 +98,7 @@ const Avatar = ({
                     boxSizing: 'border-box',
                     border,
                 }}
-                {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
+                {...getPrefixedDataAttributes({testid: 'Avatar', ...dataAttributes})}
             >
                 {shouldRenderImage ? (
                     <img

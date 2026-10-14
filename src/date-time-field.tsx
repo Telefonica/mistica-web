@@ -5,7 +5,7 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
 import {getLocalDateTimeString} from './utils/time';
-import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
+import IconCalendarRegular from '@telefonica/mistica-icons/icon-calendar-regular';
 import {isFirefox} from './utils/platform';
 import {useTheme} from './hooks';
 import * as dateStyles from './date-field.css';
@@ -112,7 +112,7 @@ const FormDateField = ({
                     <IconCalendarRegular size={iconSize.small} />
                 </div>
             }
-            dataAttributes={{'component-name': 'DateTimeField', testid: 'DateTimeField', ...dataAttributes}}
+            dataAttributes={{testid: 'DateTimeField', ...dataAttributes}}
         />
     );
 
@@ -129,7 +129,6 @@ const FormDateField = ({
                 withTime
                 isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
                 dataAttributes={{
-                    'component-name': 'DateTimeField',
                     testid: 'DateTimeField',
                     ...dataAttributes,
                 }}

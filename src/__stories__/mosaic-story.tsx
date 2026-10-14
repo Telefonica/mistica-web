@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {HorizontalMosaic, ResponsiveLayout, VerticalMosaic, PosterCard, Box} from '..';
+import {HorizontalMosaic, ResponsiveLayout, VerticalMosaic, CoverCard, Box} from '..';
 import usingVrImg from './images/using-vr.jpg';
 
 export default {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const renderItem = (index: number) => (
-    <PosterCard backgroundImage={usingVrImg} width="100%" height="100%" key={index} title={`Card ${index}`} />
+    <CoverCard imageSrc={usingVrImg} width="100%" height="100%" key={index} title={`Card ${index}`} />
 );
 
 export const VerticalMosaicStory: StoryComponent<Props> = ({items}) => {

@@ -49,11 +49,11 @@ test.each`
     expect(menuOpenImage).toMatchImageSnapshot();
 });
 
-test('MainNavigationBar mobile with burger menu extra', async () => {
+test('MainNavigationBar mobile with burger menu slot', async () => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {burgerMenuExtra: true},
+        args: {burgerMenuSlot: true},
     });
 
     await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));

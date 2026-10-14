@@ -16,7 +16,7 @@ type Props = {
 const Align = ({x = 'start', y = 'start', width, height, children, dataAttributes}: Props): JSX.Element => {
     return (
         <div
-            {...getPrefixedDataAttributes(dataAttributes, 'Align')}
+            {...getPrefixedDataAttributes({testid: 'Align', ...dataAttributes})}
             className={styles.container}
             style={{
                 placeItems: `${y} ${x}`,

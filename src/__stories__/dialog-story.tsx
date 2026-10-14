@@ -1,15 +1,6 @@
 import * as React from 'react';
-import {
-    ButtonPrimary,
-    ButtonLayout,
-    useDialog,
-    IconInformationUserLight,
-    ButtonLink,
-    Stack,
-    skinVars,
-    Select,
-    Text1,
-} from '..';
+import {ButtonPrimary, ButtonLayout, useDialog, ButtonLink, Stack, skinVars, Select, Text1} from '..';
+import IconInformationUserLight from '@telefonica/mistica-icons/icon-information-user-light';
 
 export default {
     title: 'Components/Modals',
@@ -77,7 +68,7 @@ type DialogArgs = {
     onCancel: boolean;
     link: boolean;
     asset: boolean;
-    extra: boolean;
+    slot: boolean;
 };
 
 export const Dialog: StoryComponent<DialogArgs> = ({
@@ -85,7 +76,7 @@ export const Dialog: StoryComponent<DialogArgs> = ({
     onCancel,
     link,
     asset,
-    extra,
+    slot,
     title,
     subtitle,
     message,
@@ -105,7 +96,7 @@ export const Dialog: StoryComponent<DialogArgs> = ({
                             message,
                             acceptText,
                             cancelText,
-                            extra: extra ? (
+                            slot: slot ? (
                                 <Stack space={16}>
                                     <Text1 regular>Extra content</Text1>
                                     <Select
@@ -145,5 +136,5 @@ Dialog.args = {
     onCancel: true,
     link: true,
     asset: true,
-    extra: true,
+    slot: true,
 };

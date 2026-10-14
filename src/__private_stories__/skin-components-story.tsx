@@ -11,14 +11,11 @@ import {
     Avatar,
     NavigationBreadcrumbs,
     ButtonPrimary,
-    IconPhotoCameraRegular,
     ButtonSecondary,
     ButtonDanger,
     ButtonLink,
     Callout,
-    IconBoxLight,
     DataCard,
-    IconLightningRegular,
     ButtonLinkDanger,
     PageBullets,
     Checkbox,
@@ -42,6 +39,7 @@ import {
     Title3,
     Title4,
     IconButton,
+    Pagination,
     Hero,
     Table,
     Timer,
@@ -49,15 +47,18 @@ import {
     Header,
     Placeholder,
     NegativeBox,
-    IconInvoicePlanFileRegular,
     Meter,
     Timeline,
     TimelineItem,
-    IconShopRegular,
     CoverCard,
-    IconExportRegular,
     FileUpload,
 } from '..';
+import IconPhotoCameraRegular from '@telefonica/mistica-icons/icon-photo-camera-regular';
+import IconBoxLight from '@telefonica/mistica-icons/icon-box-light';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
+import IconInvoicePlanFileRegular from '@telefonica/mistica-icons/icon-invoice-plan-file-regular';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
+import IconExportRegular from '@telefonica/mistica-icons/icon-export-regular';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
 
@@ -104,7 +105,7 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                                     description="This story is created to verify how some of the components look like when using different skins"
                                 />
                             }
-                            extra={<Placeholder />}
+                            slot={<Placeholder />}
                             noPaddingY={!brandHeader}
                         />
 
@@ -206,8 +207,8 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             pretitle="Pretitle"
                             description="Description"
                             onClose={() => {}}
-                            actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
-                            button={
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
                                 <ButtonPrimary
                                     StartIcon={IconPhotoCameraRegular}
                                     EndIcon={IconPhotoCameraRegular}
@@ -283,8 +284,40 @@ export const Default: StoryComponent<Args> = ({variantOutside}) => {
                             }
                         />
 
+                        <CoverCard
+                            size="display"
+                            imageSrc={usingVrImg}
+                            title="Title"
+                            pretitle="Pretitle"
+                            description="Description"
+                            onClose={() => {}}
+                            topActions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
+                            buttonPrimary={
+                                <ButtonPrimary
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonPrimary
+                                </ButtonPrimary>
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    type="neutral"
+                                    StartIcon={IconPhotoCameraRegular}
+                                    EndIcon={IconPhotoCameraRegular}
+                                    onPress={() => {}}
+                                >
+                                    ButtonLink neutral
+                                </ButtonLink>
+                            }
+                        />
+
                         {/** Carousel page bullets */}
                         <PageBullets currentIndex={2} numPages={10} />
+
+                        {/** Pagination */}
+                        <Pagination totalPages={40} defaultPage={32} surroundingPageCount={1} />
 
                         {/** Checkbox */}
                         <Inline space={16} wrap>

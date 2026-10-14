@@ -4,7 +4,6 @@ import {
     Badge,
     ButtonPrimary,
     FixedToTop,
-    IconShoppingCartRegular,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
@@ -14,6 +13,7 @@ import {
     useScreenSize,
     useTheme,
 } from '..';
+import IconShoppingCartRegular from '@telefonica/mistica-icons/icon-shopping-cart-regular';
 
 export default {
     title: 'Private/FixedFooter',
@@ -69,7 +69,7 @@ export const Default: StoryComponent<Args> = ({largeContent, input}) => {
                         title="Some title"
                         description="Some description text"
                         primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
-                        extra={
+                        slot={
                             <>
                                 {input ? <TextField name="text" label="Text" /> : undefined}
                                 {largeContent ? <Placeholder height={1000} /> : undefined}

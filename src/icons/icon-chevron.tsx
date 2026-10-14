@@ -5,7 +5,7 @@ import {vars} from '../skins/skin-contract.css';
 import {applyCssVars} from '../utils/css';
 import * as styles from './icon-chevron.css';
 import {useTheme} from '../hooks';
-import {O2_NEW_SKIN, BLAU_SKIN} from '../skins/constants';
+import {O2_SKIN, BLAU_SKIN} from '../skins/constants';
 
 type IconChevronRightSvgProps = {
     size: number | string;
@@ -138,7 +138,7 @@ const IconChevron = ({
     };
 
     switch (skinName) {
-        case O2_NEW_SKIN:
+        case O2_SKIN:
             return <IconChevronRightSvgO2 {...props} />;
         case BLAU_SKIN:
             return <IconChevronRightSvgBlau {...props} />;

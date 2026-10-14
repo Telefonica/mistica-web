@@ -1,15 +1,8 @@
 import * as React from 'react';
-import {
-    ButtonLink,
-    ButtonPrimary,
-    ButtonSecondary,
-    Circle,
-    IconMobileDeviceRegular,
-    IconStarFilled,
-    IconStarRegular,
-    skinVars,
-    ThemeVariant,
-} from '..';
+import {ButtonLink, ButtonPrimary, ButtonSecondary, Circle, skinVars, ThemeVariant} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
@@ -29,6 +22,8 @@ import type {CardSize, TopActionsArray} from '../card-internal';
  * These are arguments for props that all cards have in common.
  */
 export type CommonCardArgs = {
+    selected?: boolean;
+
     // container
     size: CardSize;
     variant: Variant | '';
@@ -194,6 +189,7 @@ export const videoNameToUrl = {
 };
 
 export const defaultCommonCardArgs: CommonCardArgs = {
+    selected: undefined,
     size: 'default',
     variant: '',
     variantOutside: 'default',
@@ -231,6 +227,7 @@ export const defaultCommonCardArgs: CommonCardArgs = {
 };
 
 export const commonArgTypes = {
+    selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},
     size: {
         options: ['default', 'snap', 'display'],
         control: {

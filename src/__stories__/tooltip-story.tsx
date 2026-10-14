@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular, Touchable} from '..';
+import {Tooltip, Placeholder, ResponsiveLayout, Touchable} from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -14,8 +15,12 @@ export default {
             options: ['top', 'center', 'bottom'],
             control: {type: 'select'},
         },
+        alignment: {
+            options: ['default', 'start', 'middle', 'end'],
+            control: {type: 'select'},
+        },
         position: {
-            options: ['top', 'bottom', 'left', 'right'],
+            options: ['default', 'top', 'bottom', 'left', 'right'],
             control: {type: 'select'},
         },
         variantOutside: {
@@ -29,10 +34,11 @@ export default {
 type Args = {
     targetHorizontalPosition: 'left' | 'center' | 'right';
     targetVerticalPosition: 'top' | 'center' | 'bottom';
-    position: 'top' | 'bottom' | 'left' | 'right';
+    position: 'default' | 'top' | 'bottom' | 'left' | 'right';
+    alignment: 'default' | 'start' | 'middle' | 'end';
     title: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     delay: boolean;
     variantOutside: Variant;
 };
@@ -41,9 +47,10 @@ export const Default: StoryComponent<Args> = ({
     targetHorizontalPosition,
     targetVerticalPosition,
     position,
+    alignment,
     title,
     description,
-    extra,
+    slot,
     delay,
     variantOutside,
 }) => {
@@ -86,7 +93,8 @@ export const Default: StoryComponent<Args> = ({
         <ResponsiveLayout fullWidth variant={variantOutside}>
             <div style={{width: '100vw', height: '100vh'}}>
                 <Tooltip
-                    position={position}
+                    position={position === 'default' ? undefined : position}
+                    alignment={alignment === 'default' ? undefined : alignment}
                     target={
                         <div
                             style={{
@@ -110,7 +118,7 @@ export const Default: StoryComponent<Args> = ({
                     title={title}
                     delay={delay}
                     description={description}
-                    extra={extra ? <Placeholder /> : undefined}
+                    slot={slot ? <Placeholder /> : undefined}
                 />
             </div>
         </ResponsiveLayout>
@@ -122,10 +130,11 @@ Default.storyName = 'Tooltip';
 Default.args = {
     targetHorizontalPosition: 'center',
     targetVerticalPosition: 'center',
-    position: 'top',
+    position: 'default',
+    alignment: 'default',
     title: 'Title',
     description: 'A description',
-    extra: false,
+    slot: false,
     delay: false,
     variantOutside: 'default',
 };

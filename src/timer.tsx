@@ -293,7 +293,7 @@ export const TextTimer = ({
                 // try to keep the timer in the same line without wrapping only when label is not long
                 display: labelType !== 'long' ? 'inline-block' : undefined,
             }}
-            {...getPrefixedDataAttributes(dataAttributes, 'TextTimer')}
+            {...getPrefixedDataAttributes({testid: 'TextTimer', ...dataAttributes})}
         >
             <ScreenReaderOnly>
                 <span id={labelId}>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
@@ -404,7 +404,7 @@ export const Timer = ({
             role="timer"
             aria-labelledby={labelId}
             className={styles.timerWrapper}
-            {...getPrefixedDataAttributes(dataAttributes, 'Timer')}
+            {...getPrefixedDataAttributes({testid: 'Timer', ...dataAttributes})}
         >
             <ScreenReaderOnly>
                 <span id={labelId}>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>

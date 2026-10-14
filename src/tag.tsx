@@ -125,7 +125,7 @@ const Tag = ({
 
     return (
         <span
-            {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
+            {...getPrefixedDataAttributes({testid: 'Tag', ...dataAttributes})}
             className={classNames(small ? styles.smallTag : styles.tag)}
             style={{
                 paddingLeft,
@@ -138,7 +138,7 @@ const Tag = ({
                     <Icon color={textColor} size={pxToRem(16)} className={styles.icon} />
                 </Box>
             )}
-            <ThemeVariant isInverse={false}>
+            <ThemeVariant variant="default">
                 <Text
                     color={textColor}
                     size={small ? 12 : 14}

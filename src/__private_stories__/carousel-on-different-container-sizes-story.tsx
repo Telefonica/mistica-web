@@ -1,15 +1,5 @@
 import * as React from 'react';
-import {
-    Carousel,
-    Box,
-    ResponsiveLayout,
-    MediaCard,
-    ButtonLink,
-    Stack,
-    Image,
-    GridLayout,
-    Placeholder,
-} from '..';
+import {Carousel, Box, ResponsiveLayout, MediaCard, ButtonLink, Stack, GridLayout, Placeholder} from '..';
 import tennisUrl from '../__stories__/images/tennis.jpg';
 
 export default {
@@ -50,7 +40,8 @@ const ExampleCarousel = ({
                 key={idx}
                 title={`Title ${idx} carousel ${cardsTitlePrefix}`}
                 description="Some description"
-                media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                imageSrc={tennisUrl}
+                mediaAspectRatio="16:9"
                 buttonLink={
                     <ButtonLink small href="https://google.com">
                         Link {idx}

@@ -176,7 +176,6 @@ const CreditCardExpirationField = ({
             autoComplete={autoComplete}
             inputComponent={MonthYearDateInput}
             dataAttributes={{
-                'component-name': 'CreditCardExpirationField',
                 testid: 'CreditCardExpirationField',
                 ...dataAttributes,
             }}

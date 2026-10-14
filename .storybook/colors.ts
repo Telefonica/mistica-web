@@ -1,16 +1,20 @@
+import {palette as cyberPalette} from '../src/community/skins/cyber-skin';
+
 export const AVAILABLE_SKINS = [
-    'Movistar-new',
     'Movistar',
-    'O2-new',
     'O2',
-    'Vivo-new',
     'Vivo',
+    'Vivo-evolution',
     'Telefonica',
     'Blau',
     'Esimflag',
 ] as const;
 
-export type Skin = (typeof AVAILABLE_SKINS)[number];
+export const COMMUNITY_SKINS = ['Cyber'] as const;
+
+export const ALL_SKINS = [...AVAILABLE_SKINS, ...COMMUNITY_SKINS] as const;
+
+export type Skin = (typeof ALL_SKINS)[number];
 
 type SkinTheme = {primary: string; textPrimary: string; textPrimaryInverse: string; textSecondary: string};
 
@@ -18,20 +22,13 @@ export const getColors = (skin: Skin): SkinTheme => {
     switch (skin) {
         case 'Movistar':
             return {
-                primary: '#019DF4',
-                textPrimary: '#0B2739',
-                textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#6B6C6F',
-            };
-        case 'Movistar-new':
-            return {
                 primary: '#0066FF',
                 textPrimary: '#262423',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#605e5c',
             };
         case 'Vivo':
-        case 'Vivo-new':
+        case 'Vivo-evolution':
             return {
                 primary: '#660099',
                 textPrimary: '#000000',
@@ -39,13 +36,6 @@ export const getColors = (skin: Skin): SkinTheme => {
                 textSecondary: '#666666',
             };
         case 'O2':
-            return {
-                primary: '#032B5A',
-                textPrimary: '#000033',
-                textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#757575',
-            };
-        case 'O2-new':
             return {
                 primary: '#0050FF',
                 textPrimary: '#00001E',
@@ -72,6 +62,13 @@ export const getColors = (skin: Skin): SkinTheme => {
                 textPrimary: '#001740',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#666B73',
+            };
+        case 'Cyber':
+            return {
+                primary: cyberPalette.brand,
+                textPrimary: '#000000',
+                textPrimaryInverse: '#FFFFFF',
+                textSecondary: '#666666',
             };
         default:
             throw Error('Unexpected skin: ' + skin);

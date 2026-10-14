@@ -1,8 +1,8 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
+import IconSearchRegular from '@telefonica/mistica-icons/icon-search-regular';
 import {useTheme} from './hooks';
 import {iconSize} from './icon-button.css';
 import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
@@ -105,6 +105,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
                 startIcon={withStartIcon ? <IconSearchRegular size={iconSize.small} /> : undefined}
+                endIconSpaceReserved
                 endIcon={
                     controlledValue ? (
                         <FieldEndIcon
@@ -117,7 +118,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
                 {...rest}
                 {...fieldProps}
                 type="search"
-                dataAttributes={{'component-name': 'SearchField', testid: 'SearchField', ...dataAttributes}}
+                dataAttributes={{testid: 'SearchField', ...dataAttributes}}
             />
         );
     }

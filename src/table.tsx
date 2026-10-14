@@ -378,7 +378,7 @@ export const Table = React.forwardRef(
                         mobile: collapsedRowsMode ? '100%' : fullWidth ? '100%' : 'auto',
                     }}
                     ref={ref}
-                    dataAttributes={{'component-name': 'Table', ...dataAttributes}}
+                    dataAttributes={{testid: 'Table', ...dataAttributes}}
                 >
                     <div {...getScrollContainerStyles()}>{table}</div>
                 </InternalBoxed>
@@ -388,7 +388,7 @@ export const Table = React.forwardRef(
         return (
             <div
                 ref={ref}
-                {...getPrefixedDataAttributes(dataAttributes, 'Table')}
+                {...getPrefixedDataAttributes({testid: 'Table', ...dataAttributes})}
                 {...getScrollContainerStyles(scrollOverResponsiveLayout)}
             >
                 {table}

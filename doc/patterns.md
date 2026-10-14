@@ -2,8 +2,8 @@
 
 ## Critical rules
 
-See [Critical Rules in `llms.md`](./llms.md#critical-rules) — the single source of truth. These rules apply
-throughout this document.
+See [Critical Rules in `llms.md`](./llms/llms.md#critical-rules) — the single source of truth. These rules
+apply throughout this document.
 
 ## Page layout composition
 
@@ -97,6 +97,29 @@ Follow the 24/32/16 rule:
 </Stack>
 ```
 
+### DO: Fill remaining horizontal space with `Inline` `expand`
+
+To make a row child grow into the leftover width next to a fixed-width sibling, use `Inline`'s `expand` prop
+with the index/indexes of the children that should grow. Indexes follow `React.Children.toArray` order.
+
+```tsx
+// ProgressBar fills remaining space
+<Inline space={24} expand={1} alignItems="center">
+  <Icon2GFilled />
+  <ProgressBar progressPercent={30} />
+</Inline>
+```
+
+### DON'T: grow children with raw flex or `style` on `Box`
+
+```tsx
+// ❌ raw flexbox div — breaks; Inline already wraps each child in a div
+<div style={{display: 'flex'}}>
+  <div style={{flex: 1}}>...</div>
+  <div style={{flex: '0 0 394px'}}>...</div>
+</div>
+```
+
 ## Color dos and don'ts
 
 ### DO: Use design tokens
@@ -131,6 +154,30 @@ If you need brand-specific defaults, put those colors in a custom skin and then 
 `skinVars.colors.*` instead of styling individual components with palette values.
 
 ## Responsive patterns
+
+### Pagination in lists
+
+Use `Pagination` near paged content such as search results, tables, or long lists. Keep the component
+controlled when the page value drives data fetching, routing, or analytics.
+
+```tsx
+const [page, setPage] = React.useState(1);
+
+<Stack space={16}>
+  <RowList>
+    {items.map((item) => (
+      <Row key={item.id} title={item.title} />
+    ))}
+  </RowList>
+  <Pagination totalPages={20} currentPage={page} onChange={setPage} />
+</Stack>;
+```
+
+For constrained containers, products can hide the page list and keep only previous/next controls.
+
+```tsx
+<Pagination totalPages={20} currentPage={page} onChange={setPage} hidePageList />
+```
 
 ### Conditional rendering by screen size
 
@@ -507,7 +554,7 @@ return (
 import Link from 'next/link';
 
 const theme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'Next14', Component: Link},
 };
@@ -519,7 +566,7 @@ const theme = {
 import {Link} from 'react-router-dom';
 
 const theme = {
-  skin: getMovistarNewSkin(),
+  skin: getMovistarSkin(),
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
   Link: {type: 'ReactRouter6', Component: Link},
 };

@@ -68,7 +68,7 @@ export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                 </Text>
             }
             right={right}
-            dataAttributes={{'component-name': 'Title1', ...dataAttributes}}
+            dataAttributes={{testid: 'Title1', ...dataAttributes}}
         />
     );
 };
@@ -83,7 +83,7 @@ export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                 </Text>
             }
             right={right}
-            dataAttributes={{'component-name': 'Title2', ...dataAttributes}}
+            dataAttributes={{testid: 'Title2', ...dataAttributes}}
         />
     );
 };
@@ -98,7 +98,7 @@ export const Title3 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                 </Text>
             }
             right={right}
-            dataAttributes={{'component-name': 'Title3', ...dataAttributes}}
+            dataAttributes={{testid: 'Title3', ...dataAttributes}}
         />
     );
 };
@@ -113,7 +113,7 @@ export const Title4 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                 </Text>
             }
             right={right}
-            dataAttributes={{'component-name': 'Title4', ...dataAttributes}}
+            dataAttributes={{testid: 'Title4', ...dataAttributes}}
         />
     );
 };

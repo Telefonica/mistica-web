@@ -1,4 +1,10 @@
-import type {BorderRadiiConfig, SpacingConfig, TextPresetsConfig, ThemeVariantsConfig} from './types';
+import type {
+    BorderRadiiConfig,
+    ComponentPropertiesConfig,
+    SpacingConfig,
+    TextPresetsConfig,
+    ThemeVariantsConfig,
+} from './types';
 
 export const defaultTextPresetsConfig: TextPresetsConfig = {
     text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
@@ -18,6 +24,11 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     cardDescriptionSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
     cardPretitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
     cardPretitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
+    headerPretitle: {
+        lineHeight: {desktop: 24, mobile: 22},
+        size: {desktop: 18, mobile: 16},
+        weight: 'regular',
+    },
     cardSubtitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
     cardSubtitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
     cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 20, mobile: 18}},
@@ -59,7 +70,6 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     button: '4px',
     input: '8px',
     container: '8px',
-    legacyDisplay: '16px',
     popup: '8px',
     checkbox: '2px',
     indicator: '999px',
@@ -69,11 +79,22 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     mediaSmall: '8px',
     chip: '16px',
     tag: '24px',
+    snackbar: '8px',
 };
 
 export const defaultThemeVariantsConfig: ThemeVariantsConfig = {
     brandLoadingScreen: 'inverse',
     successFeedback: 'inverse',
+};
+
+export const defaultComponentPropertiesConfig: ComponentPropertiesConfig = {
+    showBoxedBorder: {
+        default: true,
+        alternative: true,
+        brand: true,
+        negative: true,
+        media: true,
+    },
 };
 
 export const defaultSpacing: SpacingConfig = {
@@ -85,7 +106,12 @@ export const defaultSpacing: SpacingConfig = {
         left: {mobile: 16, desktop: 16},
         right: {mobile: 16, desktop: 16},
     },
-    inputPadding: {top: {mobile: 9, desktop: 3}, bottom: {mobile: 9, desktop: 3}},
+    inputPadding: {
+        top: {mobile: 9, desktop: 3},
+        bottom: {mobile: 9, desktop: 3},
+        left: {mobile: 12, desktop: 12},
+        right: {mobile: 16, desktop: 16},
+    },
     tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
     feedbackScreenPadding: {
         top: {mobile: 64, desktop: 40},
@@ -101,4 +127,6 @@ export const defaultSpacing: SpacingConfig = {
         left: {mobile: 16, desktop: 24},
         right: {mobile: 16, desktop: 24},
     },
+    boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+    responsiveLayoutMargin: {mobile: 16, desktop: 48},
 };

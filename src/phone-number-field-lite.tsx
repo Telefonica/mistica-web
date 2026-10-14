@@ -257,7 +257,7 @@ const PhoneNumberFieldLite = ({
             type="phone"
             inputProps={{prefix: rest.prefix}}
             inputComponent={PhoneInput}
-            dataAttributes={{'component-name': 'PhoneNumberFieldLite', ...dataAttributes}}
+            dataAttributes={{testid: 'PhoneNumberFieldLite', ...dataAttributes}}
         />
     );
 };

@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
  * This is useful for components that need position fixed, for example
  * for menus, alerts, overlays, etc.
  *
- * See https://reactjs.org/docs/portals.html
+ * @see https://react.dev/reference/react-dom/createPortal#usage
  */
 
 type Props = {

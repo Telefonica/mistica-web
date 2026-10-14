@@ -14,12 +14,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^25.0.3":
+  version: 25.9.5
+  resolution: "@types/node@npm:25.9.5"
+  dependencies:
+    undici-types: ">=7.24.0 <7.24.7"
+  checksum: 8de12c0edf2fd5e520723293b9b5744df78f37e94e600f43d299c5e8dd4ca581669ee27dc79493cc22c4152f4256529d0d2bdba704785ec1193d76c1e69c7652
+  languageName: node
+  linkType: hard
+
 "generate-design-tokens@workspace:.":
   version: 0.0.0-use.local
   resolution: "generate-design-tokens@workspace:."
   dependencies:
     "@telefonica/prettier-config": ^2.0.0
+    "@types/node": ^25.0.3
     prettier: ^3.3.3
+    typescript: ^5.9.3
   languageName: unknown
   linkType: soft
 
@@ -29,5 +40,32 @@ __metadata:
   bin:
     prettier: bin/prettier.cjs
   checksum: bc8604354805acfdde6106852d14b045bb20827ad76a5ffc2455b71a8257f94de93f17f14e463fe844808d2ccc87248364a5691488a3304f1031326e62d9276e
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^5.9.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 0d0ffb84f2cd072c3e164c79a2e5a1a1f4f168e84cb2882ff8967b92afe1def6c2a91f6838fb58b168428f9458c57a2ba06a6737711fdd87a256bbe83e9a217f
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^5.9.3#~builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#~builtin<compat/typescript>::version=5.9.3&hash=14eedb"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 8bb8d86819ac86a498eada254cad7fb69c5f74778506c700c2a712daeaff21d3a6f51fd0d534fe16903cb010d1b74f89437a3d02d4d0ff5ca2ba9a4660de8497
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:>=7.24.0 <7.24.7":
+  version: 7.24.6
+  resolution: "undici-types@npm:7.24.6"
+  checksum: e79802e37dc472c6324850d938b5df6b9e796f6a1bb5f8ccd24f3a6d17eae94a9cc125506c8b339a3293ffbad81daeba30b843e564c1d237b3c8deafd98b6267
   languageName: node
   linkType: hard

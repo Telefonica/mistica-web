@@ -22,7 +22,9 @@ const renderItem = (item: MosaicItem, gridMode: MosaicItemGridMode) => {
 
 const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
     return (
-        <div className={items.length === 1 ? styles.singleItemRowContainer : styles.squareContainer}>
+        <div
+            className={`${items.length === 1 ? styles.singleItemRowContainer : styles.squareContainer} ${styles.horizontalMosaicPageContainer}`}
+        >
             <Grid gap={GRID_GAP} rows={2} columns={2} height="100%">
                 {items.length === 3 ? (
                     <>
@@ -83,9 +85,9 @@ export const HorizontalMosaic = ({
         <Carousel
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            dataAttributes={{...dataAttributes, 'component-name': 'HorizontalMosaic'}}
+            dataAttributes={{...dataAttributes, testid: 'horizontal-mosaic'}}
             items={pages.map((items, index) => (
-                <Grid>
+                <Grid height="100%">
                     <HorizontalMosaicPage items={items} isEven={index % 2 === 0} key={index} />
                 </Grid>
             ))}
@@ -195,7 +197,7 @@ export const VerticalMosaic = ({
             gap={GRID_GAP}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            dataAttributes={{'component-name': 'VerticalMosaic', testid: 'VerticalMosaic', ...dataAttributes}}
+            dataAttributes={{testid: 'vertical-mosaic', ...dataAttributes}}
         >
             {pages.map((items, index) => (
                 <VerticalMosaicPage items={items} itemRole={itemRole} key={index} />

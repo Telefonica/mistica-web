@@ -9,7 +9,7 @@ import * as styles from './snackbar.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Portal} from './portal';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import * as tokens from './text-tokens';
 import {showNativeSnackbar} from './snackbar-native';
 
@@ -111,7 +111,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                             type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
                             {[styles.wrapperOpen]: isOpen}
                         )}
-                        {...getPrefixedDataAttributes(dataAttributes, 'SnackBar')}
+                        {...getPrefixedDataAttributes({testid: 'SnackBar', ...dataAttributes})}
                     >
                         <div
                             className={classNames(

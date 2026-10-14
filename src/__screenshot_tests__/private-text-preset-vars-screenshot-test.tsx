@@ -1,6 +1,6 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const SKINS = ['Movistar', 'Vivo-new', 'O2-new'] as const;
+const SKINS = ['Movistar', 'Vivo', 'O2'] as const;
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
 const getCases = () => {

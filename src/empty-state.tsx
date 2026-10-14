@@ -87,7 +87,7 @@ const EmptyState = ({
             })}
             aria-label={ariaLabel}
             role="region"
-            {...getPrefixedDataAttributes(dataAttributes, 'EmptyState')}
+            {...getPrefixedDataAttributes({testid: 'EmptyState', ...dataAttributes})}
         >
             <div style={{flex: 1}}>
                 <Stack

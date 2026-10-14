@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {TextField, Box, Text1, Stack, ResponsiveLayout} from '..';
 import {inspect} from './utils';
-import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
+import IconMusicRegular from '@telefonica/mistica-icons/icon-music-regular';
 import {countriesList} from './helpers';
 import {iconSize} from '../icon-button.css';
 
@@ -38,6 +38,7 @@ interface TextFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
+    small: boolean;
 }
 
 const defaultBaseArgs: TextFieldBaseArgs = {
@@ -55,6 +56,7 @@ const defaultBaseArgs: TextFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
+    small: false,
 };
 
 interface TextFieldControlledArgs extends TextFieldBaseArgs {

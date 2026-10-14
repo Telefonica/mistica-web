@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {Text} from '../text';
 import {makeTheme} from './test-utils';
 import ThemeContextProvider from '../theme-context-provider';
-import {getVivoNewSkin} from '../skins/vivo-new';
+import {getVivoSkin} from '../skins/vivo';
 import {getMovistarSkin} from '../skins/movistar';
 
 test.each([
@@ -13,7 +13,7 @@ test.each([
     {text: 'Ħ hola Ħ', expected: 'Vivo hola Vivo'},
 ])('Text makes vivinho char readable for screen readers: $text', ({text, expected}) => {
     render(
-        <ThemeContextProvider theme={makeTheme({skin: getVivoNewSkin()})}>
+        <ThemeContextProvider theme={makeTheme({skin: getVivoSkin()})}>
             <a href="/">
                 <Text>{text}</Text>
             </a>
@@ -28,7 +28,7 @@ test('vivinho char replacement works in Texts with multiple children', () => {
     const someVar = 'something';
     const vivinhoVar = 'Ħ';
     render(
-        <ThemeContextProvider theme={makeTheme({skin: getVivoNewSkin()})}>
+        <ThemeContextProvider theme={makeTheme({skin: getVivoSkin()})}>
             <a href="/">
                 <Text>
                     Ħ {someVar} {vivinhoVar}
@@ -40,7 +40,7 @@ test('vivinho char replacement works in Texts with multiple children', () => {
     expect(screen.getByRole('link', {name: 'Vivo something Vivo'})).toBeInTheDocument();
 });
 
-test('vivinho char is only replaced in vivo-new skin', () => {
+test('vivinho char is only replaced in vivo skin', () => {
     render(
         <ThemeContextProvider theme={makeTheme({skin: getMovistarSkin()})}>
             <a href="/">

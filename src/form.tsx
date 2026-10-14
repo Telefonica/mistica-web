@@ -267,7 +267,7 @@ const Form = ({
                 ref={formRef}
                 className={classnames(styles.form, className)}
                 noValidate
-                {...getPrefixedDataAttributes(dataAttributes, 'Form')}
+                {...getPrefixedDataAttributes({testid: 'Form', ...dataAttributes})}
             >
                 {hasMultipleFormErrors ? (
                     <ScreenReaderOnly>

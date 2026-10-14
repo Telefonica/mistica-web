@@ -34,7 +34,10 @@ const NavigationBreadcrumbs = ({
     'aria-label': ariaLabel = 'Breadcrumb',
 }: NavigationBreadcrumbsProps): JSX.Element => {
     return (
-        <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
+        <nav
+            aria-label={ariaLabel}
+            {...getPrefixedDataAttributes({testid: 'NavigationBreadcrumbs', ...dataAttributes})}
+        >
             <ol className={styles.list}>
                 {breadcrumbs.map(({title, url, onNavigate}, index) => (
                     <li key={index} className={styles.listItem}>

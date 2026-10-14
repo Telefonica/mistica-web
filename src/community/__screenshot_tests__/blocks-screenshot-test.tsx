@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../../test-utils';
 
 test('Blocks Highlighted Value Block', async () => {
-    await openStoryPage({id: 'community-blocks--block-highlighted-value', device: 'MOBILE_IOS'});
+    await openStoryPage({id: 'community-vivo-blocks--block-highlighted-value', device: 'MOBILE_IOS'});
 
     const stepper = await screen.findByTestId('highlighted-value-block');
 
@@ -11,7 +11,7 @@ test('Blocks Highlighted Value Block', async () => {
 });
 
 test('Blocks Information Block', async () => {
-    await openStoryPage({id: 'community-blocks--block-information', device: 'MOBILE_IOS'});
+    await openStoryPage({id: 'community-vivo-blocks--block-information', device: 'MOBILE_IOS'});
 
     const stepper = await screen.findByTestId('information-block');
 
@@ -25,7 +25,7 @@ test.each`
     ${false}      | ${true}
 `('Blocks Progress Block', async ({stackingGroup}) => {
     await openStoryPage({
-        id: 'community-blocks--block-progress',
+        id: 'community-vivo-blocks--block-progress',
         device: 'MOBILE_IOS',
         args: {stackingGroup},
     });
@@ -39,7 +39,7 @@ test.each`
 
 test('Blocks Row Block', async () => {
     await openStoryPage({
-        id: 'community-blocks--block-row',
+        id: 'community-vivo-blocks--block-row',
         device: 'MOBILE_IOS',
         args: {description: 'This is a very long description to verify text alignment'},
     });
@@ -52,7 +52,7 @@ test('Blocks Row Block', async () => {
 });
 
 test('Blocks Simple Block', async () => {
-    await openStoryPage({id: 'community-blocks--block-simple', device: 'MOBILE_IOS'});
+    await openStoryPage({id: 'community-vivo-blocks--block-simple', device: 'MOBILE_IOS'});
 
     const stepper = await screen.findByTestId('simple-block');
 
@@ -62,7 +62,7 @@ test('Blocks Simple Block', async () => {
 });
 
 test('Blocks Value Block', async () => {
-    await openStoryPage({id: 'community-blocks--block-value', device: 'MOBILE_IOS'});
+    await openStoryPage({id: 'community-vivo-blocks--block-value', device: 'MOBILE_IOS'});
 
     const stepper = await screen.findByTestId('value-block');
 

@@ -1,20 +1,8 @@
 import * as React from 'react';
-import {
-    Stack,
-    ButtonPrimary,
-    ButtonLink,
-    Text2,
-    Video,
-    Image,
-    Tag,
-    IconMobileDeviceRegular,
-    Circle,
-    skinVars,
-    Carousel,
-    IconStarFilled,
-    IconStarRegular,
-    MediaCard,
-} from '..';
+import {Stack, ButtonPrimary, ButtonLink, Text2, Tag, Circle, skinVars, Carousel, MediaCard} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from '../__stories__/images/tennis.jpg';
@@ -42,7 +30,7 @@ type Args = {
     titleAs: HeadingType;
     subtitle: string;
     description: string;
-    extra: boolean;
+    slot: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     topAction: boolean;
@@ -59,7 +47,7 @@ export const Default: StoryComponent<Args> = ({
     subtitle,
     description,
     actions = 'button',
-    extra,
+    slot,
     closable,
     topAction,
     media,
@@ -78,7 +66,7 @@ export const Default: StoryComponent<Args> = ({
     }
 
     const interactiveActions = {
-        button: actions.includes('button') ? (
+        buttonPrimary: actions.includes('button') ? (
             <ButtonPrimary small fake>
                 Action
             </ButtonPrimary>
@@ -93,11 +81,20 @@ export const Default: StoryComponent<Args> = ({
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
     } as
-        | {button?: JSX.Element; buttonLink?: JSX.Element; secondaryButton?: JSX.Element}
+        | {buttonPrimary?: JSX.Element; buttonLink?: JSX.Element}
         | {onPress: () => void}
         | {to: string}
         | {href: string}
         | {[key: string]: never};
+
+    const mediaProps =
+        media === 'video'
+            ? ({
+                  videoSrc: emptySource ? '' : VIDEO_SRC,
+                  mediaAspectRatio: '16:9',
+                  videoDataAttributes: {qsysid: 'video'},
+              } as const)
+            : ({imageSrc: emptySource ? '' : IMAGE_SRC, mediaAspectRatio: '16:9'} as const);
 
     return (
         <MediaCard
@@ -110,21 +107,11 @@ export const Default: StoryComponent<Args> = ({
             subtitle={subtitle}
             description={description}
             asset={assetElement}
-            media={
-                media === 'video' ? (
-                    <Video
-                        src={emptySource ? '' : VIDEO_SRC}
-                        aspectRatio="16:9"
-                        dataAttributes={{qsysid: 'video'}}
-                    />
-                ) : (
-                    <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
-                )
-            }
+            {...mediaProps}
             {...interactiveActions}
-            extra={extra ? <Placeholder /> : undefined}
+            slot={slot ? <Placeholder /> : undefined}
             onClose={closable ? () => {} : undefined}
-            actions={
+            topActions={
                 topAction
                     ? [
                           {
@@ -165,7 +152,7 @@ Default.args = {
     titleAs: 'h3',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    extra: false,
+    slot: false,
     actions: 'button',
     closable: false,
     topAction: false,
@@ -214,7 +201,8 @@ export const Group: StoryComponent = () => {
                             title="Title"
                             subtitle="Subtitle"
                             description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            imageSrc={IMAGE_SRC}
+                            mediaAspectRatio="16:9"
                             buttonLink={
                                 <ButtonLink small href="https://google.com">
                                     Link
@@ -224,7 +212,8 @@ export const Group: StoryComponent = () => {
                         <MediaCard
                             title="Title"
                             description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            imageSrc={IMAGE_SRC}
+                            mediaAspectRatio="16:9"
                             buttonLink={
                                 <ButtonLink small href="https://google.com">
                                     Link

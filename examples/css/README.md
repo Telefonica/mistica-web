@@ -28,7 +28,7 @@ For example:
 @import '@telefonica/mistica/css/movistar.css';
 ```
 
-There is one css file for each skin (`movistar`, `o2`, `vivo`, `tu`, `telefonica`, etc)
+There is one css file for each skin (`movistar`, `o2`, `vivo`, `telefonica`, etc)
 
 :warning: The css import method will depend on your bundler or tooling. The files are located inside the
 `css/` folder in the package (`node_modules/@telefonica/mistica/css/`)

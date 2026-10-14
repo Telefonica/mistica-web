@@ -1,9 +1,9 @@
 'use client';
 import * as React from 'react';
-import {Content as HeaderContent} from './list';
+import {Content as HeaderContent, ListContext} from './list';
 import IconChevron from './icons/icon-chevron';
-import Box from './box';
 import * as styles from './accordion.css';
+import Box from './box';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
@@ -197,7 +197,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     aria-label={computedAriaLabel}
                     aria-labelledby={ariaLabelledby}
                 >
-                    <Box paddingX={16}>
+                    <div className={styles.accordionContentPadding}>
                         <HeaderContent
                             labelId={labelId}
                             {...props}
@@ -219,7 +219,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                 </Inline>
                             )}
                         />
-                    </Box>
+                    </div>
                 </BaseTouchable>
                 <CSSTransition
                     in={isOpen}
@@ -231,9 +231,9 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                 >
                     <div className={styles.panelContainer} ref={panelContainerRef}>
                         <div className={styles.panel} role="region" aria-labelledby={labelId} id={panelId}>
-                            <Box paddingX={16} paddingBottom={16}>
+                            <div className={styles.accordionContentPadding} style={{paddingBottom: 16}}>
                                 {content}
-                            </Box>
+                            </div>
                         </div>
                     </div>
                 </CSSTransition>
@@ -248,7 +248,7 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
             <AccordionItemContent
                 {...props}
                 ref={ref}
-                dataAttributes={{'component-name': 'AccordionItem', ...dataAttributes}}
+                dataAttributes={{testid: 'AccordionItem', ...dataAttributes}}
             />
         </div>
     )
@@ -259,6 +259,7 @@ type AccordionBaseProps = {
     dataAttributes?: DataAttributes;
     onChange?: (index: number, value: boolean) => void;
     role?: string;
+    small?: boolean;
 };
 
 type SingleOpenProps = {
@@ -283,6 +284,7 @@ export const Accordion = ({
     onChange,
     singleOpen,
     role,
+    small = false,
 }: AccordionProps): JSX.Element => {
     const [indexList, toggle] = useAccordionState({
         value: index,
@@ -295,41 +297,39 @@ export const Accordion = ({
 
     return (
         <AccordionContext.Provider value={{index: indexList, toggle}}>
-            <div
-                role={role}
-                {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
-            >
-                {childrenContent.map((child, index) => (
-                    <React.Fragment key={index}>
-                        {child}
-                        {index < lastIndex && (
-                            <Box paddingX={16}>
-                                <Divider />
-                            </Box>
-                        )}
-                    </React.Fragment>
-                ))}
-            </div>
+            <ListContext.Provider value={{small}}>
+                <div
+                    role={role}
+                    {...getPrefixedDataAttributes({testid: 'Accordion', ...dataAttributes, accordion: true})}
+                >
+                    {childrenContent.map((child, index) => (
+                        <React.Fragment key={index}>
+                            {child}
+                            {index < lastIndex && (
+                                <Box paddingX={16}>
+                                    <Divider />
+                                </Box>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </div>
+            </ListContext.Provider>
         </AccordionContext.Provider>
     );
 };
 
 interface BoxedAccordionItemProps extends AccordionItemContentProps {
-    /**
-     * @deprecated Use `variant="brand"` instead.
-     */
-    isInverse?: boolean;
     variant?: 'default' | 'brand';
 }
 
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
-    ({dataAttributes, isInverse, variant, ...props}, ref) => (
+    ({dataAttributes, variant, ...props}, ref) => (
         <InternalBoxed
             overflow="visible"
             className={styles.boxed}
-            variant={variant ?? (isInverse ? 'brand' : 'default')}
+            variant={variant ?? 'default'}
             ref={ref}
-            dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
+            dataAttributes={{testid: 'BoxedAccordionItem', ...dataAttributes}}
         >
             <AccordionItemContent {...props} />
         </InternalBoxed>
@@ -344,6 +344,7 @@ export const BoxedAccordion = ({
     onChange,
     singleOpen,
     role,
+    small = false,
 }: AccordionProps): JSX.Element => {
     const [indexList, toggle] = useAccordionState({
         value: index,
@@ -354,13 +355,15 @@ export const BoxedAccordion = ({
 
     return (
         <AccordionContext.Provider value={{index: indexList, toggle}}>
-            <Stack
-                space={16}
-                role={role}
-                dataAttributes={{'component-name': 'BoxedAccordion', accordion: true, ...dataAttributes}}
-            >
-                {children}
-            </Stack>
+            <ListContext.Provider value={{small}}>
+                <Stack
+                    space={16}
+                    role={role}
+                    dataAttributes={{testid: 'BoxedAccordion', accordion: true, ...dataAttributes}}
+                >
+                    {children}
+                </Stack>
+            </ListContext.Provider>
         </AccordionContext.Provider>
     );
 };

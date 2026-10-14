@@ -9,8 +9,8 @@ const CarouselTest = (): JSX.Element => (
         title="Vuela con la Fibra 1Gb"
         description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
         button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
-        extra={<Placeholder />}
-        sideExtra={<Placeholder />}
+        slot={<Placeholder />}
+        sideSlot={<Placeholder />}
     />
 );
 

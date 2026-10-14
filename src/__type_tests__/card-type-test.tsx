@@ -1,131 +1,45 @@
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
-import {DataCard, SnapCard} from '../card-data';
-import {DisplayMediaCard, PosterCard, CoverCard} from '../card-cover';
-import {NakedCard, SmallNakedCard} from '../card-naked';
-import Image from '../image';
+import {DataCard} from '../card-data';
+import {CoverCard} from '../card-cover';
+import {NakedCard} from '../card-naked';
+import AdvancedDataCard from '../community/advanced-data-card';
+import Checkbox from '../checkbox';
 import {MediaCard} from '../card-media';
 
-<SnapCard title="title" />;
-<SnapCard title="title" href="/" />;
-<SnapCard title="title" to="/" />;
-<SnapCard title="title" onPress={() => {}} />;
-<SnapCard title="title" onPress={() => {}} trackingEvent={{name: 'do-something'}} role="link" />;
-// @ts-expect-error onPress and href can't be used together
-<SnapCard title="title" onPress={() => {}} href="/" />;
-// @ts-expect-error onPress and to can't be used together
-<SnapCard title="title" onPress={() => {}} to="/" />;
-// @ts-expect-error href and to can't be used together
-<SnapCard title="title" href="/" to="/" />;
-// @ts-expect-error trackingEvent can't be used if the card is not touchable
-<SnapCard title="title" trackingEvent={{name: 'do-something'}} />;
-
-<DisplayMediaCard title="title" backgroundImage={{src: 'test', srcSet: 'test'}} />;
-<DisplayMediaCard title="title" backgroundImage={{src: undefined, srcSet: 'test'}} />;
-<DisplayMediaCard title="title" backgroundImage={{src: 'test', srcSet: undefined}} />;
-
-// @ts-expect-error backgroundImage and backgroundVideo can't be used together
-<DisplayMediaCard title="title" backgroundImage="" backgroundVideo="" />;
-// @ts-expect-error backgroundImage should have src or srcSet
-<DisplayMediaCard title="title" backgroundImage={{src: undefined, srcSet: undefined}} />;
-
-<PosterCard backgroundImage="background.png" title="title" />;
-<PosterCard backgroundVideo="background.mp4" title="title" />;
-<PosterCard backgroundImage="background.png" title="title" href="/" />;
-<PosterCard backgroundImage="background.png" title="title" to="/" />;
-<PosterCard backgroundImage="background.png" title="title" onPress={() => {}} />;
-<PosterCard
-    backgroundImage="background.png"
-    title="title"
-    onPress={() => {}}
-    trackingEvent={{name: 'do-something'}}
-    role="link"
-/>;
-<PosterCard title="title" isInverse />;
-<PosterCard title="title" variant="inverse" />;
-<PosterCard title="title" variant="alternative" />;
-<PosterCard title="title" isInverse backgroundColor="red" />;
-<PosterCard title="title" variant="inverse" backgroundColor="red" />;
-<PosterCard title="title" backgroundImage={{src: 'test', srcSet: 'test'}} />;
-<PosterCard title="title" backgroundImage={{src: undefined, srcSet: 'test'}} />;
-<PosterCard title="title" backgroundImage={{src: 'test', srcSet: undefined}} />;
-
-// @ts-expect-error onPress and href can't be used together
-<PosterCard title="title" onPress={() => {}} href="/" />;
-// @ts-expect-error onPress and to can't be used together
-<PosterCard title="title" onPress={() => {}} to="/" />;
-// @ts-expect-error href and to can't be used together
-<PosterCard title="title" href="/" to="/" />;
-// @ts-expect-error trackingEvent can't be used if the card is not touchable
-<PosterCard title="title" trackingEvent={{name: 'do-something'}} />;
-// @ts-expect-error backgroundImage and backgroundVideo can't be used together
-<PosterCard title="title" backgroundImage="" backgroundVideo="" />;
-// @ts-expect-error backgroundImage and backgroundColor can't be used together
-<PosterCard title="title" backgroundImage="" backgroundColor="" />;
-// @ts-expect-error backgroundVideo and backgroundColor can't be used together
-<PosterCard title="title" backgroundVideo="" backgroundColor="" />;
-// @ts-expect-error backgroundImage should have src or srcSet
-<PosterCard title="title" backgroundImage={{src: undefined, srcSet: undefined}} />;
-// @ts-expect-error PosterCard expects no children
-<PosterCard title="title">hello</PosterCard>;
-
-(isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
-(isTouchable: boolean) => <SnapCard title="title" to={isTouchable ? '/' : undefined} />;
-(isTouchable: boolean) => <SnapCard title="title" onPress={isTouchable ? () => {} : undefined} />;
-
-<NakedCard media={<Image src="/something.png" />} title="title" />;
+<NakedCard imageSrc="/something.png" title="title" />;
 <NakedCard title="title" />;
 <NakedCard
-    media={<Image src="/something.png" />}
+    imageSrc="/something.png"
     title="title"
-    button={<ButtonPrimary href="/action">Action</ButtonPrimary>}
+    buttonPrimary={<ButtonPrimary href="/action">Action</ButtonPrimary>}
 />;
-<NakedCard media={<Image src="/something.png" />} title="title" href="/" />;
-<NakedCard media={<Image src="/something.png" />} title="title" to="/" />;
-<NakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} />;
+<NakedCard imageSrc="/something.png" title="title" href="/" />;
+<NakedCard imageSrc="/something.png" title="title" to="/" />;
+<NakedCard imageSrc="/something.png" title="title" onPress={() => {}} />;
 <NakedCard
-    media={<Image src="/something.png" />}
+    imageSrc="/something.png"
     title="title"
     onPress={() => {}}
     trackingEvent={{name: 'do-something'}}
     role="link"
 />;
 // @ts-expect-error onPress and href can't be used together
-<NakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} href="/" />;
+<NakedCard imageSrc="/something.png" title="title" onPress={() => {}} href="/" />;
 // @ts-expect-error onPress and to can't be used together
-<NakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} to="/" />;
+<NakedCard imageSrc="/something.png" title="title" onPress={() => {}} to="/" />;
 // @ts-expect-error href and to can't be used together
-<NakedCard media={<Image src="/something.png" />} title="title" href="/" to="/" />;
+<NakedCard imageSrc="/something.png" title="title" href="/" to="/" />;
 // @ts-expect-error trackingEvent can't be used if the card is not touchable
-<NakedCard media={<Image src="/something.png" />} title="title" trackingEvent={{name: 'do-something'}} />;
+<NakedCard imageSrc="/something.png" title="title" trackingEvent={{name: 'do-something'}} />;
 // @ts-expect-error footerBackgroundColor not allowed in NakedCard
 <NakedCard title="title" footerBackgroundColor="blue" />;
 // @ts-expect-error NakedCard expects no children
 <NakedCard title="title">hello</NakedCard>;
 
-<SmallNakedCard media={<Image src="/something.png" />} title="title" />;
-<SmallNakedCard media={<Image src="/something.png" />} title="title" href="/" />;
-<SmallNakedCard media={<Image src="/something.png" />} title="title" to="/" />;
-<SmallNakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} />;
-<SmallNakedCard
-    media={<Image src="/something.png" />}
-    title="title"
-    onPress={() => {}}
-    trackingEvent={{name: 'do-something'}}
-    role="link"
-/>;
-// @ts-expect-error onPress and href can't be used together
-<SmallNakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} href="/" />;
-// @ts-expect-error onPress and to can't be used together
-<SmallNakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} to="/" />;
-// @ts-expect-error href and to can't be used together
-<SmallNakedCard media={<Image src="/something.png" />} title="title" href="/" to="/" />;
-// @ts-expect-error trackingEvent can't be used if the card is not touchable
-<SmallNakedCard
-    media={<Image src="/something.png" />}
-    title="title"
-    trackingEvent={{name: 'do-something'}}
-/>;
+(isTouchable: boolean) => <DataCard title="title" href={isTouchable ? '/' : undefined} />;
+(isTouchable: boolean) => <DataCard title="title" to={isTouchable ? '/' : undefined} />;
+(isTouchable: boolean) => <DataCard title="title" onPress={isTouchable ? () => {} : undefined} />;
 
 // @ts-expect-error MediaCard expects no children
 <MediaCard title="title">hello</MediaCard>;
@@ -135,3 +49,53 @@ import {MediaCard} from '../card-media';
 
 // @ts-expect-error CoverCard expects no children
 <CoverCard title="title">hello</CoverCard>;
+
+<DataCard title="Selected card" selected />;
+<MediaCard title="Selected card" selected={false} />;
+<CoverCard title="Selected card" selected />;
+<NakedCard title="Selected card" selected />;
+<DataCard title="Card" checkbox={{}} />;
+<MediaCard title="Card" switch={{}} />;
+<CoverCard title="Card" radioValue="option" />;
+// @ts-expect-error cards do not own a selector
+<NakedCard title="Card" hideSelector />;
+
+// @ts-expect-error selection excludes a primary action
+<DataCard checkbox={{}} onPress={() => {}} />;
+// @ts-expect-error selection excludes navigation
+<MediaCard switch={{}} href="/" />;
+// @ts-expect-error selection excludes router navigation
+<CoverCard radioValue="option" to="/" />;
+// @ts-expect-error selection excludes top actions
+<NakedCard checkbox={{}} topActions={[]} />;
+// @ts-expect-error selection excludes dismiss
+<DataCard checkbox={{}} onClose={() => {}} />;
+// @ts-expect-error only one selector is allowed
+<DataCard checkbox={{}} switch={{}} />;
+
+<AdvancedDataCard title="Card" checkbox={{defaultValue: true}} />;
+// @ts-expect-error selection excludes advanced card actions
+<AdvancedDataCard checkbox={{}} actions={[]} />;
+// @ts-expect-error selection excludes advanced card navigation
+<AdvancedDataCard radioValue="option" onPress={() => {}} />;
+// @ts-expect-error selection excludes other selectors
+<AdvancedDataCard switch={{}} radioValue="option" />;
+<DataCard topActions={[<Checkbox name="option">Option</Checkbox>]} />;
+<AdvancedDataCard actions={[<Checkbox name="option">Option</Checkbox>]} />;
+
+// @ts-expect-error selected and checkbox cannot have competing states
+<DataCard checkbox={{value: true}} selected={false} />;
+// @ts-expect-error selected and switch cannot have competing states
+<MediaCard switch={{}} selected />;
+// @ts-expect-error selected and radioValue are mutually exclusive
+<CoverCard radioValue="option" selected />;
+// @ts-expect-error selected and checkbox are mutually exclusive
+<NakedCard checkbox={{}} selected />;
+// @ts-expect-error selected and checkbox are mutually exclusive
+<AdvancedDataCard checkbox={{}} selected />;
+// @ts-expect-error selected and switch are mutually exclusive
+<AdvancedDataCard switch={{}} selected />;
+// @ts-expect-error selected and radioValue are mutually exclusive
+<AdvancedDataCard radioValue="option" selected />;
+<DataCard selected onPress={() => {}} topActions={[]} />;
+<AdvancedDataCard selected onPress={() => {}} actions={[]} />;

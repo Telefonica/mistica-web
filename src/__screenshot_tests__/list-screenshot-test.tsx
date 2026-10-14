@@ -25,25 +25,25 @@ const getCases = () => {
     const cases = [];
     for (const device of devices) {
         for (const control of controls) {
-            const extra = false;
+            const slot = false;
             const badge = true;
-            cases.push([device, control, extra, badge]);
+            cases.push([device, control, slot, badge]);
         }
-        for (const extra of [true, false]) {
+        for (const slot of [true, false]) {
             const badge = false;
-            cases.push([device, 'none', extra, badge]);
+            cases.push([device, 'none', slot, badge]);
         }
     }
     return cases;
 };
 
-test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+test.each(getCases())('Row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
     await openStoryPage({
         id: 'components-lists--row-list-story',
         device: device as Device,
         args: {
             control,
-            extra,
+            slot,
             badge,
             headline: 'Headline',
             detail: 'Detail',
@@ -56,13 +56,13 @@ test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, contr
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(getCases())('Boxed row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+test.each(getCases())('Boxed row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
     await openStoryPage({
         id: 'components-lists--boxed-row-list-story',
         device: device as Device,
         args: {
             control,
-            extra,
+            slot,
             badge,
             headline: 'Headline',
             detail: 'Detail',
@@ -166,6 +166,24 @@ test.each(controlsWithOnPress)('Click control with onPress - %s', async (control
     const list = await screen.findByTestId('list');
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
+});
+
+test('Selectable custom boxed row', async () => {
+    await openStoryPage({
+        id: 'components-lists--selectable-boxed-rows-story',
+        device: 'MOBILE_IOS',
+    });
+
+    const list = await screen.findByTestId('selectable-boxed-row-list');
+    const unselectedImage = await list.screenshot();
+    expect(unselectedImage).toMatchImageSnapshot();
+
+    const buttons = await screen.findAllByRole('button', {name: 'Select row'});
+    await buttons[0].click();
+    await buttons[1].click();
+
+    const selectedImage = await list.screenshot();
+    expect(selectedImage).toMatchImageSnapshot();
 });
 
 test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (control) => {
@@ -354,6 +372,40 @@ test.each(devices)('OrderedList without marker', async (device) => {
 
     const list = await screen.findByLabelText('Ordered List');
 
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('Row list small', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device,
+        args: {
+            small: true,
+            headline: 'Headline',
+            subtitle: 'Subtitle',
+            detail: 'Detail',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(devices)('Boxed row list small', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device,
+        args: {
+            small: true,
+            headline: 'Headline',
+            subtitle: 'Subtitle',
+            detail: 'Detail',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });

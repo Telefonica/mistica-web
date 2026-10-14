@@ -1,12 +1,16 @@
 import * as React from 'react';
-import {Switch, Inline, Text3, IconCheckRegular, IconCloseRegular, ResponsiveLayout, Box} from '..';
+import {Switch, Inline, Text3, ResponsiveLayout, Box} from '..';
+import IconCheckRegular from '@telefonica/mistica-icons/icon-check-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 
 import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Switch',
     parameters: {fullScreen: true},
+    args: {className: ''},
     argTypes: {
+        className: {control: 'text'},
         variantOutside: {
             options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
@@ -15,18 +19,25 @@ export default {
 };
 
 type Args = {
+    className?: string;
     disabled: boolean;
     variantOutside: Variant;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     const [checked, onChange] = React.useState(false);
 
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
-                    <Switch name="switch" checked={checked} onChange={onChange} disabled={disabled}>
+                    <Switch
+                        className={className}
+                        name="switch"
+                        checked={checked}
+                        onChange={onChange}
+                        disabled={disabled}
+                    >
                         switch content
                     </Switch>
                 </div>
@@ -41,12 +52,12 @@ Controlled.args = {
     variantOutside: 'default',
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
-                    <Switch name="switch" defaultChecked={false} disabled={disabled}>
+                    <Switch className={className} name="switch" defaultChecked={false} disabled={disabled}>
                         switch content
                     </Switch>
                 </div>
@@ -61,12 +72,13 @@ Uncontrolled.args = {
     variantOutside: 'default',
 };
 
-export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside}) => {
+export const CustomRender: StoryComponent<Args> = ({disabled, variantOutside, className}) => {
     return (
         <ResponsiveLayout variant={variantOutside} fullWidth>
             <Box padding={16}>
                 <div data-testid="switch-wrapper" style={{maxWidth: 'fit-content'}}>
                     <Switch
+                        className={className}
                         name="switch"
                         disabled={disabled}
                         render={({labelId, checked, disabled}) => (

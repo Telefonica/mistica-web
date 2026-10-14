@@ -9,21 +9,16 @@ import {
     skinVars,
     Placeholder,
     Tag,
-    IconThumbUpFilled,
-    IconMobileDeviceRegular,
     Image,
     Inline,
     Avatar,
-    IconTrashCanRegular,
-    IconPauseFilled,
-    IconPlayFilled,
+    IconButton,
     ResponsiveLayout,
     NegativeBox,
     Title2,
     OrderedList,
     UnorderedList,
     ListItem,
-    IconLightningFilled,
     Box,
     Text1,
     Text2,
@@ -37,6 +32,14 @@ import {
     Text10,
     Stack,
 } from '..';
+import IconThumbUpFilled from '@telefonica/mistica-icons/icon-thumb-up-filled';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconTrashCanRegular from '@telefonica/mistica-icons/icon-trash-can-regular';
+import IconPauseFilled from '@telefonica/mistica-icons/icon-pause-filled';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
+import IconHeartFilled from '@telefonica/mistica-icons/icon-heart-filled';
+import IconHeartRegular from '@telefonica/mistica-icons/icon-heart-regular';
+import IconLightningFilled from '@telefonica/mistica-icons/icon-lightning-filled';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -63,9 +66,10 @@ type Args = {
     oneLineTitle: boolean;
     oneLineSubtitle: boolean;
     oneLineDescription: boolean;
-    extra: boolean;
+    slot: boolean;
     disabled: boolean;
     danger: boolean;
+    small: boolean;
     variantOutside: Variant;
     'aria-live': 'off' | 'polite' | 'assertive';
     'aria-atomic': boolean;
@@ -88,19 +92,22 @@ const Template: StoryComponent<
     oneLineTitle,
     oneLineSubtitle,
     oneLineDescription,
-    extra,
+    slot,
     disabled,
     variant,
     variantOutside,
     danger,
+    small,
     'aria-live': ariaLive,
     'aria-atomic': ariaAtomic,
 }) => {
-    const extraContent = extra ? <Placeholder height={56} /> : undefined;
+    const extraContent = slot ? <Placeholder height={56} /> : undefined;
 
     const getControlProps = (index: number) => {
         let controlProps: any = {};
         const onPress = () => alert('Pressed');
+        const defaultControlValue = boxed ? index % 2 === 0 : true;
+
         switch (control) {
             case 'chevron':
                 controlProps = {href: 'https://example.org', newTab: true};
@@ -111,7 +118,7 @@ const Template: StoryComponent<
             case 'switch':
                 controlProps = {
                     switch: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                 };
@@ -119,7 +126,7 @@ const Template: StoryComponent<
             case 'switch and onPress':
                 controlProps = {
                     switch: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                     onPress,
@@ -128,7 +135,7 @@ const Template: StoryComponent<
             case 'checkbox':
                 controlProps = {
                     checkbox: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                 };
@@ -136,7 +143,7 @@ const Template: StoryComponent<
             case 'checkbox and onPress':
                 controlProps = {
                     checkbox: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                     onPress,
@@ -145,7 +152,7 @@ const Template: StoryComponent<
             case 'checkbox with custom element':
                 controlProps = {
                     checkbox: {
-                        defaultValue: true,
+                        defaultValue: defaultControlValue,
                         onChange: () => {},
                     },
                     right: () => (
@@ -252,7 +259,12 @@ const Template: StoryComponent<
 
     let row = 1;
     const list = (
-        <ListComponent dataAttributes={{testid: 'list'}} aria-live={ariaLive} aria-atomic={ariaAtomic}>
+        <ListComponent
+            dataAttributes={{testid: 'list'}}
+            aria-live={ariaLive}
+            aria-atomic={ariaAtomic}
+            small={small}
+        >
             <RowComponent
                 headline={headline}
                 title={title}
@@ -263,7 +275,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -271,7 +283,13 @@ const Template: StoryComponent<
             />
             <RowComponent
                 asset={<IconThumbUpFilled size={24} color="currentColor" />}
-                headline={headline && <Tag type="promo">{headline}</Tag>}
+                headline={
+                    headline && (
+                        <Tag type="promo" small={small}>
+                            {headline}
+                        </Tag>
+                    )
+                }
                 title={title}
                 subtitle={subtitle}
                 description={description}
@@ -280,7 +298,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -301,7 +319,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -318,7 +336,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -335,7 +353,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -352,7 +370,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -369,7 +387,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -386,7 +404,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -403,7 +421,7 @@ const Template: StoryComponent<
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extraContent}
+                slot={extraContent}
                 disabled={disabled}
                 danger={danger}
                 variant={variant}
@@ -438,9 +456,10 @@ const defaultArgs = {
     oneLineTitle: false,
     oneLineSubtitle: false,
     oneLineDescription: false,
-    extra: false,
+    slot: false,
     disabled: false,
     danger: false,
+    small: false,
     variantOutside: 'default',
     'aria-live': 'off',
     'aria-atomic': false,
@@ -482,7 +501,7 @@ RowListStory.argTypes = {
 };
 
 export const BoxedRowListStory: StoryComponent<Args & {variant: 'default' | 'brand'}> = (args) => (
-    <Template boxed {...args} />
+    <Template key={args.control} boxed {...args} />
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = {...defaultArgs, variant: 'default'};
@@ -493,6 +512,70 @@ BoxedRowListStory.argTypes = {
         control: {type: 'select'},
     },
     danger: {if: {arg: 'variant', eq: 'default'}},
+};
+
+type SelectableBoxedRowsArgs = {
+    variantOutside: Variant;
+};
+
+const SelectableBoxedRows = () => {
+    const [selected, setSelected] = React.useState(false);
+
+    return (
+        <BoxedRowList>
+            <BoxedRow
+                title="Toggle icon button"
+                description="Toggle the icon without selecting the row"
+                iconButton={{
+                    checkedProps: {
+                        Icon: IconHeartFilled,
+                        'aria-label': 'Unselect row',
+                        backgroundType: 'solid',
+                        type: 'brand',
+                    },
+                    uncheckedProps: {
+                        Icon: IconHeartRegular,
+                        'aria-label': 'Select row',
+                        backgroundType: 'transparent',
+                        type: 'brand',
+                    },
+                }}
+            />
+            <BoxedRow
+                selected={selected}
+                title="Custom render"
+                description="Select the row with the selected prop"
+                right={
+                    <IconButton
+                        Icon={selected ? IconHeartFilled : IconHeartRegular}
+                        aria-label={selected ? 'Unselect row' : 'Select row'}
+                        backgroundType={selected ? 'solid' : 'transparent'}
+                        type="brand"
+                        onPress={() => setSelected(!selected)}
+                    />
+                }
+            />
+        </BoxedRowList>
+    );
+};
+
+export const SelectableBoxedRowsStory: StoryComponent<SelectableBoxedRowsArgs> = ({variantOutside}) => {
+    return (
+        <ResponsiveLayout variant={variantOutside} fullWidth>
+            <Box padding={16} dataAttributes={{testid: 'selectable-boxed-row-list'}}>
+                <SelectableBoxedRows />
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+SelectableBoxedRowsStory.storyName = 'Selectable BoxedRows';
+SelectableBoxedRowsStory.args = {variantOutside: 'default'};
+SelectableBoxedRowsStory.argTypes = {
+    variantOutside: {
+        options: ['default', 'brand', 'negative', 'alternative'],
+        control: {type: 'select'},
+    },
 };
 
 type UnorderedListArgs = {

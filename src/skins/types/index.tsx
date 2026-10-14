@@ -7,14 +7,11 @@ export type SkinVariant = 'prominent';
 
 export type KnownSkinName =
     | 'Movistar'
-    | 'Movistar-new'
     | 'O2'
-    | 'O2-new'
     | 'Vivo'
-    | 'Vivo-new'
+    | 'Vivo-evolution'
     | 'Telefonica'
     | 'Blau'
-    | 'Tu'
     | 'Esimflag';
 export type SkinName = KnownSkinName | string;
 
@@ -63,6 +60,7 @@ export type TextPresetsConfig = {
     cardDescriptionSnap: TextSizeTokenConfig;
     cardPretitleDefault: TextSizeTokenConfig;
     cardPretitleSnap: TextSizeTokenConfig;
+    headerPretitle: TextTokenConfig;
     cardSubtitleDefault: TextSizeTokenConfig;
     cardSubtitleSnap: TextSizeTokenConfig;
     cardTitleDefault: TextSizeTokenConfig;
@@ -99,11 +97,6 @@ export type BorderRadiiConfig = {
     button: string;
     input: string;
     container: string;
-    /**
-     * This will be used for DisplayCards and PosterCards only for the moment. One day we'll unify the borderRadius in all the cards to use container.
-     * @deprecated Use `container` instead
-     */
-    legacyDisplay: string;
     popup: string;
     checkbox: string;
     indicator: string;
@@ -113,23 +106,36 @@ export type BorderRadiiConfig = {
     avatar: string;
     mediaSmall: string;
     tag: string;
+    snackbar: string;
 };
 
 export type SpacingConfig = {
     buttonDefaultPadding: PaddingXValues;
     buttonSmallPadding: PaddingXValues;
     cardDefaultPadding: PaddingValues;
-    inputPadding: PaddingYValues;
+    inputPadding: PaddingValues;
     tagPadding: PaddingYValues;
     feedbackScreenPadding: PaddingValues;
     heroPadding: PaddingYValues;
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
+    boxedDefaultPadding: PaddingXValues;
+    responsiveLayoutMargin: ResponsiveValue<number>;
 };
 
 export type ThemeVariantsConfig = {
     successFeedback: Variant;
     brandLoadingScreen: Variant;
+};
+
+export type ComponentPropertiesConfig = {
+    showBoxedBorder: {
+        default: boolean;
+        alternative: boolean;
+        brand: boolean;
+        negative: boolean;
+        media: boolean;
+    };
 };
 
 export type Skin = {
@@ -140,6 +146,7 @@ export type Skin = {
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
     spacing?: SpacingConfig;
+    componentProperties?: ComponentPropertiesConfig;
 };
 
 export type KnownSkin = {
@@ -150,4 +157,5 @@ export type KnownSkin = {
     borderRadii?: BorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
     spacing: SpacingConfig;
+    componentProperties?: ComponentPropertiesConfig;
 };

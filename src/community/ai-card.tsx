@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {BaseTouchable} from '../touchable';
-import {Text3} from '../text';
+import {Text2} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import {useIsInViewport} from '../hooks';
 import {isClientSide} from '../utils/environment';
@@ -191,7 +191,7 @@ const AiCard = ({
                       })
                     : undefined
             }
-            dataAttributes={{'component-name': 'AiCard', testid: 'AiCard', ...dataAttributes}}
+            dataAttributes={{testid: 'AiCard', ...dataAttributes}}
             {...(touchableProps as any)}
             aria-label={ariaLabel ?? autoAriaLabel}
         >
@@ -201,7 +201,7 @@ const AiCard = ({
                 </span>
             )}
             <div ref={textLineRef} className={styles.textLine} aria-hidden="true" style={textLineStyle}>
-                <Text3 regular color={vars.colors.textPrimary} as="span">
+                <Text2 regular color={vars.colors.textPrimary} as="span">
                     <span className={styles.textWrapper}>
                         <span className={styles.ghost}>
                             {text}
@@ -222,7 +222,7 @@ const AiCard = ({
                             )}
                         </span>
                     </span>
-                </Text3>
+                </Text2>
             </div>
         </BaseTouchable>
     );
