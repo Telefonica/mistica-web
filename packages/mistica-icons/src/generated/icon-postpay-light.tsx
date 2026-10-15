@@ -24,7 +24,21 @@ const IconPostpayLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m17.678 10 .105.012a.5.5 0 0 1 .266.156l3.823 4.303a.5.5 0 0 1 .126.332v4.538c0 1.52-1.339 2.66-2.75 2.66L16.787 22l-2.043-.012c-1.578-.001-2.745-1.314-2.745-2.704v-6.6c0-1.61 1.389-2.697 2.789-2.697h.002zm-2.891.987c-.938 0-1.788.726-1.788 1.698v6.6c0 .861.744 1.703 1.748 1.703h.002l2.042.012 2.457.001c.925 0 1.75-.756 1.75-1.66v-4.038h-1.554c-.797 0-1.397-.249-1.785-.712-.374-.447-.484-1.014-.484-1.518v-2.076zm3.388 2.086c0 .38.085.68.25.876.151.18.435.354 1.019.354h.94l-2.209-2.488z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.682 1.999c1.993 0 3.74 1.66 3.74 3.653v2.852a.5.5 0 0 1-1 0V5.652c0-1.411-1.27-2.653-2.74-2.653h-4.92c-1.474 0-2.744 1.23-2.744 2.638l-.016 9.516v3.168C3.002 19.74 4.248 21 5.758 21h4.74a.5.5 0 0 1 0 1h-4.74c-2.047 0-3.756-1.693-3.756-3.679v-3.169l.016-9.516c0-1.996 1.756-3.637 3.744-3.637z"
+                    />
+                    <path fill={fillColor} d="M9.963 5.242a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1 0-1z" />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

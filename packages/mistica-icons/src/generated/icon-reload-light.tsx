@@ -24,7 +24,16 @@ const IconReloadLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.96 2.01a.5.5 0 0 1 .586.395l.582 2.997a1.095 1.095 0 0 1-.866 1.284l-2.997.583a.5.5 0 0 1-.19-.982l2.391-.465a5.96 5.96 0 0 0-3.86-1.411h-3.028a5.986 5.986 0 0 0-5.986 5.986v1.77a.5.5 0 1 1-1 0v-1.77a6.986 6.986 0 0 1 6.986-6.986h3.027a6.96 6.96 0 0 1 4.425 1.58l-.466-2.395a.5.5 0 0 1 .396-.586m-4.538 18.58a6.986 6.986 0 0 0 6.986-6.987v-1.76a.5.5 0 1 0-1 0v1.76a5.986 5.986 0 0 1-5.986 5.987h-3.027a5.96 5.96 0 0 1-3.861-1.412l2.39-.465a.5.5 0 0 0-.19-.981l-2.997.582c-.594.116-.981.69-.866 1.284l.583 2.997a.5.5 0 0 0 .981-.191L5.97 19.01a6.96 6.96 0 0 0 4.425 1.58z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

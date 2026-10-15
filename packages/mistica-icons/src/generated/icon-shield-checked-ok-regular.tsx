@@ -24,7 +24,20 @@ const IconShieldCheckedOkRegular = ({color, size = 24, ...rest}: IconProps): JSX
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.42 9.203a.751.751 0 0 1 1.02 1.102l-4.862 4.5a.75.75 0 0 1-1.018 0l-2.14-1.981a.75.75 0 0 1 1.02-1.1l1.629 1.507z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M11.847 2.013a.75.75 0 0 1 .405.037l8.265 3.162.097.046a.75.75 0 0 1 .382.605c.478 7.216-2.48 13.23-8.683 16.07a.75.75 0 0 1-.624 0c-6.204-2.84-9.163-8.853-8.685-16.07l.016-.107a.75.75 0 0 1 .464-.543l8.231-3.163zM4.476 6.436C4.193 12.812 6.812 17.893 12 20.42c5.189-2.526 7.807-7.606 7.525-13.98l-7.54-2.886z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

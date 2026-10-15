@@ -24,7 +24,20 @@ const IconMobileShieldLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.684 2c1.993 0 3.74 1.66 3.74 3.653v2.851a.5.5 0 1 1-1 0V5.653c0-1.412-1.27-2.653-2.74-2.653h-4.92C4.289 3 3.02 4.23 3.02 5.637l-.016 9.517v3.168C3.004 19.74 4.249 21 5.76 21h4.738a.5.5 0 0 1 0 1H5.76c-2.048 0-3.756-1.692-3.756-3.678v-3.17l.016-9.516C2.02 3.64 3.775 2 5.764 2z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.748 10.067a.5.5 0 0 1 .581.054c1.263 1.095 2.395 1.609 3.469 1.857l.457.09.058.014a.96.96 0 0 1 .687.87c0 4.255-1.611 7.113-4.537 8.926l-.05.027a1 1 0 0 1-.407.093h-.01a1 1 0 0 1-.456-.12c-2.926-1.813-4.538-4.67-4.538-8.926l.003-.053a.96.96 0 0 1 .684-.816l.059-.014c1.21-.204 2.483-.697 3.926-1.948zm.253 1.083c-1.423 1.15-2.734 1.662-3.999 1.889.021 3.868 1.461 6.347 3.999 7.947 2.538-1.6 3.977-4.08 3.998-7.947-1.264-.227-2.575-.74-3.998-1.89M9.963 5.243a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1 0-1z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

@@ -24,7 +24,20 @@ const IconWalletFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M3.624 3.747a2 2 0 0 0-.06.49l.012.22c.024.226.086.44.176.64a2.22 2.22 0 0 0 1.977 1.29v.002H18.48a3.75 3.75 0 0 1 3.514 3.572h-6.487c-2.075 0-3.777 1.662-3.777 3.687s1.702 3.686 3.777 3.687h6.488a3.75 3.75 0 0 1-3.746 3.58H5.75A3.75 3.75 0 0 1 2 17.164V6.834c0-1.28.643-2.412 1.624-3.088"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M22 16.335h-6.491c-1.546 0-2.779-1.237-2.779-2.687 0-1.36 1.084-2.53 2.493-2.672l.286-.015H22zm-6.218-3.587a.763.763 0 0 0-.762.763v.274c0 .421.341.763.762.763h.295a.763.763 0 0 0 .763-.763v-.274a.763.763 0 0 0-.763-.763zm-.053-9.651c1.437.105 2.4.985 2.883 2.09l.088.202H5.764c-.632 0-1.134-.474-1.194-1.038l-.006-.115c0-.305.13-.593.345-.804.305-.3.8-.346 1.256-.346h9.27z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

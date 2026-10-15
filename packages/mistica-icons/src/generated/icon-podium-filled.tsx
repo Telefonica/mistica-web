@@ -24,7 +24,16 @@ const IconPodiumFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M4.35 22A2.35 2.35 0 0 1 2 19.65v-3.8a2.35 2.35 0 0 1 2.35-2.35h1.464a2.35 2.35 0 0 1 2.35 2.35v5.4a.75.75 0 0 1-.75.75zm5.572 0a.75.75 0 0 1-.75-.75v-7.8a1.95 1.95 0 0 1 1.95-1.95h1.754a1.95 1.95 0 0 1 1.95 1.95v7.8a.75.75 0 0 1-.75.75zm6.668 0a.75.75 0 0 1-.75-.75v-3.4a2.35 2.35 0 0 1 2.35-2.35h1.46A2.35 2.35 0 0 1 22 17.85v1.8A2.35 2.35 0 0 1 19.65 22zM11.315 2.348a.85.85 0 0 1 1.372 0l.98 1.34 1.577.518a.85.85 0 0 1 .424 1.305l-.972 1.345-.005 1.66a.85.85 0 0 1-1.11.807l-1.58-.509-1.58.509a.85.85 0 0 1-1.11-.807l-.005-1.66-.971-1.345a.85.85 0 0 1 .424-1.305l1.576-.518z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
