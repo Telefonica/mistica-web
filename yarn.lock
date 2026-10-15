@@ -4550,11 +4550,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/mistica-icons@^18.0.0-beta.1, @telefonica/mistica-icons@workspace:packages/mistica-icons":
+"@telefonica/mistica-icons@^17.4.0, @telefonica/mistica-icons@workspace:packages/mistica-icons":
   version: 0.0.0-use.local
   resolution: "@telefonica/mistica-icons@workspace:packages/mistica-icons"
   peerDependencies:
-    "@telefonica/mistica": ^18.0.0-beta.1
+    "@telefonica/mistica": ^17.4.0
     react: ^18.0.0 || ^19.2.0
     react-dom: ^18.0.0 || ^19.2.0
   languageName: unknown
@@ -4581,7 +4581,7 @@ __metadata:
     "@telefonica/acceptance-testing": 5.4.0
     "@telefonica/eslint-config": ^2.2.0
     "@telefonica/libphonenumber": ^2.9.1
-    "@telefonica/mistica-icons": ^18.0.0-beta.1
+    "@telefonica/mistica-icons": ^17.4.0
     "@telefonica/prettier-config": ^2.0.0
     "@testing-library/dom": ^10.2.0
     "@testing-library/jest-dom": ^6.4.6
