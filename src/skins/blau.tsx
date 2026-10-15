@@ -721,7 +721,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             feedbackScreenTitle: {
                 lineHeight: {desktop: 40, mobile: 32},
                 size: {desktop: 32, mobile: 24},
-                weight: 'medium',
+                weight: 'light',
             },
             headerPretitle: {
                 lineHeight: {desktop: 24, mobile: 24},

@@ -729,7 +729,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             feedbackScreenTitle: {
                 lineHeight: {desktop: 40, mobile: 32},
                 size: {desktop: 32, mobile: 24},
-                weight: 'medium',
+                weight: 'regular',
             },
             headerPretitle: {
                 lineHeight: {desktop: 24, mobile: 24},
