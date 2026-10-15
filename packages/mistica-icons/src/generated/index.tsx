@@ -1668,6 +1668,7 @@ export {default as IconRecycleRegular} from './icon-recycle-regular';
 export {default as IconRefreshFilled} from './icon-refresh-filled';
 export {default as IconRefreshLight} from './icon-refresh-light';
 export {default as IconRefreshRegular} from './icon-refresh-regular';
+export {default as IconReloadFilled} from './icon-reload-filled';
 export {default as IconReloadLight} from './icon-reload-light';
 export {default as IconReloadRegular} from './icon-reload-regular';
 export {default as IconRenovateDeviceChangeMobileFilled} from './icon-renovate-device-change-mobile-filled';
