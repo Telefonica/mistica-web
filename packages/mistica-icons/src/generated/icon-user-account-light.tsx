@@ -24,7 +24,16 @@ const IconUserAccountLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.885 15.405c2.096 0 3.797 1.7 3.797 3.796v2.28a.5.5 0 0 1-.5.5L4.819 22a.5.5 0 0 1-.5-.5v-2.28c0-2.077 1.608-3.815 3.723-3.815zm-7.843 1c-1.526 0-2.723 1.253-2.724 2.816v1.778l13.364-.018V19.2a2.797 2.797 0 0 0-2.797-2.796zm4.793-11.992a3.9 3.9 0 0 1 3.9 3.9v1.697a3.9 3.9 0 0 1-3.9 3.9h-1.696a3.9 3.9 0 0 1-3.9-3.9V8.313a3.9 3.9 0 0 1 3.9-3.9zm-1.696 1a2.9 2.9 0 0 0-2.9 2.9v1.697a2.9 2.9 0 0 0 2.9 2.9h1.696a2.9 2.9 0 0 0 2.9-2.9V8.313a2.9 2.9 0 0 0-2.9-2.9z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

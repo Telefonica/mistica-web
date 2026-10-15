@@ -24,7 +24,20 @@ const IconTachometerLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 7.21a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5m-6.937 6.6a.5.5 0 0 0 0 1h2.005a.5.5 0 0 0 0-1zm1.37-4.698a.5.5 0 0 1 .707 0l1.414 1.414a.5.5 0 0 1-.707.707L6.433 9.819a.5.5 0 0 1 0-.707m11.134.707a.5.5 0 1 0-.707-.707l-1.414 1.414a.5.5 0 1 0 .707.707zm-4.607 4.786a1.149 1.149 0 0 0-2.11.631 1.15 1.15 0 0 0 2.242.36l5.972-.79a.5.5 0 1 0-.131-.992z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M2.002 12.94a8.3 8.3 0 0 1 8.3-8.3h3.396a8.3 8.3 0 0 1 8.3 8.3v2.72a3.7 3.7 0 0 1-3.7 3.7H5.702a3.7 3.7 0 0 1-3.7-3.7zm8.3-7.3a7.3 7.3 0 0 0-7.3 7.3v2.72a2.7 2.7 0 0 0 2.7 2.7h12.596a2.7 2.7 0 0 0 2.7-2.7v-2.72a7.3 7.3 0 0 0-7.3-7.3z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

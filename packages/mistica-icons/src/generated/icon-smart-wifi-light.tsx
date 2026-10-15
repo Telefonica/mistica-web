@@ -24,7 +24,20 @@ const IconSmartWifiLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.247 10.046a.5.5 0 0 1 .5.5V14.5h.7a2.55 2.55 0 0 1 2.55 2.55v1.399a2.55 2.55 0 0 1-2.55 2.55H4.551A2.55 2.55 0 0 1 2 18.448v-1.399a2.55 2.55 0 0 1 2.55-2.55h.696v-3.953a.5.5 0 0 1 1 0V14.5h11.5v-3.953a.5.5 0 0 1 .5-.5M4.551 15.5A1.55 1.55 0 0 0 3 17.05v1.399c0 .855.694 1.55 1.55 1.55h14.896a1.55 1.55 0 0 0 1.55-1.55V17.05a1.55 1.55 0 0 0-1.55-1.55z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 10.185a.83.83 0 1 1-.001 1.66.83.83 0 0 1 .001-1.66m-.003-3.31c1.076 0 2.027.508 2.704 1.17a.5.5 0 0 1-.698.715c-.538-.525-1.25-.885-2.006-.885s-1.468.36-2.006.885a.5.5 0 0 1-.699-.716c.678-.661 1.629-1.169 2.705-1.169m-.001-3.66c1.934 0 3.646.97 4.803 2.28a.5.5 0 0 1-.75.662c-1.007-1.14-2.46-1.942-4.053-1.942s-3.047.802-4.054 1.942a.5.5 0 0 1-.75-.662c1.158-1.31 2.87-2.28 4.804-2.28"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

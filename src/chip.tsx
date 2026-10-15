@@ -68,13 +68,15 @@ const Chip = (props: ChipProps): JSX.Element => {
                             : styles.icon
                     }
                 >
-                    <Icon color="currentColor" size={pxToRem(16)} />
+                    <Icon color="currentColor" size={pxToRem(20)} />
                 </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
                 <Text
                     id={id}
-                    {...getTextSizesWithWeight({textPreset: textPresets.chipLabel})}
+                    {...getTextSizesWithWeight({
+                        textPreset: props.small ? textPresets.chipLabelSmall : textPresets.chipLabel,
+                    })}
                     truncate={1}
                     color="currentColor"
                 >

@@ -24,7 +24,20 @@ const IconSharedMobileDataRegular = ({color, size = 24, ...rest}: IconProps): JS
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.25 9a4.75 4.75 0 1 1 0 9.5h-5A4.75 4.75 0 0 1 8.066 16h1.842a3.24 3.24 0 0 0 2.342 1h5a3.25 3.25 0 0 0 0-6.5h-5a3.25 3.25 0 0 0-2.999 1.998H7.668A4.75 4.75 0 0 1 12.25 9z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M11.75 5.5a4.75 4.75 0 0 1 4.184 2.499H14.09A3.24 3.24 0 0 0 11.75 7h-5a3.25 3.25 0 1 0 0 6.5h5a3.25 3.25 0 0 0 3-1.999h1.582A4.75 4.75 0 0 1 11.75 15h-5a4.75 4.75 0 1 1 0-9.5z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
