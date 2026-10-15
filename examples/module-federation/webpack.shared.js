@@ -22,9 +22,6 @@ const shared = {
     react: {singleton: true},
     'react-dom': {singleton: true},
     '@telefonica/mistica': {singleton: true, requiredVersion: false},
-    // the icons read the theme through this entry point, and a share key answers one request only,
-    // so the line above does not cover it. See doc/module-federation.md.
-    '@telefonica/mistica/icon-runtime': {singleton: true, requiredVersion: false},
     ...sharedIcons,
 };
 

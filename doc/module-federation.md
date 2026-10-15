@@ -43,7 +43,6 @@ new ModuleFederationPlugin({
     react: {singleton: true},
     'react-dom': {singleton: true},
     '@telefonica/mistica': {singleton: true},
-    '@telefonica/mistica/icon-runtime': {singleton: true},
   },
 });
 ```
@@ -51,20 +50,27 @@ new ModuleFederationPlugin({
 `@telefonica/mistica` needs `singleton: true`, because it holds React contexts. Two copies of the theme
 context break the theme, the dialogs and the snackbars.
 
-The second line needs `singleton: true` for the same reason. Each icon of `@telefonica/mistica-icons` reads
-the theme through `@telefonica/mistica/icon-runtime`, and a share key answers one request only, so the first
-line does not cover that path. A host that drops the second line gives each remote a private copy of the theme
-context, and the remote then throws _"To use @telefonica/mistica components you must instantiate
-`<ThemeContextProvider>`"_. Measured on [examples/module-federation](../examples/module-federation/README.md):
-the page renders with the line, and it renders nothing without it.
+The icons of `@telefonica/mistica-icons` read the theme through `@telefonica/mistica/icon-runtime`, and the
+line above does not share that path. A remote therefore evaluates its own copy of the theme modules. That copy
+is safe: the theme context and the theme variant context live on the React singleton, under a key that holds
+the version of Mística, so every copy of those modules reads the provider of the host. Measured on
+[examples/module-federation](../examples/module-federation/README.md): the page renders with no error.
 
-**That line is not only for an application that imports an icon.** 52 components of Mística embed one, so a
-remote that renders a `Callout` or a `Dialog` and imports no icon at all fails in the same way. The same
-measurement proves it: a remote with no icon import of its own still throws without the line.
+### Share `@telefonica/mistica/icon-runtime` or not
 
-The entry point exports four values and one type, all from leaf modules, so the line is cheap: the example
-page makes 12 requests with it. `'@telefonica/mistica/'`, with a trailing slash, also works and costs 14,
-because it shares every subpath of the package.
+Both choices render correctly. The only difference is the size:
+
+| `shared` for the entry point                            | Example page | Requests | When to choose it                       |
+| ------------------------------------------------------- | ------------ | -------- | --------------------------------------- |
+| none (**recommended**)                                  | 1846.5 kB    | 12       | Default. One line less to keep in sync. |
+| `'@telefonica/mistica/icon-runtime': {singleton: true}` | 1803.1 kB    | 12       | You need the 43 kB that the copy costs. |
+
+Without the line, each application bundles its own copy of the entry point, a few leaf modules with no state
+of their own. With the line, the page loads one copy only.
+
+Neither choice relaxes the version rule: the host and every remote need the same version of Mística. The key
+of each context and the name of each CSS variable hold that version, so the icons of a remote with another
+version read no provider and throw _"you must instantiate `<ThemeContextProvider>`"_.
 
 Two more details belong to the host, and a page stays blank without them:
 
@@ -96,7 +102,6 @@ The other configuration, a shared path prefix, also works, but it costs more tha
 // measured: the page makes 65 requests with this line, and 12 without it
 shared: {
     '@telefonica/mistica': {singleton: true},
-    '@telefonica/mistica/icon-runtime': {singleton: true},
     '@telefonica/mistica-icons/': {},
 }
 ```
@@ -115,9 +120,11 @@ identities. The provider of A then becomes invisible to B, and the components of
 theme or throw.
 
 Each icon of `@telefonica/mistica-icons` imports `@telefonica/mistica/icon-runtime`, which exports the theme
-hooks from the same modules as the barrel. Inside one build both specifiers answer with one module, so the
-context identity holds. A share scope is the exception: it keys on the specifier, so the host must share that
-path as well. See the configuration of a host above.
+hooks from the same modules as the barrel. Inside one build both specifiers answer with one module. A share
+scope keys on the specifier, so a remote gets a second copy of those modules, but the two contexts that an
+icon reads (the theme and the theme variant) are stored on the React singleton, so the copy finds the
+provider. The other contexts of Mística have no such registry, because only the components of the barrel read
+them.
 
 `useIconGradient` travels the same path, and that entry point is its only public home. The hook belongs to the
 icons by domain, but it stays here on purpose: an icon that reached it by a relative path inside its own
@@ -148,7 +155,6 @@ shared: {
         singleton: true,
         treeShaking: {mode: 'runtime-infer'},
     },
-    '@telefonica/mistica/icon-runtime': {singleton: true},
 }
 ```
 
