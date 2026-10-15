@@ -1,3 +1,15 @@
+# [18.0.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v18.0.0-beta.1...v18.0.0-beta.2) (2026-10-15)
+
+
+### Bug Fixes
+
+* **Sheet:** make close button clickable on iOS ([e587dd7](https://github.com/Telefonica/mistica-web/commit/e587dd710f47ea2ceda60583e4f07cc5dce85a27))
+
+
+### Features
+
+* **Chore:** figma-mcp-skill-updates: Instructions v2 ([b5695f4](https://github.com/Telefonica/mistica-web/commit/b5695f498de5506b4686a256da324a9ce0b53b12))
+
 # [18.0.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v17.7.0...v18.0.0-beta.1) (2026-10-09)
 
 
