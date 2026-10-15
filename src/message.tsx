@@ -44,10 +44,13 @@ export type MessageProps = TouchableComponentProps<
     > &
         ExclusifyUnion<
             | {error: true; errorMessage?: string; text?: string}
-            | ({error?: false; footer?: React.ReactNode; side?: React.ReactNode} & ExclusifyUnion<
-                  {text?: string} | {children?: React.ReactNode}
-              > &
-                  ExclusifyUnion<{sideActions?: MessageActions} | {footerActions?: MessageActions}>)
+            | ({
+                  error?: false;
+                  footer?: React.ReactNode;
+                  side?: React.ReactNode;
+                  actions?: MessageActions;
+                  actionsPosition?: 'side' | 'footer';
+              } & ExclusifyUnion<{text?: string} | {children?: React.ReactNode}>)
         >
 >;
 
@@ -68,8 +71,8 @@ const Message = ({
     children,
     footer,
     side,
-    sideActions,
-    footerActions,
+    actions,
+    actionsPosition = 'footer',
     error = false,
     errorMessage,
     dataAttributes,
@@ -87,7 +90,6 @@ const Message = ({
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
     const errorText = errorMessage ?? t(tokens.messageError);
     const directionLabel = t(type === 'incoming' ? tokens.messageIncoming : tokens.messageOutgoing);
-    const actions = sideActions || footerActions;
     const renderActions = () =>
         actions?.map((action, index) => <IconButton key={index} {...action} small type="neutral" />);
 
@@ -182,7 +184,9 @@ const Message = ({
                                             </span>
                                         </Text2>
                                     ) : (
-                                        children
+                                        <Text2 regular as="div">
+                                            {children}
+                                        </Text2>
                                     )}
                                 </div>
                                 {!error && timestamp && (
@@ -230,7 +234,7 @@ const Message = ({
                         </div>
                     )}
                 </Touchable>
-                {!error && footerActions && (
+                {!error && actions && actionsPosition === 'footer' && (
                     <div
                         className={classnames(styles.actions, {
                             [styles.unboxedActions]: !boxed,
@@ -241,13 +245,15 @@ const Message = ({
                     </div>
                 )}
             </div>
-            {!error && (side || sideActions) && (
+            {!error && (side || (actions && actionsPosition === 'side')) && (
                 <div
                     className={classnames(styles.side, styles.sideDirection[type])}
                     style={{height: bubbleHeight || undefined}}
                 >
                     {side}
-                    {sideActions && <div className={styles.actions}>{renderActions()}</div>}
+                    {actions && actionsPosition === 'side' && (
+                        <div className={styles.actions}>{renderActions()}</div>
+                    )}
                 </div>
             )}
         </div>

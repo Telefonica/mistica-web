@@ -5,7 +5,9 @@ import {
     Message,
     ResponsiveLayout,
     Stack,
+    Text,
     Text1,
+    Text3,
     IconCopyRegular,
     IconCheckRegular,
     IconTimeRegular,
@@ -37,7 +39,8 @@ type Args = {
     contentSlot: boolean;
     footer: boolean;
     side: boolean;
-    actions: 'none' | 'side' | 'footer';
+    actions: boolean;
+    actionsPosition: 'side' | 'footer';
     actionsCount: 1 | 2;
     variantOutside: Variant;
 };
@@ -64,7 +67,8 @@ const defaultArgs: Args = {
     contentSlot: false,
     footer: false,
     side: false,
-    actions: 'none',
+    actions: false,
+    actionsPosition: 'footer',
     actionsCount: 1,
     variantOutside: 'default',
 };
@@ -106,11 +110,11 @@ export default {
         contentSlot: {control: 'boolean', if: {arg: 'error', eq: false}},
         footer: {control: 'boolean', if: {arg: 'error', eq: false}},
         side: {control: 'boolean', if: {arg: 'error', eq: false}},
-        actions: {
-            options: ['none', 'side', 'footer'],
-            control: {type: 'radio', labels: {none: 'None', side: 'Side actions', footer: 'Footer actions'}},
-            description: 'Renders sideActions or footerActions. Not available in the error state.',
-            if: {arg: 'error', eq: false},
+        actions: {control: 'boolean', if: {arg: 'error', eq: false}},
+        actionsPosition: {
+            options: ['side', 'footer'],
+            control: 'radio',
+            if: {arg: 'actions'},
         },
         actionsCount: {options: [1, 2], control: 'radio', if: {arg: 'error', eq: false}},
         variantOutside: {
@@ -139,11 +143,8 @@ const MessageExample = (args: Args) => {
               ...(args.contentSlot ? {children: <Placeholder height={80} />} : {text: args.text}),
               footer: args.footer ? <Text1 regular>Delivered</Text1> : undefined,
               side: args.side ? <IconCheckRegular size={16} /> : undefined,
-              ...(args.actions === 'side'
-                  ? {sideActions: actions}
-                  : args.actions === 'footer'
-                    ? {footerActions: actions}
-                    : {}),
+              actions: args.actions ? actions : undefined,
+              actionsPosition: args.actionsPosition,
           };
     return (
         <Message
@@ -238,7 +239,8 @@ Conversation.args = {
     text: 'Good afternoon! Can we confirm the visit?',
     timestamp: '16:45',
     footer: true,
-    actions: 'footer',
+    actions: true,
+    actionsPosition: 'footer',
 };
 Conversation.parameters = {
     controls: {
@@ -255,6 +257,7 @@ Conversation.parameters = {
             'footer',
             'side',
             'actions',
+            'actionsPosition',
             'actionsCount',
         ],
     },
@@ -330,7 +333,8 @@ SlotsAndActions.args = {
     contentSlot: true,
     footer: true,
     side: true,
-    actions: 'footer',
+    actions: true,
+    actionsPosition: 'footer',
     actionsCount: 2,
 };
 SlotsAndActions.parameters = {
@@ -350,7 +354,27 @@ SlotsAndActions.parameters = {
             'footer',
             'side',
             'actions',
+            'actionsPosition',
             'actionsCount',
         ],
     },
 };
+
+export const ContentTypography: StoryComponent<Args> = (args) => (
+    <ResponsiveLayout fullWidth variant={args.variantOutside}>
+        <Box padding={16}>
+            <Stack space={16}>
+                <Message boxed={args.boxed} text="Default text" />
+                <Message boxed={args.boxed}>Plain children</Message>
+                <Message boxed={args.boxed}>
+                    <Text>Inherited text</Text>
+                </Message>
+                <Message boxed={args.boxed}>
+                    <Text3 bold>Custom text</Text3>
+                </Message>
+                <Text3 bold>Custom reference</Text3>
+            </Stack>
+        </Box>
+    </ResponsiveLayout>
+);
+ContentTypography.parameters = {controls: {include: ['boxed', 'variantOutside']}};

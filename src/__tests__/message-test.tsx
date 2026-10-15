@@ -40,35 +40,39 @@ test('interactive messages group sender, slot, footer and timestamp in reading o
     ).toBeInTheDocument();
 });
 
-test('asset, bubble and actions have independent keyboard targets', async () => {
-    const asset = jest.fn();
-    const bubble = jest.fn();
-    const action = jest.fn();
-    renderMessage(
-        <Message
-            asset={<span>Avatar</span>}
-            onAssetPress={asset}
-            assetLabel="Open Ana's profile"
-            onPress={bubble}
-            text="Hello"
-            footerActions={[{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: action}]}
-        />
-    );
-    await userEvent.tab();
-    expect(screen.getByRole('button', {name: "Open Ana's profile"})).toHaveFocus();
-    await userEvent.keyboard('{Enter}');
-    expect(asset).toHaveBeenCalledTimes(1);
-    expect(bubble).not.toHaveBeenCalled();
-    await userEvent.tab();
-    expect(screen.getByRole('button', {name: 'Mensaje: Hello'})).toHaveFocus();
-    await userEvent.keyboard(' ');
-    expect(bubble).toHaveBeenCalledTimes(1);
-    await userEvent.tab();
-    expect(screen.getByRole('button', {name: 'Copy'})).toHaveFocus();
-    await userEvent.keyboard('{Enter}');
-    expect(action).toHaveBeenCalledTimes(1);
-    expect(bubble).toHaveBeenCalledTimes(1);
-});
+test.each(['side', 'footer'] as const)(
+    'asset, bubble and %s actions have independent keyboard targets',
+    async (actionsPosition) => {
+        const asset = jest.fn();
+        const bubble = jest.fn();
+        const action = jest.fn();
+        renderMessage(
+            <Message
+                asset={<span>Avatar</span>}
+                onAssetPress={asset}
+                assetLabel="Open Ana's profile"
+                onPress={bubble}
+                text="Hello"
+                actionsPosition={actionsPosition}
+                actions={[{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: action}]}
+            />
+        );
+        await userEvent.tab();
+        expect(screen.getByRole('button', {name: "Open Ana's profile"})).toHaveFocus();
+        await userEvent.keyboard('{Enter}');
+        expect(asset).toHaveBeenCalledTimes(1);
+        expect(bubble).not.toHaveBeenCalled();
+        await userEvent.tab();
+        expect(screen.getByRole('button', {name: 'Mensaje: Hello'})).toHaveFocus();
+        await userEvent.keyboard(' ');
+        expect(bubble).toHaveBeenCalledTimes(1);
+        await userEvent.tab();
+        expect(screen.getByRole('button', {name: 'Copy'})).toHaveFocus();
+        await userEvent.keyboard('{Enter}');
+        expect(action).toHaveBeenCalledTimes(1);
+        expect(bubble).toHaveBeenCalledTimes(1);
+    }
+);
 
 test('decorative assets are excluded from the accessible name', () => {
     renderMessage(
@@ -105,4 +109,25 @@ test('errors use a localized default and do not assume a retry action', () => {
 test('explicit accessible labels override the generated name', () => {
     renderMessage(<Message text="Details" href="/details" aria-label="Open details" />);
     expect(screen.getByRole('link', {name: 'Open details'})).toHaveAttribute('href', '/details');
+});
+
+test('changing action position or removing actions never duplicates them', () => {
+    const actions = [{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: () => {}}] as const;
+    const Example = ({
+        position,
+        showActions = true,
+    }: {
+        position?: 'side' | 'footer';
+        showActions?: boolean;
+    }) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <Message text="Hello" actions={showActions ? actions : undefined} actionsPosition={position} />
+        </ThemeContextProvider>
+    );
+    const {rerender} = render(<Example />);
+    expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
+    rerender(<Example position="side" />);
+    expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
+    rerender(<Example position="side" showActions={false} />);
+    expect(screen.queryByRole('button', {name: 'Copy'})).not.toBeInTheDocument();
 });

@@ -62,7 +62,7 @@ test('Message wraps within its maximum width on mobile with side actions', async
     await openStoryPage({
         id: story,
         device: 'MOBILE_IOS',
-        args: {text: 'A very long message '.repeat(30), actions: 'side', side: true},
+        args: {text: 'A very long message '.repeat(30), actions: true, actionsPosition: 'side', side: true},
     });
     const container = await screen.findByTestId('messages');
     const message = await screen.findByTestId('Message');
@@ -108,7 +108,7 @@ test('Outgoing assets align with the bubble when a footer is present', async () 
     await openStoryPage({
         id: story,
         device: 'MOBILE_IOS',
-        args: {type: 'outgoing', footer: true, actions: 'side'},
+        args: {type: 'outgoing', footer: true, actions: true, actionsPosition: 'side'},
     });
     const bubble = await screen.findByTestId('MessageBubble');
     const avatar = await screen.findByTestId('Avatar');
@@ -126,7 +126,7 @@ test.each([true, false])(
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
-            args: {type: 'outgoing', boxed, footer: true, actions: 'footer'},
+            args: {type: 'outgoing', boxed, footer: true, actions: true, actionsPosition: 'footer'},
         });
         const bubble = await screen.findByTestId('MessageBubble');
         const action = await screen.findByRole('button', {name: 'Copy message'});
@@ -157,3 +157,35 @@ test('Short error helper grows beyond its minimum width without wrapping unneces
         )
     ).toBe(false);
 });
+
+test.each([true, false])(
+    'Children inherit message typography and allow overrides (boxed: %s)',
+    async (boxed) => {
+        await openStoryPage({
+            id: 'components-message--content-typography',
+            device: 'MOBILE_IOS',
+            args: {boxed, variantOutside: 'brand'},
+        });
+        const typography = async (text: string) => {
+            const element = await screen.findByText(text);
+            return element.evaluate((node) => {
+                const style = getComputedStyle(node);
+                return {
+                    fontSize: style.fontSize,
+                    lineHeight: style.lineHeight,
+                    fontWeight: style.fontWeight,
+                    fontFamily: style.fontFamily,
+                    color: style.color,
+                };
+            });
+        };
+        const defaultTypography = await typography('Default text');
+        expect(await typography('Plain children')).toEqual(defaultTypography);
+        expect(await typography('Inherited text')).toEqual(defaultTypography);
+        const customTypography = await typography('Custom text');
+        const referenceTypography = await typography('Custom reference');
+        expect(customTypography.fontSize).toBe(referenceTypography.fontSize);
+        expect(customTypography.fontWeight).toBe(referenceTypography.fontWeight);
+        expect(customTypography.fontWeight).not.toBe(defaultTypography.fontWeight);
+    }
+);

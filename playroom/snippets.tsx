@@ -4886,10 +4886,11 @@ export default [
       text="Pulsa para ver los detalles"
       onPress={() => alert({title: 'Detalles del mensaje'})}
       timestamp="13:32"
-      sideActions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
+      actionsPosition="side"
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
     />
     <Message senderName="Adriana" timestamp="13:33" footer={<Text1 regular>Entregado</Text1>}
-      footerActions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}>
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}>
       <Placeholder height={80} />
     </Message>
     <Message type="outgoing" text="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
