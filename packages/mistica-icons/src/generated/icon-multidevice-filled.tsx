@@ -24,7 +24,20 @@ const IconMultideviceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.55 9.996a2.45 2.45 0 0 1 2.45 2.45v7.102a2.45 2.45 0 0 1-2.45 2.45h-3.6a2.45 2.45 0 0 1-2.45-2.45v-7.102a2.45 2.45 0 0 1 2.45-2.45zm-2.8 2.506a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5zm-4.25 4.032H6.684L5.4 18.757a.75.75 0 1 1-1.298-.75l.894-1.55a3.75 3.75 0 0 1-2.953-3.102H12.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.25 2.002A3.75 3.75 0 0 1 22 5.752v4.385a3.64 3.64 0 0 0-2.65-1.14h-3.2a3.65 3.65 0 0 0-3.563 2.858H2V5.752a3.75 3.75 0 0 1 3.75-3.75z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

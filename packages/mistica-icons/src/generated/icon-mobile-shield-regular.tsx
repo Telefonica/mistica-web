@@ -24,7 +24,21 @@ const IconMobileShieldRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M16.618 10.108a.75.75 0 0 1 .876.082c1.324 1.16 2.48 1.608 3.571 1.793q.046.008.088.02A1.19 1.19 0 0 1 22 13.096c0 4.14-1.56 6.96-4.415 8.747a1.2 1.2 0 0 1-.578.157h-.014a1.2 1.2 0 0 1-.578-.157C13.56 20.054 12 17.235 12 13.095q0-.04.004-.08c.05-.48.387-.875.843-1.011l.088-.02c1.091-.187 2.246-.634 3.57-1.794zM17 11.727c-1.23.962-2.38 1.441-3.497 1.674.07 3.403 1.33 5.588 3.497 7.029 2.166-1.441 3.425-3.626 3.496-7.029-1.116-.233-2.267-.712-3.496-1.674"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.675 2.001a3.75 3.75 0 0 1 3.75 3.75v2.49a.75.75 0 0 1-1.5 0V5.75a2.25 2.25 0 0 0-2.25-2.25H5.75A2.25 2.25 0 0 0 3.5 5.75v12.496a2.25 2.25 0 0 0 2.25 2.25h4.495a.75.75 0 0 1 0 1.5H5.75A3.75 3.75 0 0 1 2 18.247V5.751a3.75 3.75 0 0 1 3.75-3.75z"
+                    />
+                    <path fill={fillColor} d="M9.96 4.992a.75.75 0 1 1 0 1.5h-3.5a.75.75 0 1 1 0-1.5z" />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

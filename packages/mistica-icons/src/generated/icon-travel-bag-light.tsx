@@ -24,7 +24,20 @@ const IconTravelBagLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M16 13.422a2.748 2.748 0 1 1 0 5.496 2.748 2.748 0 0 1 0-5.496m0 1a1.748 1.748 0 1 0 0 3.496 1.748 1.748 0 0 0 0-3.496M8.877 9.377a1.75 1.75 0 0 1 2.39.64l1 1.73a1.75 1.75 0 0 1-.641 2.39l-2.855 1.65a1.75 1.75 0 0 1-2.391-.642l-1-1.73a1.75 1.75 0 0 1 .641-2.39zm1.524 1.14a.75.75 0 0 0-1.024-.275l-2.856 1.649a.75.75 0 0 0-.274 1.024l1 1.73a.75.75 0 0 0 1.024.275l2.855-1.649a.75.75 0 0 0 .274-1.024z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M14.498 1.999a2 2 0 0 1 2 2V6.5h1.75a3.75 3.75 0 0 1 3.75 3.75v8.001a3.75 3.75 0 0 1-3.75 3.75H5.752a3.75 3.75 0 0 1-3.75-3.75V10.25a3.75 3.75 0 0 1 3.75-3.75h1.746V3.999a2 2 0 0 1 2-2zM5.752 7.5a2.75 2.75 0 0 0-2.75 2.75v8.001a2.75 2.75 0 0 0 2.75 2.75h12.496a2.75 2.75 0 0 0 2.75-2.75V10.25a2.75 2.75 0 0 0-2.75-2.75zm3.746-4.501a1 1 0 0 0-1 1V6.5h7V3.999a1 1 0 0 0-1-1z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

@@ -24,7 +24,16 @@ const IconNegativeFilmRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.25 3.502H5.75A3.75 3.75 0 0 0 2 7.252v9.497a3.75 3.75 0 0 0 3.75 3.75h12.5a3.75 3.75 0 0 0 3.75-3.75V7.252a3.75 3.75 0 0 0-3.75-3.75m-1.251 1.5V9.5H7.003V5.002zm-11.496.013v2.361H3.5v-.124a2.25 2.25 0 0 1 2.003-2.237M3.5 8.876h2.003v2.375H3.5zm0 3.875h2.003v2.374H3.5zm0 3.874h2.003v2.36A2.25 2.25 0 0 1 3.5 16.75zm3.503 2.374v-4.212h9.996V19zm11.496-.014v-2.36H20.5v.124a2.25 2.25 0 0 1-2.001 2.236m2.001-3.86h-2.001V12.75H20.5zm0-3.874h-2.001V8.876H20.5zm0-3.875h-2.001v-2.36A2.25 2.25 0 0 1 20.5 7.252zM7.003 13.287V11h9.996v2.287z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
