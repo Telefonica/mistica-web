@@ -1,3 +1,17 @@
+# [18.0.0-beta.3](https://github.com/Telefonica/mistica-web/compare/v18.0.0-beta.2...v18.0.0-beta.3) (2026-10-15)
+
+
+### Bug Fixes
+
+* **DateTimePicker:** add z-index to Overlay to prevent picker dialog zIndex issues rendering behind stacked fields in Firefox ([#1751](https://github.com/Telefonica/mistica-web/issues/1751)) ([4d41a76](https://github.com/Telefonica/mistica-web/commit/4d41a763400c0337f4afe01250f5597217ebcf6d)), closes [#1750](https://github.com/Telefonica/mistica-web/issues/1750)
+* **Select/Menu:** prevent sticky elements from disappearing in Firefox ([#1756](https://github.com/Telefonica/mistica-web/issues/1756)) ([7815f29](https://github.com/Telefonica/mistica-web/commit/7815f29f0ef7875742fae2b56219e1742ab34ffb))
+
+
+### Features
+
+* **Chip:** add chipLabelSmall token and change Chip Icon size ([#1725](https://github.com/Telefonica/mistica-web/issues/1725)) ([e287762](https://github.com/Telefonica/mistica-web/commit/e287762da96044a84818911487d095f8034f0a2b))
+* **Icons:** add Vivo Evolution Menu Icons Pack 02 ([#1768](https://github.com/Telefonica/mistica-web/issues/1768)) ([22fa9b7](https://github.com/Telefonica/mistica-web/commit/22fa9b7e0592f9082d982e69bb921f4db80c7052)), closes [Telefonica/mistica-icons#374](https://github.com/Telefonica/mistica-icons/issues/374) [Telefonica/mistica-design#2833](https://github.com/Telefonica/mistica-design/issues/2833)
+
 # [18.0.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v18.0.0-beta.1...v18.0.0-beta.2) (2026-10-15)
 
 

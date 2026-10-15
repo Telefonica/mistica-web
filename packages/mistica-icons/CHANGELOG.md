@@ -1,3 +1,5 @@
+# [18.0.0-beta.3](https://github.com/Telefonica/mistica-web/compare/v18.0.0-beta.2...v18.0.0-beta.3) (2026-10-15)
+
 # [18.0.0-beta.2](https://github.com/Telefonica/mistica-web/compare/v18.0.0-beta.1...v18.0.0-beta.2) (2026-10-15)
 
 # [18.0.0-beta.1](https://github.com/Telefonica/mistica-web/compare/v17.7.0...v18.0.0-beta.1) (2026-10-09)
