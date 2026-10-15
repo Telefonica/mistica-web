@@ -27,7 +27,20 @@ const IconShieldCheckedOkLight = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.774 9.215a.5.5 0 0 1 .678.735L11.4 14.615a.5.5 0 0 1-.683-.004l-2.29-2.164a.5.5 0 0 1 .688-.727l1.95 1.842z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M11.892 2.008a.5.5 0 0 1 .27.025L20.65 5.28l.064.03a.5.5 0 0 1 .255.398c.568 7.205-2.384 13.392-8.765 16.248a.5.5 0 0 1-.4.003c-6.213-2.644-9.351-8.995-8.773-16.252l.01-.07a.5.5 0 0 1 .309-.357l8.453-3.248zM4.007 6.1c-.433 6.713 2.473 12.398 7.988 14.85 5.691-2.646 8.426-8.191 7.996-14.85l-8.008-3.064z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
