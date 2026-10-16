@@ -29,7 +29,7 @@ This script is used by the import-design-tokens GitHub workflow.
 
 ## Border radius tokens
 
-Uniform tokens keep their existing format and output (`16` becomes `16px`). A token can also define all four
+Uniform tokens keep their existing format and output (`16` becomes `16px`). A token can also define individual
 corners independently:
 
 ```json
@@ -52,8 +52,10 @@ output remains a string and can be assigned to `border-radius`. A four-corner va
 individual property such as `border-top-left-radius`.
 
 Each value accepts a non-negative number encoded as a string (pixels), an explicit `px` value, a percentage,
-or `circle` (converted to `50%`). All four corners are required. Missing corners, invalid values, and
-definitions mixing a uniform value with corners are rejected.
+or `circle` (converted to `50%`). Omitted corners default to `0px`; they do not inherit the container radius.
+For example, `{"topLeft": {"value": "4"}, "bottomRight": {"value": "24"}}` produces `4px 0px 24px 0px`. At
+least one corner must be defined. Invalid values and definitions mixing a uniform value with corners are
+rejected. An explicitly present but invalid corner is rejected rather than defaulted to zero.
 
 The example names and values are illustrative, not new production tokens. Before publishing tokens, Design and
 Development need to agree on their names, values per skin, and how they represent incoming, outgoing, and

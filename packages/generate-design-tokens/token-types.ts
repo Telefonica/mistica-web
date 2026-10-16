@@ -23,9 +23,8 @@ export type UniformRadiusDescription = {
     type?: 'borderRadius';
 };
 
-export type CornerRadiusDescription = Record<
-    'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft',
-    UniformRadiusDescription
+export type CornerRadiusDescription = Partial<
+    Record<'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft', UniformRadiusDescription>
 >;
 
 export type RadiusDescription = UniformRadiusDescription | CornerRadiusDescription;

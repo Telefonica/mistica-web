@@ -43,13 +43,37 @@ for (const value of ['', 'invalid', '4rem', '-4', '4px extra', '4 8', 'NaN', 4, 
     });
 }
 
-for (const corner of ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'] as const) {
-    test(`requires the ${corner} corner`, () => {
+for (const [corner, expected] of [
+    ['topLeft', '0px 8px 50% 16px'],
+    ['topRight', '4px 0px 50% 16px'],
+    ['bottomRight', '4px 8px 0px 16px'],
+    ['bottomLeft', '4px 8px 50% 0px'],
+] as const) {
+    test(`defaults omitted ${corner} to zero`, () => {
         const incomplete: Partial<typeof corners> = {...corners};
         delete incomplete[corner];
-        assert.throws(() => buildRadius(incomplete as RadiusDescription), new RegExp(corner));
+        assert.equal(buildRadius(incomplete), expected);
     });
 }
+
+test('supports a subset of corners', () => {
+    assert.equal(buildRadius({topLeft: {value: '4'}, bottomRight: {value: '24'}}), '4px 0px 24px 0px');
+    assert.equal(buildRadius({bottomLeft: {value: '16'}}), '0px 0px 0px 16px');
+});
+
+test('rejects definitions without a uniform value or recognized corners', () => {
+    assert.throws(() => buildRadius({}), /Expected at least one radius corner/);
+    assert.throws(
+        () => buildRadius({topLef: {value: '4'}} as RadiusDescription),
+        /Expected at least one radius corner/
+    );
+});
+
+test('rejects explicitly invalid corners instead of defaulting them to zero', () => {
+    for (const topLeft of [undefined, null, {}]) {
+        assert.throws(() => buildRadius({topLeft} as RadiusDescription), /Invalid radius corner topLeft/);
+    }
+});
 
 test('rejects mixed uniform and per-corner definitions', () => {
     assert.throws(() => buildRadius({...corners, value: '4'}), /cannot mix/);
@@ -74,7 +98,11 @@ test('generates TypeScript and CSS for uniform and per-corner tokens in both ski
         text: {},
         themeVariant: {successFeedback: {value: 'brand'}},
         spacing: {responsiveLayoutMargin: {value: {mobile: 16, desktop: 24}}},
-        radius: {container: {value: '16'}, bubble: corners},
+        radius: {
+            container: {value: '16'},
+            bubble: corners,
+            partialBubble: {topLeft: {value: '4'}, bottomRight: {value: '24'}},
+        },
     };
     for (const skin of ['movistar', 'community/cyber']) {
         fs.writeFileSync(path.join(tokensFolder, `${skin}.json`), JSON.stringify(tokens));
@@ -84,10 +112,12 @@ test('generates TypeScript and CSS for uniform and per-corner tokens in both ski
         const source = fs.readFileSync(path.join(root, file), 'utf8');
         assert.match(source, /container: '16px'/);
         assert.match(source, /bubble: '4px 8px 50% 16px'/);
+        assert.match(source, /partialBubble: '4px 0px 24px 0px'/);
     }
     for (const file of ['css/movistar.css', 'css/community/cyber.css']) {
         const source = fs.readFileSync(path.join(root, file), 'utf8');
         assert.match(source, /--mistica-border-radius-container: 16px;/);
         assert.match(source, /--mistica-border-radius-bubble: 4px 8px 50% 16px;/);
+        assert.match(source, /--mistica-border-radius-partialBubble: 4px 0px 24px 0px;/);
     }
 });

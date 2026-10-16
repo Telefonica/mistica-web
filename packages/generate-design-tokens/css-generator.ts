@@ -53,8 +53,14 @@ export const buildRadius = (radiusDescription: RadiusDescription): string => {
         }
         return buildRadiusValue(radiusDescription);
     }
+    if (!radiusCorners.some((corner) => corner in radiusDescription)) {
+        throw new Error('Expected at least one radius corner');
+    }
     return radiusCorners
         .map((corner) => {
+            if (!(corner in radiusDescription)) {
+                return '0px';
+            }
             try {
                 return buildRadiusValue(radiusDescription[corner]);
             } catch (error) {
