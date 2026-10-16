@@ -4814,5 +4814,89 @@ export default [
             )}
         />`,
     },
+    {
+        group: 'Message',
+        name: 'Conversation with avatars and groups',
+        code: `<Box padding={16}>
+  <Stack space={24}>
+    <Message asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Stack space={4}>
+      <Message position="first" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Tengo varias opciones." />
+      <Message position="middle" asset={<Box width={40} />} text="Podemos ir el martes o el miércoles." />
+      <Message position="last" asset={<Box width={40} />} text="También el jueves por la tarde." timestamp="16:46" />
+    </Stack>
+    <Stack space={4}>
+      <Message type="outgoing" position="first" asset={<Box width={40} />} text="El martes me viene bien." />
+      <Message type="outgoing" position="middle" asset={<Box width={40} />} text="Estaré en casa a partir de las cinco." />
+      <Message type="outgoing" position="last" asset={<Avatar size={40} initials="YO" />} text="¿Podéis venir a esa hora?" timestamp="16:47" />
+    </Stack>
+    <Message asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Sí, queda confirmado para el martes a las 17:00." timestamp="16:48" />
+    <Message type="outgoing" asset={<Avatar size={40} initials="YO" />} text="¡Perfecto, gracias!" timestamp="16:49" />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
+        name: 'Conversation',
+        code: `<Box padding={16}>
+  <Stack space={16}>
+    <Message asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="¿Confirmamos la visita del martes?" timestamp="16:45" />
+    {getState('messageSent', false) ? (
+      <Message type="outgoing" text="Sí, el martes está bien." timestamp="16:50" />
+    ) : (
+      <Message type="outgoing" text="Sí, el martes está bien." error onPress={() => setState('messageSent', true)} />
+    )}
+    <Message text="Te enviaré los detalles." boxed={false} senderName="Adriana" footer={<IconTimeRegular size={16} />} />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
+        name: 'Variants and positions',
+        code: `<Stack space={16}>
+  {['default', 'brand', 'alternative', 'negative', 'media'].map(variant => (
+    <ResponsiveLayout key={variant} variant={variant} fullWidth>
+      <Box padding={16}>
+        <Stack space={16}>
+          <Text2 medium>{variant}</Text2>
+          <Message senderName="Adriana" text="Mensaje recibido sobre este fondo." timestamp="13:32" />
+          <Message type="outgoing" text="Mensaje enviado." timestamp="13:33" />
+          <Stack space={4}>
+            <Message text="Primero" position="first" />
+            <Message text="En medio" position="middle" />
+            <Message text="Último" position="last" />
+          </Stack>
+          <Message type="outgoing" text="Error" error errorMessage="No se ha enviado" />
+        </Stack>
+      </Box>
+    </ResponsiveLayout>
+  ))}
+</Stack>`,
+    },
+    {
+        group: 'Message',
+        name: 'Slots and independent actions',
+        code: `<Box padding={16}>
+  <Stack space={24}>
+    <Message
+      asset={<Avatar size={40} initials="AP" />}
+      onAssetPress={() => alert({title: 'Perfil de Adriana'})}
+      assetLabel="Abrir perfil de Adriana"
+      senderName="Adriana"
+      text="Pulsa para ver los detalles"
+      onPress={() => alert({title: 'Detalles del mensaje'})}
+      timestamp="13:32"
+      actionsPosition="side"
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
+    />
+    <Message senderName="Adriana" timestamp="13:33" footer={<Text1 regular>Entregado</Text1>}
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}>
+      <Placeholder height={80} />
+    </Message>
+    <Message type="outgoing" text="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
+    <Message text="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
+  </Stack>
+</Box>`,
+    },
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

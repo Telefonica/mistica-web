@@ -786,3 +786,24 @@ export const fileUploadListLabel: TextToken = {
     de: 'Hochgeladene Dateien',
     pt: 'Arquivos enviados',
 };
+
+export const messageIncoming: TextToken = {
+    es: 'Mensaje',
+    en: 'Message',
+    pt: 'Mensagem',
+    de: 'Nachricht',
+};
+
+export const messageOutgoing: TextToken = {
+    es: 'Tú',
+    en: 'You',
+    pt: 'Você',
+    de: 'Du',
+};
+
+export const messageError: TextToken = {
+    es: 'No enviado. Toca para reintentar.',
+    en: 'Not sent. Tap to retry',
+    pt: 'Não enviada. Clique para reenviar.',
+    de: 'Nicht gesendet. Zum Wiederholen tippen.',
+};
