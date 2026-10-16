@@ -39,6 +39,16 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
         size: {desktop: 28, mobile: 20},
         weight: 'bold',
     },
+    feedbackScreenDescription: {
+        lineHeight: {desktop: 24, mobile: 24},
+        size: {desktop: 18, mobile: 16},
+        weight: 'regular',
+    },
+    feedbackScreenTitle: {
+        lineHeight: {desktop: 40, mobile: 32},
+        size: {desktop: 32, mobile: 24},
+        weight: 'light',
+    },
     title1: {
         lineHeight: {desktop: 20, mobile: 16},
         size: {desktop: 14, mobile: 12},

@@ -10,6 +10,8 @@ import {pxToRem, applyCssVars} from './utils/css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import ScreenReaderOnly from './screen-reader-only';
+import {VIVO_SKIN} from './skins/constants';
+import IconCheckedRegular from './generated/mistica-icons/icon-checked-regular';
 
 import type {DataAttributes} from './utils/types';
 
@@ -32,7 +34,7 @@ const Stepper = ({
     'aria-describedby': ariaDescribedby,
     dataAttributes,
 }: StepperProps): JSX.Element => {
-    const {texts, t, textPresets} = useTheme();
+    const {texts, t, textPresets, skinName} = useTheme();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
 
@@ -87,11 +89,15 @@ const Stepper = ({
                                     })}
                                     aria-hidden="true"
                                 >
-                                    <IconSuccess
-                                        color={vars.colors.controlActivated}
-                                        size="100%"
-                                        skipAnimation={!hasAnimation || isBack}
-                                    />
+                                    {skinName === VIVO_SKIN ? (
+                                        <IconCheckedRegular color={vars.colors.brand} size="100%" />
+                                    ) : (
+                                        <IconSuccess
+                                            color={vars.colors.controlActivated}
+                                            size="100%"
+                                            skipAnimation={!hasAnimation || isBack}
+                                        />
+                                    )}
                                 </div>
                             ) : (
                                 <div
