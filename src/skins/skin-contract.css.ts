@@ -390,6 +390,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     headerPadding: {top: '', bottom: ''},
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
     boxedDefaultPadding: {left: '', right: ''},
+    boxedSmallPadding: {top: '', bottom: ''},
     responsiveLayoutMargin: '',
 };
 
