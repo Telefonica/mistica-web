@@ -1,5 +1,7 @@
 import * as React from 'react';
-import {Switch, Inline, Text3, IconCheckRegular, IconCloseRegular, ResponsiveLayout, Box} from '..';
+import {Switch, Inline, Text3, ResponsiveLayout, Box} from '..';
+import IconCheckRegular from '@telefonica/mistica-icons/icon-check-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 
 import type {Variant} from '../theme-variant-context';
 

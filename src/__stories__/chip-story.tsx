@@ -1,14 +1,6 @@
 import * as React from 'react';
-import {
-    Box,
-    Checkbox,
-    Chip,
-    IconLightningFilled,
-    Inline,
-    RadioButton,
-    RadioGroup,
-    ResponsiveLayout,
-} from '..';
+import {Box, Checkbox, Chip, Inline, RadioButton, RadioGroup, ResponsiveLayout} from '..';
+import IconLightningFilled from '@telefonica/mistica-icons/icon-lightning-filled';
 
 import type {Variant} from '../theme-variant-context';
 import type {DataAttributes} from '../utils/types';

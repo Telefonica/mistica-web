@@ -16,7 +16,7 @@ import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {IconButton} from './icon-button';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import * as tokens from './text-tokens';
 
 import type {NonDeprecatedVariant} from './theme-variant-context';

@@ -3,7 +3,6 @@ import {
     FileUpload,
     ButtonPrimary,
     ButtonSecondary,
-    IconExportRegular,
     ResponsiveLayout,
     Box,
     Placeholder,
@@ -14,8 +13,9 @@ import {
     Grid,
     Image,
     IconButton,
-    IconCloseRegular,
 } from '..';
+import IconExportRegular from '@telefonica/mistica-icons/icon-export-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {vars as skinVars} from '../skins/skin-contract.css';
 import beachImg from './images/beach.jpg';
 

@@ -1,0 +1,6 @@
+{
+    "main": "../dist/icon-runtime.js",
+    "module": "../dist-es/icon-runtime.js",
+    "types": "../dist/icon-runtime.d.ts",
+    "sideEffects": false
+}

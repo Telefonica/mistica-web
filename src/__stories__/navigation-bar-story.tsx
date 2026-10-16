@@ -1,11 +1,6 @@
 import * as React from 'react';
-import {
-    NavigationBar,
-    NavigationBarAction,
-    NavigationBarActionGroup,
-    useScreenSize,
-    IconSearchRegular,
-} from '..';
+import {NavigationBar, NavigationBarAction, NavigationBarActionGroup, useScreenSize} from '..';
+import IconSearchRegular from '@telefonica/mistica-icons/icon-search-regular';
 
 import type {PadSize} from '../box';
 import type {Variant} from '../theme-variant-context';

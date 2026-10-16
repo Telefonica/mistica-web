@@ -4,7 +4,7 @@ import * as styles from './timeline.css';
 import classNames from 'classnames';
 import Circle from './circle';
 import {vars} from './skins/skin-contract.css';
-import IconCheckFilled from './generated/mistica-icons/icon-check-filled';
+import IconCheckFilled from '@telefonica/mistica-icons/icon-check-filled';
 import {Text1} from './text';
 import {useThemeVariant, ThemeVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
