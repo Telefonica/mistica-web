@@ -1,14 +1,12 @@
 import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 
-// Use the Vivo reference radius until the bubble token is published in mistica-design.
 const bubbleRadius = '4px';
 export const minimumBubbleSize = 48;
 export const bubblePaddingY = 12;
 export const bubblePaddingX = 16;
-export const minimumErrorWidth = 120;
+export const minimumErrorWidth = 184;
 const boxedErrorInset = 16;
-const minimumBoxedErrorWidth = minimumErrorWidth + boxedErrorInset;
 
 export const message = style({display: 'flex', width: 'fit-content', minWidth: 0});
 export const direction = styleVariants({
@@ -74,16 +72,10 @@ export const error = style({
     alignItems: 'flex-start',
     gap: 4,
     marginTop: 4,
-    minWidth: minimumErrorWidth,
+    minWidth: 0,
     overflowWrap: 'anywhere',
 });
-export const boxedError = style({paddingLeft: boxedErrorInset, minWidth: minimumBoxedErrorWidth});
-export const outgoingError = style({
-    marginLeft: `min(0px, calc(100% - ${minimumErrorWidth}px))`,
-    selectors: {
-        [`&${boxedError}`]: {marginLeft: `min(0px, calc(100% - ${minimumBoxedErrorWidth}px))`},
-    },
-});
+export const boxedError = style({paddingInline: boxedErrorInset});
 
 export const body = style({display: 'flex', flexDirection: 'column', gap: 4});
 export const inlineTimestamp = style({flexDirection: 'row', alignItems: 'baseline', gap: 8});
@@ -95,6 +87,10 @@ export const shortErrorLayout = styleVariants({
     outgoing: {display: 'flex', flexDirection: 'column', alignItems: 'flex-end'},
 });
 export const shortErrorBubble = style({width: 'fit-content', maxWidth: '100%'});
-export const shortErrorFooter = style({width: 'max-content', minWidth: 0, maxWidth: '100%'});
+export const shortErrorFooter = style({
+    width: 'max-content',
+    minWidth: `min(${minimumErrorWidth}px, 100%)`,
+    maxWidth: '100%',
+});
 
 export const sideDirection = styleVariants({incoming: {}, outgoing: {flexDirection: 'row-reverse'}});

@@ -41,9 +41,11 @@ test.each([
         throw new Error('Message error or bubble bounds not found');
     }
     const inset = await error.evaluate((element) => parseFloat(getComputedStyle(element).paddingLeft));
-    const minimumErrorContentWidth = 120;
-    expect(errorBounds.width - inset).toBeGreaterThanOrEqual(minimumErrorContentWidth);
+    const minimumErrorWidth = 184;
+    expect(errorBounds.width).toBeGreaterThanOrEqual(minimumErrorWidth);
     expect(inset).toBe(boxed ? 16 : 0);
+    const rightInset = await error.evaluate((element) => parseFloat(getComputedStyle(element).paddingRight));
+    expect(rightInset).toBe(boxed ? 16 : 0);
     expect(errorBounds.y - (bubbleBounds.y + bubbleBounds.height)).toBeCloseTo(4, 0);
     if (type === 'outgoing') {
         expect(errorBounds.x + errorBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);

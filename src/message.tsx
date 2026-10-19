@@ -221,7 +221,6 @@ const Message = ({
                             <div
                                 className={classnames(styles.error, {
                                     [styles.boxedError]: boxed,
-                                    [styles.outgoingError]: type === 'outgoing' && !shortError,
                                 })}
                                 role="alert"
                                 id={`${id}-error`}
