@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
@@ -13,6 +13,23 @@ test('renders pagination navigation landmark', () => {
     );
 
     expect(screen.getByRole('navigation', {name: 'Paginación - Página 1 de 5'})).toBeInTheDocument();
+});
+
+test.each([1, 3, 4, 10, 17, 18, 20])('shares page buttons in a single list at page %s', (currentPage) => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination totalPages={20} currentPage={currentPage} />
+        </ThemeContextProvider>
+    );
+
+    const list = screen.getByRole('list', {hidden: true});
+    const buttons = within(list).getAllByRole('button', {hidden: true});
+    const pageNumbers = buttons.map((button) => button.textContent);
+
+    expect(new Set(pageNumbers).size).toBe(pageNumbers.length);
+    expect(within(list).getByRole('button', {current: 'page', hidden: true})).toHaveTextContent(
+        String(currentPage)
+    );
 });
 
 test('does not render when there is a single page', () => {

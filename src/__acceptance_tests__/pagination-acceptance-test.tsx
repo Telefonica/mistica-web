@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {mediaQueriesConfig} from '../media-queries.css';
 
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_EDGE_OFFSET = {x: 47, y: 24};
@@ -48,3 +49,48 @@ test('Pagination ellipses are non-interactive', async () => {
 
     await screen.findByRole('button', {name: 'Página 10, página actual', current: 'page'});
 });
+
+test.each([
+    {currentPage: 3, desktop: ['1', '2', '3', '4', '5', '...', '20'], mobile: ['1', '2', '3', '4', '...']},
+    {
+        currentPage: 10,
+        desktop: ['1', '...', '9', '10', '11', '...', '20'],
+        mobile: ['...', '9', '10', '11', '...'],
+    },
+    {
+        currentPage: 18,
+        desktop: ['1', '...', '16', '17', '18', '19', '20'],
+        mobile: ['...', '17', '18', '19', '20'],
+    },
+])(
+    'Pagination keeps the same list when resizing at page $currentPage',
+    async ({currentPage, desktop, mobile}) => {
+        const page = await openStoryPage({
+            id: STORY_ID,
+            device: 'DESKTOP',
+            args: {totalPages: 20, currentPage, hideNavigationControls: true},
+        });
+        const list = await screen.findByRole('list');
+        const markup = await list.evaluate((element) => element.innerHTML);
+        const visibleItems = () =>
+            list.evaluate((element) =>
+                Array.from(element.children)
+                    .filter((item) => item.getBoundingClientRect().width > 0)
+                    .map((item) => item.textContent)
+            );
+
+        expect(await visibleItems()).toEqual(desktop);
+
+        const viewport = {
+            width: mediaQueriesConfig.desktopMinWidth,
+            height: mediaQueriesConfig.desktopOrTabletMinHeight,
+        };
+        await page.setViewport({...viewport, width: mediaQueriesConfig.desktopMinWidth - 1});
+        expect(await visibleItems()).toEqual(mobile);
+        expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
+
+        await page.setViewport(viewport);
+        expect(await visibleItems()).toEqual(desktop);
+        expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
+    }
+);

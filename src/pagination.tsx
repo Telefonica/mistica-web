@@ -43,6 +43,8 @@ export type PaginationProps = {
 type PageItem = {type: 'page'; page: number; current: boolean};
 type EllipsisItem = {type: 'ellipsis'};
 type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
+type Visibility = 'desktop' | 'mobile' | 'all';
+type ResponsivePaginationItem = PaginationItem & {visibility: Visibility};
 
 const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
 const FIRST_PAGE = 1;
@@ -139,6 +141,40 @@ export const getPaginationItems = ({
     return items;
 };
 
+const mergePaginationItems = (
+    desktopItems: Array<PaginationItem>,
+    mobileItems: Array<PaginationItem>
+): Array<ResponsivePaginationItem> => {
+    const items: Array<ResponsivePaginationItem> = [];
+    let mobileIndex = 0;
+
+    for (const desktopItem of desktopItems) {
+        const remainingMobileIndex = mobileIndex;
+        const matchingIndex = mobileItems.findIndex(
+            (mobileItem, index) =>
+                index >= remainingMobileIndex &&
+                mobileItem.type === desktopItem.type &&
+                mobileItem.page === desktopItem.page
+        );
+
+        if (matchingIndex === -1) {
+            items.push({...desktopItem, visibility: 'desktop'});
+        } else {
+            for (; mobileIndex < matchingIndex; mobileIndex++) {
+                items.push({...mobileItems[mobileIndex], visibility: 'mobile'});
+            }
+            items.push({...desktopItem, visibility: 'all'});
+            mobileIndex++;
+        }
+    }
+
+    for (; mobileIndex < mobileItems.length; mobileIndex++) {
+        items.push({...mobileItems[mobileIndex], visibility: 'mobile'});
+    }
+
+    return items;
+};
+
 const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element => {
     return (
         <Text3 as="span" medium color="currentColor" wordBreak={false}>
@@ -159,13 +195,12 @@ const getEllipsisColor = (variant: NonDeprecatedVariant): string => {
 };
 
 type PageListProps = {
-    items: Array<PaginationItem>;
+    items: Array<ResponsivePaginationItem>;
     disabled?: boolean;
-    className?: string;
     onPageClick: (page: number) => void;
 };
 
-const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
+const PageList = ({items, disabled, onPageClick}: PageListProps): JSX.Element => {
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
     const goToPageLabel = (page: number) =>
@@ -174,11 +209,12 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
         t(texts.paginationCurrentPage || tokens.paginationCurrentPage, String(page));
 
     return (
-        <ol className={classnames(styles.pageList, className)}>
+        <ol className={styles.pageList}>
             {items.map((item, index) => {
+                const className = classnames(styles.pageListItem, styles.itemVisibility[item.visibility]);
                 if (item.type === 'ellipsis') {
                     return (
-                        <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
+                        <li key={`ellipsis-${index}`} className={className} aria-hidden="true">
                             <Text3 as="span" medium color={getEllipsisColor(variant)} wordBreak={false}>
                                 ...
                             </Text3>
@@ -188,7 +224,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
 
                 if (item.current) {
                     return (
-                        <li key={item.page} className={styles.pageListItem}>
+                        <li key={item.page} className={className}>
                             <Touchable
                                 className={classnames(
                                     styles.currentPage,
@@ -208,7 +244,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 }
 
                 return (
-                    <li key={item.page} className={styles.pageListItem}>
+                    <li key={item.page} className={className}>
                         <Touchable
                             className={classnames(styles.pageButton, styles.pageButtonVariants[variant])}
                             disabled={disabled}
@@ -329,20 +365,11 @@ export const Pagination = ({
                 ))}
 
             {!hidePageList && (
-                <>
-                    <PageList
-                        items={desktopItems}
-                        disabled={disabled}
-                        className={styles.pageListDesktop}
-                        onPageClick={goToPage}
-                    />
-                    <PageList
-                        items={mobileItems}
-                        disabled={disabled}
-                        className={styles.pageListMobile}
-                        onPageClick={goToPage}
-                    />
-                </>
+                <PageList
+                    items={mergePaginationItems(desktopItems, mobileItems)}
+                    disabled={disabled}
+                    onPageClick={goToPage}
+                />
             )}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
