@@ -68,7 +68,7 @@ export const unboxedActions = style({marginLeft: -8});
 export const error = style({
     boxSizing: 'border-box',
     display: 'grid',
-    gridTemplateColumns: '16px minmax(0, 1fr)',
+    gridTemplateColumns: 'auto minmax(0, 1fr)',
     alignItems: 'flex-start',
     gap: 4,
     marginTop: 4,
@@ -76,6 +76,11 @@ export const error = style({
     overflowWrap: 'anywhere',
 });
 export const boxedError = style({paddingInline: boxedErrorInset});
+export const errorIcon = style({
+    display: 'block',
+    width: ['1rem', '1lh'],
+    height: ['1rem', '1lh'],
+});
 
 export const body = style({display: 'flex', flexDirection: 'column', gap: 4});
 export const inlineTimestamp = style({flexDirection: 'row', alignItems: 'baseline', gap: 8});

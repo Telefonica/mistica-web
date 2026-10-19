@@ -225,7 +225,9 @@ const Message = ({
                                 role="alert"
                                 id={`${id}-error`}
                             >
-                                <IconWarningRegular size={16} color={vars.colors.textError} />
+                                <Text1 regular color={vars.colors.textError}>
+                                    <IconWarningRegular color="currentColor" className={styles.errorIcon} />
+                                </Text1>
                                 <Text1 regular color={vars.colors.textError}>
                                     {errorText}
                                 </Text1>
