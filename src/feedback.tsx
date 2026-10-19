@@ -34,6 +34,8 @@ const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps)
 
 type HapticFeedback = 'error' | 'success';
 
+const successFeedbackAsset = <IconSuccess size="100%" />;
+
 const requestVibration = (type: HapticFeedback) => {
     if (isWebViewBridgeAvailable()) {
         requestVibrationNative(type).catch(() => {});
@@ -60,7 +62,10 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 const renderFeedbackBody = (
     {asset, title, description, slot}: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'slot'>,
     animateText: boolean,
-    textPresets: Pick<Theme['textPresets'], 'feedbackScreenDescription' | 'feedbackScreenTitle'>
+    {
+        feedbackScreenTitle: titlePreset,
+        feedbackScreenDescription: descriptionPreset,
+    }: Pick<Theme['textPresets'], 'feedbackScreenDescription' | 'feedbackScreenTitle'>
 ) => {
     const normalizedDescription =
         description && Array.isArray(description) ? (
@@ -79,7 +84,7 @@ const renderFeedbackBody = (
             </div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
                 <div className={classnames(animateText && styles.feedbackTextAppearFast)} data-testid="title">
-                    <Text {...getTextSizesWithWeight({textPreset: textPresets.feedbackScreenTitle})} as="h1">
+                    <Text {...getTextSizesWithWeight({textPreset: titlePreset})} as="h1">
                         {title}
                     </Text>
                 </div>
@@ -92,7 +97,7 @@ const renderFeedbackBody = (
                         {normalizedDescription && (
                             <Text
                                 {...getTextSizesWithWeight({
-                                    textPreset: textPresets.feedbackScreenDescription,
+                                    textPreset: descriptionPreset,
                                 })}
                                 color={vars.colors.textSecondary}
                             >
@@ -301,7 +306,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
                     : 'default'
             }
             hapticFeedback="success"
-            asset={<IconSuccess size="100%" />}
+            asset={successFeedbackAsset}
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
@@ -386,9 +391,8 @@ export const SuccessFeedback = ({
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
     const {platformOverrides, themeVariants, textPresets} = useTheme();
-    const asset = <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
-        {asset, title, description, slot},
+        {asset: successFeedbackAsset, title, description, slot},
         areAnimationsSupported(platformOverrides),
         textPresets
     );
