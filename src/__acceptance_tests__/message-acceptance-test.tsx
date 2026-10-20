@@ -191,7 +191,7 @@ test('Short error helper grows beyond its minimum width without wrapping unneces
 });
 
 test.each([true, false])(
-    'Children inherit message typography and allow overrides (boxed: %s)',
+    'Content slots inherit message typography and allow overrides (boxed: %s)',
     async (boxed) => {
         await openStoryPage({
             id: 'components-message--content-typography',
@@ -212,7 +212,7 @@ test.each([true, false])(
             });
         };
         const defaultTypography = await typography('Default text');
-        expect(await typography('Plain children')).toEqual(defaultTypography);
+        expect(await typography('Plain content')).toEqual(defaultTypography);
         expect(await typography('Inherited text')).toEqual(defaultTypography);
         const customTypography = await typography('Custom text');
         const referenceTypography = await typography('Custom reference');

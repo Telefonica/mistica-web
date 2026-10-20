@@ -143,7 +143,7 @@ const MessageExample = (args: Args) => {
     const content = args.error
         ? {error: true as const, errorMessage: args.errorMessage || undefined, text: args.text}
         : {
-              ...(args.contentSlot ? {children: <Placeholder height={80} />} : {text: args.text}),
+              ...(args.contentSlot ? {contentSlot: <Placeholder height={80} />} : {text: args.text}),
               footer: args.footer ? <Text1 regular>Delivered</Text1> : undefined,
               side: args.side ? <IconCheckRegular size={16} /> : undefined,
               actions: args.actions ? actions : undefined,
@@ -368,13 +368,9 @@ export const ContentTypography: StoryComponent<Args> = (args) => (
         <Box padding={16}>
             <Stack space={16}>
                 <Message boxed={args.boxed} text="Default text" />
-                <Message boxed={args.boxed}>Plain children</Message>
-                <Message boxed={args.boxed}>
-                    <Text>Inherited text</Text>
-                </Message>
-                <Message boxed={args.boxed}>
-                    <Text3 bold>Custom text</Text3>
-                </Message>
+                <Message boxed={args.boxed} contentSlot="Plain content" />
+                <Message boxed={args.boxed} contentSlot={<Text>Inherited text</Text>} />
+                <Message boxed={args.boxed} contentSlot={<Text3 bold>Custom text</Text3>} />
                 <Text3 bold>Custom reference</Text3>
             </Stack>
         </Box>

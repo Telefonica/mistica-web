@@ -31,9 +31,8 @@ test('interactive messages group sender, slot, footer and timestamp in reading o
             timestampLabel="One o'clock"
             footer={<span>Delivered</span>}
             onPress={() => {}}
-        >
-            <span>Details</span>
-        </Message>
+            contentSlot={<span>Details</span>}
+        />
     );
     expect(
         screen.getByRole('button', {name: "Mensaje: Ana, support Details Delivered One o'clock"})

@@ -4900,9 +4900,9 @@ export default [
       actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
     />
     <Message senderName="Adriana" timestamp="13:33" footer={<Text1 regular>Entregado</Text1>}
-      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}>
-      <Placeholder height={80} />
-    </Message>
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}
+      contentSlot={<Placeholder height={80} />}
+    />
     <Message type="outgoing" text="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
     <Message text="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
   </Stack>

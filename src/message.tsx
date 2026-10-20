@@ -52,7 +52,7 @@ export type MessageProps = TouchableComponentProps<
                   side?: React.ReactNode;
                   actions?: MessageActions;
                   actionsPosition?: 'side' | 'footer';
-              } & ExclusifyUnion<{text?: string} | {children?: React.ReactNode}>)
+              } & ExclusifyUnion<{text?: string} | {contentSlot?: React.ReactNode}>)
         >
 >;
 
@@ -70,7 +70,7 @@ const Message = ({
     maxWidth = '80%',
     position = 'standalone',
     text,
-    children,
+    contentSlot,
     footer,
     side,
     actions,
@@ -191,7 +191,7 @@ const Message = ({
                                         </Text2>
                                     ) : (
                                         <Text2 regular as="div">
-                                            {children}
+                                            {contentSlot}
                                         </Text2>
                                     )}
                                 </div>
