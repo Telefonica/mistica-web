@@ -353,7 +353,7 @@ const PreviewToolsComponent = ({
     if (hide) {
         return (
             <>
-                {border}
+                <Portal>{border}</Portal>
                 {children}
             </>
         );
@@ -363,6 +363,7 @@ const PreviewToolsComponent = ({
             <>
                 {children}
                 <Portal>
+                    {border}
                     <CSSTransition
                         in={showControls}
                         nodeRef={controlsRef}
