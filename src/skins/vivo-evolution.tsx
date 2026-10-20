@@ -737,8 +737,8 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             cardSubtitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             cardSubtitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 14, mobile: 12}},
             cardTitle: {weight: 'medium'},
-            cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
-            cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 18, mobile: 16}},
+            cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 16}},
+            cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 18, mobile: 14}},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 16, mobile: 14},
