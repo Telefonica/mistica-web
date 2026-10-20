@@ -3,6 +3,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import Touchable from './touchable';
+import Avatar from './avatar';
 import {Text1, Text2} from './text';
 import {IconButton} from './icon-button';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
@@ -26,6 +27,7 @@ type MessageAction = IconButtonProps & {
     bleedY?: never;
 };
 type MessageActions = readonly [MessageAction] | readonly [MessageAction, MessageAction];
+const avatarSize = 40;
 
 export type MessageProps = TouchableComponentProps<
     {
@@ -88,7 +90,7 @@ const Message = ({
     const shortError = error && bubbleContentWidth > 0 && bubbleWidth < styles.minimumErrorWidth;
     const inlineTimestamp = boxed && textWidth > 0 && textWidth < styles.minimumBubbleSize;
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
-    const errorText = errorMessage ?? t(tokens.messageError);
+    const errorText = errorMessage ?? t(touchableProps.onPress ? tokens.messageError : tokens.messageNotSent);
     const directionLabel = t(type === 'incoming' ? tokens.messageIncoming : tokens.messageOutgoing);
     const renderActions = () =>
         actions?.map((action, index) => <IconButton key={index} {...action} small type="neutral" />);
@@ -120,7 +122,11 @@ const Message = ({
                     }
                 >
                     <Touchable maybe onPress={onAssetPress} aria-label={assetLabel}>
-                        <span aria-hidden>{asset}</span>
+                        <span aria-hidden>
+                            {React.isValidElement<{size: number}>(asset) && asset.type === Avatar
+                                ? React.cloneElement(asset, {size: avatarSize})
+                                : asset}
+                        </span>
                     </Touchable>
                 </div>
             )}

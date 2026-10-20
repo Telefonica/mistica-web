@@ -26,6 +26,7 @@ type Args = {
     timestamp: string;
     timestampLabel: string;
     asset: boolean;
+    avatarSize: number;
     interactiveAsset: boolean;
     assetLabel: string;
     boxed: boolean;
@@ -54,6 +55,7 @@ const defaultArgs: Args = {
     timestamp: '13:32',
     timestampLabel: '13:32',
     asset: true,
+    avatarSize: 40,
     interactiveAsset: false,
     assetLabel: 'Open profile',
     boxed: true,
@@ -90,6 +92,7 @@ export default {
         timestamp: {control: 'text'},
         timestampLabel: {control: 'text'},
         asset: {control: 'boolean'},
+        avatarSize: {control: 'number', if: {arg: 'asset'}},
         interactiveAsset: {control: 'boolean', if: {arg: 'asset'}},
         assetLabel: {control: 'text', if: {arg: 'interactiveAsset'}},
         boxed: {
@@ -155,7 +158,7 @@ const MessageExample = (args: Args) => {
             senderNameLabel={args.senderNameLabel || undefined}
             timestamp={args.timestamp}
             timestampLabel={args.timestampLabel || undefined}
-            asset={args.asset ? <Avatar size={40} initials="JD" /> : undefined}
+            asset={args.asset ? <Avatar size={args.avatarSize} initials="JD" /> : undefined}
             {...(args.interactiveAsset
                 ? {onAssetPress: () => window.alert('Profile'), assetLabel: args.assetLabel}
                 : {onAssetPress: undefined, assetLabel: undefined})}
@@ -197,7 +200,7 @@ export const Conversation: StoryComponent<Args> = (args) => {
                 <Stack space={16}>
                     <Message
                         {...common}
-                        asset={args.asset ? <Avatar size={40} initials="AP" /> : undefined}
+                        asset={args.asset ? <Avatar size={args.avatarSize} initials="AP" /> : undefined}
                         senderName={args.senderName}
                         text={args.text}
                         timestamp={args.timestamp}
@@ -288,7 +291,7 @@ ErrorExamples.args = {
     variantOutside: 'alternative',
     errorMessage: "Couldn't send. Tap to retry",
     shortText: 'Ok',
-    shortErrorMessage: 'Failed. Tap to retry.',
+    shortErrorMessage: 'Error message long text.',
     longErrorMessage:
         'Error message long text. Error long text. Error message long text. Error message long text.',
 };

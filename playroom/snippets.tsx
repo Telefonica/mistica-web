@@ -4816,6 +4816,16 @@ export default [
     },
     {
         group: 'Message',
+        name: 'Basic conversation',
+        code: `<Box padding={16}>
+  <Stack space={16}>
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Message type="outgoing" text="Sí" timestamp="16:46" />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
         name: 'Conversation with avatars and groups',
         code: `<Box padding={16}>
   <Stack space={24}>

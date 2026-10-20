@@ -807,3 +807,10 @@ export const messageError: TextToken = {
     pt: 'Não enviada. Clique para reenviar.',
     de: 'Nicht gesendet. Zum Wiederholen tippen.',
 };
+
+export const messageNotSent: TextToken = {
+    es: 'No enviado.',
+    en: 'Not sent.',
+    pt: 'Não enviada.',
+    de: 'Nicht gesendet.',
+};

@@ -92,7 +92,8 @@ test('Message uses an inline timestamp for short text', async () => {
     if (!textBounds || !timestampBounds) {
         throw new Error('Message text or timestamp bounds not found');
     }
-    expect(timestampBounds.x).toBeGreaterThan(textBounds.x + textBounds.width);
+    const inlineTimestampGap = 8;
+    expect(timestampBounds.x - (textBounds.x + textBounds.width)).toBeCloseTo(inlineTimestampGap, 0);
     expect(Math.abs(timestampBounds.y - textBounds.y)).toBeLessThan(8);
 });
 
@@ -145,9 +146,38 @@ test.each([true, false])(
     }
 );
 
+test.each(['incoming', 'outgoing'])('Message renders oversized avatars at 40px: %s', async (type) => {
+    await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, avatarSize: 190}});
+    const avatar = await screen.findByTestId('Avatar');
+    const bounds = await avatar.boundingBox();
+    expect(bounds?.width).toBe(40);
+    expect(bounds?.height).toBe(40);
+});
+
 test('Short error helper grows beyond its minimum width without wrapping unnecessarily', async () => {
-    await openStoryPage({id: 'components-message--error-examples', device: 'MOBILE_IOS'});
-    const helper = await screen.findByText('Failed. Tap to retry.');
+    const errorMessage = 'Error message with longer text';
+    await openStoryPage({
+        id: 'components-message--error-examples',
+        device: 'MOBILE_IOS',
+        args: {shortErrorMessage: errorMessage},
+    });
+    const helper = await screen.findByText(errorMessage);
+    const insets = await helper.evaluate((element) => {
+        const alert = element.closest('[role="alert"]');
+        const icon = alert?.querySelector('svg');
+        if (!alert || !icon) {
+            throw new Error('Message error or icon not found');
+        }
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        return {
+            left: icon.getBoundingClientRect().left - alert.getBoundingClientRect().left,
+            right: alert.getBoundingClientRect().right - range.getBoundingClientRect().right,
+        };
+    });
+    const errorInset = 16;
+    expect(insets.left).toBeCloseTo(errorInset, 0);
+    expect(insets.right).toBeCloseTo(errorInset, 0);
     const isSingleLine = await helper.evaluate((element) => {
         const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
         return element.getBoundingClientRect().height <= lineHeight + 1;
