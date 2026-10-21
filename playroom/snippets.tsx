@@ -4854,7 +4854,7 @@ export default [
     {getState('messageSent', false) ? (
       <Message type="outgoing" text="Sí, el martes está bien." timestamp="16:50" />
     ) : (
-      <Message type="outgoing" text="Sí, el martes está bien." error onPress={() => setState('messageSent', true)} />
+      <Message type="outgoing" text="Sí, el martes está bien." error errorMessage="No enviado. Toca para reintentar." onPress={() => setState('messageSent', true)} />
     )}
     <Message text="Te enviaré los detalles." boxed={false} senderName="Adriana" footer={<IconTimeRegular size={16} />} />
   </Stack>

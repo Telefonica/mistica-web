@@ -45,7 +45,7 @@ export type MessageProps = TouchableComponentProps<
         {onAssetPress: PressHandler; assetLabel: string} | {onAssetPress?: undefined; assetLabel?: undefined}
     > &
         ExclusifyUnion<
-            | {error: true; errorMessage?: string; text?: string}
+            | {error: true; errorMessage: string; text?: string}
             | ({
                   error?: false;
                   footer?: React.ReactNode;
@@ -90,7 +90,6 @@ const Message = ({
     const shortError = error && bubbleContentWidth > 0 && bubbleWidth < styles.minimumErrorWidth;
     const inlineTimestamp = boxed && textWidth > 0 && textWidth < styles.minimumBubbleSize;
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
-    const errorText = errorMessage ?? t(touchableProps.onPress ? tokens.messageError : tokens.messageNotSent);
     const directionLabel = t(type === 'incoming' ? tokens.messageIncoming : tokens.messageOutgoing);
     const renderActions = () =>
         actions?.map((action, index) => <IconButton key={index} {...action} small type="neutral" />);
@@ -152,7 +151,7 @@ const Message = ({
                             className={classnames(styles.bubble, {
                                 [styles.boxed]: boxed,
                                 [styles.incomingBackground[variant]]: boxed && type === 'incoming' && !error,
-                                [styles.outgoingBackground]: boxed && type === 'outgoing' && !error,
+                                [styles.outgoingBackground[variant]]: boxed && type === 'outgoing' && !error,
                                 [styles.errorBackground]: boxed && error,
                                 [styles.interactive]: boxed && isInteractive,
                                 [styles.shortErrorBubble]: shortError,
@@ -235,7 +234,7 @@ const Message = ({
                                     <IconWarningRegular color="currentColor" className={styles.errorIcon} />
                                 </Text1>
                                 <Text1 regular color={vars.colors.textError}>
-                                    {errorText}
+                                    {errorMessage}
                                 </Text1>
                             </div>
                         </div>

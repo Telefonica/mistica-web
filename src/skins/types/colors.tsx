@@ -49,6 +49,16 @@ export type Colors = {
     backgroundDropZoneNegativeDragover: string;
     backgroundDropZoneMediaHover: string;
     backgroundDropZoneMediaDragover: string;
+    messageBubbleBackgroundOutgoing: string;
+    messageBubbleBackgroundOutgoingBrand: string;
+    messageBubbleBackgroundOutgoingAlternative: string;
+    messageBubbleBackgroundOutgoingNegative: string;
+    messageBubbleBackgroundOutgoingMedia: string;
+    messageBubbleBackgroundIncoming: string;
+    messageBubbleBackgroundIncomingBrand: string;
+    messageBubbleBackgroundIncomingAlternative: string;
+    messageBubbleBackgroundIncomingNegative: string;
+    messageBubbleBackgroundIncomingMedia: string;
     skeletonWave: string;
     borderLow: string;
     border: string;

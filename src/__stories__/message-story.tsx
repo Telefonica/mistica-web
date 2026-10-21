@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {
     Avatar,
+    Image,
+    IconMobileDeviceRegular,
     Box,
     Message,
     ResponsiveLayout,
@@ -14,6 +16,7 @@ import {
     Placeholder,
     skinVars,
 } from '..';
+import avatarImg from './images/avatar.jpg';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -27,6 +30,7 @@ type Args = {
     timestampLabel: string;
     asset: boolean;
     avatarSize: number;
+    assetType: 'avatar' | 'image' | 'icon';
     interactiveAsset: boolean;
     assetLabel: string;
     boxed: boolean;
@@ -56,13 +60,14 @@ const defaultArgs: Args = {
     timestampLabel: '13:32',
     asset: true,
     avatarSize: 40,
+    assetType: 'avatar',
     interactiveAsset: false,
     assetLabel: 'Open profile',
     boxed: true,
     maxWidth: '80%',
     position: 'standalone',
     error: false,
-    errorMessage: '',
+    errorMessage: 'Error text',
     interaction: 'none',
     ariaLabel: '',
     href: 'https://example.com',
@@ -92,7 +97,8 @@ export default {
         timestamp: {control: 'text'},
         timestampLabel: {control: 'text'},
         asset: {control: 'boolean'},
-        avatarSize: {control: 'number', if: {arg: 'asset'}},
+        assetType: {options: ['avatar', 'image', 'icon'], control: 'select', if: {arg: 'asset'}},
+        avatarSize: {control: 'number', if: {arg: 'assetType', eq: 'avatar'}},
         interactiveAsset: {control: 'boolean', if: {arg: 'asset'}},
         assetLabel: {control: 'text', if: {arg: 'interactiveAsset'}},
         boxed: {
@@ -106,7 +112,7 @@ export default {
             if: {arg: 'boxed'},
         },
         error: {control: 'boolean'},
-        errorMessage: {control: 'text', if: {arg: 'error'}},
+        errorMessage: {control: 'text'},
         interaction: {options: ['none', 'onPress', 'href'], control: 'select'},
         ariaLabel: {control: 'text'},
         href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
@@ -127,6 +133,20 @@ export default {
     },
 };
 
+const getAsset = (args: Args, initials: string) => {
+    if (!args.asset) {
+        return undefined;
+    }
+    switch (args.assetType) {
+        case 'image':
+            return <Image src={avatarImg} width={40} aspectRatio="1:1" />;
+        case 'icon':
+            return <IconMobileDeviceRegular size={24} />;
+        default:
+            return <Avatar size={args.avatarSize} initials={initials} />;
+    }
+};
+
 const MessageExample = (args: Args) => {
     const copyAction = {
         Icon: IconCopyRegular,
@@ -141,7 +161,7 @@ const MessageExample = (args: Args) => {
     const actions =
         args.actionsCount === 2 ? ([copyAction, reminderAction] as const) : ([copyAction] as const);
     const content = args.error
-        ? {error: true as const, errorMessage: args.errorMessage || undefined, text: args.text}
+        ? {error: true as const, errorMessage: args.errorMessage, text: args.text}
         : {
               ...(args.contentSlot ? {contentSlot: <Placeholder height={80} />} : {text: args.text}),
               footer: args.footer ? <Text1 regular>Delivered</Text1> : undefined,
@@ -158,7 +178,7 @@ const MessageExample = (args: Args) => {
             senderNameLabel={args.senderNameLabel || undefined}
             timestamp={args.timestamp}
             timestampLabel={args.timestampLabel || undefined}
-            asset={args.asset ? <Avatar size={args.avatarSize} initials="JD" /> : undefined}
+            asset={getAsset(args, 'JD')}
             {...(args.interactiveAsset
                 ? {onAssetPress: () => window.alert('Profile'), assetLabel: args.assetLabel}
                 : {onAssetPress: undefined, assetLabel: undefined})}
@@ -200,7 +220,7 @@ export const Conversation: StoryComponent<Args> = (args) => {
                 <Stack space={16}>
                     <Message
                         {...common}
-                        asset={args.asset ? <Avatar size={args.avatarSize} initials="AP" /> : undefined}
+                        asset={getAsset(args, 'AP')}
                         senderName={args.senderName}
                         text={args.text}
                         timestamp={args.timestamp}
@@ -216,7 +236,7 @@ export const Conversation: StoryComponent<Args> = (args) => {
                             type="outgoing"
                             text="Tuesday, please."
                             error
-                            errorMessage={args.errorMessage || undefined}
+                            errorMessage={args.errorMessage}
                             onPress={() => setFailed(false)}
                         />
                     ) : (
@@ -253,6 +273,9 @@ Conversation.parameters = {
             'senderNameAs',
             'timestamp',
             'asset',
+            'assetType',
+            'avatarSize',
+            'errorMessage',
             'boxed',
             'maxWidth',
             'variantOutside',
@@ -310,6 +333,8 @@ ErrorExamples.parameters = {
             'shortErrorMessage',
             'longErrorMessage',
             'asset',
+            'assetType',
+            'avatarSize',
             'boxed',
             'maxWidth',
             'variantOutside',
@@ -348,6 +373,8 @@ SlotsAndActions.parameters = {
             'senderNameAs',
             'timestamp',
             'asset',
+            'assetType',
+            'avatarSize',
             'interactiveAsset',
             'assetLabel',
             'boxed',

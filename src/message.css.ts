@@ -46,19 +46,28 @@ export const boxed = style({
     minHeight: minimumBubbleSize,
 });
 export const incomingBackground = styleVariants({
-    default: {background: vars.colors.backgroundContainerAlternative},
-    brand: {background: vars.colors.backgroundContainer},
-    negative: {background: vars.colors.backgroundContainer},
-    alternative: {background: vars.colors.backgroundContainer},
-    media: {background: vars.colors.backgroundContainer},
+    default: {background: vars.colors.messageBubbleBackgroundIncoming},
+    brand: {background: vars.colors.messageBubbleBackgroundIncomingBrand},
+    negative: {background: vars.colors.messageBubbleBackgroundIncomingNegative},
+    alternative: {background: vars.colors.messageBubbleBackgroundIncomingAlternative},
+    media: {background: vars.colors.messageBubbleBackgroundIncomingMedia},
 });
-// Use brandLow until backgroundBubbleOutgoing is published in mistica-design.
-export const outgoingBackground = style({background: vars.colors.brandLow});
+export const outgoingBackground = styleVariants({
+    default: {background: vars.colors.messageBubbleBackgroundOutgoing},
+    brand: {background: vars.colors.messageBubbleBackgroundOutgoingBrand},
+    negative: {background: vars.colors.messageBubbleBackgroundOutgoingNegative},
+    alternative: {background: vars.colors.messageBubbleBackgroundOutgoingAlternative},
+    media: {background: vars.colors.messageBubbleBackgroundOutgoingMedia},
+});
 export const errorBackground = style({background: vars.colors.backgroundContainerError});
 export const interactive = style({
     selectors: {
-        [`${touchable}:hover &`]: {background: vars.colors.backgroundContainerHover},
-        [`${touchable}:active &`]: {background: vars.colors.backgroundContainerPressed},
+        [`${touchable}:hover &`]: {
+            backgroundImage: `linear-gradient(${vars.colors.backgroundContainerHover}, ${vars.colors.backgroundContainerHover})`,
+        },
+        [`${touchable}:active &`]: {
+            backgroundImage: `linear-gradient(${vars.colors.backgroundContainerPressed}, ${vars.colors.backgroundContainerPressed})`,
+        },
     },
 });
 export const content = style({minWidth: 0, whiteSpace: 'pre-wrap'});

@@ -99,15 +99,15 @@ test('errors announce a custom message, hide the timestamp and can be retried', 
     expect(retry).toHaveBeenCalledTimes(1);
 });
 
-test('errors use a localized default and do not assume a retry action', () => {
-    renderMessage(<Message type="outgoing" text="Hello" error />);
-    expect(screen.getByRole('alert')).toHaveTextContent(/^No enviado\.$/);
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-});
-
-test('errors with a retry action use the localized retry instruction', () => {
-    renderMessage(<Message type="outgoing" text="Hello" error onPress={() => {}} />);
-    expect(screen.getByRole('alert')).toHaveTextContent('No enviado. Toca para reintentar.');
+test.each([false, true])('errors display the product message regardless of retry action: %s', (retry) => {
+    renderMessage(
+        retry ? (
+            <Message type="outgoing" text="Hello" error errorMessage="Contact support" onPress={() => {}} />
+        ) : (
+            <Message type="outgoing" text="Hello" error errorMessage="Contact support" />
+        )
+    );
+    expect(screen.getByRole('alert')).toHaveTextContent(/^Contact support$/);
 });
 
 test('explicit accessible labels override the generated name', () => {

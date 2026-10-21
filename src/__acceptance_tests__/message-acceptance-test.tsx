@@ -99,9 +99,7 @@ test('Message uses an inline timestamp for short text', async () => {
 
 test('Message retry replaces the error with its delivered timestamp', async () => {
     await openStoryPage({id: 'components-message--conversation', device: 'MOBILE_IOS'});
-    await (
-        await screen.findByRole('button', {name: 'Tú: Tuesday, please. No enviado. Toca para reintentar.'})
-    ).click();
+    await (await screen.findByRole('button', {name: 'Tú: Tuesday, please. Error text'})).click();
     await screen.findByText('16:50');
     const messages = await screen.findByTestId('messages');
     expect(await messages.evaluate((element) => element.querySelector('[role=alert]'))).toBeNull();
@@ -221,3 +219,30 @@ test.each([true, false])(
         expect(customTypography.fontWeight).not.toBe(defaultTypography.fontWeight);
     }
 );
+
+test.each(['incoming', 'outgoing'])('Message keeps its bubble fill on hover and press: %s', async (type) => {
+    await openStoryPage({
+        id: story,
+        device: 'DESKTOP',
+        args: {type, variantOutside: 'negative', interaction: 'onPress'},
+    });
+    const bubble = await screen.findByTestId('MessageBubble');
+    const background = await bubble.evaluate((element) => getComputedStyle(element).backgroundColor);
+    await bubble.hover();
+    expect(await bubble.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(background);
+    expect(
+        (await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze()).violations
+    ).toEqual([]);
+    await getGlobalPage().mouse.down();
+    try {
+        expect(await bubble.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(
+            background
+        );
+        expect(
+            (await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze()).violations
+        ).toEqual([]);
+    } finally {
+        await getGlobalPage().mouse.move(0, 0);
+        await getGlobalPage().mouse.up();
+    }
+});
