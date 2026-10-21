@@ -9,7 +9,7 @@ export default {
 type Args = {
     variant: 'default' | 'brand' | 'negative' | 'alternative';
     variantOutside: 'default' | 'brand' | 'negative' | 'alternative';
-    borderRadius: number;
+    borderRadius?: number;
 };
 
 export const Default: StoryComponent<Args> = ({variant, variantOutside, borderRadius}) => {
@@ -30,7 +30,6 @@ Default.storyName = 'Boxed';
 Default.args = {
     variant: 'default',
     variantOutside: 'default',
-    borderRadius: 16,
 };
 Default.argTypes = {
     variant: {options: ['default', 'brand', 'negative', 'alternative'], control: {type: 'select'}},
