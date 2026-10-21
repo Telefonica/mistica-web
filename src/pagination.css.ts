@@ -64,7 +64,7 @@ export const pageListItem = style([
 ]);
 
 export const itemVisibility = styleVariants({
-    all: {},
+    any: {},
     desktop: {
         display: 'none',
         '@media': {

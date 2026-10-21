@@ -43,7 +43,7 @@ export type PaginationProps = {
 type PageItem = {type: 'page'; page: number; current: boolean};
 type EllipsisItem = {type: 'ellipsis'};
 type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
-type Visibility = 'desktop' | 'mobile' | 'all';
+type Visibility = 'desktop' | 'mobile' | 'any';
 type ResponsivePaginationItem = PaginationItem & {visibility: Visibility};
 
 const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
@@ -141,6 +141,11 @@ export const getPaginationItems = ({
     return items;
 };
 
+/**
+ * Merges both viewport sequences, preserving their order and sharing common items.
+ * For desktop [1, ..., 9, 10, 11, ..., 20] and mobile [..., 9, 10, 11, ...],
+ * the result is [1 (desktop), ... (any), 9 (any), 10 (any), 11 (any), ... (any), 20 (desktop)].
+ */
 const mergePaginationItems = (
     desktopItems: Array<PaginationItem>,
     mobileItems: Array<PaginationItem>
@@ -163,7 +168,7 @@ const mergePaginationItems = (
             for (; mobileIndex < matchingIndex; mobileIndex++) {
                 items.push({...mobileItems[mobileIndex], visibility: 'mobile'});
             }
-            items.push({...desktopItem, visibility: 'all'});
+            items.push({...desktopItem, visibility: 'any'});
             mobileIndex++;
         }
     }

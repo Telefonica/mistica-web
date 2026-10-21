@@ -1,8 +1,13 @@
 import {openStoryPage, screen} from '../test-utils';
 import {mediaQueriesConfig} from '../media-queries.css';
 
+import type {SerializedAXNode} from 'puppeteer';
+
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_EDGE_OFFSET = {x: 47, y: 24};
+
+const getAccessibleButtons = (node: SerializedAXNode): Array<SerializedAXNode> =>
+    node.role === 'button' ? [node] : (node.children ?? []).flatMap(getAccessibleButtons);
 
 test('Pagination page items are clickable across their mobile target area', async () => {
     await openStoryPage({
@@ -79,7 +84,26 @@ test.each([
                     .map((item) => item.textContent)
             );
 
+        const expectAccessiblePages = async (items: Array<string>) => {
+            const tree = await page.accessibility.snapshot({root: list, interestingOnly: false});
+            expect(tree).not.toBeNull();
+            const buttons = tree ? getAccessibleButtons(tree) : [];
+            expect(buttons.map(({name}) => name)).toEqual(
+                items
+                    .filter((item) => item !== '...')
+                    .map((item) =>
+                        Number(item) === currentPage
+                            ? `Página ${item}, página actual`
+                            : `Ir a la página ${item}`
+                    )
+            );
+            expect(buttons.find(({name}) => name === `Página ${currentPage}, página actual`)).toMatchObject({
+                disabled: true,
+            });
+        };
+
         expect(await visibleItems()).toEqual(desktop);
+        await expectAccessiblePages(desktop);
 
         const viewport = {
             width: mediaQueriesConfig.desktopMinWidth,
@@ -87,10 +111,12 @@ test.each([
         };
         await page.setViewport({...viewport, width: mediaQueriesConfig.desktopMinWidth - 1});
         expect(await visibleItems()).toEqual(mobile);
+        await expectAccessiblePages(mobile);
         expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
 
         await page.setViewport(viewport);
         expect(await visibleItems()).toEqual(desktop);
+        await expectAccessiblePages(desktop);
         expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
     }
 );
