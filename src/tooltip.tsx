@@ -70,8 +70,9 @@ const getElementDimensionsWithoutPadding = (element: HTMLElement) => {
         parseFloat(getComputedStyle(element, null).paddingTop) +
         parseFloat(getComputedStyle(element, null).paddingBottom);
 
-    const width = element.offsetWidth - horizontalPadding;
-    const height = element.offsetHeight - verticalPadding;
+    const rect = element.getBoundingClientRect();
+    const width = rect.width - horizontalPadding;
+    const height = rect.height - verticalPadding;
     return {width, height};
 };
 

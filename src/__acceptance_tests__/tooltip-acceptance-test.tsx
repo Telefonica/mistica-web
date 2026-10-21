@@ -230,3 +230,38 @@ test.each(['Tooltip', 'Popover'])(
         });
     }
 );
+
+describe.each(['Tooltip', 'Popover'])('%s mobile positioning', (component) => {
+    test.each(['default', 'brand'])('remains stable in the %s variant', async (variantOutside) => {
+        const page = await openStoryPage({
+            id: `components-${component.toLowerCase()}--default`,
+            device: 'MOBILE_IOS',
+            args: {variantOutside},
+        });
+        await (await screen.findByRole('button', {name: `${component} target`})).click();
+        const tooltip = await screen.findByRole('tooltip');
+        await page.evaluate(() => document.fonts.ready.then(() => undefined));
+
+        await waitFor(async () => {
+            const positions = await tooltip.evaluate(
+                (element) =>
+                    new Promise<Array<string>>((resolve) => {
+                        const panel = element.firstElementChild?.firstElementChild as HTMLElement;
+                        const samples: Array<string> = [];
+                        const STABILITY_FRAMES = 30;
+                        const sample = () => {
+                            samples.push(JSON.stringify(panel.getBoundingClientRect().toJSON()));
+                            if (samples.length === STABILITY_FRAMES) {
+                                resolve(samples);
+                            } else {
+                                requestAnimationFrame(sample);
+                            }
+                        };
+                        requestAnimationFrame(sample);
+                    })
+            );
+            expect([...new Set(positions)]).toEqual([positions[0]]);
+        });
+        expect(await tooltip.evaluate((element) => getComputedStyle(element).visibility)).toBe('visible');
+    });
+});
