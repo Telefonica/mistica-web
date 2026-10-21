@@ -528,7 +528,7 @@
     --mistica-font-weight-feedbackScreenDescription: 400;
     --mistica-font-size-cardPretitleSnap: 0.75rem;
     --mistica-line-height-cardPretitleSnap: 1.25rem;
-    --mistica-font-size-cardTitleSnap: 1rem;
+    --mistica-font-size-cardTitleSnap: 0.875rem;
     --mistica-line-height-cardTitleSnap: 1.25rem;
     --mistica-font-size-cardSubtitleSnap: 0.75rem;
     --mistica-line-height-cardSubtitleSnap: 1.25rem;
@@ -536,7 +536,7 @@
     --mistica-line-height-cardDescriptionSnap: 1.25rem;
     --mistica-font-size-cardPretitleDefault: 0.875rem;
     --mistica-line-height-cardPretitleDefault: 1.25rem;
-    --mistica-font-size-cardTitleDefault: 1.125rem;
+    --mistica-font-size-cardTitleDefault: 1rem;
     --mistica-line-height-cardTitleDefault: 1.5rem;
     --mistica-font-size-cardSubtitleDefault: 0.875rem;
     --mistica-line-height-cardSubtitleDefault: 1.25rem;
