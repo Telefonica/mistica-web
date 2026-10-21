@@ -110,7 +110,7 @@ const IconSuccessVivoEvolution = ({size = 48}: Props): JSX.Element => {
             />
             <path
                 d="M34.9092 15.5156C35.2803 15.1548 35.8734 15.1632 36.2344 15.5342C36.5952 15.9053 36.5869 16.4984 36.2158 16.8594L20.1572 32.4844C19.7933 32.8385 19.2135 32.8385 18.8496 32.4844L11.7842 25.6094C11.4132 25.2484 11.4048 24.6553 11.7656 24.2842C12.1266 23.9132 12.7197 23.9048 13.0908 24.2656L19.5039 30.5049L34.9092 15.5156Z"
-                fill={isBrand ? vars.colors.neutralLow : vars.colors.successHigh}
+                fill={isBrand ? vars.colors.neutralHighBrand : vars.colors.successHigh}
             />
         </svg>
     );
