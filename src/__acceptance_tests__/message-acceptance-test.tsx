@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, waitFor} from '../test-utils';
 import {getGlobalPage} from '@telefonica/acceptance-testing';
 import {AxePuppeteer} from '@axe-core/puppeteer';
 
@@ -29,7 +29,7 @@ test.each([
             senderName: '',
             asset: false,
             error: true,
-            errorMessage: 'No se ha enviado. Inténtalo de nuevo.',
+            errorMessage: 'Could not send please try again',
             variantOutside: 'alternative',
         },
     });
@@ -152,6 +152,51 @@ test.each(['incoming', 'outgoing'])('Message renders oversized avatars at 40px: 
     expect(bounds?.height).toBe(40);
 });
 
+test.each(['MOBILE_IOS', 'DESKTOP'] as const)(
+    'Short error text hugs its content without forcing the minimum width: %s',
+    async (device) => {
+        await openStoryPage({
+            id: story,
+            device,
+            args: {
+                type: 'outgoing',
+                text: 'Tuesday please',
+                senderName: '',
+                asset: false,
+                error: true,
+                errorMessage: 'Error text',
+            },
+        });
+        const error = await screen.findByRole('alert');
+        const bubble = await screen.findByTestId('MessageBubble');
+        const errorBounds = await error.boundingBox();
+        const bubbleBounds = await bubble.boundingBox();
+        if (!errorBounds || !bubbleBounds) {
+            throw new Error('Message error or bubble bounds not found');
+        }
+        const minimumErrorWidth = 184;
+        expect(errorBounds.width).toBeLessThan(minimumErrorWidth);
+        expect(errorBounds.x + errorBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
+        const helper = await screen.findByText('Error text');
+        const insets = await helper.evaluate((element) => {
+            const alert = element.closest('[role="alert"]');
+            const icon = alert?.querySelector('svg');
+            if (!alert || !icon) {
+                throw new Error('Message error or icon not found');
+            }
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            return {
+                left: icon.getBoundingClientRect().left - alert.getBoundingClientRect().left,
+                right: alert.getBoundingClientRect().right - range.getBoundingClientRect().right,
+            };
+        });
+        const errorInset = 16;
+        expect(insets.left).toBeCloseTo(errorInset, 0);
+        expect(insets.right).toBeCloseTo(errorInset, 0);
+    }
+);
+
 test('Short error helper grows beyond its minimum width without wrapping unnecessarily', async () => {
     const errorMessage = 'Error message with longer text';
     await openStoryPage({
@@ -160,22 +205,24 @@ test('Short error helper grows beyond its minimum width without wrapping unneces
         args: {shortErrorMessage: errorMessage},
     });
     const helper = await screen.findByText(errorMessage);
-    const insets = await helper.evaluate((element) => {
-        const alert = element.closest('[role="alert"]');
-        const icon = alert?.querySelector('svg');
-        if (!alert || !icon) {
-            throw new Error('Message error or icon not found');
-        }
-        const range = document.createRange();
-        range.selectNodeContents(element);
-        return {
-            left: icon.getBoundingClientRect().left - alert.getBoundingClientRect().left,
-            right: alert.getBoundingClientRect().right - range.getBoundingClientRect().right,
-        };
+    await waitFor(async () => {
+        const insets = await helper.evaluate((element) => {
+            const alert = element.closest('[role="alert"]');
+            const icon = alert?.querySelector('svg');
+            if (!alert || !icon) {
+                throw new Error('Message error or icon not found');
+            }
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            return {
+                left: icon.getBoundingClientRect().left - alert.getBoundingClientRect().left,
+                right: alert.getBoundingClientRect().right - range.getBoundingClientRect().right,
+            };
+        });
+        const errorInset = 16;
+        expect(insets.left).toBeCloseTo(errorInset, 0);
+        expect(insets.right).toBeCloseTo(errorInset, 0);
     });
-    const errorInset = 16;
-    expect(insets.left).toBeCloseTo(errorInset, 0);
-    expect(insets.right).toBeCloseTo(errorInset, 0);
     const isSingleLine = await helper.evaluate((element) => {
         const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
         return element.getBoundingClientRect().height <= lineHeight + 1;

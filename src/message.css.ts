@@ -110,7 +110,7 @@ export const shortErrorLayout = styleVariants({
 export const shortErrorBubble = style({width: 'fit-content', maxWidth: '100%'});
 export const shortErrorFooter = style({
     width: 'max-content',
-    minWidth: minimumErrorWidth,
+    minWidth: 0,
     maxWidth: '100%',
 });
 
