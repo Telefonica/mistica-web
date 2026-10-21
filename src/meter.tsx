@@ -474,6 +474,29 @@ const MeterComponent = ({
                             return null;
                         }
 
+                        if (
+                            type === TYPE_CIRCULAR &&
+                            isFirst &&
+                            isLast &&
+                            values[index] >= 1 &&
+                            start === 0 &&
+                            end === 1 - SMALL_VALUE_THRESHOLD
+                        ) {
+                            // A complete ring needs neither a separator nor end markers. A single
+                            // SVG arc cannot draw a full circle with coincident endpoints.
+                            return (
+                                <circle
+                                    key={reversedIndex}
+                                    cx={CENTER_X}
+                                    cy={CENTER_Y}
+                                    r={radius}
+                                    stroke={color}
+                                    fill="none"
+                                    strokeWidth={strokeWidth}
+                                />
+                            );
+                        }
+
                         const shouldIncludeStartMarker = isFirst && type !== TYPE_CIRCULAR;
                         return (
                             <path
