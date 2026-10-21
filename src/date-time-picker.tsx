@@ -162,6 +162,7 @@ const DateTimePicker = ({
                         setShowPicker(false);
                     }}
                     disableScroll
+                    style={{zIndex: 999}}
                 >
                     <div
                         ref={pickerContainerRef}

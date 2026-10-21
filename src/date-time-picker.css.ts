@@ -16,7 +16,6 @@ globalStyle(`${reactDatePicker} .rdtPicker`, {
     minWidth: 250,
     padding: 4,
     marginTop: 1,
-    zIndex: '99999 !important',
     background: '#fff',
     boxShadow: '0 1px 3px rgba(0,0,0,.1)',
     border: '1px solid #f9f9f9',
