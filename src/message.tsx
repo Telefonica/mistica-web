@@ -243,7 +243,7 @@ const Message = ({
                 </Touchable>
                 {!error && actions && actionsPosition === 'footer' && (
                     <div
-                        className={classnames(styles.actions, {
+                        className={classnames(styles.actions, styles.footerActions, {
                             [styles.unboxedActions]: !boxed,
                             [styles.outgoingFooterActions]: type === 'outgoing',
                         })}
@@ -259,7 +259,9 @@ const Message = ({
                 >
                     {side}
                     {actions && actionsPosition === 'side' && (
-                        <div className={styles.actions}>{renderActions()}</div>
+                        <div className={classnames(styles.actions, styles.sideActions[type])}>
+                            {renderActions()}
+                        </div>
                     )}
                 </div>
             )}

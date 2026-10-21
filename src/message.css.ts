@@ -7,6 +7,8 @@ export const bubblePaddingY = 12;
 export const bubblePaddingX = 16;
 export const minimumErrorWidth = 184;
 const boxedErrorInset = 16;
+const actionsGap = 16;
+const actionsInset = 4;
 
 export const message = style({display: 'flex', width: 'fit-content', minWidth: 0});
 export const direction = styleVariants({
@@ -61,7 +63,12 @@ export const interactive = style({
 });
 export const content = style({minWidth: 0, whiteSpace: 'pre-wrap'});
 export const timestamp = style({alignSelf: 'flex-end'});
-export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'center'});
+export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'center', gap: actionsGap});
+export const footerActions = style({marginTop: actionsInset});
+export const sideActions = styleVariants({
+    incoming: {marginLeft: actionsInset},
+    outgoing: {marginRight: actionsInset},
+});
 export const outgoingFooterActions = style({justifyContent: 'flex-end'});
 export const side = style({display: 'flex', flexShrink: 0, alignSelf: 'flex-start', alignItems: 'center'});
 export const unboxedActions = style({marginLeft: -8});
