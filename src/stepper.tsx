@@ -5,13 +5,13 @@ import {Text, Text1, getTextSizes} from './text';
 import {useElementDimensions, useTheme} from './hooks';
 import * as tokens from './text-tokens';
 import IconSuccess from './icons/icon-success';
+import IconStepperSuccessVivo from './icons/icon-stepper-success-vivo';
 import * as styles from './stepper.css';
 import {pxToRem, applyCssVars} from './utils/css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import ScreenReaderOnly from './screen-reader-only';
-import {VIVO_SKIN} from './skins/constants';
-import IconCheckedRegular from './generated/mistica-icons/icon-checked-regular';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 
 import type {DataAttributes} from './utils/types';
 
@@ -89,8 +89,12 @@ const Stepper = ({
                                     })}
                                     aria-hidden="true"
                                 >
-                                    {skinName === VIVO_SKIN ? (
-                                        <IconCheckedRegular color={vars.colors.brand} size="100%" />
+                                    {skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
+                                        <IconStepperSuccessVivo
+                                            color={vars.colors.controlActivated}
+                                            size="100%"
+                                            skipAnimation={!hasAnimation || isBack}
+                                        />
                                     ) : (
                                         <IconSuccess
                                             color={vars.colors.controlActivated}
