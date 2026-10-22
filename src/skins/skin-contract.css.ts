@@ -376,6 +376,8 @@ const textPresets: ToThemeTokens<TextPresetsConfig> = {
         size: '',
         weight: '',
     },
+    feedbackScreenDescription: {lineHeight: '', size: '', weight: ''},
+    feedbackScreenTitle: {lineHeight: '', size: '', weight: ''},
     headerPretitle: {lineHeight: '', size: '', weight: ''},
 };
 

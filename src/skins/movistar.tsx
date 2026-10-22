@@ -724,6 +724,16 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 size: {desktop: 20, mobile: 20},
                 weight: 'bold',
             },
+            feedbackScreenDescription: {
+                lineHeight: {desktop: 24, mobile: 22},
+                size: {desktop: 18, mobile: 16},
+                weight: 'regular',
+            },
+            feedbackScreenTitle: {
+                lineHeight: {desktop: 32, mobile: 28},
+                size: {desktop: 28, mobile: 24},
+                weight: 'bold',
+            },
             headerPretitle: {
                 lineHeight: {desktop: 24, mobile: 22},
                 size: {desktop: 18, mobile: 16},
