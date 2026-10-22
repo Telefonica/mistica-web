@@ -147,7 +147,7 @@ export const contentSmall = style({
 export const innerContentSmall = style({
     // 48px total row height: border-box makes minHeight include paddingBottom, only the top padding is left out
     boxSizing: 'border-box',
-    minHeight: `calc(48px - ${vars.spacing.boxedSmallPadding.top})`,
+    minHeight: `max(0px, calc(48px - ${vars.spacing.boxedSmallPadding.top}))`,
     paddingBottom: vars.spacing.boxedSmallPadding.bottom,
 });
 
