@@ -37,13 +37,20 @@ Default.argTypes = {
     borderRadius: {control: {type: 'number'}},
 };
 
-export const Nested: StoryComponent<{innerRadius: number; padding: number}> = ({innerRadius, padding}) => {
+export const Nested: StoryComponent<{
+    innerRadiusType: 'number' | 'string';
+    innerRadius: number;
+    innerRadiusString: string;
+    padding: number;
+}> = ({innerRadiusType, innerRadius, innerRadiusString, padding}) => {
+    const inner = innerRadiusType === 'number' ? innerRadius : innerRadiusString.trim() || '0px';
+    const outer = typeof inner === 'number' ? inner + padding : `calc(${inner} + ${padding}px)`;
     return (
         <ResponsiveLayout fullWidth>
             <Box padding={16}>
-                <Boxed borderRadius={innerRadius + padding}>
+                <Boxed borderRadius={outer}>
                     <Box padding={padding as 16}>
-                        <Boxed variant="alternative" borderRadius={innerRadius}>
+                        <Boxed variant="alternative" borderRadius={inner}>
                             <Box padding={16}>
                                 <Text8>Nested (outer radius = inner radius + padding)</Text8>
                             </Box>
@@ -57,10 +64,18 @@ export const Nested: StoryComponent<{innerRadius: number; padding: number}> = ({
 
 Nested.storyName = 'Boxed nested';
 Nested.args = {
+    innerRadiusType: 'number',
     innerRadius: 8,
+    innerRadiusString: '8px',
     padding: 16,
 };
 Nested.argTypes = {
-    innerRadius: {control: {type: 'number'}},
+    innerRadiusType: {options: ['number', 'string'], control: {type: 'inline-radio'}},
+    innerRadius: {control: {type: 'number', min: 0, step: 1}, if: {arg: 'innerRadiusType', eq: 'number'}},
+    innerRadiusString: {
+        description: 'CSS length, e.g. 8px or 1rem',
+        control: {type: 'text'},
+        if: {arg: 'innerRadiusType', eq: 'string'},
+    },
     padding: {options: [8, 16, 24], control: {type: 'select'}},
 };

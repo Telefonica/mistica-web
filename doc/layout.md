@@ -350,6 +350,15 @@ Skin tokens are CSS variables, so combine them with `calc()` instead of `+`:
 <Boxed borderRadius={`calc(${skinVars.borderRadii.container} + 16px)`}>...</Boxed>
 ```
 
+To compute the radius in JS, read it from the theme:
+
+```tsx
+const {borderRadii} = useTheme();
+const containerRadius = parseInt(borderRadii.container, 10);
+
+<Boxed borderRadius={containerRadius + 16}>...</Boxed>;
+```
+
 ## Overlay
 
 A full-screen fixed overlay that covers the viewport. Used internally by dialogs, drawers, and sheets, but
