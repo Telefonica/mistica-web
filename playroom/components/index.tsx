@@ -30,7 +30,6 @@ import IconAppleOff from '../icons/icon-apple-off';
 import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
-import {useIsOsDarkModeEnabled} from '../../src/theme-context-provider';
 
 import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src';
 
@@ -268,7 +267,6 @@ const PreviewToolsComponent = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
-    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const [showControls, setShowControls] = React.useState(false);
     const controlsRef = React.useRef<HTMLDivElement | null>(null);
@@ -347,13 +345,12 @@ const PreviewToolsComponent = ({
         </ThemeContextProvider>
     );
 
-    const isDarkMode = colorScheme === 'dark' || (colorScheme === 'auto' && isOsDarkModeEnabled);
-    const border = showBorder && !isDarkMode ? <div className={styles.previewBorder} /> : undefined;
+    const border = showBorder ? <div className={styles.previewBorder} /> : undefined;
 
     if (hide) {
         return (
             <>
-                {border}
+                <Portal>{border}</Portal>
                 {children}
             </>
         );
@@ -363,6 +360,7 @@ const PreviewToolsComponent = ({
             <>
                 {children}
                 <Portal>
+                    {border}
                     <CSSTransition
                         in={showControls}
                         nodeRef={controlsRef}
