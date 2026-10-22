@@ -70,7 +70,13 @@ export const interactive = style({
         },
     },
 });
-export const content = style({minWidth: 0, whiteSpace: 'pre-wrap'});
+export const content = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
+    minWidth: 0,
+    whiteSpace: 'pre-wrap',
+});
 export const timestamp = style({alignSelf: 'flex-end'});
 export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'center', gap: actionsGap});
 export const footerActions = style({marginTop: actionsInset});

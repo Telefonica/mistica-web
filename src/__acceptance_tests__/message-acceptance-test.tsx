@@ -293,3 +293,22 @@ test.each(['incoming', 'outgoing'])('Message keeps its bubble fill on hover and 
         await getGlobalPage().mouse.up();
     }
 });
+
+test('Outgoing errors follow the footer slot and footer actions', async () => {
+    await openStoryPage({id: 'components-message--error-with-slots', device: 'MOBILE_IOS'});
+    const bubble = await screen.findByTestId('MessageBubble');
+    const action = await screen.findByRole('button', {name: 'Copy message'});
+    const error = await screen.findByRole('alert');
+    const bubbleBounds = await bubble.boundingBox();
+    const actionBounds = await action.evaluate((element) => {
+        const bounds = element.parentElement?.getBoundingClientRect();
+        return bounds ? {y: bounds.y, height: bounds.height} : undefined;
+    });
+    const errorBounds = await error.boundingBox();
+    if (!bubbleBounds || !actionBounds || !errorBounds) {
+        throw new Error('Message element bounds not found');
+    }
+    const footerSlotHeight = 40;
+    expect(actionBounds.y).toBeGreaterThanOrEqual(bubbleBounds.y + bubbleBounds.height + footerSlotHeight);
+    expect(errorBounds.y).toBeGreaterThanOrEqual(actionBounds.y + actionBounds.height);
+});

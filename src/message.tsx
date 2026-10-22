@@ -43,17 +43,14 @@ export type MessageProps = TouchableComponentProps<
         position?: 'standalone' | 'first' | 'middle' | 'last';
     } & ExclusifyUnion<
         {onAssetPress: PressHandler; assetLabel: string} | {onAssetPress?: undefined; assetLabel?: undefined}
-    > &
-        ExclusifyUnion<
-            | {error: true; errorMessage: string; text?: string}
-            | ({
-                  error?: false;
-                  footer?: React.ReactNode;
-                  side?: React.ReactNode;
-                  actions?: MessageActions;
-                  actionsPosition?: 'side' | 'footer';
-              } & ExclusifyUnion<{text?: string} | {contentSlot?: React.ReactNode}>)
-        >
+    > & {
+            text?: string;
+            contentSlot?: React.ReactNode;
+            footer?: React.ReactNode;
+            side?: React.ReactNode;
+            actions?: MessageActions;
+            actionsPosition?: 'side' | 'footer';
+        } & ExclusifyUnion<{error: true; errorMessage: string} | {error?: false}>
 >;
 
 const Message = ({
@@ -88,7 +85,7 @@ const Message = ({
     const bubbleHeight = bubbleContentHeight + (boxed ? styles.bubblePaddingY * 2 : 0);
     const bubbleWidth = bubbleContentWidth + (boxed ? styles.bubblePaddingX * 2 : 0);
     const shortError = error && bubbleContentWidth > 0 && bubbleWidth < styles.minimumErrorWidth;
-    const inlineTimestamp = boxed && textWidth > 0 && textWidth < styles.minimumBubbleSize;
+    const inlineTimestamp = boxed && !contentSlot && textWidth > 0 && textWidth < styles.minimumBubbleSize;
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
     const directionLabel = t(type === 'incoming' ? tokens.messageIncoming : tokens.messageOutgoing);
     const renderActions = () =>
@@ -98,8 +95,8 @@ const Message = ({
         `${id}-direction`,
         (senderName || senderNameLabel) && `${id}-sender`,
         `${id}-content`,
-        !error && footer && `${id}-footer`,
         !error && timestamp && `${id}-timestamp`,
+        footer && `${id}-footer`,
         error && `${id}-error`,
     ]
         .filter(Boolean)
@@ -129,7 +126,7 @@ const Message = ({
                     </Touchable>
                 </div>
             )}
-            <div className={styles.column}>
+            <div className={classnames(styles.column, {[styles.shortErrorLayout[type]]: shortError})}>
                 <Touchable
                     {...touchableProps}
                     maybe
@@ -141,7 +138,7 @@ const Message = ({
                     className={classnames(
                         styles.touchable,
                         styles.corners[`${type}-${error ? 'standalone' : position}`],
-                        {[styles.shortErrorLayout[type]]: shortError}
+                        {[styles.shortErrorBubble]: shortError}
                     )}
                 >
                     <ThemeVariant variant={boxed ? 'default' : variant}>
@@ -182,13 +179,14 @@ const Message = ({
                                 })}
                             >
                                 <div className={styles.content} id={`${id}-content`}>
-                                    {text !== undefined ? (
+                                    {text !== undefined && (
                                         <Text2 regular as="p">
                                             <span ref={textRef} className={styles.text}>
                                                 {text}
                                             </span>
                                         </Text2>
-                                    ) : (
+                                    )}
+                                    {contentSlot !== undefined && (
                                         <Text2 regular as="div">
                                             {contentSlot}
                                         </Text2>
@@ -216,31 +214,13 @@ const Message = ({
                             </div>
                         </div>
                     </ThemeVariant>
-                    {!error && footer && (
+                    {footer && (
                         <div className={styles.footer} id={`${id}-footer`}>
                             {footer}
                         </div>
                     )}
-                    {error && (
-                        <div className={classnames(styles.footer, {[styles.shortErrorFooter]: shortError})}>
-                            <div
-                                className={classnames(styles.error, {
-                                    [styles.boxedError]: boxed,
-                                })}
-                                role="alert"
-                                id={`${id}-error`}
-                            >
-                                <Text1 regular color={vars.colors.textError}>
-                                    <IconWarningRegular color="currentColor" className={styles.errorIcon} />
-                                </Text1>
-                                <Text1 regular color={vars.colors.textError}>
-                                    {errorMessage}
-                                </Text1>
-                            </div>
-                        </div>
-                    )}
                 </Touchable>
-                {!error && actions && actionsPosition === 'footer' && (
+                {actions && actionsPosition === 'footer' && (
                     <div
                         className={classnames(styles.actions, styles.footerActions, {
                             [styles.unboxedActions]: !boxed,
@@ -250,8 +230,26 @@ const Message = ({
                         {renderActions()}
                     </div>
                 )}
+                {error && (
+                    <div className={classnames(styles.footer, {[styles.shortErrorFooter]: shortError})}>
+                        <div
+                            className={classnames(styles.error, {
+                                [styles.boxedError]: boxed,
+                            })}
+                            role="alert"
+                            id={`${id}-error`}
+                        >
+                            <Text1 regular color={vars.colors.textError}>
+                                <IconWarningRegular color="currentColor" className={styles.errorIcon} />
+                            </Text1>
+                            <Text1 regular color={vars.colors.textError}>
+                                {errorMessage}
+                            </Text1>
+                        </div>
+                    </div>
+                )}
             </div>
-            {!error && (side || (actions && actionsPosition === 'side')) && (
+            {(side || (actions && actionsPosition === 'side')) && (
                 <div
                     className={classnames(styles.side, styles.sideDirection[type])}
                     style={{height: bubbleHeight || undefined}}

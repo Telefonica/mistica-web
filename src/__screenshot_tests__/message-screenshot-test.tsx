@@ -47,3 +47,18 @@ test('Message slots and actions', async () => {
     await openStoryPage({id: 'components-message--slots-and-actions', device: 'MOBILE_IOS'});
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['side', 'footer'])('Message error with content and %s actions', async (actionsPosition) => {
+    await openStoryPage({
+        id: 'components-message--error-with-slots',
+        device: 'MOBILE_IOS',
+        args: {
+            type: 'outgoing',
+            error: true,
+            footer: true,
+            actions: true,
+            actionsPosition,
+        },
+    });
+    expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
+});

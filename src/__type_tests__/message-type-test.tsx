@@ -10,3 +10,6 @@ import Message from '../message';
 
 // @ts-expect-error A retry action does not provide an error message
 <Message error text="Hello" onPress={() => {}} />;
+
+<Message text="Hello" contentSlot={<span>Details</span>} />;
+<Message error errorMessage="Try again" contentSlot={<span>Details</span>} footer="Footer" side="Side" />;

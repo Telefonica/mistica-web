@@ -35,7 +35,7 @@ test('interactive messages group sender, slot, footer and timestamp in reading o
         />
     );
     expect(
-        screen.getByRole('button', {name: "Mensaje: Ana, support Details Delivered One o'clock"})
+        screen.getByRole('button', {name: "Mensaje: Ana, support Details One o'clock Delivered"})
     ).toBeInTheDocument();
 });
 
@@ -135,3 +135,31 @@ test('changing action position or removing actions never duplicates them', () =>
     rerender(<Example position="side" showActions={false} />);
     expect(screen.queryByRole('button', {name: 'Copy'})).not.toBeInTheDocument();
 });
+
+test.each(['side', 'footer'] as const)(
+    'error messages retain content and slots with %s actions',
+    async (actionsPosition) => {
+        const action = jest.fn();
+        const retry = jest.fn();
+        renderMessage(
+            <Message
+                type="outgoing"
+                text="Hello"
+                contentSlot={<span>Details</span>}
+                footer={<span>Footer</span>}
+                side={<span>Side</span>}
+                error
+                errorMessage="Try again"
+                onPress={retry}
+                actionsPosition={actionsPosition}
+                actions={[{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: action}]}
+            />
+        );
+        expect(screen.getByRole('button', {name: 'Tú: Hello Details Footer Try again'})).toBeInTheDocument();
+        expect(screen.getByText('Side')).toBeInTheDocument();
+        expect(screen.getByRole('alert')).toHaveTextContent('Try again');
+        await userEvent.click(screen.getByRole('button', {name: 'Copy'}));
+        expect(action).toHaveBeenCalledTimes(1);
+        expect(retry).not.toHaveBeenCalled();
+    }
+);

@@ -116,16 +116,16 @@ export default {
         interaction: {options: ['none', 'onPress', 'href'], control: 'select'},
         ariaLabel: {control: 'text'},
         href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
-        contentSlot: {control: 'boolean', if: {arg: 'error', eq: false}},
-        footer: {control: 'boolean', if: {arg: 'error', eq: false}},
-        side: {control: 'boolean', if: {arg: 'error', eq: false}},
-        actions: {control: 'boolean', if: {arg: 'error', eq: false}},
+        contentSlot: {control: 'boolean'},
+        footer: {control: 'boolean'},
+        side: {control: 'boolean'},
+        actions: {control: 'boolean'},
         actionsPosition: {
             options: ['side', 'footer'],
             control: 'radio',
             if: {arg: 'actions'},
         },
-        actionsCount: {options: [1, 2], control: 'radio', if: {arg: 'error', eq: false}},
+        actionsCount: {options: [1, 2], control: 'radio'},
         variantOutside: {
             options: ['default', 'brand', 'alternative', 'negative', 'media'],
             control: 'select',
@@ -147,7 +147,7 @@ const getAsset = (args: Args, initials: string) => {
     }
 };
 
-const MessageExample = (args: Args) => {
+const MessageExample = (args: Args & {footerContent?: React.ReactNode}) => {
     const copyAction = {
         Icon: IconCopyRegular,
         'aria-label': 'Copy message',
@@ -160,18 +160,16 @@ const MessageExample = (args: Args) => {
     };
     const actions =
         args.actionsCount === 2 ? ([copyAction, reminderAction] as const) : ([copyAction] as const);
-    const content = args.error
-        ? {error: true as const, errorMessage: args.errorMessage, text: args.text}
-        : {
-              ...(args.contentSlot ? {contentSlot: <Placeholder height={80} />} : {text: args.text}),
-              footer: args.footer ? <Text1 regular>Delivered</Text1> : undefined,
-              side: args.side ? <IconCheckRegular size={16} /> : undefined,
-              actions: args.actions ? actions : undefined,
-              actionsPosition: args.actionsPosition,
-          };
+    const errorProps = args.error ? {error: true as const, errorMessage: args.errorMessage} : {};
     return (
         <Message
-            {...content}
+            {...errorProps}
+            text={args.text}
+            contentSlot={args.contentSlot ? <Placeholder height={80} /> : undefined}
+            footer={args.footer ? args.footerContent ?? <Text1 regular>Delivered</Text1> : undefined}
+            side={args.side ? <IconCheckRegular size={16} /> : undefined}
+            actions={args.actions ? actions : undefined}
+            actionsPosition={args.actionsPosition}
             type={args.type}
             senderName={args.senderName}
             senderNameAs={args.senderNameAs}
@@ -350,8 +348,8 @@ export const SlotsAndActions: StoryComponent<Args> = (args) => (
     >
         <Box padding={16} dataAttributes={{testid: 'messages'}}>
             <Stack space={24}>
-                <MessageExample {...args} type="incoming" />
-                <MessageExample {...args} type="outgoing" />
+                <MessageExample {...args} type="incoming" footerContent={<Placeholder height={40} />} />
+                <MessageExample {...args} type="outgoing" footerContent={<Placeholder height={40} />} />
             </Stack>
         </Box>
     </ResponsiveLayout>
@@ -404,3 +402,20 @@ export const ContentTypography: StoryComponent<Args> = (args) => (
     </ResponsiveLayout>
 );
 ContentTypography.parameters = {controls: {include: ['boxed', 'variantOutside']}};
+
+export const ErrorWithSlots: StoryComponent<Args> = (args) => (
+    <ResponsiveLayout fullWidth>
+        <Box padding={16} dataAttributes={{testid: 'messages'}}>
+            <MessageExample {...args} footerContent={<Placeholder height={40} />} />
+        </Box>
+    </ResponsiveLayout>
+);
+ErrorWithSlots.args = {
+    ...defaultArgs,
+    type: 'outgoing',
+    senderName: '',
+    error: true,
+    footer: true,
+    actions: true,
+    actionsCount: 2,
+};
