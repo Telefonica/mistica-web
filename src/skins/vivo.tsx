@@ -710,6 +710,16 @@ export const getVivoSkin: GetKnownSkin = () => {
                 size: {desktop: 28, mobile: 20},
                 weight: 'medium',
             },
+            feedbackScreenDescription: {
+                lineHeight: {desktop: 24, mobile: 24},
+                size: {desktop: 18, mobile: 16},
+                weight: 'regular',
+            },
+            feedbackScreenTitle: {
+                lineHeight: {desktop: 40, mobile: 32},
+                size: {desktop: 32, mobile: 24},
+                weight: 'medium',
+            },
             headerPretitle: {
                 lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: 18, mobile: 16},
@@ -810,6 +820,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 40},
             },
             boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            boxedSmallPadding: {top: {mobile: 16, desktop: 16}, bottom: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };
