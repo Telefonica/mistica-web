@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import {SidenavBar} from '..';
-import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
+import IconFolderRegular from '@telefonica/mistica-icons/icon-folder-regular';
 
 import type {SidenavEntry} from '../sidenav-bar-types';
 

@@ -19,7 +19,7 @@ import Stack from './stack';
 import Box, {type PadSize} from './box';
 import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';

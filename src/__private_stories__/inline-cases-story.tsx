@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid, IconWarningRegular} from '..';
+import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid} from '..';
+import IconWarningRegular from '@telefonica/mistica-icons/icon-warning-regular';
 
 export default {
     title: 'Private/Inline cases',

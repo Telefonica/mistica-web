@@ -14,7 +14,7 @@ import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
 import {useThemeVariant} from './theme-variant-context';
-import IconChevronRightFilled from './generated/mistica-icons/icon-chevron-right-filled';
+import IconChevronRightFilled from '@telefonica/mistica-icons/icon-chevron-right-filled';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';

@@ -5,15 +5,15 @@ import {
     Stack,
     Inline,
     Text3,
-    IconKebabMenuLight,
     DataCard,
     Text2,
     MenuItem,
-    IconLightningRegular,
     Image,
     MenuSection,
     useDialog,
 } from '..';
+import IconKebabMenuLight from '@telefonica/mistica-icons/icon-kebab-menu-light';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
 import avatarImg from './images/avatar.jpg';
 
 import type {MenuProps} from '../menu';

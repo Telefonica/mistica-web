@@ -19,6 +19,20 @@ or
 npm install @telefonica/mistica
 ```
 
+The icons live in a separate package. Add it when you need them:
+
+```terminal
+yarn add @telefonica/mistica-icons
+```
+
+```javascript
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
+```
+
+Each icon has its own module, so an application loads the icons that it uses and nothing more. See
+[@telefonica/mistica-icons](packages/mistica-icons/README.md), and
+[doc/module-federation.md](doc/module-federation.md) if your application uses Module Federation.
+
 ### Start using `@telefonica/mistica`
 
 Before using any of our components you have to add `<ThemeContextProvider>` in the root of your React app.

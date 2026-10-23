@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Stack, IconButton, IconLightningRegular} from '../../..';
+import {Stack, IconButton} from '../../..';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
 
 const IconButtonTest = (): JSX.Element => (
     <Stack space={8}>

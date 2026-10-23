@@ -1,0 +1,52 @@
+{
+    "name": "@telefonica/mistica-icons",
+    "version": "17.4.0",
+    "license": "MIT",
+    "description": "Icons of the Mística design system",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Telefonica/mistica-web",
+        "directory": "packages/mistica-icons"
+    },
+    "homepage": "https://github.com/Telefonica/mistica-web/tree/master/packages/mistica-icons",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org",
+        "access": "public"
+    },
+    "sideEffects": false,
+    "exports": {
+        "./icon-*": {
+            "types": "./dist-es/icon-*.d.ts",
+            "import": "./dist-es/icon-*.js",
+            "require": "./dist/icon-*.js"
+        },
+        "./keywords": {
+            "types": "./dist-es/icons-keywords.d.ts",
+            "import": "./dist-es/icons-keywords.js",
+            "require": "./dist/icons-keywords.js"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "icon-*": [
+                "dist-es/icon-*.d.ts"
+            ],
+            "keywords": [
+                "dist-es/icons-keywords.d.ts"
+            ]
+        }
+    },
+    "files": [
+        "dist/**",
+        "dist-es/**"
+    ],
+    "peerDependencies": {
+        "@telefonica/mistica": "^17.4.0",
+        "react": "^18.0.0 || ^19.2.0",
+        "react-dom": "^18.0.0 || ^19.2.0"
+    },
+    "scripts": {
+        "prepack": "node ../../scripts/check-icons-build.js",
+        "prepublishOnly": "node ../../scripts/prepublish-only.js"
+    }
+}

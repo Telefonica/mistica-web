@@ -2,7 +2,7 @@ import * as React from 'react';
 import {InfoFeedbackScreen} from '../feedback';
 import {ButtonPrimary} from '../button';
 import {Placeholder} from '../placeholder';
-import IconShoppingBagRegular from '../generated/mistica-icons/icon-shopping-bag-regular';
+import IconShoppingBagRegular from '@telefonica/mistica-icons/icon-shopping-bag-regular';
 
 export default {
     title: 'Patterns/Feedback/InfoFeedbackScreen',
