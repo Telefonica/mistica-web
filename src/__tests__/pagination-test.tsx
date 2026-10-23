@@ -3,7 +3,8 @@ import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import Pagination, {getPaginationItems} from '../pagination';
+import Pagination from '../pagination';
+import {getResponsivePaginationItems} from '../utils/pagination';
 
 test('renders pagination navigation landmark', () => {
     render(
@@ -148,13 +149,39 @@ test('honors controlled currentPage', () => {
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
 });
 
-describe('getPaginationItems', () => {
+describe('getResponsivePaginationItems', () => {
+    const getViewportItems = ({
+        includeBoundaryPages = true,
+        ...args
+    }: Parameters<typeof getResponsivePaginationItems>[0] & {includeBoundaryPages?: boolean}) =>
+        getResponsivePaginationItems(args)
+            .filter(
+                ({visibility}) =>
+                    visibility === 'any' || visibility === (includeBoundaryPages ? 'desktop' : 'mobile')
+            )
+            .map(({visibility, ...item}) => item);
+
+    test.each([2, 3, 4, 5, 7, 20])('shares pages without duplicates with %s total pages', (totalPages) => {
+        for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+            for (const surroundingPageCount of [0, 1, 2, 10]) {
+                const items = getResponsivePaginationItems({totalPages, currentPage, surroundingPageCount});
+                const pages = items.filter((item) => item.type === 'page');
+                const pageNumbers = pages.map((item) => item.page);
+                expect(pageNumbers).toEqual([...new Set(pageNumbers)].sort((a, b) => a - b));
+                expect(pages.filter((item) => item.current)).toEqual([
+                    {type: 'page', page: currentPage, current: true, visibility: 'any'},
+                ]);
+                expect(pageNumbers.every((page) => page >= 1 && page <= totalPages)).toBe(true);
+            }
+        }
+    });
+
     test('returns an empty array for a single page', () => {
-        expect(getPaginationItems({totalPages: 1, currentPage: 1})).toEqual([]);
+        expect(getViewportItems({totalPages: 1, currentPage: 1})).toEqual([]);
     });
 
     test('returns all pages when total fits without ellipsis', () => {
-        const items = getPaginationItems({totalPages: 5, currentPage: 3});
+        const items = getViewportItems({totalPages: 5, currentPage: 3});
         expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
         expect(items).toHaveLength(5);
     });
@@ -164,7 +191,7 @@ describe('getPaginationItems', () => {
         (totalPages) => {
             for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
                 for (const includeBoundaryPages of [true, false]) {
-                    const items = getPaginationItems({
+                    const items = getViewportItems({
                         totalPages,
                         currentPage,
                         surroundingPageCount: 0,
@@ -184,7 +211,7 @@ describe('getPaginationItems', () => {
     );
 
     test('includes the hidden page instead of rendering an unnecessary mobile ellipsis', () => {
-        expect(getPaginationItems({totalPages: 4, currentPage: 3, includeBoundaryPages: false})).toEqual([
+        expect(getViewportItems({totalPages: 4, currentPage: 3, includeBoundaryPages: false})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: true},
@@ -193,7 +220,7 @@ describe('getPaginationItems', () => {
     });
 
     test('uses one surrounding page by default', () => {
-        const items = getPaginationItems({totalPages: 20, currentPage: 10});
+        const items = getViewportItems({totalPages: 20, currentPage: 10});
         expect(items).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
@@ -206,14 +233,14 @@ describe('getPaginationItems', () => {
     });
 
     test('uses surroundingPageCount to insert ellipsis when middle pages are skipped', () => {
-        const items = getPaginationItems({totalPages: 20, currentPage: 10, surroundingPageCount: 1});
+        const items = getViewportItems({totalPages: 20, currentPage: 10, surroundingPageCount: 1});
         expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
         expect(items[0]).toMatchObject({type: 'page', page: 1});
         expect(items[items.length - 1]).toMatchObject({type: 'page', page: 20});
     });
 
     test('fills the leading slots with pages on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 3, surroundingPageCount: 1})).toEqual([
+        expect(getViewportItems({totalPages: 40, currentPage: 3, surroundingPageCount: 1})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'page', page: 2, current: false},
             {type: 'page', page: 3, current: true},
@@ -225,7 +252,7 @@ describe('getPaginationItems', () => {
     });
 
     test('keeps configured surrounding pages centered on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 31, surroundingPageCount: 1})).toEqual([
+        expect(getViewportItems({totalPages: 40, currentPage: 31, surroundingPageCount: 1})).toEqual([
             {type: 'page', page: 1, current: false},
             {type: 'ellipsis'},
             {type: 'page', page: 30, current: false},
@@ -238,7 +265,7 @@ describe('getPaginationItems', () => {
 
     test('keeps the number of desktop items stable while changing pages', () => {
         const itemCounts = [1, 3, 20, 38, 40].map(
-            (currentPage) => getPaginationItems({totalPages: 40, currentPage, surroundingPageCount: 1}).length
+            (currentPage) => getViewportItems({totalPages: 40, currentPage, surroundingPageCount: 1}).length
         );
 
         expect(itemCounts).toEqual([7, 7, 7, 7, 7]);
@@ -246,7 +273,7 @@ describe('getPaginationItems', () => {
 
     test('hides boundary pages when configured for mobile', () => {
         expect(
-            getPaginationItems({
+            getViewportItems({
                 totalPages: 40,
                 currentPage: 3,
                 includeBoundaryPages: false,
@@ -263,7 +290,7 @@ describe('getPaginationItems', () => {
 
     test('keeps mobile item slots stable without fixed boundary pages', () => {
         expect(
-            getPaginationItems({
+            getViewportItems({
                 totalPages: 40,
                 currentPage: 33,
                 includeBoundaryPages: false,
@@ -278,7 +305,7 @@ describe('getPaginationItems', () => {
         ]);
 
         expect(
-            getPaginationItems({
+            getViewportItems({
                 totalPages: 40,
                 currentPage: 1,
                 includeBoundaryPages: false,
@@ -295,7 +322,7 @@ describe('getPaginationItems', () => {
         expect(
             [1, 3, 20, 38, 40].map(
                 (currentPage) =>
-                    getPaginationItems({
+                    getViewportItems({
                         totalPages: 40,
                         currentPage,
                         includeBoundaryPages: false,

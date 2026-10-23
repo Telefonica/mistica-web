@@ -14,8 +14,9 @@ import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-righ
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as tokens from './text-tokens';
+import {getResponsivePaginationItems} from './utils/pagination';
 
-import type {ExclusifyUnion} from './utils/utility-types';
+import type {ResponsivePaginationItem} from './utils/pagination';
 import type {DataAttributes} from './utils/types';
 import type {NonDeprecatedVariant} from './theme-variant-context';
 
@@ -40,149 +41,8 @@ export type PaginationProps = {
     'aria-label'?: string;
 };
 
-type PageItem = {type: 'page'; page: number; current: boolean};
-type EllipsisItem = {type: 'ellipsis'};
-type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
-type Visibility = 'desktop' | 'mobile' | 'any';
-type ResponsivePaginationItem = PaginationItem & {visibility: Visibility};
-
-const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
 const FIRST_PAGE = 1;
-const DESKTOP_BOUNDARY_SLOT_COUNT = 4;
-const MOBILE_BOUNDARY_SLOT_COUNT = 2;
-
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
-
-export const getPaginationItems = ({
-    totalPages,
-    currentPage,
-    surroundingPageCount = DEFAULT_SURROUNDING_PAGE_COUNT,
-    includeBoundaryPages = true,
-}: {
-    totalPages: number;
-    currentPage: number;
-    surroundingPageCount?: number;
-    includeBoundaryPages?: boolean;
-}): Array<PaginationItem> => {
-    if (totalPages <= 1) {
-        return [];
-    }
-
-    const activePage = clamp(currentPage, FIRST_PAGE, totalPages);
-    const surroundingCount = clamp(Math.floor(surroundingPageCount), 0, totalPages);
-    const dynamicPageCount = 2 * surroundingCount + 1;
-
-    const boundarySlotCount = includeBoundaryPages ? DESKTOP_BOUNDARY_SLOT_COUNT : MOBILE_BOUNDARY_SLOT_COUNT;
-
-    if (totalPages <= dynamicPageCount + boundarySlotCount) {
-        return Array.from({length: totalPages}, (_, index) => {
-            const page = index + FIRST_PAGE;
-            return {type: 'page', page, current: page === activePage};
-        });
-    }
-
-    const lastPage = totalPages;
-    const createPageItem = (page: number): PaginationItem => ({
-        type: 'page',
-        page,
-        current: page === activePage,
-    });
-    const createPageRange = (start: number, end: number): Array<PaginationItem> =>
-        Array.from({length: Math.max(0, end - start + 1)}, (_, index) => createPageItem(start + index));
-
-    if (!includeBoundaryPages) {
-        const rangeStart = Math.max(
-            Math.min(activePage - surroundingCount, lastPage - dynamicPageCount),
-            FIRST_PAGE + 1
-        );
-        const rangeEnd = rangeStart + dynamicPageCount - 1;
-        const items: Array<PaginationItem> = [];
-
-        if (rangeStart > FIRST_PAGE + 1) {
-            items.push({type: 'ellipsis'});
-        } else {
-            items.push(createPageItem(FIRST_PAGE));
-        }
-
-        items.push(...createPageRange(rangeStart, rangeEnd));
-
-        if (rangeEnd < lastPage - 1) {
-            items.push({type: 'ellipsis'});
-        } else if (rangeEnd < lastPage) {
-            items.push(createPageItem(lastPage));
-        }
-
-        return items;
-    }
-
-    const rangeStart = Math.max(
-        Math.min(activePage - surroundingCount, lastPage - dynamicPageCount - 1),
-        FIRST_PAGE + 2
-    );
-    const rangeEnd = Math.min(
-        Math.max(activePage + surroundingCount, FIRST_PAGE + dynamicPageCount + 1),
-        lastPage - 2
-    );
-
-    const items: Array<PaginationItem> = [createPageItem(FIRST_PAGE)];
-
-    if (rangeStart > FIRST_PAGE + 2) {
-        items.push({type: 'ellipsis'});
-    } else {
-        items.push(createPageItem(FIRST_PAGE + 1));
-    }
-
-    items.push(...createPageRange(rangeStart, rangeEnd));
-
-    if (rangeEnd < lastPage - 2) {
-        items.push({type: 'ellipsis'});
-    } else {
-        items.push(createPageItem(lastPage - 1));
-    }
-
-    items.push(createPageItem(lastPage));
-
-    return items;
-};
-
-/**
- * Merges both viewport sequences, preserving their order and sharing common items.
- * For desktop [1, ..., 9, 10, 11, ..., 20] and mobile [..., 9, 10, 11, ...],
- * the result is [1 (desktop), ... (any), 9 (any), 10 (any), 11 (any), ... (any), 20 (desktop)].
- */
-const mergePaginationItems = (
-    desktopItems: Array<PaginationItem>,
-    mobileItems: Array<PaginationItem>
-): Array<ResponsivePaginationItem> => {
-    const items: Array<ResponsivePaginationItem> = [];
-    let mobileIndex = 0;
-
-    for (const desktopItem of desktopItems) {
-        const remainingMobileIndex = mobileIndex;
-        const matchingIndex = mobileItems.findIndex(
-            (mobileItem, index) =>
-                index >= remainingMobileIndex &&
-                mobileItem.type === desktopItem.type &&
-                mobileItem.page === desktopItem.page
-        );
-
-        if (matchingIndex === -1) {
-            items.push({...desktopItem, visibility: 'desktop'});
-        } else {
-            for (; mobileIndex < matchingIndex; mobileIndex++) {
-                items.push({...mobileItems[mobileIndex], visibility: 'mobile'});
-            }
-            items.push({...desktopItem, visibility: 'any'});
-            mobileIndex++;
-        }
-    }
-
-    for (; mobileIndex < mobileItems.length; mobileIndex++) {
-        items.push({...mobileItems[mobileIndex], visibility: 'mobile'});
-    }
-
-    return items;
-};
 
 const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element => {
     return (
@@ -326,17 +186,10 @@ export const Pagination = ({
 
     const isPrevDisabled = activePage <= 1;
     const isNextDisabled = activePage >= totalPages;
-    const desktopItems = getPaginationItems({
+    const items = getResponsivePaginationItems({
         totalPages,
         currentPage: activePage,
         surroundingPageCount,
-        includeBoundaryPages: true,
-    });
-    const mobileItems = getPaginationItems({
-        totalPages,
-        currentPage: activePage,
-        surroundingPageCount,
-        includeBoundaryPages: false,
     });
 
     return (
@@ -373,13 +226,7 @@ export const Pagination = ({
                     </ButtonLink>
                 ))}
 
-            {!hidePageList && (
-                <PageList
-                    items={mergePaginationItems(desktopItems, mobileItems)}
-                    disabled={disabled}
-                    onPageClick={goToPage}
-                />
-            )}
+            {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
                     <IconButton
