@@ -1,3 +1,20 @@
+# [17.9.0](https://github.com/Telefonica/mistica-web/compare/v17.8.0...v17.9.0) (2026-10-23)
+
+
+### Bug Fixes
+
+* **Accordion:** announce header content in the expected order ([#1769](https://github.com/Telefonica/mistica-web/issues/1769)) ([aa354f5](https://github.com/Telefonica/mistica-web/commit/aa354f55d413aac70bee60d8b47b7284b229c426))
+
+
+### Features
+
+* **Boxed:** allow custom border radii ([#1778](https://github.com/Telefonica/mistica-web/issues/1778)) ([#1779](https://github.com/Telefonica/mistica-web/issues/1779)) ([3b04e89](https://github.com/Telefonica/mistica-web/commit/3b04e8952738db1180c7498b09e1a8a2ce80fc1d))
+* **Feedback:** add static icons, update spacing and text presets ([#1772](https://github.com/Telefonica/mistica-web/issues/1772)) ([948c3af](https://github.com/Telefonica/mistica-web/commit/948c3affdb93c5e8247d7398b3518d319c6f01b7))
+* **Skills:** add mistica-brandfactory skill ([c642d7d](https://github.com/Telefonica/mistica-web/commit/c642d7dcb1500b0bec9f37140060e8628499ccf9))
+* **Skills:** improve mistica-brandfactory skill ([f55a45e](https://github.com/Telefonica/mistica-web/commit/f55a45e44375f11859bff506686974c9e3dcfe80))
+* **skin:** add boxedSmallPadding token and apply to list and accordion small variants ([#1765](https://github.com/Telefonica/mistica-web/issues/1765)) ([5d3db8f](https://github.com/Telefonica/mistica-web/commit/5d3db8f57529ed57a248ab60594a9d35b7b89d8f))
+* **skin:** import tokens from mistica-design ([#1776](https://github.com/Telefonica/mistica-web/issues/1776)) ([f136b2b](https://github.com/Telefonica/mistica-web/commit/f136b2be821eb3017af2613475a60b982bdd0d16)), closes [/github.com/Telefonica/mistica-web/pull/1772/changes#r4325805451](https://github.com//github.com/Telefonica/mistica-web/pull/1772/changes/issues/r4325805451) [Telefonica/mistica-design#2864](https://github.com/Telefonica/mistica-design/issues/2864) [Telefonica/mistica-design#2867](https://github.com/Telefonica/mistica-design/issues/2867) [Telefonica/mistica-design#2818](https://github.com/Telefonica/mistica-design/issues/2818) [#1719](https://github.com/Telefonica/mistica-web/issues/1719) [#1720](https://github.com/Telefonica/mistica-web/issues/1720) [#1663](https://github.com/Telefonica/mistica-web/issues/1663) [#1719](https://github.com/Telefonica/mistica-web/issues/1719) [#1720](https://github.com/Telefonica/mistica-web/issues/1720) [#1663](https://github.com/Telefonica/mistica-web/issues/1663) [#1725](https://github.com/Telefonica/mistica-web/issues/1725) [#1663](https://github.com/Telefonica/mistica-web/issues/1663) [#2818](https://github.com/Telefonica/mistica-web/issues/2818) [#1720](https://github.com/Telefonica/mistica-web/issues/1720) [#1719](https://github.com/Telefonica/mistica-web/issues/1719) [#1663](https://github.com/Telefonica/mistica-web/issues/1663) [#2818](https://github.com/Telefonica/mistica-web/issues/2818) [#1725](https://github.com/Telefonica/mistica-web/issues/1725) [#2818](https://github.com/Telefonica/mistica-web/issues/2818) [#1725](https://github.com/Telefonica/mistica-web/issues/1725) [#2818](https://github.com/Telefonica/mistica-web/issues/2818)
+
 # [17.8.0](https://github.com/Telefonica/mistica-web/compare/v17.7.0...v17.8.0) (2026-10-16)
 
 
