@@ -3,6 +3,10 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import {SlideSwap, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 const SlideSwapWrapper = ({showSwappedContent}: {showSwappedContent: boolean}) => (
     <ThemeContextProvider theme={makeTheme()}>
         <SlideSwap
@@ -98,4 +102,15 @@ test('SlideSwap announces the visible content on every swap, but not on mount', 
 
     rerender(<AnnouncingSlideSwap showSwappedContent={false} />);
     expect(screen.getByRole('status')).toHaveTextContent('Send');
+});
+
+test('SlideSwap clears the announcement after a second, so it is not left next to the visible content', () => {
+    jest.useFakeTimers();
+    const {rerender} = render(<AnnouncingSlideSwap showSwappedContent={false} />);
+
+    rerender(<AnnouncingSlideSwap showSwappedContent />);
+    expect(screen.getByRole('status')).toHaveTextContent('Sending…');
+
+    React.act(() => jest.advanceTimersByTime(1000));
+    expect(screen.getByRole('status')).toHaveTextContent(/^$/);
 });

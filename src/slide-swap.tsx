@@ -11,6 +11,7 @@ import type {DataAttributes} from './utils/types';
 
 const DEFAULT_DURATION = 300;
 const OFFSET = '2rem';
+const ANNOUNCEMENT_DURATION = 1000;
 
 type Props = {
     /** content shown when `showSwappedContent` is false */
@@ -29,9 +30,10 @@ type Props = {
      */
     onTransitionEnd?: () => void;
     /**
-     * Announces the text of the content that becomes visible to screen readers on every swap, using a
-     * polite live region. Nothing is announced on mount. Disabled by default, as not every swap is
-     * meaningful (e.g. decorative icons) and some consumers, like Button, handle their own announcements.
+     * Announces the text of the content that becomes visible to screen readers on every swap, using an
+     * assertive live region that is cleared after a second. Nothing is announced on mount. Disabled by
+     * default, as not every swap is meaningful (e.g. decorative icons) and some consumers, like Button,
+     * handle their own announcements.
      */
     announceSwap?: boolean;
     className?: string;
@@ -83,6 +85,16 @@ const SlideSwap = ({
         }
     }, [showSwappedContent, announceSwap]);
 
+    // clear the announcement once it has been read, so virtual cursor navigation doesn't find it next to
+    // the visible content
+    React.useEffect(() => {
+        if (!announcement) {
+            return;
+        }
+        const timeoutId = setTimeout(() => setAnnouncement(''), ANNOUNCEMENT_DURATION);
+        return () => clearTimeout(timeoutId);
+    }, [announcement]);
+
     return (
         <div
             {...getPrefixedDataAttributes({testid: 'SlideSwap', ...dataAttributes})}
@@ -115,9 +127,10 @@ const SlideSwap = ({
                 {swappedContent}
             </div>
             {announceSwap && (
-                // always mounted while enabled, so screen readers pick up its changes
+                // always mounted while enabled, so screen readers pick up its changes. It is assertive because
+                // VoiceOver reads polite announcements twice when the page runs inside an iframe (e.g. Storybook)
                 <ScreenReaderOnly>
-                    <div role="status" aria-live="polite">
+                    <div role="status" aria-live="assertive">
                         {announcement}
                     </div>
                 </ScreenReaderOnly>
