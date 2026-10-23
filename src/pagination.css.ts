@@ -44,24 +44,6 @@ export const pageList = style([
     },
 ]);
 
-export const pageListDesktop = style({
-    display: 'none',
-
-    '@media': {
-        [mq.desktopOrBigger]: {
-            display: 'flex',
-        },
-    },
-});
-
-export const pageListMobile = style({
-    '@media': {
-        [mq.desktopOrBigger]: {
-            display: 'none',
-        },
-    },
-});
-
 export const pageListItem = style([
     sprinkles({
         display: 'flex',
@@ -80,6 +62,21 @@ export const pageListItem = style([
         },
     },
 ]);
+
+export const itemVisibility = styleVariants({
+    any: {},
+    desktop: {
+        display: 'none',
+        '@media': {
+            [mq.desktopOrBigger]: {display: 'flex'},
+        },
+    },
+    mobile: {
+        '@media': {
+            [mq.desktopOrBigger]: {display: 'none'},
+        },
+    },
+});
 
 const interactiveArea = style([
     {
