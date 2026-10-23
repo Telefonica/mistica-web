@@ -48,6 +48,8 @@ type ResponsivePaginationItem = PaginationItem & {visibility: Visibility};
 
 const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
 const FIRST_PAGE = 1;
+const DESKTOP_BOUNDARY_SLOT_COUNT = 4;
+const MOBILE_BOUNDARY_SLOT_COUNT = 2;
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
@@ -70,7 +72,9 @@ export const getPaginationItems = ({
     const surroundingCount = clamp(Math.floor(surroundingPageCount), 0, totalPages);
     const dynamicPageCount = 2 * surroundingCount + 1;
 
-    if (totalPages <= dynamicPageCount) {
+    const boundarySlotCount = includeBoundaryPages ? DESKTOP_BOUNDARY_SLOT_COUNT : MOBILE_BOUNDARY_SLOT_COUNT;
+
+    if (totalPages <= dynamicPageCount + boundarySlotCount) {
         return Array.from({length: totalPages}, (_, index) => {
             const page = index + FIRST_PAGE;
             return {type: 'page', page, current: page === activePage};

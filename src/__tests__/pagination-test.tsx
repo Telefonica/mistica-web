@@ -159,6 +159,30 @@ describe('getPaginationItems', () => {
         expect(items).toHaveLength(5);
     });
 
+    test.each([2, 3, 4])(
+        'does not repeat pages with %s total pages and no surrounding pages',
+        (totalPages) => {
+            for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+                for (const includeBoundaryPages of [true, false]) {
+                    const items = getPaginationItems({
+                        totalPages,
+                        currentPage,
+                        surroundingPageCount: 0,
+                        includeBoundaryPages,
+                    });
+                    const pages = items.filter((item) => item.type === 'page');
+                    const pageNumbers = pages.map((item) => item.page);
+
+                    expect(pageNumbers).toEqual([...new Set(pageNumbers)].sort((a, b) => a - b));
+                    expect(pages.filter((item) => item.current)).toEqual([
+                        {type: 'page', page: currentPage, current: true},
+                    ]);
+                    expect(pageNumbers.every((page) => page >= 1 && page <= totalPages)).toBe(true);
+                }
+            }
+        }
+    );
+
     test('includes the hidden page instead of rendering an unnecessary mobile ellipsis', () => {
         expect(getPaginationItems({totalPages: 4, currentPage: 3, includeBoundaryPages: false})).toEqual([
             {type: 'page', page: 1, current: false},

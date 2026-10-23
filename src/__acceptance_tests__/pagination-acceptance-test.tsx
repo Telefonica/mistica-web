@@ -120,3 +120,29 @@ test.each([
         expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
     }
 );
+
+test('Pagination with three pages and no surrounding pages keeps a single current page', async () => {
+    const page = await openStoryPage({
+        id: STORY_ID,
+        device: 'DESKTOP',
+        args: {totalPages: 3, surroundingPageCount: 0, hideNavigationControls: true},
+    });
+    const list = await screen.findByRole('list');
+    const expectPageButtons = async () => {
+        const tree = await page.accessibility.snapshot({root: list, interestingOnly: false});
+        expect(tree && getAccessibleButtons(tree).map(({name}) => name)).toEqual([
+            'Ir a la página 1',
+            'Página 2, página actual',
+            'Ir a la página 3',
+        ]);
+    };
+
+    await page.click(await screen.findByRole('button', {name: 'Ir a la página 2'}));
+    await expectPageButtons();
+
+    await page.setViewport({
+        width: mediaQueriesConfig.desktopMinWidth - 1,
+        height: mediaQueriesConfig.desktopOrTabletMinHeight,
+    });
+    await expectPageButtons();
+});
