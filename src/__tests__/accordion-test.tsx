@@ -140,6 +140,25 @@ test('Accordion with singleOpen', async () => {
     expect(screen.getByText('Content 3')).toBeInTheDocument();
 });
 
+test('Accordion button exposes header text in the expected order', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion>
+                <AccordionItem
+                    title="Title"
+                    subtitle="Subtitle"
+                    detail="Detail"
+                    right={<span>Right content</span>}
+                    asset={<img src="/decorative.svg" alt="Decorative asset" />}
+                    content={<Text3 regular>Panel content</Text3>}
+                />
+            </Accordion>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Title Subtitle Detail Right content'})).toBeInTheDocument();
+});
+
 test('Accordion with custom labels is accessible', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>

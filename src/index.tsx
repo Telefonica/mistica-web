@@ -168,7 +168,9 @@ export {default as IconInfo} from './icons/icon-info';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
