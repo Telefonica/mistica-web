@@ -70,6 +70,8 @@ const getElementDimensionsWithoutPadding = (element: HTMLElement) => {
         parseFloat(getComputedStyle(element, null).paddingTop) +
         parseFloat(getComputedStyle(element, null).paddingBottom);
 
+    // Chromium can return different offsetWidth/offsetHeight values at different subpixel positions.
+    // Use position-independent dimensions to avoid a measurement/positioning feedback loop.
     const rect = element.getBoundingClientRect();
     const width = rect.width - horizontalPadding;
     const height = rect.height - verticalPadding;
