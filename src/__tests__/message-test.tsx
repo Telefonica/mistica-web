@@ -12,7 +12,7 @@ const renderMessage = (message: React.ReactNode) =>
 test('static messages expose their direction and content without adding a focus target', () => {
     renderMessage(
         <>
-            <Message text="Hello" />
+            <Message type="incoming" text="Hello" />
             <Message type="outgoing" text="Hi" />
         </>
     );
@@ -25,6 +25,7 @@ test('static messages expose their direction and content without adding a focus 
 test('interactive messages group sender, slot, footer and timestamp in reading order', () => {
     renderMessage(
         <Message
+            type="incoming"
             senderName="Ana"
             senderNameLabel="Ana, support"
             timestamp="13:00"
@@ -47,6 +48,7 @@ test.each(['side', 'footer'] as const)(
         const action = jest.fn();
         renderMessage(
             <Message
+                type="incoming"
                 asset={<span>Avatar</span>}
                 onAssetPress={asset}
                 assetLabel="Open Ana's profile"
@@ -75,7 +77,12 @@ test.each(['side', 'footer'] as const)(
 
 test('decorative assets are excluded from the accessible name', () => {
     renderMessage(
-        <Message asset={<span role="img" aria-label="Avatar" />} text="Hello" onPress={() => {}} />
+        <Message
+            type="incoming"
+            asset={<span role="img" aria-label="Avatar" />}
+            text="Hello"
+            onPress={() => {}}
+        />
     );
     expect(screen.queryByRole('img')).not.toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Mensaje: Hello'})).toBeInTheDocument();
@@ -111,7 +118,7 @@ test.each([false, true])('errors display the product message regardless of retry
 });
 
 test('explicit accessible labels override the generated name', () => {
-    renderMessage(<Message text="Details" href="/details" aria-label="Open details" />);
+    renderMessage(<Message type="incoming" text="Details" href="/details" aria-label="Open details" />);
     expect(screen.getByRole('link', {name: 'Open details'})).toHaveAttribute('href', '/details');
 });
 
@@ -125,7 +132,12 @@ test('changing action position or removing actions never duplicates them', () =>
         showActions?: boolean;
     }) => (
         <ThemeContextProvider theme={makeTheme()}>
-            <Message text="Hello" actions={showActions ? actions : undefined} actionsPosition={position} />
+            <Message
+                type="incoming"
+                text="Hello"
+                actions={showActions ? actions : undefined}
+                actionsPosition={position}
+            />
         </ThemeContextProvider>
     );
     const {rerender} = render(<Example />);

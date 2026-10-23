@@ -62,3 +62,12 @@ test.each(['side', 'footer'])('Message error with content and %s actions', async
     });
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['default', 'alternative'])('Message unboxed over %s', async (variantOutside) => {
+    await openStoryPage({
+        id: 'components-message--default',
+        device: 'MOBILE_IOS',
+        args: {boxed: false, variantOutside},
+    });
+    expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
+});

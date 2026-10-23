@@ -312,3 +312,21 @@ test('Outgoing errors follow the footer slot and footer actions', async () => {
     expect(actionBounds.y).toBeGreaterThanOrEqual(bubbleBounds.y + bubbleBounds.height + footerSlotHeight);
     expect(errorBounds.y).toBeGreaterThanOrEqual(actionBounds.y + actionBounds.height);
 });
+
+test.each([
+    {type: 'incoming', boxed: true},
+    {type: 'outgoing', boxed: true},
+    {type: 'incoming', boxed: false},
+    {type: 'outgoing', boxed: false},
+])('Message asset spacing matches its boxed variant: %o', async ({type, boxed}) => {
+    await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, asset: true}});
+    const asset = await (await screen.findByTestId('Avatar')).boundingBox();
+    const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
+    if (!asset || !bubble) {
+        throw new Error('Message asset or bubble bounds not found');
+    }
+    const boxedGap = 8;
+    const unboxedGap = 12;
+    const gap = type === 'incoming' ? bubble.x - asset.x - asset.width : asset.x - bubble.x - bubble.width;
+    expect(gap).toBeCloseTo(boxed ? boxedGap : unboxedGap, 0);
+});

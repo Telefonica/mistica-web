@@ -20,6 +20,10 @@ export const assetAlignment = styleVariants({
     incoming: {alignSelf: 'flex-start', marginRight: 8},
     outgoing: {alignSelf: 'flex-start', marginLeft: 8},
 });
+export const unboxedAssetSpacing = styleVariants({
+    incoming: {marginRight: 12},
+    outgoing: {marginLeft: 12},
+});
 export const column = style({display: 'flex', flexDirection: 'column', minWidth: 0});
 export const touchable = style({textAlign: 'left', minWidth: 0, borderRadius: vars.borderRadii.container});
 export const corners = styleVariants({

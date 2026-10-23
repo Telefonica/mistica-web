@@ -85,7 +85,11 @@ export default {
     args: defaultArgs,
     parameters: {fullScreen: true, controls: {expanded: false}},
     argTypes: {
-        type: {options: ['incoming', 'outgoing'], control: 'select'},
+        type: {
+            options: ['incoming', 'outgoing'],
+            control: 'select',
+            description: 'Required message direction.',
+        },
         text: {control: 'text'},
         senderName: {control: 'text'},
         senderNameAs: {
@@ -217,6 +221,7 @@ export const Conversation: StoryComponent<Args> = (args) => {
             <Box padding={16} dataAttributes={{testid: 'messages'}}>
                 <Stack space={16}>
                     <Message
+                        type="incoming"
                         {...common}
                         asset={getAsset(args, 'AP')}
                         senderName={args.senderName}
@@ -224,9 +229,9 @@ export const Conversation: StoryComponent<Args> = (args) => {
                         timestamp={args.timestamp}
                     />
                     <Stack space={4}>
-                        <Message {...common} text="I found three options." position="first" />
-                        <Message {...common} text="Tuesday or Wednesday." position="middle" />
-                        <Message {...common} text="Thursday works too." position="last" />
+                        <Message type="incoming" {...common} text="I found three options." position="first" />
+                        <Message type="incoming" {...common} text="Tuesday or Wednesday." position="middle" />
+                        <Message type="incoming" {...common} text="Thursday works too." position="last" />
                     </Stack>
                     {failed ? (
                         <Message
@@ -242,6 +247,7 @@ export const Conversation: StoryComponent<Args> = (args) => {
                     )}
                     <Message {...common} type="outgoing" text="Hi!" timestamp="16:51" />
                     <Message
+                        type="incoming"
                         text="I'll send the details."
                         boxed={false}
                         senderName={args.senderName}
@@ -392,10 +398,10 @@ export const ContentTypography: StoryComponent<Args> = (args) => (
     <ResponsiveLayout fullWidth variant={args.variantOutside}>
         <Box padding={16}>
             <Stack space={16}>
-                <Message boxed={args.boxed} text="Default text" />
-                <Message boxed={args.boxed} contentSlot="Plain content" />
-                <Message boxed={args.boxed} contentSlot={<Text>Inherited text</Text>} />
-                <Message boxed={args.boxed} contentSlot={<Text3 bold>Custom text</Text3>} />
+                <Message type="incoming" boxed={args.boxed} text="Default text" />
+                <Message type="incoming" boxed={args.boxed} contentSlot="Plain content" />
+                <Message type="incoming" boxed={args.boxed} contentSlot={<Text>Inherited text</Text>} />
+                <Message type="incoming" boxed={args.boxed} contentSlot={<Text3 bold>Custom text</Text3>} />
                 <Text3 bold>Custom reference</Text3>
             </Stack>
         </Box>

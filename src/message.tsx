@@ -31,7 +31,7 @@ const avatarSize = 40;
 
 export type MessageProps = TouchableComponentProps<
     {
-        type?: 'incoming' | 'outgoing';
+        type: 'incoming' | 'outgoing';
         senderName?: string;
         senderNameAs?: 'span' | 'p' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
         senderNameLabel?: string;
@@ -54,7 +54,7 @@ export type MessageProps = TouchableComponentProps<
 >;
 
 const Message = ({
-    type = 'incoming',
+    type,
     senderName,
     senderNameAs = 'span',
     senderNameLabel,
@@ -110,7 +110,9 @@ const Message = ({
         >
             {asset && (
                 <div
-                    className={classnames(styles.asset, styles.assetAlignment[type])}
+                    className={classnames(styles.asset, styles.assetAlignment[type], {
+                        [styles.unboxedAssetSpacing[type]]: !boxed,
+                    })}
                     style={
                         type === 'outgoing' && bubbleHeight
                             ? {transform: `translateY(calc(${bubbleHeight}px - 100%))`}
@@ -164,7 +166,7 @@ const Message = ({
                                         as={senderNameAs}
                                         id={`${id}-sender`}
                                         aria-label={senderNameLabel}
-                                        color={boxed ? vars.colors.textBrand : undefined}
+                                        color={vars.colors.textBrand}
                                     >
                                         {senderName}
                                     </Text1>
