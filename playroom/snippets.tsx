@@ -256,6 +256,21 @@ const accordionSnippets: Array<Snippet> = [
         `,
     },
     {
+        group: 'Boxed',
+        name: 'Boxed (nested, custom border radius)',
+        code: `
+        <Boxed borderRadius={24}>
+          <Box padding={16}>
+            <Boxed borderRadius={8} variant="alternative">
+              <Box padding={16}>
+                <Text2 regular>Nested content</Text2>
+              </Box>
+            </Boxed>
+          </Box>
+        </Boxed>
+        `,
+    },
+    {
         group: 'Accordion',
         name: 'BoxedAccordion',
         code: `

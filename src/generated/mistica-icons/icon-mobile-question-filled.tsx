@@ -27,7 +27,20 @@ const IconMobileQuestionFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.675 2a3.75 3.75 0 0 1 3.75 3.75v3.3A6.25 6.25 0 0 0 9 15.245v1.5a6.24 6.24 0 0 0 2.668 5.12q-.386.107-.8.13l-.193.005-4.926-.003A3.75 3.75 0 0 1 2 18.247V5.75A3.75 3.75 0 0 1 5.75 2zM6.463 4.992a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.75 9.995c2.9 0 5.25 2.35 5.25 5.25v1.5c0 2.9-2.35 5.25-5.25 5.25h-1.5a5.25 5.25 0 0 1-5.25-5.25v-1.5c0-2.9 2.35-5.25 5.25-5.25zm-.749 7.919a.792.792 0 1 0 0 1.584.792.792 0 0 0 0-1.584m.1-5.414c-1.025-.054-1.906.734-2 1.757a.75.75 0 1 0 1.494.138c.024-.257.245-.416.442-.397h.005c.194.02.376.213.356.464-.009.102-.03.152-.136.27-.076.085-.142.147-.274.284a5 5 0 0 0-.391.455c-.195.24-.394.661-.394 1.193a.75.75 0 0 0 1.5 0 .55.55 0 0 1 .058-.248l.01-.01.026-.034c.21-.281.322-.35.582-.64a1.9 1.9 0 0 0 .499-1.033 1 1 0 0 0 .015-.09c.097-1.048-.661-2.007-1.716-2.106z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

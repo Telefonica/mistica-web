@@ -9,6 +9,7 @@ type Props = {
     size?: number | string;
 };
 
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
     const themeVariant = useThemeVariant();
     const {platformOverrides} = useTheme();

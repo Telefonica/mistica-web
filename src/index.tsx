@@ -169,7 +169,9 @@ export {default as IconInfo} from './icons/icon-info';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
@@ -1909,6 +1911,7 @@ export {default as IconRecycleRegular} from './generated/mistica-icons/icon-recy
 export {default as IconRefreshFilled} from './generated/mistica-icons/icon-refresh-filled';
 export {default as IconRefreshLight} from './generated/mistica-icons/icon-refresh-light';
 export {default as IconRefreshRegular} from './generated/mistica-icons/icon-refresh-regular';
+export {default as IconReloadFilled} from './generated/mistica-icons/icon-reload-filled';
 export {default as IconReloadLight} from './generated/mistica-icons/icon-reload-light';
 export {default as IconReloadRegular} from './generated/mistica-icons/icon-reload-regular';
 export {default as IconRenovateDeviceChangeMobileFilled} from './generated/mistica-icons/icon-renovate-device-change-mobile-filled';

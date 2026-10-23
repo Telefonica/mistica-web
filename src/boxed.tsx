@@ -26,10 +26,11 @@ type Props = {
     minWidth?: ByBreakpoint<number | string>;
     height?: ByBreakpoint<number | string>;
     minHeight?: ByBreakpoint<number | string>;
+    /** Numbers are interpreted as pixels and must be >= 0. Defaults to the skin container border radius */
+    borderRadius?: number | string;
 };
 
 type InternalProps = {
-    borderRadius?: typeof vars.borderRadii.container | string;
     border?: string;
     desktopOnly?: boolean;
     background?: string;
@@ -141,7 +142,10 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                                 alternative: vars.colors.backgroundContainerAlternative,
                                 media: vars.colors.backgroundContainer,
                             }[internalVariant],
-                        [styles.vars.borderRadius]: borderRadius,
+                        [styles.vars.borderRadius]:
+                            typeof borderRadius === 'number'
+                                ? `${Math.max(0, borderRadius)}px`
+                                : borderRadius,
                     }),
                     background,
                     border,

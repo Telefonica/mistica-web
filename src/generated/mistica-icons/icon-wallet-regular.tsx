@@ -27,7 +27,20 @@ const IconWalletRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.783 12.748a.763.763 0 0 0-.763.763v.274c0 .422.341.763.763.763h.294a.763.763 0 0 0 .763-.763v-.274a.763.763 0 0 0-.763-.763z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M2 6.836a3.75 3.75 0 0 1 3.75-3.75h9.685c1.203 0 2.126.526 2.727 1.325.444.59.698 1.308.794 2.036A3.75 3.75 0 0 1 22 10.131v7.033a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 17.164zm15.424-.455a2.7 2.7 0 0 0-.46-1.068c-.327-.434-.811-.727-1.529-.727h-9.27c-.54 0-.948.432-.948.902s.408.901.949.902zM3.741 5.823A2.24 2.24 0 0 0 3.5 6.836v10.328a2.25 2.25 0 0 0 2.25 2.25h12.5a2.25 2.25 0 0 0 2.21-1.829h-4.952c-2.207 0-4.027-1.769-4.027-3.937s1.82-3.936 4.027-3.937h4.953a2.25 2.25 0 0 0-2.21-1.83L6.165 7.89c-1.221 0-2.257-.896-2.425-2.067M20.5 11.21h-4.991c-1.413 0-2.529 1.13-2.529 2.437s1.115 2.436 2.528 2.437H20.5z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

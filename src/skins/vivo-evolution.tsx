@@ -737,8 +737,8 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
             cardSubtitleDefault: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             cardSubtitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 14, mobile: 12}},
             cardTitle: {weight: 'medium'},
-            cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
-            cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 18, mobile: 16}},
+            cardTitleDefault: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 16}},
+            cardTitleSnap: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 18, mobile: 14}},
             chipLabel: {
                 lineHeight: {desktop: 24, mobile: 20},
                 size: {desktop: 16, mobile: 14},
@@ -750,6 +750,16 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             drawerTitle: {
+                lineHeight: {desktop: 32, mobile: 24},
+                size: {desktop: 28, mobile: 20},
+                weight: 'medium',
+            },
+            feedbackScreenDescription: {
+                lineHeight: {desktop: 24, mobile: 20},
+                size: {desktop: 16, mobile: 14},
+                weight: 'regular',
+            },
+            feedbackScreenTitle: {
                 lineHeight: {desktop: 32, mobile: 24},
                 size: {desktop: 28, mobile: 20},
                 weight: 'medium',
@@ -854,6 +864,7 @@ export const getVivoEvolutionSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 40},
             },
             boxedDefaultPadding: {left: {mobile: 16, desktop: 24}, right: {mobile: 16, desktop: 24}},
+            boxedSmallPadding: {top: {mobile: 16, desktop: 16}, bottom: {mobile: 16, desktop: 16}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

@@ -27,7 +27,16 @@ const IconTimeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v3.5A8.25 8.25 0 0 0 10.25 22h3.5A8.25 8.25 0 0 0 22 13.75v-3.5A8.25 8.25 0 0 0 13.75 2zM11 12.211V8.265a1 1 0 1 1 2 0v3.532l2.805 2.805a1 1 0 0 1-1.415 1.414l-3.097-3.097A1 1 0 0 1 11 12.21"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
