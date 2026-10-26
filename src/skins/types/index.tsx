@@ -66,6 +66,8 @@ export type TextPresetsConfig = {
     cardTitleDefault: TextSizeTokenConfig;
     cardTitleSnap: TextSizeTokenConfig;
     drawerTitle: TextTokenConfig;
+    feedbackScreenDescription: TextTokenConfig;
+    feedbackScreenTitle: TextTokenConfig;
     chipLabel: TextTokenConfig;
     chipLabelSmall: TextTokenConfig;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
@@ -121,6 +123,7 @@ export type SpacingConfig = {
     headerPadding: PaddingYValues;
     drawerPadding: PaddingValues;
     boxedDefaultPadding: PaddingXValues;
+    boxedSmallPadding: PaddingYValues;
     responsiveLayoutMargin: ResponsiveValue<number>;
 };
 
