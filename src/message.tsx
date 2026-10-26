@@ -28,6 +28,7 @@ type MessageAction = IconButtonProps & {
 };
 type MessageActions = readonly [MessageAction] | readonly [MessageAction, MessageAction];
 const avatarSize = 40;
+const maximumActions = 2;
 
 export type MessageProps = TouchableComponentProps<
     {
@@ -39,15 +40,19 @@ export type MessageProps = TouchableComponentProps<
         timestampLabel?: string;
         asset?: React.ReactNode;
         boxed?: boolean;
+        /** Maximum width of the whole message, including its asset and side actions. Defaults to 80%.
+         * Error feedback may be wider than a short bubble, but stays within the available message width.
+         */
         maxWidth?: number | string;
         position?: 'standalone' | 'first' | 'middle' | 'last';
     } & ExclusifyUnion<
         {onAssetPress: PressHandler; assetLabel: string} | {onAssetPress?: undefined; assetLabel?: undefined}
     > & {
-            text?: string;
+            contentText?: string;
             contentSlot?: React.ReactNode;
-            footer?: React.ReactNode;
+            footerSlot?: React.ReactNode;
             side?: React.ReactNode;
+            /** Up to two actions. Extra actions from untyped consumers are ignored. */
             actions?: MessageActions;
             actionsPosition?: 'side' | 'footer';
         } & ExclusifyUnion<{error: true; errorMessage: string} | {error?: false}>
@@ -66,9 +71,9 @@ const Message = ({
     boxed = true,
     maxWidth = '80%',
     position = 'standalone',
-    text,
+    contentText,
     contentSlot,
-    footer,
+    footerSlot,
     side,
     actions,
     actionsPosition = 'footer',
@@ -89,14 +94,16 @@ const Message = ({
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
     const directionLabel = t(type === 'incoming' ? tokens.messageIncoming : tokens.messageOutgoing);
     const renderActions = () =>
-        actions?.map((action, index) => <IconButton key={index} {...action} small type="neutral" />);
+        actions
+            ?.slice(0, maximumActions)
+            .map((action, index) => <IconButton key={index} {...action} small type="neutral" />);
 
     const accessibleIds = [
         `${id}-direction`,
         (senderName || senderNameLabel) && `${id}-sender`,
         `${id}-content`,
         !error && timestamp && `${id}-timestamp`,
-        footer && `${id}-footer`,
+        footerSlot && `${id}-footer`,
         error && `${id}-error`,
     ]
         .filter(Boolean)
@@ -181,17 +188,15 @@ const Message = ({
                                 })}
                             >
                                 <div className={styles.content} id={`${id}-content`}>
-                                    {text !== undefined && (
+                                    {contentText !== undefined && (
                                         <Text2 regular as="p">
                                             <span ref={textRef} className={styles.text}>
-                                                {text}
+                                                {contentText}
                                             </span>
                                         </Text2>
                                     )}
                                     {contentSlot !== undefined && (
-                                        <Text2 regular as="div">
-                                            {contentSlot}
-                                        </Text2>
+                                        <div className={styles.contentSlot}>{contentSlot}</div>
                                     )}
                                 </div>
                                 {!error && timestamp && (
@@ -216,9 +221,9 @@ const Message = ({
                             </div>
                         </div>
                     </ThemeVariant>
-                    {footer && (
+                    {footerSlot && (
                         <div className={styles.footer} id={`${id}-footer`}>
-                            {footer}
+                            {footerSlot}
                         </div>
                     )}
                 </Touchable>

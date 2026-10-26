@@ -1,4 +1,4 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 
 const bubbleRadius = '4px';
@@ -81,9 +81,11 @@ export const content = style({
     minWidth: 0,
     whiteSpace: 'pre-wrap',
 });
+export const contentSlot = style({minWidth: 0, maxWidth: '100%', overflowX: 'auto'});
+globalStyle(`${contentSlot} > *`, {maxWidth: '100%'});
 export const timestamp = style({alignSelf: 'flex-end'});
 export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'center', gap: actionsGap});
-export const footerActions = style({marginTop: actionsInset});
+export const footerActions = style({marginTop: actionsInset, flexWrap: 'wrap'});
 export const sideActions = styleVariants({
     incoming: {marginLeft: actionsInset},
     outgoing: {marginRight: actionsInset},

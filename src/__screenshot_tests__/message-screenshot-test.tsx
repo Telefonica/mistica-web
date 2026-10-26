@@ -33,7 +33,7 @@ test.each(['incoming', 'outgoing'])('Message %s with actions and slots', async (
     await openStoryPage({
         id: 'components-message--default',
         device: 'MOBILE_IOS',
-        args: {type, side: true, footer: true, actions: true, actionsPosition: 'side'},
+        args: {type, side: true, footerSlot: true, actions: true, actionsPosition: 'side'},
     });
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });
@@ -55,7 +55,7 @@ test.each(['side', 'footer'])('Message error with content and %s actions', async
         args: {
             type: 'outgoing',
             error: true,
-            footer: true,
+            footerSlot: true,
             actions: true,
             actionsPosition,
         },

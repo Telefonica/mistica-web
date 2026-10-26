@@ -12,8 +12,8 @@ const renderMessage = (message: React.ReactNode) =>
 test('static messages expose their direction and content without adding a focus target', () => {
     renderMessage(
         <>
-            <Message type="incoming" text="Hello" />
-            <Message type="outgoing" text="Hi" />
+            <Message type="incoming" contentText="Hello" />
+            <Message type="outgoing" contentText="Hi" />
         </>
     );
     expect(screen.getByText('Mensaje:')).toBeInTheDocument();
@@ -30,7 +30,7 @@ test('interactive messages group sender, slot, footer and timestamp in reading o
             senderNameLabel="Ana, support"
             timestamp="13:00"
             timestampLabel="One o'clock"
-            footer={<span>Delivered</span>}
+            footerSlot={<span>Delivered</span>}
             onPress={() => {}}
             contentSlot={<span>Details</span>}
         />
@@ -53,7 +53,7 @@ test.each(['side', 'footer'] as const)(
                 onAssetPress={asset}
                 assetLabel="Open Ana's profile"
                 onPress={bubble}
-                text="Hello"
+                contentText="Hello"
                 actionsPosition={actionsPosition}
                 actions={[{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: action}]}
             />
@@ -80,7 +80,7 @@ test('decorative assets are excluded from the accessible name', () => {
         <Message
             type="incoming"
             asset={<span role="img" aria-label="Avatar" />}
-            text="Hello"
+            contentText="Hello"
             onPress={() => {}}
         />
     );
@@ -93,7 +93,7 @@ test('errors announce a custom message, hide the timestamp and can be retried', 
     renderMessage(
         <Message
             type="outgoing"
-            text="Hello"
+            contentText="Hello"
             error
             errorMessage="Try again"
             timestamp="13:00"
@@ -109,16 +109,24 @@ test('errors announce a custom message, hide the timestamp and can be retried', 
 test.each([false, true])('errors display the product message regardless of retry action: %s', (retry) => {
     renderMessage(
         retry ? (
-            <Message type="outgoing" text="Hello" error errorMessage="Contact support" onPress={() => {}} />
+            <Message
+                type="outgoing"
+                contentText="Hello"
+                error
+                errorMessage="Contact support"
+                onPress={() => {}}
+            />
         ) : (
-            <Message type="outgoing" text="Hello" error errorMessage="Contact support" />
+            <Message type="outgoing" contentText="Hello" error errorMessage="Contact support" />
         )
     );
     expect(screen.getByRole('alert')).toHaveTextContent(/^Contact support$/);
 });
 
 test('explicit accessible labels override the generated name', () => {
-    renderMessage(<Message type="incoming" text="Details" href="/details" aria-label="Open details" />);
+    renderMessage(
+        <Message type="incoming" contentText="Details" href="/details" aria-label="Open details" />
+    );
     expect(screen.getByRole('link', {name: 'Open details'})).toHaveAttribute('href', '/details');
 });
 
@@ -134,7 +142,7 @@ test('changing action position or removing actions never duplicates them', () =>
         <ThemeContextProvider theme={makeTheme()}>
             <Message
                 type="incoming"
-                text="Hello"
+                contentText="Hello"
                 actions={showActions ? actions : undefined}
                 actionsPosition={position}
             />
@@ -156,9 +164,9 @@ test.each(['side', 'footer'] as const)(
         renderMessage(
             <Message
                 type="outgoing"
-                text="Hello"
+                contentText="Hello"
                 contentSlot={<span>Details</span>}
-                footer={<span>Footer</span>}
+                footerSlot={<span>Footer</span>}
                 side={<span>Side</span>}
                 error
                 errorMessage="Try again"
@@ -175,3 +183,21 @@ test.each(['side', 'footer'] as const)(
         expect(retry).not.toHaveBeenCalled();
     }
 );
+
+test('ignores extra actions passed by JavaScript consumers', () => {
+    const actions = ['Copy', 'Share', 'Extra'].map((label) => ({
+        Icon: IconCopyRegular,
+        'aria-label': label,
+        onPress: () => {},
+    }));
+    renderMessage(
+        <Message
+            type="incoming"
+            contentText="Hello"
+            actions={actions as unknown as React.ComponentProps<typeof Message>['actions']}
+        />
+    );
+    expect(screen.getByRole('button', {name: 'Copy'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Share'})).toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Extra'})).not.toBeInTheDocument();
+});

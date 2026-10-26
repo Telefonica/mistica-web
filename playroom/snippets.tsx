@@ -4819,8 +4819,8 @@ export default [
         name: 'Basic conversation',
         code: `<Box padding={16}>
   <Stack space={16}>
-    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Hola, ¿confirmamos la visita?" timestamp="16:45" />
-    <Message type="outgoing" text="Sí" timestamp="16:46" />
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Message type="outgoing" contentText="Sí" timestamp="16:46" />
   </Stack>
 </Box>`,
     },
@@ -4829,19 +4829,19 @@ export default [
         name: 'Conversation with avatars and groups',
         code: `<Box padding={16}>
   <Stack space={24}>
-    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Hola, ¿confirmamos la visita?" timestamp="16:45" />
     <Stack space={4}>
-      <Message type="incoming" position="first" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Tengo varias opciones." />
-      <Message type="incoming" position="middle" asset={<Box width={40} />} text="Podemos ir el martes o el miércoles." />
-      <Message type="incoming" position="last" asset={<Box width={40} />} text="También el jueves por la tarde." timestamp="16:46" />
+      <Message type="incoming" position="first" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Tengo varias opciones." />
+      <Message type="incoming" position="middle" asset={<Box width={40} />} contentText="Podemos ir el martes o el miércoles." />
+      <Message type="incoming" position="last" asset={<Box width={40} />} contentText="También el jueves por la tarde." timestamp="16:46" />
     </Stack>
     <Stack space={4}>
-      <Message type="outgoing" position="first" asset={<Box width={40} />} text="El martes me viene bien." />
-      <Message type="outgoing" position="middle" asset={<Box width={40} />} text="Estaré en casa a partir de las cinco." />
-      <Message type="outgoing" position="last" asset={<Avatar size={40} initials="YO" />} text="¿Podéis venir a esa hora?" timestamp="16:47" />
+      <Message type="outgoing" position="first" asset={<Box width={40} />} contentText="El martes me viene bien." />
+      <Message type="outgoing" position="middle" asset={<Box width={40} />} contentText="Estaré en casa a partir de las cinco." />
+      <Message type="outgoing" position="last" asset={<Avatar size={40} initials="YO" />} contentText="¿Podéis venir a esa hora?" timestamp="16:47" />
     </Stack>
-    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="Sí, queda confirmado para el martes a las 17:00." timestamp="16:48" />
-    <Message type="outgoing" asset={<Avatar size={40} initials="YO" />} text="¡Perfecto, gracias!" timestamp="16:49" />
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Sí, queda confirmado para el martes a las 17:00." timestamp="16:48" />
+    <Message type="outgoing" asset={<Avatar size={40} initials="YO" />} contentText="¡Perfecto, gracias!" timestamp="16:49" />
   </Stack>
 </Box>`,
     },
@@ -4850,13 +4850,13 @@ export default [
         name: 'Conversation',
         code: `<Box padding={16}>
   <Stack space={16}>
-    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" text="¿Confirmamos la visita del martes?" timestamp="16:45" />
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="¿Confirmamos la visita del martes?" timestamp="16:45" />
     {getState('messageSent', false) ? (
-      <Message type="outgoing" text="Sí, el martes está bien." timestamp="16:50" />
+      <Message type="outgoing" contentText="Sí, el martes está bien." timestamp="16:50" />
     ) : (
-      <Message type="outgoing" text="Sí, el martes está bien." error errorMessage="No enviado. Toca para reintentar." onPress={() => setState('messageSent', true)} />
+      <Message type="outgoing" contentText="Sí, el martes está bien." error errorMessage="No enviado. Toca para reintentar." onPress={() => setState('messageSent', true)} />
     )}
-    <Message type="incoming" text="Te enviaré los detalles." boxed={false} senderName="Adriana" footer={<IconTimeRegular size={16} />} />
+    <Message type="incoming" contentText="Te enviaré los detalles." boxed={false} senderName="Adriana" footerSlot={<IconTimeRegular size={16} />} />
   </Stack>
 </Box>`,
     },
@@ -4869,14 +4869,14 @@ export default [
       <Box padding={16}>
         <Stack space={16}>
           <Text2 medium>{variant}</Text2>
-          <Message type="incoming" senderName="Adriana" text="Mensaje recibido sobre este fondo." timestamp="13:32" />
-          <Message type="outgoing" text="Mensaje enviado." timestamp="13:33" />
+          <Message type="incoming" senderName="Adriana" contentText="Mensaje recibido sobre este fondo." timestamp="13:32" />
+          <Message type="outgoing" contentText="Mensaje enviado." timestamp="13:33" />
           <Stack space={4}>
-            <Message type="incoming" text="Primero" position="first" />
-            <Message type="incoming" text="En medio" position="middle" />
-            <Message type="incoming" text="Último" position="last" />
+            <Message type="incoming" contentText="Primero" position="first" />
+            <Message type="incoming" contentText="En medio" position="middle" />
+            <Message type="incoming" contentText="Último" position="last" />
           </Stack>
-          <Message type="outgoing" text="Error" error errorMessage="No se ha enviado" />
+          <Message type="outgoing" contentText="Error" error errorMessage="No se ha enviado" />
         </Stack>
       </Box>
     </ResponsiveLayout>
@@ -4893,18 +4893,18 @@ export default [
       onAssetPress={() => alert({title: 'Perfil de Adriana'})}
       assetLabel="Abrir perfil de Adriana"
       senderName="Adriana"
-      text="Pulsa para ver los detalles"
+      contentText="Pulsa para ver los detalles"
       onPress={() => alert({title: 'Detalles del mensaje'})}
       timestamp="13:32"
       actionsPosition="side"
       actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
     />
-    <Message type="incoming" senderName="Adriana" timestamp="13:33" footer={<Text1 regular>Entregado</Text1>}
+    <Message type="incoming" senderName="Adriana" timestamp="13:33" footerSlot={<Text1 regular>Entregado</Text1>}
       actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}
       contentSlot={<Placeholder height={80} />}
     />
-    <Message type="outgoing" text="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
-    <Message type="incoming" text="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
+    <Message type="outgoing" contentText="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
+    <Message type="incoming" contentText="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
   </Stack>
 </Box>`,
     },

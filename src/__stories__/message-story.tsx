@@ -10,6 +10,7 @@ import {
     Text,
     Text1,
     Text3,
+    ThemeVariant,
     IconCopyRegular,
     IconCheckRegular,
     IconTimeRegular,
@@ -22,7 +23,7 @@ import type {Variant} from '../theme-variant-context';
 
 type Args = {
     type: 'incoming' | 'outgoing';
-    text: string;
+    contentText: string;
     senderName: string;
     senderNameAs: 'span' | 'p' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     senderNameLabel: string;
@@ -42,7 +43,7 @@ type Args = {
     ariaLabel: string;
     href: string;
     contentSlot: boolean;
-    footer: boolean;
+    footerSlot: boolean;
     side: boolean;
     actions: boolean;
     actionsPosition: 'side' | 'footer';
@@ -52,7 +53,7 @@ type Args = {
 
 const defaultArgs: Args = {
     type: 'incoming',
-    text: 'Lorem ipsum dolor sit amet et dolores voluptas.',
+    contentText: 'Lorem ipsum dolor sit amet et dolores voluptas.',
     senderName: 'John Doe',
     senderNameAs: 'span',
     senderNameLabel: '',
@@ -72,7 +73,7 @@ const defaultArgs: Args = {
     ariaLabel: '',
     href: 'https://example.com',
     contentSlot: false,
-    footer: false,
+    footerSlot: false,
     side: false,
     actions: false,
     actionsPosition: 'footer',
@@ -90,7 +91,7 @@ export default {
             control: 'select',
             description: 'Required message direction.',
         },
-        text: {control: 'text'},
+        contentText: {control: 'text'},
         senderName: {control: 'text'},
         senderNameAs: {
             options: ['span', 'p', 'h2', 'h3', 'h4', 'h5', 'h6'],
@@ -121,7 +122,7 @@ export default {
         ariaLabel: {control: 'text'},
         href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
         contentSlot: {control: 'boolean'},
-        footer: {control: 'boolean'},
+        footerSlot: {control: 'boolean'},
         side: {control: 'boolean'},
         actions: {control: 'boolean'},
         actionsPosition: {
@@ -168,9 +169,9 @@ const MessageExample = (args: Args & {footerContent?: React.ReactNode}) => {
     return (
         <Message
             {...errorProps}
-            text={args.text}
+            contentText={args.contentText}
             contentSlot={args.contentSlot ? <Placeholder height={80} /> : undefined}
-            footer={args.footer ? args.footerContent ?? <Text1 regular>Delivered</Text1> : undefined}
+            footerSlot={args.footerSlot ? args.footerContent ?? <Text1 regular>Delivered</Text1> : undefined}
             side={args.side ? <IconCheckRegular size={16} /> : undefined}
             actions={args.actions ? actions : undefined}
             actionsPosition={args.actionsPosition}
@@ -225,36 +226,56 @@ export const Conversation: StoryComponent<Args> = (args) => {
                         {...common}
                         asset={getAsset(args, 'AP')}
                         senderName={args.senderName}
-                        text={args.text}
+                        contentText={args.contentText}
                         timestamp={args.timestamp}
                     />
                     <Stack space={4}>
-                        <Message type="incoming" {...common} text="I found three options." position="first" />
-                        <Message type="incoming" {...common} text="Tuesday or Wednesday." position="middle" />
-                        <Message type="incoming" {...common} text="Thursday works too." position="last" />
+                        <Message
+                            type="incoming"
+                            {...common}
+                            contentText="I found three options."
+                            position="first"
+                        />
+                        <Message
+                            type="incoming"
+                            {...common}
+                            contentText="Tuesday or Wednesday."
+                            position="middle"
+                        />
+                        <Message
+                            type="incoming"
+                            {...common}
+                            contentText="Thursday works too."
+                            position="last"
+                        />
                     </Stack>
                     {failed ? (
                         <Message
                             {...common}
                             type="outgoing"
-                            text="Tuesday, please."
+                            contentText="Tuesday, please."
                             error
                             errorMessage={args.errorMessage}
                             onPress={() => setFailed(false)}
                         />
                     ) : (
-                        <Message {...common} type="outgoing" text="Tuesday, please." timestamp="16:50" />
+                        <Message
+                            {...common}
+                            type="outgoing"
+                            contentText="Tuesday, please."
+                            timestamp="16:50"
+                        />
                     )}
-                    <Message {...common} type="outgoing" text="Hi!" timestamp="16:51" />
+                    <Message {...common} type="outgoing" contentText="Hi!" timestamp="16:51" />
                     <Message
                         type="incoming"
-                        text="I'll send the details."
+                        contentText="I'll send the details."
                         boxed={false}
                         senderName={args.senderName}
                         senderNameAs={args.senderNameAs}
-                        footer={<IconTimeRegular size={16} />}
+                        footerSlot={<IconTimeRegular size={16} />}
                     />
-                    <MessageExample {...args} asset={false} text="Custom content" timestamp="" />
+                    <MessageExample {...args} asset={false} contentText="Custom content" timestamp="" />
                 </Stack>
             </Box>
         </ResponsiveLayout>
@@ -263,16 +284,16 @@ export const Conversation: StoryComponent<Args> = (args) => {
 Conversation.args = {
     ...defaultArgs,
     senderName: 'Adriana',
-    text: 'Good afternoon! Can we confirm the visit?',
+    contentText: 'Good afternoon! Can we confirm the visit?',
     timestamp: '16:45',
-    footer: true,
+    footerSlot: true,
     actions: true,
     actionsPosition: 'footer',
 };
 Conversation.parameters = {
     controls: {
         include: [
-            'text',
+            'contentText',
             'senderName',
             'senderNameAs',
             'timestamp',
@@ -284,7 +305,7 @@ Conversation.parameters = {
             'maxWidth',
             'variantOutside',
             'contentSlot',
-            'footer',
+            'footerSlot',
             'side',
             'actions',
             'actionsPosition',
@@ -304,7 +325,12 @@ export const ErrorExamples: StoryComponent<ErrorArgs> = (args) => (
             <Stack space={32}>
                 <MessageExample {...args} error />
                 <MessageExample {...args} error errorMessage={args.longErrorMessage} />
-                <MessageExample {...args} error text={args.shortText} errorMessage={args.shortErrorMessage} />
+                <MessageExample
+                    {...args}
+                    error
+                    contentText={args.shortText}
+                    errorMessage={args.shortErrorMessage}
+                />
             </Stack>
         </Box>
     </ResponsiveLayout>
@@ -331,7 +357,7 @@ ErrorExamples.parameters = {
     controls: {
         include: [
             'type',
-            'text',
+            'contentText',
             'errorMessage',
             'shortText',
             'shortErrorMessage',
@@ -363,7 +389,7 @@ export const SlotsAndActions: StoryComponent<Args> = (args) => (
 SlotsAndActions.args = {
     ...defaultArgs,
     contentSlot: true,
-    footer: true,
+    footerSlot: true,
     side: true,
     actions: true,
     actionsPosition: 'footer',
@@ -372,7 +398,7 @@ SlotsAndActions.args = {
 SlotsAndActions.parameters = {
     controls: {
         include: [
-            'text',
+            'contentText',
             'senderName',
             'senderNameAs',
             'timestamp',
@@ -385,7 +411,7 @@ SlotsAndActions.parameters = {
             'maxWidth',
             'variantOutside',
             'contentSlot',
-            'footer',
+            'footerSlot',
             'side',
             'actions',
             'actionsPosition',
@@ -398,10 +424,14 @@ export const ContentTypography: StoryComponent<Args> = (args) => (
     <ResponsiveLayout fullWidth variant={args.variantOutside}>
         <Box padding={16}>
             <Stack space={16}>
-                <Message type="incoming" boxed={args.boxed} text="Default text" />
+                <Message type="incoming" boxed={args.boxed} contentText="Default text" />
                 <Message type="incoming" boxed={args.boxed} contentSlot="Plain content" />
                 <Message type="incoming" boxed={args.boxed} contentSlot={<Text>Inherited text</Text>} />
                 <Message type="incoming" boxed={args.boxed} contentSlot={<Text3 bold>Custom text</Text3>} />
+                <div>Plain reference</div>
+                <ThemeVariant variant={args.boxed ? 'default' : args.variantOutside}>
+                    <Text>Inherited reference</Text>
+                </ThemeVariant>
                 <Text3 bold>Custom reference</Text3>
             </Stack>
         </Box>
@@ -421,7 +451,20 @@ ErrorWithSlots.args = {
     type: 'outgoing',
     senderName: '',
     error: true,
-    footer: true,
+    footerSlot: true,
     actions: true,
     actionsCount: 2,
 };
+
+export const ContentOverflow: StoryComponent<Args> = (args) => (
+    <Box padding={16}>
+        <Message
+            type="incoming"
+            boxed={args.boxed}
+            contentText="Photo"
+            maxWidth={200}
+            contentSlot={<Image src={avatarImg} width="400%" aspectRatio="1:1" alt="Portrait" />}
+        />
+    </Box>
+);
+ContentOverflow.parameters = {controls: {include: ['boxed']}};
