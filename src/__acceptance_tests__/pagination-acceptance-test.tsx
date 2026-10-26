@@ -56,6 +56,34 @@ test('Pagination ellipses are non-interactive', async () => {
 });
 
 test.each([
+    {totalPages: 2, currentPage: 1, surroundingPageCount: 0, desktop: ['1', '2'], mobile: ['1', '2']},
+    {
+        totalPages: 3,
+        currentPage: 2,
+        surroundingPageCount: 0,
+        desktop: ['1', '2', '3'],
+        mobile: ['1', '2', '3'],
+    },
+    {
+        totalPages: 4,
+        currentPage: 2,
+        surroundingPageCount: 0,
+        desktop: ['1', '2', '3', '4'],
+        mobile: ['1', '2', '...'],
+    },
+    {totalPages: 5, currentPage: 3, desktop: ['1', '2', '3', '4', '5'], mobile: ['1', '2', '3', '4', '5']},
+    {
+        currentPage: 10,
+        surroundingPageCount: 0,
+        desktop: ['1', '...', '10', '...', '20'],
+        mobile: ['...', '10', '...'],
+    },
+    {
+        currentPage: 10,
+        surroundingPageCount: 2,
+        desktop: ['1', '...', '8', '9', '10', '11', '12', '...', '20'],
+        mobile: ['...', '8', '9', '10', '11', '12', '...'],
+    },
     {currentPage: 3, desktop: ['1', '2', '3', '4', '5', '...', '20'], mobile: ['1', '2', '3', '4', '...']},
     {
         currentPage: 10,
@@ -68,12 +96,12 @@ test.each([
         mobile: ['...', '17', '18', '19', '20'],
     },
 ])(
-    'Pagination keeps the same list when resizing at page $currentPage',
-    async ({currentPage, desktop, mobile}) => {
+    'Pagination keeps the same list when resizing: %j',
+    async ({totalPages = 20, currentPage, surroundingPageCount = 1, desktop, mobile}) => {
         const page = await openStoryPage({
             id: STORY_ID,
             device: 'DESKTOP',
-            args: {totalPages: 20, currentPage, hideNavigationControls: true},
+            args: {totalPages, currentPage, surroundingPageCount, hideNavigationControls: true},
         });
         const list = await screen.findByRole('list');
         const markup = await list.evaluate((element) => element.innerHTML);
