@@ -744,6 +744,16 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 size: {desktop: 20, mobile: 20},
                 weight: 'bold',
             },
+            feedbackScreenDescription: {
+                lineHeight: {desktop: 24, mobile: 22},
+                size: {desktop: 18, mobile: 16},
+                weight: 'regular',
+            },
+            feedbackScreenTitle: {
+                lineHeight: {desktop: 32, mobile: 28},
+                size: {desktop: 28, mobile: 24},
+                weight: 'bold',
+            },
             headerPretitle: {
                 lineHeight: {desktop: 24, mobile: 22},
                 size: {desktop: 18, mobile: 16},
@@ -820,6 +830,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 24},
             },
             boxedDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
+            boxedSmallPadding: {top: {mobile: 8, desktop: 8}, bottom: {mobile: 8, desktop: 8}},
             responsiveLayoutMargin: {mobile: 16, desktop: 48},
         },
     };

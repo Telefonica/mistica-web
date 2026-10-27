@@ -386,6 +386,8 @@ const textPresets: ToThemeTokens<TextPresetsConfig> = {
         size: '',
         weight: '',
     },
+    feedbackScreenDescription: {lineHeight: '', size: '', weight: ''},
+    feedbackScreenTitle: {lineHeight: '', size: '', weight: ''},
     headerPretitle: {lineHeight: '', size: '', weight: ''},
 };
 
@@ -400,6 +402,7 @@ const spacing: ToThemeTokens<SpacingConfig> = {
     headerPadding: {top: '', bottom: ''},
     drawerPadding: {top: '', bottom: '', left: '', right: ''},
     boxedDefaultPadding: {left: '', right: ''},
+    boxedSmallPadding: {top: '', bottom: ''},
     responsiveLayoutMargin: '',
 };
 
