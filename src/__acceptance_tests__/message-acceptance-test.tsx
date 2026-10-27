@@ -426,3 +426,47 @@ test.each(['incoming', 'outgoing'])(
         ).toBeCloseTo(actionGap, 0);
     }
 );
+
+test.each([
+    {type: 'incoming', boxed: true, error: false, footerWidth: 160},
+    {type: 'outgoing', boxed: true, error: false, footerWidth: 160},
+    {type: 'incoming', boxed: false, error: true, footerWidth: 160},
+    {type: 'outgoing', boxed: true, error: true, footerWidth: 160},
+    {type: 'incoming', boxed: true, error: false, footerWidth: 400},
+    {type: 'outgoing', boxed: false, error: true, footerWidth: 400},
+])('Bubble grows to fit the footer within maxWidth: %o', async (args) => {
+    await openStoryPage({id: 'components-message--footer-sizing', device: 'MOBILE_IOS', args});
+    await waitFor(async () => {
+        const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
+        const footer = await (await screen.findByRole('img', {name: 'Attachment'})).boundingBox();
+        if (!bubble || !footer) throw new Error('Missing message bounds');
+        const maxWidth = 240;
+        expect(bubble.width).toBeCloseTo(Math.min(args.footerWidth, maxWidth), 0);
+        expect(footer.width).toBeCloseTo(bubble.width, 0);
+        expect(footer.x).toBeCloseTo(bubble.x, 0);
+    });
+});
+
+test.each(['incoming', 'outgoing'])('Short bubble grows to fit both footer actions: %s', async (type) => {
+    await openStoryPage({
+        id: 'components-message--footer-sizing',
+        device: 'MOBILE_IOS',
+        args: {type, footerSlot: false, error: true},
+    });
+    await waitFor(async () => {
+        const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
+        const copy = await screen.findByRole('button', {name: 'Copy'});
+        const reminder = await screen.findByRole('button', {name: 'Reminder'});
+        const bounds = async (button: typeof copy) =>
+            button.evaluate((node) => {
+                const rect = node.parentElement?.getBoundingClientRect();
+                return rect ? {left: rect.left, right: rect.right, top: rect.top} : null;
+            });
+        const first = await bounds(copy);
+        const last = await bounds(reminder);
+        if (!bubble || !first || !last) throw new Error('Missing action bounds');
+        expect(first.top).toBe(last.top);
+        expect(bubble.width).toBeCloseTo(last.right - first.left, 0);
+        expect(bubble.x).toBeCloseTo(first.left, 0);
+    });
+});

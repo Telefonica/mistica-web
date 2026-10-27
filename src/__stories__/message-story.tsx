@@ -486,3 +486,38 @@ export const SideSlotSizing: StoryComponent<Args> = (args) => (
     </Box>
 );
 SideSlotSizing.parameters = {controls: {include: ['type']}};
+
+export const FooterSizing: StoryComponent<Args & {footerWidth: number}> = (args) => (
+    <Box padding={16} dataAttributes={{testid: 'messages'}}>
+        <Message
+            type={args.type}
+            boxed={args.boxed}
+            contentText="Ok"
+            maxWidth={240}
+            {...(args.error
+                ? {error: true as const, errorMessage: 'Could not send'}
+                : {error: false as const})}
+            footerSlot={
+                args.footerSlot ? (
+                    <div role="img" aria-label="Attachment" style={{width: args.footerWidth}}>
+                        <Placeholder height={40} />
+                    </div>
+                ) : undefined
+            }
+            actionsPosition="footer"
+            actions={
+                args.actions
+                    ? [
+                          {Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: () => {}},
+                          {Icon: IconTimeRegular, 'aria-label': 'Reminder', onPress: () => {}},
+                      ]
+                    : undefined
+            }
+        />
+    </Box>
+);
+FooterSizing.args = {...defaultArgs, type: 'outgoing', footerSlot: true, footerWidth: 160, actions: true};
+FooterSizing.argTypes = {footerWidth: {control: 'number'}};
+FooterSizing.parameters = {
+    controls: {include: ['type', 'boxed', 'error', 'footerSlot', 'footerWidth', 'actions']},
+};

@@ -126,12 +126,13 @@ export const body = style({display: 'flex', flexDirection: 'column', gap: 4});
 export const inlineTimestamp = style({flexDirection: 'row', alignItems: 'baseline', gap: 8});
 export const text = style({display: 'inline-block', maxWidth: '100%'});
 
-export const footer = style({width: 0, minWidth: '100%', overflowWrap: 'anywhere'});
+export const footer = style({minWidth: 0, maxWidth: '100%', overflowWrap: 'anywhere', overflowX: 'auto'});
+globalStyle(`${footer} > *`, {maxWidth: '100%'});
+export const errorFooter = style({width: 0, minWidth: '100%', overflowWrap: 'anywhere'});
 export const shortErrorLayout = styleVariants({
     incoming: {display: 'flex', flexDirection: 'column', alignItems: 'flex-start'},
     outgoing: {display: 'flex', flexDirection: 'column', alignItems: 'flex-end'},
 });
-export const shortErrorBubble = style({width: 'fit-content', maxWidth: '100%'});
 export const shortErrorFooter = style({
     width: 'max-content',
     minWidth: 0,

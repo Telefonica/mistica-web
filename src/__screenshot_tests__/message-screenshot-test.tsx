@@ -94,3 +94,12 @@ test.each([
     });
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });
+
+test.each([true, false])('Message short bubble with footerSlot %s and actions', async (footerSlot) => {
+    await openStoryPage({
+        id: 'components-message--footer-sizing',
+        device: 'MOBILE_IOS',
+        args: {footerSlot, error: true},
+    });
+    expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
+});

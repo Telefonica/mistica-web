@@ -148,8 +148,7 @@ const Message = ({
                             }
                             className={classnames(
                                 styles.touchable,
-                                styles.corners[`${type}-${error ? 'standalone' : position}`],
-                                {[styles.shortErrorBubble]: shortError}
+                                styles.corners[`${type}-${error ? 'standalone' : position}`]
                             )}
                         >
                             <ThemeVariant variant={boxed ? 'default' : variant}>
@@ -164,7 +163,6 @@ const Message = ({
                                             boxed && type === 'outgoing' && !error,
                                         [styles.errorBackground]: boxed && error,
                                         [styles.interactive]: boxed && isInteractive,
-                                        [styles.shortErrorBubble]: shortError,
                                     })}
                                 >
                                     <ScreenReaderOnly>
@@ -257,7 +255,7 @@ const Message = ({
                     )}
                 </div>
                 {error && (
-                    <div className={classnames(styles.footer, {[styles.shortErrorFooter]: shortError})}>
+                    <div className={classnames(styles.errorFooter, {[styles.shortErrorFooter]: shortError})}>
                         <div
                             className={classnames(styles.error, {
                                 [styles.boxedError]: boxed,
