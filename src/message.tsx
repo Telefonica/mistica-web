@@ -41,7 +41,7 @@ export type MessageProps = TouchableComponentProps<
         asset?: React.ReactNode;
         boxed?: boolean;
         /** Maximum width of the whole message, including its asset and side actions. Defaults to 80%.
-         * Error feedback may be wider than a short bubble, but stays within the available message width.
+         * Error feedback can exceed this limit up to 184px to avoid illegible wrapping.
          */
         maxWidth?: number | string;
         position?: 'standalone' | 'first' | 'middle' | 'last';
@@ -103,7 +103,6 @@ const Message = ({
         (senderName || senderNameLabel) && `${id}-sender`,
         `${id}-content`,
         !error && timestamp && `${id}-timestamp`,
-        footerSlot && `${id}-footer`,
         error && `${id}-error`,
     ]
         .filter(Boolean)
@@ -135,108 +134,128 @@ const Message = ({
                     </Touchable>
                 </div>
             )}
-            <div className={classnames(styles.column, {[styles.shortErrorLayout[type]]: shortError})}>
-                <Touchable
-                    {...touchableProps}
-                    maybe
-                    aria-labelledby={
-                        touchableProps['aria-label']
-                            ? undefined
-                            : touchableProps['aria-labelledby'] ?? (isInteractive ? accessibleIds : undefined)
-                    }
-                    className={classnames(
-                        styles.touchable,
-                        styles.corners[`${type}-${error ? 'standalone' : position}`],
-                        {[styles.shortErrorBubble]: shortError}
-                    )}
-                >
-                    <ThemeVariant variant={boxed ? 'default' : variant}>
-                        <div
-                            ref={bubbleRef}
-                            data-testid="MessageBubble"
-                            className={classnames(styles.bubble, {
-                                [styles.boxed]: boxed,
-                                [styles.incomingBackground[variant]]: boxed && type === 'incoming' && !error,
-                                [styles.outgoingBackground[variant]]: boxed && type === 'outgoing' && !error,
-                                [styles.errorBackground]: boxed && error,
-                                [styles.interactive]: boxed && isInteractive,
-                                [styles.shortErrorBubble]: shortError,
-                            })}
+            <div className={classnames(styles.messageContent, {[styles.shortErrorLayout[type]]: shortError})}>
+                <div className={classnames(styles.row, styles.rowDirection[type])}>
+                    <div className={styles.column}>
+                        <Touchable
+                            {...touchableProps}
+                            maybe
+                            aria-labelledby={
+                                touchableProps['aria-label']
+                                    ? undefined
+                                    : touchableProps['aria-labelledby'] ??
+                                      (isInteractive ? accessibleIds : undefined)
+                            }
+                            className={classnames(
+                                styles.touchable,
+                                styles.corners[`${type}-${error ? 'standalone' : position}`],
+                                {[styles.shortErrorBubble]: shortError}
+                            )}
                         >
-                            <ScreenReaderOnly>
-                                <span id={`${id}-direction`}>{directionLabel}: </span>
-                            </ScreenReaderOnly>
-                            {(senderName || senderNameLabel) &&
-                                (senderName ? (
-                                    <Text1
-                                        medium
-                                        as={senderNameAs}
-                                        id={`${id}-sender`}
-                                        aria-label={senderNameLabel}
-                                        color={vars.colors.textBrand}
-                                    >
-                                        {senderName}
-                                    </Text1>
-                                ) : (
+                            <ThemeVariant variant={boxed ? 'default' : variant}>
+                                <div
+                                    ref={bubbleRef}
+                                    data-testid="MessageBubble"
+                                    className={classnames(styles.bubble, {
+                                        [styles.boxed]: boxed,
+                                        [styles.incomingBackground[variant]]:
+                                            boxed && type === 'incoming' && !error,
+                                        [styles.outgoingBackground[variant]]:
+                                            boxed && type === 'outgoing' && !error,
+                                        [styles.errorBackground]: boxed && error,
+                                        [styles.interactive]: boxed && isInteractive,
+                                        [styles.shortErrorBubble]: shortError,
+                                    })}
+                                >
                                     <ScreenReaderOnly>
-                                        <span id={`${id}-sender`}>{senderNameLabel}</span>
+                                        <span id={`${id}-direction`}>{directionLabel}: </span>
                                     </ScreenReaderOnly>
-                                ))}
+                                    {(senderName || senderNameLabel) &&
+                                        (senderName ? (
+                                            <Text1
+                                                medium
+                                                as={senderNameAs}
+                                                id={`${id}-sender`}
+                                                aria-label={senderNameLabel}
+                                                color={vars.colors.textBrand}
+                                            >
+                                                {senderName}
+                                            </Text1>
+                                        ) : (
+                                            <ScreenReaderOnly>
+                                                <span id={`${id}-sender`}>{senderNameLabel}</span>
+                                            </ScreenReaderOnly>
+                                        ))}
+                                    <div
+                                        className={classnames(styles.body, {
+                                            [styles.inlineTimestamp]: inlineTimestamp,
+                                        })}
+                                    >
+                                        <div className={styles.content} id={`${id}-content`}>
+                                            {contentText !== undefined && (
+                                                <Text2 regular as="p">
+                                                    <span ref={textRef} className={styles.text}>
+                                                        {contentText}
+                                                    </span>
+                                                </Text2>
+                                            )}
+                                            {contentSlot !== undefined && (
+                                                <div className={styles.contentSlot}>{contentSlot}</div>
+                                            )}
+                                        </div>
+                                        {!error && timestamp && (
+                                            <div className={boxed ? styles.timestamp : undefined}>
+                                                <Text1
+                                                    regular
+                                                    as="span"
+                                                    id={`${id}-timestamp`}
+                                                    aria-label={timestampLabel}
+                                                    color={
+                                                        boxed
+                                                            ? type === 'outgoing'
+                                                                ? vars.colors.textPrimary
+                                                                : vars.colors.textSecondary
+                                                            : undefined
+                                                    }
+                                                >
+                                                    {timestamp}
+                                                </Text1>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </ThemeVariant>
+                        </Touchable>
+                        {footerSlot && (
+                            <div className={styles.footer} id={`${id}-footer`}>
+                                {footerSlot}
+                            </div>
+                        )}
+                        {actions && actionsPosition === 'footer' && (
                             <div
-                                className={classnames(styles.body, {
-                                    [styles.inlineTimestamp]: inlineTimestamp,
+                                className={classnames(styles.actions, styles.footerActions, {
+                                    [styles.unboxedActions]: !boxed,
+                                    [styles.outgoingFooterActions]: type === 'outgoing',
                                 })}
                             >
-                                <div className={styles.content} id={`${id}-content`}>
-                                    {contentText !== undefined && (
-                                        <Text2 regular as="p">
-                                            <span ref={textRef} className={styles.text}>
-                                                {contentText}
-                                            </span>
-                                        </Text2>
-                                    )}
-                                    {contentSlot !== undefined && (
-                                        <div className={styles.contentSlot}>{contentSlot}</div>
-                                    )}
-                                </div>
-                                {!error && timestamp && (
-                                    <div className={boxed ? styles.timestamp : undefined}>
-                                        <Text1
-                                            regular
-                                            as="span"
-                                            id={`${id}-timestamp`}
-                                            aria-label={timestampLabel}
-                                            color={
-                                                boxed
-                                                    ? type === 'outgoing'
-                                                        ? vars.colors.textPrimary
-                                                        : vars.colors.textSecondary
-                                                    : undefined
-                                            }
-                                        >
-                                            {timestamp}
-                                        </Text1>
-                                    </div>
-                                )}
+                                {renderActions()}
                             </div>
-                        </div>
-                    </ThemeVariant>
-                    {footerSlot && (
-                        <div className={styles.footer} id={`${id}-footer`}>
-                            {footerSlot}
+                        )}
+                    </div>
+                    {side && (
+                        <div className={styles.sideSlot} style={{height: bubbleHeight || undefined}}>
+                            {side}
                         </div>
                     )}
-                </Touchable>
-                {actions && actionsPosition === 'footer' && (
-                    <div
-                        className={classnames(styles.actions, styles.footerActions, {
-                            [styles.unboxedActions]: !boxed,
-                            [styles.outgoingFooterActions]: type === 'outgoing',
-                        })}
-                    >
-                        {renderActions()}
-                    </div>
-                )}
+                    {actions && actionsPosition === 'side' && (
+                        <div
+                            className={classnames(styles.actions, styles.sideActions[type])}
+                            style={{height: bubbleHeight || undefined}}
+                        >
+                            {renderActions()}
+                        </div>
+                    )}
+                </div>
                 {error && (
                     <div className={classnames(styles.footer, {[styles.shortErrorFooter]: shortError})}>
                         <div
@@ -256,19 +275,6 @@ const Message = ({
                     </div>
                 )}
             </div>
-            {(side || (actions && actionsPosition === 'side')) && (
-                <div
-                    className={classnames(styles.side, styles.sideDirection[type])}
-                    style={{height: bubbleHeight || undefined}}
-                >
-                    {side}
-                    {actions && actionsPosition === 'side' && (
-                        <div className={classnames(styles.actions, styles.sideActions[type])}>
-                            {renderActions()}
-                        </div>
-                    )}
-                </div>
-            )}
         </div>
     );
 };

@@ -71,3 +71,26 @@ test.each(['default', 'alternative'])('Message unboxed over %s', async (variantO
     });
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });
+
+test.each([
+    {maxWidth: '100px', actions: false},
+    {maxWidth: '240px', actions: true},
+])('Message error readability with maxWidth $maxWidth', async ({maxWidth, actions}) => {
+    await openStoryPage({
+        id: 'components-message--default',
+        device: 'MOBILE_IOS',
+        args: {
+            type: 'outgoing',
+            asset: false,
+            senderName: '',
+            contentText: 'Ok',
+            maxWidth,
+            error: true,
+            errorMessage: 'This message could not be sent please try again',
+            actions,
+            actionsCount: 2,
+            actionsPosition: 'side',
+        },
+    });
+    expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
+});

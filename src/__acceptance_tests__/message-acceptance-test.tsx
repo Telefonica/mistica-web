@@ -352,3 +352,77 @@ test.each([true, false])('Oversized content stays inside the message (boxed: %s)
     expect(bounds.width).toBeLessThanOrEqual(200);
     expect(bounds.imageRight).toBeLessThanOrEqual(bounds.right);
 });
+
+test.each(['incoming', 'outgoing'])('Error uses the side actions width: %s', async (type) => {
+    await openStoryPage({
+        id: story,
+        device: 'MOBILE_IOS',
+        args: {
+            type,
+            asset: false,
+            senderName: '',
+            error: true,
+            errorMessage: 'An error message that needs the whole row width to remain readable',
+            actions: true,
+            actionsCount: 2,
+            actionsPosition: 'side',
+        },
+    });
+    const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
+    const error = await (await screen.findByRole('alert')).boundingBox();
+    const message = await (await screen.findByTestId('Message')).boundingBox();
+    if (!bubble || !error || !message) throw new Error('Missing message bounds');
+    expect(error.width).toBeCloseTo(message.width, 0);
+    expect(error.width).toBeGreaterThan(bubble.width);
+    expect(error.y - bubble.y - bubble.height).toBeCloseTo(4, 0);
+});
+
+test.each(['incoming', 'outgoing'])('Error preserves legibility with a narrow maxWidth: %s', async (type) => {
+    await openStoryPage({
+        id: story,
+        device: 'MOBILE_IOS',
+        args: {
+            type,
+            contentText: 'Ok',
+            maxWidth: '100px',
+            asset: false,
+            senderName: '',
+            error: true,
+            errorMessage: 'This message could not be sent please try again',
+        },
+    });
+    await waitFor(async () => {
+        const error = await (await screen.findByRole('alert')).boundingBox();
+        const message = await (await screen.findByTestId('Message')).boundingBox();
+        if (!error || !message) throw new Error('Missing message bounds');
+        const minimumErrorWidth = 184;
+        expect(error.width).toBeCloseTo(minimumErrorWidth, 0);
+        expect(message.width).toBeLessThanOrEqual(100);
+        if (type === 'outgoing') expect(error.x + error.width).toBeCloseTo(message.x + message.width, 0);
+        else expect(error.x).toBeCloseTo(message.x, 0);
+    });
+});
+
+test.each(['incoming', 'outgoing'])(
+    'Side slot uses at most 40 percent and keeps the action gap: %s',
+    async (type) => {
+        await openStoryPage({id: 'components-message--side-slot-sizing', device: 'MOBILE_IOS', args: {type}});
+        const slot = await screen.findByRole('img', {name: 'Side attachment'});
+        const slotBounds = await slot.boundingBox();
+        const message = await (await screen.findByTestId('Message')).boundingBox();
+        const action = await screen.findByRole('button', {name: 'Copy'});
+        const actionBounds = await action.evaluate((node) => {
+            const rect = node.parentElement?.getBoundingClientRect();
+            return rect ? {left: rect.left, right: rect.right} : null;
+        });
+        if (!slotBounds || !message || !actionBounds) throw new Error('Missing slot bounds');
+        const maximumSideSlotRatio = 0.4;
+        expect(slotBounds.width).toBeLessThanOrEqual(message.width * maximumSideSlotRatio);
+        const actionGap = 4;
+        expect(
+            type === 'incoming'
+                ? actionBounds.left - slotBounds.x - slotBounds.width
+                : slotBounds.x - actionBounds.right
+        ).toBeCloseTo(actionGap, 0);
+    }
+);

@@ -468,3 +468,21 @@ export const ContentOverflow: StoryComponent<Args> = (args) => (
     </Box>
 );
 ContentOverflow.parameters = {controls: {include: ['boxed']}};
+
+export const SideSlotSizing: StoryComponent<Args> = (args) => (
+    <Box padding={16}>
+        <Message
+            type={args.type}
+            contentText="Message content takes priority"
+            maxWidth={240}
+            side={
+                <div role="img" aria-label="Side attachment" style={{width: '100%'}}>
+                    <Placeholder width="100%" height={40} />
+                </div>
+            }
+            actionsPosition="side"
+            actions={[{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: () => {}}]}
+        />
+    </Box>
+);
+SideSlotSizing.parameters = {controls: {include: ['type']}};

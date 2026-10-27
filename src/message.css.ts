@@ -24,6 +24,9 @@ export const unboxedAssetSpacing = styleVariants({
     incoming: {marginRight: 12},
     outgoing: {marginLeft: 12},
 });
+export const messageContent = style({display: 'flex', flexDirection: 'column', minWidth: 0});
+export const row = style({display: 'flex', width: '100%', minWidth: 0, alignItems: 'flex-start'});
+export const rowDirection = styleVariants({incoming: {}, outgoing: {flexDirection: 'row-reverse'}});
 export const column = style({display: 'flex', flexDirection: 'column', minWidth: 0});
 export const touchable = style({textAlign: 'left', minWidth: 0, borderRadius: vars.borderRadii.container});
 export const corners = styleVariants({
@@ -91,7 +94,16 @@ export const sideActions = styleVariants({
     outgoing: {marginRight: actionsInset},
 });
 export const outgoingFooterActions = style({justifyContent: 'flex-end'});
-export const side = style({display: 'flex', flexShrink: 0, alignSelf: 'flex-start', alignItems: 'center'});
+const maximumSideSlotWidth = '40%';
+export const sideSlot = style({
+    display: 'flex',
+    flexShrink: 0,
+    alignItems: 'center',
+    minWidth: 0,
+    maxWidth: maximumSideSlotWidth,
+    overflowX: 'auto',
+});
+globalStyle(`${sideSlot} > *`, {maxWidth: '100%'});
 export const unboxedActions = style({marginLeft: -8});
 export const error = style({
     boxSizing: 'border-box',
@@ -123,7 +135,6 @@ export const shortErrorBubble = style({width: 'fit-content', maxWidth: '100%'});
 export const shortErrorFooter = style({
     width: 'max-content',
     minWidth: 0,
-    maxWidth: '100%',
+    maxWidth: `max(100%, ${minimumErrorWidth}px)`,
+    flexShrink: 0,
 });
-
-export const sideDirection = styleVariants({incoming: {}, outgoing: {flexDirection: 'row-reverse'}});

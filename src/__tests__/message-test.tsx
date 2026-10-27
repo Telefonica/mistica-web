@@ -22,7 +22,7 @@ test('static messages expose their direction and content without adding a focus 
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });
 
-test('interactive messages group sender, slot, footer and timestamp in reading order', () => {
+test('interactive messages group sender, content and timestamp in reading order', () => {
     renderMessage(
         <Message
             type="incoming"
@@ -36,7 +36,7 @@ test('interactive messages group sender, slot, footer and timestamp in reading o
         />
     );
     expect(
-        screen.getByRole('button', {name: "Mensaje: Ana, support Details One o'clock Delivered"})
+        screen.getByRole('button', {name: "Mensaje: Ana, support Details One o'clock"})
     ).toBeInTheDocument();
 });
 
@@ -175,7 +175,7 @@ test.each(['side', 'footer'] as const)(
                 actions={[{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: action}]}
             />
         );
-        expect(screen.getByRole('button', {name: 'Tú: Hello Details Footer Try again'})).toBeInTheDocument();
+        expect(screen.getByRole('button', {name: 'Tú: Hello Details Try again'})).toBeInTheDocument();
         expect(screen.getByText('Side')).toBeInTheDocument();
         expect(screen.getByRole('alert')).toHaveTextContent('Try again');
         await userEvent.click(screen.getByRole('button', {name: 'Copy'}));
@@ -200,4 +200,30 @@ test('ignores extra actions passed by JavaScript consumers', () => {
     expect(screen.getByRole('button', {name: 'Copy'})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Share'})).toBeInTheDocument();
     expect(screen.queryByRole('button', {name: 'Extra'})).not.toBeInTheDocument();
+});
+
+test.each([true, false])('Footer controls remain independent of the bubble (error: %s)', async (error) => {
+    const retry = jest.fn();
+    const footerPress = jest.fn();
+    renderMessage(
+        <Message
+            type="outgoing"
+            contentText="Hello"
+            onPress={retry}
+            {...(error ? {error: true as const, errorMessage: 'Try again'} : {error: false as const})}
+            footerSlot={<button onClick={footerPress}>Footer action</button>}
+        />
+    );
+    const footer = screen.getByRole('button', {name: 'Footer action'});
+    const bubble = screen.getByRole('button', {name: error ? 'Tú: Hello Try again' : 'Tú: Hello'});
+    expect(bubble).not.toContainElement(footer);
+    await userEvent.click(footer);
+    expect(footerPress).toHaveBeenCalledTimes(1);
+    expect(retry).not.toHaveBeenCalled();
+    footer.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(footerPress).toHaveBeenCalledTimes(2);
+    expect(retry).not.toHaveBeenCalled();
+    await userEvent.click(bubble);
+    expect(retry).toHaveBeenCalledTimes(1);
 });
