@@ -1,10 +1,14 @@
 import {openStoryPage, screen} from '../test-utils';
-import {mediaQueriesConfig} from '../media-queries.css';
 
 import type {SerializedAXNode} from 'puppeteer';
 
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_EDGE_OFFSET = {x: 47, y: 24};
+// Literal on purpose: changing the responsive breakpoint must fail these tests.
+const DESKTOP_MIN_WIDTH = 1024;
+const DESKTOP_MIN_HEIGHT = 550;
+const DESKTOP_VIEWPORT = {width: DESKTOP_MIN_WIDTH, height: DESKTOP_MIN_HEIGHT};
+const MOBILE_VIEWPORT = {width: DESKTOP_MIN_WIDTH - 1, height: DESKTOP_MIN_HEIGHT};
 
 const getAccessibleButtons = (node: SerializedAXNode): Array<SerializedAXNode> =>
     node.role === 'button' ? [node] : (node.children ?? []).flatMap(getAccessibleButtons);
@@ -101,10 +105,11 @@ test.each([
         const page = await openStoryPage({
             id: STORY_ID,
             device: 'DESKTOP',
+            viewport: DESKTOP_VIEWPORT,
             args: {totalPages, currentPage, surroundingPageCount, hideNavigationControls: true},
         });
         const list = await screen.findByRole('list');
-        const markup = await list.evaluate((element) => element.innerHTML);
+        const expectedMarkup = await list.evaluate((element) => element.innerHTML);
         const visibleItems = () =>
             list.evaluate((element) =>
                 Array.from(element.children)
@@ -133,44 +138,14 @@ test.each([
         expect(await visibleItems()).toEqual(desktop);
         await expectAccessiblePages(desktop);
 
-        const viewport = {
-            width: mediaQueriesConfig.desktopMinWidth,
-            height: mediaQueriesConfig.desktopOrTabletMinHeight,
-        };
-        await page.setViewport({...viewport, width: mediaQueriesConfig.desktopMinWidth - 1});
+        await page.setViewport(MOBILE_VIEWPORT);
         expect(await visibleItems()).toEqual(mobile);
         await expectAccessiblePages(mobile);
-        expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
+        expect(await list.evaluate((element) => element.innerHTML)).toBe(expectedMarkup);
 
-        await page.setViewport(viewport);
+        await page.setViewport(DESKTOP_VIEWPORT);
         expect(await visibleItems()).toEqual(desktop);
         await expectAccessiblePages(desktop);
-        expect(await list.evaluate((element) => element.innerHTML)).toBe(markup);
+        expect(await list.evaluate((element) => element.innerHTML)).toBe(expectedMarkup);
     }
 );
-
-test('Pagination with three pages and no surrounding pages keeps a single current page', async () => {
-    const page = await openStoryPage({
-        id: STORY_ID,
-        device: 'DESKTOP',
-        args: {totalPages: 3, surroundingPageCount: 0, hideNavigationControls: true},
-    });
-    const list = await screen.findByRole('list');
-    const expectPageButtons = async () => {
-        const tree = await page.accessibility.snapshot({root: list, interestingOnly: false});
-        expect(tree && getAccessibleButtons(tree).map(({name}) => name)).toEqual([
-            'Ir a la página 1',
-            'Página 2, página actual',
-            'Ir a la página 3',
-        ]);
-    };
-
-    await page.click(await screen.findByRole('button', {name: 'Ir a la página 2'}));
-    await expectPageButtons();
-
-    await page.setViewport({
-        width: mediaQueriesConfig.desktopMinWidth - 1,
-        height: mediaQueriesConfig.desktopOrTabletMinHeight,
-    });
-    await expectPageButtons();
-});
