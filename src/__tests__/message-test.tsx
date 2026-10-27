@@ -22,6 +22,31 @@ test('static messages expose their direction and content without adding a focus 
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });
 
+test.each(['span', 'p', 'h2'] as const)(
+    'static messages expose label overrides without duplicate text: %s',
+    (senderNameAs) => {
+        renderMessage(
+            <Message
+                type="incoming"
+                senderName="Ana"
+                senderNameAs={senderNameAs}
+                senderNameLabel="Ana, support"
+                timestamp="13:00"
+                timestampLabel="One o'clock"
+                contentText="Hello"
+            />
+        );
+        expect(screen.getByText('Ana')).toHaveAttribute('aria-hidden', 'true');
+        expect(screen.getByText('13:00')).toHaveAttribute('aria-hidden', 'true');
+        expect(screen.getByText('Ana, support')).not.toHaveAttribute('aria-hidden', 'true');
+        expect(screen.getByText("One o'clock")).not.toHaveAttribute('aria-hidden', 'true');
+        if (senderNameAs === 'h2') {
+            expect(screen.getByRole('heading', {name: 'Ana, support', level: 2})).toBeInTheDocument();
+        }
+        expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    }
+);
+
 test('interactive messages group sender, content and timestamp in reading order', () => {
     renderMessage(
         <Message

@@ -175,10 +175,18 @@ const Message = ({
                                                 medium
                                                 as={senderNameAs}
                                                 id={`${id}-sender`}
-                                                aria-label={senderNameLabel}
                                                 color={vars.colors.textBrand}
                                             >
-                                                {senderName}
+                                                {senderNameLabel ? (
+                                                    <>
+                                                        <span aria-hidden>{senderName}</span>
+                                                        <ScreenReaderOnly>
+                                                            <span>{senderNameLabel}</span>
+                                                        </ScreenReaderOnly>
+                                                    </>
+                                                ) : (
+                                                    senderName
+                                                )}
                                             </Text1>
                                         ) : (
                                             <ScreenReaderOnly>
@@ -208,7 +216,6 @@ const Message = ({
                                                     regular
                                                     as="span"
                                                     id={`${id}-timestamp`}
-                                                    aria-label={timestampLabel}
                                                     color={
                                                         boxed
                                                             ? type === 'outgoing'
@@ -217,7 +224,16 @@ const Message = ({
                                                             : undefined
                                                     }
                                                 >
-                                                    {timestamp}
+                                                    {timestampLabel ? (
+                                                        <>
+                                                            <span aria-hidden>{timestamp}</span>
+                                                            <ScreenReaderOnly>
+                                                                <span>{timestampLabel}</span>
+                                                            </ScreenReaderOnly>
+                                                        </>
+                                                    ) : (
+                                                        timestamp
+                                                    )}
                                                 </Text1>
                                             </div>
                                         )}
