@@ -92,7 +92,7 @@ test('Message uses an inline timestamp for short text', async () => {
     await openStoryPage({
         id: story,
         device: 'MOBILE_IOS',
-        args: {contentText: 'Hi', senderName: '', asset: false},
+        args: {contentText: 'Hi', senderName: '', timestampLabel: '', asset: false},
     });
     const text = await screen.findByText('Hi');
     const timestamp = await screen.findByText('13:32');
@@ -368,13 +368,18 @@ test.each(['incoming', 'outgoing'])('Error uses the side actions width: %s', asy
             actionsPosition: 'side',
         },
     });
-    const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
-    const error = await (await screen.findByRole('alert')).boundingBox();
-    const message = await (await screen.findByTestId('Message')).boundingBox();
-    if (!bubble || !error || !message) throw new Error('Missing message bounds');
-    expect(error.width).toBeCloseTo(message.width, 0);
-    expect(error.width).toBeGreaterThan(bubble.width);
-    expect(error.y - bubble.y - bubble.height).toBeCloseTo(4, 0);
+    const bubble = await screen.findByTestId('MessageBubble');
+    const error = await screen.findByRole('alert');
+    const message = await screen.findByTestId('Message');
+    await waitFor(async () => {
+        const bubbleBounds = await bubble.boundingBox();
+        const errorBounds = await error.boundingBox();
+        const messageBounds = await message.boundingBox();
+        if (!bubbleBounds || !errorBounds || !messageBounds) throw new Error('Missing message bounds');
+        expect(errorBounds.width).toBeCloseTo(messageBounds.width, 0);
+        expect(errorBounds.width).toBeGreaterThan(bubbleBounds.width);
+        expect(errorBounds.y - bubbleBounds.y - bubbleBounds.height).toBeCloseTo(4, 0);
+    });
 });
 
 test.each(['incoming', 'outgoing'])('Error preserves legibility with a narrow maxWidth: %s', async (type) => {
