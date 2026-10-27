@@ -68,7 +68,7 @@ test('Message wraps within its maximum width on mobile with side actions', async
             contentText: 'A very long message '.repeat(30),
             actions: true,
             actionsPosition: 'side',
-            side: true,
+            sideSlot: true,
         },
     });
     const container = await screen.findByTestId('messages');

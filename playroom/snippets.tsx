@@ -4918,7 +4918,7 @@ export default [
       actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}
       contentSlot={<Placeholder height={80} />}
     />
-    <Message type="outgoing" contentText="Sí" timestamp="13:34" side={<IconCheckRegular size={16} />} />
+    <Message type="outgoing" contentText="Sí" timestamp="13:34" sideSlot={<IconCheckRegular size={16} />} />
     <Message type="incoming" contentText="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
   </Stack>
 </Box>`,

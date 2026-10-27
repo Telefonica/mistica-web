@@ -18,7 +18,7 @@ import Message from '../message';
     errorMessage="Try again"
     contentSlot={<span>Details</span>}
     footerSlot="Footer"
-    side="Side"
+    sideSlot="Side"
 />;
 
 // @ts-expect-error Message direction must be explicit

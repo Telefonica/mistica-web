@@ -44,7 +44,7 @@ type Args = {
     href: string;
     contentSlot: boolean;
     footerSlot: boolean;
-    side: boolean;
+    sideSlot: boolean;
     actions: boolean;
     actionsPosition: 'side' | 'footer';
     actionsCount: 1 | 2;
@@ -74,7 +74,7 @@ const defaultArgs: Args = {
     href: 'https://example.com',
     contentSlot: false,
     footerSlot: false,
-    side: false,
+    sideSlot: false,
     actions: false,
     actionsPosition: 'footer',
     actionsCount: 1,
@@ -123,7 +123,7 @@ export default {
         href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
         contentSlot: {control: 'boolean'},
         footerSlot: {control: 'boolean'},
-        side: {control: 'boolean'},
+        sideSlot: {control: 'boolean'},
         actions: {control: 'boolean'},
         actionsPosition: {
             options: ['side', 'footer'],
@@ -172,7 +172,7 @@ const MessageExample = (args: Args & {footerContent?: React.ReactNode}) => {
             contentText={args.contentText}
             contentSlot={args.contentSlot ? <Placeholder height={80} /> : undefined}
             footerSlot={args.footerSlot ? args.footerContent ?? <Text1 regular>Delivered</Text1> : undefined}
-            side={args.side ? <IconCheckRegular size={16} /> : undefined}
+            sideSlot={args.sideSlot ? <IconCheckRegular size={16} /> : undefined}
             actions={args.actions ? actions : undefined}
             actionsPosition={args.actionsPosition}
             type={args.type}
@@ -306,7 +306,7 @@ Conversation.parameters = {
             'variantOutside',
             'contentSlot',
             'footerSlot',
-            'side',
+            'sideSlot',
             'actions',
             'actionsPosition',
             'actionsCount',
@@ -390,7 +390,7 @@ SlotsAndActions.args = {
     ...defaultArgs,
     contentSlot: true,
     footerSlot: true,
-    side: true,
+    sideSlot: true,
     actions: true,
     actionsPosition: 'footer',
     actionsCount: 2,
@@ -412,7 +412,7 @@ SlotsAndActions.parameters = {
             'variantOutside',
             'contentSlot',
             'footerSlot',
-            'side',
+            'sideSlot',
             'actions',
             'actionsPosition',
             'actionsCount',
@@ -475,7 +475,7 @@ export const SideSlotSizing: StoryComponent<Args> = (args) => (
             type={args.type}
             contentText="Message content takes priority"
             maxWidth={240}
-            side={
+            sideSlot={
                 <div role="img" aria-label="Side attachment" style={{width: '100%'}}>
                     <Placeholder width="100%" height={40} />
                 </div>

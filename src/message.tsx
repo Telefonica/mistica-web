@@ -51,7 +51,7 @@ export type MessageProps = TouchableComponentProps<
             contentText?: string;
             contentSlot?: React.ReactNode;
             footerSlot?: React.ReactNode;
-            side?: React.ReactNode;
+            sideSlot?: React.ReactNode;
             /** Up to two actions. Extra actions from untyped consumers are ignored. */
             actions?: MessageActions;
             actionsPosition?: 'side' | 'footer';
@@ -74,7 +74,7 @@ const Message = ({
     contentText,
     contentSlot,
     footerSlot,
-    side,
+    sideSlot,
     actions,
     actionsPosition = 'footer',
     error = false,
@@ -91,6 +91,7 @@ const Message = ({
     const bubbleWidth = bubbleContentWidth + (boxed ? styles.bubblePaddingX * 2 : 0);
     const shortError = error && bubbleContentWidth > 0 && bubbleWidth < styles.minimumErrorWidth;
     const inlineTimestamp = boxed && !contentSlot && textWidth > 0 && textWidth < styles.minimumBubbleSize;
+    const showTimestamp = !!timestamp && !(error && type === 'outgoing');
     const isInteractive = !!(touchableProps.onPress || touchableProps.href || touchableProps.to);
     const directionLabel = t(type === 'incoming' ? tokens.messageIncoming : tokens.messageOutgoing);
     const renderActions = () =>
@@ -102,7 +103,7 @@ const Message = ({
         `${id}-direction`,
         (senderName || senderNameLabel) && `${id}-sender`,
         `${id}-content`,
-        !error && timestamp && `${id}-timestamp`,
+        showTimestamp && `${id}-timestamp`,
         error && `${id}-error`,
     ]
         .filter(Boolean)
@@ -201,7 +202,7 @@ const Message = ({
                                                 <div className={styles.contentSlot}>{contentSlot}</div>
                                             )}
                                         </div>
-                                        {!error && timestamp && (
+                                        {showTimestamp && (
                                             <div className={boxed ? styles.timestamp : undefined}>
                                                 <Text1
                                                     regular
@@ -240,9 +241,9 @@ const Message = ({
                             </div>
                         )}
                     </div>
-                    {side && (
+                    {sideSlot && (
                         <div className={styles.sideSlot} style={{height: bubbleHeight || undefined}}>
-                            {side}
+                            {sideSlot}
                         </div>
                     )}
                     {actions && actionsPosition === 'side' && (

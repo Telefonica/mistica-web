@@ -88,7 +88,7 @@ test('decorative assets are excluded from the accessible name', () => {
     expect(screen.getByRole('button', {name: 'Mensaje: Hello'})).toBeInTheDocument();
 });
 
-test('errors announce a custom message, hide the timestamp and can be retried', async () => {
+test('outgoing errors announce a custom message, hide the timestamp and can be retried', async () => {
     const retry = jest.fn();
     renderMessage(
         <Message
@@ -104,6 +104,22 @@ test('errors announce a custom message, hide the timestamp and can be retried', 
     expect(screen.queryByText('13:00')).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', {name: 'Tú: Hello Try again'}));
     expect(retry).toHaveBeenCalledTimes(1);
+});
+
+test('incoming errors retain the timestamp and include it in the accessible name', () => {
+    renderMessage(
+        <Message
+            type="incoming"
+            contentText="Hello"
+            error
+            errorMessage="Try again"
+            timestamp="13:00"
+            onPress={() => {}}
+        />
+    );
+    expect(screen.getByText('13:00')).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Mensaje: Hello 13:00 Try again'})).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('Try again');
 });
 
 test.each([false, true])('errors display the product message regardless of retry action: %s', (retry) => {
@@ -167,7 +183,7 @@ test.each(['side', 'footer'] as const)(
                 contentText="Hello"
                 contentSlot={<span>Details</span>}
                 footerSlot={<span>Footer</span>}
-                side={<span>Side</span>}
+                sideSlot={<span>Side</span>}
                 error
                 errorMessage="Try again"
                 onPress={retry}
