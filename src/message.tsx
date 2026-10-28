@@ -175,7 +175,13 @@ const Message = ({
                                                 medium
                                                 as={senderNameAs}
                                                 id={`${id}-sender`}
-                                                color={vars.colors.textBrand}
+                                                color={
+                                                    !boxed &&
+                                                    variant !== 'default' &&
+                                                    variant !== 'alternative'
+                                                        ? vars.colors.textPrimary
+                                                        : vars.colors.textBrand
+                                                }
                                             >
                                                 {senderNameLabel ? (
                                                     <>

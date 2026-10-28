@@ -88,6 +88,30 @@ test('Message wraps within its maximum width on mobile with side actions', async
     expect(hasOverflow).toBe(false);
 });
 
+test.each(['brand', 'negative', 'media'])(
+    'Unboxed sender uses the content color over %s',
+    async (variantOutside) => {
+        await openStoryPage({
+            id: story,
+            device: 'MOBILE_IOS',
+            args: {
+                boxed: false,
+                variantOutside,
+                senderName: 'Adriana',
+                senderNameLabel: '',
+                contentText: 'Hello',
+                timestampLabel: '',
+            },
+        });
+        const sender = await screen.findByText('Adriana');
+        const content = await screen.findByText('Hello');
+        const timestamp = await screen.findByText('13:32');
+        const contentColor = await content.evaluate((node) => getComputedStyle(node).color);
+        expect(await sender.evaluate((node) => getComputedStyle(node).color)).toBe(contentColor);
+        expect(await timestamp.evaluate((node) => getComputedStyle(node).color)).toBe(contentColor);
+    }
+);
+
 test('Message uses an inline timestamp for short text', async () => {
     await openStoryPage({
         id: story,
