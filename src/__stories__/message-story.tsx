@@ -103,7 +103,7 @@ export default {
         timestampLabel: {control: 'text'},
         asset: {control: 'boolean'},
         assetType: {options: ['avatar', 'image', 'icon'], control: 'select', if: {arg: 'asset'}},
-        avatarSize: {control: 'number', if: {arg: 'assetType', eq: 'avatar'}},
+        avatarSize: {control: 'number', if: {arg: 'asset'}},
         interactiveAsset: {control: 'boolean', if: {arg: 'asset'}},
         assetLabel: {control: 'text', if: {arg: 'interactiveAsset'}},
         boxed: {
