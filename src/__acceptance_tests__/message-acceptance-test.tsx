@@ -1,6 +1,15 @@
 import {openStoryPage, screen, waitFor} from '../test-utils';
 import {getGlobalPage} from '@telefonica/acceptance-testing';
 import {AxePuppeteer} from '@axe-core/puppeteer';
+import assert from 'assert';
+
+import type {ElementHandle} from '../test-utils';
+
+const getBounds = async (element: ElementHandle) => {
+    const bounds = await element.boundingBox();
+    assert(bounds, 'Element has no bounding box');
+    return {...bounds, left: bounds.x, right: bounds.x + bounds.width};
+};
 
 const story = 'components-message--default';
 
@@ -14,51 +23,51 @@ test.each(['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const)(
 );
 
 test.each([
-    {type: 'incoming', boxed: true},
-    {type: 'outgoing', boxed: true},
-    {type: 'outgoing', boxed: false},
-])('Short error messages stay within the mobile viewport: %o', async ({type, boxed}) => {
-    await openStoryPage({
-        id: story,
-        device: 'MOBILE_IOS',
-        skin: 'Blau',
-        args: {
-            type,
-            boxed,
-            contentText: 'Error',
-            senderName: '',
-            assetType: 'none',
-            error: true,
-            errorMessage: 'Could not send please try again',
-            variantOutside: 'alternative',
-        },
-    });
-    const error = await screen.findByRole('alert');
-    const bubble = await screen.findByTestId('MessageBubble');
-    const errorBounds = await error.boundingBox();
-    const bubbleBounds = await bubble.boundingBox();
-    if (!errorBounds || !bubbleBounds) {
-        throw new Error('Message error or bubble bounds not found');
+    {type: 'incoming', boxed: true, inset: 16, edge: 'left'},
+    {type: 'outgoing', boxed: true, inset: 16, edge: 'right'},
+    {type: 'outgoing', boxed: false, inset: 0, edge: 'right'},
+] as const)(
+    'Short error messages stay within the mobile viewport: $type boxed=$boxed',
+    async ({type, boxed, inset, edge}) => {
+        await openStoryPage({
+            id: story,
+            device: 'MOBILE_IOS',
+            skin: 'Blau',
+            args: {
+                type,
+                boxed,
+                contentText: 'Error',
+                senderName: '',
+                assetType: 'none',
+                error: true,
+                errorMessage: 'Could not send please try again',
+                variantOutside: 'alternative',
+            },
+        });
+        const error = await screen.findByRole('alert');
+        const bubble = await screen.findByTestId('MessageBubble');
+        const errorBounds = await getBounds(error);
+        const bubbleBounds = await getBounds(bubble);
+        const leftInset = await error.evaluate((element) =>
+            parseFloat(getComputedStyle(element).paddingLeft)
+        );
+        const minimumErrorWidth = 184;
+        expect(errorBounds.width).toBeGreaterThanOrEqual(minimumErrorWidth);
+        expect(leftInset).toBe(inset);
+        const rightInset = await error.evaluate((element) =>
+            parseFloat(getComputedStyle(element).paddingRight)
+        );
+        expect(rightInset).toBe(inset);
+        expect(errorBounds.y - (bubbleBounds.y + bubbleBounds.height)).toBeCloseTo(4, 0);
+        expect(errorBounds[edge]).toBeCloseTo(bubbleBounds[edge], 0);
+        expect(
+            await error.evaluate(
+                () => document.documentElement.scrollWidth > document.documentElement.clientWidth
+            )
+        ).toBe(false);
+        expect(await error.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(false);
     }
-    const inset = await error.evaluate((element) => parseFloat(getComputedStyle(element).paddingLeft));
-    const minimumErrorWidth = 184;
-    expect(errorBounds.width).toBeGreaterThanOrEqual(minimumErrorWidth);
-    expect(inset).toBe(boxed ? 16 : 0);
-    const rightInset = await error.evaluate((element) => parseFloat(getComputedStyle(element).paddingRight));
-    expect(rightInset).toBe(boxed ? 16 : 0);
-    expect(errorBounds.y - (bubbleBounds.y + bubbleBounds.height)).toBeCloseTo(4, 0);
-    if (type === 'outgoing') {
-        expect(errorBounds.x + errorBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
-    } else {
-        expect(errorBounds.x).toBeCloseTo(bubbleBounds.x, 0);
-    }
-    expect(
-        await error.evaluate(
-            () => document.documentElement.scrollWidth > document.documentElement.clientWidth
-        )
-    ).toBe(false);
-    expect(await error.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(false);
-});
+);
 
 test('Message wraps within its maximum width on mobile with side actions', async () => {
     await openStoryPage({
@@ -73,10 +82,7 @@ test('Message wraps within its maximum width on mobile with side actions', async
     });
     const container = await screen.findByTestId('messages');
     const message = await screen.findByTestId('Message');
-    const bounds = await message.boundingBox();
-    if (!bounds) {
-        throw new Error('Message bounds not found');
-    }
+    const bounds = await getBounds(message);
     const availableWidth = await container.evaluate(
         (element) =>
             element.clientWidth -
@@ -120,11 +126,8 @@ test('Message uses an inline timestamp for short text', async () => {
     });
     const text = await screen.findByText('Hi');
     const timestamp = await screen.findByText('13:32');
-    const textBounds = await text.boundingBox();
-    const timestampBounds = await timestamp.boundingBox();
-    if (!textBounds || !timestampBounds) {
-        throw new Error('Message text or timestamp bounds not found');
-    }
+    const textBounds = await getBounds(text);
+    const timestampBounds = await getBounds(timestamp);
     const inlineTimestampGap = 8;
     expect(timestampBounds.x - (textBounds.x + textBounds.width)).toBeCloseTo(inlineTimestampGap, 0);
     expect(Math.abs(timestampBounds.y - textBounds.y)).toBeLessThan(8);
@@ -146,11 +149,8 @@ test('Outgoing assets align with the bubble when a footer is present', async () 
     });
     const bubble = await screen.findByTestId('MessageBubble');
     const avatar = await screen.findByTestId('Avatar');
-    const bubbleBounds = await bubble.boundingBox();
-    const avatarBounds = await avatar.boundingBox();
-    if (!bubbleBounds || !avatarBounds) {
-        throw new Error('Message bubble or avatar bounds not found');
-    }
+    const bubbleBounds = await getBounds(bubble);
+    const avatarBounds = await getBounds(avatar);
     expect(avatarBounds.y + avatarBounds.height).toBeCloseTo(bubbleBounds.y + bubbleBounds.height, 0);
 });
 
@@ -164,14 +164,11 @@ test.each([true, false])(
         });
         const bubble = await screen.findByTestId('MessageBubble');
         const action = await screen.findByRole('button', {name: 'Copy message'});
-        const bubbleBounds = await bubble.boundingBox();
+        const bubbleBounds = await getBounds(bubble);
         const actionBounds = await action.evaluate((element) => {
-            const bounds = element.parentElement?.getBoundingClientRect();
-            return bounds ? {x: bounds.x, y: bounds.y, width: bounds.width} : null;
+            const bounds = (element.parentElement as HTMLElement).getBoundingClientRect();
+            return {x: bounds.x, y: bounds.y, width: bounds.width};
         });
-        if (!bubbleBounds || !actionBounds) {
-            throw new Error('Message bubble or footer action bounds not found');
-        }
         expect(actionBounds.x + actionBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
         expect(actionBounds.y).toBeGreaterThanOrEqual(bubbleBounds.y + bubbleBounds.height);
     }
@@ -180,9 +177,9 @@ test.each([true, false])(
 test.each(['incoming', 'outgoing'])('Message renders oversized avatars at 40px: %s', async (type) => {
     await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, avatarSize: 190}});
     const avatar = await screen.findByTestId('Avatar');
-    const bounds = await avatar.boundingBox();
-    expect(bounds?.width).toBe(40);
-    expect(bounds?.height).toBe(40);
+    const bounds = await getBounds(avatar);
+    expect(bounds.width).toBe(40);
+    expect(bounds.height).toBe(40);
 });
 
 test.each(['MOBILE_IOS', 'DESKTOP'] as const)(
@@ -202,21 +199,15 @@ test.each(['MOBILE_IOS', 'DESKTOP'] as const)(
         });
         const error = await screen.findByRole('alert');
         const bubble = await screen.findByTestId('MessageBubble');
-        const errorBounds = await error.boundingBox();
-        const bubbleBounds = await bubble.boundingBox();
-        if (!errorBounds || !bubbleBounds) {
-            throw new Error('Message error or bubble bounds not found');
-        }
+        const errorBounds = await getBounds(error);
+        const bubbleBounds = await getBounds(bubble);
         const minimumErrorWidth = 184;
         expect(errorBounds.width).toBeLessThan(minimumErrorWidth);
         expect(errorBounds.x + errorBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
         const helper = await screen.findByText('Error text');
         const insets = await helper.evaluate((element) => {
-            const alert = element.closest('[role="alert"]');
-            const icon = alert?.querySelector('svg');
-            if (!alert || !icon) {
-                throw new Error('Message error or icon not found');
-            }
+            const alert = element.closest('[role="alert"]') as HTMLElement;
+            const icon = alert.querySelector('svg') as SVGElement;
             const range = document.createRange();
             range.selectNodeContents(element);
             return {
@@ -240,11 +231,8 @@ test('Short error helper grows beyond its minimum width without wrapping unneces
     const helper = await screen.findByText(errorMessage);
     await waitFor(async () => {
         const insets = await helper.evaluate((element) => {
-            const alert = element.closest('[role="alert"]');
-            const icon = alert?.querySelector('svg');
-            if (!alert || !icon) {
-                throw new Error('Message error or icon not found');
-            }
+            const alert = element.closest('[role="alert"]') as HTMLElement;
+            const icon = alert.querySelector('svg') as SVGElement;
             const range = document.createRange();
             range.selectNodeContents(element);
             return {
@@ -329,46 +317,39 @@ test('Outgoing errors follow the footer slot and footer actions', async () => {
     const bubble = await screen.findByTestId('MessageBubble');
     const action = await screen.findByRole('button', {name: 'Copy message'});
     const error = await screen.findByRole('alert');
-    const bubbleBounds = await bubble.boundingBox();
+    const bubbleBounds = await getBounds(bubble);
     const actionBounds = await action.evaluate((element) => {
-        const bounds = element.parentElement?.getBoundingClientRect();
-        return bounds ? {y: bounds.y, height: bounds.height} : undefined;
+        const bounds = (element.parentElement as HTMLElement).getBoundingClientRect();
+        return {y: bounds.y, height: bounds.height};
     });
-    const errorBounds = await error.boundingBox();
-    if (!bubbleBounds || !actionBounds || !errorBounds) {
-        throw new Error('Message element bounds not found');
-    }
+    const errorBounds = await getBounds(error);
     const footerSlotHeight = 40;
     expect(actionBounds.y).toBeGreaterThanOrEqual(bubbleBounds.y + bubbleBounds.height + footerSlotHeight);
     expect(errorBounds.y).toBeGreaterThanOrEqual(actionBounds.y + actionBounds.height);
 });
 
 test.each([
-    {type: 'incoming', boxed: true},
-    {type: 'outgoing', boxed: true},
-    {type: 'incoming', boxed: false},
-    {type: 'outgoing', boxed: false},
-])('Message asset spacing matches its boxed variant: %o', async ({type, boxed}) => {
-    await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, assetType: 'avatar'}});
-    const asset = await (await screen.findByTestId('Avatar')).boundingBox();
-    const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
-    if (!asset || !bubble) {
-        throw new Error('Message asset or bubble bounds not found');
+    {type: 'incoming', boxed: true, gap: 8, leading: 'asset', trailing: 'bubble'},
+    {type: 'outgoing', boxed: true, gap: 8, leading: 'bubble', trailing: 'asset'},
+    {type: 'incoming', boxed: false, gap: 12, leading: 'asset', trailing: 'bubble'},
+    {type: 'outgoing', boxed: false, gap: 12, leading: 'bubble', trailing: 'asset'},
+] as const)(
+    'Message asset spacing matches its boxed variant: %o',
+    async ({type, boxed, gap, leading, trailing}) => {
+        await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, assetType: 'avatar'}});
+        const asset = await getBounds(await screen.findByTestId('Avatar'));
+        const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
+        const bounds = {asset, bubble};
+        const actualGap = bounds[trailing].left - bounds[leading].right;
+        expect(actualGap).toBeCloseTo(gap, 0);
     }
-    const boxedGap = 8;
-    const unboxedGap = 12;
-    const gap = type === 'incoming' ? bubble.x - asset.x - asset.width : asset.x - bubble.x - bubble.width;
-    expect(gap).toBeCloseTo(boxed ? boxedGap : unboxedGap, 0);
-});
+);
 
 test.each([true, false])('Oversized content stays inside the message (boxed: %s)', async (boxed) => {
     await openStoryPage({id: 'components-message--content-overflow', device: 'MOBILE_IOS', args: {boxed}});
     const image = await screen.findByRole('img', {name: 'Portrait'});
     const bounds = await image.evaluate((node) => {
-        const message = node.closest('[data-testid="Message"]');
-        if (!message) {
-            throw new Error('Missing message container');
-        }
+        const message = node.closest('[data-testid="Message"]') as HTMLElement;
         const imageRect = node.getBoundingClientRect();
         const messageRect = message.getBoundingClientRect();
         return {width: messageRect.width, imageRight: imageRect.right, right: messageRect.right};
@@ -396,17 +377,19 @@ test.each(['incoming', 'outgoing'])('Error uses the side actions width: %s', asy
     const error = await screen.findByRole('alert');
     const message = await screen.findByTestId('Message');
     await waitFor(async () => {
-        const bubbleBounds = await bubble.boundingBox();
-        const errorBounds = await error.boundingBox();
-        const messageBounds = await message.boundingBox();
-        if (!bubbleBounds || !errorBounds || !messageBounds) throw new Error('Missing message bounds');
+        const bubbleBounds = await getBounds(bubble);
+        const errorBounds = await getBounds(error);
+        const messageBounds = await getBounds(message);
         expect(errorBounds.width).toBeCloseTo(messageBounds.width, 0);
         expect(errorBounds.width).toBeGreaterThan(bubbleBounds.width);
         expect(errorBounds.y - bubbleBounds.y - bubbleBounds.height).toBeCloseTo(4, 0);
     });
 });
 
-test.each(['incoming', 'outgoing'])('Error preserves legibility with a narrow maxWidth: %s', async (type) => {
+test.each([
+    {type: 'incoming', edge: 'left'},
+    {type: 'outgoing', edge: 'right'},
+] as const)('Error preserves legibility with a narrow maxWidth: $type', async ({type, edge}) => {
     await openStoryPage({
         id: story,
         device: 'MOBILE_IOS',
@@ -421,56 +404,52 @@ test.each(['incoming', 'outgoing'])('Error preserves legibility with a narrow ma
         },
     });
     await waitFor(async () => {
-        const error = await (await screen.findByRole('alert')).boundingBox();
-        const message = await (await screen.findByTestId('Message')).boundingBox();
-        if (!error || !message) throw new Error('Missing message bounds');
+        const error = await getBounds(await screen.findByRole('alert'));
+        const message = await getBounds(await screen.findByTestId('Message'));
         const minimumErrorWidth = 184;
         expect(error.width).toBeCloseTo(minimumErrorWidth, 0);
         expect(message.width).toBeLessThanOrEqual(100);
-        if (type === 'outgoing') expect(error.x + error.width).toBeCloseTo(message.x + message.width, 0);
-        else expect(error.x).toBeCloseTo(message.x, 0);
+        expect(error[edge]).toBeCloseTo(message[edge], 0);
     });
 });
 
-test.each(['incoming', 'outgoing'])(
-    'Side slot uses at most 40 percent and keeps the action gap: %s',
-    async (type) => {
+test.each([
+    {type: 'incoming', leading: 'slot', trailing: 'action'},
+    {type: 'outgoing', leading: 'action', trailing: 'slot'},
+] as const)(
+    'Side slot uses at most 40 percent and keeps the action gap: $type',
+    async ({type, leading, trailing}) => {
         await openStoryPage({id: 'components-message--side-slot-sizing', device: 'MOBILE_IOS', args: {type}});
         const slot = await screen.findByRole('img', {name: 'Side attachment'});
-        const slotBounds = await slot.boundingBox();
-        const message = await (await screen.findByTestId('Message')).boundingBox();
+        const slotBounds = await getBounds(slot);
+        const message = await getBounds(await screen.findByTestId('Message'));
         const action = await screen.findByRole('button', {name: 'Copy'});
         const actionBounds = await action.evaluate((node) => {
-            const rect = node.parentElement?.getBoundingClientRect();
-            return rect ? {left: rect.left, right: rect.right} : null;
+            const rect = (node.parentElement as HTMLElement).getBoundingClientRect();
+            return {left: rect.left, right: rect.right};
         });
-        if (!slotBounds || !message || !actionBounds) throw new Error('Missing slot bounds');
         const maximumSideSlotRatio = 0.4;
         expect(slotBounds.width).toBeLessThanOrEqual(message.width * maximumSideSlotRatio);
         const actionGap = 4;
-        expect(
-            type === 'incoming'
-                ? actionBounds.left - slotBounds.x - slotBounds.width
-                : slotBounds.x - actionBounds.right
-        ).toBeCloseTo(actionGap, 0);
+        const bounds = {action: actionBounds, slot: slotBounds};
+        const gap = bounds[trailing].left - bounds[leading].right;
+        expect(gap).toBeCloseTo(actionGap, 0);
     }
 );
 
 test.each([
-    {type: 'incoming', boxed: true, error: false, footerWidth: 160},
-    {type: 'outgoing', boxed: true, error: false, footerWidth: 160},
-    {type: 'incoming', boxed: false, error: true, footerWidth: 160},
-    {type: 'outgoing', boxed: true, error: true, footerWidth: 160},
-    {type: 'incoming', boxed: true, error: false, footerWidth: 400},
-    {type: 'outgoing', boxed: false, error: true, footerWidth: 400},
-])('Bubble grows to fit the footer within maxWidth: %o', async (args) => {
+    {type: 'incoming', boxed: true, error: false, footerWidth: 160, expectedWidth: 160},
+    {type: 'outgoing', boxed: true, error: false, footerWidth: 160, expectedWidth: 160},
+    {type: 'incoming', boxed: false, error: true, footerWidth: 160, expectedWidth: 160},
+    {type: 'outgoing', boxed: true, error: true, footerWidth: 160, expectedWidth: 160},
+    {type: 'incoming', boxed: true, error: false, footerWidth: 400, expectedWidth: 240},
+    {type: 'outgoing', boxed: false, error: true, footerWidth: 400, expectedWidth: 240},
+])('Bubble grows to fit the footer within maxWidth: %o', async ({expectedWidth, ...args}) => {
     await openStoryPage({id: 'components-message--footer-sizing', device: 'MOBILE_IOS', args});
     await waitFor(async () => {
-        const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
-        const footer = await (await screen.findByRole('img', {name: 'Attachment'})).boundingBox();
-        if (!bubble || !footer) throw new Error('Missing message bounds');
-        const maxWidth = 240;
-        expect(bubble.width).toBeCloseTo(Math.min(args.footerWidth, maxWidth), 0);
+        const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
+        const footer = await getBounds(await screen.findByRole('img', {name: 'Attachment'}));
+        expect(bubble.width).toBeCloseTo(expectedWidth, 0);
         expect(footer.width).toBeCloseTo(bubble.width, 0);
         expect(footer.x).toBeCloseTo(bubble.x, 0);
     });
@@ -483,17 +462,16 @@ test.each(['incoming', 'outgoing'])('Short bubble grows to fit both footer actio
         args: {type, footerSlot: false, error: true},
     });
     await waitFor(async () => {
-        const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
+        const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
         const copy = await screen.findByRole('button', {name: 'Copy'});
         const reminder = await screen.findByRole('button', {name: 'Reminder'});
         const bounds = async (button: typeof copy) =>
             button.evaluate((node) => {
-                const rect = node.parentElement?.getBoundingClientRect();
-                return rect ? {left: rect.left, right: rect.right, top: rect.top} : null;
+                const rect = (node.parentElement as HTMLElement).getBoundingClientRect();
+                return {left: rect.left, right: rect.right, top: rect.top};
             });
         const first = await bounds(copy);
         const last = await bounds(reminder);
-        if (!bubble || !first || !last) throw new Error('Missing action bounds');
         expect(first.top).toBe(last.top);
         expect(bubble.width).toBeCloseTo(last.right - first.left, 0);
         expect(bubble.x).toBeCloseTo(first.left, 0);

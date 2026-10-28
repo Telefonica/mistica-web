@@ -43,12 +43,16 @@ test.each(['span', 'p', 'h2'] as const)(
         expect(screen.getByText('13:00')).toHaveAttribute('aria-hidden', 'true');
         expect(screen.getByText('Ana, support')).not.toHaveAttribute('aria-hidden', 'true');
         expect(screen.getByText("One o'clock")).not.toHaveAttribute('aria-hidden', 'true');
-        if (senderNameAs === 'h2') {
-            expect(screen.getByRole('heading', {name: 'Ana, support', level: 2})).toBeInTheDocument();
-        }
         expect(screen.queryByRole('button')).not.toBeInTheDocument();
     }
 );
+
+test('sender label overrides preserve heading semantics', () => {
+    renderMessage(
+        <Message type="incoming" senderName="Ana" senderNameAs="h2" senderNameLabel="Ana, support" />
+    );
+    expect(screen.getByRole('heading', {name: 'Ana, support', level: 2})).toBeInTheDocument();
+});
 
 test('interactive messages group sender, content and timestamp in reading order', () => {
     renderMessage(
@@ -150,9 +154,14 @@ test('incoming errors retain the timestamp and include it in the accessible name
     expect(screen.getByRole('alert')).toHaveTextContent('Try again');
 });
 
-test.each([false, true])('errors display the product message regardless of retry action: %s', (retry) => {
-    renderMessage(
-        retry ? (
+test.each([
+    {
+        name: 'static',
+        message: <Message type="outgoing" contentText="Hello" error errorMessage="Contact support" />,
+    },
+    {
+        name: 'interactive',
+        message: (
             <Message
                 type="outgoing"
                 contentText="Hello"
@@ -160,10 +169,10 @@ test.each([false, true])('errors display the product message regardless of retry
                 errorMessage="Contact support"
                 onPress={() => {}}
             />
-        ) : (
-            <Message type="outgoing" contentText="Hello" error errorMessage="Contact support" />
-        )
-    );
+        ),
+    },
+])('errors display the product message for $name messages', ({message}) => {
+    renderMessage(message);
     expect(screen.getByRole('alert')).toHaveTextContent(/^Contact support$/);
 });
 
@@ -178,25 +187,25 @@ test('changing action position or removing actions never duplicates them', () =>
     const actions = [{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: () => {}}] as const;
     const Example = ({
         position,
-        showActions = true,
+        messageActions,
     }: {
         position?: 'side' | 'footer';
-        showActions?: boolean;
+        messageActions?: React.ComponentProps<typeof Message>['actions'];
     }) => (
         <ThemeContextProvider theme={makeTheme()}>
             <Message
                 type="incoming"
                 contentText="Hello"
-                actions={showActions ? actions : undefined}
+                actions={messageActions}
                 actionsPosition={position}
             />
         </ThemeContextProvider>
     );
-    const {rerender} = render(<Example />);
+    const {rerender} = render(<Example messageActions={actions} />);
+    expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
+    rerender(<Example position="side" messageActions={actions} />);
     expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
     rerender(<Example position="side" />);
-    expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
-    rerender(<Example position="side" showActions={false} />);
     expect(screen.queryByRole('button', {name: 'Copy'})).not.toBeInTheDocument();
 });
 
@@ -228,7 +237,10 @@ test.each(['side', 'footer'] as const)(
     }
 );
 
-test.each([true, false])('Footer controls remain independent of the bubble (error: %s)', async (error) => {
+test.each([
+    {name: 'error', errorProps: {error: true, errorMessage: 'Try again'}, bubbleName: 'Tú: Hello Try again'},
+    {name: 'default', errorProps: {error: false}, bubbleName: 'Tú: Hello'},
+] as const)('Footer controls remain independent of the bubble ($name)', async ({errorProps, bubbleName}) => {
     const retry = jest.fn();
     const footerPress = jest.fn();
 
@@ -237,13 +249,13 @@ test.each([true, false])('Footer controls remain independent of the bubble (erro
             type="outgoing"
             contentText="Hello"
             onPress={retry}
-            {...(error ? {error: true as const, errorMessage: 'Try again'} : {error: false as const})}
+            {...errorProps}
             footerSlot={<button onClick={footerPress}>Footer action</button>}
         />
     );
 
     const footer = screen.getByRole('button', {name: 'Footer action'});
-    const bubble = screen.getByRole('button', {name: error ? 'Tú: Hello Try again' : 'Tú: Hello'});
+    const bubble = screen.getByRole('button', {name: bubbleName});
 
     expect(bubble).not.toContainElement(footer);
 
