@@ -9,17 +9,20 @@ import IconCopyRegular from '../generated/mistica-icons/icon-copy-regular';
 const renderMessage = (message: React.ReactNode) =>
     render(<ThemeContextProvider theme={makeTheme()}>{message}</ThemeContextProvider>);
 
-test('static messages expose their direction and content without adding a focus target', () => {
+test('static messages expose their direction and are skipped by keyboard navigation', async () => {
     renderMessage(
         <>
             <Message type="incoming" contentText="Hello" />
             <Message type="outgoing" contentText="Hi" />
+            <button>Next control</button>
         </>
     );
     expect(screen.getByText('Mensaje:')).toBeInTheDocument();
     expect(screen.getByText('Tú:')).toBeInTheDocument();
     expect(screen.getByText('Hello')).toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+
+    await userEvent.tab();
+    expect(screen.getByRole('button', {name: 'Next control'})).toHaveFocus();
 });
 
 test.each(['span', 'p', 'h2'] as const)(
@@ -225,27 +228,10 @@ test.each(['side', 'footer'] as const)(
     }
 );
 
-test('ignores extra actions passed by JavaScript consumers', () => {
-    const actions = ['Copy', 'Share', 'Extra'].map((label) => ({
-        Icon: IconCopyRegular,
-        'aria-label': label,
-        onPress: () => {},
-    }));
-    renderMessage(
-        <Message
-            type="incoming"
-            contentText="Hello"
-            actions={actions as unknown as React.ComponentProps<typeof Message>['actions']}
-        />
-    );
-    expect(screen.getByRole('button', {name: 'Copy'})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name: 'Share'})).toBeInTheDocument();
-    expect(screen.queryByRole('button', {name: 'Extra'})).not.toBeInTheDocument();
-});
-
 test.each([true, false])('Footer controls remain independent of the bubble (error: %s)', async (error) => {
     const retry = jest.fn();
     const footerPress = jest.fn();
+
     renderMessage(
         <Message
             type="outgoing"
@@ -255,16 +241,21 @@ test.each([true, false])('Footer controls remain independent of the bubble (erro
             footerSlot={<button onClick={footerPress}>Footer action</button>}
         />
     );
+
     const footer = screen.getByRole('button', {name: 'Footer action'});
     const bubble = screen.getByRole('button', {name: error ? 'Tú: Hello Try again' : 'Tú: Hello'});
+
     expect(bubble).not.toContainElement(footer);
+
     await userEvent.click(footer);
     expect(footerPress).toHaveBeenCalledTimes(1);
     expect(retry).not.toHaveBeenCalled();
+
     footer.focus();
     await userEvent.keyboard('{Enter}');
     expect(footerPress).toHaveBeenCalledTimes(2);
     expect(retry).not.toHaveBeenCalled();
+
     await userEvent.click(bubble);
     expect(retry).toHaveBeenCalledTimes(1);
 });

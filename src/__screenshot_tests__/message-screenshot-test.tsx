@@ -7,6 +7,7 @@ test('Message error examples on Blau alternative', async () => {
         id: 'components-message--error-examples',
         device: 'MOBILE_IOS',
         skin: 'Blau',
+        args: {variantOutside: 'alternative'},
     });
     expect(await (await screen.findByTestId('messages')).screenshot()).toMatchImageSnapshot();
 });

@@ -84,7 +84,7 @@ export const content = style({
     minWidth: 0,
     whiteSpace: 'pre-wrap',
 });
-export const contentSlot = style({minWidth: 0, maxWidth: '100%', overflowX: 'auto'});
+export const contentSlot = style({minWidth: 0, maxWidth: '100%', overflowX: 'auto', overflowY: 'hidden'});
 globalStyle(`${contentSlot} > *`, {maxWidth: '100%'});
 export const timestamp = style({alignSelf: 'flex-end'});
 export const actions = style({display: 'flex', flexShrink: 0, alignItems: 'center', gap: actionsGap});
@@ -102,6 +102,7 @@ export const sideSlot = style({
     minWidth: 0,
     maxWidth: maximumSideSlotWidth,
     overflowX: 'auto',
+    overflowY: 'hidden',
 });
 globalStyle(`${sideSlot} > *`, {maxWidth: '100%'});
 export const unboxedActions = style({marginLeft: -8});
@@ -126,7 +127,13 @@ export const body = style({display: 'flex', flexDirection: 'column', gap: 4});
 export const inlineTimestamp = style({flexDirection: 'row', alignItems: 'baseline', gap: 8});
 export const text = style({display: 'inline-block', maxWidth: '100%'});
 
-export const footer = style({minWidth: 0, maxWidth: '100%', overflowWrap: 'anywhere', overflowX: 'auto'});
+export const footer = style({
+    minWidth: 0,
+    maxWidth: '100%',
+    overflowWrap: 'anywhere',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+});
 globalStyle(`${footer} > *`, {maxWidth: '100%'});
 export const errorFooter = style({width: 0, minWidth: '100%', overflowWrap: 'anywhere'});
 export const shortErrorLayout = styleVariants({

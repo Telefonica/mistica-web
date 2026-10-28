@@ -117,7 +117,7 @@ export default {
             if: {arg: 'boxed'},
         },
         error: {control: 'boolean'},
-        errorMessage: {control: 'text'},
+        errorMessage: {control: 'text', if: {arg: 'error'}},
         interaction: {options: ['none', 'onPress', 'href'], control: 'select'},
         ariaLabel: {control: 'text'},
         href: {control: 'text', if: {arg: 'interaction', eq: 'href'}},
@@ -130,7 +130,7 @@ export default {
             control: 'radio',
             if: {arg: 'actions'},
         },
-        actionsCount: {options: [1, 2], control: 'radio'},
+        actionsCount: {options: [1, 2], control: 'radio', if: {arg: 'actions'}},
         variantOutside: {
             options: ['default', 'brand', 'alternative', 'negative', 'media'],
             control: 'select',
@@ -289,6 +289,9 @@ Conversation.args = {
     footerSlot: true,
     actions: true,
     actionsPosition: 'footer',
+};
+Conversation.argTypes = {
+    errorMessage: {control: 'text', if: {arg: 'errorMessage', exists: true}},
 };
 Conversation.parameters = {
     controls: {
