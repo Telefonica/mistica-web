@@ -40,104 +40,124 @@ export type PaginationProps = {
     'aria-label'?: string;
 };
 
-type PageItem = {type: 'page'; page: number; current: boolean};
-type EllipsisItem = {type: 'ellipsis'};
-type PaginationItem = ExclusifyUnion<PageItem | EllipsisItem>;
+type Visibility = 'desktop' | 'mobile' | 'any';
+type ResponsivePaginationItem = ExclusifyUnion<
+    {type: 'page'; page: number; current: boolean} | {type: 'ellipsis'}
+> & {visibility: Visibility};
 
 const DEFAULT_SURROUNDING_PAGE_COUNT = 1;
 const FIRST_PAGE = 1;
+const DESKTOP_BOUNDARY_SLOT_COUNT = 4;
+const MOBILE_BOUNDARY_SLOT_COUNT = 2;
 
-const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
+const getVisibility = (desktop: boolean, mobile: boolean): Visibility =>
+    desktop && mobile ? 'any' : desktop ? 'desktop' : 'mobile';
 
-export const getPaginationItems = ({
+/**
+ * Creates one ordered list with viewport-specific visibility for pages and ellipses.
+ * With 20 pages and current page 10, desktop shows [1, ..., 9, 10, 11, ..., 20]
+ * and mobile shows [..., 9, 10, 11, ...]; only pages 1 and 20 are desktop-only.
+ */
+const getResponsivePaginationItems = ({
     totalPages,
     currentPage,
     surroundingPageCount = DEFAULT_SURROUNDING_PAGE_COUNT,
-    includeBoundaryPages = true,
 }: {
     totalPages: number;
     currentPage: number;
     surroundingPageCount?: number;
-    includeBoundaryPages?: boolean;
-}): Array<PaginationItem> => {
+}): Array<ResponsivePaginationItem> => {
     if (totalPages <= 1) {
         return [];
     }
 
-    const activePage = clamp(currentPage, FIRST_PAGE, totalPages);
-    const surroundingCount = clamp(Math.floor(surroundingPageCount), 0, totalPages);
+    const activePage = Math.min(Math.max(currentPage, FIRST_PAGE), totalPages);
+    const surroundingCount = Math.min(Math.max(Math.floor(surroundingPageCount), 0), totalPages);
     const dynamicPageCount = 2 * surroundingCount + 1;
+    const createPageRange = (start: number, end: number): Array<number> =>
+        Array.from({length: Math.max(0, end - start + 1)}, (_, index) => start + index);
 
-    if (totalPages <= dynamicPageCount) {
-        return Array.from({length: totalPages}, (_, index) => {
-            const page = index + FIRST_PAGE;
-            return {type: 'page', page, current: page === activePage};
-        });
-    }
-
-    const lastPage = totalPages;
-    const createPageItem = (page: number): PaginationItem => ({
-        type: 'page',
-        page,
-        current: page === activePage,
-    });
-    const createPageRange = (start: number, end: number): Array<PaginationItem> =>
-        Array.from({length: Math.max(0, end - start + 1)}, (_, index) => createPageItem(start + index));
-
-    if (!includeBoundaryPages) {
-        const rangeStart = Math.max(
-            Math.min(activePage - surroundingCount, lastPage - dynamicPageCount),
-            FIRST_PAGE + 1
-        );
-        const rangeEnd = rangeStart + dynamicPageCount - 1;
-        const items: Array<PaginationItem> = [];
-
-        if (rangeStart > FIRST_PAGE + 1) {
-            items.push({type: 'ellipsis'});
-        } else {
-            items.push(createPageItem(FIRST_PAGE));
-        }
-
-        items.push(...createPageRange(rangeStart, rangeEnd));
-
-        if (rangeEnd < lastPage - 1) {
-            items.push({type: 'ellipsis'});
-        } else if (rangeEnd < lastPage) {
-            items.push(createPageItem(lastPage));
-        }
-
-        return items;
-    }
-
-    const rangeStart = Math.max(
-        Math.min(activePage - surroundingCount, lastPage - dynamicPageCount - 1),
+    const desktopRangeStart = Math.max(
+        Math.min(activePage - surroundingCount, totalPages - dynamicPageCount - 1),
         FIRST_PAGE + 2
     );
-    const rangeEnd = Math.min(
+    const desktopRangeEnd = Math.min(
         Math.max(activePage + surroundingCount, FIRST_PAGE + dynamicPageCount + 1),
-        lastPage - 2
+        totalPages - 2
+    );
+    const desktopPages = new Set(
+        totalPages <= dynamicPageCount + DESKTOP_BOUNDARY_SLOT_COUNT
+            ? createPageRange(FIRST_PAGE, totalPages)
+            : [
+                  FIRST_PAGE,
+                  ...(desktopRangeStart > FIRST_PAGE + 2 ? [] : [FIRST_PAGE + 1]),
+                  ...createPageRange(desktopRangeStart, desktopRangeEnd),
+                  ...(desktopRangeEnd < totalPages - 2 ? [] : [totalPages - 1]),
+                  totalPages,
+              ]
     );
 
-    const items: Array<PaginationItem> = [createPageItem(FIRST_PAGE)];
+    const mobileRangeStart = Math.max(
+        Math.min(activePage - surroundingCount, totalPages - dynamicPageCount),
+        FIRST_PAGE + 1
+    );
+    const mobileRangeEnd = mobileRangeStart + dynamicPageCount - 1;
+    const mobilePages = new Set(
+        totalPages <= dynamicPageCount + MOBILE_BOUNDARY_SLOT_COUNT
+            ? createPageRange(FIRST_PAGE, totalPages)
+            : [
+                  ...(mobileRangeStart > FIRST_PAGE + 1 ? [] : [FIRST_PAGE]),
+                  ...createPageRange(mobileRangeStart, mobileRangeEnd),
+                  ...(mobileRangeEnd < totalPages - 1 ? [] : [totalPages]),
+              ]
+    );
 
-    if (rangeStart > FIRST_PAGE + 2) {
-        items.push({type: 'ellipsis'});
-    } else {
-        items.push(createPageItem(FIRST_PAGE + 1));
+    const items: Array<ResponsivePaginationItem> = [];
+    let lastDesktopPage = FIRST_PAGE - 1;
+    let lastMobilePage = FIRST_PAGE - 1;
+    let hasDesktopEllipsis = false;
+    let hasMobileEllipsis = false;
+
+    for (const page of [...new Set([...desktopPages, ...mobilePages])].sort((a, b) => a - b)) {
+        const isDesktop = desktopPages.has(page);
+        const isMobile = mobilePages.has(page);
+        const needsDesktopEllipsis: boolean =
+            !hasDesktopEllipsis && (!isDesktop || page > lastDesktopPage + 1);
+        const needsMobileEllipsis: boolean = !hasMobileEllipsis && (!isMobile || page > lastMobilePage + 1);
+
+        if ((isDesktop && needsDesktopEllipsis) || (isMobile && needsMobileEllipsis)) {
+            items.push({
+                type: 'ellipsis',
+                visibility: getVisibility(needsDesktopEllipsis, needsMobileEllipsis),
+            });
+            hasDesktopEllipsis ||= needsDesktopEllipsis;
+            hasMobileEllipsis ||= needsMobileEllipsis;
+        }
+        items.push({
+            type: 'page',
+            page,
+            current: page === activePage,
+            visibility: getVisibility(isDesktop, isMobile),
+        });
+        if (isDesktop) {
+            lastDesktopPage = page;
+            hasDesktopEllipsis = false;
+        }
+        if (isMobile) {
+            lastMobilePage = page;
+            hasMobileEllipsis = false;
+        }
     }
 
-    items.push(...createPageRange(rangeStart, rangeEnd));
-
-    if (rangeEnd < lastPage - 2) {
-        items.push({type: 'ellipsis'});
-    } else {
-        items.push(createPageItem(lastPage - 1));
+    const needsDesktopEllipsis = lastDesktopPage < totalPages && !hasDesktopEllipsis;
+    const needsMobileEllipsis = lastMobilePage < totalPages && !hasMobileEllipsis;
+    if (needsDesktopEllipsis || needsMobileEllipsis) {
+        items.push({type: 'ellipsis', visibility: getVisibility(needsDesktopEllipsis, needsMobileEllipsis)});
     }
-
-    items.push(createPageItem(lastPage));
-
     return items;
 };
+
+const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
 const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element => {
     return (
@@ -159,13 +179,12 @@ const getEllipsisColor = (variant: NonDeprecatedVariant): string => {
 };
 
 type PageListProps = {
-    items: Array<PaginationItem>;
+    items: Array<ResponsivePaginationItem>;
     disabled?: boolean;
-    className?: string;
     onPageClick: (page: number) => void;
 };
 
-const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX.Element => {
+const PageList = ({items, disabled, onPageClick}: PageListProps): JSX.Element => {
     const {texts, t} = useTheme();
     const variant = useThemeVariant();
     const goToPageLabel = (page: number) =>
@@ -174,11 +193,12 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
         t(texts.paginationCurrentPage || tokens.paginationCurrentPage, String(page));
 
     return (
-        <ol className={classnames(styles.pageList, className)}>
+        <ol className={styles.pageList}>
             {items.map((item, index) => {
+                const className = classnames(styles.pageListItem, styles.itemVisibility[item.visibility]);
                 if (item.type === 'ellipsis') {
                     return (
-                        <li key={`ellipsis-${index}`} className={styles.pageListItem} aria-hidden="true">
+                        <li key={`ellipsis-${index}`} className={className} aria-hidden="true">
                             <Text3 as="span" medium color={getEllipsisColor(variant)} wordBreak={false}>
                                 ...
                             </Text3>
@@ -188,7 +208,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
 
                 if (item.current) {
                     return (
-                        <li key={item.page} className={styles.pageListItem}>
+                        <li key={item.page} className={className}>
                             <Touchable
                                 className={classnames(
                                     styles.currentPage,
@@ -208,7 +228,7 @@ const PageList = ({items, disabled, className, onPageClick}: PageListProps): JSX
                 }
 
                 return (
-                    <li key={item.page} className={styles.pageListItem}>
+                    <li key={item.page} className={className}>
                         <Touchable
                             className={classnames(styles.pageButton, styles.pageButtonVariants[variant])}
                             disabled={disabled}
@@ -281,17 +301,10 @@ export const Pagination = ({
 
     const isPrevDisabled = activePage <= 1;
     const isNextDisabled = activePage >= totalPages;
-    const desktopItems = getPaginationItems({
+    const items = getResponsivePaginationItems({
         totalPages,
         currentPage: activePage,
         surroundingPageCount,
-        includeBoundaryPages: true,
-    });
-    const mobileItems = getPaginationItems({
-        totalPages,
-        currentPage: activePage,
-        surroundingPageCount,
-        includeBoundaryPages: false,
     });
 
     return (
@@ -328,22 +341,7 @@ export const Pagination = ({
                     </ButtonLink>
                 ))}
 
-            {!hidePageList && (
-                <>
-                    <PageList
-                        items={desktopItems}
-                        disabled={disabled}
-                        className={styles.pageListDesktop}
-                        onPageClick={goToPage}
-                    />
-                    <PageList
-                        items={mobileItems}
-                        disabled={disabled}
-                        className={styles.pageListMobile}
-                        onPageClick={goToPage}
-                    />
-                </>
-            )}
+            {!hidePageList && <PageList items={items} disabled={disabled} onPageClick={goToPage} />}
             {!hideNavigationControls &&
                 (mode === 'iconOnly' ? (
                     <IconButton
