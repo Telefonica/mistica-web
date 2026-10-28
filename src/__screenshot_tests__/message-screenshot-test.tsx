@@ -82,7 +82,7 @@ test.each([
         device: 'MOBILE_IOS',
         args: {
             type: 'outgoing',
-            asset: false,
+            assetType: 'none',
             senderName: '',
             contentText: 'Ok',
             maxWidth,

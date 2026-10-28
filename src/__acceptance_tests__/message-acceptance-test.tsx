@@ -27,7 +27,7 @@ test.each([
             boxed,
             contentText: 'Error',
             senderName: '',
-            asset: false,
+            assetType: 'none',
             error: true,
             errorMessage: 'Could not send please try again',
             variantOutside: 'alternative',
@@ -116,7 +116,7 @@ test('Message uses an inline timestamp for short text', async () => {
     await openStoryPage({
         id: story,
         device: 'MOBILE_IOS',
-        args: {contentText: 'Hi', senderName: '', timestampLabel: '', asset: false},
+        args: {contentText: 'Hi', senderName: '', timestampLabel: '', assetType: 'none'},
     });
     const text = await screen.findByText('Hi');
     const timestamp = await screen.findByText('13:32');
@@ -195,7 +195,7 @@ test.each(['MOBILE_IOS', 'DESKTOP'] as const)(
                 type: 'outgoing',
                 contentText: 'Tuesday please',
                 senderName: '',
-                asset: false,
+                assetType: 'none',
                 error: true,
                 errorMessage: 'Error text',
             },
@@ -349,7 +349,7 @@ test.each([
     {type: 'incoming', boxed: false},
     {type: 'outgoing', boxed: false},
 ])('Message asset spacing matches its boxed variant: %o', async ({type, boxed}) => {
-    await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, asset: true}});
+    await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, assetType: 'avatar'}});
     const asset = await (await screen.findByTestId('Avatar')).boundingBox();
     const bubble = await (await screen.findByTestId('MessageBubble')).boundingBox();
     if (!asset || !bubble) {
@@ -383,7 +383,7 @@ test.each(['incoming', 'outgoing'])('Error uses the side actions width: %s', asy
         device: 'MOBILE_IOS',
         args: {
             type,
-            asset: false,
+            assetType: 'none',
             senderName: '',
             error: true,
             errorMessage: 'An error message that needs the whole row width to remain readable',
@@ -414,7 +414,7 @@ test.each(['incoming', 'outgoing'])('Error preserves legibility with a narrow ma
             type,
             contentText: 'Ok',
             maxWidth: '100px',
-            asset: false,
+            assetType: 'none',
             senderName: '',
             error: true,
             errorMessage: 'This message could not be sent please try again',

@@ -29,9 +29,8 @@ type Args = {
     senderNameLabel: string;
     timestamp: string;
     timestampLabel: string;
-    asset: boolean;
     avatarSize: number;
-    assetType: 'avatar' | 'image' | 'icon';
+    assetType: 'none' | 'avatar' | 'image' | 'icon';
     interactiveAsset: boolean;
     assetLabel: string;
     boxed: boolean;
@@ -59,7 +58,6 @@ const defaultArgs: Args = {
     senderNameLabel: '',
     timestamp: '13:32',
     timestampLabel: '13:32',
-    asset: true,
     avatarSize: 40,
     assetType: 'avatar',
     interactiveAsset: false,
@@ -101,10 +99,9 @@ export default {
         senderNameLabel: {control: 'text'},
         timestamp: {control: 'text'},
         timestampLabel: {control: 'text'},
-        asset: {control: 'boolean'},
-        assetType: {options: ['avatar', 'image', 'icon'], control: 'select', if: {arg: 'asset'}},
-        avatarSize: {control: 'number', if: {arg: 'asset'}},
-        interactiveAsset: {control: 'boolean', if: {arg: 'asset'}},
+        assetType: {options: ['none', 'avatar', 'image', 'icon'], control: 'select'},
+        avatarSize: {control: 'number', if: {arg: 'assetType', eq: 'avatar'}},
+        interactiveAsset: {control: 'boolean', if: {arg: 'assetType', neq: 'none'}},
         assetLabel: {control: 'text', if: {arg: 'interactiveAsset'}},
         boxed: {
             control: 'boolean',
@@ -139,10 +136,9 @@ export default {
 };
 
 const getAsset = (args: Args, initials: string) => {
-    if (!args.asset) {
-        return undefined;
-    }
     switch (args.assetType) {
+        case 'none':
+            return undefined;
         case 'image':
             return <Image src={avatarImg} width={40} aspectRatio="1:1" />;
         case 'icon':
@@ -275,7 +271,7 @@ export const Conversation: StoryComponent<Args> = (args) => {
                         senderNameAs={args.senderNameAs}
                         footerSlot={<IconTimeRegular size={16} />}
                     />
-                    <MessageExample {...args} asset={false} contentText="Custom content" timestamp="" />
+                    <MessageExample {...args} assetType="none" contentText="Custom content" timestamp="" />
                 </Stack>
             </Box>
         </ResponsiveLayout>
@@ -300,7 +296,6 @@ Conversation.parameters = {
             'senderName',
             'senderNameAs',
             'timestamp',
-            'asset',
             'assetType',
             'avatarSize',
             'errorMessage',
@@ -342,7 +337,7 @@ ErrorExamples.args = {
     ...defaultArgs,
     type: 'outgoing',
     error: true,
-    asset: false,
+    assetType: 'none',
     senderName: '',
     variantOutside: 'alternative',
     errorMessage: "Couldn't send. Tap to retry",
@@ -365,7 +360,6 @@ ErrorExamples.parameters = {
             'shortText',
             'shortErrorMessage',
             'longErrorMessage',
-            'asset',
             'assetType',
             'avatarSize',
             'boxed',
@@ -405,7 +399,6 @@ SlotsAndActions.parameters = {
             'senderName',
             'senderNameAs',
             'timestamp',
-            'asset',
             'assetType',
             'avatarSize',
             'interactiveAsset',
