@@ -4,7 +4,6 @@ import type {SerializedAXNode} from 'puppeteer';
 
 const STORY_ID = 'components-pagination--default';
 const MOBILE_TARGET_EDGE_OFFSET = {x: 47, y: 24};
-// Literal on purpose: changing the responsive breakpoint must fail these tests.
 const DESKTOP_MIN_WIDTH = 1024;
 const DESKTOP_MIN_HEIGHT = 550;
 const DESKTOP_VIEWPORT = {width: DESKTOP_MIN_WIDTH, height: DESKTOP_MIN_HEIGHT};
@@ -84,39 +83,48 @@ test.each([
     {
         totalPages: 5,
         currentPage: 3,
+        surroundingPageCount: 1,
         expectedDesktop: ['1', '2', '3', '4', '5'],
         expectedMobile: ['1', '2', '3', '4', '5'],
     },
     {
+        totalPages: 20,
         currentPage: 10,
         surroundingPageCount: 0,
         expectedDesktop: ['1', '...', '10', '...', '20'],
         expectedMobile: ['...', '10', '...'],
     },
     {
+        totalPages: 20,
         currentPage: 10,
         surroundingPageCount: 2,
         expectedDesktop: ['1', '...', '8', '9', '10', '11', '12', '...', '20'],
         expectedMobile: ['...', '8', '9', '10', '11', '12', '...'],
     },
     {
+        totalPages: 20,
         currentPage: 3,
+        surroundingPageCount: 1,
         expectedDesktop: ['1', '2', '3', '4', '5', '...', '20'],
         expectedMobile: ['1', '2', '3', '4', '...'],
     },
     {
+        totalPages: 20,
         currentPage: 10,
+        surroundingPageCount: 1,
         expectedDesktop: ['1', '...', '9', '10', '11', '...', '20'],
         expectedMobile: ['...', '9', '10', '11', '...'],
     },
     {
+        totalPages: 20,
         currentPage: 18,
+        surroundingPageCount: 1,
         expectedDesktop: ['1', '...', '16', '17', '18', '19', '20'],
         expectedMobile: ['...', '17', '18', '19', '20'],
     },
 ])(
     'Pagination keeps the same list when resizing: %j',
-    async ({totalPages = 20, currentPage, surroundingPageCount = 1, expectedDesktop, expectedMobile}) => {
+    async ({totalPages, currentPage, surroundingPageCount, expectedDesktop, expectedMobile}) => {
         const page = await openStoryPage({
             id: STORY_ID,
             device: 'DESKTOP',
