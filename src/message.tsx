@@ -38,7 +38,7 @@ export type MessageProps = TouchableComponentProps<
         senderNameLabel?: string;
         timestamp?: string;
         timestampLabel?: string;
-        asset?: React.ReactNode;
+        asset?: React.ReactElement;
         boxed?: boolean;
         /** Maximum width of the whole message, including its asset and side actions. Defaults to 80%.
          * Error feedback can exceed this limit up to 184px to avoid illegible wrapping.
