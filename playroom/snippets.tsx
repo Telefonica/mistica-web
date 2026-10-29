@@ -4829,5 +4829,99 @@ export default [
             )}
         />`,
     },
+    {
+        group: 'Message',
+        name: 'Basic conversation',
+        code: `<Box padding={16}>
+  <Stack space={16}>
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Message type="outgoing" contentText="Sí" timestamp="16:46" />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
+        name: 'Conversation with avatars and groups',
+        code: `<Box padding={16}>
+  <Stack space={24}>
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Hola, ¿confirmamos la visita?" timestamp="16:45" />
+    <Stack space={4}>
+      <Message type="incoming" position="first" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Tengo varias opciones." />
+      <Message type="incoming" position="middle" asset={<Box width={40} />} contentText="Podemos ir el martes o el miércoles." />
+      <Message type="incoming" position="last" asset={<Box width={40} />} contentText="También el jueves por la tarde." timestamp="16:46" />
+    </Stack>
+    <Stack space={4}>
+      <Message type="outgoing" position="first" asset={<Box width={40} />} contentText="El martes me viene bien." />
+      <Message type="outgoing" position="middle" asset={<Box width={40} />} contentText="Estaré en casa a partir de las cinco." />
+      <Message type="outgoing" position="last" asset={<Avatar size={40} initials="YO" />} contentText="¿Podéis venir a esa hora?" timestamp="16:47" />
+    </Stack>
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="Sí, queda confirmado para el martes a las 17:00." timestamp="16:48" />
+    <Message type="outgoing" asset={<Avatar size={40} initials="YO" />} contentText="¡Perfecto, gracias!" timestamp="16:49" />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
+        name: 'Conversation',
+        code: `<Box padding={16}>
+  <Stack space={16}>
+    <Message type="incoming" asset={<Avatar size={40} initials="AP" />} senderName="Adriana" contentText="¿Confirmamos la visita del martes?" timestamp="16:45" />
+    {getState('messageSent', false) ? (
+      <Message type="outgoing" contentText="Sí, el martes está bien." timestamp="16:50" />
+    ) : (
+      <Message type="outgoing" contentText="Sí, el martes está bien." error errorMessage="No enviado. Toca para reintentar." onPress={() => setState('messageSent', true)} />
+    )}
+    <Message type="incoming" contentText="Te enviaré los detalles." boxed={false} senderName="Adriana" footerSlot={<IconTimeRegular size={16} />} />
+  </Stack>
+</Box>`,
+    },
+    {
+        group: 'Message',
+        name: 'Variants and positions',
+        code: `<Stack space={16}>
+  {['default', 'brand', 'alternative', 'negative', 'media'].map(variant => (
+    <ResponsiveLayout key={variant} variant={variant} fullWidth>
+      <Box padding={16}>
+        <Stack space={16}>
+          <Text2 medium>{variant}</Text2>
+          <Message type="incoming" senderName="Adriana" contentText="Mensaje recibido sobre este fondo." timestamp="13:32" />
+          <Message type="outgoing" contentText="Mensaje enviado." timestamp="13:33" />
+          <Stack space={4}>
+            <Message type="incoming" contentText="Primero" position="first" />
+            <Message type="incoming" contentText="En medio" position="middle" />
+            <Message type="incoming" contentText="Último" position="last" />
+          </Stack>
+          <Message type="outgoing" contentText="Error" error errorMessage="No se ha enviado" />
+        </Stack>
+      </Box>
+    </ResponsiveLayout>
+  ))}
+</Stack>`,
+    },
+    {
+        group: 'Message',
+        name: 'Slots and independent actions',
+        code: `<Box padding={16}>
+  <Stack space={24}>
+    <Message type="incoming"
+      asset={<Avatar size={40} initials="AP" />}
+      onAssetPress={() => alert({title: 'Perfil de Adriana'})}
+      assetLabel="Abrir perfil de Adriana"
+      senderName="Adriana"
+      contentText="Pulsa para ver los detalles"
+      onPress={() => alert({title: 'Detalles del mensaje'})}
+      timestamp="13:32"
+      actionsPosition="side"
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar mensaje', onPress: () => alert({title: 'Mensaje copiado'})}]}
+    />
+    <Message type="incoming" senderName="Adriana" timestamp="13:33" footerSlot={<Text1 regular>Entregado</Text1>}
+      actions={[{Icon: IconCopyRegular, 'aria-label': 'Copiar contenido', onPress: () => alert({title: 'Copiado'})}]}
+      contentSlot={<Placeholder height={80} />}
+    />
+    <Message type="outgoing" contentText="Sí" timestamp="13:34" sideSlot={<IconCheckRegular size={16} />} />
+    <Message type="incoming" contentText="Este mensaje conserva los saltos de línea y se ajusta al ancho disponible sin puntos suspensivos." maxWidth="100%" />
+  </Stack>
+</Box>`,
+    },
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
