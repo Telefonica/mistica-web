@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import Pagination, {getPaginationItems} from '../pagination';
+import Pagination from '../pagination';
 
 test('renders pagination navigation landmark', () => {
     render(
@@ -14,6 +14,34 @@ test('renders pagination navigation landmark', () => {
 
     expect(screen.getByRole('navigation', {name: 'Paginación - Página 1 de 5'})).toBeInTheDocument();
 });
+
+test.each([
+    {givenCurrentPage: 1, expectedCurrentPage: '1'},
+    {givenCurrentPage: 3, expectedCurrentPage: '3'},
+    {givenCurrentPage: 4, expectedCurrentPage: '4'},
+    {givenCurrentPage: 10, expectedCurrentPage: '10'},
+    {givenCurrentPage: 17, expectedCurrentPage: '17'},
+    {givenCurrentPage: 18, expectedCurrentPage: '18'},
+    {givenCurrentPage: 20, expectedCurrentPage: '20'},
+])(
+    'shares page buttons in a single list at page $givenCurrentPage',
+    ({givenCurrentPage, expectedCurrentPage}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Pagination totalPages={20} currentPage={givenCurrentPage} />
+            </ThemeContextProvider>
+        );
+
+        const list = screen.getByRole('list', {hidden: true});
+        const buttons = within(list).getAllByRole('button', {hidden: true});
+        const pageNumbers = buttons.map((button) => button.textContent);
+
+        expect(new Set(pageNumbers).size).toBe(pageNumbers.length);
+        expect(within(list).getByRole('button', {current: 'page', hidden: true})).toHaveTextContent(
+            expectedCurrentPage
+        );
+    }
+);
 
 test('does not render when there is a single page', () => {
     render(
@@ -131,136 +159,98 @@ test('honors controlled currentPage', () => {
     expect(screen.getByRole('button', {name: 'Ir a la página 2'})).toBeInTheDocument();
 });
 
-describe('getPaginationItems', () => {
-    test('returns an empty array for a single page', () => {
-        expect(getPaginationItems({totalPages: 1, currentPage: 1})).toEqual([]);
-    });
+const pageSweepCases = [2, 3, 4, 5, 7, 20].flatMap((givenTotalPages) =>
+    [0, 1, 2, 10].flatMap((givenSurroundingPageCount) =>
+        Array.from({length: givenTotalPages}, (_, index) => ({
+            given: {
+                totalPages: givenTotalPages,
+                surroundingPageCount: givenSurroundingPageCount,
+                currentPage: index + 1,
+            },
+            expected: {
+                firstPage: 1,
+                lastPage: givenTotalPages,
+                currentPageLabel: `Página ${index + 1}, página actual`,
+            },
+        }))
+    )
+);
 
-    test('returns all pages when total fits without ellipsis', () => {
-        const items = getPaginationItems({totalPages: 5, currentPage: 3});
-        expect(items.filter((i) => i.type === 'ellipsis')).toHaveLength(0);
-        expect(items).toHaveLength(5);
-    });
-
-    test('includes the hidden page instead of rendering an unnecessary mobile ellipsis', () => {
-        expect(getPaginationItems({totalPages: 4, currentPage: 3, includeBoundaryPages: false})).toEqual([
-            {type: 'page', page: 1, current: false},
-            {type: 'page', page: 2, current: false},
-            {type: 'page', page: 3, current: true},
-            {type: 'page', page: 4, current: false},
-        ]);
-    });
-
-    test('uses one surrounding page by default', () => {
-        const items = getPaginationItems({totalPages: 20, currentPage: 10});
-        expect(items).toEqual([
-            {type: 'page', page: 1, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 9, current: false},
-            {type: 'page', page: 10, current: true},
-            {type: 'page', page: 11, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 20, current: false},
-        ]);
-    });
-
-    test('uses surroundingPageCount to insert ellipsis when middle pages are skipped', () => {
-        const items = getPaginationItems({totalPages: 20, currentPage: 10, surroundingPageCount: 1});
-        expect(items.some((i) => i.type === 'ellipsis')).toBe(true);
-        expect(items[0]).toMatchObject({type: 'page', page: 1});
-        expect(items[items.length - 1]).toMatchObject({type: 'page', page: 20});
-    });
-
-    test('fills the leading slots with pages on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 3, surroundingPageCount: 1})).toEqual([
-            {type: 'page', page: 1, current: false},
-            {type: 'page', page: 2, current: false},
-            {type: 'page', page: 3, current: true},
-            {type: 'page', page: 4, current: false},
-            {type: 'page', page: 5, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 40, current: false},
-        ]);
-    });
-
-    test('keeps configured surrounding pages centered on desktop', () => {
-        expect(getPaginationItems({totalPages: 40, currentPage: 31, surroundingPageCount: 1})).toEqual([
-            {type: 'page', page: 1, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 30, current: false},
-            {type: 'page', page: 31, current: true},
-            {type: 'page', page: 32, current: false},
-            {type: 'ellipsis'},
-            {type: 'page', page: 40, current: false},
-        ]);
-    });
-
-    test('keeps the number of desktop items stable while changing pages', () => {
-        const itemCounts = [1, 3, 20, 38, 40].map(
-            (currentPage) => getPaginationItems({totalPages: 40, currentPage, surroundingPageCount: 1}).length
+test.each(pageSweepCases)(
+    'renders unique page buttons for $given.totalPages pages at page $given.currentPage with surrounding count $given.surroundingPageCount',
+    ({given, expected}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Pagination {...given} />
+            </ThemeContextProvider>
         );
 
-        expect(itemCounts).toEqual([7, 7, 7, 7, 7]);
-    });
+        const list = screen.getByRole('list', {hidden: true});
+        const buttons = within(list).getAllByRole('button', {hidden: true});
+        const pages = buttons.map((button) => Number(button.textContent));
 
-    test('hides boundary pages when configured for mobile', () => {
-        expect(
-            getPaginationItems({
-                totalPages: 40,
-                currentPage: 3,
-                includeBoundaryPages: false,
-                surroundingPageCount: 1,
-            })
-        ).toEqual([
-            {type: 'page', page: 1, current: false},
-            {type: 'page', page: 2, current: false},
-            {type: 'page', page: 3, current: true},
-            {type: 'page', page: 4, current: false},
-            {type: 'ellipsis'},
-        ]);
-    });
+        expect(pages).toEqual([...new Set(pages)].sort((a, b) => a - b));
+        expect(pages.every((page) => page >= expected.firstPage && page <= expected.lastPage)).toBe(true);
+        expect(within(list).getByRole('button', {current: 'page', hidden: true})).toHaveAccessibleName(
+            expected.currentPageLabel
+        );
+    }
+);
 
-    test('keeps mobile item slots stable without fixed boundary pages', () => {
-        expect(
-            getPaginationItems({
-                totalPages: 40,
-                currentPage: 33,
-                includeBoundaryPages: false,
-                surroundingPageCount: 1,
-            })
-        ).toEqual([
-            {type: 'ellipsis'},
-            {type: 'page', page: 32, current: false},
-            {type: 'page', page: 33, current: true},
-            {type: 'page', page: 34, current: false},
-            {type: 'ellipsis'},
-        ]);
+test.each([
+    {given: {totalPages: 3, currentPage: 2, surroundingPageCount: 0}, expected: {pages: [1, 2, 3]}},
+    {
+        given: {totalPages: 5, currentPage: 3, surroundingPageCount: undefined},
+        expected: {pages: [1, 2, 3, 4, 5]},
+    },
+    {
+        given: {totalPages: 40, currentPage: 1, surroundingPageCount: 1},
+        expected: {pages: [1, 2, 3, 4, 5, 40]},
+    },
+    {
+        given: {totalPages: 40, currentPage: 31, surroundingPageCount: 1},
+        expected: {pages: [1, 30, 31, 32, 40]},
+    },
+    {
+        given: {totalPages: 40, currentPage: 40, surroundingPageCount: 1},
+        expected: {pages: [1, 36, 37, 38, 39, 40]},
+    },
+    {given: {totalPages: 40, currentPage: 20, surroundingPageCount: 0}, expected: {pages: [1, 20, 40]}},
+    {
+        given: {totalPages: 40, currentPage: 20, surroundingPageCount: 2},
+        expected: {pages: [1, 18, 19, 20, 21, 22, 40]},
+    },
+])(
+    'renders shared page buttons for $given.totalPages pages at page $given.currentPage with surrounding count $given.surroundingPageCount',
+    ({given, expected}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Pagination {...given} />
+            </ThemeContextProvider>
+        );
 
-        expect(
-            getPaginationItems({
-                totalPages: 40,
-                currentPage: 1,
-                includeBoundaryPages: false,
-                surroundingPageCount: 1,
-            })
-        ).toEqual([
-            {type: 'page', page: 1, current: true},
-            {type: 'page', page: 2, current: false},
-            {type: 'page', page: 3, current: false},
-            {type: 'page', page: 4, current: false},
-            {type: 'ellipsis'},
-        ]);
+        const list = screen.getByRole('list', {hidden: true});
+        const buttons = within(list).getAllByRole('button', {hidden: true});
+        expect(buttons.map((button) => Number(button.textContent))).toEqual(expected.pages);
+    }
+);
 
-        expect(
-            [1, 3, 20, 38, 40].map(
-                (currentPage) =>
-                    getPaginationItems({
-                        totalPages: 40,
-                        currentPage,
-                        includeBoundaryPages: false,
-                        surroundingPageCount: 1,
-                    }).length
-            )
-        ).toEqual([5, 5, 5, 5, 5]);
-    });
+test('keeps a single current page after selecting a page with no surrounding pages', async () => {
+    const given = {totalPages: 3, surroundingPageCount: 0, hideNavigationControls: true};
+    const expectedLabels = ['Ir a la página 1', 'Página 2, página actual', 'Ir a la página 3'];
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Pagination {...given} />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Ir a la página 2'}));
+
+    const list = screen.getByRole('list');
+    const buttons = within(list).getAllByRole('button');
+    expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual(expectedLabels);
+    expect(within(list).getByRole('button', {current: 'page'})).toHaveAccessibleName(
+        'Página 2, página actual'
+    );
+    expect(within(list).getByRole('button', {current: 'page'})).toHaveAttribute('aria-disabled', 'true');
 });
