@@ -329,19 +329,21 @@ test('Outgoing errors follow the footer slot and footer actions', async () => {
 });
 
 test.each([
-    {type: 'incoming', boxed: true, gap: 8, leading: 'asset', trailing: 'bubble'},
-    {type: 'outgoing', boxed: true, gap: 8, leading: 'bubble', trailing: 'asset'},
-    {type: 'incoming', boxed: false, gap: 12, leading: 'asset', trailing: 'bubble'},
-    {type: 'outgoing', boxed: false, gap: 12, leading: 'bubble', trailing: 'asset'},
+    {type: 'incoming', boxed: true, leading: 'asset', trailing: 'bubble', expectedGap: 8},
+    {type: 'outgoing', boxed: true, leading: 'bubble', trailing: 'asset', expectedGap: 8},
+    {type: 'incoming', boxed: false, leading: 'asset', trailing: 'bubble', expectedGap: 12},
+    {type: 'outgoing', boxed: false, leading: 'bubble', trailing: 'asset', expectedGap: 12},
 ] as const)(
     'Message asset spacing matches its boxed variant: %o',
-    async ({type, boxed, gap, leading, trailing}) => {
+    async ({type, boxed, leading, trailing, expectedGap}) => {
         await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, assetType: 'avatar'}});
+
         const asset = await getBounds(await screen.findByTestId('Avatar'));
         const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
         const bounds = {asset, bubble};
         const actualGap = bounds[trailing].left - bounds[leading].right;
-        expect(actualGap).toBeCloseTo(gap, 0);
+
+        expect(actualGap).toBeCloseTo(expectedGap, 0);
     }
 );
 

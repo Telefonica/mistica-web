@@ -185,6 +185,7 @@ test('explicit accessible labels override the generated name', () => {
 
 test('changing action position or removing actions never duplicates them', () => {
     const actions = [{Icon: IconCopyRegular, 'aria-label': 'Copy', onPress: () => {}}] as const;
+
     const Example = ({
         position,
         messageActions,
@@ -201,10 +202,13 @@ test('changing action position or removing actions never duplicates them', () =>
             />
         </ThemeContextProvider>
     );
+
     const {rerender} = render(<Example messageActions={actions} />);
     expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
+
     rerender(<Example position="side" messageActions={actions} />);
     expect(screen.getAllByRole('button', {name: 'Copy'})).toHaveLength(1);
+
     rerender(<Example position="side" />);
     expect(screen.queryByRole('button', {name: 'Copy'})).not.toBeInTheDocument();
 });
