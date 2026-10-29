@@ -1748,6 +1748,10 @@ const layoutSnippets: Array<Snippet> = [
         code: '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
+        name: 'GridLayout 7+5',
+        code: '<ResponsiveLayout><GridLayout template="7+5" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+    },
+    {
         name: 'GridLayout 4+6',
         code: '<ResponsiveLayout><GridLayout template="4+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
