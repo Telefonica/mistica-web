@@ -1,3 +1,15 @@
+# [17.10.0](https://github.com/Telefonica/mistica-web/compare/v17.9.0...v17.10.0) (2026-10-30)
+
+
+### Bug Fixes
+
+* **Tooltip:** stabilize Tooltip and Popover positioning ([#1780](https://github.com/Telefonica/mistica-web/issues/1780)) ([2c2ab4f](https://github.com/Telefonica/mistica-web/commit/2c2ab4f87ce180c8e5285072fafd1603ab0af5b9)), closes [#1621](https://github.com/Telefonica/mistica-web/issues/1621)
+
+
+### Features
+
+* **Message:** add conversation message component ([#1767](https://github.com/Telefonica/mistica-web/issues/1767)) ([b5f4ea8](https://github.com/Telefonica/mistica-web/commit/b5f4ea88c93fff8c6a5b6e78aba0b8ee088084e7))
+
 # [17.9.0](https://github.com/Telefonica/mistica-web/compare/v17.8.0...v17.9.0) (2026-10-23)
 
 
