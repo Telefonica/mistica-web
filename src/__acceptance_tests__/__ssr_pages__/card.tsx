@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {MediaCard, DataCard, Inline, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../..';
+import {MediaCard, DataCard, Inline, ButtonPrimary, ButtonLink} from '../../..';
+import IconAcademicLight from '@telefonica/mistica-icons/icon-academic-light';
 
 const CardsTest = (): JSX.Element => (
     <Inline space={16}>

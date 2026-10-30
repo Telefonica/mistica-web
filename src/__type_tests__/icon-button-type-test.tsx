@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Icon2GRegular, IconButton} from '..';
+import {IconButton} from '..';
+import Icon2GRegular from '@telefonica/mistica-icons/icon-2-g-regular';
 
 <IconButton Icon={Icon2GRegular} aria-label="something" />;
 <IconButton Icon={Icon2GRegular} aria-labelledby="something" />;

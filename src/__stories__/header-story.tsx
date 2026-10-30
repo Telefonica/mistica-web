@@ -7,9 +7,9 @@ import {
     ResponsiveLayout,
     Placeholder,
     Callout,
-    IconInformationUserLight,
     Tag,
 } from '..';
+import IconInformationUserLight from '@telefonica/mistica-icons/icon-information-user-light';
 
 import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';

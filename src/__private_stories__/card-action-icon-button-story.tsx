@@ -3,17 +3,17 @@ import {
     DataCard,
     ButtonPrimary,
     ButtonLink,
-    IconMobileDeviceRegular,
     skinVars,
     Circle,
     Tag,
-    IconShopRegular,
     CardActionIconButton,
     Text2,
     Stack,
-    IconStarFilled,
-    IconStarRegular,
 } from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 
 export default {
     title: 'Private/Deprecated Card Stories/Utils/CardActionIconButton',

@@ -12,9 +12,9 @@ import {
     Text2,
     Title1,
     Callout,
-    IconInformationRegular,
     ButtonLink,
 } from '..';
+import IconInformationRegular from '@telefonica/mistica-icons/icon-information-regular';
 import avatarImg from './images/avatar.jpg';
 
 export default {
