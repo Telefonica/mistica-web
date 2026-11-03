@@ -10,7 +10,6 @@ const minWidth = createVar();
 export const buttonVars = {minWidth};
 
 const colorTransitionTiming = '0.1s ease-in-out';
-const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
 export const buttonMinWidth = {
     default: '104px',
@@ -121,41 +120,25 @@ const button = style([
 export const small = style({});
 export const smallLink = style({});
 
-export const loadingFiller = style([
-    sprinkles({
-        display: 'block',
-        height: 0,
-        overflow: 'hidden',
-    }),
-    {
-        opacity: 0,
-    },
-]);
+export const slideSwap = style({
+    width: '100%',
+    verticalAlign: 'top',
+});
 
 export const loadingContent = style([
     sprinkles({
-        display: 'inline-flex',
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
     }),
     {
-        left: buttonPaddingLeft.default,
-        right: buttonPaddingRight.default,
-        opacity: 0,
-        transform: 'translateY(2rem)',
-        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
+        paddingLeft: buttonPaddingLeft.default,
+        paddingRight: buttonPaddingRight.default,
 
         selectors: {
             [`${small} &`]: {
-                left: buttonPaddingLeft.small,
-                right: buttonPaddingRight.small,
-            },
-            [`${isLoading} &`]: {
-                transform: 'translateY(0)',
-                opacity: 1,
+                paddingLeft: buttonPaddingLeft.small,
+                paddingRight: buttonPaddingRight.small,
             },
         },
     },
@@ -169,16 +152,10 @@ export const textContent = style([
     }),
     {
         padding: `${buttonPaddingY.default} ${buttonPaddingRight.default} ${buttonPaddingY.default} ${buttonPaddingLeft.default}`, // height 48
-        opacity: 1,
-        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
                 padding: `${buttonPaddingY.small} ${buttonPaddingRight.small} ${buttonPaddingY.small} ${buttonPaddingLeft.small}`, // height 32
-            },
-            [`${isLoading} &`]: {
-                transform: 'translateY(-2rem)',
-                opacity: 0,
             },
         },
     },
