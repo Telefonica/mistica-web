@@ -23,6 +23,8 @@ const skin: Skin = {
         skeletonWave: '#EEEEEE',
         borderLow: '#F6F6F6',
         border: '#DDDDDD',
+        popupBorder: 'transparent',
+        tooltipBorder: '#DDDDDD',
         borderHigh: '#86888C',
         borderSelected: '#f08753',
         buttonDangerBackground: '#FF374A',

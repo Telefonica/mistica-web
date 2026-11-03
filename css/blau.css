@@ -13,8 +13,8 @@
     --mistica-blau-blauRed10: #feece8;
     --mistica-blau-blauBluePrimary30: #b3e9fb;
     --mistica-blau-grey3: #dddddd;
-    --mistica-blau-grey2: #f2f2f2;
     --mistica-blau-grey1: #f6f6f6;
+    --mistica-blau-grey2: #f2f2f2;
     --mistica-blau-grey5: #666666;
     --mistica-blau-blauBlueSecondary60: #005a99;
     --mistica-blau-blauRed: #d12937;
@@ -213,6 +213,8 @@
     --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-textBrand: var(--mistica-blau-blauBlueSecondary);
     --mistica-color-inputBorder: var(--mistica-blau-grey4);
+    --mistica-color-popupBorder: rgba(var(--mistica-blau-raw-white), 0);
+    --mistica-color-tooltipBorder: var(--mistica-blau-grey3);
     --mistica-color-inputBorderInverse: var(--mistica-blau-grey6);
     --mistica-color-inputBorderNegative: var(--mistica-blau-white);
     --mistica-color-inputBorderBrand: var(--mistica-blau-grey6);
@@ -648,6 +650,8 @@
     --mistica-color-textActivated: var(--mistica-blau-blauBluePrimary);
     --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
     --mistica-color-inputBorder: var(--mistica-blau-darkModeGrey5);
+    --mistica-color-popupBorder: var(--mistica-blau-darkModeGrey5);
+    --mistica-color-tooltipBorder: var(--mistica-blau-darkModeGrey5);
     --mistica-color-inputBorderInverse: var(--mistica-blau-darkModeGrey5);
     --mistica-color-inputBorderNegative: var(--mistica-blau-darkModeGrey5);
     --mistica-color-inputBorderBrand: var(--mistica-blau-darkModeGrey5);
@@ -983,6 +987,8 @@
         --mistica-color-textActivated: var(--mistica-blau-blauBluePrimary);
         --mistica-color-textBrand: var(--mistica-blau-blauBluePrimary);
         --mistica-color-inputBorder: var(--mistica-blau-darkModeGrey5);
+        --mistica-color-popupBorder: var(--mistica-blau-darkModeGrey5);
+        --mistica-color-tooltipBorder: var(--mistica-blau-darkModeGrey5);
         --mistica-color-inputBorderInverse: var(--mistica-blau-darkModeGrey5);
         --mistica-color-inputBorderNegative: var(--mistica-blau-darkModeGrey5);
         --mistica-color-inputBorderBrand: var(--mistica-blau-darkModeGrey5);
@@ -1308,6 +1314,8 @@
         --mistica-color-textActivated: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-textBrand: var(--mistica-blau-blauBlueSecondary);
         --mistica-color-inputBorder: var(--mistica-blau-grey4);
+        --mistica-color-popupBorder: rgba(var(--mistica-blau-raw-white), 0);
+        --mistica-color-tooltipBorder: var(--mistica-blau-grey3);
         --mistica-color-inputBorderInverse: var(--mistica-blau-grey6);
         --mistica-color-inputBorderNegative: var(--mistica-blau-white);
         --mistica-color-inputBorderBrand: var(--mistica-blau-grey6);

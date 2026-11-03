@@ -41,7 +41,7 @@ export const optionsContainer = style([
         top,
         left,
         minWidth,
-        boxShadow: '0px 2px 4px 0px #00000033',
+        boxShadow: `0 0 0 1px ${skinVars.colors.popupBorder}, 0px 2px 4px 0px #00000033`,
         padding: optionContainerPadding,
         transformOrigin,
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',

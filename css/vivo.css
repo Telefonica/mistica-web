@@ -204,6 +204,8 @@
     --mistica-color-textActivated: var(--mistica-vivo-vivoPurple);
     --mistica-color-textBrand: var(--mistica-vivo-vivoPurple);
     --mistica-color-inputBorder: var(--mistica-vivo-grey4);
+    --mistica-color-popupBorder: rgba(var(--mistica-vivo-raw-white), 0);
+    --mistica-color-tooltipBorder: var(--mistica-vivo-grey3);
     --mistica-color-inputBorderInverse: var(--mistica-vivo-white);
     --mistica-color-inputBorderNegative: var(--mistica-vivo-white);
     --mistica-color-inputBorderBrand: var(--mistica-vivo-white);
@@ -639,6 +641,8 @@
     --mistica-color-textActivated: var(--mistica-vivo-vivoPurpleLight80);
     --mistica-color-textBrand: var(--mistica-vivo-vivoPurpleLight80);
     --mistica-color-inputBorder: var(--mistica-vivo-darkModeGrey5);
+    --mistica-color-popupBorder: var(--mistica-vivo-darkModeGrey5);
+    --mistica-color-tooltipBorder: var(--mistica-vivo-darkModeGrey5);
     --mistica-color-inputBorderInverse: var(--mistica-vivo-darkModeGrey5);
     --mistica-color-inputBorderNegative: var(--mistica-vivo-darkModeGrey5);
     --mistica-color-inputBorderBrand: var(--mistica-vivo-darkModeGrey5);
@@ -971,6 +975,8 @@
         --mistica-color-textActivated: var(--mistica-vivo-vivoPurpleLight80);
         --mistica-color-textBrand: var(--mistica-vivo-vivoPurpleLight80);
         --mistica-color-inputBorder: var(--mistica-vivo-darkModeGrey5);
+        --mistica-color-popupBorder: var(--mistica-vivo-darkModeGrey5);
+        --mistica-color-tooltipBorder: var(--mistica-vivo-darkModeGrey5);
         --mistica-color-inputBorderInverse: var(--mistica-vivo-darkModeGrey5);
         --mistica-color-inputBorderNegative: var(--mistica-vivo-darkModeGrey5);
         --mistica-color-inputBorderBrand: var(--mistica-vivo-darkModeGrey5);
@@ -1296,6 +1302,8 @@
         --mistica-color-textActivated: var(--mistica-vivo-vivoPurple);
         --mistica-color-textBrand: var(--mistica-vivo-vivoPurple);
         --mistica-color-inputBorder: var(--mistica-vivo-grey4);
+        --mistica-color-popupBorder: rgba(var(--mistica-vivo-raw-white), 0);
+        --mistica-color-tooltipBorder: var(--mistica-vivo-grey3);
         --mistica-color-inputBorderInverse: var(--mistica-vivo-white);
         --mistica-color-inputBorderNegative: var(--mistica-vivo-white);
         --mistica-color-inputBorderBrand: var(--mistica-vivo-white);
