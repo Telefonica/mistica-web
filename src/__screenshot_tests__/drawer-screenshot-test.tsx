@@ -2,7 +2,7 @@ import {openStoryPage, screen, waitFor} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
-test.skip.each`
+test.each`
     device          | withActions | dismissible | contentLength
     ${'MOBILE_IOS'} | ${true}     | ${true}     | ${1}
     ${'MOBILE_IOS'} | ${true}     | ${true}     | ${5}
