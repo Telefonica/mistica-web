@@ -1,5 +1,4 @@
-import {within} from '@telefonica/acceptance-testing';
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {within, openStoryPage, screen, setRootFontSize} from '../test-utils';
 import {normalizeVariant} from '../theme-variant-context';
 
 const THEME_VARIANTS = ['default', 'inverse', 'alternative'] as const;

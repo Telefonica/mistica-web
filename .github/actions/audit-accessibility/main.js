@@ -3,9 +3,9 @@ const path = require('path');
 const os = require('os');
 const handler = require('serve-handler');
 const http = require('http');
-const {AxePuppeteer} = require('@axe-core/puppeteer');
+const {AxeBuilder} = require('@axe-core/playwright');
 const {createHtmlReport} = require('axe-html-reporter');
-const puppeteer = require('puppeteer');
+const {chromium} = require('playwright');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
@@ -64,16 +64,18 @@ const startStorybook = () => {
 };
 
 /**
- * @param {import('puppeteer').Browser} browser
+ * @param {import('playwright').Browser} browser
  * @param {string} url
  * @param {Array<string>} disabledRules
  * @returns {Promise<import('axe-core').AxeResults>}
  */
 const audit = async (browser, url, disabledRules = []) => {
     const page = await browser.newPage();
-    const ua = await browser.userAgent();
-    await page.setUserAgent(`${ua} acceptance-test`);
-    await page.goto(url, {waitUntil: 'networkidle0'});
+    await page.addInitScript(() => {
+        const userAgent = navigator.userAgent;
+        Object.defineProperty(navigator, 'userAgent', {get: () => `${userAgent} acceptance-test`});
+    });
+    await page.goto(url, {waitUntil: 'networkidle'});
     // Wait until the story has actually mounted, otherwise axe may scan the Storybook
     // loading shell instead of the rendered story, producing flaky page-level results.
     await page
@@ -82,19 +84,20 @@ const audit = async (browser, url, disabledRules = []) => {
                 const root = document.querySelector('#storybook-root');
                 return Boolean(root && root.children.length > 0);
             },
+            undefined,
             {timeout: 5000}
         )
         .catch(() => {
             // Some stories may legitimately render no content; continue with the audit.
         });
-    const result = await new AxePuppeteer(page)
+    const result = await new AxeBuilder({page})
         .disableRules([
             // ignored because some stories don't include an H1 header
             'page-has-heading-one',
             ...disabledRules,
         ])
         .analyze();
-    page.close();
+    await page.close();
     return result;
 };
 
@@ -278,7 +281,6 @@ const getDisabledRules = (story, skin) => {
 };
 
 const main = async () => {
-    const isCi = process.env.CI;
     process.chdir(PATH_REPO_ROOT);
 
     if (!process.env.CI) {
@@ -301,11 +303,7 @@ const main = async () => {
 
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
-    const browser = await puppeteer.launch({
-        // Launch chromium installed in docker in CI
-        ...(isCi ? {executablePath: '/usr/bin/chromium'} : {}),
-        args: ['--incognito', '--no-sandbox'],
-    });
+    const browser = await chromium.launch();
 
     /** @type Array<[story: string, skin: string, results: import('axe-core').AxeResults]> */
     const results = [];
@@ -344,7 +342,7 @@ const main = async () => {
         await generateReportForConsole(results);
     }
 
-    browser.close();
+    await browser.close();
     closeStorybook();
 };
 

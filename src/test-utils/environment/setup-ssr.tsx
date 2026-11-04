@@ -1,10 +1,16 @@
-import puppeteerSetup from 'jest-environment-puppeteer/setup';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const browserSetup = require('./setup-browser');
 import {compileSsrClient} from '../ssr';
 
-export default async (jestConfig: any = {}): Promise<void> => {
+import type {Config} from '@jest/types';
+
+export default async (
+    jestConfig: Config.GlobalConfig,
+    projectConfig: Config.ProjectConfig
+): Promise<void> => {
     console.log();
     console.log('Building SSR client bundles...');
     await compileSsrClient({build: process.env.NO_BUILD !== 'true'});
 
-    await puppeteerSetup(jestConfig);
+    await browserSetup(jestConfig, projectConfig);
 };

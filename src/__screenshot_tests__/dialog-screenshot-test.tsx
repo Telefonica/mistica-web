@@ -35,7 +35,7 @@ test('Select options are correctly positioned inside a dialog', async () => {
 
     await (await screen.findByRole('button', {name: 'Open'})).click();
     await screen.findByRole('dialog');
-    await (await screen.findByLabelText('Select')).click();
+    await (await screen.findByRole('button', {name: 'Select Orange'})).click();
 
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();

@@ -22,8 +22,11 @@ test.each(['checkbox', 'switch', 'radio'])('outline follows the %s prop', async 
     const unselected = await getOutline();
     await first.focus();
     await page.keyboard.press('Space');
-    const selected = await getOutline();
-    expect(selected.color).not.toBe(unselected.color);
+    const selected = await waitFor(async () => {
+        const outline = await getOutline();
+        expect(outline.color).not.toBe(unselected.color);
+        return outline;
+    });
     expect(selected.width).toBe('2px');
     expect(selected.inset).toBe('-4px');
     expect(await first.evaluate((element) => element === document.activeElement)).toBe(true);
@@ -32,7 +35,9 @@ test.each(['checkbox', 'switch', 'radio'])('outline follows the %s prop', async 
     } else {
         await page.keyboard.press('Space');
     }
-    expect((await getOutline()).color).toBe(unselected.color);
+    await waitFor(async () => {
+        expect((await getOutline()).color).toBe(unselected.color);
+    });
 });
 
 test('custom controls only select the card through selected', async () => {
@@ -42,7 +47,9 @@ test('custom controls only select the card through selected', async () => {
     expect((await getOutline(2)).color).toBe(unlocked.color);
     const unselected = await getOutline(1);
     await (await screen.findByRole('button', {name: 'Add favorite'})).click();
-    expect((await getOutline(1)).color).not.toBe(unselected.color);
+    await waitFor(async () => {
+        expect((await getOutline(1)).color).not.toBe(unselected.color);
+    });
 });
 
 test.each(['data', 'media', 'cover', 'naked', 'advanced'])(
@@ -57,10 +64,14 @@ test.each(['data', 'media', 'cover', 'naked', 'advanced'])(
             name: 'First This is a description',
         });
         await (await screen.findByText('First', {exact: true})).click();
-        expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe('true');
+        await waitFor(async () => {
+            expect(await surface.getAttribute('aria-checked')).toBe('true');
+        });
         expect(await surface.evaluate((element) => element === document.activeElement)).toBe(true);
         await page.keyboard.press('Space');
-        expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe('false');
+        await waitFor(async () => {
+            expect(await surface.getAttribute('aria-checked')).toBe('false');
+        });
     }
 );
 
@@ -159,5 +170,7 @@ test.each(['checkbox', 'switch', 'radio'])('%s fills a cover card with aspect ra
         throw new Error('Card control bounds not found');
     }
     await page.mouse.click(box.x + box.width / 2, box.y + box.height - 8);
-    expect(await surface.evaluate((element) => element.getAttribute('aria-checked'))).toBe('true');
+    await waitFor(async () => {
+        expect(await surface.getAttribute('aria-checked')).toBe('true');
+    });
 });

@@ -10,7 +10,7 @@ test.each(testDevices)('ButtonLayout UI package, device: %s', async (device) => 
         device,
     });
 
-    const image = await page.screenshot({fullPage: true, captureBeyondViewport: true});
+    const image = await page.screenshot({fullPage: true});
 
     expect(image).toMatchImageSnapshot();
 });

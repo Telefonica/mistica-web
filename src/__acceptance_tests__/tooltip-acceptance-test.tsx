@@ -246,7 +246,7 @@ describe.each(
         await (await screen.findByRole('button', {name: `${component} target`})).click();
         const tooltip = await screen.findByRole('tooltip');
         await page.evaluate(() => document.fonts.ready.then(() => undefined));
-        await page.waitForNetworkIdle();
+        await page.waitForLoadState('networkidle');
 
         const positions = await tooltip.evaluate(
             (element) =>

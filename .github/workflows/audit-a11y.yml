@@ -11,16 +11,21 @@ concurrency:
 
 jobs:
     audit-a11y:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-24.04
         steps:
             - uses: actions/checkout@v6
               with:
                   persist-credentials: false
 
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
+
+            - run: yarn playwright install --with-deps chromium
 
             - name: 'Build storybook'
               run: 'yarn storybook-static'

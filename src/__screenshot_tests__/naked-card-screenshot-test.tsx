@@ -11,7 +11,7 @@ test.each(TESTABLE_DEVICES)('NakedCard in %s', async (device) => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -25,7 +25,7 @@ test.each(TESTABLE_DEVICES)('NakedCard with large fontSize in %s', async (device
     await setRootFontSize(32);
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -51,7 +51,7 @@ test('NakedCard with slot ', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -66,7 +66,7 @@ test('NakedCard with circular image ', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -81,7 +81,7 @@ test('NakedCard without media ', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -97,7 +97,7 @@ test('NakedCard closeable', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -113,7 +113,7 @@ test('NakedCard with top actions', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -128,7 +128,7 @@ test.each(TESTABLE_DEVICES)('NakedCard with asset in %s', async (device) => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+    const image = await nakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -140,7 +140,7 @@ test.each(TESTABLE_DEVICES)('SmallNakedCard in %s', async (device) => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+    const image = await smallNakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -154,7 +154,7 @@ test.each(TESTABLE_DEVICES)('SmallNakedCard with large fontSize in %s', async (d
     await setRootFontSize(32);
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+    const image = await smallNakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -170,7 +170,7 @@ test('SmallNakedCard with slot ', async () => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+    const image = await smallNakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -185,7 +185,7 @@ test('SmallNakedCard with circular image ', async () => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+    const image = await smallNakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -200,7 +200,7 @@ test('SmallNakedCard without media ', async () => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+    const image = await smallNakedCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });

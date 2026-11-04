@@ -1,4 +1,4 @@
-import {openSSRPage} from '../test-utils';
+import {openSSRPage, ssimScreenshotConfig} from '../test-utils';
 
 test('ssr success feedback screen', async () => {
     // The SuccessFeedbackScreen renders the background using a Portal. The Portal node is
@@ -7,7 +7,7 @@ test('ssr success feedback screen', async () => {
 });
 
 test('ssr error feedback screen', async () => {
-    await openSSRPage({name: 'feedback-screen-error', checkHidrationVisualMismatch: true});
+    await openSSRPage({name: 'feedback-screen-error', hydrationScreenshotConfig: ssimScreenshotConfig});
 });
 
 test('ssr info feedback screen', async () => {

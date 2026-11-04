@@ -1,11 +1,10 @@
-import {openStoryPage, screen, waitFor} from '../test-utils';
-import {getGlobalPage} from '@telefonica/acceptance-testing';
-import {AxePuppeteer} from '@axe-core/puppeteer';
+import {openStoryPage, screen, waitFor, getGlobalPage} from '../test-utils';
+import AxeBuilder from '@axe-core/playwright';
 import assert from 'assert';
 
-import type {ElementHandle} from '../test-utils';
+import type {Locator} from '../test-utils';
 
-const getBounds = async (element: ElementHandle) => {
+const getBounds = async (element: Locator) => {
     const bounds = await element.boundingBox();
     assert(bounds, 'Element has no bounding box');
     return {...bounds, left: bounds.x, right: bounds.x + bounds.width};
@@ -17,7 +16,7 @@ test.each(['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const)(
     'Message conversation has accessible contrast in %s',
     async (skin) => {
         await openStoryPage({id: 'components-message--conversation', device: 'MOBILE_IOS', skin});
-        const result = await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze();
+        const result = await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze();
         expect(result.violations).toEqual([]);
     }
 );
@@ -296,7 +295,7 @@ test.each(['incoming', 'outgoing'])('Message keeps its bubble fill on hover and 
     await bubble.hover();
     expect(await bubble.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(background);
     expect(
-        (await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze()).violations
+        (await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze()).violations
     ).toEqual([]);
     await getGlobalPage().mouse.down();
     try {
@@ -304,7 +303,7 @@ test.each(['incoming', 'outgoing'])('Message keeps its bubble fill on hover and 
             background
         );
         expect(
-            (await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze()).violations
+            (await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze()).violations
         ).toEqual([]);
     } finally {
         await getGlobalPage().mouse.move(0, 0);

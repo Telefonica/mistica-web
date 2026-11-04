@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, ssimScreenshotConfig} from '../test-utils';
 
 test('SidenavBar', async () => {
     await openStoryPage({
@@ -95,7 +95,7 @@ test.each`
     const sidenavBar = await screen.findByRole('navigation');
     const image = await sidenavBar.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 // A raw "#" does not survive the URL of the story, so the colour uses the encoding of Storybook.
@@ -241,7 +241,7 @@ test.each`
         args: {variant, pageVariant: variant},
     });
 
-    const topBar = await screen.findByRole('banner');
+    const topBar = await screen.findByTestId('SidenavBar');
     expect(await topBar.screenshot()).toMatchImageSnapshot();
 });
 

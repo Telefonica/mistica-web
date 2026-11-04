@@ -14,8 +14,10 @@ permissions:
 jobs:
     update-screenshots:
         name: update-screenshots
-        runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
+        runs-on: ubuntu-24.04
+        container:
+            image: mcr.microsoft.com/playwright:v1.64.1-noble
+            options: --ipc=host
         # Requires manual approval - uses GH_TOKEN_MISTICA with write access
         environment: production
         strategy:
@@ -45,9 +47,12 @@ jobs:
                   ref: ${{ steps.validate.outputs.branch }}
                   persist-credentials: false
 
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - run: yarn storybook-static
@@ -74,7 +79,7 @@ jobs:
 
     upload-changes:
         needs: update-screenshots
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-24.04
         if: always()
         steps:
             - name: checkout

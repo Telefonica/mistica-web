@@ -1,15 +1,18 @@
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
-import {openPage, serverHostName, screen, getGlobalPage, PageApi} from '@telefonica/acceptance-testing';
+import {openPage, screen} from './browser';
 import {MOVISTAR_SKIN} from '../skins/constants';
 import {kebabCase} from 'lodash';
 
-import type {TestViewport} from '@telefonica/acceptance-testing';
+import type {TestViewport, PageApi} from './browser';
+import type {MatchImageSnapshotOptions} from 'jest-image-snapshot';
 
-export type {ElementHandle} from '@telefonica/acceptance-testing';
+export type {Locator} from 'playwright';
+export {within, getGlobalPage} from './browser';
 
-export {screen, PageApi};
+export {screen};
+export type {PageApi};
 
 export type StoryArgs = {[key: string]: string | number | boolean};
 
@@ -52,7 +55,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
     },
     [MOBILE_DEVICE_IOS]: {
@@ -65,7 +67,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
     },
     [MOBILE_DEVICE_IOS_INSET]: {
@@ -78,7 +79,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
             safeAreaInset: {
                 // smallest iPhone's bottom inset height on vertical position (iPhone 13 mini)
                 bottom: '34px',
@@ -95,7 +95,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
     },
     [TABLET_DEVICE]: {
@@ -107,7 +106,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
         userAgent: '',
     },
@@ -120,7 +118,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
-            isLandscape: false,
         },
     },
     [LARGE_DESKTOP_DEVICE]: {
@@ -131,7 +128,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
-            isLandscape: false,
         },
     },
     [EXTRA_LARGE_DESKTOP_DEVICE]: {
@@ -142,7 +138,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
-            isLandscape: false,
         },
     },
 };
@@ -203,10 +198,13 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
     });
 };
 
-const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
+const checkHydrationMismatch = async (
+    page: PageApi,
+    screenshotConfig?: MatchImageSnapshotOptions
+): Promise<void> => {
     const {testPath, currentTestName} = expect.getState();
     const tmpdir = os.tmpdir();
-    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}-snap`);
+    const snapshotId = kebabCase(`${path.basename(testPath || '')}-${currentTestName}-snap`);
     const baselineImagePath = path.join(tmpdir, `${snapshotId}.png`);
     await page.screenshot({path: baselineImagePath});
 
@@ -215,6 +213,7 @@ const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
 
     try {
         expect(hydrateImage).toMatchImageSnapshot({
+            ...screenshotConfig,
             // use the saved ssr snapshot as the baseline
             customSnapshotsDir: tmpdir,
             customSnapshotIdentifier: snapshotId,
@@ -243,6 +242,7 @@ export const openSSRPage = async ({
     device = TABLET_DEVICE,
     skin = MOVISTAR_SKIN,
     checkHidrationVisualMismatch = true,
+    hydrationScreenshotConfig,
     prefersColorScheme,
     waitUntil,
 }: {
@@ -250,14 +250,14 @@ export const openSSRPage = async ({
     device?: Device;
     skin?: string;
     checkHidrationVisualMismatch?: boolean;
+    hydrationScreenshotConfig?: MatchImageSnapshotOptions;
     prefersColorScheme?: 'light' | 'dark';
-    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2';
+    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
 }): Promise<PageApi> => {
-    const globalPage = getGlobalPage();
     const port = (global as any)['__SSR_SERVER__'].address().port;
 
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
-    globalPage.on('console', async (msg) => {
+    const onConsole = async (msg: import('playwright').ConsoleMessage) => {
         const type = msg.type();
         const args = [...(await Promise.all(msg.args().map((h: any) => h.jsonValue())))];
         if (args.length === 0) {
@@ -269,21 +269,22 @@ export const openSSRPage = async ({
         if (type === 'warning') {
             console.warn(...args);
         }
-    });
+    };
 
     const page = await openPage({
-        url: `http://${serverHostName}:${port}/${name}?skin=${skin}`,
+        onConsole,
+        url: `http://localhost:${port}/${name}?skin=${skin}`,
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
         waitUntil,
     });
 
     if (prefersColorScheme) {
-        await page.emulateMediaFeatures([{name: 'prefers-color-scheme', value: prefersColorScheme}]);
+        await page.emulateMedia({colorScheme: prefersColorScheme});
     }
 
     if (checkHidrationVisualMismatch) {
-        await checkHydrationMismatch(page);
+        await checkHydrationMismatch(page, hydrationScreenshotConfig);
     } else {
         await hydrateSSRPage(page);
     }

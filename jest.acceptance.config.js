@@ -24,8 +24,8 @@ module.exports = {
         '!**/__acceptance_tests__/*-ssr-acceptance-test.tsx', // these are handled in jest.ssr.config.js
     ],
 
-    globalSetup: 'jest-environment-puppeteer/setup',
-    globalTeardown: 'jest-environment-puppeteer/teardown',
-    testEnvironment: 'jest-environment-puppeteer',
+    globalSetup: require.resolve('./src/test-utils/environment/setup-browser.js'),
+    globalTeardown: require.resolve('./src/test-utils/environment/teardown-browser.js'),
+    testEnvironment: require.resolve('./src/test-utils/environment/playwright.js'),
     setupFilesAfterEnv: [require.resolve('./src/test-utils/fail-test-on-console-error.tsx')],
 };

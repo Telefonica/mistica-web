@@ -1,6 +1,5 @@
 import path from 'path';
 import {openStoryPage, screen} from '../test-utils';
-import {prepareFile} from '@telefonica/acceptance-testing';
 
 const variants = ['default', 'brand', 'alternative', 'negative', 'media'] as const;
 
@@ -63,16 +62,16 @@ test('FileUpload - upload multiple files and remove', async () => {
 
     // Upload first file
     const fileInput = await screen.findByLabelText('Drag or upload your file');
-    const firstFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-1.txt'));
-    const secondFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-2.png'));
-    await fileInput.uploadFile(firstFixturePath);
+    const firstFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-1.txt');
+    const secondFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-2.png');
+    await fileInput.setInputFiles(firstFixturePath);
     await screen.findByText('file-upload-1.txt');
 
     const imageWithOneFile = await fileUploader.screenshot();
     expect(imageWithOneFile).toMatchImageSnapshot();
 
     // Upload second file
-    await fileInput.uploadFile(secondFixturePath);
+    await fileInput.setInputFiles(secondFixturePath);
     await screen.findByText('file-upload-2.png');
     await screen.findAllByRole('button', {name: /^Eliminar archivo/});
 
@@ -97,12 +96,12 @@ test('FileUpload - custom gallery', async () => {
 
     const fileUploader = await screen.findByTestId('FileUpload');
     const fileInput = await screen.findByLabelText('Gallery');
-    const firstFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-2.png'));
-    const secondFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-3.png'));
+    const firstFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-2.png');
+    const secondFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-3.png');
 
-    await fileInput.uploadFile(firstFixturePath);
+    await fileInput.setInputFiles(firstFixturePath);
     await screen.findByLabelText('Remove file-upload-2.png');
-    await fileInput.uploadFile(secondFixturePath);
+    await fileInput.setInputFiles(secondFixturePath);
     await screen.findByLabelText('Remove file-upload-3.png');
 
     const image = await fileUploader.screenshot();

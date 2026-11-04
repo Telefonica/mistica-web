@@ -1,5 +1,4 @@
-import {within} from '@telefonica/acceptance-testing';
-import {openStoryPage, screen} from '../test-utils';
+import {within, openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['DESKTOP', 'MOBILE_IOS'] as const;
 
@@ -43,11 +42,11 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     // In mobile, options are displayed with a native select, and it's not visible in screenshots
     if (device === 'DESKTOP') {
         // Open Dialog's select
-        await (await screen.findByLabelText('Select')).click();
+        await (await screen.findByRole('button', {name: 'Select'})).click();
         expect(await page.screenshot()).toMatchImageSnapshot();
 
         // Close Dialog's select
-        await (await screen.findByLabelText('Select')).click();
+        await (await screen.findByTestId('Overlay')).click();
         expect(await page.screenshot()).toMatchImageSnapshot();
     }
 
@@ -57,6 +56,7 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
 
     // Open Snackbar
     await (await screen.findByLabelText('sheet-snackbar-button')).click();
+    await (await screen.findByRole('alert')).waitFor({state: 'visible'});
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Close Dialog's Sheet
@@ -86,11 +86,11 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     // In mobile, options are displayed with a native select, and it's not visible in screenshots
     if (device === 'DESKTOP') {
         // Open Sheet's select
-        await (await screen.findByLabelText('Select')).click();
+        await (await screen.findByRole('button', {name: 'Select'})).click();
         expect(await page.screenshot()).toMatchImageSnapshot();
 
         // Close Sheet's select
-        await (await screen.findByLabelText('Select')).click();
+        await (await screen.findByTestId('Overlay')).click();
         expect(await page.screenshot()).toMatchImageSnapshot();
     }
 

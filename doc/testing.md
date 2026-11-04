@@ -25,16 +25,48 @@ classes in the HTML content you render in the test or write acceptance/screensho
 
 ## Acceptance tests
 
+Browser tests use Jest with Playwright's Chromium. Install the browser once after installing dependencies:
+
+```sh
+yarn playwright install chromium
+yarn test-acceptance
+```
+
+On Linux, use `yarn playwright install --with-deps chromium` to install the system dependencies too.
+`yarn test-acceptance --ui` opens a visible browser. Jest options still work, for example
+`yarn test-acceptance --runInBand --testPathPattern=button-screenshot`.
+
+The test environment starts Storybook automatically, or reuses a running local Storybook on port 6006. With
+`CI=true`, it serves the static build instead; run `yarn storybook-static` first. SSR tests use
+`yarn test-ssr` after `yarn compile` and check for console warnings and visual differences between server
+rendering and hydration.
+
+Each page gets an isolated browser context. `openStoryPage` configures the viewport, touch support, user
+agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators. Use
+their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
+
+Screenshot assertions still use `jest-image-snapshot`, including the existing filenames and SSIM options.
+Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching CI.
+Update the container tag and the pinned Playwright dependencies together when upgrading Chromium:
+
+```sh
+yarn storybook-static
+CI=true yarn test-acceptance -u --ci
+```
+
+The `update_screenshots` workflow runs the same command. Browser or OS upgrades require reviewing the updated
+references; do not replace Linux references with screenshots taken on macOS or Windows.
+
 To change some behaviors to facilitate acceptance tests (tests that run in a browser), a helper function is
 used.
 
 `isRunningAcceptanceTest` returns true if the user agent includes the `'acceptance-test'` string.
 
 To make this work in your test environment, you should add that string to the browser's user agent. For
-example in `Puppeteer`:
+example in Playwright:
 
 ```js
-await page.setUserAgent(`${currentUserAgent} acceptance-test`);
+const context = await browser.newContext({userAgent: `${currentUserAgent} acceptance-test`});
 ```
 
 ## Questions?

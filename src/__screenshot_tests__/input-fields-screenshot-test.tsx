@@ -1,5 +1,4 @@
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
-import {within} from '@telefonica/acceptance-testing';
+import {openStoryPage, screen, setRootFontSize, within} from '../test-utils';
 
 test('TextField - appears properly on desktop', async () => {
     await openStoryPage({
@@ -110,7 +109,7 @@ test('TextField - long label', async () => {
     const field = await screen.findByLabelText(
         'This TextField has a very long label and should display ellipsis'
     );
-    await field.type('Some text');
+    await field.pressSequentially('Some text');
 
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 
@@ -330,7 +329,7 @@ test('TextField - appears properly (typing)', async () => {
 
     const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByLabelText('Label');
-    await field.type('hello moto');
+    await field.pressSequentially('hello moto');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -345,7 +344,7 @@ test('TextField - appears properly (typing and blur)', async () => {
 
     const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByLabelText('Label');
-    await field.type('hello moto');
+    await field.pressSequentially('hello moto');
 
     await field.evaluate((el) => (el as HTMLInputElement).blur());
     const image = await fieldWrapper.screenshot();
@@ -370,7 +369,7 @@ test('TextField - multiline', async () => {
         '\n'
     );
 
-    await field.type(lines);
+    await field.pressSequentially(lines);
 
     const afterWriteScreenshot = await fieldWrapper.screenshot();
     expect(afterWriteScreenshot).toMatchImageSnapshot();
@@ -428,7 +427,7 @@ test('SearchField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('hello moto');
+    await field.pressSequentially('hello moto');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -442,7 +441,7 @@ test('SearchField with suggestions', async () => {
     });
 
     const field = await screen.findByLabelText('Label');
-    await field.type('a');
+    await field.pressSequentially('a');
 
     const screenshot = await page.screenshot({fullPage: true});
 
@@ -457,7 +456,7 @@ test('SearchField without suggestions', async () => {
     });
 
     const field = await screen.findByLabelText('Label');
-    await field.type('merry xmas');
+    await field.pressSequentially('merry xmas');
 
     const screenshot = await page.screenshot({fullPage: true});
 
@@ -479,7 +478,7 @@ test('DateField', async () => {
     expect(emptyScreenshot).toMatchImageSnapshot();
 
     await field.focus();
-    await field.type('06' + '10' + '1980');
+    await field.pressSequentially('06' + '10' + '1980');
 
     const filledScreenshot = await fieldWrapper.screenshot();
 
@@ -529,7 +528,7 @@ test('DateTimeField', async () => {
     expect(emptyScreenshot).toMatchImageSnapshot();
 
     await field.focus();
-    await field.type('06' + '10' + '1980' + '13' + '14');
+    await field.pressSequentially('06' + '10' + '1980' + '13' + '14');
 
     const filledScreenshot = await fieldWrapper.screenshot();
 
@@ -551,7 +550,7 @@ test('TimeField', async () => {
     expect(emptyScreenshot).toMatchImageSnapshot();
 
     await field.focus();
-    await field.type('09' + '00');
+    await field.pressSequentially('09' + '00');
 
     const filledScreenshot = await fieldWrapper.screenshot();
 
@@ -573,9 +572,9 @@ test('MonthField', async () => {
     expect(emptyScreenshot).toMatchImageSnapshot();
 
     await field.focus();
-    await field.type('10');
+    await field.pressSequentially('10');
     page.keyboard.press('Tab');
-    await field.type('2021');
+    await field.pressSequentially('2021');
 
     const filledScreenshot = await fieldWrapper.screenshot();
 
@@ -595,7 +594,7 @@ test('PinField', async () => {
     await firstDigitField.focus();
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 
-    await firstDigitField.type('1');
+    await firstDigitField.pressSequentially('1');
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });
 
@@ -609,7 +608,7 @@ test('PinField - hideCode', async () => {
     const fieldGroup = await screen.findByTestId('pin-field');
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
-    await firstDigitField.type('1');
+    await firstDigitField.pressSequentially('1');
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });
 
@@ -630,7 +629,7 @@ test.each`
     const field = await screen.findByLabelText('Label');
 
     await field.click({clickCount: 3});
-    await field.type(number);
+    await field.pressSequentially(number);
 
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 });
@@ -652,7 +651,7 @@ test.each`
     const field = await screen.findByLabelText('Label');
 
     await field.click({clickCount: 3});
-    await field.type(number);
+    await field.pressSequentially(number);
 
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 });
@@ -671,7 +670,7 @@ test('CreditCardExpirationField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('a10b25c');
+    await field.pressSequentially('a10b25c');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -691,7 +690,7 @@ test('CreditCardNumberField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('d1234567812ab345678c');
+    await field.pressSequentially('d1234567812ab345678c');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -711,7 +710,7 @@ test('CvvField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('1234abc123');
+    await field.pressSequentially('1234abc123');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -731,7 +730,7 @@ test('DecimalField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('123a,456bc,.3');
+    await field.pressSequentially('123a,456bc,.3');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -751,7 +750,7 @@ test('EmailField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('aitor.menta@gmail.com');
+    await field.pressSequentially('aitor.menta@gmail.com');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -771,7 +770,7 @@ test('IbanField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('ES2114650100722030876293');
+    await field.pressSequentially('ES2114650100722030876293');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -791,7 +790,7 @@ test('IntegerField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('123abc123');
+    await field.pressSequentially('123abc123');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -811,7 +810,7 @@ test('PasswordField', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await field.type('password123');
+    await field.pressSequentially('password123');
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
@@ -882,7 +881,7 @@ test('SearchField - increased font size', async () => {
 
     expect(image).toMatchImageSnapshot();
 
-    await field.type('a long text to cause overflow');
+    await field.pressSequentially('a long text to cause overflow');
     await field.evaluate((el) => (el as HTMLInputElement).blur());
 
     const withLongValue = await fieldWrapper.screenshot();
@@ -943,7 +942,7 @@ test('PinField- increased font size', async () => {
     const fieldGroup = await screen.findByTestId('pin-field');
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
-    await firstDigitField.type('1');
+    await firstDigitField.pressSequentially('1');
 
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });

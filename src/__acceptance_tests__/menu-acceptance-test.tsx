@@ -22,7 +22,7 @@ const openMenu = async (args: StoryArgs = {}, testViewport = viewport) => {
             ...args,
         },
     });
-    const target = await screen.findByRole('button', {name: 'Open'});
+    const target = await screen.findByRole('button', {name: /^(Open|Close)$/});
     await target.click();
     const menu = await screen.findByRole('menu');
     const getBounds = async () => ({

@@ -21,7 +21,7 @@ module.exports = {
     testMatch: ['**/__acceptance_tests__/*-ssr-acceptance-test.tsx'],
 
     globalSetup: require.resolve('./src/test-utils/environment/setup-ssr.tsx'),
-    globalTeardown: 'jest-environment-puppeteer/teardown',
-    testEnvironment: 'jest-environment-puppeteer',
+    globalTeardown: require.resolve('./src/test-utils/environment/teardown-browser.js'),
+    testEnvironment: require.resolve('./src/test-utils/environment/playwright.js'),
     setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-ssr-test-env.tsx')],
 };

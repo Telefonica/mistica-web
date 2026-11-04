@@ -39,7 +39,7 @@ test('Select - appears properly with selected option on MOBILE_IOS', async () =>
     });
 
     const field = await screen.findByRole('combobox');
-    await field.select('apple');
+    await field.selectOption('apple');
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
     const image = await fieldWrapper.screenshot();
@@ -74,7 +74,7 @@ test('Select - appears properly with long selected option on MOBILE_IOS', async 
     });
 
     const field = await screen.findByRole('combobox');
-    await field.select('longValue');
+    await field.selectOption('longValue');
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
     const image = await fieldWrapper.screenshot();
@@ -129,7 +129,7 @@ test('Select - error', async () => {
     });
 
     const field = await screen.findByRole('combobox');
-    await field.select('apple');
+    await field.selectOption('apple');
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
     const image = await fieldWrapper.screenshot();

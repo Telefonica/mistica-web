@@ -178,7 +178,7 @@ test('Selectable custom boxed row', async () => {
     const unselectedImage = await list.screenshot();
     expect(unselectedImage).toMatchImageSnapshot();
 
-    const buttons = await screen.findAllByRole('button', {name: 'Select row'});
+    const buttons = await screen.findAllByRole('button', {name: /^(Select|Unselect) row$/});
     await buttons[0].click();
     await buttons[1].click();
 
