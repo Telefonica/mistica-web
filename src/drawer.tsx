@@ -17,8 +17,9 @@ import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
-import Form, {FormProps} from './form';
+import Form from './form';
 
+import type {FormProps} from './form';
 import type {DataAttributes, HeadingType, TrackingEvent} from './utils/types';
 
 type DrawerFormProps = Omit<FormProps, 'children'>;
