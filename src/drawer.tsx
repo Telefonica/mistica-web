@@ -19,6 +19,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
 import type {DataAttributes, HeadingType, TrackingEvent} from './utils/types';
+import Form, {FormProps} from './form';
+
+type DrawerFormProps = Omit<FormProps, 'children'>;
 
 /**
  * Renders divider or a div with transparent border to avoid the small but noticeable layout shift on scroll
@@ -31,6 +34,7 @@ type DrawerLayoutProps = {
     children: React.ReactNode;
     onClose: () => void;
     onDismiss?: () => void;
+    form?: DrawerFormProps;
 };
 
 type DrawerPropsRef = {
@@ -39,7 +43,7 @@ type DrawerPropsRef = {
 };
 
 const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
-    ({width, children, onClose, onDismiss}, ref) => {
+    ({width, children, onClose, onDismiss, form}, ref) => {
         useSetModalStateEffect();
         const {isMobile} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
@@ -79,6 +83,17 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
             };
         }, [dismiss]);
 
+        const content = (
+            <div
+                data-testid="drawerLayout"
+                ref={open}
+                style={{width: widthStyle}}
+                className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
+            >
+                {children}
+            </div>
+        );
+
         return (
             <Portal>
                 <FocusTrap>
@@ -91,14 +106,16 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                             isOpen ? styles.overlayOpen : styles.overlayClosed
                         )}
                     />
-                    <div
-                        data-testid="drawerLayout"
-                        ref={open}
-                        style={{width: widthStyle}}
-                        className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
-                    >
-                        {children}
-                    </div>
+                    {form ? (
+                        <Form
+                            {...form}
+                            onSubmit={async (...args) => Promise.resolve(form.onSubmit(...args)).then(close)}
+                        >
+                            {content}
+                        </Form>
+                    ) : (
+                        content
+                    )}
                 </FocusTrap>
             </Portal>
         );
@@ -140,10 +157,12 @@ type DrawerProps = {
      * width is ignored in mobile viewport
      */
     width?: number;
+    /** if form is set, button onPress is ignored. Use form.onSubmit */
     button?: ButtonProps;
     secondaryButton?: ButtonProps;
     buttonLink?: ButtonProps;
     dataAttributes?: DataAttributes;
+    form?: DrawerFormProps | undefined;
 };
 
 const Drawer = ({
@@ -160,6 +179,7 @@ const Drawer = ({
     secondaryButton,
     buttonLink,
     dataAttributes,
+    form,
 }: DrawerProps): JSX.Element => {
     const layoutRef = React.useRef<DrawerPropsRef>(null);
     const hasActions = !!(button || secondaryButton || buttonLink);
@@ -182,7 +202,7 @@ const Drawer = ({
     });
 
     return (
-        <DrawerLayout width={width} ref={layoutRef} onClose={onClose} onDismiss={onDismiss}>
+        <DrawerLayout width={width} ref={layoutRef} onClose={onClose} onDismiss={onDismiss} form={form}>
             <section
                 role="dialog"
                 aria-modal="true"
@@ -243,7 +263,17 @@ const Drawer = ({
                     <div className={styles.buttonsLayoutContainer}>
                         <ButtonLayout
                             primaryButton={
-                                button && (
+                                button &&
+                                (form ? (
+                                    <ButtonPrimary
+                                        submit
+                                        trackEvent={button.trackEvent}
+                                        trackingEvent={button.trackingEvent}
+                                        disabled={button.disabled}
+                                    >
+                                        {button.text}
+                                    </ButtonPrimary>
+                                ) : (
                                     <ButtonPrimary
                                         trackEvent={button.trackEvent}
                                         trackingEvent={button.trackingEvent}
@@ -252,7 +282,7 @@ const Drawer = ({
                                     >
                                         {button.text}
                                     </ButtonPrimary>
-                                )
+                                ))
                             }
                             secondaryButton={
                                 secondaryButton && (
