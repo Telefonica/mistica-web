@@ -70,35 +70,39 @@ const startStorybook = () => {
  * @returns {Promise<import('axe-core').AxeResults>}
  */
 const audit = async (browser, url, disabledRules = []) => {
-    const page = await browser.newPage();
-    await page.addInitScript(() => {
-        const userAgent = navigator.userAgent;
-        Object.defineProperty(navigator, 'userAgent', {get: () => `${userAgent} acceptance-test`});
-    });
-    await page.goto(url, {waitUntil: 'networkidle'});
-    // Wait until the story has actually mounted, otherwise axe may scan the Storybook
-    // loading shell instead of the rendered story, producing flaky page-level results.
-    await page
-        .waitForFunction(
-            () => {
-                const root = document.querySelector('#storybook-root');
-                return Boolean(root && root.children.length > 0);
-            },
-            undefined,
-            {timeout: 5000}
-        )
-        .catch(() => {
-            // Some stories may legitimately render no content; continue with the audit.
+    const context = await browser.newContext();
+    try {
+        const page = await context.newPage();
+        await page.addInitScript(() => {
+            const userAgent = navigator.userAgent;
+            Object.defineProperty(navigator, 'userAgent', {get: () => `${userAgent} acceptance-test`});
         });
-    const result = await new AxeBuilder({page})
-        .disableRules([
-            // ignored because some stories don't include an H1 header
-            'page-has-heading-one',
-            ...disabledRules,
-        ])
-        .analyze();
-    await page.close();
-    return result;
+        await page.goto(url, {waitUntil: 'networkidle'});
+        // Wait until the story has actually mounted, otherwise axe may scan the Storybook
+        // loading shell instead of the rendered story, producing flaky page-level results.
+        await page
+            .waitForFunction(
+                () => {
+                    const root = document.querySelector('#storybook-root');
+                    return Boolean(root && root.children.length > 0);
+                },
+                undefined,
+                {timeout: 5000}
+            )
+            .catch(() => {
+                // Some stories may legitimately render no content; continue with the audit.
+            });
+        const result = await new AxeBuilder({page})
+            .disableRules([
+                // ignored because some stories don't include an H1 header
+                'page-has-heading-one',
+                ...disabledRules,
+            ])
+            .analyze();
+        return result;
+    } finally {
+        await context.close();
+    }
 };
 
 /**
