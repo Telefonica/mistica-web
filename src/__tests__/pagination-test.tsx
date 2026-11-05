@@ -254,3 +254,20 @@ test('keeps a single current page after selecting a page with no surrounding pag
     );
     expect(within(list).getByRole('button', {current: 'page'})).toHaveAttribute('aria-disabled', 'true');
 });
+
+test.each([
+    {locale: 'de-DE', phoneNumberFormattingRegionCode: 'DE', previous: 'Zurück', next: 'Weiter'},
+    {locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR', previous: 'Anterior', next: 'Próximo'},
+] as const)(
+    'navigation accessible names include their visible labels in $locale',
+    ({previous, next, ...i18n}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme({i18n})}>
+                <Pagination totalPages={5} currentPage={3} />
+            </ThemeContextProvider>
+        );
+
+        expect(screen.getByRole('button', {name: new RegExp(previous, 'i')})).toHaveTextContent(previous);
+        expect(screen.getByRole('button', {name: new RegExp(next, 'i')})).toHaveTextContent(next);
+    }
+);

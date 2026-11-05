@@ -208,3 +208,22 @@ test.each`
     await userEvent.tab();
     expect(document.body).toHaveFocus();
 });
+
+test('image alternative text does not interrupt the visible card label', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <MediaCard
+                title="Title"
+                subtitle="Subtitle"
+                description="Description"
+                imageSrc="image.jpg"
+                imageAlt="Image description"
+                href="/"
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(
+        screen.getByRole('link', {name: 'Title Subtitle Description Image description'})
+    ).toBeInTheDocument();
+});
