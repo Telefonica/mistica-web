@@ -13,10 +13,10 @@
     --mistica-telefonica-grey1: #f7f7ff;
     --mistica-telefonica-grey9: #031a34;
     --mistica-telefonica-grey2: #d1d5e4;
+    --mistica-telefonica-telefonicaBlue10: #e5f0ff;
     --mistica-telefonica-grey5: #6e7894;
     --mistica-telefonica-coral60: #d22a1e;
     --mistica-telefonica-coral65: #c82c1e;
-    --mistica-telefonica-telefonicaBlue10: #e5f0ff;
     --mistica-telefonica-telefonicaBlue30: #80b3ff;
     --mistica-telefonica-grey6: #58617a;
     --mistica-telefonica-turquoise: #75c0c7;
@@ -35,9 +35,9 @@
     --mistica-telefonica-darkModeBlack: #000522;
     --mistica-telefonica-darkModeGrey: #00182f;
     --mistica-telefonica-grey8: #2b3447;
+    --mistica-telefonica-darkModeGrey6: #00264d;
     --mistica-telefonica-darkModeTelefonicaBlue: #227aff;
     --mistica-telefonica-coral: #d6786b;
-    --mistica-telefonica-darkModeGrey6: #00264d;
     --mistica-telefonica-telefonicaBlue20: #b2d1ff;
     --mistica-telefonica-grey3: #b0b6ca;
     --mistica-telefonica-yellow: #e4c35c;
@@ -227,6 +227,8 @@
     --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue70);
     --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
+    --mistica-color-popupBorder: rgba(var(--mistica-telefonica-raw-white), 0);
+    --mistica-color-tooltipBorder: var(--mistica-telefonica-grey2);
     --mistica-color-inputBorderInverse: var(--mistica-telefonica-white);
     --mistica-color-inputBorderNegative: var(--mistica-telefonica-white);
     --mistica-color-inputBorderBrand: var(--mistica-telefonica-white);
@@ -698,6 +700,8 @@
     --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue30);
     --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue30);
     --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
+    --mistica-color-popupBorder: var(--mistica-telefonica-grey5);
+    --mistica-color-tooltipBorder: var(--mistica-telefonica-grey5);
     --mistica-color-inputBorderInverse: var(--mistica-telefonica-grey5);
     --mistica-color-inputBorderNegative: var(--mistica-telefonica-grey5);
     --mistica-color-inputBorderBrand: var(--mistica-telefonica-grey5);
@@ -1099,6 +1103,8 @@
         --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue30);
         --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue30);
         --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
+        --mistica-color-popupBorder: var(--mistica-telefonica-grey5);
+        --mistica-color-tooltipBorder: var(--mistica-telefonica-grey5);
         --mistica-color-inputBorderInverse: var(--mistica-telefonica-grey5);
         --mistica-color-inputBorderNegative: var(--mistica-telefonica-grey5);
         --mistica-color-inputBorderBrand: var(--mistica-telefonica-grey5);
@@ -1468,6 +1474,8 @@
         --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue70);
         --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
+        --mistica-color-popupBorder: rgba(var(--mistica-telefonica-raw-white), 0);
+        --mistica-color-tooltipBorder: var(--mistica-telefonica-grey2);
         --mistica-color-inputBorderInverse: var(--mistica-telefonica-white);
         --mistica-color-inputBorderNegative: var(--mistica-telefonica-white);
         --mistica-color-inputBorderBrand: var(--mistica-telefonica-white);

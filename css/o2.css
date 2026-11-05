@@ -224,6 +224,8 @@
     --mistica-color-textActivated: var(--mistica-o2-beyondBlue);
     --mistica-color-textBrand: var(--mistica-o2-beyondBlue);
     --mistica-color-inputBorder: var(--mistica-o2-grey45);
+    --mistica-color-popupBorder: rgba(var(--mistica-o2-raw-white), 0);
+    --mistica-color-tooltipBorder: var(--mistica-o2-grey30);
     --mistica-color-inputBorderInverse: var(--mistica-o2-white);
     --mistica-color-inputBorderNegative: var(--mistica-o2-white);
     --mistica-color-inputBorderBrand: var(--mistica-o2-white);
@@ -659,6 +661,8 @@
     --mistica-color-textActivated: var(--mistica-o2-beyondBlue30);
     --mistica-color-textBrand: var(--mistica-o2-beyondBlue30);
     --mistica-color-inputBorder: var(--mistica-o2-grey45);
+    --mistica-color-popupBorder: var(--mistica-o2-grey45);
+    --mistica-color-tooltipBorder: var(--mistica-o2-grey45);
     --mistica-color-inputBorderInverse: var(--mistica-o2-grey45);
     --mistica-color-inputBorderNegative: var(--mistica-o2-grey45);
     --mistica-color-inputBorderBrand: var(--mistica-o2-grey45);
@@ -985,6 +989,8 @@
         --mistica-color-textActivated: var(--mistica-o2-beyondBlue30);
         --mistica-color-textBrand: var(--mistica-o2-beyondBlue30);
         --mistica-color-inputBorder: var(--mistica-o2-grey45);
+        --mistica-color-popupBorder: var(--mistica-o2-grey45);
+        --mistica-color-tooltipBorder: var(--mistica-o2-grey45);
         --mistica-color-inputBorderInverse: var(--mistica-o2-grey45);
         --mistica-color-inputBorderNegative: var(--mistica-o2-grey45);
         --mistica-color-inputBorderBrand: var(--mistica-o2-grey45);
@@ -1320,6 +1326,8 @@
         --mistica-color-textActivated: var(--mistica-o2-beyondBlue);
         --mistica-color-textBrand: var(--mistica-o2-beyondBlue);
         --mistica-color-inputBorder: var(--mistica-o2-grey45);
+        --mistica-color-popupBorder: rgba(var(--mistica-o2-raw-white), 0);
+        --mistica-color-tooltipBorder: var(--mistica-o2-grey30);
         --mistica-color-inputBorderInverse: var(--mistica-o2-white);
         --mistica-color-inputBorderNegative: var(--mistica-o2-white);
         --mistica-color-inputBorderBrand: var(--mistica-o2-white);
