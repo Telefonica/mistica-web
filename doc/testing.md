@@ -69,6 +69,18 @@ example in Playwright:
 const context = await browser.newContext({userAgent: `${currentUserAgent} acceptance-test`});
 ```
 
+## Accessibility audits
+
+The Playwright migration preserves the previous axe-core 4.7.2 audit engine. Both the Playwright adapter and
+its axe-core dependency are pinned in `package.json`; the browser version is independent of these pins.
+Upgrade the audit engine separately and review newly enabled rules before updating its version.
+
+An audit with axe-core 4.14.0 reported 83 `label-content-name-mismatch` violations across 17 existing stories
+and their skins. That release enables this previously experimental rule by default. These findings remain
+unresolved; retaining the previous engine does not fix them. See the
+[4.14 rule documentation](https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch) when
+addressing the visible labels and accessible names.
+
 ## Questions?
 
 Don't hesistate to ask at
