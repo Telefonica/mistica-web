@@ -1,0 +1,31 @@
+{
+    "name": "mistica-example-module-federation",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "measure": "node measure.js",
+        "verify": "node verify.js",
+        "dev:host": "webpack serve --config host/webpack.config.js",
+        "dev:remote": "webpack serve --config remote/webpack.config.js"
+    },
+    "dependencies": {
+        "@telefonica/mistica": "portal:../..",
+        "@telefonica/mistica-icons": "portal:../../packages/mistica-icons",
+        "react": "19.2.1",
+        "react-dom": "19.2.1"
+    },
+    "devDependencies": {
+        "@swc/core": "^1.3.95",
+        "css-loader": "^7.1.2",
+        "html-webpack-plugin": "^5.6.3",
+        "style-loader": "^4.0.0",
+        "swc-loader": "^0.2.3",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.0"
+    },
+    "packageManager": "yarn@3.6.1",
+    "resolutions": {
+        "@telefonica/mistica-icons": "portal:../../packages/mistica-icons"
+    }
+}

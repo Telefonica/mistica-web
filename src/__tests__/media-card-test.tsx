@@ -8,9 +8,9 @@ import Stack from '../stack';
 import {Text2} from '../text';
 import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, ButtonLink} from '../button';
-import IconMobileDeviceRegular from '../generated/mistica-icons/icon-mobile-device-regular';
-import IconStarFilled from '../generated/mistica-icons/icon-star-filled';
-import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 
 const titleFirst = 'Title Headline Pretitle Description Extra line 1Extra line 2';
 const pretitleFirst = 'Pretitle Headline Title Description Extra line 1Extra line 2';
