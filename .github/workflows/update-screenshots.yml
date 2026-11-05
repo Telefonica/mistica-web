@@ -14,7 +14,7 @@ permissions:
 jobs:
     update-screenshots:
         name: update-screenshots
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest
         container:
             image: mcr.microsoft.com/playwright:v1.64.1-noble
             options: --ipc=host
@@ -79,7 +79,7 @@ jobs:
 
     upload-changes:
         needs: update-screenshots
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest
         if: always()
         steps:
             - name: checkout
