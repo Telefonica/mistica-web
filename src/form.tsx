@@ -26,7 +26,7 @@ export type FormValues = {[name: string]: any};
 
 type HTMLFieldElement = HTMLSelectElement | HTMLInputElement;
 
-type FormProps = {
+export type FormProps = {
     id?: string;
     onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void;
     initialValues?: FormValues;

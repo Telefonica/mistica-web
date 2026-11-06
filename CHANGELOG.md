@@ -1,3 +1,11 @@
+# [17.11.0](https://github.com/Telefonica/mistica-web/compare/v17.10.0...v17.11.0) (2026-11-04)
+
+
+### Features
+
+* **Drawer:** allow form behavior in drawer ([#1793](https://github.com/Telefonica/mistica-web/issues/1793)) ([373450a](https://github.com/Telefonica/mistica-web/commit/373450a44baddf3c083ab4f5295011215a00c36e))
+* **GridLayout:** add 7+5 desktop template ([#1787](https://github.com/Telefonica/mistica-web/issues/1787)) ([e51336a](https://github.com/Telefonica/mistica-web/commit/e51336a1a1c0202940bb7374297ddaa24b124ed2)), closes [#1786](https://github.com/Telefonica/mistica-web/issues/1786)
+
 # [17.10.0](https://github.com/Telefonica/mistica-web/compare/v17.9.0...v17.10.0) (2026-10-30)
 
 
