@@ -62,9 +62,9 @@ Each page gets an isolated browser context. `openStoryPage` configures the viewp
 agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators. Use
 their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
 
-Screenshot assertions use Playwright's pixel comparison and retain the existing reference filenames. Normal
-test runs never create or update reference images. Review differences in `reports/playwright` or open
-`yarn playwright show-report reports/playwright-html`.
+Screenshot assertions use Playwright's pixel comparison and reuse the existing reference images. Parameterized
+cases have unique reference filenames. Normal test runs never create or update reference images. Review
+differences in `reports/playwright` or open `yarn playwright show-report reports/playwright-html`.
 
 Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching CI.
 Update the container tag and pinned Playwright dependencies together when upgrading Chromium:
