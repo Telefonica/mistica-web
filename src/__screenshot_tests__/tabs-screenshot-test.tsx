@@ -1,25 +1,27 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {within, openStoryPage, screen, setRootFontSize} from '../test-utils';
 import {normalizeVariant} from '../theme-variant-context';
 
 const THEME_VARIANTS = ['default', 'inverse', 'alternative'] as const;
 
-test.each`
-    device          | withIcon
-    ${'MOBILE_IOS'} | ${true}
-    ${'MOBILE_IOS'} | ${false}
-    ${'TABLET'}     | ${true}
-    ${'TABLET'}     | ${false}
-    ${'DESKTOP'}    | ${true}
-    ${'DESKTOP'}    | ${false}
-`('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
-    await openStoryPage({
-        id: 'components-tabs--default',
-        device,
-        args: {icon: withIcon},
+for (const testCase of [
+    {device: 'MOBILE_IOS', withIcon: true},
+    {device: 'MOBILE_IOS', withIcon: false},
+    {device: 'TABLET', withIcon: true},
+    {device: 'TABLET', withIcon: false},
+    {device: 'DESKTOP', withIcon: true},
+    {device: 'DESKTOP', withIcon: false},
+] as const) {
+    const {device, withIcon} = testCase;
+    test(`Tabs in ${testCase.device} withIcon (${testCase.withIcon})`, async () => {
+        await openStoryPage({
+            id: 'components-tabs--default',
+            device,
+            args: {icon: withIcon},
+        });
+        await expectScreenshot(await screen.findByRole('tablist'));
     });
-    const image = await (await screen.findByRole('tablist')).screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Tabs with large fontSize', async () => {
     await openStoryPage({
@@ -29,8 +31,7 @@ test('Tabs with large fontSize', async () => {
 
     await setRootFontSize(32);
 
-    const image = await (await screen.findByRole('tablist')).screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(await screen.findByRole('tablist'));
 });
 
 test('Tabs with long text', async () => {
@@ -40,8 +41,7 @@ test('Tabs with long text', async () => {
         args: {text: 'A long text in the tab'},
     });
 
-    const image = await (await screen.findByRole('tablist')).screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(await screen.findByRole('tablist'));
 });
 
 test('Tabs with long text and icon', async () => {
@@ -51,8 +51,7 @@ test('Tabs with long text and icon', async () => {
         args: {text: 'A long text in the tab', icon: true},
     });
 
-    const image = await (await screen.findByRole('tablist')).screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(await screen.findByRole('tablist'));
 });
 
 test('Tabs selected line appears properly', async () => {
@@ -66,24 +65,24 @@ test('Tabs selected line appears properly', async () => {
 
     await tabs[1].click();
 
-    const secondTabActive = await tabslist.screenshot();
-    expect(secondTabActive).toMatchImageSnapshot();
+    await expectScreenshot(tabslist);
 
     await tabs[2].click();
 
-    const thirdTabActive = await tabslist.screenshot();
-    expect(thirdTabActive).toMatchImageSnapshot();
+    await expectScreenshot(tabslist);
 });
 
-test.each(THEME_VARIANTS)('Tabs in %s theme', async (variant) => {
-    await openStoryPage({
-        id: 'components-tabs--default',
-        device: 'MOBILE_IOS',
-        args: {variantOutside: normalizeVariant(variant)},
+for (const testCase of THEME_VARIANTS) {
+    const variant = testCase;
+    test(`Tabs in ${testCase} theme`, async () => {
+        await openStoryPage({
+            id: 'components-tabs--default',
+            device: 'MOBILE_IOS',
+            args: {variantOutside: normalizeVariant(variant)},
+        });
+        await expectScreenshot(await screen.findByRole('tablist'));
     });
-    const image = await (await screen.findByRole('tablist')).screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Tabs in dark mode', async () => {
     await openStoryPage({
@@ -91,6 +90,5 @@ test('Tabs in dark mode', async () => {
         device: 'MOBILE_IOS',
         isDarkMode: true,
     });
-    const image = await (await screen.findByRole('tablist')).screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(await screen.findByRole('tablist'));
 });

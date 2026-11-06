@@ -1,4 +1,5 @@
-import {openSSRPage, ssimScreenshotConfig} from '../test-utils';
+import {test} from '../test-utils/playwright';
+import {openSSRPage, renderingTolerance} from '../test-utils';
 
 test('ssr success feedback screen', async () => {
     // The SuccessFeedbackScreen renders the background using a Portal. The Portal node is
@@ -7,7 +8,7 @@ test('ssr success feedback screen', async () => {
 });
 
 test('ssr error feedback screen', async () => {
-    await openSSRPage({name: 'feedback-screen-error', hydrationScreenshotConfig: ssimScreenshotConfig});
+    await openSSRPage({name: 'feedback-screen-error', hydrationScreenshotConfig: renderingTolerance});
 });
 
 test('ssr info feedback screen', async () => {

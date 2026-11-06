@@ -5,6 +5,20 @@ extends:
 plugins:
     - mistica-local-rules
 overrides:
+    - files:
+          - 'src/__component_tests__/**/*.story.tsx'
+      rules:
+          storybook/default-exports: 'off'
+          storybook/prefer-pascal-case: 'off'
+    - files:
+          - 'src/__component_tests__/**/*.{ts,tsx}'
+          - 'playwright*.config.ts'
+      settings:
+          testing-library/utils-module: 'off'
+          testing-library/custom-queries: 'off'
+          import/resolver:
+              node:
+                  extensions: ['.js', '.ts', '.tsx']
     # import/no-restricted-paths is silent without a resolver that knows ts. Scoped: repo wide it breaks other rules.
     - files:
           - 'src/sidenav-bar*.tsx'
@@ -23,6 +37,8 @@ overrides:
           - '.storybook/**/*.{js,ts,tsx}'
           - 'src/__stories__/**/*.{js,ts,tsx}'
           - 'playroom/**/*.{js,ts,tsx}'
+          - 'playwright/**/*.{js,ts,tsx}'
+          - 'src/__component_tests__/**/*.story.tsx'
           - '**/*-test.tsx'
           - '**/*-story.tsx'
       rules:

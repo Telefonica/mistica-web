@@ -1,31 +1,36 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['DESKTOP', 'MOBILE_ANDROID', 'MOBILE_IOS'] as const;
 
-test.each(DEVICES)('Slider - %s', async (device) => {
-    await openStoryPage({
-        id: 'components-slider--uncontrolled',
-        device,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Slider - ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-slider--uncontrolled',
+            device,
+        });
+
+        const slider = await screen.findByTestId('slider');
+
+        await expectScreenshot(slider);
     });
+}
 
-    const slider = await screen.findByTestId('slider');
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Slider - inverse in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-slider--uncontrolled',
+            device,
+            args: {variantOutside: 'brand'},
+        });
 
-    const image = await slider.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const slider = await screen.findByTestId('slider');
 
-test.each(DEVICES)('Slider - inverse in %s', async (device) => {
-    await openStoryPage({
-        id: 'components-slider--uncontrolled',
-        device,
-        args: {variantOutside: 'brand'},
+        await expectScreenshot(slider);
     });
-
-    const slider = await screen.findByTestId('slider');
-
-    const image = await slider.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Slider - disabled', async () => {
     await openStoryPage({
@@ -36,8 +41,7 @@ test('Slider - disabled', async () => {
 
     const slider = await screen.findByTestId('slider');
 
-    const image = await slider.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(slider);
 });
 
 test('Slider - tooltip', async () => {
@@ -51,11 +55,9 @@ test('Slider - tooltip', async () => {
 
     await slider.focus();
 
-    const withTooltip = await page.screenshot({fullPage: true});
-    expect(withTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 
     await slider.evaluate((el) => (el as HTMLInputElement).blur());
 
-    const withoutTooltip = await page.screenshot({fullPage: true});
-    expect(withoutTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });

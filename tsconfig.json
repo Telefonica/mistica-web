@@ -75,17 +75,7 @@
 
         "resolveJsonModule": true,
         "noEmit": true,
-        /**
-         * The documented way of importing jest-dom type definitions: https://github.com/testing-library/jest-dom?tab=readme-ov-file#with-typescript
-         * isn't working as expected so we need to add them manually: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
-         */
-        "types": [
-            "vite/client",
-            "@testing-library/jest-dom",
-            "./deprecated-types.d.ts",
-            "@types/jest-image-snapshot",
-            "@figma/code-connect/figma-types"
-        ]
+        "types": ["vite/client", "./deprecated-types.d.ts", "@figma/code-connect/figma-types"]
     },
 
     // this also excludes paths from VSCode auto import feature

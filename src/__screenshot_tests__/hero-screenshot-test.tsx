@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -15,27 +16,33 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('Hero - %s (%s)', async (background, device) => {
-    await openStoryPage({
-        id: 'components-hero-hero--default',
-        device: device as Device,
-        args: {background},
+for (const testCase of getCases()) {
+    const [background, device] = testCase;
+    test(`Hero - ${testCase[0]} (${testCase[1]})`, async () => {
+        await openStoryPage({
+            id: 'components-hero-hero--default',
+            device: device as Device,
+            args: {background},
+        });
+
+        const story = await screen.findByTestId('hero');
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('hero');
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Hero - no vertical padding (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'components-hero-hero--default',
+            device,
+            args: {noPaddingY: true},
+        });
 
-test.each(DEVICES)('Hero - no vertical padding (%s)', async (device) => {
-    await openStoryPage({
-        id: 'components-hero-hero--default',
-        device,
-        args: {noPaddingY: true},
+        const story = await screen.findByTestId('hero');
+        await expectScreenshot(story);
     });
-
-    const story = await screen.findByTestId('hero');
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('Hero - custom height', async () => {
     await openStoryPage({
@@ -45,7 +52,7 @@ test('Hero - custom height', async () => {
     });
 
     const story = await screen.findByTestId('hero');
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
 test('Hero - background brand in O2 skin', async () => {
@@ -56,5 +63,5 @@ test('Hero - background brand in O2 skin', async () => {
     });
 
     const story = await screen.findByTestId('hero');
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });

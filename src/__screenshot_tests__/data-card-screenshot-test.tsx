@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -5,42 +6,42 @@ import type {Device} from '../test-utils';
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const ASPECT_RATIO_VALUES = ['1:1', '7:10', '9:10'];
 
-test.each(TESTABLE_DEVICES)('DataCard in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-datacard--default',
-        device,
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`DataCard in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-datacard--default',
+            device,
+        });
+
+        const dataCard = await screen.findByTestId('data-card');
+
+        await expectScreenshot(dataCard);
     });
+}
 
-    const dataCard = await screen.findByTestId('data-card');
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`DataCard with large fontSize in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-datacard--default',
+            device,
+        });
 
-    const image = await dataCard.screenshot();
+        await setRootFontSize(32);
 
-    expect(image).toMatchImageSnapshot();
-});
+        const dataCard = await screen.findByTestId('data-card');
 
-test.each(TESTABLE_DEVICES)('DataCard with large fontSize in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-datacard--default',
-        device,
+        await expectScreenshot(dataCard);
     });
-
-    await setRootFontSize(32);
-
-    const dataCard = await screen.findByTestId('data-card');
-
-    const image = await dataCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('DataCard group', async () => {
     const page = await openStoryPage({
         id: 'private-deprecated-card-stories-datacard--group',
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('DataCard with slot content', async () => {
@@ -50,9 +51,7 @@ test('DataCard with slot content', async () => {
         args: {slot: true},
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('DataCard closable', async () => {
@@ -62,9 +61,7 @@ test('DataCard closable', async () => {
         args: {closable: true},
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('DataCard with top actions', async () => {
@@ -74,9 +71,7 @@ test('DataCard with top actions', async () => {
         args: {topAction: true},
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('DataCard without icon, with top actions and too long title', async () => {
@@ -90,24 +85,23 @@ test('DataCard without icon, with top actions and too long title', async () => {
         },
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
-test.each(ASPECT_RATIO_VALUES)('DataCard with aspect ratio %s', async (aspectRatio) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-datacard--default',
-        device: 'MOBILE_IOS',
-        args: {aspectRatio: aspectRatio.replace(':', ' ')},
+for (const testCase of ASPECT_RATIO_VALUES) {
+    const aspectRatio = testCase;
+    test(`DataCard with aspect ratio ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-datacard--default',
+            device: 'MOBILE_IOS',
+            args: {aspectRatio: aspectRatio.replace(':', ' ')},
+        });
+
+        const dataCard = await screen.findByTestId('data-card');
+
+        await expectScreenshot(dataCard);
     });
-
-    const dataCard = await screen.findByTestId('data-card');
-
-    const image = await dataCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('DataCard only with headline and title', async () => {
     await openStoryPage({
@@ -126,7 +120,5 @@ test('DataCard only with headline and title', async () => {
 
     const dataCard = await screen.findByTestId('data-card');
 
-    const image = await dataCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(dataCard);
 });

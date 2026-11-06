@@ -1,18 +1,20 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
-test.each(DEVICES)('Select - appears properly on %s', async (device) => {
-    await openStoryPage({
-        id: 'components-select--controlled',
-        device,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Select - appears properly on ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-select--controlled',
+            device,
+        });
+
+        const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+        await expectScreenshot(fieldWrapper);
     });
-
-    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Select - appears properly with selected option on DESKTOP', async () => {
     await openStoryPage({
@@ -27,9 +29,7 @@ test('Select - appears properly with selected option on DESKTOP', async () => {
     await selectOptions?.at(-1)?.click();
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - appears properly with selected option on MOBILE_IOS', async () => {
@@ -42,9 +42,7 @@ test('Select - appears properly with selected option on MOBILE_IOS', async () =>
     await field.selectOption('apple');
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - appears properly with long selected option on DESKTOP', async () => {
@@ -62,9 +60,7 @@ test('Select - appears properly with long selected option on DESKTOP', async () 
     await selectOptions?.at(-1)?.click();
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - appears properly with long selected option on MOBILE_IOS', async () => {
@@ -77,9 +73,7 @@ test('Select - appears properly with long selected option on MOBILE_IOS', async 
     await field.selectOption('longValue');
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - optional', async () => {
@@ -90,9 +84,7 @@ test('Select - optional', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - disabled', async () => {
@@ -103,9 +95,7 @@ test('Select - disabled', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - helper text', async () => {
@@ -116,9 +106,7 @@ test('Select - helper text', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - error', async () => {
@@ -132,9 +120,7 @@ test('Select - error', async () => {
     await field.selectOption('apple');
 
     const fieldWrapper = await screen.findByTestId('select-field-wrapper');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('Select - display all options', async () => {
@@ -146,9 +132,7 @@ test('Select - display all options', async () => {
     const field = await screen.findByRole('button', {name: 'Select a fruit'});
     await field.click();
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Select - display all options in dark mode', async () => {
@@ -161,9 +145,7 @@ test('Select - display all options in dark mode', async () => {
     const field = await screen.findByRole('button', {name: 'Select a fruit'});
     await field.click();
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Select - display all options over inverse', async () => {
@@ -176,9 +158,7 @@ test('Select - display all options over inverse', async () => {
     const field = await screen.findByRole('button', {name: 'Select a fruit'});
     await field.click();
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Select - display all options with native select', async () => {
@@ -191,9 +171,7 @@ test('Select - display all options with native select', async () => {
     const field = await screen.findByLabelText('Select a fruit');
     await field.click();
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Select - display all options with native select in dark mode', async () => {
@@ -207,9 +185,7 @@ test('Select - display all options with native select in dark mode', async () =>
     const field = await screen.findByLabelText('Select a fruit');
     await field.click();
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Select - display all options with native select over inverse', async () => {
@@ -222,7 +198,5 @@ test('Select - display all options with native select over inverse', async () =>
     const field = await screen.findByLabelText('Select a fruit');
     await field.click();
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });

@@ -1,45 +1,46 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-mediacard--default',
-        device,
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`MediaCard in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-mediacard--default',
+            device,
+        });
+
+        const mediaCard = await screen.findByTestId('media-card');
+
+        await expectScreenshot(mediaCard);
     });
+}
 
-    const mediaCard = await screen.findByTestId('media-card');
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`MediaCard with large fontSize in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-mediacard--default',
+            device,
+        });
 
-    const image = await mediaCard.screenshot();
+        await setRootFontSize(32);
 
-    expect(image).toMatchImageSnapshot();
-});
+        const mediaCard = await screen.findByTestId('media-card');
 
-test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-mediacard--default',
-        device,
+        await expectScreenshot(mediaCard);
     });
-
-    await setRootFontSize(32);
-
-    const mediaCard = await screen.findByTestId('media-card');
-
-    const image = await mediaCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('MediaCard group', async () => {
     const page = await openStoryPage({
         id: 'private-deprecated-card-stories-mediacard--group',
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('MediaCard with body ', async () => {
@@ -52,9 +53,7 @@ test('MediaCard with body ', async () => {
         },
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('MediaCard with body closeable', async () => {
@@ -68,9 +67,7 @@ test('MediaCard with body closeable', async () => {
         },
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('MediaCard with top actions', async () => {
@@ -84,21 +81,20 @@ test('MediaCard with top actions', async () => {
         },
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
-test.each(TESTABLE_DEVICES)('MediaCard with asset in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-deprecated-card-stories-mediacard--default',
-        device,
-        args: {
-            asset: 'circle with icon',
-        },
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`MediaCard with asset in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-deprecated-card-stories-mediacard--default',
+            device,
+            args: {
+                asset: 'circle with icon',
+            },
+        });
+
+        await expectScreenshot(page, {...{fullPage: true}});
     });
-
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
-});
+}

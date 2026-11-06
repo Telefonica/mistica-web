@@ -1,12 +1,12 @@
 import path from 'path';
 import fs from 'fs';
-import os from 'os';
-import {openPage, screen} from './browser';
+import {openPage, screen, getGlobalPage} from './browser';
+import {test, expect, getSSRPort} from './playwright';
 import {MOVISTAR_SKIN} from '../skins/constants';
 import {kebabCase} from 'lodash';
 
 import type {TestViewport, PageApi} from './browser';
-import type {MatchImageSnapshotOptions} from 'jest-image-snapshot';
+import type {ScreenshotOptions} from './playwright';
 
 export type {Locator} from 'playwright';
 export {within, getGlobalPage} from './browser';
@@ -14,7 +14,7 @@ export {within, getGlobalPage} from './browser';
 export {screen};
 export type {PageApi};
 
-export type StoryArgs = {[key: string]: string | number | boolean};
+export type StoryArgs = {[key: string]: string | number | boolean | undefined};
 
 const MOBILE_DEVICE_IOS_SMALL = 'MOBILE_IOS_SMALL';
 const MOBILE_DEVICE_IOS_INSET = 'MOBILE_IOS_INSET';
@@ -198,36 +198,16 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
     });
 };
 
-const checkHydrationMismatch = async (
-    page: PageApi,
-    screenshotConfig?: MatchImageSnapshotOptions
-): Promise<void> => {
-    const {testPath, currentTestName} = expect.getState();
-    const tmpdir = os.tmpdir();
-    const snapshotId = kebabCase(`${path.basename(testPath || '')}-${currentTestName}-snap`);
-    const baselineImagePath = path.join(tmpdir, `${snapshotId}.png`);
-    await page.screenshot({path: baselineImagePath});
-
+const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: ScreenshotOptions): Promise<void> => {
+    const info = test.info();
+    const name = `${kebabCase(info.titlePath.join(' '))}-hydration.png`;
+    const baselineImagePath = info.snapshotPath(name);
+    fs.mkdirSync(path.dirname(baselineImagePath), {recursive: true});
+    await page.screenshot({path: baselineImagePath, caret: 'initial'});
     await hydrateSSRPage(page);
-    const hydrateImage = await page.screenshot();
-
+    await page.evaluate(() => document.fonts.ready.then(() => undefined));
     try {
-        expect(hydrateImage).toMatchImageSnapshot({
-            ...screenshotConfig,
-            // use the saved ssr snapshot as the baseline
-            customSnapshotsDir: tmpdir,
-            customSnapshotIdentifier: snapshotId,
-            customDiffDir: path.join(
-                __dirname,
-                '..',
-                '__acceptance_tests__',
-                '__image_snapshots__',
-                '__diff_output__'
-            ),
-        });
-    } catch (error: any) {
-        Error.captureStackTrace(error, checkHydrationMismatch);
-        throw error;
+        expect(await page.screenshot({caret: 'initial'})).toMatchSnapshot(name, screenshotConfig);
     } finally {
         fs.unlinkSync(baselineImagePath);
     }
@@ -250,11 +230,11 @@ export const openSSRPage = async ({
     device?: Device;
     skin?: string;
     checkHidrationVisualMismatch?: boolean;
-    hydrationScreenshotConfig?: MatchImageSnapshotOptions;
+    hydrationScreenshotConfig?: ScreenshotOptions;
     prefersColorScheme?: 'light' | 'dark';
     waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
 }): Promise<PageApi> => {
-    const port = (global as any)['__SSR_SERVER__'].address().port;
+    const port = getSSRPort();
 
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
     const onConsole = async (msg: import('playwright').ConsoleMessage) => {
@@ -293,7 +273,7 @@ export const openSSRPage = async ({
 };
 
 export const setRootFontSize = (px: number): Promise<void> =>
-    page.$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);
+    getGlobalPage().$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);
 
 export const waitFor = <T,>(
     expectation: () => Promise<T> | T,
@@ -323,10 +303,4 @@ export const waitFor = <T,>(
     });
 };
 
-// about SSIM: https://github.com/americanexpress/jest-image-snapshot#%EF%B8%8F-api
-// We use this config for screenshot tests that tend to be flaky in CI because of subtle differences in the rendering
-export const ssimScreenshotConfig = {
-    comparisonMethod: 'ssim',
-    failureThreshold: 0.001,
-    failureThresholdType: 'percent',
-} as const;
+export {renderingTolerance} from './playwright';

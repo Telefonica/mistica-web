@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -37,81 +38,89 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('Row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
-    await openStoryPage({
-        id: 'components-lists--row-list-story',
-        device: device as Device,
-        args: {
-            control,
-            slot,
-            badge,
-            headline: 'Headline',
-            detail: 'Detail',
-            subtitle: 'Subtitle',
-        },
+for (const testCase of getCases()) {
+    const [device, control, slot, badge] = testCase;
+    test(`Row list - ${testCase[0]} ${testCase[1]} slot ${testCase[2]} badge ${testCase[3]}`, async () => {
+        await openStoryPage({
+            id: 'components-lists--row-list-story',
+            device: device as Device,
+            args: {
+                control,
+                slot,
+                badge,
+                headline: 'Headline',
+                detail: 'Detail',
+                subtitle: 'Subtitle',
+            },
+        });
+
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of getCases()) {
+    const [device, control, slot, badge] = testCase;
+    test(`Boxed row list - ${testCase[0]} ${testCase[1]} slot ${testCase[2]} badge ${testCase[3]}`, async () => {
+        await openStoryPage({
+            id: 'components-lists--boxed-row-list-story',
+            device: device as Device,
+            args: {
+                control,
+                slot,
+                badge,
+                headline: 'Headline',
+                detail: 'Detail',
+                subtitle: 'Subtitle',
+            },
+        });
 
-test.each(getCases())('Boxed row list - %s %s slot %s badge %s', async (device, control, slot, badge) => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device: device as Device,
-        args: {
-            control,
-            slot,
-            badge,
-            headline: 'Headline',
-            detail: 'Detail',
-            subtitle: 'Subtitle',
-        },
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of controls) {
+    const control = testCase;
+    test(`Row list disabled - ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-lists--row-list-story',
+            device: 'MOBILE_IOS',
+            args: {
+                control,
+                headline: 'Headline',
+                badge: true,
+                disabled: true,
+                detail: 'Detail',
+                subtitle: 'Subtitle',
+            },
+        });
 
-test.each(controls)('Row list disabled - %s', async (control) => {
-    await openStoryPage({
-        id: 'components-lists--row-list-story',
-        device: 'MOBILE_IOS',
-        args: {
-            control,
-            headline: 'Headline',
-            badge: true,
-            disabled: true,
-            detail: 'Detail',
-            subtitle: 'Subtitle',
-        },
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of controls) {
+    const control = testCase;
+    test(`Boxed row list disabled - ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-lists--boxed-row-list-story',
+            device: 'MOBILE_IOS',
+            args: {
+                control,
+                headline: 'Headline',
+                badge: true,
+                disabled: true,
+                detail: 'Detail',
+                subtitle: 'Subtitle',
+            },
+        });
 
-test.each(controls)('Boxed row list disabled - %s', async (control) => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device: 'MOBILE_IOS',
-        args: {
-            control,
-            headline: 'Headline',
-            badge: true,
-            disabled: true,
-            detail: 'Detail',
-            subtitle: 'Subtitle',
-        },
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
-
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Rows with only a Title content are centered', async () => {
     await openStoryPage({
@@ -128,45 +137,48 @@ test('Rows with only a Title content are centered', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
-test.each(devices)('Custom row with text centered', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device,
-        args: {
-            control: 'custom element with text',
-            title: 'Title',
-            subtitle: 'Subtitle',
-            headline: '',
-            description: '',
-            detail: 'Detail',
-        },
+for (const testCase of devices) {
+    const device = testCase;
+    test(`Custom row with text centered (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--boxed-row-list-story',
+            device,
+            args: {
+                control: 'custom element with text',
+                title: 'Title',
+                subtitle: 'Subtitle',
+                headline: '',
+                description: '',
+                detail: 'Detail',
+            },
+        });
+
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of controlsWithOnPress) {
+    const control = testCase;
+    test(`Click control with onPress - ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-lists--row-list-story',
+            device: 'MOBILE_IOS',
+            args: {
+                control: control + ' and onPress',
+            },
+        });
 
-test.each(controlsWithOnPress)('Click control with onPress - %s', async (control) => {
-    await openStoryPage({
-        id: 'components-lists--row-list-story',
-        device: 'MOBILE_IOS',
-        args: {
-            control: control + ' and onPress',
-        },
+        const elements = await screen.findAllByRole(control);
+        await elements[0].click();
+
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
-
-    const elements = await screen.findAllByRole(control);
-    await elements[0].click();
-
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Selectable custom boxed row', async () => {
     await openStoryPage({
@@ -175,30 +187,30 @@ test('Selectable custom boxed row', async () => {
     });
 
     const list = await screen.findByTestId('selectable-boxed-row-list');
-    const unselectedImage = await list.screenshot();
-    expect(unselectedImage).toMatchImageSnapshot();
+    await expectScreenshot(list);
 
     const buttons = await screen.findAllByRole('button', {name: /^(Select|Unselect) row$/});
     await buttons[0].click();
     await buttons[1].click();
 
-    const selectedImage = await list.screenshot();
-    expect(selectedImage).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
-test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (control) => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device: 'DESKTOP',
-        args: {control},
+for (const testCase of controlsWithIconButton) {
+    const control = testCase;
+    test(`Rows with ${testCase} using big fontSize`, async () => {
+        await openStoryPage({
+            id: 'components-lists--boxed-row-list-story',
+            device: 'DESKTOP',
+            args: {control},
+        });
+
+        await setRootFontSize(32);
+
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
-
-    await setRootFontSize(32);
-
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Rows over inverse background', async () => {
     await openStoryPage({
@@ -210,8 +222,7 @@ test('Rows over inverse background', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
 test('BoxedRows over inverse background', async () => {
@@ -224,8 +235,7 @@ test('BoxedRows over inverse background', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
 test('BoxedRows inverse', async () => {
@@ -238,8 +248,7 @@ test('BoxedRows inverse', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
 test('BoxedRows inverse over inverse', async () => {
@@ -253,8 +262,7 @@ test('BoxedRows inverse over inverse', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
 test('Rows danger', async () => {
@@ -267,8 +275,7 @@ test('Rows danger', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
 test('Rows danger over inverse background', async () => {
@@ -282,8 +289,7 @@ test('Rows danger over inverse background', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
 test('BoxedRows danger', async () => {
@@ -296,116 +302,131 @@ test('BoxedRows danger', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(list);
 });
 
-test.each(devices)('UnorderedList', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--unordered-list-story',
-        device,
+for (const testCase of devices) {
+    const device = testCase;
+    test(`UnorderedList (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--unordered-list-story',
+            device,
+        });
+
+        const list = await screen.findByLabelText('Unordered List');
+
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByLabelText('Unordered List');
+for (const testCase of devices) {
+    const device = testCase;
+    test(`UnorderedList default icons (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--unordered-list-story',
+            device,
+            args: {customIcon: false},
+        });
 
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const list = await screen.findByLabelText('Unordered List');
 
-test.each(devices)('UnorderedList default icons', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--unordered-list-story',
-        device,
-        args: {customIcon: false},
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByLabelText('Unordered List');
+for (const testCase of devices) {
+    const device = testCase;
+    test(`UnorderedList without marker (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--unordered-list-story',
+            device,
+            args: {withMarker: false},
+        });
 
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const list = await screen.findByLabelText('Unordered List');
 
-test.each(devices)('UnorderedList without marker', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--unordered-list-story',
-        device,
-        args: {withMarker: false},
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByLabelText('Unordered List');
+for (const testCase of devices) {
+    const device = testCase;
+    test(`OrderedList (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--ordered-list-story',
+            device,
+        });
 
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const list = await screen.findByLabelText('Ordered List');
 
-test.each(devices)('OrderedList', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--ordered-list-story',
-        device,
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByLabelText('Ordered List');
+for (const testCase of devices) {
+    const device = testCase;
+    test(`OrderedList default icons (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--ordered-list-story',
+            device,
+            args: {customIcon: false},
+        });
 
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const list = await screen.findByLabelText('Ordered List');
 
-test.each(devices)('OrderedList default icons', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--ordered-list-story',
-        device,
-        args: {customIcon: false},
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByLabelText('Ordered List');
+for (const testCase of devices) {
+    const device = testCase;
+    test(`OrderedList without marker (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--ordered-list-story',
+            device,
+            args: {withMarker: false},
+        });
 
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const list = await screen.findByLabelText('Ordered List');
 
-test.each(devices)('OrderedList without marker', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--ordered-list-story',
-        device,
-        args: {withMarker: false},
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByLabelText('Ordered List');
+for (const testCase of devices) {
+    const device = testCase;
+    test(`Row list small (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--row-list-story',
+            device,
+            args: {
+                small: true,
+                headline: 'Headline',
+                subtitle: 'Subtitle',
+                detail: 'Detail',
+            },
+        });
 
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(devices)('Row list small', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--row-list-story',
-        device,
-        args: {
-            small: true,
-            headline: 'Headline',
-            subtitle: 'Subtitle',
-            detail: 'Detail',
-        },
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
+}
 
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of devices) {
+    const device = testCase;
+    test(`Boxed row list small (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-lists--boxed-row-list-story',
+            device,
+            args: {
+                small: true,
+                headline: 'Headline',
+                subtitle: 'Subtitle',
+                detail: 'Detail',
+            },
+        });
 
-test.each(devices)('Boxed row list small', async (device) => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device,
-        args: {
-            small: true,
-            headline: 'Headline',
-            subtitle: 'Subtitle',
-            detail: 'Detail',
-        },
+        const list = await screen.findByTestId('list');
+        await expectScreenshot(list);
     });
-
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}

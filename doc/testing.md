@@ -16,58 +16,76 @@ if (process.env.NODE_ENV !== 'test') {
 Make sure your bundler (webpack, rollup, parcel, etc) makes the correct substitutions and the minifier
 effectively removes unused code.
 
-## Unit tests
+## Component tests
 
-Unit tests usually don't require CSS because they test component functionality. Some Mistica components have
-different layouts in mobile and desktop, and there are cases in which we use CSS styles to achieve this
-result. If you are trying to test something that depends on these styles, you can either import `mistica.css`
-classes in the HTML content you render in the test or write acceptance/screenshot tests instead.
-
-## Acceptance tests
-
-Browser tests use Jest with Playwright's Chromium. Install the browser once after installing dependencies:
+All tests use Playwright Test. Install Chromium after installing dependencies:
 
 ```sh
 yarn playwright install chromium
-yarn test-acceptance
+yarn test
 ```
 
-On Linux, use `yarn playwright install --with-deps chromium` to install the system dependencies too.
-`yarn test-acceptance --ui` opens a visible browser. Jest options still work, for example
-`yarn test-acceptance --runInBand --testPathPattern=button-screenshot`.
+On Linux, use `yarn playwright install --with-deps chromium` to install system dependencies too.
 
-The test environment starts Storybook automatically, or reuses a running local Storybook on port 6006. With
-`CI=true`, it serves the static build instead; run `yarn storybook-static` first. SSR tests use
-`yarn test-ssr` after `yarn compile` and check for console warnings and visual differences between server
-rendering and hydration.
+Component tests live in `src/__component_tests__`. The runner starts a Vite gallery with real React
+components and CSS. Each `*.story.tsx` module exports the scenarios used by the matching test file. Mount a
+scenario with `mount('button/Basic', props)` and interact through semantic Playwright locators. The gallery
+wraps scenarios in `ThemeContextProvider` with `makeTheme()` by default. Scenarios that test the provider
+itself can export `withTheme = false` and provide their own wrapper.
+
+Use callbacks passed to `mount` to observe events. These callbacks run in the test process, while the
+component runs in Chromium. Browser-side setup belongs in a scenario or `page.evaluate`. Use
+`page.clock` for timers and `page.emulateMedia` for media preferences. Component tests fail on browser
+exceptions and console warnings or errors.
+
+Pure utility tests also use Playwright Test, without opening a page. Run an individual file or title with:
+
+```sh
+yarn test button-test.tsx
+yarn test --grep 'accessible name'
+yarn test --ui
+```
+
+## Acceptance and screenshot tests
+
+```sh
+yarn test-acceptance
+yarn test-acceptance button-screenshot --workers=1
+yarn test-acceptance --headed
+```
+
+The runner starts Storybook automatically, or reuses a local instance on port 6006. With `CI=true`, it
+serves the static build instead; run `yarn storybook-static` first. `--ui` opens Playwright's test explorer;
+`--headed` displays the browser while tests run.
 
 Each page gets an isolated browser context. `openStoryPage` configures the viewport, touch support, user
-agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators. Use
-their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
+agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators.
+Use their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
 
-Screenshot assertions still use `jest-image-snapshot`, including the existing filenames and SSIM options.
-Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching CI.
-Update the container tag and the pinned Playwright dependencies together when upgrading Chromium:
+Screenshot assertions use Playwright's pixel comparison and retain the existing reference filenames.
+Normal test runs never create or update reference images. Review differences in `reports/playwright` or
+open `yarn playwright show-report reports/playwright-html`.
+
+Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching
+CI. Update the container tag and pinned Playwright dependencies together when upgrading Chromium:
 
 ```sh
 yarn storybook-static
-CI=true yarn test-acceptance -u --ci
+CI=true yarn test-acceptance --update-snapshots
 ```
 
-The `update_screenshots` workflow runs the same command. Browser or OS upgrades require reviewing the updated
-references; do not replace Linux references with screenshots taken on macOS or Windows.
+The `update_screenshots` workflow runs the same command. Browser or OS upgrades require reviewing the
+updated references; do not replace Linux references with screenshots taken on macOS or Windows.
 
-To change some behaviors to facilitate acceptance tests (tests that run in a browser), a helper function is
-used.
+`isRunningAcceptanceTest` returns true when the user agent includes `acceptance-test`. `openStoryPage`
+adds this marker automatically.
 
-`isRunningAcceptanceTest` returns true if the user agent includes the `'acceptance-test'` string.
+## Server rendering
 
-To make this work in your test environment, you should add that string to the browser's user agent. For
-example in Playwright:
-
-```js
-const context = await browser.newContext({userAgent: `${currentUserAgent} acceptance-test`});
-```
+`yarn test-ssr` builds the server-rendered examples and compares their appearance before and after
+hydration. It also checks browser console output. After `yarn build`, use `NO_BUILD=true yarn test-ssr`
+to reuse the compiled library. Hydration baselines are temporary files under `reports`, not committed
+reference images.
 
 ## Accessibility audits
 

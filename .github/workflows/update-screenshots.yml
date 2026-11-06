@@ -56,7 +56,7 @@ jobs:
               run: yarn install --immutable --immutable-cache
 
             - run: yarn storybook-static
-            - run: yarn test-acceptance -u --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+            - run: yarn test-acceptance --update-snapshots --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
             - name: Collect changed screenshots
               id: collect

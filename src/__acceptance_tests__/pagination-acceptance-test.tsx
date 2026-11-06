@@ -1,3 +1,4 @@
+import {test, expect} from '../test-utils/playwright';
 import {openStoryPage, screen, within} from '../test-utils';
 
 const STORY_ID = 'components-pagination--default';
@@ -53,7 +54,7 @@ test('Pagination ellipses are non-interactive', async () => {
     await screen.findByRole('button', {name: 'Página 10, página actual', current: 'page'});
 });
 
-test.each([
+for (const testCase of [
     {
         totalPages: 2,
         currentPage: 1,
@@ -117,9 +118,9 @@ test.each([
         expectedDesktop: ['1', '...', '16', '17', '18', '19', '20'],
         expectedMobile: ['...', '17', '18', '19', '20'],
     },
-])(
-    'Pagination keeps the same list when resizing: %j',
-    async ({totalPages, currentPage, surroundingPageCount, expectedDesktop, expectedMobile}) => {
+]) {
+    const {totalPages, currentPage, surroundingPageCount, expectedDesktop, expectedMobile} = testCase;
+    test(`Pagination keeps the same list when resizing: ${JSON.stringify(testCase)}`, async () => {
         const page = await openStoryPage({
             id: STORY_ID,
             device: 'DESKTOP',
@@ -165,5 +166,5 @@ test.each([
         expect(await visibleItems()).toEqual(expectedDesktop);
         await expectAccessiblePages(expectedDesktop);
         expect(await list.evaluate((element) => element.innerHTML)).toBe(expectedMarkup);
-    }
-);
+    });
+}

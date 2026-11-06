@@ -1,43 +1,44 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each(TESTABLE_DEVICES)('NakedCard in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-nakedcard--default',
-        device,
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`NakedCard in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-nakedcard--default',
+            device,
+        });
+
+        const nakedCard = await screen.findByTestId('naked-card');
+        await expectScreenshot(nakedCard);
     });
+}
 
-    const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`NakedCard with large fontSize in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-nakedcard--default',
+            device,
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
+        await setRootFontSize(32);
 
-test.each(TESTABLE_DEVICES)('NakedCard with large fontSize in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-nakedcard--default',
-        device,
+        const nakedCard = await screen.findByTestId('naked-card');
+        await expectScreenshot(nakedCard);
     });
-
-    await setRootFontSize(32);
-
-    const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('NakedCard group', async () => {
     const page = await openStoryPage({
         id: 'private-deprecated-card-stories-nakedcard--group',
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('NakedCard with slot ', async () => {
@@ -51,9 +52,7 @@ test('NakedCard with slot ', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(nakedCard);
 });
 
 test('NakedCard with circular image ', async () => {
@@ -66,9 +65,7 @@ test('NakedCard with circular image ', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(nakedCard);
 });
 
 test('NakedCard without media ', async () => {
@@ -81,9 +78,7 @@ test('NakedCard without media ', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(nakedCard);
 });
 
 test('NakedCard closeable', async () => {
@@ -97,9 +92,7 @@ test('NakedCard closeable', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(nakedCard);
 });
 
 test('NakedCard with top actions', async () => {
@@ -113,51 +106,52 @@ test('NakedCard with top actions', async () => {
     });
 
     const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(nakedCard);
 });
 
-test.each(TESTABLE_DEVICES)('NakedCard with asset in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-nakedcard--default',
-        device,
-        args: {
-            asset: 'circle with icon',
-        },
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`NakedCard with asset in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-nakedcard--default',
+            device,
+            args: {
+                asset: 'circle with icon',
+            },
+        });
+
+        const nakedCard = await screen.findByTestId('naked-card');
+        await expectScreenshot(nakedCard);
     });
+}
 
-    const nakedCard = await screen.findByTestId('naked-card');
-    const image = await nakedCard.screenshot();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`SmallNakedCard in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-nakedcard--small',
+            device,
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(TESTABLE_DEVICES)('SmallNakedCard in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-nakedcard--small',
-        device,
+        const smallNakedCard = await screen.findByTestId('small-naked-card');
+        await expectScreenshot(smallNakedCard);
     });
+}
 
-    const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`SmallNakedCard with large fontSize in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'private-deprecated-card-stories-nakedcard--small',
+            device,
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
+        await setRootFontSize(32);
 
-test.each(TESTABLE_DEVICES)('SmallNakedCard with large fontSize in %s', async (device) => {
-    await openStoryPage({
-        id: 'private-deprecated-card-stories-nakedcard--small',
-        device,
+        const smallNakedCard = await screen.findByTestId('small-naked-card');
+        await expectScreenshot(smallNakedCard);
     });
-
-    await setRootFontSize(32);
-
-    const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('SmallNakedCard with slot ', async () => {
     await openStoryPage({
@@ -170,9 +164,7 @@ test('SmallNakedCard with slot ', async () => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(smallNakedCard);
 });
 
 test('SmallNakedCard with circular image ', async () => {
@@ -185,9 +177,7 @@ test('SmallNakedCard with circular image ', async () => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(smallNakedCard);
 });
 
 test('SmallNakedCard without media ', async () => {
@@ -200,7 +190,5 @@ test('SmallNakedCard without media ', async () => {
     });
 
     const smallNakedCard = await screen.findByTestId('small-naked-card');
-    const image = await smallNakedCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(smallNakedCard);
 });

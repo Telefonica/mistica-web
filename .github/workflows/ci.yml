@@ -44,14 +44,14 @@ jobs:
             - run: yarn circular-dependencies
             - run: yarn build
             - run: yarn ts-check
-            - run: yarn test --ci
-            - run: NO_BUILD=true yarn test-ssr --ci
+            - run: yarn test
+            - run: NO_BUILD=true yarn test-ssr
 
             - uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: failed-screenshots-ssr
-                  path: src/**/__diff_output__/*-diff.png
+                  path: reports/playwright/**/*-diff.png
 
     build-acceptance:
         runs-on: ubuntu-latest
@@ -77,13 +77,13 @@ jobs:
               run: yarn install --immutable --immutable-cache
 
             - run: yarn storybook-static
-            - run: yarn test-acceptance --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+            - run: yarn test-acceptance --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
             - uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: failed-screenshots-${{ matrix.shard }}
-                  path: src/**/__diff_output__/*-diff.png
+                  path: reports/playwright/**/*-diff.png
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
@@ -108,7 +108,7 @@ jobs:
               with:
                   pattern: failed-screenshots-*
                   merge-multiple: true
-                  path: src/
+                  path: reports/playwright/
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'

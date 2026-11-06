@@ -1,3 +1,4 @@
+import {test, expect} from '../test-utils/playwright';
 import {openStoryPage, screen, waitFor} from '../test-utils';
 
 import type {StoryArgs} from '../test-utils';
@@ -58,14 +59,17 @@ test('Menu uses bottom-start with default placement and alignment', async () => 
     });
 });
 
-test.each([100, 200, 600])('Menu constrains width=%s to its size limits', async (width) => {
-    const {getBounds} = await openMenu({width, placement: 'right'});
-    await waitFor(async () => {
-        const {target, menu} = await getBounds();
-        expect(menu.width).toBe(Math.min(MENU_MAX_WIDTH, Math.max(MENU_MIN_WIDTH, width)));
-        expectPlacement('right', target, menu);
+for (const testCase of [100, 200, 600]) {
+    const width = testCase;
+    test(`Menu constrains width=${testCase} to its size limits`, async () => {
+        const {getBounds} = await openMenu({width, placement: 'right'});
+        await waitFor(async () => {
+            const {target, menu} = await getBounds();
+            expect(menu.width).toBe(Math.min(MENU_MAX_WIDTH, Math.max(MENU_MIN_WIDTH, width)));
+            expectPlacement('right', target, menu);
+        });
     });
-});
+}
 
 test('Menu constrains explicit width to the viewport', async () => {
     const viewportWidth = 240;
@@ -85,9 +89,11 @@ test('Menu treats zero width as automatic width', async () => {
     expect(menu.width).toBeLessThanOrEqual(MENU_MAX_WIDTH);
 });
 
-test.each(placements.flatMap((placement) => alignments.map((alignment) => ({placement, alignment}))))(
-    'Menu placement=$placement alignment=$alignment',
-    async ({placement, alignment}) => {
+for (const testCase of placements.flatMap((placement) =>
+    alignments.map((alignment) => ({placement, alignment}))
+)) {
+    const {placement, alignment} = testCase;
+    test(`Menu placement=${testCase.placement} alignment=${testCase.alignment}`, async () => {
         const {getBounds} = await openMenu({placement, alignment});
         await waitFor(async () => {
             const {target, menu} = await getBounds();
@@ -106,26 +112,30 @@ test.each(placements.flatMap((placement) => alignments.map((alignment) => ({plac
                 );
             }
         });
-    }
-);
-
-test.each`
-    placement   | horizontalPosition | verticalPosition | expectedPlacement
-    ${'top'}    | ${'center'}        | ${'top'}         | ${'bottom'}
-    ${'bottom'} | ${'center'}        | ${'bottom'}      | ${'top'}
-    ${'left'}   | ${'left'}          | ${'center'}      | ${'right'}
-    ${'right'}  | ${'right'}         | ${'center'}      | ${'left'}
-`('Menu flips from $placement to $expectedPlacement', async ({expectedPlacement, ...args}) => {
-    const {getBounds} = await openMenu({...args, alignment: 'middle'});
-    await waitFor(async () => {
-        const {target, menu} = await getBounds();
-        expectPlacement(expectedPlacement, target, menu);
     });
-});
+}
 
-test.each(placements.flatMap((placement) => alignments.map((alignment) => ({placement, alignment}))))(
-    'Menu shifts within $placement without changing alignment=$alignment',
-    async ({placement, alignment}) => {
+for (const testCase of [
+    {placement: 'top', horizontalPosition: 'center', verticalPosition: 'top', expectedPlacement: 'bottom'},
+    {placement: 'bottom', horizontalPosition: 'center', verticalPosition: 'bottom', expectedPlacement: 'top'},
+    {placement: 'left', horizontalPosition: 'left', verticalPosition: 'center', expectedPlacement: 'right'},
+    {placement: 'right', horizontalPosition: 'right', verticalPosition: 'center', expectedPlacement: 'left'},
+] as const) {
+    const {expectedPlacement, ...args} = testCase;
+    test(`Menu flips from ${testCase.placement} to ${testCase.expectedPlacement}`, async () => {
+        const {getBounds} = await openMenu({...args, alignment: 'middle'});
+        await waitFor(async () => {
+            const {target, menu} = await getBounds();
+            expectPlacement(expectedPlacement, target, menu);
+        });
+    });
+}
+
+for (const testCase of placements.flatMap((placement) =>
+    alignments.map((alignment) => ({placement, alignment}))
+)) {
+    const {placement, alignment} = testCase;
+    test(`Menu shifts within ${testCase.placement} without changing alignment=${testCase.alignment}`, async () => {
         const isVertical = placement === 'top' || placement === 'bottom';
         const {getBounds} = await openMenu({
             placement,
@@ -144,47 +154,48 @@ test.each(placements.flatMap((placement) => alignments.map((alignment) => ({plac
                 expect(isVertical ? menu.left : menu.top).toBeCloseTo(0);
             }
         });
-    }
-);
+    });
+}
 
-test.each(placements)('Menu limits height and scrolls in %s', async (placement) => {
-    const {menu, getBounds} = await openMenu({placement, menuOptionsCount: 30});
-    const bounds = await getBounds();
-    expect(bounds.menu.top).toBeGreaterThanOrEqual(0);
-    expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height);
-    expect(
-        await menu.evaluate((element) => {
-            const content = element.firstElementChild;
-            return content && content.scrollHeight > content.clientHeight;
-        })
-    ).toBe(true);
-    const lastOption = await screen.findByRole('menuitem', {name: 'Click to close the menu'});
-    await lastOption.evaluate((element) => element.scrollIntoView());
-    await lastOption.click();
-    await screen.findByRole('button', {name: 'Open'});
-});
+for (const testCase of placements) {
+    const placement = testCase;
+    test(`Menu limits height and scrolls in ${testCase}`, async () => {
+        const {menu, getBounds} = await openMenu({placement, menuOptionsCount: 30});
+        const bounds = await getBounds();
+        expect(bounds.menu.top).toBeGreaterThanOrEqual(0);
+        expect(bounds.menu.bottom).toBeLessThanOrEqual(viewport.height);
+        expect(
+            await menu.evaluate((element) => {
+                const content = element.firstElementChild;
+                return content && content.scrollHeight > content.clientHeight;
+            })
+        ).toBe(true);
+        const lastOption = await screen.findByRole('menuitem', {name: 'Click to close the menu'});
+        await lastOption.evaluate((element) => element.scrollIntoView());
+        await lastOption.click();
+        await screen.findByRole('button', {name: 'Open'});
+    });
+}
 
-test.each(['left', 'right'])(
-    'Menu defaults to alignment matching horizontalPosition=%s',
-    async (horizontalPosition) => {
+for (const testCase of ['left', 'right']) {
+    const horizontalPosition = testCase;
+    test(`Menu defaults to alignment matching horizontalPosition=${testCase}`, async () => {
         const {getBounds} = await openMenu({horizontalPosition, verticalPosition: 'top'});
         const {target, menu} = await getBounds();
         expectPlacement('bottom', target, menu);
         expect(horizontalPosition === 'left' ? menu.left : menu.right).toBeCloseTo(
             horizontalPosition === 'left' ? target.left : target.right
         );
-    }
-);
+    });
+}
 
-test.each(
-    ['left', 'right'].flatMap((placement) =>
-        ['top', 'bottom'].flatMap((verticalPosition) =>
-            [240, 360].map((width) => ({placement, verticalPosition, width}))
-        )
+for (const testCase of ['left', 'right'].flatMap((placement) =>
+    ['top', 'bottom'].flatMap((verticalPosition) =>
+        [240, 360].map((width) => ({placement, verticalPosition, width}))
     )
-)(
-    'Menu placement=$placement falls back vertically at $verticalPosition with viewport width=$width',
-    async ({placement, verticalPosition, width}) => {
+)) {
+    const {placement, verticalPosition, width} = testCase;
+    test(`Menu placement=${testCase.placement} falls back vertically at ${testCase.verticalPosition} with viewport width=${testCase.width}`, async () => {
         const {menu, getBounds} = await openMenu(
             {placement, verticalPosition, menuOptionsCount: 30, description: true},
             {...viewport, width}
@@ -208,5 +219,5 @@ test.each(
         await lastOption.evaluate((element) => element.scrollIntoView());
         await lastOption.click();
         await screen.findByRole('button', {name: 'Open'});
-    }
-);
+    });
+}

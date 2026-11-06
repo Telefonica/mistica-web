@@ -1,3 +1,4 @@
+import {test, expect, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 import {VIVO_SKIN} from '../skins/constants';
 
@@ -8,11 +9,11 @@ const isDisabled = (element: Locator) => element.isDisabled();
 test('Carousel mobile', async () => {
     const page = await openStoryPage({id: 'components-carousels-carousel--default', device: 'MOBILE_IOS'});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile without bullets', async () => {
@@ -22,11 +23,11 @@ test('Carousel mobile without bullets', async () => {
         args: {bullets: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile without controls, with bullets', async () => {
@@ -36,11 +37,11 @@ test('Carousel mobile without controls, with bullets', async () => {
         args: {bullets: true, withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile without controls, nor bullets', async () => {
@@ -50,11 +51,11 @@ test('Carousel mobile without controls, nor bullets', async () => {
         args: {bullets: false, withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile with controls and autoplay', async () => {
@@ -64,11 +65,11 @@ test('Carousel mobile with controls and autoplay', async () => {
         args: {autoplay: true},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile in Vivo', async () => {
@@ -78,11 +79,11 @@ test('Carousel mobile in Vivo', async () => {
         skin: VIVO_SKIN,
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile with large mobilePageOffset', async () => {
@@ -92,11 +93,11 @@ test('Carousel mobile with large mobilePageOffset', async () => {
         args: {mobilePageOffset: 'large'},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile with initialActiveItem=1', async () => {
@@ -106,7 +107,7 @@ test('Carousel mobile with initialActiveItem=1', async () => {
         args: {initialActiveItem: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel mobile with a single page', async () => {
@@ -116,7 +117,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 1, itemsPerPageMobile: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     const page2 = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -124,7 +125,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 2, itemsPerPageMobile: 2},
     });
 
-    expect(await page2.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page2);
 
     const page3 = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -132,7 +133,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 1, itemsPerPageMobile: 2},
     });
 
-    expect(await page3.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page3);
 });
 
 test('Carousel desktop', async () => {
@@ -146,19 +147,19 @@ test('Carousel desktop', async () => {
     const nextArrow = await screen.findByRole('button', {name: /siguiente|últim/i});
 
     // https://jira.tid.es/browse/WEB-680
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -170,7 +171,7 @@ test('Carousel desktop  with initialActiveItem=3', async () => {
         args: {initialActiveItem: 3},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Carousel desktop without controls, with bullets', async () => {
@@ -180,7 +181,7 @@ test('Carousel desktop without controls, with bullets', async () => {
         args: {numItems: 9, bullets: true, withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
 });
 
 test('Carousel desktop without controls, nor bullets', async () => {
@@ -190,7 +191,7 @@ test('Carousel desktop without controls, nor bullets', async () => {
         args: {numItems: 9, bullets: false, withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
 });
 
 test('Carousel desktop with controls and autoplay', async () => {
@@ -203,19 +204,19 @@ test('Carousel desktop with controls and autoplay', async () => {
     const prevArrow = await screen.findByRole('button', {name: /primer|anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente|últim/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -227,11 +228,11 @@ test('CenteredCarousel mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('CenteredCarousel mobile, with bullets, no controls', async () => {
@@ -241,11 +242,11 @@ test('CenteredCarousel mobile, with bullets, no controls', async () => {
         args: {bullets: true, withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('CenteredCarousel mobile, with controls and autoplay', async () => {
@@ -255,11 +256,11 @@ test('CenteredCarousel mobile, with controls and autoplay', async () => {
         args: {autoplay: true},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('CenteredCarousel with only one item', async () => {
@@ -269,7 +270,7 @@ test('CenteredCarousel with only one item', async () => {
         args: {numItems: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('CenteredCarousel mobile with initialActiveItem=1', async () => {
@@ -279,7 +280,7 @@ test('CenteredCarousel mobile with initialActiveItem=1', async () => {
         args: {initialActiveItem: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Slideshow mobile', async () => {
@@ -288,7 +289,7 @@ test('Slideshow mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Slideshow mobile, without controls', async () => {
@@ -298,7 +299,7 @@ test('Slideshow mobile, without controls', async () => {
         args: {withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Slideshow mobile, with controls and autoplay', async () => {
@@ -311,19 +312,19 @@ test('Slideshow mobile, with controls and autoplay', async () => {
     const prevArrow = await screen.findByRole('button', {name: /primer|anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente|últim/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -338,19 +339,19 @@ test('Slideshow desktop', async () => {
     const prevArrow = await screen.findByRole('button', {name: /primer|anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente|últim/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -362,7 +363,7 @@ test('Slideshow desktop, without controls: borrar', async () => {
         args: {numItems: 3, withControls: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Slideshow desktop, with controls and autoplay', async () => {
@@ -375,19 +376,19 @@ test('Slideshow desktop, with controls and autoplay', async () => {
     const prevArrow = await screen.findByRole('button', {name: /primer|anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente|últim/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
-    await page.click(nextArrow);
+    await nextArrow.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -398,7 +399,7 @@ test('Carousel on different container types', async () => {
         device: 'DESKTOP',
     });
 
-    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('Carousel with external controls', async () => {
@@ -411,15 +412,15 @@ test('Carousel with external controls', async () => {
     const nextLink = await screen.findByRole('button', {name: /Next/i});
 
     // https://jira.tid.es/browse/WEB-680
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
 
-    await page.click(nextLink);
+    await nextLink.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
 
-    await page.click(prevLink);
+    await prevLink.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+    await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00004}});
 });
 
 test('Slideshow with external controls', async () => {
@@ -431,13 +432,13 @@ test('Slideshow with external controls', async () => {
     const prevLink = await screen.findByRole('button', {name: /Prev/i});
     const nextLink = await screen.findByRole('button', {name: /Next/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(nextLink);
+    await nextLink.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(prevLink);
+    await prevLink.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });

@@ -1,5 +1,3 @@
-import {configureToMatchImageSnapshot} from 'jest-image-snapshot';
-
 import type {Locator, Page, BrowserContext, BrowserContextOptions} from 'playwright';
 
 export type TestViewport = NonNullable<BrowserContextOptions['viewport']> &
@@ -7,26 +5,24 @@ export type TestViewport = NonNullable<BrowserContextOptions['viewport']> &
         safeAreaInset?: Partial<Record<'top' | 'right' | 'bottom' | 'left', number | string>>;
     };
 
-export type PageApi = Omit<Page, 'click' | 'type'> & {
-    click: (element: Locator, options?: Parameters<Locator['click']>[0]) => Promise<void>;
-    type: (element: Locator, text: string) => Promise<void>;
-    clear: (element: Locator) => Promise<void>;
-};
+export type PageApi = Page;
 
 let context: BrowserContext | undefined;
+let currentBrowser: import('playwright').Browser;
+let currentPage: Page;
+let browserUserAgent: string;
+
+export const initializeBrowser = async (browser: import('playwright').Browser): Promise<void> => {
+    currentBrowser = browser;
+    const page = await browser.newPage();
+    browserUserAgent = await page.evaluate(() => navigator.userAgent);
+    await page.close();
+};
 let pageErrors: Array<Error> = [];
 
-export const getGlobalPage = (): Page => global.page;
+export const getGlobalPage = (): Page => currentPage;
 
-expect.extend({
-    toMatchImageSnapshot: configureToMatchImageSnapshot({
-        failureThreshold: 0,
-        failureThresholdType: 'percent',
-        customSnapshotIdentifier: ({defaultIdentifier}) => `${defaultIdentifier}-snap`,
-    }),
-});
-
-afterEach(async () => {
+export const closeBrowserContext = async (): Promise<void> => {
     await context?.close();
     context = undefined;
     const errors = pageErrors;
@@ -34,31 +30,6 @@ afterEach(async () => {
     if (errors.length) {
         throw new Error(errors.map((error) => error.stack || error.message).join('\n'));
     }
-});
-
-const PAINT_TIMEOUT = 30000;
-const PAINT_INTERVAL = 250;
-
-const stableScreenshot = async (capture: () => Promise<Buffer>): Promise<Buffer> => {
-    await global.page.waitForLoadState('networkidle');
-    await global.page.evaluate(() => document.fonts.ready.then(() => undefined));
-    const start = Date.now();
-    let previous = await capture();
-    while (Date.now() - start < PAINT_TIMEOUT) {
-        await new Promise((resolve) => setTimeout(resolve, PAINT_INTERVAL));
-        const current = await capture();
-        if (previous.equals(current)) {
-            return current;
-        }
-        previous = current;
-    }
-    throw new Error('Screenshot did not stabilize');
-};
-
-const withStableScreenshot = (locator: Locator): Locator => {
-    const screenshot = locator.screenshot.bind(locator);
-    locator.screenshot = (options) => stableScreenshot(() => screenshot({caret: 'initial', ...options}));
-    return locator;
 };
 
 type RoleOptions = NonNullable<Parameters<Page['getByRole']>[1]> & {
@@ -68,11 +39,11 @@ type RoleOptions = NonNullable<Parameters<Page['getByRole']>[1]> & {
 const queries = (root: () => Page | Locator) => {
     const find = async (locator: Locator): Promise<Locator> => {
         await locator.waitFor({state: 'attached'});
-        return withStableScreenshot(locator);
+        return locator;
     };
     const findAll = async (locator: Locator): Promise<Array<Locator>> => {
         await locator.first().waitFor({state: 'attached'});
-        return (await locator.all()).map(withStableScreenshot);
+        return locator.all();
     };
     const byRole = (role: string, {current, ...options}: RoleOptions = {}) => {
         const locator = root().getByRole(role as Parameters<Page['getByRole']>[0], {exact: true, ...options});
@@ -123,18 +94,18 @@ export const openPage = async ({
 }): Promise<PageApi> => {
     await context?.close();
     const {width, height, deviceScaleFactor, isMobile, hasTouch, safeAreaInset} = viewport;
-    context = await global.browser.newContext({
+    context = await currentBrowser.newContext({
         viewport: {width, height},
         deviceScaleFactor,
         isMobile,
         hasTouch,
-        userAgent: `${userAgent || global.browserUserAgent} acceptance-test`,
+        userAgent: `${userAgent || browserUserAgent} acceptance-test`,
         colorScheme: isDarkMode ? 'dark' : 'light',
         locale: 'es-ES',
         timezoneId: 'UTC',
     });
-    global.page = await context.newPage();
-    const page = global.page;
+    currentPage = await context.newPage();
+    const page = currentPage;
     page.setDefaultTimeout(10000);
     page.on('pageerror', (error) => pageErrors.push(error));
     if (onConsole) {
@@ -166,10 +137,7 @@ export const openPage = async ({
     }, safeAreaInset);
     await page.goto(url || `http://localhost:6006${path}`, {waitUntil});
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
-    const api = Object.create(page) as PageApi;
-    api.click = (element, options) => element.click(options);
-    api.type = (element, text) => element.pressSequentially(text);
-    api.clear = (element) => element.fill('');
-    api.screenshot = (options) => stableScreenshot(() => page.screenshot({caret: 'initial', ...options}));
-    return api;
+    const screenshot = page.screenshot.bind(page);
+    page.screenshot = (options) => screenshot({caret: 'initial', ...options});
+    return page;
 };

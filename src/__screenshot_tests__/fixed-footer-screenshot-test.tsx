@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {screen, openStoryPage} from '../test-utils';
 
 test('Dialog over fixed footer', async () => {
@@ -8,22 +9,20 @@ test('Dialog over fixed footer', async () => {
 
     await (await screen.findByText('Open dialog')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each(['MOBILE_IOS', 'DESKTOP', 'LARGE_DESKTOP'] as const)(
-    'ButtonFixedFooterLayout on %s',
-    async (device) => {
+for (const testCase of ['MOBILE_IOS', 'DESKTOP', 'LARGE_DESKTOP'] as const) {
+    const device = testCase;
+    test(`ButtonFixedFooterLayout on ${testCase}`, async () => {
         const page = await openStoryPage({
             id: 'layout-fixedfooterlayout--footer-with-buttons-only',
             device,
         });
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
 test('Fixed footer with static position when height is smaller than the footer itself', async () => {
     const page = await openStoryPage({
@@ -31,22 +30,19 @@ test('Fixed footer with static position when height is smaller than the footer i
         device: 'MOBILE_IOS_SMALL',
     });
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await page.setViewportSize({
         width: 564,
         height: 100,
     });
 
-    const imageOverflow = await page.screenshot({fullPage: false, scale: 'css'});
-    expect(imageOverflow).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: false, scale: 'css'}});
 
     const loadMoreTextButton = await screen.findByRole('button', {name: 'Load more text'});
     await loadMoreTextButton.scrollIntoViewIfNeeded();
     await loadMoreTextButton.evaluate((el) => el.scrollIntoView());
-    const imageOverflowScrolled = await page.screenshot({fullPage: false, scale: 'css'});
-    expect(imageOverflowScrolled).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: false, scale: 'css'}});
 });
 
 test('Fixed footer with safe inset at the bottom', async () => {
@@ -55,16 +51,14 @@ test('Fixed footer with safe inset at the bottom', async () => {
         device: 'MOBILE_IOS_INSET',
     });
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await (await screen.findByRole('button', {name: 'Load more text'})).click();
     await (await screen.findByRole('button', {name: 'Load more text'})).click();
     await (await screen.findByRole('button', {name: 'Load more text'})).click();
     await (await screen.findByTestId('line-15')).evaluate((el) => el.scrollIntoView());
 
-    const imageOverflowLinesInset = await page.screenshot({fullPage: false});
-    expect(imageOverflowLinesInset).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: false}});
 
     await page.setViewportSize({
         width: 564,
@@ -74,8 +68,7 @@ test('Fixed footer with safe inset at the bottom', async () => {
     const loadMoreTextButton = await screen.findByRole('button', {name: 'Load more text'});
     await loadMoreTextButton.scrollIntoViewIfNeeded();
     await loadMoreTextButton.evaluate((el) => el.scrollIntoView());
-    const imageOverflowLinesInsetHorizontal = await page.screenshot({fullPage: false, scale: 'css'});
-    expect(imageOverflowLinesInsetHorizontal).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: false, scale: 'css'}});
 });
 
 test('Fixed footer onChangeFooterHeight takes into account safe-area-inset-bottom', async () => {
@@ -84,13 +77,13 @@ test('Fixed footer onChangeFooterHeight takes into account safe-area-inset-botto
         device: 'MOBILE_IOS_INSET',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     const changeFooterHeightButton = await screen.findByRole('button', {name: 'Change footer height'});
 
     await changeFooterHeightButton.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     const addPlaceholderButton = await screen.findByRole('button', {name: 'Add placeholder'});
 
@@ -99,5 +92,5 @@ test('Fixed footer onChangeFooterHeight takes into account safe-area-inset-botto
     await addPlaceholderButton.click();
     await addPlaceholderButton.click();
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
