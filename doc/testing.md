@@ -16,12 +16,35 @@ if (process.env.NODE_ENV !== 'test') {
 Make sure your bundler (webpack, rollup, parcel, etc) makes the correct substitutions and the minifier
 effectively removes unused code.
 
-## Unit tests
+## Component tests
 
-`yarn test` runs the React unit suite with Jest. The next PR in the migration stack moves these tests to
-Playwright Test and removes Jest. Browser, screenshot and SSR tests already use Playwright Test directly.
-Install Chromium with `yarn playwright install chromium`, or `yarn playwright install --with-deps chromium` on
-Linux.
+All tests use Playwright Test. Install Chromium after installing dependencies:
+
+```sh
+yarn playwright install chromium
+yarn test
+```
+
+On Linux, use `yarn playwright install --with-deps chromium` to install system dependencies too.
+
+Component tests live in `src/__component_tests__`. The runner starts a Vite gallery with real React components
+and CSS. Each `*.story.tsx` module exports the scenarios used by the matching test file. Mount a scenario with
+`mount('button/Accessible', props)` and interact through semantic Playwright locators. The gallery wraps
+scenarios in `ThemeContextProvider` with `makeTheme()` by default. Scenarios that test the provider itself can
+export `withTheme = false` and provide their own wrapper.
+
+Use callbacks passed to `mount` to observe events. These callbacks run in the test process, while the
+component runs in Chromium. Browser-side setup belongs in a scenario or `page.evaluate`. Use `page.clock` for
+timers and `page.emulateMedia` for media preferences. Component tests fail on browser exceptions and console
+warnings or errors.
+
+Pure utility tests also use Playwright Test, without opening a page. Run an individual file or title with:
+
+```sh
+yarn test button-test.tsx
+yarn test --grep 'accessible name'
+yarn test --ui
+```
 
 ## Acceptance and screenshot tests
 
@@ -39,10 +62,9 @@ Each page gets an isolated browser context. `openStoryPage` configures the viewp
 agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators. Use
 their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
 
-Screenshot assertions use Playwright's pixel comparison and reuse the existing reference images.
-Parameterized cases have unique reference filenames. Normal
-test runs never create or update reference images. Review differences in `reports/playwright` or open
-`yarn playwright show-report reports/playwright-html`.
+Screenshot assertions use Playwright's pixel comparison and reuse the existing reference images. Parameterized
+cases have unique reference filenames. Normal test runs never create or update reference images. Review
+differences in `reports/playwright` or open `yarn playwright show-report reports/playwright-html`.
 
 Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching CI.
 Update the container tag and pinned Playwright dependencies together when upgrading Chromium:
