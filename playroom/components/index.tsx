@@ -320,7 +320,6 @@ const PreviewToolsComponent = ({
             ...themesMap[skinName].themeConfig,
             platformOverrides: {platform: os},
             // Don't override media queries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
-            enableTabFocus: false,
             colorScheme,
             dimensions: {
                 headerMobileHeight: 'mistica',
