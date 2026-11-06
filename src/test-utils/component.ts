@@ -1,6 +1,11 @@
 import {test as base, expect} from '@playwright/test';
 
-import type {ConsoleMessage} from '@playwright/test';
+import type {ConsoleMessage, Page} from '@playwright/test';
+
+type ComponentStyles = typeof import('../../playwright/gallery/styles');
+
+export const getComponentStyles = (page: Page): Promise<ComponentStyles> =>
+    page.evaluate(() => (window as unknown as {misticaTestStyles: ComponentStyles}).misticaTestStyles);
 
 export const test = base.extend<{applicationErrors: void}>({
     applicationErrors: [
