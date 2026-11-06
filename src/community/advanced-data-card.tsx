@@ -112,7 +112,7 @@ const CardContent = ({
                                 {title}
                             </Text>
                         </div>
-                    )}
+                    )}{' '}
                     {headline && (
                         <div
                             ref={headlineRef}
@@ -123,7 +123,7 @@ const CardContent = ({
                         >
                             {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
                         </div>
-                    )}
+                    )}{' '}
                     {pretitle && (
                         <div style={{order: -1, paddingBottom: title || subtitle || description ? 4 : 0}}>
                             <Text2 truncate={pretitleLinesMax} as={pretitleAs} regular hyphens="auto">
@@ -140,7 +140,7 @@ const CardContent = ({
                                 {pretitle}
                             </Text2>
                         </div>
-                    )}
+                    )}{' '}
                     {headline && (
                         <div
                             ref={headlineRef}
@@ -151,7 +151,7 @@ const CardContent = ({
                         >
                             {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
                         </div>
-                    )}
+                    )}{' '}
                     {title && (
                         <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                             <Text
@@ -166,14 +166,14 @@ const CardContent = ({
                         </div>
                     )}
                 </>
-            )}
+            )}{' '}
             {subtitle && (
                 <div style={{paddingBottom: description ? 4 : 0}}>
                     <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
                         {subtitle}
                     </Text2>
                 </div>
-            )}
+            )}{' '}
             {description && (
                 <Text2
                     truncate={descriptionLinesMax}
