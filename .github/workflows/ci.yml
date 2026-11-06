@@ -53,6 +53,15 @@ jobs:
                   name: failed-screenshots-ssr
                   path: reports/playwright/**/*-diff.png
 
+            - uses: actions/upload-artifact@v4
+              if: failure()
+              with:
+                  name: playwright-report-build
+                  path: |
+                      reports/playwright-components
+                      reports/playwright
+                      reports/playwright-html
+
     build-acceptance:
         runs-on: ubuntu-latest
         container:
@@ -84,6 +93,14 @@ jobs:
               with:
                   name: failed-screenshots-${{ matrix.shard }}
                   path: reports/playwright/**/*-diff.png
+
+            - uses: actions/upload-artifact@v4
+              if: failure()
+              with:
+                  name: playwright-report-${{ matrix.shard }}
+                  path: |
+                      reports/playwright
+                      reports/playwright-html
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest

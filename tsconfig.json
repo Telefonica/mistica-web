@@ -80,6 +80,7 @@
          * isn't working as expected so we need to add them manually: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
          */
         "types": [
+            "node",
             "jest",
             "vite/client",
             "@testing-library/jest-dom",

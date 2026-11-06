@@ -1,7 +1,7 @@
 import {test as base, expect} from '@playwright/test';
 import path from 'path';
 import {kebabCase} from 'lodash';
-import {initializeBrowser, closeBrowserContext} from './browser';
+import {initializeBrowser, closeBrowserContext, getGlobalPage} from './browser';
 
 import type {Server} from 'http';
 import type {Locator, Page, PageAssertionsToHaveScreenshotOptions} from '@playwright/test';
@@ -75,6 +75,7 @@ export const expectScreenshot = async (
     target: Page | Locator | Buffer,
     options: ScreenshotOptions = {}
 ): Promise<void> => {
+    await getGlobalPage().waitForLoadState('networkidle');
     const info = test.info();
     const name = `${kebabCase(`${path.basename(info.file)} ${info.titlePath.slice(1).join(' ')} ${++screenshotIndex}`)}-snap.png`;
     if (Buffer.isBuffer(target)) {

@@ -15,7 +15,7 @@ const getCases = () => {
 
 for (const testCase of getCases()) {
     const [x, y] = testCase;
-    test(`Align x="${testCase[0]}" and y="${testCase[1]}" (${testCase[2]})`, async () => {
+    test(`Align x="${testCase[0]}" and y="${testCase[1]}" (%s)`, async () => {
         await openStoryPage({
             id: 'layout-align--default',
             device: 'MOBILE_IOS',
