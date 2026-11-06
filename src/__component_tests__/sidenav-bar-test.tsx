@@ -1,5 +1,5 @@
 import {test as browserTest} from '@playwright/test';
-import {test, expect} from '../test-utils/component';
+import {test, expect, getComponentStyles} from '../test-utils/component';
 import {sidenavCollapse, sidenavExpand} from '../text-tokens';
 
 import type {Locator, Page} from '@playwright/test';
@@ -61,10 +61,7 @@ test('SidenavBar keeps the same fallback when it is boxed, minus the inset of th
 });
 test('SidenavLayout offsets the sticky rail by topOffset', async ({mount, page}) => {
     await mount('sidenav-bar/Scenario4', {});
-    const layoutStyles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar-layout.css.ts';
-        return await import(path);
-    });
+    const layoutStyles = (await getComponentStyles(page)).sidenavLayout;
     const topOffsetVarName = layoutStyles.topOffsetVar.slice('var('.length, -1);
     expect(
         await page
@@ -77,10 +74,7 @@ test('SidenavLayout offsets the sticky rail by topOffset', async ({mount, page})
 });
 test('SidenavLayout leaves the rail at the top of the viewport without topOffset', async ({mount, page}) => {
     await mount('sidenav-bar/Scenario5', {});
-    const layoutStyles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar-layout.css.ts';
-        return await import(path);
-    });
+    const layoutStyles = (await getComponentStyles(page)).sidenavLayout;
 
     const topOffsetVarName = layoutStyles.topOffsetVar.slice('var('.length, -1);
     expect(
@@ -143,10 +137,7 @@ test('SidenavBar follows a change of collapsed when showCollapseButton is false'
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 
@@ -159,10 +150,7 @@ test('SidenavBar ignores a change of defaultCollapsed when the user can toggle i
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await component.update({step: 1});
 
@@ -178,10 +166,7 @@ test('SidenavBar closes the section title when collapsed and keeps the name of i
     page,
 }) => {
     await mount('sidenav-bar/Scenario15', {});
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
     const titleBox = page
         .locator('.' + styles.sectionTitle)
         .filter({has: page.getByText('Workspace', {exact: true})});
@@ -191,10 +176,7 @@ test('SidenavBar closes the section title when collapsed and keeps the name of i
 });
 test('SidenavBar hides the heading of a section and keeps the name of its list', async ({mount, page}) => {
     await mount('sidenav-bar/Scenario16', {});
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
     const titleBox = page
         .locator('.' + styles.sectionTitle)
         .filter({has: page.getByText('Workspace', {exact: true})});
@@ -208,10 +190,7 @@ test('SidenavBar paints the heading of a section that declares a plain string ti
     page,
 }) => {
     await mount('sidenav-bar/Scenario17', {});
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
     const titleBox = page
         .locator('.' + styles.sectionTitle)
         .filter({has: page.getByText('Workspace', {exact: true})});
@@ -224,10 +203,7 @@ test('SidenavBar keeps the label of an item in the document when collapsed', asy
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     const label = page.getByText('Home');
 
@@ -245,10 +221,7 @@ test('SidenavBar folds the labels of an open group with the rail when it collaps
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
     await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
@@ -268,10 +241,7 @@ test('SidenavBar turns the chevron of a parent item that the user opens', async 
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await page.getByRole('button', {name: 'Projects'}).click();
 
@@ -462,10 +432,7 @@ test('SidenavBar gives each section divider its 16px on the side of the items on
     page,
 }) => {
     await mount('sidenav-bar/Scenario40', {});
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     const nav = page.getByRole('navigation', {name: 'Main navigation'});
     const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
@@ -479,10 +446,7 @@ test('SidenavBar gives each section divider its 16px on the side of the items on
 test('SidenavBar draws no divider above the first entry nor below the last one', async ({mount, page}) => {
     await mount('sidenav-bar/Scenario41', {});
     const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     const nav = page.getByRole('navigation', {name: 'Main navigation'});
     const bodyList = nav.getByRole('list').first();
@@ -497,10 +461,7 @@ test('SidenavBar shares one divider between a section with a bottom divider and 
 }) => {
     await mount('sidenav-bar/Scenario42', {});
     const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     const nav = page.getByRole('navigation', {name: 'Main navigation'});
     const bodyList = nav.getByRole('list').first();
@@ -663,6 +624,10 @@ test('SidenavBar double panel stays open when the user presses outside of the ba
     await expect(getPanel('Projects')).toHaveCount(1);
 
     await page.locator('body').click();
+    await expect(page.getByRole('button', {name: 'Projects', exact: true})).toHaveAttribute(
+        'aria-expanded',
+        'true'
+    );
 
     await expect(getPanel('Projects')).toHaveCount(1);
 });
@@ -818,10 +783,7 @@ test('SidenavBar collapsed keeps the labels of the dialog panel readable', async
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     const panel = await openDialogPanel(page, 'Projects');
 
@@ -908,10 +870,7 @@ test('SidenavBar keeps the accent of a selected first-level item on the collapse
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemAccent)).toBe(true);
     await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemTouchableSelected.default)).toBe(true);
@@ -924,10 +883,7 @@ test('SidenavBar double panel gives the accent to the selected child, and the ba
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     const parentRow = queryItemRow('projects');
     const childRow = queryItemRow('archived');
@@ -944,10 +900,7 @@ test('SidenavBar double panel gives the background to the parent of the open col
     const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
     const hasStyle = async (row: Locator, className: string) =>
         (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await expect
         .poll(() => hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default))
@@ -991,20 +944,14 @@ test('SidenavBar boxed drops its border when the sidenav carries a variant of it
 }) => {
     await mount('sidenav-bar/Scenario77', {});
     const sidenavBar = page.getByRole('navigation');
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await expect(sidenavBar).not.toContainClass(styles.boxedBorder);
 });
 test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off', async ({mount, page}) => {
     await mount('sidenav-bar/Scenario78', {});
     const sidenavBar = page.getByRole('navigation');
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return await import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
 
     await expect(sidenavBar).not.toContainClass(styles.boxedBorder);
 });
@@ -1117,10 +1064,7 @@ for (const [pageVariant, expected] of [
         page,
     }) => {
         await mount('sidenav-bar/Boxed', {pageVariant});
-        const styles = await page.evaluate(async () => {
-            const path = '/src/sidenav-bar.css.ts';
-            return import(path);
-        });
+        const styles = (await getComponentStyles(page)).sidenav;
         const nav = page.getByRole('navigation');
         await expect(nav).toContainClass(styles.boxed);
         if (expected) await expect(nav).toContainClass(styles.boxedBorder);
@@ -1133,10 +1077,7 @@ test('SidenavBar reports the phase of the motion to the logo, and settles it whe
     await page.emulateMedia({reducedMotion: 'no-preference'});
     await page.clock.install({time: new Date('2025-01-01T00:00:00Z')});
     await mount('sidenav-bar/Motion');
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
     await expect(page.getByRole('img', {name: 'Logo expanded', exact: true})).toHaveCount(1);
     await page.clock.pauseAt(new Date('2025-01-02T00:00:00Z'));
     await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
@@ -1166,10 +1107,7 @@ browserTest(
 );
 test('SidenavBar drops its scroll dividers when the screen goes narrow and back', async ({mount, page}) => {
     await mount('sidenav-bar/Scrollable');
-    const styles = await page.evaluate(async () => {
-        const path = '/src/sidenav-bar.css.ts';
-        return import(path);
-    });
+    const styles = (await getComponentStyles(page)).sidenav;
     const dividers = page.locator('.' + styles.scrollSpacerDivider.split(' ').pop());
     const body = page.locator('.' + styles.bodyBase.split(' ')[0]);
     await expect(dividers).toHaveCount(1);

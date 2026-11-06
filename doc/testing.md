@@ -38,6 +38,10 @@ component runs in Chromium. Browser-side setup belongs in a scenario or `page.ev
 timers and `page.emulateMedia` for media preferences. Component tests fail on browser exceptions and console
 warnings or errors.
 
+CI builds the gallery once and serves the compiled assets to avoid reloading the development module graph for
+every test. React stays in development mode so warnings remain part of the checks. Local runs use Vite's
+development server for debugging.
+
 Pure utility tests also use Playwright Test, without opening a page. Run an individual file or title with:
 
 ```sh
