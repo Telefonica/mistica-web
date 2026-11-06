@@ -57,7 +57,10 @@ export const Default: StoryComponent<Args> = ({largeContent, input}) => {
                                         <IconShoppingCartRegular color="currentColor" />
                                     </Badge>
                                 </NavigationBarAction>
-                                <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                                <NavigationBarAction
+                                    onPress={() => {}}
+                                    aria-label={isDesktopOrBigger ? undefined : 'Open profile'}
+                                >
                                     <Avatar size={isDesktopOrBigger ? 32 : 24} initials="ML" />
                                     {isDesktopOrBigger && 'María López Serrano'}
                                 </NavigationBarAction>

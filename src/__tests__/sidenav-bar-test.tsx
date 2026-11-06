@@ -1668,3 +1668,21 @@ test('SidenavBar drops its scroll dividers when the screen goes narrow and back'
     // reports a sentinel outside of the scrollport again.
     expect(countScrollDividers()).toBe(0);
 });
+
+test('SidenavBar includes the visible right slot in a parent item accessible name', async () => {
+    await renderSidenav({
+        entries: [
+            {
+                id: 'projects',
+                label: 'Projects',
+                asset: IconFolderRegular,
+                rightSlot: <Text2 regular>3</Text2>,
+                children: [{id: 'active', label: 'Active', href: '/active'}],
+            },
+        ],
+    });
+
+    expect(screen.getByRole('button', {name: 'Projects 3'})).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+    expect(screen.getByRole('button', {name: 'Projects'})).toBeInTheDocument();
+});

@@ -29,11 +29,11 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     };
 
     // Open Dialog
-    await (await screen.findByLabelText('dialog-button')).click();
+    await (await screen.findByTestId('dialog-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Open Dialog's Menu
-    await (await screen.findByLabelText('dialog-menu-button')).click();
+    await (await screen.findByTestId('dialog-menu-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Close Dialog's Menu
@@ -52,15 +52,15 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     }
 
     // Open Dialog's Sheet
-    await (await screen.findByLabelText('dialog-sheet-button')).click();
+    await (await screen.findByTestId('dialog-sheet-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Open Snackbar
-    await (await screen.findByLabelText('sheet-snackbar-button')).click();
+    await (await screen.findByTestId('sheet-snackbar-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Close Dialog's Sheet
-    await (await screen.findByLabelText('sheet-close-button')).click();
+    await (await screen.findByTestId('sheet-close-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Close Dialog
@@ -72,11 +72,11 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Open Sheet
-    await (await screen.findByLabelText('sheet-button')).click();
+    await (await screen.findByTestId('sheet-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Open Sheet's Dialog
-    await (await screen.findByLabelText('sheet-dialog-button')).click();
+    await (await screen.findByTestId('sheet-dialog-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Close Sheet's Dialog
@@ -95,7 +95,7 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     }
 
     // Close Sheet
-    await (await screen.findByLabelText('sheet-close-button')).click();
+    await (await screen.findByTestId('sheet-close-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // Burger menu is only rendered in mobile
