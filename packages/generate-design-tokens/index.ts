@@ -2,8 +2,19 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.ts';
 import * as prettier from 'prettier';
+import {
+    assertDensityInSupportedCategories,
+    normalizeTextTokenValue,
+    normalizeToBreakpoints,
+} from './density.ts';
 
-import type {ColorDescription, DesignTokens, GradientDescription} from './token-types.ts';
+import type {
+    ColorDescription,
+    DesignTokens,
+    GradientDescription,
+    SpacingValue,
+    TokenValue,
+} from './token-types.ts';
 
 /**
  * Generates skin files and CSS from design tokens in mistica-design.
@@ -124,10 +135,25 @@ const buildColor = (colorDescription: ColorDescription): string => {
     throw new Error(`Unknown color format: ${colorDescription.value}`);
 };
 
+const SPACING_SIDES = ['top', 'right', 'bottom', 'left'];
+
+const isSpacingBySide = (value: SpacingValue): value is Record<string, TokenValue<number>> =>
+    typeof value === 'object' && Object.keys(value).every((key) => SPACING_SIDES.includes(key));
+
+const normalizeSpacing = (value: SpacingValue): unknown => {
+    if (isSpacingBySide(value)) {
+        return Object.fromEntries(
+            Object.entries(value).map(([side, sideValue]) => [side, normalizeToBreakpoints(sideValue)])
+        );
+    }
+    return normalizeToBreakpoints(value);
+};
+
 const generateSkinSrc = (skinName: string, family: SkinFamily): string => {
     const designTokensFile = fs.readFileSync(path.join(family.tokensFolder, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens: DesignTokens = JSON.parse(designTokensFile);
+    assertDensityInSupportedCategories(designTokens);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
     const textTokens: Record<string, Record<string, unknown>> = {};
@@ -136,7 +162,7 @@ const generateSkinSrc = (skinName: string, family: SkinFamily): string => {
             if (!textTokens[textPresetName]) {
                 textTokens[textPresetName] = {};
             }
-            textTokens[textPresetName][textAttribute] = value;
+            textTokens[textPresetName][textAttribute] = normalizeTextTokenValue(textAttribute, value);
         });
     });
 
@@ -177,7 +203,7 @@ ${functionSignature}
             ${Object.entries(designTokens.radius)
                 .map(
                     ([radiusName, radiusDescription]) =>
-                        `'${radiusName}': '${buildRadius(radiusDescription)}'`
+                        `'${radiusName}': ${JSON.stringify(buildRadius(radiusDescription))}`
                 )
                 .join(',')}
         },
@@ -198,7 +224,9 @@ ${functionSignature}
                 : ''
         }
         spacing: ${JSON.stringify(
-            Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
+            Object.fromEntries(
+                Object.entries(designTokens.spacing).map(([name, {value}]) => [name, normalizeSpacing(value)])
+            )
         )},
     };
     return skin;

@@ -1,3 +1,7 @@
+import type {DensityValue} from '../../src/density/definitions.ts';
+
+export type {Density, DensityValue} from '../../src/density/definitions.ts';
+
 export type GradientDescription = {
     angle: number;
     colors: Array<{
@@ -18,13 +22,24 @@ export type GradientColorDescription = {
 
 export type ColorDescription = SolidColorDescription | GradientColorDescription;
 
+export type Breakpoint = 'mobile' | 'desktop';
+
+export type BreakpointValue<T> = Record<Breakpoint, T>;
+
+/**
+ * A scalar, a density value, a breakpoint value, or a breakpoint value whose entries are density values.
+ */
+export type TokenValue<T> = T | DensityValue<T> | BreakpointValue<T | DensityValue<T>>;
+
 export type RadiusDescription = {
-    value: string;
+    value: TokenValue<string>;
 };
 
-export type TextTokenValue = string | number | {mobile: number; desktop: number};
+export type TextTokenValue = string | DensityValue<string> | TokenValue<number>;
 
-export type SpacingValue = number | string | {mobile: number; desktop: number};
+type SpacingSide = 'top' | 'right' | 'bottom' | 'left';
+
+export type SpacingValue = TokenValue<number> | Partial<Record<SpacingSide, TokenValue<number>>>;
 
 export type DesignTokens = {
     global: {palette: Record<string, {value: string}>};
@@ -35,7 +50,7 @@ export type DesignTokens = {
     themeVariant: Record<string, {value: string}>;
     componentProperties?: {showBoxedBorder?: {value: boolean}};
     spacing: {
-        responsiveLayoutMargin: {value: {mobile: number; desktop: number}};
+        responsiveLayoutMargin: {value: BreakpointValue<number>};
         [spacingName: string]: {value: SpacingValue};
     };
 };

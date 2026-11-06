@@ -349,7 +349,7 @@ export const iconSize = {
 };
 
 export const iconContainerSize = {
-    default: `calc(${iconSize.default} + 24px)`,
+    default: `calc(${iconSize.default} + 2 * ${skinVars.spacing.iconButtonDefaultPadding})`,
     small: `calc(${iconSize.small} + 12px)`,
 };
 

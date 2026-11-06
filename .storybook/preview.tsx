@@ -24,7 +24,7 @@ import {getPlatform} from '../src/utils/platform';
 
 import type {Preview} from '@storybook/react-vite';
 import type {Decorator} from '@storybook/react';
-import type {ColorScheme, ThemeConfig} from '../src';
+import type {ColorScheme, Density, ThemeConfig} from '../src';
 
 type Platform = 'android' | 'desktop' | 'ios';
 
@@ -48,6 +48,9 @@ const getColorScheme = (searchParams: URLSearchParams): ColorScheme | undefined 
         ? colorScheme
         : undefined;
 };
+
+const getDensityByValue = (value?: string | null): Density | undefined =>
+    value === 'cozy' || value === 'compact' ? value : undefined;
 
 const getPlatformByValue = (value?: string | null): Platform | undefined => {
     if (value === 'ios' || value === 'android' || value === 'desktop') {
@@ -79,7 +82,6 @@ const getTheme = (
                   },
               }
             : {}),
-        enableTabFocus: false,
         dimensions: {
             headerMobileHeight: 'mistica',
         },
@@ -97,10 +99,15 @@ const MisticaThemeProvider = ({
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState(getPlatformByUrl(searchParams));
     const [colorScheme, setColorScheme] = React.useState(getColorScheme(searchParams));
+    const [density, setDensity] = React.useState(getDensityByValue(searchParams.get('density')));
     const isStoryOnNewTab = window.frameElement === null;
 
     const handlePlatformSelected = React.useCallback((value: string) => {
         setPlatform(getPlatformByValue(value));
+    }, []);
+
+    const handleDensitySelected = React.useCallback((value: string) => {
+        setDensity(getDensityByValue(value));
     }, []);
 
     React.useEffect(() => {
@@ -108,6 +115,7 @@ const MisticaThemeProvider = ({
         channel.on('skin-selected', setSkin);
         channel.on('color-scheme-selected', setColorScheme);
         channel.on('platform-selected', handlePlatformSelected);
+        channel.on('density-selected', handleDensitySelected);
 
         channel.emit('story-mounted');
 
@@ -115,8 +123,9 @@ const MisticaThemeProvider = ({
             channel.off('skin-selected', setSkin);
             channel.off('color-scheme-selected', setColorScheme);
             channel.off('platform-selected', handlePlatformSelected);
+            channel.off('density-selected', handleDensitySelected);
         };
-    }, [handlePlatformSelected]);
+    }, [handlePlatformSelected, handleDensitySelected]);
 
     return (
         <React.StrictMode>
@@ -125,7 +134,10 @@ const MisticaThemeProvider = ({
              * If story is opened in a new tab, we always render it because the addons don't exist in there.
              */}
             {((skin && colorScheme && platform) || isStoryOnNewTab) && (
-                <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
+                <ThemeContextProvider
+                    theme={getTheme(skin as string, platform, colorScheme)}
+                    density={density}
+                >
                     <OverscrollColorProvider>
                         {(skin === VIVO_SKIN || skin === VIVO_EVOLUTION_SKIN) && (
                             <style>{`body {font-family: "Vivo Type"}`}</style>

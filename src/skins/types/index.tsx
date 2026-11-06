@@ -1,4 +1,5 @@
 import type {Variant} from '../../theme-variant-context';
+import type {DensityValue} from '../../density/definitions';
 import type {Colors} from './colors';
 
 export type {Colors} from './colors';
@@ -18,6 +19,23 @@ export type SkinName = KnownSkinName | string;
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
+
+export type {Density, DensityValue} from '../../density/definitions';
+
+export type MaybeDensity<T> = T | DensityValue<T>;
+
+/**
+ * The skin shape of a resolved config: every leaf can also be a density value. The schema of mistica-design
+ * decides which tokens use density, so the type does not restrict it to some categories.
+ *
+ * The tuples stop the distribution over a union: MaybeDensity<'light' | 'bold'> lets cozy and compact take
+ * different members, while a distributed type would force the same member in every mode.
+ */
+export type MaybeDensityConfig<T> = [T] extends [never]
+    ? never
+    : [T] extends [number | string]
+      ? MaybeDensity<T>
+      : {[K in keyof T]: MaybeDensityConfig<T[K]>};
 
 type ResponsiveValue<T> = {mobile: T; desktop: T};
 
@@ -113,8 +131,9 @@ export type BorderRadiiConfig = {
 };
 
 export type SpacingConfig = {
-    buttonDefaultPadding: PaddingXValues;
-    buttonSmallPadding: PaddingXValues;
+    buttonDefaultPadding: PaddingValues;
+    buttonSmallPadding: PaddingValues;
+    iconButtonDefaultPadding: ResponsiveValue<number>;
     cardDefaultPadding: PaddingValues;
     inputPadding: PaddingValues;
     tagPadding: PaddingYValues;
@@ -126,6 +145,12 @@ export type SpacingConfig = {
     boxedSmallPadding: PaddingYValues;
     responsiveLayoutMargin: ResponsiveValue<number>;
 };
+
+export type SkinTextPresetsConfig = MaybeDensityConfig<PartialTextPresetsConfig>;
+
+export type SkinBorderRadiiConfig = MaybeDensityConfig<BorderRadiiConfig>;
+
+export type SkinSpacingConfig = MaybeDensityConfig<SpacingConfig>;
 
 export type ThemeVariantsConfig = {
     successFeedback: Variant;
@@ -146,10 +171,10 @@ export type Skin = {
     name: SkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
-    textPresets?: PartialTextPresetsConfig;
-    borderRadii?: BorderRadiiConfig;
+    textPresets?: SkinTextPresetsConfig;
+    borderRadii?: SkinBorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
-    spacing?: SpacingConfig;
+    spacing?: SkinSpacingConfig;
     componentProperties?: ComponentPropertiesConfig;
 };
 
@@ -157,9 +182,9 @@ export type KnownSkin = {
     name: KnownSkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
-    textPresets?: PartialTextPresetsConfig;
-    borderRadii?: BorderRadiiConfig;
+    textPresets?: SkinTextPresetsConfig;
+    borderRadii?: SkinBorderRadiiConfig;
     themeVariants?: ThemeVariantsConfig;
-    spacing: SpacingConfig;
+    spacing: SkinSpacingConfig;
     componentProperties?: ComponentPropertiesConfig;
 };

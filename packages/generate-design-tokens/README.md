@@ -16,8 +16,15 @@ The script is written in TypeScript and runs directly on Node (>= 24), which str
 no build step is required:
 
 ```bash
-node index.ts
+yarn generate
+# or, from the repository root: yarn generate-design-tokens
 ```
+
+The density definitions come from `src/density/definitions.ts`, the same module that the library uses, so the
+two cannot drift apart. That file has no imports, because Node can not load the React code of the library. The
+root `package.json` has no `"type"` field, so Node loads it as an ES module after a warning; the `generate`
+script turns off that warning only (`--disable-warning=MODULE_TYPELESS_PACKAGE_JSON`). Use the script, not
+`node index.ts`, to keep the output clean.
 
 Type-check the package with:
 
