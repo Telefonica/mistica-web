@@ -159,7 +159,7 @@ export const Content = ({
                         {asset}
                     </div>
                 </div>
-            )}
+            )}{' '}
             <div className={classNames(styles.innerContent, {[styles.innerContentSmall]: small})}>
                 <div
                     className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
@@ -178,7 +178,7 @@ export const Content = ({
                         dataAttributes={{testid: 'title'}}
                     >
                         {title}
-                    </Text>
+                    </Text>{' '}
                     {headline && (
                         <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
                             <Text1
@@ -190,7 +190,7 @@ export const Content = ({
                                 {headline}
                             </Text1>
                         </div>
-                    )}
+                    )}{' '}
                     {subtitle && (
                         <Box paddingTop={2}>
                             <SubtitleComponent
@@ -203,7 +203,7 @@ export const Content = ({
                                 {subtitle}
                             </SubtitleComponent>
                         </Box>
-                    )}
+                    )}{' '}
                     {description && (
                         <Box paddingTop={2}>
                             <DescriptionComponent
@@ -216,7 +216,7 @@ export const Content = ({
                                 {description}
                             </DescriptionComponent>
                         </Box>
-                    )}
+                    )}{' '}
                     {slot && (
                         <Box ref={slotRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
                             {slot}
@@ -418,6 +418,9 @@ const getAssetText = (asset: React.ReactNode): string => {
             if (typeof props['aria-label'] === 'string' && props['aria-label'].trim()) {
                 text += (text ? ' ' : '') + props['aria-label'].trim();
             }
+            if (typeof props.initials === 'string' && !props.src) {
+                text += (text ? ' ' : '') + props.initials.trim().slice(0, 2);
+            }
             React.Children.forEach(props.children, visit);
         }
     };
@@ -511,8 +514,8 @@ const RowContent = React.forwardRef<
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
     const computedAriaLabel = [
-        title,
         assetText,
+        title,
         headlineText,
         subtitle,
         description,

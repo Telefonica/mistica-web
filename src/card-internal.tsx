@@ -1284,11 +1284,7 @@ const TextContent = ({
 
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
-            {title1}
-            {headlineElement}
-            {title2}
-            {subtitleElement}
-            {descriptionElement}
+            {title1} {headlineElement} {title2} {subtitleElement} {descriptionElement}
         </div>
     );
 };
@@ -1588,8 +1584,8 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
             (ariaLabeledByProp
                 ? undefined
                 : (title && isBiggerHeading(titleAs, pretitleAs)
-                      ? [title, imageAlt, headlineText, pretitle, subtitle, description, slotText]
-                      : [pretitle, headlineText, title, imageAlt, subtitle, description, slotText]
+                      ? [title, headlineText, pretitle, subtitle, description, slotText, imageAlt]
+                      : [pretitle, headlineText, title, subtitle, description, slotText, imageAlt]
                   )
                       .filter(Boolean)
                       .join(' '));

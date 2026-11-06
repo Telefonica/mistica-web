@@ -474,15 +474,15 @@ export const paginationNextPage: TextToken = {
 export const paginationPrevPageAriaLabel: TextToken = {
     es: 'Página anterior',
     en: 'Previous page',
-    de: 'Vorherige Seite',
+    de: 'Zurück zur vorherigen Seite',
     pt: 'Página anterior',
 };
 
 export const paginationNextPageAriaLabel: TextToken = {
     es: 'Página siguiente',
     en: 'Next page',
-    de: 'Nächste Seite',
-    pt: 'Página seguinte',
+    de: 'Weiter zur nächsten Seite',
+    pt: 'Próximo: página seguinte',
 };
 
 export const paginationGoToPage: TextToken = {
