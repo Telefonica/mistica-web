@@ -207,7 +207,7 @@ const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: Screensh
     const baselineImagePath = info.snapshotPath(name, {kind: 'screenshot'});
     fs.mkdirSync(path.dirname(baselineImagePath), {recursive: true});
     await page.waitForLoadState('networkidle');
-    let baseline = Buffer.alloc(0);
+    let baseline: Buffer = Buffer.alloc(0);
     await expect
         .poll(
             async () => {
