@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -15,69 +16,79 @@ const getCases = () => {
     return cases;
 };
 
-test.each(BUTTONS)('Buttons - %s - normal', async (button) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
-        device: 'MOBILE_IOS',
+for (const testCase of BUTTONS) {
+    const button = testCase;
+    test(`Buttons - ${testCase} - normal`, async () => {
+        await openStoryPage({
+            id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+            device: 'MOBILE_IOS',
+        });
+
+        const story = await screen.findByTestId('content');
+
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('content');
+for (const testCase of BUTTONS) {
+    const button = testCase;
+    test(`Buttons - ${testCase} - inverse`, async () => {
+        await openStoryPage({
+            id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+            device: 'MOBILE_IOS',
+            args: {variantOutside: 'brand'},
+        });
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('content');
 
-test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
-        device: 'MOBILE_IOS',
-        args: {variantOutside: 'brand'},
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('content');
+for (const testCase of BUTTONS) {
+    const button = testCase;
+    test(`Buttons - ${testCase} - media`, async () => {
+        await openStoryPage({
+            id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+            device: 'MOBILE_IOS',
+            args: {variantOutside: 'media'},
+        });
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('content');
 
-test.each(BUTTONS)('Buttons - %s - media', async (button) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
-        device: 'MOBILE_IOS',
-        args: {variantOutside: 'media'},
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('content');
+for (const testCase of BUTTONS) {
+    const button = testCase;
+    test(`Buttons - ${testCase} - disabled`, async () => {
+        await openStoryPage({
+            id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+            device: 'MOBILE_IOS',
+            args: {disabled: true},
+        });
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('content');
 
-test.each(BUTTONS)('Buttons - %s - disabled', async (button) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
-        device: 'MOBILE_IOS',
-        args: {disabled: true},
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('content');
+for (const testCase of BUTTONS) {
+    const button = testCase;
+    test(`Buttons - ${testCase} - small`, async () => {
+        await openStoryPage({
+            id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+            device: 'MOBILE_IOS',
+            args: {small: true},
+        });
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('content');
 
-test.each(BUTTONS)('Buttons - %s - small', async (button) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
-        device: 'MOBILE_IOS',
-        args: {small: true},
+        await expectScreenshot(story);
     });
-
-    const story = await screen.findByTestId('content');
-
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Buttons - Link button - small disabled on hover', async () => {
     await openStoryPage({
@@ -91,36 +102,36 @@ test('Buttons - Link button - small disabled on hover', async () => {
 
     const story = await screen.findByTestId('content');
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
-test.each(getCases())('Buttons - %s - spinner (%s)', async (button, device) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
-        device: device as Device,
-        args: {showSpinner: true, loadingText: 'Loading text'},
+for (const testCase of getCases()) {
+    const [button, device] = testCase;
+    test(`Buttons - ${testCase[0]} - spinner (${testCase[1]})`, async () => {
+        await openStoryPage({
+            id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
+            device: device as Device,
+            args: {showSpinner: true, loadingText: 'Loading text'},
+        });
+
+        const story = await screen.findByTestId('content');
+
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('content');
-
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each`
-    device              | small    | showSpinner
-    ${'MOBILE_IOS'}     | ${true}  | ${true}
-    ${'MOBILE_IOS'}     | ${true}  | ${false}
-    ${'MOBILE_IOS'}     | ${false} | ${true}
-    ${'MOBILE_IOS'}     | ${false} | ${false}
-    ${'MOBILE_ANDROID'} | ${true}  | ${true}
-    ${'MOBILE_ANDROID'} | ${true}  | ${false}
-    ${'MOBILE_ANDROID'} | ${false} | ${true}
-    ${'MOBILE_ANDROID'} | ${false} | ${false}
-`(
-    'Buttons - ellipsis with small = $small and showSpinner = $showSpinner ($device)',
-    async ({device, small, showSpinner}) => {
+for (const testCase of [
+    {device: 'MOBILE_IOS', small: true, showSpinner: true},
+    {device: 'MOBILE_IOS', small: true, showSpinner: false},
+    {device: 'MOBILE_IOS', small: false, showSpinner: true},
+    {device: 'MOBILE_IOS', small: false, showSpinner: false},
+    {device: 'MOBILE_ANDROID', small: true, showSpinner: true},
+    {device: 'MOBILE_ANDROID', small: true, showSpinner: false},
+    {device: 'MOBILE_ANDROID', small: false, showSpinner: true},
+    {device: 'MOBILE_ANDROID', small: false, showSpinner: false},
+] as const) {
+    const {device, small, showSpinner} = testCase;
+    test(`Buttons - ellipsis with small = ${testCase.small} and showSpinner = ${testCase.showSpinner} (${testCase.device})`, async () => {
         await openStoryPage({
             id: 'private-ellipsis-in-buttons--default',
             device,
@@ -129,10 +140,9 @@ test.each`
 
         const story = await screen.findByTestId('content');
 
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(story);
+    });
+}
 
 const BUTTON_LINK_ACTIONS = ['href', 'to', 'onPress'];
 const BUTTON_LINK_CHEVRON_OPTIONS = ['default', 'true', 'false'];
@@ -147,21 +157,23 @@ const getLinkWithChevronCases = () => {
     return cases;
 };
 
-test.each(getLinkWithChevronCases())('Buttons - Link button - %s (chevron = %s)', async (action, chevron) => {
-    await openStoryPage({
-        id: 'components-buttons--link-button',
-        device: 'MOBILE_IOS',
-        args: {
-            action,
-            chevron,
-        },
+for (const testCase of getLinkWithChevronCases()) {
+    const [action, chevron] = testCase;
+    test(`Buttons - Link button - ${testCase[0]} (chevron = ${testCase[1]})`, async () => {
+        await openStoryPage({
+            id: 'components-buttons--link-button',
+            device: 'MOBILE_IOS',
+            args: {
+                action,
+                chevron,
+            },
+        });
+
+        const story = await screen.findByTestId('content');
+
+        await expectScreenshot(story);
     });
-
-    const story = await screen.findByTestId('content');
-
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Buttons - Link button - with chevron in Vivo', async () => {
     await openStoryPage({
@@ -175,8 +187,7 @@ test('Buttons - Link button - with chevron in Vivo', async () => {
 
     const story = await screen.findByTestId('content');
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
 test('Buttons - Link button with chevron and big font size', async () => {
@@ -192,8 +203,7 @@ test('Buttons - Link button with chevron and big font size', async () => {
 
     const story = await screen.findByTestId('content');
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
 test('Buttons - Link button with chevron and big font size in Vivo', async () => {
@@ -210,6 +220,5 @@ test('Buttons - Link button with chevron and big font size in Vivo', async () =>
 
     const story = await screen.findByTestId('content');
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });

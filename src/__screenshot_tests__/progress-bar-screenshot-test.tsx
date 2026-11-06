@@ -1,49 +1,54 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const COLORS = ['default', 'error'];
 
-test.each(COLORS)('ProgressBar - color={%s}', async (color) => {
-    await openStoryPage({id: 'components-progress-bars--progress-bar-story', args: {color}});
+for (const testCase of COLORS) {
+    const color = testCase;
+    test(`ProgressBar - color={${testCase}}`, async () => {
+        await openStoryPage({id: 'components-progress-bars--progress-bar-story', args: {color}});
 
-    const stepper = await screen.findByTestId('progress-bar');
+        const stepper = await screen.findByTestId('progress-bar');
 
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(COLORS)('ProgressBar - inverse and color={%s}', async (color) => {
-    await openStoryPage({
-        id: 'components-progress-bars--progress-bar-story',
-        args: {color, variantOutside: 'brand'},
+        await expectScreenshot(stepper);
     });
+}
 
-    const stepper = await screen.findByTestId('progress-bar');
+for (const testCase of COLORS) {
+    const color = testCase;
+    test(`ProgressBar - inverse and color={${testCase}}`, async () => {
+        await openStoryPage({
+            id: 'components-progress-bars--progress-bar-story',
+            args: {color, variantOutside: 'brand'},
+        });
 
-    const image = await stepper.screenshot();
+        const stepper = await screen.findByTestId('progress-bar');
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(COLORS)('ProgressBarStepped - color={%s}', async (color) => {
-    await openStoryPage({id: 'components-progress-bars--progress-bar-stepped-story', args: {color}});
-
-    const stepper = await screen.findByTestId('progress-bar-stepped');
-
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(COLORS)('ProgressBarStepped - inverse and color={%s}', async (color) => {
-    await openStoryPage({
-        id: 'components-progress-bars--progress-bar-stepped-story',
-        args: {color, variantOutside: 'brand'},
+        await expectScreenshot(stepper);
     });
+}
 
-    const stepper = await screen.findByTestId('progress-bar-stepped');
+for (const testCase of COLORS) {
+    const color = testCase;
+    test(`ProgressBarStepped - color={${testCase}}`, async () => {
+        await openStoryPage({id: 'components-progress-bars--progress-bar-stepped-story', args: {color}});
 
-    const image = await stepper.screenshot();
+        const stepper = await screen.findByTestId('progress-bar-stepped');
 
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(stepper);
+    });
+}
+
+for (const testCase of COLORS) {
+    const color = testCase;
+    test(`ProgressBarStepped - inverse and color={${testCase}}`, async () => {
+        await openStoryPage({
+            id: 'components-progress-bars--progress-bar-stepped-story',
+            args: {color, variantOutside: 'brand'},
+        });
+
+        const stepper = await screen.findByTestId('progress-bar-stepped');
+
+        await expectScreenshot(stepper);
+    });
+}

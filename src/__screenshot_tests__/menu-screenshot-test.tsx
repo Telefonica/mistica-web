@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const testCases = [
@@ -28,27 +29,31 @@ const viewport = {
     isLandscape: true,
 };
 
-test.each`
-    icon     | checkbox
-    ${false} | ${false}
-    ${false} | ${true}
-    ${true}  | ${false}
-    ${true}  | ${true}
-`('Menu. icon={$icon} checkbox={$checkbox} ', async ({icon, checkbox}) => {
-    const page = await openStoryPage({
-        id: 'components-menu--default',
-        device: 'MOBILE_IOS',
-        viewport,
-        args: {icon, checkbox},
+for (const [caseIndex, testCase] of (
+    [
+        {icon: false, checkbox: false},
+        {icon: false, checkbox: true},
+        {icon: true, checkbox: false},
+        {icon: true, checkbox: true},
+    ] as const
+).entries()) {
+    const {icon, checkbox} = testCase;
+    test(`Menu. icon={${testCase.icon}} checkbox={${testCase.checkbox}}  (case ${caseIndex + 1})`, async () => {
+        const page = await openStoryPage({
+            id: 'components-menu--default',
+            device: 'MOBILE_IOS',
+            viewport,
+            args: {icon, checkbox},
+        });
+
+        await (await screen.findByRole('button')).click();
+        await expectScreenshot(page);
     });
+}
 
-    await (await screen.findByRole('button')).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
-
-test.each(testCases)(
-    'Menu positioned at %s,%s',
-    async (verticalPosition, horizontalPosition, menuOptionsCount, isDarkMode) => {
+for (const [caseIndex, testCase] of testCases.entries()) {
+    const [verticalPosition, horizontalPosition, menuOptionsCount, isDarkMode] = testCase;
+    test(`Menu positioned at ${testCase[0]},${testCase[1]} (case ${caseIndex + 1})`, async () => {
         const page = await openStoryPage({
             id: 'components-menu--default',
             device: 'MOBILE_IOS',
@@ -58,9 +63,9 @@ test.each(testCases)(
         });
 
         await (await screen.findByRole('button')).click();
-        expect(await page.screenshot()).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
 const maxHeightTestCases = [
     ['top', 'left'],
@@ -69,9 +74,9 @@ const maxHeightTestCases = [
     ['bottom', 'right'],
 ] as const;
 
-test.each(maxHeightTestCases)(
-    'Menu respect max height when options overflow and positioned at %s,%s',
-    async (verticalPosition, horizontalPosition) => {
+for (const [caseIndex, testCase] of maxHeightTestCases.entries()) {
+    const [verticalPosition, horizontalPosition] = testCase;
+    test(`Menu respect max height when options overflow and positioned at ${testCase[0]},${testCase[1]} (case ${caseIndex + 1})`, async () => {
         const page = await openStoryPage({
             id: 'components-menu--default',
             device: 'MOBILE_IOS',
@@ -79,9 +84,9 @@ test.each(maxHeightTestCases)(
         });
 
         await (await screen.findByRole('button')).click();
-        expect(await page.screenshot()).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
 test('Menu is rendered inside a datacard', async () => {
     const page = await openStoryPage({
@@ -90,7 +95,7 @@ test('Menu is rendered inside a datacard', async () => {
     });
 
     await (await screen.findByRole('button')).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Menu with item description', async () => {
@@ -104,7 +109,7 @@ test('Menu with item description', async () => {
     });
 
     await (await screen.findByRole('button')).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Menu with asset', async () => {
@@ -118,22 +123,25 @@ test('Menu with asset', async () => {
     });
 
     await (await screen.findByRole('button')).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each(['top', 'bottom', 'left', 'right'])('Menu placement=%s', async (placement) => {
-    const page = await openStoryPage({
-        id: 'components-menu--default',
-        device: 'DESKTOP',
-        args: {
-            placement,
-            alignment: 'middle',
-            horizontalPosition: 'center',
-            verticalPosition: 'center',
-            menuOptionsCount: 3,
-        },
+for (const [caseIndex, testCase] of ['top', 'bottom', 'left', 'right'].entries()) {
+    const placement = testCase;
+    test(`Menu placement=${testCase} (case ${caseIndex + 1})`, async () => {
+        const page = await openStoryPage({
+            id: 'components-menu--default',
+            device: 'DESKTOP',
+            args: {
+                placement,
+                alignment: 'middle',
+                horizontalPosition: 'center',
+                verticalPosition: 'center',
+                menuOptionsCount: 3,
+            },
+        });
+
+        await (await screen.findByRole('button', {name: 'Open'})).click();
+        await expectScreenshot(page);
     });
-
-    await (await screen.findByRole('button', {name: 'Open'})).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
+}

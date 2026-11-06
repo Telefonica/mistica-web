@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 test('HorizontalScroll', async () => {
@@ -5,6 +6,5 @@ test('HorizontalScroll', async () => {
         id: 'layout-horizontalscroll--default',
     });
 
-    const screenshot = await page.screenshot();
-    expect(screenshot).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });

@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, setRootFontSize} from '../test-utils';
 import {BLAU_SKIN, MOVISTAR_SKIN, O2_SKIN, VIVO_EVOLUTION_SKIN, VIVO_SKIN} from '../skins/constants';
 
@@ -33,33 +34,31 @@ const getExtraContentCases = () => {
     return cases;
 };
 
-test.each(getCases())(
-    'Feedback %s screen appears properly on %s and %s',
-    async (feedbackType, skin, device) => {
+for (const testCase of getCases()) {
+    const [feedbackType, skin, device] = testCase;
+    test(`Feedback ${testCase[0]} screen appears properly on ${testCase[1]} and ${testCase[2]}`, async () => {
         const page = await openStoryPage({
             id: `patterns-feedback-${feedbackType}`,
             skin: skin as (typeof testableSkins)[number],
             device,
         });
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
-test.each(getExtraContentCases())(
-    'Feedback %s screen with slot content appears properly on %s',
-    async (feedbackType, device) => {
+for (const testCase of getExtraContentCases()) {
+    const [feedbackType, device] = testCase;
+    test(`Feedback ${testCase[0]} screen with slot content appears properly on ${testCase[1]}`, async () => {
         const page = await openStoryPage({
             id: `patterns-feedback-${feedbackType}`,
             device,
             args: {slot: true},
         });
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
 test('Feedback screen with large fontSize', async () => {
     const page = await openStoryPage({
@@ -70,8 +69,7 @@ test('Feedback screen with large fontSize', async () => {
 
     await setRootFontSize(32);
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Info feedback screen with custom icon', async () => {
@@ -82,20 +80,18 @@ test('Info feedback screen with custom icon', async () => {
         args: {asset: 'custom'},
     });
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each(testableDevices)(
-    'Success feedback screen appears properly with Vivo skin on %s',
-    async (device) => {
+for (const testCase of testableDevices) {
+    const device = testCase;
+    test(`Success feedback screen appears properly with Vivo skin on ${testCase}`, async () => {
         const page = await openStoryPage({
             id: 'patterns-feedback-successfeedbackscreen--success',
             skin: VIVO_SKIN,
             device,
         });
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}

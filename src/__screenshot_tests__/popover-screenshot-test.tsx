@@ -1,19 +1,22 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const POPOVER_POSITIONS = ['top', 'bottom', 'left', 'right'];
 
-test.each(POPOVER_POSITIONS)('Popover - position = %s', async (position) => {
-    const page = await openStoryPage({
-        id: 'components-popover--default',
-        device: 'DESKTOP',
-        args: {position, slot: true},
+for (const testCase of POPOVER_POSITIONS) {
+    const position = testCase;
+    test(`Popover - position = ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-popover--default',
+            device: 'DESKTOP',
+            args: {position, slot: true},
+        });
+
+        await (await screen.findByTestId('target')).click();
+
+        await expectScreenshot(page);
     });
-
-    await page.click(await screen.findByTestId('target'));
-
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Popover - appears properly on mobile', async () => {
     const page = await openStoryPage({
@@ -21,10 +24,9 @@ test('Popover - appears properly on mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Popover - inverse', async () => {
@@ -34,23 +36,23 @@ test('Popover - inverse', async () => {
         args: {variantOutside: 'brand'},
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each(
-    ['top', 'bottom', 'left', 'right'].flatMap((position) =>
-        ['start', 'end'].map((alignment) => ({position, alignment}))
-    )
-)('Popover - position=$position alignment=$alignment', async (args) => {
-    const page = await openStoryPage({
-        id: 'components-popover--default',
-        device: 'DESKTOP',
-        args,
+for (const testCase of ['top', 'bottom', 'left', 'right'].flatMap((position) =>
+    ['start', 'end'].map((alignment) => ({position, alignment}))
+)) {
+    const args = testCase;
+    test(`Popover - position=${testCase.position} alignment=${testCase.alignment}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-popover--default',
+            device: 'DESKTOP',
+            args,
+        });
+
+        await (await screen.findByRole('button', {name: 'Popover target'})).click();
+        await expectScreenshot(page);
     });
-
-    await (await screen.findByRole('button', {name: 'Popover target'})).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
+}

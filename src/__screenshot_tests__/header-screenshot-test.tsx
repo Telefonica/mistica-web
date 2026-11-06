@@ -1,26 +1,28 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each`
-    device          | inverse
-    ${'MOBILE_IOS'} | ${true}
-    ${'MOBILE_IOS'} | ${false}
-    ${'DESKTOP'}    | ${true}
-    ${'DESKTOP'}    | ${false}
-`('Header in $device inverse=$inverse', async ({device, inverse}: {device: Device; inverse: boolean}) => {
-    await openStoryPage({
-        id: 'components-headers-header--default',
-        device,
-        args: {variant: inverse ? 'brand' : 'default'},
-    });
+for (const testCase of [
+    {device: 'MOBILE_IOS', inverse: true},
+    {device: 'MOBILE_IOS', inverse: false},
+    {device: 'DESKTOP', inverse: true},
+    {device: 'DESKTOP', inverse: false},
+] as const) {
+    const {device, inverse} = testCase as {device: Device; inverse: boolean};
+    test(`Header in ${testCase.device} inverse=${testCase.inverse}`, async () => {
+        await openStoryPage({
+            id: 'components-headers-header--default',
+            device,
+            args: {variant: inverse ? 'brand' : 'default'},
+        });
 
-    const story = await screen.findByTestId('header-layout');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('header-layout');
+        await expectScreenshot(story);
+    });
+}
 
 test('Header vertical slot in desktop', async () => {
     await openStoryPage({
@@ -30,8 +32,7 @@ test('Header vertical slot in desktop', async () => {
     });
 
     const story = await screen.findByTestId('header-layout');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
 test('Header small', async () => {
@@ -42,21 +43,19 @@ test('Header small', async () => {
     });
 
     const story = await screen.findByTestId('header-layout');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
-test.each`
-    device          | bleed    | sideBySideSlotOnDesktop
-    ${'MOBILE_IOS'} | ${true}  | ${false}
-    ${'MOBILE_IOS'} | ${false} | ${false}
-    ${'DESKTOP'}    | ${true}  | ${false}
-    ${'DESKTOP'}    | ${false} | ${false}
-    ${'DESKTOP'}    | ${true}  | ${true}
-    ${'DESKTOP'}    | ${false} | ${true}
-`(
-    'HeaderLayout without paddingY device=$device bleed=$bleed sideBySideSlotOnDesktop=$sideBySideSlotOnDesktop',
-    async ({device, bleed, sideBySideSlotOnDesktop}) => {
+for (const testCase of [
+    {device: 'MOBILE_IOS', bleed: true, sideBySideSlotOnDesktop: false},
+    {device: 'MOBILE_IOS', bleed: false, sideBySideSlotOnDesktop: false},
+    {device: 'DESKTOP', bleed: true, sideBySideSlotOnDesktop: false},
+    {device: 'DESKTOP', bleed: false, sideBySideSlotOnDesktop: false},
+    {device: 'DESKTOP', bleed: true, sideBySideSlotOnDesktop: true},
+    {device: 'DESKTOP', bleed: false, sideBySideSlotOnDesktop: true},
+] as const) {
+    const {device, bleed, sideBySideSlotOnDesktop} = testCase;
+    test(`HeaderLayout without paddingY device=${testCase.device} bleed=${testCase.bleed} sideBySideSlotOnDesktop=${testCase.sideBySideSlotOnDesktop}`, async () => {
         await openStoryPage({
             id: 'components-headers-header--default',
             device,
@@ -64,20 +63,18 @@ test.each`
         });
 
         const story = await screen.findByTestId('header-layout');
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(story);
+    });
+}
 
-test.each`
-    device          | inverse
-    ${'MOBILE_IOS'} | ${true}
-    ${'MOBILE_IOS'} | ${false}
-    ${'DESKTOP'}    | ${true}
-    ${'DESKTOP'}    | ${false}
-`(
-    'MainSectionHeader in $device inverse=$inverse',
-    async ({device, inverse}: {device: Device; inverse: boolean}) => {
+for (const testCase of [
+    {device: 'MOBILE_IOS', inverse: true},
+    {device: 'MOBILE_IOS', inverse: false},
+    {device: 'DESKTOP', inverse: true},
+    {device: 'DESKTOP', inverse: false},
+] as const) {
+    const {device, inverse} = testCase as {device: Device; inverse: boolean};
+    test(`MainSectionHeader in ${testCase.device} inverse=${testCase.inverse}`, async () => {
         await openStoryPage({
             id: 'components-headers-mainsectionheader--default',
             device,
@@ -86,23 +83,24 @@ test.each`
 
         const story = await screen.findByTestId('header-layout');
 
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each(DEVICES)('Header with large text', async (device) => {
-    await openStoryPage({
-        id: 'components-headers-mainsectionheader--default',
-        device,
+        await expectScreenshot(story);
     });
+}
 
-    await setRootFontSize(32);
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Header with large text (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-headers-mainsectionheader--default',
+            device,
+        });
 
-    const story = await screen.findByTestId('header-layout');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        await setRootFontSize(32);
+
+        const story = await screen.findByTestId('header-layout');
+        await expectScreenshot(story);
+    });
+}
 
 test('Header with truncation and color overrides', async () => {
     await openStoryPage({
@@ -115,32 +113,32 @@ test('Header with truncation and color overrides', async () => {
     });
 
     const story = await screen.findByTestId('header-layout');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
-test.each(DEVICES)('Header with bleed', async (device) => {
-    await openStoryPage({
-        id: 'components-headers-header--default',
-        device,
-        args: {bleed: true, sideBySideSlotOnDesktop: false, variant: 'brand'},
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Header with bleed (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'components-headers-header--default',
+            device,
+            args: {bleed: true, sideBySideSlotOnDesktop: false, variant: 'brand'},
+        });
+
+        const story = await screen.findByTestId('header-layout');
+
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('header-layout');
-
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each`
-    device          | titleSize
-    ${'MOBILE_IOS'} | ${'title1'}
-    ${'MOBILE_IOS'} | ${'title2'}
-    ${'DESKTOP'}    | ${'title1'}
-    ${'DESKTOP'}    | ${'title2'}
-`(
-    'Header in $device titleSize=$titleSize',
-    async ({device, titleSize}: {device: Device; titleSize: string}) => {
+for (const testCase of [
+    {device: 'MOBILE_IOS', titleSize: 'title1'},
+    {device: 'MOBILE_IOS', titleSize: 'title2'},
+    {device: 'DESKTOP', titleSize: 'title1'},
+    {device: 'DESKTOP', titleSize: 'title2'},
+] as const) {
+    const {device, titleSize} = testCase as {device: Device; titleSize: string};
+    test(`Header in ${testCase.device} titleSize=${testCase.titleSize}`, async () => {
         await openStoryPage({
             id: 'components-headers-header--default',
             device,
@@ -149,7 +147,6 @@ test.each`
 
         const story = await screen.findByTestId('header-layout');
 
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(story);
+    });
+}
