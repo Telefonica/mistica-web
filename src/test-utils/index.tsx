@@ -201,13 +201,13 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
 const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: ScreenshotOptions): Promise<void> => {
     const info = test.info();
     const name = `${kebabCase(info.titlePath.join(' '))}-hydration.png`;
-    const baselineImagePath = info.snapshotPath(name);
+    const baselineImagePath = info.snapshotPath(name, {kind: 'screenshot'});
     fs.mkdirSync(path.dirname(baselineImagePath), {recursive: true});
     await page.screenshot({path: baselineImagePath, caret: 'initial'});
     await hydrateSSRPage(page);
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
     try {
-        expect(await page.screenshot({caret: 'initial'})).toMatchSnapshot(name, screenshotConfig);
+        await expect(page).toHaveScreenshot(name, {caret: 'initial', ...screenshotConfig});
     } finally {
         fs.unlinkSync(baselineImagePath);
     }

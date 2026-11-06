@@ -1,4 +1,4 @@
-import {test, expectScreenshot} from '../test-utils/playwright';
+import {test, expect, expectScreenshot} from '../test-utils/playwright';
 import {within, openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['DESKTOP', 'MOBILE_IOS'] as const;
@@ -21,6 +21,12 @@ for (const testCase of DEVICES) {
             const snackbar = await screen.findByRole('alert');
             const dismissButton = await within(snackbar).findByRole('button', {name: 'Cerrar'});
             await dismissButton.click();
+        };
+
+        const closeSheet = async () => {
+            const closeButton = await screen.findByTestId('sheet-close-button');
+            await closeButton.click();
+            await expect(closeButton).toHaveCount(0);
         };
 
         const closeLastOpenedDialog = async () => {
@@ -63,7 +69,7 @@ for (const testCase of DEVICES) {
         await expectScreenshot(page);
 
         // Close Dialog's Sheet
-        await (await screen.findByTestId('sheet-close-button')).click();
+        await closeSheet();
         await expectScreenshot(page);
 
         // Close Dialog
@@ -98,7 +104,7 @@ for (const testCase of DEVICES) {
         }
 
         // Close Sheet
-        await (await screen.findByTestId('sheet-close-button')).click();
+        await closeSheet();
         await expectScreenshot(page);
 
         // Burger menu is only rendered in mobile

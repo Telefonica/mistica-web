@@ -75,7 +75,7 @@
 
         "resolveJsonModule": true,
         "noEmit": true,
-        "types": ["vite/client", "./deprecated-types.d.ts", "@figma/code-connect/figma-types"]
+        "types": ["node", "vite/client", "./deprecated-types.d.ts", "@figma/code-connect/figma-types"]
     },
 
     // this also excludes paths from VSCode auto import feature
