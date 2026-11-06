@@ -27,6 +27,7 @@ for (const testCase of DEVICES) {
             const closeButton = await screen.findByTestId('sheet-close-button');
             await closeButton.click();
             await expect(closeButton).toHaveCount(0);
+            await page.mouse.move(0, 0);
         };
 
         const closeLastOpenedDialog = async () => {
