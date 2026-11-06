@@ -215,7 +215,7 @@ export const defaultCommonCardArgs: CommonCardArgs = {
     subtitleLinesMax: 0,
     description: 'This is a description for the card',
     descriptionLinesMax: 0,
-    ariaLabel: 'Aria label',
+    ariaLabel: '',
     ariaDescription: 'Aria description',
     onClose: true,
     onPress: true,

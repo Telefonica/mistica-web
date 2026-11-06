@@ -168,8 +168,8 @@ If `node_modules/@telefonica/mistica` is **not** available, fall back to the Git
 ## Development
 
 - `yarn test`: run tests
-- `yarn test-acceptance`: run acceptance tests headless (you need to start storybook first)
-- `yarn test-acceptance --ui`: run acceptance tests with ui (you need to start storybook first)
+- `yarn test-acceptance`: run acceptance tests headless (starts Storybook automatically)
+- `yarn test-acceptance --ui`: open Playwright's acceptance test explorer
 - `yarn lint`: check codestyle
 - `yarn ts-check`: check static types (run `yarn build` first — the type check requires generated declaration
   files in `dist/`)

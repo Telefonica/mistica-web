@@ -12,14 +12,20 @@ concurrency:
 jobs:
     audit-a11y:
         runs-on: ubuntu-latest
+        container:
+            image: mcr.microsoft.com/playwright:v1.64.1-noble
+            options: --ipc=host
         steps:
             - uses: actions/checkout@v6
               with:
                   persist-credentials: false
 
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - name: 'Build storybook'

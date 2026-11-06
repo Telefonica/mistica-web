@@ -1,37 +1,44 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID', 'DESKTOP'];
 
-test.each(DEVICES)('ButtonGroup (%s)', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-buttons-buttongroup--default',
-        device,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`ButtonGroup (${testCase})`, async () => {
+        const page = await openStoryPage({
+            id: 'components-buttons-buttongroup--default',
+            device,
+        });
+
+        await expectScreenshot(page, {...{fullPage: true}});
     });
+}
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`ButtonGroup (${testCase}) - small`, async () => {
+        const page = await openStoryPage({
+            id: 'components-buttons-buttongroup--default',
+            device,
+            args: {small: true},
+        });
 
-test.each(DEVICES)('ButtonGroup (%s) - small', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-buttons-buttongroup--default',
-        device,
-        args: {small: true},
+        await expectScreenshot(page, {...{fullPage: true}});
     });
+}
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`ButtonGroup - Long text (${testCase})`, async () => {
+        const page = await openStoryPage({
+            id: 'components-buttons-buttongroup--default',
+            device,
+            args: {buttonPrimaryText: 'A very long action text in this button', buttonLink: false},
+        });
 
-test.each(DEVICES)('ButtonGroup - Long text (%s)', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-buttons-buttongroup--default',
-        device,
-        args: {buttonPrimaryText: 'A very long action text in this button', buttonLink: false},
+        await expectScreenshot(page, {...{fullPage: true}});
     });
-
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
-});
+}

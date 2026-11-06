@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('Divider', async () => {
@@ -5,7 +6,7 @@ test('Divider', async () => {
 
     const story = await screen.findByTestId('divider-story');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 
 test('Divider - inverse', async () => {
@@ -13,5 +14,5 @@ test('Divider - inverse', async () => {
 
     const story = await screen.findByTestId('divider-story');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
