@@ -31,8 +31,8 @@
     ],
     "scripts": {
         "test": "jest --config jest.unit.config.js",
-        "test-acceptance": "test-acceptance",
-        "test-ssr": "test-acceptance --config jest.ssr.config.js",
+        "test-acceptance": "playwright test --config playwright.config.ts",
+        "test-ssr": "playwright test --config playwright.ssr.config.ts",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\" \"**/*.css\" \"**/*.html\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
@@ -40,7 +40,7 @@
         "import-mistica-icons": "node packages/import-mistica-icons/index.js",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
-        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache && bash -c 'yarn jest --clearCache > /dev/null 2>&1'",
+        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "prepack": "yarn build",
         "storybook": "storybook dev -p 6006",
@@ -66,28 +66,18 @@
         "iOS >= 14"
     ],
     "prettier": "@telefonica/prettier-config",
-    "acceptanceTests": {
-        "devServer": {
-            "command": "yarn storybook-for-acceptance-tests",
-            "port": 6006
-        },
-        "ciServer": {
-            "command": "yarn serve-static-storybook",
-            "port": 6006
-        }
-    },
     "devDependencies": {
         "@actions/core": "^1.10.0",
         "@actions/github": "^5.0.0",
-        "@axe-core/puppeteer": "^4.4.2",
+        "@axe-core/playwright": "4.14.0",
         "@azure/storage-blob": "^12.9.0",
+        "@playwright/test": "1.64.1",
         "@semantic-release/changelog": "^6.0.1",
         "@semantic-release/git": "^10.0.1",
         "@storybook/react-vite": "^10.2.8",
         "@swc/cli": "^0.1.62",
         "@swc/core": "^1.3.95",
         "@swc/jest": "^0.2.29",
-        "@telefonica/acceptance-testing": "5.4.0",
         "@telefonica/eslint-config": "^2.2.0",
         "@telefonica/prettier-config": "^2.0.0",
         "@testing-library/dom": "^10.2.0",
@@ -95,7 +85,7 @@
         "@testing-library/react": "^16.0.0",
         "@testing-library/user-event": "^14.5.2",
         "@types/detect-port": "^1.3.2",
-        "@types/jest-environment-puppeteer": "^5.0.3",
+        "@types/jest": "27.0.3",
         "@types/lodash": "^4.17.21",
         "@types/mini-css-extract-plugin": "^1.2.2",
         "@types/mkdirp": "^1.0.2",
@@ -127,13 +117,14 @@
         "is-ci": "^3.0.1",
         "jest": "^29.3.1",
         "jest-environment-jsdom": "^29.3.1",
-        "jest-environment-puppeteer": "^6.1.1",
         "jimp": "^0.16.1",
         "lint-staged": "^12.3.7",
         "lodash": "^4.17.21",
         "mini-css-extract-plugin": "^1.6.2",
         "node-fetch": "^2.6.7",
         "playroom": "^1.4.0",
+        "playwright": "1.64.1",
+        "playwright-core": "1.64.1",
         "postcss": "^8.4.18",
         "postcss-loader": "^4.2.0",
         "prettier": "^3.3.2",
@@ -153,7 +144,8 @@
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
         "vite-plugin-entry-shaking": "^0.5.1",
-        "vite-plugin-no-bundle": "^4.0.0"
+        "vite-plugin-no-bundle": "^4.0.0",
+        "webpack": "^5"
     },
     "dependencies": {
         "@figma/code-connect": "^1.4.8",

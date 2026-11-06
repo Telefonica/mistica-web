@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -8,18 +9,19 @@ test('Grid', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each(devices)('Grid auto columns %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'layout-grid--auto-columns',
-        device,
-    });
+for (const testCase of devices) {
+    const device = testCase;
+    test(`Grid auto columns ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'layout-grid--auto-columns',
+            device,
+        });
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(page, {...{fullPage: true}});
+    });
+}

@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -18,14 +19,16 @@ const createCases = () => {
     return cases;
 };
 
-test.each(createCases())('EmptyState %p %p %p', async (device, asset, actions) => {
-    await openStoryPage({
-        id: 'patterns-empty-states-emptystatecard--default',
-        device: device as Device,
-        args: {asset, actions},
-    });
+for (const testCase of createCases()) {
+    const [device, asset, actions] = testCase;
+    test(`EmptyState ${JSON.stringify(testCase[0])} ${JSON.stringify(testCase[1])} ${JSON.stringify(testCase[2])}`, async () => {
+        await openStoryPage({
+            id: 'patterns-empty-states-emptystatecard--default',
+            device: device as Device,
+            args: {asset, actions},
+        });
 
-    const emptyState = await screen.findByTestId('empty-state-card');
-    const image = await emptyState.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const emptyState = await screen.findByTestId('empty-state-card');
+        await expectScreenshot(emptyState);
+    });
+}

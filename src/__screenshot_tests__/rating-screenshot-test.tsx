@@ -1,40 +1,50 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
-test.each([0, 1, 2, 3, 4, 5, 4.5, 4.51])('InfoRating - value = %s', async (value) => {
-    await openStoryPage({
-        id: 'components-rating--info-rating-story',
-        device: 'MOBILE_IOS',
-        args: {value},
+for (const testCase of [0, 1, 2, 3, 4, 5, 4.5, 4.51]) {
+    const value = testCase;
+    test(`InfoRating - value = ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-rating--info-rating-story',
+            device: 'MOBILE_IOS',
+            args: {value},
+        });
+
+        const rating = await screen.findByTestId('info-rating');
+
+        await expectScreenshot(rating);
     });
+}
 
-    const rating = await screen.findByTestId('info-rating');
+for (const testCase of [4.5, 0.74, 0.75, 1.24, 4.25]) {
+    const value = testCase;
+    test(`InfoRating - with half value and value = ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-rating--info-rating-story',
+            device: 'MOBILE_IOS',
+            args: {value, withHalfValue: true},
+        });
 
-    expect(await rating.screenshot()).toMatchImageSnapshot();
-});
+        const rating = await screen.findByTestId('info-rating');
 
-test.each([4.5, 0.74, 0.75, 1.24, 4.25])('InfoRating - with half value and value = %s', async (value) => {
-    await openStoryPage({
-        id: 'components-rating--info-rating-story',
-        device: 'MOBILE_IOS',
-        args: {value, withHalfValue: true},
+        await expectScreenshot(rating);
     });
+}
 
-    const rating = await screen.findByTestId('info-rating');
+for (const testCase of [16, 24, 48]) {
+    const size = testCase;
+    test(`InfoRating - size = ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-rating--info-rating-story',
+            device: 'MOBILE_IOS',
+            args: {size},
+        });
 
-    expect(await rating.screenshot()).toMatchImageSnapshot();
-});
+        const rating = await screen.findByTestId('info-rating');
 
-test.each([16, 24, 48])('InfoRating - size = %s', async (size) => {
-    await openStoryPage({
-        id: 'components-rating--info-rating-story',
-        device: 'MOBILE_IOS',
-        args: {size},
+        await expectScreenshot(rating);
     });
-
-    const rating = await screen.findByTestId('info-rating');
-
-    expect(await rating.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('InfoRating - inverse', async () => {
     await openStoryPage({
@@ -45,7 +55,7 @@ test('InfoRating - inverse', async () => {
 
     const rating = await screen.findByTestId('info-rating');
 
-    expect(await rating.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(rating);
 });
 
 test('InfoRating - custom icons', async () => {
@@ -57,11 +67,11 @@ test('InfoRating - custom icons', async () => {
 
     const rating = await screen.findByTestId('info-rating');
 
-    expect(await rating.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(rating);
 });
 
 test('Rating - quantitative', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {type: 'quantitative'},
@@ -69,16 +79,16 @@ test('Rating - quantitative', async () => {
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 
     const thirdIcon = await screen.findByRole('radio', {name: '3 de 5'});
-    await page.click(thirdIcon);
+    await thirdIcon.click();
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 });
 
 test('Rating - quantitative with custom icons', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {type: 'quantitative', customIcons: true},
@@ -86,16 +96,16 @@ test('Rating - quantitative with custom icons', async () => {
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 
     const thirdIcon = await screen.findByRole('radio', {name: '3 de 5'});
-    await page.click(thirdIcon);
+    await thirdIcon.click();
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 });
 
 test('Rating - qualitative', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {type: 'qualitative'},
@@ -103,19 +113,19 @@ test('Rating - qualitative', async () => {
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 
     const labels = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
 
     for (const label of labels) {
         const currentIcon = await screen.findByRole('radio', {name: label});
-        await page.click(currentIcon);
-        expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+        await currentIcon.click();
+        await expectScreenshot(ratingWrapper);
     }
 });
 
 test('Rating - qualitative with custom icons', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {type: 'qualitative', customIcons: true},
@@ -123,19 +133,19 @@ test('Rating - qualitative with custom icons', async () => {
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 
     const labels = ['no battery', 'low battery', 'mid battery', 'full battery'];
 
     for (const label of labels) {
         const currentIcon = await screen.findByRole('radio', {name: label});
-        await page.click(currentIcon);
-        expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+        await currentIcon.click();
+        await expectScreenshot(ratingWrapper);
     }
 });
 
 test('Rating - qualitative inverse', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {type: 'qualitative', variantOutside: 'brand'},
@@ -143,28 +153,31 @@ test('Rating - qualitative inverse', async () => {
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 
     const thirdIcon = await screen.findByRole('radio', {name: 'regular'});
-    await page.click(thirdIcon);
+    await thirdIcon.click();
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 });
 
-test.each([8, 24, 48])('Rating - size = %s', async (size) => {
-    await openStoryPage({
-        id: 'components-rating--rating-story',
-        device: 'MOBILE_IOS',
-        args: {size},
+for (const testCase of [8, 24, 48]) {
+    const size = testCase;
+    test(`Rating - size = ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-rating--rating-story',
+            device: 'MOBILE_IOS',
+            args: {size},
+        });
+
+        const ratingWrapper = await screen.findByTestId('rating-wrapper');
+
+        await expectScreenshot(ratingWrapper);
     });
-
-    const ratingWrapper = await screen.findByTestId('rating-wrapper');
-
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('Rating - inverse', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {variantOutside: 'brand'},
@@ -173,7 +186,7 @@ test('Rating - inverse', async () => {
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
 
     const thirdIcon = await screen.findByRole('radio', {name: '3 de 5'});
-    await page.click(thirdIcon);
+    await thirdIcon.click();
 
-    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(ratingWrapper);
 });

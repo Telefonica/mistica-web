@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 import {MOVISTAR_SKIN, O2_SKIN} from '../skins/constants';
 
@@ -13,13 +14,15 @@ for (const skin of testableSkins) {
     }
 }
 
-test.each(cases)('SuccessFeedbackScreen with NavigationBar - %s - %s', async (skin, device) => {
-    const page = await openStoryPage({
-        id: `private-fixedfooter--default`,
-        skin: skin as (typeof testableSkins)[number],
-        device,
-    });
+for (const testCase of cases) {
+    const [skin, device] = testCase;
+    test(`SuccessFeedbackScreen with NavigationBar - ${testCase[0]} - ${testCase[1]}`, async () => {
+        const page = await openStoryPage({
+            id: `private-fixedfooter--default`,
+            skin: skin as (typeof testableSkins)[number],
+            device,
+        });
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(page);
+    });
+}

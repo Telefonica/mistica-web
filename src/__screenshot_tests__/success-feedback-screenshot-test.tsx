@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 import {MOVISTAR_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN, BLAU_SKIN, O2_SKIN} from '../skins/constants';
 
@@ -13,41 +14,41 @@ for (const skin of testableSkins) {
     }
 }
 
-test.each(cases)('Success Feedback component appears properly on %s and %s', async (skin, device) => {
-    const page = await openStoryPage({
-        id: `patterns-feedback-successfeedback--success`,
-        skin: skin as never,
-        device,
+for (const testCase of cases) {
+    const [skin, device] = testCase;
+    test(`Success Feedback component appears properly on ${testCase[0]} and ${testCase[1]}`, async () => {
+        const page = await openStoryPage({
+            id: `patterns-feedback-successfeedback--success`,
+            skin: skin as never,
+            device,
+        });
+
+        await expectScreenshot(page);
     });
+}
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(testableDevices)(
-    'Success Feedback component appears properly as a Success Header on %s',
-    async (device) => {
+for (const testCase of testableDevices) {
+    const device = testCase;
+    test(`Success Feedback component appears properly as a Success Header on ${testCase}`, async () => {
         const page = await openStoryPage({
             id: 'patterns-feedback-successfeedback--success-as-header',
             skin: MOVISTAR_SKIN,
             device,
         });
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
-test.each(testableDevices)(
-    'Success Feedback component appears properly with Vivo skin on %s',
-    async (device) => {
+for (const testCase of testableDevices) {
+    const device = testCase;
+    test(`Success Feedback component appears properly with Vivo skin on ${testCase}`, async () => {
         const page = await openStoryPage({
             id: `patterns-feedback-successfeedback--success`,
             skin: VIVO_SKIN,
             device,
         });
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}

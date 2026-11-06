@@ -1,3 +1,4 @@
+import {test, expect} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('Form with Fixed Footer Layout', async () => {
@@ -14,7 +15,7 @@ test('Form with Fixed Footer Layout', async () => {
 });
 
 test('Form focuses first field with error after submit validation', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'patterns-forms-form-with-automatic-state-management--default',
         device: 'MOBILE_IOS',
     });
