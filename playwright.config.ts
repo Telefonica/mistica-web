@@ -21,12 +21,11 @@ export default defineConfig({
         toHaveScreenshot: {
             pathTemplate: '{testDir}/{testFileDir}/__image_snapshots__/{arg}{ext}',
             threshold: 0.01,
-            maxDiffPixels: 0,
             animations: 'allow',
             caret: 'initial',
             scale: 'device',
         },
-        toMatchSnapshot: {threshold: 0.01, maxDiffPixels: 0},
+        toMatchSnapshot: {threshold: 0.01},
     },
     use: {
         browserName: 'chromium',

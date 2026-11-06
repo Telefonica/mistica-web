@@ -11,6 +11,12 @@ export default defineConfig({
     testIgnore: [],
     webServer: undefined,
     globalSetup: './src/test-utils/environment/setup-ssr.tsx',
-    snapshotPathTemplate: path.resolve('reports/playwright-hydration/{testFilePath}/{testName}/{arg}{ext}'),
+    expect: {
+        ...config.expect,
+        toHaveScreenshot: {
+            ...config.expect?.toHaveScreenshot,
+            pathTemplate: path.resolve('reports/playwright-hydration/{testFilePath}/{testName}/{arg}{ext}'),
+        },
+    },
     updateSnapshots: 'none',
 });

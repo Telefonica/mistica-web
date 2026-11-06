@@ -198,16 +198,32 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
     });
 };
 
+const SCREENSHOT_STABILITY_INTERVAL = 250;
+const SCREENSHOT_STABILITY_TIMEOUT = 30000;
+
 const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: ScreenshotOptions): Promise<void> => {
     const info = test.info();
     const name = `${kebabCase(info.titlePath.join(' '))}-hydration.png`;
-    const baselineImagePath = info.snapshotPath(name);
+    const baselineImagePath = info.snapshotPath(name, {kind: 'screenshot'});
     fs.mkdirSync(path.dirname(baselineImagePath), {recursive: true});
-    await page.screenshot({path: baselineImagePath, caret: 'initial'});
+    await page.waitForLoadState('networkidle');
+    let baseline = Buffer.alloc(0);
+    await expect
+        .poll(
+            async () => {
+                const current = await page.screenshot({caret: 'initial'});
+                const stable = current.equals(baseline);
+                baseline = current;
+                return stable;
+            },
+            {intervals: [SCREENSHOT_STABILITY_INTERVAL], timeout: SCREENSHOT_STABILITY_TIMEOUT}
+        )
+        .toBe(true);
+    fs.writeFileSync(baselineImagePath, baseline);
     await hydrateSSRPage(page);
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
     try {
-        expect(await page.screenshot({caret: 'initial'})).toMatchSnapshot(name, screenshotConfig);
+        await expect(page).toHaveScreenshot(name, {caret: 'initial', ...screenshotConfig});
     } finally {
         fs.unlinkSync(baselineImagePath);
     }
